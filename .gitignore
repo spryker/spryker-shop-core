@@ -1,0 +1,36 @@
+# IDEs
+/.idea
+/.project
+/nbproject
+/.buildpath
+/.settings
+*.sublime-*
+*.AppleDouble
+*.AppleDB
+*.AppleDesktop
+Temporary Items
+.apdisk
+GPATH
+GRTAGS
+GTAGS
+
+# OS
+.DS_Store
+
+# vagrant stuff
+.vagrant
+
+# profiling
+/profiler
+
+npm-debug.log
+Bundles/*/tests/_output
+Bundles/*/tests/**/_support/_generated
+
+# assets
+.sass-cache
+node_modules/
+/static/public/
+yarn.lock
+/vendor/*
+composer.phar

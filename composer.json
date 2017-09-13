@@ -1,0 +1,24 @@
+{
+  "name": "spryker/spryker-shop",
+  "description": "Spryker Shop page and widget modules",
+  "license": "proprietary",
+  "require":{
+    "spryker/spryker": "*"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "use-include-path": true
+  },
+  "autoload": {
+    "files": [
+      "autoload.php"
+    ]
+  },
+  "replace": {
+
+  }
+}
