@@ -1,0 +1,65 @@
+{# TODO consider keeping this template here or moving it to CatalogPage module (if thi module contains this only it's a waste) #}
+
+{# mandatory #}
+{% set name = name %}
+{% set detailsUrl = detailsUrl %}
+{% set priceValue = priceValue %}
+
+{# optional #}
+{% set class = class | default('') %}
+{% set imageUrl = imageUrl | default('') %}
+{% set productLabels = productLabels | default(null) %}
+{% set idProductAbstract = idProductAbstract | default(null) %}
+{% set originalPrice = originalPrice | default(null) %}
+{#{% set averageRating = averageRating | default(null) %}#}
+{#{% set productLabelPlaceholder = productLabelPlaceholder | default(null) %}#}
+{#{% set productGroupPlaceholder = productGroupPlaceholder | default(null) %}#}
+{#{% set productReviewPlaceholder = productReviewPlaceholder | default(null) %}#}
+
+<div class="{{ class }} product js-product-container">
+    <div class="product__container callout">
+        <a href="{{ detailsUrl }}" class="thumbnail __preview-image">
+            <img src="{{ imageUrl }}">
+        </a>
+        {{ widget('productLabels') }}
+        {#{{ productLabelPlaceholder }}#}
+        {#{% if productLabels %}#}
+            {#{{ productLabels | raw }}#}
+        {#{% endif %}#}
+
+        {{ widget('productGroups') }}
+        {#{% include '@ProductGroupWidget/_catalog-page/product-groups.twig' ignore missing %}#}
+        {#{{ productGroupPlaceholder }}#}
+        {#{% if idProductAbstract %}#}
+            {#{% block productGroups %}#}
+                {#{{ spyProductGroupItems(idProductAbstract, '@ProductGroup/partials/product-group-items.twig') }}#}
+            {#{% endblock %}#}
+        {#{% endif %}#}
+        <p class="__no-margin-bottom">
+            <strong>{{ name }}</strong>
+        </p>
+
+        {{ widget('productRating') }}
+        {#{{ productReviewPlaceholder }}#}
+        {#{% if averageRating %}#}
+            {#{% include '@ProductReview/partials/read-only-rating.twig' with {'rating': averageRating } %}#}
+        {#{% elseif idProductAbstract %}#}
+            {#{% block productReview %}#}
+                {#{{ spyProductAbstractReview(idProductAbstract, '@ProductReview/partials/product-rating.twig') }}#}
+            {#{% endblock %}#}
+        {#{% endif %}#}
+
+        <p>
+            {# TODO: original price must be an extension of this template #}
+            {% if originalPrice %}
+                <span class="catalog-price__price-original">{{ originalPrice | money }}</span>
+                <span class="catalog-price__price-reduced">{{ priceValue | money }}</span>
+            {% else %}
+                {{ priceValue | money }}
+            {% endif %}
+        </p>
+        <div class="product__action">
+            <a class="button expanded" href="{{ detailsUrl }}">{{ 'product.view' | trans }} &raquo;</a>
+        </div>
+    </div>
+</div>

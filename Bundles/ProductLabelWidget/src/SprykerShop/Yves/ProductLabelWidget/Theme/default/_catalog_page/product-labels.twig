@@ -1,0 +1,6 @@
+{# TODO: ? #}
+{% if idProductLabels is defined %}
+    {{ spyProductLabels(idProductLabels, '@ProductLabelWidget/_catalog-page/_partials/product-labels.twig') }}
+{% elseif idProductAbstract is defined %}
+    {{ spyProductAbstractLabels(idProductAbstract, '@ProductLabelWidget/_catalog-page/_partials/product-labels.twig') }}
+{% endif %}

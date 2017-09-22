@@ -1,8 +1,6 @@
-{% block breadcrumbItems %}
-    <li><a href="/">{{ 'global.home' | trans }}</a></li>
-    {% if productCategories|length %}
-        {% for category in productCategories %}
-            <li><a href="{{ category.url }}">{{ category.name }}</a></li>
-        {% endfor %}
-    {% endif %}
-{% endblock %}
+<li><a href="/">{{ 'global.home' | trans }}</a></li>
+{% if _widget.data.productCategories|length %}
+    {% for category in _widget.data.productCategories %}
+        <li><a href="{{ category.url }}">{{ category.name }}</a></li>
+    {% endfor %}
+{% endif %}

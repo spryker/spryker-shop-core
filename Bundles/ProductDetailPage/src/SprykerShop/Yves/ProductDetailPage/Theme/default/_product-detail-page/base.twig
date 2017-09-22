@@ -1,60 +1,68 @@
 {% block page_title %}
-    {% if product.metaTitle %}
-        {{ product.metaTitle }}
+    {% if _view.data.product.metaTitle %}
+        {{ _view.data.product.metaTitle }}
     {% else %}
-        {{ product.name }}
+        {{ _view.data.product.name }}
     {% endif %}
 {% endblock %}
 
-{% block breadcrumbItems %}{% endblock %}
+{% block breadcrumbItems %}
+    {{ widget('breadcrumb') }}
+{% endblock %}
 
 {% block title %}
-    <h3>{{ product.name }}</h3>
+    <h3>{{ _view.data.product.name }}</h3>
+{% endblock %}
+
+{% block outside %}
+    {{ widget('productImage', 'mobileView') }}
 {% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="small-12 medium-6 xlarge-7 xxlarge-8 columns">
-            {% block productImages %}{% endblock %}
+            {{ widget('productImage', 'desktopView') }}
         </div>
 
         <div class="small-12 medium-6 xlarge-5 xxlarge-4 columns">
 
             <div class="callout">
-                {% if product.attributes.brand is defined %}<h5><small>{{ 'page.product.by' | trans }}</small> {{ product.attributes.brand }}</h5>{% endif %}
+                {% if _view.data.product.attributes.brand is defined %}<h5><small>{{ 'page.product.by' | trans }}</small> {{ _view.data.product.attributes.brand }}</h5>{% endif %}
                 <p>
 
-                    {% if product.prices.ORIGINAL is defined %}
-                        <span class="stat catalog-price__price-reduced">{{ product.price | money }}</span> <span class="catalog-price__price-original">{{ product.prices.ORIGINAL | money }}</span>
+                    {% if _view.data.product.prices.ORIGINAL is defined %}
+                        <span class="stat catalog-price__price-reduced">{{ _view.data.product.price | money }}</span> <span class="catalog-price__price-original">{{ _view.data.product.prices.ORIGINAL | money }}</span>
                     {% else %}
-                        <span class="stat">{{ product.price | money }}</span>
+                        <span class="stat">{{ _view.data.product.price | money }}</span>
                     {% endif %}
 
                     <br/>
-                    <small>{{ 'product.attribute.sku' | trans }}: {{ product.sku }}</small>
+                    <small>{{ 'product.attribute.sku' | trans }}: {{ _view.data.product.sku }}</small>
                 </p>
 
-                {% block productRating %}{% endblock %}
+                {{ widget('productReview', 'productRating') }}
 
                 {% include '@ProductDetailPage/_product-detail-page/_partials/variants.twig' %}
             </div>
 
-            {% block productGroups %}{% endblock %}
+            {{ widget('productGroups') }}
 
-            <form method="POST" action="/cart/add/{{ product.sku }}">
-                {% block productOptions %}{% endblock %}
+            <form method="POST" action="/cart/add/{{ _view.data.product.sku }}">
+                {{ widget('productOptions') }}
                 <div>
-                    {% block addToCartButton %}
-                        <button type="submit" class="button expanded success js-add-to-cart-button" {{ (not product.isVariant) ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
+                    {% if _view.hasWidget('addToCartButton') %}
+                        {{ widget('addToCartButton') }}
+                    {% else %}
+                        <button type="submit" class="button expanded success js-add-to-cart-button" {{ (not _view.data.product.isVariant) ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
                             <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}
                         </button>
-                    {% endblock %}
+                    {% endif %}
 
                     <div class="small-12 columns"></div>
                 </div>
             </form>
 
-            {% block addToWishlist %}{% endblock %}
+            {{ widget('addToWishlist') }}
         </div>
     </div>
 
@@ -62,11 +70,11 @@
         <div class="small-12 columns">
             <div class="callout">
                 <h5>{{ 'product.attribute.long_description' | trans }}</h5>
-                <p>{{ product.description }}</p>
+                <p>{{ _view.data.product.description }}</p>
 
                 <h5>{{ 'page.product.details' | trans }}</h5>
                 <div class="row">
-                    {% for attributeName, attributeValue in product.attributes if attributeName  %}
+                    {% for attributeName, attributeValue in _view.data.product.attributes if attributeName  %}
 
                         <p class="small-12 medium-6 xlarge-4 xxlarge-3 columns">
                             <strong>{{ ('product.attribute.'~attributeName) | trans }} </strong><br>
@@ -78,10 +86,10 @@
         </div>
     </div>
 
-    {% block productReviews %}{% endblock %}
+    {{ widget('productReview', 'productReviews') }}
 
-    {% block similarProducts %}{% endblock %}
+    {{ widget('productRelations', 'similarProducts') }}
 
-    {% block productCmsBlock %}{% endblock %}
+    {{ widget('productCmsBlock') }}
 
 {% endblock %}

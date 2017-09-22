@@ -22,12 +22,4 @@ class ProductOptionWidgetFactory extends AbstractFactory
         return new ProductOptionClient();
     }
 
-    /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
-     */
-    public function getApplication()
-    {
-        return (new Pimple())->getApplication();
-    }
-
 }

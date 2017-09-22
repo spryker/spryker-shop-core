@@ -14,7 +14,7 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
 {
 
     const CLIENT_PRODUCT_GROUP = 'CLIENT_PRODUCT_GROUP';
-    const PLUGIN_CONTROLLER_RESPONSE_EXPANDERS = 'PLUGIN_CONTROLLER_RESPONSE_EXPANDERS';
+    const PLUGIN_PRODUCT_DETAIL_PAGE_WIDGET_BUILDERS = 'PLUGIN_PRODUCT_DETAIL_PAGE_WIDGET_BUILDERS';
     const PLUGIN_STORAGE_PRODUCT_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
 
     /**
@@ -25,7 +25,7 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
     public function provideDependencies(Container $container)
     {
         $container = $this->addProductGroupClient($container);
-        $container = $this->addControllerResponseExpanderPlugins($container);
+        $container = $this->addProductDetailPageWidgetBuilderPlugins($container);
         $container = $this->addStorageProductExpanderPlugins($container);
 
         return $container;
@@ -50,10 +50,10 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addControllerResponseExpanderPlugins(Container $container)
+    protected function addProductDetailPageWidgetBuilderPlugins(Container $container)
     {
-        $container[self::PLUGIN_CONTROLLER_RESPONSE_EXPANDERS] = function (Container $container) {
-            return $this->getControllerResponseExpanderPlugins($container);
+        $container[self::PLUGIN_PRODUCT_DETAIL_PAGE_WIDGET_BUILDERS] = function (Container $container) {
+            return $this->getProductDetailPageWidgetBuilderPlugins($container);
         };
 
         return $container;
@@ -62,9 +62,9 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Yves\Kernel\Dependency\Plugin\ControllerResponseExpanderPluginInterface[]
+     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetBuilderPluginInterface[]
      */
-    protected function getControllerResponseExpanderPlugins(Container $container)
+    protected function getProductDetailPageWidgetBuilderPlugins(Container $container)
     {
         return [];
     }

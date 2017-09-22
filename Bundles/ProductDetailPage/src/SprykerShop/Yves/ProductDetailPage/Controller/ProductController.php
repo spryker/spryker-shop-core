@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductDetailPage\Controller;
 
 use Pyz\Yves\Application\Controller\AbstractController;
 use Spryker\Shared\Storage\StorageConstants;
+use Spryker\Yves\Kernel\Controller\View;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -29,7 +30,7 @@ class ProductController extends AbstractController
      * @param array $productData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Spryker\Yves\Kernel\Controller\View
      */
     public function detailAction(array $productData, Request $request)
     {
@@ -37,20 +38,16 @@ class ProductController extends AbstractController
             ->createStorageProductMapper()
             ->mapStorageProduct($productData, $request, $this->getSelectedAttributes($request));
 
-        $request->attributes->set(self::ATTRIBUTE_STORAGE_PRODUCT_TRANSFER, $storageProductTransfer);
-
-        $productData = [
+        // TODO: use transfer instead of array as data
+        $view = new View([
             'product' => $storageProductTransfer,
             'page_keywords' => $storageProductTransfer->getMetaKeywords(),
             'page_description' => $storageProductTransfer->getMetaDescription(),
-        ];
+        ]);
 
-        // TODO: response need to be transfer object that other expanders can also use
-        return $this->extendedViewResponse(
-            $request,
-            $this->getFactory()->getControllerResponseExtenderPlugins(),
-            $productData
-        );
+        $view->buildWidgets($this->getFactory()->getProductDetailPageWidgetBuilderPlugins(), $request);
+
+        return $view;
     }
 
     /**

@@ -49,11 +49,11 @@ class ProductDetailPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Dependency\Plugin\ControllerResponseExpanderPluginInterface[]
+     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetBuilderPluginInterface[]
      */
-    public function getControllerResponseExtenderPlugins()
+    public function getProductDetailPageWidgetBuilderPlugins()
     {
-        return $this->getProvidedDependency(ProductDetailPageDependencyProvider::PLUGIN_CONTROLLER_RESPONSE_EXPANDERS);
+        return $this->getProvidedDependency(ProductDetailPageDependencyProvider::PLUGIN_PRODUCT_DETAIL_PAGE_WIDGET_BUILDERS);
     }
 
     /**
