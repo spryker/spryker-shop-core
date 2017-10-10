@@ -8,16 +8,7 @@
                     <div class="carousel" data-component="carousel">
                     {% for relation in productRelations %}
 
-                        {% include "@CatalogProductWidget/_catalog-page/product.twig" with {
-                            class: 'columns',
-                            idProductAbstract: relation.idProductAbstract,
-                            detailsUrl: relation.url,
-                            name:relation.name,
-                            priceValue: relation.price,
-                            originalPrice: (relation.prices.ORIGINAL is defined ? relation.prices.ORIGINAL : null),
-                            imageUrl: (relation.imageSets|length ? relation.imageSets.default[0].externalUrlSmall : ''),
-                            productLabels: spyProductAbstractLabels(relation.idProductAbstract, '@ProductLabelWidget/_catalog_page/_partials/product-labels.twig')
-                        } %}
+                        {{ widget('ProductWidgetPlugin', relation) }}
 
                     {% endfor %}
                     </div>

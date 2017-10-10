@@ -1,12 +1,12 @@
-{% block productRating %}
-    {{ spyProductAbstractReview(_widget.view.data.product.idProductAbstract, '@ProductReviewWidget/_product-detail-page/_partials/product-rating.twig') }}
+{% block rating %}
+    {{ spyProductAbstractReview(_widget.product.idProductAbstract, '@ProductReviewWidget/_product-detail-page/_partials/product-rating.twig') }}
 {% endblock %}
 
-{% block productReviews %}
+{% block reviews %}
     <div class="row">
         <div class="small-12 columns">
-            {{ render(path('product-review/submit', {idProductAbstract: _widget.view.data.product.idProductAbstract})) }}
-            {{ render(path('product-review/index', {idProductAbstract: _widget.view.data.product.idProductAbstract})) }}
+            {{ render(path('product-review/submit', {idProductAbstract: _widget.product.idProductAbstract})) }}
+            {{ render(path('product-review/index', {idProductAbstract: _widget.product.idProductAbstract})) }}
         </div>
     </div>
 {% endblock %}

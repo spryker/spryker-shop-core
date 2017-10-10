@@ -1,68 +1,78 @@
 {% block page_title %}
-    {% if _view.data.product.metaTitle %}
-        {{ _view.data.product.metaTitle }}
+    {% if _view.product.metaTitle %}
+        {{ _view.product.metaTitle }}
     {% else %}
-        {{ _view.data.product.name }}
+        {{ _view.product.name }}
     {% endif %}
 {% endblock %}
 
 {% block breadcrumbItems %}
-    {{ widget('breadcrumb') }}
+    {{ widget('ProductCategoryWidgetPlugin', _view.product) }}
 {% endblock %}
 
 {% block title %}
-    <h3>{{ _view.data.product.name }}</h3>
+    <h3>{{ _view.product.name }}</h3>
 {% endblock %}
 
 {% block outside %}
-    {{ widget('productImage', 'mobileView') }}
+    {{ widgetBlock('ProductImageWidgetPlugin', 'smallView', _view.product) }}
 {% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="small-12 medium-6 xlarge-7 xxlarge-8 columns">
-            {{ widget('productImage', 'desktopView') }}
+            <div style="position: relative">
+                {{ widgetBlock('ProductImageWidgetPlugin', 'largeView', _view.product) }}
+
+                {{ widget('ProductAbstractLabelWidgetPlugin', _view.product) }}
+            </div>
         </div>
 
         <div class="small-12 medium-6 xlarge-5 xxlarge-4 columns">
 
             <div class="callout">
-                {% if _view.data.product.attributes.brand is defined %}<h5><small>{{ 'page.product.by' | trans }}</small> {{ _view.data.product.attributes.brand }}</h5>{% endif %}
+                {% if _view.product.attributes.brand is defined %}<h5><small>{{ 'page.product.by' | trans }}</small> {{ _view.product.attributes.brand }}</h5>{% endif %}
                 <p>
 
-                    {% if _view.data.product.prices.ORIGINAL is defined %}
-                        <span class="stat catalog-price__price-reduced">{{ _view.data.product.price | money }}</span> <span class="catalog-price__price-original">{{ _view.data.product.prices.ORIGINAL | money }}</span>
+                    {% if _view.product.prices.ORIGINAL is defined %}
+                        <span class="stat catalog-price__price-reduced">{{ _view.product.price | money }}</span> <span class="catalog-price__price-original">{{ _view.product.prices.ORIGINAL | money }}</span>
                     {% else %}
-                        <span class="stat">{{ _view.data.product.price | money }}</span>
+                        <span class="stat">{{ _view.product.price | money }}</span>
                     {% endif %}
 
                     <br/>
-                    <small>{{ 'product.attribute.sku' | trans }}: {{ _view.data.product.sku }}</small>
+                    <small>{{ 'product.attribute.sku' | trans }}: {{ _view.product.sku }}</small>
                 </p>
 
-                {{ widget('productReview', 'productRating') }}
+                {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', _view.product) }}
 
                 {% include '@ProductDetailPage/_product-detail-page/_partials/variants.twig' %}
             </div>
 
-            {{ widget('productGroups') }}
+            {{ widget('ProductGroupWidgetPlugin', _view.product.idProductAbstract) }}
 
-            <form method="POST" action="/cart/add/{{ _view.data.product.sku }}">
-                {{ widget('productOptions') }}
+            <form method="POST" action="/cart/add/{{ _view.product.sku }}">
+
+                {{ widget('ProductOptionWidgetPlugin', _view.product) }}
+
                 <div>
-                    {% if _view.hasWidget('addToCartButton') %}
-                        {{ widget('addToCartButton') }}
+                    {% if widgetExists('AvailabilityWidgetPlugin') %}
+                        {% set disabled = not widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', _view.product) %}
                     {% else %}
-                        <button type="submit" class="button expanded success js-add-to-cart-button" {{ (not _view.data.product.isVariant) ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
-                            <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}
-                        </button>
+                        {% set disabled = (not _view.product.isVariant) %}
                     {% endif %}
+
+                    <button type="submit" class="button expanded success js-add-to-cart-button" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
+                        <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}
+                    </button>
+
+                    {{ widgetBlock('AvailabilityWidgetPlugin', 'outOfStock', _view.product) }}
 
                     <div class="small-12 columns"></div>
                 </div>
             </form>
 
-            {{ widget('addToWishlist') }}
+            {{ widget('WishlistWidgetPlugin', _view.product) }}
         </div>
     </div>
 
@@ -70,11 +80,11 @@
         <div class="small-12 columns">
             <div class="callout">
                 <h5>{{ 'product.attribute.long_description' | trans }}</h5>
-                <p>{{ _view.data.product.description }}</p>
+                <p>{{ _view.product.description }}</p>
 
                 <h5>{{ 'page.product.details' | trans }}</h5>
                 <div class="row">
-                    {% for attributeName, attributeValue in _view.data.product.attributes if attributeName  %}
+                    {% for attributeName, attributeValue in _view.product.attributes if attributeName  %}
 
                         <p class="small-12 medium-6 xlarge-4 xxlarge-3 columns">
                             <strong>{{ ('product.attribute.'~attributeName) | trans }} </strong><br>
@@ -86,10 +96,10 @@
         </div>
     </div>
 
-    {{ widget('productReview', 'productReviews') }}
+    {{ widgetBlock('ProductReviewWidgetPlugin', 'reviews', _view.product) }}
 
-    {{ widget('productRelations', 'similarProducts') }}
+    {{ widgetBlock('ProductRelationWidgetPlugin', 'similarProducts', _view.product) }}
 
-    {{ widget('productCmsBlock') }}
+    {{ widget('ProductCmsBlockWidgetPlugin', _view.product) }}
 
 {% endblock %}

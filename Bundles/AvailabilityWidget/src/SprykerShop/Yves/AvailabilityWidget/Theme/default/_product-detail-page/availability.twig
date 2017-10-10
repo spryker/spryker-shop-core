@@ -1,9 +1,11 @@
-<button type="submit" class="button expanded success js-add-to-cart-button" {{ (not _widget.view.data.product.isVariant or not _widget.view.data.product.available) ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
-    <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}
-</button>
+{% block isAvailable -%}
+    {{ (_widget.product.isVariant and _widget.product.available) ? 1 : 0}}
+{%- endblock %}
 
-{% if not _widget.view.data.product.available %}
-    <p>
-        <strong>{{ "product.detail.out_of_stock" | trans }}</strong>
-    </p>
-{% endif %}
+{% block outOfStock %}
+    {% if not _widget.product.available %}
+        <p>
+            <strong>{{ "product.detail.out_of_stock" | trans }}</strong>
+        </p>
+    {% endif %}
+{% endblock %}

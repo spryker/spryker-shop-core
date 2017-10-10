@@ -73,7 +73,7 @@ class CatalogPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetBuilderPluginInterface[]
+     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[]
      */
     public function getCatalogWidgetBuilderPlugins()
     {

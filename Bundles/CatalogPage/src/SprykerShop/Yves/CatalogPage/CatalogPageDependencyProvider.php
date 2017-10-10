@@ -90,7 +90,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetBuilderPluginInterface[]
+     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[]
      */
     protected function getCatalogWidgetBuilderPlugins()
     {

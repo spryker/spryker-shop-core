@@ -9,8 +9,8 @@
             <div class="row align-spaced">
                 <div class="small-11 columns">
                     <div class="carousel" data-component="carousel">
-                        {% for product in products if product.available %}
 
+                        {% for product in products if product.available %}
                             {% include templatePath with {
                                 idProductAbstract: product.idProductAbstract,
                                 detailsUrl: product.url,
@@ -18,10 +18,13 @@
                                 priceValue: product.price,
                                 product: product,
                                 imageUrl: (product.imageSets|length ? product.imageSets.default[0].externalUrlSmall : ''),
-                                originalPrice: (product.prices.ORIGINAL is defined ? product.prices.ORIGINAL : null),
-                                productLabels: spyProductAbstractLabels(product.idProductAbstract, '@ProductLabelWidget/_catalog-page/product-labels.twig')
+                                originalPrice: (product.prices.ORIGINAL is defined ? product.prices.ORIGINAL : null)
                             } %}
-
+{#
+,
+productLabels: widget('')
+productLabels: spyProductAbstractLabels(product.idProductAbstract, '@ProductLabelWidget/_catalog-page/product-labels.twig')
+#}
                         {% endfor %}
                     </div>
                 </div>

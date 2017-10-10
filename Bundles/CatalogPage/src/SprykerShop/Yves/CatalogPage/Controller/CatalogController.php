@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CatalogPage\Controller;
 use Generated\Shared\Search\PageIndexMap;
 use Pyz\Yves\Application\Controller\AbstractController;
 use Spryker\Shared\Storage\StorageConstants;
-use Spryker\Yves\Kernel\Controller\View;
+use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,7 +26,7 @@ class CatalogController extends AbstractController
      * @param array $categoryNode
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\Controller\View
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(array $categoryNode, Request $request)
     {
@@ -53,8 +53,8 @@ class CatalogController extends AbstractController
         $searchResults = array_merge($searchResults, $metaAttributes);
         $template = $this->getCategoryNodeTemplate($categoryNode['node_id']);
 
-        $view = new View($searchResults, $template);
-        $view->buildWidgets($this->getFactory()->getCatalogWidgetBuilderPlugins(), $request);
+        $view = new \Spryker\Yves\Kernel\View\View($searchResults, $template);
+        $view->addWidgets($this->getFactory()->getCatalogWidgetBuilderPlugins(), $request);
 
         return $view;
     }
@@ -62,7 +62,7 @@ class CatalogController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\Controller\View
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function fulltextSearchAction(Request $request)
     {
@@ -77,7 +77,7 @@ class CatalogController extends AbstractController
         $searchResults['idCategory'] = null;
 
         $view = new View($searchResults);
-        $view->buildWidgets($this->getFactory()->getCatalogWidgetBuilderPlugins(), $request);
+        $view->addWidgets($this->getFactory()->getCatalogWidgetBuilderPlugins(), $request);
 
         return $view;
     }

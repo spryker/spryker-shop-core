@@ -1,6 +1,6 @@
 <li><a href="/">{{ 'global.home' | trans }}</a></li>
-{% if _widget.data.productCategories|length %}
-    {% for category in _widget.data.productCategories %}
+{% if _widget.product.categories|length %}
+    {% for category in _widget.product.categories %}
         <li><a href="{{ category.url }}">{{ category.name }}</a></li>
     {% endfor %}
 {% endif %}

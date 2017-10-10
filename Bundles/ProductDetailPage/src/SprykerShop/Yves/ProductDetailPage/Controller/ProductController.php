@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductDetailPage\Controller;
 
 use Pyz\Yves\Application\Controller\AbstractController;
 use Spryker\Shared\Storage\StorageConstants;
-use Spryker\Yves\Kernel\Controller\View;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,7 +19,6 @@ class ProductController extends AbstractController
 {
 
     const ATTRIBUTE_PRODUCT_DATA = 'productData';
-    const ATTRIBUTE_STORAGE_PRODUCT_TRANSFER = 'storageProductTransfer';
 
     const PARAM_ATTRIBUTE = 'attribute';
 
@@ -30,7 +28,7 @@ class ProductController extends AbstractController
      * @param array $productData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\Controller\View
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function detailAction(array $productData, Request $request)
     {
@@ -38,16 +36,11 @@ class ProductController extends AbstractController
             ->createStorageProductMapper()
             ->mapStorageProduct($productData, $request, $this->getSelectedAttributes($request));
 
-        // TODO: use transfer instead of array as data
-        $view = new View([
+        $data = [
             'product' => $storageProductTransfer,
-            'page_keywords' => $storageProductTransfer->getMetaKeywords(),
-            'page_description' => $storageProductTransfer->getMetaDescription(),
-        ]);
+        ];
 
-        $view->buildWidgets($this->getFactory()->getProductDetailPageWidgetBuilderPlugins(), $request);
-
-        return $view;
+        return $this->view($data, $this->getFactory()->getProductDetailPageWidgetPlugins());
     }
 
     /**
