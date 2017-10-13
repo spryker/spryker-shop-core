@@ -2,14 +2,14 @@
     <div class="row align-middle">
 
         <div class="small-12 large-4 xlarge-6 columns show-for-large">
-            <strong>{{ _view.data.pagination.numFound }}</strong> {{ "catalog.itemsFound"|trans }}
+            <strong>{{ _view.pagination.numFound }}</strong> {{ "catalog.itemsFound"|trans }}
         </div>
         <div class="small-8 large-5 xlarge-4 columns">
             <label>
                 <select name="sort" class="__no-margin-bottom" data-default-value="">
                     <option value="">{{ 'catalog.sort.relevance' | trans }}</option>
-                    {% for sortParamName in _view.data.sort.sortParamNames %}
-                        <option value="{{ sortParamName }}" {% if sortParamName == _view.data.sort.currentSortParam %}selected{% endif %}>{{ ('catalog.sort.' ~ sortParamName) | trans }}</option>
+                    {% for sortParamName in _view.sort.sortParamNames %}
+                        <option value="{{ sortParamName }}" {% if sortParamName == _view.sort.currentSortParam %}selected{% endif %}>{{ ('catalog.sort.' ~ sortParamName) | trans }}</option>
                     {% endfor %}
                 </select>
             </label>

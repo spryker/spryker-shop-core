@@ -9,16 +9,16 @@ namespace SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductReviewWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface ProductReviewWidgetPluginInterface extends WidgetPluginInterface
+interface ProductAbstractReviewWidgetPluginInterface extends WidgetPluginInterface
 {
 
-    const NAME = 'ProductReviewWidgetPlugin';
+    const NAME = 'ProductAbstractReviewWidgetPlugin';
 
     /**
-     * @param float $rating
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    public function initialize(float $rating): void;
+    public function initialize(int $idProductAbstract): void;
 
 }

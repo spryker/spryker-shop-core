@@ -1,10 +1,10 @@
 {% block breadcrumbItems %}
     <li><a href="/">{{ 'global.home' | trans }}</a></li>
-    {% include '@CatalogPage/_partials/category-breadcrumb.twig' with {categoryNode: _view.data.category} only %}
+    {% include '@CatalogPage/_partials/category-breadcrumb.twig' with {categoryNode: _view.category} only %}
 {% endblock %}
 
 {% block title %}
-    <h3>{{ _view.data.category.name }}</h3>
+    <h3>{{ _view.category.name }}</h3>
 {% endblock %}
 
 {% block content %}

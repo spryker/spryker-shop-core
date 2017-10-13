@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageFactory getFactory()
- * @method \Spryker\Client\Catalog\CatalogClientInterface getClient()
  */
 class SuggestionController extends AbstractController
 {
@@ -33,7 +32,8 @@ class SuggestionController extends AbstractController
         }
 
         $searchResults = $this
-            ->getClient()
+            ->getFactory()
+            ->getCatalogClient()
             ->catalogSuggestSearch($searchString, $request->query->all());
 
         return $this->jsonResponse([

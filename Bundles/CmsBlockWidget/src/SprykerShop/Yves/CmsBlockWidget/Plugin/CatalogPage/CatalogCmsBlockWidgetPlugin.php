@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductWidget;
+namespace SprykerShop\Yves\CmsBlockWidget\Plugin\CatalogPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductReviewWidget\ProductReviewWidgetPluginInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Plugin\CmsBlockWidget\CatalogCmsBlockWidgetPluginInterface;
 
-class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductReviewWidgetPluginInterface
+class CatalogCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements CatalogCmsBlockWidgetPluginInterface
 {
 
     /**
-     * @param float $rating
+     * @param int $idCategory
      *
      * @return void
      */
-    public function initialize(float $rating): void
+    public function initialize(int $idCategory): void
     {
-        $this->addParameter('rating', $rating);
+        $this->addParameter('idCategory', $idCategory);
     }
 
     /**
@@ -36,7 +36,7 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public static function getTemplate(): string
     {
-        return '@ProductReviewWidget/_product_widget/product-review.twig';
+        return '@CmsBlockWidget/_catalog-page/catalog-cms-block.twig';
     }
 
 }

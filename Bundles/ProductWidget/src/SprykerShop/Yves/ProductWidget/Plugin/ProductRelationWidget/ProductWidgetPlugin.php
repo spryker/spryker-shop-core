@@ -55,7 +55,7 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
      *
      * @return string|null
      */
-    protected function getImageUrl(StorageProductAbstractRelationTransfer $storageProductAbstractRelationTransfer)
+    protected function getImageUrl(StorageProductAbstractRelationTransfer $storageProductAbstractRelationTransfer): ?string
     {
         $imageSets = $storageProductAbstractRelationTransfer->getImageSets();
 
@@ -67,7 +67,7 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
      *
      * @return string|null
      */
-    protected function getOriginalPrice(StorageProductAbstractRelationTransfer $storageProductAbstractRelationTransfer)
+    protected function getOriginalPrice(StorageProductAbstractRelationTransfer $storageProductAbstractRelationTransfer): ?string
     {
         $prices = $storageProductAbstractRelationTransfer->getPrices();
 

@@ -1,5 +1,5 @@
 {% set activeFilters = '' %}
-{% for filter in _view.data.facets %}
+{% for filter in _view.facets %}
     {% set activeFilters = activeFilters ~ include([
         '@CatalogPage/_partials/active-filters/' ~ filter.config.name ~ '.twig',
         '@CatalogPage/_partials/active-filters/' ~ filter.config.type ~ '.twig',
@@ -13,7 +13,7 @@
                 <small class="active-filters__label">{{ 'catalog.filter.activeFilters' | trans }}:</small>
                 {{ activeFilters | raw }}
 
-                <a href="{{ generateUrlWithoutAllActiveSearchFilters(_view.data.facets) }}" class="alert button hollow small active-filters__filter">
+                <a href="{{ generateUrlWithoutAllActiveSearchFilters(_view.facets) }}" class="alert button hollow small active-filters__filter">
                     {{ 'catalog.filter.resetAllFilters' | trans }}<i class="fa fa-close"></i>
                 </a>
             </div>

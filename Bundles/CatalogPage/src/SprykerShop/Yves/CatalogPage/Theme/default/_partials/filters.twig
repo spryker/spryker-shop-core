@@ -1,4 +1,4 @@
-{% for filter in _view.data.facets %}
+{% for filter in _view.facets %}
     {% if filter.values is not defined or filter.values|length > 0 %}
         <div class="callout">
             <h5>{{ ('product.filter.' ~ filter.name) | trans }}</h5>

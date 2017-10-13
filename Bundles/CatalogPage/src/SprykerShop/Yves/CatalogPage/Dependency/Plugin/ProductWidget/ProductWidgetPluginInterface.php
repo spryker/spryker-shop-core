@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductReviewWidget;
+namespace SprykerShop\Yves\CatalogPage\Dependency\Plugin\ProductWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface ProductReviewWidgetPluginInterface extends WidgetPluginInterface
+interface ProductWidgetPluginInterface extends WidgetPluginInterface
 {
 
-    const NAME = 'ProductReviewWidgetPlugin';
+    public const NAME = 'ProductWidgetPlugin';
 
     /**
-     * @param float $rating
+     * @param array $product
      *
      * @return void
      */
-    public function initialize(float $rating): void;
+    public function initialize(array $product): void;
 
 }

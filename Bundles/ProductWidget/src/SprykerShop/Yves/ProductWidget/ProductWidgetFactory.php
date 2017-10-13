@@ -20,4 +20,12 @@ class ProductWidgetFactory extends AbstractFactory
         return $this->getProvidedDependency(ProductWidgetDependencyProvider::PLUGIN_PRODUCT_RELATION_WIDGET_SUB_WIDGETS);
     }
 
+    /**
+     * @return string[]
+     */
+    public function getCatalogPageSubWidgets(): array
+    {
+        return $this->getProvidedDependency(ProductWidgetDependencyProvider::PLUGIN_CATALOG_PAGE_SUB_WIDGETS);
+    }
+
 }

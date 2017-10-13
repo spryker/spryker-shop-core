@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductReviewWidget;
+namespace SprykerShop\Yves\CatalogPage\Dependency\Plugin\CmsBlockWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface ProductReviewWidgetPluginInterface extends WidgetPluginInterface
+interface CatalogCmsBlockWidgetPluginInterface extends WidgetPluginInterface
 {
 
-    const NAME = 'ProductReviewWidgetPlugin';
+    public const NAME = 'CatalogCmsBlockWidgetPlugin';
 
     /**
-     * @param float $rating
+     * @param int $idCategory
      *
      * @return void
      */
-    public function initialize(float $rating): void;
+    public function initialize(int $idCategory): void;
 
 }

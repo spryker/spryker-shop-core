@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductCmsBlockWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\CmsBlockWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductCmsBlockWidget\ProductCmsBlockWidgetPluginInterface;
+use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\CmsBlockWidget\ProductCmsBlockWidgetPluginInterface;
 
 class ProductCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements ProductCmsBlockWidgetPluginInterface
 {
@@ -37,7 +37,7 @@ class ProductCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public static function getTemplate(): string
     {
-        return '@ProductCmsBlockWidget/_product-detail-page/cms-content-widget-product.twig';
+        return '@CmsBlockWidget/_product-detail-page/cms-content-widget-product.twig';
     }
 
 }

@@ -16,7 +16,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_LOCALE = 'CLIENT_LOCALE';
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
     const CLIENT_CATEGORY = 'CLIENT_CATEGORY';
-    const PLUGIN_CATALOG_WIDGET_BUILDERS = 'PLUGIN_CATALOG_WIDGET_BUILDERS';
+    const PLUGIN_CATALOG_PAGE_WIDGETS = 'PLUGIN_CATALOG_PAGE_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -28,7 +28,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSearchClient($container);
         $container = $this->addCategoryClient($container);
         $container = $this->addLocaleClient($container);
-        $container = $this->addCatalogWidgetBuilderPlugins($container);
+        $container = $this->addCatalogPageWidgetPlugins($container);
 
         return $container;
     }
@@ -80,10 +80,10 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCatalogWidgetBuilderPlugins(Container $container)
+    protected function addCatalogPageWidgetPlugins(Container $container)
     {
-        $container[static::PLUGIN_CATALOG_WIDGET_BUILDERS] = function (Container $container) {
-            return $this->getCatalogWidgetBuilderPlugins();
+        $container[static::PLUGIN_CATALOG_PAGE_WIDGETS] = function (Container $container) {
+            return $this->getCatalogPageWidgetPlugins();
         };
 
         return $container;
@@ -92,7 +92,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[]
      */
-    protected function getCatalogWidgetBuilderPlugins()
+    protected function getCatalogPageWidgetPlugins()
     {
         return [];
     }

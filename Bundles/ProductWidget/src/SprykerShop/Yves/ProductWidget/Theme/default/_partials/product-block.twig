@@ -1,46 +1,55 @@
+{# mandatory #}
+{% set productName = productName %}
+{% set idProductAbstract = idProductAbstract %}
+{% set priceValue = priceValue %}
+{% set imageUrl = imageUrl %}
+{% set detailsUrl = detailsUrl %}
+
+{# optional #}
+{% set originalPrice = originalPrice | default(null) %}
 {% set class = class | default('') %}
 
 <div class="{{ class }} product js-product-container">
     <div class="product__container callout">
         {% block image %}
-            <a href="{{ _widget.detailsUrl }}" class="thumbnail __preview-image">
-                <img src="{{ _widget.imageUrl }}">
+            <a href="{{ detailsUrl }}" class="thumbnail __preview-image">
+                <img src="{{ imageUrl }}">
             </a>
         {% endblock %}
 
         {% block productLabels %}
-            {{ widget('ProductAbstractLabelWidgetPlugin', _widget.idProductAbstract) }}
+            {{ widget('ProductAbstractLabelWidgetPlugin', idProductAbstract) }}
         {% endblock %}
 
         {% block productGroups %}
-            {{ widget('ProductGroupWidgetPlugin', _widget.idProductAbstract) }}
+            {{ widget('ProductGroupWidgetPlugin', idProductAbstract) }}
         {% endblock %}
 
         {% block name %}
             <p class="__no-margin-bottom">
-                <strong>{{ _widget.productName }}</strong>
+                <strong>{{ productName }}</strong>
             </p>
         {% endblock %}
 
         {% block productRating %}
-            {{ widget('ProductReviewWidgetPlugin', _widget.idProductAbstract) }}
+            {{ widget('ProductAbstractReviewWidgetPlugin', idProductAbstract) }}
         {% endblock %}
 
         {% block price %}
             <p>
                 {# TODO: original price must be an extension of this template #}
-                {% if _widget.originalPrice %}
-                    <span class="catalog-price__price-original">{{ _widget.originalPrice | money }}</span>
-                    <span class="catalog-price__price-reduced">{{ _widget.priceValue | money }}</span>
+                {% if originalPrice %}
+                    <span class="catalog-price__price-original">{{ originalPrice | money }}</span>
+                    <span class="catalog-price__price-reduced">{{ priceValue | money }}</span>
                 {% else %}
-                    {{ _widget.priceValue | money }}
+                    {{ priceValue | money }}
                 {% endif %}
             </p>
         {% endblock %}
 
         <div class="product__action">
             {% block actions %}
-                <a class="button expanded" href="{{ _widget.detailsUrl }}">{{ 'product.view' | trans }} &raquo;</a>
+                <a class="button expanded" href="{{ detailsUrl }}">{{ 'product.view' | trans }} &raquo;</a>
             {% endblock %}
         </div>
     </div>

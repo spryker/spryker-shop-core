@@ -1,3 +1,9 @@
-{% set class = 'columns' %}
-
-{% extends '@ProductWidget/_partials/product-block.twig' %}
+{% include '@ProductWidget/_partials/product-block.twig' with {
+    productName: _widget.productName,
+    idProductAbstract: _widget.idProductAbstract,
+    priceValue: _widget.priceValue,
+    imageUrl: _widget.imageUrl,
+    detailsUrl: _widget.detailsUrl,
+    originalPrice: _widget.originalPrice,
+    class: 'columns',
+} %}

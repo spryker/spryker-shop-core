@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductCmsBlockWidget;
+namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\CmsBlockWidget;
 
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;

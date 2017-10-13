@@ -1,4 +1,6 @@
-{{ widget('cmsBlock', 'top') }}
+{% block topCmsBlock %}
+    {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'top', _view.idCategory) }}
+{% endblock %}
 
 <form method="GET" data-component="catalog-filter-form">
     <div class="row">
@@ -16,7 +18,9 @@
                 {% include '@CatalogPage/_partials/filters.twig' %}
             </div>
 
-            {{ widget('cmsBlock', 'middle') }}
+            {% block middleCmsBlock %}
+                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', _view.idCategory) }}
+            {% endblock %}
         </div>
 
         <div class="small-12 medium-12 large-8 xlarge-9 columns">
@@ -28,19 +32,9 @@
             {% include '@CatalogPage/_partials/pagination.twig' %}
 
             <div class="row">
-                {{ widget('products') }}
-                {#{% for product in _view.data.products %}#}
-                    {#{% include "@CatalogProductWidget/_catalog-page/product.twig" with {#}
-                        {#class: 'small-12 medium-6 large-6 xlarge-4 columns',#}
-                        {#idProductAbstract: product.id_product_abstract,#}
-                        {#detailsUrl: product.url,#}
-                        {#name: product.abstract_name,#}
-                        {#priceValue: product.price,#}
-                        {#__originalPrice: (product.prices.ORIGINAL is defined ? product.prices.ORIGINAL : null),#}
-                        {#imageUrl: (product.images|length ? product.images.0.external_url_small : ''),#}
-                        {#__averageRating: (product.rating is defined ? product.rating : null)#}
-                    {#} %}#}
-                {#{% endfor %}#}
+                {% for product in _view.products %}
+                    {{ widget('ProductWidgetPlugin', product) }}
+                {% endfor %}
             </div>
 
             {% include '@CatalogPage/_partials/pagination.twig' %}
@@ -48,9 +42,11 @@
         </div>
     </div>
 
-    {% if _view.data.searchString is defined and _view.data.searchString != '' %}
-        <input type="hidden" name="q" value="{{ _view.data.searchString }}" />
+    {% if _view.searchString is defined and _view.searchString != '' %}
+        <input type="hidden" name="q" value="{{ _view.searchString }}" />
     {% endif %}
 </form>
 
-{{ widget('cmsBlock', 'bottom') }}
+{% block bottomCmsBlock %}
+    {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'bottom', _view.idCategory) }}
+{% endblock %}

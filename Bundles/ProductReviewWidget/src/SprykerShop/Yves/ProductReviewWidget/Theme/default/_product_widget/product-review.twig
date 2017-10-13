@@ -1,1 +1,1 @@
-{{ spyProductAbstractReview(_widget.idProductAbstract, '@ProductReviewWidget/_partials/product-rating.twig') }}
+{% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {'rating': _widget.rating } %}
