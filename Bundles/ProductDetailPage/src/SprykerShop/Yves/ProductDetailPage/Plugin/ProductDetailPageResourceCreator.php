@@ -12,15 +12,15 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 /**
  * @method \SprykerShop\Yves\ProductDetailPage\ProductDetailPageFactory getFactory()
  */
-class ProductResourceCreator extends AbstractPlugin
+class ProductDetailPageResourceCreator extends AbstractPlugin
 {
 
     /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Plugin\ProductResourceCreator
+     * @return \SprykerShop\Yves\ProductDetailPage\ResourceCreator\ProductDetailPageResourceCreator
      */
     public function createProductResourceCreator()
     {
-        return $this->getFactory()->createProductResourceCreator();
+        return $this->getFactory()->createProductDetailPageResourceCreator();
     }
 
 }

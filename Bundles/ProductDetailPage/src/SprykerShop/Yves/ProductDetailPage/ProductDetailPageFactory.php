@@ -11,17 +11,17 @@ use Spryker\Client\Product\ProductClient;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductDetailPage\Mapper\AttributeVariantMapper;
 use SprykerShop\Yves\ProductDetailPage\Mapper\StorageProductMapper;
-use SprykerShop\Yves\ProductDetailPage\ResourceCreator\ProductResourceCreator;
+use SprykerShop\Yves\ProductDetailPage\ResourceCreator\ProductDetailPageResourceCreator;
 
 class ProductDetailPageFactory extends AbstractFactory
 {
 
     /**
-     * @return \SprykerShop\Yves\ProductDetailPage\ResourceCreator\ProductResourceCreator
+     * @return \SprykerShop\Yves\ProductDetailPage\ResourceCreator\ProductDetailPageResourceCreator
      */
-    public function createProductResourceCreator()
+    public function createProductDetailPageResourceCreator()
     {
-        return new ProductResourceCreator();
+        return new ProductDetailPageResourceCreator();
     }
 
     /**

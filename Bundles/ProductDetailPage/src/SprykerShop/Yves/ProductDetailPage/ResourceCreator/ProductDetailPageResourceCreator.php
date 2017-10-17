@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 use SprykerShop\Yves\ProductDetailPage\Controller\ProductController;
 
-class ProductResourceCreator extends AbstractResourceCreator
+class ProductDetailPageResourceCreator extends AbstractResourceCreator
 {
 
     /**
