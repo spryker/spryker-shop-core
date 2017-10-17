@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 /**
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageFactory getFactory()
  */
-class CategoryResourceCreator extends AbstractPlugin
+class CatalogPageResourceCreator extends AbstractPlugin
 {
 
     /**
@@ -20,7 +20,7 @@ class CategoryResourceCreator extends AbstractPlugin
      */
     public function createCategoryResourceCreator()
     {
-        return $this->getFactory()->createCategoryResourceCreator();
+        return $this->getFactory()->createCatalogPageResourceCreator();
     }
 
 }

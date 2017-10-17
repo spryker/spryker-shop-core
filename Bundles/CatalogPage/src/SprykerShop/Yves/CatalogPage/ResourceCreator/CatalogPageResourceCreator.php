@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 use Spryker\Zed\Category\CategoryConfig;
 
-class CategoryResourceCreator extends AbstractResourceCreator
+class CatalogPageResourceCreator extends AbstractResourceCreator
 {
 
     const ATTRIBUTE_CATEGORY_NODE = 'categoryNode';
