@@ -1,0 +1,23 @@
+{% if products is defined %}
+    <div class="row">
+        <div class="small-12 columns">
+            <div class="callout">
+                <div class="row align-spaced">
+                    <div class="small-11 columns">
+                        <div class="carousel" data-component="carousel">
+
+                            {% for product in products if product.available %}
+                                {{ widget('ProductGroupWidgetPlugin', product) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if product is defined %}
+    {{ widget('ProductGroupWidgetPlugin', product) }}
+{% endif %}
+

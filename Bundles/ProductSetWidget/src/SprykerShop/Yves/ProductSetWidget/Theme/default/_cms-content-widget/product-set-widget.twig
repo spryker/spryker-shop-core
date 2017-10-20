@@ -1,19 +1,21 @@
+<h3>{{ _widget.productSet.name }}</h3>
+
 <div class="row">
     <div class="small-12 large-6 columns">
-        {% include '@ProductSetDetailPage/_product-set-detail-page/_partials/images.twig' %}
+        {% include '@ProductSetWidget/_partials/images.twig' with {productSet: _widget.productSet} %}
     </div>
 
     <div class="small-12 large-6 columns">
-        {% include '@ProductSetDetailPage/_product-set-detail-page/_partials/products.twig' %}
+        {% include '@ProductSetWidget/_partials/products.twig' with {storageProducts: _widget.storageProducts} %}
     </div>
 </div>
 
-{% if _view.productSet.description %}
+{% if _widget.productSet.description %}
     <div class="row">
         <div class="small-12 columns">
             <div class="callout">
                 <h5>{{ 'product.attribute.long_description' | trans }}</h5>
-                <p>{{ _view.productSet.description }}</p>
+                <p>{{ _widget.productSet.description }}</p>
             </div>
         </div>
     </div>

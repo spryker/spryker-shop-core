@@ -1,5 +1,7 @@
 {% block topCmsBlock %}
-    {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'top', _view.idCategory) }}
+    {% if _view.idCategory %}
+        {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'top', _view.idCategory) }}
+    {% endif %}
 {% endblock %}
 
 <form method="GET" data-component="catalog-filter-form">
@@ -19,7 +21,9 @@
             </div>
 
             {% block middleCmsBlock %}
-                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', _view.idCategory) }}
+                {% if _view.idCategory %}
+                    {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', _view.idCategory) }}
+                {% endif %}
             {% endblock %}
         </div>
 
@@ -48,5 +52,7 @@
 </form>
 
 {% block bottomCmsBlock %}
-    {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'bottom', _view.idCategory) }}
+    {% if _view.idCategory %}
+        {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'bottom', _view.idCategory) }}
+    {% endif %}
 {% endblock %}

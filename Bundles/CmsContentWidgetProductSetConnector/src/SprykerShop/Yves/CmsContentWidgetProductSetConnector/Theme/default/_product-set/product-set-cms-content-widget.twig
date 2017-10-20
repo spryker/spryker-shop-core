@@ -1,0 +1,9 @@
+{% if productSetList is defined %}
+    {% for productSet in productSetList %}
+        {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.storageProducts) }}
+    {% endfor %}
+{% endif %}
+
+{% if productSet is defined %}
+    {{ widget('ProductSetWidgetPlugin', productSet, storageProducts) }}
+{% endif %}

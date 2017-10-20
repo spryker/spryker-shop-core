@@ -31,5 +31,5 @@
 {% endblock %}
 
 {% block content %}
-    {% include '@ProductSetDetailPage/_partials/product_set_block.twig' %}
+    {{ widget('ProductSetWidgetPlugin', _view.productSet, _view.storageProducts) }}
 {% endblock %}

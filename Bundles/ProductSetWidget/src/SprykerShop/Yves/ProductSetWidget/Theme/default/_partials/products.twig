@@ -2,7 +2,7 @@
     <form method="GET" data-component="product-variants" action="#product-set">
         <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
 
-        {% for storageProduct in _view.storageProducts %}
+        {% for storageProduct in _widget.storageProducts %}
             <div class="row">
                 <div class="small-5 columns">
                     <a href="{{ storageProduct.url }}" class="thumbnail __preview-image __no-margin-bottom">
@@ -15,7 +15,7 @@
                         {{ storageProduct.price | money }}
                     </p>
 
-                    {% include '@ProductSetDetailPage/_product-set-detail-page/_partials/variants.twig' with {product: storageProduct}%}
+                    {% include '@ProductSetWidget/_partials/variants.twig' with {product: storageProduct}%}
 
                     <a href="{{ path('cart/add', {sku: storageProduct.sku}) }}"
                        class="button expanded success __no-margin-bottom js-add-to-cart-button {{ (not storageProduct.isVariant or not storageProduct.available) ? 'disabled' : '' }}"
@@ -41,7 +41,7 @@
 <form method="POST" action="{{ path('cart/add-items') }}">
     {% set isDisabled = false %}
 
-    {% for storageProduct in _view.storageProducts %}
+    {% for storageProduct in _widget.storageProducts %}
         {% if storageProduct.isVariant %}
             {% if storageProduct.available %}
                 <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ storageProduct.sku }}" />

@@ -7,8 +7,12 @@
 
 namespace SprykerShop\Yves\ProductSetDetailPage;
 
-use SprykerShop\Yves\ProductSetDetailPage\ResourceCreator\ProductSetDetailPageResourceCreator;
+use Pyz\Yves\Collector\Creator\ResourceCreatorInterface;
+use Spryker\Client\Product\ProductClientInterface;
+use Spryker\Client\ProductSet\ProductSetClientInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface;
+use SprykerShop\Yves\ProductSetDetailPage\ResourceCreator\ProductSetDetailPageResourceCreator;
 
 class ProductSetDetailPageFactory extends AbstractFactory
 {
@@ -16,7 +20,7 @@ class ProductSetDetailPageFactory extends AbstractFactory
     /**
      * @return \Pyz\Yves\Collector\Creator\ResourceCreatorInterface
      */
-    public function createProductSetDetailPageResourceCreator()
+    public function createProductSetDetailPageResourceCreator(): ResourceCreatorInterface
     {
         return new ProductSetDetailPageResourceCreator(
             $this->getProductSetClient(),
@@ -28,7 +32,7 @@ class ProductSetDetailPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductSet\ProductSetClientInterface
      */
-    public function getProductSetClient()
+    public function getProductSetClient(): ProductSetClientInterface
     {
         return $this->getProvidedDependency(ProductSetDetailPageDependencyProvider::CLIENT_PRODUCT_SET);
     }
@@ -36,7 +40,7 @@ class ProductSetDetailPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Product\ProductClientInterface
      */
-    public function getProductClient()
+    public function getProductClient(): ProductClientInterface
     {
         return $this->getProvidedDependency(ProductSetDetailPageDependencyProvider::CLIENT_PRODUCT);
     }
@@ -44,9 +48,17 @@ class ProductSetDetailPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface
      */
-    public function getStorageProductMapperPlugin()
+    public function getStorageProductMapperPlugin(): StorageProductMapperPluginInterface
     {
         return $this->getProvidedDependency(ProductSetDetailPageDependencyProvider::PLUGIN_STORAGE_PRODUCT_MAPPER);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getProductSetDetailPageWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductSetDetailPageDependencyProvider::PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS);
     }
 
 }

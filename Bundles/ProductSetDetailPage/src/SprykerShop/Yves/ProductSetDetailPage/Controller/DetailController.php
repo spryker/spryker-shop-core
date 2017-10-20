@@ -31,7 +31,7 @@ class DetailController extends AbstractController
             'storageProducts' => $storageProductTransfers,
         ];
 
-        return $this->view($data);
+        return $this->view($data, $this->getFactory()->getProductSetDetailPageWidgetPlugins());
     }
 
 }
