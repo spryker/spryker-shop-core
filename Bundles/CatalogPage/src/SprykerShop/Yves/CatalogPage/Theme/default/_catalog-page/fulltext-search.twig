@@ -1,3 +1,7 @@
+{% block pageTitle -%}
+    {{ 'global.search.results'|trans }} "{{ _view.searchString }}"
+{%- endblock %}
+
 {% block breadcrumbItems %}
     <li><a href="/">{{ 'global.home' | trans }}</a></li>
 {% endblock %}

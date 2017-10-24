@@ -1,3 +1,7 @@
+{% block pageTitle -%}
+    {{ 'product.sets' | trans }}
+{%- endblock %}
+
 {% block breadcrumbItems %}
     <li><a href="/">{{ 'global.home' | trans }}</a></li>
     <li><a href="{{ url('product-sets') }}">{{ 'product.sets' | trans }}</a></li>

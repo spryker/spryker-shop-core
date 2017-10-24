@@ -1,3 +1,13 @@
+{% block pageTitle -%}
+    {{ _view.pageTitle | default(null) }}
+{%- endblock %}
+{% block pageKeywords -%}
+    {{ _view.pageKeywords | default(null) }}
+{%- endblock %}
+{% block pageDescription -%}
+    {{ _view.pageDescription | default(null) }}
+{%- endblock %}
+
 {% block breadcrumbItems %}
     <li><a href="/">{{ 'global.home' | trans }}</a></li>
     {% include '@CatalogPage/_partials/category-breadcrumb.twig' with {categoryNode: _view.category} only %}

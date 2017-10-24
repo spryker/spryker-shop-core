@@ -39,13 +39,12 @@ class CatalogController extends AbstractController
             ->getCatalogClient()
             ->catalogSearch($searchString, $parameters);
 
-        $pageTitle = ($categoryNode['meta_title']) ?: $categoryNode['name'];
         $metaAttributes = [
             'idCategory' => $parameters['category'],
             'category' => $categoryNode,
-            'page_title' => $pageTitle,
-            'page_description' => $categoryNode['meta_description'],
-            'page_keywords' => $categoryNode['meta_keywords'],
+            'pageTitle' => ($categoryNode['meta_title'] ?: $categoryNode['name']),
+            'pageDescription' => $categoryNode['meta_description'],
+            'pageKeywords' => $categoryNode['meta_keywords'],
             'searchString' => $searchString,
         ];
 

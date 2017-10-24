@@ -1,10 +1,12 @@
-{% block page_title %}
-    {% if _view.product.metaTitle %}
-        {{ _view.product.metaTitle }}
-    {% else %}
-        {{ _view.product.name }}
-    {% endif %}
-{% endblock %}
+{% block pageTitle -%}
+    {{ _view.product.metaTitle | default(_view.product.name) }}
+{%- endblock %}
+{% block pageKeywords -%}
+    {{ _view.product.metaKeywords | default(null) }}
+{%- endblock %}
+{% block pageDescription -%}
+    {{ _view.product.metaDescription | default(null) }}
+{%- endblock %}
 
 {% block breadcrumbItems %}
     {{ widget('ProductCategoryWidgetPlugin', _view.product) }}
