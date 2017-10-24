@@ -44,4 +44,12 @@ class ProductWidgetFactory extends AbstractFactory
         return $this->getProvidedDependency(ProductWidgetDependencyProvider::PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS);
     }
 
+    /**
+     * @return string[]
+     */
+    public function getFeaturedProductSubWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductWidgetDependencyProvider::PLUGIN_HOME_PAGE_SUB_WIDGETS);
+    }
+
 }

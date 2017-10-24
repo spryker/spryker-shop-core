@@ -22,6 +22,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_CATALOG_PAGE_SUB_WIDGETS = 'PLUGIN_CATALOG_PAGE_SUB_WIDGETS';
     const PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_SUB_WIDGETS = 'PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_SUB_WIDGETS';
     const PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS = 'PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS';
+    const PLUGIN_HOME_PAGE_SUB_WIDGETS = 'PLUGIN_HOME_PAGE_SUB_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -34,6 +35,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCatalogPageSubWidgetPlugins($container);
         $container = $this->addCmsContentWidgetProductSubWidgetPlugins($container);
         $container = $this->addCmsContentWidgetProductGroupSubWidgetPlugins($container);
+        $container = $this->addHomePageSubWidgetPlugins($container);
 
         return $container;
     }
@@ -89,6 +91,20 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS] = function (Container $container) {
             return $this->getCmsContentWidgetProductGroupSubWidgetPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addHomePageSubWidgetPlugins(Container $container)
+    {
+        $container[self::PLUGIN_HOME_PAGE_SUB_WIDGETS] = function (Container $container) {
+            return $this->getHomePageSubWidgetPlugins($container);
         };
 
         return $container;
@@ -158,6 +174,23 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
             ProductAbstractLabelWidgetPlugin::class,
             ProductGroupWidgetPlugin::class,
             ProductAbstractReviewWidgetPlugin::class,
+        ];
+    }
+
+    /**
+     * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     *
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return string[]
+     */
+    protected function getHomePageSubWidgetPlugins(Container $container): array
+    {
+        // TODO: move this to project level
+        return [
+            ProductLabelWidgetPlugin::class,
+            ProductGroupWidgetPlugin::class,
+            ProductReviewWidgetPlugin::class,
         ];
     }
 
