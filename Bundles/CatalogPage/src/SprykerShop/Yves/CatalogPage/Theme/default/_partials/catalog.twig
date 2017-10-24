@@ -1,5 +1,5 @@
 {% block topCmsBlock %}
-    {% if _view.idCategory %}
+    {% if _view.idCategory is defined %}
         {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'top', _view.idCategory) }}
     {% endif %}
 {% endblock %}
@@ -21,7 +21,7 @@
             </div>
 
             {% block middleCmsBlock %}
-                {% if _view.idCategory %}
+                {% if _view.idCategory is defined %}
                     {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', _view.idCategory) }}
                 {% endif %}
             {% endblock %}
@@ -52,7 +52,7 @@
 </form>
 
 {% block bottomCmsBlock %}
-    {% if _view.idCategory %}
+    {% if _view.idCategory is defined %}
         {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'bottom', _view.idCategory) }}
     {% endif %}
 {% endblock %}
