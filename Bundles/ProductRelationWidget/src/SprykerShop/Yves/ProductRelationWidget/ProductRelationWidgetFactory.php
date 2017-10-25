@@ -13,7 +13,7 @@ class ProductRelationWidgetFactory extends AbstractFactory
 {
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getProductDetailPageSimilarProductsWidgetPlugins(): array
     {
