@@ -24,7 +24,7 @@ class CmsController extends AbstractController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function pageAction($meta, Request $request)
     {
@@ -56,14 +56,6 @@ class CmsController extends AbstractController
         ];
 
         return $this->view($data, [], $meta['template']);
-
-//        return $this->renderView($meta['template'], [
-//            'placeholders' => $meta['placeholders'],
-//            'edit' => $edit,
-//            'pageTitle' => $meta['meta_title'],
-//            'pageDescription' => $meta['meta_description'],
-//            'pageKeywords' => $meta['meta_keywords'],
-//        ]);
     }
 
     /**
