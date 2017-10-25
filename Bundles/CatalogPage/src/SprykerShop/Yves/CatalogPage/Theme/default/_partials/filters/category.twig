@@ -6,8 +6,8 @@
                 {% set quantity = filterValue.docCount %}
             {% endfor %}
 
-            {% if filterPath is defined %}
-                {% set categoryUrl = url(filterPath, {categoryPath: (categoryNode.url)}) %}
+            {% if _view.filterPath is defined %}
+                {% set categoryUrl = url(_view.filterPath, {categoryPath: (categoryNode.url)}) %}
             {% else %}
                 {% set categoryUrl = categoryNode.url | replace({"'": "\\'", '"':'\\"'}) %}
             {% endif %}

@@ -12,7 +12,7 @@
     <li><a href="/">{{ 'global.home' | trans }}</a></li>
     <li><a href="{{ url(_view.filterPath) }}">{{ 'catalog.new' | trans }}</a></li>
     {% if _view.category %}
-        {% include '@catalog/catalog/partials/category-breadcrumb.twig' with {categoryNode: _view.category, filterPath: _view.filterPath} only %}
+        {% include '@CatalogPage/_partials/category-breadcrumb.twig' with {categoryNode: _view.category, filterPath: _view.filterPath} only %}
     {% endif %}
 {% endblock %}
 
