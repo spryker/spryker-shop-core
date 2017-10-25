@@ -24,7 +24,7 @@
                 {% endif %}
 
                 <div class="show-for-medium">
-                    {% include '@CatalogPage/suggestion/partials/list.twig' with {
+                    {% include '@CatalogPage/suggestion/_partials/list.twig' with {
                         name: ('global.search.suggestion.in_categories' | trans),
                         items: suggestionByType.category | default(),
                         length: categoriesLength
@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="show-for-medium">
-                    {% include '@CatalogPage/suggestion/partials/list.twig' with {
+                    {% include '@CatalogPage/suggestion/_partials/list.twig' with {
                         name: ('global.search.suggestion.in_cms' | trans),
                         items: suggestionByType.cms_page | default(),
                         length: pagesLength
@@ -45,7 +45,7 @@
             <div class="columns show-for-medium __no-margin-bottom">
                 <h6>{{ 'global.search.suggestion.in_products' | trans }}</h6>
                 {% for product in suggestionByType.product_abstract | slice(0, productsLength)  %}
-                    {% include '@CatalogPage/suggestion/partials/product.twig' %}
+                    {% include '@CatalogPage/suggestion/_partials/product.twig' %}
                 {% endfor %}
 
                 <div class="text-right">

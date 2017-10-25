@@ -1,6 +1,6 @@
-{% if availablePreviewLanguages is defined %}
+{% if _view.availablePreviewLanguages is defined %}
     <div class="available-preview-languages">
-        {% for previewLanguage in availablePreviewLanguages %}
+        {% for previewLanguage in _view.availablePreviewLanguages %}
             <a class="button expanded" href="{{ previewLanguage.uri }}" {% if previewLanguage.isCurrentLocale %}disabled{% endif %}>{{ previewLanguage.locale }}</a>
         {% endfor %}
     </div>
