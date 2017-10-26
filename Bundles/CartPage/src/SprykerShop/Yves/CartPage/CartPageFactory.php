@@ -11,7 +11,6 @@ use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Handler\CartOperationHandler;
 use SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
-use Pyz\Yves\Discount\Handler\VoucherHandler;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
 use SprykerShop\Yves\ProductDetailPage\Mapper\AttributeVariantMapper;

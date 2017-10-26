@@ -20,11 +20,6 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     const ROUTE_CART_UPDATE = 'cart/update';
     const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
     const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
-
-    const ROUTE_CART_VOUCHER_ADD = 'cart/voucher/add';
-    const ROUTE_CART_VOUCHER_REMOVE = 'cart/voucher/remove';
-    const ROUTE_CART_VOUCHER_CLEAR = 'cart/voucher/clear';
-
     const SKU_PATTERN = '[a-zA-Z0-9-_]+';
 
     /**

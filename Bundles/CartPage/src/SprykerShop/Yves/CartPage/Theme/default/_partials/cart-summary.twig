@@ -7,7 +7,7 @@
 
         <li><hr/></li>
 
-        {% include '@CartPage/_partials/cart-discounts.twig' %}
+        {{ widget('DiscountSummaryWidgetPlugin', _view.cart) }}
 
         {% if _view.cart.shipment is not null and _view.cart.shipment.method is not null %}
 

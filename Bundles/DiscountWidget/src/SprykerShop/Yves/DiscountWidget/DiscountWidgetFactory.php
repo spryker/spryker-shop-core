@@ -6,9 +6,9 @@
 
 namespace SprykerShop\Yves\DiscountWidget;
 
-use Pyz\Yves\Discount\Handler\VoucherHandler;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\DiscountWidget\Handler\VoucherHandler;
 use SprykerShop\Yves\DiscountWidget\Form\VoucherForm;
 
 class DiscountWidgetFactory extends AbstractFactory
@@ -32,7 +32,7 @@ class DiscountWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Yves\Discount\Handler\VoucherHandlerInterface
+     * @return \SprykerShop\Yves\DiscountWidget\Handler\VoucherHandler
      */
     public function createCartVoucherHandler()
     {
