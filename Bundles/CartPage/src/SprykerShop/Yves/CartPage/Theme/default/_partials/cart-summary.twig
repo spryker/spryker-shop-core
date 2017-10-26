@@ -3,30 +3,30 @@
     <h5>{{ 'cart.your-order' | trans }}</h5>
 
     <ul class="no-bullet">
-        <li>{{ 'cart.price.subtotal' | trans }} <span class="float-right">{{ cart.totals.subtotal | money }}</span></li>
+        <li>{{ 'cart.price.subtotal' | trans }} <span class="float-right">{{ _view.cart.totals.subtotal | money }}</span></li>
 
         <li><hr/></li>
 
         {% include '@CartPage/_partials/cart-discounts.twig' %}
 
-        {% if cart.shipment is not null and cart.shipment.method is not null %}
+        {% if _view.cart.shipment is not null and _view.cart.shipment.method is not null %}
 
             <li><strong>{{ 'cart.shipping' | trans }}</strong></li>
 
             <li>
-                {{ cart.shipment.method.name }}
-                <span class="float-right">{{ cart.shipment.method.storeCurrencyPrice | money }}</span>
+                {{ _view.cart.shipment.method.name }}
+                <span class="float-right">{{ _view.cart.shipment.method.storeCurrencyPrice | money }}</span>
             </li>
 
             <li><hr/></li>
         {% endif %}
 
-        <li>{{ 'cart.price.grand.total' | trans }} <strong class="float-right">{{ cart.totals.grandTotal | money }}</strong></li>
+        <li>{{ 'cart.price.grand.total' | trans }} <strong class="float-right">{{ _view.cart.totals.grandTotal | money }}</strong></li>
 
-        <li>{{ 'cart.total.tax_total' | trans }} <span class="float-right">{{ cart.totals.taxTotal.amount | money }}</span></li>
+        <li>{{ 'cart.total.tax_total' | trans }} <span class="float-right">{{ _view.cart.totals.taxTotal.amount | money }}</span></li>
     </ul>
 
-    {% if cart.items | length %}
+    {% if _view.cart.items | length %}
         <p class="__padding-top">
             <a class="button expanded success __no-margin-bottom" href="{{ url('checkout-index') }}">
                 <i class="fa fa-check"></i>{{ 'cart.checkout'|trans }}

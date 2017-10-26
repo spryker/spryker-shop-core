@@ -25,6 +25,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     const PLUGIN_STORAGE_PRODUCT_MAPPER = 'PLUGIN_STORAGE_PRODUCT_MAPPER';
     const PLUGIN_PROMOTION_PRODUCT_MAPPER = 'PLUGIN_PROMOTION_PRODUCT_MAPPER';
+    const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -35,6 +36,8 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->provideClients($container);
         $container = $this->providePlugins($container);
+
+        $container = $this->addCartPageWidgetPlugins($container);
 
         return $container;
     }
@@ -91,5 +94,30 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCartPageWidgetPlugins(Container $container)
+    {
+        $container[self::PLUGIN_CART_PAGE_WIDGETS] = function (Container $container) {
+            return $this->getCartPageWidgetPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     *
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return string[]
+     */
+    protected function getCartPageWidgetPlugins(Container $container): array
+    {
+        return [];
     }
 }

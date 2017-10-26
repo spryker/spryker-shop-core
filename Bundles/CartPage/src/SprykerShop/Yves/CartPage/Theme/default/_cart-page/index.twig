@@ -9,10 +9,10 @@
 {% endblock %}
 
 {% block content %}
-    {% if cart.items|length > 0 %}
+    {% if _view.cart.items|length > 0 %}
         <div class="row">
             <div class="small-12 columns">
-                {% for cartItem in cartItems %}
+                {% for cartItem in _view.cartItems %}
                      {% if cartItem.bundleProduct is defined %}
                          {% include '@CartPage/_partials/cart-item.twig' with {
                             cartItem: cartItem.bundleProduct,
@@ -24,13 +24,14 @@
                 {% endfor %}
             </div>
 
-            {% include '@DiscountPromotion/discount-promotion/item-list.twig' %}
+            {#{% include '@DiscountPromotion/discount-promotion/item-list.twig' %}#}
 
         </div>
 
         <div class="row">
             <div class="small-12 large-6 columns">
-                {% include '@CartPage/_partials/voucher-form.twig' %}
+                {#{% include '@CartPage/_partials/voucher-form.twig' %}#}
+                {{ widget('DiscountVoucherFormWidgetPlugin') }}
             </div>
 
             <div class="small-12 large-6 columns">
@@ -40,7 +41,7 @@
     {% else %}
         <div class="row">
             <div class="small-12 columns">
-                {% include '@CartPage/_partials/cart-empty.twig' %}
+                {#{% include '@CartPage/_partials/cart-empty.twig' %}#}
             </div>
         </div>
     {% endif %}

@@ -75,18 +75,6 @@ class CartControllerProvider extends AbstractYvesControllerProvider
             ->convert('preselectedAttributes', [$this, 'getPreSelectedAttributesFromRequest'])
             ->convert('optionValueIds', [$this, 'getProductOptionsFromRequest'])
             ->method('POST');
-
-        $this->createController('/{cart}/voucher/add', self::ROUTE_CART_VOUCHER_ADD, 'CartPage', 'Voucher', 'add')
-            ->assert('cart', $allowedLocalesPattern . 'cart|cart')
-            ->value('cart', 'cart');
-
-        $this->createController('/{cart}/voucher/remove', self::ROUTE_CART_VOUCHER_REMOVE, 'CartPage', 'Voucher', 'remove')
-            ->assert('cart', $allowedLocalesPattern . 'cart|cart')
-            ->value('cart', 'cart');
-
-        $this->createController('/{cart}/voucher/clear', self::ROUTE_CART_VOUCHER_CLEAR, 'CartPage', 'Voucher', 'clear')
-            ->assert('cart', $allowedLocalesPattern . 'cart|cart')
-            ->value('cart', 'cart');
     }
 
     /**
