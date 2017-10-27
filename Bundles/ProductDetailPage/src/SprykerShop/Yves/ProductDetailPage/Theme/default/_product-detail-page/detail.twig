@@ -100,7 +100,7 @@
 
     {{ widgetBlock('ProductReviewWidgetPlugin', 'reviews', _view.product) }}
 
-    {{ widgetBlock('ProductRelationWidgetPlugin', 'similarProducts', _view.product) }}
+    {{ widget('SimilarProductsWidgetPlugin', _view.product) }}
 
     {{ widget('ProductCmsBlockWidgetPlugin', _view.product) }}
 

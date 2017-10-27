@@ -1,19 +1,19 @@
 {% block variant %}
     <label><strong>{{ ('product.attribute.' ~ attributeName) | trans }}: </strong>
 
-        {% if product.selectedAttributes[attributeName] is defined and product.selectedAttributes[attributeName] %}
-            {{ product.selectedAttributes[attributeName] }}
+        {% if _view.product.selectedAttributes[attributeName] is defined and _view.product.selectedAttributes[attributeName] %}
+            {{ _view.product.selectedAttributes[attributeName] }}
 
             <a class="js-reset-variant-attribute">{{ 'reset' | trans }}</a>
 
-            <input name="{{ attributeFieldName }}" value="{{ product.selectedAttributes[attributeName] }}" type="hidden" class="js-variant-attribute-field" />
+            <input name="{{ attributeFieldName }}" value="{{ _view.product.selectedAttributes[attributeName] }}" type="hidden" class="js-variant-attribute-field" />
         {% else %}
 
-            {% if attributeName in product.availableAttributes|keys %}
-                {% set attributes = product.availableAttributes[attributeName] %}
+            {% if attributeName in _view.product.availableAttributes|keys %}
+                {% set attributes = _view.product.availableAttributes[attributeName] %}
             {% endif %}
 
-            {% if product.availableAttributes[attributeName] is not defined and product.selectedAttributes|length > 0 %}
+            {% if _view.product.availableAttributes[attributeName] is not defined and _view.product.selectedAttributes|length > 0 %}
                 {{ 'product.attribute.not_available' | trans }}
             {% else %}
                 <select name="{{ attributeFieldName }}" onchange="this.form.submit()">

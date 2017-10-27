@@ -30,10 +30,12 @@ class CartController extends AbstractController
             ->getCartClient()
             ->getQuote();
 
+        // TODO: product bundle widget?
         $cartItems = $this->getFactory()
             ->createProductBundleGrouper()
             ->getGroupedBundleItems($quoteTransfer->getItems(), $quoteTransfer->getBundleItems());
 
+        // TODO: checkout widget?
         $stepBreadcrumbsTransfer = $this->getFactory()
             ->getCheckoutBreadcrumbPlugin()
             ->generateStepBreadcrumbs($quoteTransfer);

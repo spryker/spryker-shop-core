@@ -10,10 +10,10 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductRelationWi
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface ProductRelationWidgetPluginInterface extends WidgetPluginInterface
+interface SimilarProductsWidgetPluginInterface extends WidgetPluginInterface
 {
 
-    const NAME = 'ProductRelationWidgetPlugin';
+    const NAME = 'SimilarProductsWidgetPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer

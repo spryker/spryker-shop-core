@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductRelationWidget\Plugin;
+namespace SprykerShop\Yves\ProductRelationWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductRelationWidget\ProductRelationWidgetPluginInterface;
+use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductRelationWidget\SimilarProductsWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductRelationWidget\ProductRelationWidgetFactory getFactory()
  */
-class ProductRelationWidgetPlugin extends AbstractWidgetPlugin implements ProductRelationWidgetPluginInterface
+class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements SimilarProductsWidgetPluginInterface
 {
 
     /**
@@ -42,7 +42,7 @@ class ProductRelationWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public static function getTemplate(): string
     {
-        return '@ProductRelationWidget/_product-detail-page/product-relations.twig';
+        return '@ProductRelationWidget/_product-detail-page/similar-products.twig';
     }
 
 }

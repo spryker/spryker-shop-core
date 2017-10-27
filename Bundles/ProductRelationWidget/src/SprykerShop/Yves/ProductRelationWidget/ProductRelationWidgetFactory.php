@@ -20,4 +20,12 @@ class ProductRelationWidgetFactory extends AbstractFactory
         return $this->getProvidedDependency(ProductRelationWidgetDependencyProvider::PLUGIN_PRODUCT_DETAIL_PAGE_SIMILAR_PRODUCTS_WIDGETS);
     }
 
+    /**
+     * @return string[]
+     */
+    public function getCartPageUpSellingProductsWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductRelationWidgetDependencyProvider::PLUGIN_CART_PAGE_UP_SELLING_PRODUCTS_WIDGETS);
+    }
+
 }
