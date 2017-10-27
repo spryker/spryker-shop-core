@@ -24,8 +24,7 @@
                 {% endfor %}
             </div>
 
-            {#//TODO migrate me!!!#}
-            {#{% include '@DiscountPromotion/discount-promotion/item-list.twig' %}#}
+            {{ widget('DiscountPromotionItemListWidgetPlugin', _view.cart, app.request) }}
 
         </div>
 
@@ -41,7 +40,7 @@
     {% else %}
         <div class="row">
             <div class="small-12 columns">
-                {#{% include '@CartPage/_partials/cart-empty.twig' %}#}
+                {% include '@CartPage/_partials/cart-empty.twig' %}
             </div>
         </div>
     {% endif %}

@@ -12,6 +12,7 @@ use Silex\Application;
 
 class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
 {
+    // TODO: route should be "discountWidget/..."
     const ROUTE_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
     const ROUTE_DISCOUNT_VOUCHER_REMOVE = 'discount/voucher/remove';
     const ROUTE_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';

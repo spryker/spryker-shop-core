@@ -1,0 +1,8 @@
+{% if _widget.cart.promotionItems|length > 0 %}
+    <div class="small-12 columns">
+        <h1> {{ 'cart.promotion.items' | trans }}</h1>
+        {% for promotionStorageProduct in _widget.promotionStorageProducts %}
+            {% include '@DiscountPromotionWidget/_cart-page/_partials/item.twig' %}
+        {% endfor %}
+    </div>
+{% endif %}

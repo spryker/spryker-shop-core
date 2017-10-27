@@ -31,6 +31,7 @@ class VoucherForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // TODO: reference from controller provider
         $builder->setAction('/discount/voucher/add');
 
         $this->addVoucherCodeField($builder);

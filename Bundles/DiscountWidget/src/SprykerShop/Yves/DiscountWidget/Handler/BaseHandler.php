@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\DiscountWidget\Handler;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 
+// TODO: is this part of DiscountWidget module???
 class BaseHandler
 {
     /**

@@ -1,0 +1,33 @@
+{% set promotionStorageProduct = promotionStorageProduct %}
+
+<div class="callout cart-item">
+
+    <div class="row">
+        <div class="small-9 large-expand columns">
+            <ul class="no-bullet">
+                <li class="lead">{{ promotionStorageProduct.promotionItem.discount.displayName }}</li>
+                <li>{{ promotionStorageProduct.promotionItem.discount.description }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        {% include '@CartPage/_partials/cart-images.twig' with {cartItem : promotionStorageProduct } %}
+
+        <div class="small-9 large-expand columns">
+            <ul class="no-bullet">
+                {# General data #}
+                <li class="lead">{{ promotionStorageProduct.name }}</li>
+                <li class="__secondary">
+                    <small>{{ 'cart.item.sku' | trans }} {{ promotionStorageProduct.sku }}</small>
+                </li>
+
+                {% include '@DiscountPromotionWidget/_cart-page/_partials/product-variants.twig' %}
+            </ul>
+        </div>
+
+        {% include '@DiscountPromotionWidget/_cart-page/_partials/item-prices.twig' %}
+
+        {% include '@DiscountPromotionWidget/_cart-page/_partials/add-to-cart.twig' %}
+    </div>
+</div>

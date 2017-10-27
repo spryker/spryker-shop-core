@@ -20,12 +20,11 @@ class CartController extends AbstractController
     const PARAM_ITEMS = 'items';
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array|null $selectedAttributes
      *
      * @return array
      */
-    public function indexAction(Request $request, array $selectedAttributes = null)
+    public function indexAction(array $selectedAttributes = null)
     {
         $quoteTransfer = $this->getFactory()
             ->getCartClient()
@@ -43,28 +42,11 @@ class CartController extends AbstractController
             ->createCartItemsAttributeProvider()
             ->getItemsAttributes($quoteTransfer, $selectedAttributes);
 
-        $promotionStorageProducts = $this->getFactory()
-            ->getProductPromotionMapperPlugin()
-            ->mapPromotionItemsFromProductStorage(
-                $quoteTransfer,
-                $request
-            );
-
-        // TODO: return view, decouple features to widgets
-//        return $this->viewResponse([
-//            'cart' => $quoteTransfer,
-//            'cartItems' => $cartItems,
-//            'attributes' => $itemAttributesBySku,
-//            'voucherForm' => $voucherForm->createView(),
-//            'stepBreadcrumbs' => $stepBreadcrumbsTransfer,
-//            'promotionStorageProducts' => $promotionStorageProducts,
-//        ]);
         $data = [
             'cart' => $quoteTransfer,
             'cartItems' => $cartItems,
             'attributes' => $itemAttributesBySku,
             'stepBreadcrumbs' => $stepBreadcrumbsTransfer,
-            'promotionStorageProducts' => $promotionStorageProducts,
         ];
 
         return $this->view($data, $this->getFactory()->getCartPageWidgetPlugins());
