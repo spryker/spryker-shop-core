@@ -31,9 +31,6 @@ class CartController extends AbstractController
             ->getCartClient()
             ->getQuote();
 
-        $voucherForm = $this->getFactory()
-            ->getVoucherForm();
-
         $cartItems = $this->getFactory()
             ->createProductBundleGrouper()
             ->getGroupedBundleItems($quoteTransfer->getItems(), $quoteTransfer->getBundleItems());
@@ -54,14 +51,23 @@ class CartController extends AbstractController
             );
 
         // TODO: return view, decouple features to widgets
-        return $this->viewResponse([
+//        return $this->viewResponse([
+//            'cart' => $quoteTransfer,
+//            'cartItems' => $cartItems,
+//            'attributes' => $itemAttributesBySku,
+//            'voucherForm' => $voucherForm->createView(),
+//            'stepBreadcrumbs' => $stepBreadcrumbsTransfer,
+//            'promotionStorageProducts' => $promotionStorageProducts,
+//        ]);
+        $data = [
             'cart' => $quoteTransfer,
             'cartItems' => $cartItems,
             'attributes' => $itemAttributesBySku,
-            'voucherForm' => $voucherForm->createView(),
             'stepBreadcrumbs' => $stepBreadcrumbsTransfer,
             'promotionStorageProducts' => $promotionStorageProducts,
-        ]);
+        ];
+
+        return $this->view($data, $this->getFactory()->getCartPageWidgetPlugins());
     }
 
     /**

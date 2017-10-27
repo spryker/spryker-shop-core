@@ -7,13 +7,10 @@
 
 namespace SprykerShop\Yves\CartPage;
 
-use SprykerShop\Yves\CartPage\Form\VoucherForm;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Handler\CartOperationHandler;
 use SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
-use Pyz\Yves\Discount\Handler\VoucherHandler;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
 use SprykerShop\Yves\ProductDetailPage\Mapper\AttributeVariantMapper;
@@ -34,18 +31,6 @@ class CartPageFactory extends AbstractFactory
     public function getCartClient()
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_CART);
-    }
-
-    /**
-     * @return \Pyz\Yves\Discount\Handler\VoucherHandlerInterface
-     */
-    public function createCartVoucherHandler()
-    {
-        return new VoucherHandler(
-            $this->getCalculationClient(),
-            $this->getCartClient(),
-            $this->getFlashMessenger()
-        );
     }
 
     /**
@@ -124,23 +109,6 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getVoucherForm()
-    {
-        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)
-            ->create($this->createVoucherFormType());
-    }
-
-    /**
-     * @return \Symfony\Component\Form\AbstractType
-     */
-    protected function createVoucherFormType()
-    {
-        return new VoucherForm();
-    }
-
-    /**
      * @return \Pyz\Yves\Checkout\Plugin\CheckoutBreadcrumbPlugin
      */
     public function getCheckoutBreadcrumbPlugin()
@@ -154,6 +122,14 @@ class CartPageFactory extends AbstractFactory
     public function getCartVariantAttributeMapperPlugin()
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_CART_VARIANT);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCartPageWidgetPlugins()
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_CART_PAGE_WIDGETS);
     }
 
     /**

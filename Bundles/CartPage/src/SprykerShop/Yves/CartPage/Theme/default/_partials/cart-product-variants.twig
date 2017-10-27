@@ -1,4 +1,4 @@
-{% set itemAttributes = attribute(attributes, cartItem.sku) %}
+{% set itemAttributes = attribute(_view.attributes, cartItem.sku) %}
 
 {% if itemAttributes|length > 0 %}
     {# Product Variants #}
