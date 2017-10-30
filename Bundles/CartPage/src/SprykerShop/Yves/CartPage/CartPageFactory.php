@@ -109,14 +109,6 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Plugin\CheckoutBreadcrumbPlugin
-     */
-    public function getCheckoutBreadcrumbPlugin()
-    {
-        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_CHECKOUT_BREADCRUMB);
-    }
-
-    /**
      * @return \Spryker\Yves\CartVariant\Dependency\Plugin\CartVariantAttributeMapperPluginInterface
      */
     public function getCartVariantAttributeMapperPlugin()

@@ -5,7 +5,7 @@
 {% block breadcrumbItems %}
     <li><a href="/">{{ 'global.home' | trans }}</a></li>
     <li>{{ 'cart.cart'|trans }}</li>
-    {% include '@Checkout/checkout/partials/breadcrumb.twig' %}
+    {{ widget('CheckoutBreadcrumbWidgetPlugin', _view.cart) }}
 {% endblock %}
 
 {% block content %}
@@ -13,14 +13,15 @@
         <div class="row">
             <div class="small-12 columns">
                 {% for cartItem in _view.cartItems %}
-                     {% if cartItem.bundleProduct is defined %}
-                         {% include '@CartPage/_partials/cart-item.twig' with {
+                     {# TODO: move to ProductBundleWidget ??? #}
+                    {% if cartItem.bundleProduct is defined %}
+                        {% include '@CartPage/_partials/cart-item.twig' with {
                             cartItem: cartItem.bundleProduct,
                             bundleItems: cartItem.bundleItems
-                         } %}
-                     {% else %}
-                         {% include '@CartPage/_partials/cart-item.twig' %}
-                     {% endif %}
+                        } %}
+                    {% else %}
+                        {% include '@CartPage/_partials/cart-item.twig' %}
+                    {% endif %}
                 {% endfor %}
             </div>
 

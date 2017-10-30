@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CartPage;
 
-use Pyz\Yves\Checkout\Plugin\CheckoutBreadcrumbPlugin;
 use Spryker\Yves\CartVariant\Dependency\Plugin\CartVariantAttributeMapperPlugin;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
@@ -19,7 +18,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_CALCULATION = 'calculation client';
     const CLIENT_CART = 'cart client';
     const PLUGIN_APPLICATION = 'application plugin';
-    const PLUGIN_CHECKOUT_BREADCRUMB = 'PLUGIN_CHECKOUT_BREADCRUMB';
     const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
     const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     const PLUGIN_STORAGE_PRODUCT_MAPPER = 'PLUGIN_STORAGE_PRODUCT_MAPPER';
@@ -77,10 +75,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::PLUGIN_CART_VARIANT] = function () {
             return new CartVariantAttributeMapperPlugin();
-        };
-
-        $container[self::PLUGIN_CHECKOUT_BREADCRUMB] = function () {
-            return new CheckoutBreadcrumbPlugin();
         };
 
         $container[self::PLUGIN_STORAGE_PRODUCT_MAPPER] = function () {

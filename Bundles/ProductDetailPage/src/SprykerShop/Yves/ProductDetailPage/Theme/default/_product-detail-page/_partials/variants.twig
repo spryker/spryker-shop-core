@@ -4,6 +4,7 @@
         <h5>{{ 'product.variants' | trans }}</h5>
         {% for attributeName,attributes in _view.product.superAttributes %}
             {% include '@ProductDetailPage/_product-detail-page/_partials/variant.twig' with {
+                product: _view.product,
                 attributeFieldName: 'attribute[' ~ attributeName ~ ']'
             } %}
         {% endfor %}

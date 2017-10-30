@@ -35,11 +35,6 @@ class CartController extends AbstractController
             ->createProductBundleGrouper()
             ->getGroupedBundleItems($quoteTransfer->getItems(), $quoteTransfer->getBundleItems());
 
-        // TODO: checkout widget?
-        $stepBreadcrumbsTransfer = $this->getFactory()
-            ->getCheckoutBreadcrumbPlugin()
-            ->generateStepBreadcrumbs($quoteTransfer);
-
         $itemAttributesBySku = $this->getFactory()
             ->createCartItemsAttributeProvider()
             ->getItemsAttributes($quoteTransfer, $selectedAttributes);
@@ -48,7 +43,6 @@ class CartController extends AbstractController
             'cart' => $quoteTransfer,
             'cartItems' => $cartItems,
             'attributes' => $itemAttributesBySku,
-            'stepBreadcrumbs' => $stepBreadcrumbsTransfer,
         ];
 
         return $this->view($data, $this->getFactory()->getCartPageWidgetPlugins());
