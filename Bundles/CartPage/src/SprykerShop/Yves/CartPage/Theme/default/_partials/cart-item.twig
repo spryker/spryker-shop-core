@@ -5,25 +5,14 @@
 
         <div class="small-9 large-expand columns">
             <ul class="no-bullet">
-                {# General data #}
                 <li class="lead">{{ cartItem.name }}</li>
                 <li class="__secondary">
                     <small>{{ 'cart.item.sku' | trans }} {{ cartItem.sku }}</small>
                 </li>
 
-                {% if bundleItems is defined %}
-                    {# Product Bundles #}
-                    <li>
-                        <strong>{{ 'cart.item.bundle.description' | trans }}</strong>
-                        <ul>
-                            {% for bundleItem in bundleItems %}
-                                <li>{{ bundleItem.quantity }} x {{ bundleItem.name }}  </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% else %}
-                    {% include '@CartPage/_partials/cart-product-variants.twig' %}
-                {% endif %}
+                {{ widget('ProductBundleItemsWidgetPlugin', cartItem, _view.cart) }}
+
+                {% include '@CartPage/_partials/cart-product-variants.twig' %}
             </ul>
         </div>
 

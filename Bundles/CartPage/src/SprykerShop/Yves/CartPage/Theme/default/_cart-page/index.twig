@@ -13,15 +13,7 @@
         <div class="row">
             <div class="small-12 columns">
                 {% for cartItem in _view.cartItems %}
-                     {# TODO: move to ProductBundleWidget ??? #}
-                    {% if cartItem.bundleProduct is defined %}
-                        {% include '@CartPage/_partials/cart-item.twig' with {
-                            cartItem: cartItem.bundleProduct,
-                            bundleItems: cartItem.bundleItems
-                        } %}
-                    {% else %}
-                        {% include '@CartPage/_partials/cart-item.twig' %}
-                    {% endif %}
+                    {% include '@CartPage/_partials/cart-item.twig' %}
                 {% endfor %}
             </div>
 

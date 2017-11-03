@@ -7,17 +7,19 @@
 
 namespace SprykerShop\Yves\CartPage\Dependency\Plugin\ProductBundleWidget;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface ProductBundleWidgetPluginInterface extends WidgetPluginInterface
+interface ProductBundleItemsWidgetPluginInterface extends WidgetPluginInterface
 {
-    public const NAME = 'ProductBundleWidgetPlugin';
+    public const NAME = 'ProductBundleItemsWidgetPlugin';
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer): void;
+    public function initialize(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void;
 }

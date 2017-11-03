@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 
+// TODO: this needs to be moved from this module
 class ProductBundleCartOperationHandler extends BaseHandler implements CartOperationInterface
 {
     /**

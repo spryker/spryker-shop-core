@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
+ * @method \SprykerShop\Client\CartPage\CartPageClientInterface getClient()
  */
 class CartController extends AbstractController
 {
@@ -30,10 +31,7 @@ class CartController extends AbstractController
             ->getCartClient()
             ->getQuote();
 
-        // TODO: product bundle widget?
-        $cartItems = $this->getFactory()
-            ->createProductBundleGrouper()
-            ->getGroupedBundleItems($quoteTransfer->getItems(), $quoteTransfer->getBundleItems());
+        $cartItems = $this->getClient()->getCartItems($quoteTransfer);
 
         $itemAttributesBySku = $this->getFactory()
             ->createCartItemsAttributeProvider()
