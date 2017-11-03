@@ -7,12 +7,27 @@
 
 namespace SprykerShop\Yves\CheckoutPage;
 
-use Pyz\Yves\Checkout\Plugin\CheckoutBreadcrumbPlugin;
+use Pyz\Yves\Shipment\Plugin\ShipmentFormDataProviderPlugin;
+use Pyz\Yves\Shipment\Plugin\ShipmentHandlerPlugin;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutToQuoteBridge;
+use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
+use SprykerShop\Yves\CustomerPage\Plugin\CustomerStepHandler;
 
 class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    const PAYMENT_METHOD_HANDLER = 'payment method handler';
+    const PAYMENT_SUB_FORMS = 'payment sub forms';
+
+    const PLUGIN_APPLICATION = 'application plugin';
+
+    const CLIENT_QUOTE = 'cart client';
+
     const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
     const CLIENT_CHECKOUT = 'CLIENT_CHECKOUT';
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
@@ -47,7 +62,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideClients(Container $container)
     {
-        $container = parent::provideClients($container);
+        $container[self::CLIENT_QUOTE] = function () use ($container) {
+            return new CheckoutToQuoteBridge($container->getLocator()->quote()->client());
+        };
 
         $container[self::CLIENT_CALCULATION] = function (Container $container) {
             return $container->getLocator()->calculation()->client();
@@ -75,7 +92,13 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function providePlugins(Container $container)
     {
-        $container = parent::providePlugins($container);
+        $container[self::PAYMENT_SUB_FORMS] = function () {
+            return new SubFormPluginCollection();
+        };
+
+        $container[self::PAYMENT_METHOD_HANDLER] = function () {
+            return new StepHandlerPluginCollection();
+        };
 
         $container[self::PLUGIN_CUSTOMER_STEP_HANDLER] = function () {
             return new CustomerStepHandler();

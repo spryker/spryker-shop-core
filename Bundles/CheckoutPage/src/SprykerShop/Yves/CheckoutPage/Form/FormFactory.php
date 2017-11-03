@@ -5,29 +5,37 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Pyz\Yves\Checkout\Form;
+namespace SprykerShop\Yves\CheckoutPage\Form;
 
-use Pyz\Yves\Checkout\CheckoutDependencyProvider;
-use Pyz\Yves\Checkout\Form\DataProvider\SubFormDataProviders;
-use Pyz\Yves\Checkout\Form\Steps\PaymentForm;
-use Pyz\Yves\Checkout\Form\Steps\SummaryForm;
-use Pyz\Yves\Checkout\Form\Voucher\VoucherForm;
-use Pyz\Yves\Customer\Form\CheckoutAddressCollectionForm;
-use Pyz\Yves\Customer\Form\CustomerCheckoutForm;
-use Pyz\Yves\Customer\Form\DataProvider\CheckoutAddressFormDataProvider;
-use Pyz\Yves\Customer\Form\GuestForm;
-use Pyz\Yves\Customer\Form\LoginForm;
-use Pyz\Yves\Customer\Form\RegisterForm;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
+use SprykerShop\Yves\CheckoutPage\Form\DataProvider\SubFormDataProviders;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\SummaryForm;
+use SprykerShop\Yves\CheckoutPage\Form\Voucher\VoucherForm;
+use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
+use SprykerShop\Yves\CustomerPage\Form\CustomerCheckoutForm;
+use SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider;
+use SprykerShop\Yves\CustomerPage\Form\GuestForm;
+use SprykerShop\Yves\CustomerPage\Form\LoginForm;
+use SprykerShop\Yves\CustomerPage\Form\RegisterForm;
 use Pyz\Yves\Shipment\Form\ShipmentForm;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Yves\Checkout\Form\FormFactory as SprykerFormFactory;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandler;
 use Symfony\Component\Form\FormTypeInterface;
 
-class FormFactory extends SprykerFormFactory
+class FormFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
+     */
+    public function createPaymentMethodSubForms()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PAYMENT_SUB_FORMS);
+    }
+    
     /**
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
@@ -77,7 +85,7 @@ class FormFactory extends SprykerFormFactory
      */
     protected function getShipmentFormDataProviderPlugin()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGIN_SHIPMENT_FORM_DATA_PROVIDER);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_FORM_DATA_PROVIDER);
     }
 
     /**
@@ -95,7 +103,7 @@ class FormFactory extends SprykerFormFactory
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subForms
      *
-     * @return \Pyz\Yves\Checkout\Form\DataProvider\SubFormDataProviders
+     * @return \SprykerShop\Yves\CheckoutPage\Form\DataProvider\SubFormDataProviders
      */
     protected function createSubFormDataProvider(SubFormPluginCollection $subForms)
     {
@@ -136,7 +144,7 @@ class FormFactory extends SprykerFormFactory
     /**
      * @param \Symfony\Component\Form\FormTypeInterface $subForm
      *
-     * @return \Pyz\Yves\Customer\Form\CustomerCheckoutForm
+     * @return \SprykerShop\Yves\CustomerPage\Form\CustomerCheckoutForm
      */
     protected function createCustomerCheckoutForm(FormTypeInterface $subForm)
     {
@@ -154,7 +162,7 @@ class FormFactory extends SprykerFormFactory
     }
 
     /**
-     * @return \Pyz\Yves\Customer\Form\CheckoutAddressCollectionForm
+     * @return \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm
      */
     protected function createCheckoutAddressCollectionForm()
     {
@@ -162,7 +170,7 @@ class FormFactory extends SprykerFormFactory
     }
 
     /**
-     * @return \Pyz\Yves\Customer\Form\DataProvider\CheckoutAddressFormDataProvider
+     * @return \SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider
      */
     protected function createAddressFormDataProvider()
     {
@@ -181,7 +189,7 @@ class FormFactory extends SprykerFormFactory
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Form\Voucher\VoucherForm
+     * @return \SprykerShop\Yves\CheckoutPage\Form\Voucher\VoucherForm
      */
     protected function createVoucherFormType()
     {
@@ -191,7 +199,7 @@ class FormFactory extends SprykerFormFactory
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subForms
      *
-     * @return \Pyz\Yves\Checkout\Form\Steps\PaymentForm
+     * @return \SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm
      */
     protected function createPaymentForm(SubFormPluginCollection $subForms)
     {
@@ -199,7 +207,7 @@ class FormFactory extends SprykerFormFactory
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Form\Steps\SummaryForm
+     * @return \SprykerShop\Yves\CheckoutPage\Form\Steps\SummaryForm
      */
     protected function createSummaryForm()
     {
@@ -241,7 +249,7 @@ class FormFactory extends SprykerFormFactory
      */
     protected function getApplication()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGIN_APPLICATION);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_APPLICATION);
     }
 
     /**
@@ -249,7 +257,7 @@ class FormFactory extends SprykerFormFactory
      */
     public function getStore()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::STORE);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
     }
 
     /**
@@ -257,11 +265,11 @@ class FormFactory extends SprykerFormFactory
      */
     protected function getCustomerClient()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CUSTOMER);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**
-     * @return \Pyz\Yves\Customer\Form\LoginForm
+     * @return \SprykerShop\Yves\CustomerPage\Form\LoginForm
      */
     protected function createLoginForm()
     {
@@ -269,7 +277,7 @@ class FormFactory extends SprykerFormFactory
     }
 
     /**
-     * @return \Pyz\Yves\Customer\Form\RegisterForm
+     * @return \SprykerShop\Yves\CustomerPage\Form\RegisterForm
      */
     protected function createRegisterForm()
     {
@@ -277,7 +285,7 @@ class FormFactory extends SprykerFormFactory
     }
 
     /**
-     * @return \Pyz\Yves\Customer\Form\GuestForm
+     * @return \SprykerShop\Yves\CustomerPage\Form\GuestForm
      */
     protected function createGuestForm()
     {
@@ -289,6 +297,6 @@ class FormFactory extends SprykerFormFactory
      */
     public function getCartClient()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CART);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CART);
     }
 }

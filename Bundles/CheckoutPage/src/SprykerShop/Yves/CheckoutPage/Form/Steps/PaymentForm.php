@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Pyz\Yves\Checkout\Form\Steps;
+namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -109,7 +109,7 @@ class PaymentForm extends AbstractType
      * @param \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface[] $paymentMethodSubForms
      * @param array $options
      *
-     * @return \Pyz\Yves\Checkout\Form\Steps\PaymentForm
+     * @return \SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm
      */
     protected function addPaymentMethodSubForms(FormBuilderInterface $builder, array $paymentMethodSubForms, array $options)
     {

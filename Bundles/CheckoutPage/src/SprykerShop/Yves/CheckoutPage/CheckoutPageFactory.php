@@ -8,6 +8,9 @@
 namespace SprykerShop\Yves\CheckoutPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
+use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
+use SprykerShop\Yves\DiscountWidget\Handler\VoucherHandler;
 
 class CheckoutPageFactory extends AbstractFactory
 {
@@ -22,7 +25,7 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Process\StepFactory
+     * @return \SprykerShop\Yves\CheckoutPage\Process\StepFactory
      */
     public function createStepFactory()
     {
@@ -30,7 +33,7 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Form\FormFactory
+     * @return \SprykerShop\Yves\CheckoutPage\Form\FormFactory
      */
     public function createCheckoutFormFactory()
     {
@@ -38,7 +41,7 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Yves\Discount\Handler\VoucherHandler
+     * @return \SprykerShop\Yves\DiscountWidget\Handler\VoucherHandler
      */
     public function createVoucherHandler()
     {
@@ -62,7 +65,7 @@ class CheckoutPageFactory extends AbstractFactory
      */
     protected function getApplication()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGIN_APPLICATION);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_APPLICATION);
     }
 
     /**
@@ -70,7 +73,7 @@ class CheckoutPageFactory extends AbstractFactory
      */
     protected function getCalculationClient()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CALCULATION);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CALCULATION);
     }
 
     /**
@@ -78,7 +81,7 @@ class CheckoutPageFactory extends AbstractFactory
      */
     protected function getCartClient()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CART);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CART);
     }
 
     /**
@@ -90,7 +93,7 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Plugin\CheckoutBreadcrumbPlugin
+     * @return \SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin
      */
     public function getCheckoutBreadcrumbPlugin()
     {

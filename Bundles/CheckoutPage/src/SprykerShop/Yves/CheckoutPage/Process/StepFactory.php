@@ -5,20 +5,21 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Pyz\Yves\Checkout\Process;
+namespace SprykerShop\Yves\CheckoutPage\Process;
 
-use Pyz\Yves\Checkout\CheckoutDependencyProvider;
-use Pyz\Yves\Checkout\Plugin\Provider\CheckoutControllerProvider;
-use Pyz\Yves\Checkout\Process\Steps\AddressStep;
-use Pyz\Yves\Checkout\Process\Steps\CustomerStep;
-use Pyz\Yves\Checkout\Process\Steps\EntryStep;
-use Pyz\Yves\Checkout\Process\Steps\PaymentStep;
-use Pyz\Yves\Checkout\Process\Steps\PlaceOrderStep;
-use Pyz\Yves\Checkout\Process\Steps\ShipmentStep;
-use Pyz\Yves\Checkout\Process\Steps\SuccessStep;
-use Pyz\Yves\Checkout\Process\Steps\SummaryStep;
-use Pyz\Yves\Customer\Plugin\Provider\CustomerControllerProvider;
-use Spryker\Yves\Checkout\Process\StepFactory as SprykerStepFactory;
+use SprykerShop\Yves\CheckoutPage\DataContainer\DataContainer;
+use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
+use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\CustomerStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\EntryStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\PaymentStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\PlaceOrderStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep;
+use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
 use Spryker\Yves\StepEngine\Process\StepCollection;
@@ -26,8 +27,32 @@ use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
 use Spryker\Yves\StepEngine\Process\StepEngine;
 use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
 
-class StepFactory extends SprykerStepFactory
+class StepFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection
+     */
+    public function createPaymentMethodHandler()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PAYMENT_METHOD_HANDLER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\DataContainer\DataContainer
+     */
+    protected function createDataContainer()
+    {
+        return new DataContainer($this->getQuoteClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutToQuoteInterface
+     */
+    protected function getQuoteClient()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_QUOTE);
+    }
+
     /**
      * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
      *
@@ -45,7 +70,7 @@ class StepFactory extends SprykerStepFactory
     {
         $stepCollection = new StepCollection(
             $this->getUrlGenerator(),
-            CheckoutControllerProvider::CHECKOUT_ERROR
+            CheckoutPageControllerProvider::CHECKOUT_ERROR
         );
 
         $stepCollection
@@ -62,52 +87,52 @@ class StepFactory extends SprykerStepFactory
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Process\Steps\EntryStep
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\EntryStep
      */
     protected function createEntryStep()
     {
         return new EntryStep(
-            CheckoutControllerProvider::CHECKOUT_INDEX,
+            CheckoutPageControllerProvider::CHECKOUT_INDEX,
             HomePageControllerProvider::ROUTE_HOME
         );
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Process\Steps\CustomerStep
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\CustomerStep
      */
     protected function createCustomerStep()
     {
         return new CustomerStep(
-            $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CUSTOMER),
+            $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER),
             $this->getCustomerStepHandler(),
-            CheckoutControllerProvider::CHECKOUT_CUSTOMER,
+            CheckoutPageControllerProvider::CHECKOUT_CUSTOMER,
             HomePageControllerProvider::ROUTE_HOME,
-            $this->getApplication()->path(CustomerControllerProvider::ROUTE_LOGOUT)
+            $this->getApplication()->path(CustomerPageControllerProvider::ROUTE_LOGOUT)
         );
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Process\Steps\AddressStep
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep
      */
     protected function createAddressStep()
     {
         return new AddressStep(
-            $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CUSTOMER),
-            $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CALCULATION),
-            CheckoutControllerProvider::CHECKOUT_ADDRESS,
+            $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER),
+            $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CALCULATION),
+            CheckoutPageControllerProvider::CHECKOUT_ADDRESS,
             HomePageControllerProvider::ROUTE_HOME
         );
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Process\Steps\ShipmentStep
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep
      */
     protected function createShipmentStep()
     {
         return new ShipmentStep(
             $this->getCalculationClient(),
             $this->getShipmentPlugins(),
-            CheckoutControllerProvider::CHECKOUT_SHIPMENT,
+            CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
             HomePageControllerProvider::ROUTE_HOME
         );
     }
@@ -125,60 +150,60 @@ class StepFactory extends SprykerStepFactory
      */
     public function getShipmentPlugins()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGIN_SHIPMENT_HANDLER);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_HANDLER);
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Process\Steps\PaymentStep
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\PaymentStep
      */
     protected function createPaymentStep()
     {
         return new PaymentStep(
             $this->createPaymentMethodHandler(),
-            CheckoutControllerProvider::CHECKOUT_PAYMENT,
+            CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
             HomePageControllerProvider::ROUTE_HOME,
             $this->getFlashMessenger()
         );
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Process\Steps\SummaryStep
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep
      */
     protected function createSummaryStep()
     {
         return new SummaryStep(
             $this->createProductBundleGrouper(),
             $this->getCartClient(),
-            CheckoutControllerProvider::CHECKOUT_SUMMARY,
+            CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
             HomePageControllerProvider::ROUTE_HOME
         );
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Process\Steps\PlaceOrderStep
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\PlaceOrderStep
      */
     protected function createPlaceOrderStep()
     {
         return new PlaceOrderStep(
             $this->getCheckoutClient(),
             $this->getFlashMessenger(),
-            CheckoutControllerProvider::CHECKOUT_PLACE_ORDER,
+            CheckoutPageControllerProvider::CHECKOUT_PLACE_ORDER,
             HomePageControllerProvider::ROUTE_HOME,
             [
-                'payment failed' => CheckoutControllerProvider::CHECKOUT_PAYMENT,
+                'payment failed' => CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
             ]
         );
     }
 
     /**
-     * @return \Pyz\Yves\Checkout\Process\Steps\SuccessStep
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep
      */
     protected function createSuccessStep()
     {
         return new SuccessStep(
-            $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CUSTOMER),
+            $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER),
             $this->getCartClient(),
-            CheckoutControllerProvider::CHECKOUT_SUCCESS,
+            CheckoutPageControllerProvider::CHECKOUT_SUCCESS,
             HomePageControllerProvider::ROUTE_HOME
         );
     }
@@ -188,7 +213,7 @@ class StepFactory extends SprykerStepFactory
      */
     protected function getCustomerStepHandler()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGIN_CUSTOMER_STEP_HANDLER);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_CUSTOMER_STEP_HANDLER);
     }
 
     /**
@@ -212,7 +237,7 @@ class StepFactory extends SprykerStepFactory
      */
     protected function getApplication()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGIN_APPLICATION);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_APPLICATION);
     }
 
     /**
@@ -220,7 +245,7 @@ class StepFactory extends SprykerStepFactory
      */
     public function getCalculationClient()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CALCULATION);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CALCULATION);
     }
 
     /**
@@ -228,7 +253,7 @@ class StepFactory extends SprykerStepFactory
      */
     public function getCheckoutClient()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CHECKOUT);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CHECKOUT);
     }
 
     /**
@@ -236,7 +261,7 @@ class StepFactory extends SprykerStepFactory
      */
     public function getCartClient()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_CART);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CART);
     }
 
     /**

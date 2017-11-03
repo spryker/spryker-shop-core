@@ -5,13 +5,13 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Pyz\Yves\Checkout\Plugin;
+namespace SprykerShop\Yves\CheckoutPage\Plugin;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @method \Pyz\Yves\Checkout\CheckoutFactory getFactory()
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutFactory getFactory()
  * @method \Spryker\Client\Checkout\CheckoutClientInterface getClient()
  */
 class CheckoutBreadcrumbPlugin extends AbstractPlugin

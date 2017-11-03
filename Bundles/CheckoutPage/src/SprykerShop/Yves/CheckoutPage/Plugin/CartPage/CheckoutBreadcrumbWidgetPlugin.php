@@ -15,6 +15,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\CheckoutPage\CheckoutBreadcrumbW
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageFactory getFactory()
  */
+// TODO: this need to go to CheckoutWidget module
 class CheckoutBreadcrumbWidgetPlugin extends AbstractWidgetPlugin implements CheckoutBreadcrumbWidgetPluginInterface
 {
     /**

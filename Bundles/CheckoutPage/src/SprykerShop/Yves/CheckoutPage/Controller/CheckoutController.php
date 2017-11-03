@@ -5,15 +5,15 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Pyz\Yves\Checkout\Controller;
+namespace SprykerShop\Yves\CheckoutPage\Controller;
 
 use Pyz\Yves\Application\Controller\AbstractController;
-use Pyz\Yves\Checkout\Form\Voucher\VoucherForm;
-use Pyz\Yves\Checkout\Plugin\Provider\CheckoutControllerProvider;
+use SprykerShop\Yves\CheckoutPage\Form\Voucher\VoucherForm;
+use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Pyz\Yves\Checkout\CheckoutFactory getFactory()
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutFactory getFactory()
  */
 class CheckoutController extends AbstractController
 {
@@ -158,7 +158,7 @@ class CheckoutController extends AbstractController
                 ->add($voucherCode);
         }
 
-        return $this->redirectResponseInternal(CheckoutControllerProvider::CHECKOUT_SUMMARY);
+        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
     }
 
     /**

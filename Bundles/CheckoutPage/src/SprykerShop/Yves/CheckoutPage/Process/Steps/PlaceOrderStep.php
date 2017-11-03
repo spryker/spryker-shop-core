@@ -5,14 +5,13 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Pyz\Yves\Checkout\Process\Steps;
+namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Pyz\Yves\Checkout\Plugin\Provider\CheckoutControllerProvider;
+use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use Spryker\Client\Checkout\CheckoutClientInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Yves\Checkout\Process\Steps\AbstractPlaceOrderStep;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 
 class PlaceOrderStep extends AbstractPlaceOrderStep
@@ -67,7 +66,7 @@ class PlaceOrderStep extends AbstractPlaceOrderStep
         }
 
         if (!$dataTransfer->getCheckoutConfirmed()) {
-            $this->escapeRoute = CheckoutControllerProvider::CHECKOUT_SUMMARY;
+            $this->escapeRoute = CheckoutPageControllerProvider::CHECKOUT_SUMMARY;
             return false;
         }
 
