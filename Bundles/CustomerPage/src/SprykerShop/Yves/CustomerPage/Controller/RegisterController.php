@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use Spryker\Shared\Customer\Code\Messages;
+use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,7 +21,7 @@ class RegisterController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -52,7 +52,7 @@ class RegisterController extends AbstractCustomerController
             ->createCustomerFormFactory()
             ->createLoginForm();
 
-        return $this->viewResponse([
+        return $this->view([
             'loginForm' => $loginForm->createView(),
             'registerForm' => $registerForm->createView(),
         ]);

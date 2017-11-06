@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +20,7 @@ class ProfileController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -54,7 +55,7 @@ class ProfileController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_PROFILE);
         }
 
-        return $this->viewResponse([
+        return $this->view([
             'profileForm' => $profileForm->createView(),
             'passwordForm' => $passwordForm->createView(),
         ]);

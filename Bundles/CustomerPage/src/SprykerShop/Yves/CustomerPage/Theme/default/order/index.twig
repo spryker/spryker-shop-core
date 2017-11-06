@@ -10,7 +10,7 @@
 
 {% block customerContent %}
     <div class="callout">
-        {% if orderList | length %}
+        {% if _view.orderList | length %}
             <h5>{{ 'customer.order.all_orders' | trans }}</h5>
             <hr>
 
@@ -19,9 +19,9 @@
             <div class="row align-center">
                 {% include '@Application/layout/partials/pagination.twig' with {
                     parameters: {},
-                    currentPage: pagination.page,
+                    currentPage: _view.pagination.page,
                     paginationPath: 'customer/order',
-                    maxPage: pagination.lastPage,
+                    maxPage: _view.pagination.lastPage,
                     showAlwaysFirstAndLast: true
                 } %}
             </div>

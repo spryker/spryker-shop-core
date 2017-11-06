@@ -14,8 +14,8 @@
         <hr>
 
         <p>
-            <strong>{{ 'customer.order.order_id' | trans }}:</strong> {{ order.orderReference }}<br/>
-            <strong>{{ 'customer.order.date' | trans }}:</strong> {{ order.createdAt| formatDateTime }}
+            <strong>{{ 'customer.order.order_id' | trans }}:</strong> {{ _view.order.orderReference }}<br/>
+            <strong>{{ 'customer.order.date' | trans }}:</strong> {{ _view.order.createdAt| formatDateTime }}
         </p>
 
         {% block orderItems %}

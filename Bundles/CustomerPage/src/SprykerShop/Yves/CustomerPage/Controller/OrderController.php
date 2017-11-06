@@ -25,7 +25,7 @@ class OrderController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -37,7 +37,7 @@ class OrderController extends AbstractCustomerController
 
         $orderList = $orderListTransfer->getOrders();
 
-        return $this->viewResponse([
+        return $this->view([
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderList,
         ]);
@@ -46,13 +46,13 @@ class OrderController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function detailsAction(Request $request)
     {
         $responseData = $this->getOrderDetailsResponseData($request->query->getInt('id'));
 
-        return $this->viewResponse($responseData);
+        return $this->view($responseData);
     }
 
     /**

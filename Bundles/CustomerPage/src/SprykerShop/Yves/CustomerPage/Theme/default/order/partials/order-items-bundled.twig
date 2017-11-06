@@ -6,13 +6,13 @@
         {{ orderItem.bundleProduct.name }}
     </td>
     <td class="text-right">
-        {{ orderItem.bundleProduct.unitPrice | money(true, order.currencyIsoCode) }}
+        {{ orderItem.bundleProduct.unitPrice | money(true, _view.order.currencyIsoCode) }}
     </td>
     <td class="text-right">
         {{ orderItem.bundleProduct.quantity }}
     </td>
     <td class="text-right">
-        {{ orderItem.bundleProduct.unitPriceToPayAggregation | money(true, order.currencyIsoCode) }}
+        {{ orderItem.bundleProduct.unitPriceToPayAggregation | money(true, _view.order.currencyIsoCode) }}
     </td>
 </tr>
 
@@ -26,7 +26,7 @@
         {% if orderItem.bundleProduct.productOptions|length > 0 %}
             {{ "customer.order.options" | trans }} <br />
             {% for productOption in orderItem.bundleProduct.productOptions %}
-                &nbsp; - {{ productOption.value | trans }} {{ productOption.sumGrossPrice | money(true, order.currencyIsoCode) }}  <br />
+                &nbsp; - {{ productOption.value | trans }} {{ productOption.sumGrossPrice | money(true, _view.order.currencyIsoCode) }}  <br />
             {% endfor %}
         {% endif %}
 

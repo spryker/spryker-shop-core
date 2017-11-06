@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\CustomerPage\Controller;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use Spryker\Shared\Customer\Code\Messages;
+use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 class AddressController extends AbstractCustomerController
@@ -21,7 +21,7 @@ class AddressController extends AbstractCustomerController
     const KEY_ADDRESSES = 'addresses';
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction()
     {
@@ -39,13 +39,13 @@ class AddressController extends AbstractCustomerController
 
         $responseData = $this->getAddressListResponseData($customerTransfer, $addressesTransfer);
 
-        return $this->viewResponse($responseData);
+        return $this->view($responseData);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -77,7 +77,7 @@ class AddressController extends AbstractCustomerController
             $this->addErrorMessage(Messages::CUSTOMER_ADDRESS_NOT_ADDED);
         }
 
-        return $this->viewResponse([
+        return $this->view([
             'form' => $addressForm->createView(),
         ]);
     }
@@ -85,7 +85,7 @@ class AddressController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
     {
@@ -117,7 +117,7 @@ class AddressController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
         }
 
-        return $this->viewResponse([
+        return $this->view([
             'form' => $addressForm->createView(),
         ]);
     }

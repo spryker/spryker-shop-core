@@ -12,6 +12,6 @@
     <div class="callout">
         <h5>{{ 'customer.account.edit_address_information' | trans }}</h5>
         <hr>
-        {% include "@CustomerPage/address/partials/form.twig" with {'form': form, 'formAction': url('customer/address/new')} %}
+        {% include "@CustomerPage/address/partials/form.twig" with {'form': _view.form, 'formAction': url('customer/address/new')} %}
     </div>
 {% endblock %}

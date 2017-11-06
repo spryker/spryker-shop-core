@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for orderItem in items %}
+    {% for orderItem in _view.items %}
 
         {% if orderItem.bundleItems is defined  %}
             {% include "@CustomerPage/order/partials/order-items-bundled.twig" %}
@@ -22,13 +22,13 @@
                     {{ orderItem.name }}
                 </td>
                 <td class="text-right">
-                    {{ orderItem.unitPrice | money(true, order.currencyIsoCode) }}
+                    {{ orderItem.unitPrice | money(true, _view.order.currencyIsoCode) }}
                 </td>
                 <td class="text-right">
                     {{ orderItem.quantity }}
                 </td>
                 <td class="text-right">
-                    {{ orderItem.unitPriceToPayAggregation | money(true, order.currencyIsoCode) }}
+                    {{ orderItem.unitPriceToPayAggregation | money(true, _view.order.currencyIsoCode) }}
                 </td>
             </tr>
             {% include "@CustomerPage/order/partials/order-items-options.twig" %}

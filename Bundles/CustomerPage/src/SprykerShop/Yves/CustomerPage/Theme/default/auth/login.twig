@@ -6,11 +6,11 @@
 
     <div class="row small-unstack" data-component="viewer">
         <div class="columns __checkout-proceed-as-method" data-viewer-id="user" data-viewer-default>
-            {% include "@CustomerPage/register/partials/register-form.twig" with {'form': registerForm} %}
+            {% include "@CustomerPage/register/partials/register-form.twig" with {'form': _view.registerForm} %}
         </div>
 
         <div class="columns __checkout-proceed-as-method" data-viewer-id="user" data-viewer-default>
-            {% include "@CustomerPage/auth/partials/login-form.twig" with {'form': loginForm} %}
+            {% include "@CustomerPage/auth/partials/login-form.twig" with {'form': _view.loginForm} %}
         </div>
     </div>
 

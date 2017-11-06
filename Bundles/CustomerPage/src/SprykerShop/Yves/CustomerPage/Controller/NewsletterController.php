@@ -26,7 +26,7 @@ class NewsletterController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -49,7 +49,7 @@ class NewsletterController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_NEWSLETTER);
         }
 
-        return $this->viewResponse([
+        return $this->view([
             'customer' => $customerTransfer,
             'form' => $newsletterForm->createView(),
         ]);

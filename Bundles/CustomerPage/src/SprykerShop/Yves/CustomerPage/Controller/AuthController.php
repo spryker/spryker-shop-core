@@ -16,7 +16,7 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider
 class AuthController extends AbstractCustomerController
 {
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function loginAction()
     {
@@ -33,9 +33,9 @@ class AuthController extends AbstractCustomerController
             ->createCustomerFormFactory()
             ->createRegisterForm();
 
-        return [
+        return $this->view([
             'loginForm' => $loginForm->createView(),
             'registerForm' => $registerForm->createView(),
-        ];
+        ]);
     }
 }

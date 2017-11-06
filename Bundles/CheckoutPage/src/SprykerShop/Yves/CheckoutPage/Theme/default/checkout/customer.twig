@@ -26,19 +26,19 @@
 
             <div class="__checkout-proceed-as-method" data-viewer-id="guest" {% if isGuest %}data-viewer-default{% endif %}>
                 {{ form_start(guestForm, {'attr': {'class': 'callout'}}) }}
-                    {% include '@Customer/guest/_partials/guest-form-body.twig' with {'form': guestForm.customer} %}
+                    {% include '@CustomerPage/guest/partials/guest-form-body.twig' with {'form': guestForm.customer} %}
                 {{ form_end(guestForm) }}
             </div>
 
             <div class="__checkout-proceed-as-method" data-viewer-id="user" {% if not isGuest %}data-viewer-default{% endif %}>
                 {{ form_start(registerForm, { 'attr': { 'class': 'callout' }}) }}
-                    {% include '@Customer/register/_partials/register-form-body.twig' with {'form': registerForm.customer} %}
+                    {% include '@CustomerPage/register/partials/register-form-body.twig' with {'form': registerForm.customer} %}
                 {{ form_end(registerForm) }}
             </div>
         </div>
 
         <div class="small-12 large-6 columns __checkout-proceed-as-method">
-            {% include "@Customer/auth/_partials/login-form.twig" with {'form': loginForm} %}
+            {% include "@CustomerPage/auth/partials/login-form.twig" with {'form': loginForm} %}
         </div>
     </div>
 {% endblock %}

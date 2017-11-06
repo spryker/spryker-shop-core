@@ -8,9 +8,9 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\Customer\Code\Messages;
 use SprykerShop\Yves\CustomerPage\Form\RestorePasswordForm;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
-use Spryker\Shared\Customer\Code\Messages;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,7 +22,7 @@ class PasswordController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function forgottenPasswordAction(Request $request)
     {
@@ -44,7 +44,7 @@ class PasswordController extends AbstractCustomerController
             }
         }
 
-        return $this->viewResponse([
+        return $this->view([
             'form' => $form->createView(),
         ]);
     }
@@ -52,7 +52,7 @@ class PasswordController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function restorePasswordAction(Request $request)
     {
@@ -91,7 +91,7 @@ class PasswordController extends AbstractCustomerController
             $this->processResponseErrors($customerResponseTransfer);
         }
 
-        return $this->viewResponse([
+        return $this->view([
             'form' => $form->createView(),
         ]);
     }

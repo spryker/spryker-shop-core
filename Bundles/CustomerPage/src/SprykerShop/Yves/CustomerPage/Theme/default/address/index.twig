@@ -13,7 +13,7 @@
         <div class="small-12 columns">
             <div class="callout">
                 <ul class="no-bullet">
-                    {% for address in addresses %}
+                    {% for address in _view.addresses %}
                         <li>
                             <a href="{{ url('customer/address/update', {'id': address.idCustomerAddress }) }}" class="float-right">
                                 <small><i class="fa fa-map-marker"></i> {{ "customer.profile.address.edit" | trans }}</small>

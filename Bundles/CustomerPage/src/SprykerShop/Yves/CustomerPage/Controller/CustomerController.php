@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerOverviewRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 
 /**
@@ -26,7 +27,7 @@ class CustomerController extends AbstractCustomerController
     const KEY_SHIPPING = 'shipping';
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction()
     {
@@ -47,7 +48,7 @@ class CustomerController extends AbstractCustomerController
             ->getCustomerClient()
             ->getCustomerOverview($overviewRequest);
 
-        return $this->viewResponse([
+        return $this->view([
             'customer' => $customerTransfer,
             'orderList' => $overviewResponse->getOrderList()->getOrders(),
             'addresses' => $this->getDefaultAddresses($customerTransfer),

@@ -8,7 +8,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for order in orderList %}
+    {% for order in _view.orderList %}
         {% set dateTime = date(order.createdAt) %}
         <tr>
             <td>{{ order.orderReference }}</td>
