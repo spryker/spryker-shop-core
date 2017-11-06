@@ -1,0 +1,23 @@
+<a name="product-review-submit" href="#"></a>
+
+{% if _view.showSuccess %}
+<div class="__message">
+    <div class="callout success">{{ 'product_review.submit.success' | trans }}</div>
+</div>
+{% endif %}
+
+<div class="callout js-form-product-review {% if _view.hideForm %}hide{% endif %}">
+    <div>
+        <h5>
+            {{ _view.productAbstract.name }}
+            {% if _view.productAbstract.attributes.brand is defined %}
+                <small>{{ 'page.product.by' | trans }}</small>
+                {{ _view.productAbstract.attributes.brand }}
+            {% endif %}
+        </h5>
+    </div>
+    {{ form_start(_view.form, {'action': '#product-review-submit'}) }}
+        {% include '@ProductReviewWidget/submit/_partials/product-review-form.twig' with {'form': _view.form} only %}
+        <button class="button expanded info">{{ 'forms.submit-btn' | trans }}</button>
+    {{ form_end(_view.form) }}
+</div>

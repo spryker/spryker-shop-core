@@ -24,10 +24,6 @@ class ProductAbstractReviewWidgetPlugin extends AbstractWidgetPlugin implements 
     }
 
     /**
-     * TODO: add specification
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -36,15 +32,11 @@ class ProductAbstractReviewWidgetPlugin extends AbstractWidgetPlugin implements 
     }
 
     /**
-     * TODO: add specification
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string
     {
-        return '@ProductReviewWidget/_product_widget/product-abstract-review.twig';
+        return '@ProductReviewWidget/_product-widget/product-abstract-review.twig';
     }
 
 }
