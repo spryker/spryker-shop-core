@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @method \SprykerShop\Yves\CheckoutPage\CheckoutFactory getFactory()
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageFactory getFactory()
  * @method \Spryker\Client\Checkout\CheckoutClientInterface getClient()
  */
 class CheckoutBreadcrumbPlugin extends AbstractPlugin

@@ -13,7 +13,7 @@ use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \SprykerShop\Yves\CheckoutPage\CheckoutFactory getFactory()
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageFactory getFactory()
  */
 class CheckoutController extends AbstractController
 {
@@ -162,7 +162,7 @@ class CheckoutController extends AbstractController
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Process\StepEngine
+     * @return \Spryker\Yves\StepEngine\Process\StepEngineInterface
      */
     protected function createStepProcess()
     {

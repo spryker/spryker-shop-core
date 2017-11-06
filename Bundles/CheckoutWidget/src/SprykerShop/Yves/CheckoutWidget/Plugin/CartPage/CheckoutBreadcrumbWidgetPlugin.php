@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\Plugin\CartPage;
+namespace SprykerShop\Yves\CheckoutWidget\Plugin\CartPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StepBreadcrumbsTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CartPage\Dependency\Plugin\CheckoutPage\CheckoutBreadcrumbWidgetPluginInterface;
+use SprykerShop\Yves\CartPage\Dependency\Plugin\CheckoutWidget\CheckoutBreadcrumbWidgetPluginInterface;
 
 /**
- * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageFactory getFactory()
+ * @method \SprykerShop\Yves\CheckoutWidget\CheckoutWidgetFactory getFactory()
  */
-// TODO: this need to go to CheckoutWidget module
 class CheckoutBreadcrumbWidgetPlugin extends AbstractWidgetPlugin implements CheckoutBreadcrumbWidgetPluginInterface
 {
     /**
