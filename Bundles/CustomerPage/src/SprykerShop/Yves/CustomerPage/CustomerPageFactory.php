@@ -96,11 +96,11 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Client\Newsletter\NewsletterClientInterface
+     * @return \SprykerShop\Client\NewsletterWidget\NewsletterWidgetClientInterface
      */
-    public function getNewsletterClient()
+    public function getNewsletterPageClient()
     {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_NEWSLETTER);
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_NEWSLETTER_PAGE);
     }
 
     /**
@@ -193,5 +193,13 @@ class CustomerPageFactory extends AbstractFactory
     public function getCustomerClient()
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCustomerOverviewWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CUSTOMER_OVERVIEW_WIDGETS);
     }
 }

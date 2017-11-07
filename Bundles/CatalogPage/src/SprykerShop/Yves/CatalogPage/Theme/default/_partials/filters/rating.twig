@@ -7,7 +7,7 @@
             {% for i in (maximumRating-1)..1 %}
                 <li>
                     <label class="rating-selector {% if filterValue == i %}selected{% endif %}" data-rating-filter="{{ i }}">
-                        {% include '@ProductReview/partials/read-only-rating.twig' with {rating: i, suffix: 'catalog.filter.rating_up' | trans } only %}
+                        {% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {rating: i, suffix: 'catalog.filter.rating_up' | trans } only %}
                     </label>
                 </li>
             {% endfor %}

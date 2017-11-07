@@ -7,19 +7,20 @@
 
 namespace SprykerShop\Yves\CustomerPage;
 
-use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
-use SprykerShop\Yves\CustomerPage\Plugin\GuestCheckoutAuthenticationHandlerPlugin;
-use SprykerShop\Yves\CustomerPage\Plugin\LoginCheckoutAuthenticationHandlerPlugin;
-use SprykerShop\Yves\CustomerPage\Plugin\RegistrationCheckoutAuthenticationHandlerPlugin;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
+use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
+use SprykerShop\Yves\CustomerPage\Plugin\GuestCheckoutAuthenticationHandlerPlugin;
+use SprykerShop\Yves\CustomerPage\Plugin\LoginCheckoutAuthenticationHandlerPlugin;
+use SprykerShop\Yves\CustomerPage\Plugin\RegistrationCheckoutAuthenticationHandlerPlugin;
+use SprykerShop\Yves\NewsletterWidget\Plugin\CustomerPage\NewsletterSubscriptionSummaryWidgetPlugin;
 
 class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_CUSTOMER = 'customer client';
-    const CLIENT_NEWSLETTER = 'newsletter client';
+    const CLIENT_NEWSLETTER_PAGE = 'CLIENT_NEWSLETTER_PAGE';
     const CLIENT_SALES = 'client client';
     const PLUGIN_APPLICATION = 'application plugin';
     const PLUGIN_AUTHENTICATION_HANDLER = 'authentication plugin';
@@ -28,6 +29,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'registration authentication plugin';
     const FLASH_MESSENGER = 'flash messenger';
     const STORE = 'store';
+    const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -39,6 +41,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->provideClients($container);
         $container = $this->providePlugins($container);
         $container = $this->provideStore($container);
+        $container = $this->addCustomerOverviewWidgetPlugins($container);
 
         return $container;
     }
@@ -58,8 +61,8 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->sales()->client();
         };
 
-        $container[self::CLIENT_NEWSLETTER] = function (Container $container) {
-            return $container->getLocator()->newsletter()->client();
+        $container[self::CLIENT_NEWSLETTER_PAGE] = function (Container $container) {
+            return $container->getLocator()->newsletterWidget()->client();
         };
 
         return $container;
@@ -113,5 +116,27 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    protected function addCustomerOverviewWidgetPlugins(Container $container)
+    {
+        $container[static::PLUGIN_CUSTOMER_OVERVIEW_WIDGETS] = function (Container $container) {
+            return $this->getCustomerOverviewWidgetPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return string[]
+     */
+    protected function getCustomerOverviewWidgetPlugins(Container $container): array
+    {
+        // TODO: move to project level
+        return [
+            NewsletterSubscriptionSummaryWidgetPlugin::class,
+        ];
     }
 }

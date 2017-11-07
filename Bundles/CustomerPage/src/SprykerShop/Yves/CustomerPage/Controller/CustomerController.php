@@ -15,6 +15,7 @@ use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 
 /**
+ * @method \SprykerShop\Client\CustomerPage\CustomerPageClientInterface getClient()
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class CustomerController extends AbstractCustomerController
@@ -43,17 +44,16 @@ class CustomerController extends AbstractCustomerController
 
         $overviewRequest = $this->createOverviewRequest($customerTransfer);
 
-        $overviewResponse = $this
-            ->getFactory()
-            ->getCustomerClient()
-            ->getCustomerOverview($overviewRequest);
+        $overviewResponse = $this->getClient()->getCustomerOverview($overviewRequest);
 
-        return $this->view([
+        $data = [
             'customer' => $customerTransfer,
             'orderList' => $overviewResponse->getOrderList()->getOrders(),
             'addresses' => $this->getDefaultAddresses($customerTransfer),
-            'isSubscribed' => $overviewResponse->getIsSubscribed(),
-        ]);
+            'overviewResponse' => $overviewResponse,
+        ];
+
+        return $this->view($data, $this->getFactory()->getCustomerOverviewWidgetPlugins());
     }
 
     /**
