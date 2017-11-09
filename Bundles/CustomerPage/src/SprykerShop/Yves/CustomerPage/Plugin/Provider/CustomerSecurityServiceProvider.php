@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 
-use Pyz\Yves\Application\Plugin\Provider\AbstractServiceProvider;
+use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractServiceProvider;
 use SprykerShop\Yves\CustomerPage\Form\LoginForm;
 use Silex\Application;
 use Spryker\Shared\Config\Config;

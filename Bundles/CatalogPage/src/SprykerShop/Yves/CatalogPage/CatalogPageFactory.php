@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CatalogPage;
 use Spryker\Client\Catalog\CatalogClient;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGenerator;
-use SprykerShop\Yves\CatalogPage\ResourceCreator\CatalogPageResourceCreator;
+use SprykerShop\Yves\CatalogPage\ResourceCreator\CatalogPageResourceCreatorPlugin;
 use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
 
 class CatalogPageFactory extends AbstractFactory
@@ -57,11 +57,11 @@ class CatalogPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Yves\Collector\Creator\ResourceCreatorInterface
+     * @return \SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorInterface
      */
     public function createCatalogPageResourceCreator()
     {
-        return new CatalogPageResourceCreator();
+        return new CatalogPageResourceCreatorPlugin();
     }
 
     /**

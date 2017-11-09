@@ -7,22 +7,22 @@
 
 namespace SprykerShop\Yves\ProductSetDetailPage;
 
-use Pyz\Yves\Collector\Creator\ResourceCreatorInterface;
+use SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorInterface;
 use Spryker\Client\Product\ProductClientInterface;
 use Spryker\Client\ProductSet\ProductSetClientInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface;
-use SprykerShop\Yves\ProductSetDetailPage\ResourceCreator\ProductSetDetailPageResourceCreator;
+use SprykerShop\Yves\ProductSetDetailPage\ResourceCreator\ProductSetDetailPageResourceCreatorPlugin;
 
 class ProductSetDetailPageFactory extends AbstractFactory
 {
 
     /**
-     * @return \Pyz\Yves\Collector\Creator\ResourceCreatorInterface
+     * @return \SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorInterface
      */
     public function createProductSetDetailPageResourceCreator(): ResourceCreatorInterface
     {
-        return new ProductSetDetailPageResourceCreator(
+        return new ProductSetDetailPageResourceCreatorPlugin(
             $this->getProductSetClient(),
             $this->getProductClient(),
             $this->getStorageProductMapperPlugin()

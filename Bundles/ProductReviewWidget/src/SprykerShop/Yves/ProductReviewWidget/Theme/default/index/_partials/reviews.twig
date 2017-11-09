@@ -27,7 +27,7 @@
 {% endfor %}
 
 <div class="callout text-center">
-    {% include '@Application/layout/partials/pagination.twig' with {
+    {% include '@ShopLayout/layout/partials/pagination.twig' with {
         parameters: app.request.query.all(),
         currentPage: pagination.currentPage,
         paginationPath: app.request.getPathInfo(),

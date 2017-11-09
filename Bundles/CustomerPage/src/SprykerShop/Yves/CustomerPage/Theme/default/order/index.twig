@@ -17,7 +17,7 @@
             {% include "@CustomerPage/order/partials/order-list.twig" %}
 
             <div class="row align-center">
-                {% include '@Application/layout/partials/pagination.twig' with {
+                {% include '@ShopLayout/layout/partials/pagination.twig' with {
                     parameters: {},
                     currentPage: _view.pagination.page,
                     paginationPath: 'customer/order',
