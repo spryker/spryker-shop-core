@@ -1,0 +1,26 @@
+
+// @function edge($name)  {
+//     @if map-has-key($grid-breakpoints, $name) == false {
+//         @error 'no breakpoint named #{$name} in $grid-breakpoints';
+//     }
+
+//     @return map-get($grid-breakpoints, $name);
+// }
+
+// @mixin tablet {
+//     @include breakpoint(edge(md)) {
+//         @content; 
+//     }
+// }
+
+// @mixin tablet-landscape {
+//     @include breakpoint(edge(lg)) {
+//         @content;
+//     }
+// }
+
+// @mixin desktop {
+//     @include breakpoint(edge(xl)) {
+//         @content; 
+//     }
+// }

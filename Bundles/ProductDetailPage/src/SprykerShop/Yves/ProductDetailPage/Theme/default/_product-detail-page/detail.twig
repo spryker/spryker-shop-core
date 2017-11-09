@@ -1,3 +1,5 @@
+{% extends template('Base') %}
+
 {% block pageTitle -%}
     {{ _view.product.metaTitle | default(_view.product.name) }}
 {%- endblock %}
@@ -21,6 +23,10 @@
 {% endblock %}
 
 {% block content %}
+    {% block testblock %}
+        <h3>123</h3>
+    {% endblock %}
+
     <div class="row">
         <div class="small-12 medium-6 xlarge-7 xxlarge-8 columns">
             <div style="position: relative">

@@ -1,0 +1,10 @@
+@import '../../../Style/setting';
+
+@mixin atomTest($name: '.a-test') {
+    #{$name} {
+        color: $color-main;
+        font-size: 30px;
+
+        @content;
+    }
+}

@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "@spryker-shop/ui",
+  "description": "Spryker Shop UI module",
+  "main": "index.js",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://github.com/spryker/#missing",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spryker/#missing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/spryker/#missing/issues"
+  },
+  "dependencies": {
+    "@webcomponents/custom-elements": "^1.0.0"
+  }
+}

@@ -1,0 +1,97 @@
+
+// @mixin g-grid-col {
+//     & .g-col {
+//         @content;
+//     }
+// }
+
+// .g-grid {
+//     @include clearfix;
+//     clear: both;
+//     display: flex;
+//     flex-flow: row wrap;
+//     align-items: flex-start;
+//     justify-content: flex-start;
+//     width: 100%;
+//     max-width: 100%;
+
+//     &--container {
+//         @include container;
+//         padding-left: $grid-spacing;
+//         padding-right: $grid-spacing;
+//     }
+
+//     &--top {
+//         align-items: flex-start;
+//     }
+
+//     &--bottom {
+//         align-items: flex-end;
+//     }
+
+//     &--left {
+//         justify-content: flex-start;
+//     }
+
+//     &--right {
+//         justify-content: flex-end;
+//     }
+
+//     &--center {
+//         justify-content: center;
+//     }
+
+//     &--middle {
+//         align-items: center;
+//     }
+
+//     &--justify {
+//         justify-content: space-between;
+
+//         @include g-grid-col {
+//             margin-left: auto;
+//             margin-right: auto;
+
+//             &:first-child {
+//                 margin-left: 0;
+//             }
+
+//             &:last-child {
+//                 margin-right: 0;
+//             }
+//         }
+//     }
+
+//     &--stretch {
+//         align-items: stretch;
+
+//         @include g-grid-col {
+//             margin-top: 0;
+//             margin-bottom: 0;
+//         }
+//     }
+// }
+
+// .g-col {
+//     @include clearfix;
+//     float: left;
+//     display: block;
+//     flex-grow: 0;
+//     flex-basis: auto;
+    
+//     @each $edge, $width in $grid-breakpoints {
+//         @include breakpoint($width) {
+//             @for $col from 1 through $grid-columns {
+//                 &--#{$edge}-#{$col} {
+//                     width: span($col of $grid-columns);
+//                     min-width: span($col of $grid-columns);
+//                 }
+//             }
+//         }
+//     }
+
+//     &--expand {
+//         flex-grow: 1;
+//     }
+// }
+

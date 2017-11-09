@@ -1,0 +1,32 @@
+$font-family: 'Arial', sans-serif;
+$font-family-code: 'Menlo', monospace;
+
+$font-size: (
+    1: 40px,
+    2: 36px,
+    3: 32px,
+    4: 28px,
+    5: 24px,
+    6: 20px,
+    code: 14px,
+    big: 18px,
+    default: 16px,
+    small: 14px
+);
+
+$font-weight: (
+    light: 300,
+    regular: 400,
+    bold: 900
+);
+
+$font-line-height: (
+    1: 1.1,
+    2: 1.2,
+    3: 1.4,
+    4: 1.4,
+    5: 1.4,
+    6: 1.4,
+    code: 18px,
+    default: 1.5
+);

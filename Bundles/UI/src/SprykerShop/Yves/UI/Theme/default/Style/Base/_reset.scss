@@ -1,0 +1,55 @@
+* {
+    @include reset;
+    &:hover,
+    &:active,
+    &:focus {
+        outline: 0;
+    }
+    &::before,
+    &::after {
+        position: relative;
+        box-sizing: border-box;
+        color: inherit;
+    }
+}
+
+html {
+    @include reset;
+    position: static;
+}
+
+// HTML5 display-role reset for older browsers
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+
+    &::before,
+    &::after {
+        content: none;
+    }
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
