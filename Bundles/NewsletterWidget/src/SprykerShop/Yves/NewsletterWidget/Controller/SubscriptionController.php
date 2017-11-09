@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\NewsletterWidget\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Pyz\Yves\Application\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\NewsletterWidget\Form\NewsletterSubscriptionForm;
 use Symfony\Component\HttpFoundation\Request;
 

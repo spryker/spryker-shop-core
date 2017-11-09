@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\HomePage\Controller;
 
-use Pyz\Yves\Application\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Spryker\Shared\Storage\StorageConstants;
 
 /**

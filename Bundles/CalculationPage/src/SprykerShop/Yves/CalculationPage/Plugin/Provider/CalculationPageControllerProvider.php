@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CalculationPage\Plugin\Provider;
 
-use Pyz\Yves\Application\Plugin\Provider\AbstractYvesControllerProvider;
+use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 use Silex\Application;
 
 class CalculationPageControllerProvider extends AbstractYvesControllerProvider

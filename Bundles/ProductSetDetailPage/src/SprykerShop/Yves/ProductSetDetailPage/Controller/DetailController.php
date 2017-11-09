@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ProductSetDetailPage\Controller;
 
 use Generated\Shared\Transfer\ProductSetStorageTransfer;
-use Pyz\Yves\Application\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 
 /**
  * @method \SprykerShop\Yves\ProductSetDetailPage\ProductSetDetailPageFactory getFactory()

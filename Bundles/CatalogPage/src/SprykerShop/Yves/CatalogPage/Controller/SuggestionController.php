@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CatalogPage\Controller;
 
-use Pyz\Yves\Application\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

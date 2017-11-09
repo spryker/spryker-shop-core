@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
-use Pyz\Yves\Application\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\CheckoutPage\Form\Voucher\VoucherForm;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;

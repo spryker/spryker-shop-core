@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CmsPage\Controller;
 
 use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Pyz\Yves\Application\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\CmsPage\Plugin\Provider\PreviewControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

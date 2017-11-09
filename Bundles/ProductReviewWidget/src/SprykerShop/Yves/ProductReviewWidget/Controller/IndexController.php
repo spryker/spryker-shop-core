@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ProductReviewWidget\Controller;
 
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
-use Pyz\Yves\Application\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\RedirectPage\Controller;
 
-use Pyz\Yves\Application\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Spryker\Shared\Storage\StorageConstants;
 
 class RedirectController extends AbstractController

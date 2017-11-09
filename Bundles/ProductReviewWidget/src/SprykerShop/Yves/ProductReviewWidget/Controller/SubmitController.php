@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ProductReviewWidget\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Pyz\Yves\Application\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\Form\FormError;

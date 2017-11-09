@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\DiscountWidget\Controller;
 
-use Pyz\Yves\Application\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\DiscountWidget\Form\VoucherForm;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
