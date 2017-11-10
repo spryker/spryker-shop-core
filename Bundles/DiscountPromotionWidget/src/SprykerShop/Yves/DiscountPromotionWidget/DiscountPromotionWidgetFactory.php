@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\DiscountPromotionWidget;
 
+use Spryker\Yves\DiscountPromotion\Dependency\StorageProductMapperPluginInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class DiscountPromotionWidgetFactory extends AbstractFactory
@@ -17,5 +18,13 @@ class DiscountPromotionWidgetFactory extends AbstractFactory
     public function getProductPromotionMapperPlugin()
     {
         return $this->getProvidedDependency(DiscountPromotionWidgetDependencyProvider::PLUGIN_PROMOTION_PRODUCT_MAPPER);
+    }
+
+    /**
+     * @return StorageProductMapperPluginInterface
+     */
+    public function getStorageProductMapperPlugin()
+    {
+        return $this->getProvidedDependency(DiscountPromotionWidgetDependencyProvider::PLUGIN_STORAGE_PRODUCT_MAPPER);
     }
 }

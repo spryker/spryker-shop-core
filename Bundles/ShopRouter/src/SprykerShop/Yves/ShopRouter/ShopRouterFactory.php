@@ -62,8 +62,6 @@ class ShopRouterFactory extends AbstractFactory
         return $this->getProvidedDependency(ShopRouterDependencyProvider::PLUGIN_APPLICATION);
     }
 
-
-
     /**
      * @return RouterInterface
      */
