@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerShop\Yves\UI\Twig;
+namespace SprykerShop\Yves\ShopUI\Twig;
 
 use Spryker\Shared\Twig\TwigExtension;
 use Twig_SimpleFunction;
