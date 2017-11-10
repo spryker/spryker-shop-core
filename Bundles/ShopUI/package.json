@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@spryker-shop/ui",
+  "name": "@spryker-shop/shop-ui",
   "description": "Spryker Shop UI module",
   "main": "index.js",
   "license": "SEE LICENSE IN LICENSE",

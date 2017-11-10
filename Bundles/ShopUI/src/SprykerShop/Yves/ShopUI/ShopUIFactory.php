@@ -8,15 +8,15 @@
 namespace SprykerShop\Yves\UI;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\UI\Twig\UIComponentsTwigExtension;
+use SprykerShop\Yves\UI\Twig\ShopUITwigExtension;
 
-class UIFactory extends AbstractFactory
+class ShopUIFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Shared\Twig\TwigExtension
      */
-    public function createUIComponentsTwigExtension()
+    public function createShopUITwigExtension()
     {
-        return new UIComponentsTwigExtension();
+        return new ShopUITwigExtension();
     }
 }

@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\UI\Twig;
 use Spryker\Shared\Twig\TwigExtension;
 use Twig_SimpleFunction;
 
-class UIComponentsTwigExtension extends TwigExtension
+class ShopUITwigExtension extends TwigExtension
 {
     const FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE = 'model';
     const FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE = 'atom';
@@ -76,7 +76,7 @@ class UIComponentsTwigExtension extends TwigExtension
      */
     protected function getModelTemplate(String $modelName)
     {
-        return '@UI/Model/' . $modelName . '.twig';
+        return '@ShopUI/Model/' . $modelName . '.twig';
     }
 
     /**
@@ -87,6 +87,6 @@ class UIComponentsTwigExtension extends TwigExtension
      */
     protected function getComponentTemplate(String $componentType, String $componentName)
     {
-        return '@UI/Component/' . $componentType . '/' . $componentName . '/' . $componentName . '.twig';
+        return '@ShopUI/Component/' . $componentType . '/' . $componentName . '/' . $componentName . '.twig';
     }
 }
