@@ -14,8 +14,8 @@ use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface
 
 class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_COLLECTOR = 'collector client';
-    const PLUGIN_APPLICATION = 'application plugin';
+    const CLIENT_COLLECTOR = 'CLIENT_COLLECTOR';
+    const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     const PLUGIN_RESOURCE_CREATORS = 'PLUGIN_RESOURCE_CREATORS';
 
     /**
