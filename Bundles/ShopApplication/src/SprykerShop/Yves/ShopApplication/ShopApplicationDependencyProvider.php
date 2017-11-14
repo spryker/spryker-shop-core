@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ShopApplication;
 
-use Pyz\Yves\Twig\Plugin\TwigYves;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
@@ -16,7 +15,6 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
     const SERVICE_UTIL_DATE_TIME = 'util date time service';
     const PLUGIN_APPLICATION = 'application plugin';
-    const PLUGIN_TWIG = 'twig plugin';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -42,12 +40,6 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
-
-        $container[self::PLUGIN_TWIG] = function (Container $container) {
-            $twigPlugin = new TwigYves();
-
-            return $twigPlugin->getTwigYvesExtension($container[self::PLUGIN_APPLICATION]);
         };
 
         return $container;

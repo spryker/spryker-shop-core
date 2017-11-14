@@ -8,18 +8,9 @@
 namespace SprykerShop\Yves\CmsPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CmsPage\ResourceCreator\PageResourceCreatorPlugin;
 
 class CmsPageFactory extends AbstractFactory
 {
-
-    /**
-     * @return \SprykerShop\Yves\CmsPage\ResourceCreator\PageResourceCreatorPlugin
-     */
-    public function createPageResourceCreator()
-    {
-        return new PageResourceCreatorPlugin();
-    }
 
     /**
      * @return \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface

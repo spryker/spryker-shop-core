@@ -48,7 +48,6 @@ class ShopApplicationServiceProvider extends AbstractServiceProvider
         $this->setLogLevel();
 
         $this->addTwigExtension($this->application, [
-            $this->getFactory()->getTwigYvesExtension(),
             $this->getFactory()->createDateFormatterTwigExtension(),
         ]);
 

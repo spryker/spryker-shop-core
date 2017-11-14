@@ -18,7 +18,6 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
     const CMS_TWIG_CONTENT_RENDERER_PLUGIN = 'CMS_TWIG_CONTENT_RENDERER_PLUGIN';
     const CLIENT_CMS = 'CLIENT_CMS';
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_CMS_COLLECTOR = 'CLIENT_CMS_COLLECTOR';
     const STORE = 'STORE';
 
     /**
@@ -31,7 +30,6 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCmsTwigContentRendererPlugin($container);
         $container = $this->addCmsClient($container);
         $container = $this->addCustomerClient($container);
-        $container = $this->addCmsCollectorClient($container);
         $container = $this->addStore($container);
 
         return $container;
@@ -74,20 +72,6 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return $container->getLocator()->customer()->client();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addCmsCollectorClient(Container $container)
-    {
-        $container[static::CLIENT_CMS_COLLECTOR] = function (Container $container) {
-            return $container->getLocator()->cmsCollector()->client();
         };
 
         return $container;

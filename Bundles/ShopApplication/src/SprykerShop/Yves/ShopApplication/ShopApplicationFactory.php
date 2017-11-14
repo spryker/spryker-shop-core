@@ -49,14 +49,6 @@ class ShopApplicationFactory extends SprykerApplicationFactory
     }
 
     /**
-     * @return \Twig_Extension
-     */
-    public function getTwigYvesExtension()
-    {
-        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGIN_TWIG);
-    }
-
-    /**
      * @return \Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension
      */
     public function createDateFormatterTwigExtension()
