@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutPage;
 
-use Pyz\Yves\Shipment\Plugin\ShipmentFormDataProviderPlugin;
-use Pyz\Yves\Shipment\Plugin\ShipmentHandlerPlugin;
+use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentFormDataProviderPlugin;
+use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentHandlerPlugin;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
@@ -18,6 +18,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutToQuoteBridge;
 use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\CustomerStepHandler;
+use SprykerShop\Yves\MoneyWidget\Plugin\MoneyPlugin;
 
 class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -32,6 +33,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_CHECKOUT = 'CLIENT_CHECKOUT';
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     const CLIENT_CART = 'CLIENT_CART';
+    const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
+    const CLIENT_GLOSSARY = 'glossary client';
+
     const STORE = 'STORE';
 
     const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
@@ -39,6 +43,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_SHIPMENT_HANDLER = 'PLUGIN_SHIPMENT_HANDLER';
     const PLUGIN_SHIPMENT_FORM_DATA_PROVIDER = 'PLUGIN_SHIPMENT_FORM_DATA_PROVIDER';
     const PLUGIN_CHECKOUT_BREADCRUMB = 'PLUGIN_CHECKOUT_BREADCRUMB';
+    const PLUGIN_MONEY = 'PLUGIN_MONEY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -80,6 +85,18 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::CLIENT_CART] = function (Container $container) {
             return $container->getLocator()->cart()->client();
+        };
+
+        $container[self::CLIENT_SHIPMENT] = function (Container $container) {
+            return $container->getLocator()->shipment()->client();
+        };
+
+        $container[self::CLIENT_GLOSSARY] = function (Container $container) {
+            return $container->getLocator()->glossary()->client();
+        };
+
+        $container[static::PLUGIN_MONEY] = function () {
+            return new MoneyPlugin();
         };
 
         return $container;

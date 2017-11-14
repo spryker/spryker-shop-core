@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage\Form;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\SubFormDataProviders;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\SummaryForm;
 use SprykerShop\Yves\CheckoutPage\Form\Voucher\VoucherForm;
 use Spryker\Yves\Kernel\AbstractFactory;
@@ -19,7 +20,6 @@ use SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvi
 use SprykerShop\Yves\CustomerPage\Form\GuestForm;
 use SprykerShop\Yves\CustomerPage\Form\LoginForm;
 use SprykerShop\Yves\CustomerPage\Form\RegisterForm;
-use Pyz\Yves\Shipment\Form\ShipmentForm;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
@@ -73,7 +73,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Yves\Shipment\Form\ShipmentForm
+     * @return \SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm
      */
     protected function createShipmentForm()
     {

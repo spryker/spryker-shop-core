@@ -7,8 +7,12 @@
 
 namespace SprykerShop\Yves\CheckoutPage;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
+use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
 use SprykerShop\Yves\DiscountWidget\Handler\VoucherHandler;
 
@@ -98,5 +102,66 @@ class CheckoutPageFactory extends AbstractFactory
     public function getCheckoutBreadcrumbPlugin()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_CHECKOUT_BREADCRUMB);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\AbstractType
+     */
+    public function createShipmentForm()
+    {
+        return new ShipmentForm();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider
+     */
+    public function createShipmentDataProvider()
+    {
+        return new ShipmentFormDataProvider(
+            $this->getShipmentClient(),
+            $this->getGlossaryClient(),
+            $this->getStore(),
+            $this->getMoneyPlugin()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler
+     */
+    public function createShipmentHandler()
+    {
+        return new ShipmentHandler($this->getShipmentClient());
+    }
+
+    /**
+     * @return \Spryker\Client\Shipment\ShipmentClientInterface
+     */
+    public function getShipmentClient()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Client\Glossary\GlossaryClientInterface
+     */
+    public function getGlossaryClient()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
+     */
+    protected function getMoneyPlugin()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_MONEY);
+    }
+
+    /**
+     * @return Store
+     */
+    protected function getStore()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
     }
 }
