@@ -285,7 +285,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Yves\Customer\Form\GuestForm
+     * @return GuestForm
      */
     protected function createGuestForm()
     {

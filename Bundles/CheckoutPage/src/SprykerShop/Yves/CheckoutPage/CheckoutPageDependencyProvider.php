@@ -54,6 +54,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
+        $container = $this->addUtilValidateService($container);
         $container = $this->provideClients($container);
         $container = $this->providePlugins($container);
         $container = $this->provideStore($container);
