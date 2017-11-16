@@ -285,11 +285,19 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPage\Form\GuestForm
+     * @return \Pyz\Yves\Customer\Form\GuestForm
      */
     protected function createGuestForm()
     {
-        return new GuestForm();
+        return new GuestForm($this->getUtilValidateService());
+    }
+
+    /**
+     * @return \Spryker\Service\UtilValidate\UtilValidateServiceInterface
+     */
+    protected function getUtilValidateService()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_UTIL_VALIDATE);
     }
 
     /**

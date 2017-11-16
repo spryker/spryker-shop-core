@@ -38,6 +38,8 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
     const STORE = 'STORE';
 
+    const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+
     const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
     const PLUGIN_SHIPMENT_STEP_HANDLER = 'PLUGIN_SHIPMENT_STEP_HANDLER';
     const PLUGIN_SHIPMENT_HANDLER = 'PLUGIN_SHIPMENT_HANDLER';
@@ -56,6 +58,20 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->providePlugins($container);
         $container = $this->provideStore($container);
         $container = $this->addCheckoutBreadcrumbPluginPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilValidateService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+            return $container->getLocator()->utilValidate()->service();
+        };
 
         return $container;
     }
