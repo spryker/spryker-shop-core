@@ -16,7 +16,6 @@ class ShopUITwigExtension extends TwigExtension
     const FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE = 'atom';
     const FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE = 'molecule';
     const FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE = 'organism';
-    const FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE = 'template';
 
     /**
      * @return Twig_SimpleFilter[]
@@ -40,31 +39,24 @@ class ShopUITwigExtension extends TwigExtension
             ]),
 
             new Twig_SimpleFunction(self::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE, function ($componentName) {
-                return $this->getComponentTemplate('Atom', $componentName);
+                return $this->getComponentTemplate('atoms', $componentName);
             }, [
                 $this, 
                 self::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE
             ]),
 
             new Twig_SimpleFunction(self::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE, function ($componentName) {
-                return $this->getComponentTemplate('Molecule', $componentName);
+                return $this->getComponentTemplate('molecules', $componentName);
             }, [
                 $this, 
                 self::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE
             ]),
 
             new Twig_SimpleFunction(self::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE, function ($componentName) {
-                return $this->getComponentTemplate('Organism', $componentName);
+                return $this->getComponentTemplate('organisms', $componentName);
             }, [
                 $this, 
                 self::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE
-            ]),
-
-            new Twig_SimpleFunction(self::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE, function ($componentName) {
-                return $this->getComponentTemplate('Template', $componentName);
-            }, [
-                $this, 
-                self::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE
             ]),
         ];
     }
@@ -76,7 +68,7 @@ class ShopUITwigExtension extends TwigExtension
      */
     protected function getModelTemplate(String $modelName)
     {
-        return '@ShopUI/Model/' . $modelName . '.twig';
+        return '@ShopUI/models/' . $modelName . '.twig';
     }
 
     /**
@@ -85,8 +77,8 @@ class ShopUITwigExtension extends TwigExtension
      *
      * @return String
      */
-    protected function getComponentTemplate(String $componentType, String $componentName)
+    protected function getComponentTemplate(String $componentFolder, String $componentName)
     {
-        return '@ShopUI/Component/' . $componentType . '/' . $componentName . '/' . $componentName . '.twig';
+        return '@ShopUI/components/' . $componentFolder . '/' . $componentName . '/' . $componentName . '.twig';
     }
 }

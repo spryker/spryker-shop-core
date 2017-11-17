@@ -1,0 +1,11 @@
+{% extends model('component') %}
+
+{% set name = 'price-reduced' %}
+{% set amountOriginal = data.amountOriginal %}
+{% set amountReduced = data.amountReduced %}
+
+{% block body %}
+    <span class="stat catalog-price__price-reduced">{{ amountReduced }}</span> 
+    <span class="catalog-price__price-original">{{ amountOriginal }}</span>
+{% endblock %}
+

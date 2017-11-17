@@ -1,0 +1,15 @@
+.is-unordered-list {
+    margin-left: 16px;
+
+    & > li {
+        list-style: disc;
+    }
+}
+
+.is-ordered-list {
+    margin-left: 16px;
+
+    & > li {
+        list-style: decimal;
+    }
+}

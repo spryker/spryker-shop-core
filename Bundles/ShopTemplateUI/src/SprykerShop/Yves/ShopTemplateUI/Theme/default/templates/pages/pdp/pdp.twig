@@ -1,19 +1,18 @@
-{% block pageTitle -%}
-    {{ _view.product.metaTitle | default(_view.product.name) }}
-{%- endblock %}
-{% block pageKeywords -%}
-    {{ _view.product.metaKeywords | default(null) }}
-{%- endblock %}
-{% block pageDescription -%}
-    {{ _view.product.metaDescription | default(null) }}
-{%- endblock %}
+{% extends "@ShopLayout/layout/layout.twig" %}
+
+{% set productName = _view.product.name %}
+
+{% set title = productName %}
+{% set metaTitle = _view.product.metaTitle | default(productName) %}
+{% set metaKeywords = _view.product.metaKeywords | default(null) %}
+{% set metaDescription = _view.product.metaDescription | default(null) %}
 
 {% block breadcrumbItems %}
     {{ widget('ProductCategoryWidgetPlugin', _view.product) }}
 {% endblock %}
 
-{% block title %}
-    <h3>{{ _view.product.name }}</h3>
+{% block pageTitle %}
+    <h3>{{ productName }}</h3>
 {% endblock %}
 
 {% block outside %}
@@ -21,39 +20,24 @@
 {% endblock %}
 
 {% block content %}
-    {% block testblock %}
-        <h3>123</h3>
-    {% endblock %}
-
     <div class="row">
         <div class="small-12 medium-6 xlarge-7 xxlarge-8 columns">
             <div style="position: relative">
                 {{ widgetBlock('ProductImageWidgetPlugin', 'largeView', _view.product) }}
-
                 {{ widget('ProductAbstractLabelWidgetPlugin', _view.product) }}
             </div>
         </div>
 
         <div class="small-12 medium-6 xlarge-5 xxlarge-4 columns">
-
-            <div class="callout">
-                {% if _view.product.attributes.brand is defined %}<h5><small>{{ 'page.product.by' | trans }}</small> {{ _view.product.attributes.brand }}</h5>{% endif %}
-                <p>
-
-                    {% if _view.product.prices.ORIGINAL is defined %}
-                        <span class="stat catalog-price__price-reduced">{{ _view.product.price | money }}</span> <span class="catalog-price__price-original">{{ _view.product.prices.ORIGINAL | money }}</span>
-                    {% else %}
-                        <span class="stat">{{ _view.product.price | money }}</span>
-                    {% endif %}
-
-                    <br/>
-                    <small>{{ 'product.attribute.sku' | trans }}: {{ _view.product.sku }}</small>
-                </p>
-
-                {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', _view.product) }}
-
-                {% include '@ProductDetailPage/_product-detail-page/_partials/variants.twig' %}
-            </div>
+            {% include molecule('view-main') with {
+                data: {
+                    brand: _view.product.attributes.brand | default(null),
+                    price: _view.product.price,
+                    priceOriginal: _view.product.prices.ORIGINAL | default(null),
+                    sku: _view.product.sku,
+                    product: _view.product
+                }
+            } only %}
 
             {{ widget('ProductGroupWidgetPlugin', _view.product.idProductAbstract) }}
 
@@ -84,28 +68,17 @@
 
     <div class="row">
         <div class="small-12 columns">
-            <div class="callout">
-                <h5>{{ 'product.attribute.long_description' | trans }}</h5>
-                <p>{{ _view.product.description }}</p>
-
-                <h5>{{ 'page.product.details' | trans }}</h5>
-                <div class="row">
-                    {% for attributeName, attributeValue in _view.product.attributes if attributeName  %}
-
-                        <p class="small-12 medium-6 xlarge-4 xxlarge-3 columns">
-                            <strong>{{ ('product.attribute.'~attributeName) | trans }} </strong><br>
-                            {{ attributeValue }}
-                        </p>
-                    {% endfor %}
-                </div>
-            </div>
+            {% include molecule('view-details') with {
+                data: {
+                    description: _view.product.description,
+                    attributes: _view.product.attributes
+                }
+            } only %}
         </div>
     </div>
 
     {{ widgetBlock('ProductReviewWidgetPlugin', 'reviews', _view.product) }}
-
     {{ widget('SimilarProductsWidgetPlugin', _view.product) }}
-
     {{ widget('ProductCmsBlockWidgetPlugin', _view.product) }}
 
 {% endblock %}

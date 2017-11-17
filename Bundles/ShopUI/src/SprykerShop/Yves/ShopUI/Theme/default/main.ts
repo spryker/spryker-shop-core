@@ -1,18 +1,18 @@
 declare const require;
 
-import { bootstrap } from './Lib/app';
+import { bootstrap } from './app';
 
 function importAll(requireContext) {
     requireContext.keys().forEach(requireContext);
 }
 
-import './Style/base';
+import './styles/basics';
 
-importAll(require.context('./Component/Atom', true, /index\.ts$/));
-importAll(require.context('./Component/Molecule', true, /index\.ts$/));
-importAll(require.context('./Component/Organism', true, /index\.ts$/));
-importAll(require.context('./Component/Template', true, /index\.ts$/));
+importAll(require.context('./components/atoms', true, /index\.ts$/));
+importAll(require.context('./components/molecules', true, /index\.ts$/));
+importAll(require.context('./components/organisms', true, /index\.ts$/));
+importAll(require.context('./components/templates', true, /index\.ts$/));
 
-import './Style/util';
+import './styles/utils';
 
 document.addEventListener('DOMContentLoaded', bootstrap);

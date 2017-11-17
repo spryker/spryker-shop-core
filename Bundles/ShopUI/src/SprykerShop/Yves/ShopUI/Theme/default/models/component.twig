@@ -1,0 +1,84 @@
+
+{#
+ #
+ #
+ # Component API
+ # 
+ # @important: use components with 'only' keyword 
+ # and limit the scope to what you pass through data interface
+ #}
+
+{# @var {string} define container html tag #}
+{%- set tag = tag | default('div') -%}
+
+{# @var {string} define css BEM block name #}
+{%- set name = name | default('') -%}
+
+{# @var {string} define js selector #}
+{%- set selector = selector | default('js-' ~ name) -%}
+
+{# @var {boolean} define if javascrit is enabled for this components - selector is then rendered #}
+{%- set js = js | default(false) -%}
+
+{# @var {string} define addictional css class(es) #}
+{%- set class = class | default('') -%}
+
+{# @var {array[string]} define css BEM modifier's tails array #}
+{%- set modifiers = modifiers | default([]) -%}
+
+{# @var {object} define html5 attributes #}
+{%- set attributes = attributes | default({}) -%}
+
+{# @var {object} define data interface #}
+{%- set data = data | default({}) -%}
+
+{# @var {boolean} set debug mode #}
+{%- set debug = debug | default(false) -%}
+
+{#
+ #
+ #
+ # Component blocks
+ #}
+
+{# with debug=false the blocks are created but not rendered on page load #}
+{%- if debug -%}
+
+    {# create 'class', 'selector' and 'attr' blocks #}
+    {# to use them: {{ block('blockname') }} #}
+    
+
+    {# render BEM classes (block and modifiers) according to the name #}
+    {%- block _renderClasses -%}
+        {{name-}} 
+        {%- for modifier in modifiers %} {{name}}--{{modifier}}{% endfor -%}
+        {%- if class %} {{class-}}{% endif -%}
+        {%- if js %} {{selector-}}{% endif -%}
+    {%- endblock -%}
+
+    {# render html5 attributes #}
+    {%- block _renderAttributes -%}
+        {%- for attrname, attrvalue in attributes -%}
+            {%- if attrvalue is sameas(true) -%}
+                {{-attrname}}
+            {%- elseif attrvalue is not sameas(false) -%}
+                {{-attrname}}='{{attrvalue}}'
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endblock -%}
+
+    {# define the body block where to place component html/twig #}
+    {%- block body -%}{%- endblock -%}
+
+{%- endif -%}
+
+{#
+ #
+ #
+ # Component
+ #}
+{%- block component -%}
+    <{{-tag}} class="{{block('_renderClasses')}}" {{block('_renderAttributes')}}>
+        {{-block('body')-}}
+    </{{-tag-}}>
+{%- endblock -%}

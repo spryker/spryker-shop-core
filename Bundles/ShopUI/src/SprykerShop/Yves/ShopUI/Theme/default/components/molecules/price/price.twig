@@ -1,0 +1,9 @@
+{% extends model('component') %}
+
+{% set name = 'price' %}
+{% set amount = data.amount %}
+
+{% block body %}
+    <span class="stat">{{ amount }}</span>
+{% endblock %}
+

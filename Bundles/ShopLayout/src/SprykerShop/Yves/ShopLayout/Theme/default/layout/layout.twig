@@ -1,22 +1,11 @@
-<!doctype html>
-<html class="no-js" lang="{{ app.locale | slice(0, 2) }}">
+{% extends template('shop', 'layout') %}
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <meta name="description" content="{% block pageDescription %}{{ pageDescription | default('') | trans }}{% endblock %}" />
-    <meta name="keywords" content="{% block pageKeywords %}{{ pageKeywords | default('') | trans }}{% endblock %}" />
-    <meta name="generator" content="spryker" />
-    {% block pageMeta %}{% endblock %}
+{% set locale = app.locale | slice(0, 2) %}
+{% set title = title | default('global.spryker.shop') | trans %}
+{% set metaDescription = metaDescription | default('') | trans %}
+{% set metaKeywords = metaKeywords | default('') | trans %}
 
-    <link rel="stylesheet" href="/assets/default/css/vendor.css" />
-    <link rel="stylesheet" href="/assets/default/css/app.css" />
-    {% block stylesheets %}{% endblock %}
-
-    <title>{% block pageTitle %}{{ pageTitle | default('global.spryker.shop') | trans }}{% endblock %}</title>
-</head>
-
-<body data-component="main">
+{% block body %}
     {% block outside %}{% endblock %}
 
     <aside id="aside" class="hide-for-large __aside" tabindex="-1" data-component="aside">
@@ -64,7 +53,7 @@
                                     {% block breadcrumbItems %}{% endblock %}
                                 </ul>
                             </nav>
-                            {% block title %}{% endblock %}
+                            {% block pageTitle %}{% endblock %}
                         </div>
                     {% endblock %}
 
@@ -94,10 +83,4 @@
 
         </footer>
     </div>
-
-    <script src="/assets/default/js/vendor.js"></script>
-    <script src="/assets/default/js/app.js"></script>
-    {% block javascript %}{% endblock %}
-</body>
-
-</html>
+{% endblock %}
