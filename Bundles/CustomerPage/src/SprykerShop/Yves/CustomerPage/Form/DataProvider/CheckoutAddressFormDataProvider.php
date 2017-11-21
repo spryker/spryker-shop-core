@@ -7,7 +7,7 @@ namespace SprykerShop\Yves\CustomerPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Pyz\Client\Customer\CustomerClientInterface;
+use Spryker\Client\Customer\CustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -21,7 +21,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected $customerTransfer;
 
     /**
-     * @param \Pyz\Client\Customer\CustomerClientInterface $customerClient
+     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
      * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(CustomerClientInterface $customerClient, Store $store)

@@ -29,7 +29,7 @@ class CmsPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Client\Customer\CustomerClientInterface
+     * @return \Spryker\Client\Customer\CustomerClientInterface
      */
     public function getCustomerClient()
     {

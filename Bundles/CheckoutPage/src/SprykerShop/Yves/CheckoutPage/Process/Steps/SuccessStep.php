@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Pyz\Client\Customer\CustomerClientInterface;
+use Spryker\Client\Customer\CustomerClientInterface;
 use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SuccessStep extends AbstractBaseStep
 {
     /**
-     * @var \Pyz\Client\Customer\CustomerClientInterface
+     * @var \Spryker\Client\Customer\CustomerClientInterface
      */
     protected $customerClient;
 
@@ -26,7 +26,7 @@ class SuccessStep extends AbstractBaseStep
     protected $cartClient;
 
     /**
-     * @param \Pyz\Client\Customer\CustomerClientInterface $customerClient
+     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
      * @param \Spryker\Client\Cart\CartClientInterface $cartClient
      * @param string $stepRoute
      * @param string $escapeRoute

@@ -16,7 +16,7 @@ use Spryker\Yves\ProductReview\ProductReviewFactory as SprykerProductReviewFacto
 class ProductReviewWidgetFactory extends SprykerProductReviewFactory
 {
     /**
-     * @return \Pyz\Client\Customer\CustomerClientInterface
+     * @return \Spryker\Client\Customer\CustomerClientInterface
      */
     public function getCustomerClient()
     {
