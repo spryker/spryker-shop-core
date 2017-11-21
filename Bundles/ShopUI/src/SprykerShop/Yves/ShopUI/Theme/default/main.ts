@@ -11,7 +11,7 @@ import './styles/basics';
 importAll(require.context('./components/atoms', true, /index\.ts$/));
 importAll(require.context('./components/molecules', true, /index\.ts$/));
 importAll(require.context('./components/organisms', true, /index\.ts$/));
-importAll(require.context('./components/templates', true, /index\.ts$/));
+// importAll(require.context('.//templates', true, /index\.ts$/));
 
 import './styles/utils';
 

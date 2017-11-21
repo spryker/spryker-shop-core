@@ -1,6 +1,6 @@
 {% extends model('component') %}
 
-{% set name = 'view-main' %}
+{% set name = 'product-main-info' %}
 {% set sku = data.sku %}
 {% set price = data.price %}
 {% set product = data.product %}
@@ -20,7 +20,7 @@
             {% if priceOriginal %}
                 {% include molecule('price-reduced') with {
                     data: {
-                        amountOriginal: priceOriginal | money,
+                        amount: priceOriginal | money,
                         amonutReduced: price | money
                     }
                 } only %}
@@ -38,6 +38,6 @@
 
         {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', product) }}
 
-        {% include '@ProductDetailPage/_product-detail-page/_partials/variants.twig' %}
+        {# {% include '@ProductDetailPage/_product-detail-page/_partials/variants.twig' %} #}
     </div>
 {% endblock %}

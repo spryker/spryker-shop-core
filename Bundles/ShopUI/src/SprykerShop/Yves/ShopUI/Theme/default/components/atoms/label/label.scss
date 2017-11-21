@@ -1,0 +1,16 @@
+@import '../../../styles/settings';
+@import '../../../styles/helpers';
+
+@mixin label($name: '.label') {
+    #{$name} {
+        margin-right: 16px;
+
+        &--required {
+            &::after {
+                content: ' *';
+            }
+        }
+
+        @content;
+    }
+}

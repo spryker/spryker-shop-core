@@ -1,0 +1,16 @@
+{% extends model('component') %}
+
+{% set name = 'input' %}
+{% set type = data.type | default('text') %}
+{% set value = data.value | default(null) %}
+
+{% block attributes %}
+    {{parent()}}
+    type="{{ type }}"
+    {%- if value is not null %} value="{{ value }}"{% endif -%}
+    {# <input
+            
+            class="{{ block('class') }} {{ block('selector') }}"
+            {%- block widgetAttributes %} {{ block('attr') }}{% endblock -%}
+             /> #}
+{% endblock %}

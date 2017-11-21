@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% set name = 'checkbox' %}
+{% set value = data.value | default(null) %}
+{% set checked = data.checked | default(false) %}
+
+{% block body %}
+    <label>
+        <input
+                type="checkbox"
+                class="{{ name }}__input"
+                {%- if value is not null %} value="{{ value }}"{% endif -%}
+                {%- if checked %} checked="checked"{% endif -%}
+                {%- block widgetAttributes %}{% endblock -%} />
+
+        <span class="{{ name }}__check fa fa-check"></span>
+    </label>
+{% endblock %}

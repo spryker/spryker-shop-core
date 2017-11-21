@@ -1,0 +1,49 @@
+@import '../../../styles/settings';
+@import '../../../styles/helpers';
+
+$a-radio-size: 20px;
+$a-radio-circle-size: 8px;
+
+@mixin radio($name: '.radio') {
+    #{$name} {
+        float: left;
+        display: inline-block;
+        position: relative;
+        width: $a-radio-size;
+        height: $a-radio-size;
+        margin-right: 4px;
+        border: 1px solid $color-input-border;
+        border-radius: 100%;
+        background-color: $color-bg;
+        text-align: center;
+        overflow: hidden;
+
+        &__input {
+            @include is-invisible;
+            position: absolute;
+            top: - $a-radio-size;
+        }
+
+        &__circle {
+            @include is-invisible;
+            @include transition-visibility;
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: $a-radio-circle-size;
+            height: $a-radio-circle-size;
+            margin: auto;
+            border-radius: 100%;
+            background-color: $color-main;
+        }
+
+        &__input:checked + &__circle {
+            @include is-visible;
+        }
+
+        @content;
+    }
+}
