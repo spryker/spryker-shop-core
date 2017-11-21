@@ -188,7 +188,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Client\Customer\CustomerClientInterface TODO: client should come from core or shop
+     * @return \Spryker\Client\Customer\CustomerClientInterface TODO: client should come from core or shop
      */
     public function getCustomerClient()
     {

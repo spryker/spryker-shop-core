@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Pyz\Client\Customer\CustomerClientInterface;
+use Spryker\Client\Customer\CustomerClientInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
@@ -23,7 +23,7 @@ class CustomerStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $customerStepHandler;
 
     /**
-     * @var \Pyz\Client\Customer\CustomerClientInterface
+     * @var \Spryker\Client\Customer\CustomerClientInterface
      */
     protected $customerClient;
 
@@ -38,7 +38,7 @@ class CustomerStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $externalRedirect;
 
     /**
-     * @param \Pyz\Client\Customer\CustomerClientInterface $customerClient
+     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface $customerStepHandler
      * @param string $stepRoute
      * @param string $escapeRoute

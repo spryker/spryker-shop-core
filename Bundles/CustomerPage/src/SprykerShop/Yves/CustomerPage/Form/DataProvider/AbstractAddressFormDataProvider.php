@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form\DataProvider;
 
-use Pyz\Client\Customer\CustomerClientInterface;
+use Spryker\Client\Customer\CustomerClientInterface;
 use Spryker\Shared\Kernel\Store;
 
 abstract class AbstractAddressFormDataProvider
@@ -15,7 +15,7 @@ abstract class AbstractAddressFormDataProvider
     const COUNTRY_GLOSSARY_PREFIX = 'countries.iso.';
 
     /**
-     * @var \Pyz\Client\Customer\CustomerClientInterface
+     * @var \Spryker\Client\Customer\CustomerClientInterface
      */
     protected $customerClient;
 
@@ -25,7 +25,7 @@ abstract class AbstractAddressFormDataProvider
     protected $store;
 
     /**
-     * @param \Pyz\Client\Customer\CustomerClientInterface $customerClient
+     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
      * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(CustomerClientInterface $customerClient, Store $store)

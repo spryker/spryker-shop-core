@@ -112,7 +112,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Client\Customer\CustomerClientInterface
+     * @return \Spryker\Client\Customer\CustomerClientInterface
      */
     protected function getCustomerClient()
     {
