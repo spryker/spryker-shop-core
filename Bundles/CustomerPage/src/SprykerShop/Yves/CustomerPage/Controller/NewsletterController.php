@@ -8,6 +8,10 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
+use Generated\Shared\Transfer\NewsletterTypeTransfer;
+use Spryker\Shared\Newsletter\NewsletterConstants;
 use SprykerShop\Yves\CustomerPage\Form\NewsletterSubscriptionForm;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,10 +84,12 @@ class NewsletterController extends AbstractCustomerController
      */
     protected function processSubscription(CustomerTransfer $customerTransfer)
     {
-        $subscriptionResult = $this->getFactory()
-            ->getNewsletterPageClient()
-            ->subscribeForEditorialNewsletter($customerTransfer);
+        $request = $this->createNewsletterSubscriptionRequest($customerTransfer);
+        $subscriptionResponse = $this->getFactory()
+            ->getNewsletterClient()
+            ->subscribeWithDoubleOptIn($request);
 
+        $subscriptionResult = current($subscriptionResponse->getSubscriptionResults());
         if ($subscriptionResult->getIsSuccess()) {
             $this->addSuccessMessage(self::MESSAGE_SUBSCRIPTION_SUCCESS);
 
@@ -100,9 +106,11 @@ class NewsletterController extends AbstractCustomerController
      */
     protected function processUnsubscription(CustomerTransfer $customerTransfer)
     {
+        $request = $this->createNewsletterSubscriptionRequest($customerTransfer);
+
         $this->getFactory()
-            ->getNewsletterPageClient()
-            ->unsubscribeFromAllNewsletters($customerTransfer);
+            ->getNewsletterClient()
+            ->unsubscribe($request);
 
         $this->addSuccessMessage(self::MESSAGE_UNSUBSCRIPTION_SUCCESS);
     }
@@ -114,12 +122,36 @@ class NewsletterController extends AbstractCustomerController
      */
     protected function getFormData(CustomerTransfer $customerTransfer)
     {
+        $request = $this->createNewsletterSubscriptionRequest($customerTransfer);
+
         $subscriptionResultTransfer = $this->getFactory()
-            ->getNewsletterPageClient()
-            ->checkEditorialNewsletterSubscription($customerTransfer);
+            ->getNewsletterClient()
+            ->checkSubscription($request);
 
         return [
-            NewsletterSubscriptionForm::FIELD_SUBSCRIBE => $subscriptionResultTransfer->getIsSuccess(),
+            NewsletterSubscriptionForm::FIELD_SUBSCRIBE => $subscriptionResultTransfer->getSubscriptionResults()[0]->getIsSuccess(),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param string|null $subscriberKey
+     *
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer
+     */
+    protected function createNewsletterSubscriptionRequest(CustomerTransfer $customerTransfer, $subscriberKey = null)
+    {
+        $subscriptionRequest = new NewsletterSubscriptionRequestTransfer();
+
+        $subscriber = new NewsletterSubscriberTransfer();
+        $subscriber->setFkCustomer($customerTransfer->getIdCustomer());
+        $subscriber->setEmail($customerTransfer->getEmail());
+        $subscriber->setSubscriberKey($subscriberKey);
+
+        $subscriptionRequest->setNewsletterSubscriber($subscriber);
+        $subscriptionRequest->addSubscriptionType((new NewsletterTypeTransfer())
+            ->setName(NewsletterConstants::DEFAULT_NEWSLETTER));
+
+        return $subscriptionRequest;
     }
 }

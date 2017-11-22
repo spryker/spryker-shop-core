@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\Container;
 class NewsletterWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    const CLIENT_NEWSLETTER = 'CLIENT_NEWSLETTER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -24,6 +25,7 @@ class NewsletterWidgetDependencyProvider extends AbstractBundleDependencyProvide
         parent::provideDependencies($container);
 
         $container = $this->addUtilValidateService($container);
+        $container = $this->addNewsletterClient($container);
 
         return $container;
     }
@@ -37,6 +39,20 @@ class NewsletterWidgetDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
             return $container->getLocator()->utilValidate()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addNewsletterClient(Container $container)
+    {
+        $container[static::CLIENT_NEWSLETTER] = function (Container $container) {
+            return $container->getLocator()->newsletter()->client();
         };
 
         return $container;

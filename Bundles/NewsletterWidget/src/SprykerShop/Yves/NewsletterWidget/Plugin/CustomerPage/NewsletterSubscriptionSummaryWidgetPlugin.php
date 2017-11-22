@@ -7,20 +7,22 @@
 
 namespace SprykerShop\Yves\NewsletterWidget\Plugin\CustomerPage;
 
-use Generated\Shared\Transfer\CustomerOverviewResponseTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\NewsletterWidget\NewsletterSubscriptionSummaryWidgetPluginInterface;
 
 class NewsletterSubscriptionSummaryWidgetPlugin extends AbstractWidgetPlugin implements NewsletterSubscriptionSummaryWidgetPluginInterface
 {
+
     /**
-     * @param \Generated\Shared\Transfer\CustomerOverviewResponseTransfer $customerOverviewResponseTransfer
+     * @param bool $isSubscribed
      *
      * @return void
      */
-    public function initialize(CustomerOverviewResponseTransfer $customerOverviewResponseTransfer): void
+    public function initialize($isSubscribed): void
     {
-        $this->addParameter('isSubscribed', $customerOverviewResponseTransfer->getIsSubscribed());
+        $this->addParameter('isSubscribed',
+            $isSubscribed
+        );
     }
 
     /**

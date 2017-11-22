@@ -96,11 +96,11 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Client\NewsletterWidget\NewsletterWidgetClientInterface
+     * @return \Spryker\Client\Newsletter\NewsletterClientInterface
      */
-    public function getNewsletterPageClient()
+    public function getNewsletterClient()
     {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_NEWSLETTER_PAGE);
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_NEWSLETTER);
     }
 
     /**

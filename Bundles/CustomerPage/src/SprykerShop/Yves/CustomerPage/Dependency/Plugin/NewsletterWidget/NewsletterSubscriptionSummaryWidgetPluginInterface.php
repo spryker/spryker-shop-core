@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin\NewsletterWidget;
 
-use Generated\Shared\Transfer\CustomerOverviewResponseTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface NewsletterSubscriptionSummaryWidgetPluginInterface extends WidgetPluginInterface
@@ -15,9 +14,9 @@ interface NewsletterSubscriptionSummaryWidgetPluginInterface extends WidgetPlugi
     public const NAME = 'NewsletterSubscriptionSummaryWidgetPlugin';
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerOverviewResponseTransfer $customerOverviewResponseTransfer
+     * @param bool $orderListTransfer
      *
      * @return void
      */
-    public function initialize(CustomerOverviewResponseTransfer $customerOverviewResponseTransfer): void;
+    public function initialize($orderListTransfer): void;
 }

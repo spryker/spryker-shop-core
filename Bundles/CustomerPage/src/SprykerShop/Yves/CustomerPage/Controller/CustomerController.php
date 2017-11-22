@@ -7,15 +7,17 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
-use Generated\Shared\Transfer\CustomerOverviewRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
+use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 
 /**
- * @method \SprykerShop\Client\CustomerPage\CustomerPageClientInterface getClient()
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class CustomerController extends AbstractCustomerController
@@ -42,34 +44,17 @@ class CustomerController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGOUT);
         }
 
-        $overviewRequest = $this->createOverviewRequest($customerTransfer);
-
-        $overviewResponse = $this->getClient()->getCustomerOverview($overviewRequest);
+        $orderListTransfer = $this->createOrderListTransfer($customerTransfer);
+        $orderList = $this->getFactory()->getSalesClient()->getPaginatedOrder($orderListTransfer);
 
         $data = [
             'customer' => $customerTransfer,
-            'orderList' => $overviewResponse->getOrderList()->getOrders(),
+            'orderList' => $orderList->getOrders(),
             'addresses' => $this->getDefaultAddresses($customerTransfer),
-            'overviewResponse' => $overviewResponse,
+            'isSubscribed' => $this->getIsSubscribed($customerTransfer),
         ];
 
         return $this->view($data, $this->getFactory()->getCustomerOverviewWidgetPlugins());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerOverviewRequestTransfer
-     */
-    protected function createOverviewRequest(CustomerTransfer $customerTransfer)
-    {
-        $orderListTransfer = $this->createOrderListTransfer($customerTransfer);
-
-        $overviewRequestTransfer = new CustomerOverviewRequestTransfer();
-        $overviewRequestTransfer->setCustomer($customerTransfer);
-        $overviewRequestTransfer->setOrderList($orderListTransfer);
-
-        return $overviewRequestTransfer;
     }
 
     /**
@@ -127,5 +112,33 @@ class CustomerController extends AbstractCustomerController
         }
 
         return $addresses;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
+     */
+    protected function getIsSubscribed(CustomerTransfer $customerTransfer)
+    {
+        $subscriptionRequestTransfer = new NewsletterSubscriptionRequestTransfer();
+
+        $subscriberTransfer = new NewsletterSubscriberTransfer();
+        $subscriberTransfer->setFkCustomer($customerTransfer->getIdCustomer());
+        $subscriberTransfer->setEmail($customerTransfer->getEmail());
+        $subscriptionRequestTransfer->setNewsletterSubscriber($subscriberTransfer);
+
+        $newsletterTypeTransfer = new NewsletterTypeTransfer();
+        $newsletterTypeTransfer->setName(NewsletterConstants::DEFAULT_NEWSLETTER);
+
+        $subscriptionRequestTransfer->addSubscriptionType($newsletterTypeTransfer);
+
+        $subscriptionResponseTransfer = $this->getFactory()
+            ->getNewsletterClient()
+            ->checkSubscription($subscriptionRequestTransfer);
+
+        $result = current($subscriptionResponseTransfer->getSubscriptionResults());
+
+        return $result->getisSuccess();
     }
 }

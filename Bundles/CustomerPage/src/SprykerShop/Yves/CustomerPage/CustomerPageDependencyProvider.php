@@ -20,7 +20,7 @@ use SprykerShop\Yves\NewsletterWidget\Plugin\CustomerPage\NewsletterSubscription
 class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_CUSTOMER = 'customer client';
-    const CLIENT_NEWSLETTER_PAGE = 'CLIENT_NEWSLETTER_PAGE';
+    const CLIENT_NEWSLETTER = 'CLIENT_NEWSLETTER';
     const CLIENT_SALES = 'client client';
     const PLUGIN_APPLICATION = 'application plugin';
     const PLUGIN_AUTHENTICATION_HANDLER = 'authentication plugin';
@@ -61,8 +61,8 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->sales()->client();
         };
 
-        $container[self::CLIENT_NEWSLETTER_PAGE] = function (Container $container) {
-            return $container->getLocator()->newsletterWidget()->client();
+        $container[self::CLIENT_NEWSLETTER] = function (Container $container) {
+            return $container->getLocator()->newsletter()->client();
         };
 
         return $container;
