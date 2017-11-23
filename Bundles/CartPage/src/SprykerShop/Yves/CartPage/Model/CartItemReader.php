@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Client\CartPage\Model;
+namespace SprykerShop\Yves\CartPage\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class CartItemReader implements CartItemReaderInterface
 {
     /**
-     * @var \SprykerShop\Client\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
+     * @var \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
      */
     protected $cartItemTransformerPlugins;
 
     /**
-     * @param \SprykerShop\Client\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[] $cartItemTransformerPlugins
+     * @param \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[] $cartItemTransformerPlugins
      */
     public function __construct(array $cartItemTransformerPlugins)
     {

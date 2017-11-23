@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Client\ProductBundleWidget\Plugin;
+namespace SprykerShop\Yves\ProductBundleWidget\Plugin\CartPage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Kernel\AbstractPlugin;
-use SprykerShop\Client\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface;
+use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface;
 
 /**
- * @method \SprykerShop\Client\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */
 class ProductBundleCartItemTransformerPlugin extends AbstractPlugin implements CartItemTransformerPluginInterface
 {

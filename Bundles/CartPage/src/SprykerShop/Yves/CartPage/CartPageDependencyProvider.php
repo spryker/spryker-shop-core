@@ -15,13 +15,14 @@ use SprykerShop\Yves\ProductDetailPage\Plugin\StorageProductMapperPlugin;
 
 class CartPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_CALCULATION = 'calculation client';
-    const CLIENT_CART = 'cart client';
-    const PLUGIN_APPLICATION = 'application plugin';
-    const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
-    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
-    const PLUGIN_STORAGE_PRODUCT_MAPPER = 'PLUGIN_STORAGE_PRODUCT_MAPPER';
-    const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
+    public const PLUGIN_CART_ITEM_TRANSFORMERS = 'PLUGIN_CART_ITEM_TRANSFORMERS';
+    public const CLIENT_CALCULATION = 'calculation client';
+    public const CLIENT_CART = 'cart client';
+    public const PLUGIN_APPLICATION = 'application plugin';
+    public const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
+    public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    public const PLUGIN_STORAGE_PRODUCT_MAPPER = 'PLUGIN_STORAGE_PRODUCT_MAPPER';
+    public const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -32,8 +33,8 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->provideClients($container);
         $container = $this->providePlugins($container);
-
         $container = $this->addCartPageWidgetPlugins($container);
+        $container = $this->addCartItemTransformerPlugins($container);
 
         return $container;
     }
@@ -106,6 +107,30 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return string[]
      */
     protected function getCartPageWidgetPlugins(Container $container): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCartItemTransformerPlugins(Container $container)
+    {
+        $container[static::PLUGIN_CART_ITEM_TRANSFORMERS] = function (Container $container) {
+            return $this->getCartItemTransformerPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
+     */
+    protected function getCartItemTransformerPlugins(Container $container)
     {
         return [];
     }

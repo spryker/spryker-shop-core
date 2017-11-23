@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CartPage;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Handler\CartOperationHandler;
 use SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler;
+use SprykerShop\Yves\CartPage\Model\CartItemReader;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
@@ -157,5 +158,21 @@ class CartPageFactory extends AbstractFactory
     protected function getProductClient()
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_PRODUCT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Model\CartItemReaderInterface
+     */
+    public function createCartItemReader()
+    {
+        return new CartItemReader($this->getCartItemTransformerPlugins());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
+     */
+    protected function getCartItemTransformerPlugins()
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_CART_ITEM_TRANSFORMERS);
     }
 }
