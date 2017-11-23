@@ -6,9 +6,7 @@ import Component from '../models/component';
 export default class Bootstrapper {
 
     start(registry: Registry): Promise<void> { 
-        const candidates = registry.getAvailable();
-
-        return this.mountComponents(candidates)
+        return this.mountComponents(registry.candidates)
             .then(this.flattenComponentArrays)
             .then(this.triggerComponentsInit)
             .then(this.triggerComponentsReady);

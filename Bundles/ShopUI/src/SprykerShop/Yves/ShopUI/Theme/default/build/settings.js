@@ -7,13 +7,15 @@ const path = require('path');
 const oryx = require('@spryker/oryx');
 const argv = require('yargs').argv;
 
+const theme = 'default';
 const rootDir = process.cwd();
 const srcDir = path.join(__dirname, '..');
 const publicPath = '/public/Yves/assets/';
 const publicDir = path.join(rootDir, publicPath);
 
 const settings = {
-    name: 'yves_default',
+    name: `yves_${theme}`,
+    theme,
 
     options: {
         isProduction: !!argv.production,
@@ -26,6 +28,43 @@ const settings = {
         srcDir,
         publicPath,
         publicDir
+    },
+
+    entries: {
+        spryker: {
+            dirs: [
+                rootDir
+            ],
+            patterns: [
+                `**/spryker/spryker-shop/**/src/SprykerShop/Yves/*/Theme/${theme}/components/**/index.ts`,
+                '!/config/**',
+                '!/data/**',
+                '!/deploy/**',
+                '!/node_modules/**',
+                '!/public/**',
+                '!/src/**',
+                '!/test/**'
+            ],
+            description: 'loading Spryker components...'
+        },
+
+        project: {
+            dirs: [
+                rootDir
+            ],
+            patterns: [
+                `**/Theme/${theme}/components/**/index.ts`,
+                '!config/**',
+                '!data/**',
+                '!deploy/**',
+                '!node_modules/**',
+                '!public/**',
+                '!test/**',
+                '!vendor/**',
+                '!**/spryker/spryker-shop/**'
+            ],
+            description: 'loading project component...'
+        }
     }
 }
 

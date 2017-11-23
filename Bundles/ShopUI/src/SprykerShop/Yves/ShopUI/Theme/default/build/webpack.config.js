@@ -10,22 +10,11 @@ const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const settings = require('./settings');
 
-const baseCssRegex = /ShopUI\/\S+\/styles\/basics(\/\S+)?\.scss$/;
-const baseCss = new ExtractTextPlugin({
-    filename: `css/${settings.name}.basics.css`
-});
-
-const utilCssRegex = /ShopUI\/\S+\/styles\/utils(\/\S+)?\.scss$/;
-const utilCss = new ExtractTextPlugin({
-    filename: `css/${settings.name}.utils.css`
-});
-
-const css = new ExtractTextPlugin({
-    filename: `css/${settings.name}.[name].css`,
-    allChunks: true
-});
-
-const cssExtractSettings = {
+/**
+ * 
+ * ExtractTextPlugin
+ */
+const cssPluginSettings = {
     fallback: 'style-loader',
     use: [{
         loader: 'css-loader',
@@ -40,24 +29,56 @@ const cssExtractSettings = {
     }]
 };
 
-let devtool = 'inline-source-map';
-let postCssPlugins = [];
+const basicsCssRegex = /ShopUI\/\S+\/styles\/basics(\/\S+)?\.scss$/;
+const basicsCssPlugin = new ExtractTextPlugin({
+    filename: `css/${settings.name}.basics.css`
+});
 
+const utilsCssRegex = /ShopUI\/\S+\/styles\/utils(\/\S+)?\.scss$/;
+const utilsCssPlugin = new ExtractTextPlugin({
+    filename: `css/${settings.name}.utils.css`
+});
+
+const shopCssPlugin = new ExtractTextPlugin({
+    filename: `css/${settings.name}.[name].css`,
+    allChunks: true
+});
+
+/**
+ * 
+ * shop entry points (oryx)
+ */
+const sprykerEntries = oryx.find(settings.entries.spryker, []);
+const projectEntries = oryx.find(settings.entries.project, []);
+const shopEntries = [
+    ...new Set([
+        path.join(__dirname, '../main.ts'),
+        ...sprykerEntries,
+        ...projectEntries
+    ])
+];
+
+/**
+ * 
+ * postCss
+ */
+const postCssPlugins = [];
 if (settings.options.isProduction) {
-    devtool = false;
-
-    postCssPlugins = [
+    postCssPlugins.push(
         autoprefixer({
             browsers: ['last 4 versions']
         })
-    ];
+    )
 }
 
+/**
+ * 
+ * configuration
+ */
 const config = {
     context: settings.paths.rootDir,
     stats: settings.options.isVerbose ? 'verbose' : 'errors-only',
-    devtool,
-
+    devtool: settings.options.isProduction ? false : 'inline-source-map',
     watch: settings.options.isWatching,
     watchOptions: {
         aggregateTimeout: 300,
@@ -66,7 +87,7 @@ const config = {
     },
 
     entry: {
-        shop: path.join(__dirname, '../main.ts')
+        shop: shopEntries
     },
 
     output: {
@@ -77,7 +98,10 @@ const config = {
     },
 
     resolve: {
-        extensions: ['.ts', '.js', '.json', '.css', '.scss']
+        extensions: ['.ts', '.js', '.json', '.css', '.scss'],
+        alias: {
+            'ShopUI': settings.paths.srcDir
+        }
     },
 
     resolveLoader: {
@@ -94,22 +118,26 @@ const config = {
             options: {
                 configFile: path.join(__dirname, './tsconfig.json'),
                 compilerOptions: {
-                    baseUrl: settings.paths.rootDir
+                    baseUrl: settings.paths.rootDir,
+                    paths: {
+                        '*': ['*', settings.paths.srcDir + '/*'],
+                        'ShopUI/*': [settings.paths.srcDir + '/*']
+                    }
                 }
             },
         }, {
-            test: baseCssRegex,
-            loader: baseCss.extract(cssExtractSettings)
+            test: basicsCssRegex,
+            loader: basicsCssPlugin.extract(cssPluginSettings)
         }, {
-            test: utilCssRegex,
-            loader: utilCss.extract(cssExtractSettings)
+            test: utilsCssRegex,
+            loader: utilsCssPlugin.extract(cssPluginSettings)
         }, {
             test: /\.s?css/i,
             exclude: [
-                baseCssRegex,
-                utilCssRegex
+                basicsCssRegex,
+                utilsCssRegex
             ],
-            loader: css.extract(cssExtractSettings)
+            loader: shopCssPlugin.extract(cssPluginSettings)
         }, {
             test: /\.(ttf|woff2?|eot|svg|otf)\??(\d*\w*=?\.?)+$/i,
             use: [{
@@ -132,21 +160,25 @@ const config = {
     },
 
     plugins: [
+        basicsCssPlugin,
+        utilsCssPlugin,
+        shopCssPlugin,
+
         new webpack.LoaderOptionsPlugin({
             options: {
                 context: settings.paths.rootDir,
                 postcss: postCssPlugins
             }
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'shop'
+        new webpack.DefinePlugin({
+            PRODUCTION: settings.options.isProduction
         }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'shop'
+        // }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'manifest'
-        }),
-        baseCss,
-        utilCss,
-        css
+        })
     ]
 };
 

@@ -1,4 +1,4 @@
-{% extends "@ShopLayout/layout/layout.twig" %}
+{% extends template('layout', 'ShopLayout') %}
 
 {% set productName = _view.product.name %}
 
@@ -68,7 +68,7 @@
 
     <div class="row">
         <div class="small-12 columns">
-            {% include molecule('view-details') with {
+            {% include molecule('product-detail-info') with {
                 data: {
                     description: _view.product.description,
                     attributes: _view.product.attributes

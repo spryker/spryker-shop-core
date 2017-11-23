@@ -11,8 +11,4 @@ export default class Registry {
     add(candidate: Candidate): number {
         return this.candidates.push(candidate);
     }
-
-    getAvailable(): Candidate[] { 
-        return this.candidates.filter(candidate => candidate.existsInDOM)
-    }
 }

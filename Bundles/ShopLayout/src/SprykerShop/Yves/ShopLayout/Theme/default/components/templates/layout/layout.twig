@@ -1,5 +1,6 @@
-{% extends template('shop', 'layout') %}
+{% extends template('main') %}
 
+{% set name = 'layout' %}
 {% set locale = app.locale | slice(0, 2) %}
 {% set title = title | default('global.spryker.shop') | trans %}
 {% set metaDescription = metaDescription | default('') | trans %}
