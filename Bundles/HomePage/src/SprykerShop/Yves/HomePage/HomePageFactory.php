@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\HomePage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\FeaturedProductWidget\Plugin\HomePage\FeaturedProductListWidgetPlugin;
 
 class HomePageFactory extends AbstractFactory
 {
@@ -26,11 +25,7 @@ class HomePageFactory extends AbstractFactory
      */
     public function getHomePageWidgetPlugins(): array
     {
-        // TODO: get from dependency provider
-        return [
-            // TODO: get from project level
-            FeaturedProductListWidgetPlugin::class,
-        ];
+        return [];
     }
 
 }
