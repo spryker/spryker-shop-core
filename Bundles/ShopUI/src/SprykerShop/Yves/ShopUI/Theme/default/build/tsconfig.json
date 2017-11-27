@@ -1,25 +1,22 @@
 {
     "compilerOptions": {
-        "outDir": "public/Yves/assets/",
         "sourceMap": true,
         "noImplicitAny": false,
-        "module": "commonjs",
+        "module": "esnext",
         "moduleResolution": "node",
+        "removeComments": true,
         "target": "es5",
-        "allowJs": true,
         "lib": [
             "dom",
-            "es2015",
             "es5",
-            "es6"
+            "es6",
+            "es7"
         ]
     },
+    "files": [
+        "../main.ts"
+    ],
     "exclude": [
-        "node_modules/*",
-        "public/*",
-        "src/*",
-        "deploy/*",
-        "assets/*",
-        "config/*"
+        "./"
     ]
 }

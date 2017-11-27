@@ -12,6 +12,19 @@ const settings = require('./settings');
 
 /**
  * 
+ * shop entry points (oryx)
+ */
+const sprykerComponentEntries = oryx.find(settings.entries.spryker, []);
+const projectComponentEntries = oryx.find(settings.entries.project, []);
+const componentEntries = [
+    ...new Set([
+        ...sprykerComponentEntries,
+        ...projectComponentEntries
+    ])
+];
+
+/**
+ * 
  * ExtractTextPlugin
  */
 const cssPluginSettings = {
@@ -39,24 +52,10 @@ const utilsCssPlugin = new ExtractTextPlugin({
     filename: `css/${settings.name}.utils.css`
 });
 
-const shopCssPlugin = new ExtractTextPlugin({
+const appCssPlugin = new ExtractTextPlugin({
     filename: `css/${settings.name}.[name].css`,
     allChunks: true
 });
-
-/**
- * 
- * shop entry points (oryx)
- */
-const sprykerEntries = oryx.find(settings.entries.spryker, []);
-const projectEntries = oryx.find(settings.entries.project, []);
-const shopEntries = [
-    ...new Set([
-        path.join(__dirname, '../main.ts'),
-        ...sprykerEntries,
-        ...projectEntries
-    ])
-];
 
 /**
  * 
@@ -87,7 +86,10 @@ const config = {
     },
 
     entry: {
-        shop: shopEntries
+        app: [
+            path.join(__dirname, '../main.ts'),
+            ...componentEntries
+        ]
     },
 
     output: {
@@ -116,9 +118,10 @@ const config = {
             test: /\.ts$/,
             loader: 'ts-loader',
             options: {
-                configFile: path.join(__dirname, './tsconfig.json'),
+                configFile: path.join(__dirname, 'tsconfig.json'),
                 compilerOptions: {
                     baseUrl: settings.paths.rootDir,
+                    outDir: settings.paths.publicPath,
                     paths: {
                         '*': ['*', settings.paths.srcDir + '/*'],
                         'ShopUI/*': [settings.paths.srcDir + '/*']
@@ -137,7 +140,7 @@ const config = {
                 basicsCssRegex,
                 utilsCssRegex
             ],
-            loader: shopCssPlugin.extract(cssPluginSettings)
+            loader: appCssPlugin.extract(cssPluginSettings)
         }, {
             test: /\.(ttf|woff2?|eot|svg|otf)\??(\d*\w*=?\.?)+$/i,
             use: [{
@@ -162,7 +165,7 @@ const config = {
     plugins: [
         basicsCssPlugin,
         utilsCssPlugin,
-        shopCssPlugin,
+        appCssPlugin,
 
         new webpack.LoaderOptionsPlugin({
             options: {
@@ -170,14 +173,19 @@ const config = {
                 postcss: postCssPlugins
             }
         }),
+
         new webpack.DefinePlugin({
             PRODUCTION: settings.options.isProduction
         }),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: 'shop'
-        // }),
+
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'manifest'
+            name: 'app',
+            minChunks: 2
+        }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest',
+            minChunks: Infinity
         })
     ]
 };

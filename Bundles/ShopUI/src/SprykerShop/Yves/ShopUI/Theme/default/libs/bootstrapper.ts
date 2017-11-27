@@ -1,12 +1,13 @@
 import Logger from './logger';
-import Registry from './registry';
 import Candidate from './candidate';
 import Component from '../models/component';
 
 export default class Bootstrapper {
 
-    start(registry: Registry): Promise<void> { 
-        return this.mountComponents(registry.candidates)
+    start(registry: Map<string, Candidate>): Promise<void> { 
+        const candidates = Array.from(registry.values());
+
+        return this.mountComponents(candidates)
             .then(this.flattenComponentArrays)
             .then(this.triggerComponentsInit)
             .then(this.triggerComponentsReady);
@@ -14,7 +15,7 @@ export default class Bootstrapper {
 
     async mountComponents(candidates: Candidate[]): Promise<Component[][]> {
         return Promise.all(
-            candidates.map(candidate => candidate.mountComponents())
+            candidates.map(candidate => candidate.mount())
         );
     }
 

@@ -9,7 +9,7 @@ export default class Candidate {
         this.importer = importer;
     }
 
-    async mountComponents(): Promise<Component[]> {
+    async mount(): Promise<Component[]> {
         const elements = Array.prototype.slice.call(document.getElementsByClassName(this.selector));
 
         if (elements.length === 0) { 

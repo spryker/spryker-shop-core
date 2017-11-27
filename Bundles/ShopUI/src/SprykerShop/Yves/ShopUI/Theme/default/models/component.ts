@@ -24,7 +24,11 @@ export default abstract class Component {
     ready(): void {
     }
 
-    find(selector: string): Element[] {
+    findOne(selector: string): Element {
+        return Array.prototype.slice.call(this.element.querySelector(selector));
+    }
+
+    findAll(selector: string): Element[] {
         return Array.prototype.slice.call(this.element.querySelectorAll(selector));
     }
 }
