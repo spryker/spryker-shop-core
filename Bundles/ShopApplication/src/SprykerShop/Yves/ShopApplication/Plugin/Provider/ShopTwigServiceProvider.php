@@ -13,6 +13,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig_Environment;
@@ -38,28 +39,24 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
             ->register($app);
 
         $this->registerTwigLoaderChain($app);
-        $this->registerTwigCache($app);
+        $this->setTwigOptions($app);
         $this->registerTwig($app);
-
-        // TODO: move these to somewhere else
-        $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
-                $twig = $this->registerWidgetTwigFilter($twig);
-
-                return $twig;
-            })
-        );
     }
 
     /**
      * @param \Silex\Application $app
+     *
+     * @throws \SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException
      *
      * @return void
      */
     public function boot(Application $app)
     {
         if (!$app instanceof SprykerApplication) {
-            return; // TODO: perhaps throw exception
+            throw new InvalidApplicationException(sprintf(
+                'The used application object need to be an instance of %s.',
+                SprykerApplication::class
+            ));
         }
 
         $this->getFactory()
@@ -114,7 +111,7 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
      *
      * @return void
      */
-    protected function registerTwigCache(Application $app)
+    protected function setTwigOptions(Application $app)
     {
         $app['twig.options'] = Config::get(TwigConstants::YVES_TWIG_OPTIONS);
     }
@@ -131,40 +128,36 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
             return [];
         });
         $app['twig'] = $app->share(
-            $app->extend(
-                'twig',
-                function (\Twig_Environment $twig) use ($app) {
-                    if (class_exists('Symfony\Bridge\Twig\Extension\RoutingExtension')) {
-                        if (isset($app['form.factory'])) {
-                            $app['twig.loader']->addLoader(
-                                new Twig_Loader_Filesystem(__DIR__ . '/../../Resources/views/Form')
-                            );
-                        }
+            $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
+                if (class_exists('Symfony\Bridge\Twig\Extension\RoutingExtension')) {
+                    if (isset($app['form.factory'])) {
+                        $app['twig.loader']->addLoader(
+                            new Twig_Loader_Filesystem(__DIR__ . '/../../Resources/views/Form')
+                        );
                     }
-
-                    foreach ($app['twig.global.variables'] as $name => $value) {
-                        $twig->addGlobal($name, $value);
-                    }
-
-                    return $twig;
                 }
-            )
+
+                foreach ($app['twig.global.variables'] as $name => $value) {
+                    $twig->addGlobal($name, $value);
+                }
+
+                $this->registerWidgetTwigFilter($twig);
+
+                return $twig;
+            })
         );
     }
 
     /**
      * @param \Twig_Environment $twig
      *
-     * @return \Twig_Environment
+     * @return void
      */
     protected function registerWidgetTwigFilter(Twig_Environment $twig)
     {
-        $filters = $this->getTwigFilters();
-        foreach ($filters as $filter) {
+        foreach ($this->getTwigFilters() as $filter) {
             $twig->addFilter($filter->getName(), $filter);
         }
-
-        return $twig;
     }
 
     /**

@@ -7,14 +7,15 @@
 
 namespace SprykerShop\Yves\ShopApplication\Plugin\Provider;
 
-use Exception;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Kernel\View\ViewInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
-use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
+use SprykerShop\Yves\ShopApplication\Exception\EmptyWidgetRegistryException;
+use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
+use SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Throwable;
@@ -27,17 +28,15 @@ use Twig_SimpleFunction;
 class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
-     * @param \Silex\Application $app
+     * @param \Silex\Application $application
      *
      * @return void
      */
-    public function register(Application $app)
+    public function register(Application $application)
     {
-        $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
-                $twig = $this->registerWidgetTwigFunction($twig);
-
-                return $twig;
+        $application['twig'] = $application->share(
+            $application->extend('twig', function (\Twig_Environment $twig) {
+                return $this->registerWidgetTwigFunction($twig);
             })
         );
     }
@@ -45,12 +44,17 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
     /**
      * @param \Silex\Application $app
      *
+     * @throws \SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException
+     *
      * @return void
      */
     public function boot(Application $app)
     {
         if (!$app instanceof SprykerApplication) {
-            return; // TODO: perhaps throw exception
+            throw new InvalidApplicationException(sprintf(
+                'The used application object need to be an instance of %s.',
+                SprykerApplication::class
+            ));
         }
 
         $app['dispatcher']->addListener(KernelEvents::VIEW, function (GetResponseForControllerResultEvent $event) use ($app) {
@@ -65,8 +69,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     protected function registerWidgetTwigFunction(Twig_Environment $twig)
     {
-        $functions = $this->getFunctions();
-        foreach ($functions as $function) {
+        foreach ($this->getFunctions() as $function) {
             $twig->addFunction($function->getName(), $function);
         }
 
@@ -76,7 +79,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
     /**
      * @return \Twig_SimpleFunction[]
      */
-    public function getFunctions()
+    protected function getFunctions()
     {
         return [
             new Twig_SimpleFunction('widget', [$this, 'widget'], [
@@ -105,13 +108,12 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
      * @param string $name
      * @param array $arguments
      *
-     * @throws \Exception
+     * @throws \SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException
      *
      * @return string
      */
     public function widget(Twig_Environment $twig, $name, ...$arguments)
     {
-        // TODO: refactor
         try {
             $widgetContainer = $this->getWidgetContainer();
 
@@ -135,8 +137,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
             return $result;
         } catch (Throwable $e) {
-            // TODO: use custom exception
-            throw new Exception(sprintf(
+            throw new WidgetRenderException(sprintf(
                 'Something went wrong in widget "%s": %s',
                 $name,
                 $e->getMessage()
@@ -150,21 +151,20 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
      * @param string $block
      * @param array $arguments
      *
-     * @throws \Exception
+     * @throws \SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException
      *
      * @return string
      */
     public function widgetBlock(Twig_Environment $twig, $name, $block, ...$arguments)
     {
-        // TODO: refactor
         try {
-            $view = $this->getWidgetContainer();
+            $widgetContainer = $this->getWidgetContainer();
 
-            if (!$view->hasWidget($name)) {
+            if (!$widgetContainer->hasWidget($name)) {
                 return '';
             }
 
-            $widgetClass = $view->getWidgetClassName($name);
+            $widgetClass = $widgetContainer->getWidgetClassName($name);
             $widgetFactory = $this->getFactory()->createWidgetFactory();
             $widget = $widgetFactory->build($widgetClass, $arguments);
 
@@ -180,8 +180,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
             return $result;
         } catch (Throwable $e) {
-            // TODO: use custom exception
-            throw new Exception(sprintf(
+            throw new WidgetRenderException(sprintf(
                 'Something went wrong in widget "%s": %s',
                 $name,
                 $e->getMessage()
@@ -194,13 +193,12 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
      * @param string $name
      * @param array $arguments
      *
-     * @throws \Exception
+     * @throws \SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException
      *
      * @return string
      */
     public function widgetGlobal(Twig_Environment $twig, $name, ...$arguments)
     {
-        // TODO: refactor
         try {
             $widgetCollection = $this->getFactory()->createWidgetCollection();
 
@@ -224,8 +222,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
             return $result;
         } catch (Throwable $e) {
-            // TODO: use custom exception
-            throw new Exception(sprintf(
+            throw new WidgetRenderException(sprintf(
                 'Something went wrong in widget "%s": %s',
                 $name,
                 $e->getMessage()
@@ -244,7 +241,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
     }
 
     /**
-     * @throws \Exception
+     * @throws \SprykerShop\Yves\ShopApplication\Exception\EmptyWidgetRegistryException
      *
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
      */
@@ -254,8 +251,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $widgetContainer = $widgetRegistry->getLastAdded();
 
         if (!$widgetContainer) {
-            // TODO: use custom exception
-            throw new Exception(sprintf(
+            throw new EmptyWidgetRegistryException(sprintf(
                 'You have tried to access a widget but %s is empty. To fix this you need to register your widget or view in the registry.',
                 get_class($widgetRegistry)
             ));
@@ -282,8 +278,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $twig = $application['twig'];
         $twig->addGlobal('_view', $result);
 
-        // TODO: clean up
-        $widgetContainerRegistry = new WidgetContainerRegistry($application);
+        $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
         $widgetContainerRegistry->add($result);
 
         if ($result->getTemplate()) {
