@@ -1,36 +1,44 @@
 <?php
+
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShopLayout\Plugin\Provider;
+namespace SprykerShop\Yves\ShopApplication\Plugin\Provider;
 
+use Exception;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\Kernel\View\View;
+use Spryker\Yves\Kernel\View\ViewInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
-use SprykerShop\Yves\ShopLayout\ShopLayoutFactory;
+use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
+use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Throwable;
+use Twig_Environment;
+use Twig_SimpleFunction;
 
 /**
- * Class ShopLayoutTwigFunctionServiceProvider
- *
- * @method ShopLayoutFactory getFactory()
+ * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  */
-class ShopLayoutTwigExtensionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
     public function register(Application $app)
     {
+        $this->registerBaseWidgetContainer($app);
+
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
                 $twig = $this->registerWidgetTwigFunction($twig);
-                $twig = $this->registerWidgetTwigFilter($twig);
 
                 return $twig;
             })
@@ -38,11 +46,38 @@ class ShopLayoutTwigExtensionServiceProvider extends AbstractPlugin implements S
     }
 
     /**
+     * @param \Silex\Application $app
+     *
+     * @return void
+     */
+    public function boot(Application $app)
+    {
+        if (!$app instanceof SprykerApplication) {
+            return; // TODO: perhaps throw exception
+        }
+
+        $app['dispatcher']->addListener(KernelEvents::VIEW, function (GetResponseForControllerResultEvent $event) use ($app) {
+            $this->onKernelView($event, $app);
+        }, 0);
+    }
+
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return void
+     */
+    protected function registerBaseWidgetContainer(Application $app): void
+    {
+        $widgetContainerRegistry = new WidgetContainerRegistry($app);
+        $widgetContainerRegistry->add(new View([], $this->getFactory()->getBaseWidgetPlugins()));
+    }
+
+    /**
      * @param \Twig_Environment $twig
      *
      * @return \Twig_Environment
      */
-    protected function registerWidgetTwigFunction(\Twig_Environment $twig)
+    protected function registerWidgetTwigFunction(Twig_Environment $twig)
     {
         $functions = $this->getFunctions();
         foreach ($functions as $function) {
@@ -58,17 +93,17 @@ class ShopLayoutTwigExtensionServiceProvider extends AbstractPlugin implements S
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('widget', [$this, 'widget'], [
+            new Twig_SimpleFunction('widget', [$this, 'widget'], [
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
             ]),
-            new \Twig_SimpleFunction('widgetBlock', [$this, 'widgetBlock'], [
+            new Twig_SimpleFunction('widgetBlock', [$this, 'widgetBlock'], [
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
             ]),
-            new \Twig_SimpleFunction('widgetExists', [$this, 'widgetExists'], [
+            new Twig_SimpleFunction('widgetExists', [$this, 'widgetExists'], [
                 'needs_context' => false,
             ]),
         ];
@@ -83,7 +118,7 @@ class ShopLayoutTwigExtensionServiceProvider extends AbstractPlugin implements S
      *
      * @return string
      */
-    public function widget(\Twig_Environment $twig, $name, ...$arguments)
+    public function widget(Twig_Environment $twig, $name, ...$arguments)
     {
         // TODO: refactor
         try {
@@ -108,9 +143,9 @@ class ShopLayoutTwigExtensionServiceProvider extends AbstractPlugin implements S
             $widgetContainerRegistry->removeLastAdded();
 
             return $result;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             // TODO: use custom exception
-            throw new \Exception(sprintf(
+            throw new Exception(sprintf(
                 'Something went wrong in widget "%s": %s',
                 $name,
                 $e->getMessage()
@@ -128,7 +163,7 @@ class ShopLayoutTwigExtensionServiceProvider extends AbstractPlugin implements S
      *
      * @return string
      */
-    public function widgetBlock(\Twig_Environment $twig,  $name, $block, ...$arguments)
+    public function widgetBlock(Twig_Environment $twig, $name, $block, ...$arguments)
     {
         // TODO: refactor
         try {
@@ -153,9 +188,9 @@ class ShopLayoutTwigExtensionServiceProvider extends AbstractPlugin implements S
             $widgetContainerRegistry->removeLastAdded();
 
             return $result;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             // TODO: use custom exception
-            throw new \Exception(sprintf(
+            throw new Exception(sprintf(
                 'Something went wrong in widget "%s": %s',
                 $name,
                 $e->getMessage()
@@ -185,7 +220,7 @@ class ShopLayoutTwigExtensionServiceProvider extends AbstractPlugin implements S
 
         if (!$widgetContainer) {
             // TODO: use custom exception
-            throw new \Exception(sprintf(
+            throw new Exception(sprintf(
                 'You have tried to access a widget but %s is empty. To fix this you need to register your widget or view in the registry.',
                 get_class($widgetRegistry)
             ));
@@ -195,44 +230,36 @@ class ShopLayoutTwigExtensionServiceProvider extends AbstractPlugin implements S
     }
 
     /**
-     * @param \Twig_Environment $twig
-     *
-     * @return \Twig_Environment
-     */
-    protected function registerWidgetTwigFilter(\Twig_Environment $twig)
-    {
-        $filters = $this->getTwigFilters();
-        foreach ($filters as $filter) {
-            $twig->addFilter($filter->getName(), $filter);
-        }
-
-        return $twig;
-    }
-
-    /**
-     * @return \Twig_SimpleFilter[]
-     */
-    public function getTwigFilters()
-    {
-        return [
-            new \Twig_SimpleFilter('floor', function ($value) {
-                return floor($value);
-            }),
-            new \Twig_SimpleFilter('ceil', function ($value) {
-                return ceil($value);
-            }),
-            new \Twig_SimpleFilter('int', function ($value) {
-                return (int)$value;
-            }),
-        ];
-    }
-
-    /**
-     * @param Application $app
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
+     * @param \Spryker\Shared\Kernel\Communication\Application $application
      *
      * @return void
      */
-    public function boot(Application $app)
+    protected function onKernelView(GetResponseForControllerResultEvent $event, SprykerApplication $application)
     {
+        $result = $event->getControllerResult();
+
+        if (!$result instanceof ViewInterface) {
+            return;
+        }
+
+        /** @var \Twig_Environment $twig */
+        $twig = $application['twig'];
+        $twig->addGlobal('_view', $result);
+
+        // TODO: clean up
+        $widgetContainerRegistry = new WidgetContainerRegistry($application);
+        $widgetContainerRegistry->add($result);
+
+        if ($result->getTemplate()) {
+            $response = $application->render($result->getTemplate());
+        } else {
+            $response = $this->getFactory()
+                ->createTwigRenderer()
+                ->render($application);
+        }
+
+        $event->setResponse($response);
+        $widgetContainerRegistry->removeLastAdded();
     }
 }

@@ -16,11 +16,10 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolver;
 use Spryker\Yves\Kernel\Plugin\Pimple;
-use SprykerShop\Yves\ShopApplication\ShopApplicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ShopApplicationFactory getFactory()
+ * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  */
 class ShopApplicationServiceProvider extends AbstractServiceProvider
 {
@@ -46,10 +45,6 @@ class ShopApplicationServiceProvider extends AbstractServiceProvider
         $this->setControllerResolver();
         $this->setLocale();
         $this->setLogLevel();
-
-        $this->addTwigExtension($this->application, [
-            $this->getFactory()->createDateFormatterTwigExtension(),
-        ]);
 
         $this->addGlobalTemplateVariable($this->application, [
             'environment' => Environment::getEnvironment(),

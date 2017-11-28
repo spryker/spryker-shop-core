@@ -11,27 +11,9 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
+// TODO: get rid of this class
 abstract class AbstractServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    /**
-     * @param \Silex\Application $app
-     * @param \Twig_Extension[] $twigExtensions
-     *
-     * @return void
-     */
-    protected function addTwigExtension(Application $app, array $twigExtensions)
-    {
-        $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) use ($twigExtensions) {
-                foreach ($twigExtensions as $extension) {
-                    $twig->addExtension($extension);
-                }
-
-                return $twig;
-            })
-        );
-    }
-
     /**
      * @param \Silex\Application $app
      * @param array $globalTemplateVariables

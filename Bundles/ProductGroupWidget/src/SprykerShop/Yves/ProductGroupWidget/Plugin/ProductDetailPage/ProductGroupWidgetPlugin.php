@@ -12,12 +12,6 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductGroupWidget\Prod
 
 class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGroupWidgetPluginInterface
 {
-
-    /**
-     * @var int
-     */
-    protected $idProductAbstract;
-
     /**
      * @param int $idProductAbstract
      *
@@ -25,7 +19,7 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public function initialize(int $idProductAbstract): void
     {
-        $this->idProductAbstract = $idProductAbstract;
+        $this->addParameter('idProductAbstract', $idProductAbstract);
     }
 
     /**
@@ -42,14 +36,6 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
     public static function getTemplate(): string
     {
         return '@ProductGroupWidget/_product-detail-page/product-groups.twig';
-    }
-
-    /**
-     * @return int
-     */
-    public function getIdProductAbstract(): int
-    {
-        return $this->idProductAbstract;
     }
 
 }
