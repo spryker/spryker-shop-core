@@ -12,7 +12,6 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Kernel\View\View;
 use Spryker\Yves\Kernel\View\ViewInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
@@ -34,8 +33,6 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     public function register(Application $app)
     {
-        $this->registerBaseWidgetContainer($app);
-
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
                 $twig = $this->registerWidgetTwigFunction($twig);
@@ -59,17 +56,6 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $app['dispatcher']->addListener(KernelEvents::VIEW, function (GetResponseForControllerResultEvent $event) use ($app) {
             $this->onKernelView($event, $app);
         }, 0);
-    }
-
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return void
-     */
-    protected function registerBaseWidgetContainer(Application $app): void
-    {
-        $widgetContainerRegistry = new WidgetContainerRegistry($app);
-        $widgetContainerRegistry->add(new View([], $this->getFactory()->getBaseWidgetPlugins()));
     }
 
     /**
@@ -99,6 +85,11 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
                 'is_safe' => ['html'],
             ]),
             new Twig_SimpleFunction('widgetBlock', [$this, 'widgetBlock'], [
+                'needs_environment' => true,
+                'needs_context' => false,
+                'is_safe' => ['html'],
+            ]),
+            new Twig_SimpleFunction('widgetGlobal', [$this, 'widgetGlobal'], [
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
@@ -184,6 +175,50 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
             $template = $twig->load($widget::getTemplate());
             $result = $template->renderBlock($block);
+
+            $widgetContainerRegistry->removeLastAdded();
+
+            return $result;
+        } catch (Throwable $e) {
+            // TODO: use custom exception
+            throw new Exception(sprintf(
+                'Something went wrong in widget "%s": %s',
+                $name,
+                $e->getMessage()
+            ), $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     * @param string $name
+     * @param array $arguments
+     *
+     * @throws \Exception
+     *
+     * @return string
+     */
+    public function widgetGlobal(Twig_Environment $twig, $name, ...$arguments)
+    {
+        // TODO: refactor
+        try {
+            $widgetCollection = $this->getFactory()->createWidgetCollection();
+
+            if (!$widgetCollection->hasWidget($name)) {
+                return '';
+            }
+
+            $widgetClass = $widgetCollection->getWidgetClassName($name);
+            $widgetFactory = $this->getFactory()->createWidgetFactory();
+            $widget = $widgetFactory->build($widgetClass, $arguments);
+
+            $twig->addGlobal('_widget', $widget);
+
+            $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
+            $widgetContainerRegistry->add($widget);
+
+            $template = $twig->load($widget::getTemplate());
+            $result = $template->render();
 
             $widgetContainerRegistry->removeLastAdded();
 

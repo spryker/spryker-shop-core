@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CmsContentWidgetProductConnector;
 
 use Spryker\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorFactory as SprykerCmsContentWidgetProductConnectorFactory;
 use Spryker\Yves\Kernel\Plugin\Pimple;
+use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
 use SprykerShop\Yves\ProductWidget\Plugin\CmsContentWidget\ProductGroupWidgetPlugin;
 use SprykerShop\Yves\ProductWidget\Plugin\CmsContentWidget\ProductWidgetPlugin;
@@ -34,9 +35,17 @@ class CmsContentWidgetProductConnectorFactory extends SprykerCmsContentWidgetPro
     }
 
     /**
+     * @return WidgetCollection
+     */
+    public function createCmsProductContentWidgetCollection()
+    {
+        return new WidgetCollection($this->getCmsProductContentWidgetPlugins());
+    }
+
+    /**
      * @return string[]
      */
-    public function getCmsProductContentWidgetPlugins(): array
+    protected function getCmsProductContentWidgetPlugins(): array
     {
         // TODO: move to dependency provider
         return [

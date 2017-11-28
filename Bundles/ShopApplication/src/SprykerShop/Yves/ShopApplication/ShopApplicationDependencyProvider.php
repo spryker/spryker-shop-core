@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
     const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
-    const PLUGIN_BASE_WIDGETS = 'PLUGIN_BASE_WIDGETS';
+    const PLUGIN_GLOBAL_WIDGETS = 'PLUGIN_GLOBAL_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -24,7 +24,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addApplicationPlugin($container);
-        $container = $this->addBaseWidgetPlugins($container);
+        $container = $this->addGlobalWidgetPlugins($container);
 
         return $container;
     }
@@ -50,10 +50,10 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addBaseWidgetPlugins(Container $container)
+    protected function addGlobalWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_BASE_WIDGETS] = function () use ($container) {
-            return $this->getBaseWidgetPlugins($container);
+        $container[self::PLUGIN_GLOBAL_WIDGETS] = function () use ($container) {
+            return $this->getGlobalWidgetPlugins($container);
         };
 
         return $container;
@@ -64,7 +64,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return string[]
      */
-    protected function getBaseWidgetPlugins(Container $container): array
+    protected function getGlobalWidgetPlugins(Container $container): array
     {
         return [];
     }

@@ -11,6 +11,7 @@ use Silex\Provider\TwigServiceProvider;
 use Spryker\Yves\Application\ApplicationFactory as SprykerApplicationFactory;
 use Spryker\Yves\Application\Plugin\Provider\ExceptionService\SubRequestExceptionHandler;
 use Spryker\Yves\Application\Routing\Helper;
+use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
 use Spryker\Yves\Kernel\Widget\WidgetFactory;
 use SprykerShop\Yves\ShopApplication\Twig\TwigRenderer;
@@ -83,11 +84,19 @@ class ShopApplicationFactory extends SprykerApplicationFactory
     }
 
     /**
+     * @return WidgetCollection
+     */
+    public function createWidgetCollection()
+    {
+        return new WidgetCollection($this->getGlobalWidgetPlugins());
+    }
+
+    /**
      * @return string[]
      */
-    public function getBaseWidgetPlugins(): array
+    public function getGlobalWidgetPlugins(): array
     {
-        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGIN_BASE_WIDGETS);
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGIN_GLOBAL_WIDGETS);
     }
 
     /**
