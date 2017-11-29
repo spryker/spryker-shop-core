@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\ProductNewPage\ProductNewPageFactory getFactory()
- * @method \SprykerShop\Client\ProductNewPage\ProductNewPageClientInterface getClient()
  */
 class NewProductsController extends AbstractController
 {
@@ -38,7 +37,8 @@ class NewProductsController extends AbstractController
         }
 
         $searchResults = $this
-            ->getClient()
+            ->getFactory()
+            ->getProductNewClient()
             ->findNewProducts($parameters);
 
         $searchResults['category'] = $categoryNode;

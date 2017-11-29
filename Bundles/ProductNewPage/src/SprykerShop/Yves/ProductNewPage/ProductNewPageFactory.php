@@ -7,12 +7,12 @@
 
 namespace SprykerShop\Yves\ProductNewPage;
 
+use Spryker\Client\ProductNew\ProductNewClient;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductWidget\Plugin\CatalogPage\ProductWidgetPlugin;
 
 class ProductNewPageFactory extends AbstractFactory
 {
-
     /**
      * @return string[]
      */
@@ -23,6 +23,15 @@ class ProductNewPageFactory extends AbstractFactory
             // TODO: get from project level
             ProductWidgetPlugin::class,
         ];
+    }
+
+    /**
+     * @return \Spryker\Client\ProductNew\ProductNewClientInterface
+     */
+    public function getProductNewClient()
+    {
+        // TODO: use bridge + get from dependency provider
+        return new ProductNewClient();
     }
 
     /**
@@ -40,5 +49,4 @@ class ProductNewPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductNewPageDependencyProvider::PLUGIN_CATEGORY_READER);
     }
-
 }
