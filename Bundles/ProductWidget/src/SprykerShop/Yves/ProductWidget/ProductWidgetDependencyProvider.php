@@ -9,11 +9,6 @@ namespace SprykerShop\Yves\ProductWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductGroupWidget\Plugin\ProductWidget\ProductGroupWidgetPlugin;
-use SprykerShop\Yves\ProductLabelWidget\Plugin\ProductWidget\ProductAbstractLabelWidgetPlugin;
-use SprykerShop\Yves\ProductLabelWidget\Plugin\ProductWidget\ProductLabelWidgetPlugin;
-use SprykerShop\Yves\ProductReviewWidget\Plugin\ProductWidget\ProductAbstractReviewWidgetPlugin;
-use SprykerShop\Yves\ProductReviewWidget\Plugin\ProductWidget\ProductReviewWidgetPlugin;
 
 class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -119,12 +114,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getProductRelationWidgetSubWidgetPlugins(Container $container): array
     {
-        // TODO: move this to project level
-        return [
-            ProductAbstractLabelWidgetPlugin::class,
-            ProductGroupWidgetPlugin::class,
-            ProductAbstractReviewWidgetPlugin::class,
-        ];
+        return [];
     }
 
     /**
@@ -136,12 +126,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getCatalogPageSubWidgetPlugins(Container $container): array
     {
-        // TODO: move this to project level
-        return [
-            ProductLabelWidgetPlugin::class,
-            ProductGroupWidgetPlugin::class,
-            ProductReviewWidgetPlugin::class,
-        ];
+        return [];
     }
 
     /**
@@ -153,11 +138,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getCmsContentWidgetProductSubWidgetPlugins(Container $container): array
     {
-        // TODO: move this to project level
-        return [
-            ProductAbstractLabelWidgetPlugin::class,
-            ProductAbstractReviewWidgetPlugin::class,
-        ];
+        return [];
     }
 
     /**
@@ -169,12 +150,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getCmsContentWidgetProductGroupSubWidgetPlugins(Container $container): array
     {
-        // TODO: move this to project level
-        return [
-            ProductAbstractLabelWidgetPlugin::class,
-            ProductGroupWidgetPlugin::class,
-            ProductAbstractReviewWidgetPlugin::class,
-        ];
+        return [];
     }
 
     /**
@@ -186,12 +162,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getHomePageSubWidgetPlugins(Container $container): array
     {
-        // TODO: move this to project level
-        return [
-            ProductLabelWidgetPlugin::class,
-            ProductGroupWidgetPlugin::class,
-            ProductReviewWidgetPlugin::class,
-        ];
+        return [];
     }
 
 }
