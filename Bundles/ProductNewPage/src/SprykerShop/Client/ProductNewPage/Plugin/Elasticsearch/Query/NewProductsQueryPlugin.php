@@ -13,8 +13,8 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\Nested;
 use Elastica\Query\Term;
 use Generated\Shared\Search\PageIndexMap;
-use Pyz\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\ProductLabel\Plugin\ProductLabelFacetConfigTransferBuilderPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
@@ -22,7 +22,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface
 {
-
     /**
      * @var \Elastica\Query
      */
@@ -85,7 +84,7 @@ class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface
             ->getProductLabelClient()
             ->findLabelByName($labelName, $localeName);
 
-        $stringFacetFieldFilter = $this->createStringFacetFieldFilter(CatalogSearchConfigBuilder::LABEL_FACET_NAME);
+        $stringFacetFieldFilter = $this->createStringFacetFieldFilter(ProductLabelFacetConfigTransferBuilderPlugin::NAME);
         $stringFacetValueFilter = $this->createStringFacetValueFilter($storageProductLabelTransfer->getIdProductLabel());
 
         $newProductsBoolQuery = new BoolQuery();
@@ -136,5 +135,4 @@ class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface
 
         return $query;
     }
-
 }
