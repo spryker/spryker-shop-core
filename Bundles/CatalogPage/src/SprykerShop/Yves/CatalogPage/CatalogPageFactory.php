@@ -57,19 +57,11 @@ class CatalogPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorInterface
-     */
-    public function createCatalogPageResourceCreator()
-    {
-        return new CatalogPageResourceCreatorPlugin();
-    }
-
-    /**
      * @return \Spryker\Client\Catalog\CatalogClientInterface
      */
     public function getCatalogClient()
     {
-        return new CatalogClient(); // TODO: move to dependency provider
+        return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_CATALOG);
     }
 
     /**

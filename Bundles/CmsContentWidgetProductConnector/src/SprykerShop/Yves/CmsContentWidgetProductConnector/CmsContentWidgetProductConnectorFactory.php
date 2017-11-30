@@ -8,15 +8,11 @@
 namespace SprykerShop\Yves\CmsContentWidgetProductConnector;
 
 use Spryker\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorFactory as SprykerCmsContentWidgetProductConnectorFactory;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
-use SprykerShop\Yves\ProductWidget\Plugin\CmsContentWidget\ProductGroupWidgetPlugin;
-use SprykerShop\Yves\ProductWidget\Plugin\CmsContentWidget\ProductWidgetPlugin;
 
 class CmsContentWidgetProductConnectorFactory extends SprykerCmsContentWidgetProductConnectorFactory
 {
-
     /**
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerRegistry
      */
@@ -30,12 +26,11 @@ class CmsContentWidgetProductConnectorFactory extends SprykerCmsContentWidgetPro
      */
     protected function getApplication()
     {
-        // TODO: move to dependency provider
-        return (new Pimple())->getApplication();
+        return $this->getProvidedDependency(CmsContentWidgetProductConnectorDependencyProvider::APPLICATION);
     }
 
     /**
-     * @return WidgetCollection
+     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
      */
     public function createCmsProductContentWidgetCollection()
     {
@@ -47,12 +42,7 @@ class CmsContentWidgetProductConnectorFactory extends SprykerCmsContentWidgetPro
      */
     protected function getCmsProductContentWidgetPlugins(): array
     {
-        // TODO: move to dependency provider
-        return [
-            // TODO: move to project
-            ProductWidgetPlugin::class,
-            ProductGroupWidgetPlugin::class,
-        ];
+        return $this->getProvidedDependency(CmsContentWidgetProductConnectorDependencyProvider::PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS);
     }
 
     /**
@@ -60,7 +50,6 @@ class CmsContentWidgetProductConnectorFactory extends SprykerCmsContentWidgetPro
      */
     public function getStorageProductMapperPlugin()
     {
-        return $this->getProvidedDependency(CmsContentWidgetProductConnectorDependencyProvider::STORAGE_PRODUCT_MAPPER_PLUGIN);
+        return $this->getProvidedDependency(CmsContentWidgetProductConnectorDependencyProvider::PLUGIN_STORAGE_PRODUCT_MAPPER);
     }
-
 }

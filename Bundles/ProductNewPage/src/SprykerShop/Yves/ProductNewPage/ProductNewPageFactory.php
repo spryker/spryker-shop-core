@@ -8,22 +8,16 @@
 namespace SprykerShop\Yves\ProductNewPage;
 
 use Spryker\Client\Collector\CollectorClient;
-use Spryker\Client\ProductNew\ProductNewClient;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductWidget\Plugin\CatalogPage\ProductWidgetPlugin;
 
 class ProductNewPageFactory extends AbstractFactory
 {
     /**
      * @return string[]
      */
-    public function getNewProductPageWidgetPlugins(): array
+    public function getProductNewPageWidgetPlugins(): array
     {
-        // TODO: get from dependency provider
-        return [
-            // TODO: get from project level
-            ProductWidgetPlugin::class,
-        ];
+        return $this->getProvidedDependency(ProductNewPageDependencyProvider::PLUGIN_PRODUCT_NEW_PAGE_WIDGETS);
     }
 
     /**
@@ -31,8 +25,7 @@ class ProductNewPageFactory extends AbstractFactory
      */
     public function getProductNewClient()
     {
-        // TODO: use bridge + get from dependency provider
-        return new ProductNewClient();
+        return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_PRODUCT_NEW);
     }
 
     /**
@@ -48,7 +41,7 @@ class ProductNewPageFactory extends AbstractFactory
      */
     public function getCollectorClient()
     {
-        return new CollectorClient(); // TODO: get from dependency provider
+        return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_COLLECTOR);
     }
 
     /**

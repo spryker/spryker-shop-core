@@ -7,18 +7,13 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Mapper;
 
-use Symfony\Component\HttpFoundation\Request;
-
 interface StorageProductMapperInterface
 {
-
     /**
      * @param array $productData
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $selectedAttributes
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
-    public function mapStorageProduct(array $productData, Request $request, array $selectedAttributes = []);
-
+    public function mapStorageProduct(array $productData, array $selectedAttributes = []);
 }

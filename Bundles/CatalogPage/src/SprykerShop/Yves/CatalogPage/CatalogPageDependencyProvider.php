@@ -17,6 +17,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
     const CLIENT_CATEGORY = 'CLIENT_CATEGORY';
     const PLUGIN_CATALOG_PAGE_WIDGETS = 'PLUGIN_CATALOG_PAGE_WIDGETS';
+    const CLIENT_CATALOG = 'CLIENT_CATALOG';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -28,6 +29,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSearchClient($container);
         $container = $this->addCategoryClient($container);
         $container = $this->addLocaleClient($container);
+        $container = $this->addCatalogClient($container);
         $container = $this->addCatalogPageWidgetPlugins($container);
 
         return $container;
@@ -70,6 +72,20 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCatalogClient(Container $container)
+    {
+        $container[static::CLIENT_CATALOG] = function (Container $container) {
+            return $container->getLocator()->catalog()->client();
         };
 
         return $container;

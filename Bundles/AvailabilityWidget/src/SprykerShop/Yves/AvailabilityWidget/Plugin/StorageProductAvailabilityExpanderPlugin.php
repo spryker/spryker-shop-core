@@ -21,11 +21,10 @@ class StorageProductAvailabilityExpanderPlugin extends AbstractPlugin implements
     /**
      * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
      * @param array $productData
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
-    public function expandStorageProduct(StorageProductTransfer $storageProductTransfer, array $productData, Request $request)
+    public function expandStorageProduct(StorageProductTransfer $storageProductTransfer, array $productData)
     {
         $storageAvailabilityTransfer = $this->getFactory()
             ->getAvailabilityClient()

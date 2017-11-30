@@ -10,11 +10,9 @@ namespace SprykerShop\Yves\ProductSetDetailPage;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ProductDetailPage\Plugin\StorageProductMapperPlugin;
-use SprykerShop\Yves\ProductSetWidget\Plugin\ProductSetDetailPage\ProductSetWidgetPlugin;
 
 class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CLIENT_CART = 'CLIENT_CART';
     const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     const CLIENT_PRODUCT_SET = 'CLIENT_PRODUCT_SET';
@@ -101,10 +99,6 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function getProductSetDetailPageWidgetPlugins(Container $container): array
     {
-        // TODO: move to project level
-        return [
-            ProductSetWidgetPlugin::class,
-        ];
+        return [];
     }
-
 }

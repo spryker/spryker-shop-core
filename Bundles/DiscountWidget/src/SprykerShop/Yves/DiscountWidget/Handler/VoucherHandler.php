@@ -13,7 +13,6 @@ use Spryker\Client\Calculation\CalculationClientInterface;
 use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 
-// TODO: review this class
 class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 {
     /**

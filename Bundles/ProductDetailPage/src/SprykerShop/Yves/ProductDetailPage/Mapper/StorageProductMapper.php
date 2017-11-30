@@ -37,12 +37,11 @@ class StorageProductMapper implements StorageProductMapperInterface
 
     /**
      * @param array $productData
-     * @param Request $request
      * @param array $selectedAttributes
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
-    public function mapStorageProduct(array $productData, Request $request, array $selectedAttributes = [])
+    public function mapStorageProduct(array $productData, array $selectedAttributes = [])
     {
         $storageProductTransfer = $this->mapAbstractStorageProduct($productData);
         $storageProductTransfer->setSelectedAttributes($selectedAttributes);
@@ -56,11 +55,7 @@ class StorageProductMapper implements StorageProductMapperInterface
         }
 
         foreach ($this->storageProductExpanderPlugins as $storageProductExpanderPlugin) {
-            $storageProductTransfer = $storageProductExpanderPlugin->expandStorageProduct(
-                $storageProductTransfer,
-                $productData,
-                $request
-            );
+            $storageProductTransfer = $storageProductExpanderPlugin->expandStorageProduct($storageProductTransfer, $productData);
         }
 
         return $storageProductTransfer;

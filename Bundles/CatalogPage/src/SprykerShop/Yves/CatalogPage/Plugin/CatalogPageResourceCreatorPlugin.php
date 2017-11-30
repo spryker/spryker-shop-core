@@ -51,6 +51,8 @@ class CatalogPageResourceCreatorPlugin extends AbstractPlugin implements Resourc
     }
 
     /**
+     * @param array $data
+     *
      * @return array
      */
     public function mergeResourceData(array $data)

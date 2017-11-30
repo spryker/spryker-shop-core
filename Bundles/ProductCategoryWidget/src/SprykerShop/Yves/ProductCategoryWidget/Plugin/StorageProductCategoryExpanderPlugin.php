@@ -20,11 +20,10 @@ class StorageProductCategoryExpanderPlugin extends AbstractPlugin implements Sto
     /**
      * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
      * @param array $productData
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
-    public function expandStorageProduct(StorageProductTransfer $storageProductTransfer, array $productData, Request $request)
+    public function expandStorageProduct(StorageProductTransfer $storageProductTransfer, array $productData)
     {
         if (array_key_exists(StorageProductTransfer::CATEGORIES, $productData) === false) {
             return $storageProductTransfer;

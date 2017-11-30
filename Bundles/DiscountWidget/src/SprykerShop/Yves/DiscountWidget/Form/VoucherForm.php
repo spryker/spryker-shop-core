@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\DiscountWidget\Form;
 
+use SprykerShop\Yves\DiscountWidget\Plugin\Provider\DiscountWidgetControllerProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -31,8 +32,7 @@ class VoucherForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO: reference from controller provider
-        $builder->setAction('/discount/voucher/add');
+        $builder->setAction(DiscountWidgetControllerProvider::ROUTE_DISCOUNT_VOUCHER_ADD);
 
         $this->addVoucherCodeField($builder);
     }

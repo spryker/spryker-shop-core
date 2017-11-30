@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductDetailPage\Plugin;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface;
 
 /**
@@ -16,7 +15,6 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPlu
  */
 class StorageProductMapperPlugin extends AbstractPlugin implements StorageProductMapperPluginInterface
 {
-
     /**
      * @param array $data
      * @param array $selectedAttributes
@@ -27,16 +25,6 @@ class StorageProductMapperPlugin extends AbstractPlugin implements StorageProduc
     {
         return $this->getFactory()
             ->createStorageProductMapper()
-            ->mapStorageProduct($data, $this->getRequest(), $selectedAttributes);
+            ->mapStorageProduct($data, $selectedAttributes);
     }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     * TODO: do we really need this?
-     */
-    protected function getRequest()
-    {
-        return (new Pimple())->getApplication()['request_stack']->getCurrentRequest();
-    }
-
 }
