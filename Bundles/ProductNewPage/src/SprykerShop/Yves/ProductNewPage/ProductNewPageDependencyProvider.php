@@ -7,15 +7,14 @@
 
 namespace SprykerShop\Yves\ProductNewPage;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\CategoryWidget\Plugin\CategoryReaderPlugin;
 
 class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
-    const PLUGIN_CATEGORY_READER = 'PLUGIN_CATEGORY_READER';
+    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -25,7 +24,7 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addSearchClient($container);
-        $container = $this->addCategoryReaderPlugin($container);
+        $container = $this->addStore($container);
 
         return $container;
     }
@@ -49,13 +48,12 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCategoryReaderPlugin(Container $container)
+    protected function addStore($container)
     {
-        $container[self::PLUGIN_CATEGORY_READER] = function (Container $container) {
-            return new CategoryReaderPlugin();
+        $container[self::STORE] = function (Container $container) {
+            return Store::getInstance();
         };
 
         return $container;
     }
-
 }

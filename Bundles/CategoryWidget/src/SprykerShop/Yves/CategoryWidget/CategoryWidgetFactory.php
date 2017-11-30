@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class CategoryWidgetFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\CategoryExporter\CategoryExporterClient
      */
@@ -19,21 +18,4 @@ class CategoryWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CategoryWidgetDependencyProvider::CLIENT_CATEGORY_EXPORTER);
     }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(CategoryWidgetDependencyProvider::STORE);
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\Application
-     */
-    public function getApplication()
-    {
-        return $this->getProvidedDependency(CategoryWidgetDependencyProvider::APPLICATION);
-    }
-
 }
