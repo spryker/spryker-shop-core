@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Container;
 class ShopTranslatorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
+    const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
      * @param Container $container
@@ -21,7 +21,7 @@ class ShopTranslatorDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $this->addGlossaryClient($container);
+        $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -31,10 +31,10 @@ class ShopTranslatorDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return Container
      */
-    protected function addGlossaryClient(Container $container): Container
+    protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_GLOSSARY] = function (Container $container) {
-            return $container->getLocator()->glossary()->client();
+        $container[self::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+            return $container->getLocator()->glossaryStorage()->client();
         };
 
         return $container;
