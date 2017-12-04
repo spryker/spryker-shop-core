@@ -5,9 +5,10 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerShop\Yves\CustomerPage\Form;
+namespace SprykerShop\Yves\NewsletterPage\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class NewsletterSubscriptionForm extends AbstractType
@@ -40,7 +41,7 @@ class NewsletterSubscriptionForm extends AbstractType
      */
     protected function addSubscribeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SUBSCRIBE, 'checkbox', [
+        $builder->add(self::FIELD_SUBSCRIBE, CheckboxType::class, [
             'label' => 'customer.newsletter.subscription_agreement',
             'required' => false,
         ]);

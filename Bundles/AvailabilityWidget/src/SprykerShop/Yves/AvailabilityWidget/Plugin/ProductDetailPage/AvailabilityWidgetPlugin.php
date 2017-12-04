@@ -25,10 +25,6 @@ class AvailabilityWidgetPlugin extends AbstractWidgetPlugin implements Availabil
     }
 
     /**
-     * TODO: add specification
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -37,10 +33,6 @@ class AvailabilityWidgetPlugin extends AbstractWidgetPlugin implements Availabil
     }
 
     /**
-     * TODO: add specification
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

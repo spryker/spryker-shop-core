@@ -7,13 +7,14 @@
 
 namespace SprykerShop\Yves\CartPage\Plugin\Provider;
 
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractServiceProvider;
 use Silex\Application;
+use Silex\ServiceProviderInterface;
+use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
-class CartServiceProvider extends AbstractServiceProvider
+class CartServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
      * @param \Silex\Application $app

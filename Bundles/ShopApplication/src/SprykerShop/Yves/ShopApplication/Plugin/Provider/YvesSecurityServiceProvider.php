@@ -8,9 +8,11 @@
 namespace SprykerShop\Yves\ShopApplication\Plugin\Provider;
 
 use Silex\Application;
+use Silex\ServiceProviderInterface;
+use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
-class YvesSecurityServiceProvider extends AbstractServiceProvider
+class YvesSecurityServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     const BCRYPT_FACTOR = 12;
 

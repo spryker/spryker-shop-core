@@ -9,12 +9,7 @@ namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
-use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
-use Spryker\Shared\Newsletter\NewsletterConstants;
-use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 
 /**
@@ -30,7 +25,7 @@ class CustomerController extends AbstractCustomerController
     const KEY_SHIPPING = 'shipping';
 
     /**
-     * @return View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction()
     {
@@ -51,7 +46,6 @@ class CustomerController extends AbstractCustomerController
             'customer' => $customerTransfer,
             'orderList' => $orderList->getOrders(),
             'addresses' => $this->getDefaultAddresses($customerTransfer),
-            'isSubscribed' => $this->getIsSubscribed($customerTransfer),
         ];
 
         return $this->view($data, $this->getFactory()->getCustomerOverviewWidgetPlugins());
@@ -112,33 +106,5 @@ class CustomerController extends AbstractCustomerController
         }
 
         return $addresses;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
-     */
-    protected function getIsSubscribed(CustomerTransfer $customerTransfer)
-    {
-        $subscriptionRequestTransfer = new NewsletterSubscriptionRequestTransfer();
-
-        $subscriberTransfer = new NewsletterSubscriberTransfer();
-        $subscriberTransfer->setFkCustomer($customerTransfer->getIdCustomer());
-        $subscriberTransfer->setEmail($customerTransfer->getEmail());
-        $subscriptionRequestTransfer->setNewsletterSubscriber($subscriberTransfer);
-
-        $newsletterTypeTransfer = new NewsletterTypeTransfer();
-        $newsletterTypeTransfer->setName(NewsletterConstants::DEFAULT_NEWSLETTER);
-
-        $subscriptionRequestTransfer->addSubscriptionType($newsletterTypeTransfer);
-
-        $subscriptionResponseTransfer = $this->getFactory()
-            ->getNewsletterClient()
-            ->checkSubscription($subscriptionRequestTransfer);
-
-        $result = current($subscriptionResponseTransfer->getSubscriptionResults());
-
-        return $result->getisSuccess();
     }
 }

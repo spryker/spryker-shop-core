@@ -19,7 +19,6 @@ use SprykerShop\Yves\CustomerPage\Plugin\RegistrationCheckoutAuthenticationHandl
 class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_CUSTOMER = 'customer client';
-    const CLIENT_NEWSLETTER = 'CLIENT_NEWSLETTER';
     const CLIENT_SALES = 'client client';
     const PLUGIN_APPLICATION = 'application plugin';
     const PLUGIN_AUTHENTICATION_HANDLER = 'authentication plugin';
@@ -39,7 +38,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addCustomerClient($container);
         $container = $this->addSalesClient($container);
-        $container = $this->addNewsletterClient($container);
         $container = $this->addApplication($container);
         $container = $this->addAuthenticationHandlerPlugin($container);
         $container = $this->addLoginCheckoutAuthenticationHandlerPlugin($container);
@@ -168,19 +166,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_SALES] = function (Container $container) {
             return $container->getLocator()->sales()->client();
-        };
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addNewsletterClient(Container $container): Container
-    {
-        $container[self::CLIENT_NEWSLETTER] = function (Container $container) {
-            return $container->getLocator()->newsletter()->client();
         };
         return $container;
     }
