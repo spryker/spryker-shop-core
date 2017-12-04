@@ -61,8 +61,8 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
     protected function mapProductStorageTransfer(array $productData)
     {
         return $this->getFactory()
-            ->getStorageProductMapperPlugin()
-            ->mapStorageProduct($productData, []);
+            ->getProductClient()
+            ->mapStorageProductForCurrentLocale($productData);
     }
 
 }

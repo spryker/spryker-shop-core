@@ -32,8 +32,8 @@ class ProductController extends AbstractController
     public function detailAction(array $productData, Request $request)
     {
         $storageProductTransfer = $this->getFactory()
-            ->createStorageProductMapper()
-            ->mapStorageProduct($productData, $this->getSelectedAttributes($request));
+            ->getProductClient()
+            ->mapStorageProductForCurrentLocale($productData, $this->getSelectedAttributes($request));
 
         $data = [
             'product' => $storageProductTransfer,

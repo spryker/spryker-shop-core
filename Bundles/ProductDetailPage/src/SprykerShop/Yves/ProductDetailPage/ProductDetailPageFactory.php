@@ -7,47 +7,10 @@
 
 namespace SprykerShop\Yves\ProductDetailPage;
 
-use Spryker\Client\Product\ProductClient;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductDetailPage\Mapper\AttributeVariantMapper;
-use SprykerShop\Yves\ProductDetailPage\Mapper\StorageProductMapper;
-use SprykerShop\Yves\ProductDetailPage\ResourceCreator\ProductDetailPageResourceCreatorPlugin;
 
 class ProductDetailPageFactory extends AbstractFactory
 {
-
-    /**
-     * @return \SprykerShop\Yves\ProductDetailPage\ResourceCreator\ProductDetailPageResourceCreatorPlugin
-     */
-    public function createProductDetailPageResourceCreator()
-    {
-        return new ProductDetailPageResourceCreatorPlugin();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Mapper\StorageProductMapperInterface
-     */
-    public function createStorageProductMapper()
-    {
-        return new StorageProductMapper($this->createAttributeVariantMapper(), $this->getStorageProductExpanderPlugins());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Mapper\AttributeVariantMapperInterface
-     */
-    public function createAttributeVariantMapper()
-    {
-        return new AttributeVariantMapper($this->getProductClient());
-    }
-
-    /**
-     * @return \Spryker\Client\ProductGroup\ProductGroupClientInterface
-     */
-    public function getProductGroupClient()
-    {
-        return $this->getProvidedDependency(ProductDetailPageDependencyProvider::CLIENT_PRODUCT_GROUP);
-    }
-
     /**
      * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[]
      */
@@ -57,19 +20,10 @@ class ProductDetailPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductExpanderPluginInterface[]
-     */
-    protected function getStorageProductExpanderPlugins()
-    {
-        return $this->getProvidedDependency(ProductDetailPageDependencyProvider::PLUGIN_STORAGE_PRODUCT_EXPANDERS);
-    }
-
-    /**
-     * @return \Spryker\Client\Product\ProductClient
+     * @return \Spryker\Client\Product\ProductClientInterface
      */
     public function getProductClient()
     {
-        return new ProductClient();
+        return $this->getProvidedDependency(ProductDetailPageDependencyProvider::CLIENT_PRODUCT);
     }
-
 }

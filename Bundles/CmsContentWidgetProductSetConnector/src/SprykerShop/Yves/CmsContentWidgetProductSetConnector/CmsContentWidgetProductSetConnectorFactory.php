@@ -44,12 +44,4 @@ class CmsContentWidgetProductSetConnectorFactory extends SprykerCmsContentWidget
     {
         return $this->getProvidedDependency(CmsContentWidgetProductSetConnectorDependencyProvider::PLUGIN_CMS_PRODUCT_SET_CONTENT_WIDGETS);
     }
-
-    /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface
-     */
-    public function getStorageMapperPlugin()
-    {
-        return $this->getProvidedDependency(CmsContentWidgetProductSetConnectorDependencyProvider::PLUGIN_STORAGE_PRODUCT_MAPPER);
-    }
 }

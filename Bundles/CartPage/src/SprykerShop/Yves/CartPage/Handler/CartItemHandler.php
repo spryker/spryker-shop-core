@@ -13,7 +13,6 @@ use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Client\Product\ProductClientInterface;
 use Spryker\Shared\CartVariant\CartVariantConstants;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface;
 
 class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
 {
@@ -33,22 +32,15 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
     protected $productClient;
 
     /**
-     * @var \SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface
-     */
-    protected $storageProductMapperPlugin;
-
-    /**
      * @param \SprykerShop\Yves\CartPage\Handler\CartOperationInterface $cartOperationHandler
      * @param \Spryker\Client\Cart\CartClientInterface $cartClient
      * @param \Spryker\Client\Product\ProductClientInterface $productClient
-     * @param \SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface $storageProductMapperPlugin
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      */
     public function __construct(
         CartOperationInterface $cartOperationHandler,
         CartClientInterface $cartClient,
         ProductClientInterface $productClient,
-        StorageProductMapperPluginInterface $storageProductMapperPlugin,
         FlashMessengerInterface $flashMessenger
     ) {
 
@@ -57,7 +49,6 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
         $this->cartOperationHandler = $cartOperationHandler;
         $this->cartClient = $cartClient;
         $this->productClient = $productClient;
-        $this->storageProductMapperPlugin = $storageProductMapperPlugin;
     }
 
     /**
@@ -126,7 +117,7 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
         $productData = $this->productClient->getProductAbstractFromStorageByIdForCurrentLocale(
             $item->getIdProductAbstract()
         );
-        return $this->storageProductMapperPlugin->mapStorageProduct($productData, $selectedAttributes);
+        return $this->productClient->mapStorageProductForCurrentLocale($productData, $selectedAttributes);
     }
 
     /**

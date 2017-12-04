@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductSetDetailPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductDetailPage\Plugin\StorageProductMapperPlugin;
 
 class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -17,7 +16,6 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
     const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     const CLIENT_PRODUCT_SET = 'CLIENT_PRODUCT_SET';
 
-    const PLUGIN_STORAGE_PRODUCT_MAPPER = 'PLUGIN_STORAGE_PRODUCT_MAPPER';
     const PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS = 'PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS';
 
     /**
@@ -27,12 +25,10 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideDependencies(Container $container)
     {
-        $this->addCartClient($container);
-        $this->addProductClient($container);
-        $this->addProductSetClient($container);
-
-        $this->addStorageProductMapperPlugin($container);
-        $this->addProductSetDetailPageWidgetPlugins($container);
+        $container = $this->addCartClient($container);
+        $container = $this->addProductClient($container);
+        $container = $this->addProductSetClient($container);
+        $container = $this->addProductSetDetailPageWidgetPlugins($container);
 
         return $container;
     }
@@ -40,64 +36,63 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addCartClient(Container $container)
     {
         $container[self::CLIENT_CART] = function (Container $container) {
             return $container->getLocator()->cart()->client();
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addProductClient(Container $container)
     {
         $container[self::CLIENT_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->client();
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addProductSetClient(Container $container)
     {
         $container[self::CLIENT_PRODUCT_SET] = function (Container $container) {
             return $container->getLocator()->productSet()->client();
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addStorageProductMapperPlugin(Container $container)
+    protected function addProductSetDetailPageWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_STORAGE_PRODUCT_MAPPER] = function (Container $container) {
-            return new StorageProductMapperPlugin();
+        $container[self::PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS] = function () {
+            return $this->getProductSetDetailPageWidgetPlugins();
         };
-    }
 
-    protected function addProductSetDetailPageWidgetPlugins($container)
-    {
-        $container[self::PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS] = function (Container $container) {
-            return $this->getProductSetDetailPageWidgetPlugins($container);
-        };
+        return $container;
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return string[]
      */
-    protected function getProductSetDetailPageWidgetPlugins(Container $container): array
+    protected function getProductSetDetailPageWidgetPlugins(): array
     {
         return [];
     }

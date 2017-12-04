@@ -10,11 +10,9 @@ namespace SprykerShop\Yves\CmsContentWidgetProductConnector;
 use Spryker\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorDependencyProvider as SprykerCmsContentWidgetProductConnectorDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
-use SprykerShop\Yves\ProductDetailPage\Plugin\StorageProductMapperPlugin;
 
 class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsContentWidgetProductConnectorDependencyProvider
 {
-    const PLUGIN_STORAGE_PRODUCT_MAPPER = 'PLUGIN_STORAGE_PRODUCT_MAPPER';
     const APPLICATION = 'APPLICATION';
     const PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS = 'PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS';
 
@@ -26,23 +24,8 @@ class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsConte
     public function provideDependencies(Container $container)
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addStorageProductMapperPlugin($container);
         $container = $this->addApplication($container);
         $container = $this->addCmsProductContentWidgetPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addStorageProductMapperPlugin(Container $container): Container
-    {
-        $container[static::PLUGIN_STORAGE_PRODUCT_MAPPER] = function (Container $container) {
-            return new StorageProductMapperPlugin(); // TODO: invalid plugin usage (mapper should be in client?)
-        };
 
         return $container;
     }

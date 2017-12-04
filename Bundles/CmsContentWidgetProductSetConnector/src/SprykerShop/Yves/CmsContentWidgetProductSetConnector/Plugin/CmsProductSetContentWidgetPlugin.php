@@ -58,7 +58,7 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
         foreach ($productSetStorageTransfer->getIdProductAbstracts() as $idProductAbstract) {
             $productAbstractData = $this->getFactory()->getProductClient()->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
 
-            $storageProductTransfers[] = $this->getFactory()->getStorageMapperPlugin()->mapStorageProduct(
+            $storageProductTransfers[] = $this->getFactory()->getProductClient()->mapStorageProductForCurrentLocale(
                 $productAbstractData,
                 $this->getSelectedAttributes($context, $idProductAbstract)
             );
