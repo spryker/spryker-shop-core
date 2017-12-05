@@ -14,7 +14,7 @@ use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface
 
 class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_COLLECTOR = 'CLIENT_COLLECTOR';
+    const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
     const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     const PLUGIN_RESOURCE_CREATORS = 'PLUGIN_RESOURCE_CREATORS';
 
@@ -55,9 +55,9 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCollectorClient(Container $container): Container
     {
-        $container[self::CLIENT_COLLECTOR] = function (Container $container) {
-            return $container->getLocator()->collector()->client();
-        };
+        $container[self::CLIENT_URL_STORAGE] = function (Container $container) {
+            return $container->getLocator()->urlStorage()->client();
+    };
 
         return $container;
     }

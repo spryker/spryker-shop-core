@@ -51,7 +51,7 @@ class ShopRouterFactory extends AbstractFactory
      */
     public function getUrlMatcher()
     {
-        return $this->getProvidedDependency(ShopRouterDependencyProvider::CLIENT_COLLECTOR);
+        return $this->getProvidedDependency(ShopRouterDependencyProvider::CLIENT_URL_STORAGE);
     }
 
     /**

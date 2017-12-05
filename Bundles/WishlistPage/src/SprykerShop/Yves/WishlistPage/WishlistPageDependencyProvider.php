@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Container;
 class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_AVAILABILITY = 'CLIENT_AVAILABILITY';
+    const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -38,8 +38,8 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->customer()->client();
         };
 
-        $container[self::CLIENT_AVAILABILITY] = function (Container $container) {
-            return $container->getLocator()->availability()->client();
+        $container[self::CLIENT_AVAILABILITY_STORAGE] = function (Container $container) {
+            return $container->getLocator()->availabilityStorage()->client();
         };
 
         return $container;

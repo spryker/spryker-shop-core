@@ -28,8 +28,8 @@ class StorageProductAvailabilityExpanderPlugin extends AbstractPlugin implements
     public function expandStorageProduct(StorageProductTransfer $storageProductTransfer, array $productData, Request $request)
     {
         $storageAvailabilityTransfer = $this->getFactory()
-            ->getAvailabilityClient()
-            ->getProductAvailabilityByIdProductAbstract($storageProductTransfer->getIdProductAbstract());
+            ->getAvailabilityStorageClient()
+            ->getAvailabilityAbstractAsStorageTransfer($storageProductTransfer->getIdProductAbstract());
 
         if (!$storageProductTransfer->getIsVariant()) {
             $storageProductTransfer->setAvailable($storageAvailabilityTransfer->getIsAbstractProductAvailable());

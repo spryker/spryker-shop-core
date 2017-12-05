@@ -94,11 +94,11 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Availability\AvailabilityClientInterface
+     * @return \Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface
      */
-    public function getAvailabilityClient()
+    public function getAvailabilityStorageClient()
     {
-        return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_AVAILABILITY);
+        return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
     }
 
     /**
@@ -114,7 +114,7 @@ class WishlistPageFactory extends AbstractFactory
      */
     public function createAvailabilityReader()
     {
-        return new AvailabilityReader($this->getAvailabilityClient());
+        return new AvailabilityReader($this->getAvailabilityStorageClient());
     }
 
     /**
