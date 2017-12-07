@@ -122,6 +122,6 @@ class WishlistPageFactory extends AbstractFactory
      */
     public function getWishlistClient()
     {
-        return new WishlistClient(); // TODO: get from dependency provider
+        return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_WISHLIST);
     }
 }

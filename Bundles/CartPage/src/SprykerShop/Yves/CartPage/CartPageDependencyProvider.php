@@ -11,7 +11,6 @@ use Spryker\Yves\CartVariant\Dependency\Plugin\CartVariantAttributeMapperPlugin;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
-use SprykerShop\Yves\ProductDetailPage\Plugin\StorageProductMapperPlugin;
 
 class CartPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -21,7 +20,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_APPLICATION = 'application plugin';
     public const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
-    public const PLUGIN_STORAGE_PRODUCT_MAPPER = 'PLUGIN_STORAGE_PRODUCT_MAPPER';
     public const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
 
     /**
@@ -78,10 +76,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
             return new CartVariantAttributeMapperPlugin();
         };
 
-        $container[self::PLUGIN_STORAGE_PRODUCT_MAPPER] = function () {
-            return new StorageProductMapperPlugin();
-        };
-
         return $container;
     }
 
@@ -92,8 +86,8 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartPageWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_CART_PAGE_WIDGETS] = function (Container $container) {
-            return $this->getCartPageWidgetPlugins($container);
+        $container[self::PLUGIN_CART_PAGE_WIDGETS] = function () {
+            return $this->getCartPageWidgetPlugins();
         };
 
         return $container;
@@ -102,11 +96,9 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return string[]
      */
-    protected function getCartPageWidgetPlugins(Container $container): array
+    protected function getCartPageWidgetPlugins(): array
     {
         return [];
     }
@@ -118,19 +110,17 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartItemTransformerPlugins(Container $container)
     {
-        $container[static::PLUGIN_CART_ITEM_TRANSFORMERS] = function (Container $container) {
-            return $this->getCartItemTransformerPlugins($container);
+        $container[static::PLUGIN_CART_ITEM_TRANSFORMERS] = function () {
+            return $this->getCartItemTransformerPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
      */
-    protected function getCartItemTransformerPlugins(Container $container)
+    protected function getCartItemTransformerPlugins(): array
     {
         return [];
     }

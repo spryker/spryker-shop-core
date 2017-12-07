@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductRelationWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductWidget\Plugin\ProductRelationWidget\ProductWidgetPlugin;
 
 class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -52,10 +51,7 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function getProductDetailPageSimilarProductsWidgetPlugins(Container $container): array
     {
-        // TODO: move this to project level
-        return [
-            ProductWidgetPlugin::class,
-        ];
+        return [];
     }
 
     /**
@@ -81,9 +77,6 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function getCartPageUpSellingProductsWidgetPlugins(Container $container): array
     {
-        // TODO: move this to project level
-        return [
-            ProductWidgetPlugin::class,
-        ];
+        return [];
     }
 }

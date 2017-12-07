@@ -7,14 +7,14 @@
 
 namespace SprykerShop\Yves\CmsContentWidgetProductConnector;
 
-use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductDetailPage\Plugin\StorageProductMapperPlugin;
 use Spryker\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorDependencyProvider as SprykerCmsContentWidgetProductConnectorDependencyProvider;
+use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 
 class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsContentWidgetProductConnectorDependencyProvider
 {
-
-    const STORAGE_PRODUCT_MAPPER_PLUGIN = 'STORAGE_PRODUCT_MAPPER_PLUGIN';
+    const APPLICATION = 'APPLICATION';
+    const PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS = 'PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -24,7 +24,8 @@ class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsConte
     public function provideDependencies(Container $container)
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addStorageProductMapperPlugin($container);
+        $container = $this->addApplication($container);
+        $container = $this->addCmsProductContentWidgetPlugins($container);
 
         return $container;
     }
@@ -34,13 +35,34 @@ class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsConte
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addStorageProductMapperPlugin(Container $container): Container
+    protected function addApplication(Container $container): Container
     {
-        $container[static::STORAGE_PRODUCT_MAPPER_PLUGIN] = function (Container $container) {
-            return new StorageProductMapperPlugin();
+        $container[static::APPLICATION] = function (Container $container) {
+            return (new Pimple())->getApplication();
         };
 
         return $container;
     }
 
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCmsProductContentWidgetPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS] = function (Container $container) {
+            return $this->getCmsProductContentWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCmsProductContentWidgetPlugins()
+    {
+        return [];
+    }
 }

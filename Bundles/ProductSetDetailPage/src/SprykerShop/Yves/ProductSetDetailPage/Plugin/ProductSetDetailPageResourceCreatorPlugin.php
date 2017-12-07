@@ -18,7 +18,6 @@ use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface
  */
 class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface
 {
-
     /**
      * @return string
      */
@@ -52,6 +51,8 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
     }
 
     /**
+     * @param array $data
+     *
      * @return array
      */
     public function mergeResourceData(array $data)
@@ -77,7 +78,7 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
         foreach ($productSetStorageTransfer->getIdProductAbstracts() as $idProductAbstract) {
             $productAbstractData = $this->getFactory()->getProductClient()->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
 
-            $storageProductTransfers[] = $this->getFactory()->getStorageProductMapperPlugin()->mapStorageProduct(
+            $storageProductTransfers[] = $this->getFactory()->getProductClient()->mapStorageProductForCurrentLocale(
                 $productAbstractData,
                 $this->getSelectedAttributes($application, $idProductAbstract)
             );

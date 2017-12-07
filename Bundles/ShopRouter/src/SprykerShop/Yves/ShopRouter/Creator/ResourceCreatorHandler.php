@@ -15,7 +15,6 @@ use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
 
-// TODO: clean up this class by getting rid of class instantiations
 class ResourceCreatorHandler implements ResourceCreatorHandlerInterface
 {
 

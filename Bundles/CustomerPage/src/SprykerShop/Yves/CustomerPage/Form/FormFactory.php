@@ -102,16 +102,6 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createNewsletterSubscriptionForm()
-    {
-        $newsletterSubscriptionFormType = new NewsletterSubscriptionForm();
-
-        return $this->getFormFactory()->create($newsletterSubscriptionFormType);
-    }
-
-    /**
      * @return \Spryker\Client\Customer\CustomerClientInterface
      */
     protected function getCustomerClient()

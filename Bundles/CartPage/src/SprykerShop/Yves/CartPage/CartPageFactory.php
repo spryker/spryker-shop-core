@@ -7,14 +7,13 @@
 
 namespace SprykerShop\Yves\CartPage;
 
+use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Handler\CartOperationHandler;
 use SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
-use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
-use SprykerShop\Yves\ProductDetailPage\Mapper\AttributeVariantMapper;
 
 class CartPageFactory extends AbstractFactory
 {
@@ -64,7 +63,6 @@ class CartPageFactory extends AbstractFactory
             $this->createCartOperationHandler(),
             $this->getCartClient(),
             $this->getProductClient(),
-            $this->getStorageProductMapperPlugin(),
             $this->getFlashMessenger()
         );
     }
@@ -123,22 +121,6 @@ class CartPageFactory extends AbstractFactory
     public function getCartPageWidgetPlugins()
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_CART_PAGE_WIDGETS);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Mapper\AttributeVariantMapperInterface
-     */
-    protected function createAttributeVariantMapper()
-    {
-        return new AttributeVariantMapper($this->getProductClient());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface
-     */
-    protected function getStorageProductMapperPlugin()
-    {
-        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_STORAGE_PRODUCT_MAPPER);
     }
 
     /**

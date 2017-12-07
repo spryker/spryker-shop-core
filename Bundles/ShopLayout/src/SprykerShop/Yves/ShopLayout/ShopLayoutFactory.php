@@ -10,4 +10,11 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class ShopLayoutFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(ShopLayoutDependencyProvider::STORE);
+    }
 }

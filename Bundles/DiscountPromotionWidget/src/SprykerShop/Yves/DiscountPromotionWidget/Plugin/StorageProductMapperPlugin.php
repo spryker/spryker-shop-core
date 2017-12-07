@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \SprykerShop\Yves\DiscountPromotionWidget\DiscountPromotionWidgetFactory getFactory()
- *
  */
 class StorageProductMapperPlugin extends AbstractPlugin implements StorageProductMapperPluginInterface
 {
@@ -25,7 +24,7 @@ class StorageProductMapperPlugin extends AbstractPlugin implements StorageProduc
     public function mapStorageProduct(array $productStorageData, array $selectedAttributes)
     {
         return $this->getFactory()
-            ->getStorageProductMapperPlugin()
-            ->mapStorageProduct($productStorageData, $selectedAttributes);
+            ->getProductClient()
+            ->mapStorageProductForCurrentLocale($productStorageData, $selectedAttributes);
     }
 }

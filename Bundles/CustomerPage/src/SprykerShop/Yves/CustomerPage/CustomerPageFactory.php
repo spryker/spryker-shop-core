@@ -96,14 +96,6 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Newsletter\NewsletterClientInterface
-     */
-    public function getNewsletterClient()
-    {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_NEWSLETTER);
-    }
-
-    /**
      * @return \Spryker\Client\Sales\SalesClientInterface
      */
     public function getSalesClient()
@@ -188,7 +180,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Customer\CustomerClientInterface TODO: client should come from core or shop
+     * @return \Spryker\Client\Customer\CustomerClientInterface
      */
     public function getCustomerClient()
     {

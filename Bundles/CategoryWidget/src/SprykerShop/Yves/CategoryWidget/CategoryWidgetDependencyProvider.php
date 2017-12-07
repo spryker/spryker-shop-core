@@ -7,17 +7,12 @@
 
 namespace SprykerShop\Yves\CategoryWidget;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 
 class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-
-    const CLIENT_CATEGORY_EXPORTER = 'category exporter client';
-    const STORE = 'STORE';
-    const APPLICATION = 'APPLICATION';
+    const CLIENT_CATEGORY_EXPORTER = 'CLIENT_CATEGORY_EXPORTER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -27,8 +22,6 @@ class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addCategoryExporterClient($container);
-        $container = $this->addStore($container);
-        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -46,35 +39,4 @@ class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addStore($container)
-    {
-        $container[self::STORE] = function (Container $container) {
-            return Store::getInstance();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addApplication($container)
-    {
-        $container[self::APPLICATION] = function () {
-            $pimplePlugin = new Pimple();
-
-            return $pimplePlugin->getApplication();
-        };
-
-        return $container;
-    }
-
 }

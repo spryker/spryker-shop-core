@@ -7,28 +7,12 @@
 
 namespace SprykerShop\Yves\ProductSetDetailPage;
 
-use SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorInterface;
 use Spryker\Client\Product\ProductClientInterface;
 use Spryker\Client\ProductSet\ProductSetClientInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface;
-use SprykerShop\Yves\ProductSetDetailPage\ResourceCreator\ProductSetDetailPageResourceCreatorPlugin;
 
 class ProductSetDetailPageFactory extends AbstractFactory
 {
-
-    /**
-     * @return \SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorInterface
-     */
-    public function createProductSetDetailPageResourceCreator(): ResourceCreatorInterface
-    {
-        return new ProductSetDetailPageResourceCreatorPlugin(
-            $this->getProductSetClient(),
-            $this->getProductClient(),
-            $this->getStorageProductMapperPlugin()
-        );
-    }
-
     /**
      * @return \Spryker\Client\ProductSet\ProductSetClientInterface
      */
@@ -46,19 +30,10 @@ class ProductSetDetailPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface
-     */
-    public function getStorageProductMapperPlugin(): StorageProductMapperPluginInterface
-    {
-        return $this->getProvidedDependency(ProductSetDetailPageDependencyProvider::PLUGIN_STORAGE_PRODUCT_MAPPER);
-    }
-
-    /**
      * @return string[]
      */
     public function getProductSetDetailPageWidgetPlugins(): array
     {
         return $this->getProvidedDependency(ProductSetDetailPageDependencyProvider::PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS);
     }
-
 }

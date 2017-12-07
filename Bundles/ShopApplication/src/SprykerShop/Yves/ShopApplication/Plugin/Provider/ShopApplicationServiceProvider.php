@@ -8,12 +8,14 @@
 namespace SprykerShop\Yves\ShopApplication\Plugin\Provider;
 
 use Silex\Application;
+use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Application\Environment as ApplicationEnvironment;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
+use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolver;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  */
-class ShopApplicationServiceProvider extends AbstractServiceProvider
+class ShopApplicationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     const LOCALE = 'locale';
     const REQUEST_URI = 'REQUEST_URI';
@@ -46,7 +48,7 @@ class ShopApplicationServiceProvider extends AbstractServiceProvider
         $this->setLocale();
         $this->setLogLevel();
 
-        $this->addGlobalTemplateVariable($this->application, [
+        $this->addGlobalTemplateVariables($app, [
             'environment' => Environment::getEnvironment(),
         ]);
     }
@@ -126,5 +128,20 @@ class ShopApplicationServiceProvider extends AbstractServiceProvider
             ->server->get(self::REQUEST_URI);
 
         return $requestUri;
+    }
+
+    /**
+     * @param \Silex\Application $app
+     * @param array $globalTemplateVariables
+     *
+     * @return void
+     */
+    protected function addGlobalTemplateVariables(Application $app, array $globalTemplateVariables)
+    {
+        $app['twig.global.variables'] = $app->share(
+            $app->extend('twig.global.variables', function (array $variables) use ($globalTemplateVariables) {
+                return array_merge($variables, $globalTemplateVariables);
+            })
+        );
     }
 }
