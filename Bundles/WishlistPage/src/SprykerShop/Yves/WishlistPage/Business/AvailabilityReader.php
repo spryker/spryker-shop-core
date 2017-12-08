@@ -37,7 +37,7 @@ class AvailabilityReader implements AvailabilityReaderInterface
             $sku = $wishlistItemMetaTransfer->getSku();
             $idProductAbstract = $wishlistItemMetaTransfer->getIdProductAbstract();
 
-            $storageAvailabilityTransfer = $this->availabilityStorageClient->getAvailabilityAbstractAsStorageTransfer($idProductAbstract);
+            $storageAvailabilityTransfer = $this->availabilityStorageClient->getProductAvailabilityByIdProductAbstract($idProductAbstract);
             $isAvailable = $storageAvailabilityTransfer->getConcreteProductAvailableItems()[$sku];
 
             $availability[$sku] = $isAvailable;
