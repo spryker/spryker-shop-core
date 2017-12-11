@@ -7,32 +7,16 @@
 
 namespace SprykerShop\Yves\NewsletterWidget\Form;
 
-use SprykerShop\Yves\NewsletterWidget\Dependency\Service\NewsletterWidgetToUtilValidateServiceInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class NewsletterSubscriptionForm extends AbstractType
 {
     const FIELD_SUBSCRIBE = 'subscribe';
     const FORM_ID = 'subscription';
-
-    /**
-     * @var \SprykerShop\Yves\NewsletterWidget\Dependency\Service\NewsletterWidgetToUtilValidateServiceInterface
-     */
-    protected $utilValidateService;
-
-    /**
-     * @param \SprykerShop\Yves\NewsletterWidget\Dependency\Service\NewsletterWidgetToUtilValidateServiceInterface $utilValidateService
-     */
-    public function __construct(NewsletterWidgetToUtilValidateServiceInterface $utilValidateService)
-    {
-        $this->utilValidateService = $utilValidateService;
-    }
 
     /**
      * @return string
@@ -89,20 +73,11 @@ class NewsletterSubscriptionForm extends AbstractType
      */
     protected function addSubscribeField(FormBuilderInterface $builder)
     {
-        $utilValidateService = $this->utilValidateService;
-
         $builder->add(self::FIELD_SUBSCRIBE, 'email', [
             'label' => 'newsletter.subscribe',
             'required' => false,
             'constraints' => [
                 new NotBlank(),
-                new Callback([
-                    'callback' => function ($email, ExecutionContextInterface $context) use ($utilValidateService) {
-                        if (!$utilValidateService->isEmailFormatValid($email)) {
-                            $context->buildViolation('customer.email.format.invalid')->addViolation();
-                        }
-                    },
-                ]),
             ],
         ]);
 
