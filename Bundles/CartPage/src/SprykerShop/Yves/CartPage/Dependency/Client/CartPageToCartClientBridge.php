@@ -126,7 +126,7 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
      */
     public function getZedStub()
     {
-        // TODO: get rid of this after
+        // TODO: get rid of this after https://github.com/spryker/spryker/pull/2925
         return $this->cartClient->getZedStub();
     }
 
