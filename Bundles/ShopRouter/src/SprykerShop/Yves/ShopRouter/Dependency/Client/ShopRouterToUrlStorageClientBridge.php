@@ -7,19 +7,19 @@
 
 namespace SprykerShop\Yves\ShopRouter\Dependency\Client;
 
-class ShopRouterToCollectorClientBridge implements ShopRouterToCollectorClientInterface
+class ShopRouterToUrlStorageClientBridge implements ShopRouterToUrlStorageClientInterface
 {
     /**
-     * @var \Spryker\Client\Collector\CollectorClientInterface
+     * @var \Spryker\Client\UrlStorage\UrlStorageClientInterface
      */
-    protected $collectorClient;
+    protected $urlStorageClient;
 
     /**
-     * @param \Spryker\Client\Collector\CollectorClientInterface $collectorClient
+     * @param \Spryker\Client\UrlStorage\UrlStorageClientInterface $urlStorageClient
      */
-    public function __construct($collectorClient)
+    public function __construct($urlStorageClient)
     {
-        $this->collectorClient = $collectorClient;
+        $this->urlStorageClient = $urlStorageClient;
     }
 
     /**
@@ -30,6 +30,6 @@ class ShopRouterToCollectorClientBridge implements ShopRouterToCollectorClientIn
      */
     public function matchUrl($url, $localeName)
     {
-        return $this->collectorClient->matchUrl($url, $localeName);
+        return $this->urlStorageClient->matchUrl($url, $localeName);
     }
 }

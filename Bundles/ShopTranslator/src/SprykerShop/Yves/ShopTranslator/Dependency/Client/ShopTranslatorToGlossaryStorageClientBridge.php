@@ -7,19 +7,19 @@
 
 namespace SprykerShop\Yves\ShopTranslator\Dependency\Client;
 
-class ShopTranslatorToGlossaryClientBridge implements ShopTranslatorToGlossaryClientInterface
+class ShopTranslatorToGlossaryStorageClientBridge implements ShopTranslatorToGlossaryStorageClientInterface
 {
     /**
      * @var \Spryker\Client\Glossary\GlossaryClientInterface
      */
-    protected $glossaryClient;
+    protected $glossaryStorageClient;
 
     /**
-     * @param \Spryker\Client\Glossary\GlossaryClientInterface $glossaryClient
+     * @param \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface $glossaryStorageClient
      */
-    public function __construct($glossaryClient)
+    public function __construct($glossaryStorageClient)
     {
-        $this->glossaryClient = $glossaryClient;
+        $this->glossaryStorageClient = $glossaryStorageClient;
     }
 
     /**
@@ -31,6 +31,6 @@ class ShopTranslatorToGlossaryClientBridge implements ShopTranslatorToGlossaryCl
      */
     public function translate($id, $localeName, array $parameters = [])
     {
-        return $this->glossaryClient->translate($id, $localeName, $parameters);
+        return $this->glossaryStorageClient->translate($id, $localeName, $parameters);
     }
 }

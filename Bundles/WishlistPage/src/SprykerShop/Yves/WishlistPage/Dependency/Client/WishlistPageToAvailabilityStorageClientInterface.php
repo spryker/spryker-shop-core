@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\WishlistPage\Dependency\Client;
 
-interface WishlistPageToAvailabilityClientInterface
+interface WishlistPageToAvailabilityStorageClientInterface
 {
     /**
      * @param int $idProductAbstract

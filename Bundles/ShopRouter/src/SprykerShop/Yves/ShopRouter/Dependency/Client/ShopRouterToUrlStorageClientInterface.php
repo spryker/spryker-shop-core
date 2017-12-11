@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ShopRouter\Dependency\Client;
 
-interface ShopRouterToCollectorClientInterface
+interface ShopRouterToUrlStorageClientInterface
 {
     /**
      * @param string $url

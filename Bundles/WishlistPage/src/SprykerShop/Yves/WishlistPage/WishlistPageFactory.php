@@ -12,7 +12,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\WishlistPage\Business\AvailabilityReader;
 use SprykerShop\Yves\WishlistPage\Business\MoveToCartHandler;
-use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityClientInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface;
 use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
@@ -96,11 +96,11 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityClientInterface
+     * @return \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface
      */
-    public function getAvailabilityClient(): WishlistPageToAvailabilityClientInterface
+    public function getAvailabilityStorageClient(): WishlistPageToAvailabilityStorageClientInterface
     {
-        return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_AVAILABILITY);
+        return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
     }
 
     /**
@@ -116,7 +116,7 @@ class WishlistPageFactory extends AbstractFactory
      */
     public function createAvailabilityReader()
     {
-        return new AvailabilityReader($this->getAvailabilityClient());
+        return new AvailabilityReader($this->getAvailabilityStorageClient());
     }
 
     /**

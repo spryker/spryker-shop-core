@@ -7,12 +7,12 @@
 
 namespace SprykerShop\Yves\CategoryWidget\Dependency\Client;
 
-interface CategoryWidgetToCategoryExporterClientInterface
+interface CategoryWidgetToCategoryStorageClientInterface
 {
     /**
      * @param string $locale
      *
      * @return array
      */
-    public function getNavigationCategories($locale);
+    public function getCategories($locale);
 }

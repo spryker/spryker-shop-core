@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ShopRouter;
 use Spryker\Shared\Application\Business\Routing\SilexRouter;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorHandler;
-use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToCollectorClientInterface;
+use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlStorageClientInterface;
 use SprykerShop\Yves\ShopRouter\Generator\UrlGenerator;
 use SprykerShop\Yves\ShopRouter\Mapper\UrlMapper;
 use SprykerShop\Yves\ShopRouter\Merger\ParameterMerger;
@@ -44,11 +44,11 @@ class ShopRouterFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToCollectorClientInterface
+     * @return \SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlStorageClientInterface
      */
-    public function getUrlMatcher(): ShopRouterToCollectorClientInterface
+    public function getUrlMatcher(): ShopRouterToUrlStorageClientInterface
     {
-        return $this->getProvidedDependency(ShopRouterDependencyProvider::CLIENT_COLLECTOR);
+        return $this->getProvidedDependency(ShopRouterDependencyProvider::CLIENT_URL_STORAGE);
     }
 
     /**

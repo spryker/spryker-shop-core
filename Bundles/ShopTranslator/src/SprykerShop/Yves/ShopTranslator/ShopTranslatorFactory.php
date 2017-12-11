@@ -7,7 +7,7 @@
 namespace SprykerShop\Yves\ShopTranslator;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryClientInterface;
+use SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryStorageClientInterface;
 use SprykerShop\Yves\ShopTranslator\Model\TwigTranslator;
 
 class ShopTranslatorFactory extends AbstractFactory
@@ -19,14 +19,14 @@ class ShopTranslatorFactory extends AbstractFactory
      */
     public function createTwigTranslator($locale)
     {
-        return new TwigTranslator($this->getGlossaryClient(), $locale);
+        return new TwigTranslator($this->getGlossaryStorageClient(), $locale);
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryClientInterface
+     * @return \SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryStorageClientInterface
      */
-    public function getGlossaryClient(): ShopTranslatorToGlossaryClientInterface
+    public function getGlossaryStorageClient(): ShopTranslatorToGlossaryStorageClientInterface
     {
-        return $this->getProvidedDependency(ShopTranslatorDependencyProvider::CLIENT_GLOSSARY);
+        return $this->getProvidedDependency(ShopTranslatorDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

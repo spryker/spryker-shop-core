@@ -9,14 +9,14 @@ namespace SprykerShop\Yves\WishlistPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityClientBridge;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientBridge;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientBridge;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientBridge;
 
 class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_AVAILABILITY = 'CLIENT_AVAILABILITY';
+    const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
     const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
 
     /**
@@ -54,8 +54,8 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAvailabilityClient(Container $container): Container
     {
-        $container[self::CLIENT_AVAILABILITY] = function (Container $container) {
-            return new WishlistPageToAvailabilityClientBridge($container->getLocator()->availability()->client());
+        $container[self::CLIENT_AVAILABILITY_STORAGE] = function (Container $container) {
+            return new WishlistPageToAvailabilityStorageClientBridge($container->getLocator()->availabilityStorage()->client());
         };
 
         return $container;

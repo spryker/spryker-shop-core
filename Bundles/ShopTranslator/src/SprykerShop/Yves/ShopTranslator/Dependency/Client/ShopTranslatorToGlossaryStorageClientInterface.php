@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ShopTranslator\Dependency\Client;
 
-interface ShopTranslatorToGlossaryClientInterface
+interface ShopTranslatorToGlossaryStorageClientInterface
 {
     /**
      * @param string $id
