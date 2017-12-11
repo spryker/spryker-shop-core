@@ -9,10 +9,10 @@ namespace SprykerShop\Yves\CartPage\Handler;
 
 use ArrayObject;
 use Generated\Shared\Transfer\StorageProductTransfer;
-use Spryker\Client\Cart\CartClientInterface;
-use Spryker\Client\Product\ProductClientInterface;
 use Spryker\Shared\CartVariant\CartVariantConstants;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface;
 
 class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
 {
@@ -22,25 +22,25 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
     protected $cartOperationHandler;
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
+     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface
      */
     protected $cartClient;
 
     /**
-     * @var \Spryker\Client\Product\ProductClientInterface
+     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface
      */
     protected $productClient;
 
     /**
      * @param \SprykerShop\Yves\CartPage\Handler\CartOperationInterface $cartOperationHandler
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
-     * @param \Spryker\Client\Product\ProductClientInterface $productClient
+     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $cartClient
+     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface $productClient
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      */
     public function __construct(
         CartOperationInterface $cartOperationHandler,
-        CartClientInterface $cartClient,
-        ProductClientInterface $productClient,
+        CartPageToCartClientInterface $cartClient,
+        CartPageToProductClientInterface $productClient,
         FlashMessengerInterface $flashMessenger
     ) {
 

@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\DiscountPromotionWidget;
 
-use Spryker\Client\Product\ProductClient;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\DiscountPromotionWidget\Dependency\Client\DiscountPromotionWidgetToProductClientInterface;
 
 class DiscountPromotionWidgetFactory extends AbstractFactory
 {
@@ -21,9 +21,9 @@ class DiscountPromotionWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Product\ProductClientInterface
+     * @return \SprykerShop\Yves\DiscountPromotionWidget\Dependency\Client\DiscountPromotionWidgetToProductClientInterface
      */
-    public function getProductClient()
+    public function getProductClient(): DiscountPromotionWidgetToProductClientInterface
     {
         return $this->getProvidedDependency(DiscountPromotionWidgetDependencyProvider::CLIENT_PRODUCT);
     }

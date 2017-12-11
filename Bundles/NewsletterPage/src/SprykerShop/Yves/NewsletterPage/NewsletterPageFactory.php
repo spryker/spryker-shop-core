@@ -9,8 +9,9 @@ namespace SprykerShop\Yves\NewsletterPage;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\NewsletterPage\Dependency\Client\NewsletterPageToCustomerClientInterface;
+use SprykerShop\Yves\NewsletterPage\Dependency\Client\NewsletterPageToNewsletterClientInterface;
 use SprykerShop\Yves\NewsletterPage\Form\DataProvider\NewsletterSubscriptionFormDataProvider;
-use SprykerShop\Yves\NewsletterPage\Form\Handler\NewsletterSubscriptionFormHandler;
 use SprykerShop\Yves\NewsletterPage\Form\NewsletterSubscriptionForm;
 
 class NewsletterPageFactory extends AbstractFactory
@@ -51,17 +52,17 @@ class NewsletterPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Newsletter\NewsletterClientInterface
+     * @return \SprykerShop\Yves\NewsletterPage\Dependency\Client\NewsletterPageToNewsletterClientInterface
      */
-    public function getNewsletterClient()
+    public function getNewsletterClient(): NewsletterPageToNewsletterClientInterface
     {
         return $this->getProvidedDependency(NewsletterPageDependencyProvider::CLIENT_NEWSLETTER);
     }
 
     /**
-     * @return \Spryker\Client\Customer\CustomerClientInterface
+     * @return \SprykerShop\Yves\NewsletterPage\Dependency\Client\NewsletterPageToCustomerClientInterface
      */
-    public function getCustomerClient()
+    public function getCustomerClient(): NewsletterPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(NewsletterPageDependencyProvider::CLIENT_CUSTOMER);
     }

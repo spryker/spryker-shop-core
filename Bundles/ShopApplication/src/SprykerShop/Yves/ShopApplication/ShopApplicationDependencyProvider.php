@@ -52,19 +52,17 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlobalWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_GLOBAL_WIDGETS] = function () use ($container) {
-            return $this->getGlobalWidgetPlugins($container);
+        $container[self::PLUGIN_GLOBAL_WIDGETS] = function () {
+            return $this->getGlobalWidgetPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return string[]
      */
-    protected function getGlobalWidgetPlugins(Container $container): array
+    protected function getGlobalWidgetPlugins(): array
     {
         return [];
     }

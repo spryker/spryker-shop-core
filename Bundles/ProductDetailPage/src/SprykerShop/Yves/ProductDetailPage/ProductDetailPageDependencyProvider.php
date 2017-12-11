@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductDetailPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductClientBridge;
 
 class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -36,7 +37,7 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
     protected function addProductClient(Container $container)
     {
         $container[self::CLIENT_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->client();
+            return new ProductDetailPageToProductClientBridge($container->getLocator()->product()->client());
         };
 
         return $container;

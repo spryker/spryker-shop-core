@@ -8,33 +8,34 @@ namespace SprykerShop\Yves\DiscountWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface;
+use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCartClientInterface;
+use SprykerShop\Yves\DiscountWidget\Form\CartVoucherForm;
+use SprykerShop\Yves\DiscountWidget\Form\CheckoutVoucherForm;
 use SprykerShop\Yves\DiscountWidget\Handler\VoucherHandler;
-use SprykerShop\Yves\DiscountWidget\Form\VoucherForm;
 
 class DiscountWidgetFactory extends AbstractFactory
 {
-
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getVoucherForm()
+    public function createCartVoucherForm()
     {
-        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)
-            ->create($this->createVoucherFormType());
+        return $this->getFormFactory()->create($this->createCartVoucherFormType());
     }
 
     /**
      * @return \Symfony\Component\Form\AbstractType
      */
-    protected function createVoucherFormType()
+    protected function createCartVoucherFormType()
     {
-        return new VoucherForm();
+        return new CartVoucherForm();
     }
 
     /**
      * @return \SprykerShop\Yves\DiscountWidget\Handler\VoucherHandler
      */
-    public function createCartVoucherHandler()
+    public function createVoucherHandler()
     {
         return new VoucherHandler(
             $this->getCalculationClient(),
@@ -44,17 +45,17 @@ class DiscountWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Calculation\CalculationClientInterface
+     * @return \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface
      */
-    public function getCalculationClient()
+    public function getCalculationClient(): DiscountWidgetToCalculationClientInterface
     {
         return $this->getProvidedDependency(DiscountWidgetDependencyProvider::CLIENT_CALCULATION);
     }
 
     /**
-     * @return \Spryker\Client\Cart\CartClient
+     * @return \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCartClientInterface
      */
-    public function getCartClient()
+    public function getCartClient(): DiscountWidgetToCartClientInterface
     {
         return $this->getProvidedDependency(DiscountWidgetDependencyProvider::CLIENT_CART);
     }
@@ -75,4 +76,27 @@ class DiscountWidgetFactory extends AbstractFactory
         return $this->getProvidedDependency(DiscountWidgetDependencyProvider::PLUGIN_APPLICATION);
     }
 
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCheckoutVoucherForm()
+    {
+        return $this->getFormFactory()->create($this->createCheckoutVoucherFormType());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormFactory
+     */
+    protected function getFormFactory()
+    {
+        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\AbstractType
+     */
+    protected function createCheckoutVoucherFormType()
+    {
+        return new CheckoutVoucherForm();
+    }
 }

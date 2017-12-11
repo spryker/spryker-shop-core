@@ -8,11 +8,13 @@
 namespace SprykerShop\Yves\WishlistPage;
 
 use Generated\Shared\Transfer\WishlistTransfer;
-use Spryker\Client\Wishlist\WishlistClient;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\WishlistPage\Business\AvailabilityReader;
 use SprykerShop\Yves\WishlistPage\Business\MoveToCartHandler;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface;
 use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
 use SprykerShop\Yves\WishlistPage\Form\DataProvider\AddAllAvailableProductsToCartFormDataProvider;
 use SprykerShop\Yves\WishlistPage\Form\DataProvider\WishlistFormDataProvider;
@@ -21,9 +23,9 @@ use SprykerShop\Yves\WishlistPage\Form\WishlistFormType;
 class WishlistPageFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\Customer\CustomerClientInterface
+     * @return \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface
      */
-    public function getCustomerClient()
+    public function getCustomerClient(): WishlistPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_CUSTOMER);
     }
@@ -94,9 +96,9 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface
+     * @return \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface
      */
-    public function getAvailabilityStorageClient()
+    public function getAvailabilityStorageClient(): WishlistPageToAvailabilityStorageClientInterface
     {
         return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
     }
@@ -118,9 +120,9 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Wishlist\WishlistClientInterface
+     * @return \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface
      */
-    public function getWishlistClient()
+    public function getWishlistClient(): WishlistPageToWishlistClientInterface
     {
         return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_WISHLIST);
     }

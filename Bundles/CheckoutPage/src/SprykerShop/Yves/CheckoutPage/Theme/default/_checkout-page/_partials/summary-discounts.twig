@@ -1,8 +1,8 @@
-{% if quoteTransfer.totals.discounttotal %}
-    {% if quoteTransfer.voucherDiscounts|length %}
+{% if _view.quoteTransfer.totals.discounttotal %}
+    {% if _view.quoteTransfer.voucherDiscounts|length %}
         <li><strong>{{ 'cart.vouchers' | trans }}</strong></li>
         <li>
-            {% for voucherDiscount in quoteTransfer.voucherDiscounts %}
+            {% for voucherDiscount in _view.quoteTransfer.voucherDiscounts %}
                 <div class="row">
                     <div class="small-8 columns">{{ voucherDiscount.displayName }}</div>
                     <div class="small-4 columns text-right">- {{ voucherDiscount.amount | money }}</div>
@@ -10,10 +10,10 @@
             {% endfor %}
         </li>
     {% endif %}
-    {% if quoteTransfer.cartRuleDiscounts|length %}
+    {% if _view.quoteTransfer.cartRuleDiscounts|length %}
         <li><strong>{{ 'cart.discounts' | trans }}</strong></li>
         <li>
-            {% for ruleDiscount in quoteTransfer.cartRuleDiscounts %}
+            {% for ruleDiscount in _view.quoteTransfer.cartRuleDiscounts %}
                 <div class="row">
                     <div class="small-8 columns">{{ ruleDiscount.displayName }}</div>
                     <div class="small-4 columns text-right">- {{ ruleDiscount.amount | money }}</div>

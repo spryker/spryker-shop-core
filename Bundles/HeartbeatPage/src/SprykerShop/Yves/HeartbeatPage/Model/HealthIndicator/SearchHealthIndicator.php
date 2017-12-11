@@ -8,22 +8,22 @@
 namespace SprykerShop\Yves\HeartbeatPage\Model\HealthIndicator;
 
 use Exception;
-use Spryker\Client\Search\SearchClientInterface;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
+use SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSearchClientInterface;
 
 class SearchHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {
     const FAILURE_MESSAGE_UNABLE_TO_CONNECT_TO_SEARCH = 'Unable to connect to search';
 
     /**
-     * @var \Spryker\Client\Search\SearchClientInterface
+     * @var \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSearchClientInterface
      */
     protected $searchClient;
 
     /**
-     * @param \Spryker\Client\Search\SearchClientInterface $searchClient
+     * @param \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSearchClientInterface $searchClient
      */
-    public function __construct(SearchClientInterface $searchClient)
+    public function __construct(HeartbeatPageToSearchClientInterface $searchClient)
     {
         $this->searchClient = $searchClient;
     }

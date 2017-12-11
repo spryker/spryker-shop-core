@@ -8,18 +8,18 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Client\Checkout\CheckoutClientInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\AbstractBaseStep;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithPostConditionErrorRouteInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 // TODO: merge with PlaceOrderStep
 abstract class AbstractPlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirectInterface, StepWithPostConditionErrorRouteInterface
 {
     /**
-     * @var \Spryker\Client\Checkout\CheckoutClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface
      */
     protected $checkoutClient;
 
@@ -44,13 +44,13 @@ abstract class AbstractPlaceOrderStep extends AbstractBaseStep implements StepWi
     protected $postConditionErrorRoute;
 
     /**
-     * @param \Spryker\Client\Checkout\CheckoutClientInterface $checkoutClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param array $errorCodeToRouteMatching
      */
     public function __construct(
-        CheckoutClientInterface $checkoutClient,
+        CheckoutPageToCheckoutClientInterface $checkoutClient,
         $stepRoute,
         $escapeRoute,
         array $errorCodeToRouteMatching = []

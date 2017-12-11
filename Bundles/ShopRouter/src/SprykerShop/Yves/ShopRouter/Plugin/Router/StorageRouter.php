@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ShopRouter\Plugin\Router;
 
 use Spryker\Yves\Application\Routing\AbstractRouter;
-use SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorHandler;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 

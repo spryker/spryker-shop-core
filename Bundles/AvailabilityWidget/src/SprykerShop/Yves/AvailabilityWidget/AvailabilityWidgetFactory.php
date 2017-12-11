@@ -7,18 +7,8 @@
 
 namespace SprykerShop\Yves\AvailabilityWidget;
 
-use Spryker\Client\AvailabilityStorage\AvailabilityStorageClient;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class AvailabilityWidgetFactory extends AbstractFactory
 {
-
-    /**
-     * @return AvailabilityStorageClient
-     */
-    public function getAvailabilityStorageClient()
-    {
-        return $this->getProvidedDependency(AvailabilityWidgetDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
-    }
-
 }

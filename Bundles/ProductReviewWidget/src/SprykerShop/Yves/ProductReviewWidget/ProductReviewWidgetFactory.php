@@ -7,34 +7,37 @@
 
 namespace SprykerShop\Yves\ProductReviewWidget;
 
-use SprykerShop\Yves\ProductReviewWidget\Controller\Calculator\ProductReviewSummaryCalculator;
-use SprykerShop\Yves\ProductReviewWidget\Form\DataProvider\ProductReviewFormDataProvider;
-use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\ProductReview\ProductReviewFactory as SprykerProductReviewFactory;
+use SprykerShop\Yves\ProductReviewWidget\Controller\Calculator\ProductReviewSummaryCalculator;
+use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToCustomerClientInterface;
+use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductClientInterface;
+use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface;
+use SprykerShop\Yves\ProductReviewWidget\Form\DataProvider\ProductReviewFormDataProvider;
+use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
 
 class ProductReviewWidgetFactory extends SprykerProductReviewFactory
 {
     /**
-     * @return \Spryker\Client\Customer\CustomerClientInterface
+     * @return \SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToCustomerClientInterface
      */
-    public function getCustomerClient()
+    public function getCustomerClient(): ProductReviewWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**
-     * @return \Spryker\Client\Product\ProductClientInterface
+     * @return \SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductClientInterface
      */
-    public function getProductClient()
+    public function getProductClient(): ProductReviewWidgetToProductClientInterface
     {
         return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::CLIENT_PRODUCT);
     }
 
     /**
-     * @return \Spryker\Client\ProductReview\ProductReviewClientInterface
+     * @return \SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface
      */
-    public function getProductReviewClient()
+    public function getProductReviewClient(): ProductReviewWidgetToProductReviewClientInterface
     {
         return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::CLIENT_PRODUCT_REVIEW);
     }
@@ -56,12 +59,20 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     {
         $dataProvider = $this->createProductReviewFormDataProvider();
         $form = $this->getFormFactory()->create(
-            new ProductReviewForm($this->getProductReviewClient()),
+            $this->createProductReviewFormType(),
             $dataProvider->getData($idProductAbstract),
             $dataProvider->getOptions()
         );
 
         return $form;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\AbstractType
+     */
+    protected function createProductReviewFormType()
+    {
+        return new ProductReviewForm();
     }
 
     /**

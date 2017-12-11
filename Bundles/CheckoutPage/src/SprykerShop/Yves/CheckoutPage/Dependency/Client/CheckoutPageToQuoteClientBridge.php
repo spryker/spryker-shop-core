@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CheckoutPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class CheckoutToQuoteBridge implements CheckoutToQuoteInterface
+class CheckoutPageToQuoteClientBridge implements CheckoutPageToQuoteClientInterface
 {
     /**
      * @var \Spryker\Client\Quote\QuoteClientInterface

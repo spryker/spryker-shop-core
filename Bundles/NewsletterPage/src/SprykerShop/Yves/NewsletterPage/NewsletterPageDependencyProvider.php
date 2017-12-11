@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\NewsletterPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\NewsletterPage\Dependency\Client\NewsletterPageToCustomerClientBridge;
+use SprykerShop\Yves\NewsletterPage\Dependency\Client\NewsletterPageToNewsletterClientBridge;
 
 class NewsletterPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -36,7 +38,7 @@ class NewsletterPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addNewsletterClient(Container $container)
     {
         $container[static::CLIENT_NEWSLETTER] = function (Container $container) {
-            return $container->getLocator()->newsletter()->client();
+            return new NewsletterPageToNewsletterClientBridge($container->getLocator()->newsletter()->client());
         };
 
         return $container;
@@ -50,7 +52,7 @@ class NewsletterPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCustomerClient(Container $container)
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return $container->getLocator()->customer()->client();
+            return new NewsletterPageToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;

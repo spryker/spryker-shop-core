@@ -10,23 +10,22 @@ namespace SprykerShop\Yves\CatalogPage\ActiveSearchFilter;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use InvalidArgumentException;
-use Spryker\Client\Search\SearchClientInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class UrlGenerator implements UrlGeneratorInterface
 {
-
     /**
-     * @var \Spryker\Client\Search\SearchClientInterface
+     * @var \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface
      */
     protected $searchClient;
 
     /**
-     * @param \Spryker\Client\Search\SearchClientInterface $searchClient
+     * @param \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface $searchClient
      */
-    public function __construct(SearchClientInterface $searchClient)
+    public function __construct(CatalogPageToSearchClientInterface $searchClient)
     {
         $this->searchClient = $searchClient;
     }
@@ -152,5 +151,4 @@ class UrlGenerator implements UrlGeneratorInterface
 
         return $params;
     }
-
 }

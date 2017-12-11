@@ -9,13 +9,13 @@ namespace SprykerShop\Yves\ProductSetDetailPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductClientBridge;
+use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductSetClientBridge;
 
 class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_CART = 'CLIENT_CART';
     const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     const CLIENT_PRODUCT_SET = 'CLIENT_PRODUCT_SET';
-
     const PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS = 'PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS';
 
     /**
@@ -25,7 +25,6 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addCartClient($container);
         $container = $this->addProductClient($container);
         $container = $this->addProductSetClient($container);
         $container = $this->addProductSetDetailPageWidgetPlugins($container);
@@ -38,24 +37,10 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCartClient(Container $container)
-    {
-        $container[self::CLIENT_CART] = function (Container $container) {
-            return $container->getLocator()->cart()->client();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addProductClient(Container $container)
     {
         $container[self::CLIENT_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->client();
+            return new ProductSetDetailPageToProductClientBridge($container->getLocator()->product()->client());
         };
 
         return $container;
@@ -69,7 +54,7 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
     protected function addProductSetClient(Container $container)
     {
         $container[self::CLIENT_PRODUCT_SET] = function (Container $container) {
-            return $container->getLocator()->productSet()->client();
+            return new ProductSetDetailPageToProductSetClientBridge($container->getLocator()->productSet()->client());
         };
 
         return $container;

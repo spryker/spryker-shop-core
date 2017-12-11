@@ -7,16 +7,15 @@
 
 namespace SprykerShop\Yves\ProductSetListPage;
 
-use Spryker\Client\ProductSet\ProductSetClientInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductSetListPage\Dependency\Client\ProductSetListPageToProductSetClientInterface;
 
 class ProductSetListPageFactory extends AbstractFactory
 {
-
     /**
-     * @return \Spryker\Client\ProductSet\ProductSetClientInterface
+     * @return \SprykerShop\Yves\ProductSetListPage\Dependency\Client\ProductSetListPageToProductSetClientInterface
      */
-    public function getProductSetClient(): ProductSetClientInterface
+    public function getProductSetClient(): ProductSetListPageToProductSetClientInterface
     {
         return $this->getProvidedDependency(ProductSetListPageDependencyProvider::CLIENT_PRODUCT_SET);
     }
@@ -28,5 +27,4 @@ class ProductSetListPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductSetListPageDependencyProvider::PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS);
     }
-
 }

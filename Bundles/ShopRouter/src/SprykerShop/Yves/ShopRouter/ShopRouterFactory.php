@@ -8,22 +8,19 @@
 namespace SprykerShop\Yves\ShopRouter;
 
 use Spryker\Shared\Application\Business\Routing\SilexRouter;
-use SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorHandler;
-use SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorHandlerInterface;
-use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
-use SprykerShop\Yves\ShopRouter\Generator\UrlGenerator;
-use SprykerShop\Yves\ShopRouter\Merger\ParameterMerger;
-use SprykerShop\Yves\ShopRouter\Mapper\UrlMapper;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorHandler;
+use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlStorageClientInterface;
+use SprykerShop\Yves\ShopRouter\Generator\UrlGenerator;
+use SprykerShop\Yves\ShopRouter\Mapper\UrlMapper;
+use SprykerShop\Yves\ShopRouter\Merger\ParameterMerger;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\RouterInterface;
 
 class ShopRouterFactory extends AbstractFactory
 {
-
     /**
-     * @return ResourceCreatorPluginInterface[]
+     * @return \SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface[]
      */
     public function getResourceCreatorPlugins()
     {
@@ -47,9 +44,9 @@ class ShopRouterFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Collector\Matcher\UrlMatcherInterface
+     * @return \SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlStorageClientInterface
      */
-    public function getUrlMatcher()
+    public function getUrlMatcher(): ShopRouterToUrlStorageClientInterface
     {
         return $this->getProvidedDependency(ShopRouterDependencyProvider::CLIENT_URL_STORAGE);
     }
@@ -63,7 +60,7 @@ class ShopRouterFactory extends AbstractFactory
     }
 
     /**
-     * @return RouterInterface
+     * @return \Symfony\Component\Routing\RouterInterface
      */
     public function createSharedSilexRouter()
     {
@@ -71,17 +68,17 @@ class ShopRouterFactory extends AbstractFactory
     }
 
     /**
-     * @param RequestContext $requestContext
+     * @param \Symfony\Component\Routing\RequestContext $requestContext
      *
-     * @return UrlGenerator
+     * @return \SprykerShop\Yves\ShopRouter\Generator\UrlGenerator
      */
-    public function createUrlGenerator(RouteCollection $routeCollection ,RequestContext $requestContext)
+    public function createUrlGenerator(RouteCollection $routeCollection, RequestContext $requestContext)
     {
         return new UrlGenerator($this->getApplication(), $routeCollection, $requestContext);
     }
 
     /**
-     * @return ResourceCreatorHandlerInterface
+     * @return \SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorHandlerInterface
      */
     public function createResourceCreatorHandler()
     {

@@ -11,18 +11,18 @@ use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
-use Spryker\Client\Customer\CustomerClientInterface;
-use Spryker\Client\Wishlist\WishlistClientInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface;
 
 class MoveToCartHandler implements MoveToCartHandlerInterface
 {
     /**
-     * @var \Spryker\Client\Wishlist\WishlistClientInterface
+     * @var \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface
      */
     protected $wishlistClient;
 
     /**
-     * @var \Spryker\Client\Customer\CustomerClientInterface
+     * @var \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface
      */
     protected $customerClient;
 
@@ -32,12 +32,15 @@ class MoveToCartHandler implements MoveToCartHandlerInterface
     protected $availabilityReader;
 
     /**
-     * @param \Spryker\Client\Wishlist\WishlistClientInterface $wishlistClient
-     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface $wishlistClient
+     * @param \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\WishlistPage\Business\AvailabilityReaderInterface $availabilityReader
      */
-    public function __construct(WishlistClientInterface $wishlistClient, CustomerClientInterface $customerClient, AvailabilityReaderInterface $availabilityReader)
-    {
+    public function __construct(
+        WishlistPageToWishlistClientInterface $wishlistClient,
+        WishlistPageToCustomerClientInterface $customerClient,
+        AvailabilityReaderInterface $availabilityReader
+    ) {
         $this->wishlistClient = $wishlistClient;
         $this->customerClient = $customerClient;
         $this->availabilityReader = $availabilityReader;

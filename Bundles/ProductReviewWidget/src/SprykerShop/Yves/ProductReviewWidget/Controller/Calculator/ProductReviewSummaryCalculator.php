@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\ProductReviewWidget\Controller\Calculator;
 
 use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
+use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
-use Spryker\Client\ProductReview\ProductReviewClientInterface;
 
 class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorInterface
 {
@@ -17,14 +17,14 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
     const RATING_PRECISION = 1;
 
     /**
-     * @var \Spryker\Client\ProductReview\ProductReviewClientInterface
+     * @var \SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface
      */
     protected $productReviewClient;
 
     /**
-     * @param \Spryker\Client\ProductReview\ProductReviewClientInterface $productReviewClient
+     * @param \SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface $productReviewClient
      */
-    public function __construct(ProductReviewClientInterface $productReviewClient)
+    public function __construct(ProductReviewWidgetToProductReviewClientInterface $productReviewClient)
     {
         $this->productReviewClient = $productReviewClient;
     }

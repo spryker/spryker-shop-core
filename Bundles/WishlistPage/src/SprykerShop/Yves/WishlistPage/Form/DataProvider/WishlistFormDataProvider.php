@@ -8,26 +8,26 @@
 namespace SprykerShop\Yves\WishlistPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\WishlistTransfer;
-use Spryker\Client\Customer\CustomerClientInterface;
-use Spryker\Client\Wishlist\WishlistClientInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface;
 
 class WishlistFormDataProvider
 {
     /**
-     * @var \Spryker\Client\Wishlist\WishlistClientInterface
+     * @var \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface
      */
     protected $wishlistClient;
 
     /**
-     * @var \Spryker\Client\Customer\CustomerClientInterface
+     * @var \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface
      */
     protected $customerClient;
 
     /**
-     * @param \Spryker\Client\Wishlist\WishlistClientInterface $wishlistClient
-     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface $wishlistClient
+     * @param \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface $customerClient
      */
-    public function __construct(WishlistClientInterface $wishlistClient, CustomerClientInterface $customerClient)
+    public function __construct(WishlistPageToWishlistClientInterface $wishlistClient, WishlistPageToCustomerClientInterface $customerClient)
     {
         $this->wishlistClient = $wishlistClient;
         $this->customerClient = $customerClient;

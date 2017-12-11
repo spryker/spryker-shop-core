@@ -35,8 +35,8 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductDetailPageSimilarProductsWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_DETAIL_PAGE_SIMILAR_PRODUCTS_WIDGETS] = function (Container $container) {
-            return $this->getProductDetailPageSimilarProductsWidgetPlugins($container);
+        $container[self::PLUGIN_PRODUCT_DETAIL_PAGE_SIMILAR_PRODUCTS_WIDGETS] = function () {
+            return $this->getProductDetailPageSimilarProductsWidgetPlugins();
         };
 
         return $container;
@@ -45,11 +45,9 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return string[]
      */
-    protected function getProductDetailPageSimilarProductsWidgetPlugins(Container $container): array
+    protected function getProductDetailPageSimilarProductsWidgetPlugins(): array
     {
         return [];
     }
@@ -61,8 +59,8 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCartPageUpSellingProductsWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_CART_PAGE_UP_SELLING_PRODUCTS_WIDGETS] = function (Container $container) {
-            return $this->getProductDetailPageSimilarProductsWidgetPlugins($container);
+        $container[self::PLUGIN_CART_PAGE_UP_SELLING_PRODUCTS_WIDGETS] = function () {
+            return $this->getProductDetailPageSimilarProductsWidgetPlugins();
         };
 
         return $container;
@@ -71,11 +69,9 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return string[]
      */
-    protected function getCartPageUpSellingProductsWidgetPlugins(Container $container): array
+    protected function getCartPageUpSellingProductsWidgetPlugins(): array
     {
         return [];
     }

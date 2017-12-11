@@ -7,23 +7,24 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Form;
 
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
+use Spryker\Yves\StepEngine\Form\FormCollectionHandler;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\SubFormDataProviders;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\SummaryForm;
-use SprykerShop\Yves\CheckoutPage\Form\Voucher\VoucherForm;
-use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
 use SprykerShop\Yves\CustomerPage\Form\CustomerCheckoutForm;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\GuestForm;
 use SprykerShop\Yves\CustomerPage\Form\LoginForm;
 use SprykerShop\Yves\CustomerPage\Form\RegisterForm;
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
-use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
-use Spryker\Yves\StepEngine\Form\FormCollectionHandler;
 use Symfony\Component\Form\FormTypeInterface;
 
 class FormFactory extends AbstractFactory
@@ -121,15 +122,6 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getVoucherForm()
-    {
-        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)
-            ->create($this->createVoucherFormType());
-    }
-
-    /**
      * @return \Symfony\Component\Form\FormTypeInterface[]
      */
     protected function getCustomerFormTypes()
@@ -184,16 +176,7 @@ class FormFactory extends AbstractFactory
     {
         return [
             $this->createSummaryForm(),
-            $this->createVoucherFormType(),
         ];
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Form\Voucher\VoucherForm
-     */
-    protected function createVoucherFormType()
-    {
-        return new VoucherForm();
     }
 
     /**
@@ -261,9 +244,9 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Pyz\Client\Customer\CustomerClient
+     * @return CheckoutPageToCustomerClientInterface
      */
-    protected function getCustomerClient()
+    protected function getCustomerClient(): CheckoutPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER);
     }
@@ -285,7 +268,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return GuestForm
+     * @return \SprykerShop\Yves\CustomerPage\Form\GuestForm
      */
     protected function createGuestForm()
     {
@@ -293,18 +276,10 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Service\UtilValidate\UtilValidateServiceInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface
      */
-    protected function getUtilValidateService()
+    protected function getUtilValidateService(): CheckoutPageToUtilValidateServiceInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_UTIL_VALIDATE);
-    }
-
-    /**
-     * @return \Spryker\Client\Cart\CartClientInterface
-     */
-    public function getCartClient()
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CART);
     }
 }

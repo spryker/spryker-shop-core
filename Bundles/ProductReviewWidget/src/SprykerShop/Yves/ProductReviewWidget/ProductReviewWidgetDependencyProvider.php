@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ProductReviewWidget;
 
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\ProductReview\ProductReviewDependencyProvider as SprykerProductReviewDependencyProvider;
+use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToCustomerClientBridge;
+use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductClientBridge;
+use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientBridge;
 
 class ProductReviewWidgetDependencyProvider extends SprykerProductReviewDependencyProvider
 {
@@ -40,7 +43,7 @@ class ProductReviewWidgetDependencyProvider extends SprykerProductReviewDependen
     protected function addCustomerClient(Container $container)
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return $container->getLocator()->customer()->client();
+            return new ProductReviewWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;
@@ -54,7 +57,7 @@ class ProductReviewWidgetDependencyProvider extends SprykerProductReviewDependen
     protected function addProductClient(Container $container)
     {
         $container[static::CLIENT_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->client();
+            return new ProductReviewWidgetToProductClientBridge($container->getLocator()->product()->client());
         };
 
         return $container;
@@ -68,7 +71,7 @@ class ProductReviewWidgetDependencyProvider extends SprykerProductReviewDependen
     protected function addProductReviewClient(Container $container)
     {
         $container[static::CLIENT_PRODUCT_REVIEW] = function (Container $container) {
-            return $container->getLocator()->productReview()->client();
+            return new ProductReviewWidgetToProductReviewClientBridge($container->getLocator()->productReview()->client());
         };
 
         return $container;

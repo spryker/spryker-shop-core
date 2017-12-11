@@ -7,11 +7,14 @@
 
 namespace SprykerShop\Yves\HeartbeatPage;
 
+use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSearchClientInterface;
+use SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSessionClientInterface;
+use SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToStorageClientInterface;
 use SprykerShop\Yves\HeartbeatPage\Model\HealthChecker;
 use SprykerShop\Yves\HeartbeatPage\Model\HealthIndicator\SearchHealthIndicator;
 use SprykerShop\Yves\HeartbeatPage\Model\HealthIndicator\SessionHealthIndicator;
 use SprykerShop\Yves\HeartbeatPage\Model\HealthIndicator\StorageHealthIndicator;
-use Spryker\Yves\Kernel\AbstractFactory;
 
 class HeartbeatPageFactory extends AbstractFactory
 {
@@ -39,9 +42,9 @@ class HeartbeatPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\SearchClientInterface
+     * @return \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSearchClientInterface
      */
-    protected function getSearchClient()
+    protected function getSearchClient(): HeartbeatPageToSearchClientInterface
     {
         return $this->getProvidedDependency(HeartbeatPageDependencyProvider::CLIENT_SEARCH);
     }
@@ -55,9 +58,9 @@ class HeartbeatPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Session\SessionClientInterface
+     * @return \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSessionClientInterface
      */
-    protected function getSessionClient()
+    protected function getSessionClient(): HeartbeatPageToSessionClientInterface
     {
         return $this->getProvidedDependency(HeartbeatPageDependencyProvider::CLIENT_SESSION);
     }
@@ -71,9 +74,9 @@ class HeartbeatPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
+     * @return \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToStorageClientInterface
      */
-    protected function getStorageClient()
+    protected function getStorageClient(): HeartbeatPageToStorageClientInterface
     {
         return $this->getProvidedDependency(HeartbeatPageDependencyProvider::CLIENT_STORAGE);
     }

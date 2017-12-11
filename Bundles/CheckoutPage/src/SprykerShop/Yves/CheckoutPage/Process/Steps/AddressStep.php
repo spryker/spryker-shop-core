@@ -9,33 +9,33 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Client\Customer\CustomerClientInterface;
-use Spryker\Client\Calculation\CalculationClientInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
 {
     /**
-     * @var \Spryker\Client\Customer\CustomerClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
      */
     protected $customerClient;
 
     /**
-     * @var \Spryker\Client\Calculation\CalculationClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
      */
     protected $calculationClient;
 
     /**
-     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
-     * @param \Spryker\Client\Calculation\CalculationClientInterface $calculationClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param string $stepRoute
      * @param string $escapeRoute
      */
     public function __construct(
-        CustomerClientInterface $customerClient,
-        CalculationClientInterface $calculationClient,
+        CheckoutPageToCustomerClientInterface $customerClient,
+        CheckoutPageToCalculationClientInterface $calculationClient,
         $stepRoute,
         $escapeRoute
     ) {

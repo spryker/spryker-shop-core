@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CategoryWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\CategoryWidget\Dependency\Client\CategoryWidgetToCategoryStorageClientBridge;
 
 class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -34,7 +35,7 @@ class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCategoryStorageClient(Container $container)
     {
         $container[self::CLIENT_CATEGORY_STORAGE] = function (Container $container) {
-            return $container->getLocator()->categoryStorage()->client();
+            return new CategoryWidgetToCategoryStorageClientBridge($container->getLocator()->categoryStorage()->client());
         };
 
         return $container;

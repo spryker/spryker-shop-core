@@ -8,13 +8,13 @@
 namespace SprykerShop\Yves\ShopTranslator\Model;
 
 use InvalidArgumentException;
-use Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface;
+use SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryStorageClientInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class TwigTranslator implements TranslatorInterface
 {
     /**
-     * @var \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface
+     * @var \SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryStorageClientInterface
      */
     private $client;
 
@@ -24,10 +24,10 @@ class TwigTranslator implements TranslatorInterface
     private $localeName;
 
     /**
-     * @param GlossaryStorageClientInterface $client
-     * @param null $localeName
+     * @param \SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryStorageClientInterface $client
+     * @param string|null $localeName
      */
-    public function __construct(GlossaryStorageClientInterface $client, $localeName = null)
+    public function __construct(ShopTranslatorToGlossaryStorageClientInterface $client, $localeName = null)
     {
         $this->client = $client;
         $this->localeName = $localeName;

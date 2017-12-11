@@ -9,10 +9,10 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
-use Spryker\Client\Checkout\CheckoutClientInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
+use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 
 class PlaceOrderStep extends AbstractPlaceOrderStep
 {
@@ -22,14 +22,14 @@ class PlaceOrderStep extends AbstractPlaceOrderStep
     protected $flashMessenger;
 
     /**
-     * @param \Spryker\Client\Checkout\CheckoutClientInterface $checkoutClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param array $errorCodeToRouteMatching
      */
     public function __construct(
-        CheckoutClientInterface $checkoutClient,
+        CheckoutPageToCheckoutClientInterface $checkoutClient,
         FlashMessengerInterface $flashMessenger,
         $stepRoute,
         $escapeRoute,
