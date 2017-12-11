@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Container;
 
 class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_CATEGORY_EXPORTER = 'CLIENT_CATEGORY_EXPORTER';
+    const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -21,7 +21,7 @@ class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addCategoryExporterClient($container);
+        $container = $this->addCategoryStorageClient($container);
 
         return $container;
     }
@@ -31,10 +31,10 @@ class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCategoryExporterClient(Container $container)
+    protected function addCategoryStorageClient(Container $container)
     {
-        $container[self::CLIENT_CATEGORY_EXPORTER] = function (Container $container) {
-            return $container->getLocator()->categoryExporter()->client();
+        $container[self::CLIENT_CATEGORY_STORAGE] = function (Container $container) {
+            return $container->getLocator()->categoryStorage()->client();
         };
 
         return $container;

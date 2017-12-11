@@ -2,7 +2,7 @@
     <ul class="menu vertical {% if nested is defined %}nested{% endif %}">
         {% for categoryNode in categories %}
             {% set quantity = 0 %}
-            {% for filterValue in filter.values if (filterValue.value == categoryNode.node_id) %}
+            {% for filterValue in filter.values if (filterValue.value == categoryNode.nodeId) %}
                 {% set quantity = filterValue.docCount %}
             {% endfor %}
 
