@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ShopRouter;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
-use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
+use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToCollectorClientBridge;
 
 class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -49,27 +49,27 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addCollectorClient(Container $container): Container
     {
         $container[self::CLIENT_COLLECTOR] = function (Container $container) {
-            return $container->getLocator()->collector()->client();
+            return new ShopRouterToCollectorClientBridge($container->getLocator()->collector()->client());
         };
 
         return $container;
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addResourceCreatorPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_RESOURCE_CREATORS] = function (Container $container) {
+        $container[self::PLUGIN_RESOURCE_CREATORS] = function () {
             return $this->getResourceCreatorPlugins();
         };
 
@@ -77,7 +77,7 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return ResourceCreatorPluginInterface[]
+     * @return \SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface[]
      */
     protected function getResourceCreatorPlugins()
     {

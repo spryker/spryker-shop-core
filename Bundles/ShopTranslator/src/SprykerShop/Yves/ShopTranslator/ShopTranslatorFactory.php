@@ -6,17 +6,16 @@
 
 namespace SprykerShop\Yves\ShopTranslator;
 
-use Spryker\Client\Glossary\GlossaryClientInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryClientInterface;
 use SprykerShop\Yves\ShopTranslator\Model\TwigTranslator;
 
 class ShopTranslatorFactory extends AbstractFactory
 {
-
     /**
      * @param string $locale
      *
-     * @return TwigTranslator
+     * @return \SprykerShop\Yves\ShopTranslator\Model\TwigTranslator
      */
     public function createTwigTranslator($locale)
     {
@@ -24,9 +23,9 @@ class ShopTranslatorFactory extends AbstractFactory
     }
 
     /**
-     * @return GlossaryClientInterface
+     * @return \SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryClientInterface
      */
-    public function getGlossaryClient()
+    public function getGlossaryClient(): ShopTranslatorToGlossaryClientInterface
     {
         return $this->getProvidedDependency(ShopTranslatorDependencyProvider::CLIENT_GLOSSARY);
     }

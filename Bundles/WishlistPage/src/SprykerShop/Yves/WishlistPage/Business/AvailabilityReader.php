@@ -7,19 +7,19 @@
 
 namespace SprykerShop\Yves\WishlistPage\Business;
 
-use Spryker\Client\Availability\AvailabilityClientInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityClientInterface;
 
 class AvailabilityReader implements AvailabilityReaderInterface
 {
     /**
-     * @var \Spryker\Client\Availability\AvailabilityClientInterface
+     * @var \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityClientInterface
      */
     protected $availabilityClient;
 
     /**
-     * @param \Spryker\Client\Availability\AvailabilityClientInterface $availabilityClient
+     * @param \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityClientInterface $availabilityClient
      */
-    public function __construct(AvailabilityClientInterface $availabilityClient)
+    public function __construct(WishlistPageToAvailabilityClientInterface $availabilityClient)
     {
         $this->availabilityClient = $availabilityClient;
     }

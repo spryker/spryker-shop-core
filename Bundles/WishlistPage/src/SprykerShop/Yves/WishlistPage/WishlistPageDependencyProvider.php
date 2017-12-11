@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\WishlistPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityClientBridge;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientBridge;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientBridge;
 
 class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -38,7 +41,7 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCustomerClient(Container $container): Container
     {
         $container[self::CLIENT_CUSTOMER] = function (Container $container) {
-            return $container->getLocator()->customer()->client();
+            return new WishlistPageToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;
@@ -52,7 +55,7 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addAvailabilityClient(Container $container): Container
     {
         $container[self::CLIENT_AVAILABILITY] = function (Container $container) {
-            return $container->getLocator()->availability()->client();
+            return new WishlistPageToAvailabilityClientBridge($container->getLocator()->availability()->client());
         };
 
         return $container;
@@ -66,7 +69,7 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addWishlistClient(Container $container): Container
     {
         $container[self::CLIENT_WISHLIST] = function (Container $container) {
-            return $container->getLocator()->wishlist()->client();
+            return new WishlistPageToWishlistClientBridge($container->getLocator()->wishlist()->client());
         };
 
         return $container;
