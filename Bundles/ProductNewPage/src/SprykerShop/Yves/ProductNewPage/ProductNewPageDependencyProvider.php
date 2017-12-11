@@ -10,10 +10,11 @@ namespace SprykerShop\Yves\ProductNewPage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCollectorClientBridge;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientBridge;
 
 class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_SEARCH = 'CLIENT_SEARCH';
     const CLIENT_PRODUCT_NEW = 'CLIENT_PRODUCT_NEW';
     const CLIENT_COLLECTOR = 'CLIENT_COLLECTOR';
     const STORE = 'STORE';
@@ -26,7 +27,6 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addSearchClient($container);
         $container = $this->addProductNewClient($container);
         $container = $this->addCollectorClient($container);
         $container = $this->addStore($container);
@@ -40,24 +40,10 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addSearchClient(Container $container)
-    {
-        $container[self::CLIENT_SEARCH] = function (Container $container) {
-            return $container->getLocator()->search()->client();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addProductNewClient(Container $container)
     {
         $container[self::CLIENT_PRODUCT_NEW] = function (Container $container) {
-            return $container->getLocator()->productNew()->client();
+            return new ProductNewPageToProductNewClientBridge($container->getLocator()->productNew()->client());
         };
 
         return $container;
@@ -71,7 +57,7 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCollectorClient(Container $container)
     {
         $container[self::CLIENT_COLLECTOR] = function (Container $container) {
-            return $container->getLocator()->collector()->client();
+            return new ProductNewPageToCollectorClientBridge($container->getLocator()->collector()->client());
         };
 
         return $container;
@@ -84,7 +70,7 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore($container)
     {
-        $container[self::STORE] = function (Container $container) {
+        $container[self::STORE] = function () {
             return Store::getInstance();
         };
 
@@ -98,7 +84,7 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductNewPageWidgetPlugins($container)
     {
-        $container[self::PLUGIN_PRODUCT_NEW_PAGE_WIDGETS] = function (Container $container) {
+        $container[self::PLUGIN_PRODUCT_NEW_PAGE_WIDGETS] = function () {
             return $this->getProductNewPageWidgetPlugins();
         };
 

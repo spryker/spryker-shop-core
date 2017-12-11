@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CalculationPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CalculationPage\Dependency\Client\CalculationPageToCalculationClientInterface;
 
 /**
  * @method \Spryker\Client\Calculation\CalculationClientInterface getClient()
@@ -15,16 +16,17 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class CalculationPageFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\Quote\QuoteClientInterface
+     * @return \SprykerShop\Yves\CalculationPage\Dependency\Client\CalculationPageToQuoteClientInterface
      */
     public function getQuoteClient()
     {
         return $this->getProvidedDependency(CalculationPageDependencyProvider::CLIENT_QUOTE);
     }
+
     /**
-     * @return \Spryker\Client\Calculation\CalculationClientInterface
+     * @return \SprykerShop\Yves\CalculationPage\Dependency\Client\CalculationPageToCalculationClientInterface
      */
-    public function getCalculationClient()
+    public function getCalculationClient(): CalculationPageToCalculationClientInterface
     {
         return $this->getProvidedDependency(CalculationPageDependencyProvider::CLIENT_CALCULATION);
     }

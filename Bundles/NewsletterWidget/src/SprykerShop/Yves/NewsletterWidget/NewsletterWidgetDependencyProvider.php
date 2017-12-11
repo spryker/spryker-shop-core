@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\NewsletterWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\NewsletterWidget\Dependency\Client\NewsletterWidgetToNewsletterClientBridge;
+use SprykerShop\Yves\NewsletterWidget\Dependency\Service\NewsletterWidgetToUtilValidateServiceBridge;
 
 class NewsletterWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -38,21 +40,21 @@ class NewsletterWidgetDependencyProvider extends AbstractBundleDependencyProvide
     protected function addUtilValidateService(Container $container)
     {
         $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
-            return $container->getLocator()->utilValidate()->service();
+            return new NewsletterWidgetToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
         };
 
         return $container;
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addNewsletterClient(Container $container)
     {
         $container[static::CLIENT_NEWSLETTER] = function (Container $container) {
-            return $container->getLocator()->newsletter()->client();
+            return new NewsletterWidgetToNewsletterClientBridge($container->getLocator()->newsletter()->client());
         };
 
         return $container;

@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CartPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Handler\CartOperationHandler;
 use SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler;
@@ -18,15 +19,7 @@ use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
 class CartPageFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\Calculation\CalculationClientInterface
-     */
-    public function getCalculationClient()
-    {
-        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_CALCULATION);
-    }
-
-    /**
-     * @return \Spryker\Client\Cart\CartClient
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface
      */
     public function getCartClient()
     {
@@ -135,9 +128,9 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Product\ProductClientInterface $productClient
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface
      */
-    protected function getProductClient()
+    protected function getProductClient(): CartPageToProductClientInterface
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_PRODUCT);
     }

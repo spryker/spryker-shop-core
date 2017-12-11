@@ -8,20 +8,20 @@
 namespace SprykerShop\Yves\NewsletterPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
-use Spryker\Client\Newsletter\NewsletterClientInterface;
+use SprykerShop\Yves\NewsletterPage\Dependency\Client\NewsletterPageToNewsletterClientInterface;
 use SprykerShop\Yves\NewsletterPage\Form\NewsletterSubscriptionForm;
 
 class NewsletterSubscriptionFormDataProvider
 {
     /**
-     * @var \Spryker\Client\Newsletter\NewsletterClientInterface
+     * @var \SprykerShop\Yves\NewsletterPage\Dependency\Client\NewsletterPageToNewsletterClientInterface
      */
     protected $newsletterClient;
 
     /**
-     * @param \Spryker\Client\Newsletter\NewsletterClientInterface $newsletterClient
+     * @param \SprykerShop\Yves\NewsletterPage\Dependency\Client\NewsletterPageToNewsletterClientInterface $newsletterClient
      */
-    public function __construct(NewsletterClientInterface $newsletterClient)
+    public function __construct(NewsletterPageToNewsletterClientInterface $newsletterClient)
     {
         $this->newsletterClient = $newsletterClient;
     }

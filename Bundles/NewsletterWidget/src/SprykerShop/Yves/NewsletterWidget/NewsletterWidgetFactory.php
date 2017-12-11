@@ -7,10 +7,11 @@
 
 namespace SprykerShop\Yves\NewsletterWidget;
 
-use Spryker\Client\Newsletter\NewsletterClientInterface;
-use SprykerShop\Yves\NewsletterWidget\Form\NewsletterSubscriptionForm;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\NewsletterWidget\Dependency\Client\NewsletterWidgetToNewsletterClientInterface;
+use SprykerShop\Yves\NewsletterWidget\Dependency\Service\NewsletterWidgetToUtilValidateServiceInterface;
+use SprykerShop\Yves\NewsletterWidget\Form\NewsletterSubscriptionForm;
 
 class NewsletterWidgetFactory extends AbstractFactory
 {
@@ -32,17 +33,17 @@ class NewsletterWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Service\UtilValidate\UtilValidateServiceInterface
+     * @return \SprykerShop\Yves\NewsletterWidget\Dependency\Service\NewsletterWidgetToUtilValidateServiceInterface
      */
-    protected function getUtilValidateService()
+    protected function getUtilValidateService(): NewsletterWidgetToUtilValidateServiceInterface
     {
         return $this->getProvidedDependency(NewsletterWidgetDependencyProvider::SERVICE_UTIL_VALIDATE);
     }
 
     /**
-     * @return NewsletterClientInterface
+     * @return \SprykerShop\Yves\NewsletterWidget\Dependency\Client\NewsletterWidgetToNewsletterClientInterface
      */
-    public function getNewsletterClient()
+    public function getNewsletterClient(): NewsletterWidgetToNewsletterClientInterface
     {
         return $this->getProvidedDependency(NewsletterWidgetDependencyProvider::CLIENT_NEWSLETTER);
     }

@@ -8,13 +8,14 @@
 namespace SprykerShop\Yves\CategoryWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CategoryWidget\Dependency\Client\CategoryWidgetToCategoryExporterClientInterface;
 
 class CategoryWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\CategoryExporter\CategoryExporterClient
+     * @return \SprykerShop\Yves\CategoryWidget\Dependency\Client\CategoryWidgetToCategoryExporterClientInterface
      */
-    public function getCategoryExporterClient()
+    public function getCategoryExporterClient(): CategoryWidgetToCategoryExporterClientInterface
     {
         return $this->getProvidedDependency(CategoryWidgetDependencyProvider::CLIENT_CATEGORY_EXPORTER);
     }

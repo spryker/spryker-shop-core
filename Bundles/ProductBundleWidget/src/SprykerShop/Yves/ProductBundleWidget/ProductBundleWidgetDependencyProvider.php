@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetToProductBundleClientBridge;
 
 class ProductBundleWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -34,7 +35,7 @@ class ProductBundleWidgetDependencyProvider extends AbstractBundleDependencyProv
     protected function addProductBundleClient(Container $container): Container
     {
         $container[self::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
-            return $container->getLocator()->productBundle()->client();
+            return new ProductBundleWidgetToProductBundleClientBridge($container->getLocator()->productBundle()->client());
         };
 
         return $container;

@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CategoryWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\CategoryWidget\Dependency\Client\CategoryWidgetToCategoryExporterClientBridge;
 
 class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -34,7 +35,7 @@ class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCategoryExporterClient(Container $container)
     {
         $container[self::CLIENT_CATEGORY_EXPORTER] = function (Container $container) {
-            return $container->getLocator()->categoryExporter()->client();
+            return new CategoryWidgetToCategoryExporterClientBridge($container->getLocator()->categoryExporter()->client());
         };
 
         return $container;

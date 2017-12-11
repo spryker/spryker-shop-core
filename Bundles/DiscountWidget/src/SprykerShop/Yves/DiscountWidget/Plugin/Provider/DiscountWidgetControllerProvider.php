@@ -15,6 +15,7 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
     const ROUTE_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
     const ROUTE_DISCOUNT_VOUCHER_REMOVE = 'discount/voucher/remove';
     const ROUTE_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';
+    const CHECKOUT_VOUCHER_ADD = 'checkout-voucher-add';
 
     const SKU_PATTERN = '[a-zA-Z0-9-_]+';
 
@@ -38,5 +39,10 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{discount}/voucher/clear', self::ROUTE_DISCOUNT_VOUCHER_CLEAR, 'DiscountWidget', 'Voucher', 'clear')
             ->assert('discount', $allowedLocalesPattern . 'discount|discount')
             ->value('discount', 'discount');
+
+        $this->createController('/{checkout}/add-voucher', self::CHECKOUT_VOUCHER_ADD, 'DiscountWidget', 'Checkout', 'addVoucher')
+            ->assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+            ->value('checkout', 'checkout')
+            ->method('GET|POST');
     }
 }

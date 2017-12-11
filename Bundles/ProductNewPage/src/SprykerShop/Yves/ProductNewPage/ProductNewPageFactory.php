@@ -7,8 +7,9 @@
 
 namespace SprykerShop\Yves\ProductNewPage;
 
-use Spryker\Client\Collector\CollectorClient;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCollectorClientInterface;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientInterface;
 
 class ProductNewPageFactory extends AbstractFactory
 {
@@ -21,25 +22,17 @@ class ProductNewPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductNew\ProductNewClientInterface
+     * @return \SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientInterface
      */
-    public function getProductNewClient()
+    public function getProductNewClient(): ProductNewPageToProductNewClientInterface
     {
         return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_PRODUCT_NEW);
     }
 
     /**
-     * @return \Spryker\Client\Search\SearchClientInterface
+     * @return \SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCollectorClientInterface
      */
-    protected function getSearchClient()
-    {
-        return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_SEARCH);
-    }
-
-    /**
-     * @return \Spryker\Client\Collector\CollectorClientInterface
-     */
-    public function getCollectorClient()
+    public function getCollectorClient(): ProductNewPageToCollectorClientInterface
     {
         return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_COLLECTOR);
     }

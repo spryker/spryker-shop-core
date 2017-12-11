@@ -11,6 +11,8 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
 use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\GuestCheckoutAuthenticationHandlerPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\LoginCheckoutAuthenticationHandlerPlugin;
@@ -18,15 +20,15 @@ use SprykerShop\Yves\CustomerPage\Plugin\RegistrationCheckoutAuthenticationHandl
 
 class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_CUSTOMER = 'customer client';
-    const CLIENT_SALES = 'client client';
-    const PLUGIN_APPLICATION = 'application plugin';
-    const PLUGIN_AUTHENTICATION_HANDLER = 'authentication plugin';
-    const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'login authentication plugin';
-    const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'guest authentication plugin';
-    const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'registration authentication plugin';
-    const FLASH_MESSENGER = 'flash messenger';
-    const STORE = 'store';
+    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    const CLIENT_SALES = 'CLIENT_SALES';
+    const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
+    const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
+    const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'PLUGIN_GUEST_AUTHENTICATION_HANDLER';
+    const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER';
+    const FLASH_MESSENGER = 'FLASH_MESSENGER';
+    const STORE = 'STORE';
     const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
 
     /**
@@ -152,7 +154,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCustomerClient(Container $container): Container
     {
         $container[self::CLIENT_CUSTOMER] = function (Container $container) {
-            return $container->getLocator()->customer()->client();
+            return new CustomerPageToCustomerClientBridge($container->getLocator()->customer()->client());
         };
         return $container;
     }
@@ -165,7 +167,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSalesClient(Container $container): Container
     {
         $container[self::CLIENT_SALES] = function (Container $container) {
-            return $container->getLocator()->sales()->client();
+            return new CustomerPageToSalesClientBridge($container->getLocator()->sales()->client());
         };
         return $container;
     }

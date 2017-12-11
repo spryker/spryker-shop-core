@@ -9,17 +9,12 @@ namespace SprykerShop\Yves\CheckoutPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutToQuoteInterface
+interface CheckoutPageToShipmentClientInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote();
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
-    public function setQuote(QuoteTransfer $quoteTransfer);
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 }

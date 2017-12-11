@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\DiscountPromotionWidget;
 use Spryker\Yves\DiscountPromotion\Plugin\ProductPromotionMapperPlugin;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\DiscountPromotionWidget\Dependency\Client\DiscountPromotionWidgetToProductClientBridge;
 
 class DiscountPromotionWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -51,7 +52,7 @@ class DiscountPromotionWidgetDependencyProvider extends AbstractBundleDependency
     protected function addProductClient(Container $container)
     {
         $container[self::CLIENT_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->client();
+            return new DiscountPromotionWidgetToProductClientBridge($container->getLocator()->product()->client());
         };
 
         return $container;

@@ -11,15 +11,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class HomePageFactory extends AbstractFactory
 {
-
-    /**
-     * @return \Spryker\Client\Catalog\CatalogClientInterface
-     */
-    public function getCatalogClient()
-    {
-        return $this->getProvidedDependency(HomePageDependencyProvider::CLIENT_CATALOG);
-    }
-
     /**
      * @return string[]
      */

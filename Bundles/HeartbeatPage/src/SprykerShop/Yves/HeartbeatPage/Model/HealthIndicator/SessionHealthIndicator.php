@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\HeartbeatPage\Model\HealthIndicator;
 
 use Exception;
-use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
+use SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSessionClientInterface;
 
 class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {
@@ -18,14 +18,14 @@ class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIn
     const KEY_HEARTBEAT = 'heartbeat';
 
     /**
-     * @var \Spryker\Client\Session\SessionClientInterface
+     * @var \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSessionClientInterface
      */
     protected $sessionClient;
 
     /**
-     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
+     * @param \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSessionClientInterface $sessionClient
      */
-    public function __construct(SessionClientInterface $sessionClient)
+    public function __construct(HeartbeatPageToSessionClientInterface $sessionClient)
     {
         $this->sessionClient = $sessionClient;
     }

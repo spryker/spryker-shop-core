@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\HeartbeatPage\Model\HealthIndicator;
 
 use Exception;
-use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
+use SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToStorageClientInterface;
 
 class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {
@@ -17,14 +17,14 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     const KEY_HEARTBEAT = 'heartbeat';
 
     /**
-     * @var \Spryker\Client\Storage\StorageClientInterface
+     * @var \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToStorageClientInterface
      */
     protected $storageClient;
 
     /**
-     * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
+     * @param \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToStorageClientInterface $storageClient
      */
-    public function __construct(StorageClientInterface $storageClient)
+    public function __construct(HeartbeatPageToStorageClientInterface $storageClient)
     {
         $this->storageClient = $storageClient;
     }

@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\CartPage\Handler;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 
 // TODO: this needs to be moved from this module
 class ProductBundleCartOperationHandler extends BaseHandler implements CartOperationInterface
@@ -21,7 +21,7 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
     protected $cartOperationHandler;
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface|\Spryker\Client\Kernel\AbstractClient
+     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface
      */
     protected $cartClient;
 
@@ -32,13 +32,13 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
 
     /**
      * @param \SprykerShop\Yves\CartPage\Handler\CartOperationInterface $cartOperationHandler
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $cartClient
      * @param string $locale
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      */
     public function __construct(
         CartOperationInterface $cartOperationHandler,
-        CartClientInterface $cartClient,
+        CartPageToCartClientInterface $cartClient,
         $locale,
         FlashMessengerInterface $flashMessenger
     ) {

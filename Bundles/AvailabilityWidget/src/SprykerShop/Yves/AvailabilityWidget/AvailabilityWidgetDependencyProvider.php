@@ -11,5 +11,4 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 
 class AvailabilityWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-
 }

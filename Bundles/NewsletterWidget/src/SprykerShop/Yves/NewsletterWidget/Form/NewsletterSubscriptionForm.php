@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\NewsletterWidget\Form;
 
-use Spryker\Service\UtilValidate\UtilValidateServiceInterface;
+use SprykerShop\Yves\NewsletterWidget\Dependency\Service\NewsletterWidgetToUtilValidateServiceInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,14 +22,14 @@ class NewsletterSubscriptionForm extends AbstractType
     const FORM_ID = 'subscription';
 
     /**
-     * @var \Spryker\Service\UtilValidate\UtilValidateServiceInterface
+     * @var \SprykerShop\Yves\NewsletterWidget\Dependency\Service\NewsletterWidgetToUtilValidateServiceInterface
      */
     protected $utilValidateService;
 
     /**
-     * @param \Spryker\Service\UtilValidate\UtilValidateServiceInterface $utilValidateService
+     * @param \SprykerShop\Yves\NewsletterWidget\Dependency\Service\NewsletterWidgetToUtilValidateServiceInterface $utilValidateService
      */
-    public function __construct(UtilValidateServiceInterface $utilValidateService)
+    public function __construct(NewsletterWidgetToUtilValidateServiceInterface $utilValidateService)
     {
         $this->utilValidateService = $utilValidateService;
     }

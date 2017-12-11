@@ -8,13 +8,14 @@
 namespace SprykerShop\Yves\ProductBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetToProductBundleClientInterface;
 
 class ProductBundleWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ProductBundle\ProductBundleClientInterface
+     * @return \SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetToProductBundleClientInterface
      */
-    public function getProductBundleClient()
+    public function getProductBundleClient(): ProductBundleWidgetToProductBundleClientInterface
     {
         return $this->getProvidedDependency(ProductBundleWidgetDependencyProvider::CLIENT_PRODUCT_BUNDLE);
     }

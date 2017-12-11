@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\DataContainer;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutToQuoteInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 
 class DataContainer implements DataContainerInterface
@@ -24,9 +24,9 @@ class DataContainer implements DataContainerInterface
     protected $quoteTransfer;
 
     /**
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutToQuoteInterface $quoteClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface $quoteClient
      */
-    public function __construct(CheckoutToQuoteInterface $quoteClient)
+    public function __construct(CheckoutPageToQuoteClientInterface $quoteClient)
     {
         $this->quoteClient = $quoteClient;
     }
