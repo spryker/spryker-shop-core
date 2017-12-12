@@ -1,5 +1,5 @@
-{% if stepBreadcrumbs is defined %}
-    {% for stepBreadcrumbItem in stepBreadcrumbs.breadcrumbs %}
+{% if _view.stepBreadcrumbs is defined %}
+    {% for stepBreadcrumbItem in _view.stepBreadcrumbs.breadcrumbs %}
         <li class="{% if stepBreadcrumbItem.isActive %}active{% elseif not stepBreadcrumbItem.isEnabled %}disabled{% endif %}">
             {% if stepBreadcrumbItem.isEnabled and not stepBreadcrumbItem.isActive %}
                 <a href="{{ url(stepBreadcrumbItem.route) }}">{{ stepBreadcrumbItem.title | trans }}</a>

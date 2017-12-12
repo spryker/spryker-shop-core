@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
- * @method \SprykerShop\Client\CartPage\CartPageClientInterface getClient()
  */
 class CartController extends AbstractController
 {
@@ -31,7 +30,7 @@ class CartController extends AbstractController
             ->getCartClient()
             ->getQuote();
 
-        $cartItems = $this->getClient()->getCartItems($quoteTransfer);
+        $cartItems = $this->getFactory()->createCartItemReader()->getCartItems($quoteTransfer);
 
         $itemAttributesBySku = $this->getFactory()
             ->createCartItemsAttributeProvider()

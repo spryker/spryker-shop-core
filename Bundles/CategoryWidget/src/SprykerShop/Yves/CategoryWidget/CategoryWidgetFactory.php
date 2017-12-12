@@ -8,32 +8,16 @@
 namespace SprykerShop\Yves\CategoryWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CategoryWidget\Dependency\Client\CategoryWidgetToCategoryStorageClientInterface;
 
 class CategoryWidgetFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Client\CategoryExporter\CategoryExporterClient
+     * @return \SprykerShop\Yves\CategoryWidget\Dependency\Client\CategoryWidgetToCategoryStorageClientInterface
      */
-    public function getCategoryExporterClient()
+    public function getCategoryStorageClient(): CategoryWidgetToCategoryStorageClientInterface
     {
-        return $this->getProvidedDependency(CategoryWidgetDependencyProvider::CLIENT_CATEGORY_EXPORTER);
+        return $this->getProvidedDependency(CategoryWidgetDependencyProvider::CLIENT_CATEGORY_STORAGE);
     }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(CategoryWidgetDependencyProvider::STORE);
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\Application
-     */
-    public function getApplication()
-    {
-        return $this->getProvidedDependency(CategoryWidgetDependencyProvider::APPLICATION);
-    }
-
 }

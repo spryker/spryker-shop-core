@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\WebProfilerWidget;
 
-use SprykerShop\Shared\WebProfilerWidget\WebProfilerWidgetConstants;
+use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class WebProfilerWidgetConfig extends AbstractBundleConfig
@@ -17,6 +17,6 @@ class WebProfilerWidgetConfig extends AbstractBundleConfig
      */
     public function isWebProfilerEnabled()
     {
-        return $this->get(WebProfilerWidgetConstants::ENABLE_WEB_PROFILER, false);
+        return $this->get(WebProfilerConstants::ENABLE_WEB_PROFILER, false);
     }
 }

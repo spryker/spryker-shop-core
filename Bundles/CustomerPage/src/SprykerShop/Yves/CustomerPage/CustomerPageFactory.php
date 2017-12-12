@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\CustomerPage;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
@@ -96,17 +98,9 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Client\NewsletterWidget\NewsletterWidgetClientInterface
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface
      */
-    public function getNewsletterPageClient()
-    {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_NEWSLETTER_PAGE);
-    }
-
-    /**
-     * @return \Spryker\Client\Sales\SalesClientInterface
-     */
-    public function getSalesClient()
+    public function getSalesClient(): CustomerPageToSalesClientInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_SALES);
     }
@@ -188,9 +182,9 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Customer\CustomerClientInterface TODO: client should come from core or shop
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface
      */
-    public function getCustomerClient()
+    public function getCustomerClient(): CustomerPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_CUSTOMER);
     }

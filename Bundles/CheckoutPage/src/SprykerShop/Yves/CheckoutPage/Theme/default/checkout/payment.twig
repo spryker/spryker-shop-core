@@ -7,21 +7,21 @@
 
 {% block content %}
     <div class="row columns">
-        {{ form_start(paymentForm, { attr: { id: 'payment-form' }}) }}
+        {{ form_start(_view.paymentForm, { attr: { id: 'payment-form' }}) }}
 
             <div class="callout">
                 <ul class="no-bullet">
-                    {% for name, choices in paymentForm.paymentSelection.vars.choices %}
+                    {% for name, choices in _view.paymentForm.paymentSelection.vars.choices %}
 
                         <h4>{{ ('checkout.payment.provider.' ~ name) | trans }}</h4>
 
                         {% for key, choice in choices %}
                             <li>  &nbsp;
-                                {{ form_widget(paymentForm.paymentSelection[key], {'attr': {'class': '__toggler'}}) }}
-                                {{ form_label(paymentForm.paymentSelection[key]) }}
+                                {{ form_widget(_view.paymentForm.paymentSelection[key], {'attr': {'class': '__toggler'}}) }}
+                                {{ form_label(_view.paymentForm.paymentSelection[key]) }}
                                 <div class="__toggler-target">
                                     <div class="row columns">
-                                        {{ checkout.include_subform(paymentForm[paymentForm.paymentSelection[key].vars.value]) }}
+                                        {{ checkout.include_subform(_view.paymentForm[_view.paymentForm.paymentSelection[key].vars.value]) }}
                                     </div>
                                 </div>
                             </li>
@@ -34,7 +34,7 @@
             <div class="callout">
                 <div class="row align-right">
                     <div class="small-12 medium-6 large-4 xlarge-3 columns">
-                        <a href="{{ previousStepUrl }}" class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
+                        <a href="{{ _view.previousStepUrl }}" class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
                     </div>
                     <div class="small-12 medium-6 large-4 xlarge-3 columns">
                         <button type="submit" class="button success expanded __no-margin-bottom">{{ 'checkout.step.summary' | trans }}</button>
@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-        {{ form_end(paymentForm) }}
+        {{ form_end(_view.paymentForm) }}
     </div>
 
 {% endblock %}

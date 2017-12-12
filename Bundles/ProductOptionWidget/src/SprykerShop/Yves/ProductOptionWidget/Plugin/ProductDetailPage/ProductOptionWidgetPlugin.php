@@ -16,7 +16,6 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductOptionWidget\Pro
  */
 class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductOptionWidgetPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
      *
@@ -69,5 +68,4 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
             ->getProductOptionClient()
             ->getProductOptions($idProductAbstract, $this->getLocale());
     }
-
 }

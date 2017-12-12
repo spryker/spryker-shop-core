@@ -8,8 +8,6 @@
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use SprykerShop\Yves\CheckoutPage\Form\Voucher\VoucherForm;
-use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,7 +18,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return mixed
      */
     public function indexAction(Request $request)
     {
@@ -32,7 +30,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return mixed
      */
     public function customerAction(Request $request)
     {
@@ -43,13 +41,17 @@ class CheckoutController extends AbstractController
                 ->createCustomerFormCollection()
         );
 
-        return $response;
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, $this->getFactory()->getCustomerPageWidgetPlugins());
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return mixed
      */
     public function addressAction(Request $request)
     {
@@ -60,43 +62,59 @@ class CheckoutController extends AbstractController
                 ->createAddressFormCollection()
         );
 
-        return $response;
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, $this->getFactory()->getCustomerPageWidgetPlugins());
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return mixed
      */
     public function shipmentAction(Request $request)
     {
-        return $this->createStepProcess()->process(
+        $response = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
                 ->createCheckoutFormFactory()
                 ->createShipmentFormCollection()
         );
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, $this->getFactory()->getCustomerPageWidgetPlugins());
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return mixed
      */
     public function paymentAction(Request $request)
     {
-        return $this->createStepProcess()->process(
+        $response = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
                 ->createCheckoutFormFactory()
                 ->createPaymentFormCollection()
         );
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, $this->getFactory()->getCustomerPageWidgetPlugins());
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return mixed
      */
     public function summaryAction(Request $request)
     {
@@ -107,7 +125,11 @@ class CheckoutController extends AbstractController
                 ->createSummaryFormCollection()
         );
 
-        return $viewData;
+        if (!is_array($viewData)) {
+            return $viewData;
+        }
+
+        return $this->view($viewData, $this->getFactory()->getSummaryPageWidgetPlugins());
     }
 
     /**
@@ -123,11 +145,17 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return mixed
      */
     public function successAction(Request $request)
     {
-        return $this->createStepProcess()->process($request);
+        $response = $this->createStepProcess()->process($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, $this->getFactory()->getCustomerPageWidgetPlugins());
     }
 
     /**
@@ -136,29 +164,6 @@ class CheckoutController extends AbstractController
     public function errorAction()
     {
         return [];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function addVoucherAction(Request $request)
-    {
-        $form = $this->getFactory()
-            ->createCheckoutFormFactory()
-            ->getVoucherForm()
-            ->handleRequest($request);
-
-        if ($form->isValid()) {
-            $voucherCode = $form->get(VoucherForm::FIELD_VOUCHER_DISCOUNTS)->getData();
-
-            $this->getFactory()
-                ->createVoucherHandler()
-                ->add($voucherCode);
-        }
-
-        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
     }
 
     /**

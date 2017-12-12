@@ -8,8 +8,8 @@ namespace SprykerShop\Yves\CartPage\Handler;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CartOperationHandler extends BaseHandler implements CartOperationInterface
@@ -17,7 +17,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     const URL_PARAM_ID_DISCOUNT_PROMOTION = 'idDiscountPromotion';
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface|\Spryker\Client\Kernel\AbstractClient
+     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface
      */
     protected $cartClient;
 
@@ -32,13 +32,13 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     protected $request;
 
     /**
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $cartClient
      * @param string $locale
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(
-        CartClientInterface $cartClient,
+        CartPageToCartClientInterface $cartClient,
         $locale,
         FlashMessengerInterface $flashMessenger,
         Request $request

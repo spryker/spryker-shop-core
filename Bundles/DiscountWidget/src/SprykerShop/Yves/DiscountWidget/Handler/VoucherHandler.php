@@ -9,31 +9,30 @@ namespace SprykerShop\Yves\DiscountWidget\Handler;
 use ArrayObject;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Calculation\CalculationClientInterface;
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
+use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface;
+use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCartClientInterface;
 
-// TODO: review this class
 class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 {
     /**
-     * @var \Spryker\Client\Calculation\CalculationClientInterface|\Spryker\Client\Kernel\AbstractClient
+     * @var \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface
      */
     protected $calculationClient;
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
+     * @var \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCartClientInterface
      */
     protected $cartClient;
 
     /**
-     * @param \Spryker\Client\Calculation\CalculationClientInterface $calculationClient
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface $calculationClient
+     * @param \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCartClientInterface $cartClient
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      */
     public function __construct(
-        CalculationClientInterface $calculationClient,
-        CartClientInterface $cartClient,
+        DiscountWidgetToCalculationClientInterface $calculationClient,
+        DiscountWidgetToCartClientInterface $cartClient,
         FlashMessengerInterface $flashMessenger
     ) {
         parent::__construct($flashMessenger);

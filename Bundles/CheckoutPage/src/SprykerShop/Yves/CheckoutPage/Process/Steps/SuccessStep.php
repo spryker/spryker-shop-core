@@ -8,32 +8,32 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Customer\CustomerClientInterface;
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SuccessStep extends AbstractBaseStep
 {
     /**
-     * @var \Spryker\Client\Customer\CustomerClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
      */
     protected $customerClient;
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface
      */
     protected $cartClient;
 
     /**
-     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface $cartClient
      * @param string $stepRoute
      * @param string $escapeRoute
      */
     public function __construct(
-        CustomerClientInterface $customerClient,
-        CartClientInterface $cartClient,
+        CheckoutPageToCustomerClientInterface $customerClient,
+        CheckoutPageToCartClientInterface $cartClient,
         $stepRoute,
         $escapeRoute
     ) {

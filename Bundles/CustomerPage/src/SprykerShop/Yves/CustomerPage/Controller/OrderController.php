@@ -33,7 +33,7 @@ class OrderController extends AbstractCustomerController
 
         $orderListTransfer = $this->getFactory()
             ->getSalesClient()
-            ->getOrders($orderListTransfer);
+            ->getPaginatedOrder($orderListTransfer);
 
         $orderList = $orderListTransfer->getOrders();
 

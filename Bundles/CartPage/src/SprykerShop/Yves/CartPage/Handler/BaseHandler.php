@@ -6,9 +6,10 @@
 
 namespace SprykerShop\Yves\CartPage\Handler;
 
-use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 
+// TODO: get rid of this class and use MessengerClient instead (coming with https://github.com/spryker/spryker/pull/2925)
 class BaseHandler
 {
     /**
@@ -25,11 +26,11 @@ class BaseHandler
     }
 
     /**
-     * @param \Spryker\Client\Kernel\AbstractClient $client
+     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $client
      *
      * @return void
      */
-    public function setFlashMessagesFromLastZedRequest(AbstractClient $client)
+    public function setFlashMessagesFromLastZedRequest(CartPageToCartClientInterface $client)
     {
         foreach ($client->getZedStub()->getErrorMessages() as $errorMessage) {
             $this->flashMessenger->addErrorMessage($errorMessage->getValue());

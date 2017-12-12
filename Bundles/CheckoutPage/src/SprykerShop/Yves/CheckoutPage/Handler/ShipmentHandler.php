@@ -9,22 +9,22 @@ use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Client\Shipment\ShipmentClientInterface;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ShipmentHandler
 {
     /**
-     * @var \Spryker\Client\Shipment\ShipmentClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
      */
     protected $shipmentClient;
 
     /**
-     * @param \Spryker\Client\Shipment\ShipmentClientInterface $shipmentClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      */
-    public function __construct(ShipmentClientInterface $shipmentClient)
+    public function __construct(CheckoutPageToShipmentClientInterface $shipmentClient)
     {
         $this->shipmentClient = $shipmentClient;
     }

@@ -37,7 +37,6 @@
 
         {% block price %}
             <p>
-                {# TODO: original price must be an extension of this template #}
                 {% if originalPrice %}
                     <span class="catalog-price__price-original">{{ originalPrice | money }}</span>
                     <span class="catalog-price__price-reduced">{{ priceValue | money }}</span>

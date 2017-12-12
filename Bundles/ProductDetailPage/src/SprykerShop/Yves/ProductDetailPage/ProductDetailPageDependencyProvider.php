@@ -9,13 +9,12 @@ namespace SprykerShop\Yves\ProductDetailPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductClientBridge;
 
 class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
-    const CLIENT_PRODUCT_GROUP = 'CLIENT_PRODUCT_GROUP';
+    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     const PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS';
-    const PLUGIN_STORAGE_PRODUCT_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -24,9 +23,8 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addProductGroupClient($container);
+        $container = $this->addProductClient($container);
         $container = $this->addProductDetailPageWidgetPlugins($container);
-        $container = $this->addStorageProductExpanderPlugins($container);
 
         return $container;
     }
@@ -36,37 +34,13 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductGroupClient(Container $container)
+    protected function addProductClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_GROUP] = function (Container $container) {
-            return $container->getLocator()->productGroup()->client();
+        $container[self::CLIENT_PRODUCT] = function (Container $container) {
+            return new ProductDetailPageToProductClientBridge($container->getLocator()->product()->client());
         };
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addStorageProductExpanderPlugins(Container $container)
-    {
-        $container[self::PLUGIN_STORAGE_PRODUCT_EXPANDERS] = function (Container $container) {
-            return $this->getStorageProductExpanderPlugins($container);
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductExpanderPluginInterface[]
-     */
-    protected function getStorageProductExpanderPlugins(Container $container): array
-    {
-        return [];
     }
 
     /**
@@ -76,8 +50,8 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductDetailPageWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS] = function (Container $container) {
-            return $this->getProductDetailPageWidgetPlugins($container);
+        $container[self::PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS] = function () {
+            return $this->getProductDetailPageWidgetPlugins();
         };
 
         return $container;
@@ -86,13 +60,10 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return string[]
      */
-    protected function getProductDetailPageWidgetPlugins(Container $container): array
+    protected function getProductDetailPageWidgetPlugins(): array
     {
         return [];
     }
-
 }

@@ -7,15 +7,18 @@
 
 namespace SprykerShop\Yves\ProductNewPage;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\CategoryWidget\Plugin\CategoryReaderPlugin;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCollectorClientBridge;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientBridge;
 
 class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
-    const CLIENT_SEARCH = 'CLIENT_SEARCH';
-    const PLUGIN_CATEGORY_READER = 'PLUGIN_CATEGORY_READER';
+    const CLIENT_PRODUCT_NEW = 'CLIENT_PRODUCT_NEW';
+    const CLIENT_COLLECTOR = 'CLIENT_COLLECTOR';
+    const STORE = 'STORE';
+    const PLUGIN_PRODUCT_NEW_PAGE_WIDGETS = 'PLUGIN_PRODUCT_NEW_PAGE_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -24,8 +27,10 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addSearchClient($container);
-        $container = $this->addCategoryReaderPlugin($container);
+        $container = $this->addProductNewClient($container);
+        $container = $this->addCollectorClient($container);
+        $container = $this->addStore($container);
+        $container = $this->addProductNewPageWidgetPlugins($container);
 
         return $container;
     }
@@ -35,10 +40,10 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addSearchClient(Container $container)
+    protected function addProductNewClient(Container $container)
     {
-        $container[self::CLIENT_SEARCH] = function (Container $container) {
-            return $container->getLocator()->search()->client();
+        $container[self::CLIENT_PRODUCT_NEW] = function (Container $container) {
+            return new ProductNewPageToProductNewClientBridge($container->getLocator()->productNew()->client());
         };
 
         return $container;
@@ -49,13 +54,48 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCategoryReaderPlugin(Container $container)
+    protected function addCollectorClient(Container $container)
     {
-        $container[self::PLUGIN_CATEGORY_READER] = function (Container $container) {
-            return new CategoryReaderPlugin();
+        $container[self::CLIENT_COLLECTOR] = function (Container $container) {
+            return new ProductNewPageToCollectorClientBridge($container->getLocator()->collector()->client());
         };
 
         return $container;
     }
 
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStore($container)
+    {
+        $container[self::STORE] = function () {
+            return Store::getInstance();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductNewPageWidgetPlugins($container)
+    {
+        $container[self::PLUGIN_PRODUCT_NEW_PAGE_WIDGETS] = function () {
+            return $this->getProductNewPageWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getProductNewPageWidgetPlugins(): array
+    {
+        return [];
+    }
 }

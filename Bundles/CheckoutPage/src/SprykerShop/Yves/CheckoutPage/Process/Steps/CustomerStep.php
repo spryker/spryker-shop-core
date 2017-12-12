@@ -8,11 +8,11 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Customer\CustomerClientInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CustomerStep extends AbstractBaseStep implements StepWithBreadcrumbInterface, StepWithExternalRedirectInterface
@@ -23,7 +23,7 @@ class CustomerStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $customerStepHandler;
 
     /**
-     * @var \Spryker\Client\Customer\CustomerClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
      */
     protected $customerClient;
 
@@ -38,14 +38,14 @@ class CustomerStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $externalRedirect;
 
     /**
-     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface $customerStepHandler
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param string $logoutRoute
      */
     public function __construct(
-        CustomerClientInterface $customerClient,
+        CheckoutPageToCustomerClientInterface $customerClient,
         StepHandlerPluginInterface $customerStepHandler,
         $stepRoute,
         $escapeRoute,

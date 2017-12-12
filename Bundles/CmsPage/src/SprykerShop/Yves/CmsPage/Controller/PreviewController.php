@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\CmsPage\Controller;
 
 use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\CmsPage\Plugin\Provider\PreviewControllerProvider;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -80,10 +80,10 @@ class PreviewController extends AbstractController
         $localeCmsPageDataRequestTransfer = $this->getFactory()
             ->getCmsClient()
             ->getFlattenedLocaleCmsPageData(
-            (new FlattenedLocaleCmsPageDataRequestTransfer())
+                (new FlattenedLocaleCmsPageDataRequestTransfer())
                 ->setIdCmsPage($idCmsPage)
                 ->setLocale((new LocaleTransfer())->setLocaleName($this->getLocale()))
-        );
+            );
 
         return $localeCmsPageDataRequestTransfer->getFlattenedLocaleCmsPageData();
     }

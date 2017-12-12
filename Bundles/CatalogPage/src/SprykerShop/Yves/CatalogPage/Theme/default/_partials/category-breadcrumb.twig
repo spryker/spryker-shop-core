@@ -6,7 +6,7 @@
     {% set categoryUrl = categoryNode.url %}
 {% endif %}
 
-{% if categoryNode.parents is not empty %}
+{% if categoryNode.parents is defined and categoryNode.parents is not empty %}
     {% include '@CatalogPage/_partials/category-breadcrumb.twig' with {categoryNode: categoryNode.parents|first, filterPath: filterPath} only %}
     <li>
         <a href="{{ categoryUrl }}">{{ categoryNode.name }}</a>

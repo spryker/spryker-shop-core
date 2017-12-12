@@ -13,15 +13,15 @@
                         <h5>{{ 'checkout.step.summary.payment' | trans }}</h5>
                         <ul class="no-bullet">
                             <li>
-                                <span class="__secondary">{{ 'checkout.step.summary.with_method' | trans }}</span> {{ quoteTransfer.payment.paymentMethod }}
+                                <span class="__secondary">{{ 'checkout.step.summary.with_method' | trans }}</span> {{ _view.quoteTransfer.payment.paymentMethod }}
                             </li>
-                            {% if quoteTransfer.payment.summaryPartialPath %}
+                            {% if _view.quoteTransfer.payment.summaryPartialPath %}
                                 <li>
-                                    {% include '@' ~ quoteTransfer.payment.summaryPartialPath ~ '.twig' with {'quoteTransfer': quoteTransfer} %}
+                                    {% include '@' ~ _view.quoteTransfer.payment.summaryPartialPath ~ '.twig' with {'_view.quoteTransfer': _view.quoteTransfer} %}
                                 </li>
                             {% endif %}
                             <li>
-                                {% include '@CheckoutPage/_checkout-page/_partials/summary-address.twig' with {'address': quoteTransfer.billingAddress} %}
+                                {% include '@CheckoutPage/_checkout-page/_partials/summary-address.twig' with {'address': _view.quoteTransfer.billingAddress} %}
                             </li>
                         </ul>
                     </div>
@@ -30,9 +30,9 @@
                     <div class="callout">
                         <h5>{{ 'checkout.step.summary.shipping' | trans }}</h5>
                         <ul class="no-bullet">
-                            <li><span class="__secondary">{{ 'checkout.step.summary.with_method' | trans }}</span> {{ quoteTransfer.shipment.method.name }}</li>
+                            <li><span class="__secondary">{{ 'checkout.step.summary.with_method' | trans }}</span> {{ _view.quoteTransfer.shipment.method.name }}</li>
                             <li>
-                                {% include '@CheckoutPage/_checkout-page/_partials/summary-address.twig' with {'address': quoteTransfer.shippingAddress} %}
+                                {% include '@CheckoutPage/_checkout-page/_partials/summary-address.twig' with {'address': _view.quoteTransfer.shippingAddress} %}
                             </li>
                         </ul>
                     </div>
@@ -43,7 +43,7 @@
         <div class="small-12 medium-6 columns">
             <div class="callout">
                 <ul class="no-bullet">
-                    {% for item in cartItems %}
+                    {% for item in _view.cartItems %}
                         {% if item.bundleProduct is defined %}
                             {% include '@CheckoutPage/_checkout-page/_partials/summary-item.twig' with {'item': item.bundleProduct, 'bundleItems' : item.bundleItems} %}
                         {% else %}
@@ -62,7 +62,7 @@
                 <ul class="no-bullet">
                     <li>
                         {{ 'checkout.step.summary.sub_total' | trans }}
-                        <span class="float-right">{{ quoteTransfer.totals.subtotal | money }}</span>
+                        <span class="float-right">{{ _view.quoteTransfer.totals.subtotal | money }}</span>
                     </li>
                     <li><hr></li>
 
@@ -70,32 +70,31 @@
 
                     <li><strong>{{ 'checkout.step.summary.shipping' | trans }}</strong></li>
                     <li>
-                        {{ quoteTransfer.shipment.method.name }}
-                        <span class="float-right">{{ quoteTransfer.shipment.method.storeCurrencyPrice | money }}</span>
+                        {{ _view.quoteTransfer.shipment.method.name }}
+                        <span class="float-right">{{ _view.quoteTransfer.shipment.method.storeCurrencyPrice | money }}</span>
                     </li>
                     <li><hr></li>
                     <li class="clearfix">
                         <h5 class="float-left">{{ 'checkout.step.summary.grand_total' | trans }}</h5>
-                        <h5 class="float-right"><strong>{{ quoteTransfer.totals.grandtotal | money }}</strong></h5>
+                        <h5 class="float-right"><strong>{{ _view.quoteTransfer.totals.grandtotal | money }}</strong></h5>
                     </li>
                     <li>
                         {{ 'checkout.step.summary.tax' | trans }}
-                        <span class="float-right">{{ quoteTransfer.totals.taxtotal.amount | money }}</span>
+                        <span class="float-right">{{ _view.quoteTransfer.totals.taxtotal.amount | money }}</span>
                     </li>
                 </ul>
             </div>
 
-
-            {% include '@CheckoutPage/_checkout-page/_partials/voucher-form.twig' %}
+            {{ widget('CheckoutVoucherFormWidgetPlugin', _view.quoteTransfer) }}
         </div>
     </div>
 
-    {{ form_start(summaryForm, {'attr': {'class': 'row'}}) }}
+    {{ form_start(_view.summaryForm, {'attr': {'class': 'row'}}) }}
         <div class="small-12 columns">
             <div class="callout">
                 <div class="row align-right">
                     <div class="small-12 medium-6 large-4 xlarge-3 columns">
-                        <a href="{{ previousStepUrl }}" class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
+                        <a href="{{ _view.previousStepUrl }}" class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
                     </div>
                     <div class="small-12 medium-6 large-4 xlarge-3 columns">
                         <button type="submit" class="button success expanded __no-margin-bottom">{{ 'checkout.step.place.order' | trans }}</button>
@@ -103,5 +102,5 @@
                 </div>
             </div>
         </div>
-    {{ form_end(summaryForm) }}
+    {{ form_end(_view.summaryForm) }}
 {% endblock %}

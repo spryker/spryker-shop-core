@@ -7,15 +7,16 @@
 
 namespace SprykerShop\Yves\CatalogPage;
 
-use Spryker\Client\Catalog\CatalogClient;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGenerator;
-use SprykerShop\Yves\CatalogPage\ResourceCreator\CatalogPageResourceCreatorPlugin;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryClientInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
 use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
 
 class CatalogPageFactory extends AbstractFactory
 {
-
     /**
      * @return \SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGeneratorInterface
      */
@@ -25,25 +26,25 @@ class CatalogPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Category\CategoryClientInterface
+     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryClientInterface
      */
-    public function getCategoryClient()
+    public function getCategoryClient(): CatalogPageToCategoryClientInterface
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_CATEGORY);
     }
 
     /**
-     * @return \Spryker\Client\Locale\LocaleClientInterface
+     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientInterface
      */
-    public function getLocaleClient()
+    public function getLocaleClient(): CatalogPageToLocaleClientInterface
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_LOCALE);
     }
 
     /**
-     * @return \Spryker\Client\Search\SearchClientInterface
+     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface
      */
-    protected function getSearchClient()
+    protected function getSearchClient(): CatalogPageToSearchClientInterface
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_SEARCH);
     }
@@ -57,19 +58,11 @@ class CatalogPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorInterface
+     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientInterface
      */
-    public function createCatalogPageResourceCreator()
+    public function getCatalogClient(): CatalogPageToCatalogClientInterface
     {
-        return new CatalogPageResourceCreatorPlugin();
-    }
-
-    /**
-     * @return \Spryker\Client\Catalog\CatalogClientInterface
-     */
-    public function getCatalogClient()
-    {
-        return new CatalogClient(); // TODO: move to dependency provider
+        return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_CATALOG);
     }
 
     /**
@@ -79,5 +72,4 @@ class CatalogPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::PLUGIN_CATALOG_PAGE_WIDGETS);
     }
-
 }

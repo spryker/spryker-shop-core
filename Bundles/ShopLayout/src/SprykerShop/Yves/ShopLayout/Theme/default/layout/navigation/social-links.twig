@@ -1,4 +1,4 @@
-{% for node in navigationTree.nodes %}
+{% for node in _widget.navigationTree.nodes %}
     {% embed '@ShopLayout/layout/navigation/_partials/base-node.twig' %}
         {% block nodeContainer %}
             <div class="picture">
@@ -10,12 +10,8 @@
             <a class="picture__icon {{ class }}" href="{{ url }}" title="{{ title }}"></a>
         {% endblock %}
 
-        {% block link %}
-            <a class="picture__icon {{ class }}" href="{{ link }}" title="{{ title }}"></a>
-        {% endblock %}
-
         {% block externalUrl %}
-            <a class="picture__icon {{ class }}" href="{{ externalUrl }}" target="_blank" title="{{ title }}"></a>
+            <a class="picture__icon {{ class }}" href="{{ url }}" target="_blank" title="{{ title }}"></a>
         {% endblock %}
 
         {% block other %}

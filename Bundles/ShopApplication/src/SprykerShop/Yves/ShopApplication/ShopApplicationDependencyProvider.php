@@ -13,8 +13,8 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 
 class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_UTIL_DATE_TIME = 'util date time service';
-    const PLUGIN_APPLICATION = 'application plugin';
+    const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    const PLUGIN_GLOBAL_WIDGETS = 'PLUGIN_GLOBAL_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -23,8 +23,8 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->providePlugins($container);
-        $container = $this->addUtilDateTimeService($container);
+        $container = $this->addApplicationPlugin($container);
+        $container = $this->addGlobalWidgetPlugins($container);
 
         return $container;
     }
@@ -34,7 +34,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function providePlugins(Container $container)
+    protected function addApplicationPlugin(Container $container)
     {
         $container[self::PLUGIN_APPLICATION] = function () {
             $pimplePlugin = new Pimple();
@@ -50,12 +50,20 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addUtilDateTimeService(Container $container)
+    protected function addGlobalWidgetPlugins(Container $container)
     {
-        $container[self::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
-            return $container->getLocator()->utilDateTime()->service();
+        $container[self::PLUGIN_GLOBAL_WIDGETS] = function () {
+            return $this->getGlobalWidgetPlugins();
         };
 
         return $container;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getGlobalWidgetPlugins(): array
+    {
+        return [];
     }
 }

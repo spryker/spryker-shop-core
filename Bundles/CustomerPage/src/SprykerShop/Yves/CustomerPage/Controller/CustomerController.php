@@ -7,15 +7,12 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
-use Generated\Shared\Transfer\CustomerOverviewRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
-use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 
 /**
- * @method \SprykerShop\Client\CustomerPage\CustomerPageClientInterface getClient()
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class CustomerController extends AbstractCustomerController
@@ -28,7 +25,7 @@ class CustomerController extends AbstractCustomerController
     const KEY_SHIPPING = 'shipping';
 
     /**
-     * @return View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction()
     {
@@ -42,34 +39,16 @@ class CustomerController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGOUT);
         }
 
-        $overviewRequest = $this->createOverviewRequest($customerTransfer);
-
-        $overviewResponse = $this->getClient()->getCustomerOverview($overviewRequest);
+        $orderListTransfer = $this->createOrderListTransfer($customerTransfer);
+        $orderList = $this->getFactory()->getSalesClient()->getPaginatedOrder($orderListTransfer);
 
         $data = [
             'customer' => $customerTransfer,
-            'orderList' => $overviewResponse->getOrderList()->getOrders(),
+            'orderList' => $orderList->getOrders(),
             'addresses' => $this->getDefaultAddresses($customerTransfer),
-            'overviewResponse' => $overviewResponse,
         ];
 
         return $this->view($data, $this->getFactory()->getCustomerOverviewWidgetPlugins());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerOverviewRequestTransfer
-     */
-    protected function createOverviewRequest(CustomerTransfer $customerTransfer)
-    {
-        $orderListTransfer = $this->createOrderListTransfer($customerTransfer);
-
-        $overviewRequestTransfer = new CustomerOverviewRequestTransfer();
-        $overviewRequestTransfer->setCustomer($customerTransfer);
-        $overviewRequestTransfer->setOrderList($orderListTransfer);
-
-        return $overviewRequestTransfer;
     }
 
     /**

@@ -7,9 +7,19 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process;
 
-use SprykerShop\Yves\CheckoutPage\DataContainer\DataContainer;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
+use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
+use Spryker\Yves\StepEngine\Process\StepCollection;
+use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
+use Spryker\Yves\StepEngine\Process\StepEngine;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
+use SprykerShop\Yves\CheckoutPage\DataContainer\DataContainer;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\CustomerStep;
@@ -20,11 +30,6 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
-use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
-use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
-use Spryker\Yves\StepEngine\Process\StepCollection;
-use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
-use Spryker\Yves\StepEngine\Process\StepEngine;
 use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
 
 class StepFactory extends AbstractFactory
@@ -46,9 +51,9 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutToQuoteInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface
      */
-    protected function getQuoteClient()
+    protected function getQuoteClient(): CheckoutPageToQuoteClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_QUOTE);
     }
@@ -103,7 +108,7 @@ class StepFactory extends AbstractFactory
     protected function createCustomerStep()
     {
         return new CustomerStep(
-            $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER),
+            $this->getCustomerClient(),
             $this->getCustomerStepHandler(),
             CheckoutPageControllerProvider::CHECKOUT_CUSTOMER,
             HomePageControllerProvider::ROUTE_HOME,
@@ -117,8 +122,8 @@ class StepFactory extends AbstractFactory
     protected function createAddressStep()
     {
         return new AddressStep(
-            $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER),
-            $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CALCULATION),
+            $this->getCustomerClient(),
+            $this->getCalculationClient(),
             CheckoutPageControllerProvider::CHECKOUT_ADDRESS,
             HomePageControllerProvider::ROUTE_HOME
         );
@@ -173,7 +178,6 @@ class StepFactory extends AbstractFactory
     {
         return new SummaryStep(
             $this->createProductBundleGrouper(),
-            $this->getCartClient(),
             CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
             HomePageControllerProvider::ROUTE_HOME
         );
@@ -201,7 +205,7 @@ class StepFactory extends AbstractFactory
     protected function createSuccessStep()
     {
         return new SuccessStep(
-            $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER),
+            $this->getCustomerClient(),
             $this->getCartClient(),
             CheckoutPageControllerProvider::CHECKOUT_SUCCESS,
             HomePageControllerProvider::ROUTE_HOME
@@ -241,25 +245,25 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Calculation\CalculationClient
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
      */
-    public function getCalculationClient()
+    public function getCalculationClient(): CheckoutPageToCalculationClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CALCULATION);
     }
 
     /**
-     * @return \Spryker\Client\Checkout\CheckoutClientInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface
      */
-    public function getCheckoutClient()
+    public function getCheckoutClient(): CheckoutPageToCheckoutClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CHECKOUT);
     }
 
     /**
-     * @return \Spryker\Client\Cart\CartClientInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface
      */
-    public function getCartClient()
+    public function getCartClient(): CheckoutPageToCartClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CART);
     }
@@ -270,5 +274,13 @@ class StepFactory extends AbstractFactory
     public function createStepBreadcrumbGenerator()
     {
         return new StepBreadcrumbGenerator();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
+     */
+    protected function getCustomerClient():CheckoutPageToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER);
     }
 }

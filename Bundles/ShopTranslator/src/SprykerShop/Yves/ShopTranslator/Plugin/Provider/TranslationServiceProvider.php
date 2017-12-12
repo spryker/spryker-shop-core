@@ -7,14 +7,15 @@
 
 namespace SprykerShop\Yves\ShopTranslator\Plugin\Provider;
 
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractServiceProvider;
 use Silex\Application;
+use Silex\ServiceProviderInterface;
+use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \SprykerShop\Yves\ShopTranslator\ShopTranslatorFactory getFactory()
  * @method \Spryker\Client\Glossary\GlossaryClientInterface getClient()
  */
-class TranslationServiceProvider extends AbstractServiceProvider
+class TranslationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
      * @param \Silex\Application $app

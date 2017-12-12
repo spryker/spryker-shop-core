@@ -9,12 +9,15 @@ namespace SprykerShop\Yves\HeartbeatPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSearchClientBridge;
+use SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSessionClientBridge;
+use SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToStorageClientBridge;
 
 class HeartbeatPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_SEARCH = 'search client';
-    const CLIENT_SESSION = 'session client';
-    const CLIENT_STORAGE = 'storage client';
+    const CLIENT_SEARCH = 'CLIENT_SEARCH';
+    const CLIENT_SESSION = 'CLIENT_SESSION';
+    const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -38,7 +41,7 @@ class HeartbeatPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSearchClient(Container $container): Container
     {
         $container[self::CLIENT_SEARCH] = function (Container $container) {
-            return $container->getLocator()->search()->client();
+            return new HeartbeatPageToSearchClientBridge($container->getLocator()->search()->client());
         };
 
         return $container;
@@ -52,7 +55,7 @@ class HeartbeatPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSessionClient(Container $container): Container
     {
         $container[self::CLIENT_SESSION] = function (Container $container) {
-            return $container->getLocator()->session()->client();
+            return new HeartbeatPageToSessionClientBridge($container->getLocator()->session()->client());
         };
 
         return $container;
@@ -66,7 +69,7 @@ class HeartbeatPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStorageClient(Container $container): Container
     {
         $container[self::CLIENT_STORAGE] = function (Container $container) {
-            return $container->getLocator()->storage()->client();
+            return new HeartbeatPageToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
         return $container;

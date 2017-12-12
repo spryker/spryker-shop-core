@@ -9,10 +9,10 @@ namespace SprykerShop\Yves\ProductSetListPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductSetListPage\Dependency\Client\ProductSetListPageToProductSetClientBridge;
 
 class ProductSetListPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CLIENT_PRODUCT_SET = 'CLIENT_PRODUCT_SET';
     const PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS = 'PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS';
 
@@ -37,7 +37,7 @@ class ProductSetListPageDependencyProvider extends AbstractBundleDependencyProvi
     protected function addProductSetClient(Container $container)
     {
         $container[self::CLIENT_PRODUCT_SET] = function (Container $container) {
-            return $container->getLocator()->productSet()->client();
+            return new ProductSetListPageToProductSetClientBridge($container->getLocator()->productSet()->client());
         };
     }
 
@@ -48,19 +48,16 @@ class ProductSetListPageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductSetListPageWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS] = function (Container $container) {
-            return $this->getProductSetListPageWidgetPlugins($container);
+        $container[self::PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS] = function () {
+            return $this->getProductSetListPageWidgetPlugins();
         };
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return string[]
      */
-    protected function getProductSetListPageWidgetPlugins($container): array
+    protected function getProductSetListPageWidgetPlugins(): array
     {
         return [];
     }
-
 }

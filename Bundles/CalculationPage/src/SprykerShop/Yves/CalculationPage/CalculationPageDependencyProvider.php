@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\CalculationPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\CalculationPage\Dependency\Client\CalculationPageToCalculationClientBridge;
+use SprykerShop\Yves\CalculationPage\Dependency\Client\CalculationPageToQuoteClientBridge;
 
 class CalculationPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -36,7 +38,7 @@ class CalculationPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addQuoteClient(Container $container)
     {
         $container[static::CLIENT_QUOTE] = function (Container $container) {
-            return $container->getLocator()->quote()->client();
+            return new CalculationPageToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 
         return $container;
@@ -50,7 +52,7 @@ class CalculationPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCalculationClient(Container $container)
     {
         $container[static::CLIENT_CALCULATION] = function (Container $container) {
-            return $container->getLocator()->calculation()->client();
+            return new CalculationPageToCalculationClientBridge($container->getLocator()->calculation()->client());
         };
 
         return $container;

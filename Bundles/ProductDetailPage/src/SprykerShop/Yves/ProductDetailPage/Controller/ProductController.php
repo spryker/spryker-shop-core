@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Controller;
 
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Spryker\Shared\Storage\StorageConstants;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductController extends AbstractController
 {
-
     const ATTRIBUTE_PRODUCT_DATA = 'productData';
 
     const PARAM_ATTRIBUTE = 'attribute';
@@ -33,8 +32,8 @@ class ProductController extends AbstractController
     public function detailAction(array $productData, Request $request)
     {
         $storageProductTransfer = $this->getFactory()
-            ->createStorageProductMapper()
-            ->mapStorageProduct($productData, $request, $this->getSelectedAttributes($request));
+            ->getProductClient()
+            ->mapStorageProductForCurrentLocale($productData, $this->getSelectedAttributes($request));
 
         $data = [
             'product' => $storageProductTransfer,
@@ -52,5 +51,4 @@ class ProductController extends AbstractController
     {
         return array_filter($request->query->get(self::PARAM_ATTRIBUTE, []));
     }
-
 }

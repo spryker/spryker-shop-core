@@ -25,7 +25,7 @@ class CategoryServiceProvider extends AbstractPlugin implements ServiceProviderI
     public function register(Application $app)
     {
         $this->addGlobalTemplateVariable($app, [
-            'categories' => $this->getFactory()->getCategoryExporterClient()->getNavigationCategories($app['locale']),
+            'categories' => $this->getFactory()->getCategoryStorageClient()->getCategories($app['locale']),
         ]);
     }
 

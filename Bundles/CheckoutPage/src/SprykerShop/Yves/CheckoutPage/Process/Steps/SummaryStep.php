@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouperInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
@@ -22,26 +21,18 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $productBundleGrouper;
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
-     */
-    protected $cartClient;
-
-    /**
      * @param \Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouperInterface $productBundleGrouper
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
      * @param string $stepRoute
      * @param string $escapeRoute
      */
     public function __construct(
         ProductBundleGrouperInterface $productBundleGrouper,
-        CartClientInterface $cartClient,
         $stepRoute,
         $escapeRoute
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->productBundleGrouper = $productBundleGrouper;
-        $this->cartClient = $cartClient;
     }
 
     /**

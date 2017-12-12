@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductRelationWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductWidget\Plugin\ProductRelationWidget\ProductWidgetPlugin;
 
 class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -36,8 +35,8 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductDetailPageSimilarProductsWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_DETAIL_PAGE_SIMILAR_PRODUCTS_WIDGETS] = function (Container $container) {
-            return $this->getProductDetailPageSimilarProductsWidgetPlugins($container);
+        $container[self::PLUGIN_PRODUCT_DETAIL_PAGE_SIMILAR_PRODUCTS_WIDGETS] = function () {
+            return $this->getProductDetailPageSimilarProductsWidgetPlugins();
         };
 
         return $container;
@@ -46,16 +45,11 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return string[]
      */
-    protected function getProductDetailPageSimilarProductsWidgetPlugins(Container $container): array
+    protected function getProductDetailPageSimilarProductsWidgetPlugins(): array
     {
-        // TODO: move this to project level
-        return [
-            ProductWidgetPlugin::class,
-        ];
+        return [];
     }
 
     /**
@@ -65,8 +59,8 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCartPageUpSellingProductsWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_CART_PAGE_UP_SELLING_PRODUCTS_WIDGETS] = function (Container $container) {
-            return $this->getProductDetailPageSimilarProductsWidgetPlugins($container);
+        $container[self::PLUGIN_CART_PAGE_UP_SELLING_PRODUCTS_WIDGETS] = function () {
+            return $this->getProductDetailPageSimilarProductsWidgetPlugins();
         };
 
         return $container;
@@ -75,15 +69,10 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return string[]
      */
-    protected function getCartPageUpSellingProductsWidgetPlugins(Container $container): array
+    protected function getCartPageUpSellingProductsWidgetPlugins(): array
     {
-        // TODO: move this to project level
-        return [
-            ProductWidgetPlugin::class,
-        ];
+        return [];
     }
 }

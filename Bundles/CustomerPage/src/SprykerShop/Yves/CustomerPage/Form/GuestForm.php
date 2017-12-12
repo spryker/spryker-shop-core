@@ -1,11 +1,13 @@
 <?php
+
 /**
  * This file is part of the Spryker Demoshop.
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
+
 namespace SprykerShop\Yves\CustomerPage\Form;
 
-use Spryker\Service\UtilValidate\UtilValidateServiceInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,14 +25,14 @@ class GuestForm extends AbstractType
     const FIELD_ACCEPT_TERMS = 'accept_terms';
 
     /**
-     * @var \Spryker\Service\UtilValidate\UtilValidateServiceInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface
      */
     protected $utilValidateService;
 
     /**
-     * @param \Spryker\Service\UtilValidate\UtilValidateServiceInterface $utilValidateService
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface $utilValidateService
      */
-    public function __construct(UtilValidateServiceInterface $utilValidateService)
+    public function __construct(CheckoutPageToUtilValidateServiceInterface $utilValidateService)
     {
         $this->utilValidateService = $utilValidateService;
     }

@@ -8,36 +8,35 @@ namespace SprykerShop\Yves\ShopTranslator;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryStorageClientBridge;
 
 class ShopTranslatorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
-    const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
+    const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     public function provideDependencies(Container $container)
     {
-        $this->addGlossaryClient($container);
+        $this->addGlossaryStorageClient($container);
 
         return $container;
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addGlossaryClient(Container $container): Container
+    protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_GLOSSARY] = function (Container $container) {
-            return $container->getLocator()->glossary()->client();
+        $container[self::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+            return new ShopTranslatorToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
         };
 
         return $container;
     }
-
 }

@@ -7,26 +7,19 @@
 
 namespace SprykerShop\Yves\CartPage;
 
+use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Handler\CartOperationHandler;
 use SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler;
+use SprykerShop\Yves\CartPage\Model\CartItemReader;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
-use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
-use SprykerShop\Yves\ProductDetailPage\Mapper\AttributeVariantMapper;
 
 class CartPageFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\Calculation\CalculationClientInterface
-     */
-    public function getCalculationClient()
-    {
-        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_CALCULATION);
-    }
-
-    /**
-     * @return \Spryker\Client\Cart\CartClient
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface
      */
     public function getCartClient()
     {
@@ -63,7 +56,6 @@ class CartPageFactory extends AbstractFactory
             $this->createCartOperationHandler(),
             $this->getCartClient(),
             $this->getProductClient(),
-            $this->getStorageProductMapperPlugin(),
             $this->getFlashMessenger()
         );
     }
@@ -125,22 +117,6 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Mapper\AttributeVariantMapperInterface
-     */
-    protected function createAttributeVariantMapper()
-    {
-        return new AttributeVariantMapper($this->getProductClient());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\StorageProductMapperPluginInterface
-     */
-    protected function getStorageProductMapperPlugin()
-    {
-        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_STORAGE_PRODUCT_MAPPER);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider
      */
     public function createCartItemsAttributeProvider()
@@ -152,10 +128,26 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Product\ProductClientInterface $productClient
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface
      */
-    protected function getProductClient()
+    protected function getProductClient(): CartPageToProductClientInterface
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_PRODUCT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Model\CartItemReaderInterface
+     */
+    public function createCartItemReader()
+    {
+        return new CartItemReader($this->getCartItemTransformerPlugins());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
+     */
+    protected function getCartItemTransformerPlugins()
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_CART_ITEM_TRANSFORMERS);
     }
 }

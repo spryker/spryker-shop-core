@@ -7,16 +7,8 @@
 
 namespace SprykerShop\Yves\RedirectPage;
 
-use SprykerShop\Yves\RedirectPage\ResourceCreator\RedirectResourceCreatorPlugin;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class RedirectPageFactory extends AbstractFactory
 {
-    /**
-     * @return \SprykerShop\Yves\RedirectPage\ResourceCreator\RedirectResourceCreatorPlugin
-     */
-    public function createRedirectResourceCreator()
-    {
-        return new RedirectResourceCreatorPlugin();
-    }
 }

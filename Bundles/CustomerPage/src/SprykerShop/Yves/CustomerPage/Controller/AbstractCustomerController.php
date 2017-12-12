@@ -20,7 +20,7 @@ abstract class AbstractCustomerController extends AbstractController
      */
     protected function getLoggedInCustomerTransfer()
     {
-        if ($this->isLoggedInCustomer()) {
+        if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
             return $this->getFactory()->getCustomerClient()->getCustomer();
         }
 

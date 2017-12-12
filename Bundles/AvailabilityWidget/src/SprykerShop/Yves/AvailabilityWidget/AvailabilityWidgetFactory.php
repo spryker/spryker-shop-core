@@ -7,18 +7,8 @@
 
 namespace SprykerShop\Yves\AvailabilityWidget;
 
-use Spryker\Client\Availability\AvailabilityClient;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class AvailabilityWidgetFactory extends AbstractFactory
 {
-
-    /**
-     * @return \Spryker\Client\Availability\AvailabilityClientInterface
-     */
-    public function getAvailabilityClient()
-    {
-        return new AvailabilityClient();
-    }
-
 }

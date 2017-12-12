@@ -7,13 +7,34 @@
 
 namespace SprykerShop\Yves\ShopApplication;
 
-use Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension;
+use Silex\Provider\TwigServiceProvider;
 use Spryker\Yves\Application\ApplicationFactory as SprykerApplicationFactory;
 use Spryker\Yves\Application\Plugin\Provider\ExceptionService\SubRequestExceptionHandler;
+use Spryker\Yves\Application\Routing\Helper;
+use Spryker\Yves\Kernel\Widget\WidgetCollection;
+use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
+use Spryker\Yves\Kernel\Widget\WidgetFactory;
+use SprykerShop\Yves\ShopApplication\Twig\TwigRenderer;
 use Symfony\Component\HttpFoundation\Response;
 
 class ShopApplicationFactory extends SprykerApplicationFactory
 {
+    /**
+     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerRegistry
+     */
+    public function createWidgetContainerRegistry()
+    {
+        return new WidgetContainerRegistry($this->getApplication());
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface
+     */
+    public function createWidgetFactory()
+    {
+        return new WidgetFactory();
+    }
+
     /**
      * @return \Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface[]
      */
@@ -31,13 +52,19 @@ class ShopApplicationFactory extends SprykerApplicationFactory
     }
 
     /**
+     * @return \Silex\Provider\TwigServiceProvider
+     */
+    public function createSilexTwigServiceProvider()
+    {
+        return new TwigServiceProvider();
+    }
+
+    /**
      * @return \Spryker\Yves\Application\Plugin\Provider\ExceptionService\SubRequestExceptionHandler
      */
     protected function createSubRequestExceptionHandler()
     {
-        $application = $this->getApplication();
-
-        return new SubRequestExceptionHandler($application);
+        return new SubRequestExceptionHandler($this->getApplication());
     }
 
     /**
@@ -49,18 +76,34 @@ class ShopApplicationFactory extends SprykerApplicationFactory
     }
 
     /**
-     * @return \Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension
+     * @return \SprykerShop\Yves\ShopApplication\Twig\TwigRendererInterface
      */
-    public function createDateFormatterTwigExtension()
+    public function createTwigRenderer()
     {
-        return new DateTimeFormatterTwigExtension($this->getUtilDateTimeService());
+        return new TwigRenderer($this->createRoutingHelper());
     }
 
     /**
-     * @return \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
+     * @return WidgetCollection
      */
-    protected function getUtilDateTimeService()
+    public function createWidgetCollection()
     {
-        return $this->getProvidedDependency(ShopApplicationDependencyProvider::SERVICE_UTIL_DATE_TIME);
+        return new WidgetCollection($this->getGlobalWidgetPlugins());
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getGlobalWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGIN_GLOBAL_WIDGETS);
+    }
+
+    /**
+     * @return \Spryker\Yves\Application\Routing\Helper
+     */
+    protected function createRoutingHelper()
+    {
+        return new Helper($this->getApplication());
     }
 }

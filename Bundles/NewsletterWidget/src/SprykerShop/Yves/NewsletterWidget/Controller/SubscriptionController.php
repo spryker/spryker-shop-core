@@ -8,13 +8,16 @@
 namespace SprykerShop\Yves\NewsletterWidget\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
+use Generated\Shared\Transfer\NewsletterTypeTransfer;
+use Spryker\Shared\Newsletter\NewsletterConstants;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\NewsletterWidget\Form\NewsletterSubscriptionForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\NewsletterWidget\NewsletterWidgetFactory getFactory()
- * @method \SprykerShop\Client\NewsletterWidget\NewsletterWidgetClientInterface getClient()
  */
 class SubscriptionController extends AbstractController
 {
@@ -44,19 +47,22 @@ class SubscriptionController extends AbstractController
             $customerTransfer = (new CustomerTransfer())
                 ->setEmail($subscriptionForm->get(NewsletterSubscriptionForm::FIELD_SUBSCRIBE)->getData());
 
-            $subscriptionResponse = $this
-                ->getClient()
-                ->subscribeForEditorialNewsletter($customerTransfer);
+            $request = $this->createNewsletterSubscriptionRequest($customerTransfer);
+            $subscriptionResponse = $this->getFactory()
+                ->getNewsletterClient()
+                ->subscribeWithDoubleOptIn($request);
 
-            if ($subscriptionResponse->getIsSuccess()) {
+            $subscriptionResult = current($subscriptionResponse->getSubscriptionResults());
+
+            if ($subscriptionResult->getIsSuccess()) {
                 $subscriptionForm = $this
                     ->getFactory()
                     ->getNewsletterSubscriptionForm();
                 $success = 'newsletter.subscription.success';
             }
 
-            if (!$subscriptionResponse->getIsSuccess()) {
-                $error = $subscriptionResponse->getErrorMessage();
+            if (!$subscriptionResult->getIsSuccess()) {
+                $error = $subscriptionResult->getErrorMessage();
             }
         }
 
@@ -65,5 +71,47 @@ class SubscriptionController extends AbstractController
             'error' => $error,
             'success' => $success,
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer
+     */
+    public function subscribeForEditorialNewsletter(CustomerTransfer $customerTransfer)
+    {
+        $request = $this->createNewsletterSubscriptionRequest($customerTransfer);
+
+        $subscriptionResponse = $this->getFactory()
+            ->getNewsletterClient()
+            ->subscribeWithDoubleOptIn($request);
+
+        return $subscriptionResponse->getSubscriptionResults()[0];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param string|null $subscriberKey
+     *
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer
+     */
+    protected function createNewsletterSubscriptionRequest(CustomerTransfer $customerTransfer, $subscriberKey = null)
+    {
+        $subscriptionRequest = new NewsletterSubscriptionRequestTransfer();
+
+        $subscriber = new NewsletterSubscriberTransfer();
+        $subscriber->setFkCustomer($customerTransfer->getIdCustomer());
+        $subscriber->setEmail($customerTransfer->getEmail());
+        $subscriber->setSubscriberKey($subscriberKey);
+
+        $subscriptionRequest->setNewsletterSubscriber($subscriber);
+        $subscriptionRequest->addSubscriptionType((new NewsletterTypeTransfer())
+                ->setName(NewsletterConstants::DEFAULT_NEWSLETTER));
+
+        return $subscriptionRequest;
     }
 }

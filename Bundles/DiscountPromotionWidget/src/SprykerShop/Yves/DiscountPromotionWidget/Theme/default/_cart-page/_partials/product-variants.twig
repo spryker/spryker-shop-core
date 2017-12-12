@@ -2,7 +2,6 @@
 
 <form method="GET" data-component="product-variants">
     {% for attributeName,attributes in promotionStorageProduct.superAttributes %}
-        {# TODO: fix incorrect template reference #}
         {% include '@ProductDetailPage/_product-detail-page/_partials/variant.twig' with {
             attributeFieldName: 'attributes[' ~ promotionStorageProduct.idProductAbstract ~ '][' ~ attributeName ~ ']',
             product: promotionStorageProduct

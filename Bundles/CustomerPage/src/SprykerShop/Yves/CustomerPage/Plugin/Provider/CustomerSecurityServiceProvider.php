@@ -7,18 +7,19 @@
 
 namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractServiceProvider;
-use SprykerShop\Yves\CustomerPage\Form\LoginForm;
 use Silex\Application;
+use Silex\ServiceProviderInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Customer\CustomerConstants;
+use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\CustomerPage\Form\LoginForm;
 use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 
 /**
  * @method \Spryker\Client\Customer\CustomerClientInterface getClient()
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
-class CustomerSecurityServiceProvider extends AbstractServiceProvider
+class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     const FIREWALL_SECURED = 'secured';
     const ROLE_USER = 'ROLE_USER';

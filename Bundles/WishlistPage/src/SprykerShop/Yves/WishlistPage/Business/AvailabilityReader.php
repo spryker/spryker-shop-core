@@ -7,21 +7,21 @@
 
 namespace SprykerShop\Yves\WishlistPage\Business;
 
-use Spryker\Client\Availability\AvailabilityClientInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface;
 
 class AvailabilityReader implements AvailabilityReaderInterface
 {
     /**
-     * @var \Spryker\Client\Availability\AvailabilityClientInterface
+     * @var \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface
      */
-    protected $availabilityClient;
+    protected $availabilityStorageClient;
 
     /**
-     * @param \Spryker\Client\Availability\AvailabilityClientInterface $availabilityClient
+     * @param \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface $availabilityClient
      */
-    public function __construct(AvailabilityClientInterface $availabilityClient)
+    public function __construct(WishlistPageToAvailabilityStorageClientInterface $availabilityClient)
     {
-        $this->availabilityClient = $availabilityClient;
+        $this->availabilityStorageClient = $availabilityStorageClient;
     }
 
     /**
@@ -37,7 +37,7 @@ class AvailabilityReader implements AvailabilityReaderInterface
             $sku = $wishlistItemMetaTransfer->getSku();
             $idProductAbstract = $wishlistItemMetaTransfer->getIdProductAbstract();
 
-            $storageAvailabilityTransfer = $this->availabilityClient->getProductAvailabilityByIdProductAbstract($idProductAbstract);
+            $storageAvailabilityTransfer = $this->availabilityStorageClient->getProductAvailabilityByIdProductAbstract($idProductAbstract);
             $isAvailable = $storageAvailabilityTransfer->getConcreteProductAvailableItems()[$sku];
 
             $availability[$sku] = $isAvailable;

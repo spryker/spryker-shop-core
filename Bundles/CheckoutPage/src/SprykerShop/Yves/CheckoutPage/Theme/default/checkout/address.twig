@@ -6,14 +6,14 @@
 
 {% block content %}
 
-    {{ form_start(addressesForm) }}
+        {{ form_start(_view.addressesForm) }}
 	    <div class="row">
 
             <div class="small-12 large-6 columns">
                 <div class="callout">
                     <h4>{{ 'page.checkout.summary.shipping' | trans }}</h4>
 
-                    {% include '@CheckoutPage/_checkout-page/_partials/address-selection.twig' with {'addressForm': addressesForm.shippingAddress} %}
+                    {% include '@CheckoutPage/_checkout-page/_partials/address-selection.twig' with {'addressForm': _view.addressesForm.shippingAddress} %}
                 </div>
             </div>
 
@@ -21,11 +21,11 @@
                 <div class="callout">
                     <h4>{{ 'page.checkout.address.billing-address' | trans }}</h4>
 
-                    {{ form_widget(addressesForm.billingSameAsShipping, {'attr': {'class': '__toggler __inverted'}}) }}
-                    <label for="addressesForm_billingSameAsShipping">{{ 'customer.billingSameAsShipping' | trans }}</label>
+                    {{ form_widget(_view.addressesForm.billingSameAsShipping, {'attr': {'class': '__toggler __inverted'}}) }}
+                    <label for="_view.addressesForm_billingSameAsShipping">{{ 'customer.billingSameAsShipping' | trans }}</label>
 
                     <div class="__toggler-target">
-                        {% include '@CheckoutPage/_checkout-page/_partials/address-selection.twig' with {'addressForm': addressesForm.billingAddress} %}
+                        {% include '@CheckoutPage/_checkout-page/_partials/address-selection.twig' with {'addressForm': _view.addressesForm.billingAddress} %}
                     </div>
                 </div>
 			</div>
@@ -34,7 +34,7 @@
                 <div class="callout">
                     <div class="row align-right">
                         <div class="small-12 medium-6 large-4 xlarge-3 columns">
-                            <a href="{% if addressesForm.vars.data.customer.isGuest %}{{ previousStepUrl }}{% else %}{{ url('cart') }}{% endif %}" class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
+                            <a href="{% if _view.addressesForm.vars.data.customer.isGuest %}{{ _view.previousStepUrl }}{% else %}{{ url('cart') }}{% endif %}" class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
                         </div>
                         <div class="small-12 medium-6 large-4 xlarge-3 columns">
                             <button type="submit" class="button success expanded __no-margin-bottom">{{ 'checkout.step.shipment' | trans }}</button>
@@ -43,5 +43,5 @@
                 </div>
             </div>
 	    </div>
-    {{ form_end(addressesForm) }}
+    {{ form_end(_view.addressesForm) }}
 {% endblock %}

@@ -7,45 +7,57 @@
 
 namespace SprykerShop\Yves\CheckoutPage;
 
-use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentFormDataProviderPlugin;
-use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentHandlerPlugin;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Yves\Checkout\CheckoutDependencyProvider as SprykerCheckoutDependencyProvider;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutToQuoteBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceBridge;
 use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
+use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentFormDataProviderPlugin;
+use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentHandlerPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\CustomerStepHandler;
 use SprykerShop\Yves\MoneyWidget\Plugin\MoneyPlugin;
 
 class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PAYMENT_METHOD_HANDLER = 'payment method handler';
-    const PAYMENT_SUB_FORMS = 'payment sub forms';
-
-    const PLUGIN_APPLICATION = 'application plugin';
-
-    const CLIENT_QUOTE = 'cart client';
-
+    const CLIENT_QUOTE = 'CLIENT_QUOTE';
     const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
     const CLIENT_CHECKOUT = 'CLIENT_CHECKOUT';
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     const CLIENT_CART = 'CLIENT_CART';
     const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
-    const CLIENT_GLOSSARY = 'glossary client';
+    const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
 
     const STORE = 'STORE';
 
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
 
+    const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
     const PLUGIN_SHIPMENT_STEP_HANDLER = 'PLUGIN_SHIPMENT_STEP_HANDLER';
     const PLUGIN_SHIPMENT_HANDLER = 'PLUGIN_SHIPMENT_HANDLER';
     const PLUGIN_SHIPMENT_FORM_DATA_PROVIDER = 'PLUGIN_SHIPMENT_FORM_DATA_PROVIDER';
     const PLUGIN_CHECKOUT_BREADCRUMB = 'PLUGIN_CHECKOUT_BREADCRUMB';
     const PLUGIN_MONEY = 'PLUGIN_MONEY';
+    const PLUGIN_CUSTOMER_PAGE_WIDGETS = 'PLUGIN_CUSTOMER_PAGE_WIDGETS';
+    const PLUGIN_ADDRESS_PAGE_WIDGETS = 'PLUGIN_ADDRESS_PAGE_WIDGETS';
+    const PLUGIN_SHIPMENT_PAGE_WIDGETS = 'PLUGIN_SHIPMENT_PAGE_WIDGETS';
+    const PLUGIN_PAYMENT_PAGE_WIDGETS = 'PLUGIN_PAYMENT_PAGE_WIDGETS';
+    const PLUGIN_SUMMARY_PAGE_WIDGETS = 'PLUGIN_SUMMARY_PAGE_WIDGETS';
+    const PLUGIN_SUCCESS_PAGE_WIDGETS = 'PLUGIN_SUCCESS_PAGE_WIDGETS';
+
+    const PAYMENT_METHOD_HANDLER = SprykerCheckoutDependencyProvider::PAYMENT_METHOD_HANDLER; // constant value must be BC because of dependency injector
+    const PAYMENT_SUB_FORMS = SprykerCheckoutDependencyProvider::PAYMENT_SUB_FORMS; // constant value must be BC because of dependency injector
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -54,11 +66,31 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addUtilValidateService($container);
-        $container = $this->provideClients($container);
-        $container = $this->providePlugins($container);
+        $container = $this->addQuoteClient($container);
+        $container = $this->addCalculationClient($container);
+        $container = $this->addCheckoutClient($container);
+        $container = $this->addCustomerClient($container);
+        $container = $this->addCartClient($container);
+        $container = $this->addShipmentClient($container);
+        $container = $this->addGlossaryClient($container);
+
+        $container = $this->addApplication($container);
         $container = $this->provideStore($container);
-        $container = $this->addCheckoutBreadcrumbPluginPlugins($container);
+        $container = $this->addUtilValidateService($container);
+
+        $container = $this->addSubFormPluginCollection($container);
+        $container = $this->addPaymentMethodHandlerPluginCollection($container);
+        $container = $this->AddCustomerStepHandlerPlugin($container);
+        $container = $this->addShipmentHandlerPluginCollection($container);
+        $container = $this->addShipmentFormDataProviderPlugin($container);
+        $container = $this->addMoneyPlugin($container);
+        $container = $this->addCheckoutBreadcrumbPlugin($container);
+        $container = $this->addCustomerPageWidgetPlugins($container);
+        $container = $this->addAddressPageWidgetPlugins($container);
+        $container = $this->addShipmentPageWidgetPlugins($container);
+        $container = $this->addPaymentPageWidgetPlugins($container);
+        $container = $this->addSummaryPageWidgetPlugins($container);
+        $container = $this->addSuccessPageWidgetPlugins($container);
 
         return $container;
     }
@@ -71,88 +103,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addUtilValidateService(Container $container)
     {
         $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
-            return $container->getLocator()->utilValidate()->service();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function provideClients(Container $container)
-    {
-        $container[self::CLIENT_QUOTE] = function () use ($container) {
-            return new CheckoutToQuoteBridge($container->getLocator()->quote()->client());
-        };
-
-        $container[self::CLIENT_CALCULATION] = function (Container $container) {
-            return $container->getLocator()->calculation()->client();
-        };
-
-        $container[self::CLIENT_CHECKOUT] = function (Container $container) {
-            return $container->getLocator()->checkout()->client();
-        };
-
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
-            return $container->getLocator()->customer()->client();
-        };
-
-        $container[self::CLIENT_CART] = function (Container $container) {
-            return $container->getLocator()->cart()->client();
-        };
-
-        $container[self::CLIENT_SHIPMENT] = function (Container $container) {
-            return $container->getLocator()->shipment()->client();
-        };
-
-        $container[self::CLIENT_GLOSSARY] = function (Container $container) {
-            return $container->getLocator()->glossary()->client();
-        };
-
-        $container[static::PLUGIN_MONEY] = function () {
-            return new MoneyPlugin();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function providePlugins(Container $container)
-    {
-        $container[self::PAYMENT_SUB_FORMS] = function () {
-            return new SubFormPluginCollection();
-        };
-
-        $container[self::PAYMENT_METHOD_HANDLER] = function () {
-            return new StepHandlerPluginCollection();
-        };
-
-        $container[self::PLUGIN_CUSTOMER_STEP_HANDLER] = function () {
-            return new CustomerStepHandler();
-        };
-
-        $container[self::PLUGIN_SHIPMENT_HANDLER] = function () {
-            $shipmentHandlerPlugins = new StepHandlerPluginCollection();
-            $shipmentHandlerPlugins->add(new ShipmentHandlerPlugin(), self::PLUGIN_SHIPMENT_STEP_HANDLER);
-
-            return $shipmentHandlerPlugins;
-        };
-
-        $container[self::PLUGIN_SHIPMENT_FORM_DATA_PROVIDER] = function () {
-            return new ShipmentFormDataProviderPlugin();
-        };
-
-        $container[self::PLUGIN_APPLICATION] = function () {
-            $pimplePlugin = new Pimple();
-
-            return $pimplePlugin->getApplication();
+            return new CheckoutPageToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
         };
 
         return $container;
@@ -177,12 +128,344 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCheckoutBreadcrumbPluginPlugins(Container $container)
+    protected function addCheckoutBreadcrumbPlugin(Container $container)
     {
         $container[self::PLUGIN_CHECKOUT_BREADCRUMB] = function () {
             return new CheckoutBreadcrumbPlugin();
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient(Container $container): Container
+    {
+        $container[self::CLIENT_QUOTE] = function () use ($container) {
+            return new CheckoutPageToQuoteClientBridge($container->getLocator()->quote()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCalculationClient(Container $container): Container
+    {
+        $container[self::CLIENT_CALCULATION] = function (Container $container) {
+            return new CheckoutPageToCalculationClientBridge($container->getLocator()->calculation()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutClient(Container $container): Container
+    {
+        $container[self::CLIENT_CHECKOUT] = function (Container $container) {
+            return new CheckoutPageToCheckoutClientBridge($container->getLocator()->checkout()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
+            return new CheckoutPageToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCartClient(Container $container): Container
+    {
+        $container[self::CLIENT_CART] = function (Container $container) {
+            return new CheckoutPageToCartClientBridge($container->getLocator()->cart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShipmentClient(Container $container): Container
+    {
+        $container[self::CLIENT_SHIPMENT] = function (Container $container) {
+            return new CheckoutPageToShipmentClientBridge($container->getLocator()->shipment()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlossaryClient(Container $container): Container
+    {
+        $container[self::CLIENT_GLOSSARY] = function (Container $container) {
+            return new CheckoutPageToGlossaryClientBridge($container->getLocator()->glossary()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMoneyPlugin(Container $container): Container
+    {
+        $container[static::PLUGIN_MONEY] = function () {
+            return new MoneyPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSubFormPluginCollection(Container $container): Container
+    {
+        $container[self::PAYMENT_SUB_FORMS] = function () {
+            return new SubFormPluginCollection();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPaymentMethodHandlerPluginCollection(Container $container): Container
+    {
+        $container[self::PAYMENT_METHOD_HANDLER] = function () {
+            return new StepHandlerPluginCollection();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function AddCustomerStepHandlerPlugin(Container $container): Container
+    {
+        $container[self::PLUGIN_CUSTOMER_STEP_HANDLER] = function () {
+            return new CustomerStepHandler();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShipmentHandlerPluginCollection(Container $container): Container
+    {
+        $container[self::PLUGIN_SHIPMENT_HANDLER] = function () {
+            $shipmentHandlerPlugins = new StepHandlerPluginCollection();
+            $shipmentHandlerPlugins->add(new ShipmentHandlerPlugin(), self::PLUGIN_SHIPMENT_STEP_HANDLER);
+
+            return $shipmentHandlerPlugins;
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShipmentFormDataProviderPlugin(Container $container): Container
+    {
+        $container[self::PLUGIN_SHIPMENT_FORM_DATA_PROVIDER] = function () {
+            return new ShipmentFormDataProviderPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addApplication(Container $container): Container
+    {
+        $container[self::PLUGIN_APPLICATION] = function () {
+            $pimplePlugin = new Pimple();
+            return $pimplePlugin->getApplication();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSummaryPageWidgetPlugins(Container $container): Container
+    {
+        $container[self::PLUGIN_SUMMARY_PAGE_WIDGETS] = function () {
+            return $this->getSummaryPageWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getSummaryPageWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerPageWidgetPlugins(Container $container): Container
+    {
+        $container[self::PLUGIN_CUSTOMER_PAGE_WIDGETS] = function () {
+            return $this->getCustomerPageWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCustomerPageWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAddressPageWidgetPlugins(Container $container): Container
+    {
+        $container[self::PLUGIN_ADDRESS_PAGE_WIDGETS] = function () {
+            return $this->getAddressPageWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAddressPageWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShipmentPageWidgetPlugins(Container $container): Container
+    {
+        $container[self::PLUGIN_SHIPMENT_PAGE_WIDGETS] = function () {
+            return $this->getShipmentPageWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getShipmentPageWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPaymentPageWidgetPlugins(Container $container): Container
+    {
+        $container[self::PLUGIN_PAYMENT_PAGE_WIDGETS] = function () {
+            return $this->getPaymentPageWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getPaymentPageWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSuccessPageWidgetPlugins(Container $container): Container
+    {
+        $container[self::PLUGIN_SUCCESS_PAGE_WIDGETS] = function () {
+            return $this->getSuccessPageWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getSuccessPageWidgetPlugins(): array
+    {
+        return [];
     }
 }

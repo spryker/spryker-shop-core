@@ -10,25 +10,25 @@ namespace SprykerShop\Yves\CheckoutPage\Form\DataProvider;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
-use Spryker\Client\Glossary\GlossaryClientInterface;
-use Spryker\Client\Shipment\ShipmentClientInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
     const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
 
     /**
-     * @var \Spryker\Client\Shipment\ShipmentClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
      */
     protected $shipmentClient;
 
     /**
-     * @var \Spryker\Client\Glossary\GlossaryClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface
      */
     protected $glossaryClient;
 
@@ -43,14 +43,14 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $moneyPlugin;
 
     /**
-     * @param \Spryker\Client\Shipment\ShipmentClientInterface $shipmentClient
-     * @param \Spryker\Client\Glossary\GlossaryClientInterface $glossaryClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface $glossaryClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      */
     public function __construct(
-        ShipmentClientInterface $shipmentClient,
-        GlossaryClientInterface $glossaryClient,
+        CheckoutPageToShipmentClientInterface $shipmentClient,
+        CheckoutPageToGlossaryClientInterface $glossaryClient,
         Store $store,
         MoneyPluginInterface $moneyPlugin
     ) {

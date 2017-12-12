@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CmsContentWidgetProductSetConnector\Plugin;
 
 use Generated\Shared\Transfer\ProductSetStorageTransfer;
 use Spryker\Yves\CmsContentWidgetProductSetConnector\Plugin\CmsProductSetContentWidgetPlugin as SprykerCmsProductSetContentWidgetPlugin;
-use Spryker\Yves\Kernel\View\View;
+use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController;
 use Twig_Environment;
 
@@ -18,7 +18,6 @@ use Twig_Environment;
  */
 class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidgetPlugin
 {
-
     /**
      * @param \Twig_Environment $twig
      * @param array $context
@@ -30,7 +29,7 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
     public function contentWidgetFunction(Twig_Environment $twig, array $context, $productSetKeys, $templateIdentifier = null)
     {
         $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
-        $widgetContainerRegistry->add($this->createView());
+        $widgetContainerRegistry->add($this->createCmsProductContentWidgetCollection());
 
         $result = parent::contentWidgetFunction($twig, $context, $productSetKeys, $templateIdentifier);
 
@@ -40,11 +39,11 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
      */
-    protected function createView(): View
+    protected function createCmsProductContentWidgetCollection(): WidgetContainerInterface
     {
-        return new View([], $this->getFactory()->getCmsProductSetContentWidgetPlugins());
+        return $this->getFactory()->createCmsProductSetContentWidgetCollection();
     }
 
     /**
@@ -59,7 +58,7 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
         foreach ($productSetStorageTransfer->getIdProductAbstracts() as $idProductAbstract) {
             $productAbstractData = $this->getFactory()->getProductClient()->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
 
-            $storageProductTransfers[] = $this->getFactory()->getStorageMapperPlugin()->mapStorageProduct(
+            $storageProductTransfers[] = $this->getFactory()->getProductClient()->mapStorageProductForCurrentLocale(
                 $productAbstractData,
                 $this->getSelectedAttributes($context, $idProductAbstract)
             );
@@ -90,5 +89,4 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
     {
         return $context['app']['request'];
     }
-
 }

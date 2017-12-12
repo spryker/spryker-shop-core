@@ -7,19 +7,16 @@
 
 namespace SprykerShop\Yves\ProductOptionWidget;
 
-use Spryker\Client\ProductOption\ProductOptionClient;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Kernel\Plugin\Pimple;
+use SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetToProductOptionClientInterface;
 
 class ProductOptionWidgetFactory extends AbstractFactory
 {
-
     /**
-     * @return \Spryker\Client\ProductOption\ProductOptionClient
+     * @return \SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetToProductOptionClientInterface
      */
-    public function getProductOptionClient()
+    public function getProductOptionClient(): ProductOptionWidgetToProductOptionClientInterface
     {
-        return new ProductOptionClient();
+        return $this->getProvidedDependency(ProductOptionWidgetDependencyProvider::CLIENT_PRODUCT_OPTION);
     }
-
 }

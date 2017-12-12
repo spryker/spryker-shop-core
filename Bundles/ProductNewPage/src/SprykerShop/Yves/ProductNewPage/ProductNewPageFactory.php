@@ -8,37 +8,40 @@
 namespace SprykerShop\Yves\ProductNewPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductWidget\Plugin\CatalogPage\ProductWidgetPlugin;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCollectorClientInterface;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientInterface;
 
 class ProductNewPageFactory extends AbstractFactory
 {
-
     /**
      * @return string[]
      */
-    public function getNewProductPageWidgetPlugins(): array
+    public function getProductNewPageWidgetPlugins(): array
     {
-        // TODO: get from dependency provider
-        return [
-            // TODO: get from project level
-            ProductWidgetPlugin::class,
-        ];
+        return $this->getProvidedDependency(ProductNewPageDependencyProvider::PLUGIN_PRODUCT_NEW_PAGE_WIDGETS);
     }
 
     /**
-     * @return \Spryker\Client\Search\SearchClientInterface
+     * @return \SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientInterface
      */
-    protected function getSearchClient()
+    public function getProductNewClient(): ProductNewPageToProductNewClientInterface
     {
-        return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_SEARCH);
+        return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_PRODUCT_NEW);
     }
 
     /**
-     * @return \SprykerShop\Yves\CategoryWidget\Plugin\CategoryReaderPlugin
+     * @return \SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCollectorClientInterface
      */
-    public function getCategoryReaderPlugin()
+    public function getCollectorClient(): ProductNewPageToCollectorClientInterface
     {
-        return $this->getProvidedDependency(ProductNewPageDependencyProvider::PLUGIN_CATEGORY_READER);
+        return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_COLLECTOR);
     }
 
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(ProductNewPageDependencyProvider::STORE);
+    }
 }

@@ -8,21 +8,22 @@
 namespace SprykerShop\Yves\ShopApplication\Plugin\Provider;
 
 use Silex\Application;
+use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Application\Environment as ApplicationEnvironment;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
+use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolver;
 use Spryker\Yves\Kernel\Plugin\Pimple;
-use SprykerShop\Yves\ShopApplication\ShopApplicationFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ShopApplicationFactory getFactory()
+ * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  */
-class ShopApplicationServiceProvider extends AbstractServiceProvider
+class ShopApplicationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     const LOCALE = 'locale';
     const REQUEST_URI = 'REQUEST_URI';
@@ -47,11 +48,7 @@ class ShopApplicationServiceProvider extends AbstractServiceProvider
         $this->setLocale();
         $this->setLogLevel();
 
-        $this->addTwigExtension($this->application, [
-            $this->getFactory()->createDateFormatterTwigExtension(),
-        ]);
-
-        $this->addGlobalTemplateVariable($this->application, [
+        $this->addGlobalTemplateVariables($app, [
             'environment' => Environment::getEnvironment(),
         ]);
     }
@@ -131,5 +128,20 @@ class ShopApplicationServiceProvider extends AbstractServiceProvider
             ->server->get(self::REQUEST_URI);
 
         return $requestUri;
+    }
+
+    /**
+     * @param \Silex\Application $app
+     * @param array $globalTemplateVariables
+     *
+     * @return void
+     */
+    protected function addGlobalTemplateVariables(Application $app, array $globalTemplateVariables)
+    {
+        $app['twig.global.variables'] = $app->share(
+            $app->extend('twig.global.variables', function (array $variables) use ($globalTemplateVariables) {
+                return array_merge($variables, $globalTemplateVariables);
+            })
+        );
     }
 }
