@@ -3,36 +3,30 @@ import Candidate from './candidate';
 import Component from '../models/component';
 
 export default class Bootstrapper {
+    private readonly logger: Logger
 
-    start(registry: Map<string, Candidate>): Promise<void> { 
-        const candidates = Array.from(registry.values());
-
-        return this.mountComponents(candidates)
-            .then(this.flattenComponentArrays)
-            .then(this.triggerComponentsInit)
-            .then(this.triggerComponentsReady);
+    constructor(logger: Logger) { 
+        this.logger = logger;
     }
 
-    async mountComponents(candidates: Candidate[]): Promise<Component[][]> {
+    async start(registry: Map<string, Candidate>): Promise<void> { 
+        const self = this;
+        const candidates = Array.from(registry.values());
+        
+        return this
+            .mountComponents(candidates)
+            .then(counts => self.logCount(counts));
+    }
+
+    async mountComponents(candidates: Candidate[]): Promise<number[]> {
         return Promise.all(
             candidates.map(candidate => candidate.mount())
         );
     }
 
-    async flattenComponentArrays(components: Component[][]): Promise<Component[]> {
-        return components.reduce(
-            (flattenComponentArray, componentArray) => flattenComponentArray.concat(componentArray),
-            []
-        );
-    }
-
-    async triggerComponentsInit(components: Component[]): Promise<Component[]> {
-        components.forEach(component => component.init());
-        return components;
-    }
-
-    async triggerComponentsReady(components: Component[]): Promise<void> {
-        components.forEach(component => component.ready());
+    async logCount(counts: number[]): Promise<void> {
+        const count = counts.reduce((a, b) => a + b);
+        this.logger.log(count, 'components mounted');
     }
 
 }

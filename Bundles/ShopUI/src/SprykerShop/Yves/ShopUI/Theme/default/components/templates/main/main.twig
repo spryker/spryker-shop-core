@@ -36,9 +36,7 @@
         <body>
             {% include atom('test-component') only %}
             
-            <div class="{{block('_renderClasses')}}" {{block('_renderAttributes')}}>
-                {{-block('body')-}}
-            </div>
+            {{ parent() }}
 
             {% block footerScripts %}
                 <script src="/assets/default/js/vendor.js"></script>

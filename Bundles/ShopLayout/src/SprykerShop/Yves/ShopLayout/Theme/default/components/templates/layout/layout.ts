@@ -1,7 +1,9 @@
-import Component from 'ShopUI/models/component';
+import ComponentMixin from 'ShopUI/models/component';
 
-export default class AtomTest extends Component {
-    init() {
+export default class Layout extends ComponentMixin(HTMLElement) {
+    constructor() {
+        super();
+        
         console.log('this is a layout test');
     }
 }

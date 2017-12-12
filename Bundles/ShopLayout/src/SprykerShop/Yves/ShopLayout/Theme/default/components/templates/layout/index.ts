@@ -1,2 +1,2 @@
 import { register } from 'ShopUI/app';
-export default register('layout', () => import(/* webpackMode: "lazy" */'./layout'));
+export default register('main-layout', () => import(/* webpackMode: "lazy" */'./layout'));

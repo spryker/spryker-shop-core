@@ -1,7 +1,9 @@
-import Component from '../../../models/component';
+import ComponentMixin from '../../../models/component';
 
-export default class AtomTest extends Component {
-    init() { 
+export default class AtomTest extends ComponentMixin(HTMLElement) {
+    constructor() { 
+        super();
+        
         console.log('this is a test');
     }
 }

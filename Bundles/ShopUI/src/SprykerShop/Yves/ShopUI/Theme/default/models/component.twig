@@ -8,17 +8,11 @@
  # and limit the scope to what you pass through data interface
  #}
 
-{# @var {string} define container html tag #}
-{%- set tag = tag | default('div') -%}
-
 {# @var {string} define css BEM block name #}
 {%- set name = name | default('') -%}
 
 {# @var {string} define js selector #}
 {%- set selector = selector | default('js-' ~ name) -%}
-
-{# @var {boolean} define if javascrit is enabled for this components - selector is then rendered #}
-{%- set js = js | default(false) -%}
 
 {# @var {string} define addictional css class(es) #}
 {%- set class = class | default('') -%}
@@ -53,7 +47,6 @@
         {{name-}} 
         {%- for modifier in modifiers %} {{name}}--{{modifier}}{% endfor -%}
         {%- if class %} {{class-}}{% endif -%}
-        {%- if js %} {{selector-}}{% endif -%}
     {%- endblock -%}
 
     {# render html5 attributes #}
@@ -78,7 +71,7 @@
  # Component
  #}
 {%- block component -%}
-    <{{-tag}} class="{{block('_renderClasses')}}" {{block('_renderAttributes')}}>
+    <{{-name}} class="{{block('_renderClasses')}}" {{block('_renderAttributes')}}>
         {{-block('body')-}}
-    </{{-tag-}}>
+    </{{-name-}}>
 {%- endblock -%}

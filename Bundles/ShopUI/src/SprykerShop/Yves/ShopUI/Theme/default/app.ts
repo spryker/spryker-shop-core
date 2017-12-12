@@ -3,34 +3,30 @@ import Candidate from './libs/candidate';
 import Bootstrapper from './libs/bootstrapper';
 import { IComponentImporter } from './models/component';
 
-export const EVENT_APP_READY: string = 'app.ready';
-export const EVENT_APP_ERROR: string = 'app.error';
+import config from './app.config';
 
 const registry: Map<string, Candidate> = new Map();
-const logger: Logger = new Logger('Yves default UI');
-const boostrapper: Bootstrapper = new Bootstrapper();
+const logger: Logger = new Logger(config.log.prefix, config.log.level);
+const boostrapper: Bootstrapper = new Bootstrapper(logger);
 
 function ready(): void {
-    const readyEvent = new CustomEvent(EVENT_APP_READY);
+    const readyEvent = new CustomEvent(config.events.ready);
     document.dispatchEvent(readyEvent);
 }
 
 function fail(error): void {
-    const errorEvent = new CustomEvent(EVENT_APP_ERROR, { detail: error });
+    const errorEvent = new CustomEvent(config.events.error, { detail: error });
     document.dispatchEvent(errorEvent);
     logger.log('application bootstrap failed\n', error);
 }
 
-export function register(name: string, importer: IComponentImporter): Candidate {
-    const selector = `js-${name}`;
-    const candidate = new Candidate(selector, importer);
-    registry.set(selector, candidate);
+export function register(tag: string, importer: IComponentImporter): Candidate {
+    const candidate = new Candidate(tag, importer, logger);
+    registry.set(tag, candidate);
     return candidate;
 }
 
 export function bootstrap(): void {
-    console.log(registry);
-
     boostrapper
         .start(registry)
         .then(ready)
