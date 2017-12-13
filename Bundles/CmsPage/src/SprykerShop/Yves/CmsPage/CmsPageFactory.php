@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CmsPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCmsClientInterface;
+use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCmsStorageClientInterface;
 use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCustomerClientInterface;
 
 class CmsPageFactory extends AbstractFactory
@@ -22,7 +23,7 @@ class CmsPageFactory extends AbstractFactory
     }
 
     /**
-     * @return CmsPageToCmsClientInterface
+     * @return \SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCmsClientInterface
      */
     public function getCmsClient(): CmsPageToCmsClientInterface
     {
@@ -43,5 +44,13 @@ class CmsPageFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(CmsPageDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCmsStorageClientInterface
+     */
+    public function getCmsStorageClient(): CmsPageToCmsStorageClientInterface
+    {
+        return $this->getProvidedDependency(CmsPageDependencyProvider::CLIENT_CMS_STORAGE);
     }
 }

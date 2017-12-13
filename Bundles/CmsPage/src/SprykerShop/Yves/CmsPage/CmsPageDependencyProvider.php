@@ -12,6 +12,7 @@ use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPlugin;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCmsClientBridge;
+use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCmsStorageClientBridge;
 use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCustomerClientBridge;
 
 class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -20,6 +21,7 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_CMS = 'CLIENT_CMS';
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     const STORE = 'STORE';
+    const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -30,6 +32,7 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addCmsTwigContentRendererPlugin($container);
         $container = $this->addCmsClient($container);
+        $container = $this->addCmsStorageClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addStore($container);
 
@@ -59,6 +62,20 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_CMS] = function (Container $container) {
             return new CmsPageToCmsClientBridge($container->getLocator()->cms()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCmsStorageClient(Container $container)
+    {
+        $container[static::CLIENT_CMS_STORAGE] = function (Container $container) {
+            return new CmsPageToCmsStorageClientBridge($container->getLocator()->cmsStorage()->client());
         };
 
         return $container;

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CmsPage\Controller;
 
 use DateTime;
+use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -17,59 +18,61 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CmsController extends AbstractController
 {
-
     /**
-     * @param array $meta
+     * @param array $data
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function pageAction($meta, Request $request)
+    public function pageAction($data, Request $request)
     {
+        $localeCmsPageDataTransfer = $this->getFactory()
+            ->getCmsStorageClient()
+            ->mapCmsPageStorageData($data);
+
         $edit = (bool)$request->get('edit', false);
 
-        if (!$meta['is_active']) {
-            throw new NotFoundHttpException('The Cms Page is not active');
+        if (!$localeCmsPageDataTransfer->getIsActive()) {
+            throw new NotFoundHttpException('The Cms Page is not active.');
         }
 
-        if (!$this->isPageActiveInGivenDate($meta, new DateTime())) {
-            throw new NotFoundHttpException('The Cms Page is not active in given dates');
+        if (!$this->isPageActiveInGivenDate($localeCmsPageDataTransfer, new DateTime())) {
+            throw new NotFoundHttpException('The Cms Page is not active in given dates.');
         }
 
         $loader = $this->getApplication()['twig']->getLoader();
-        if (!$loader->exists($meta['template'])) {
-            throw new NotFoundHttpException('The Cms Page template is not found');
+        if (!$loader->exists($localeCmsPageDataTransfer->getTemplatePath())) {
+            throw new NotFoundHttpException('The Cms Page template is not found.');
         }
 
-        $meta['placeholders'] = $this->getFactory()
+        $placeholders = $this->getFactory()
             ->getCmsTwigRendererPlugin()
-            ->render($meta['placeholders'], ['cmsContent' => $meta]);
+            ->render($localeCmsPageDataTransfer->getPlaceholders(), ['cmsContent' => $data]);
 
-        $data = [
-            'placeholders' => $meta['placeholders'],
+        $responseData = [
+            'placeholders' => $placeholders,
             'edit' => $edit,
-            'pageTitle' => $meta['meta_title'],
-            'pageDescription' => $meta['meta_description'],
-            'pageKeywords' => $meta['meta_keywords'],
+            'pageTitle' => $localeCmsPageDataTransfer->getMetaTitle(),
+            'pageDescription' => $localeCmsPageDataTransfer->getMetaDescription(),
+            'pageKeywords' => $localeCmsPageDataTransfer->getMetaKeywords(),
         ];
 
-        return $this->view($data, [], $meta['template']);
+        return $this->view($responseData, [], $localeCmsPageDataTransfer->getTemplatePath());
     }
 
     /**
-     * @param array $meta
+     * @param \Generated\Shared\Transfer\LocaleCmsPageDataTransfer $localeCmsPageDataTransfer
      * @param \DateTime $dateToCompare
      *
      * @return bool
      */
-    protected function isPageActiveInGivenDate(array $meta, DateTime $dateToCompare)
+    protected function isPageActiveInGivenDate(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, DateTime $dateToCompare)
     {
-        if (isset($meta['valid_from']) && isset($meta['valid_to'])) {
-
-            $validFrom = new DateTime($meta['valid_from']);
-            $validTo = new DateTime($meta['valid_to']);
+        if ($localeCmsPageDataTransfer->getValidFrom() && $localeCmsPageDataTransfer->getValidTo()) {
+            $validFrom = new DateTime($localeCmsPageDataTransfer->getValidFrom());
+            $validTo = new DateTime($localeCmsPageDataTransfer->getValidTo());
 
             if ($dateToCompare >= $validFrom && $dateToCompare <= $validTo) {
                 return true;
@@ -80,5 +83,4 @@ class CmsController extends AbstractController
 
         return true;
     }
-
 }
