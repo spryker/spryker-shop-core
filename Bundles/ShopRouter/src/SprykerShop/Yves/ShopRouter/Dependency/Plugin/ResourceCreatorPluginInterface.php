@@ -30,6 +30,8 @@ interface ResourceCreatorPluginInterface
     public function getActionName();
 
     /**
+     * @param array $data
+     *
      * @return array
      */
     public function mergeResourceData(array $data);

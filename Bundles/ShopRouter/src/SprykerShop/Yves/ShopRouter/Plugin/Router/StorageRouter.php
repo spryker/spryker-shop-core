@@ -16,61 +16,62 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
  */
 class StorageRouter extends AbstractRouter
 {
-    const PARAMETER_PAGE = 'page';
-
     /**
      * {@inheritdoc}
+     *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         $urlMatcher = $this->getFactory()->getUrlMatcher();
-        if ($urlMatcher->matchUrl($name, $this->getApplication()['locale'])) {
-            $request = $this->getRequest();
-            $requestParameters = $request->query->all();
-            //if no page is provided we generate a url to change the filter and therefore want to reset the page
-            if (!isset($parameters[self::PARAMETER_PAGE]) && isset($requestParameters[self::PARAMETER_PAGE])) {
-                unset($requestParameters[self::PARAMETER_PAGE]);
+        $localeName = $this->getApplication()['locale'];
+
+        if (!$urlMatcher->matchUrl($name, $localeName)) {
+            $name = $this->getDefaultLocalePrefix() . $name;
+
+            if (!$urlMatcher->matchUrl($name, $localeName)) {
+                throw new RouteNotFoundException();
             }
-
-            $mergedParameters = $this
-                ->getFactory()
-                ->createParameterMerger()
-                ->mergeParameters($requestParameters, $parameters);
-
-            $pathInfo = $this
-                ->getFactory()
-                ->createUrlMapper()
-                ->generateUrlFromParameters($mergedParameters);
-
-            $pathInfo = $name . $pathInfo;
-
-            return $this->getUrlOrPathForType($pathInfo, $referenceType);
         }
 
-        throw new RouteNotFoundException();
+        $requestParameters = $this->getRequest()->query->all();
+
+        $mergedParameters = $this
+            ->getFactory()
+            ->createParameterMerger()
+            ->mergeParameters($requestParameters, $parameters);
+
+        $pathInfo = $this
+            ->getFactory()
+            ->createUrlMapper()
+            ->generateUrlFromParameters($mergedParameters);
+
+        $pathInfo = $name . $pathInfo;
+
+        return $this->getUrlOrPathForType($pathInfo, $referenceType);
     }
 
     /**
      * {@inheritdoc}
+     *
      * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      */
     public function match($pathinfo)
     {
-        $defaultLocalePrefix = '/' . mb_substr($this->getApplication()['locale'], 0, 2);
+        $defaultLocalePrefix = $this->getDefaultLocalePrefix();
 
         if ($defaultLocalePrefix === $pathinfo || $defaultLocalePrefix . '/' === $pathinfo) {
             throw new ResourceNotFoundException();
         }
 
         if ($pathinfo !== '/') {
-            $urlMatcher = $this
-                ->getFactory()
-                ->getUrlMatcher();
-            $urlDetails = $urlMatcher->matchUrl($pathinfo, $this->getApplication()['locale']);
+            $urlMatcher = $this->getFactory()->getUrlMatcher();
+            $localeName = $this->getApplication()['locale'];
 
-            if ($urlDetails === false) {
-                $urlDetails = $urlMatcher->matchUrl($defaultLocalePrefix . $pathinfo, $this->getApplication()['locale']);
+            $urlDetails = $urlMatcher->matchUrl($pathinfo, $localeName);
+
+            if (!$urlDetails) {
+                $urlDetails = $urlMatcher->matchUrl($defaultLocalePrefix . $pathinfo, $localeName);
             }
 
             if ($urlDetails) {
@@ -104,5 +105,13 @@ class StorageRouter extends AbstractRouter
     protected function getApplication()
     {
         return $this->getFactory()->getApplication();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultLocalePrefix()
+    {
+        return '/' . mb_substr($this->getApplication()['locale'], 0, 2);
     }
 }
