@@ -12,15 +12,12 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductCategoryWidgetPluginInterface extends WidgetPluginInterface
 {
-
     const NAME = 'ProductCategoryWidgetPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $locale
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, $locale): void;
-
+    public function initialize(ProductViewTransfer $productViewTransfer): void;
 }

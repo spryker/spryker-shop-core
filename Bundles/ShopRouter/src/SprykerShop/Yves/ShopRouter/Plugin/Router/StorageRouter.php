@@ -24,7 +24,7 @@ class StorageRouter extends AbstractRouter
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         $urlMatcher = $this->getFactory()->getUrlMatcher();
-        $localeName = $this->getApplication()['locale'];
+        $localeName = $this->getLocale();
 
         if (!$urlMatcher->matchUrl($name, $localeName)) {
             $name = $this->getDefaultLocalePrefix() . $name;
@@ -66,7 +66,7 @@ class StorageRouter extends AbstractRouter
 
         if ($pathinfo !== '/') {
             $urlMatcher = $this->getFactory()->getUrlMatcher();
-            $localeName = $this->getApplication()['locale'];
+            $localeName = $this->getLocale();
 
             $urlDetails = $urlMatcher->matchUrl($pathinfo, $localeName);
 
@@ -112,6 +112,6 @@ class StorageRouter extends AbstractRouter
      */
     protected function getDefaultLocalePrefix()
     {
-        return '/' . mb_substr($this->getApplication()['locale'], 0, 2);
+        return '/' . mb_substr($this->getLocale(), 0, 2);
     }
 }

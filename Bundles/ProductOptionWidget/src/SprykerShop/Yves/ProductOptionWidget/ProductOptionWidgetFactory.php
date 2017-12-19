@@ -8,15 +8,15 @@
 namespace SprykerShop\Yves\ProductOptionWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetToProductOptionClientInterface;
+use SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetToProductOptionStorageClientInterface;
 
 class ProductOptionWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetToProductOptionClientInterface
+     * @return \SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetToProductOptionStorageClientInterface
      */
-    public function getProductOptionClient(): ProductOptionWidgetToProductOptionClientInterface
+    public function getProductOptionStorageClient(): ProductOptionWidgetToProductOptionStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductOptionWidgetDependencyProvider::CLIENT_PRODUCT_OPTION);
+        return $this->getProvidedDependency(ProductOptionWidgetDependencyProvider::CLIENT_PRODUCT_OPTION_STORAGE);
     }
 }

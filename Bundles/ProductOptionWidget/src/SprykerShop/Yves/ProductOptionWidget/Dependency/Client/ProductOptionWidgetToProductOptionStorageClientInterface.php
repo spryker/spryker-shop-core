@@ -7,13 +7,13 @@
 
 namespace SprykerShop\Yves\ProductOptionWidget\Dependency\Client;
 
-interface ProductOptionWidgetToProductOptionClientInterface
+interface ProductOptionWidgetToProductOptionStorageClientInterface
 {
     /**
      * @param int $idAbstractProduct
      * @param int $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
      */
     public function getProductOptions($idAbstractProduct, $localeName);
 }
