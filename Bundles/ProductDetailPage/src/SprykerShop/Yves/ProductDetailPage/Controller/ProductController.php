@@ -31,12 +31,12 @@ class ProductController extends AbstractController
      */
     public function detailAction(array $productData, Request $request)
     {
-        $storageProductTransfer = $this->getFactory()
-            ->getProductClient()
-            ->mapStorageProductForCurrentLocale($productData, $this->getSelectedAttributes($request));
+        $productViewTransfer = $this->getFactory()
+            ->getProductStorageClient()
+            ->mapProductStorageDataForCurrentLocale($productData, $this->getSelectedAttributes($request));
 
         $data = [
-            'product' => $storageProductTransfer,
+            'product' => $productViewTransfer,
         ];
 
         return $this->view($data, $this->getFactory()->getProductDetailPageWidgetPlugins());

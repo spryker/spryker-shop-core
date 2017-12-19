@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ProductDetailPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductClientInterface;
+use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientInterface;
 
 class ProductDetailPageFactory extends AbstractFactory
 {
@@ -21,10 +21,10 @@ class ProductDetailPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductClientInterface
+     * @return \SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientInterface
      */
-    public function getProductClient(): ProductDetailPageToProductClientInterface
+    public function getProductStorageClient(): ProductDetailPageToProductStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductDetailPageDependencyProvider::CLIENT_PRODUCT);
+        return $this->getProvidedDependency(ProductDetailPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 }

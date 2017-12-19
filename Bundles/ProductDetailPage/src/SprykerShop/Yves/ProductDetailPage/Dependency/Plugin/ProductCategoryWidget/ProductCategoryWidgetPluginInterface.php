@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductCategoryWidget;
 
-use Generated\Shared\Transfer\StorageProductTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductCategoryWidgetPluginInterface extends WidgetPluginInterface
@@ -16,10 +16,11 @@ interface ProductCategoryWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'ProductCategoryWidgetPlugin';
 
     /**
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $locale
      *
      * @return void
      */
-    public function initialize(StorageProductTransfer $storageProductTransfer): void;
+    public function initialize(ProductViewTransfer $productViewTransfer, $locale): void;
 
 }

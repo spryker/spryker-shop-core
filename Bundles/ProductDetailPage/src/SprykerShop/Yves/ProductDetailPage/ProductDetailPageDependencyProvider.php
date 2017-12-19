@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\ProductDetailPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductClientBridge;
+use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientBridge;
 
 class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     const PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS';
 
     /**
@@ -23,7 +23,7 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addProductClient($container);
+        $container = $this->addProductStorageClient($container);
         $container = $this->addProductDetailPageWidgetPlugins($container);
 
         return $container;
@@ -34,10 +34,10 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductClient(Container $container)
+    protected function addProductStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT] = function (Container $container) {
-            return new ProductDetailPageToProductClientBridge($container->getLocator()->product()->client());
+        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+            return new ProductDetailPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
         };
 
         return $container;

@@ -7,23 +7,16 @@
 
 namespace SprykerShop\Yves\ProductCategoryWidget\Plugin\ProductDetailPage;
 
-use Generated\Shared\Transfer\StorageProductTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductCategoryWidget\ProductCategoryWidgetFactory;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductCategoryWidget\ProductCategoryWidgetPluginInterface;
 
+/**
+ * @method ProductCategoryWidgetFactory getFactory()
+ */
 class ProductCategoryWidgetPlugin extends AbstractWidgetPlugin implements ProductCategoryWidgetPluginInterface
 {
-
-    /**
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
-     *
-     * @return void
-     */
-    public function initialize(StorageProductTransfer $storageProductTransfer): void
-    {
-        $this->addParameter('product', $storageProductTransfer);
-    }
-
     /**
      * @return string
      */
@@ -40,4 +33,20 @@ class ProductCategoryWidgetPlugin extends AbstractWidgetPlugin implements Produc
         return '@ProductCategoryWidget/_product-detail-page/breadcrumb.twig';
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $locale
+     *
+     * @return void
+     */
+    public function initialize(ProductViewTransfer $productViewTransfer, $locale): void
+    {
+        $productAbstractCategoryStorageTransfer = $this->getFactory()
+            ->getProductCategoryStorageClient()
+            ->findProductAbstractCategory($productViewTransfer->getIdProductAbstract(), $locale);
+
+        $this
+            ->addParameter('product', $productViewTransfer)
+            ->addParameter('categories', $productAbstractCategoryStorageTransfer->getCategories());
+    }
 }

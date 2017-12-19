@@ -7,12 +7,21 @@
 
 namespace SprykerShop\Yves\ProductImageWidget\Plugin\ProductDetailPage;
 
-use Generated\Shared\Transfer\StorageProductTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductImageWidget\ProductImageWidgetPluginInterface;
 
 class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductImageWidgetPluginInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return void
+     */
+    public function initialize(ProductViewTransfer $productViewTransfer): void
+    {
+        $this->addParameter('product', $productViewTransfer);
+    }
 
     /**
      * @return string
@@ -29,15 +38,4 @@ class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductIm
     {
         return '@ProductImageWidget/_product-detail-page/images.twig';
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
-     *
-     * @return void
-     */
-    public function initialize(StorageProductTransfer $storageProductTransfer): void
-    {
-        $this->addParameter('product', $storageProductTransfer);
-    }
-
 }
