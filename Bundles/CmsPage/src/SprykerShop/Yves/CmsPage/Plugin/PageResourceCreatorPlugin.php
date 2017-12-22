@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CmsPage\Plugin;
 
+use Spryker\Shared\CmsStorage\CmsStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
 
@@ -20,7 +21,7 @@ class PageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreato
      */
     public function getType()
     {
-        return 'page';
+        return CmsStorageConstants::CMS_PAGE_RESOURCE_NAME;
     }
 
     /**
@@ -48,12 +49,14 @@ class PageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreato
     }
 
     /**
+     * @param array $data
+     *
      * @return array
      */
     public function mergeResourceData(array $data)
     {
         return [
-            'meta' => $data
+            'data' => $data
         ];
     }
 }

@@ -1,7 +1,7 @@
 <div class="product-label-group">
-    {% for productLabelTransfer in productLabelTransferCollection %}
+    {% for productLabelDictionaryItemTransfer in productLabelDictionaryItemTransfers %}
         {% include '@ProductLabelWidget/_partials/label.twig' with {
-            productLabelTransfer: productLabelTransfer
+            productLabelDictionaryItemTransfer: productLabelDictionaryItemTransfer
         } %}
     {% endfor %}
 </div>

@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ProductWidget\Plugin\ProductRelationWidget;
 
-use Generated\Shared\Transfer\StorageProductAbstractRelationTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductRelationWidget\Dependency\Plugin\ProductWidget\ProductWidgetPluginInterface;
 
@@ -16,21 +16,15 @@ use SprykerShop\Yves\ProductRelationWidget\Dependency\Plugin\ProductWidget\Produ
  */
 class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetPluginInterface
 {
-
     /**
-     * @param \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer $storageProductAbstractRelationTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void
      */
-    public function initialize(StorageProductAbstractRelationTransfer $storageProductAbstractRelationTransfer): void
+    public function initialize(ProductViewTransfer $productViewTransfer): void
     {
         $this
-            ->addParameter('idProductAbstract', $storageProductAbstractRelationTransfer->getIdProductAbstract())
-            ->addParameter('productName', $storageProductAbstractRelationTransfer->getName())
-            ->addParameter('imageUrl', $this->getImageUrl($storageProductAbstractRelationTransfer))
-            ->addParameter('detailsUrl', $storageProductAbstractRelationTransfer->getUrl())
-            ->addParameter('priceValue', $storageProductAbstractRelationTransfer->getPrice())
-            ->addParameter('originalPrice', $this->getOriginalPrice($storageProductAbstractRelationTransfer))
+            ->addParameter('product', $productViewTransfer)
             ->addWidgets($this->getFactory()->getProductRelationWidgetSubWidgets());
     }
 
@@ -49,29 +43,4 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
     {
         return '@ProductWidget/_product-relation-widget/product.twig';
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer $storageProductAbstractRelationTransfer
-     *
-     * @return string|null
-     */
-    protected function getImageUrl(StorageProductAbstractRelationTransfer $storageProductAbstractRelationTransfer): ?string
-    {
-        $imageSets = $storageProductAbstractRelationTransfer->getImageSets();
-
-        return $imageSets['default'][0]['externalUrlSmall'] ?? null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer $storageProductAbstractRelationTransfer
-     *
-     * @return string|null
-     */
-    protected function getOriginalPrice(StorageProductAbstractRelationTransfer $storageProductAbstractRelationTransfer): ?string
-    {
-        $prices = $storageProductAbstractRelationTransfer->getPrices();
-
-        return $prices['ORIGINAL'] ?? null;
-    }
-
 }

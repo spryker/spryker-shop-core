@@ -1,0 +1,30 @@
+{
+  "name": "spryker-shop/product-review-widget",
+  "description": "ProductReviewWidget module",
+  "license": "proprietary",
+  "require": {
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -1,1 +1,4 @@
-{{ product_relation("up-selling", {quote : _widget.quote}, 'You might also be interested in these products', '@ProductRelationWidget/_partials/product_relation_carousel.twig') }}
+{% include '@ProductRelationWidget/_partials/product_relation_carousel.twig' with {
+    title: 'You might also be interested in these products',
+    productCollection: _widget.productCollection
+} %}

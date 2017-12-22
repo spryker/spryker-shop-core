@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ProductOptionWidget\Plugin\ProductDetailPage;
 
-use Generated\Shared\Transfer\StorageProductTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductOptionWidget\ProductOptionWidgetPluginInterface;
 
@@ -17,17 +17,13 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductOptionWidget\Pro
 class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductOptionWidgetPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void
      */
-    public function initialize(StorageProductTransfer $storageProductTransfer): void
+    public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this
-            ->addParameter(
-                'productOptionGroups',
-                $this->getProductOptionGroups($storageProductTransfer->getIdProductAbstract())
-            );
+        $this->addParameter('productOptionGroups', $this->getProductOptionGroups($productViewTransfer));
     }
 
     /**
@@ -47,25 +43,25 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param ProductViewTransfer $productViewTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StorageProductOptionGroupTransfer[]
      */
-    protected function getProductOptionGroups(int $idProductAbstract)
+    protected function getProductOptionGroups(ProductViewTransfer $productViewTransfer)
     {
-        return $this->getStorageProductOptionGroupCollectionTransfer($idProductAbstract)->getProductOptionGroups();
+        return $this->getStorageProductOptionGroupCollectionTransfer($productViewTransfer)->getProductOptionGroups();
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param ProductViewTransfer $productViewTransfer
      *
-     * @return \Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
      */
-    protected function getStorageProductOptionGroupCollectionTransfer(int $idProductAbstract)
+    protected function getStorageProductOptionGroupCollectionTransfer(ProductViewTransfer $productViewTransfer)
     {
         return $this
             ->getFactory()
-            ->getProductOptionClient()
-            ->getProductOptions($idProductAbstract, $this->getLocale());
+            ->getProductOptionStorageClient()
+            ->getProductOptions($productViewTransfer->getIdProductAbstract(), $this->getLocale());
     }
 }

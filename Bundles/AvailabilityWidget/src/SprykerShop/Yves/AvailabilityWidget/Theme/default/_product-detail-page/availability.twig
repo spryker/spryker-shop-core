@@ -1,5 +1,5 @@
 {% block isAvailable -%}
-    {{ (_widget.product.isVariant and _widget.product.available) ? 1 : 0}}
+    {{ (_widget.product.idProductConcrete and _widget.product.available) ? 1 : 0}}
 {%- endblock %}
 
 {% block outOfStock %}

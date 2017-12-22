@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Plugin;
 
-use Spryker\Shared\Product\ProductConfig;
+use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductDetailPage\Controller\ProductController;
 use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
@@ -22,7 +22,7 @@ class ProductDetailPageResourceCreatorPlugin extends AbstractPlugin implements R
      */
     public function getType()
     {
-        return ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT;
+        return ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME;
     }
 
     /**
@@ -50,6 +50,8 @@ class ProductDetailPageResourceCreatorPlugin extends AbstractPlugin implements R
     }
 
     /**
+     * @param array $data
+     *
      * @return array
      */
     public function mergeResourceData(array $data)

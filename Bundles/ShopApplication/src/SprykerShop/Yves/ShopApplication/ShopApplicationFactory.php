@@ -24,7 +24,7 @@ class ShopApplicationFactory extends SprykerApplicationFactory
      */
     public function createWidgetContainerRegistry()
     {
-        return new WidgetContainerRegistry($this->getApplication());
+        return new WidgetContainerRegistry();
     }
 
     /**

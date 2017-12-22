@@ -13,7 +13,7 @@ interface ShopRouterToUrlStorageClientInterface
      * @param string $url
      * @param string $localeName
      *
-     * @return array|bool
+     * @return array
      */
     public function matchUrl($url, $localeName);
 }

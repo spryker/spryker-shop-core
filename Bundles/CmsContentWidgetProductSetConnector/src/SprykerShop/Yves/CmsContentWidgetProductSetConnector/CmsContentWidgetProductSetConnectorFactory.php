@@ -18,15 +18,7 @@ class CmsContentWidgetProductSetConnectorFactory extends SprykerCmsContentWidget
      */
     public function createWidgetContainerRegistry()
     {
-        return new WidgetContainerRegistry($this->getApplication());
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
-     */
-    protected function getApplication()
-    {
-        return $this->getProvidedDependency(CmsContentWidgetProductSetConnectorDependencyProvider::APPLICATION);
+        return new WidgetContainerRegistry();
     }
 
     /**

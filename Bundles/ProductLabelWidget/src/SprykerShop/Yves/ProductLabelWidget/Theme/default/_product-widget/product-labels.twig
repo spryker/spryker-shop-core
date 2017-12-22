@@ -1,1 +1,3 @@
-{{ spyProductLabels(_widget.idProductLabels, '@ProductLabelWidget/_partials/product-labels.twig') }}
+{% include '@ProductLabelWidget/_partials/group.twig' with {
+    productLabelDictionaryItemTransfers: _widget.productLabelDictionaryItemTransfers
+} %}

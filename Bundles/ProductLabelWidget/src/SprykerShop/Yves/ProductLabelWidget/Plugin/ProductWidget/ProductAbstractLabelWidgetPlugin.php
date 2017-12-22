@@ -8,11 +8,14 @@
 namespace SprykerShop\Yves\ProductLabelWidget\Plugin\ProductWidget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductLabelWidget\ProductLabelWidgetFactory;
 use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductLabelWidget\ProductAbstractLabelWidgetPluginInterface;
 
+/**
+ * @method ProductLabelWidgetFactory getFactory()
+ */
 class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductAbstractLabelWidgetPluginInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
@@ -20,7 +23,9 @@ class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements P
      */
     public function initialize(int $idProductAbstract): void
     {
-        $this->addParameter('idProductAbstract', $idProductAbstract);
+        $this
+            ->addParameter('idProductAbstract', $idProductAbstract)
+            ->addParameter('productLabelDictionaryItemTransfers', $this->getProductLabelDictionaryItems($idProductAbstract));
     }
 
     /**
@@ -39,4 +44,15 @@ class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements P
         return '@ProductLabelWidget/_product-widget/product-abstract-labels.twig';
     }
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     */
+    protected function getProductLabelDictionaryItems($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->getProductLabelStorageClient()
+            ->findLabelsByIdProductAbstract($idProductAbstract, $this->getLocale());
+    }
 }

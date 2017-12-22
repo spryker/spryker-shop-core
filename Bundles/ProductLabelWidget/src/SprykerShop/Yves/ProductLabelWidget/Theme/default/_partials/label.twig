@@ -1,9 +1,9 @@
-{% if productLabelTransfer.getFrontEndReference() == 'template:tag' %}
+{% if productLabelDictionaryItemTransfer.frontEndReference == 'template:tag' %}
     {% include '@ProductLabelWidget/_partials/labels/tag.twig' with {
-        productLabelTransfer: productLabelTransfer
+        productLabelDictionaryItemTransfer: productLabelDictionaryItemTransfer
     } %}
 {% else %}
     {% include '@ProductLabelWidget/_partials/labels/flag.twig' with {
-        productLabelTransfer: productLabelTransfer
+        productLabelDictionaryItemTransfer: productLabelDictionaryItemTransfer
     } %}
 {% endif %}

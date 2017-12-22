@@ -25,6 +25,7 @@ class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSe
     {
         $this
             ->addParameter('quote', $quoteTransfer)
+            ->addParameter('productCollection', $this->findUpSellingProducts($quoteTransfer))
             ->addWidgets($this->getFactory()->getCartPageUpSellingProductsWidgetPlugins());
     }
 
@@ -42,5 +43,17 @@ class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSe
     public static function getTemplate(): string
     {
         return '@ProductRelationWidget/_cart-page/up-selling.twig';
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function findUpSellingProducts(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()
+            ->getProductRelationStorageClient()
+            ->findUpSellingProducts($quoteTransfer, $this->getLocale());
     }
 }

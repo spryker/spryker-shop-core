@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\ProductOptionWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetToProductOptionClientBridge;
+use SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetToProductOptionStorageClientBridge;
 
 class ProductOptionWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_PRODUCT_OPTION = 'CLIENT_PRODUCT_OPTION';
+    const CLIENT_PRODUCT_OPTION_STORAGE = 'CLIENT_PRODUCT_OPTION_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -34,8 +34,8 @@ class ProductOptionWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductOptionClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_OPTION] = function (Container $container) {
-            return new ProductOptionWidgetToProductOptionClientBridge($container->getLocator()->productOption()->client());
+        $container[self::CLIENT_PRODUCT_OPTION_STORAGE] = function (Container $container) {
+            return new ProductOptionWidgetToProductOptionStorageClientBridge($container->getLocator()->productOptionStorage()->client());
         };
 
         return $container;

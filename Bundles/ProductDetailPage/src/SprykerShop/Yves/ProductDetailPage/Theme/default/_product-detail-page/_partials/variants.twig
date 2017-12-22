@@ -1,8 +1,8 @@
-{% if _view.product.superAttributes|length > 0 %}
+{% if _view.product.attributeMap.superAttributes|length > 0 %}
     <p>
     <form method="GET" data-component="product-variants">
         <h5>{{ 'product.variants' | trans }}</h5>
-        {% for attributeName,attributes in _view.product.superAttributes %}
+        {% for attributeName,attributes in _view.product.attributeMap.superAttributes %}
             {% include '@ProductDetailPage/_product-detail-page/_partials/variant.twig' with {
                 product: _view.product,
                 attributeFieldName: 'attribute[' ~ attributeName ~ ']'

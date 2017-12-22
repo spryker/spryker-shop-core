@@ -138,9 +138,11 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
             return $result;
         } catch (Throwable $e) {
             throw new WidgetRenderException(sprintf(
-                'Something went wrong in widget "%s": %s',
+                'Something went wrong in widget "%s": %s in %s:%d',
                 $name,
-                $e->getMessage()
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
             ), $e->getCode(), $e);
         }
     }
