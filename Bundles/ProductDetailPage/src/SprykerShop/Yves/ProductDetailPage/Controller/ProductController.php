@@ -33,7 +33,7 @@ class ProductController extends AbstractController
     {
         $productViewTransfer = $this->getFactory()
             ->getProductStorageClient()
-            ->mapProductStorageDataForCurrentLocale($productData, $this->getSelectedAttributes($request));
+            ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request));
 
         $data = [
             'product' => $productViewTransfer,

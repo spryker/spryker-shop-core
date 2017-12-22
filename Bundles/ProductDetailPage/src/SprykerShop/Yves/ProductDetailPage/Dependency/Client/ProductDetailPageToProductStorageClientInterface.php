@@ -14,9 +14,10 @@ interface ProductDetailPageToProductStorageClientInterface
 {
     /**
      * @param array $data
+     * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageDataForCurrentLocale(array $data, array $selectedAttributes = []);
+    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
 }

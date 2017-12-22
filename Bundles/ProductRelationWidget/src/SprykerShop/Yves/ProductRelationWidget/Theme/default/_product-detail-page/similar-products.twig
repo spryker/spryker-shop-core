@@ -1,1 +1,4 @@
-{{ product_relation("related-products", {idProductAbstract : _widget.product.idProductAbstract}, 'Similar products', '@ProductRelationWidget/_partials/product_relation_carousel.twig') }}
+{% include '@ProductRelationWidget/_partials/product_relation_carousel.twig' with {
+    title: 'Similar products',
+    productCollection: _widget.productCollection
+} %}

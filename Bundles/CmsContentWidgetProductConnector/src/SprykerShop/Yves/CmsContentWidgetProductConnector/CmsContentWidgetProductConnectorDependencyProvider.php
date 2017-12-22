@@ -9,11 +9,9 @@ namespace SprykerShop\Yves\CmsContentWidgetProductConnector;
 
 use Spryker\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorDependencyProvider as SprykerCmsContentWidgetProductConnectorDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 
 class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsContentWidgetProductConnectorDependencyProvider
 {
-    const APPLICATION = 'APPLICATION';
     const PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS = 'PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS';
 
     /**
@@ -24,22 +22,7 @@ class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsConte
     public function provideDependencies(Container $container)
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addApplication($container);
         $container = $this->addCmsProductContentWidgetPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addApplication(Container $container): Container
-    {
-        $container[static::APPLICATION] = function (Container $container) {
-            return (new Pimple())->getApplication();
-        };
 
         return $container;
     }
@@ -51,7 +34,7 @@ class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsConte
      */
     protected function addCmsProductContentWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS] = function (Container $container) {
+        $container[static::PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS] = function () {
             return $this->getCmsProductContentWidgetPlugins();
         };
 

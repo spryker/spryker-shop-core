@@ -7,9 +7,6 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
-use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
-
 class ProductDetailPageToProductStorageClientBridge implements ProductDetailPageToProductStorageClientInterface
 {
     /**
@@ -27,12 +24,13 @@ class ProductDetailPageToProductStorageClientBridge implements ProductDetailPage
 
     /**
      * @param array $data
+     * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageDataForCurrentLocale(array $data, array $selectedAttributes = [])
+    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
     {
-        return $this->productStorageClient->mapProductStorageDataForCurrentLocale($data, $selectedAttributes);
+        return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
     }
 }
