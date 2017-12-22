@@ -1,97 +1,92 @@
+.grid {
+    @include clearfix;
+    clear: both;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-width: 100%;
 
-// @mixin g-grid-col {
-//     & .g-col {
-//         @content;
-//     }
-// }
+    &--container {
+        display: block;
+        width: 100%;
+        max-width: $grid-max-width;
+        margin: auto;
+        padding-left: $grid-spacing;
+        padding-right: $grid-spacing;
+    }
 
-// .g-grid {
-//     @include clearfix;
-//     clear: both;
-//     display: flex;
-//     flex-flow: row wrap;
-//     align-items: flex-start;
-//     justify-content: flex-start;
-//     width: 100%;
-//     max-width: 100%;
+    &--top {
+        align-items: flex-start;
+    }
 
-//     &--container {
-//         @include container;
-//         padding-left: $grid-spacing;
-//         padding-right: $grid-spacing;
-//     }
+    &--bottom {
+        align-items: flex-end;
+    }
 
-//     &--top {
-//         align-items: flex-start;
-//     }
+    &--left {
+        justify-content: flex-start;
+    }
 
-//     &--bottom {
-//         align-items: flex-end;
-//     }
+    &--right {
+        justify-content: flex-end;
+    }
 
-//     &--left {
-//         justify-content: flex-start;
-//     }
+    &--center {
+        justify-content: center;
+    }
 
-//     &--right {
-//         justify-content: flex-end;
-//     }
+    &--middle {
+        align-items: center;
+    }
 
-//     &--center {
-//         justify-content: center;
-//     }
+    &--justify {
+        justify-content: space-between;
 
-//     &--middle {
-//         align-items: center;
-//     }
+        & .col {
+            margin-left: auto;
+            margin-right: auto;
 
-//     &--justify {
-//         justify-content: space-between;
+            &:first-child {
+                margin-left: 0;
+            }
 
-//         @include g-grid-col {
-//             margin-left: auto;
-//             margin-right: auto;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
 
-//             &:first-child {
-//                 margin-left: 0;
-//             }
+    &--stretch {
+        align-items: stretch;
 
-//             &:last-child {
-//                 margin-right: 0;
-//             }
-//         }
-//     }
+        & .col {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+}
 
-//     &--stretch {
-//         align-items: stretch;
-
-//         @include g-grid-col {
-//             margin-top: 0;
-//             margin-bottom: 0;
-//         }
-//     }
-// }
-
-// .g-col {
-//     @include clearfix;
-//     float: left;
-//     display: block;
-//     flex-grow: 0;
-//     flex-basis: auto;
+.col {
+    @include clearfix;
+    float: left;
+    display: block;
+    flex-grow: 0;
+    flex-basis: auto;
     
-//     @each $edge, $width in $grid-breakpoints {
-//         @include breakpoint($width) {
-//             @for $col from 1 through $grid-columns {
-//                 &--#{$edge}-#{$col} {
-//                     width: span($col of $grid-columns);
-//                     min-width: span($col of $grid-columns);
-//                 }
-//             }
-//         }
-//     }
+    @each $breakpoint, $edges in $grid-breakpoints {
+        @include media-min(edge-min($edges)) {
+            @for $column from 1 through $grid-columns {
+                &--#{$breakpoint}-#{$column} {
+                    width: span($column);
+                    min-width: span($column);
+                }
+            }
+        }
+    }
 
-//     &--expand {
-//         flex-grow: 1;
-//     }
-// }
+    &--expand {
+        flex-grow: 1;
+    }
+}
 

@@ -8,11 +8,14 @@
  # and limit the scope to what you pass through data interface
  #}
 
-{# @var {string} define css BEM block name #}
+{# @var {string} define name #}
 {%- set name = name | default('') -%}
 
+{# @var {string} define tag name #}
+{%- set tag = tag is defined ? tag : (name | default('div')) -%}
+
 {# @var {string} define js selector #}
-{%- set selector = selector | default('js-' ~ name) -%}
+{%- set selector = selector | default(name ? 'js-' ~ name : '') -%}
 
 {# @var {string} define addictional css class(es) #}
 {%- set class = class | default('') -%}
@@ -71,7 +74,7 @@
  # Component
  #}
 {%- block component -%}
-    <{{-name}} class="{{block('_renderClasses')}}" {{block('_renderAttributes')}}>
+    <{{-tag}} class="{{block('_renderClasses')}}" {{block('_renderAttributes')}}>
         {{-block('body')-}}
-    </{{-name-}}>
+    </{{-tag-}}>
 {%- endblock -%}

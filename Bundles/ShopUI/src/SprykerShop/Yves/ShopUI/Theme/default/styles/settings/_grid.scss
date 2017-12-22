@@ -1,30 +1,10 @@
+$grid-columns: 12;
+$grid-spacing: 16px;        
+$grid-max-width: 1160px;
 
-// @import '~susy/sass/susy';
-// @import '~breakpoint-sass/stylesheets/breakpoint';
-
-// $grid-columns: 12;
-// $grid-gutter: 0;  
-// $grid-spacing: 16px;        
-// $grid-max-width: 1160px;
-
-// $susy: (
-//     flow: ltr,
-//     math: fluid,
-//     output: float,
-//     gutter-position: inside,
-//     container: $grid-max-width,
-//     container-position: center,
-//     columns: $grid-columns,
-//     gutters: $grid-gutter,
-//     column-width: false,
-//     global-box-sizing: border-box,
-//     last-flow: to
-// );
-
-// $grid-breakpoints: (
-//     sm: 0px,
-//     md: 550px,
-//     lg: 770px,
-//     xl: 970px
-// );
-
+$grid-breakpoints: (
+    sm: (0, 549px),
+    md: (550px, 769px),
+    lg: (770px, 969px),
+    xl: (970px)
+);

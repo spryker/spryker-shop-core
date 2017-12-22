@@ -1,0 +1,62 @@
+@mixin component-menu($name: '.menu') {
+    #{$name} {
+        &__separator {
+            display: inline-block;
+            padding: spacing();
+
+            &::after {
+                content: '|';
+                color: $color-lighter;
+            }
+        }
+
+        &__item {
+            display: block;
+            padding: spacing();
+            margin: 0;
+
+            &--has-children-dropdown {
+                z-index: $zi-element + 1;
+
+                & > #{$name} {
+                    @include shadow;
+                    @include is-invisible;
+                    @include transition-visibility;
+                    position: absolute;
+                    left: 0;
+                    width: spacing(30);
+                    border: 1px solid $color-lighter;
+                    background-color: $color-white;
+                }
+
+                &:hover > #{$name} {
+                    @include is-visible;
+                }
+
+                & #{$name}__item {
+                    padding: spacing(.5) spacing();
+                }
+            }
+
+            &--has-children-list {
+                border-bottom: 1px solid $color-lighter;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+                
+                & > #{$name} {
+                    margin-left: spacing();
+                }
+
+                & #{$name}__item {
+                    @include font-size(small);
+                }
+            }
+        }
+
+        &--horizontal > &__item {
+            display: inline-block;
+        }
+    }
+}

@@ -10,7 +10,10 @@ body {
     h#{$i} {
         @include font-size($i);
         @include line-height($i);
-        margin: 32px 0 16px 0;
+
+        &--margins {
+            margin: spacing(4) 0 spacing(2) 0;
+        }
     }
 }
 
@@ -35,15 +38,42 @@ cite {
 }
 
 p,
-ul,
-ol,
 blockquote,
 iframe {
-    margin: 16px 0;
+    margin: spacing(2) 0;
 }
 
 img {
     max-width: 100%;
     max-height: 100%;
+}
+
+input[type=text],
+input[type=number],
+input[type=date],
+input[type=email],
+input[type=password] {
+    @include transition(border-color);
+    padding: spacing(.5);
+    border: 1px solid $color-lighter;
+
+    &:focus {
+        border-color: $color-dark;
+    }
+}
+
+input[type=button],
+input[type=submit],
+button {
+    @include transition(background-color);
+    padding: spacing(.5) spacing(2);
+    border-radius: spacing();
+    background-color: $color-main;
+    color: $color-white;
+
+    &:hover,
+    &:focus {
+        background-color: $color-main-dark;
+    }
 }
 

@@ -1,0 +1,12 @@
+@mixin component-box($name: '.box') {
+    #{$name} {
+        @include clearfix;
+        margin: spacing();
+        padding: spacing();
+        border: 1px solid $color-lighter;
+
+        &--borderless {
+            border-color: $color-transparent;
+        }
+    }
+}

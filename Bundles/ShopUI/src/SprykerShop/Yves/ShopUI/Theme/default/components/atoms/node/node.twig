@@ -1,0 +1,27 @@
+{% extends model('component') %}
+
+{% set name = 'node' %}
+{% set node = data.node %}
+
+{% set today = 'now' | date('Ymd') %}
+{% set type = node.nodeType %}
+{% set isActive = node.isActive %}
+{% set isValidFrom = node.validFrom is empty or node.validFrom | date('Ymd') <= today %}
+{% set isValidTo = node.validFrom is empty or node.validFrom | date('Ymd') <= today %}
+{% set isActiveAndValid = isActive and isValidFrom and isValidTo %}
+
+{% block component %}
+    {% if isActiveAndValid %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if type == 'category' or type == 'link' or type == 'cms_page' %}
+        {% block url %}{% endblock %}
+    {% elseif type == 'external_url' %}
+        {% block externalUrl %}{% endblock %}
+    {% else %}
+        {% block other %}{% endblock %}
+    {% endif %}
+{% endblock %}

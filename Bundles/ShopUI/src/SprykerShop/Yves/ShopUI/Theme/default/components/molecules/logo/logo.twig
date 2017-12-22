@@ -1,0 +1,11 @@
+{% extends model('component') %}
+
+{% set name = 'logo' %}
+{% set tag = 'span' %}
+{% set url = data.url | default('/') %}
+
+{% block body %}
+    <a href="{{url}}">
+        <img src="/assets/default/img/logo.svg" />
+    </a>
+{% endblock %}

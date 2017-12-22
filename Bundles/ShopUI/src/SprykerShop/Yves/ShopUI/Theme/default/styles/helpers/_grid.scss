@@ -1,0 +1,40 @@
+@function edge-min($edges) {
+    @if length($edges) > 0 {
+        @return nth($edges, 1);
+    }
+
+    @return 0;
+}
+
+@function edge-max($edges) {
+    @if length($edges) > 1 {
+        @return nth($edges, 2);
+    }
+
+    @return null;
+}
+
+@mixin media-min($min: 0) {
+    @media only screen and (min-device-width: $min) {
+        @content;
+    }
+}
+
+@mixin media-between($min: 0, $max: $grid-max-width) {
+    @media only screen and (min-device-width: $min) and (max-device-width: $max) {
+        @content;
+    }
+}
+
+@mixin media-max($max: $grid-max-width) {
+    @media only screen and (max-device-width: $max) {
+        @content;
+    }
+}
+
+@function span($column, $columns: $grid-columns) {
+    @return (100% / $columns) * $column;
+}
+
+
+

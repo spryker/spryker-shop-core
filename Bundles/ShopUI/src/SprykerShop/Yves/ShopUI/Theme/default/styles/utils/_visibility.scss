@@ -1,25 +1,42 @@
+.is-hidden {
+    display: none;
 
-// .is-hidden {
-//     display: none;
+    @each $breakpointA, $edgesA in $grid-breakpoints {
+        $edgeMin: edge-min($edgesA);
+        $edgeMax: edge-max($edgesA);
 
-//     @each $edgeA, $widthA in $grid-breakpoints {
-//         @each $edgeB, $widthB in $grid-breakpoints {
-//             @if $edgeA == $edgeB {
-//                 &--#{$edgeA} {
-//                     @include breakpoint($widthA) {
-//                         display: none;
-//                     }
-//                 }
-//             } @elseif $widthB > $widthA {
-//                 &--#{$edgeA}-#{$edgeB} {
-//                     @include breakpoint($widthA $widthB) {
-//                         display: none;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
+        &-#{$breakpointA}-only {
+            @if $edgeMax == null {
+                @include media-min($edgeMin) {
+                    display: none;
+                }
+            } @else {
+                @include media-between($edgeMin, $edgeMax) {
+                    display: none;
+                }
+            }
+        }
+
+        @each $breakpointB, $edgesB in $grid-breakpoints {
+            @if edge-min($edgesB) > edge-min($edgesA) {
+                $edgeMin: edge-min($edgesA);
+                $edgeMax: edge-max($edgesB);
+
+                &-#{$breakpointA}-#{$breakpointB} {
+                    @if $edgeMax == null {
+                        @include media-min($edgeMin) {
+                            display: none;
+                        }
+                    } @else {
+                        @include media-between($edgeMin, $edgeMax) {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 .is-visible {
     @include is-visible;

@@ -1,0 +1,44 @@
+{% extends model('component') %}
+
+{% set name = 'header' %}
+
+{% block body %}
+    <div class="box">
+        <div class="grid grid--middle">
+            <div class="col col--sm-7 col--lg-5 col--xl-6">
+                {% include molecule('logo') only %}
+            </div>
+            
+            {% block header %}
+                {# <div class="large-7 xlarge-6 columns show-for-large">
+                    {% include '@ShopLayout/layout/partials/search-form.twig' %}
+                </div> #}
+
+                <a class="shrink columns text-right align-middle hide-for-large" href="#aside" data-aside-toggle>
+                    {% if app['cart.quantity'] > 0 %}
+                        <span class="warning badge">{{ app['cart.quantity'] }}</span>
+                    {% endif %}
+                    <i class="fa fa-bars"></i>
+                </a>
+            {% endblock %}
+        </div>
+    </div>
+
+    <div class="header__navigation box">
+        {% block navigation %}
+            {% include organism('navigation') %}
+        {% endblock %}
+    </div>
+    
+    <div class="box">
+        {% block breadcrumb %}
+            <nav role="navigation">
+                <ul class="breadcrumbs">
+                    {% block breadcrumbItems %}{% endblock %}
+                </ul>
+            </nav>
+        {% endblock %}
+
+        {% block pageTitle %}{% endblock %}
+    </div>
+{% endblock %}

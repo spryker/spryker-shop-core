@@ -1,0 +1,20 @@
+{% extends model('component') %}
+
+{% set name = 'navigation' %}
+{% set tag = 'nav' %}
+{% set nodes = data.nodes | default([]) %}
+
+{% block body %}
+    <ul class="menu menu--horizontal">
+        {% for node in nodes %}
+            {% set hasChildren = node.children | length > 0 %}
+            
+            {% include molecule('navigation-node') with {
+                class: 'menu__item' ~ (hasChildren ? ' menu__item--has-children-dropdown' : ''),
+                data: {
+                    node: node
+                }
+            } only %}
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends atom('node') %}
+
+{% set name = 'navigation-node' %}
+{% set tag = 'li' %}
+{% set node = data.node %}
+
+{% block body %}
+    {{ parent() }}
+
+    <ul class="menu">
+        {% for childNode in node.children %}
+            {% set hasChildren = childNode.children | length > 0 %}
+
+            {% include molecule('navigation-node') with {
+                class: 'menu__item' ~ (hasChildren ? ' menu__item--has-children-list' : ''),
+                data: {
+                    node: childNode
+                }
+            } only %}
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block url %}
+    <a href="{{ node.url }}">{{ node.title }}</a>
+{% endblock %}
+
+{% block link %}
+    <a href="{{ node.url }}">{{ node.title }}</a>
+{% endblock %}
+
+{% block externalUrl %}
+    <a href="{{ node.url }}" target="_blank">{{ node.title }}</a>
+{% endblock %}
+
+{% block other %}
+    {{ node.title }}
+{% endblock %}
+

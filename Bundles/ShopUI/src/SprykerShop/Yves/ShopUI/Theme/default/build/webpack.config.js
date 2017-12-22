@@ -14,14 +14,18 @@ const settings = require('./settings');
  * 
  * shop entry points (oryx)
  */
-const sprykerComponentEntries = oryx.find(settings.entries.spryker, []);
-const projectComponentEntries = oryx.find(settings.entries.project, []);
-const componentEntries = [
-    ...new Set([
-        ...sprykerComponentEntries,
-        ...projectComponentEntries
-    ])
-];
+
+const componentEntries = new Map();
+
+function populateEntries(p) { 
+    const dir = path.dirname(p);
+    const componentName = path.basename(dir);
+    const componentType = path.basename(path.dirname(dir));
+    componentEntries.set(`${componentType}/${componentName}`, p);
+}
+
+oryx.find(settings.entries.spryker, []).forEach(populateEntries);
+oryx.find(settings.entries.project, []).forEach(populateEntries);
 
 /**
  * 
@@ -88,7 +92,7 @@ const config = {
     entry: {
         app: [
             path.join(__dirname, '../main.ts'),
-            ...componentEntries
+            ...Array.from(componentEntries.values())
         ]
     },
 

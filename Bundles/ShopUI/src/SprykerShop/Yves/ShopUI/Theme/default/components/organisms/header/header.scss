@@ -1,0 +1,9 @@
+@mixin component-header($name: '.header') {
+    #{$name} {
+        z-index: $zi-header;
+
+        &__navigation {
+            z-index: $zi-header + 1;
+        }
+    }
+}

@@ -1,28 +1,29 @@
-import Logger from './logger';
-import Component, { IComponentImporter } from '../models/component';
+import { IComponentImporter, IComponentContructor } from '../models/component';
+
+export interface ICandidateMountStats { 
+    [key: string]: number
+}
 
 export default class Candidate {
     readonly tag: string
     readonly importer: IComponentImporter
-    private readonly logger: Logger
+    readonly count: number
 
-    constructor(tag: string, importer: IComponentImporter, logger: Logger) {
+    constructor(tag: string, importer: IComponentImporter) {
         this.tag = tag;
         this.importer = importer;
-        this.logger = logger;
+        this.count = document.getElementsByTagName(tag).length;
     }
 
-    async mount(): Promise<number> {
-        const elements = document.getElementsByTagName(this.tag);
-        this.logger.debug('mounting', elements.length, this.tag, 'candidates');
-
-        if (elements.length === 0) { 
-            return 0;
+    async mount(): Promise<void> {
+        if (this.count === 0) { 
+            return;
         } 
 
         const componentModule = await this.importer();
-        customElements.define(this.tag, componentModule.default);
+        const componentConstructor = <IComponentContructor>componentModule.default;
 
-        return elements.length;
+        customElements.define(this.tag, componentConstructor);
+        return customElements.whenDefined(this.tag);
     }
 }

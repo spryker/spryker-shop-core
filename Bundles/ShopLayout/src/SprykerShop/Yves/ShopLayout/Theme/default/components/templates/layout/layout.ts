@@ -1,9 +1,9 @@
-import ComponentMixin from 'ShopUI/models/component';
+import Component from 'ShopUI/models/component';
 
-export default class Layout extends ComponentMixin(HTMLElement) {
-    constructor() {
-        super();
-        
+export default class Layout extends Component {
+    
+    ready() {
         console.log('this is a layout test');
     }
+    
 }
