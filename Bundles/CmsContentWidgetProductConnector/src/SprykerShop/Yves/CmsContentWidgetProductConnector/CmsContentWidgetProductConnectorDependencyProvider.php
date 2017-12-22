@@ -9,10 +9,12 @@ namespace SprykerShop\Yves\CmsContentWidgetProductConnector;
 
 use Spryker\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorDependencyProvider as SprykerCmsContentWidgetProductConnectorDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\CmsContentWidgetProductConnector\Dependency\Client\CmsContentWidgetProductConnectorToProductStorageClientBridge;
 
 class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsContentWidgetProductConnectorDependencyProvider
 {
     const PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS = 'PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS';
+    const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -23,6 +25,7 @@ class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsConte
     {
         $container = parent::provideDependencies($container);
         $container = $this->addCmsProductContentWidgetPlugins($container);
+        $container = $this->addProductStorageClient($container);
 
         return $container;
     }
@@ -36,6 +39,20 @@ class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsConte
     {
         $container[static::PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS] = function () {
             return $this->getCmsProductContentWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addProductStorageClient(Container $container)
+    {
+        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+            return new CmsContentWidgetProductConnectorToProductStorageClientBridge($container->getLocator()->productStorage()->client());
         };
 
         return $container;
