@@ -1,7 +1,7 @@
 {% include '@ProductWidget/_partials/product-block.twig' with {
     productName: _widget.product.name,
     idProductAbstract: _widget.product.idProductAbstract,
-    priceValue: _widget.product.price,
+    priceValue: _widget.product.prices.DEFAULT,
     imageUrl: (_widget.product.images|length ? _widget.product.images.0.externalUrlSmall : ''),
     detailsUrl: _widget.product.url,
     originalPrice: (_widget.product.prices.ORIGINAL is defined ? _widget.product.prices.ORIGINAL : null),

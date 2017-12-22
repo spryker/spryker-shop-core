@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ProductWidget\Plugin\CmsContentWidget;
 
-use Generated\Shared\Transfer\StorageProductTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CmsContentWidgetProductConnector\Dependency\Plugin\ProductWidget\ProductGroupWidgetPluginInterface;
 
@@ -18,14 +18,14 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
 {
 
     /**
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
+     * @param ProductViewTransfer $productViewTransfer
      *
      * @return void
      */
-    public function initialize(StorageProductTransfer $storageProductTransfer): void
+    public function initialize(ProductViewTransfer $productViewTransfer): void
     {
         $this
-            ->addParameter('product', $storageProductTransfer)
+            ->addParameter('product', $productViewTransfer)
             ->addWidgets($this->getFactory()->getCmsContentWidgetProductGroupWidgetPlugins());
     }
 

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CmsContentWidgetProductConnector\Plugin;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\CmsContentWidgetProductConnector\Plugin\CmsProductContentWidgetPlugin as SprykerCmsProductContentWidgetPlugin;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Twig_Environment;
@@ -56,13 +57,35 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
     /**
      * @param array $productData
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     protected function mapProductStorageTransfer(array $productData)
     {
+        //TODO remove hardcoded locale
+        $localeName = Store::getInstance()->getCurrentLocale();
         return $this->getFactory()
-            ->getProductClient()
-            ->mapStorageProductForCurrentLocale($productData);
+            ->getProductStorageClient()
+            ->mapProductStorageData($productData, $localeName);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array|null
+     */
+    protected function findProductAbstractByIdProductAbstract($idProductAbstract)
+    {
+        //TODO remove hardcoded locale
+        $localeName = Store::getInstance()->getCurrentLocale();
+        $productData = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductAbstractStorageData($idProductAbstract, $localeName);
+
+        if (!$productData) {
+            return null;
+        }
+
+        return $productData;
     }
 
 }

@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CmsContentWidgetProductConnector;
 use Spryker\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorFactory as SprykerCmsContentWidgetProductConnectorFactory;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
+use SprykerShop\Yves\CmsContentWidgetProductConnector\Dependency\Client\CmsContentWidgetProductConnectorToProductStorageClientInterface;
 
 class CmsContentWidgetProductConnectorFactory extends SprykerCmsContentWidgetProductConnectorFactory
 {
@@ -34,5 +35,13 @@ class CmsContentWidgetProductConnectorFactory extends SprykerCmsContentWidgetPro
     protected function getCmsProductContentWidgetPlugins(): array
     {
         return $this->getProvidedDependency(CmsContentWidgetProductConnectorDependencyProvider::PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS);
+    }
+
+    /**
+     * @return CmsContentWidgetProductConnectorToProductStorageClientInterface
+     */
+    public function getProductStorageClient() : CmsContentWidgetProductConnectorToProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(CmsContentWidgetProductConnectorDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 }
