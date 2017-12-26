@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget\Plugin\ProductDetailPage;
 
-use Generated\Shared\Transfer\StorageProductTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\CmsBlockWidget\ProductCmsBlockWidgetPluginInterface;
 
@@ -15,13 +15,13 @@ class ProductCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements Produc
 {
 
     /**
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void
      */
-    public function initialize(StorageProductTransfer $storageProductTransfer): void
+    public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter('product', $storageProductTransfer);
+        $this->addParameter('product', $productViewTransfer);
     }
 
     /**

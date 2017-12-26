@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CmsBlockWidget\Plugin\Twig;
 use DateTime;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\SpyCmsBlockTransfer;
-use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
 use Silex\Application;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
