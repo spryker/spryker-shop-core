@@ -19,7 +19,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterfa
 class ProductBundleCartItemTransformerPlugin extends AbstractPlugin implements CartItemTransformerPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $&artItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $cartItems
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]

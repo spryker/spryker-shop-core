@@ -19,13 +19,6 @@ use SprykerShop\Yves\CheckoutPage\Form\DataProvider\SubFormDataProviders;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\SummaryForm;
-use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
-use SprykerShop\Yves\CustomerPage\Form\CustomerCheckoutForm;
-use SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider;
-use SprykerShop\Yves\CustomerPage\Form\GuestForm;
-use SprykerShop\Yves\CustomerPage\Form\LoginForm;
-use SprykerShop\Yves\CustomerPage\Form\RegisterForm;
-use Symfony\Component\Form\FormTypeInterface;
 
 class FormFactory extends AbstractFactory
 {
@@ -50,7 +43,7 @@ class FormFactory extends AbstractFactory
      */
     public function createAddressFormCollection()
     {
-        return $this->createFormCollection($this->getAddressFormTypes(), $this->createAddressFormDataProvider());
+        return $this->createFormCollection($this->getAddressFormTypes(), $this->getAddressFormDataProvider());
     }
 
     /**
@@ -126,21 +119,7 @@ class FormFactory extends AbstractFactory
      */
     protected function getCustomerFormTypes()
     {
-        return [
-            $this->createLoginForm(),
-            $this->createCustomerCheckoutForm($this->createRegisterForm()),
-            $this->createCustomerCheckoutForm($this->createGuestForm()),
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormTypeInterface $subForm
-     *
-     * @return \SprykerShop\Yves\CustomerPage\Form\CustomerCheckoutForm
-     */
-    protected function createCustomerCheckoutForm(FormTypeInterface $subForm)
-    {
-        return new CustomerCheckoutForm($subForm);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CUSTOMER_STEP_SUB_FORMS);
     }
 
     /**
@@ -148,25 +127,7 @@ class FormFactory extends AbstractFactory
      */
     protected function getAddressFormTypes()
     {
-        return [
-            $this->createCheckoutAddressCollectionForm(),
-        ];
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm
-     */
-    protected function createCheckoutAddressCollectionForm()
-    {
-        return new CheckoutAddressCollectionForm();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider
-     */
-    protected function createAddressFormDataProvider()
-    {
-        return new CheckoutAddressFormDataProvider($this->getCustomerClient(), $this->getStore());
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::ADDRESS_STEP_SUB_FORMS);
     }
 
     /**
@@ -252,34 +213,18 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPage\Form\LoginForm
-     */
-    protected function createLoginForm()
-    {
-        return new LoginForm();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerPage\Form\RegisterForm
-     */
-    protected function createRegisterForm()
-    {
-        return new RegisterForm();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerPage\Form\GuestForm
-     */
-    protected function createGuestForm()
-    {
-        return new GuestForm($this->getUtilValidateService());
-    }
-
-    /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface
      */
     protected function getUtilValidateService(): CheckoutPageToUtilValidateServiceInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_UTIL_VALIDATE);
+    }
+
+    /**
+     * @return StepEngineFormDataProviderInterface|null
+     */
+    protected function getAddressFormDataProvider()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::ADDRESS_STEP_FORM_DATA_PROVIDER);
     }
 }

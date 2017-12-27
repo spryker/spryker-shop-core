@@ -7,14 +7,17 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
-use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\CustomerPage\CustomerPageFactory;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method CustomerPageFactory getFactory()
+ */
 class GuestForm extends AbstractType
 {
     const FIELD_SALUTATION = 'salutation';
@@ -23,19 +26,6 @@ class GuestForm extends AbstractType
     const FIELD_EMAIL = 'email';
     const FIELD_IS_GUEST = 'is_guest';
     const FIELD_ACCEPT_TERMS = 'accept_terms';
-
-    /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface
-     */
-    protected $utilValidateService;
-
-    /**
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface $utilValidateService
-     */
-    public function __construct(CheckoutPageToUtilValidateServiceInterface $utilValidateService)
-    {
-        $this->utilValidateService = $utilValidateService;
-    }
 
     /**
      * @return string
@@ -126,15 +116,17 @@ class GuestForm extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
-        $utilValidateService = $this->utilValidateService;
-
         $builder->add(self::FIELD_EMAIL, self::FIELD_EMAIL, [
             'label' => 'auth.email',
             'constraints' => [
                 new NotBlank(),
                 new Callback([
-                    'callback' => function ($email, ExecutionContextInterface $context) use ($utilValidateService) {
-                        if (!$utilValidateService->isEmailFormatValid($email)) {
+                    'callback' => function ($email, ExecutionContextInterface $context) {
+                        $isEmailFormatValid = $this->getFactory()
+                            ->getUtilValidateService()
+                            ->isEmailFormatValid($email);
+
+                        if (!$isEmailFormatValid) {
                             $context->buildViolation('customer.email.format.invalid')->addViolation();
                         }
                     },

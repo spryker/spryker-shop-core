@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
- * @method \Pyz\Client\Customer\CustomerClient getClient()
  */
 class CustomerStepHandler extends AbstractPlugin implements StepHandlerPluginInterface
 {

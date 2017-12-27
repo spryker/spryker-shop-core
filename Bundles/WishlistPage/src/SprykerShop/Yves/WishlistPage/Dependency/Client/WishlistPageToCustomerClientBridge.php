@@ -29,4 +29,12 @@ class WishlistPageToCustomerClientBridge implements WishlistPageToCustomerClient
     {
         return $this->customerClient->getCustomer();
     }
+
+    /**
+     * @return bool
+     */
+    public function isLoggedIn()
+    {
+        return $this->customerClient->isLoggedIn();
+    }
 }

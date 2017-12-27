@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToUtilValidateServiceInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
@@ -195,5 +196,13 @@ class CustomerPageFactory extends AbstractFactory
     public function getCustomerOverviewWidgetPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CUSTOMER_OVERVIEW_WIDGETS);
+    }
+
+    /**
+     * @return CustomerPageToUtilValidateServiceInterface
+     */
+    public function getUtilValidateService()
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_UTIL_VALIDATE);
     }
 }

@@ -12,6 +12,7 @@ use Spryker\Yves\Checkout\CheckoutDependencyProvider as SprykerCheckoutDependenc
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
+use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientBridge;
@@ -25,8 +26,11 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateS
 use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentFormDataProviderPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentHandlerPlugin;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\CustomerStepHandler;
 use SprykerShop\Yves\MoneyWidget\Plugin\MoneyPlugin;
+use Symfony\Component\Form\FormTypeInterface;
 
 class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -57,7 +61,10 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_SUCCESS_PAGE_WIDGETS = 'PLUGIN_SUCCESS_PAGE_WIDGETS';
 
     const PAYMENT_METHOD_HANDLER = SprykerCheckoutDependencyProvider::PAYMENT_METHOD_HANDLER; // constant value must be BC because of dependency injector
-    const PAYMENT_SUB_FORMS = SprykerCheckoutDependencyProvider::PAYMENT_SUB_FORMS; // constant value must be BC because of dependency injector
+    const PAYMENT_SUB_FORMS = SprykerCheckoutDependencyProvider::PAYMENT_SUB_FORMS;  // constant value must be BC because of dependency injector
+    const CUSTOMER_STEP_SUB_FORMS = 'CUSTOMER_STEP_SUB_FORMS';
+    const ADDRESS_STEP_SUB_FORMS = 'ADDRESS_STEP_SUB_FORMS';
+    const ADDRESS_STEP_FORM_DATA_PROVIDER = 'ADDRESS_STEP_FORM_DATA_PROVIDER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -91,6 +98,10 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPaymentPageWidgetPlugins($container);
         $container = $this->addSummaryPageWidgetPlugins($container);
         $container = $this->addSuccessPageWidgetPlugins($container);
+
+        $container = $this->addCustomerStepSubForms($container);
+        $container = $this->addAddressStepSubForms($container);
+        $container = $this->addAddressStepFormDataProvider($container);
 
         return $container;
     }
@@ -247,6 +258,74 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerStepSubForms(Container $container): Container
+    {
+        $container[self::CUSTOMER_STEP_SUB_FORMS] = function () {
+            return $this->getCustomerStepSubForms();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return FormTypeInterface[]
+     */
+    protected function getCustomerStepSubForms()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAddressStepSubForms(Container $container): Container
+    {
+        $container[self::ADDRESS_STEP_SUB_FORMS] = function () {
+            return $this->getAddressStepSubForms();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return FormTypeInterface[]
+     */
+    protected function getAddressStepSubForms()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAddressStepFormDataProvider(Container $container): Container
+    {
+        $container[self::ADDRESS_STEP_FORM_DATA_PROVIDER] = function (Container $container) {
+            return $this->getAddressStepFormDataProvider($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return StepEngineFormDataProviderInterface|null
+     */
+    protected function getAddressStepFormDataProvider(Container $container)
+    {
+        return null;
     }
 
     /**
@@ -467,5 +546,23 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSuccessPageWidgetPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return CustomerPageToCustomerClientInterface
+     */
+    protected function getCustomerClient(Container $container)
+    {
+        return new CustomerPageToCustomerClientBridge($container->getLocator()->customer()->client());
+    }
+
+    /**
+     * @return Store
+     */
+    protected function getStore()
+    {
+        return Store::getInstance();
     }
 }

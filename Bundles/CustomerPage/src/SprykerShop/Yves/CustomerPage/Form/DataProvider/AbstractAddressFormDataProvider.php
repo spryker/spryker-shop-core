@@ -8,14 +8,14 @@
 namespace SprykerShop\Yves\CustomerPage\Form\DataProvider;
 
 use Spryker\Shared\Kernel\Store;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 
 abstract class AbstractAddressFormDataProvider
 {
     const COUNTRY_GLOSSARY_PREFIX = 'countries.iso.';
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
+     * @var \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface
      */
     protected $customerClient;
 
@@ -25,10 +25,10 @@ abstract class AbstractAddressFormDataProvider
     protected $store;
 
     /**
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
      * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(CheckoutPageToCustomerClientInterface $customerClient, Store $store)
+    public function __construct(CustomerPageToCustomerClientInterface $customerClient, Store $store)
     {
         $this->customerClient = $customerClient;
         $this->store = $store;

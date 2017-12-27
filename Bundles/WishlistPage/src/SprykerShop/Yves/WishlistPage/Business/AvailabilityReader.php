@@ -17,9 +17,9 @@ class AvailabilityReader implements AvailabilityReaderInterface
     protected $availabilityStorageClient;
 
     /**
-     * @param \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface $availabilityClient
+     * @param \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface $availabilityStorageClient
      */
-    public function __construct(WishlistPageToAvailabilityStorageClientInterface $availabilityClient)
+    public function __construct(WishlistPageToAvailabilityStorageClientInterface $availabilityStorageClient)
     {
         $this->availabilityStorageClient = $availabilityStorageClient;
     }

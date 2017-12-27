@@ -85,6 +85,13 @@ interface CustomerPageToCustomerClientInterface
     public function getAddresses(CustomerTransfer $customerTransfer);
 
     /**
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return AddressTransfer
+     */
+    public function getAddress(AddressTransfer $addressTransfer);
+
+    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

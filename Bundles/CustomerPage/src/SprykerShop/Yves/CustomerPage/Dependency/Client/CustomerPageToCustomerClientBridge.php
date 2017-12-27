@@ -130,6 +130,16 @@ class CustomerPageToCustomerClientBridge implements CustomerPageToCustomerClient
     }
 
     /**
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return AddressTransfer
+     */
+    public function getAddress(AddressTransfer $addressTransfer)
+    {
+        return $this->customerClient->getAddress($addressTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
