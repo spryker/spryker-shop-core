@@ -34,7 +34,7 @@ class CartController extends AbstractController
 
         $itemAttributesBySku = $this->getFactory()
             ->createCartItemsAttributeProvider()
-            ->getItemsAttributes($quoteTransfer, $selectedAttributes);
+            ->getItemsAttributes($quoteTransfer, $this->getLocale(), $selectedAttributes);
 
         $data = [
             'cart' => $quoteTransfer,
@@ -132,7 +132,8 @@ class CartController extends AbstractController
                 array_replace($selectedAttributes, $preselectedAttributes),
                 $quoteTransfer->getItems(),
                 $groupKey,
-                $optionValueIds
+                $optionValueIds,
+                $this->getLocale()
             );
 
         if ($isItemReplacedInCart) {

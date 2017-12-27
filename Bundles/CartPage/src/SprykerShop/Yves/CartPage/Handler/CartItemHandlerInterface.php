@@ -8,22 +8,25 @@
 namespace SprykerShop\Yves\CartPage\Handler;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\StorageProductTransfer;
 
 interface CartItemHandlerInterface
 {
+
     /**
      * @param string $sku
      * @param array $selectedAttributes
      * @param \ArrayObject|\Generated\Shared\Transfer\StorageProductTransfer[] $items
-
-     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     * @param string $localeName
+     *
+     * @return ProductViewTransfer
      */
-    public function getProductStorageTransfer($sku, array $selectedAttributes, ArrayObject $items);
+    public function getProductViewTransfer($sku, array $selectedAttributes, ArrayObject $items, $localeName);
 
     /**
      * @param string $currentItemSku
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $quantity
      * @param string $groupKey
      * @param array $optionValueIds
@@ -32,7 +35,7 @@ interface CartItemHandlerInterface
      */
     public function replaceCartItem(
         $currentItemSku,
-        StorageProductTransfer $storageProductTransfer,
+        ProductViewTransfer $productViewTransfer,
         $quantity,
         $groupKey,
         array $optionValueIds
@@ -42,8 +45,9 @@ interface CartItemHandlerInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\StorageProductTransfer[] $items
      * @param array $itemAttributesBySku
      * @param array|null $selectedAttributes
+     * @param string $localeName
      *
      * @return array
      */
-    public function narrowDownOptions(ArrayObject $items, array $itemAttributesBySku, array $selectedAttributes = null);
+    public function narrowDownOptions(ArrayObject $items, array $itemAttributesBySku, array $selectedAttributes = null, $localeName);
 }
