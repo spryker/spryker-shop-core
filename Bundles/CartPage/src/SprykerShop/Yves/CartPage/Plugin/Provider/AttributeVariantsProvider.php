@@ -73,9 +73,13 @@ class AttributeVariantsProvider
     {
         $productViewTransfer = $this->cartItemHandler->getProductViewTransfer($sku, $selectedAttributes, $items, $localeName);
 
-        $this->cartItemHandler->replaceCartItem($sku, $productViewTransfer, $quantity, $groupKey, $optionValueIds);
+        if ($productViewTransfer->getIdProductConcrete()) {
+            $this->cartItemHandler->replaceCartItem($sku, $productViewTransfer, $quantity, $groupKey, $optionValueIds);
 
-        return true;
+            return true;
+        }
+
+        return false;
     }
 
     /**

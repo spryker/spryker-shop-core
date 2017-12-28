@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\ProductSetListPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductSetListPage\Dependency\Client\ProductSetListPageToProductSetClientBridge;
+use SprykerShop\Yves\ProductSetListPage\Dependency\Client\ProductSetListPageToProductSetPageSearchClientBridge;
 
 class ProductSetListPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_PRODUCT_SET = 'CLIENT_PRODUCT_SET';
+    const CLIENT_PRODUCT_SET_PAGE_SEARCH = 'CLIENT_PRODUCT_SET_PAGE_SEARCH';
     const PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS = 'PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS';
 
     /**
@@ -36,8 +36,8 @@ class ProductSetListPageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductSetClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_SET] = function (Container $container) {
-            return new ProductSetListPageToProductSetClientBridge($container->getLocator()->productSet()->client());
+        $container[self::CLIENT_PRODUCT_SET_PAGE_SEARCH] = function (Container $container) {
+            return new ProductSetListPageToProductSetPageSearchClientBridge($container->getLocator()->productSetPageSearch()->client());
         };
     }
 

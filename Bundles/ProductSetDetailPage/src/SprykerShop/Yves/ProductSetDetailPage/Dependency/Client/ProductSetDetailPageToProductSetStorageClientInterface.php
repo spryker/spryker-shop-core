@@ -7,12 +7,12 @@
 
 namespace SprykerShop\Yves\ProductSetDetailPage\Dependency\Client;
 
-interface ProductSetDetailPageToProductSetClientInterface
+interface ProductSetDetailPageToProductSetStorageClientInterface
 {
     /**
      * @param array $productSetStorageData
      *
-     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer
      */
     public function mapProductSetStorageDataToTransfer(array $productSetStorageData);
 }

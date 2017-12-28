@@ -7,26 +7,27 @@
 
 namespace SprykerShop\Yves\ProductSetDetailPage;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductClientInterface;
-use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductSetClientInterface;
+use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductStorageClientInterface;
+use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductSetStorageClientInterface;
 
 class ProductSetDetailPageFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductSetClientInterface
+     * @return \SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductSetStorageClientInterface
      */
-    public function getProductSetClient(): ProductSetDetailPageToProductSetClientInterface
+    public function getProductSetStorageClient(): ProductSetDetailPageToProductSetStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductSetDetailPageDependencyProvider::CLIENT_PRODUCT_SET);
+        return $this->getProvidedDependency(ProductSetDetailPageDependencyProvider::CLIENT_PRODUCT_SET_STORAGE);
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductClientInterface
+     * @return \SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductStorageClientInterface
      */
-    public function getProductClient(): ProductSetDetailPageToProductClientInterface
+    public function getProductStorageClient(): ProductSetDetailPageToProductStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductSetDetailPageDependencyProvider::CLIENT_PRODUCT);
+        return $this->getProvidedDependency(ProductSetDetailPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 
     /**

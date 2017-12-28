@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ProductSetDetailPage\Controller;
 
-use Generated\Shared\Transfer\ProductSetStorageTransfer;
+use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 
 /**
@@ -19,16 +19,16 @@ class DetailController extends AbstractController
     const PARAM_ATTRIBUTE = 'attributes';
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSetStorageTransfer $productSetStorageTransfer
-     * @param \Generated\Shared\Transfer\StorageProductTransfer[] $storageProductTransfers
+     * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
      *
      * @return array
      */
-    public function indexAction(ProductSetStorageTransfer $productSetStorageTransfer, array $storageProductTransfers)
+    public function indexAction(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers)
     {
         $data = [
-            'productSet' => $productSetStorageTransfer,
-            'storageProducts' => $storageProductTransfers,
+            'productSet' => $productSetDataStorageTransfer,
+            'productViews' => $productViewTransfers,
         ];
 
         return $this->view($data, $this->getFactory()->getProductSetDetailPageWidgetPlugins());

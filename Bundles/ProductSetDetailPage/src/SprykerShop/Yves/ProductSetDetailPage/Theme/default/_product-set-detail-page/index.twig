@@ -21,7 +21,7 @@
     <div class="row hide-for-xlarge">
         <div class="small-12 columns">
             <div class="__image-viewer-block">
-                {% for image in _view.productSet.images %}
+                {% for image in _view.productSet.imageSets.0.images %}
                     <div data-viewer-id="{{ image.externalUrlLarge }}" data-viewer-reset>
                         <a class="close-button">&times;</a>
                         <img class="thumbnail" src="{{ image.externalUrlLarge }}">
@@ -33,5 +33,5 @@
 {% endblock %}
 
 {% block content %}
-    {{ widget('ProductSetWidgetPlugin', _view.productSet, _view.storageProducts) }}
+    {{ widget('ProductSetWidgetPlugin', _view.productSet, _view.productViews) }}
 {% endblock %}

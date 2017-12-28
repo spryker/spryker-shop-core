@@ -1,9 +1,9 @@
 {% if productSetList is defined %}
     {% for productSet in productSetList %}
-        {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.storageProducts) }}
+        {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.productViews) }}
     {% endfor %}
 {% endif %}
 
 {% if productSet is defined %}
-    {{ widget('ProductSetWidgetPlugin', productSet, storageProducts) }}
+    {{ widget('ProductSetWidgetPlugin', productSet, productViews) }}
 {% endif %}

@@ -9,9 +9,13 @@ namespace SprykerShop\Yves\CmsContentWidgetProductSetConnector;
 
 use Spryker\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorDependencyProvider as SprykerCmsContentWidgetProductSetConnectorDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\CmsContentWidgetProductSetConnector\Dependency\Client\CmsContentWidgetProductSetConnectorToProductSetStorageClientBridge;
+use SprykerShop\Yves\CmsContentWidgetProductSetConnector\Dependency\Client\CmsContentWidgetProductSetConnectorToProductStorageClientBridge;
 
 class CmsContentWidgetProductSetConnectorDependencyProvider extends SprykerCmsContentWidgetProductSetConnectorDependencyProvider
 {
+    const CLIENT_PRODUCT_SET_STORAGE = 'CLIENT_PRODUCT_SET_STORAGE';
+    const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     const PLUGIN_CMS_PRODUCT_SET_CONTENT_WIDGETS = 'PLUGIN_CMS_PRODUCT_SET_CONTENT_WIDGETS';
 
     /**
@@ -23,6 +27,8 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends SprykerCmsCo
     {
         $container = parent::provideDependencies($container);
         $container = $this->addCmsProductSetContentWidgetPlugins($container);
+        $container = $this->addProductStorageClient($container);
+        $container = $this->addProductSetStorageClient($container);
 
         return $container;
     }
@@ -47,5 +53,33 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends SprykerCmsCo
     protected function getCmsProductSetContentWidgetPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addProductSetStorageClient(Container $container) : Container
+    {
+        $container[static::CLIENT_PRODUCT_SET_STORAGE] = function (Container $container) {
+            return new CmsContentWidgetProductSetConnectorToProductSetStorageClientBridge($container->getLocator()->productSetStorage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param $container
+     *
+     * @return mixed
+     */
+    protected function addProductStorageClient($container)
+    {
+        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+            return new CmsContentWidgetProductSetConnectorToProductStorageClientBridge($container->getLocator()->productStorage()->client());
+        };
+
+        return $container;
     }
 }

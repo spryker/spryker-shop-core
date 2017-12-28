@@ -61,11 +61,9 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
      */
     protected function mapProductStorageTransfer(array $productData)
     {
-        //TODO remove hardcoded locale
-        $localeName = Store::getInstance()->getCurrentLocale();
         return $this->getFactory()
             ->getProductStorageClient()
-            ->mapProductStorageData($productData, $localeName);
+            ->mapProductStorageData($productData, $this->getLocale());
     }
 
     /**
@@ -75,11 +73,9 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
      */
     protected function findProductAbstractByIdProductAbstract($idProductAbstract)
     {
-        //TODO remove hardcoded locale
-        $localeName = Store::getInstance()->getCurrentLocale();
         $productData = $this->getFactory()
             ->getProductStorageClient()
-            ->getProductAbstractStorageData($idProductAbstract, $localeName);
+            ->getProductAbstractStorageData($idProductAbstract, $this->getLocale());
 
         if (!$productData) {
             return null;

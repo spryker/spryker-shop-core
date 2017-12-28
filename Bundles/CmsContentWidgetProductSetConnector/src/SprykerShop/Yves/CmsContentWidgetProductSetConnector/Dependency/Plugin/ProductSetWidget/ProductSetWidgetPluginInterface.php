@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CmsContentWidgetProductSetConnector\Dependency\Plugin\ProductSetWidget;
 
-use Generated\Shared\Transfer\ProductSetStorageTransfer;
+use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductSetWidgetPluginInterface extends WidgetPluginInterface
@@ -16,11 +16,11 @@ interface ProductSetWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'ProductSetWidgetPlugin';
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSetStorageTransfer $productSetStorageTransfer
-     * @param \Generated\Shared\Transfer\StorageProductTransfer[] $storageProductTransfers
+     * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
      *
      * @return void
      */
-    public function initialize(ProductSetStorageTransfer $productSetStorageTransfer, array $storageProductTransfers): void;
+    public function initialize(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers): void;
 
 }

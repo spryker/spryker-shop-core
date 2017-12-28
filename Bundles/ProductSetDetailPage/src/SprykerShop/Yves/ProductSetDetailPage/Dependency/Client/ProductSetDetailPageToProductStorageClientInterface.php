@@ -7,20 +7,23 @@
 
 namespace SprykerShop\Yves\ProductSetDetailPage\Dependency\Client;
 
-interface ProductSetDetailPageToProductClientInterface
+interface ProductSetDetailPageToProductStorageClientInterface
 {
+
     /**
      * @param int $idProductAbstract
+     * @param string $localeName
      *
      * @return array
      */
-    public function getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
+    public function getProductAbstractStorageData($idProductAbstract, $localeName);
 
     /**
      * @param array $data
+     * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapStorageProductForCurrentLocale(array $data, array $selectedAttributes = []);
+    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
 }

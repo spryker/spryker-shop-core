@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ProductSetListPage\Dependency\Client;
 
-interface ProductSetListPageToProductSetClientInterface
+interface ProductSetListPageToProductSetPageSearchClientInterface
 {
     /**
      * @param int|null $limit

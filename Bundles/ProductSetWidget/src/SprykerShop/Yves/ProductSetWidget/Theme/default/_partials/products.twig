@@ -2,31 +2,31 @@
     <form method="GET" data-component="product-variants" action="#product-set">
         <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
 
-        {% for storageProduct in _widget.storageProducts %}
+        {% for productView in _widget.productViews %}
             <div class="row">
                 <div class="small-5 columns">
-                    <a href="{{ storageProduct.url }}" class="thumbnail __preview-image __no-margin-bottom">
-                        {% if storageProduct.images|length > 0 %}
-                            <img src="{{ storageProduct.images.0.externalUrlSmall }}">
+                    <a href="{{ productView.url }}" class="thumbnail __preview-image __no-margin-bottom">
+                        {% if productView.images|length > 0 %}
+                            <img src="{{ productView.images.0.externalUrlSmall }}">
                         {% endif %}
                     </a>
                 </div>
                 <div class="small-7 columns">
                     <p id="test">
-                        <a href="{{ storageProduct.url }}"><strong>{{ storageProduct.name }}</strong></a><br>
-                        {{ storageProduct.price | money }}
+                        <a href="{{ productView.url }}"><strong>{{ productView.name }}</strong></a><br>
+                        {{ productView.prices.DEFAULT | money }}
                     </p>
 
-                    {% include '@ProductSetWidget/_partials/variants.twig' with {product: storageProduct}%}
+                    {% include '@ProductSetWidget/_partials/variants.twig' with {product: productView}%}
 
-                    <a href="{{ path('cart/add', {sku: storageProduct.sku}) }}"
-                       class="button expanded success __no-margin-bottom js-add-to-cart-button {{ (not storageProduct.isVariant or not storageProduct.available) ? 'disabled' : '' }}"
+                    <a href="{{ path('cart/add', {sku: productView.sku}) }}"
+                       class="button expanded success __no-margin-bottom js-add-to-cart-button {{ (not productView.idProductConcrete or not productView.available) ? 'disabled' : '' }}"
                        data-component="disable-on-click"
                     >
                         <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}
                     </a>
 
-                    {% if not storageProduct.available %}
+                    {% if not productView.available %}
                         <p>
                             <strong>{{ "product.detail.out_of_stock" | trans }}</strong>
                         </p>
@@ -43,10 +43,10 @@
 <form method="POST" action="{{ path('cart/add-items') }}">
     {% set isDisabled = false %}
 
-    {% for storageProduct in _widget.storageProducts %}
-        {% if storageProduct.isVariant %}
-            {% if storageProduct.available %}
-                <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ storageProduct.sku }}" />
+    {% for productView in _widget.productViews %}
+        {% if productView.idProductConcrete is not empty %}
+            {% if productView.available %}
+                <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ productView.sku }}" />
                 <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1" />
             {% endif %}
         {% else %}
