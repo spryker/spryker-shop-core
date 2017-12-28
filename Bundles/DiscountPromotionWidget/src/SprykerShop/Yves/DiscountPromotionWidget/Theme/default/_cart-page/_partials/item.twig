@@ -1,25 +1,25 @@
-{% set promotionStorageProduct = promotionStorageProduct %}
+{% set product = product %}
 
 <div class="callout cart-item">
 
     <div class="row">
         <div class="small-9 large-expand columns">
             <ul class="no-bullet">
-                <li class="lead">{{ promotionStorageProduct.promotionItem.discount.displayName }}</li>
-                <li>{{ promotionStorageProduct.promotionItem.discount.description }}</li>
+                <li class="lead">{{ product.promotionItem.discount.displayName }}</li>
+                <li>{{ product.promotionItem.discount.description }}</li>
             </ul>
         </div>
     </div>
 
     <div class="row">
-        {% include '@CartPage/_partials/cart-images.twig' with {cartItem : promotionStorageProduct } %}
+        {% include '@CartPage/_partials/cart-images.twig' with {cartItem : product } %}
 
         <div class="small-9 large-expand columns">
             <ul class="no-bullet">
                 {# General data #}
-                <li class="lead">{{ promotionStorageProduct.name }}</li>
+                <li class="lead">{{ product.name }}</li>
                 <li class="__secondary">
-                    <small>{{ 'cart.item.sku' | trans }} {{ promotionStorageProduct.sku }}</small>
+                    <small>{{ 'cart.item.sku' | trans }} {{ product.sku }}</small>
                 </li>
 
                 {% include '@DiscountPromotionWidget/_cart-page/_partials/product-variants.twig' %}

@@ -1,23 +1,23 @@
-{% set promotionStorageProduct = promotionStorageProduct %}
+{% set product = product %}
 
 <div class="small-4 medium-3 large-2 columns">
     <ul class="no-bullet">
-        <form method="POST" action="{{ '/cart/add/' ~ promotionStorageProduct.sku }}">
+        <form method="POST" action="{{ '/cart/add/' ~ product.sku }}">
             <li>
                 <label>
                     <strong>{{ 'cart.item_quantity' | trans }}</strong>
                     <span class="input-group __no-margin-bottom">
                         <select name="quantity">
-                         {% for i in range(1, promotionStorageProduct.promotionItem.maxQuantity) %}
+                         {% for i in range(1, product.promotionItem.maxQuantity) %}
                              <option value="{{ i }}">{{ i }}</option>
                          {% endfor %}
                         </select>
                 </label>
-                <input type="hidden" value="{{ promotionStorageProduct.sku }}" name="groupKey">
-                <input type="hidden" value="{{ promotionStorageProduct.promotionItem.discount.discountPromotion.idDiscountPromotion }}" name="idDiscountPromotion">
+                <input type="hidden" value="{{ product.sku }}" name="groupKey">
+                <input type="hidden" value="{{ product.promotionItem.discount.discountPromotion.idDiscountPromotion }}" name="idDiscountPromotion">
             </li>
             <li>
-                <button type="submit" class="button expanded success {{ ( promotionStorageProduct.isVariant) ? '' : 'disabled' }}  __no-margin-bottom">
+                <button type="submit" class="button expanded success {{ ( product.idProductConcrete) ? '' : 'disabled' }}  __no-margin-bottom">
                     {{ "Add to cart" }}
                 </button>
             </li>
