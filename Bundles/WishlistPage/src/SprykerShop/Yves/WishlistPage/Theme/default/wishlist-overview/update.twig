@@ -7,7 +7,7 @@
 {% block customerNavigation %}
     {% include "@CustomerPage/partials/navigation.twig" with {'active': 'wishlist'} %}
 
-    {% include "@WishlistPage/partials/wishlist-navigation.twig" with {'wishlistCollection': _view.wishlistCollection, 'active': 'wishlist'} %}
+    {% include "@WishlistPage/_partials/wishlist-navigation.twig" with {'wishlistCollection': _view.wishlistCollection, 'active': 'wishlist'} %}
 {% endblock %}
 
 {% block customerContent %}
@@ -16,7 +16,7 @@
             <div class="callout">
                 <h4>{{ 'customer.account.wishlist.overview.title' | trans }}</h4>
 
-                {% include '@WishlistPage/wishlist-overview/partials/wishlist-update-table.twig' %}
+                {% include '@WishlistPage/wishlist-overview/_partials/wishlist-update-table.twig' %}
             </div>
         </div>
     </div>

@@ -27,23 +27,15 @@ class MoveToCartHandler implements MoveToCartHandlerInterface
     protected $customerClient;
 
     /**
-     * @var \SprykerShop\Yves\WishlistPage\Business\AvailabilityReaderInterface
-     */
-    protected $availabilityReader;
-
-    /**
      * @param \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface $wishlistClient
      * @param \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface $customerClient
-     * @param \SprykerShop\Yves\WishlistPage\Business\AvailabilityReaderInterface $availabilityReader
      */
     public function __construct(
         WishlistPageToWishlistClientInterface $wishlistClient,
-        WishlistPageToCustomerClientInterface $customerClient,
-        AvailabilityReaderInterface $availabilityReader
+        WishlistPageToCustomerClientInterface $customerClient
     ) {
         $this->wishlistClient = $wishlistClient;
         $this->customerClient = $customerClient;
-        $this->availabilityReader = $availabilityReader;
     }
 
     /**

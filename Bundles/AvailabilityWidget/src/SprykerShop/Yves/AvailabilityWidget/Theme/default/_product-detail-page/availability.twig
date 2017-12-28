@@ -1,9 +1,9 @@
 {% block isAvailable -%}
-    {{ (_widget.product.idProductConcrete and _widget.product.available) ? 1 : 0}}
+    {{ (_widget.product.idProductConcrete and _widget.product.available) ? 1 : 0 }}
 {%- endblock %}
 
 {% block outOfStock %}
-    {% if not _widget.product.available %}
+    {% if _widget.product.idProductConcrete and not _widget.product.available %}
         <p>
             <strong>{{ "product.detail.out_of_stock" | trans }}</strong>
         </p>

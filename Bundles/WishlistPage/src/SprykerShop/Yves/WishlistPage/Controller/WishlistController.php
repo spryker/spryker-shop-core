@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\WishlistPage\Controller;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
@@ -61,24 +62,22 @@ class WishlistController extends AbstractController
 
         $wishlistOverviewResponse = $this->getFactory()
             ->getWishlistClient()
-            ->getWishlistOverview($wishlistOverviewRequest);
+            ->getWishlistOverviewWithoutProductDetails($wishlistOverviewRequest);
 
         if (!$wishlistOverviewResponse->getWishlist()->getIdWishlist()) {
             throw new NotFoundHttpException();
         }
 
-        $availability = $this->getFactory()
-            ->createAvailabilityReader()
-            ->getAvailability($wishlistOverviewResponse->getMeta()->getWishlistItemMetaCollection());
+        $wishlistItems = $this->getWishlistItems($wishlistOverviewResponse);
 
         $addAllAvailableProductsToCartForm = $this->createAddAllAvailableProductsToCartForm($wishlistOverviewResponse);
 
         return $this->view([
+            'wishlistItems' => $wishlistItems,
             'wishlistOverview' => $wishlistOverviewResponse,
             'currentPage' => $wishlistOverviewResponse->getPagination()->getPage(),
             'totalPages' => $wishlistOverviewResponse->getPagination()->getPagesTotal(),
             'wishlistName' => $wishlistName,
-            'availability' => $availability,
             'addAllAvailableProductsToCartForm' => $addAllAvailableProductsToCartForm->createView(),
         ]);
     }
@@ -266,5 +265,45 @@ class WishlistController extends AbstractController
         );
 
         return $addAllAvailableProductsToCartForm;
+    }
+
+    /**
+     * @param WishlistOverviewResponseTransfer $wishlistOverviewResponse
+     *
+     * @return ProductViewTransfer[]
+     */
+    protected function getWishlistItems(WishlistOverviewResponseTransfer $wishlistOverviewResponse): array
+    {
+        $wishlistItems = [];
+        foreach ($wishlistOverviewResponse->getItems() as $wishlistItemTransfer) {
+            $wishlistItems[] = $this->createProductView($wishlistItemTransfer);
+        }
+
+        return $wishlistItems;
+    }
+
+    /**
+     * @param WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return ProductViewTransfer
+     */
+    protected function createProductView(WishlistItemTransfer $wishlistItemTransfer)
+    {
+        $productConcreteStorageData = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductConcreteStorageData($wishlistItemTransfer->getIdProduct(), $this->getLocale());
+
+        $productViewTransfer = new ProductViewTransfer();
+        $productViewTransfer->fromArray($productConcreteStorageData, true);
+
+        foreach ($this->getFactory()->getWishlistItemExpanderPlugins() as $productViewExpanderPlugin) {
+            $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer(
+                $productViewTransfer,
+                $productConcreteStorageData,
+                $this->getLocale()
+            );
+        }
+
+        return $productViewTransfer;
     }
 }

@@ -7,12 +7,13 @@
 
 namespace SprykerShop\Yves\WishlistPage\Dependency\Client;
 
-interface WishlistPageToAvailabilityStorageClientInterface
+interface WishlistPageToProductStorageClientInterface
 {
     /**
-     * @param int $idProductAbstract
+     * @param int $idProductConcrete
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
+     * @return array
      */
-    public function getProductAvailabilityByIdProductAbstract($idProductAbstract);
+    public function getProductConcreteStorageData($idProductConcrete, $localeName);
 }

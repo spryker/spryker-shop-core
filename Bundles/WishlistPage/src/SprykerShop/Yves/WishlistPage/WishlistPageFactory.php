@@ -8,12 +8,12 @@
 namespace SprykerShop\Yves\WishlistPage;
 
 use Generated\Shared\Transfer\WishlistTransfer;
+use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\WishlistPage\Business\AvailabilityReader;
 use SprykerShop\Yves\WishlistPage\Business\MoveToCartHandler;
-use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToProductStorageClientInterface;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface;
 use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
 use SprykerShop\Yves\WishlistPage\Form\DataProvider\AddAllAvailableProductsToCartFormDataProvider;
@@ -96,27 +96,11 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface
-     */
-    public function getAvailabilityStorageClient(): WishlistPageToAvailabilityStorageClientInterface
-    {
-        return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
-    }
-
-    /**
      * @return \SprykerShop\Yves\WishlistPage\Business\MoveToCartHandlerInterface
      */
     public function createMoveToCartHandler()
     {
-        return new MoveToCartHandler($this->getWishlistClient(), $this->getCustomerClient(), $this->createAvailabilityReader());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\WishlistPage\Business\AvailabilityReaderInterface
-     */
-    public function createAvailabilityReader()
-    {
-        return new AvailabilityReader($this->getAvailabilityStorageClient());
+        return new MoveToCartHandler($this->getWishlistClient(), $this->getCustomerClient());
     }
 
     /**
@@ -125,5 +109,21 @@ class WishlistPageFactory extends AbstractFactory
     public function getWishlistClient(): WishlistPageToWishlistClientInterface
     {
         return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_WISHLIST);
+    }
+
+    /**
+     * @return WishlistPageToProductStorageClientInterface
+     */
+    public function getProductStorageClient()
+    {
+        return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return ProductViewExpanderPluginInterface[]
+     */
+    public function getWishlistItemExpanderPlugins()
+    {
+        return $this->getProvidedDependency(WishlistPageDependencyProvider::PLUGIN_WISHLIST_ITEM_EXPANDERS);
     }
 }
