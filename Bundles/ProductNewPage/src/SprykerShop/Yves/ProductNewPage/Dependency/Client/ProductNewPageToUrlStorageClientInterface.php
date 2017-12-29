@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ProductNewPage\Dependency\Client;
 
-interface ProductNewPageToCollectorClientInterface
+interface ProductNewPageToUrlStorageClientInterface
 {
     /**
      * @param string $url

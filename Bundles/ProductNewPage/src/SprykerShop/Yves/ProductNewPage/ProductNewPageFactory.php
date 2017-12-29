@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ProductNewPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCollectorClientInterface;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorageClientInterface;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientInterface;
 
 class ProductNewPageFactory extends AbstractFactory
@@ -30,11 +30,11 @@ class ProductNewPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCollectorClientInterface
+     * @return \SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorageClientInterface
      */
-    public function getCollectorClient(): ProductNewPageToCollectorClientInterface
+    public function getUrlStorageClient(): ProductNewPageToUrlStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_COLLECTOR);
+        return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_URL_STORAGE);
     }
 
     /**
