@@ -46,7 +46,6 @@ class SubmitController extends AbstractController
             'hideForm' => $isFormEmpty || $isReviewPosted,
             'form' => $productReviewForm->createView(),
             'showSuccess' => $isReviewPosted,
-            'productAbstract' => $this->getFactory()->getProductClient()->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract),
         ]);
     }
 

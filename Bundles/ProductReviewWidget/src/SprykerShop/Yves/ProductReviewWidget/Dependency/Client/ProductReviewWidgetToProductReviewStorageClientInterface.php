@@ -7,12 +7,12 @@
 
 namespace SprykerShop\Yves\ProductReviewWidget\Dependency\Client;
 
-interface ProductReviewWidgetToProductClientInterface
+interface ProductReviewWidgetToProductReviewStorageClientInterface
 {
     /**
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer
      */
-    public function getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
+    public function findProductAbstractReview($idProductAbstract);
 }

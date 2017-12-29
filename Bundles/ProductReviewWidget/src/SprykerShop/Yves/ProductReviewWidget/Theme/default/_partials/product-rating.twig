@@ -1,5 +1,8 @@
 {% block content %}
-    {% if productAbstractReviewTransfer %}
-        {% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {'rating': productAbstractReviewTransfer.averageRating } %}
+    {% if productReviewStorageTransfer %}
+        {% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {
+            'rating': productReviewStorageTransfer.averageRating,
+            'maximumRating': maximumRating
+        } %}
     {% endif %}
 {% endblock %}

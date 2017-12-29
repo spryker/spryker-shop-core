@@ -1,12 +1,15 @@
 {% block rating %}
-    {{ spyProductAbstractReview(_widget.product.idProductAbstract, '@ProductReviewWidget/_product-detail-page/_partials/product-rating.twig') }}
+    {% include '@ProductReviewWidget/_product-detail-page/_partials/product-rating.twig' with {
+        'productReviewStorageTransfer': _widget.productReviewStorageTransfer,
+        'maximumRating': _widget.maximumRating
+    } %}
 {% endblock %}
 
 {% block reviews %}
     <div class="row">
         <div class="small-12 columns">
-            {{ render(path('product-review/submit', {idProductAbstract: _widget.product.idProductAbstract})) }}
-            {{ render(path('product-review/index', {idProductAbstract: _widget.product.idProductAbstract})) }}
+            {{ render(path('product-review/submit', {idProductAbstract: _widget.productReviewStorageTransfer.idProductAbstract})) }}
+            {{ render(path('product-review/index', {idProductAbstract: _widget.productReviewStorageTransfer.idProductAbstract})) }}
         </div>
     </div>
 {% endblock %}

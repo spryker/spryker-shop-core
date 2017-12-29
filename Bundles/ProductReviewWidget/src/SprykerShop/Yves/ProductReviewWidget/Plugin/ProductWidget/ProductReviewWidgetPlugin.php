@@ -8,11 +8,14 @@
 namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductWidget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory;
 use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductReviewWidget\ProductReviewWidgetPluginInterface;
 
+/**
+ * @method ProductReviewWidgetFactory getFactory()
+ */
 class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductReviewWidgetPluginInterface
 {
-
     /**
      * @param float $rating
      *
@@ -20,7 +23,9 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public function initialize(float $rating): void
     {
-        $this->addParameter('rating', $rating);
+        $this
+            ->addParameter('rating', $rating)
+            ->addParameter('maximumRating', $this->getMaximumRating());
     }
 
     /**
@@ -39,4 +44,13 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
         return '@ProductReviewWidget/_product-widget/product-review.twig';
     }
 
+    /**
+     * @return int
+     */
+    protected function getMaximumRating()
+    {
+        return $this->getFactory()
+            ->getProductReviewClient()
+            ->getMaximumRating();
+    }
 }

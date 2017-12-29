@@ -40,7 +40,7 @@
                     <div><small>{{ 'product.attribute.sku' | trans }}: {{ _view.product.sku }}</small></div>
                 </p>
 
-                {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', _view.product) }}
+                {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', _view.product.idProductAbstract) }}
 
                 {% include '@ProductDetailPage/_product-detail-page/_partials/variants.twig' %}
             </div>
@@ -92,7 +92,7 @@
         </div>
     </div>
 
-    {{ widgetBlock('ProductReviewWidgetPlugin', 'reviews', _view.product) }}
+    {{ widgetBlock('ProductReviewWidgetPlugin', 'reviews', _view.product.idProductAbstract) }}
 
     {{ widget('SimilarProductsWidgetPlugin', _view.product) }}
 

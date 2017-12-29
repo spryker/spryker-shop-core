@@ -1,0 +1,19 @@
+<div class="row" data-component="catalog-rating-filter">
+    <div class="small-12 columns">
+        <ul class="no-bullet">
+            {% for i in (_widget.maximumRating-1)..1 %}
+                <li>
+                    <label class="rating-selector {% if _widget.filterValue == i %}selected{% endif %}" data-rating-filter="{{ i }}">
+                        {% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {
+                            'rating': i,
+                            'maximumRating': _widget.maximumRating,
+                            'suffix': 'catalog.filter.rating_up' | trans
+                        } only %}
+                    </label>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <input type="hidden" name="{{ _widget.filter.name }}[min]" value="{{ _widget.filterValue }}" data-default-value="" class="js-rating-filter-input" />
+    </div>
+</div>

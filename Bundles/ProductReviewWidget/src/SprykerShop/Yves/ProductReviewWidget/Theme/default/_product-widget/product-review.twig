@@ -1,1 +1,4 @@
-{% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {'rating': _widget.rating } %}
+{% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {
+    'rating': _widget.rating,
+    'maximumRating': _widget.maximumRating
+} %}

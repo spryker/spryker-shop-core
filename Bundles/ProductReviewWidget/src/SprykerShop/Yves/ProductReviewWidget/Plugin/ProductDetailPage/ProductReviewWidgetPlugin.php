@@ -7,21 +7,25 @@
 
 namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductDetailPage;
 
-use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReviewWidget\ProductReviewWidgetPluginInterface;
+use SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory;
 
+/**
+ * @method ProductReviewWidgetFactory getFactory()
+ */
 class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductReviewWidgetPluginInterface
 {
-
     /**
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    public function initialize(StorageProductTransfer $storageProductTransfer): void
+    public function initialize(int $idProductAbstract): void
     {
-        $this->addParameter('product', $storageProductTransfer);
+        $this
+            ->addParameter('productReviewStorageTransfer', $this->findProductAbstractReview($idProductAbstract))
+            ->addParameter('maximumRating', $this->getMaximumRating());
     }
 
     /**
@@ -40,4 +44,25 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
         return '@ProductReviewWidget/_product-detail-page/product-review.twig';
     }
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer
+     */
+    protected function findProductAbstractReview($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->getProductReviewStorageClient()
+            ->findProductAbstractReview($idProductAbstract);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getMaximumRating()
+    {
+        return $this->getFactory()
+            ->getProductReviewClient()
+            ->getMaximumRating();
+    }
 }

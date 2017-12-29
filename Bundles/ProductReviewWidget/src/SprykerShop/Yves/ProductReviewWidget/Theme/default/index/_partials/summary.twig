@@ -1,8 +1,12 @@
 {% set summary = summary %}
 {% set pagination = pagination %}
+{% set maximumRating = maximumRating %}
 
 <p>
-    {% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {'rating': summary.averageRating } %}
+    {% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {
+        'rating': summary.averageRating,
+        'maximumRating': maximumRating
+    } %}
 
     {% if summary.totalReview > 0 %}
         <span>

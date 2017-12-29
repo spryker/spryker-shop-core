@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReviewWidget;
 
-use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductReviewWidgetPluginInterface extends WidgetPluginInterface
@@ -16,10 +15,10 @@ interface ProductReviewWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'ProductReviewWidgetPlugin';
 
     /**
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    public function initialize(StorageProductTransfer $storageProductTransfer): void;
+    public function initialize(int $idProductAbstract): void;
 
 }
