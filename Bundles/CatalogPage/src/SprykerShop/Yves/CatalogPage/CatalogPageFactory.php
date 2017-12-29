@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CatalogPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGenerator;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientInterface;
-use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryClientInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryStorageClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
 use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
@@ -26,11 +26,11 @@ class CatalogPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryClientInterface
+     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryStorageClientInterface
      */
-    public function getCategoryClient(): CatalogPageToCategoryClientInterface
+    public function getCategoryStorageClient(): CatalogPageToCategoryStorageClientInterface
     {
-        return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_CATEGORY);
+        return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_CATEGORY_STORAGE);
     }
 
     /**

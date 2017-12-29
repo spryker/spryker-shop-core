@@ -85,9 +85,11 @@ class CatalogController extends AbstractController
             ->getLocaleClient()
             ->getCurrentLocale();
 
-        return $this->getFactory()
-            ->getCategoryClient()
-            ->getTemplatePathByNodeId($idCategoryNode, $localeName);
+        $categoryNodeStorageTransfer = $this->getFactory()
+            ->getCategoryStorageClient()
+            ->getCategoryNodeById($idCategoryNode, $localeName);
+
+        return $categoryNodeStorageTransfer->getTemplatePath();
     }
 
 }
