@@ -23,7 +23,9 @@ class ProductAbstractReviewWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public function initialize(int $idProductAbstract): void
     {
-        $this->addParameter('productReviewStorageTransfer', $this->findProductAbstractReview($idProductAbstract));
+        $this
+            ->addParameter('productReviewStorageTransfer', $this->findProductAbstractReview($idProductAbstract))
+            ->addParameter('maximumRating', $this->getMaximumRating());
     }
 
     /**

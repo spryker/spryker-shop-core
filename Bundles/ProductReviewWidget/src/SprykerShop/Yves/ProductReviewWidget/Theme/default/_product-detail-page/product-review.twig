@@ -8,8 +8,8 @@
 {% block reviews %}
     <div class="row">
         <div class="small-12 columns">
-            {{ render(path('product-review/submit', {idProductAbstract: _widget.productReviewStorageTransfer.idProductAbstract})) }}
-            {{ render(path('product-review/index', {idProductAbstract: _widget.productReviewStorageTransfer.idProductAbstract})) }}
+            {{ render(path('product-review/submit', {'idProductAbstract': _widget.idProductAbstract})) }}
+            {{ render(path('product-review/index', {'idProductAbstract': _widget.idProductAbstract})) }}
         </div>
     </div>
 {% endblock %}
