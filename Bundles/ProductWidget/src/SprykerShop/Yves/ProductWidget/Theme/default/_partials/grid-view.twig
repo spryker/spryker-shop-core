@@ -36,14 +36,16 @@
         {% endblock %}
 
         {% block price %}
-            <p>
-                {% if originalPrice %}
-                    <span class="catalog-price__price-original">{{ originalPrice | money }}</span>
-                    <span class="catalog-price__price-reduced">{{ priceValue | money }}</span>
-                {% else %}
-                    {{ priceValue | money }}
-                {% endif %}
-            </p>
+            {% if priceValue is not null %}
+                <p>
+                    {% if originalPrice %}
+                        <span class="catalog-price__price-original">{{ originalPrice | money }}</span>
+                        <span class="catalog-price__price-reduced">{{ priceValue | money }}</span>
+                    {% else %}
+                        {{ priceValue | money }}
+                    {% endif %}
+                </p>
+            {% endif %}
         {% endblock %}
 
         <div class="product__action">

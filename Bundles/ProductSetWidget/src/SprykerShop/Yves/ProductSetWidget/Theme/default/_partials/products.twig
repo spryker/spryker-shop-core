@@ -14,7 +14,9 @@
                 <div class="small-7 columns">
                     <p id="test">
                         <a href="{{ productView.url }}"><strong>{{ productView.name }}</strong></a><br>
-                        {{ productView.prices.DEFAULT | money }}
+                        {% if productView.price is not null %}
+                            {{ productView.price | money }}
+                        {% endif %}
                     </p>
 
                     {% include '@ProductSetWidget/_partials/variants.twig' with {product: productView}%}
