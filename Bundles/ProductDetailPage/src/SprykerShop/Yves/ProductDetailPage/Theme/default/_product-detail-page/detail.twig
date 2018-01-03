@@ -34,11 +34,10 @@
 
             <div class="callout">
                 {% if _view.product.attributes.brand is defined %}<h5><small>{{ 'page.product.by' | trans }}</small> {{ _view.product.attributes.brand }}</h5>{% endif %}
-                <p>
-                    {{ widget('PriceWidgetPlugin', _view.product) }}
 
-                    <div><small>{{ 'product.attribute.sku' | trans }}: {{ _view.product.sku }}</small></div>
-                </p>
+                {{ widget('PriceWidgetPlugin', _view.product) }}
+
+                <small>{{ 'product.attribute.sku' | trans }}: {{ _view.product.sku }}</small>
 
                 {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', _view.product.idProductAbstract) }}
 
@@ -51,20 +50,30 @@
 
                 {{ widget('ProductOptionWidgetPlugin', _view.product) }}
 
-                <div>
-                    {% if widgetExists('AvailabilityWidgetPlugin') %}
-                        {% set disabled = not widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', _view.product) %}
-                    {% else %}
-                        {% set disabled = (_view.product.idProductConcrete is not defined) %}
-                    {% endif %}
+                <div class="callout">
+                    <div class="row">
+                        <div class="small-4 xlarge-3 columns __no-margin-bottom">
+                            <select name="quantity" class="__no-margin-bottom">
+                                {% for index in 1..10 %}
+                                    <option value="{{ index }}">{{ index }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-                    <button type="submit" class="button expanded success js-add-to-cart-button" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
-                        <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}
-                    </button>
+                        <div class="small-8 xlarge-9 columns">
+                            {% if widgetExists('AvailabilityWidgetPlugin') %}
+                                {% set disabled = not widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', _view.product) or _view.product.defaultPrice is null %}
+                            {% else %}
+                                {% set disabled = (_view.product.idProductConcrete is not defined or _view.product.defaultPrice is null) %}
+                            {% endif %}
+
+                            <button type="submit" class="button expanded success js-add-to-cart-button __no-margin-bottom" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
+                                <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}
+                            </button>
+                        </div>
+                    </div>
 
                     {{ widgetBlock('AvailabilityWidgetPlugin', 'outOfStock', _view.product) }}
-
-                    <div class="small-12 columns"></div>
                 </div>
             </form>
 

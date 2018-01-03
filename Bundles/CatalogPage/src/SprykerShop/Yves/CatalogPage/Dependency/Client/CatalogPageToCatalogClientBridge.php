@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\CatalogPage\Dependency\Client;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 class CatalogPageToCatalogClientBridge implements CatalogPageToCatalogClientInterface
 {
     /**
@@ -42,5 +45,26 @@ class CatalogPageToCatalogClientBridge implements CatalogPageToCatalogClientInte
     public function catalogSuggestSearch($searchString, array $requestParameters = [])
     {
         return $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return string
+     */
+    public function getCatalogViewMode(Request $request)
+    {
+        return $this->catalogClient->getCatalogViewMode($request);
+    }
+
+    /**
+     * @param string $mode
+     * @param Response $response
+     *
+     * @return Response
+     */
+    public function setCatalogViewMode($mode, Response $response)
+    {
+        return $this->catalogClient->setCatalogViewMode($mode, $response);
     }
 }

@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
@@ -155,11 +156,11 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler
+     * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface
      */
     public function createShipmentHandler()
     {
-        return new ShipmentHandler($this->getShipmentClient());
+        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient());
     }
 
     /**
@@ -192,5 +193,13 @@ class CheckoutPageFactory extends AbstractFactory
     protected function getStore()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
+    }
+
+    /**
+     * @return CheckoutPageToPriceClientInterface
+     */
+    protected function getPriceClient(): CheckoutPageToPriceClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_PRICE);
     }
 }

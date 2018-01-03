@@ -3,18 +3,19 @@
  * This file is part of the Spryker Demoshop.
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
+
 namespace SprykerShop\Yves\CheckoutPage\Handler;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Shared\Price\PriceMode;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class ShipmentHandler
+class ShipmentHandler implements ShipmentHandlerInterface
 {
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
@@ -22,11 +23,20 @@ class ShipmentHandler
     protected $shipmentClient;
 
     /**
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
+     * @var CheckoutPageToPriceClientInterface
      */
-    public function __construct(CheckoutPageToShipmentClientInterface $shipmentClient)
-    {
+    protected $priceClient;
+
+    /**
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
+     * @param CheckoutPageToPriceClientInterface $priceClient
+     */
+    public function __construct(
+        CheckoutPageToShipmentClientInterface $shipmentClient,
+        CheckoutPageToPriceClientInterface $priceClient
+    ) {
         $this->shipmentClient = $shipmentClient;
+        $this->priceClient = $priceClient;
     }
 
     /**
@@ -103,7 +113,7 @@ class ShipmentHandler
      */
     protected function setPrice(ExpenseTransfer $shipmentExpenseTransfer, $price, $priceMode)
     {
-        if ($priceMode === PriceMode::PRICE_MODE_NET) {
+        if ($priceMode === $this->priceClient->getNetPriceModeIdentifier()) {
             $shipmentExpenseTransfer->setUnitGrossPrice(0);
             $shipmentExpenseTransfer->setUnitNetPrice($price);
             return;

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductNewPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCatalogClientInterface;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorageClientInterface;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientInterface;
 
@@ -43,5 +44,13 @@ class ProductNewPageFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(ProductNewPageDependencyProvider::STORE);
+    }
+
+    /**
+     * @return ProductNewPageToCatalogClientInterface
+     */
+    public function getCatalogClient(): ProductNewPageToCatalogClientInterface
+    {
+        return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_CATALOG);
     }
 }

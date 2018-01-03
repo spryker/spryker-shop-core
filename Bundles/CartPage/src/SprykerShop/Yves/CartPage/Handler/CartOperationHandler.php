@@ -7,17 +7,20 @@
 namespace SprykerShop\Yves\CartPage\Handler;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CartOperationHandler extends BaseHandler implements CartOperationInterface
 {
     const URL_PARAM_ID_DISCOUNT_PROMOTION = 'idDiscountPromotion';
+    const TRANSLATION_KEY_QUANTITY_ADJUSTED = 'cart.quantity.adjusted';
 
     /**
-     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface
+     * @var \Spryker\Client\Cart\CartClientInterface|\Spryker\Client\Kernel\AbstractClient
      */
     protected $cartClient;
 
@@ -32,21 +35,30 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     protected $request;
 
     /**
-     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $cartClient
+     * @var CartPageToAvailabilityClientInterface
+     */
+    protected $availabilityClient;
+
+    /**
+     * @param CartPageToCartClientInterface $cartClient
      * @param string $locale
-     * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param FlashMessengerInterface $flashMessenger
+     * @param Request $request
+     * @param CartPageToAvailabilityClientInterface $availabilityClient
      */
     public function __construct(
         CartPageToCartClientInterface $cartClient,
         $locale,
         FlashMessengerInterface $flashMessenger,
-        Request $request
+        Request $request,
+        CartPageToAvailabilityClientInterface $availabilityClient
     ) {
         parent::__construct($flashMessenger);
         $this->cartClient = $cartClient;
         $this->locale = $locale;
         $this->request = $request;
+        $this->availabilityClient = $availabilityClient;
+        $this->flashMessenger = $flashMessenger;
     }
 
     /**
@@ -58,6 +70,9 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
      */
     public function add($sku, $quantity, $optionValueUsageIds = [])
     {
+        $quantity = $this->normalizeQuantity($quantity);
+        $quantity = $this->adjustQuantityBasedOnProductAvailability($sku, $quantity);
+
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku($sku);
         $itemTransfer->setQuantity($quantity);
@@ -155,5 +170,44 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     protected function getIdDiscountPromotion()
     {
         return (int)$this->request->request->get(static::URL_PARAM_ID_DISCOUNT_PROMOTION);
+    }
+
+    /**
+     * @param int $quantity
+     *
+     * @return int
+     */
+    protected function normalizeQuantity($quantity)
+    {
+        if (!$quantity || $quantity <= 0) {
+            $quantity = 1;
+        }
+        return $quantity;
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return int
+     */
+    protected function adjustQuantityBasedOnProductAvailability($sku, $quantity)
+    {
+        $productAvailabilityRequestTransfer = (new ProductConcreteAvailabilityRequestTransfer())
+            ->setSku($sku);
+
+        $productConcreteAvailabilityTransfer = $this->availabilityClient
+            ->findProductConcreteAvailability($productAvailabilityRequestTransfer);
+
+        if ($productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
+            return $quantity;
+        }
+
+        if ($quantity > $productConcreteAvailabilityTransfer->getAvailability()) {
+            $this->flashMessenger->addInfoMessage(static::TRANSLATION_KEY_QUANTITY_ADJUSTED);
+            return $productConcreteAvailabilityTransfer->getAvailability();
+        }
+
+        return $quantity;
     }
 }

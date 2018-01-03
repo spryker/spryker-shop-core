@@ -11,14 +11,13 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductWidgetPluginInterface extends WidgetPluginInterface
 {
-
     public const NAME = 'ProductWidgetPlugin';
 
     /**
      * @param array $product
+     * @param string|null $viewMode
      *
      * @return void
      */
-    public function initialize(array $product): void;
-
+    public function initialize(array $product, $viewMode = null): void;
 }

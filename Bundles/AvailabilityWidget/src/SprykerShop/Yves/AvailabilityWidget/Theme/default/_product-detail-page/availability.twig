@@ -4,8 +4,10 @@
 
 {% block outOfStock %}
     {% if _widget.product.idProductConcrete and not _widget.product.available %}
-        <p>
-            <strong>{{ "product.detail.out_of_stock" | trans }}</strong>
-        </p>
+        <div class="row">
+            <div class="small-12 columns">
+                <strong>{{ "product.detail.out_of_stock" | trans }}</strong>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

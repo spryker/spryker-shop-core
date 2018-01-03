@@ -48,6 +48,9 @@ class NewProductsController extends AbstractController
 
         $searchResults['category'] = $categoryNode;
         $searchResults['filterPath'] = ProductNewPageControllerProvider::ROUTE_NEW_PRODUCTS;
+        $searchResults['viewMode'] = $this->getFactory()
+            ->getCatalogClient()
+            ->getCatalogViewMode($request);
 
         return $this->view($searchResults, $this->getFactory()->getProductNewPageWidgetPlugins());
     }

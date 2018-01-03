@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CartPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
@@ -34,7 +35,13 @@ class CartPageFactory extends AbstractFactory
      */
     public function createCartOperationHandler()
     {
-        return new CartOperationHandler($this->getCartClient(), $this->getLocale(), $this->getFlashMessenger(), $this->getRequest());
+        return new CartOperationHandler(
+            $this->getCartClient(),
+            $this->getLocale(),
+            $this->getFlashMessenger(),
+            $this->getRequest(),
+            $this->getAvailabilityClient()
+        );
     }
 
     /**
@@ -144,6 +151,14 @@ class CartPageFactory extends AbstractFactory
     protected function getAvailabilityStorageClient(): CartPageToAvailabilityStorageClientInterface
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface
+     */
+    protected function getAvailabilityClient(): CartPageToAvailabilityClientInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_AVAILABILITY);
     }
 
     /**

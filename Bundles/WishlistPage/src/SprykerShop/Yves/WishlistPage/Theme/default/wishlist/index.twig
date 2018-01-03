@@ -52,10 +52,14 @@
                                     {% endif %}
                                 </td>
                                 <td nowrap="nowrap">
-                                    {% if item.prices.ORIGINAL is defined %}
-                                        <span class="catalog-price__price-reduced">{{ item.defaultPrice | money }}</span> <span class="catalog-price__price-original">{{ item.prices.ORIGINAL | money }}</span>
+                                    {% if item.defaultPrice is not null %}
+                                        {% if item.prices.ORIGINAL is defined %}
+                                            <span class="catalog-price__price-reduced">{{ item.defaultPrice | money }}</span> <span class="catalog-price__price-original">{{ item.prices.ORIGINAL | money }}</span>
+                                        {% else %}
+                                            {{ item.defaultPrice | money }}
+                                        {% endif %}
                                     {% else %}
-                                        {{ item.defaultPrice | money }}
+                                        N/A
                                     {% endif %}
                                 </td>
                                 <td>
@@ -73,7 +77,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if item.available %}
+                                    {% if item.available and item.defaultPrice is not null %}
                                         <form id="addToCart_{{ loop.index }}" class="float-left" method="POST" action="{{ path('wishlist/move-to-cart', {sku: item.sku, 'wishlist-name': _view.wishlistName}) }}">
                                             <a title="{{ 'customer.account.wishlist.add-to-cart' | trans }}" onclick="document.getElementById('addToCart_{{ loop.index }}').submit()">
                                                 <i class="fa fa-shopping-cart"></i>

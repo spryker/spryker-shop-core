@@ -1,11 +1,19 @@
-{% embed '@ProductWidget/_partials/product-block.twig' with {
-    productName: _widget.product.abstract_name,
-    idProductAbstract: _widget.product.id_product_abstract,
-    priceValue: _widget.product.price,
-    imageUrl: (_widget.product.images|length ? _widget.product.images.0.external_url_small : ''),
-    detailsUrl: _widget.product.url,
-    originalPrice: (_widget.product.prices.ORIGINAL is defined ? _widget.product.prices.ORIGINAL : null),
-    class: 'small-12 medium-6 large-6 xlarge-4 columns'
+{% if _widget.viewMode == 'list' %}
+    {% set productTemplate = '@ProductWidget/_partials/list-view.twig' %}
+    {% set class = 'small-12 columns' %}
+{% else %}
+    {% set productTemplate = '@ProductWidget/_partials/grid-view.twig' %}
+    {% set class = 'small-12 medium-6 large-6 xlarge-4 columns' %}
+{% endif %}
+
+{% embed productTemplate with {
+    'productName': _widget.product.abstract_name,
+    'idProductAbstract': _widget.product.id_product_abstract,
+    'priceValue': _widget.product.price,
+    'imageUrl': (_widget.product.images|length ? _widget.product.images.0.external_url_small : ''),
+    'detailsUrl': _widget.product.url,
+    'originalPrice': (_widget.product.prices.ORIGINAL is defined ? _widget.product.prices.ORIGINAL : null),
+    'class': class
 } %}
     {% block productLabels %}
         {{ widget('ProductLabelWidgetPlugin', _widget.product.id_product_labels) }}

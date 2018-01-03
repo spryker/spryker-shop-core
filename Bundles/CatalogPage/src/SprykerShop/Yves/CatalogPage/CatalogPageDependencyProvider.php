@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryStorageClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientBridge;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientBridge;
 
 class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -21,6 +22,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';
     const CLIENT_CATALOG = 'CLIENT_CATALOG';
     const PLUGIN_CATALOG_PAGE_WIDGETS = 'PLUGIN_CATALOG_PAGE_WIDGETS';
+    const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -33,6 +35,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCategoryStorageClient($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addCatalogClient($container);
+        $container = $this->addProductCategoryFilterClient($container);
         $container = $this->addCatalogPageWidgetPlugins($container);
 
         return $container;
@@ -89,6 +92,20 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_CATALOG] = function (Container $container) {
             return new CatalogPageToCatalogClientBridge($container->getLocator()->catalog()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductCategoryFilterClient(Container $container)
+    {
+        $container[static::CLIENT_PRODUCT_CATEGORY_FILTER] = function (Container $container) {
+            return new CatalogPageToProductCategoryFilterClientBridge($container->getLocator()->productCategoryFilter()->client());
         };
 
         return $container;

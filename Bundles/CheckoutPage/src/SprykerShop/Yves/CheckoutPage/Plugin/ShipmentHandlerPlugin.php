@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Plugin;
 
-
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface;
@@ -26,6 +25,6 @@ class ShipmentHandlerPlugin extends AbstractPlugin implements StepHandlerPluginI
      */
     public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)
     {
-        $this->getFactory()->createShipmentHandler()->addShipmentToQuote($request, $quoteTransfer);
+        return $this->getFactory()->createShipmentHandler()->addShipmentToQuote($request, $quoteTransfer);
     }
 }

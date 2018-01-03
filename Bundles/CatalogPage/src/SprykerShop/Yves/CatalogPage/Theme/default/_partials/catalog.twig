@@ -1,3 +1,5 @@
+{% set viewMode = _view.viewMode | default(null) %}
+
 {% block topCmsBlock %}
     {% if _view.idCategory is defined and _view.idCategory %}
         {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'top', _view.idCategory) }}
@@ -10,12 +12,18 @@
         {% include '@CatalogPage/_partials/spelling-suggestion.twig' %}
 
         <div class="small-12 medium-12 large-4 xlarge-3 columns">
+            <div class="show-for-large">
+                {% include '@CatalogPage/_partials/catalog-view-mode.twig' %}
+            </div>
+
             <input id="catalog-filters" type="checkbox" class="__toggler __no-margin-bottom hide" checked>
+
             <div class="callout hide-for-large">
                 <label for="catalog-filters" class="button hollow expanded __no-margin-bottom">
                     <i class="fa fa-filter"></i> Show/Hide filters
                 </label>
             </div>
+
             <div class="__toggler-target">
                 {% include '@CatalogPage/_partials/filters.twig' %}
             </div>
@@ -25,6 +33,10 @@
                     {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', _view.idCategory) }}
                 {% endif %}
             {% endblock %}
+
+            <div class="hide-for-large">
+                {% include '@Catalog/catalog/partials/catalog-view-mode.twig' %}
+            </div>
         </div>
 
         <div class="small-12 medium-12 large-8 xlarge-9 columns">
@@ -37,7 +49,7 @@
 
             <div class="row">
                 {% for product in _view.products %}
-                    {{ widget('ProductWidgetPlugin', product) }}
+                    {{ widget('ProductWidgetPlugin', product, viewMode) }}
                 {% endfor %}
             </div>
 

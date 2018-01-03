@@ -7,12 +7,12 @@
 
 namespace SprykerShop\Yves\CmsContentWidgetProductSetConnector;
 
-use Spryker\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorConnectorFactory as SprykerCmsContentWidgetProductSetConnectorConnectorFactory;
+use Spryker\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorFactory as SprykerCmsContentWidgetProductSetConnectorFactory;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
 use SprykerShop\Yves\CmsContentWidgetProductSetConnector\Dependency\Client\CmsContentWidgetProductSetConnectorToProductSetStorageClientInterface;
 
-class CmsContentWidgetProductSetConnectorFactory extends SprykerCmsContentWidgetProductSetConnectorConnectorFactory
+class CmsContentWidgetProductSetConnectorFactory extends SprykerCmsContentWidgetProductSetConnectorFactory
 {
     /**
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerRegistry

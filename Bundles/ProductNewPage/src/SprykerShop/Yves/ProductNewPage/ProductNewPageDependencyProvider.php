@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ProductNewPage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCatalogClientBridge;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorageClientBridge;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientBridge;
 
@@ -19,6 +20,7 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
     const STORE = 'STORE';
     const PLUGIN_PRODUCT_NEW_PAGE_WIDGETS = 'PLUGIN_PRODUCT_NEW_PAGE_WIDGETS';
+    const CLIENT_CATALOG = 'CLIENT_CATALOG';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -30,6 +32,7 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductNewClient($container);
         $container = $this->addUrlStorageClient($container);
         $container = $this->addStore($container);
+        $container = $this->addCatalogClient($container);
         $container = $this->addProductNewPageWidgetPlugins($container);
 
         return $container;
@@ -58,6 +61,20 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_URL_STORAGE] = function (Container $container) {
             return new ProductNewPageToUrlStorageClientBridge($container->getLocator()->urlStorage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCatalogClient(Container $container)
+    {
+        $container[self::CLIENT_CATALOG] = function (Container $container) {
+            return new ProductNewPageToCatalogClientBridge($container->getLocator()->catalog()->client());
         };
 
         return $container;
