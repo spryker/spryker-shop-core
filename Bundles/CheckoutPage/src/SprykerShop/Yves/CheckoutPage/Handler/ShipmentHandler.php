@@ -1,7 +1,8 @@
 <?php
+
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CheckoutPage\Handler;
@@ -23,13 +24,13 @@ class ShipmentHandler implements ShipmentHandlerInterface
     protected $shipmentClient;
 
     /**
-     * @var CheckoutPageToPriceClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface
      */
     protected $priceClient;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
-     * @param CheckoutPageToPriceClientInterface $priceClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface $priceClient
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,

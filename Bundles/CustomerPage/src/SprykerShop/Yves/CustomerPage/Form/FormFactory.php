@@ -1,15 +1,16 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace SprykerShop\Yves\CustomerPage\Form;
 
-use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
-use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
+use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
 
 class FormFactory extends AbstractFactory
 {

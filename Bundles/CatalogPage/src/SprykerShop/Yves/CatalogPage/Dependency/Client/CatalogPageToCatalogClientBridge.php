@@ -48,7 +48,7 @@ class CatalogPageToCatalogClientBridge implements CatalogPageToCatalogClientInte
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */
@@ -59,9 +59,9 @@ class CatalogPageToCatalogClientBridge implements CatalogPageToCatalogClientInte
 
     /**
      * @param string $mode
-     * @param Response $response
+     * @param \Symfony\Component\HttpFoundation\Response $response
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function setCatalogViewMode($mode, Response $response)
     {

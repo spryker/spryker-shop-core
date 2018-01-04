@@ -11,7 +11,6 @@ use ArrayObject;
 
 interface CartItemsMapperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
      * @param string $localeName

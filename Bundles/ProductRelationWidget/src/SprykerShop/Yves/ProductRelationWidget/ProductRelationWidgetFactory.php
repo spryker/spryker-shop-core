@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,7 +12,6 @@ use SprykerShop\Yves\ProductRelationWidget\Dependency\Client\ProductRelationWidg
 
 class ProductRelationWidgetFactory extends AbstractFactory
 {
-
     /**
      * @return string[]
      */
@@ -30,11 +29,10 @@ class ProductRelationWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductRelationWidgetToProductRelationStorageClientInterface
+     * @return \SprykerShop\Yves\ProductRelationWidget\Dependency\Client\ProductRelationWidgetToProductRelationStorageClientInterface
      */
     public function getProductRelationStorageClient(): ProductRelationWidgetToProductRelationStorageClientInterface
     {
         return $this->getProvidedDependency(ProductRelationWidgetDependencyProvider::CLIENT_PRODUCT_RELATION_STORAGE);
     }
-
 }

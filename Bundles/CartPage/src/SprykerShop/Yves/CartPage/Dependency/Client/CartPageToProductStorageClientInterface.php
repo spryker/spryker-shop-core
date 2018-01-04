@@ -11,7 +11,6 @@ interface CartPageToProductStorageClientInterface
 {
     /**
      * @param int $idProductAbstract
-     *
      * @param string $localeName
      *
      * @return array

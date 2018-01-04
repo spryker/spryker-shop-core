@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,12 +12,12 @@ use Spryker\Shared\Kernel\Communication\Application;
 class TwigRenderer implements TwigRendererInterface
 {
     /**
-     * @var RoutingHelperInterface
+     * @var \SprykerShop\Yves\ShopApplication\Twig\RoutingHelperInterface
      */
     protected $routingHelper;
 
     /**
-     * @param RoutingHelperInterface $routingHelper
+     * @param \SprykerShop\Yves\ShopApplication\Twig\RoutingHelperInterface $routingHelper
      */
     public function __construct(RoutingHelperInterface $routingHelper)
     {

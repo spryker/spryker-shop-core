@@ -1,7 +1,8 @@
 <?php
+
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CartPage\Handler;
@@ -35,16 +36,16 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     protected $request;
 
     /**
-     * @var CartPageToAvailabilityClientInterface
+     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface
      */
     protected $availabilityClient;
 
     /**
-     * @param CartPageToCartClientInterface $cartClient
+     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $cartClient
      * @param string $locale
-     * @param FlashMessengerInterface $flashMessenger
-     * @param Request $request
-     * @param CartPageToAvailabilityClientInterface $availabilityClient
+     * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface $availabilityClient
      */
     public function __construct(
         CartPageToCartClientInterface $cartClient,

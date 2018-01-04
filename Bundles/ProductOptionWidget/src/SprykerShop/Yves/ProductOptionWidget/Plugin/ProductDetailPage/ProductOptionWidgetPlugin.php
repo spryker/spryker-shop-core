@@ -43,7 +43,7 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StorageProductOptionGroupTransfer[]
      */
@@ -53,7 +53,7 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
      */

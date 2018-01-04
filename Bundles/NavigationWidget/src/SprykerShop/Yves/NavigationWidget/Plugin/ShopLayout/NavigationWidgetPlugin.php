@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\NavigationWidget\Plugin\ShopLayout;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\NavigationWidget\NavigationWidgetFactory;
 use SprykerShop\Yves\ShopLayout\Dependency\Plugin\NavigationWidget\NavigationWidgetPluginInterface;
 
 /**
  * Class NavigationWidgetPlugin
  *
- * @method NavigationWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\NavigationWidget\NavigationWidgetFactory getFactory()
  */
 class NavigationWidgetPlugin extends AbstractWidgetPlugin implements NavigationWidgetPluginInterface
 {
-
     /**
      * @var array
      */

@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface SimilarProductsWidgetPluginInterface extends WidgetPluginInterface
 {
-
     const NAME = 'SimilarProductsWidgetPlugin';
 
     /**
@@ -21,5 +20,4 @@ interface SimilarProductsWidgetPluginInterface extends WidgetPluginInterface
      * @return void
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void;
-
 }

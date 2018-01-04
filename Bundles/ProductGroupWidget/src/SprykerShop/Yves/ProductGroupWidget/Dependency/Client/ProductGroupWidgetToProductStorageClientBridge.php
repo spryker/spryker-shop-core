@@ -1,22 +1,21 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductGroupWidget\Dependency\Client;
 
-use Spryker\Client\ProductStorage\ProductStorageClientInterface;
-
 class ProductGroupWidgetToProductStorageClientBridge implements ProductGroupWidgetToProductStorageClientInterface
 {
     /**
-     * @var ProductStorageClientInterface
+     * @var \Spryker\Client\ProductStorage\ProductStorageClientInterface
      */
     protected $productStorageClient;
 
     /**
-     * @param ProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Client\ProductStorage\ProductStorageClientInterface $productStorageClient
      */
     public function __construct($productStorageClient)
     {
@@ -45,5 +44,4 @@ class ProductGroupWidgetToProductStorageClientBridge implements ProductGroupWidg
     {
         return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
     }
-
 }

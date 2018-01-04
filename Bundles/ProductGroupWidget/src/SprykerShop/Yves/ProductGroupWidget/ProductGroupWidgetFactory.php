@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,19 +13,18 @@ use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToPr
 
 class ProductGroupWidgetFactory extends AbstractFactory
 {
-
     /**
-     * @return ProductGroupWidgetToProductGroupStorageClientInterface
+     * @return \SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductGroupStorageClientInterface
      */
-    public function getProductGroupStorageClient() : ProductGroupWidgetToProductGroupStorageClientInterface
+    public function getProductGroupStorageClient(): ProductGroupWidgetToProductGroupStorageClientInterface
     {
         return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::CLIENT_PRODUCT_GROUP_STORAGE);
     }
 
     /**
-     * @return ProductGroupWidgetToProductStorageClientInterface
+     * @return \SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductStorageClientInterface
      */
-    public function getProductStorageClient() : ProductGroupWidgetToProductStorageClientInterface
+    public function getProductStorageClient(): ProductGroupWidgetToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }

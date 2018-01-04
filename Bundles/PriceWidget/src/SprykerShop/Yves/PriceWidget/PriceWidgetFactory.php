@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -15,15 +15,15 @@ use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToQuoteClientInter
 class PriceWidgetFactory extends AbstractFactory
 {
     /**
-     * @return PriceWidgetToPriceStorageClientInterface
+     * @return \SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToPriceStorageClientInterface
      */
-    public function getPriceStorageClient():PriceWidgetToPriceStorageClientInterface
+    public function getPriceStorageClient(): PriceWidgetToPriceStorageClientInterface
     {
         return $this->getProvidedDependency(PriceWidgetDependencyProvider::CLIENT_PRICE_STORAGE);
     }
 
     /**
-     * @return PriceWidgetToQuoteClientInterface
+     * @return \SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToQuoteClientInterface
      */
     public function getQuoteClient(): PriceWidgetToQuoteClientInterface
     {
@@ -31,7 +31,7 @@ class PriceWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return PriceWidgetToPriceClientInterface
+     * @return \SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToPriceClientInterface
      */
     public function getPriceClient(): PriceWidgetToPriceClientInterface
     {

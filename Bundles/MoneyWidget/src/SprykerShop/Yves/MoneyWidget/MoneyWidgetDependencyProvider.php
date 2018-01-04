@@ -15,7 +15,6 @@ use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CurrencyWidget\Plugin\CurrencyPlugin;
-use SprykerShop\Yves\CurrencyWidget\Plugin\CurrencyPluginInterface;
 
 class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -111,9 +110,9 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addCurrencyPlugin(Container $container)
     {
@@ -125,7 +124,7 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return CurrencyPluginInterface
+     * @return \SprykerShop\Yves\CurrencyWidget\Plugin\CurrencyPluginInterface
      */
     protected function getCurrencyPlugin()
     {

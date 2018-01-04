@@ -1,19 +1,19 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CurrencyWidget\Plugin\ShopLayout;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CurrencyWidget\CurrencyWidgetFactory;
 use SprykerShop\Yves\ShopLayout\Dependency\Plugin\CurrencyWidget\CurrencyWidgetPluginInterface;
 
 /**
  * Class CurrencyWidgetPlugin
  *
- * @method CurrencyWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\CurrencyWidget\CurrencyWidgetFactory getFactory()
  */
 class CurrencyWidgetPlugin extends AbstractWidgetPlugin implements CurrencyWidgetPluginInterface
 {

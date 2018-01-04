@@ -9,15 +9,13 @@ namespace SprykerShop\Yves\ErrorPage\Plugin\ExceptionHandler;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ErrorPage\Dependency\Plugin\ExceptionHandlerPluginInterface;
-use SprykerShop\Yves\ErrorPage\ErrorPageConfig;
-use SprykerShop\Yves\ErrorPage\ErrorPageFactory;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * @method ErrorPageFactory getFactory()
- * @method ErrorPageConfig getConfig()
+ * @method \SprykerShop\Yves\ErrorPage\ErrorPageFactory getFactory()
+ * @method \SprykerShop\Yves\ErrorPage\ErrorPageConfig getConfig()
  */
 class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements ExceptionHandlerPluginInterface
 {

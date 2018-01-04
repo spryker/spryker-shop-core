@@ -1,16 +1,16 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductNewPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCatalogClientInterface;
-use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorageClientInterface;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientInterface;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorageClientInterface;
 
 class ProductNewPageFactory extends AbstractFactory
 {
@@ -47,7 +47,7 @@ class ProductNewPageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductNewPageToCatalogClientInterface
+     * @return \SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCatalogClientInterface
      */
     public function getCatalogClient(): ProductNewPageToCatalogClientInterface
     {

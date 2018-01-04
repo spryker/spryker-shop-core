@@ -9,8 +9,6 @@ namespace SprykerShop\Yves\CartPage\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
-use Generated\Shared\Transfer\StorageAttributeMapTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
@@ -24,20 +22,20 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     const PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
 
     /**
-     * @var CartPageToProductStorageClientInterface
+     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface
      */
     protected $productStorageClient;
 
     /**
-     * @var CartItemsMapperInterface
+     * @var \SprykerShop\Yves\CartPage\Mapper\CartItemsMapperInterface
      */
     protected $cartItemsAvailabilityMapper;
 
     /**
      * CartItemsAttributeMapper constructor.
      *
-     * @param CartPageToProductStorageClientInterface $productStorageClient
-     * @param CartItemsMapperInterface $cartItemsAvailabilityMapper
+     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface $productStorageClient
+     * @param \SprykerShop\Yves\CartPage\Mapper\CartItemsMapperInterface $cartItemsAvailabilityMapper
      */
     public function __construct(CartPageToProductStorageClientInterface $productStorageClient, CartItemsMapperInterface $cartItemsAvailabilityMapper)
     {
@@ -46,7 +44,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
-     * @param ArrayObject $items
+     * @param \ArrayObject $items
      * @param string $localeName
      *
      * @return array

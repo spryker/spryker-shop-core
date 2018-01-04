@@ -1,18 +1,17 @@
 <?php
 
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\PriceWidget\Plugin\ShopLayout;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\PriceWidget\PriceWidgetFactory;
 use SprykerShop\Yves\ShopLayout\Dependency\Plugin\PriceWidget\PriceModeSwitcherWidgetPluginInterface;
 
 /**
- * @method PriceWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\PriceWidget\PriceWidgetFactory getFactory()
  */
 class PriceModeSwitcherWidgetPlugin extends AbstractWidgetPlugin implements PriceModeSwitcherWidgetPluginInterface
 {

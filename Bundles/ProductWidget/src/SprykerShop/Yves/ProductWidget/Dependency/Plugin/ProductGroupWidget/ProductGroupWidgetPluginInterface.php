@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductGroupWidgetPluginInterface extends WidgetPluginInterface
 {
-
     const NAME = 'ProductGroupWidgetPlugin';
 
     /**
@@ -20,5 +19,4 @@ interface ProductGroupWidgetPluginInterface extends WidgetPluginInterface
      * @return void
      */
     public function initialize(int $idProductAbstract): void;
-
 }

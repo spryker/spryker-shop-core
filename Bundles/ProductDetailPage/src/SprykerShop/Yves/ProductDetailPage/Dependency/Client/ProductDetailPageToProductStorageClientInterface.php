@@ -7,9 +7,6 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
-use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
-
 interface ProductDetailPageToProductStorageClientInterface
 {
     /**

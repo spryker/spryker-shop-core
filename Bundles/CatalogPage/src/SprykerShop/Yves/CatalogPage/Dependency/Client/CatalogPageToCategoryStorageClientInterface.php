@@ -7,15 +7,13 @@
 
 namespace SprykerShop\Yves\CatalogPage\Dependency\Client;
 
-use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
-
 interface CatalogPageToCategoryStorageClientInterface
 {
     /**
      * @param int $idCategoryNode
      * @param string $localeName
      *
-     * @return CategoryNodeStorageTransfer
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
     public function getCategoryNodeById($idCategoryNode, $localeName);
 }

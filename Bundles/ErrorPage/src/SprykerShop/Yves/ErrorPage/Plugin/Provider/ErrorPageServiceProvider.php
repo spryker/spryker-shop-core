@@ -43,8 +43,6 @@ class ErrorPageServiceProvider extends AbstractPlugin implements ServiceProvider
     /**
      * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function onKernelException(GetResponseForExceptionEvent $event)

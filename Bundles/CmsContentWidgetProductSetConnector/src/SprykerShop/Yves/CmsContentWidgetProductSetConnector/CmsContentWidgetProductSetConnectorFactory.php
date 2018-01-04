@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CmsContentWidgetProductSetConnector;
@@ -39,9 +39,9 @@ class CmsContentWidgetProductSetConnectorFactory extends SprykerCmsContentWidget
     }
 
     /**
-     * @return CmsContentWidgetProductSetConnectorToProductSetStorageClientInterface
+     * @return \SprykerShop\Yves\CmsContentWidgetProductSetConnector\Dependency\Client\CmsContentWidgetProductSetConnectorToProductSetStorageClientInterface
      */
-    public function getProductSetStorageClient() : CmsContentWidgetProductSetConnectorToProductSetStorageClientInterface
+    public function getProductSetStorageClient(): CmsContentWidgetProductSetConnectorToProductSetStorageClientInterface
     {
         return $this->getProvidedDependency(CmsContentWidgetProductSetConnectorDependencyProvider::CLIENT_PRODUCT_SET_STORAGE);
     }

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -11,13 +12,12 @@ use Spryker\Yves\Kernel\Container;
 
 class NavigationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     public const CLIENT_NAVIGATION_STORAGE = 'CLIENT_NAVIGATION_STORAGE';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     public function provideDependencies(Container $container)
     {
@@ -27,9 +27,9 @@ class NavigationWidgetDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addNavigationStorageClient($container)
     {
@@ -39,5 +39,4 @@ class NavigationWidgetDependencyProvider extends AbstractBundleDependencyProvide
 
         return $container;
     }
-
 }

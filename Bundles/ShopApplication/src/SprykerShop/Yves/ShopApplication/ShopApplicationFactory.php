@@ -1,21 +1,19 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ShopApplication;
 
 use Silex\Provider\TwigServiceProvider;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
 use Spryker\Yves\Kernel\Widget\WidgetFactory;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
 use SprykerShop\Yves\ShopApplication\Twig\RoutingHelper;
-use SprykerShop\Yves\ShopApplication\Twig\RoutingHelperInterface;
 use SprykerShop\Yves\ShopApplication\Twig\TwigRenderer;
 
 class ShopApplicationFactory extends AbstractFactory
@@ -61,7 +59,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return WidgetCollection
+     * @return \Spryker\Yves\Kernel\Widget\WidgetCollection
      */
     public function createWidgetCollection()
     {
@@ -77,7 +75,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return RoutingHelperInterface
+     * @return \SprykerShop\Yves\ShopApplication\Twig\RoutingHelperInterface
      */
     protected function createRoutingHelper()
     {
@@ -85,7 +83,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStore()
     {
@@ -93,7 +91,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return ShopApplicationToUtilTextServiceInterface
+     * @return \SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface
      */
     protected function getUtilTextService(): ShopApplicationToUtilTextServiceInterface
     {

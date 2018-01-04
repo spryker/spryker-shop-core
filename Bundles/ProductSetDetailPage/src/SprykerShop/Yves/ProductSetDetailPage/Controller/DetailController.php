@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductSetDetailPage\Controller;
@@ -15,7 +15,6 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
  */
 class DetailController extends AbstractController
 {
-
     const PARAM_ATTRIBUTE = 'attributes';
 
     /**
@@ -33,5 +32,4 @@ class DetailController extends AbstractController
 
         return $this->view($data, $this->getFactory()->getProductSetDetailPageWidgetPlugins());
     }
-
 }

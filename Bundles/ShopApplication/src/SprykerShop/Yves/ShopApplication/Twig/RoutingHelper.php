@@ -20,19 +20,19 @@ class RoutingHelper implements RoutingHelperInterface
     protected $app;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
-     * @var ShopApplicationToUtilTextServiceInterface
+     * @var \SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface
      */
     protected $utilTextService;
 
     /**
      * @param \Silex\Application $app
-     * @param Store $store
-     * @param ShopApplicationToUtilTextServiceInterface $utilTextService
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface $utilTextService
      */
     public function __construct(Application $app, Store $store, ShopApplicationToUtilTextServiceInterface $utilTextService)
     {
@@ -43,6 +43,8 @@ class RoutingHelper implements RoutingHelperInterface
 
     /**
      * @param string $destination
+     *
+     * @throws \LogicException
      *
      * @return string
      */

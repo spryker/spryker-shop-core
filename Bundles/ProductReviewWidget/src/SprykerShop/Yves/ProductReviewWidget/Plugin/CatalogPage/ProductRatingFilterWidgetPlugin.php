@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,18 +10,16 @@ namespace SprykerShop\Yves\ProductReviewWidget\Plugin\CatalogPage;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CatalogPage\Dependency\Plugin\ProductReviewWidget\ProductRatingFilterWidgetPluginInterface;
-use SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ProductReviewWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
 class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements ProductRatingFilterWidgetPluginInterface
 {
-
     /**
-     * @param RangeSearchResultTransfer $rangeSearchResultTransfer
-     * @param Request $request
+     * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeSearchResultTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      */
@@ -50,8 +48,8 @@ class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements Pr
     }
 
     /**
-     * @param RangeSearchResultTransfer $rangeSearchResultTransfer
-     * @param Request $request
+     * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeSearchResultTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return float|null
      */

@@ -11,7 +11,6 @@ use ArrayObject;
 
 interface CartVariantAttributeMapperPluginInterface
 {
-
     /**
      * @api
      *

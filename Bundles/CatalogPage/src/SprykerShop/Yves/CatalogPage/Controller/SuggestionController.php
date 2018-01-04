@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CatalogPage\Controller;
@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SuggestionController extends AbstractController
 {
-
     const PARAM_SEARCH_QUERY = 'q';
 
     /**
@@ -41,5 +40,4 @@ class SuggestionController extends AbstractController
             'suggestion' => $this->renderView('@CatalogPage/suggestion/index.twig', $searchResults)->getContent(),
         ]);
     }
-
 }

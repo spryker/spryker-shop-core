@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductSetListPage\Controller;
@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ListController extends AbstractController
 {
-
     const PARAM_LIMIT = 'limit';
     const PARAM_OFFSET = 'offset';
     const DEFAULT_LIMIT = 100;
@@ -36,5 +35,4 @@ class ListController extends AbstractController
 
         return $this->view($searchResults, $this->getFactory()->getProductSetListPageWidgets());
     }
-
 }

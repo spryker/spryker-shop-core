@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget\Plugin\Twig;
 
+use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\SpyCmsBlockTransfer;
@@ -81,7 +82,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     /**
      * @param array $blockOptions
      *
-     * @return SpyCmsBlockTransfer[]
+     * @return \Generated\Shared\Transfer\SpyCmsBlockTransfer[]
      */
     protected function getBlockDataByOptions(array &$blockOptions)
     {
@@ -169,7 +170,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     }
 
     /**
-     * @param SpyCmsBlockTransfer $cmsBlockData
+     * @param \Generated\Shared\Transfer\SpyCmsBlockTransfer $cmsBlockData
      *
      * @return bool
      */
@@ -189,7 +190,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     }
 
     /**
-     * @param SpyCmsBlockTransfer $spyCmsBlockTransfer
+     * @param \Generated\Shared\Transfer\SpyCmsBlockTransfer $spyCmsBlockTransfer
      *
      * @return bool
      */
@@ -199,7 +200,6 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
 
         if ($spyCmsBlockTransfer->getValidFrom() !== null) {
             $validFrom = new DateTime($spyCmsBlockTransfer->getValidFrom());
-
 
             if ($dateToCompare < $validFrom) {
                 return false;
@@ -222,7 +222,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
      *
      * @return array
      */
-    protected function getPlaceholders(\ArrayObject $mappings)
+    protected function getPlaceholders(ArrayObject $mappings)
     {
         $placeholders = [];
         foreach ($mappings as $mapping) {
@@ -235,7 +235,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     /**
      * @param array $data
      *
-     * @return SpyCmsBlockTransfer
+     * @return \Generated\Shared\Transfer\SpyCmsBlockTransfer
      */
     protected function getCmsBlockTransfer(array $data)
     {

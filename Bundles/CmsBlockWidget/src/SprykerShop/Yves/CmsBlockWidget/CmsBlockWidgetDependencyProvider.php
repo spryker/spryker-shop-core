@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -8,19 +9,17 @@ namespace SprykerShop\Yves\CmsBlockWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge;
 
 class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const TWIG_FUNCTION_PLUGINS = 'TWIG_FUNCTION_PLUGINS';
     const CLIENT_CMS_BLOCK_STORAGE = 'CLIENT_CMS_BLOCK_STORAGE';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     public function provideDependencies(Container $container)
     {
@@ -31,9 +30,9 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addTwigFunctionPlugins(Container $container)
     {
@@ -45,7 +44,7 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return TwigFunctionPluginInterface[]
+     * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
      */
     protected function getTwigFunctionPlugins()
     {
@@ -53,9 +52,9 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addCmsBlockStorageClient(Container $container)
     {
@@ -65,5 +64,4 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

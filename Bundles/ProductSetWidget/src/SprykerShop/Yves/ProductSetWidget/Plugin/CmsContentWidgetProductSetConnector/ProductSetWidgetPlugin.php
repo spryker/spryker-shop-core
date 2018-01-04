@@ -1,20 +1,18 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductSetWidget\Plugin\CmsContentWidgetProductSetConnector;
 
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
-use Generated\Shared\Transfer\ProductSetStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CmsContentWidgetProductSetConnector\Dependency\Plugin\ProductSetWidget\ProductSetWidgetPluginInterface;
 
 class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetWidgetPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
@@ -43,5 +41,4 @@ class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetW
     {
         return '@ProductSetWidget/_cms-content-widget/product-set-widget.twig';
     }
-
 }

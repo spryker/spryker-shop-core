@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CheckoutPage\Form;
@@ -205,7 +205,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return CheckoutPageToCustomerClientInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
      */
     protected function getCustomerClient(): CheckoutPageToCustomerClientInterface
     {
@@ -221,7 +221,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return StepEngineFormDataProviderInterface|null
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null
      */
     protected function getAddressFormDataProvider()
     {

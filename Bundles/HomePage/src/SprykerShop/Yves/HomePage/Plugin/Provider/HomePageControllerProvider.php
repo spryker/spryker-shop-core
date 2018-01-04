@@ -1,18 +1,17 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\HomePage\Plugin\Provider;
 
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 use Silex\Application;
+use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 class HomePageControllerProvider extends AbstractYvesControllerProvider
 {
-
     const ROUTE_HOME = 'home';
 
     /**
@@ -28,5 +27,4 @@ class HomePageControllerProvider extends AbstractYvesControllerProvider
             ->assert('root', $allowedLocalesPattern)
             ->value('root', '');
     }
-
 }

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CartPage\Plugin\Provider;
@@ -15,9 +15,8 @@ use SprykerShop\Yves\CartPage\Handler\CartItemHandlerInterface;
 
 class AttributeVariantsProvider
 {
-
     /**
-     * @var CartVariantAttributeMapperPluginInterface
+     * @var \SprykerShop\Yves\CartPage\Dependency\Plugin\CartVariantAttributeMapperPluginInterface
      */
     protected $cartVariantAttributeMapperPlugin;
 
@@ -29,8 +28,8 @@ class AttributeVariantsProvider
     /**
      * AttributeVariantsProvider constructor.
      *
-     * @param CartVariantAttributeMapperPluginInterface $cartVariantAttributeMapperPlugin
-     * @param CartItemHandlerInterface $cartItemHandler
+     * @param \SprykerShop\Yves\CartPage\Dependency\Plugin\CartVariantAttributeMapperPluginInterface $cartVariantAttributeMapperPlugin
+     * @param \SprykerShop\Yves\CartPage\Handler\CartItemHandlerInterface $cartItemHandler
      */
     public function __construct(
         CartVariantAttributeMapperPluginInterface $cartVariantAttributeMapperPlugin,
@@ -69,7 +68,7 @@ class AttributeVariantsProvider
      *
      * @return true
      */
-    public function tryToReplaceItem($sku, $quantity, $selectedAttributes, ArrayObject $items, $groupKey = null, $optionValueIds = [], $localeName)
+    public function tryToReplaceItem($sku, $quantity, $selectedAttributes, ArrayObject $items, $groupKey, $optionValueIds, $localeName)
     {
         $productViewTransfer = $this->cartItemHandler->getProductViewTransfer($sku, $selectedAttributes, $items, $localeName);
 

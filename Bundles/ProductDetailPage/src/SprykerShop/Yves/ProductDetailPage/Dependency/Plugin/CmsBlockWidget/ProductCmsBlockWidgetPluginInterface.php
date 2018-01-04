@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductCmsBlockWidgetPluginInterface extends WidgetPluginInterface
 {
-
     const NAME = 'ProductCmsBlockWidgetPlugin';
 
     /**
@@ -23,5 +22,4 @@ interface ProductCmsBlockWidgetPluginInterface extends WidgetPluginInterface
      * @return void
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void;
-
 }

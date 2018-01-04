@@ -18,7 +18,6 @@ interface CmsContentWidgetProductConnectorToProductStorageClientInterface
      */
     public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
 
-
     /**
      * @param int $idProductAbstract
      * @param string $localeName

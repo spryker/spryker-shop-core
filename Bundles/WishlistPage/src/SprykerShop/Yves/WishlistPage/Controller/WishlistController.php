@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\WishlistPage\Controller;
@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
 use SprykerShop\Yves\WishlistPage\Plugin\Provider\WishlistPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -268,9 +268,9 @@ class WishlistController extends AbstractController
     }
 
     /**
-     * @param WishlistOverviewResponseTransfer $wishlistOverviewResponse
+     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewResponse
      *
-     * @return ProductViewTransfer[]
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
     protected function getWishlistItems(WishlistOverviewResponseTransfer $wishlistOverviewResponse): array
     {
@@ -283,9 +283,9 @@ class WishlistController extends AbstractController
     }
 
     /**
-     * @param WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return ProductViewTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     protected function createProductView(WishlistItemTransfer $wishlistItemTransfer)
     {

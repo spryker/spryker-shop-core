@@ -55,6 +55,8 @@ class PriceModeSwitchController extends AbstractController
     /**
      * @param string $priceMode
      *
+     * @throws \SprykerShop\Yves\PriceWidget\Exception\UnknownPriceModeException
+     *
      * @return void
      */
     protected function switchPriceMode($priceMode)

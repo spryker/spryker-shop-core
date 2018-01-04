@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 interface ProductNewPageToCatalogClientInterface
 {
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */

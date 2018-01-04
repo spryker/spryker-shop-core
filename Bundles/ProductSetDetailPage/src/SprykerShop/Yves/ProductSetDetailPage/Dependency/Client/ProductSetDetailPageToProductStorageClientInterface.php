@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductSetDetailPage\Dependency\Client;
 
 interface ProductSetDetailPageToProductStorageClientInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param string $localeName

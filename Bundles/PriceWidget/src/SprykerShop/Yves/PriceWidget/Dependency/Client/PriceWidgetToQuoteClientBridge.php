@@ -33,7 +33,7 @@ class PriceWidgetToQuoteClientBridge implements PriceWidgetToQuoteClientInterfac
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */

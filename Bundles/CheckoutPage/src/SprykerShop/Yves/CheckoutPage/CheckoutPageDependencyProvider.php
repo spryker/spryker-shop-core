@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,7 +12,6 @@ use Spryker\Yves\Checkout\CheckoutDependencyProvider as SprykerCheckoutDependenc
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
-use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientBridge;
@@ -28,10 +27,8 @@ use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentFormDataProviderPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentHandlerPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
-use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\CustomerStepHandler;
 use SprykerShop\Yves\MoneyWidget\Plugin\MoneyPlugin;
-use Symfony\Component\Form\FormTypeInterface;
 
 class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -90,7 +87,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addSubFormPluginCollection($container);
         $container = $this->addPaymentMethodHandlerPluginCollection($container);
-        $container = $this->AddCustomerStepHandlerPlugin($container);
+        $container = $this->addCustomerStepHandlerPlugin($container);
         $container = $this->addShipmentHandlerPluginCollection($container);
         $container = $this->addShipmentFormDataProviderPlugin($container);
         $container = $this->addMoneyPlugin($container);
@@ -292,7 +289,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return FormTypeInterface[]
+     * @return \Symfony\Component\Form\FormTypeInterface[]
      */
     protected function getCustomerStepSubForms()
     {
@@ -314,7 +311,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return FormTypeInterface[]
+     * @return \Symfony\Component\Form\FormTypeInterface[]
      */
     protected function getAddressStepSubForms()
     {
@@ -336,9 +333,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return StepEngineFormDataProviderInterface|null
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null
      */
     protected function getAddressStepFormDataProvider(Container $container)
     {
@@ -378,7 +375,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function AddCustomerStepHandlerPlugin(Container $container): Container
+    protected function addCustomerStepHandlerPlugin(Container $container): Container
     {
         $container[self::PLUGIN_CUSTOMER_STEP_HANDLER] = function () {
             return new CustomerStepHandler();
@@ -566,9 +563,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return CustomerPageToCustomerClientInterface
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface
      */
     protected function getCustomerClient(Container $container)
     {
@@ -576,7 +573,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStore()
     {

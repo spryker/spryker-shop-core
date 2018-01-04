@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CatalogPage\Dependency\Client;
 
-use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
-
 class CatalogPageToCategoryStorageClientBridge implements CatalogPageToCategoryStorageClientInterface
 {
     /**
@@ -28,7 +26,7 @@ class CatalogPageToCategoryStorageClientBridge implements CatalogPageToCategoryS
      * @param int $idCategoryStorageNode
      * @param string $localeName
      *
-     * @return CategoryNodeStorageTransfer
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
     public function getCategoryNodeById($idCategoryStorageNode, $localeName)
     {

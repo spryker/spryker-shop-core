@@ -23,8 +23,8 @@ class ProductLabelWidgetToProductLabelStorageClientBridge implements ProductLabe
     }
 
     /**
-     * @param $idProductAbstract
-     * @param $localeName
+     * @param int $idProductAbstract
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */

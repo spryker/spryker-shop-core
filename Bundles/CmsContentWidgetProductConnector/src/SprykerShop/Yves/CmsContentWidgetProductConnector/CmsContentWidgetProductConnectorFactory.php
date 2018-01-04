@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -21,6 +21,7 @@ class CmsContentWidgetProductConnectorFactory extends SprykerCmsContentWidgetPro
     {
         return new WidgetContainerRegistry();
     }
+
     /**
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
      */
@@ -38,9 +39,9 @@ class CmsContentWidgetProductConnectorFactory extends SprykerCmsContentWidgetPro
     }
 
     /**
-     * @return CmsContentWidgetProductConnectorToProductStorageClientInterface
+     * @return \SprykerShop\Yves\CmsContentWidgetProductConnector\Dependency\Client\CmsContentWidgetProductConnectorToProductStorageClientInterface
      */
-    public function getProductStorageClient() : CmsContentWidgetProductConnectorToProductStorageClientInterface
+    public function getProductStorageClient(): CmsContentWidgetProductConnectorToProductStorageClientInterface
     {
         return $this->getProvidedDependency(CmsContentWidgetProductConnectorDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }

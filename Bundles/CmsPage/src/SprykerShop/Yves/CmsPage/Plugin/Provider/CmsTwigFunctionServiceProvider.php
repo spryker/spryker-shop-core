@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,18 +10,18 @@ namespace SprykerShop\Yves\CmsPage\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CmsPage\CmsPageFactory;
+use Twig_Environment;
+use Twig_SimpleFunction;
 
 /**
- * @method CmsPageFactory getFactory()
+ * @method \SprykerShop\Yves\CmsPage\CmsPageFactory getFactory()
  */
 class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const CMS_PREFIX_KEY = 'generated.cms';
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -35,15 +36,15 @@ class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServicePr
 
     /**
      * @param \Twig_Environment $twig
-     * @param Application $application
+     * @param \Silex\Application $application
      *
      * @return \Twig_Environment
      */
-    protected function registerCmsTwigFunction(\Twig_Environment $twig, Application $application)
+    protected function registerCmsTwigFunction(Twig_Environment $twig, Application $application)
     {
         $twig->addFunction(
             'spyCms',
-            new \Twig_SimpleFunction('spyCms', function (array $context, $identifier) use ($application) {
+            new Twig_SimpleFunction('spyCms', function (array $context, $identifier) use ($application) {
                 $placeholders = $context['_view']['placeholders'];
 
                 $translation = '';
@@ -88,7 +89,7 @@ class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServicePr
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

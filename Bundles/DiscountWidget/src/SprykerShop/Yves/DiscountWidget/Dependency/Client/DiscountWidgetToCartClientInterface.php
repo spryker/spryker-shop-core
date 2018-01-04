@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DiscountWidgetToCartClientInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

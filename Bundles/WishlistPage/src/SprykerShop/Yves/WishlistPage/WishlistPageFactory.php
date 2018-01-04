@@ -1,19 +1,17 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\WishlistPage;
 
 use Generated\Shared\Transfer\WishlistTransfer;
-use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\WishlistPage\Business\MoveToCartHandler;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface;
-use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToProductStorageClientInterface;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface;
 use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
 use SprykerShop\Yves\WishlistPage\Form\DataProvider\AddAllAvailableProductsToCartFormDataProvider;
@@ -112,7 +110,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return WishlistPageToProductStorageClientInterface
+     * @return \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToProductStorageClientInterface
      */
     public function getProductStorageClient()
     {
@@ -120,7 +118,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductViewExpanderPluginInterface[]
+     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     public function getWishlistItemExpanderPlugins()
     {

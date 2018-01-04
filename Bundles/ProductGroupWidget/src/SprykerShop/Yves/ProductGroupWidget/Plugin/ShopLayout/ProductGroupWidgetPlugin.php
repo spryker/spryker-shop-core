@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductGroupWidget\Plugin\ShopLayout;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductGroupWidget\ProductGroupWidgetFactory;
 use SprykerShop\Yves\ShopLayout\Dependency\Plugin\ProductGroupWidget\ProductGroupWidgetPluginInterface;
 
 /**
  * Class ProductGroupWidgetPlugin
  *
- * @method ProductGroupWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\ProductGroupWidget\ProductGroupWidgetFactory getFactory()
  */
 class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGroupWidgetPluginInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param string $template
@@ -54,7 +52,7 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
     /**
      * @param int $idProductAbstract
      *
-     * @return ProductViewTransfer[]
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
     protected function getProductGroups($idProductAbstract)
     {

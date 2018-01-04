@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface AvailabilityWidgetPluginInterface extends WidgetPluginInterface
 {
-
     const NAME = 'AvailabilityWidgetPlugin';
 
     /**
@@ -21,5 +20,4 @@ interface AvailabilityWidgetPluginInterface extends WidgetPluginInterface
      * @return void
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void;
-
 }

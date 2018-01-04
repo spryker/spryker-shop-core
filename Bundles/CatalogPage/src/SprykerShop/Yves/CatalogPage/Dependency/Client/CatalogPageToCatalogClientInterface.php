@@ -29,7 +29,7 @@ interface CatalogPageToCatalogClientInterface
     public function catalogSuggestSearch($searchString, array $requestParameters = []);
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */
@@ -37,9 +37,9 @@ interface CatalogPageToCatalogClientInterface
 
     /**
      * @param string $mode
-     * @param Response $response
+     * @param \Symfony\Component\HttpFoundation\Response $response
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function setCatalogViewMode($mode, Response $response);
 }

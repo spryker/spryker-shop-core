@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -13,7 +13,6 @@ use SprykerShop\Yves\ProductSetDetailPage\Dependency\ProductSetWidget\ProductSet
 
 class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetWidgetPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
@@ -42,5 +41,4 @@ class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetW
     {
         return '@ProductSetWidget/_product-set-detail-page/product-set-widget.twig';
     }
-
 }
