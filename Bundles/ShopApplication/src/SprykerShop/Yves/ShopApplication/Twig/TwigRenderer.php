@@ -8,19 +8,18 @@
 namespace SprykerShop\Yves\ShopApplication\Twig;
 
 use Spryker\Shared\Kernel\Communication\Application;
-use Spryker\Yves\Application\Routing\Helper;
 
 class TwigRenderer implements TwigRendererInterface
 {
     /**
-     * @var \Spryker\Yves\Application\Routing\Helper
+     * @var RoutingHelperInterface
      */
     protected $routingHelper;
 
     /**
-     * @param \Spryker\Yves\Application\Routing\Helper $routingHelper
+     * @param RoutingHelperInterface $routingHelper
      */
-    public function __construct(Helper $routingHelper)
+    public function __construct(RoutingHelperInterface $routingHelper)
     {
         $this->routingHelper = $routingHelper;
     }
