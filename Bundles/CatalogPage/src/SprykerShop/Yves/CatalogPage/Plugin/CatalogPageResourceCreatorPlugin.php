@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CatalogPage\Plugin;
 
+use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Zed\Category\CategoryConfig;
 use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
@@ -23,7 +23,7 @@ class CatalogPageResourceCreatorPlugin extends AbstractPlugin implements Resourc
      */
     public function getType()
     {
-        return CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
+        return CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME;
     }
 
     /**

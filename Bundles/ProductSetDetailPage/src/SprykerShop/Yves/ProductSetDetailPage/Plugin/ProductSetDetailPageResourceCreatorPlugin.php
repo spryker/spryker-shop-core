@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductSetDetailPage\Plugin;
 
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Silex\Application;
+use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController;
 use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
@@ -23,7 +24,7 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
      */
     public function getType()
     {
-        return 'product_set';
+        return ProductSetStorageConstants::PRODUCT_SET_RESOURCE_NAME;
     }
 
     /**

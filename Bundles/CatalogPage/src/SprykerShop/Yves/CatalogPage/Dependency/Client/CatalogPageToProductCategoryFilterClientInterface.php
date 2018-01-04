@@ -10,14 +10,6 @@ namespace SprykerShop\Yves\CatalogPage\Dependency\Client;
 interface CatalogPageToProductCategoryFilterClientInterface
 {
     /**
-     * @param int $idCategory
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function getProductCategoryFiltersForCategoryByLocale($idCategory, $localeName);
-
-    /**
      * @param array $facets
      * @param array $productCategoryFilters
      *

@@ -23,17 +23,6 @@ class CatalogPageToProductCategoryFilterClientBridge implements CatalogPageToPro
     }
 
     /**
-     * @param int $idCategory
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function getProductCategoryFiltersForCategoryByLocale($idCategory, $localeName)
-    {
-        return $this->productCategoryFilterClient->getProductCategoryFiltersForCategoryByLocale($idCategory, $localeName);
-    }
-
-    /**
      * @param array $facets
      * @param array $productCategoryFilters
      *

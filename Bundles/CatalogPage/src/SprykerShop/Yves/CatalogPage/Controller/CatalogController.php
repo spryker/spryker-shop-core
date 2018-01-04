@@ -34,6 +34,7 @@ class CatalogController extends AbstractController
     {
         $searchString = $request->query->get('q', '');
         $idCategoryNode = $categoryNode['node_id'];
+        $idCategory = $categoryNode['id_category'];
 
         $parameters = $request->query->all();
         $parameters[PageIndexMap::CATEGORY] = $idCategoryNode;
@@ -43,7 +44,7 @@ class CatalogController extends AbstractController
             ->getCatalogClient()
             ->catalogSearch($searchString, $parameters);
 
-        $searchResults = $this->updateFacetFiltersByCategory($searchResults, $idCategoryNode);
+        $searchResults = $this->updateFacetFiltersByCategory($searchResults, $idCategory);
 
         $metaAttributes = [
             'idCategory' => $idCategoryNode,
@@ -123,21 +124,25 @@ class CatalogController extends AbstractController
 
     /**
      * @param array $searchResults
-     * @param int $idCategoryNode
+     * @param int $idCategory
      *
      * @return array
      */
-    protected function updateFacetFiltersByCategory(array $searchResults, $idCategoryNode)
+    protected function updateFacetFiltersByCategory(array $searchResults, $idCategory)
     {
         if (!isset($searchResults[FacetResultFormatterPlugin::NAME])) {
             return $searchResults;
         }
 
-        $productCategoryFilterClient = $this->getFactory()->getProductCategoryFilterClient();
-        $searchResults[FacetResultFormatterPlugin::NAME] = $productCategoryFilterClient
+        $productCategoryFilters = $this->getFactory()->getProductCategoryFilterStorageClient()->getProductCategoryFilterByIdCategory($idCategory);
+        if (!$productCategoryFilters) {
+            return $searchResults;
+        }
+
+        $searchResults[FacetResultFormatterPlugin::NAME] = $this->getFactory()->getProductCategoryFilterClient()
             ->updateFacetsByCategory(
                 $searchResults[FacetResultFormatterPlugin::NAME],
-                $productCategoryFilterClient->getProductCategoryFiltersForCategoryByLocale($idCategoryNode, $this->getLocale())
+                $productCategoryFilters->getFilterData()
             );
 
         return $searchResults;

@@ -13,6 +13,7 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientBri
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryStorageClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterClientBridge;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterStorageClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientBridge;
 
 class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -23,6 +24,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_CATALOG = 'CLIENT_CATALOG';
     const PLUGIN_CATALOG_PAGE_WIDGETS = 'PLUGIN_CATALOG_PAGE_WIDGETS';
     const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
+    const CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE = 'CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -36,6 +38,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleClient($container);
         $container = $this->addCatalogClient($container);
         $container = $this->addProductCategoryFilterClient($container);
+        $container = $this->addProductCategoryFilterStorageClient($container);
         $container = $this->addCatalogPageWidgetPlugins($container);
 
         return $container;
@@ -110,6 +113,21 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductCategoryFilterStorageClient(Container $container)
+    {
+        $container[static::CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE] = function (Container $container) {
+            return new CatalogPageToProductCategoryFilterStorageClientBridge($container->getLocator()->productCategoryFilterStorage()->client());
+        };
+
+        return $container;
+    }
+
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

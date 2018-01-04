@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\RedirectPage\Plugin;
 
+use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
 
@@ -20,7 +21,7 @@ class RedirectResourceCreatorPlugin extends AbstractPlugin implements ResourceCr
      */
     public function getType()
     {
-        return 'redirect';
+        return UrlStorageConstants::REDIRECT_RESOURCE_NAME;
     }
 
     /**
