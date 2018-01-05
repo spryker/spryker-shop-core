@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CmsBlockWidget\Plugin\Twig;
 use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\SpyCmsBlockTransfer;
+use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 use Silex\Application;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
@@ -82,7 +82,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     /**
      * @param array $blockOptions
      *
-     * @return \Generated\Shared\Transfer\SpyCmsBlockTransfer[]
+     * @return \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer[]
      */
     protected function getBlockDataByOptions(array &$blockOptions)
     {
@@ -170,11 +170,11 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockTransfer $cmsBlockData
+     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockData
      *
      * @return bool
      */
-    protected function validateBlock(SpyCmsBlockTransfer $cmsBlockData)
+    protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData)
     {
         return !($cmsBlockData === null);
     }
@@ -190,11 +190,11 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockTransfer $spyCmsBlockTransfer
+     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $spyCmsBlockTransfer
      *
      * @return bool
      */
-    protected function validateDates(SpyCmsBlockTransfer $spyCmsBlockTransfer)
+    protected function validateDates(SpyCmsBlockEntityTransfer $spyCmsBlockTransfer)
     {
         $dateToCompare = new DateTime();
 
@@ -235,10 +235,10 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\SpyCmsBlockTransfer
+     * @return \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer
      */
     protected function getCmsBlockTransfer(array $data)
     {
-        return (new SpyCmsBlockTransfer())->fromArray($data, true);
+        return (new SpyCmsBlockEntityTransfer())->fromArray($data, true);
     }
 }
