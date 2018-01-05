@@ -37,6 +37,14 @@ cite {
     font-style: italic;
 }
 
+small {
+    @include font-size(small);
+}
+
+big {
+    @include font-size(big);
+}
+
 p,
 blockquote,
 iframe {
@@ -59,21 +67,6 @@ input[type=password] {
 
     &:focus {
         border-color: $color-dark;
-    }
-}
-
-input[type=button],
-input[type=submit],
-button {
-    @include transition(background-color);
-    padding: spacing(.5) spacing(2);
-    border-radius: spacing();
-    background-color: $color-main;
-    color: $color-white;
-
-    &:hover,
-    &:focus {
-        background-color: $color-main-dark;
     }
 }
 

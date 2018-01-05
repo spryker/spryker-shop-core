@@ -1,0 +1,11 @@
+{% extends model('component') %}
+
+{% set name = 'thumbnail' %}
+{% set tag = 'span' %}
+
+{% block attributes %}{% endblock %}
+
+{% block body %}
+    <img class="{{name}}__image" {{block('renderAttributes')}} />
+{% endblock %}
+

@@ -1,0 +1,49 @@
+{% extends template('base') %}
+
+{% set name = 'layout-main' %}
+{% set tag = name %}
+
+{% set locale = app.locale | slice(0, 2) %}
+{% set title = title | default('global.spryker.shop') | trans %}
+{% set metaDescription = metaDescription | default('') | trans %}
+{% set metaKeywords = metaKeywords | default('') | trans %}
+
+{% block body %}
+    {% block outside %}{% endblock %}
+
+    {# {% include organism('sidebar') only %} #}
+    
+    <div class="grid grid--container">
+        <div class="box box--borderless">
+            {% block page_start %}{% endblock %}
+
+            {% include organism('header') only %}
+
+            {% block breadcrumb %}
+                <div class="box">
+                    <nav role="navigation">
+                        <ul class="breadcrumbs">
+                            {% block breadcrumbItems %}{% endblock %}
+                        </ul>
+                    </nav>
+                </div>
+            {% endblock %}
+
+            {% block pageTitle %}{% endblock %}
+
+            <main>
+                {% block content %}{% endblock %}
+            </main>
+
+            {% block footer %}
+                {% include organism('footer') only %}
+            {% endblock %}
+
+            <p class="align-center">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                <br>Aenean commodo ligula eget dolor. Aenean massa.
+                <br>&copy; ACME Company
+            </p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends model('component') %}
+
+{% set name = 'product-card' %}
+
+{% set productName = data.name %}
+{% set productAbstractId = data.abstractId %}
+{% set productUrl = data.url %}
+{% set productImageUrl = data.imageUrl %}
+{% set productPrice = data.price %}
+{% set productOriginalPrice = data.originalPrice | default(null) %}
+
+{% block body %}
+    <div class="{{name}}__container box box--stretch">
+        {% block image %}
+            <a href="{{ productUrl }}">
+                {% include atom('thumbnail') with {
+                    attributes: {
+                        alt: productName,
+                        src: productImageUrl,
+                        title: productName
+                    }
+                } only %}
+            </a>
+        {% endblock %}
+
+        {% block labels %}
+            {{ widget('ProductAbstractLabelWidgetPlugin', productAbstractId) }}
+        {% endblock %}
+
+        {% block groups %}
+            {{ widget('ProductGroupWidgetPlugin', productAbstractId) }}
+        {% endblock %}
+
+        {% block name %}
+            <strong>{{ productName }}</strong>
+        {% endblock %}
+
+        {% block rating %}
+            {{ widget('ProductAbstractReviewWidgetPlugin', productAbstractId) }}
+        {% endblock %}
+
+        {% block price %}
+            <p>
+                {% include molecule('price') with {
+                    data: {
+                        amount: productPrice | money,
+                        originalAmount: productOriginalPrice is empty ? null : (productOriginalPrice | money)
+                    }
+                } only %}
+            </p>
+        {% endblock %}
+
+        {% block actionsContainer %}
+            <div class="{{name}}__actions-container">
+                {% block actions %}
+                    <a class="button button--expand" href="{{ productUrl }}">{{ 'product.view' | trans }} &raquo;</a>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

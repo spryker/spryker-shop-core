@@ -29,16 +29,4 @@
             {% include organism('navigation') %}
         {% endblock %}
     </div>
-    
-    <div class="box">
-        {% block breadcrumb %}
-            <nav role="navigation">
-                <ul class="breadcrumbs">
-                    {% block breadcrumbItems %}{% endblock %}
-                </ul>
-            </nav>
-        {% endblock %}
-
-        {% block pageTitle %}{% endblock %}
-    </div>
 {% endblock %}

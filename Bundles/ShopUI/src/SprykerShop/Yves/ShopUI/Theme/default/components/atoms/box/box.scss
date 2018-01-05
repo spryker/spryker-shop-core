@@ -8,5 +8,9 @@
         &--borderless {
             border-color: $color-transparent;
         }
+
+        &--stretch {
+            height: calc(100% - #{spacing(2)});
+        }
     }
 }

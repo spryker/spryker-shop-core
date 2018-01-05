@@ -1,9 +1,14 @@
 {% extends model('component') %}
 
 {% set name = 'price' %}
+
 {% set amount = data.amount %}
+{% set originalAmount = data.originalAmount | default(null) %}
 
 {% block body %}
-    <span class="stat">{{ amount }}</span>
+    {% if originalAmount -%}
+        <span class="stat {{name}}__amount {{name}}__amount--original">{{ originalAmount }}</span>
+    {%- endif -%}
+    <span class="stat {{name}}__amount {{name}}__amount--default">{{ amount }}</span>
 {% endblock %}
 

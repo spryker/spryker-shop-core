@@ -1,0 +1,26 @@
+@mixin component-thumbnail($name: '.thumbnail') {
+    #{$name} {
+        display: block;
+        height: spacing(20);
+        margin: spacing();
+
+        &--small {
+            height: spacing(10);
+        }
+
+        &--big {
+            height: spacing(40);
+        }
+
+        &__image {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+}

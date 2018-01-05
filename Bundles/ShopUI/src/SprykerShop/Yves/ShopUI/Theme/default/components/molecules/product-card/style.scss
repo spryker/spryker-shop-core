@@ -1,0 +1,5 @@
+@import '../../../styles/settings';
+@import '../../../styles/helpers';
+@import 'product-card';
+
+@include component-product-card;

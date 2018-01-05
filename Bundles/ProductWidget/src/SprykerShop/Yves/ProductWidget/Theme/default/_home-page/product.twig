@@ -1,4 +1,4 @@
-{% embed '@ProductWidget/_partials/product-block.twig' with {
+{% embed molecule('product-card') with {
     productName: _widget.product.abstract_name,
     idProductAbstract: _widget.product.id_product_abstract,
     priceValue: _widget.product.price,

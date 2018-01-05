@@ -1,0 +1,20 @@
+@mixin component-button($name: '.button') {
+    #{$name} {
+        @include transition(background-color);
+        display: inline-block;
+        padding: spacing() spacing(2);
+        background-color: $color-main;
+        color: $color-white;
+        text-align: center;
+
+        &:hover,
+        &:focus {
+            background-color: $color-main-dark;
+            text-decoration: none;
+        }
+
+        &--expand {
+            width: 100%;
+        }
+    }
+}
