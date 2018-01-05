@@ -45,13 +45,16 @@ class CatalogController extends AbstractController
             ->catalogSearch($searchString, $parameters);
 
         $searchResults = $this->updateFacetFiltersByCategory($searchResults, $idCategory);
+        $metaTitle = isset($categoryNode['meta_title']) ? $categoryNode['meta_title'] : '';
+        $metaDescription = isset($categoryNode['meta_description']) ? $categoryNode['meta_description'] : '';
+        $metaKeywords = isset($categoryNode['meta_keywords']) ? $categoryNode['meta_keywords'] : '';
 
         $metaAttributes = [
             'idCategory' => $idCategoryNode,
             'category' => $categoryNode,
-            'pageTitle' => ($categoryNode['meta_title'] ?: $categoryNode['name']),
-            'pageDescription' => $categoryNode['meta_description'],
-            'pageKeywords' => $categoryNode['meta_keywords'],
+            'pageTitle' => ($metaTitle ?: $categoryNode['name']),
+            'pageDescription' => $metaDescription,
+            'pageKeywords' => $metaKeywords,
             'searchString' => $searchString,
             'viewMode' => $this->getFactory()
                 ->getCatalogClient()
