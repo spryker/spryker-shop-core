@@ -28,7 +28,7 @@
                         <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}
                     </a>
 
-                    {% if not productView.available %}
+                    {% if productView.idProductConcrete and not productView.available %}
                         <p>
                             <strong>{{ "product.detail.out_of_stock" | trans }}</strong>
                         </p>
