@@ -1,5 +1,5 @@
 {
-  "name": "spryker-shop/product-detail-p-age",
+  "name": "spryker-shop/product-detail-page",
   "description": "ProductDetailPage module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,5 @@
 {
-  "name": "spryker-shop/redirect-p-age",
+  "name": "spryker-shop/redirect-page",
   "description": "RedirectPAge module",
   "license": "proprietary",
   "require": {
