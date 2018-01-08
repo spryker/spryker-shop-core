@@ -1,14 +1,15 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductSetDetailPage\Plugin;
 
-use Generated\Shared\Transfer\ProductSetStorageTransfer;
+use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Silex\Application;
+use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController;
 use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
@@ -23,7 +24,7 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
      */
     public function getType()
     {
-        return 'product_set';
+        return ProductSetStorageConstants::PRODUCT_SET_RESOURCE_NAME;
     }
 
     /**
@@ -57,34 +58,35 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
      */
     public function mergeResourceData(array $data)
     {
-        $productSetStorageTransfer = $this->getFactory()->getProductSetClient()->mapProductSetStorageDataToTransfer($data);
-        $storageProductTransfers = $this->mapStorageProducts($this->getApplication(), $productSetStorageTransfer);
+        $productSetStorageTransfer = $this->getFactory()->getProductSetStorageClient()->mapProductSetStorageDataToTransfer($data);
+        $productViewTransfers = $this->mapProductViewTransfer($this->getApplication(), $productSetStorageTransfer);
 
         return [
-            'productSetStorageTransfer' => $productSetStorageTransfer,
-            'storageProductTransfers' => $storageProductTransfers,
+            'productSetDataStorageTransfer' => $productSetStorageTransfer,
+            'productViewTransfers' => $productViewTransfers,
         ];
     }
 
     /**
      * @param \Silex\Application $application
-     * @param \Generated\Shared\Transfer\ProductSetStorageTransfer $productSetStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function mapStorageProducts(Application $application, ProductSetStorageTransfer $productSetStorageTransfer)
+    protected function mapProductViewTransfer(Application $application, ProductSetDataStorageTransfer $productSetDataStorageTransfer)
     {
-        $storageProductTransfers = [];
-        foreach ($productSetStorageTransfer->getIdProductAbstracts() as $idProductAbstract) {
-            $productAbstractData = $this->getFactory()->getProductClient()->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
+        $productViewTransfers = [];
+        foreach ($productSetDataStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
+            $productAbstractData = $this->getFactory()->getProductStorageClient()->getProductAbstractStorageData($idProductAbstract, $this->getLocale());
 
-            $storageProductTransfers[] = $this->getFactory()->getProductClient()->mapStorageProductForCurrentLocale(
+            $productViewTransfers[] = $this->getFactory()->getProductStorageClient()->mapProductStorageData(
                 $productAbstractData,
+                $this->getLocale(),
                 $this->getSelectedAttributes($application, $idProductAbstract)
             );
         }
 
-        return $storageProductTransfers;
+        return $productViewTransfers;
     }
 
     /**

@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CatalogPage\Plugin\Provider;
 
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 use Silex\Application;
+use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 class CatalogPageControllerProvider extends AbstractYvesControllerProvider
 {
-
     const ROUTE_SEARCH = 'search';
     const ROUTE_SUGGESTION = 'search/suggestion';
+    const ROUTER_CHANGE_VIEW_MODE = 'change-view-mode';
 
     /**
      * @param \Silex\Application $app
@@ -32,6 +32,9 @@ class CatalogPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{search}/suggestion', self::ROUTE_SUGGESTION, 'CatalogPage', 'Suggestion', 'index')
             ->assert('search', $allowedLocalesPattern . 'search|search')
             ->value('search', 'search');
-    }
 
+        $this->createController('/{catalog}/change-view-mode', static::ROUTER_CHANGE_VIEW_MODE, 'CatalogPage', 'Catalog', 'changeViewMode')
+            ->assert('catalog', $allowedLocalesPattern . 'catalog|catalog')
+            ->value('catalog', 'catalog');
+    }
 }

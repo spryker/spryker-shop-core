@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CatalogPage;
@@ -10,8 +10,10 @@ namespace SprykerShop\Yves\CatalogPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGenerator;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientInterface;
-use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryClientInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryStorageClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterClientInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterStorageClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
 use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
 
@@ -26,11 +28,11 @@ class CatalogPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryClientInterface
+     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryStorageClientInterface
      */
-    public function getCategoryClient(): CatalogPageToCategoryClientInterface
+    public function getCategoryStorageClient(): CatalogPageToCategoryStorageClientInterface
     {
-        return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_CATEGORY);
+        return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_CATEGORY_STORAGE);
     }
 
     /**
@@ -71,5 +73,21 @@ class CatalogPageFactory extends AbstractFactory
     public function getCatalogPageWidgetPlugins(): array
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::PLUGIN_CATALOG_PAGE_WIDGETS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterClientInterface
+     */
+    public function getProductCategoryFilterClient(): CatalogPageToProductCategoryFilterClientInterface
+    {
+        return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_PRODUCT_CATEGORY_FILTER);
+    }
+
+    /**
+     * @return CatalogPageToProductCategoryFilterStorageClientInterface
+     */
+    public function getProductCategoryFilterStorageClient(): CatalogPageToProductCategoryFilterStorageClientInterface
+    {
+        return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE);
     }
 }

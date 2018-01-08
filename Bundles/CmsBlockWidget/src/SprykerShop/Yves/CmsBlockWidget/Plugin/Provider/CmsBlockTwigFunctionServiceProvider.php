@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,16 +10,15 @@ namespace SprykerShop\Yves\CmsBlockWidget\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CmsBlockWidget\CmsBlockWidgetFactory;
+use Twig_Environment;
 
 /**
- * @method CmsBlockWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\CmsBlockWidget\CmsBlockWidgetFactory getFactory()
  */
 class CmsBlockTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -33,14 +33,13 @@ class CmsBlockTwigFunctionServiceProvider extends AbstractPlugin implements Serv
 
     /**
      * @param \Twig_Environment $twig
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return \Twig_Environment
      */
-    protected function registerCmsBlockTwigFunction(\Twig_Environment $twig, Application $app)
+    protected function registerCmsBlockTwigFunction(Twig_Environment $twig, Application $app)
     {
-        foreach ($this->getCmsBlockTwigFunctions($app) as $function)
-        {
+        foreach ($this->getCmsBlockTwigFunctions($app) as $function) {
             $twig->addFunction($function->getName(), $function);
         }
 
@@ -48,11 +47,11 @@ class CmsBlockTwigFunctionServiceProvider extends AbstractPlugin implements Serv
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return array
      */
-    function getCmsBlockTwigFunctions(Application $app)
+    protected function getCmsBlockTwigFunctions(Application $app)
     {
         $functions = [];
         foreach ($this->getFactory()->getTwigFunctionPlugins() as $twigFunction) {
@@ -63,7 +62,7 @@ class CmsBlockTwigFunctionServiceProvider extends AbstractPlugin implements Serv
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

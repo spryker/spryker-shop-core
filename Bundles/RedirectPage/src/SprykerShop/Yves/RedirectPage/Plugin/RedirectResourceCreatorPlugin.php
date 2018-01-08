@@ -1,12 +1,13 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\RedirectPage\Plugin;
 
+use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
 
@@ -20,7 +21,7 @@ class RedirectResourceCreatorPlugin extends AbstractPlugin implements ResourceCr
      */
     public function getType()
     {
-        return 'redirect';
+        return UrlStorageConstants::REDIRECT_RESOURCE_NAME;
     }
 
     /**

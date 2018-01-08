@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -46,9 +46,9 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return ProductViewTransfer[]
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
     protected function findRelatedProducts(ProductViewTransfer $productViewTransfer)
     {

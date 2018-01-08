@@ -14,7 +14,6 @@ use Twig_SimpleFunction;
 
 class CatalogPageTwigExtension extends TwigExtension
 {
-
     const FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER = 'generateUrlWithoutActiveSearchFilter';
     const FUNCTION_GET_URL_WITHOUT_ALL_ACTIVE_SEARCH_FILTERS = 'generateUrlWithoutAllActiveSearchFilters';
 
@@ -84,5 +83,4 @@ class CatalogPageTwigExtension extends TwigExtension
     {
         return $context['app']['request'];
     }
-
 }

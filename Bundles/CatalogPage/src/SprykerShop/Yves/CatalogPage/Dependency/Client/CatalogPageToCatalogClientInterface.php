@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\CatalogPage\Dependency\Client;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 interface CatalogPageToCatalogClientInterface
 {
     /**
@@ -24,4 +27,19 @@ interface CatalogPageToCatalogClientInterface
      * @return array
      */
     public function catalogSuggestSearch($searchString, array $requestParameters = []);
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    public function getCatalogViewMode(Request $request);
+
+    /**
+     * @param string $mode
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function setCatalogViewMode($mode, Response $response);
 }

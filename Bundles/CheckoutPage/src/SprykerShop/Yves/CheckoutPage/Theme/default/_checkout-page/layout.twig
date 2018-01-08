@@ -1,7 +1,7 @@
 {% block breadcrumbItems %}
     <li><a href="/">{{ 'global.home' | trans }}</a></li>
     <li><a href="{{ url('cart') }}">{{ 'cart.cart'|trans }}</a></li>
-    {% include '@CheckoutPage/_checkout-page/_partials/breadcrumb.twig' %}
+    {% include '@CheckoutPage/_checkout-page/_partials/breadcrumb.twig' with {stepBreadcrumbs: _view.stepBreadcrumbs} %}
 {% endblock %}
 
 {% block navigation %}{% endblock %}

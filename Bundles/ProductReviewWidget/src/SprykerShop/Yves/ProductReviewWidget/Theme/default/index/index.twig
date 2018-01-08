@@ -9,14 +9,22 @@
     <div>
         <h3>{{ 'product_review.product_ratings' | trans }}</h3>
 
-        {% include '@ProductReviewWidget/index/_partials/summary.twig' with {'summary': _view.summary, 'pagination': _view.pagination} %}
+        {% include '@ProductReviewWidget/index/_partials/summary.twig' with {
+            'summary': _view.summary,
+            'pagination': _view.pagination,
+            'maximumRating': _view.maximumRating
+        } %}
     </div>
 
     {% if _view.summary.totalReview > 0 %}
         <div>
             <h3>{{ 'product_review.product_reviews' | trans }}</h3>
 
-            {% include '@ProductReviewWidget/index/_partials/reviews.twig' with {'productReviews': _view.productReviews, 'pagination': _view.pagination} %}
+            {% include '@ProductReviewWidget/index/_partials/reviews.twig' with {
+                'productReviews': _view.productReviews,
+                'pagination': _view.pagination,
+                'maximumRating': _view.maximumRating
+            } %}
         </div>
     {% endif %}
 </div>

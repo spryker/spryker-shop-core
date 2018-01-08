@@ -1,14 +1,14 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CatalogPage\Plugin;
 
+use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Zed\Category\CategoryConfig;
 use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
@@ -23,7 +23,7 @@ class CatalogPageResourceCreatorPlugin extends AbstractPlugin implements Resourc
      */
     public function getType()
     {
-        return CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
+        return CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME;
     }
 
     /**

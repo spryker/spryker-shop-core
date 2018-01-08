@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerPageToCustomerClientInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -83,6 +82,13 @@ interface CustomerPageToCustomerClientInterface
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
     public function getAddresses(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function getAddress(AddressTransfer $addressTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer

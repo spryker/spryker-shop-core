@@ -1,26 +1,25 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ShopApplication\Twig;
 
 use Spryker\Shared\Kernel\Communication\Application;
-use Spryker\Yves\Application\Routing\Helper;
 
 class TwigRenderer implements TwigRendererInterface
 {
     /**
-     * @var \Spryker\Yves\Application\Routing\Helper
+     * @var \SprykerShop\Yves\ShopApplication\Twig\RoutingHelperInterface
      */
     protected $routingHelper;
 
     /**
-     * @param \Spryker\Yves\Application\Routing\Helper $routingHelper
+     * @param \SprykerShop\Yves\ShopApplication\Twig\RoutingHelperInterface $routingHelper
      */
-    public function __construct(Helper $routingHelper)
+    public function __construct(RoutingHelperInterface $routingHelper)
     {
         $this->routingHelper = $routingHelper;
     }

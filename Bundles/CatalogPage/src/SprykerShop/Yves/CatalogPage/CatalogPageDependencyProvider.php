@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CatalogPage;
@@ -10,17 +10,21 @@ namespace SprykerShop\Yves\CatalogPage;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientBridge;
-use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryClientBridge;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryStorageClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientBridge;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterClientBridge;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterStorageClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientBridge;
 
 class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_LOCALE = 'CLIENT_LOCALE';
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
-    const CLIENT_CATEGORY = 'CLIENT_CATEGORY';
+    const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';
     const CLIENT_CATALOG = 'CLIENT_CATALOG';
     const PLUGIN_CATALOG_PAGE_WIDGETS = 'PLUGIN_CATALOG_PAGE_WIDGETS';
+    const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
+    const CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE = 'CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -30,9 +34,11 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addSearchClient($container);
-        $container = $this->addCategoryClient($container);
+        $container = $this->addCategoryStorageClient($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addCatalogClient($container);
+        $container = $this->addProductCategoryFilterClient($container);
+        $container = $this->addProductCategoryFilterStorageClient($container);
         $container = $this->addCatalogPageWidgetPlugins($container);
 
         return $container;
@@ -57,10 +63,10 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCategoryClient(Container $container)
+    protected function addCategoryStorageClient(Container $container)
     {
-        $container[static::CLIENT_CATEGORY] = function (Container $container) {
-            return new CatalogPageToCategoryClientBridge($container->getLocator()->category()->client());
+        $container[static::CLIENT_CATEGORY_STORAGE] = function (Container $container) {
+            return new CatalogPageToCategoryStorageClientBridge($container->getLocator()->categoryStorage()->client());
         };
 
         return $container;
@@ -93,6 +99,35 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductCategoryFilterClient(Container $container)
+    {
+        $container[static::CLIENT_PRODUCT_CATEGORY_FILTER] = function (Container $container) {
+            return new CatalogPageToProductCategoryFilterClientBridge($container->getLocator()->productCategoryFilter()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductCategoryFilterStorageClient(Container $container)
+    {
+        $container[static::CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE] = function (Container $container) {
+            return new CatalogPageToProductCategoryFilterStorageClientBridge($container->getLocator()->productCategoryFilterStorage()->client());
+        };
+
+        return $container;
+    }
+
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

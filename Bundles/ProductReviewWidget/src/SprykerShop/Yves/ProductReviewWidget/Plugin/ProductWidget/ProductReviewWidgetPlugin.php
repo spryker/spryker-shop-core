@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,9 +10,11 @@ namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductWidget;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductReviewWidget\ProductReviewWidgetPluginInterface;
 
+/**
+ * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
+ */
 class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductReviewWidgetPluginInterface
 {
-
     /**
      * @param float $rating
      *
@@ -20,7 +22,9 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public function initialize(float $rating): void
     {
-        $this->addParameter('rating', $rating);
+        $this
+            ->addParameter('rating', $rating)
+            ->addParameter('maximumRating', $this->getMaximumRating());
     }
 
     /**
@@ -39,4 +43,13 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
         return '@ProductReviewWidget/_product-widget/product-review.twig';
     }
 
+    /**
+     * @return int
+     */
+    protected function getMaximumRating()
+    {
+        return $this->getFactory()
+            ->getProductReviewClient()
+            ->getMaximumRating();
+    }
 }

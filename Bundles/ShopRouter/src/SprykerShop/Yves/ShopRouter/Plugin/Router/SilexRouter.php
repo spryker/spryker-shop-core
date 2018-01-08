@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ShopRouter\Plugin\Router;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\ShopRouter\ShopRouterFactory;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * @method ShopRouterFactory getFactory()
+ * @method \SprykerShop\Yves\ShopRouter\ShopRouterFactory getFactory()
  */
 class SilexRouter extends AbstractPlugin implements RouterInterface
 {
-
     /**
      * @var \Spryker\Shared\Application\Business\Routing\SilexRouter
      */
@@ -29,7 +27,7 @@ class SilexRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @param RequestContext $context
+     * @param \Symfony\Component\Routing\RequestContext $context
      *
      * @return void
      */
@@ -39,7 +37,7 @@ class SilexRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @return mixed|RequestContext
+     * @return mixed|\Symfony\Component\Routing\RequestContext
      */
     public function getContext()
     {
@@ -47,7 +45,7 @@ class SilexRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @return mixed|RouteCollection
+     * @return mixed|\Symfony\Component\Routing\RouteCollection
      */
     public function getRouteCollection()
     {

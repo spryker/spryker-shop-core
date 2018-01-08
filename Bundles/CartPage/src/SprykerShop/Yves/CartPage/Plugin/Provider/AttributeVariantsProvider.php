@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CartPage\Plugin\Provider;
@@ -10,13 +10,13 @@ namespace SprykerShop\Yves\CartPage\Plugin\Provider;
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StorageProductTransfer;
+use SprykerShop\Yves\CartPage\Dependency\Plugin\CartVariantAttributeMapperPluginInterface;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandlerInterface;
-use Spryker\Yves\CartVariant\Dependency\Plugin\CartVariantAttributeMapperPluginInterface;
 
 class AttributeVariantsProvider
 {
     /**
-     * @var \Spryker\Yves\CartVariant\Dependency\Plugin\CartVariantAttributeMapperPluginInterface
+     * @var \SprykerShop\Yves\CartPage\Dependency\Plugin\CartVariantAttributeMapperPluginInterface
      */
     protected $cartVariantAttributeMapperPlugin;
 
@@ -26,9 +26,9 @@ class AttributeVariantsProvider
     protected $cartItemHandler;
 
     /**
-     * CartItemsAttributeProvider constructor.
+     * AttributeVariantsProvider constructor.
      *
-     * @param \Spryker\Yves\CartVariant\Dependency\Plugin\CartVariantAttributeMapperPluginInterface $cartVariantAttributeMapperPlugin
+     * @param \SprykerShop\Yves\CartPage\Dependency\Plugin\CartVariantAttributeMapperPluginInterface $cartVariantAttributeMapperPlugin
      * @param \SprykerShop\Yves\CartPage\Handler\CartItemHandlerInterface $cartItemHandler
      */
     public function __construct(
@@ -41,19 +41,20 @@ class AttributeVariantsProvider
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $localeName
      * @param array|null $itemAttributes
      *
      * @return array
      */
-    public function getItemsAttributes(QuoteTransfer $quoteTransfer, array $itemAttributes = null)
+    public function getItemsAttributes(QuoteTransfer $quoteTransfer, $localeName, array $itemAttributes = null)
     {
         $itemAttributes = $this->removeEmptyAttributes($itemAttributes);
 
         $itemAttributesBySku = $this->cartVariantAttributeMapperPlugin
-            ->buildMap($quoteTransfer->getItems());
+            ->buildMap($quoteTransfer->getItems(), $localeName);
 
         return $this->cartItemHandler
-            ->narrowDownOptions($quoteTransfer->getItems(), $itemAttributesBySku, $itemAttributes);
+            ->narrowDownOptions($quoteTransfer->getItems(), $itemAttributesBySku, $itemAttributes, $localeName);
     }
 
     /**
@@ -63,17 +64,20 @@ class AttributeVariantsProvider
      * @param \ArrayObject $items
      * @param string|null $groupKey
      * @param array $optionValueIds
+     * @param string $localeName
      *
-     * @return bool
+     * @return true
      */
-    public function tryToReplaceItem($sku, $quantity, $selectedAttributes, ArrayObject $items, $groupKey = null, $optionValueIds = [])
+    public function tryToReplaceItem($sku, $quantity, $selectedAttributes, ArrayObject $items, $groupKey, $optionValueIds, $localeName)
     {
-        $storageProductTransfer = $this->cartItemHandler->getProductStorageTransfer($sku, $selectedAttributes, $items);
+        $productViewTransfer = $this->cartItemHandler->getProductViewTransfer($sku, $selectedAttributes, $items, $localeName);
 
-        if ($storageProductTransfer->getIsVariant() === true) {
-            $this->cartItemHandler->replaceCartItem($sku, $storageProductTransfer, $quantity, $groupKey, $optionValueIds);
+        if ($productViewTransfer->getIdProductConcrete()) {
+            $this->cartItemHandler->replaceCartItem($sku, $productViewTransfer, $quantity, $groupKey, $optionValueIds);
+
             return true;
         }
+
         return false;
     }
 

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,18 +10,18 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CustomerPage\CustomerPageFactory;
+use Twig_Environment;
+use Twig_SimpleFunction;
 
 /**
  * Class CustomerTwigServiceProvider
  *
- * @method CustomerPageFactory getFactory()
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */
@@ -38,10 +39,11 @@ class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements Serv
      *
      * @return \Twig_Environment
      */
-    protected function registerCustomerTwigFunction(\Twig_Environment $twig)
+    protected function registerCustomerTwigFunction(Twig_Environment $twig)
     {
-        $twig->addFunction('getUsername',
-            new \Twig_SimpleFunction('getUsername', function () {
+        $twig->addFunction(
+            'getUsername',
+            new Twig_SimpleFunction('getUsername', function () {
                 if (!$this->getFactory()->getCustomerClient()->isLoggedIn()) {
                     return null;
                 }
@@ -50,8 +52,9 @@ class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements Serv
             })
         );
 
-        $twig->addFunction('isLoggedIn',
-            new \Twig_SimpleFunction('isLoggedIn', function () {
+        $twig->addFunction(
+            'isLoggedIn',
+            new Twig_SimpleFunction('isLoggedIn', function () {
                 return $this->getFactory()->getCustomerClient()->isLoggedIn();
             })
         );
@@ -60,7 +63,7 @@ class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements Serv
     }
 
     /**
-     * @param Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

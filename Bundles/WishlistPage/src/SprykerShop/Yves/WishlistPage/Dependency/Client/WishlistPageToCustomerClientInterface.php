@@ -13,4 +13,9 @@ interface WishlistPageToCustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer();
+
+    /**
+     * @return bool
+     */
+    public function isLoggedIn();
 }

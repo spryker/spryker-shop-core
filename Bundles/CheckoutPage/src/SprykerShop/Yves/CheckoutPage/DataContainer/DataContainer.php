@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\CheckoutPage\DataContainer;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 
 class DataContainer implements DataContainerInterface
 {

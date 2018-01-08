@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\ProductLabelWidget\Dependency\Client;
 interface ProductLabelWidgetToProductLabelStorageClientInterface
 {
     /**
-     * @param $idProductAbstract
-     * @param $localeName
+     * @param int $idProductAbstract
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */

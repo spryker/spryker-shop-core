@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -40,7 +40,7 @@ class CheckoutBreadcrumbWidgetPlugin extends AbstractWidgetPlugin implements Che
      */
     public static function getTemplate(): string
     {
-        return '@CheckoutPage/_cart-page/checkout-breadcrumbs.twig';
+        return '@CheckoutWidget/_cart-page/checkout-breadcrumbs.twig';
     }
 
     /**

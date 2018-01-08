@@ -1,23 +1,23 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\NavigationWidget\Plugin\ShopLayout;
 
+use Generated\Shared\Transfer\NavigationStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\NavigationWidget\NavigationWidgetFactory;
 use SprykerShop\Yves\ShopLayout\Dependency\Plugin\NavigationWidget\NavigationWidgetPluginInterface;
 
 /**
  * Class NavigationWidgetPlugin
  *
- * @method NavigationWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\NavigationWidget\NavigationWidgetFactory getFactory()
  */
 class NavigationWidgetPlugin extends AbstractWidgetPlugin implements NavigationWidgetPluginInterface
 {
-
     /**
      * @var array
      */
@@ -58,26 +58,24 @@ class NavigationWidgetPlugin extends AbstractWidgetPlugin implements NavigationW
     /**
      * @param string $navigationKey
      *
-     * @return string
+     * @return NavigationStorageTransfer|null
      */
     public function getNavigation($navigationKey)
     {
         $key = $navigationKey . '-' . $this->getLocale();
 
         if (!isset(static::$buffer[$key])) {
-            $navigationTreeTransfer = $this->getFactory()->getNavigationStorageClient()->findNavigationTreeByKey($navigationKey, $this->getLocale());
+            $navigationStorageTransfer = $this->getFactory()->getNavigationStorageClient()->findNavigationTreeByKey($navigationKey, $this->getLocale());
 
-            static::$buffer[$key] = $navigationTreeTransfer;
+            static::$buffer[$key] = $navigationStorageTransfer;
         }
 
-        $navigationTreeTransfer = static::$buffer[$key];
+        $navigationStorageTransfer = static::$buffer[$key];
 
-        //TODO Fix the isActive
-//        if (!$navigationTreeTransfer || !$navigationTreeTransfer()->getIsActive()) {
-//            return '';
-//        }
+        if (!$navigationStorageTransfer || !$navigationStorageTransfer->getIsActive()) {
+            return null;
+        }
 
-
-        return $navigationTreeTransfer;
+        return $navigationStorageTransfer;
     }
 }

@@ -1,12 +1,11 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CheckoutPage\Plugin;
-
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -26,6 +25,6 @@ class ShipmentHandlerPlugin extends AbstractPlugin implements StepHandlerPluginI
      */
     public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)
     {
-        $this->getFactory()->createShipmentHandler()->addShipmentToQuote($request, $quoteTransfer);
+        return $this->getFactory()->createShipmentHandler()->addShipmentToQuote($request, $quoteTransfer);
     }
 }

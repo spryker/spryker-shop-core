@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductReviewWidget;
@@ -11,8 +11,8 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\ProductReview\ProductReviewFactory as SprykerProductReviewFactory;
 use SprykerShop\Yves\ProductReviewWidget\Controller\Calculator\ProductReviewSummaryCalculator;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToCustomerClientInterface;
-use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface;
+use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewStorageClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Form\DataProvider\ProductReviewFormDataProvider;
 use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
 
@@ -27,19 +27,19 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductClientInterface
-     */
-    public function getProductClient(): ProductReviewWidgetToProductClientInterface
-    {
-        return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::CLIENT_PRODUCT);
-    }
-
-    /**
      * @return \SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface
      */
     public function getProductReviewClient(): ProductReviewWidgetToProductReviewClientInterface
     {
         return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::CLIENT_PRODUCT_REVIEW);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewStorageClientInterface
+     */
+    public function getProductReviewStorageClient(): ProductReviewWidgetToProductReviewStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::CLIENT_PRODUCT_REVIEW_STORAGE);
     }
 
     /**

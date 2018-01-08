@@ -1,20 +1,18 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CmsBlockWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
-use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface;
 
 class CmsBlockWidgetFactory extends AbstractFactory
 {
-
     /**
-     * @return TwigFunctionPluginInterface[]
+     * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
      */
     public function getTwigFunctionPlugins()
     {
@@ -22,7 +20,7 @@ class CmsBlockWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return CmsBlockWidgetToCmsBlockStorageClientInterface
+     * @return \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface
      */
     public function getCmsBlockStorageClient()
     {

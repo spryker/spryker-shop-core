@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
@@ -155,11 +156,11 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler
+     * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface
      */
     public function createShipmentHandler()
     {
-        return new ShipmentHandler($this->getShipmentClient());
+        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient());
     }
 
     /**
@@ -171,7 +172,7 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return CheckoutPageToGlossaryClientInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface
      */
     public function getGlossaryClient(): CheckoutPageToGlossaryClientInterface
     {
@@ -192,5 +193,13 @@ class CheckoutPageFactory extends AbstractFactory
     protected function getStore()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface
+     */
+    protected function getPriceClient(): CheckoutPageToPriceClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_PRICE);
     }
 }

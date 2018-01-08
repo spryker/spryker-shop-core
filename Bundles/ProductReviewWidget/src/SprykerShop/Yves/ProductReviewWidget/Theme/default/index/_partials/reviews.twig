@@ -1,5 +1,6 @@
 {% set productReviews = productReviews %}
 {% set pagination = pagination %}
+{% set maximumRating = maximumRating %}
 
 {% if productReviews | length == 0 %}
     <p>{{ 'product_review.no_reviews' | trans }}</p>
@@ -10,7 +11,10 @@
 
         <div class="row">
             <div class="columns small-12 medium-2">
-                {% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {'rating': productReviewTransfer.rating } %}
+                {% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {
+                    'rating': productReviewTransfer.rating,
+                    'maximumRating': maximumRating
+                } %}
             </div>
             <div class="columns small-12 medium-2">
                 <small>{{ 'page.product.by' | trans }}</small> {{ productReviewTransfer.nickname | e('html')}}

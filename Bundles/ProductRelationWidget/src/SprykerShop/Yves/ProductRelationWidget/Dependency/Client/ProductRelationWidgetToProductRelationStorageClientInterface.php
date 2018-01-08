@@ -20,7 +20,7 @@ interface ProductRelationWidgetToProductRelationStorageClientInterface
     public function findRelatedProducts($idProductAbstract, $localeName);
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]

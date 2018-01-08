@@ -1,23 +1,23 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductSetListPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductSetListPage\Dependency\Client\ProductSetListPageToProductSetClientInterface;
+use SprykerShop\Yves\ProductSetListPage\Dependency\Client\ProductSetListPageToProductSetPageSearchClientInterface;
 
 class ProductSetListPageFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\ProductSetListPage\Dependency\Client\ProductSetListPageToProductSetClientInterface
+     * @return \SprykerShop\Yves\ProductSetListPage\Dependency\Client\ProductSetListPageToProductSetPageSearchClientInterface
      */
-    public function getProductSetClient(): ProductSetListPageToProductSetClientInterface
+    public function getProductSetPageSearchClient(): ProductSetListPageToProductSetPageSearchClientInterface
     {
-        return $this->getProvidedDependency(ProductSetListPageDependencyProvider::CLIENT_PRODUCT_SET);
+        return $this->getProvidedDependency(ProductSetListPageDependencyProvider::CLIENT_PRODUCT_SET_PAGE_SEARCH);
     }
 
     /**

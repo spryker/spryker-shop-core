@@ -1,15 +1,16 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CatalogPage\Controller;
 
 use Generated\Shared\Search\PageIndexMap;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Shared\Storage\StorageConstants;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,8 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CatalogController extends AbstractController
 {
-
     const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
+
+    const URL_PARAM_VIEW_MODE = 'mode';
+    const URL_PARAM_REFERER_URL = 'referer-url';
 
     /**
      * @param array $categoryNode
@@ -30,26 +33,36 @@ class CatalogController extends AbstractController
     public function indexAction(array $categoryNode, Request $request)
     {
         $searchString = $request->query->get('q', '');
+        $idCategoryNode = $categoryNode['node_id'];
+        $idCategory = $categoryNode['id_category'];
 
         $parameters = $request->query->all();
-        $parameters[PageIndexMap::CATEGORY] = $categoryNode['node_id'];
+        $parameters[PageIndexMap::CATEGORY] = $idCategoryNode;
 
         $searchResults = $this
             ->getFactory()
             ->getCatalogClient()
             ->catalogSearch($searchString, $parameters);
 
+        $searchResults = $this->updateFacetFiltersByCategory($searchResults, $idCategory);
+        $metaTitle = isset($categoryNode['meta_title']) ? $categoryNode['meta_title'] : '';
+        $metaDescription = isset($categoryNode['meta_description']) ? $categoryNode['meta_description'] : '';
+        $metaKeywords = isset($categoryNode['meta_keywords']) ? $categoryNode['meta_keywords'] : '';
+
         $metaAttributes = [
-            'idCategory' => $parameters['category'],
+            'idCategory' => $idCategoryNode,
             'category' => $categoryNode,
-            'pageTitle' => ($categoryNode['meta_title'] ?: $categoryNode['name']),
-            'pageDescription' => $categoryNode['meta_description'],
-            'pageKeywords' => $categoryNode['meta_keywords'],
+            'pageTitle' => ($metaTitle ?: $categoryNode['name']),
+            'pageDescription' => $metaDescription,
+            'pageKeywords' => $metaKeywords,
             'searchString' => $searchString,
+            'viewMode' => $this->getFactory()
+                ->getCatalogClient()
+                ->getCatalogViewMode($request),
         ];
 
         $searchResults = array_merge($searchResults, $metaAttributes);
-        $template = $this->getCategoryNodeTemplate($categoryNode['node_id']);
+        $template = $this->getCategoryNodeTemplate($idCategoryNode);
 
         return $this->view($searchResults, $this->getFactory()->getCatalogPageWidgetPlugins(), $template);
     }
@@ -70,8 +83,28 @@ class CatalogController extends AbstractController
 
         $searchResults['searchString'] = $searchString;
         $searchResults['idCategory'] = null;
+        $searchResults['viewMode'] = $this->getFactory()
+            ->getCatalogClient()
+            ->getCatalogViewMode($request);
 
         return $this->view($searchResults, $this->getFactory()->getCatalogPageWidgetPlugins());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function changeViewModeAction(Request $request)
+    {
+        $viewMode = $request->query->get(static::URL_PARAM_VIEW_MODE);
+        $refererUrl = $request->query->get(static::URL_PARAM_REFERER_URL);
+
+        $response = $this->redirectResponseExternal($refererUrl);
+
+        return $this->getFactory()
+            ->getCatalogClient()
+            ->setCatalogViewMode($viewMode, $response);
     }
 
     /**
@@ -85,9 +118,36 @@ class CatalogController extends AbstractController
             ->getLocaleClient()
             ->getCurrentLocale();
 
-        return $this->getFactory()
-            ->getCategoryClient()
-            ->getTemplatePathByNodeId($idCategoryNode, $localeName);
+        $categoryNodeStorageTransfer = $this->getFactory()
+            ->getCategoryStorageClient()
+            ->getCategoryNodeById($idCategoryNode, $localeName);
+
+        return $categoryNodeStorageTransfer->getTemplatePath();
     }
 
+    /**
+     * @param array $searchResults
+     * @param int $idCategory
+     *
+     * @return array
+     */
+    protected function updateFacetFiltersByCategory(array $searchResults, $idCategory)
+    {
+        if (!isset($searchResults[FacetResultFormatterPlugin::NAME])) {
+            return $searchResults;
+        }
+
+        $productCategoryFilters = $this->getFactory()->getProductCategoryFilterStorageClient()->getProductCategoryFilterByIdCategory($idCategory);
+        if (!$productCategoryFilters) {
+            return $searchResults;
+        }
+
+        $searchResults[FacetResultFormatterPlugin::NAME] = $this->getFactory()->getProductCategoryFilterClient()
+            ->updateFacetsByCategory(
+                $searchResults[FacetResultFormatterPlugin::NAME],
+                $productCategoryFilters->getFilterData()
+            );
+
+        return $searchResults;
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,14 +10,12 @@ namespace SprykerShop\Yves\ProductLabelWidget\Plugin\ProductDetailPage;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductLabelWidget\ProductLabelWidgetPluginInterface;
-use SprykerShop\Yves\ProductLabelWidget\ProductLabelWidgetFactory;
 
 /**
- * @method ProductLabelWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\ProductLabelWidget\ProductLabelWidgetFactory getFactory()
  */
 class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLabelWidgetPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
@@ -47,7 +45,7 @@ class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements P
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
@@ -57,5 +55,4 @@ class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements P
             ->getProductLabelStorageClient()
             ->findLabelsByIdProductAbstract($productViewTransfer->getIdProductAbstract(), $this->getLocale());
     }
-
 }

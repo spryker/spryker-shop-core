@@ -133,9 +133,9 @@ class WishlistPageToWishlistClientBridge implements WishlistPageToWishlistClient
      *
      * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
      */
-    public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    public function getWishlistOverviewWithoutProductDetails(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
-        return $this->wishlistClient->getWishlistOverview($wishlistOverviewRequestTransfer);
+        return $this->wishlistClient->getWishlistOverviewWithoutProductDetails($wishlistOverviewRequestTransfer);
     }
 
     /**

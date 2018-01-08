@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductNewPage\Controller;
@@ -20,6 +20,8 @@ class NewProductsController extends AbstractController
     /**
      * @param string $categoryPath
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array
      */
@@ -48,6 +50,9 @@ class NewProductsController extends AbstractController
 
         $searchResults['category'] = $categoryNode;
         $searchResults['filterPath'] = ProductNewPageControllerProvider::ROUTE_NEW_PRODUCTS;
+        $searchResults['viewMode'] = $this->getFactory()
+            ->getCatalogClient()
+            ->getCatalogViewMode($request);
 
         return $this->view($searchResults, $this->getFactory()->getProductNewPageWidgetPlugins());
     }
@@ -63,7 +68,7 @@ class NewProductsController extends AbstractController
         $categoryPath = $categoryPathPrefix . '/' . ltrim($categoryPath, '/');
 
         $categoryNode = $this->getFactory()
-            ->getCollectorClient()
+            ->getUrlStorageClient()
             ->matchUrl($categoryPath, $this->getLocale());
 
         return $categoryNode ? $categoryNode['data'] : [];

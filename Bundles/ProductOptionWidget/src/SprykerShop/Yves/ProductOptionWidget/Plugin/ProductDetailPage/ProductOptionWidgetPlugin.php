@@ -43,17 +43,22 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StorageProductOptionGroupTransfer[]
      */
     protected function getProductOptionGroups(ProductViewTransfer $productViewTransfer)
     {
+        $productAbstractOptionStorageTransfer = $this->getStorageProductOptionGroupCollectionTransfer($productViewTransfer);
+        if (!$productAbstractOptionStorageTransfer) {
+            return [];
+        }
+
         return $this->getStorageProductOptionGroupCollectionTransfer($productViewTransfer)->getProductOptionGroups();
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
      */

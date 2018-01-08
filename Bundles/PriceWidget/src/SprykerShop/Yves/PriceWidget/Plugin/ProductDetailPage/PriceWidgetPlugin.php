@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,11 +9,10 @@ namespace SprykerShop\Yves\PriceWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\PriceWidget\PriceWidgetFactory;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\PriceWidget\PriceWidgetPluginInterface;
 
 /**
- * @method PriceWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\PriceWidget\PriceWidgetFactory getFactory()
  */
 class PriceWidgetPlugin extends AbstractWidgetPlugin implements PriceWidgetPluginInterface
 {

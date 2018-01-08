@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CustomerPage\Form\DataProvider;
@@ -71,19 +71,5 @@ class AddressFormDataProvider extends AbstractAddressFormDataProvider
             AddressForm::FIELD_FIRST_NAME => $customerTransfer->getFirstName(),
             AddressForm::FIELD_LAST_NAME => $customerTransfer->getLastName(),
         ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getAvailableCountries()
-    {
-        $countries = [];
-
-        foreach ($this->store->getCountries() as $iso2Code) {
-            $countries[$iso2Code] = self::COUNTRY_GLOSSARY_PREFIX . $iso2Code;
-        }
-
-        return $countries;
     }
 }

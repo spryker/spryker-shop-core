@@ -1,18 +1,22 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CartPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
-use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Handler\CartOperationHandler;
 use SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler;
+use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
+use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
 
@@ -31,7 +35,13 @@ class CartPageFactory extends AbstractFactory
      */
     public function createCartOperationHandler()
     {
-        return new CartOperationHandler($this->getCartClient(), $this->getLocale(), $this->getFlashMessenger(), $this->getRequest());
+        return new CartOperationHandler(
+            $this->getCartClient(),
+            $this->getLocale(),
+            $this->getFlashMessenger(),
+            $this->getRequest(),
+            $this->getAvailabilityClient()
+        );
     }
 
     /**
@@ -55,7 +65,7 @@ class CartPageFactory extends AbstractFactory
         return new CartItemHandler(
             $this->createCartOperationHandler(),
             $this->getCartClient(),
-            $this->getProductClient(),
+            $this->getProductStorageClient(),
             $this->getFlashMessenger()
         );
     }
@@ -101,7 +111,7 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\CartVariant\Dependency\Plugin\CartVariantAttributeMapperPluginInterface
+     * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartVariantAttributeMapperPluginInterface
      */
     public function getCartVariantAttributeMapperPlugin()
     {
@@ -128,11 +138,27 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface
      */
-    protected function getProductClient(): CartPageToProductClientInterface
+    protected function getProductStorageClient(): CartPageToProductStorageClientInterface
     {
-        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_PRODUCT);
+        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface
+     */
+    protected function getAvailabilityStorageClient(): CartPageToAvailabilityStorageClientInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface
+     */
+    protected function getAvailabilityClient(): CartPageToAvailabilityClientInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_AVAILABILITY);
     }
 
     /**
@@ -149,5 +175,24 @@ class CartPageFactory extends AbstractFactory
     protected function getCartItemTransformerPlugins()
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_CART_ITEM_TRANSFORMERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper
+     */
+    public function createCartItemsAttributeMapper()
+    {
+        return new CartItemsAttributeMapper(
+            $this->getProductStorageClient(),
+            $this->createCartItemsAvailabilityMapper()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper
+     */
+    public function createCartItemsAvailabilityMapper()
+    {
+        return new CartItemsAvailabilityMapper($this->getAvailabilityStorageClient());
     }
 }

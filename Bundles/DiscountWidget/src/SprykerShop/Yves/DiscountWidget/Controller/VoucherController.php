@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\DiscountWidget\Controller;
 
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use SprykerShop\Yves\DiscountWidget\Form\CartVoucherForm;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
+use SprykerShop\Yves\DiscountWidget\Form\CartVoucherForm;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CmsContentWidgetProductConnector\Plugin;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\CmsContentWidgetProductConnector\Plugin\CmsProductContentWidgetPlugin as SprykerCmsProductContentWidgetPlugin;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Twig_Environment;
@@ -17,7 +16,6 @@ use Twig_Environment;
  */
 class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
 {
-
     /**
      * @return callable
      */
@@ -47,7 +45,7 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
     }
 
     /**
-     * @return WidgetContainerInterface
+     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
      */
     protected function createCmsProductContentWidgetCollection(): WidgetContainerInterface
     {
@@ -61,11 +59,9 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
      */
     protected function mapProductStorageTransfer(array $productData)
     {
-        //TODO remove hardcoded locale
-        $localeName = Store::getInstance()->getCurrentLocale();
         return $this->getFactory()
             ->getProductStorageClient()
-            ->mapProductStorageData($productData, $localeName);
+            ->mapProductStorageData($productData, $this->getLocale());
     }
 
     /**
@@ -75,11 +71,9 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
      */
     protected function findProductAbstractByIdProductAbstract($idProductAbstract)
     {
-        //TODO remove hardcoded locale
-        $localeName = Store::getInstance()->getCurrentLocale();
         $productData = $this->getFactory()
             ->getProductStorageClient()
-            ->getProductAbstractStorageData($idProductAbstract, $localeName);
+            ->getProductAbstractStorageData($idProductAbstract, $this->getLocale());
 
         if (!$productData) {
             return null;
@@ -87,5 +81,4 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
 
         return $productData;
     }
-
 }

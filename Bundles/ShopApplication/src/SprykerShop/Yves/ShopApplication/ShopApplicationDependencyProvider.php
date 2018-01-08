@@ -1,20 +1,24 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ShopApplication;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
+use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceBridge;
 
 class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
     const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     const PLUGIN_GLOBAL_WIDGETS = 'PLUGIN_GLOBAL_WIDGETS';
+    const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -25,6 +29,8 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addApplicationPlugin($container);
         $container = $this->addGlobalWidgetPlugins($container);
+        $container = $this->addStore($container);
+        $container = $this->addUtilTextService($container);
 
         return $container;
     }
@@ -40,6 +46,34 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStore(Container $container)
+    {
+        $container[self::STORE] = function () {
+            return Store::getInstance();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilTextService(Container $container)
+    {
+        $container[self::SERVICE_UTIL_TEXT] = function (Container $container) {
+            return new ShopApplicationToUtilTextServiceBridge($container->getLocator()->utilText()->service());
         };
 
         return $container;

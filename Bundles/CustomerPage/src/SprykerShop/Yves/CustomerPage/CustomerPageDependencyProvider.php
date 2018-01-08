@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CustomerPage;
@@ -11,6 +11,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
 use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
@@ -30,6 +31,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     const FLASH_MESSENGER = 'FLASH_MESSENGER';
     const STORE = 'STORE';
     const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
+    const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -46,8 +48,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGuestCheckoutAuthenticationHandlerPlugin($container);
         $container = $this->addRegistrationCheckoutAuthenticationHandlerPlugin($container);
         $container = $this->addFlashMessenger($container);
-        $container = $this->provideStore($container);
+        $container = $this->addStore($container);
         $container = $this->addCustomerOverviewWidgetPlugins($container);
+        $container = $this->addUtilValidateService($container);
 
         return $container;
     }
@@ -57,7 +60,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function provideStore(Container $container)
+    protected function addStore(Container $container)
     {
         $container[static::STORE] = function () {
             return Store::getInstance();
@@ -78,6 +81,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 
             return $pimplePlugin->getApplication();
         };
+
         return $container;
     }
 
@@ -91,6 +95,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::PLUGIN_AUTHENTICATION_HANDLER] = function () {
             return new AuthenticationHandler();
         };
+
         return $container;
     }
 
@@ -104,6 +109,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::PLUGIN_LOGIN_AUTHENTICATION_HANDLER] = function () {
             return new LoginCheckoutAuthenticationHandlerPlugin();
         };
+
         return $container;
     }
 
@@ -117,6 +123,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::PLUGIN_GUEST_AUTHENTICATION_HANDLER] = function () {
             return new GuestCheckoutAuthenticationHandlerPlugin();
         };
+
         return $container;
     }
 
@@ -130,6 +137,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER] = function () {
             return new RegistrationCheckoutAuthenticationHandlerPlugin();
         };
+
         return $container;
     }
 
@@ -143,6 +151,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::FLASH_MESSENGER] = function (Container $container) {
             return $container[self::PLUGIN_APPLICATION]['flash_messenger'];
         };
+
         return $container;
     }
 
@@ -156,6 +165,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::CLIENT_CUSTOMER] = function (Container $container) {
             return new CustomerPageToCustomerClientBridge($container->getLocator()->customer()->client());
         };
+
         return $container;
     }
 
@@ -169,6 +179,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::CLIENT_SALES] = function (Container $container) {
             return new CustomerPageToSalesClientBridge($container->getLocator()->sales()->client());
         };
+
         return $container;
     }
 
@@ -179,8 +190,8 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerOverviewWidgetPlugins(Container $container)
     {
-        $container[static::PLUGIN_CUSTOMER_OVERVIEW_WIDGETS] = function (Container $container) {
-            return $this->getCustomerOverviewWidgetPlugins($container);
+        $container[static::PLUGIN_CUSTOMER_OVERVIEW_WIDGETS] = function () {
+            return $this->getCustomerOverviewWidgetPlugins();
         };
 
         return $container;
@@ -189,9 +200,21 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilValidateService(Container $container): Container
+    {
+        $container[self::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+            return new CheckoutPageToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
+        };
+
+        return $container;
+    }
+
+    /**
      * @return string[]
      */
-    protected function getCustomerOverviewWidgetPlugins(Container $container): array
+    protected function getCustomerOverviewWidgetPlugins(): array
     {
         return [];
     }

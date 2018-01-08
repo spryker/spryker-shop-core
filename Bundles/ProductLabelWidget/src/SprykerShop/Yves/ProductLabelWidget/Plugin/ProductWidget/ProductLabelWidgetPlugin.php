@@ -1,22 +1,20 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductLabelWidget\Plugin\ProductWidget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductLabelWidget\ProductLabelWidgetFactory;
 use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductLabelWidget\ProductLabelWidgetPluginInterface;
 
 /**
- * @method ProductLabelWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\ProductLabelWidget\ProductLabelWidgetFactory getFactory()
  */
 class ProductLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLabelWidgetPluginInterface
 {
-
     /**
      * @param array $idProductLabels
      *
@@ -56,5 +54,4 @@ class ProductLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLa
             ->getProductLabelStorageClient()
             ->findLabels($idProductLabels, $this->getLocale());
     }
-
 }

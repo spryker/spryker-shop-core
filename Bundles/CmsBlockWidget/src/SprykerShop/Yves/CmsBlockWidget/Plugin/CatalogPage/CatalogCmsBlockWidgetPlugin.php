@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,7 +12,6 @@ use SprykerShop\Yves\CatalogPage\Dependency\Plugin\CmsBlockWidget\CatalogCmsBloc
 
 class CatalogCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements CatalogCmsBlockWidgetPluginInterface
 {
-
     /**
      * @param int $idCategory
      *
@@ -38,5 +37,4 @@ class CatalogCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements Catalo
     {
         return '@CmsBlockWidget/_catalog-page/catalog-cms-block.twig';
     }
-
 }

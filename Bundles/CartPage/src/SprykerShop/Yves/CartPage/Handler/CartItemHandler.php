@@ -1,18 +1,18 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CartPage\Handler;
 
 use ArrayObject;
-use Generated\Shared\Transfer\StorageProductTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Shared\CartVariant\CartVariantConstants;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
-use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 
 class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
 {
@@ -27,20 +27,20 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
     protected $cartClient;
 
     /**
-     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface
+     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface
      */
     protected $productClient;
 
     /**
      * @param \SprykerShop\Yves\CartPage\Handler\CartOperationInterface $cartOperationHandler
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $cartClient
-     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductClientInterface $productClient
+     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface $productClient
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      */
     public function __construct(
         CartOperationInterface $cartOperationHandler,
         CartPageToCartClientInterface $cartClient,
-        CartPageToProductClientInterface $productClient,
+        CartPageToProductStorageClientInterface $productClient,
         FlashMessengerInterface $flashMessenger
     ) {
 
@@ -55,17 +55,18 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
      * @param string $sku
      * @param array $selectedAttributes
      * @param \ArrayObject|\Generated\Shared\Transfer\StorageProductTransfer[] $items
-
-     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function getProductStorageTransfer($sku, array $selectedAttributes, ArrayObject $items)
+    public function getProductViewTransfer($sku, array $selectedAttributes, ArrayObject $items, $localeName)
     {
-        return $this->mapSelectedAttributesToStorageProduct($sku, $selectedAttributes, $items);
+        return $this->mapSelectedAttributesToStorageProduct($sku, $selectedAttributes, $items, $localeName);
     }
 
     /**
      * @param string $currentItemSku
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $quantity
      * @param string $groupKey
      * @param array $optionValueIds
@@ -74,12 +75,12 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
      */
     public function replaceCartItem(
         $currentItemSku,
-        StorageProductTransfer $storageProductTransfer,
+        ProductViewTransfer $productViewTransfer,
         $quantity,
         $groupKey,
         array $optionValueIds
     ) {
-        $newItemSku = $storageProductTransfer->getSku();
+        $newItemSku = $productViewTransfer->getSku();
         $this->cartOperationHandler->add($newItemSku, $quantity, $optionValueIds);
         $this->setFlashMessagesFromLastZedRequest($this->cartClient);
 
@@ -92,32 +93,39 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
      * @param string $sku
      * @param array $selectedAttributes
      * @param \ArrayObject|\Generated\Shared\Transfer\StorageProductTransfer[] $items
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapSelectedAttributesToStorageProduct($sku, array $selectedAttributes, ArrayObject $items)
+    public function mapSelectedAttributesToStorageProduct($sku, array $selectedAttributes, ArrayObject $items, $localeName)
     {
         foreach ($items as $item) {
             if ($item->getSku() === $sku) {
-                return $this->getStorageProductForSelectedAttributes($selectedAttributes, $item);
+                return $this->getStorageProductForSelectedAttributes($selectedAttributes, $item, $localeName);
             }
         }
 
-        return new StorageProductTransfer();
+        return new ProductViewTransfer();
     }
 
     /**
      * @param array $selectedAttributes
      * @param \Generated\Shared\Transfer\ItemTransfer $item
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    protected function getStorageProductForSelectedAttributes(array $selectedAttributes, $item)
+    protected function getStorageProductForSelectedAttributes(array $selectedAttributes, $item, $localeName)
     {
-        $productData = $this->productClient->getProductAbstractFromStorageByIdForCurrentLocale(
-            $item->getIdProductAbstract()
+        $productData = $this->productClient->getProductAbstractStorageData(
+            $item->getIdProductAbstract(),
+            $localeName
         );
-        return $this->productClient->mapStorageProductForCurrentLocale($productData, $selectedAttributes);
+        return $this->productClient->mapProductStorageData(
+            $productData,
+            $localeName,
+            $selectedAttributes
+        );
     }
 
     /**
@@ -139,13 +147,15 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\StorageProductTransfer[] $items
      * @param array $itemAttributesBySku
      * @param array|null $selectedAttributes
+     * @param string $localeName
      *
      * @return array
      */
     public function narrowDownOptions(
         ArrayObject $items,
         array $itemAttributesBySku,
-        array $selectedAttributes = null
+        array $selectedAttributes,
+        $localeName
     ) {
 
         if (count($selectedAttributes) === 0) {
@@ -155,7 +165,7 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
         foreach ($selectedAttributes as $sku => $attributes) {
             $itemAttributesBySku = $this->setSelectedAttributesAsSelected($itemAttributesBySku, $attributes, $sku);
 
-            $availableAttributes = $this->getAvailableAttributesForItem($items, $selectedAttributes, $sku);
+            $availableAttributes = $this->getAvailableAttributesForItem($items, $selectedAttributes, $sku, $localeName);
 
             $itemAttributesBySku = $this->removeAttributesThatAreNotAvailableForItem($itemAttributesBySku, $sku, $availableAttributes);
         }
@@ -184,13 +194,15 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
      * @param \ArrayObject $items
      * @param array $itemAttributes
      * @param string $sku
+     * @param string $localeName
      *
      * @return array
      */
-    protected function getAvailableAttributesForItem(ArrayObject $items, array $itemAttributes, $sku)
+    protected function getAvailableAttributesForItem(ArrayObject $items, array $itemAttributes, $sku, $localeName)
     {
-        $storageProductTransfer = $this->getProductStorageTransfer($sku, $itemAttributes[$sku], $items);
+        $storageProductTransfer = $this->getProductViewTransfer($sku, $itemAttributes[$sku], $items, $localeName);
         $availableAttributes = $storageProductTransfer->getAvailableAttributes();
+
         return $availableAttributes;
     }
 

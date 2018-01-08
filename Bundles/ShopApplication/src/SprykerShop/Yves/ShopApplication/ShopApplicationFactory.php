@@ -1,23 +1,22 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ShopApplication;
 
 use Silex\Provider\TwigServiceProvider;
-use Spryker\Yves\Application\ApplicationFactory as SprykerApplicationFactory;
-use Spryker\Yves\Application\Plugin\Provider\ExceptionService\SubRequestExceptionHandler;
-use Spryker\Yves\Application\Routing\Helper;
+use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
 use Spryker\Yves\Kernel\Widget\WidgetFactory;
+use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
+use SprykerShop\Yves\ShopApplication\Twig\RoutingHelper;
 use SprykerShop\Yves\ShopApplication\Twig\TwigRenderer;
-use Symfony\Component\HttpFoundation\Response;
 
-class ShopApplicationFactory extends SprykerApplicationFactory
+class ShopApplicationFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerRegistry
@@ -36,22 +35,6 @@ class ShopApplicationFactory extends SprykerApplicationFactory
     }
 
     /**
-     * @return \Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface[]
-     */
-    public function createExceptionHandlers()
-    {
-        $defaultExceptionHandlers = parent::createExceptionHandlers();
-
-        $exceptionHandlers = [
-            Response::HTTP_NOT_FOUND => $this->createSubRequestExceptionHandler(),
-        ];
-
-        $exceptionHandlers = ($exceptionHandlers + $defaultExceptionHandlers);
-
-        return $exceptionHandlers;
-    }
-
-    /**
      * @return \Silex\Provider\TwigServiceProvider
      */
     public function createSilexTwigServiceProvider()
@@ -60,15 +43,7 @@ class ShopApplicationFactory extends SprykerApplicationFactory
     }
 
     /**
-     * @return \Spryker\Yves\Application\Plugin\Provider\ExceptionService\SubRequestExceptionHandler
-     */
-    protected function createSubRequestExceptionHandler()
-    {
-        return new SubRequestExceptionHandler($this->getApplication());
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     protected function getApplication()
     {
@@ -84,7 +59,7 @@ class ShopApplicationFactory extends SprykerApplicationFactory
     }
 
     /**
-     * @return WidgetCollection
+     * @return \Spryker\Yves\Kernel\Widget\WidgetCollection
      */
     public function createWidgetCollection()
     {
@@ -100,10 +75,26 @@ class ShopApplicationFactory extends SprykerApplicationFactory
     }
 
     /**
-     * @return \Spryker\Yves\Application\Routing\Helper
+     * @return \SprykerShop\Yves\ShopApplication\Twig\RoutingHelperInterface
      */
     protected function createRoutingHelper()
     {
-        return new Helper($this->getApplication());
+        return new RoutingHelper($this->getApplication(), $this->getStore(), $this->getUtilTextService());
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore()
+    {
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface
+     */
+    protected function getUtilTextService(): ShopApplicationToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CmsContentWidgetProductSetConnector\Plugin;
 
-use Generated\Shared\Transfer\ProductSetStorageTransfer;
+use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Spryker\Yves\CmsContentWidgetProductSetConnector\Plugin\CmsProductSetContentWidgetPlugin as SprykerCmsProductSetContentWidgetPlugin;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController;
@@ -48,23 +48,58 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
 
     /**
      * @param array $context
-     * @param \Generated\Shared\Transfer\ProductSetStorageTransfer $productSetStorageTransfer
+     * @param array $productSetKeyMap
+     * @param string $setKey
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
+     * @return array
      */
-    protected function mapStorageProducts(array $context, ProductSetStorageTransfer $productSetStorageTransfer)
+    protected function getSingleProductSet(array $context, array $productSetKeyMap, $setKey)
     {
-        $storageProductTransfers = [];
-        foreach ($productSetStorageTransfer->getIdProductAbstracts() as $idProductAbstract) {
-            $productAbstractData = $this->getFactory()->getProductClient()->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
+        if (!isset($productSetKeyMap[$setKey])) {
+            return [];
+        }
 
-            $storageProductTransfers[] = $this->getFactory()->getProductClient()->mapStorageProductForCurrentLocale(
+        $productSet = $this->getProductSetStorageTransfer($productSetKeyMap[$setKey]);
+        if (!$productSet || !$productSet->getIsActive()) {
+            return [];
+        }
+
+        return [
+            'productSet' => $productSet,
+            'productViews' => $this->mapProductSetDataStorageTransfers($context, $productSet),
+        ];
+    }
+
+    /**
+     * @param int $idProductSet
+     *
+     * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer|null
+     */
+    protected function getProductSetStorageTransfer($idProductSet)
+    {
+        return $this->getFactory()->getProductSetStorageClient()->getProductSetByIdProductSet($idProductSet, $this->getLocale());
+    }
+
+    /**
+     * @param array $context
+     * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function mapProductSetDataStorageTransfers(array $context, ProductSetDataStorageTransfer $productSetDataStorageTransfer)
+    {
+        $productViewTransfers = [];
+        foreach ($productSetDataStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
+            $productAbstractData = $this->getFactory()->getProductStorageClient()->getProductAbstractStorageData($idProductAbstract, $this->getLocale());
+
+            $productViewTransfers[] = $this->getFactory()->getProductStorageClient()->mapProductStorageData(
                 $productAbstractData,
+                $this->getLocale(),
                 $this->getSelectedAttributes($context, $idProductAbstract)
             );
         }
 
-        return $storageProductTransfers;
+        return $productViewTransfers;
     }
 
     /**

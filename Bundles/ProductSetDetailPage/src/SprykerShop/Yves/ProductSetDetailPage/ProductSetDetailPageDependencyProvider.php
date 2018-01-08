@@ -1,21 +1,21 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ProductSetDetailPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductClientBridge;
-use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductSetClientBridge;
+use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductSetStorageClientBridge;
+use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductStorageClientBridge;
 
 class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
-    const CLIENT_PRODUCT_SET = 'CLIENT_PRODUCT_SET';
+    const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    const CLIENT_PRODUCT_SET_STORAGE = 'CLIENT_PRODUCT_SET_STORAGE';
     const PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS = 'PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS';
 
     /**
@@ -25,8 +25,8 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addProductClient($container);
-        $container = $this->addProductSetClient($container);
+        $container = $this->addProductStorageClient($container);
+        $container = $this->addProductSetStorageClient($container);
         $container = $this->addProductSetDetailPageWidgetPlugins($container);
 
         return $container;
@@ -37,10 +37,10 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductClient(Container $container)
+    protected function addProductStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT] = function (Container $container) {
-            return new ProductSetDetailPageToProductClientBridge($container->getLocator()->product()->client());
+        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+            return new ProductSetDetailPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
         };
 
         return $container;
@@ -51,10 +51,10 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductSetClient(Container $container)
+    protected function addProductSetStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_SET] = function (Container $container) {
-            return new ProductSetDetailPageToProductSetClientBridge($container->getLocator()->productSet()->client());
+        $container[self::CLIENT_PRODUCT_SET_STORAGE] = function (Container $container) {
+            return new ProductSetDetailPageToProductSetStorageClientBridge($container->getLocator()->productSetStorage()->client());
         };
 
         return $container;

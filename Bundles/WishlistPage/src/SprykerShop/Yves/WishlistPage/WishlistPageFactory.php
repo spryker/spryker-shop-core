@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\WishlistPage;
@@ -10,9 +10,7 @@ namespace SprykerShop\Yves\WishlistPage;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\WishlistPage\Business\AvailabilityReader;
 use SprykerShop\Yves\WishlistPage\Business\MoveToCartHandler;
-use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface;
 use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
@@ -96,27 +94,11 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToAvailabilityStorageClientInterface
-     */
-    public function getAvailabilityStorageClient(): WishlistPageToAvailabilityStorageClientInterface
-    {
-        return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
-    }
-
-    /**
      * @return \SprykerShop\Yves\WishlistPage\Business\MoveToCartHandlerInterface
      */
     public function createMoveToCartHandler()
     {
-        return new MoveToCartHandler($this->getWishlistClient(), $this->getCustomerClient(), $this->createAvailabilityReader());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\WishlistPage\Business\AvailabilityReaderInterface
-     */
-    public function createAvailabilityReader()
-    {
-        return new AvailabilityReader($this->getAvailabilityStorageClient());
+        return new MoveToCartHandler($this->getWishlistClient(), $this->getCustomerClient());
     }
 
     /**
@@ -125,5 +107,21 @@ class WishlistPageFactory extends AbstractFactory
     public function getWishlistClient(): WishlistPageToWishlistClientInterface
     {
         return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_WISHLIST);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToProductStorageClientInterface
+     */
+    public function getProductStorageClient()
+    {
+        return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     */
+    public function getWishlistItemExpanderPlugins()
+    {
+        return $this->getProvidedDependency(WishlistPageDependencyProvider::PLUGIN_WISHLIST_ITEM_EXPANDERS);
     }
 }

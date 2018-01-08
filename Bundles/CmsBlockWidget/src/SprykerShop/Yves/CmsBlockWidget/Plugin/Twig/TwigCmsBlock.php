@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget\Plugin\Twig;
 
+use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\SpyCmsBlockTransfer;
-use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
+use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 use Silex\Application;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
@@ -82,7 +82,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     /**
      * @param array $blockOptions
      *
-     * @return SpyCmsBlockTransfer[]
+     * @return \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer[]
      */
     protected function getBlockDataByOptions(array &$blockOptions)
     {
@@ -170,11 +170,11 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     }
 
     /**
-     * @param SpyCmsBlockTransfer $cmsBlockData
+     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockData
      *
      * @return bool
      */
-    protected function validateBlock(SpyCmsBlockTransfer $cmsBlockData)
+    protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData)
     {
         return !($cmsBlockData === null);
     }
@@ -190,17 +190,16 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     }
 
     /**
-     * @param SpyCmsBlockTransfer $spyCmsBlockTransfer
+     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $spyCmsBlockTransfer
      *
      * @return bool
      */
-    protected function validateDates(SpyCmsBlockTransfer $spyCmsBlockTransfer)
+    protected function validateDates(SpyCmsBlockEntityTransfer $spyCmsBlockTransfer)
     {
         $dateToCompare = new DateTime();
 
         if ($spyCmsBlockTransfer->getValidFrom() !== null) {
             $validFrom = new DateTime($spyCmsBlockTransfer->getValidFrom());
-
 
             if ($dateToCompare < $validFrom) {
                 return false;
@@ -223,7 +222,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
      *
      * @return array
      */
-    protected function getPlaceholders(\ArrayObject $mappings)
+    protected function getPlaceholders(ArrayObject $mappings)
     {
         $placeholders = [];
         foreach ($mappings as $mapping) {
@@ -236,10 +235,10 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     /**
      * @param array $data
      *
-     * @return SpyCmsBlockTransfer
+     * @return \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer
      */
     protected function getCmsBlockTransfer(array $data)
     {
-        return (new SpyCmsBlockTransfer())->fromArray($data, true);
+        return (new SpyCmsBlockEntityTransfer())->fromArray($data, true);
     }
 }

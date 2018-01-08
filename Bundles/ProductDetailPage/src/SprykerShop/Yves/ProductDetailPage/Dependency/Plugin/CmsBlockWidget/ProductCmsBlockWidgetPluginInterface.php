@@ -7,21 +7,19 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\CmsBlockWidget;
 
-use Generated\Shared\Transfer\StorageProductTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductCmsBlockWidgetPluginInterface extends WidgetPluginInterface
 {
-
     const NAME = 'ProductCmsBlockWidgetPlugin';
 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void
      */
-    public function initialize(StorageProductTransfer $storageProductTransfer): void;
-
+    public function initialize(ProductViewTransfer $productViewTransfer): void;
 }

@@ -1,19 +1,20 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\WishlistPage\Controller;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
 use SprykerShop\Yves\WishlistPage\Plugin\Provider\WishlistPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,24 +62,22 @@ class WishlistController extends AbstractController
 
         $wishlistOverviewResponse = $this->getFactory()
             ->getWishlistClient()
-            ->getWishlistOverview($wishlistOverviewRequest);
+            ->getWishlistOverviewWithoutProductDetails($wishlistOverviewRequest);
 
         if (!$wishlistOverviewResponse->getWishlist()->getIdWishlist()) {
             throw new NotFoundHttpException();
         }
 
-        $availability = $this->getFactory()
-            ->createAvailabilityReader()
-            ->getAvailability($wishlistOverviewResponse->getMeta()->getWishlistItemMetaCollection());
+        $wishlistItems = $this->getWishlistItems($wishlistOverviewResponse);
 
         $addAllAvailableProductsToCartForm = $this->createAddAllAvailableProductsToCartForm($wishlistOverviewResponse);
 
         return $this->view([
+            'wishlistItems' => $wishlistItems,
             'wishlistOverview' => $wishlistOverviewResponse,
             'currentPage' => $wishlistOverviewResponse->getPagination()->getPage(),
             'totalPages' => $wishlistOverviewResponse->getPagination()->getPagesTotal(),
             'wishlistName' => $wishlistName,
-            'availability' => $availability,
             'addAllAvailableProductsToCartForm' => $addAllAvailableProductsToCartForm->createView(),
         ]);
     }
@@ -266,5 +265,45 @@ class WishlistController extends AbstractController
         );
 
         return $addAllAvailableProductsToCartForm;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewResponse
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function getWishlistItems(WishlistOverviewResponseTransfer $wishlistOverviewResponse): array
+    {
+        $wishlistItems = [];
+        foreach ($wishlistOverviewResponse->getItems() as $wishlistItemTransfer) {
+            $wishlistItems[] = $this->createProductView($wishlistItemTransfer);
+        }
+
+        return $wishlistItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function createProductView(WishlistItemTransfer $wishlistItemTransfer)
+    {
+        $productConcreteStorageData = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductConcreteStorageData($wishlistItemTransfer->getIdProduct(), $this->getLocale());
+
+        $productViewTransfer = new ProductViewTransfer();
+        $productViewTransfer->fromArray($productConcreteStorageData, true);
+
+        foreach ($this->getFactory()->getWishlistItemExpanderPlugins() as $productViewExpanderPlugin) {
+            $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer(
+                $productViewTransfer,
+                $productConcreteStorageData,
+                $this->getLocale()
+            );
+        }
+
+        return $productViewTransfer;
     }
 }
