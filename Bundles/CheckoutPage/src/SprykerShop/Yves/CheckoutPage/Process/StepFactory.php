@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CheckoutPage\Process;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
 use Spryker\Yves\StepEngine\Process\StepCollection;
 use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
@@ -19,6 +18,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationCli
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
@@ -143,11 +143,11 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
      */
-    public function createProductBundleGrouper()
+    public function getProductBundleClient(): CheckoutPageToProductBundleClientInterface
     {
-        return new ProductBundleGrouper();
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_PRODUCT_BUNDLE);
     }
 
     /**
@@ -177,7 +177,7 @@ class StepFactory extends AbstractFactory
     protected function createSummaryStep()
     {
         return new SummaryStep(
-            $this->createProductBundleGrouper(),
+            $this->getProductBundleClient(),
             CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
             HomePageControllerProvider::ROUTE_HOME
         );

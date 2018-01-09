@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
 use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\GuestCheckoutAuthenticationHandlerPlugin;
@@ -23,6 +24,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     const CLIENT_SALES = 'CLIENT_SALES';
+    const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
     const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
@@ -42,6 +44,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addCustomerClient($container);
         $container = $this->addSalesClient($container);
+        $container = $this->addProductGroupClient($container);
         $container = $this->addApplication($container);
         $container = $this->addAuthenticationHandlerPlugin($container);
         $container = $this->addLoginCheckoutAuthenticationHandlerPlugin($container);
@@ -178,6 +181,20 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_SALES] = function (Container $container) {
             return new CustomerPageToSalesClientBridge($container->getLocator()->sales()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductGroupClient(Container $container): Container
+    {
+        $container[self::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
+            return new CustomerPageToProductBundleClientBridge($container->getLocator()->productBundle()->client());
         };
 
         return $container;

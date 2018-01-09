@@ -9,30 +9,30 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouperInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
 {
     /**
-     * @var \Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouperInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
      */
-    protected $productBundleGrouper;
+    protected $productBundleClient;
 
     /**
-     * @param \Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouperInterface $productBundleGrouper
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
      * @param string $stepRoute
      * @param string $escapeRoute
      */
     public function __construct(
-        ProductBundleGrouperInterface $productBundleGrouper,
+        CheckoutPageToProductBundleClientInterface $productBundleClient,
         $stepRoute,
         $escapeRoute
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
-        $this->productBundleGrouper = $productBundleGrouper;
+        $this->productBundleClient = $productBundleClient;
     }
 
     /**
@@ -85,7 +85,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     {
         return [
             'quoteTransfer' => $quoteTransfer,
-            'cartItems' => $this->productBundleGrouper->getGroupedBundleItems(
+            'cartItems' => $this->productBundleClient->getGroupedBundleItems(
                 $quoteTransfer->getItems(),
                 $quoteTransfer->getBundleItems()
             ),

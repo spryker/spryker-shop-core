@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CartPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
@@ -68,14 +67,6 @@ class CartPageFactory extends AbstractFactory
             $this->getProductStorageClient(),
             $this->getFlashMessenger()
         );
-    }
-
-    /**
-     * @return \Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper
-     */
-    public function createProductBundleGrouper()
-    {
-        return new ProductBundleGrouper();
     }
 
     /**
