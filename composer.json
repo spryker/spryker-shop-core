@@ -11,7 +11,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "config": {
-    "use-include-path": true
+    "use-include-path": true,
+    "process-timeout": 1000
   },
   "autoload": {
     "files": [
@@ -19,6 +20,50 @@
     ]
   },
   "replace": {
-
+    "spryker-shop/availability-widget": "*",
+    "spryker-shop/calculation-page": "*",
+    "spryker-shop/cart-page": "*",
+    "spryker-shop/catalog-page": "*",
+    "spryker-shop/category-widget": "*",
+    "spryker-shop/checkout-page": "*",
+    "spryker-shop/checkout-widget": "*",
+    "spryker-shop/cms-block-widget": "*",
+    "spryker-shop/cms-content-widget-product-connector": "*",
+    "spryker-shop/cms-content-widget-product-set-connector": "*",
+    "spryker-shop/cms-page": "*",
+    "spryker-shop/currency-widget": "*",
+    "spryker-shop/customer-page": "*",
+    "spryker-shop/discount-promotion-widget": "*",
+    "spryker-shop/discount-widget": "*",
+    "spryker-shop/error-page": "*",
+    "spryker-shop/heartbeat-page": "*",
+    "spryker-shop/home-page": "*",
+    "spryker-shop/money-widget": "*",
+    "spryker-shop/navigation-widget": "*",
+    "spryker-shop/newsletter-page": "*",
+    "spryker-shop/newsletter-widget": "*",
+    "spryker-shop/price-widget": "*",
+    "spryker-shop/product-bundle-widget": "*",
+    "spryker-shop/product-category-widget": "*",
+    "spryker-shop/product-detail-page": "*",
+    "spryker-shop/product-group-widget": "*",
+    "spryker-shop/product-image-widget": "*",
+    "spryker-shop/product-label-widget": "*",
+    "spryker-shop/product-new-page": "*",
+    "spryker-shop/product-option-widget": "*",
+    "spryker-shop/product-relation-widget": "*",
+    "spryker-shop/product-review-widget": "*",
+    "spryker-shop/product-set-detail-page": "*",
+    "spryker-shop/product-set-list-page": "*",
+    "spryker-shop/product-set-widget": "*",
+    "spryker-shop/product-widget": "*",
+    "spryker-shop/redirect-page": "*",
+    "spryker-shop/shop-application": "*",
+    "spryker-shop/shop-layout": "*",
+    "spryker-shop/shop-router": "*",
+    "spryker-shop/shop-translator": "*",
+    "spryker-shop/web-profiler-widget": "*",
+    "spryker-shop/wishlist-page": "*",
+    "spryker-shop/wishlist-widget": "*"
   }
 }
