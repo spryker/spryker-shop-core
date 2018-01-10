@@ -9,19 +9,10 @@ namespace SprykerShop\Yves\PriceWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToPriceClientInterface;
-use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToPriceStorageClientInterface;
 use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToQuoteClientInterface;
 
 class PriceWidgetFactory extends AbstractFactory
 {
-    /**
-     * @return \SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToPriceStorageClientInterface
-     */
-    public function getPriceStorageClient(): PriceWidgetToPriceStorageClientInterface
-    {
-        return $this->getProvidedDependency(PriceWidgetDependencyProvider::CLIENT_PRICE_STORAGE);
-    }
-
     /**
      * @return \SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToQuoteClientInterface
      */
