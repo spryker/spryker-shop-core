@@ -3,7 +3,7 @@
   "description": "CmsBlockWidget module",
   "license": "proprietary",
   "require": {
-    "spryker-shop/cms-block-storage": "^0.1.0",
+    "spryker/cms-block-storage": "^0.1.0",
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {

@@ -3,8 +3,8 @@
   "description": "NavigationWidget module",
   "license": "proprietary",
   "require": {
-    "spryker-shop/navigation-storage": "^0.1.0",
-    "spryker/kernel": "^3.16.0"
+    "spryker/kernel": "^3.16.0",
+    "spryker/navigation-storage": "^0.1.0"
   },
   "require-dev": {
     "spryker-shop/shop-layout": "*"
