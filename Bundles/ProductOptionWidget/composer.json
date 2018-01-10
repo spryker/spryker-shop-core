@@ -3,8 +3,8 @@
   "description": "ProductOptionWidget module",
   "license": "proprietary",
   "require": {
-    "spryker-shop/product-option-storage": "^0.1.0",
-    "spryker/kernel": "^3.16.0"
+    "spryker/kernel": "^3.16.0",
+    "spryker/product-option-storage": "^0.1.0"
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",

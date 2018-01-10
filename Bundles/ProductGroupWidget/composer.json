@@ -3,9 +3,9 @@
   "description": "ProductGroupWidget module",
   "license": "proprietary",
   "require": {
-    "spryker-shop/product-group-storage": "^0.1.0",
-    "spryker-shop/product-storage": "^0.1.0",
-    "spryker/kernel": "^3.16.0"
+    "spryker/kernel": "^3.16.0",
+    "spryker/product-group-storage": "^0.1.0",
+    "spryker/product-storage": "^0.1.0"
   },
   "require-dev": {
     "spryker-shop/shop-layout": "*"
