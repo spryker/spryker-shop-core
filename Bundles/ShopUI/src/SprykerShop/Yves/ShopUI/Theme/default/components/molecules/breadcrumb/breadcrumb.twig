@@ -1,0 +1,30 @@
+{% extends model('component') %}
+
+{% set name = 'breadcrumb' %}
+{% set tag = 'nav' %}
+
+{% set steps = data.steps | default([]) %}
+{% set startWithHome = data.startWithHome | default(true) %}
+
+{% block body %}
+    <ul>
+        {% if startWithHome %}
+            {% include molecule('breadcrumb-step') with {
+                data: {
+                    url: '/',
+                    label: 'global.home' | trans
+                }
+            } only %}
+        {% endif %}
+        {% block breadcrumbs %}
+            {% for step in steps %}
+                {% include molecule('breadcrumb-step') with {
+                    data: {
+                        url: loop.last ? null : step.url,
+                        label: step.label
+                    }
+                } only %}
+            {% endfor %}
+        {% endblock %}
+    </ul>
+{% endblock %}

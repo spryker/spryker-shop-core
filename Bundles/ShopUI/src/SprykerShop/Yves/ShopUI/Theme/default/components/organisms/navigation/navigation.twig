@@ -1,9 +1,9 @@
 {% extends model('component') %}
 
-{% set name = 'header' %}
+{% set name = name | default('navigation') %}
 
 {% block body %}
-    <ul class="menu menu--horizontal align-right">
+    <ul class="menu menu--inline text-right">
         <li class="menu__item">
             <span class="float-left small-10 columns">
                 {{ widgetGlobal('CurrencyWidgetPlugin') }}
@@ -50,6 +50,8 @@
             {% include '@ShopLayout/layout/partials/search-form.twig' %}
         </div> #}
     </div>
+
+    <hr class="box__separator" />
 
     {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', template('navigation-widget', 'ShopLayout')) }}
 {% endblock %}

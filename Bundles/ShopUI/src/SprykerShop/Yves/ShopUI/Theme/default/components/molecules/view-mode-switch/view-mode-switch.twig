@@ -1,0 +1,22 @@
+{% extends model('component') %}
+
+{% set name = 'view-mode-switch' %}
+
+{% set gridHref = path('change-view-mode', { mode: 'grid', 'referer-url': app.request.requestUri }) %}
+{% set listHref = path('change-view-mode', { mode: 'list', 'referer-url': app.request.requestUri }) %}
+
+{% block body %}
+    <ul class="menu menu--inline">
+        <li class="menu__item">
+            <a href="{{ gridHref }}">
+                # {{ 'catalog.view.mode.grid' | trans }}
+            </a>
+        </li>
+        <li class="menu__separator"></li>
+        <li class="menu__item">
+            <a href="{{ listHref }}">
+                = {{ 'catalog.view.mode.list' | trans }}
+            </a>
+        </li>
+    </ul>
+{% endblock %}

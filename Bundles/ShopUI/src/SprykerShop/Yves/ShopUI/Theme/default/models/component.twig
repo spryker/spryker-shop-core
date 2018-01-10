@@ -49,7 +49,6 @@
  # Component blocks
  #}
 
-{# with debug=false the blocks are created but not rendered on page load #}
 {%- if __blocks -%}
     {# create 'class', 'selector' and 'attr' blocks #}
     {# to use them: {{ block('blockname') }} #}
@@ -81,6 +80,9 @@
 
     {# define the body block where to place component html/twig #}
     {%- block body -%}{%- endblock -%}
+
+    {# define the hidden blocks container #}
+    {%- block hidden -%}{%- endblock -%}
 {%- endif -%}
 
 {#
@@ -92,8 +94,8 @@
 {%- block component -%}
     {%- if debug -%}{{-block('renderWarnings')-}}{%- endif -%}
 
-    <{{-tag-}} 
-        {%- block class %} class="{{block('renderClass')}}"{%- endblock -%} 
+    <{{-tag}} 
+        class="{%- block class %}{{block('renderClass')}}{%- endblock -%}"
         {%- block attributes %} {{block('renderAttributes')}}{%- endblock -%}>
         {{-block('body')-}}
     </{{-tag-}}>

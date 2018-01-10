@@ -1,5 +1,4 @@
 $color-main: #2199e8 !default; 
-$color-main-dark: darken($color-main, 10); 
 $color-alt: #e2694a !default;
 
 $color-transparent: rgba(0, 0, 0, 0);
@@ -14,7 +13,13 @@ $color-dark: #cccccc !default;
 $color-darker: #777777 !default;
 $color-darkest: #333333 !default;
 
-$color-bg: $color-white !default;
+$color-bg: $color-lightest !default;
 $color-text: $color-darkest !default;
 $color-input-border: $color-lighter !default;
 $color-shadow: rgba(0, 0, 0, .1);
+
+$color-action: (
+    success: #4FC2A0,
+    warning: #F29133,
+    alert: #B2171A
+);

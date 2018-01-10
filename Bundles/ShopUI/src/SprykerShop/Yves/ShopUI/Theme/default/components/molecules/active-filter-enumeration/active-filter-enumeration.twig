@@ -1,0 +1,19 @@
+{% extends model('component') %}
+
+{% set name = name | default('active-filter-enumeration') %}
+
+{% set filter = data.filter %}
+{% set isMultiSelect = data.isMultiSelect | default(filter.config.isMultiValued | default(false)) %}
+
+{% set values = isMultiSelect ? filter.activeValue : [filter.activeValue] %}
+
+{% block component %}
+    {% for value in values %}
+        {% include molecule('active-filter') with {
+            data: {
+                filter: filter,
+                value: value
+            }
+        } only %}
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends model('component') %}
+
+{% set name = 'active-filter-section' %}
+
+{% set facets = data.facets | default([])%}
+{% set activeFilters = '' %}
+
+{% for filter in facets %}
+    {% set activeFilters = activeFilters ~ include(
+        [
+            molecule('active-filter-' ~ filter.config.name),
+            molecule('active-filter-' ~ filter.config.type)
+        ], 
+        {
+            data: {
+                filter: filter
+            }
+        }, 
+        with_context = false, 
+        ignore_missing = true
+    ) %}
+{% endfor %}
+
+{% set hasActiveFilters = activeFilters | trim is not empty %}
+
+{% block body %}
+    {% if hasActiveFilters %}
+        <div class="box">
+            <small>{{ 'catalog.filter.activeFilters' | trans }}:</small> {{ activeFilters | raw }}
+
+            <a class="button button--small" href="{{ generateUrlWithoutAllActiveSearchFilters(facets) }}">
+                {{ 'catalog.filter.resetAllFilters' | trans }} (x)
+            </a>     
+        </div> 
+    {% endif %}
+{% endblock %}

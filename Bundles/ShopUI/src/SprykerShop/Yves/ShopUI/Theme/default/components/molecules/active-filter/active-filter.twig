@@ -1,0 +1,27 @@
+{% extends model('component') %}
+
+{% set name = name | default('active-filter') %}
+{% set tag = tag | default('a') %}
+
+{% set filter = data.filter %}
+{% set value = data.value | default(null) %}
+
+{% block component %}
+    {% if value is not empty %}
+        {{parent()}}
+    {% endif %}
+{% endblock %}
+
+{% block class %}
+    {{parent()}}
+    button button--small button--hollow
+{% endblock %}
+
+{% block attributes %}
+    {{parent()}}
+    href="{{ generateUrlWithoutActiveSearchFilter(filter, value) }}"
+{% endblock %}
+
+{% block body %}
+    {{ ('product.filter.' ~ filter.name) | trans }}: {{value}} (x)
+{% endblock %}

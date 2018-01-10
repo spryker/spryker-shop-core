@@ -1,6 +1,6 @@
 {% extends model('component') %}
 
-{% set name = 'header' %}
+{% set name = name | default('header') %}
 
 {% block body %}
     <div class="box">
@@ -14,19 +14,19 @@
                     {% include '@ShopLayout/layout/partials/search-form.twig' %}
                 </div> #}
 
-                <a class="shrink columns text-right align-middle hide-for-large" href="#aside" data-aside-toggle>
+                {# <a class="shrink columns text-right align-middle hide-for-large" href="#aside" data-aside-toggle>
                     {% if app['cart.quantity'] > 0 %}
                         <span class="warning badge">{{ app['cart.quantity'] }}</span>
                     {% endif %}
                     <i class="fa fa-bars"></i>
-                </a>
+                </a> #}
             {% endblock %}
         </div>
     </div>
 
-    <div class="header__navigation box">
+    <div class="box">
         {% block navigation %}
-            {% include organism('navigation') %}
+            {% include organism('navigation') only %}
         {% endblock %}
     </div>
 {% endblock %}

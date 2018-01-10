@@ -1,19 +1,20 @@
 @mixin component-menu($name: '.menu') {
-    #{$name} {
-        &__separator {
-            display: inline-block;
-            padding: spacing();
-
-            &::after {
-                content: '|';
-                color: $color-lighter;
-            }
-        }
-
+    @include component-list($name) {
         &__item {
-            display: block;
-            padding: spacing();
-            margin: 0;
+            margin: spacing() 0;
+
+            &--has-children-list {
+                margin-bottom: spacing(2);
+                
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                & #{$name}__item {
+                    @include font-size(small);
+                    margin: spacing();
+                }
+            }
 
             &--has-children-dropdown {
                 z-index: $zi-element + 1;
@@ -33,30 +34,21 @@
                     @include is-visible;
                 }
 
-                & #{$name}__item {
-                    padding: spacing(.5) spacing();
-                }
-            }
-
-            &--has-children-list {
-                border-bottom: 1px solid $color-lighter;
-
-                &:last-child {
-                    border-bottom: none;
-                }
-                
-                & > #{$name} {
+                & > #{$name} > #{$name}__item {
                     margin-left: spacing();
-                }
-
-                & #{$name}__item {
-                    @include font-size(small);
+                    margin-right: spacing();
                 }
             }
         }
 
-        &--horizontal > &__item {
+        &__separator {
             display: inline-block;
+            margin: 0 spacing();
+
+            &::after {
+                content: '|';
+                color: $color-lighter;
+            }
         }
     }
 }

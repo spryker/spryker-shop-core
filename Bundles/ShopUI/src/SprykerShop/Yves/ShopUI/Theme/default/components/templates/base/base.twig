@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% set locale = locale | default('en') %}
-{% set title = title | default('') %}
+{% set headTitle = headTitle | default('') %}
 {% set metaTitle = metaTitle | default(title) %}
 {% set metaDescription = metaDescription | default('') %}
 {% set metaKeywords = metaKeywords | default('') %}
@@ -31,7 +31,7 @@
                 <script src="/assets/js/yves_default.manifest.js"></script>
             {% endblock %}
 
-            <title>{% block title %}{{ title }}{% endblock %}</title>
+            <title>{% block headTitle %}{{ headTitle }}{% endblock %}</title>
         </head>
         <body>
             {# {% include atom('test-component') only %} #}

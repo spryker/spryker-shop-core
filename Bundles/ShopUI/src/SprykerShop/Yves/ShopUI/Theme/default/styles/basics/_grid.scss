@@ -88,5 +88,29 @@
     &--expand {
         flex-grow: 1;
     }
+
+    &--top {
+        align-self: flex-start;
+    }
+
+    &--bottom {
+        align-self: flex-end;
+    }
+
+    &--left {
+        justify-self: flex-start;
+    }
+
+    &--right {
+        justify-self: flex-end;
+    }
+
+    &--center {
+        justify-self: center;
+    }
+
+    &--middle {
+        align-self: center;
+    }
 }
 

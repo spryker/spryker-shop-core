@@ -1,0 +1,24 @@
+{% extends model('component') %}
+
+{% set name = name | default('filter-enumeration') %}
+
+{% set filter = data.filter | default(null) %}
+{% set isMultiSelect = data.isMultiSelect | default(filter.config.isMultiValued | default(false)) %}
+{% set activeValues = isMultiSelect ? filter.activeValue : [filter.activeValue] %}
+
+{% block body %}
+    <ul class="menu">
+        {% for filterValue in filter.values %}
+            <li class="menu__item">
+                <label>
+                    <input 
+                        type="{% if isMultiSelect %}checkbox{% else %}radio{% endif %}" 
+                        name="{{ filter.config.parameterName }}{% if isMultiSelect %}[]{% endif %}" 
+                        value="{{ filterValue.value }}" 
+                        {% if filterValue.value in activeValues %}checked{% endif %} />
+                    {{ filterValue.value }} ({{ filterValue.docCount }})
+                </label>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

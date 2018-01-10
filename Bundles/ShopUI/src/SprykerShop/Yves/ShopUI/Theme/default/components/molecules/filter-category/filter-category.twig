@@ -1,0 +1,46 @@
+{% extends model('component') %}
+
+{% set name = 'filter-category' %}
+
+{% set filterPath = data.filterPath | default(null) %}
+{% set filter = data.filter | default(null) %}
+{% set categories = data.categories | default([]) %}
+
+{% block body %}
+    {% if categories is not empty %}
+        <ul class="menu">
+            {% for categoryNode in categories %}
+                {% set quantity = 0 %}
+                {% set hasChildren = categoryNode.children is defined and categoryNode.children is not empty %}
+
+                {% for filterValue in filter.values if (filterValue.value == categoryNode.nodeId) %}
+                    {% set quantity = filterValue.docCount %}
+                {% endfor %}
+
+                {% if filterPath is not empty %}
+                    {% set categoryUrl = url(filterPath, {categoryPath: (categoryNode.url)}) %}
+                {% else %}
+                    {% set categoryUrl = categoryNode.url | replace({"'": "\\'", '"':'\\"'}) %}
+                {% endif %}
+
+                <li class="menu__item {% if hasChildren %}menu__item--has-children-list{% endif %}">
+                    <button class="link" onclick="this.form.action='{{ categoryUrl }}'" {% if quantity == 0 %}disabled="disabled"{% endif %}>
+                        {{ categoryNode.name }} ({{ quantity }})
+                    </button>
+
+                    {% if hasChildren %}
+                        {% include molecule('filter-category') with {
+                            data: {
+                                filterPath: filterPath,
+                                filter: filter,
+                                categories: categoryNode.children
+                            }
+                        } only %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+

@@ -1,0 +1,66 @@
+{% extends molecule('product-card') %}
+
+{% set name = 'product-list-item' %}
+
+{% block class %}
+    {{parent()}}
+    box box--stretch
+{% endblock %}
+
+{% block body %}
+    <div class="grid grid--stretch">
+        {% block imageContainer %}
+            <div class="col col--sm-3 col--md-2 col--middle">
+                {% block image %}
+                    <a href="{{ productUrl }}">
+                        {% include atom('thumbnail') with {
+                            modifiers: ['small'],
+                            attributes: {
+                                alt: productName,
+                                src: productImageUrl,
+                                title: productName
+                            }
+                        } only %}
+                    </a>
+                {% endblock %}
+            </div>
+        {% endblock %}
+
+        <div class="col col--sm-6 col--md-7 col--xl-8 col--middle">
+            {% block labels %}
+                {{ widget('ProductAbstractLabelWidgetPlugin', productAbstractId) }}
+            {% endblock %}
+
+            {% block groups %}
+                {{ widget('ProductGroupWidgetPlugin', productAbstractId) }}
+            {% endblock %}
+
+            {% block name %}
+                <strong>{{ productName }}</strong>
+            {% endblock %}
+
+            {% block rating %}
+                {{ widget('ProductAbstractReviewWidgetPlugin', productAbstractId) }}
+            {% endblock %}
+
+            {% block price %}
+                <div>
+                    {% include molecule('price') with {
+                        data: {
+                            amount: productPrice | money,
+                            originalAmount: productOriginalPrice is empty ? null : (productOriginalPrice | money)
+                        }
+                    } only %}
+                </div>
+            {% endblock %}
+        </div>
+        
+        {% block actionsContainer %}
+            <div class="col col--sm-3 col--xl-2 col--bottom">
+                {% block actions %}
+                    <a class="button button--expand" href="{{ productUrl }}">{{ 'product.view' | trans }} &raquo;</a>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends model('component') %}
+
+{% set name = 'filter-section' %}
+
+{% set filterPath = data.filterPath | default(null) %}
+{% set facets = data.facets | default(null) %}
+{% set categories = data.categories | default([]) %}
+
+{% block body %}
+    <div class="box">
+        {% for filter in facets %}
+            {% set filterHasValues = filter.values is not defined or filter.values | length > 0 %}
+
+            {% if filterHasValues %}
+                <h6>{{ ('product.filter.' ~ filter.name | lower) | trans }}</h6>
+
+                {% include [
+                    molecule('filter-' ~ filter.config.name),
+                    molecule('filter-' ~ filter.config.type)
+                ] ignore missing with {
+                    data: {
+                        filterPath: filterPath,
+                        filter: filter,
+                        categories: categories
+                    }
+                } only %}
+
+                <hr class="box__separator" />
+            {% endif %}
+        {% endfor %}
+
+        <button type="submit" class="button button--expand button--small">
+            {{ 'catalog.filter.button' | trans }}
+        </button>
+    </div>
+{% endblock %}

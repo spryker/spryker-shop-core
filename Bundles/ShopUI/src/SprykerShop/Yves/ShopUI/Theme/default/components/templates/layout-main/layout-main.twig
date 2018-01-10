@@ -1,12 +1,13 @@
 {% extends template('base') %}
 
-{% set name = 'layout-main' %}
-{% set tag = name %}
+{% set name = name | default('layout-main') %}
 
-{% set locale = app.locale | slice(0, 2) %}
+{% set locale = locale | default(app.locale | slice(0, 2)) %}
 {% set title = title | default('global.spryker.shop') | trans %}
 {% set metaDescription = metaDescription | default('') | trans %}
 {% set metaKeywords = metaKeywords | default('') | trans %}
+{% set breadcrumbSteps = breadcrumbSteps | default([]) %}
+{% set breadcrumbStartWithHome = breadcrumbStartWithHome | default(true) %}
 
 {% block body %}
     {% block outside %}{% endblock %}
@@ -14,36 +15,41 @@
     {# {% include organism('sidebar') only %} #}
     
     <div class="grid grid--container">
-        <div class="box box--borderless">
-            {% block page_start %}{% endblock %}
+        {% block page_start %}{% endblock %}
 
-            {% include organism('header') only %}
+        {% include organism('header') only %}
 
-            {% block breadcrumb %}
-                <div class="box">
-                    <nav role="navigation">
-                        <ul class="breadcrumbs">
-                            {% block breadcrumbItems %}{% endblock %}
-                        </ul>
-                    </nav>
-                </div>
-            {% endblock %}
+        {% block breadcrumbsContainer %}
+            <div class="box">
+                {% block breadcrumbs %}
+                    {% include molecule('breadcrumb') with {
+                        data: {
+                            steps: breadcrumbSteps,
+                            startWithHome: breadcrumbStartWithHome
+                        }
+                    } only %}
+                {% endblock %}
+            </div>
+        {% endblock %}
 
-            {% block pageTitle %}{% endblock %}
+        {% block titleContainer %}
+            <div class="box">
+                {% block title %}{% endblock %}
+            </div>
+        {% endblock %}
 
-            <main>
-                {% block content %}{% endblock %}
-            </main>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
 
-            {% block footer %}
-                {% include organism('footer') only %}
-            {% endblock %}
+        {% block footer %}
+            {% include organism('footer') only %}
+        {% endblock %}
 
-            <p class="align-center">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                <br>Aenean commodo ligula eget dolor. Aenean massa.
-                <br>&copy; ACME Company
-            </p>
-        </div>
+        <p class="text-center text-small">
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+            <br>Aenean commodo ligula eget dolor. Aenean massa.
+            <br>&copy; ACME Company
+        </p>
     </div>
 {% endblock %}

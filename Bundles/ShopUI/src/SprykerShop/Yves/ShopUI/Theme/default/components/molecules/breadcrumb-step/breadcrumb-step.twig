@@ -1,0 +1,14 @@
+{% extends model('component') %}
+
+{% set name = 'breadcrumb-step' %}
+{% set tag = 'li' %}
+
+{% set url = data.url | default(null) %}
+{% set label = data.label | default(null) %}
+{% set isLink = url is not empty %}
+
+{% block body %}
+    {% if isLink %}<a href="{{url}}">{% endif %}
+    {{label}}
+    {% if isLink %}</a>{% endif %}
+{% endblock %}

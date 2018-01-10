@@ -1,0 +1,38 @@
+@mixin component-link-action($action) {
+    &--#{$action} {
+        color: map-get($color-action, $action);
+    }
+}
+
+@mixin component-link($name: '.link') {
+    #{$name} {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+        color: $color-main;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        @include component-link-action(success);
+        @include component-link-action(warning);
+        @include component-link-action(alert);
+
+        &--small {
+            @include font-size(small);
+        }
+
+        &[disabled],
+        &--disabled {
+            color: $color-dark;
+            cursor: not-allowed;
+
+            &:hover {
+                color: $color-dark;
+                text-decoration: none;
+            }
+        }
+    }
+}

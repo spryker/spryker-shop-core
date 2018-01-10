@@ -1,0 +1,95 @@
+{% extends model('component') %}
+
+{#
+  Parameters:
+    * parameters (array) : associative array that contains the current route-arguments
+    * currentPage (int) : the current page you are in
+    * paginationPath (string) : the route name to use for links
+    * showAlwaysFirstAndLast (bool) : Always show first and last link (just disabled)
+    * maxPage (int) : represents the total number of existing pages
+    * extremePagesLimit (int): the number of first and last pages to be displayed (default 1)
+    * nearbyPagesLimit (int): the number of pages that are displayed around the active page (default 2)
+    * anchor (string): the anchor to be used after each pagination (default empty)
+#}
+
+{% set name = name | default('pagination') %}
+{% set tag = tag | default('nav') %}
+
+{% set parameters = data.parameters | default([]) %}
+{% set currentPage = data.currentPage | default(1) %}
+{% set paginationPath = data.paginationPath | default('') %}
+{% set showAlwaysFirstAndLast = data.showAlwaysFirstAndLast | default(false) %}
+{% set maxPage = data.maxPage | default(10) %}
+{% set extremePagesLimit = data.extremePagesLimit | default(1) %}
+{% set nearbyPagesLimit = data.nearbyPagesLimit | default(2) %}
+{% set anchor = data.anchor | default('') %}
+{% set anchor = anchor is empty ? '#' ~ anchor : anchor %}
+
+{% block attributes %}
+    {{parent()}}
+    role="navigation"
+{% endblock %}
+
+{% block body %}
+    <ul>
+        {% if currentPage > 1 %}
+            <li class="{{name}}__item">
+                <a class="{{name}}__step {{name}}__step--previous" href="{{ path(paginationPath, parameters|merge({page: currentPage-1})) }}{{ anchor }}">{{ 'pagination.previous' | trans }}</a>
+            </li>
+
+            {% for i in range(1, extremePagesLimit) if ( i < currentPage - nearbyPagesLimit ) %}
+                <li class="{{name}}__item">
+                    <a class="{{name}}__step" href="{{ path(paginationPath, parameters|merge({page: i})) }}{{ anchor }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+
+            {% if extremePagesLimit + 1 < currentPage - nearbyPagesLimit %}
+                <li class="{{name}}__item">
+                    <span class="{{name}}__step {{name}}__step--ellipsis">&hellip;</span>
+                </li>
+            {% endif %}
+
+            {% for i in range(currentPage-nearbyPagesLimit, currentPage-1) if ( i > 0 ) %}
+                <li class="{{name}}__item">
+                    <a class="{{name}}__step" href="{{ path(paginationPath, parameters|merge({page: i})) }}{{ anchor }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+        {% elseif showAlwaysFirstAndLast %}
+            <li class="{{name}}__item">
+                <span class="{{name}}__step {{name}}__step--previous {{name}}__step--disabled">{{ 'pagination.previous' | trans }}</span>
+            </li>
+        {% endif %}
+
+        <li class="{{name}}__item">
+            <a class="{{name}}__step {{name}}__step--current" href="{{ path(paginationPath, parameters|merge({ page: currentPage })) }}{{ anchor }}">{{ currentPage }}</a>
+        </li>
+
+        {% if currentPage < maxPage %}
+            {% for i in range(currentPage+1, currentPage + nearbyPagesLimit) if ( i <= maxPage ) %}
+                <li class="{{name}}__item">
+                    <a class="{{name}}__step" href="{{ path(paginationPath, parameters|merge({page: i})) }}{{ anchor }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+
+            {% if  (maxPage - extremePagesLimit) > (currentPage + nearbyPagesLimit) %}
+                <li class="{{name}}__item">
+                    <span class="{{name}}__step {{name}}__step--ellipsis">&hellip;</span>
+                </li>
+            {% endif %}
+
+            {% for i in range(maxPage - extremePagesLimit+1, maxPage) if ( i > currentPage + nearbyPagesLimit ) %}
+                <li class="{{name}}__item">
+                    <a class="{{name}}__step" href="{{ path(paginationPath, parameters|merge({page: i})) }}{{ anchor }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+
+            <li class="{{name}}__item">
+                <a class="{{name}}__step {{name}}__step--next" href="{{ path(paginationPath, parameters|merge({page: currentPage+1})) }}{{ anchor }}">{{ 'pagination.next' | trans }}</a>
+            </li>
+        {% elseif showAlwaysFirstAndLast %}
+            <li class="{{name}}__item">
+                <span class="{{name}}__step {{name}}__step--next {{name}}__step--disabled">{{ 'pagination.next' | trans }}</span>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,23 @@
+@mixin component-pagination($name: '.pagination') {
+    #{$name} {
+        @include font-size(small);
+
+        &__item {
+            display: inline-block;
+        }
+
+        &__step {
+            display: inline-block;
+            padding: spacing(.25) spacing();
+
+            &--current {
+                background-color: $color-main;
+                color: $color-white;
+            }
+
+            &--disabled {
+                color: $color-dark;
+            }
+        }
+    }
+}

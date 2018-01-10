@@ -5,7 +5,7 @@
 {% set nodes = data.nodes | default([]) %}
 
 {% block body %}
-    <ul class="menu menu--horizontal">
+    <ul class="menu menu--inline">
         {% for node in nodes %}
             {% set hasChildren = node.children | length > 0 %}
             

@@ -1,3 +1,25 @@
+@mixin component-button-action($action) {
+    &--#{$action} {
+        background-color: map-get($color-action, $action);
+
+        &:hover,
+        &:focus {
+            background-color: darken(map-get($color-action, $action), 10);
+        }
+    }
+
+    &--#{$action}#{&}--hollow {
+        background-color: $color-white;
+        box-shadow: inset 0 0 0 1px map-get($color-action, $action);
+        color: map-get($color-action, $action);
+
+        &:hover,
+        &:focus {
+            background-color: lighten(map-get($color-action, $action), 40);
+        }
+    }
+}
+
 @mixin component-button($name: '.button') {
     #{$name} {
         @include transition(background-color);
@@ -6,15 +28,47 @@
         background-color: $color-main;
         color: $color-white;
         text-align: center;
+        cursor: pointer;
 
         &:hover,
         &:focus {
-            background-color: $color-main-dark;
+            background-color: darken($color-main, 10);
             text-decoration: none;
+        }
+
+        &--hollow {
+            background-color: $color-white;
+            box-shadow: inset 0 0 0 1px $color-main;
+            color: $color-main;
+
+            &:hover,
+            &:focus {
+                background-color: lighten($color-main, 40);
+            }
+        }
+
+        @include component-button-action(success);
+        @include component-button-action(warning);
+        @include component-button-action(alert);
+
+        &--small {
+            @include font-size(small);
+            padding: spacing(.5) spacing();
         }
 
         &--expand {
             width: 100%;
+        }
+
+        &[disabled],
+        &--disabled {
+            background-color: $color-dark;
+            cursor: not-allowed;
+
+            &:hover,
+            &:focus {
+                background-color: $color-dark;
+            }
         }
     }
 }
