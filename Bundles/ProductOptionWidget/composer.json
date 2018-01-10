@@ -5,7 +5,7 @@
   "require": {
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+
   },
   "autoload": {
     "psr-4": {

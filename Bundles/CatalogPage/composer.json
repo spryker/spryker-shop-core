@@ -2,11 +2,6 @@
   "name": "spryker-shop/catalog-page",
   "description": "CatalogPage module",
   "license": "proprietary",
-  "require": {
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*"
-  },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"

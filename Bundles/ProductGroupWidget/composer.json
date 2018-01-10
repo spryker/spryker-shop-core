@@ -1,7 +1,12 @@
 {
-  "name": "spryker-shop/checkout-page",
-  "description": "CheckoutPage module",
+  "name": "spryker-shop/product-group-widget",
+  "description": "ProductGroupWidget module",
   "license": "proprietary",
+  "require": {
+  },
+  "require-dev": {
+
+  },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
