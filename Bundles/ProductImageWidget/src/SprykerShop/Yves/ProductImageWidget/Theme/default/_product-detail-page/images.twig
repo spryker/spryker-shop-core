@@ -21,7 +21,7 @@
                     {% for image in _widget.product.images %}
                         <div data-viewer-id="{{ image.externalUrlLarge }}" {% if loop.first %}data-viewer-default{% endif %}>
                             <span class="thumbnail __preview-image __preview-image--large">
-                                <img src="{{ image.externalUrlLarge }}">
+                                <img itemprop="image" src="{{ image.externalUrlLarge }}">
                             </span>
                         </div>
                     {% endfor %}
