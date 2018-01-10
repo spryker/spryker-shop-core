@@ -3,18 +3,21 @@
   "description": "MoneyWidget module",
   "license": "proprietary",
   "require": {
+    "spryker-shop/currency-widget": "^0.1.0",
+    "spryker/kernel": "^3.16.0",
+    "spryker/money": "^2.4.0"
   },
   "require-dev": {
-
+    "spryker/silex": "*",
+    "spryker/twig": "*"
+  },
+  "suggest": {
+    "spryker/silex": "TODO: add suggestion description",
+    "spryker/twig": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

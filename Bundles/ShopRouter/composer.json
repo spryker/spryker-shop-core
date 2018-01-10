@@ -3,18 +3,17 @@
   "description": "ShopRouter module",
   "license": "proprietary",
   "require": {
-  },
-  "require-dev": {
-
+    "spryker-shop/url-storage": "^0.1.0",
+    "spryker/application": "^3.8.0",
+    "spryker/kernel": "^3.16.0",
+    "spryker/log": "^3.4.0",
+    "spryker/silex": "^2.0.0",
+    "spryker/symfony": "^3.1.0",
+    "spryker/util-text": "^1.2.0"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

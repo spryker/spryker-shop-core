@@ -3,18 +3,19 @@
   "description": "ProductGroupWidget module",
   "license": "proprietary",
   "require": {
+    "spryker-shop/product-group-storage": "^0.1.0",
+    "spryker-shop/product-storage": "^0.1.0",
+    "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
-
+    "spryker-shop/shop-layout": "*"
+  },
+  "suggest": {
+    "spryker-shop/shop-layout": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

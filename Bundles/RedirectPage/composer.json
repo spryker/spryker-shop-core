@@ -1,20 +1,23 @@
 {
   "name": "spryker-shop/redirect-page",
-  "description": "RedirectPAge module",
+  "description": "RedirectPage module",
   "license": "proprietary",
   "require": {
+    "spryker-shop/shop-application": "^0.1.0",
+    "spryker/kernel": "^3.16.0",
+    "spryker/storage": "^3.4.0"
   },
   "require-dev": {
-
+    "spryker-shop/shop-router": "*",
+    "spryker/url-storage": "*"
+  },
+  "suggest": {
+    "spryker-shop/shop-router": "TODO: add suggestion description",
+    "spryker/url-storage": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

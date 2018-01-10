@@ -3,18 +3,18 @@
   "description": "ProductBundleWidget module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.16.0",
+    "spryker/product-bundle": "^4.1.0"
   },
   "require-dev": {
-
+    "spryker-shop/cart-page": "*"
+  },
+  "suggest": {
+    "spryker-shop/cart-page": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

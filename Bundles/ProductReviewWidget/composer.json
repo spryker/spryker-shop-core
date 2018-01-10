@@ -3,18 +3,30 @@
   "description": "ProductReviewWidget module",
   "license": "proprietary",
   "require": {
+    "spryker-shop/product-review-storage": "^0.1.0",
+    "spryker-shop/shop-application": "^0.1.0",
+    "spryker/application": "^3.8.0",
+    "spryker/customer": "^7.4.0",
+    "spryker/kernel": "^3.16.0",
+    "spryker/product-review": "^1.1.0",
+    "spryker/storage": "^3.4.0",
+    "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-
+    "spryker-shop/catalog-page": "*",
+    "spryker-shop/product-detail-page": "*",
+    "spryker-shop/product-widget": "*",
+    "spryker/silex": "*"
+  },
+  "suggest": {
+    "spryker-shop/catalog-page": "TODO: add suggestion description",
+    "spryker-shop/product-detail-page": "TODO: add suggestion description",
+    "spryker-shop/product-widget": "TODO: add suggestion description",
+    "spryker/silex": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

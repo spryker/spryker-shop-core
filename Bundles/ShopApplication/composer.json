@@ -3,18 +3,28 @@
   "description": "ShopApplication module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.16.0",
+    "spryker/silex": "^2.0.0",
+    "spryker/storage": "^3.4.0",
+    "spryker/util-text": "^1.2.0"
   },
   "require-dev": {
-
+    "spryker/application": "*",
+    "spryker/config": "*",
+    "spryker/log": "*",
+    "spryker/symfony": "*",
+    "spryker/twig": "*"
+  },
+  "suggest": {
+    "spryker/application": "TODO: add suggestion description",
+    "spryker/config": "TODO: add suggestion description",
+    "spryker/log": "TODO: add suggestion description",
+    "spryker/symfony": "TODO: add suggestion description",
+    "spryker/twig": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
