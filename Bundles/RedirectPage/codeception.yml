@@ -1,4 +1,4 @@
-namespace: RedirectPAge
+namespace: RedirectPage
 actor: Tester
 paths:
     tests: tests

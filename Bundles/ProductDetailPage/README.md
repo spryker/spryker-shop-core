@@ -5,7 +5,7 @@
 ## Installation
 
 ```
-composer require spryker-shop/product-detail-p-age
+composer require spryker-shop/product-detail-page
 ```
 
 ## Documentation
