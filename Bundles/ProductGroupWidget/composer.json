@@ -1,16 +1,17 @@
 {
-  "name": "spryker-shop/product-bundle-widget",
-  "description": "ProductBundleWidget module",
+  "name": "spryker-shop/product-group-widget",
+  "description": "ProductGroupWidget module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.16.0",
-    "spryker/product-bundle": "^4.1.0"
+    "spryker-shop/product-group-storage": "^0.1.0",
+    "spryker-shop/product-storage": "^0.1.0",
+    "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
-    "spryker-shop/cart-page": "*"
+    "spryker-shop/shop-layout": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "TODO: add suggestion description"
+    "spryker-shop/shop-layout": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {

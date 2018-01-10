@@ -76,7 +76,7 @@ class NewsletterController extends AbstractController
 
         $subscriptionRequest->setNewsletterSubscriber($subscriber);
         $subscriptionRequest->addSubscriptionType((new NewsletterTypeTransfer())
-            ->setName(NewsletterConstants::DEFAULT_NEWSLETTER));
+            ->setName(NewsletterConstants::DEFAULT_NEWSLETTER_TYPE));
 
         return $subscriptionRequest;
     }

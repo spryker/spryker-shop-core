@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Controller;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Shared\Storage\StorageConstants;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,9 +38,30 @@ class ProductController extends AbstractController
 
         $data = [
             'product' => $productViewTransfer,
+            'productUrl' => $this->getProductUrl($productViewTransfer),
         ];
 
         return $this->view($data, $this->getFactory()->getProductDetailPageWidgetPlugins());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return string
+     */
+    protected function getProductUrl(ProductViewTransfer $productViewTransfer)
+    {
+        if (!$productViewTransfer->getIdProductConcrete()) {
+            return $productViewTransfer->getUrl();
+        }
+
+        $variantUriParams[static::PARAM_ATTRIBUTE] = $productViewTransfer->getSelectedAttributes();
+
+        return sprintf(
+            '%s?%s',
+            $productViewTransfer->getUrl(),
+            http_build_query($variantUriParams)
+        );
     }
 
     /**

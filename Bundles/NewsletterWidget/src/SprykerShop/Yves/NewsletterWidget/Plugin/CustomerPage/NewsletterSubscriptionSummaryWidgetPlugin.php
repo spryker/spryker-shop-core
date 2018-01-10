@@ -61,7 +61,7 @@ class NewsletterSubscriptionSummaryWidgetPlugin extends AbstractWidgetPlugin imp
         $subscriptionRequestTransfer->setNewsletterSubscriber($subscriberTransfer);
 
         $newsletterTypeTransfer = new NewsletterTypeTransfer();
-        $newsletterTypeTransfer->setName(NewsletterConstants::DEFAULT_NEWSLETTER);
+        $newsletterTypeTransfer->setName(NewsletterConstants::DEFAULT_NEWSLETTER_TYPE);
 
         $subscriptionRequestTransfer->addSubscriptionType($newsletterTypeTransfer);
 

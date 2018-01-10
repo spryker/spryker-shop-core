@@ -3,18 +3,30 @@
   "description": "CatalogPage module",
   "license": "proprietary",
   "require": {
+    "spryker-shop/category-storage": "^0.1.0",
+    "spryker-shop/product-category-filter-storage": "^0.1.0",
+    "spryker-shop/shop-application": "^0.1.0",
+    "spryker/catalog": "^5.2.0",
+    "spryker/kernel": "^3.16.0",
+    "spryker/locale": "^3.1.0",
+    "spryker/product-category-filter": "^1.1.0",
+    "spryker/search": "^7.0.0",
+    "spryker/storage": "^3.4.0",
+    "spryker/symfony": "^3.1.0",
+    "spryker/twig": "^3.3.0",
+    "spryker/util-text": "^1.2.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker-shop/shop-router": "*",
+    "spryker/silex": "*"
+  },
+  "suggest": {
+    "spryker-shop/shop-router": "TODO: add suggestion description",
+    "spryker/silex": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

@@ -3,18 +3,34 @@
   "description": "CustomerPage module",
   "license": "proprietary",
   "require": {
+    "spryker-shop/checkout-page": "^0.1.0",
+    "spryker-shop/shop-application": "^0.1.0",
+    "spryker/application": "^3.8.0",
+    "spryker/customer": "^7.4.0",
+    "spryker/kernel": "^3.16.0",
+    "spryker/product-bundle": "^4.1.0",
+    "spryker/sales": "^8.5.0",
+    "spryker/step-engine": "^3.1.0",
+    "spryker/symfony": "^3.1.0",
+    "spryker/util-validate": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker-shop/home-page": "*",
+    "spryker/config": "*",
+    "spryker/messenger": "*",
+    "spryker/silex": "*",
+    "spryker/twig": "*"
+  },
+  "suggest": {
+    "spryker/config": "TODO: add suggestion description",
+    "spryker-shop/home-page": "TODO: add suggestion description",
+    "spryker/messenger": "TODO: add suggestion description",
+    "spryker/silex": "TODO: add suggestion description",
+    "spryker/twig": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
