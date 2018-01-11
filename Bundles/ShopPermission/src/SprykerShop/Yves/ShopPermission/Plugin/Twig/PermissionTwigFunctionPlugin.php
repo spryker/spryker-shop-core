@@ -1,13 +1,19 @@
 <?php
 
-namespace SprykerShop\Yves\Permission\Twig\Plugin;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerShop\Yves\ShopPermission\Plugin\Twig;
 
 use Silex\Application;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
+use Twig_SimpleFunction;
 
 /**
- * @method \Spryker\Client\Permission\PermissionClientInterface getClient()
+ * @method \SprykerShop\Yves\ShopPermission\ShopPermissionFactory getFactory()
  */
 class PermissionTwigFunctionPlugin extends AbstractPlugin implements TwigFunctionPluginInterface
 {
@@ -17,13 +23,14 @@ class PermissionTwigFunctionPlugin extends AbstractPlugin implements TwigFunctio
      *      {% productAbstract.price %}
      * {{ endif }}
      *
-     * @param Application $application
+     * @param \Silex\Application $application
+     *
      * @return array
      */
     public function getFunctions(Application $application)
     {
         return [
-            new \Twig_SimpleFunction('can', [
+            new Twig_SimpleFunction('can', [
                 $this,
                 'can',
             ], [
@@ -35,12 +42,14 @@ class PermissionTwigFunctionPlugin extends AbstractPlugin implements TwigFunctio
 
     /**
      * @param string $permissionKey
-     * @param array $options
+     * @param string|int|mixed|null $context
      *
      * @return bool
      */
-    public function can($permissionKey, array $options)
+    public function can($permissionKey, $context = null)
     {
-        return $this->getClient()->can($permissionKey, $options);
+        return $this->getFactory()
+            ->getPermissionClient()
+            ->can($permissionKey, $context);
     }
 }
