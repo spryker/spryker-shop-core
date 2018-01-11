@@ -11,9 +11,8 @@ interface ProductGroupWidgetToProductGroupStorageClientInterface
 {
     /**
      * @param int $idProductAbstract
-     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractGroupStorageTransfer
      */
-    public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName);
+    public function findProductGroupItemsByIdProductAbstract($idProductAbstract);
 }

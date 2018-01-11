@@ -3,18 +3,24 @@
   "description": "CmsBlockWidget module",
   "license": "proprietary",
   "require": {
+    "spryker/cms-block-storage": "^0.1.0",
+    "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker-shop/catalog-page": "*",
+    "spryker-shop/product-detail-page": "*",
+    "spryker/silex": "*",
+    "spryker/twig": "*"
+  },
+  "suggest": {
+    "spryker-shop/catalog-page": "TODO: add suggestion description",
+    "spryker-shop/product-detail-page": "TODO: add suggestion description",
+    "spryker/silex": "TODO: add suggestion description",
+    "spryker/twig": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

@@ -7,11 +7,16 @@
 {% set metaKeywords = _view.product.metaKeywords | default(null) %}
 {% set metaDescription = _view.product.metaDescription | default(null) %}
 
+{% block attributes %}
+    {{parent()}}
+    itemscope itemtype="http://schema.org/Product"
+{% endblock %}
+
 {% block breadcrumbItems %}
     {{ widget('ProductCategoryWidgetPlugin', _view.product) }}
 {% endblock %}
 
-{% block pageTitle %}
+{% block title %}
     <h3>{{ productName }}</h3>
 {% endblock %}
 

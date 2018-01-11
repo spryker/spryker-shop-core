@@ -1,3 +1,3 @@
-# RedirectPAge Changelog
+# RedirectPage Changelog
 
-[Release Changelog](https://github.com/spryker-shop/RedirectPAge/releases)
+[Release Changelog](https://github.com/spryker-shop/redirect-page/releases)

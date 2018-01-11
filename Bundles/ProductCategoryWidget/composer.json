@@ -3,18 +3,18 @@
   "description": "ProductCategoryWidget module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.16.0",
+    "spryker/product-category-storage": "^0.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker-shop/product-detail-page": "*"
+  },
+  "suggest": {
+    "spryker-shop/product-detail-page": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

@@ -3,18 +3,19 @@
   "description": "ProductSetWidget module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker-shop/product-set-detail-page": "*",
+    "spryker/cms-content-widget-product-set-connector": "*"
+  },
+  "suggest": {
+    "spryker/cms-content-widget-product-set-connector": "TODO: add suggestion description",
+    "spryker-shop/product-set-detail-page": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

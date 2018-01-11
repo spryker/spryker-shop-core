@@ -3,18 +3,20 @@
   "description": "DiscountPromotionWidget module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.16.0",
+    "spryker/product-storage": "^0.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker-shop/cart-page": "*",
+    "spryker/symfony": "*"
+  },
+  "suggest": {
+    "spryker-shop/cart-page": "TODO: add suggestion description",
+    "spryker/symfony": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

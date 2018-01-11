@@ -24,12 +24,11 @@ class ProductGroupWidgetToProductGroupStorageClientBridge implements ProductGrou
 
     /**
      * @param int $idProductAbstract
-     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractGroupStorageTransfer
      */
-    public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findProductGroupItemsByIdProductAbstract($idProductAbstract)
     {
-        return $this->productGroupStorageClient->findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName);
+        return $this->productGroupStorageClient->findProductGroupItemsByIdProductAbstract($idProductAbstract);
     }
 }

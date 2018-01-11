@@ -1,11 +1,11 @@
-# RedirectPAge Module
+# RedirectPage Module
 
 {{ADD DESCRIPTION HERE}}
 
 ## Installation
 
 ```
-composer require spryker-shop/redirect-p-age
+composer require spryker-shop/redirect-page
 ```
 
 ## Documentation

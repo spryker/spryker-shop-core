@@ -20,6 +20,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceBridge;
@@ -40,6 +41,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
     const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
     const CLIENT_PRICE = 'CLIENT_PRICE';
+    const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
 
     const STORE = 'STORE';
 
@@ -80,6 +82,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentClient($container);
         $container = $this->addGlossaryClient($container);
         $container = $this->addPriceClient($container);
+        $container = $this->addProductBundleClient($container);
 
         $container = $this->addApplication($container);
         $container = $this->provideStore($container);
@@ -255,6 +258,20 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_PRICE] = function (Container $container) {
             return new CheckoutPageToPriceClientBridge($container->getLocator()->price()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductBundleClient(Container $container): Container
+    {
+        $container[self::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
+            return new CheckoutPageToProductBundleClientBridge($container->getLocator()->productBundle()->client());
         };
 
         return $container;

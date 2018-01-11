@@ -3,18 +3,21 @@
   "description": "ProductWidget module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker-shop/catalog-page": "*",
+    "spryker-shop/product-relation-widget": "*",
+    "spryker/cms-content-widget-product-connector": "*"
+  },
+  "suggest": {
+    "spryker-shop/catalog-page": "TODO: add suggestion description",
+    "spryker/cms-content-widget-product-connector": "TODO: add suggestion description",
+    "spryker-shop/product-relation-widget": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

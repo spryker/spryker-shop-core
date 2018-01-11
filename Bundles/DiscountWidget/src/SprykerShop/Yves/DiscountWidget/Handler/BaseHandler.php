@@ -7,10 +7,9 @@
 
 namespace SprykerShop\Yves\DiscountWidget\Handler;
 
-use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
+use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface;
 
-// TODO: get rid of this class and use MessengerClient instead (coming with https://github.com/spryker/spryker/pull/2925)
 class BaseHandler
 {
     /**
@@ -31,7 +30,7 @@ class BaseHandler
      *
      * @return void
      */
-    public function setFlashMessagesFromLastZedRequest(AbstractClient $client)
+    public function setFlashMessagesFromLastZedRequest(DiscountWidgetToCalculationClientInterface $client)
     {
         foreach ($client->getZedStub()->getErrorMessages() as $errorMessage) {
             $this->flashMessenger->addErrorMessage($errorMessage->getValue());

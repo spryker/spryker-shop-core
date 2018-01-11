@@ -1,0 +1,31 @@
+{
+  "name": "spryker-shop/product-group-widget",
+  "description": "ProductGroupWidget module",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.16.0",
+    "spryker/product-group-storage": "^0.1.0",
+    "spryker/product-storage": "^0.1.0"
+  },
+  "require-dev": {
+    "spryker-shop/shop-layout": "*"
+  },
+  "suggest": {
+    "spryker-shop/shop-layout": "TODO: add suggestion description"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

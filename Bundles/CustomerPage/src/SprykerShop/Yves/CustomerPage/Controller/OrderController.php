@@ -120,11 +120,12 @@ class OrderController extends AbstractCustomerController
             ->getSalesClient()
             ->getOrderDetails($orderTransfer);
 
-        $bundleItemGrouper = $this->getFactory()->createProductBundleGroupper();
-        $items = $bundleItemGrouper->getGroupedBundleItems(
-            $orderTransfer->getItems(),
-            $orderTransfer->getBundleItems()
-        );
+        $items = $this->getFactory()
+            ->getProductBundleClient()
+            ->getGroupedBundleItems(
+                $orderTransfer->getItems(),
+                $orderTransfer->getBundleItems()
+            );
 
         return [
             'order' => $orderTransfer,
