@@ -1,6 +1,6 @@
 # Spryker Commerce OS
 
-## Core Modules
+## Shop Modules
 
 ### Links
 - **[Spryker Documentation](https://academy.spryker.com/)**
