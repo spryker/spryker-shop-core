@@ -15,7 +15,7 @@
                             <li>
                                 <span class="__secondary">{{ 'checkout.step.summary.with_method' | trans }}</span> {{ _view.quoteTransfer.payment.paymentMethod }}
                             </li>
-                            {% if _view.quoteTransfer.payment.summaryPartialPath %}
+                            {% if _view.quoteTransfer.payment.summaryPartialPath is defined and _view.quoteTransfer.payment.summaryPartialPath %}
                                 <li>
                                     {% include '@' ~ _view.quoteTransfer.payment.summaryPartialPath ~ '.twig' with {'_view.quoteTransfer': _view.quoteTransfer} %}
                                 </li>
