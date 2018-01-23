@@ -2,11 +2,11 @@
   "name": "spryker/spryker-shop",
   "description": "Spryker Shop page and widget modules",
   "license": "proprietary",
-  "require":{
+  "require": {
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -18,6 +18,9 @@
     "files": [
       "autoload.php"
     ]
+  },
+  "scripts": {
+    "cs-check": "vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p"
   },
   "replace": {
     "spryker-shop/availability-widget": "*",
