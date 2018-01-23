@@ -3,7 +3,7 @@
   "description": "Spryker Shop page and widget modules",
   "license": "proprietary",
   "require":{
-    "spryker/spryker": "*"
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"
