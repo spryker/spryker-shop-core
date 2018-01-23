@@ -15,7 +15,7 @@ interface CartItemHandlerInterface
     /**
      * @param string $sku
      * @param array $selectedAttributes
-     * @param \ArrayObject|\Generated\Shared\Transfer\StorageProductTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
@@ -40,7 +40,7 @@ interface CartItemHandlerInterface
     );
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StorageProductTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param array $itemAttributesBySku
      * @param array|null $selectedAttributes
      * @param string $localeName
