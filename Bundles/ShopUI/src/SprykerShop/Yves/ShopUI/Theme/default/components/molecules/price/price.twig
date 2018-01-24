@@ -1,15 +1,19 @@
 {% extends model('component') %}
 
-{% set name = 'price' %}
-{% set tag = 'span' %}
+{% set config = {
+    name: 'price',
+    tag: 'span'
+} | merge(config | default({})) %}
 
-{% set amount = data.amount %}
-{% set originalAmount = data.originalAmount | default(null) %}
+{% set data = {
+    amount: data.amount,
+    originalAmount: data.originalAmount | default(null)
+} | merge(data | default({})) %}
 
 {% block body %}
-    {% if originalAmount -%}
-        <span class="stat {{name}}__amount {{name}}__amount--original">{{ originalAmount }}</span>
+    {% if data.originalAmount -%}
+        <span class="stat {{config.name}}__amount {{config.name}}__amount--original">{{data.originalAmount}}</span>
     {%- endif -%}
-    <span class="stat {{name}}__amount {{name}}__amount--default">{{ amount }}</span>
+    <span class="stat {{config.name}}__amount {{config.name}}__amount--default">{{data.amount}}</span>
 {% endblock %}
 

@@ -1,12 +1,17 @@
 {% extends model('component') %}
 
-{% set name = 'navigation' %}
-{% set tag = 'nav' %}
-{% set nodes = data.nodes | default([]) %}
+{% set config = {
+    name: 'navigation',
+    tag: 'nav'
+} | merge(config | default({})) %}
+
+{% set data = {
+    nodes: data.nodes | default([]),
+} | merge(data | default({})) %}
 
 {% block body %}
     <ul class="menu menu--inline">
-        {% for node in nodes %}
+        {% for node in data.nodes %}
             {% set hasChildren = node.children | length > 0 %}
             
             {% include molecule('navigation-node') with {

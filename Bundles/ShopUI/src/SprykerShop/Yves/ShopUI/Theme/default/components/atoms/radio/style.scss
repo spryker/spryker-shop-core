@@ -1,2 +1,6 @@
-@import 'Radio';
-@include radio;
+@import '../../../styles/settings';
+@import '../../../styles/helpers';
+@import '../checkbox/checkbox';
+@import 'radio';
+
+@include component-radio;

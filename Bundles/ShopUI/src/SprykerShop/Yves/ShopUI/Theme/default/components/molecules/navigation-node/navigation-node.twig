@@ -1,14 +1,15 @@
 {% extends atom('node') %}
 
-{% set name = 'navigation-node' %}
-{% set tag = 'li' %}
-{% set node = data.node %}
+{% set config = {
+    name: 'navigation-node',
+    tag: 'li'
+} | merge(config | default({})) %}
 
 {% block body %}
     {{ parent() }}
 
     <ul class="menu">
-        {% for childNode in node.children %}
+        {% for childNode in data.node.children %}
             {% set hasChildren = childNode.children | length > 0 %}
 
             {% include molecule('navigation-node') with {
@@ -22,18 +23,18 @@
 {% endblock %}
 
 {% block url %}
-    <a href="{{ node.url }}">{{ node.title }}</a>
+    <a href="{{ data.node.url }}">{{ data.node.title }}</a>
 {% endblock %}
 
 {% block link %}
-    <a href="{{ node.url }}">{{ node.title }}</a>
+    <a href="{{ data.node.url }}">{{ data.node.title }}</a>
 {% endblock %}
 
 {% block externalUrl %}
-    <a href="{{ node.url }}" target="_blank">{{ node.title }}</a>
+    <a href="{{ data.node.url }}" target="_blank">{{ data.node.title }}</a>
 {% endblock %}
 
 {% block other %}
-    {{ node.title }}
+    {{ data.node.title }}
 {% endblock %}
 

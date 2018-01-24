@@ -1,0 +1,146 @@
+{% extends template('layout-main') %}
+
+{% set products = products | default(_view.products) %}
+{% set category = category | default(_view.category | default(null)) %}
+{% set categoryId = categoryId | default(_view.idCategory | default(null)) %}
+{% set searchString = searchString | default(_view.searchString) %}
+{% set paginationPath = paginationPath | default(app.request.getPathInfo()) %}
+
+{% set metaTitle = metaTitle | default(_view.pageTitle | default(null)) %}
+{% set metaDescription = metaDescription | default(_view.pageDescription | default(null)) %}
+{% set metaKeywords = metaKeywords | default(_view.pageKeywords | default(null)) %}
+{% set headTitle = headTitle | default(_view.category.name | default(null)) %}
+{% set viewMode = viewMode | default(_view.viewMode | default(null)) %}
+
+{% macro renderBreadcrumbSteps(categoryNode, isLastLeaf, filterPath) %}
+    {% import _self as self %}
+    {% set categoryUrl = filterPath is not empty ? url(filterPath, {categoryPath: (categoryNode.url)}) : categoryNode.url %}
+    {% set categoryLabel = categoryNode.name %}
+    {% set categoryPatrentNodes = categoryNode.parents | default(null) %}
+
+    {% if categoryPatrentNodes is not empty %}
+        {{ self.renderBreadcrumbSteps(categoryPatrentNodes | first, false, filterPath) }}
+        
+        {% if not isLastLeaf %}
+            {% include molecule('breadcrumb-step') with {
+                data: {
+                    url: categoryUrl,
+                    label: categoryLabel
+                }
+            } only %}
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% block breadcrumbs %}
+    {% import _self as self %}
+    
+    {% embed molecule('breadcrumb') with {
+        embed: {
+            breadcrumbs: self.renderBreadcrumbSteps(category, true)
+        }
+    } only %}
+        {% block breadcrumbs %}
+            {{ embed.breadcrumbs }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block title %}
+    <h3>{{ headTitle }}</h3>
+{% endblock %}
+
+{% block content %}
+    {% block cmsTop %}
+        {% if categoryId %}
+            <div class="box">
+                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'top', categoryId) }}
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    <form method="GET" class="grid">
+        {% include '@CatalogPage/_partials/spelling-suggestion.twig' %}
+
+        <div class="col col--sm-12 col--lg-4 col--xl-3">
+            {% include molecule('view-mode-switch') only %}
+
+            {% include molecule('class-toggler') with {
+                class: 'box is-hidden-lg-xl',
+                attributes: {
+                    'class-to-toggle': 'is-hidden-sm-md',
+                    target: 'js-show-hide-toggler__target',
+                    checked: true
+                },
+                data: {
+                    label: 'Show/Hide filters'
+                }
+            } only %}
+            
+            {% include organism('filter-section') with {
+                class: 'js-show-hide-toggler__target',
+                data: {
+                    filterPath: _view.filterPath | default(null),
+                    facets: _view.facets,
+                    categories: categories
+                }
+            } only %}
+
+            {% block cmsMiddle %}
+                {% if categoryId %}
+                    <div class="box">
+                        {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', categoryId) }}
+                    </div>
+                {% endif %}
+            {% endblock %}
+        </div>
+
+        <div class="col col--sm-12 col--lg-8 col--xl-9">
+            {% include molecule('sort') only %}
+
+            {% include organism('active-filter-section') with {
+                data: {
+                    facets: _view.facets
+                }
+            } only %}
+
+            {% include molecule('pagination') with {
+                data: {
+                    parameters: app.request.query.all(),
+                    currentPage: _view.pagination.currentPage,
+                    paginationPath: paginationPath,
+                    maxPage: _view.pagination.maxPage,
+                    showAlwaysFirstAndLast: true
+                }
+            } only %}
+
+            <div class="grid grid--stretch">
+                {% for product in products %}
+                    {{ widget('ProductWidgetPlugin', product, viewMode) }}
+                {% endfor %}
+            </div>
+
+            {% include molecule('pagination') with {
+                data: {
+                    parameters: app.request.query.all(),
+                    currentPage: _view.pagination.currentPage,
+                    paginationPath: paginationPath,
+                    maxPage: _view.pagination.maxPage,
+                    showAlwaysFirstAndLast: true
+                }
+            } only %}
+        </div>
+
+        {% if searchString is not empty %}
+            <input type="hidden" name="q" value="{{ searchString }}" />
+        {% endif %}
+    </form>
+
+    {% block cmsBottom %}
+        {% if categoryId %}
+            <div class="box">
+                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'bottom', categoryId) }}
+            </div>
+        {% endif %}
+    {% endblock %}
+{% endblock %}

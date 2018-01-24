@@ -62,17 +62,3 @@ hr {
     margin: spacing() 0;
 }
 
-input[type=text],
-input[type=number],
-input[type=date],
-input[type=email],
-input[type=password] {
-    @include transition(border-color);
-    padding: spacing(.5);
-    border: 1px solid $color-lighter;
-
-    &:focus {
-        border-color: $color-dark;
-    }
-}
-

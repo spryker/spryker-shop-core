@@ -1,0 +1,14 @@
+{% extends model('component') %}
+
+{% set config = {
+    name: 'icon',
+    tag: 'svg'
+} | merge(config | default({})) %}
+
+{% set data = {
+    name: data.name | default('')
+} | merge(data | default({})) %}
+
+{% block body %}
+    <use href="#{{data.name}}"></use>
+{% endblock %}

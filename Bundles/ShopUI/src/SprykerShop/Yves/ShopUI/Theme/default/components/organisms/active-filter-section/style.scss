@@ -1,0 +1,5 @@
+@import '../../../styles/settings';
+@import '../../../styles/helpers';
+@import 'active-filter-section';
+
+@include component-active-filter-section;

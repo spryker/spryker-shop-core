@@ -1,2 +1,5 @@
-@import 'Input';
-@include input;
+@import '../../../styles/settings';
+@import '../../../styles/helpers';
+@import 'input';
+
+@include component-input();

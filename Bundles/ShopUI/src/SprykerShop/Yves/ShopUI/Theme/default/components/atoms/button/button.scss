@@ -10,7 +10,7 @@
 
     &--#{$action}#{&}--hollow {
         background-color: $color-white;
-        box-shadow: inset 0 0 0 1px map-get($color-action, $action);
+        border-color: map-get($color-action, $action);
         color: map-get($color-action, $action);
 
         &:hover,
@@ -24,8 +24,9 @@
     #{$name} {
         @include transition(background-color);
         display: inline-block;
-        padding: spacing() spacing(2);
+        padding: spacing(.5) spacing();
         background-color: $color-main;
+        border: 1px solid $color-main;
         color: $color-white;
         text-align: center;
         cursor: pointer;
@@ -38,7 +39,7 @@
 
         &--hollow {
             background-color: $color-white;
-            box-shadow: inset 0 0 0 1px $color-main;
+            border-color: $color-main;
             color: $color-main;
 
             &:hover,
@@ -50,11 +51,6 @@
         @include component-button-action(success);
         @include component-button-action(warning);
         @include component-button-action(alert);
-
-        &--small {
-            @include font-size(small);
-            padding: spacing(.5) spacing();
-        }
 
         &--expand {
             width: 100%;

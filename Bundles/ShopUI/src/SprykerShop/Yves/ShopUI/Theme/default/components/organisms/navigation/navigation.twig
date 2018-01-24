@@ -1,57 +1,52 @@
 {% extends model('component') %}
 
-{% set name = name | default('navigation') %}
+{% set config = {
+    name: 'navigation',
+    tag: 'section'
+} | merge(config | default({})) %}
 
 {% block body %}
-    <ul class="menu menu--inline text-right">
-        <li class="menu__item">
-            <span class="float-left small-10 columns">
-                {{ widgetGlobal('CurrencyWidgetPlugin') }}
-            </span>
-        </li>
-        
-        <li class="menu__separator"></li>
+    <div class="text-right">
+        <ul class="menu menu--inline">
+            <li class="menu__item">
+                <span class="float-left small-10 columns">
+                    {{ widgetGlobal('CurrencyWidgetPlugin') }}
+                </span>
+            </li>
+            
+            <li class="menu__separator"></li>
 
-        {% if availableLanguages is defined and availableLanguages|length > 0 %}
-            {% for availableLanguage in availableLanguages %}
-                <li class="menu__item">
-                    {% if availableLanguage != currentLanguage %}
-                        <a href="/{{ availableLanguage }}">{{ availableLanguage }}</a>
-                    {% else %}
-                        <span>{{ availableLanguage }}</span>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        {% endif %}
-
-        <li class="menu__separator"></li>
-        
-        {% if app['cart.quantity'] > 0 %}
-            <li class="menu__item"><span class="warning badge float-left">{{ app['cart.quantity'] }}</span></li>
-        {% endif %}
-        
-        <li class="menu__item"><a href="{{ url('cart') }}"><i class="fa fa-shopping-cart"></i>{{ 'global.cart' | trans }}</a></li>
-        
-        <li class="menu__separator"></li>
-        
-        {% if hideUserMenu is not defined or hideUserMenu != true %}
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li class="menu__item"><a href="{{ url('customer/overview') }}"><i class="fa fa-user"></i>{{ 'customer.profile'|trans }}</a></li>
-                <li class="menu__item"><a href="{{ url('wishlist/overview') }}"><i class="fa fa-list"></i>{{ 'wishlist.wishlist'|trans }}</a></li>
-                <li class="menu__item"><a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i>{{ 'customer.logout'|trans }}</a></li>
-            {% else %}
-                <li class="menu__item"><a href="{{ url('login') }}"><i class="fa fa-sign-in"></i>{{ 'customer.login'|trans }}</a></li>
+            {% if availableLanguages is defined and availableLanguages|length > 0 %}
+                {% for availableLanguage in availableLanguages %}
+                    <li class="menu__item">
+                        {% if availableLanguage != currentLanguage %}
+                            <a href="/{{ availableLanguage }}">{{ availableLanguage }}</a>
+                        {% else %}
+                            <span>{{ availableLanguage }}</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
             {% endif %}
-        {% endif %}
-    </ul>
 
-    <div class="grid grid--right">
-        {# <div class="small-12 columns hide-for-large">
-            {% include '@ShopLayout/layout/partials/search-form.twig' %}
-        </div> #}
+            <li class="menu__separator"></li>
+            
+            {% if app['cart.quantity'] > 0 %}
+                <li class="menu__item"><span class="warning badge float-left">{{ app['cart.quantity'] }}</span></li>
+            {% endif %}
+            
+            <li class="menu__item"><a href="{{ url('cart') }}"><i class="fa fa-shopping-cart"></i>{{ 'global.cart' | trans }}</a></li>
+            
+            <li class="menu__separator"></li>
+            
+            {% if hideUserMenu is not defined or hideUserMenu != true %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="menu__item"><a href="{{ url('customer/overview') }}"><i class="fa fa-user"></i>{{ 'customer.profile'|trans }}</a></li>
+                    <li class="menu__item"><a href="{{ url('wishlist/overview') }}"><i class="fa fa-list"></i>{{ 'wishlist.wishlist'|trans }}</a></li>
+                    <li class="menu__item"><a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i>{{ 'customer.logout'|trans }}</a></li>
+                {% else %}
+                    <li class="menu__item"><a href="{{ url('login') }}"><i class="fa fa-sign-in"></i>{{ 'customer.login'|trans }}</a></li>
+                {% endif %}
+            {% endif %}
+        </ul>
     </div>
-
-    <hr class="box__separator" />
-
-    {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', template('navigation-widget', 'ShopLayout')) }}
 {% endblock %}

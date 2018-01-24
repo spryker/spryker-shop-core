@@ -1,0 +1,41 @@
+@mixin component-select($name: '.select') {
+    #{$name} {
+        @include transition(border-color);
+        display: inline-block;
+        max-width: 100%;
+        background-color: $color-white;
+        border: 1px solid $color-input-border;
+
+        &__select {
+            display: inline-block;
+            max-width: 100%;
+            background-color: $color-transparent;
+            border: spacing(.5) solid $color-transparent;
+            border-right-width: spacing(3);
+            z-index: 2;
+            appearance: none;
+            -webkit-appearance: none;
+
+            &::-ms-expand {
+                display: none;
+            }
+        }
+
+        &__arrows {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: spacing(.5);
+            margin: auto;
+            z-index: 1;
+        }
+
+        &--expand,
+        &--expand &__select {
+            display: block;
+            width: 100%;
+        }
+
+        @content;
+    }
+}

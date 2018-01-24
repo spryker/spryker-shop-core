@@ -1,13 +1,18 @@
 {% extends model('component') %}
 
-{% set name = 'node' %}
-{% set node = data.node %}
+{% set config = {
+    name: 'node'
+} | merge(config | default({})) %}
+
+{% set data = {
+    node: data.node
+} | merge(data | default({}))  %}
 
 {% set today = 'now' | date('Ymd') %}
-{% set type = node.nodeType %}
-{% set isActive = node.isActive %}
-{% set isValidFrom = node.validFrom is empty or node.validFrom | date('Ymd') <= today %}
-{% set isValidTo = node.validFrom is empty or node.validFrom | date('Ymd') <= today %}
+{% set type = data.node.nodeType %}
+{% set isActive = data.node.isActive %}
+{% set isValidFrom = data.node.validFrom is empty or data.node.validFrom | date('Ymd') <= today %}
+{% set isValidTo = data.node.validFrom is empty or data.node.validFrom | date('Ymd') <= today %}
 {% set isActiveAndValid = isActive and isValidFrom and isValidTo %}
 
 {% block component %}

@@ -1,0 +1,5 @@
+@import '../../../styles/settings';
+@import '../../../styles/helpers';
+@import 'search-form';
+
+@include component-search-form();

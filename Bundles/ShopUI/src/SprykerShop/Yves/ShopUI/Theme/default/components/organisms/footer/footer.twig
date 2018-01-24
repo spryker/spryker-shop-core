@@ -1,6 +1,9 @@
 {% extends model('component') %}
 
-{% set name = 'footer' %}
+{% set config = {
+    name: 'footer',
+    tag: 'footer'
+} | merge(config | default({})) %}
 
 {% block body %}
     <div class="box">
@@ -23,20 +26,22 @@
         </div>
     </div>
 
-    <div class="box grid grid--middle">
-        <div class="col col--sm-12 col--md-6 col--lg-6">
-            {{ widgetGlobal('NavigationWidgetPlugin', 'FOOTER_NAVIGATION', '@ShopLayout/layout/navigation/footer.twig') }}
-        </div>
+    <div class="box">
+        <div class="grid grid--middle">
+            <div class="col col--sm-12 col--md-6 col--lg-6">
+                {{ widgetGlobal('NavigationWidgetPlugin', 'FOOTER_NAVIGATION', '@ShopLayout/layout/navigation/footer.twig') }}
+            </div>
 
-        <ul class="col col--sm-12 col--md-6 col--lg-3">
-            <li><h5>{{ 'global.get_in_touch' | trans }}</h5></li>
-            <li>+49 (0)30 2084983 50</li>
-            <li><a href="mailto:info@spryker.com">info@spryker.com</a></li>
-        </ul>
-        
-        <div class="col col--lg-3 is-hidden-sm-md">
-            <h5>{{ 'global.social' | trans }}</h5>
-            {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', '@ShopLayout/layout/navigation/social-links.twig') }}
+            <ul class="col col--sm-12 col--md-6 col--lg-3">
+                <li><h5>{{ 'global.get_in_touch' | trans }}</h5></li>
+                <li>+49 (0)30 2084983 50</li>
+                <li><a href="mailto:info@spryker.com">info@spryker.com</a></li>
+            </ul>
+            
+            <div class="col col--lg-3 is-hidden-sm-md">
+                <h5>{{ 'global.social' | trans }}</h5>
+                {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', '@ShopLayout/layout/navigation/social-links.twig') }}
+            </div>
         </div>
     </div>
 

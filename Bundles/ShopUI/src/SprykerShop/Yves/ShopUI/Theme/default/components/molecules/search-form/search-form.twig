@@ -1,0 +1,29 @@
+{% extends model('component') %}
+
+{% set config = {
+    name: 'search-form'
+} | merge(config | default({})) %}
+
+{% set data = {
+    searchUrl: data.searchUrl | default(path('search')),
+    suggestionUrl: data.suggestionUrl | default(path('search/suggestion')),
+    searchValue: data.searchValue | default(app.request.get('q'))
+} | merge(data | default({})) %}
+
+{% block body %}
+    <form class="grid" action="{{data.searchUrl}}">
+        <div class="col col--sm-10">
+            <input name="q" type="text" class="input input--expand" placeholder="{{ 'global.search' | trans }}" value="{{data.searchValue}}" autocomplete="off">
+        </div>
+        <div class="col col--sm-2">
+            <button type="submit" class="{{config.name}}__submit button button--expand">
+                {% include atom('icon') with {
+                    data: {
+                        name: 'search'
+                    }
+                } only %}
+            </button>
+        </div>
+    </form>
+{% endblock %}
+

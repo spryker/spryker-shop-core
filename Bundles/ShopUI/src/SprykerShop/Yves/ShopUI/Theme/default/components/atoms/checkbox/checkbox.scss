@@ -1,19 +1,17 @@
-@import '../../../styles/settings';
-@import '../../../styles/helpers';
-
-$a-checkbox-size: 20px;
-
-@mixin checkbox($name: '.checkbox') {
+@mixin component-checkbox($name: '.checkbox') {
     #{$name} {
-        float: left;
         display: inline-block;
-        width: $a-checkbox-size;
-        height: $a-checkbox-size;
-        border: 1px solid $color-input-border;
-        background-color: $color-white;
-        margin-right: 4px;
-        text-align: center;
-        overflow: hidden;
+
+        &__box {
+            display: inline-block;
+            width: spacing(2.5);
+            height: spacing(2.5);
+            border: 1px solid $color-input-border;
+            background-color: $color-white;
+            margin-right: spacing(.5);
+            text-align: center;
+            vertical-align: top;
+        }
 
         &__input {
             @include is-invisible;
@@ -23,17 +21,21 @@ $a-checkbox-size: 20px;
         &__check {
             @include is-invisible;
             @include transition-visibility;
-            position: relative;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            color: $color-main;
+            position: absolute;
+            top: spacing(.5);
+            left: spacing(.5);
+            width: spacing(1.5);
+            height: spacing(1.5);
+            background-color: $color-main;
         }
 
         &__input:checked + &__check {
             @include is-visible;
+        }
+
+        &--expand {
+            display: block;
+            width: 100%;
         }
 
         @content;

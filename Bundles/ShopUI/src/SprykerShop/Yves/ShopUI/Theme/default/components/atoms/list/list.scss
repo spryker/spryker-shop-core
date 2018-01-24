@@ -8,6 +8,10 @@
             }
         }
 
+        &--inline {
+            display: inline-block;
+        }
+
         &--inline > &__item {
             display: inline-block;
             margin: 0 spacing();

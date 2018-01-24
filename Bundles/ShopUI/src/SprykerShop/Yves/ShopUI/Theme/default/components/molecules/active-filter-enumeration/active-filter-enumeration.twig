@@ -1,17 +1,26 @@
 {% extends model('component') %}
 
-{% set name = name | default('active-filter-enumeration') %}
+{% set config = {
+    name: 'active-filter-enumeration'
+} | merge(config | default({})) %}
 
-{% set filter = data.filter %}
-{% set isMultiSelect = data.isMultiSelect | default(filter.config.isMultiValued | default(false)) %}
+{% set data = {
+    filter: data.filter,
+    isMultiSelect: data.isMultiSelect | default(data.filter.config.isMultiValued | default(false))
+} | merge(data | default({})) %}
 
-{% set values = isMultiSelect ? filter.activeValue : [filter.activeValue] %}
+{% set values = data.isMultiSelect ? data.filter.activeValue : [data.filter.activeValue] %}
+
+{% block attributes %}{% endblock %}
+{% block class %}{% endblock %}
 
 {% block component %}
     {% for value in values %}
         {% include molecule('active-filter') with {
+            class: class,
+            attributes: attributes,
             data: {
-                filter: filter,
+                filter: data.filter,
                 value: value
             }
         } only %}

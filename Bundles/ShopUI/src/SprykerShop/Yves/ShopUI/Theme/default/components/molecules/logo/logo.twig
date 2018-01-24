@@ -1,11 +1,17 @@
 {% extends model('component') %}
 
-{% set name = 'logo' %}
-{% set tag = 'span' %}
-{% set url = data.url | default('/') %}
+{% set config = {
+    name: 'logo',
+    tag: 'span'
+} | merge(config | default({})) %}
+
+{% set data = {
+    url: data.url | default('/'),
+    src: data.src | default('/assets/default/img/logo.svg')
+} | merge(data | default({})) %}
 
 {% block body %}
-    <a href="{{url}}">
-        <img src="/assets/default/img/logo.svg" />
+    <a href="{{data.url}}">
+        <img src="{{data.src}}" />
     </a>
 {% endblock %}

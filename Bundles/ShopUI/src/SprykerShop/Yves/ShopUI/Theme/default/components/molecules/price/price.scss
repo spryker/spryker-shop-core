@@ -14,5 +14,7 @@
                 text-decoration: line-through;
             }
         }
+
+        @content;
     }
 }

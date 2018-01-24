@@ -1,32 +1,59 @@
 {% extends model('component') %}
 
-{% set name = name | default('header') %}
+{% set config = {
+    name: 'header',
+    tag: 'header'
+} | merge(config | default({})) %}
+
+{% set data = {
+    showTopNavigation: data.showTopNavigation | default(true),
+    showSearchForm: data.showSearchForm | default(true),
+    showMainNavigation: data.showMainNavigation | default(true)
+} | merge(data | default({})) %}
+
+{% block class %}
+    {{parent()}}
+    box
+{% endblock %}
 
 {% block body %}
-    <div class="box">
-        <div class="grid grid--middle">
-            <div class="col col--sm-7 col--lg-5 col--xl-6">
-                {% include molecule('logo') only %}
-            </div>
-            
-            {% block header %}
-                {# <div class="large-7 xlarge-6 columns show-for-large">
-                    {% include '@ShopLayout/layout/partials/search-form.twig' %}
-                </div> #}
-
-                {# <a class="shrink columns text-right align-middle hide-for-large" href="#aside" data-aside-toggle>
-                    {% if app['cart.quantity'] > 0 %}
-                        <span class="warning badge">{{ app['cart.quantity'] }}</span>
-                    {% endif %}
-                    <i class="fa fa-bars"></i>
-                </a> #}
-            {% endblock %}
-        </div>
-    </div>
-
-    <div class="box">
-        {% block navigation %}
+    {% if data.showTopNavigation %}
+        <div class="is-hidden-sm-md">
             {% include organism('navigation') only %}
-        {% endblock %}
+            <hr class="box__separator" />
+        </div>
+    {% endif %}
+
+    <div class="grid grid--middle">
+        <div class="col col--sm-7 col--lg-5 col--xl-6">
+            {% include molecule('logo') only %}
+        </div>
+
+        {% if data.showSearchForm %}
+            <div class="col col--expand is-hidden-sm-md">
+                {% include molecule('search-form') only %}
+            </div>
+        {% endif %}
+
+            {# <a class="shrink columns text-right align-middle hide-for-large" href="#aside" data-aside-toggle>
+                {% if app['cart.quantity'] > 0 %}
+                    <span class="warning badge">{{ app['cart.quantity'] }}</span>
+                {% endif %}
+                <i class="fa fa-bars"></i>
+            </a> #}
     </div>
+
+    {% if data.showSearchForm %}
+        <div class="is-hidden-lg-xl">
+            <hr class="box__separator" />
+            {% include molecule('search-form') only %}
+        </div>
+    {% endif %}
+
+    {% if data.showMainNavigation %}
+        <div class="is-hidden-sm-md">
+            <hr class="box__separator" />
+            {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', template('navigation-widget', 'ShopLayout')) }}
+        </div>
+    {% endif %}
 {% endblock %}

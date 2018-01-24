@@ -1,4 +1,9 @@
 {% extends molecule('filter-enumeration') %}
 
-{% set name = name | default('filter-multi-select') %}
-{% set isMultiSelect = true %}
+{% set config = {
+    name: 'filter-multi-select'
+} | merge(config | default({})) %}
+
+{% set data = {
+    isMultiSelect: true
+} | merge(data | default({})) %}

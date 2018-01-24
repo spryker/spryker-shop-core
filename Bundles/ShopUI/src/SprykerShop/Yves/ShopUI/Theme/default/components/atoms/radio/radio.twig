@@ -1,18 +1,9 @@
-{% extends model('component') %}
+{% extends atom('checkbox') %}
 
-{% set name = 'radio' %}
-{% set value = data.value | default(null) %}
-{% set checked = data.checked | default(false) %}
+{% set config = {
+    name: 'radio'
+} | merge(config | default({})) %}
 
-{% block body %}
-    <label>
-        <input
-                type="radio"
-                class="{{name}}__input"
-                {%- if value is not null %} value="{{value}}"{% endif -%}
-                {%- if checked %} checked="checked"{% endif -%}
-                {%- block widgetAttributes %}{% endblock -%} />
-
-        <span class="{{name}}__circle"></span>
-    </label>
-{% endblock %}
+{% set attributes = {
+    type: 'radio'
+} | merge(attributes | default({})) %}

@@ -1,0 +1,33 @@
+{% extends model('component') %}
+
+{% set config = {
+    name: 'class-toggler',
+    tag: 'class-toggler'
+} | merge(config | default({})) %}
+
+{% set data = {
+    label: data.label | default('')
+} | merge(data | default({})) %}
+
+{% set attributes = {
+    checked: attributes.checked | default(false),
+    target: attributes.target | default(''),
+    'hide-when-checked': attributes['hide-when-checked'] | default(false)
+} | merge(attributes | default({})) %}
+
+{% block body %}
+    {% embed atom('checkbox') with {
+        modifiers: ['expand'],
+        data: {
+            label: data.label
+        },
+        attributes: {
+            checked: attributes.checked
+        },
+        embed: {
+            selector: config.selector
+        }
+    } only %}
+        {% block inputClass %}{{parent()}}{{embed.selector}}__checkbox{% endblock %}
+    {% endembed %}
+{% endblock %}

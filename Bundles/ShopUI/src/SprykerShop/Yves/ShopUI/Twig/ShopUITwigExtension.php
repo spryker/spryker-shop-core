@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ShopUI\Twig;
 
 use Spryker\Shared\Twig\TwigExtension;
 use Twig_SimpleFunction;
+use Twig_SimpleFilter;
 
 class ShopUITwigExtension extends TwigExtension
 {
@@ -17,7 +18,7 @@ class ShopUITwigExtension extends TwigExtension
     const FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE = 'molecule';
     const FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE = 'organism';
     const FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE = 'template';
-    const DEFAULT_MODULE_COMPONENT = 'ShopUI';
+    const DEFAULT_MODULE = 'ShopUI';
 
     /**
      * @return Twig_SimpleFilter[]
@@ -40,29 +41,29 @@ class ShopUITwigExtension extends TwigExtension
                 self::FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE_COMPONENT) {
+            new Twig_SimpleFunction(self::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
                 return $this->getComponentTemplate($componentModule, 'atoms', $componentName);
             }, [
                 $this, 
                 self::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE_COMPONENT) {
+            new Twig_SimpleFunction(self::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
                 return $this->getComponentTemplate($componentModule, 'molecules', $componentName);
             }, [
                 $this, 
                 self::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE_COMPONENT) {
+            new Twig_SimpleFunction(self::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
                 return $this->getComponentTemplate($componentModule, 'organisms', $componentName);
             }, [
                 $this, 
                 self::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE_COMPONENT) {
-                return $this->getComponentTemplate($componentModule, 'templates', $componentName);
+            new Twig_SimpleFunction(self::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE, function ($templateName, $templateModule = self::DEFAULT_MODULE) {
+                return $this->getTemplateTemplate($templateModule, $templateName);
             }, [
                 $this, 
                 self::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE
@@ -90,5 +91,10 @@ class ShopUITwigExtension extends TwigExtension
     protected function getComponentTemplate(String $componentModule, String $componentType, String $componentName)
     {
         return '@' . $componentModule . '/components/' . $componentType . '/' . $componentName . '/' . $componentName . '.twig';
+    }
+
+    protected function getTemplateTemplate(String $templateModule, String $templateName)
+    {
+        return '@' . $templateModule . '/templates/' . $templateName . '/' . $templateName . '.twig';
     }
 }

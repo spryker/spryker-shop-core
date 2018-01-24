@@ -1,18 +1,27 @@
 {% extends model('component') %}
 
-{% set name = 'checkbox' %}
-{% set value = data.value | default(null) %}
-{% set checked = data.checked | default(false) %}
+{% set config = {
+    name: 'checkbox',
+    tag: 'label'
+} | merge(config | default({})) %}
+
+{% set attributes = {
+    type: 'checkbox'
+} | merge(attributes | default({})) %}
+
+{% set data = {
+    label: data.label | default('')
+} | merge(data | default({})) %}
+
+{% block attributes %}{% endblock %}
 
 {% block body %}
-    <label>
-        <input
-                type="checkbox"
-                class="{{ name }}__input"
-                {%- if value is not null %} value="{{ value }}"{% endif -%}
-                {%- if checked %} checked="checked"{% endif -%}
-                {%- block widgetAttributes %}{% endblock -%} />
-
-        <span class="{{ name }}__check fa fa-check"></span>
-    </label>
+    <span class="{{config.name}}__box"></span>
+    <input class="{{config.name}}__input {% block inputClass %}{% endblock %}" {{block('renderAttributes')}}/>
+    <span class="{{config.name}}__check"></span>
+    {% block labelContainer %}    
+        <span class="{{config.name}}__label">
+            {% block label %}{{data.label}}{% endblock %}
+        </span>
+    {% endblock %}
 {% endblock %}

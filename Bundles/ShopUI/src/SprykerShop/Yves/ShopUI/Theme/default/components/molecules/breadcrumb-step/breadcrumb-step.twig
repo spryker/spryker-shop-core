@@ -1,14 +1,29 @@
 {% extends model('component') %}
 
-{% set name = 'breadcrumb-step' %}
-{% set tag = 'li' %}
+{% set config = {
+    name: 'breadcrumb-step',
+    tag: 'li'
+} | merge(config | default({})) %}
 
-{% set url = data.url | default(null) %}
-{% set label = data.label | default(null) %}
-{% set isLink = url is not empty %}
+{% set data = {
+    url: data.url | default(null),
+    label: data.label | default(null),
+    withChevron: data.withChevron | default(true)
+} | merge(data | default({})) %}
+
+{% set isLink = data.url is not empty %}
 
 {% block body %}
-    {% if isLink %}<a href="{{url}}">{% endif %}
-    {{label}}
+    {% if isLink %}<a href="{{data.url}}">{% endif %}
+        {{data.label}}
     {% if isLink %}</a>{% endif %}
+    {% if data.withChevron %}
+        {% include atom('icon') with {
+            modifiers: ['small'],
+            class: config.name ~ '__separator',
+            data: {
+                name: 'angle-double-right'
+            }
+        } only %}
+    {% endif %}
 {% endblock %}

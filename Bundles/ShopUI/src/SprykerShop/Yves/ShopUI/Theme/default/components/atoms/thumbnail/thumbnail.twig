@@ -1,11 +1,13 @@
 {% extends model('component') %}
-
-{% set name = 'thumbnail' %}
-{% set tag = 'span' %}
+ 
+{% set config = {
+    name: 'thumbnail',
+    tag: 'span'
+} | merge(config | default({})) %}
 
 {% block attributes %}{% endblock %}
 
 {% block body %}
-    <img class="{{name}}__image" {{block('renderAttributes')}} />
+    <img class="{{config.name}}__image" {{block('renderAttributes')}} />
 {% endblock %}
 

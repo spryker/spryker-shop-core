@@ -1,2 +1,5 @@
-@import 'Checkbox';
-@include checkbox;
+@import '../../../styles/settings';
+@import '../../../styles/helpers';
+@import 'checkbox';
+
+@include component-checkbox;

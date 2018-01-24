@@ -26,7 +26,8 @@
                     position: absolute;
                     left: 0;
                     width: spacing(30);
-                    border: 1px solid $color-lighter;
+                    margin-left: - spacing();
+                    border: 1px solid $color-light;
                     background-color: $color-white;
                 }
 
@@ -50,5 +51,7 @@
                 color: $color-lighter;
             }
         }
+
+        @content;
     }
 }

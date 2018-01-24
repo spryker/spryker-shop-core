@@ -5,98 +5,68 @@
  # Component API
  # 
  # @important: use components with 'only' keyword 
- # and limit the scope to what you pass through data interface
+ # and limit the scope to what you pass through config and data interface
  #}
 
-{# @var {string} define name #}
-{%- set name = name | default('') -%}
+{%- set defaultConfig = {
+    name: '',
+    tag: 'div',
+    selector: '',
+    debug: false
+} -%}
 
-{# @var {string} define tag name #}
-{%- set tag = tag | default('div') -%}
+{% block implementation %}
+    {%- set config = defaultConfig | merge(config | default({})) -%}
+    {%- set config = config | merge({
+        selector: config.selector | default(config.name is empty ? defaultConfig.selector : 'js-' ~ config.name)
+    }) -%}
+    {%- set class = class | default('') -%}
+    {%- set modifiers = modifiers | default([]) -%}
+    {%- set attributes = attributes | default({}) -%}
+    {%- set data = data | default({}) -%}
+    {%- set embed = embed | default({}) -%}
 
-{# @var {string} define js selector #}
-{%- set selector = selector | default(name ? 'js-' ~ name : '') -%}
+    {#
+     #
+     #
+     # Component blocks
+     #}
 
-{# @var {string} define addictional css class(es) #}
-{%- set class = class | default('') -%}
+    {%- if config.debug -%}
+        {# create 'class', 'selector' and 'attr' blocks #}
+        {# to use them: {{ block('blockname') }} #}
 
-{# @var {array[string]} define css BEM modifier's tails array #}
-{%- set modifiers = modifiers | default([]) -%}
+        {# render BEM classes (block and modifiers) according to the name #}
+        {%- block renderClass -%}
+            {%- if config.name == config.tag %}custom-element {% endif -%}
+            {{config.name-}} 
+            {%- for modifier in modifiers %} {{config.name}}--{{modifier}}{% endfor -%}
+            {%- if class %} {{class-}}{% endif -%}
+        {%- endblock -%}
 
-{# @var {object} define html5 attributes #}
-{%- set attributes = attributes | default({}) -%}
+        {# render html5 attributes #}
+        {%- block renderAttributes -%}
+            {%- for attrname, attrvalue in attributes -%}
+                {%- if attrvalue is sameas(true) -%}
+                    {{-' ' ~ attrname-}}
+                {%- elseif attrvalue is not sameas(false) -%}
+                    {{-' ' ~ attrname-}}='{{-attrvalue-}}'
+                {%- endif -%}
+            {%- endfor -%}
+        {%- endblock -%}
+    {%- endif -%}
 
-{# @var {object} define data interface #}
-{%- set data = data | default({}) -%}
+    {#
+     #
+     #
+     # Component
+     #}
 
-{# @var {boolean} set debug mode #}
-{%- set debug = debug | default(true) -%}
-
-{#
- #
- #
- # Component private
- #}
-
-{%- set __blocks = __blocks | default(false) -%}
-{%- set __isContextInherithedCheck = __isContextInherithedCheck | default(false) -%}
-{%- set __isContextInherithed = __isContextInherithedCheck -%}
-{%- set __isContextInherithedCheck = true -%}
-
-{#
- #
- #
- # Component blocks
- #}
-
-{%- if __blocks -%}
-    {# create 'class', 'selector' and 'attr' blocks #}
-    {# to use them: {{ block('blockname') }} #}
-
-    {# render BEM classes (block and modifiers) according to the name #}
-    {%- block renderClass -%}
-        {{name-}} 
-        {%- for modifier in modifiers %} {{name}}--{{modifier}}{% endfor -%}
-        {%- if class %} {{class-}}{% endif -%}
+    {%- block component -%}
+        <{{-config.tag}} 
+            class="{%- block class %}{{block('renderClass')}}{%- endblock -%}"
+            {%- block attributes %} {{block('renderAttributes')}}{%- endblock -%}>
+            {%- block body -%}{%- endblock -%}
+        </{{-config.tag-}}>
     {%- endblock -%}
-
-    {# render html5 attributes #}
-    {%- block renderAttributes -%}
-        {%- for attrname, attrvalue in attributes -%}
-            {%- if attrvalue is sameas(true) -%}
-                {{-attrname}}
-            {%- elseif attrvalue is not sameas(false) -%}
-                {{-attrname}}='{{attrvalue}}'
-            {%- endif -%}
-        {%- endfor -%}
-    {%- endblock -%}
-
-    {# render warnings #}
-    {%- block renderWarnings -%}
-        {%- if __isContextInherithed -%}
-            <div class="debug debug--warning">Use <code>only</code> keyword for {{name}} component or it might not work properly</div>
-        {%- endif -%}
-    {%- endblock -%}
-
-    {# define the body block where to place component html/twig #}
-    {%- block body -%}{%- endblock -%}
-
-    {# define the hidden blocks container #}
-    {%- block hidden -%}{%- endblock -%}
-{%- endif -%}
-
-{#
- #
- #
- # Component
- #}
-
-{%- block component -%}
-    {%- if debug -%}{{-block('renderWarnings')-}}{%- endif -%}
-
-    <{{-tag}} 
-        class="{%- block class %}{{block('renderClass')}}{%- endblock -%}"
-        {%- block attributes %} {{block('renderAttributes')}}{%- endblock -%}>
-        {{-block('body')-}}
-    </{{-tag-}}>
-{%- endblock -%}
+{% endblock -%}

@@ -1,66 +1,72 @@
 {% extends molecule('product-card') %}
 
-{% set name = 'product-list-item' %}
-
-{% block class %}
-    {{parent()}}
-    box box--stretch
-{% endblock %}
+{% set config = {
+    name: 'product-list-item' 
+} | merge(config | default({})) %}
 
 {% block body %}
-    <div class="grid grid--stretch">
-        {% block imageContainer %}
-            <div class="col col--sm-3 col--md-2 col--middle">
-                {% block image %}
-                    <a href="{{ productUrl }}">
-                        {% include atom('thumbnail') with {
-                            modifiers: ['small'],
-                            attributes: {
-                                alt: productName,
-                                src: productImageUrl,
-                                title: productName
+    <div class="box">
+        <div class="grid grid--stretch">
+            {% block imageContainer %}
+                <div class="col col--sm-3 col--md-2 col--middle">
+                    {% block image %}
+                        <a href="{{ data.url }}">
+                            {% include atom('thumbnail') with {
+                                modifiers: ['small'],
+                                attributes: {
+                                    alt: data.name,
+                                    src: data.imageUrl,
+                                    title: data.name
+                                }
+                            } only %}
+                        </a>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            <div class="col col--sm-6 col--md-7 col--xl-8 col--middle">
+                {% block labels %}
+                    {{ widget('ProductAbstractLabelWidgetPlugin', data.abstractId) }}
+                {% endblock %}
+
+                {% block groups %}
+                    {{ widget('ProductGroupWidgetPlugin', data.abstractId) }}
+                {% endblock %}
+
+                {% block name %}
+                    <strong>{{ data.name }}</strong>
+                {% endblock %}
+
+                {% block rating %}
+                    {{ widget('ProductAbstractReviewWidgetPlugin', data.abstractId) }}
+                {% endblock %}
+
+                {% block price %}
+                    <div>
+                        {% include molecule('price') with {
+                            data: {
+                                amount: data.price | money,
+                                originalAmount: data.originalPrice is empty ? null : (data.originalPrice | money)
                             }
                         } only %}
-                    </a>
+                    </div>
                 {% endblock %}
             </div>
-        {% endblock %}
-
-        <div class="col col--sm-6 col--md-7 col--xl-8 col--middle">
-            {% block labels %}
-                {{ widget('ProductAbstractLabelWidgetPlugin', productAbstractId) }}
-            {% endblock %}
-
-            {% block groups %}
-                {{ widget('ProductGroupWidgetPlugin', productAbstractId) }}
-            {% endblock %}
-
-            {% block name %}
-                <strong>{{ productName }}</strong>
-            {% endblock %}
-
-            {% block rating %}
-                {{ widget('ProductAbstractReviewWidgetPlugin', productAbstractId) }}
-            {% endblock %}
-
-            {% block price %}
-                <div>
-                    {% include molecule('price') with {
-                        data: {
-                            amount: productPrice | money,
-                            originalAmount: productOriginalPrice is empty ? null : (productOriginalPrice | money)
-                        }
-                    } only %}
+            
+            {% block actionsContainer %}
+                <div class="col col--sm-3 col--xl-2 col--bottom">
+                    {% block actions %}
+                        <a class="button button--expand" href="{{ data.url }}">
+                            {{ 'product.view' | trans }}
+                            {% include atom('icon') with {
+                                data: {
+                                    name: 'angle-double-right'
+                                }
+                            } only %}
+                        </a>
+                    {% endblock %}
                 </div>
             {% endblock %}
         </div>
-        
-        {% block actionsContainer %}
-            <div class="col col--sm-3 col--xl-2 col--bottom">
-                {% block actions %}
-                    <a class="button button--expand" href="{{ productUrl }}">{{ 'product.view' | trans }} &raquo;</a>
-                {% endblock %}
-            </div>
-        {% endblock %}
     </div>
 {% endblock %}

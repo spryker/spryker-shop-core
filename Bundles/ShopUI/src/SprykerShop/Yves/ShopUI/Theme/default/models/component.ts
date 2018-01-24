@@ -9,22 +9,43 @@ export interface IComponentImporter {
 }
 
 export const ComponentMixin = (SuperClass: IComponentContructor) => class extends SuperClass {
+    readonly selector: string
 
     constructor(...args: any[]) { 
         super(...args);
+        this.selector = `js-${this.tagName.toLowerCase()}`;
         document.addEventListener(config.events.ready, this.ready.bind(this), false);
     }
 
     ready(): void { }
 
-    findOne<T extends HTMLElement>(selector: string): T {
-        return this.querySelector(selector);
+    setAttributeSafe(name: string, value?: string): void { 
+        if (!value) {
+            return this.removeAttribute(name);
+        }
+
+        this.setAttribute(name, value);
     }
 
-    findAll<T extends HTMLElement>(selector: string): T[] {
-        return Array.prototype.slice.call(this.querySelectorAll(selector));
+    getAttributeSafe(name: string): string {
+        if (this.hasAttribute(name)) {
+            return this.getAttribute(name);
+        }
+
+        return '';
     }
 
+    setPropertySafe(name: string, value?: boolean): void {
+        if (!value) {
+            return this.removeAttribute(name);
+        }
+
+        this.setAttribute(name, '');
+    }
+
+    getPropertySafe(name: string): boolean {
+        return this.hasAttribute(name);
+    }
 }
 
 export default class Component extends ComponentMixin(HTMLElement) { }

@@ -1,0 +1,22 @@
+{% extends model('component') %}
+
+{% set name = name | default('spelling-suggestion') %}
+{% set tag = 'span' %}
+
+{% set amount = data.amount %}
+{% set originalAmount = data.originalAmount | default(null) %}
+
+{% block body %}
+    {% if originalAmount -%}
+        <span class="stat {{name}}__amount {{name}}__amount--original">{{ originalAmount }}</span>
+    {%- endif -%}
+    <span class="stat {{name}}__amount {{name}}__amount--default">{{ amount }}</span>
+{% endblock %}
+
+{% if _view.spellingSuggestion is defined and _view.spellingSuggestion is not null  %}
+    <div class="small-12 columns">
+        <div class="callout warning">
+            {{ 'global.search.spellingSuggestion' | trans }}: <strong><a href="{{ path('search', {'q': _view.spellingSuggestion}) }}">{{ _view.spellingSuggestion }}</a></strong>
+        </div>
+    </div>
+{% endif %}

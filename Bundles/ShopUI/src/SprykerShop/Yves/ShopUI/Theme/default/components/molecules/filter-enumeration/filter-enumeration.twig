@@ -1,23 +1,32 @@
 {% extends model('component') %}
 
-{% set name = name | default('filter-enumeration') %}
+{% set config = {
+    name: 'filter-enumeration' 
+} | merge(config | default({})) %}
 
-{% set filter = data.filter | default(null) %}
-{% set isMultiSelect = data.isMultiSelect | default(filter.config.isMultiValued | default(false)) %}
-{% set activeValues = isMultiSelect ? filter.activeValue : [filter.activeValue] %}
+{% set data = {
+    filter: data.filter | default(null),
+    isMultiSelect: data.isMultiSelect | default(null)
+} | merge(data | default({})) %}
+
+{% set isMultiSelect = data.isMultiSelect is null ? (data.filter.config.isMultiValued | default(false)) : false %}
+{% set activeValues = isMultiSelect ? data.filter.activeValue : [data.filter.activeValue] %}
+{% set inputComponent = isMultiSelect ? atom('checkbox') : atom('radio') %}
 
 {% block body %}
     <ul class="menu">
-        {% for filterValue in filter.values %}
+        {% for filterValue in data.filter.values %}
             <li class="menu__item">
-                <label>
-                    <input 
-                        type="{% if isMultiSelect %}checkbox{% else %}radio{% endif %}" 
-                        name="{{ filter.config.parameterName }}{% if isMultiSelect %}[]{% endif %}" 
-                        value="{{ filterValue.value }}" 
-                        {% if filterValue.value in activeValues %}checked{% endif %} />
-                    {{ filterValue.value }} ({{ filterValue.docCount }})
-                </label>
+                {% include inputComponent with {
+                    attributes: {
+                        name: data.filter.config.parameterName ~ (isMultiSelect ? '[]' : ''),
+                        value: filterValue.value,
+                        checked: (filterValue.value in activeValues)
+                    },
+                    data: {
+                        label: filterValue.value ~ ' (' ~ filterValue.docCount ~ ')'
+                    }
+                } only %}
             </li>
         {% endfor %}
     </ul>

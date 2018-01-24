@@ -4,18 +4,19 @@ $color-alt: #e2694a !default;
 $color-transparent: rgba(0, 0, 0, 0);
 
 $color-white: #ffffff !default;
-$color-light: #dddddd !default;
-$color-lighter: #efefef !default;
+$color-light: #dadada !default;
+$color-lighter: #f0f0f0 !default;
 $color-lightest: #f4f4f4 !default;
 
 $color-black: #000000 !default;
-$color-dark: #cccccc !default;
+$color-dark: #bbbbbb !default;
 $color-darker: #777777 !default;
 $color-darkest: #333333 !default;
 
-$color-bg: $color-lightest !default;
+$color-bg: $color-white !default;
 $color-text: $color-darkest !default;
-$color-input-border: $color-lighter !default;
+$color-input-border: $color-light !default;
+$color-input-border-focus: $color-dark !default;
 $color-shadow: rgba(0, 0, 0, .1);
 
 $color-action: (

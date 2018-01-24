@@ -1,0 +1,23 @@
+{% extends model('component') %}
+
+{% set config = {
+    name: 'select',
+    tag: 'label'
+} | merge(config | default({})) %}
+
+{% set data = {
+} | merge(data | default({})) %}
+
+{% block attributes %}{% endblock %}
+
+{% block body %}
+    <select class="{{config.name}}__select {% block selectClass %}{% endblock %}" {{block('renderAttributes')}}>
+        {% block options %}{% endblock %}
+    </select>
+    {% include atom('icon') with {
+        class: config.name ~ '__arrows',
+        data: {
+            name: 'caret-down'
+        }
+    } only %}
+{% endblock %}

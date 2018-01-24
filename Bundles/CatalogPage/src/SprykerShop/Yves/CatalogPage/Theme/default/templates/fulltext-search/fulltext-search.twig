@@ -1,0 +1,19 @@
+{% extends template('catalog', 'CatalogPage') %}
+
+{% set searchString = searchString | default(_view.searchString) %}
+{% set paginationPath = app.request.attributes.get('_route') %}
+{% set headTitle = ('global.search.results' | trans) ~ searchString %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'global.search' | trans
+            }]
+        }
+    } only %}
+{% endblock %}
+
+{% block title %}
+    <h3>{{ 'global.search.results' | trans }} "<strong>{{ searchString }}</strong>"</h3>
+{% endblock %}

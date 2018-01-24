@@ -1,8 +1,10 @@
 {% extends model('component') %}
 
-{% set name = 'test-component' %}
+{% set config = {
+    name: 'test-component'
+} | merge(config | default({})) %}
 
 {% block body %}
-    This is an <strong>atom</strong> component.
+    This is an <strong class="{{config.selector}}-something">atom</strong> component.
 {% endblock %}
 

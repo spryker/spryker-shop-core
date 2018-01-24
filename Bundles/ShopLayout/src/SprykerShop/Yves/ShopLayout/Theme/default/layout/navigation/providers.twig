@@ -1,7 +1,7 @@
 {% for node in _widget.navigationTree.nodes %}
     {% embed '@ShopLayout/layout/navigation/_partials/base-node.twig' %}
         {% block nodeContainer %}
-            <div class="thumbnail picture">
+            <div class="picture">
                 {{ parent() }}
             </div>
         {% endblock %}

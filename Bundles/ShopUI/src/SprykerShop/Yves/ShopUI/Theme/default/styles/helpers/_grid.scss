@@ -15,19 +15,19 @@
 }
 
 @mixin media-min($min: 0) {
-    @media only screen and (min-device-width: $min) {
+    @media only screen and (min-width: $min) {
         @content;
     }
 }
 
 @mixin media-between($min: 0, $max: $grid-max-width) {
-    @media only screen and (min-device-width: $min) and (max-device-width: $max) {
+    @media only screen and (min-width: $min) and (max-width: $max) {
         @content;
     }
 }
 
 @mixin media-max($max: $grid-max-width) {
-    @media only screen and (max-device-width: $max) {
+    @media only screen and (max-width: $max) {
         @content;
     }
 }

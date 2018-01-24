@@ -1,24 +1,28 @@
 {% extends model('component') %}
 
-{% set name = 'filter-category' %}
+{% set config = {
+    name: 'filter-category' 
+} | merge(config | default({})) %}
 
-{% set filterPath = data.filterPath | default(null) %}
-{% set filter = data.filter | default(null) %}
-{% set categories = data.categories | default([]) %}
+{% set data = {
+    filter: data.filter | default(null),
+    filterPath: data.filterPath | default(null),
+    categories: data.categories | default([])
+} | merge(data | default({})) %}
 
 {% block body %}
-    {% if categories is not empty %}
+    {% if data.categories is not empty %}
         <ul class="menu">
-            {% for categoryNode in categories %}
+            {% for categoryNode in data.categories %}
                 {% set quantity = 0 %}
                 {% set hasChildren = categoryNode.children is defined and categoryNode.children is not empty %}
 
-                {% for filterValue in filter.values if (filterValue.value == categoryNode.nodeId) %}
+                {% for filterValue in data.filter.values if (filterValue.value == categoryNode.nodeId) %}
                     {% set quantity = filterValue.docCount %}
                 {% endfor %}
 
-                {% if filterPath is not empty %}
-                    {% set categoryUrl = url(filterPath, {categoryPath: (categoryNode.url)}) %}
+                {% if data.filterPath is not empty %}
+                    {% set categoryUrl = url(data.filterPath, {categoryPath: (categoryNode.url)}) %}
                 {% else %}
                     {% set categoryUrl = categoryNode.url | replace({"'": "\\'", '"':'\\"'}) %}
                 {% endif %}
@@ -31,8 +35,8 @@
                     {% if hasChildren %}
                         {% include molecule('filter-category') with {
                             data: {
-                                filterPath: filterPath,
-                                filter: filter,
+                                filter: data.filter,
+                                filterPath: data.filterPath,
                                 categories: categoryNode.children
                             }
                         } only %}

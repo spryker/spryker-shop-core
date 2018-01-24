@@ -65,6 +65,26 @@
             margin-bottom: 0;
         }
     }
+
+    &--spacing {
+        & .col {
+            padding: spacing();
+        }
+    }
+
+    &--spacing-v {
+        & .col {
+            padding-top: spacing();
+            padding-bottom: spacing();
+        }
+    }
+
+    &--spacing-h {
+        & .col {
+            padding-left: spacing();
+            padding-right: spacing();
+        }
+    }
 }
 
 .col {

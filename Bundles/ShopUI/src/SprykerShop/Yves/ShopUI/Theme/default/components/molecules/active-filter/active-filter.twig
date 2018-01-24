@@ -1,27 +1,33 @@
 {% extends model('component') %}
 
-{% set name = name | default('active-filter') %}
-{% set tag = tag | default('a') %}
+{% set config = {
+    name: 'active-filter',
+    tag: 'a'
+} | merge(config | default({})) %}
 
-{% set filter = data.filter %}
-{% set value = data.value | default(null) %}
+{% set data = {
+    filter: data.filter,
+    value: data.value | default(null)
+} | merge(data | default({})) %}
 
 {% block component %}
-    {% if value is not empty %}
+    {% if data.value is not empty %}
         {{parent()}}
     {% endif %}
 {% endblock %}
 
 {% block class %}
     {{parent()}}
-    button button--small button--hollow
+    link link--small
 {% endblock %}
 
 {% block attributes %}
     {{parent()}}
-    href="{{ generateUrlWithoutActiveSearchFilter(filter, value) }}"
+    href="{{ generateUrlWithoutActiveSearchFilter(data.filter, data.value) }}"
 {% endblock %}
 
 {% block body %}
-    {{ ('product.filter.' ~ filter.name) | trans }}: {{value}} (x)
+    <strong>{{data.value}}</strong>
+    {{ ('product.filter.' ~ data.filter.name) | trans }}
+    &times;
 {% endblock %}

@@ -1,5 +1,19 @@
-@mixin input($name: '.input') {
+@mixin component-input($name: '.input') {
     #{$name} {
+        @include transition(border-color);
+        display: inline-block;
+        padding: spacing(.5) spacing();
+        border: 1px solid $color-input-border;
+
+        &:focus {
+            border-color: $color-input-border-focus;
+        }
+
+        &--expand {
+            display: block;
+            width: 100%;
+        }
+        
         @content;
     }
 }

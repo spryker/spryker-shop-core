@@ -2,9 +2,11 @@
     #{$name} {
         display: inline-block;
 
-        &:not(:first-child)::before {
-            content: '>';
-            margin: spacing();
+        &__separator {
+            margin-left: spacing(.5);
+            margin-right: spacing(.5);
         }
+
+        @content
     }
 }

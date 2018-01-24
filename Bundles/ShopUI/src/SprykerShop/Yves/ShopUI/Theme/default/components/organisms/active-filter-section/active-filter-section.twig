@@ -1,17 +1,24 @@
 {% extends model('component') %}
 
-{% set name = 'active-filter-section' %}
+{% set config = {
+    name: 'active-filter-section',
+    tag: 'section'
+} | merge(config | default({})) %}
 
-{% set facets = data.facets | default([])%}
-{% set activeFilters = '' %}
+{% set data = {
+    facets: data.facets | default([]),
+} | merge(data | default({})) %}
 
-{% for filter in facets %}
-    {% set activeFilters = activeFilters ~ include(
+{% set activeFilters = [] %}
+
+{% for filter in data.facets %}
+    {% set activeFilter = include(
         [
             molecule('active-filter-' ~ filter.config.name),
             molecule('active-filter-' ~ filter.config.type)
         ], 
         {
+            class: config.name ~ '__item',
             data: {
                 filter: filter
             }
@@ -19,18 +26,31 @@
         with_context = false, 
         ignore_missing = true
     ) %}
+
+    {% if activeFilter | trim is not empty %}
+        {% set activeFilters = activeFilters | merge([activeFilter]) %}
+    {% endif %}    
 {% endfor %}
 
-{% set hasActiveFilters = activeFilters | trim is not empty %}
+{%- block class -%}
+    {{parent()}} box
+{%- endblock -%}
+
+{% block component %}
+    {% if activeFilters | length > 0 %}
+        {{parent()}}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
-    {% if hasActiveFilters %}
-        <div class="box">
-            <small>{{ 'catalog.filter.activeFilters' | trans }}:</small> {{ activeFilters | raw }}
+    <small>{{ 'catalog.filter.activeFilters' | trans }}:</small>
+    {{ activeFilters | join | raw }}
 
-            <a class="button button--small" href="{{ generateUrlWithoutAllActiveSearchFilters(facets) }}">
-                {{ 'catalog.filter.resetAllFilters' | trans }} (x)
-            </a>     
-        </div> 
-    {% endif %}
+    <hr class="box__separator" />
+
+    <div class="text-right">
+        <a class="link link--small" href="{{ generateUrlWithoutAllActiveSearchFilters(data.facets) }}">
+            {{ 'catalog.filter.resetAllFilters' | trans }} &times;
+        </a>   
+    </div>  
 {% endblock %}

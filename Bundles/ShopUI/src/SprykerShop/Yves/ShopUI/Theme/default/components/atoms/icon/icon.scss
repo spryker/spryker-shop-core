@@ -1,0 +1,17 @@
+@mixin component-icon($name: '.icon') {
+    #{$name} {
+        fill: currentColor;
+        width: spacing(2);
+        height: spacing(2);
+        display: inline-block;
+        vertical-align: middle;
+        user-select: none;
+
+        &--small {
+            width: spacing();
+            height: spacing();
+        }
+
+        @content
+    }
+}
