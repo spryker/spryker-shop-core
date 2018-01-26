@@ -143,9 +143,10 @@ class CatalogController extends AbstractController
         }
 
         $searchResults[FacetResultFormatterPlugin::NAME] = $this->getFactory()->getProductCategoryFilterClient()
-            ->updateFacetsByCategory(
+            ->updateCategoryFacets(
                 $searchResults[FacetResultFormatterPlugin::NAME],
-                $productCategoryFilters->getFilterData()
+                $idCategory,
+                $this->getLocale()
             );
 
         return $searchResults;

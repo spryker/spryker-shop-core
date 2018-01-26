@@ -128,7 +128,6 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
