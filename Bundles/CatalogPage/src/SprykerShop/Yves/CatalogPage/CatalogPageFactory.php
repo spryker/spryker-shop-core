@@ -84,7 +84,7 @@ class CatalogPageFactory extends AbstractFactory
     }
 
     /**
-     * @return CatalogPageToProductCategoryFilterStorageClientInterface
+     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterStorageClientInterface
      */
     public function getProductCategoryFilterStorageClient(): CatalogPageToProductCategoryFilterStorageClientInterface
     {
