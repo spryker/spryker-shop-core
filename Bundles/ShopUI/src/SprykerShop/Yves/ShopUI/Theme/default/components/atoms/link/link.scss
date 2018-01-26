@@ -1,9 +1,3 @@
-@mixin component-link-action($action) {
-    &--#{$action} {
-        color: map-get($color-action, $action);
-    }
-}
-
 @mixin component-link($name: '.link') {
     #{$name} {
         display: inline-block;
@@ -16,12 +10,21 @@
             text-decoration: underline;
         }
 
-        @include component-link-action(success);
-        @include component-link-action(warning);
-        @include component-link-action(alert);
+        @each $action, $color-action in $color-actions {
+            @include component-link-action($action, $color-action);
+        }
 
         &--small {
             @include font-size(small);
+        }
+
+        &--alt {
+            @include transition(color);
+
+            &:hover {
+                text-decoration: none;
+                color: dark($color-alt);
+            }
         }
 
         &[disabled],
@@ -35,4 +38,12 @@
             }
         }
     }
+}
+
+@mixin component-link-action($action, $color-action) {
+    &--#{$action} {
+        color: $color-action;
+    }
+
+    @content;
 }

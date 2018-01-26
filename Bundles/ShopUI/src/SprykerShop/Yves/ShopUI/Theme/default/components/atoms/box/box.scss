@@ -16,7 +16,7 @@
         }
 
         &--borderless {
-            box-shadow: none;
+            border-color: $color-transparent;
         }
 
         &--stretch {

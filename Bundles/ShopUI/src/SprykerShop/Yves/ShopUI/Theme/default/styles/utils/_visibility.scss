@@ -1,34 +1,34 @@
 .is-hidden {
     display: none;
 
-    @each $breakpointA, $edgesA in $grid-breakpoints {
-        $edgeMin: edge-min($edgesA);
-        $edgeMax: edge-max($edgesA);
+    @each $breakpoint-a, $edges-a in $grid-breakpoints {
+        $edge-min: edge-min($edges-a);
+        $edge-max: edge-max($edges-a);
 
-        &-#{$breakpointA}-only {
-            @if $edgeMax == null {
-                @include media-min($edgeMin) {
+        &-#{$breakpoint-a}-only {
+            @if $edge-max == null {
+                @include media-min($edge-min) {
                     display: none;
                 }
             } @else {
-                @include media-between($edgeMin, $edgeMax) {
+                @include media-between($edge-min, $edge-max) {
                     display: none;
                 }
             }
         }
 
-        @each $breakpointB, $edgesB in $grid-breakpoints {
-            @if edge-min($edgesB) > edge-min($edgesA) {
-                $edgeMin: edge-min($edgesA);
-                $edgeMax: edge-max($edgesB);
+        @each $breakpoint-b, $edges-b in $grid-breakpoints {
+            @if edge-min($edges-b) > edge-min($edges-a) {
+                $edge-min: edge-min($edges-a);
+                $edge-max: edge-max($edges-b);
 
-                &-#{$breakpointA}-#{$breakpointB} {
-                    @if $edgeMax == null {
-                        @include media-min($edgeMin) {
+                &-#{$breakpoint-a}-#{$breakpoint-b} {
+                    @if $edge-max == null {
+                        @include media-min($edge-min) {
                             display: none;
                         }
                     } @else {
-                        @include media-between($edgeMin, $edgeMax) {
+                        @include media-between($edge-min, $edge-max) {
                             display: none;
                         }
                     }

@@ -1,3 +1,7 @@
+@function span($column, $columns: $grid-columns) {
+    @return (100% / $columns) * $column;
+}
+
 @function edge-min($edges) {
     @if length($edges) > 0 {
         @return nth($edges, 1);
@@ -32,8 +36,28 @@
     }
 }
 
-@function span($column, $columns: $grid-columns) {
-    @return (100% / $columns) * $column;
+@mixin breakpoint($min-bp, $max-bp: null) {
+    $edges-min: map-get($grid-breakpoints, $min-bp);
+    $edge-min: edge-min($edges-min);
+
+    @if $max-bp == null {
+        @include media-min($edge-min) {
+            @content;
+        }
+    } @else {
+        $edges-max: map-get($grid-breakpoints, $max-bp);
+        $edge-max: edge-max($edges-max);
+
+        @if $edge-max == null {
+            @include media-min($edge-min) {
+                @content;
+            }
+        } @else {
+            @include media-between($edge-min, $edge-max) {
+                @content;
+            }
+        }
+    }
 }
 
 

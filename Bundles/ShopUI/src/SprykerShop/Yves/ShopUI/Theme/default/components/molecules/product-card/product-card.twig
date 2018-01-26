@@ -21,17 +21,12 @@
                 {% include atom('thumbnail') with {
                     attributes: {
                         alt: data.name,
+                        src: data.imageUrl,
                         title: data.name
                     }
                 } only %}
             </a>
         {% endblock %}
-
-        {# attributes: {
-                        alt: data.name,
-                        src: data.imageUrl,
-                        title: data.name
-                    } #}
 
         {% block labels %}
             {{ widget('ProductAbstractLabelWidgetPlugin', data.abstractId) }}

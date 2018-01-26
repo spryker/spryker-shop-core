@@ -1,26 +1,26 @@
 import Component from '../../../models/component';
 
-export default class ClassTogglerComponent extends Component {
+export default class ClassToggler extends Component {
     trigger: HTMLInputElement
     targets: HTMLElement[]
 
-    ready() {
+    ready(): void {
         this.trigger = this.querySelector(`.${this.selector}__checkbox`);
         this.targets = Array.from(document.getElementsByClassName(this.target));
         this.toggle();
         this.mapEvents();
     }
 
-    mapEvents() {
+    mapEvents(): void {
         this.trigger.addEventListener('change', (event: Event) => this.onTargetClick(event));
     }
 
-    onTargetClick(event: Event) { 
+    onTargetClick(event: Event): void { 
         event.preventDefault();
         this.toggle();
     }
 
-    toggle() { 
+    toggle(): void { 
         const addClass = this.hideWhenChecked ? this.trigger.checked : !this.trigger.checked;
         this.targets.forEach((element: HTMLElement) => element.classList.toggle(this.classToToggle, addClass));
     }

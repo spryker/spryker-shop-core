@@ -20,7 +20,7 @@
 
         &__check {
             @include is-invisible;
-            @include transition-visibility;
+            @include transition;
             position: absolute;
             top: spacing(.5);
             left: spacing(.5);

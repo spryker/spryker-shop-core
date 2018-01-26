@@ -1,22 +1,27 @@
 {% extends model('component') %}
 
-{% set name = name | default('spelling-suggestion') %}
-{% set tag = 'span' %}
+{% set config = {
+    name: 'spelling-suggestion',
+    tag: 'div'
+} | merge(config | default({})) %}
 
-{% set amount = data.amount %}
-{% set originalAmount = data.originalAmount | default(null) %}
+{% set data = {
+    suggestion: data.suggestion | default('')
+} | merge(data | default({})) %}
 
-{% block body %}
-    {% if originalAmount -%}
-        <span class="stat {{name}}__amount {{name}}__amount--original">{{ originalAmount }}</span>
-    {%- endif -%}
-    <span class="stat {{name}}__amount {{name}}__amount--default">{{ amount }}</span>
+{% set href = path('search', {
+    q: data.suggestion
+}) %}
+
+{% block component %}
+    {% if data.suggestion is not empty %}
+        {{parent()}}
+    {% endif %}
 {% endblock %}
 
-{% if _view.spellingSuggestion is defined and _view.spellingSuggestion is not null  %}
-    <div class="small-12 columns">
-        <div class="callout warning">
-            {{ 'global.search.spellingSuggestion' | trans }}: <strong><a href="{{ path('search', {'q': _view.spellingSuggestion}) }}">{{ _view.spellingSuggestion }}</a></strong>
-        </div>
-    </div>
-{% endif %}
+{% block body %}
+    <em class="text-big">
+        {{ 'global.search.spellingSuggestion' | trans }}
+        <strong><a href="{{href}}">{{data.suggestion}}</a></strong>?
+    </em>
+{% endblock %}

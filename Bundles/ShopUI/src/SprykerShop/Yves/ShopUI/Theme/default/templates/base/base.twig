@@ -1,8 +1,8 @@
-{% set locale = locale | default('en') %}
-{% set headTitle = headTitle | default('') %}
+{% set locale = locale | default(app.locale | slice(0, 2)) %}
+{% set title = title | default('global.spryker.shop') | trans %}
 {% set metaTitle = metaTitle | default(title) %}
-{% set metaDescription = metaDescription | default('') %}
-{% set metaKeywords = metaKeywords | default('') %}
+{% set metaDescription = metaDescription | default('') | trans %}
+{% set metaKeywords = metaKeywords | default('') | trans %}
 
 {% block template %}
     <!doctype html>
@@ -27,7 +27,7 @@
                 <script src="/assets/js/yves_default.manifest.js"></script>
             {% endblock %}
 
-            <title>{% block headTitle %}{{ headTitle }}{% endblock %}</title>
+            <title>{% block headTitle %}{{ title }}{% endblock %}</title>
         </head>
         <body>
             {% block body %}{% endblock %}

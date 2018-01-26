@@ -19,7 +19,7 @@
 {% block body %}
     {% if data.showTopNavigation %}
         <div class="is-hidden-sm-md">
-            {% include organism('navigation') only %}
+            {% include organism('navigation-top') only %}
             <hr class="box__separator" />
         </div>
     {% endif %}
@@ -53,7 +53,7 @@
     {% if data.showMainNavigation %}
         <div class="is-hidden-sm-md">
             <hr class="box__separator" />
-            {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', template('navigation-widget', 'ShopLayout')) }}
+            {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', template('navigation-main', 'ShopLayout')) }}
         </div>
     {% endif %}
 {% endblock %}

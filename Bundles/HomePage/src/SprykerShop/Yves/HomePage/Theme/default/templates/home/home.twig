@@ -1,16 +1,11 @@
 {% extends template('layout-main') %}
 
-{% block breadcrumbs %}{% endblock %}
-{% block titleContainer %}{% endblock %}
+{% block pageInfo %}{% endblock %}
 
 {% block content %}    
-    <div class="box align-center">
-        <h1>{{ 'global.spryker.shop' | trans }}<br/>{{ 'global.spryker.motto' | trans }}</h1>
-    </div>
-
-    <div class="box">
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-    </div>
+    {% include molecule('jumbotron') with {
+        class: 'box' 
+    } only %}
 
     {{ spyCmsBlock({name: 'Home Page'}) }}
 

@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% set config = {
-    name: 'navigation',
+    name: 'navigation-multilevel',
     tag: 'nav'
 } | merge(config | default({})) %}
 
@@ -14,7 +14,7 @@
         {% for node in data.nodes %}
             {% set hasChildren = node.children | length > 0 %}
             
-            {% include molecule('navigation-node') with {
+            {% include molecule('navigation-multilevel-node') with {
                 class: 'menu__item' ~ (hasChildren ? ' menu__item--has-children-dropdown' : ''),
                 data: {
                     node: node

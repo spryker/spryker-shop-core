@@ -1,0 +1,7 @@
+{% set nodes = nodes | default(_widget.navigationTree.nodes) %}
+
+{% include molecule('navigation-list') with {
+    data: {
+        nodes: nodes
+    }
+} only %}

@@ -12,6 +12,16 @@
             height: spacing();
         }
 
+        &--big {
+            width: spacing(3);
+            height: spacing(3);
+        }
+
+        &--bigger {
+            width: spacing(4);
+            height: spacing(4);
+        }
+
         @content
     }
 }

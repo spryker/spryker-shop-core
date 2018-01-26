@@ -9,15 +9,17 @@ export interface IComponentImporter {
 }
 
 export const ComponentMixin = (SuperClass: IComponentContructor) => class extends SuperClass {
+    readonly name: string
     readonly selector: string
 
     constructor(...args: any[]) { 
         super(...args);
-        this.selector = `js-${this.tagName.toLowerCase()}`;
-        document.addEventListener(config.events.ready, this.ready.bind(this), false);
+        this.name = this.tagName.toLowerCase();
+        this.selector = `js-${this.name}`;
+        document.addEventListener(config.events.ready, (event: Event) => this.ready(event), false);
     }
 
-    ready(): void { }
+    ready(event?: Event): void { }
 
     setAttributeSafe(name: string, value?: string): void { 
         if (!value) {

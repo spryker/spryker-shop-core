@@ -36,11 +36,15 @@
         {# create 'class', 'selector' and 'attr' blocks #}
         {# to use them: {{ block('blockname') }} #}
 
+        {# render custom component class #}
+        {%- block renderCustomComponentClass -%}
+            {%- if config.name == config.tag and '-' in config.tag -%}custom-element {% endif -%}
+        {%- endblock -%}
+
         {# render BEM classes (block and modifiers) according to the name #}
         {%- block renderClass -%}
-            {%- if config.name == config.tag %}custom-element {% endif -%}
-            {{config.name-}} 
-            {%- for modifier in modifiers %} {{config.name}}--{{modifier}}{% endfor -%}
+            {{config.name | trim-}} 
+            {%- for modifier in modifiers -%}{%- if modifier | trim is not empty %} {{config.name}}--{{modifier | trim}}{% endif -%}{% endfor -%}
             {%- if class %} {{class-}}{% endif -%}
         {%- endblock -%}
 
@@ -54,6 +58,14 @@
                 {%- endif -%}
             {%- endfor -%}
         {%- endblock -%}
+
+        {%- block renderComponent -%}
+            <{{-config.tag}} 
+                class="{{-block('renderCustomComponentClass')-}}{%- block class -%}{{-block('renderClass')-}}{%- endblock -%}"
+                {% block attributes -%}{{-block('renderAttributes')-}}{%- endblock -%}>
+                {%- block body -%}{%- endblock -%}
+            </{{-config.tag-}}>
+        {%- endblock -%}
     {%- endif -%}
 
     {#
@@ -63,10 +75,6 @@
      #}
 
     {%- block component -%}
-        <{{-config.tag}} 
-            class="{%- block class %}{{block('renderClass')}}{%- endblock -%}"
-            {%- block attributes %} {{block('renderAttributes')}}{%- endblock -%}>
-            {%- block body -%}{%- endblock -%}
-        </{{-config.tag-}}>
+        {{-block('renderComponent')-}}
     {%- endblock -%}
 {% endblock -%}

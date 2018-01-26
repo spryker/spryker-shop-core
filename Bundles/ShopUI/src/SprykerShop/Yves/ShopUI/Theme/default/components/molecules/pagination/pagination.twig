@@ -28,14 +28,6 @@
     anchor: data.anchor | default('#')
 } | merge(data | default({})) %}
 
-{%- block class -%}
-    {{parent()}} box
-{%- endblock -%}
-
-{% block attributes %}
-    {{parent()}} role="navigation"
-{% endblock %}
-
 {% block body %}
     <ul>
         {% if data.currentPage > 1 %}

@@ -1,20 +1,15 @@
 {% extends template('base') %}
 
-{% set locale = locale | default(app.locale | slice(0, 2)) %}
-{% set title = title | default('global.spryker.shop') | trans %}
-{% set metaDescription = metaDescription | default('') | trans %}
-{% set metaKeywords = metaKeywords | default('') | trans %}
-{% set breadcrumbSteps = breadcrumbSteps | default([]) %}
-{% set breadcrumbStartWithHome = breadcrumbStartWithHome | default(true) %}
-
 {% block body %}
-    {% include atom('icon-sprite') only %}
+    {% block notifications %}
+        {% include organism('notification-area') only %}
+    {% endblock %}
 
     {% block outside %}{% endblock %}
 
     {# {% include organism('sidebar') only %} #}
     
-    <div class="grid grid--container">
+    <div class="container">
         {% block page_start %}{% endblock %}
 
         {% block header %}
@@ -24,21 +19,18 @@
         {% block pageInfo %}
             <div class="box">
                 {% block breadcrumbs %}
-                    {% include molecule('breadcrumb') with {
-                        data: {
-                            steps: breadcrumbSteps,
-                            startWithHome: breadcrumbStartWithHome
-                        }
-                    } only %}
+                    {% include molecule('breadcrumb') only %}
                 {% endblock %}
 
                 <hr class="box__separator" />
                 
-                {% block title %}{% endblock %}
+                {% block title %}
+                    <h3>{{title}}</h3>
+                {% endblock %}
             </div>
         {% endblock %}
 
-        <main class="grid">
+        <main>
             {% block content %}{% endblock %}
         </main>
 
@@ -52,4 +44,8 @@
             <br>&copy; ACME Company
         </p>
     </div>
+
+    {% block iconSprite %}
+        {% include atom('icon-sprite') only %}
+    {% endblock %}
 {% endblock %}

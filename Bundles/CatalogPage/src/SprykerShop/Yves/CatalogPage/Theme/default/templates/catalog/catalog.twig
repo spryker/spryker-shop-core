@@ -1,16 +1,24 @@
 {% extends template('layout-main') %}
 
+{% set title = title | default(_view.category.name | default('')) %}
+{% set metaTitle = metaTitle | default(_view.pageTitle | default(title)) %}
+{% set metaDescription = metaDescription | default(_view.pageDescription | default('')) %}
+{% set metaKeywords = metaKeywords | default(_view.pageKeywords | default('')) %}
+{% set viewMode = viewMode | default(_view.viewMode | default(null)) %}
+
 {% set products = products | default(_view.products) %}
 {% set category = category | default(_view.category | default(null)) %}
 {% set categoryId = categoryId | default(_view.idCategory | default(null)) %}
-{% set searchString = searchString | default(_view.searchString) %}
-{% set paginationPath = paginationPath | default(app.request.getPathInfo()) %}
+{% set facets = facets | default(_view.facets) %}
+{% set filterPath = filterPath | default(_view.filterPath | default(null)) %}
 
-{% set metaTitle = metaTitle | default(_view.pageTitle | default(null)) %}
-{% set metaDescription = metaDescription | default(_view.pageDescription | default(null)) %}
-{% set metaKeywords = metaKeywords | default(_view.pageKeywords | default(null)) %}
-{% set headTitle = headTitle | default(_view.category.name | default(null)) %}
-{% set viewMode = viewMode | default(_view.viewMode | default(null)) %}
+{% set paginationData = {
+    parameters: app.request.query.all(),
+    currentPage: _view.pagination.currentPage,
+    paginationPath: app.request.getPathInfo(),
+    maxPage: _view.pagination.maxPage,
+    showAlwaysFirstAndLast: true
+} | merge(paginationData | default({})) %}
 
 {% macro renderBreadcrumbSteps(categoryNode, isLastLeaf, filterPath) %}
     {% import _self as self %}
@@ -46,10 +54,6 @@
     {% endembed %}
 {% endblock %}
 
-{% block title %}
-    <h3>{{ headTitle }}</h3>
-{% endblock %}
-
 {% block content %}
     {% block cmsTop %}
         {% if categoryId %}
@@ -60,80 +64,70 @@
     {% endblock %}
 
     <form method="GET" class="grid">
-        {% include '@CatalogPage/_partials/spelling-suggestion.twig' %}
+        {% block form %}
+            <div class="col col--sm-12 col--lg-4 col--xl-3">
+                {% include molecule('view-mode-switch') with {
+                    class: 'box'
+                } only %}
 
-        <div class="col col--sm-12 col--lg-4 col--xl-3">
-            {% include molecule('view-mode-switch') only %}
+                {% include molecule('class-toggler') with {
+                    class: 'box is-hidden-lg-xl',
+                    attributes: {
+                        'class-to-toggle': 'is-hidden-sm-md',
+                        target: 'js-catalog__filters-toggle',
+                        checked: true
+                    },
+                    data: {
+                        label: 'Show/Hide filters'
+                    }
+                } only %}
 
-            {% include molecule('class-toggler') with {
-                class: 'box is-hidden-lg-xl',
-                attributes: {
-                    'class-to-toggle': 'is-hidden-sm-md',
-                    target: 'js-show-hide-toggler__target',
-                    checked: true
-                },
-                data: {
-                    label: 'Show/Hide filters'
-                }
-            } only %}
-            
-            {% include organism('filter-section') with {
-                class: 'js-show-hide-toggler__target',
-                data: {
-                    filterPath: _view.filterPath | default(null),
-                    facets: _view.facets,
-                    categories: categories
-                }
-            } only %}
+                {% include organism('filter-section') with {
+                    class: 'js-catalog__filters-toggle',
+                    data: {
+                        facets: facets,
+                        filterPath: filterPath,
+                        categories: categories
+                    }
+                } only %}
 
-            {% block cmsMiddle %}
-                {% if categoryId %}
-                    <div class="box">
-                        {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', categoryId) }}
-                    </div>
-                {% endif %}
-            {% endblock %}
-        </div>
-
-        <div class="col col--sm-12 col--lg-8 col--xl-9">
-            {% include molecule('sort') only %}
-
-            {% include organism('active-filter-section') with {
-                data: {
-                    facets: _view.facets
-                }
-            } only %}
-
-            {% include molecule('pagination') with {
-                data: {
-                    parameters: app.request.query.all(),
-                    currentPage: _view.pagination.currentPage,
-                    paginationPath: paginationPath,
-                    maxPage: _view.pagination.maxPage,
-                    showAlwaysFirstAndLast: true
-                }
-            } only %}
-
-            <div class="grid grid--stretch">
-                {% for product in products %}
-                    {{ widget('ProductWidgetPlugin', product, viewMode) }}
-                {% endfor %}
+                {% block cmsMiddle %}
+                    {% if categoryId %}
+                        <div class="box">
+                            {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', categoryId) }}
+                        </div>
+                    {% endif %}
+                {% endblock %}
             </div>
 
-            {% include molecule('pagination') with {
-                data: {
-                    parameters: app.request.query.all(),
-                    currentPage: _view.pagination.currentPage,
-                    paginationPath: paginationPath,
-                    maxPage: _view.pagination.maxPage,
-                    showAlwaysFirstAndLast: true
-                }
-            } only %}
-        </div>
+            <div class="col col--sm-12 col--lg-8 col--xl-9">
+                {% include molecule('sort') with {
+                    class: 'box'
+                } only %}
 
-        {% if searchString is not empty %}
-            <input type="hidden" name="q" value="{{ searchString }}" />
-        {% endif %}
+                {% include organism('active-filter-section') with {
+                    data: {
+                        facets: facets
+                    }
+                } only %}
+
+                {% include molecule('pagination') with {
+                    class: 'box',
+                    data: paginationData
+                } only %}
+
+                <div class="grid grid--stretch">
+                    {% for product in products %}
+                        {{ widget('ProductWidgetPlugin', product, viewMode) }}
+                    {% endfor %}
+                </div>
+
+                {% include molecule('pagination') with {
+                    class: 'box',
+                    data: paginationData
+                } only %}
+            </div>
+        {% endblock %}
     </form>
 
     {% block cmsBottom %}

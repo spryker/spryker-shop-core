@@ -22,7 +22,7 @@
                 & > #{$name} {
                     @include shadow;
                     @include is-invisible;
-                    @include transition-visibility;
+                    @include transition;
                     position: absolute;
                     left: 0;
                     width: spacing(30);

@@ -1,8 +1,12 @@
 {% extends template('catalog', 'CatalogPage') %}
 
 {% set searchString = searchString | default(_view.searchString) %}
-{% set paginationPath = app.request.attributes.get('_route') %}
-{% set headTitle = ('global.search.results' | trans) ~ searchString %}
+{% set title = title |  default(('global.search.results' | trans) ~ searchString) %}
+{% set suggestion = suggestion | default(_view.spellingSuggestion) %}
+
+{% set paginationData = {
+    paginationPath: app.request.attributes.get('_route')
+} | merge(paginationData | default({})) %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -16,4 +20,22 @@
 
 {% block title %}
     <h3>{{ 'global.search.results' | trans }} "<strong>{{ searchString }}</strong>"</h3>
+
+    {% embed molecule('spelling-suggestion') with {
+        data: {
+            suggestion: suggestion
+        }
+    } only %}
+        {% block body %}
+            <hr class="box__separator" />
+            {{parent()}}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block form %}
+    {{parent()}}
+    {% if searchString is not empty %}
+        <input type="hidden" name="q" value="{{ searchString }}" />
+    {% endif %}
 {% endblock %}

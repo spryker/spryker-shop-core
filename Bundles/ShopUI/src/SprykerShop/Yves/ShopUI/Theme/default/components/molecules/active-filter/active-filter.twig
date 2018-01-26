@@ -10,6 +10,10 @@
     value: data.value | default(null)
 } | merge(data | default({})) %}
 
+{% set attributes = {
+    href: (data.value is not empty) ? generateUrlWithoutActiveSearchFilter(data.filter, data.value) : null
+} | merge(attributes | default({})) %}
+
 {% block component %}
     {% if data.value is not empty %}
         {{parent()}}
@@ -19,11 +23,6 @@
 {% block class %}
     {{parent()}}
     link link--small
-{% endblock %}
-
-{% block attributes %}
-    {{parent()}}
-    href="{{ generateUrlWithoutActiveSearchFilter(data.filter, data.value) }}"
 {% endblock %}
 
 {% block body %}
