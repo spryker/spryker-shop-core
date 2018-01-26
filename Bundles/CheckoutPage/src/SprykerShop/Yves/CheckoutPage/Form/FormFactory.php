@@ -29,7 +29,7 @@ class FormFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PAYMENT_SUB_FORMS);
     }
-    
+
     /**
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
@@ -62,16 +62,16 @@ class FormFactory extends AbstractFactory
     protected function getShipmentFormTypes()
     {
         return [
-            $this->createShipmentForm(),
+            $this->getShipmentForm(),
         ];
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm
+     * @return string
      */
-    protected function createShipmentForm()
+    protected function getShipmentForm()
     {
-        return new ShipmentForm();
+        return ShipmentForm::class;
     }
 
     /**
@@ -88,10 +88,9 @@ class FormFactory extends AbstractFactory
     public function createPaymentFormCollection()
     {
         $createPaymentSubForms = $this->createPaymentMethodSubForms();
-        $paymentFormType = $this->createPaymentForm($createPaymentSubForms);
         $subFormDataProvider = $this->createSubFormDataProvider($createPaymentSubForms);
 
-        return $this->createSubFormCollection($paymentFormType, $subFormDataProvider);
+        return $this->createSubFormCollection(PaymentForm::class, $subFormDataProvider);
     }
 
     /**
@@ -131,31 +130,21 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface[]
+     * @return string[]
      */
     protected function createSummaryFormTypes()
     {
         return [
-            $this->createSummaryForm(),
+            $this->getSummaryForm(),
         ];
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subForms
-     *
-     * @return \SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm
+     * @return string
      */
-    protected function createPaymentForm(SubFormPluginCollection $subForms)
+    protected function getSummaryForm()
     {
-        return new PaymentForm($subForms);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Form\Steps\SummaryForm
-     */
-    protected function createSummaryForm()
-    {
-        return new SummaryForm();
+        return SummaryForm::class;
     }
 
     /**

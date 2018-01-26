@@ -20,17 +20,9 @@ class DiscountWidgetFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCartVoucherForm()
+    public function getCartVoucherForm()
     {
-        return $this->getFormFactory()->create($this->createCartVoucherFormType());
-    }
-
-    /**
-     * @return \Symfony\Component\Form\AbstractType
-     */
-    protected function createCartVoucherFormType()
-    {
-        return new CartVoucherForm();
+        return $this->getFormFactory()->create(CartVoucherForm::class);
     }
 
     /**

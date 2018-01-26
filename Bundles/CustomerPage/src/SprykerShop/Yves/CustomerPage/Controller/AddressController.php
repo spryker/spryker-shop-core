@@ -58,7 +58,7 @@ class AddressController extends AbstractCustomerController
         $addressForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->createAddressForm($dataProvider->getOptions())
+            ->getAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
         if ($addressForm->isSubmitted() === false) {
@@ -96,7 +96,7 @@ class AddressController extends AbstractCustomerController
         $addressForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->createAddressForm($dataProvider->getOptions())
+            ->getAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
         if ($addressForm->isSubmitted() === false) {
