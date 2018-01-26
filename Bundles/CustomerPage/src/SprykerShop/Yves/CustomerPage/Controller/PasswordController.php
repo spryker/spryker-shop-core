@@ -31,7 +31,7 @@ class PasswordController extends AbstractCustomerController
             ->getForgottenPasswordForm()
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getData());
 
@@ -69,7 +69,7 @@ class PasswordController extends AbstractCustomerController
             ])
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getData());
 

@@ -35,7 +35,7 @@ class RegisterController extends AbstractCustomerController
             ->getRegisterForm()
             ->handleRequest($request);
 
-        if ($registerForm->isValid()) {
+        if ($registerForm->isSubmitted() && $registerForm->isValid()) {
             $customerResponseTransfer = $this->registerCustomer($registerForm->getData());
 
             if ($customerResponseTransfer->getIsSuccess()) {

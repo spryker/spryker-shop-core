@@ -28,7 +28,7 @@ class VoucherController extends AbstractController
             ->getCartVoucherForm()
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $voucherCode = $form->get(CartVoucherForm::FIELD_VOUCHER_CODE)->getData();
 
             $this->getFactory()
