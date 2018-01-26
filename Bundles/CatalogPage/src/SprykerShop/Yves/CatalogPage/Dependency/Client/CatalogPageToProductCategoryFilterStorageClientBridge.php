@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CatalogPage\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer;
-
 class CatalogPageToProductCategoryFilterStorageClientBridge implements CatalogPageToProductCategoryFilterStorageClientInterface
 {
     /**
@@ -27,11 +25,10 @@ class CatalogPageToProductCategoryFilterStorageClientBridge implements CatalogPa
     /**
      * @param int $idCategory
      *
-     * @return ProductCategoryFilterStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer|null
      */
     public function getProductCategoryFilterByIdCategory($idCategory)
     {
         return $this->productCategoryFilterStorageClient->getProductCategoryFilterByIdCategory($idCategory);
     }
-
 }

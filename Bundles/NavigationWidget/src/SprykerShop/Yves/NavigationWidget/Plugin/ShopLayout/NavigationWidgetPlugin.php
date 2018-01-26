@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\NavigationWidget\Plugin\ShopLayout;
 
-use Generated\Shared\Transfer\NavigationStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShopLayout\Dependency\Plugin\NavigationWidget\NavigationWidgetPluginInterface;
 
@@ -58,7 +57,7 @@ class NavigationWidgetPlugin extends AbstractWidgetPlugin implements NavigationW
     /**
      * @param string $navigationKey
      *
-     * @return NavigationStorageTransfer|null
+     * @return \Generated\Shared\Transfer\NavigationStorageTransfer|null
      */
     public function getNavigation($navigationKey)
     {
