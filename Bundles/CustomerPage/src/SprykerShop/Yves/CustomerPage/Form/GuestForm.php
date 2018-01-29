@@ -70,7 +70,7 @@ class GuestForm extends AbstractType
                 'Mrs' => 'customer.salutation.mrs',
                 'Dr' => 'customer.salutation.dr',
             ]),
-            'choice_as_values' => true,
+            'choices_as_values' => true,
             'label' => 'address.salutation',
             'constraints' => [
                 new NotBlank(),
