@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Form;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
