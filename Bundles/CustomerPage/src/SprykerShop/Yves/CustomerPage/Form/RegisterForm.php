@@ -29,12 +29,14 @@ class RegisterForm extends AbstractType
     const FIELD_ACCEPT_TERMS = 'accept_terms';
     const FIELD_IS_GUEST = 'is_guest';
 
+    public const BLOCK_PREFIX = 'registerForm';
+
     /**
      * @return string
      */
     public function getBlockPrefix()
     {
-        return 'registerForm';
+        return static::BLOCK_PREFIX;
     }
 
     /**

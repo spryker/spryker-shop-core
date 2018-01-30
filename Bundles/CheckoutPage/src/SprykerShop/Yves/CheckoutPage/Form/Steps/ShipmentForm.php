@@ -60,8 +60,7 @@ class ShipmentForm extends AbstractType
     protected function addShipmentMethods(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_ID_SHIPMENT_METHOD, ChoiceType::class, [
-            'choices' => array_flip($options[self::OPTION_SHIPMENT_METHODS]),
-            'choices_as_values' => true,
+            'choices' => $options[self::OPTION_SHIPMENT_METHODS],
             'expanded' => true,
             'multiple' => false,
             'required' => true,

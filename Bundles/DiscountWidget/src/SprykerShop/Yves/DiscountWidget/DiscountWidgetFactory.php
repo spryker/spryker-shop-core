@@ -86,10 +86,10 @@ class DiscountWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @return string
      */
     protected function createCheckoutVoucherFormType()
     {
-        return new CheckoutVoucherForm();
+        return CheckoutVoucherForm::class;
     }
 }

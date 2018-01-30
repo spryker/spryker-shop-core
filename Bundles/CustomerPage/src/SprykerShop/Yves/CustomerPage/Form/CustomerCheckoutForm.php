@@ -23,7 +23,7 @@ class CustomerCheckoutForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(static::SUB_FORM);
+        $resolver->setRequired(static::SUB_FORM_CUSTOMER);
     }
 
     /**
@@ -34,6 +34,6 @@ class CustomerCheckoutForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::SUB_FORM_CUSTOMER, $options[static::SUB_FORM], ['data_class' => CustomerTransfer::class, 'property_path' => 'customer']);
+        $builder->add(self::SUB_FORM_CUSTOMER, $options[static::SUB_FORM_CUSTOMER], ['data_class' => CustomerTransfer::class, 'property_path' => 'customer']);
     }
 }

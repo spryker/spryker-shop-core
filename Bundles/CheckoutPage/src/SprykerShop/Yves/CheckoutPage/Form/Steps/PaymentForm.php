@@ -77,8 +77,7 @@ class PaymentForm extends AbstractType
             self::PAYMENT_SELECTION,
             ChoiceType::class,
             [
-                'choices' => array_flip($paymentMethodChoices),
-                'choices_as_values' => true,
+                'choices' => $paymentMethodChoices,
                 'label' => false,
                 'required' => true,
                 'expanded' => true,
@@ -145,7 +144,7 @@ class PaymentForm extends AbstractType
             $subFormName = ucfirst($paymentMethodSubForm->getName());
 
             if (!$paymentMethodSubForm instanceof SubFormProviderNameInterface) {
-                $choices[$paymentMethodSubForm->getPropertyPath()] = $subFormName;
+                $choices[$subFormName] = $paymentMethodSubForm->getPropertyPath();
                 continue;
             }
 
@@ -153,7 +152,7 @@ class PaymentForm extends AbstractType
                 $choices[$paymentMethodSubForm->getProviderName()] = [];
             }
 
-            $choices[$paymentMethodSubForm->getProviderName()][$paymentMethodSubForm->getPropertyPath()] = $subFormName;
+            $choices[$paymentMethodSubForm->getProviderName()][$subFormName] = $paymentMethodSubForm->getPropertyPath();
         }
 
         return $choices;

@@ -31,12 +31,14 @@ class GuestForm extends AbstractType
     const FIELD_IS_GUEST = 'is_guest';
     const FIELD_ACCEPT_TERMS = 'accept_terms';
 
+    public const BLOCK_PREFIX = 'guestForm';
+
     /**
      * @return string
      */
     public function getBlockPrefix()
     {
-        return 'guestForm';
+        return static::BLOCK_PREFIX;
     }
 
     /**
