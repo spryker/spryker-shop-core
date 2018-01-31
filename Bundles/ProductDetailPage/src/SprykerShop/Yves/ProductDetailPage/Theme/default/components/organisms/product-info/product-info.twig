@@ -1,0 +1,64 @@
+{% extends model('component') %}
+
+{% set config = {
+    name: 'product-info',
+    tag: 'section'
+} | merge(config | default({})) %}
+
+{% set data = {
+    product: data.product
+} | merge(data | default({})) %}
+
+{% block body %}
+    {% if data.product.attributes.brand is defined %}
+        <h5>
+            <small>{{ 'page.product.by' | trans }}</small>
+            {{ data.product.attributes.brand }}
+        </h5>
+    {% endif %}
+
+    <small>{{ 'product.attribute.sku' | trans }}: {{ data.product.sku }}</small>
+
+    {{ widget('PriceWidgetPlugin', data.product) }}
+    {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
+    {% include '@ProductDetailPage/_product-detail-page/_partials/variants.twig' %}
+    {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
+
+    <form method="POST" action="/cart/add/{{ data.product.sku }}">
+        {{ widget('data.ProductOptionWidgetPlugin', data.product) }}
+
+        <div class="col col--sm-6">
+            {% set options = [] %}
+            
+            {% for index in 1..10 %}
+                {% set options = options | merge([{
+                    label: index,
+                    value: index
+                }]) %}
+            {% endfor %}
+
+            {% include atom('select') with {
+                modifiers: ['expand'],
+                data: {
+                    options: options
+                }
+            } only %}
+        </div>
+
+        <div class="col col--sm-6">
+            {% if widgetExists('AvailabilityWidgetPlugin') %}
+                {% set disabled = not widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product) or data.product.price is null %}
+            {% else %}
+                {% set disabled = (data.product.idProductConcrete is not defined or data.product.price is null) %}
+            {% endif %}
+
+            <button type="submit" class="button button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
+                {{ 'page.detail.add-to-cart' | trans }}
+            </button>
+        </div>
+
+        {# {{ widgetBlock('AvailabilityWidgetPlugin', 'outOfStock', data.product) }} #}
+    </form>
+
+    {# {{ widget('WishlistWidgetPlugin', data.product) }} #}
+{% endblock %}

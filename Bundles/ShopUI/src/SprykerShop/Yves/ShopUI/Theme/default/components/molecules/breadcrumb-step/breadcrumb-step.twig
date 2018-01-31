@@ -8,6 +8,7 @@
 {% set data = {
     url: data.url | default(null),
     label: data.label | default(null),
+    itemProp: data.itemProp | default(null),
     withChevron: data.withChevron | default(true)
 } | merge(data | default({})) %}
 
@@ -15,8 +16,11 @@
 
 {% block body %}
     {% if isLink %}<a href="{{data.url}}">{% endif %}
-        {{data.label}}
+    {% if data.itemProp %}<span itemprop="{{data.itemProp}}">{% endif %}
+    {{data.label}}
+    {% if data.itemProp %}</span>{% endif %}
     {% if isLink %}</a>{% endif %}
+    
     {% if data.withChevron %}
         {% include atom('icon') with {
             modifiers: ['small'],

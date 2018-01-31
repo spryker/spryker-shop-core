@@ -36,12 +36,13 @@
 
         &[disabled],
         &--disabled {
-            background-color: $color-dark;
+            background-color: $color-light;
+            border-color: $color-light;
             cursor: not-allowed;
 
             &:hover,
             &:focus {
-                background-color: $color-dark;
+                background-color: $color-light;
             }
         }
     }

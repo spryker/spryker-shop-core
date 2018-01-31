@@ -47,5 +47,9 @@
 }
 
 .is-scrollable {
-    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.is-not-scrollable {
+    overflow-y: hidden;
 }

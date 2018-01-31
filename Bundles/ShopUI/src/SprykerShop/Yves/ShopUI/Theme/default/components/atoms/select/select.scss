@@ -7,7 +7,7 @@
         border: 1px solid $color-input-border;
 
         &__select {
-            display: inline-block;
+            display: block;
             max-width: 100%;
             background-color: $color-transparent;
             border: spacing(.5) solid $color-transparent;
@@ -34,6 +34,11 @@
         &--expand &__select {
             display: block;
             width: 100%;
+        }
+
+        &--naked {
+            background-color: $color-transparent;
+            border: none;
         }
 
         @content;

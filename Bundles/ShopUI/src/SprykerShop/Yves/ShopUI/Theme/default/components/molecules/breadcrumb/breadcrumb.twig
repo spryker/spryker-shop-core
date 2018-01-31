@@ -23,8 +23,10 @@
         {% for step in data.steps %}
             {% include molecule('breadcrumb-step') with {
                 data: {
-                    url: loop.last ? null : step.url,
-                    label: step.label
+                    url: loop.last ? null : (step.url | default(null)),
+                    label: step.label | default(null),
+                    itemProp: step.itemProp | default(null),
+                    withChevron: step.withChevron | default(true)
                 }
             } only %}
         {% endfor %}

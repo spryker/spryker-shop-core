@@ -1,0 +1,20 @@
+{% set categories = categories | default(_widget.categories) %}
+
+{% if categories is not empty %}
+    {% set steps = [] %}
+
+    {% for category in categories %}
+        {% set steps = steps | merge([{
+            url: category.url,
+            label: category.name,
+            itemProp: 'category'
+        }]) %}
+    {% endfor %}
+
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: steps
+        }
+    } only %}
+{% endif %}
+

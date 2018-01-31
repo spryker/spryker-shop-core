@@ -1,0 +1,42 @@
+@mixin component-simple-carousel($name: '.simple-carousel') {
+    #{$name} {
+        &:hover &__prev,
+        &:hover &__next {
+            @include is-visible;
+        }
+
+        &__slider {
+            max-width: 100%;
+            border: spacing(3) solid transparent;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        &__grid {
+            @include transition(transform);
+            flex-wrap: nowrap;
+        }
+
+        &__prev,
+        &__next {
+            @include is-invisible;
+            @include transition;
+            display: block;
+            position: absolute;
+            top: 50%;
+            bottom: 50%;
+            margin-top: - $component-icon-size-big / 2;
+            z-index: 2;
+        }
+
+        &__prev {
+            left: 0;
+        }
+
+        &__next {
+            right: 0;
+        }
+
+        @content;
+    }
+}

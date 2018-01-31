@@ -1,0 +1,6 @@
+@import '../../../styles/settings';
+@import '../../../styles/helpers';
+@import '../../atoms/icon/icon';
+@import 'simple-carousel';
+
+@include component-simple-carousel;

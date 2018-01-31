@@ -6,13 +6,18 @@
 } | merge(config | default({})) %}
 
 {% set data = {
+    options: data.options | default([])
 } | merge(data | default({})) %}
 
 {% block attributes %}{% endblock %}
 
 {% block body %}
     <select class="{{config.name}}__select {% block selectClass %}{% endblock %}" {{block('renderAttributes')}}>
-        {% block options %}{% endblock %}
+        {% block options %}
+            {% for option in data.options %}
+                <option value="{{option.value}}">{{option.label}}</option>
+            {% endfor %}
+        {% endblock %}
     </select>
     {% include atom('icon') with {
         class: config.name ~ '__arrows',

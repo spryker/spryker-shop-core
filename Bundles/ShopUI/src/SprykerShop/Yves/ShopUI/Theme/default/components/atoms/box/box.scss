@@ -23,7 +23,7 @@
             height: calc(100% - #{spacing(2)});
         }
 
-        & + #{$name} {
+        & + & {
             margin-top: spacing(2);
         }
 

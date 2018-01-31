@@ -1,21 +1,40 @@
 {% extends template('base') %}
 
+{% set bodyClass = (bodyClass | default('')) ~ 'js-layout-main__side-drawer-container' %}
+
 {% block body %}
     {% block notifications %}
         {% include organism('notification-area') only %}
     {% endblock %}
 
+    {% block sidebar %}
+        {% include organism('side-drawer') with {
+            class: 'is-hidden-lg-xl',
+            attributes: {
+                'container-selector': 'js-layout-main__side-drawer-container',
+                'trigger-selector': 'js-layout-main__side-drawer-trigger'
+            }
+        } only %}
+    {% endblock %}
+
     {% block outside %}{% endblock %}
 
-    {# {% include organism('sidebar') only %} #}
-    
+    {% block header %}
+        {% embed organism('header') only %}
+            {% block mobile %}
+                <a href="#" class="link link--alt js-layout-main__side-drawer-trigger">
+                    {% include atom('icon') with {
+                        modifiers: ['big'],
+                        data: {
+                            name: 'bars'
+                        }
+                    } only %}
+                </a>
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+
     <div class="container">
-        {% block page_start %}{% endblock %}
-
-        {% block header %}
-            {% include organism('header') only %}
-        {% endblock %}
-
         {% block pageInfo %}
             <div class="box">
                 {% block breadcrumbs %}
@@ -35,17 +54,19 @@
         </main>
 
         {% block footer %}
-            {% include organism('footer') only %}
+                {% include organism('footer') only %}
         {% endblock %}
 
-        <p class="text-center text-small">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-            <br>Aenean commodo ligula eget dolor. Aenean massa.
-            <br>&copy; ACME Company
-        </p>
+        {% block copyright %}
+            <p class="text-center text-small">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                <br>Aenean commodo ligula eget dolor. Aenean massa.
+                <br>&copy; ACME Company
+            </p>
+        {% endblock %}
     </div>
 
-    {% block iconSprite %}
+    {% block icons %}
         {% include atom('icon-sprite') only %}
     {% endblock %}
 {% endblock %}

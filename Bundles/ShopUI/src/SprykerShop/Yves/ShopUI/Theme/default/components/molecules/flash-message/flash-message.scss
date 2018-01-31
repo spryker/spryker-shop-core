@@ -4,7 +4,7 @@
         @include is-invisible;
         @include transition(max-height opacity visibility, 500ms);
         max-height: 0;
-        background-color: rgba(light($color-main), .9);
+        background-color: rgba(light($color-main), .97);
         cursor: pointer;
         overflow-y: hidden;
 
@@ -28,7 +28,7 @@
 
 @mixin component-flash-message-action($action, $color-action) {
     &--#{$action} {
-        background-color: rgba(light($color-action), .9);
+        background-color: rgba(light($color-action), .97);
     }
 
     &--#{$action} &__message {

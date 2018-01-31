@@ -1,13 +1,17 @@
-{% if _widget.currencies | length > 1 %}
+{% set currencies = currencies | default(_widget.currencies) %}
+{% set currentCurrency = currentCurrency | default(_widget.currentCurrency) %}
+
+{% if currencies is not empty %}
     <form method="GET" action="{{ path('currency-switch') }}" data-component="currency-switch">
         {% embed atom('select') with {
+            modifiers: ['naked'],
             attributes: {
                 name: 'currency-iso-code',
                 onchange: 'this.form.submit()'
             },
             embed: {
-                currencies: _widget.currencies,
-                currentCurrency: _widget.currentCurrency
+                currencies: currencies,
+                currentCurrency: currentCurrency
             }
         } only %}
             {% block options %}

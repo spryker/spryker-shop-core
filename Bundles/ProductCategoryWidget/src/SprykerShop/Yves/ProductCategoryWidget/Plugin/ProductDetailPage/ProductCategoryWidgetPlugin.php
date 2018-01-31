@@ -29,7 +29,7 @@ class ProductCategoryWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public static function getTemplate(): string
     {
-        return '@ProductCategoryWidget/_product-detail-page/breadcrumb.twig';
+        return '@ProductCategoryWidget/templates/product-detail-page-breadcrumb/product-detail-page-breadcrumb.twig';
     }
 
     /**

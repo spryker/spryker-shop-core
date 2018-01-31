@@ -2,6 +2,6 @@
     @return darken($color, $degree);
 }
 
-@function light($color, $degree: 30) {
+@function light($color, $degree: 35) {
     @return lighten($color, $degree);
 }

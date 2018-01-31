@@ -1,0 +1,51 @@
+{% extends template('layout-main') %}
+
+{% set product = product | default(_view.product) %}
+{% set productUrl = productUrl | default(_view.productUrl) %}
+{% set title = title | default(product.metaTitle) %}
+{% set title = title is empty ? product.name : title %}
+{% set metaTitle = metaTitle | default(title) %}
+{% set metaDescription = metaDescription | default(product.metaDescription) %}
+{% set metaKeywords = metaKeywords | default(product.metaKeywords) %}
+
+{% block breadcrumbs %}
+    {{ widget('ProductCategoryWidgetPlugin', product, app.locale) }}
+{% endblock %}
+
+{% block title %}
+    <h3 itemprop="name">{{ product.name }}</h3>
+    <link itemprop="url" href="{{ productUrl }}" />
+{% endblock %}
+
+{% block outside %}
+    {# {{ widgetBlock('ProductImageWidgetPlugin', 'smallView', product) }} #}
+{% endblock %}
+
+{% block content %}
+    <div class="grid">
+        <div class="col col--sm-12 col--md-6 col--lg-7 col--sl-8">
+            {{ widgetBlock('ProductImageWidgetPlugin', 'largeView', product) }}
+            {{ widget('ProductAbstractLabelWidgetPlugin', product) }}
+        </div>
+
+        {% include organism('product-info', 'ProductDetailPage') with {
+            class: 'col col--sm-12 col--md-6 col--lg-5 col--lg-4',
+            data: {
+                product: product
+            }
+        } only %}
+    </div>
+
+    {% include organism('product-details', 'ProductDetailPage') with {
+        class: 'box',
+        data: {
+            description: product.description,
+            attributes: product.attributes
+        }
+    } only %}
+
+    {# {{ widgetBlock('ProductReviewWidgetPlugin', 'reviews', product.idProductAbstract) }} #}
+    {# {{ widget('SimilarProductsWidgetPlugin', product) }} #}
+    {# {{ widget('ProductCmsBlockWidgetPlugin', product) }} #}
+
+{% endblock %}

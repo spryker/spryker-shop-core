@@ -14,7 +14,23 @@
 {% endblock %}
 
 {% block largeView %}
-    <div class="callout text-center" data-component="viewer">
+    {% set slides = [] | merge(_widget.product.images) %}
+    {% set slides = slides | merge(_widget.product.images) %}
+    {% set slides = slides | merge(_widget.product.images) %}
+    {% set slides = slides | merge(_widget.product.images) %}
+    {% set slides = slides | merge(_widget.product.images) %}
+
+    {% embed molecule('simple-carousel') with {
+        data: {
+            slides: slides
+        }
+    } only %}
+        {% block slide %}
+            <img itemprop="image" src="{{ slide.externalUrlLarge }}">
+        {% endblock %}
+    {% endembed %}
+
+    {# <div class="callout text-center" data-component="viewer">
         <div class="row show-for-xlarge">
             <div class="small-12 columns">
                 <div class="__image-viewer-inline">
@@ -42,5 +58,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> #}
 {% endblock %}

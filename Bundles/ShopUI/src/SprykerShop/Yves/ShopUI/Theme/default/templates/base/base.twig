@@ -3,6 +3,7 @@
 {% set metaTitle = metaTitle | default(title) %}
 {% set metaDescription = metaDescription | default('') | trans %}
 {% set metaKeywords = metaKeywords | default('') | trans %}
+{% set bodyClass = bodyClass | default('') %}
 
 {% block template %}
     <!doctype html>
@@ -29,7 +30,7 @@
 
             <title>{% block headTitle %}{{ title }}{% endblock %}</title>
         </head>
-        <body>
+        <body {%- if bodyClass is not empty %} class="{{bodyClass}}"{%- endif -%}>
             {% block body %}{% endblock %}
 
             {% block footerScripts %}
