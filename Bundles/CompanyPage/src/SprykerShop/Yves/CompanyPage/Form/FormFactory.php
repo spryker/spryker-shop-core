@@ -8,11 +8,26 @@
 namespace SprykerShop\Yves\CompanyPage\Form;
 
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CompanyPage\CompanyPageDependencyProvider;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
+use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
+use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUnitAddressFormDataProvider;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class FormFactory extends AbstractFactory
 {
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyLoginForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(LoginForm::class);
+    }
+
     /**
      * @return \Symfony\Component\Form\FormFactoryInterface
      */
@@ -24,10 +39,85 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCompanyCreateForm()
+    public function getCompanyRegisterForm(): FormInterface
     {
-        $companyCreateFormType = new CompanyCreateForm();
+        return $this->getFormFactory()->create(RegisterForm::class);
+    }
 
-        return $this->getFormFactory()->create($companyCreateFormType);
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getBusinessUnitForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyBusinessUnitForm::class);
+    }
+
+    /**
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyUnitAddressForm(array $formOptions): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyUnitAddressForm::class, null, $formOptions);
+    }
+
+    /**
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyBusinessUnitAddressForm(array $formOptions): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyBusinessUnitAddressForm::class, null, $formOptions);
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD)
+     *
+     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitFormDataProvider
+     */
+    public function createBusinessUnitFormDataProvider(): CompanyBusinessUnitFormDataProvider
+    {
+        return new CompanyBusinessUnitFormDataProvider($this->getCompanyBusinessUnitClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
+     */
+    protected function getCompanyBusinessUnitClient(): CompanyPageToCompanyBusinessUnitClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD)
+     *
+     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUnitAddressFormDataProvider
+     */
+    public function createCompanyUnitAddressFormDataProvider(): CompanyUnitAddressFormDataProvider
+    {
+        return new CompanyUnitAddressFormDataProvider(
+            $this->getCompanyUnitAddressClient(),
+            $this->getStore()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface
+     */
+    protected function getCompanyUnitAddressClient(): CompanyPageToCompanyUnitAddressClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_UNIT_ADDRESS);
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD)
+     *
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore(): Store
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::STORE);
     }
 }

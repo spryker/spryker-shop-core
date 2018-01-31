@@ -22,6 +22,7 @@ class CompanyPageToCustomerClientBridge implements CompanyPageToCustomerClientIn
         $this->customerClient = $customerClient;
     }
 
+
     /**
      * @return bool
      */

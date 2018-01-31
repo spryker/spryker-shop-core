@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 
 class CompanyPageToCompanyClientBridge implements CompanyPageToCompanyClientInterface
@@ -27,9 +28,9 @@ class CompanyPageToCompanyClientBridge implements CompanyPageToCompanyClientInte
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function createCompany(CompanyTransfer $companyTransfer): CompanyTransfer
+    public function createCompany(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
         return $this->companyClient->createCompany($companyTransfer);
     }

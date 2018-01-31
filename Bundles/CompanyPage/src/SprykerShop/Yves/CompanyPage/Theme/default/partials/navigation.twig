@@ -1,0 +1,13 @@
+{% set active = active|default('') %}
+<ul class="menu vertical">
+    <li {% if active == 'overview' %}class="active"{% endif %}>
+        <a href="{{ path('company/overview') }}" data-id="sidebar-overview">{{ 'company.account.overview' | trans }}</a>
+    </li>
+    <li {% if active == 'address' %}class="active"{% endif %}>
+        <a href="{{ path('company/address') }}" data-id="sidebar-address">{{ 'company.account.address' | trans }}</a>
+    </li>
+    <li {% if active == 'business-unit' %}class="active"{% endif %}>
+        <a href="{{ path('company/business-unit') }}" data-id="sidebar-business-unit">{{ 'company.account.business_unit' | trans }}</a>
+        {% block businessUnitSubmenu %}{% endblock %}
+    </li>
+</ul>

@@ -1,0 +1,66 @@
+{% extends "@CompanyPage/layout.twig" %}
+{% set businessUnit = _view.businessUnit %}
+{% block title %}
+    <h3>{{ 'company.account.business_unit' | trans }}</h3>
+{% endblock %}
+
+{% block companyNavigation %}
+    {% include "@CompanyPage/partials/navigation.twig" with {'active': 'business-unit'} %}
+{% endblock %}
+
+{% block companyContent %}
+    <div class="callout">
+        <h5>{{ 'company.account.business_unit.details' | trans }}</h5>
+        <hr>
+        <table class="stack">
+            <thead>
+            <tr class="active">
+                <th>{{ 'company.account.business_unit.name' | trans }}</th>
+                <th>{{ 'company.account.business_unit.email' | trans }}</th>
+                <th>{{ 'company.account.business_unit.phone' | trans }}</th>
+                <th>{{ 'company.account.business_unit.external_url' | trans }}</th>
+                <th class="text-right">{{ 'company.account.table.actions' | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ businessUnit.name }}</td>
+                <td>{{ businessUnit.email }}</td>
+                <td>{{ businessUnit.phone }}</td>
+                <td><a href="{{ businessUnit.externalUrl }}" target="_blank">{{ businessUnit.externalUrl }}</a></td>
+                <td class="text-right">
+                    <a href="{{ url('company/business-unit/update', {'id': businessUnit.idCompanyBusinessUnit}) }}" class="float-right">
+                        <small><i class="fa fa-users"></i> {{ "company.account.business_unit.edit" | trans }}</small>
+                    </a>
+                    <a href="{{ url('company/business-unit/delete', {'id': businessUnit.idCompanyBusinessUnit }) }}" class="float-right">
+                        <small><i class="fa fa-remove"></i> {{ "company.account.business_unit.delete" | trans }}</small>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="callout">
+        <h5>{{ 'company.account.business_unit.address' | trans }}</h5>
+        <hr>
+        {% if _view.addresses | length %}
+            {% include "@CompanyPage/address/partials/company-unit-address-list.twig" %}
+        {% else %}
+            <p>{{ 'company.account.address.no_addresses' | trans }}</p>
+        {% endif %}
+        <div class="row align-right">
+            <div class="small-12 medium-6 large-4 columns">
+                <a class="button expanded __no-margin-bottom" href="{{ url('company/business-unit/address/create', {'id': businessUnit.idCompanyBusinessUnit}) }}" data-id="company-business-unit-add-new-address">{{ 'company.account.add_new_address' | trans }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout">
+        <div class="row align-right">
+            <div class="small-12 medium-6 large-4 columns align-bottom">
+                <a href="{{ url('company/business-unit') }}"
+                   class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 
 /**
@@ -15,22 +17,34 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 abstract class AbstractCompanyController extends AbstractController
 {
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return bool
      */
-    protected function getLoggedInCustomerTransfer()
+    protected function isLoggedInCustomer(): bool
     {
-        if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
-            return $this->getFactory()->getCustomerClient()->getCustomer();
-        }
-
-        return null;
+        return $this->getFactory()->getCustomerClient()->isLoggedIn();
     }
 
     /**
-     * @return bool
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    protected function isLoggedInCustomer()
+    protected function getCompanyUser(): ?CompanyUserTransfer
     {
-        return $this->getFactory()->getCustomerClient()->isLoggedIn();
+        return $this->getFactory()->getCompanyUserClient()->getCompanyUser();
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function processResponseErrors(AbstractTransfer $responseTransfer): void
+    {
+        if ($responseTransfer->offsetExists('errors')) {
+            $responseErrors = $responseTransfer->offsetGet('errors');
+            /** @var \Generated\Shared\Transfer\ResponseErrorTransfer $errorTransfer */
+            foreach ($responseErrors as $errorTransfer) {
+                $this->addErrorMessage($errorTransfer->getMessage());
+            }
+        }
     }
 }

@@ -8,23 +8,22 @@
 namespace SprykerShop\Yves\CompanyPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Plugin\AuthenticationHandlerPluginInterface;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
 
 class CompanyPageFactory extends AbstractFactory
 {
     /**
-     * @param string $targetUrl
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \SprykerShop\Yves\CompanyPage\Form\FormFactory
      */
-    public function createRedirectResponse($targetUrl): RedirectResponse
+    public function createCompanyFormFactory(): FormFactory
     {
-        return new RedirectResponse($targetUrl);
+        return new FormFactory();
     }
 
     /**
@@ -36,14 +35,6 @@ class CompanyPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface
-     */
-    public function getCompanyClient(): CompanyPageToCompanyClientInterface
-    {
-        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface
      */
     public function getCompanyUserClient(): CompanyPageToCompanyUserClientInterface
@@ -52,19 +43,50 @@ class CompanyPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Form\FormFactory
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface
      */
-    public function createCompanyFormFactory(): FormFactory
+    public function getCompanyRoleClient(): CompanyPageToCompanyRoleClientInterface
     {
-        return new FormFactory();
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_ROLE);
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Plugin\AuthenticationHandlerPluginInterface
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface
      */
-    public function getAuthenticationHandler(): AuthenticationHandlerPluginInterface
+    public function getCompanyClient(): CompanyPageToCompanyClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
+     */
+    public function getCompanyBusinessUnitClient(): CompanyPageToCompanyBusinessUnitClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCompanyOverviewWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_COMPANY_OVERVIEW_WIDGETS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler
+     */
+    public function getAuthenticationHandlerPlugin(): AuthenticationHandler
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_AUTHENTICATION_HANDLER);
     }
 
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface
+     */
+    public function getCompanyUnitAddressClient()
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_UNIT_ADDRESS);
+    }
 }
