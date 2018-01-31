@@ -54,7 +54,7 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
     /**
      * @param string $sku
      * @param array $selectedAttributes
-     * @param \ArrayObject|\Generated\Shared\Transfer\StorageProductTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
@@ -92,7 +92,7 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
     /**
      * @param string $sku
      * @param array $selectedAttributes
-     * @param \ArrayObject|\Generated\Shared\Transfer\StorageProductTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
@@ -129,22 +129,7 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
     }
 
     /**
-     * @param string $sku
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function findItemInCartBySku($sku, ArrayObject $items)
-    {
-        foreach ($items as $item) {
-            if ($item->getSku() === $sku) {
-                return $item;
-            }
-        }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StorageProductTransfer[] $items
      * @param array $itemAttributesBySku
      * @param array|null $selectedAttributes
      * @param string $localeName
@@ -200,8 +185,8 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
      */
     protected function getAvailableAttributesForItem(ArrayObject $items, array $itemAttributes, $sku, $localeName)
     {
-        $storageProductTransfer = $this->getProductViewTransfer($sku, $itemAttributes[$sku], $items, $localeName);
-        $availableAttributes = $storageProductTransfer->getAvailableAttributes();
+        $productViewTransfer = $this->getProductViewTransfer($sku, $itemAttributes[$sku], $items, $localeName);
+        $availableAttributes = $productViewTransfer->getAvailableAttributes();
 
         return $availableAttributes;
     }

@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\CartPage\Plugin\Provider;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StorageProductTransfer;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\CartVariantAttributeMapperPluginInterface;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandlerInterface;
 
@@ -90,7 +90,7 @@ class AttributeVariantsProvider
     public function formatUpdateActionResponse($sku, array $selectedAttributes)
     {
         return [
-            StorageProductTransfer::SELECTED_ATTRIBUTES => [$sku => $this->arrayRemoveEmpty($selectedAttributes)],
+            ProductViewTransfer::SELECTED_ATTRIBUTES => [$sku => $this->arrayRemoveEmpty($selectedAttributes)],
         ];
     }
 

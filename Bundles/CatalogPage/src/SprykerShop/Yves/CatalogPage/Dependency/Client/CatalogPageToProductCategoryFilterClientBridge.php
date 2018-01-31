@@ -24,12 +24,13 @@ class CatalogPageToProductCategoryFilterClientBridge implements CatalogPageToPro
 
     /**
      * @param array $facets
-     * @param array $productCategoryFilters
+     * @param int $idCategory
+     * @param string $localeName
      *
      * @return array
      */
-    public function updateFacetsByCategory(array $facets, array $productCategoryFilters)
+    public function updateCategoryFacets(array $facets, $idCategory, $localeName)
     {
-        return $this->productCategoryFilterClient->updateFacetsByCategory($facets, $productCategoryFilters);
+        return $this->productCategoryFilterClient->updateCategoryFacets($facets, $idCategory, $localeName);
     }
 }

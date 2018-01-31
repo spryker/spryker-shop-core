@@ -1,0 +1,22 @@
+language: php
+php:
+  - 7.1
+
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+
+env:
+  global:
+    - APPLICATION_ENV=development
+    - APPLICATION_STORE=DE
+
+install:
+  - composer update --no-interaction --prefer-dist --no-autoloader
+
+script:
+  - composer cs-check
+
+notifications:
+  email: false
