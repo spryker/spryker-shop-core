@@ -1,0 +1,13 @@
+{% set slides = [] | merge(_widget.product.images | default([])) %}
+
+{% embed molecule('simple-carousel') with {
+    data: {
+        slides: slides
+    }
+} only %}
+    {% block slide %}
+        <div class="text-center">
+            <img itemprop="image" src="{{ slide.externalUrlLarge }}">
+        </div>
+    {% endblock %}
+{% endembed %}

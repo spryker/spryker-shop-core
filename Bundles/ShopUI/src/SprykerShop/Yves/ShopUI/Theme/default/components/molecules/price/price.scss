@@ -1,18 +1,21 @@
 @mixin component-price($name: '.price') {
     #{$name} {
+        display: block;
+
         &__amount {
-            display: inline-block;
-
-            &--default {
-                @include font-weight(bold);
-            }
-
+            @include font-size(big);
+            
             &--original {
                 @include font-size(small);
-                margin-right: spacing();
-                color: $color-darker;
+                display: block;
+                color: $color-dark;
                 text-decoration: line-through;
             }
+        }
+
+        &__tag {
+            margin-right: spacing(.5);
+            color: $color-alt;
         }
 
         @content;

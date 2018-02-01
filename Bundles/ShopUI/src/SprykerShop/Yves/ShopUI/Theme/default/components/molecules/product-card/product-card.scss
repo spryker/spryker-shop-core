@@ -11,5 +11,9 @@
             right: spacing();
             margin: auto;
         }
+
+        &--stretch {
+            height: 100%;
+        }
     }
 }

@@ -1,0 +1,14 @@
+{% extends model('component') %}
+
+{% set config = {
+    name: 'burst',
+    tag: 'div'
+} | merge(config | default({})) %}
+
+{% set data = {
+    text: data.text | default('')
+} | merge(data | default({})) %}
+
+{% block body %}
+    <span class="{{config.name}}__text">{{data.text}}</span>
+{% endblock %}

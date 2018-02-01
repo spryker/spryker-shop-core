@@ -17,23 +17,23 @@
     <link itemprop="url" href="{{ productUrl }}" />
 {% endblock %}
 
-{% block outside %}
-    {# {{ widgetBlock('ProductImageWidgetPlugin', 'smallView', product) }} #}
-{% endblock %}
-
 {% block content %}
     <div class="grid">
-        <div class="col col--sm-12 col--md-6 col--lg-7 col--sl-8">
-            {{ widgetBlock('ProductImageWidgetPlugin', 'largeView', product) }}
-            {{ widget('ProductAbstractLabelWidgetPlugin', product) }}
+        <div class="col col--sm-12 col--lg-7 col--xl-8">
+            <div class="box">
+                {{ widget('ProductImageWidgetPlugin', product) }}
+                {{ widget('ProductAbstractLabelWidgetPlugin', product) }}
+            </div>
         </div>
 
-        {% include organism('product-info', 'ProductDetailPage') with {
-            class: 'col col--sm-12 col--md-6 col--lg-5 col--lg-4',
-            data: {
-                product: product
-            }
-        } only %}
+        <div class="col col--sm-12 col--lg-5 col--xl-4">
+            {% include organism('product-info', 'ProductDetailPage') with {
+                class: 'box',
+                data: {
+                    product: product
+                }
+            } only %}
+        </div>
     </div>
 
     {% include organism('product-details', 'ProductDetailPage') with {
@@ -45,7 +45,7 @@
     } only %}
 
     {# {{ widgetBlock('ProductReviewWidgetPlugin', 'reviews', product.idProductAbstract) }} #}
-    {# {{ widget('SimilarProductsWidgetPlugin', product) }} #}
+    {{ widget('SimilarProductsWidgetPlugin', product) }}
     {# {{ widget('ProductCmsBlockWidgetPlugin', product) }} #}
 
 {% endblock %}

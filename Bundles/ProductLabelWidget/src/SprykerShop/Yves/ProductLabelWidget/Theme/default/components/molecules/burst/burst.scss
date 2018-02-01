@@ -1,0 +1,41 @@
+$component-burst-size: spacing(6);
+
+@mixin component-burst($name: '.burst') {
+    #{$name} {
+        display: flex;
+        align-items: center;
+        width: $component-burst-size;
+        height: $component-burst-size;
+        background: $color-alt;
+        text-align: center;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: $component-burst-size;
+            width: $component-burst-size;
+            background: $color-alt;
+            z-index: 1;
+        }
+
+        &::before {
+            transform: rotate(30deg);
+        }
+
+        &::after {
+            transform: rotate(60deg);
+        }
+
+        &__text {
+            @include font-size(small);
+            @include line-height(tight);
+            color: $color-white;
+            z-index: 2;
+        }
+
+        @content;
+    }
+}

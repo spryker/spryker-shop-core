@@ -2,5 +2,4 @@
 @import '../../../styles/helpers';
 @import 'box';
 
-@include component-box();
-@include component-box-in-grid();
+@include component-box;

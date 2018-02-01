@@ -2,9 +2,9 @@
     #{$name} {
         @include transition(background-color);
         display: inline-block;
-        padding: spacing(.5) spacing();
+        padding: spacing(.5) + 1 spacing() + 1;
         background-color: $color-main;
-        border: 1px solid $color-main;
+        border: none;
         color: $color-white;
         text-align: center;
         cursor: pointer;
@@ -16,8 +16,9 @@
         }
 
         &--hollow {
+            padding: spacing(.5) spacing();
             background-color: $color-white;
-            border-color: $color-main;
+            border: 1px solid $color-main;
             color: $color-main;
 
             &:hover,

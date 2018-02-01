@@ -46,5 +46,7 @@
             @include is-visible;
             right: 0;
         }
+
+        @content;
     }
 }

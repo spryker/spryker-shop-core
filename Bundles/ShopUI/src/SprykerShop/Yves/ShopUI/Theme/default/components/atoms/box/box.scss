@@ -6,6 +6,7 @@
         background-color: $color-white;
         border: 1px solid $color-lighter;
         
+        hr,
         &__separator {
             display: block;
             margin-top: spacing();
@@ -29,18 +30,4 @@
 
         @content;
     }
-}
-
-@mixin component-box-in-grid($name: '.box') {
-    // #{$name} + .grid,
-    // #{$name} + .col {
-    //     margin-top: -8px;
-    // }
-
-    // .grid + #{$name},
-    // .col + #{$name} {
-    //     margin-top: 0px;
-    // }
-
-    // @content;
 }

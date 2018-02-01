@@ -41,6 +41,6 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
      */
     public static function getTemplate(): string
     {
-        return '@ProductWidget/_product-relation-widget/product.twig';
+        return '@ProductWidget/templates/product-relation/product-relation.twig';
     }
 }

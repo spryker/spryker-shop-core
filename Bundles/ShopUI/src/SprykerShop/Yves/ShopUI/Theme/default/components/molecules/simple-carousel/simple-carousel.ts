@@ -1,75 +1,137 @@
 import Component from '../../../models/component';
 
 export default class SimpleCarousel extends Component {
-    grid: HTMLElement
-    prevTrigger: HTMLElement
-    nextTrigger: HTMLElement
+    triggerPrev: HTMLElement
+    triggerNext: HTMLElement
+    slider: HTMLElement
     slidesCount: number
-    steps: number[]
-    stepIndex: number
+    slideWidth: number
+    dots: HTMLElement[]
+    viewsCount: number
+    viewCurrentIndex: number = 0
+    
+    readonly dotSelector: string
+    readonly dotCurrentModifier: string
+
+    constructor() {
+        super();
+
+        this.dotSelector = `${this.selector}__dot`;
+        this.dotCurrentModifier = `${this.name}__dot--current`;
+    }
 
     ready(): void {
         this.slidesCount = this.getElementsByClassName(`${this.selector}__slide`).length;
 
-        if (this.slidesCount <= 1) { 
+        if (this.slidesCount <= 1) {
             return;
         }
 
-        this.grid = this.querySelector(`.${this.selector}__grid`);
-        this.prevTrigger = this.querySelector(`.${this.selector}__prev`);
-        this.nextTrigger = this.querySelector(`.${this.selector}__next`);
-        this.steps = this.getSteps();
-        this.stepIndex = 0;
+        this.triggerPrev = this.querySelector(`.${this.selector}__prev`);
+        this.triggerNext = this.querySelector(`.${this.selector}__next`);
+        this.slider = this.querySelector(`.${this.selector}__slider`);
+        this.slideWidth = 100 / this.slidesToShow;
+        this.dots = Array.from(this.getElementsByClassName(this.dotSelector));
+        this.viewsCount = this.getViewsCount();
+        
         this.mapEvents();
     }
 
-    getSteps(): number[] { 
-        const stepWidth: number = (100 / this.slidesToDisplay);
-        const gridWidth: number = (stepWidth * this.slidesCount);
-        const steps: number = (gridWidth - 100) / stepWidth;
-        return new Array(1 + steps).fill(stepWidth).map((width: number, index: number) => - width * index);
+    getViewsCount(): number { 
+        return Math.ceil((this.slidesCount - this.slidesToShow) / this.slidesToScroll) + 1;
     }
 
     mapEvents(): void {
-        this.prevTrigger.addEventListener('click', (event: Event) => this.onPrevClick(event));
-        this.nextTrigger.addEventListener('click', (event: Event) => this.onNextClick(event));
+        this.triggerPrev.addEventListener('click', (event: Event) => this.onPrevClick(event));
+        this.triggerNext.addEventListener('click', (event: Event) => this.onNextClick(event));
+        this.dots.forEach((dot: HTMLElement) => dot.addEventListener('click', (event: Event) => this.ondotClick(event)));
     }
 
-    onPrevClick(event: Event) {
+    onPrevClick(event: Event): void {
         event.preventDefault();
-        this.prev();
+        this.loadPrevViewIndex();
+        this.slide();
+        this.updateCurrentDot();
     }
 
-    onNextClick(event: Event) { 
+    onNextClick(event: Event): void { 
         event.preventDefault();
-        this.next();
+        this.loadNextViewIndex();
+        this.slide();
+        this.updateCurrentDot();
     }
 
-    prev() {
-        this.stepIndex = this.stepIndex - 1;
+    ondotClick(event: Event): void {
+        event.preventDefault();
+        this.loadViewIndexFromDot(<HTMLElement>event.srcElement)
+        this.slide();
+        this.updateCurrentDot();
+    }
 
-        if (this.stepIndex < 0) {
-            this.stepIndex = this.steps.length - 1;
+    loadPrevViewIndex(): void { 
+        this.viewCurrentIndex = this.viewCurrentIndex - 1;
+
+        if (this.viewCurrentIndex < 0) {
+            this.viewCurrentIndex = this.viewsCount - 1;
+        }
+    }
+
+    loadNextViewIndex(): void {
+        this.viewCurrentIndex = this.viewCurrentIndex + 1;
+
+        if (this.viewCurrentIndex >= this.viewsCount) {
+            this.viewCurrentIndex = 0;
+        }
+    }
+
+    loadViewIndexFromDot(dot: HTMLElement): void { 
+        this.viewCurrentIndex = this.dots.indexOf(dot);
+
+        if (this.viewCurrentIndex === -1) {
+            this.viewCurrentIndex = 0;
+        }
+    }
+
+    slide(): void {
+        let slidesToSlide = this.slidesToScroll * this.viewCurrentIndex;
+
+        if (this.slidesToScroll + slidesToSlide > this.slidesCount) { 
+            slidesToSlide = slidesToSlide - (this.slidesCount - slidesToSlide);
         }
 
-        this.grid.style.transform = `translateX(${this.steps[this.stepIndex]}%)`;
+        const offset = - (slidesToSlide * this.slideWidth);
+        this.slider.style.transform = `translateX(${offset}%)`;
     }
 
-    next() { 
-        this.stepIndex = this.stepIndex + 1;
-
-        if (this.stepIndex >= this.steps.length) {
-            this.stepIndex = 0;
+    updateCurrentDot(): void {
+        if (this.dots.length === 0) { 
+            return;
         }
 
-        this.grid.style.transform = `translateX(${this.steps[this.stepIndex]}%)`;
+        this
+            .querySelector(`.${this.dotSelector}.${this.dotCurrentModifier}`)
+            .classList
+            .remove(this.dotCurrentModifier);
+        
+        this
+            .dots[this.viewCurrentIndex]
+            .classList
+            .add(this.dotCurrentModifier);
     }
 
-    set slidesToDisplay(value: number) {
-        this.setAttributeSafe('slides-to-display', `${value}`);
+    set slidesToShow(value: number) {
+        this.setAttributeSafe('slides-to-show', `${value}`);
     }
 
-    get slidesToDisplay(): number {
-        return parseInt(this.getAttributeSafe('slides-to-display' || '0'));
+    get slidesToShow(): number {
+        return parseInt(this.getAttributeSafe('slides-to-show' || '0'));
+    }
+
+    set slidesToScroll(value: number) {
+        this.setAttributeSafe('slides-to-scroll', `${value}`);
+    }
+
+    get slidesToScroll(): number {
+        return parseInt(this.getAttributeSafe('slides-to-scroll' || '0'));
     }
 }

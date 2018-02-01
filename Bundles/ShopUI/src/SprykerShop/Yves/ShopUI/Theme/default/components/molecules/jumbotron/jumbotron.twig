@@ -6,7 +6,7 @@
 } | merge(config | default({})) %}
 
 {% set data = {
-    imageUrl: data.imageUrl | default('/assets/default/img/home-banner.jpg'),
+    imageUrl: data.imageUrl,
     textColor: data.textColor | default('#ffffff'),
     headline: data.headline | default('global.spryker.shop' | trans),
     subHeadline: data.subHeadline | default('global.spryker.motto' | trans)

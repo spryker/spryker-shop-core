@@ -12,8 +12,17 @@
 
 {% block body %}
     {% if data.originalAmount -%}
-        <span class="stat {{config.name}}__amount {{config.name}}__amount--original">{{data.originalAmount}}</span>
+        <span class="{{config.name}}__amount {{config.name}}__amount--original">{{data.originalAmount}}</span>
     {%- endif -%}
-    <span class="stat {{config.name}}__amount {{config.name}}__amount--default">{{data.amount}}</span>
+
+    <span class="{{config.name}}__amount">
+        {% include atom('icon') with {
+            class: config.name ~ '__tag',
+            data: {
+                name: 'tag'
+            }
+        } only %}
+        {{data.amount}}
+    </span>
 {% endblock %}
 

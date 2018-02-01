@@ -1,40 +1,102 @@
+$component-simple-carousel-icon-size: $component-icon-size-big;
+
 @mixin component-simple-carousel($name: '.simple-carousel') {
     #{$name} {
-        &:hover &__prev,
-        &:hover &__next {
-            @include is-visible;
+        &__container {
+            padding-left: $component-simple-carousel-icon-size;
+            padding-right: $component-simple-carousel-icon-size;
         }
 
-        &__slider {
+        &__view {
             max-width: 100%;
-            border: spacing(3) solid transparent;
             overflow: hidden;
             z-index: 1;
         }
 
-        &__grid {
-            @include transition(transform);
+        &__slider {
+            @include transition(transform, 500ms);
             flex-wrap: nowrap;
         }
 
-        &__prev,
-        &__next {
-            @include is-invisible;
-            @include transition;
-            display: block;
+        &__dots {
+            text-align: center;
+            line-height: 0;
+        }
+
+        &__dot {
+            display: inline-block;
+            padding: spacing(.5);
+
+            &::before {
+                @include transition(background-color, 150ms);
+                content: '';
+                display: block;
+                width: spacing();
+                height: spacing();
+                background-color: $color-light;
+                border-radius: 100%;
+            }
+
+            &:hover,
+            &--current {
+                &::before {
+                    background-color: $color-main;
+                }
+            }
+        }
+
+        &__navigation {
+            display: flex;
+            align-items: center;
             position: absolute;
-            top: 50%;
-            bottom: 50%;
-            margin-top: - $component-icon-size-big / 2;
+            top: 0;
+            bottom: 0;
             z-index: 2;
+            pointer-events: none;
+
+            &--prev {
+                left: 0;
+            }
+
+            &--next {
+                right: 0;
+            }
         }
 
-        &__prev {
-            left: 0;
+        &__arrow {
+            @include transition(color);
+            color: $color-light;
+            pointer-events: all;
+
+            &:hover {
+                color: $color-main;
+            }
         }
 
-        &__next {
-            right: 0;
+        &--inset &__container {
+            padding-left:0;
+            padding-right: 0;
+        }
+
+        &--inset &__navigation {
+            width: auto;
+        }
+
+        &--inset &__arrow {
+            padding: spacing();
+            background-color: rgba($color-lightest, .75);
+        }
+
+        @include breakpoint(lg) {
+            &__navigation {
+                @include is-invisible;
+                @include transition;
+            }
+
+            &:hover &__navigation {
+                @include is-visible;
+                pointer-events: none;
+            }
         }
 
         @content;

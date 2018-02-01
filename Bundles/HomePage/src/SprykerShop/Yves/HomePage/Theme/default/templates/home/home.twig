@@ -4,7 +4,10 @@
 
 {% block content %}    
     {% include molecule('jumbotron') with {
-        class: 'box' 
+        class: 'box',
+        data: {
+            imageUrl: '/assets/default/img/home-banner.jpg'
+        }
     } only %}
 
     {{ spyCmsBlock({name: 'Home Page'}) }}

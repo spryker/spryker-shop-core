@@ -6,43 +6,50 @@
 } | merge(config | default({})) %}
 
 {% set data = {
-    product: data.product
+    product: data.product,
+    maxQuantity: data.maxQuantity | default(10)
 } | merge(data | default({})) %}
 
-{% block body %}
-    {% if data.product.attributes.brand is defined %}
-        <h5>
-            <small>{{ 'page.product.by' | trans }}</small>
-            {{ data.product.attributes.brand }}
-        </h5>
-    {% endif %}
+{% set brand = data.product.attributes.brand | default(null) %}
+{% set sku = data.product.sku %}
 
-    <small>{{ 'product.attribute.sku' | trans }}: {{ data.product.sku }}</small>
+{% block body %}
+    {% if brand is not empty %}
+        <h5><small>{{'page.product.by' | trans}}</small> {{brand}}</h5>
+    {% endif %}
+    <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
+
+    <hr />
 
     {{ widget('PriceWidgetPlugin', data.product) }}
-    {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
+    {# {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }} #}
     {% include '@ProductDetailPage/_product-detail-page/_partials/variants.twig' %}
-    {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
+    {# {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }} #}
 
-    <form method="POST" action="/cart/add/{{ data.product.sku }}">
+    <hr />
+
+    <form class="grid grid--justify grid--bottom" method="POST" action="/cart/add/{{sku}}">
         {{ widget('data.ProductOptionWidgetPlugin', data.product) }}
 
-        <div class="col col--sm-6">
+        <div class="col col--sm-5">
             {% set options = [] %}
             
-            {% for index in 1..10 %}
+            {% for index in 1..data.maxQuantity %}
                 {% set options = options | merge([{
                     label: index,
                     value: index
                 }]) %}
             {% endfor %}
 
-            {% include atom('select') with {
-                modifiers: ['expand'],
-                data: {
-                    options: options
-                }
-            } only %}
+            <label>
+                {{'page.detail.quantity' | trans}}
+                {% include atom('select') with {
+                    modifiers: ['expand'],
+                    data: {
+                        options: options
+                    }
+                } only %}
+            </label>
         </div>
 
         <div class="col col--sm-6">
@@ -52,7 +59,12 @@
                 {% set disabled = (data.product.idProductConcrete is not defined or data.product.price is null) %}
             {% endif %}
 
-            <button type="submit" class="button button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
+            <button type="submit" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
+                {% include atom('icon') with {
+                    data: {
+                        name: 'cart-plus'
+                    }
+                } only %}
                 {{ 'page.detail.add-to-cart' | trans }}
             </button>
         </div>

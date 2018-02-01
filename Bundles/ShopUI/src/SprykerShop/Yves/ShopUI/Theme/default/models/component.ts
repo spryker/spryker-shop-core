@@ -1,27 +1,29 @@
 import config from '../app.config';
 
 export interface IComponentContructor {
-    new(...args: any[]): HTMLElement
+    new(): HTMLElement
 }
 
 export interface IComponentImporter {
     (): Promise<{ default: IComponentContructor }>
 }
 
-export const ComponentMixin = (SuperClass: IComponentContructor) => class extends SuperClass {
+export default abstract class Component extends HTMLElement { 
     readonly name: string
     readonly selector: string
 
-    constructor(...args: any[]) { 
-        super(...args);
+    constructor() {
+        super();
+
         this.name = this.tagName.toLowerCase();
         this.selector = `js-${this.name}`;
+
         document.addEventListener(config.events.ready, (event: Event) => this.ready(event), false);
     }
 
-    ready(event?: Event): void { }
+    abstract ready(event?: Event): void
 
-    setAttributeSafe(name: string, value?: string): void { 
+    setAttributeSafe(name: string, value?: string): void {
         if (!value) {
             return this.removeAttribute(name);
         }
@@ -49,5 +51,3 @@ export const ComponentMixin = (SuperClass: IComponentContructor) => class extend
         return this.hasAttribute(name);
     }
 }
-
-export default class Component extends ComponentMixin(HTMLElement) { }

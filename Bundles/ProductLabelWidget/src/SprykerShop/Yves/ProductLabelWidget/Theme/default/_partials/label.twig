@@ -1,9 +1,19 @@
 {% if productLabelDictionaryItemTransfer.frontEndReference == 'template:tag' %}
-    {% include '@ProductLabelWidget/_partials/labels/tag.twig' with {
+    {# {% include '@ProductLabelWidget/_partials/labels/tag.twig' with {
         productLabelDictionaryItemTransfer: productLabelDictionaryItemTransfer
-    } %}
+    } %} #}
+    {% include molecule('burst', 'ProductLabelWidget') with {
+        data: {
+            text: productLabelDictionaryItemTransfer.getName()
+        }
+    } only %}
 {% else %}
-    {% include '@ProductLabelWidget/_partials/labels/flag.twig' with {
+    {# {% include '@ProductLabelWidget/_partials/labels/flag.twig' with {
         productLabelDictionaryItemTransfer: productLabelDictionaryItemTransfer
-    } %}
+    } %} #}
+    {% include molecule('burst', 'ProductLabelWidget') with {
+        data: {
+            text: productLabelDictionaryItemTransfer.getName()
+        }
+    } only %}
 {% endif %}
