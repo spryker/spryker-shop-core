@@ -12,22 +12,24 @@ use SprykerShop\Yves\ShopLayout\Dependency\Plugin\LanguageSwitcherWidget\Languag
 class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements LanguageSwitcherWidgetPluginInterface
 {
     /**
-     * @param string $currentUrl
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      *
      * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function initialize($currentUrl): void
+    public function initialize($request): void
     {
-        $currentUrlStorage = $this->getFactory()->getUrlStorageClient()->getUrlData($currentUrl);
+        $currentUrlStorage = $this->getFactory()
+            ->getUrlStorageClient()
+            ->getUrlData($request->getPathInfo());
         $localeUrls = [];
 
         if(isset($currentUrlStorage[UrlTransfer::LOCALE_URLS])) {
             $localeUrls = $currentUrlStorage[UrlTransfer::LOCALE_URLS];
         }
 
-        $this->addParameter('languages', $this->getLanguages($localeUrls, $currentUrl))
+        $this->addParameter('languages', $this->getLanguages($localeUrls, $request))
             ->addParameter('currentLanguage', $this->getCurrentLanguage());
     }
 
@@ -49,28 +51,45 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
 
     /**
      * @param array $localeUrls
-     * @param string $currentUrl
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string[]
      *
      * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    protected function getLanguages(array $localeUrls, $currentUrl): array
+    protected function getLanguages(array $localeUrls, $request): array
     {
-        $languages = [];
         $locales = $this->getFactory()
             ->getStore()
             ->getLocales();
 
+        return $this->attachUrlsToLanguages($locales, $localeUrls, $request);
+    }
+
+    /**
+     * @param array $locales
+     * @param array $localeUrls
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function attachUrlsToLanguages(array $locales, array $localeUrls, $request): array
+    {
+        $currentUrl = $request->getRequestUri();
+        $languages = [];
         foreach ($locales as $locale) {
             $language = substr($locale, 0, strpos($locale, '_'));
             if(empty($localeUrls)) {
-                $languages[$language] = str_replace(array_keys($locales), $language, $currentUrl);
+                $replacementCounts = 0;
+                $languages[$language] = str_replace(array_keys($locales), $language, $currentUrl, $replacementCounts);
+                if($replacementCounts === 0) {
+                    $languages[$language] = rtrim('/' . $language . '/' . $currentUrl, '/');
+                }
             }
 
             foreach($localeUrls as $localeUrl) {
                 if($localeUrl[UrlTransfer::LOCALE_NAME] === $locale) {
-                    $languages[$language] = $localeUrl[UrlTransfer::URL];
+                    $languages[$language] = $localeUrl[UrlTransfer::URL] . '?' . $request->getQueryString();
                     break;
                 }
             }

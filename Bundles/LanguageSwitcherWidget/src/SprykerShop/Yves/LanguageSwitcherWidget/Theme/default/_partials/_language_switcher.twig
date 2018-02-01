@@ -1,6 +1,6 @@
 {% if _widget.languages is defined and _widget.languages|length > 0 %}
     <form method="GET" action="" data-component="language-switch">
-        <select name="" onchange="this.form.action=this.value; this.form.submit()">
+        <select name="" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
             {% for language, url in _widget.languages %}
                 <option value="{{ app.request.getSchemeAndHttpHost() }}{{ url }}" {{ (language == currentLanguage) ? 'selected' : ''}}>{{ language }}</option>
             {% endfor %}

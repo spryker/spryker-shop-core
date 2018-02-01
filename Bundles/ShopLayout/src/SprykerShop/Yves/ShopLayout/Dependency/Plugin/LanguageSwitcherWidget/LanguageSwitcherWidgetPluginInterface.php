@@ -7,9 +7,9 @@ interface LanguageSwitcherWidgetPluginInterface
     const NAME = 'LanguageSwitcherWidgetPlugin';
 
     /**
-     * @param string $currentUrl
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
      */
-    public function initialize($currentUrl): void;
+    public function initialize($request): void;
 }
