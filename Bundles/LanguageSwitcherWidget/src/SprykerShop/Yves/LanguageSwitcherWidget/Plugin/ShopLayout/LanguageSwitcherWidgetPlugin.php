@@ -2,6 +2,7 @@
 
 namespace SprykerShop\Yves\LanguageSwitcherWidget\Plugin\ShopLayout;
 
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShopLayout\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
 
@@ -11,13 +12,22 @@ use SprykerShop\Yves\ShopLayout\Dependency\Plugin\LanguageSwitcherWidget\Languag
 class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements LanguageSwitcherWidgetPluginInterface
 {
     /**
+     * @param string $currentUrl
+     *
      * @return void
      *
      * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function initialize(): void
+    public function initialize($currentUrl): void
     {
-        $this->addParameter('languages', $this->getLanguages())
+        $currentUrlStorage = $this->getFactory()->getUrlStorageClient()->getUrlData($currentUrl);
+        $localeUrls = [];
+
+        if(isset($currentUrlStorage[UrlTransfer::LOCALE_URLS])) {
+            $localeUrls = $currentUrlStorage[UrlTransfer::LOCALE_URLS];
+        }
+
+        $this->addParameter('languages', $this->getLanguages($localeUrls, $currentUrl))
             ->addParameter('currentLanguage', $this->getCurrentLanguage());
     }
 
@@ -38,12 +48,14 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
     }
 
     /**
+     * @param array $localeUrls
+     * @param string $currentUrl
      *
      * @return string[]
      *
      * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    protected function getLanguages()
+    protected function getLanguages(array $localeUrls, $currentUrl): array
     {
         $languages = [];
         $locales = $this->getFactory()
@@ -51,7 +63,17 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
             ->getLocales();
 
         foreach ($locales as $locale) {
-            $languages[] = substr($locale, 0, strpos($locale, '_'));
+            $language = substr($locale, 0, strpos($locale, '_'));
+            if(empty($localeUrls)) {
+                $languages[$language] = str_replace(array_keys($locales), $language, $currentUrl);
+            }
+
+            foreach($localeUrls as $localeUrl) {
+                if($localeUrl[UrlTransfer::LOCALE_NAME] === $locale) {
+                    $languages[$language] = $localeUrl[UrlTransfer::URL];
+                    break;
+                }
+            }
         }
 
         return $languages;

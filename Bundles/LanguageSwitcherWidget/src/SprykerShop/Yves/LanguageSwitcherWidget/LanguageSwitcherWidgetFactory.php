@@ -15,4 +15,24 @@ class LanguageSwitcherWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(LanguageSwitcherWidgetDependencyProvider::STORE);
     }
+
+    /**
+     * @return \SprykerShop\Yves\LanguageSwitcherWidget\Dependency\Client\LanguageSwitcherWidgetToUrlStorageClientInterface
+     *
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getUrlStorageClient()
+    {
+        return $this->getProvidedDependency(LanguageSwitcherWidgetDependencyProvider::CLIENT_URL_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\LanguageSwitcherWidget\Dependency\Service\LanguageSwitcherWidgetToSynchronizationServiceInterface
+     *
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getSynchronizationService()
+    {
+        return $this->getProvidedDependency(LanguageSwitcherWidgetDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
 }
