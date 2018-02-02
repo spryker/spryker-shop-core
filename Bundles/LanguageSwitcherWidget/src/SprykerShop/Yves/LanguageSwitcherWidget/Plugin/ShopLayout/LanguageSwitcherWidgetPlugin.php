@@ -5,6 +5,7 @@ namespace SprykerShop\Yves\LanguageSwitcherWidget\Plugin\ShopLayout;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShopLayout\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\LanguageSwitcherWidget\LanguageSwitcherWidgetFactory getFactory()
@@ -18,7 +19,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      *
      * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function initialize($request): void
+    public function initialize(Request $request): void
     {
         $currentUrlStorage = $this->getFactory()
             ->getUrlStorageClient()

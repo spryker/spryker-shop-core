@@ -2,6 +2,8 @@
 
 namespace SprykerShop\Yves\ShopLayout\Dependency\Plugin\LanguageSwitcherWidget;
 
+use Symfony\Component\HttpFoundation\Request;
+
 interface LanguageSwitcherWidgetPluginInterface
 {
     const NAME = 'LanguageSwitcherWidgetPlugin';
@@ -11,5 +13,5 @@ interface LanguageSwitcherWidgetPluginInterface
      *
      * @return void
      */
-    public function initialize($request): void;
+    public function initialize(Request $request): void;
 }
