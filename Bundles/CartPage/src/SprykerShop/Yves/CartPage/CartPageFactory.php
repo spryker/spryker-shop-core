@@ -10,10 +10,13 @@ namespace SprykerShop\Yves\CartPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCustomerClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToSalesClientInterface;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Handler\CartOperationHandler;
 use SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler;
+use SprykerShop\Yves\CartPage\Handler\ReorderHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
@@ -67,6 +70,25 @@ class CartPageFactory extends AbstractFactory
             $this->getProductStorageClient(),
             $this->getFlashMessenger()
         );
+    }
+
+    /**
+     * @return ReorderHandler
+     */
+    public function createReorderHandler(): ReorderHandler
+    {
+        return new ReorderHandler(
+            $this->getCartClient(),
+            $this->getSalesClient()
+        );
+    }
+
+    /**
+     * @return CartPageToCustomerClientInterface
+     */
+    public function getCustomerClient(): CartPageToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**
@@ -166,6 +188,14 @@ class CartPageFactory extends AbstractFactory
     protected function getCartItemTransformerPlugins()
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_CART_ITEM_TRANSFORMERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToSalesClientInterface
+     */
+    protected function getSalesClient(): CartPageToSalesClientInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_SALES);
     }
 
     /**

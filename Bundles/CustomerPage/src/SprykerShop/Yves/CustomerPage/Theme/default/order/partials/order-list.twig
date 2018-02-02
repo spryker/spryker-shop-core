@@ -18,6 +18,9 @@
                 <a href="{{ path('customer/order/details', {'id': order.idSalesOrder}) }}">
                     <small><i class="fa fa-cart-arrow-down"></i> {{ 'customer.order.view_order' | trans }}</small>
                 </a>
+                <a href="{{ path('cart/reorder', {'id': order.idSalesOrder}) }}">
+                    <small><i class="fa fa-repeat"></i> {{ 'cart.order.reorder' | trans }}</small>
+                </a>
             </td>
         </tr>
     {% endfor %}

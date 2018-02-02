@@ -20,6 +20,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     const ROUTE_CART_UPDATE = 'cart/update';
     const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
     const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
+    const ROUTE_CART_ORDER_REPEAT = 'cart/reorder';
     const SKU_PATTERN = '[a-zA-Z0-9-_]+';
 
     /**
@@ -70,6 +71,10 @@ class CartControllerProvider extends AbstractYvesControllerProvider
             ->convert('preselectedAttributes', [$this, 'getPreSelectedAttributesFromRequest'])
             ->convert('optionValueIds', [$this, 'getProductOptionsFromRequest'])
             ->method('POST');
+
+        $this->createController('/{cart}/reorder', self::ROUTE_CART_ORDER_REPEAT, 'CartPage', 'Cart', 'reorder')
+            ->assert('cart', $allowedLocalesPattern . 'cart|cart')
+            ->value('cart', 'cart');
     }
 
     /**
