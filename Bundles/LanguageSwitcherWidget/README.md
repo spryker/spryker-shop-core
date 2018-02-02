@@ -1,11 +1,11 @@
-# CurrencyWidget Module
+# LanguageSwitcherWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Controls the language switcher widget UI and its plugin initialization
 
 ## Installation
 
 ```
-composer require spryker-shop/currency-widget
+composer require spryker-shop/language-switcher-widget-widget
 ```
 
 ## Documentation
