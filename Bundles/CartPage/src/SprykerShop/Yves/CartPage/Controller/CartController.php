@@ -167,6 +167,25 @@ class CartController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function reorderItemsAction(Request $request)
+    {
+        $idSalesOrder = $request->query->getInt('id');
+        $idOrderItems = $request->query->getInt('items');
+        $customerTransfer = $this->getLoggedInCustomerTransfer();
+
+        $this->getFactory()
+            ->createReorderHandler()
+            ->reorderItems($idSalesOrder, $customerTransfer, $idOrderItems);
+
+        //todo route from config
+        return $this->redirectResponseInternal('checkout-index');
+    }
+
+    /**
      * @return \SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler
      */
     protected function getCartOperationHandler()

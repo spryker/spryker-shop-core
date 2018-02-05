@@ -16,6 +16,9 @@
         {% else %}
             <tr>
                 <td class="text-left">
+                    <input type="checkbox" name="items[]" value="{{ orderItem.idOrderItem }}">
+                </td>
+                <td class="text-left">
                     {{ orderItem.sku }}
                 </td>
                 <td class="text-left">

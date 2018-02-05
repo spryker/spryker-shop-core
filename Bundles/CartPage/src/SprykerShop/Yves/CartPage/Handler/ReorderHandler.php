@@ -64,4 +64,36 @@ class ReorderHandler
         $quoteTransfer = $this->cartClient->addItems($items->getArrayCopy());
         $this->cartClient->storeQuote($quoteTransfer);
     }
+
+    public function reorderItems($idSalesOrder, CustomerTransfer $customerTransfer, $idOrderItems)
+    {
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer
+            ->setIdSalesOrder($idSalesOrder)
+            ->setFkCustomer($customerTransfer->getIdCustomer());
+
+        $orderTransfer = $this->salesClient
+            ->getOrderDetails($orderTransfer);
+
+        $quote = new QuoteTransfer();
+        $this->cartClient->storeQuote($quote);
+
+        $items = $orderTransfer->getItems();
+
+        $itemsToAdd = [];
+        foreach ($items as $item) {
+            if (!in_array($item->getId(), $idOrderItems)) {
+                continue;
+            }
+
+            $itemsToAdd[] = $item;
+            $key = array_search($item->getId(), $idOrderItems);
+            unset($idOrderItems[$key]);
+        }
+
+        $quoteTransfer = $this->cartClient->addItems($items->getArrayCopy());
+        $this->cartClient->storeQuote($quoteTransfer);
+
+        //if (!empty($idOrderItems)) show error
+    }
 }
