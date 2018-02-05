@@ -13,16 +13,12 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientBridge;
-use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCustomerClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientBridge;
-use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToSalesClientBridge;
 use SprykerShop\Yves\CartPage\Plugin\CartVariantAttributeMapperPlugin;
 
 class CartPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CART = 'CLIENT_CART';
-    public const CLIENT_SALES = 'CLIENT_SALES';
-    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_AVAILABILITY = 'CLIENT_AVAILABILITY';
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
@@ -39,8 +35,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addCartClient($container);
-        $container = $this->addSalesClient($container);
-        $container = $this->addCustomerClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addAvailabilityClient($container);
         $container = $this->addAvailabilityStorageClient($container);
@@ -103,34 +97,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_AVAILABILITY_STORAGE] = function (Container $container) {
             return new CartPageToAvailabilityStorageClientBridge($container->getLocator()->availabilityStorage()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addSalesClient(Container $container): Container
-    {
-        $container[static::CLIENT_SALES] = function (Container $container) {
-            return new CartPageToSalesClientBridge($container->getLocator()->sales()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addCustomerClient(Container $container): Container
-    {
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
-            return new CartPageToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;

@@ -149,43 +149,6 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function reorderAction(Request $request)
-    {
-        $idSalesOrder = $request->query->getInt('id');
-        $customerTransfer = $this->getLoggedInCustomerTransfer();
-
-        $this->getFactory()
-            ->createReorderHandler()
-            ->reorder($idSalesOrder, $customerTransfer);
-
-        //todo route from config
-        return $this->redirectResponseInternal('checkout-index');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function reorderItemsAction(Request $request)
-    {
-        $idSalesOrder = $request->query->getInt('id');
-        $idOrderItems = $request->query->getInt('items');
-        $customerTransfer = $this->getLoggedInCustomerTransfer();
-
-        $this->getFactory()
-            ->createReorderHandler()
-            ->reorderItems($idSalesOrder, $customerTransfer, $idOrderItems);
-
-        //todo route from config
-        return $this->redirectResponseInternal('checkout-index');
-    }
-
-    /**
      * @return \SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler
      */
     protected function getCartOperationHandler()
@@ -209,17 +172,5 @@ class CartController extends AbstractController
         }
 
         return $itemTransfers;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    protected function getLoggedInCustomerTransfer()
-    {
-        if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
-            return $this->getFactory()->getCustomerClient()->getCustomer();
-        }
-
-        return null;
     }
 }
