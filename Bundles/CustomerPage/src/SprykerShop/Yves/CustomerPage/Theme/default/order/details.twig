@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block customerContent %}
-    <form action="{{ path('cart/reorder-items') }}">
+    <form action="{{ path('customer/order/reorder-items') }}">
         <input type="hidden" name="id" value="{{ _view.order.idSalesOrder }}">
     <div class="callout">
         <h5>{{ 'customer.profile.order_details' | trans }}</h5>
@@ -33,12 +33,16 @@
     {% include "@CustomerPage/order/partials/details-personal-data.twig" %}
 
     <div class="callout">
-        <div class="row align-right">
-            <div class="small-12 medium-6 large-4 columns align-bottom">
-                <a href="{{ url('customer/order') }}" class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
-                <a href="{{ path('cart/reorder', {'id': _view.order.idSalesOrder}) }}" class="button expanded">
+        <div class="row align-bottom">
+            <div class="mall-12 medium-6 large-4 column">
+                <a href="{{ url('customer/order') }}" class=" button expanded">{{ 'general.back.button' | trans }}</a>
+            </div>
+            <div class="mall-12 medium-6 large-4 column">
+                <a href="{{ path('cart/reorder', {'id': _view.order.idSalesOrder}) }}" class="button success expanded">
                     {{ 'cart.order.reorder' | trans }}
                 </a>
+            </div>
+            <div class="mall-12 medium-6 large-4 column">
                 <input type="submit"  class="button expanded" value="{{ 'customer.order.reorder_selected' | trans }}">
             </div>
         </div>
