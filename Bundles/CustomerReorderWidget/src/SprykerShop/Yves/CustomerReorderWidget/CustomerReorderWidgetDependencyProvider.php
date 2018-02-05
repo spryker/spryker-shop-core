@@ -20,12 +20,6 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_SALES = 'CLIENT_SALES';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
-    public const CLIENT_AVAILABILITY = 'CLIENT_AVAILABILITY';
-    public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
-    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
-    public const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
-    public const PLUGIN_CART_ITEM_TRANSFORMERS = 'PLUGIN_CART_ITEM_TRANSFORMERS';
-    public const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

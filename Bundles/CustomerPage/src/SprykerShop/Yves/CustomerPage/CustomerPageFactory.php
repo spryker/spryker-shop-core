@@ -198,6 +198,14 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @return string[]
+     */
+    public function getCustomerOrderWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CUSTOMER_ORDER_WIDGETS);
+    }
+
+    /**
      * @return \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToUtilValidateServiceInterface
      */
     public function getUtilValidateService()

@@ -48,7 +48,12 @@ class CustomerController extends AbstractCustomerController
             'addresses' => $this->getDefaultAddresses($customerTransfer),
         ];
 
-        return $this->view($data, $this->getFactory()->getCustomerOverviewWidgetPlugins());
+        $widgetPlugins = array_merge(
+            $this->getFactory()->getCustomerOverviewWidgetPlugins(),
+            $this->getFactory()->getCustomerOrderWidgetPlugins()
+        );
+
+        return $this->view($data, $widgetPlugins);
     }
 
     /**

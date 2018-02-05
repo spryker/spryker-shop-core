@@ -37,10 +37,13 @@ class OrderController extends AbstractCustomerController
 
         $orderList = $orderListTransfer->getOrders();
 
-        return $this->view([
-            'pagination' => $orderListTransfer->getPagination(),
-            'orderList' => $orderList,
-        ]);
+        return $this->view(
+            [
+                'pagination' => $orderListTransfer->getPagination(),
+                'orderList' => $orderList,
+            ],
+            $this->getFactory()->getCustomerOrderWidgetPlugins()
+        );
     }
 
     /**

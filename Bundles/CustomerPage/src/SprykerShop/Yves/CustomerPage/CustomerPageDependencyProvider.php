@@ -33,6 +33,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     const FLASH_MESSENGER = 'FLASH_MESSENGER';
     const STORE = 'STORE';
     const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
+    const PLUGIN_CUSTOMER_ORDER_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_WIDGETS';
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
 
     /**
@@ -53,6 +54,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFlashMessenger($container);
         $container = $this->addStore($container);
         $container = $this->addCustomerOverviewWidgetPlugins($container);
+        $container = $this->addCustomerOrderWidgetPlugins($container);
         $container = $this->addUtilValidateService($container);
 
         return $container;
@@ -219,6 +221,20 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addCustomerOrderWidgetPlugins(Container $container)
+    {
+        $container[static::PLUGIN_CUSTOMER_ORDER_WIDGETS] = function () {
+            return $this->getCustomerOrderWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     protected function addUtilValidateService(Container $container): Container
     {
         $container[self::SERVICE_UTIL_VALIDATE] = function (Container $container) {
@@ -232,6 +248,14 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return string[]
      */
     protected function getCustomerOverviewWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCustomerOrderWidgetPlugins(): array
     {
         return [];
     }
