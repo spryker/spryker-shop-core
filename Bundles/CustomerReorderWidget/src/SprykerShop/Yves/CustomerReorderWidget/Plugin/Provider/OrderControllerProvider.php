@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Plugin\Provider;
 
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
-use Symfony\Component\HttpFoundation\Request;
 
 class OrderControllerProvider extends AbstractYvesControllerProvider
 {
@@ -27,13 +26,12 @@ class OrderControllerProvider extends AbstractYvesControllerProvider
     {
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
-        $this->createController('/{cart}/reorder', self::ROUTE_CART_ORDER_REPEAT, 'CartPage', 'Cart', 'reorder')
-            ->assert('cart', $allowedLocalesPattern . 'cart|cart')
-            ->value('cart', 'cart')
-            ->method('POST');
-        $this->createController('/{cart}/reorder-items', self::ROUTE_CART_ORDER_ITEMS_REPEAT, 'CartPage', 'Cart', 'reorder')
-            ->assert('cart', $allowedLocalesPattern . 'cart|cart')
-            ->value('cart', 'cart')
+        $this->createController('/{customer}/order/reorder', static::ROUTE_CART_ORDER_REPEAT, 'CustomerReorderWidget', 'Order', 'reorder')
+            ->assert('customer', $allowedLocalesPattern . 'customer|customer')
+            ->value('customer', 'customer');
+        $this->createController('/{customer}/order/reorder-items', static::ROUTE_CART_ORDER_ITEMS_REPEAT, 'CustomerReorderWidget', 'Order', 'reorder')
+            ->assert('customer', $allowedLocalesPattern . 'customer|customer')
+            ->value('customer', 'customer')
             ->method('POST');
     }
 }
