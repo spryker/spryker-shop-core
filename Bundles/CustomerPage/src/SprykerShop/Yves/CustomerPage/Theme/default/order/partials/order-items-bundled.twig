@@ -1,5 +1,8 @@
 <tr>
     <td class="text-left">
+        {% if widgetExists('CustomerReorderWidgetPlugin') %}
+            {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_checkbox', _view.order, orderItem) }}
+        {% endif %}
         {{ orderItem.bundleProduct.sku }}
     </td>
     <td class="text-left">

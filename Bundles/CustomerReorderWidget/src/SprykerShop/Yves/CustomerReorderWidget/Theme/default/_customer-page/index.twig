@@ -1,0 +1,29 @@
+{% block link %}
+<a href="{{ path('customer/order/reorder', {'id': _widget.order.idSalesOrder}) }}">
+    <small><i class="fa fa-repeat"></i> {{ 'cart.order.reorder' | trans }}</small>
+</a>
+{% endblock %}
+
+{% block form_start %}
+<form action="{{ path('customer/order/reorder-items') }}" method="post">
+    <input type="hidden" name="id" value="{{ _widget.order.idSalesOrder }}">
+{% endblock %}
+
+{% block form_checkbox %}
+    <input type="checkbox" name="items[]" value="{{ _widget.item.idOrderItem }}">
+{% endblock %}
+
+{% block form_buttons %}
+<div class="mall-12 medium-6 large-4 column">
+    <a href="{{ path('customer/order/reorder', {'id': _widget.order.idSalesOrder}) }}" class="button success expanded">
+        {{ 'cart.order.reorder' | trans }}
+    </a>
+</div>
+<div class="mall-12 medium-6 large-4 column">
+    <input type="submit" class="button expanded" value="{{ 'customer.order.reorder_selected' | trans }}">
+</div>
+{% endblock %}
+
+{% block form_end %}
+</form>
+{% endblock %}

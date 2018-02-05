@@ -7,13 +7,11 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Controller;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
+ * @method \SprykerShop\Yves\CustomerReorderWidget\CustomerReorderWidgetFactory getFactory()
  */
 class OrderController extends AbstractController
 {

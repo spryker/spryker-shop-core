@@ -1,7 +1,6 @@
 <table>
     <thead>
         <tr>
-            <th class="text-left"></th>
             <th class="text-left">{{ 'customer.order.item_sku' | trans }}</th>
             <th class="text-left">{{ 'customer.order.product_name' | trans }}</th>
             <th class="text-right">{{ 'customer.order.item_price' | trans }}</th>
@@ -16,12 +15,10 @@
             {% include "@CustomerPage/order/partials/order-items-bundled.twig" %}
         {% else %}
             <tr>
-                {#{% if wigjetExists('CustomerReorderWidget') %}#}
                 <td class="text-left">
-                    <input type="checkbox" name="items[]" value="{{ orderItem.idOrderItem }}">
-                </td>
-                {#{% endif %}#}
-                <td class="text-left">
+                    {% if widgetExists('CustomerReorderWidgetPlugin') %}
+                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_checkbox', _view.order, orderItem) }}
+                    {% endif %}
                     {{ orderItem.sku }}
                 </td>
                 <td class="text-left">

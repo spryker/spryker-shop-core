@@ -9,8 +9,9 @@
 {% endblock %}
 
 {% block customerContent %}
-    <form action="{{ path('customer/order/reorder-items') }}">
-        <input type="hidden" name="id" value="{{ _view.order.idSalesOrder }}">
+    {% if widgetExists('CustomerReorderWidgetPlugin') %}
+        {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_start', _view.order) }}
+    {% endif %}
     <div class="callout">
         <h5>{{ 'customer.profile.order_details' | trans }}</h5>
         <hr>
@@ -37,15 +38,12 @@
             <div class="mall-12 medium-6 large-4 column">
                 <a href="{{ url('customer/order') }}" class=" button expanded">{{ 'general.back.button' | trans }}</a>
             </div>
-            <div class="mall-12 medium-6 large-4 column">
-                <a href="{{ path('cart/reorder', {'id': _view.order.idSalesOrder}) }}" class="button success expanded">
-                    {{ 'cart.order.reorder' | trans }}
-                </a>
-            </div>
-            <div class="mall-12 medium-6 large-4 column">
-                <input type="submit"  class="button expanded" value="{{ 'customer.order.reorder_selected' | trans }}">
-            </div>
+            {% if widgetExists('CustomerReorderWidgetPlugin') %}
+                {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_buttons', _view.order) }}
+            {% endif %}
         </div>
     </div>
-    </form>
+    {% if widgetExists('CustomerReorderWidgetPlugin') %}
+        {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_start', _view.order) }}
+    {% endif %}
 {% endblock %}

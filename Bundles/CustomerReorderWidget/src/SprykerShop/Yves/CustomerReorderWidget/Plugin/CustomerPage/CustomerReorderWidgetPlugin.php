@@ -8,6 +8,7 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Plugin\CustomerPage;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\CustomerReorderWidget\CustomerReorderWidgetPluginInterface;
@@ -16,11 +17,13 @@ class CustomerReorderWidgetPlugin extends AbstractWidgetPlugin implements Custom
 {
     /**
      * @param OrderTransfer $orderTransfer
+     * @param ItemTransfer|null $itemTransfer
      * @return void
      */
-    public function initialize(OrderTransfer $orderTransfer): void
+    public function initialize(OrderTransfer $orderTransfer, ItemTransfer $itemTransfer = null): void
     {
         $this->addParameter('order', $orderTransfer);
+        $this->addParameter('item', $itemTransfer);
     }
 
     /**
@@ -36,6 +39,6 @@ class CustomerReorderWidgetPlugin extends AbstractWidgetPlugin implements Custom
      */
     public static function getTemplate(): string
     {
-        return '@CustomerReorderWidget/_customer-page/reorder-button.twig';
+        return '@CustomerReorderWidget/_customer-page/index.twig';
     }
 }
