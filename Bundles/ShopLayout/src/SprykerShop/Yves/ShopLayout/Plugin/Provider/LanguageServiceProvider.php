@@ -24,7 +24,6 @@ class LanguageServiceProvider extends AbstractPlugin implements ServiceProviderI
     public function register(Application $app)
     {
         $this->addGlobalTemplateVariables($app, [
-            'availableLanguages' => $this->getLanguages(),
             'currentLanguage' => $this->getCurrentLanguage(),
         ]);
     }
@@ -36,23 +35,6 @@ class LanguageServiceProvider extends AbstractPlugin implements ServiceProviderI
      */
     public function boot(Application $app)
     {
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getLanguages()
-    {
-        $languages = [];
-        $locales = $this->getFactory()
-            ->getStore()
-            ->getLocales();
-
-        foreach ($locales as $locale) {
-            $languages[] = substr($locale, 0, strpos($locale, '_'));
-        }
-
-        return $languages;
     }
 
     /**

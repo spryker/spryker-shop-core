@@ -61,7 +61,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
                 'anonymous' => true,
                 'pattern' => '^/',
                 'form' => [
-                    'login_path' => '/login',
+                    'login_path' => $this->buildLoginPath($selectedLanguage),
                     'check_path' => '/login_check',
                     'username_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_EMAIL . ']',
                     'password_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_PASSWORD . ']',
@@ -133,6 +133,20 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
     protected function buildLogoutPath($prefixLocale)
     {
         $logoutPath = '/logout';
+        if ($prefixLocale) {
+            $logoutPath = '/' . $prefixLocale . $logoutPath;
+        }
+        return $logoutPath;
+    }
+
+    /**
+     * @param string $prefixLocale
+     *
+     * @return string
+     */
+    protected function buildLoginPath($prefixLocale)
+    {
+        $logoutPath = '/login';
         if ($prefixLocale) {
             $logoutPath = '/' . $prefixLocale . $logoutPath;
         }

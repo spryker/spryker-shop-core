@@ -3,6 +3,7 @@
   "description": "CatalogPage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker-shop/shop-application": "^0.1.0",
     "spryker/catalog": "^5.2.0",
     "spryker/category-storage": "^0.1.0",

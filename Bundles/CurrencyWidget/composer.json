@@ -3,6 +3,7 @@
   "description": "CurrencyWidget module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/cart": "^4.3.0",
     "spryker/currency": "^3.2.0",
     "spryker/kernel": "^3.16.0",

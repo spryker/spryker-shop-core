@@ -1,3 +1,3 @@
 # LanguageSwitcherWidget Changelog
 
-[Release Changelog](https://github.com/spryker-shop/LanguageSwitcherWidget/releases)
+[Release Changelog](https://github.com/spryker-shop/language-switcher-widget/releases)

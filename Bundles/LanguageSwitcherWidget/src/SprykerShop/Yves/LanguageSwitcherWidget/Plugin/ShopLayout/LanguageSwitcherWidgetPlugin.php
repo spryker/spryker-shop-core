@@ -26,8 +26,8 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
             ->getUrlData($request->getPathInfo());
         $localeUrls = [];
 
-        if(isset($currentUrlStorage[UrlTransfer::LOCALE_URLS])) {
-            $localeUrls = $currentUrlStorage[UrlTransfer::LOCALE_URLS];
+        if(!is_null($currentUrlStorage) && $currentUrlStorage->getLocaleUrls()->count() !== 0) {
+            $localeUrls = (array)$currentUrlStorage->getLocaleUrls();
         }
 
         $this->addParameter('languages', $this->getLanguages($localeUrls, $request))
@@ -58,13 +58,17 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      *
      * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    protected function getLanguages(array $localeUrls, $request): array
+    protected function getLanguages(array $localeUrls, Request $request): array
     {
         $locales = $this->getFactory()
             ->getStore()
             ->getLocales();
 
-        return $this->attachUrlsToLanguages($locales, $localeUrls, $request);
+        if(!empty($localeUrls)) {
+            return $this->attachLocaleUrlsFromStorageToLanguages($locales, $localeUrls, $request);
+        }
+
+        return $this->attachLocaleUrlsToLanguages($locales, $request);
     }
 
     /**
@@ -74,20 +78,11 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      *
      * @return array
      */
-    protected function attachUrlsToLanguages(array $locales, array $localeUrls, $request): array
+    protected function attachLocaleUrlsFromStorageToLanguages(array $locales, array $localeUrls, Request $request): array
     {
-        $currentUrl = $request->getRequestUri();
         $languages = [];
         foreach ($locales as $locale) {
-            $language = substr($locale, 0, strpos($locale, '_'));
-            if(empty($localeUrls)) {
-                $replacementCounts = 0;
-                $languages[$language] = str_replace(array_keys($locales), $language, $currentUrl, $replacementCounts);
-                if($replacementCounts === 0) {
-                    $languages[$language] = rtrim('/' . $language . '/' . $currentUrl, '/');
-                }
-            }
-
+            $language = $this->getLanguageFromLocale($locale);
             foreach($localeUrls as $localeUrl) {
                 if($localeUrl[UrlTransfer::LOCALE_NAME] === $locale) {
                     $languages[$language] = $localeUrl[UrlTransfer::URL] . '?' . $request->getQueryString();
@@ -97,6 +92,50 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
         }
 
         return $languages;
+    }
+
+    /**
+     * @param array $locales
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function attachLocaleUrlsToLanguages(array $locales, Request $request): array
+    {
+        $currentUrl = $request->getRequestUri();
+        $languages = [];
+        foreach ($locales as $locale) {
+            $language = $this->getLanguageFromLocale($locale);
+            $languages[$language] = $this->replaceCurrentUrlLanguage($currentUrl, array_keys($locales), $language);
+        }
+
+        return $languages;
+    }
+
+    /**
+     * @param string $currentUrl
+     * @param array $languages
+     * @param string $replacementLanguage
+     *
+     * @return string
+     */
+    protected function replaceCurrentUrlLanguage($currentUrl, array $languages, $replacementLanguage)
+    {
+        if(preg_match('/\/(' . implode('|', $languages) . ')/', $currentUrl)) {
+            return preg_replace('/\/(' . implode('|', $languages) . ')/', '/' . $replacementLanguage, $currentUrl, 1);
+        }
+
+        return rtrim('/' . $replacementLanguage . $currentUrl, '/');
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return string
+     */
+    protected function getLanguageFromLocale($locale): string
+    {
+        return substr($locale, 0, strpos($locale, '_'));
     }
 
     /**
