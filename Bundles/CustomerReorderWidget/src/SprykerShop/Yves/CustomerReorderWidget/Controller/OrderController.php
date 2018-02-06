@@ -38,9 +38,13 @@ class OrderController extends AbstractController
             return $this->redirectResponseInternal('error/404');
         }
 
+        $order = $this->getFactory()
+            ->createOrderHandler()
+            ->getOrderTransfer($idOrder, $customerTransfer);
+
         $this->getFactory()
             ->createReorderHandler()
-            ->reorder($idOrder, $customerTransfer);
+            ->reorder($order);
 
         return $this->gerRedirectToCart();
     }
@@ -60,9 +64,13 @@ class OrderController extends AbstractController
         $idSalesOrder = $request->request->getInt(self::ORDER_ID);
         $items = (array)$request->request->get(self::PARAM_ITEMS);
 
+        $order = $this->getFactory()
+            ->createOrderHandler()
+            ->getOrderTransfer($idSalesOrder, $customerTransfer);
+
         $this->getFactory()
             ->createReorderHandler()
-            ->reorderItems($idSalesOrder, $customerTransfer, $items);
+            ->reorderItems($order, $items);
 
         return $this->gerRedirectToCart();
     }

@@ -15,6 +15,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityHandlerInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandlerInterface;
 
@@ -27,7 +28,6 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     {
         return new ReorderHandler(
             $this->getCartClient(),
-            $this->getSalesClient(),
             $this->getProductBundleClient()
         );
     }
@@ -39,6 +39,16 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     {
         return new AvailabilityHandler(
             $this->getProductStorageClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\OrderHandler
+     */
+    public function createOrderHandler(): OrderHandler
+    {
+        return new OrderHandler(
+            $this->getSalesClient()
         );
     }
 

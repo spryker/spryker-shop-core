@@ -7,24 +7,22 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface ReorderHandlerInterface
 {
     /**
-     * @param int $idSalesOrder
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function reorder(int $idSalesOrder, CustomerTransfer $customerTransfer): void;
+    public function reorder(OrderTransfer $orderTransfer): void;
 
     /**
-     * @param int $idSalesOrder
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int[] $idOrderItems
      *
      * @return void
      */
-    public function reorderItems(int $idSalesOrder, CustomerTransfer $customerTransfer, array $idOrderItems): void;
+    public function reorderItems(OrderTransfer $orderTransfer, array $idOrderItems): void;
 }

@@ -7,13 +7,11 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 
 class ReorderHandler implements ReorderHandlerInterface
 {
@@ -23,15 +21,11 @@ class ReorderHandler implements ReorderHandlerInterface
      * @see \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
      */
     const BUNDLE_PRODUCT = 'bundleProduct';
+
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface
      */
     protected $cartClient;
-
-    /**
-     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface
-     */
-    protected $salesClient;
 
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface
@@ -40,42 +34,37 @@ class ReorderHandler implements ReorderHandlerInterface
 
     /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
-     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface $salesClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,
-        CustomerReorderWidgetToSalesClientInterface $salesClient,
         CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
     ) {
         $this->cartClient = $cartClient;
-        $this->salesClient = $salesClient;
         $this->productBundleClient = $productBundleClient;
     }
 
     /**
-     * @param int $idSalesOrder
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function reorder(int $idSalesOrder, CustomerTransfer $customerTransfer): void
+    public function reorder(OrderTransfer $orderTransfer): void
     {
-        $items = $this->getOrderItemsTransfer($idSalesOrder, $customerTransfer);
+        $items = $this->getOrderItemsTransfer($orderTransfer);
 
         $this->updateCart($items);
     }
 
     /**
-     * @param int $idSalesOrder
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int[] $idOrderItems
      *
      * @return void
      */
-    public function reorderItems(int $idSalesOrder, CustomerTransfer $customerTransfer, array $idOrderItems): void
+    public function reorderItems(OrderTransfer $orderTransfer, array $idOrderItems): void
     {
-        $items = $this->getOrderItemsTransfer($idSalesOrder, $customerTransfer);
+        $items = $this->getOrderItemsTransfer($orderTransfer);
 
         $itemsToAdd = [];
         foreach ($items as $item) {
@@ -97,21 +86,12 @@ class ReorderHandler implements ReorderHandlerInterface
     }
 
     /**
-     * @param int $idSalesOrder
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getOrderItemsTransfer(int $idSalesOrder, CustomerTransfer $customerTransfer): array
+    protected function getOrderItemsTransfer(OrderTransfer $orderTransfer): array
     {
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer
-            ->setIdSalesOrder($idSalesOrder)
-            ->setFkCustomer($customerTransfer->getIdCustomer());
-
-        $orderTransfer = $this->salesClient
-            ->getOrderDetails($orderTransfer);
-
         $items = $this->productBundleClient
             ->getGroupedBundleItems($orderTransfer->getItems(), $orderTransfer->getBundleItems());
         $items = $this->getProductsFromBundles($items);
