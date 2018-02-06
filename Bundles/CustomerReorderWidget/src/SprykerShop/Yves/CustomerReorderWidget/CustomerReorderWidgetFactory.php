@@ -16,13 +16,14 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityHandlerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandler;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandlerInterface;
 
 class CustomerReorderWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandler
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandlerInterface
      */
-    public function createReorderHandler(): ReorderHandler
+    public function createReorderHandler(): ReorderHandlerInterface
     {
         return new ReorderHandler(
             $this->getCartClient(),

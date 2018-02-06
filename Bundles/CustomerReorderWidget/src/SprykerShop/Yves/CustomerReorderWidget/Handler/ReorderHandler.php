@@ -15,7 +15,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 
-class ReorderHandler
+class ReorderHandler implements ReorderHandlerInterface
 {
     /**
      * Name of field in grouped items.
