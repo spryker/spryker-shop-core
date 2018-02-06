@@ -47,37 +47,15 @@ class ReorderHandler
 
     public function reorder($idSalesOrder, CustomerTransfer $customerTransfer)
     {
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer
-            ->setIdSalesOrder($idSalesOrder)
-            ->setFkCustomer($customerTransfer->getIdCustomer());
+        $items = $this->getOrderItemsTransfer($idSalesOrder, $customerTransfer)
+            ->getArrayCopy();
 
-        $orderTransfer = $this->salesClient
-            ->getOrderDetails($orderTransfer);
-
-        $quote = new QuoteTransfer();
-        $this->cartClient->storeQuote($quote);
-
-        $items = $orderTransfer->getItems();
-
-        $quoteTransfer = $this->cartClient->addItems($items->getArrayCopy());
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->updateCart($items);
     }
 
     public function reorderItems($idSalesOrder, CustomerTransfer $customerTransfer, $idOrderItems)
     {
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer
-            ->setIdSalesOrder($idSalesOrder)
-            ->setFkCustomer($customerTransfer->getIdCustomer());
-
-        $orderTransfer = $this->salesClient
-            ->getOrderDetails($orderTransfer);
-
-        $quote = new QuoteTransfer();
-        $this->cartClient->storeQuote($quote);
-
-        $items = $orderTransfer->getItems();
+        $items = $this->getOrderItemsTransfer($idSalesOrder, $customerTransfer);
 
         $itemsToAdd = [];
         foreach ($items as $item) {
@@ -93,9 +71,31 @@ class ReorderHandler
             unset($idOrderItems[$key]);
         }
 
-        $quoteTransfer = $this->cartClient->addItems($itemsToAdd);
-        $this->cartClient->storeQuote($quoteTransfer);
-
         //if (!empty($idOrderItems)) show error
+
+        $this->updateCart($itemsToAdd);
+    }
+
+    protected function getOrderItemsTransfer($idSalesOrder, CustomerTransfer $customerTransfer): \ArrayObject
+    {
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer
+            ->setIdSalesOrder($idSalesOrder)
+            ->setFkCustomer($customerTransfer->getIdCustomer());
+
+        $orderTransfer = $this->salesClient
+            ->getOrderDetails($orderTransfer);
+
+        return $orderTransfer->getItems();
+    }
+
+    protected function updateCart(array $orderItems)
+    {
+        $quote = new QuoteTransfer();
+        $this->cartClient->storeQuote($quote);
+
+        $quoteTransfer = $this->cartClient->addItems($orderItems);
+        $this->cartClient->storeQuote($quoteTransfer);
     }
 }
