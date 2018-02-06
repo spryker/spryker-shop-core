@@ -12,11 +12,18 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CustomerReorderWidget\CustomerReorderWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\CustomerReorderWidget\CustomerReorderWidgetConfig getConfig()
  */
 class OrderController extends AbstractController
 {
     const PARAM_ITEMS = 'items';
     const ORDER_ID = 'id';
+    /**
+     * Route for cart page.
+     * Described in CartPage module
+     * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     */
+    const ROUTE_CART = 'cart';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,8 +39,7 @@ class OrderController extends AbstractController
             ->createReorderHandler()
             ->reorder($idSalesOrder, $customerTransfer);
 
-        //todo route from config
-        return $this->redirectResponseInternal('checkout-index');
+        return $this->gerRedirectToCart();
     }
 
     /**
@@ -51,8 +57,7 @@ class OrderController extends AbstractController
             ->createReorderHandler()
             ->reorderItems($idSalesOrder, $customerTransfer, $items);
 
-        //todo route from config
-        return $this->redirectResponseInternal('checkout-index');
+        return $this->gerRedirectToCart();
     }
 
     /**
@@ -65,5 +70,13 @@ class OrderController extends AbstractController
         }
 
         return null;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function gerRedirectToCart()
+    {
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 }
