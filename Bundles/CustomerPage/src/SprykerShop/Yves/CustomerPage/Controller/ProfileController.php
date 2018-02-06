@@ -26,7 +26,7 @@ class ProfileController extends AbstractCustomerController
         $profileForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->createProfileForm()
+            ->getProfileForm()
             ->handleRequest($request);
 
         if ($profileForm->isSubmitted() === false) {
@@ -40,17 +40,17 @@ class ProfileController extends AbstractCustomerController
             $profileForm->setData($customerTransfer->toArray());
         }
 
-        if ($profileForm->isValid() && $this->processProfileUpdate($profileForm->getData()) === true) {
+        if ($profileForm->isSubmitted() && $profileForm->isValid() && $this->processProfileUpdate($profileForm->getData()) === true) {
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_PROFILE);
         }
 
         $passwordForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->createPasswordForm()
+            ->getPasswordForm()
             ->handleRequest($request);
 
-        if ($passwordForm->isValid() && $this->processPasswordUpdate($passwordForm->getData()) === true) {
+        if ($passwordForm->isSubmitted() && $passwordForm->isValid() && $this->processPasswordUpdate($passwordForm->getData()) === true) {
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_PROFILE);
         }
 

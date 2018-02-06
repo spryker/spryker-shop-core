@@ -35,7 +35,7 @@ class ProductReviewForm extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'productReviewForm';
     }
@@ -69,7 +69,8 @@ class ProductReviewForm extends AbstractType
             static::FIELD_RATING,
             ChoiceType::class,
             [
-                'choices' => $this->getRatingFieldChoices(),
+                'choices' => array_flip($this->getRatingFieldChoices()),
+                'choices_as_values' => true,
                 'label' => 'product_review.submit.rating',
                 'required' => true,
                 'expanded' => false,

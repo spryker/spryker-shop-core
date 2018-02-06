@@ -14,7 +14,6 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInt
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
-use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
 
@@ -135,14 +134,6 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
-     */
-    public function createShipmentForm()
-    {
-        return new ShipmentForm();
-    }
-
-    /**
      * @return \SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider
      */
     public function createShipmentDataProvider()
@@ -201,5 +192,13 @@ class CheckoutPageFactory extends AbstractFactory
     protected function getPriceClient(): CheckoutPageToPriceClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
+     */
+    public function createPaymentMethodSubForms()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PAYMENT_SUB_FORMS);
     }
 }
