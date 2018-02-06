@@ -14,12 +14,12 @@
 {% endblock %}
 
 {% block form_buttons %}
-<div class="mall-12 medium-6 large-4 column">
+<div class="small-12 medium-6 large-4 columns align-bottom">
     <a href="{{ path('customer/order/reorder', {'id': _widget.order.idSalesOrder}) }}" class="button success expanded">
         {{ 'cart.order.reorder' | trans }}
     </a>
 </div>
-<div class="mall-12 medium-6 large-4 column">
+<div class="small-12 medium-6 large-4 columns align-bottom">
     <input type="submit" class="button expanded" value="{{ 'customer.order.reorder_selected' | trans }}">
 </div>
 {% endblock %}
