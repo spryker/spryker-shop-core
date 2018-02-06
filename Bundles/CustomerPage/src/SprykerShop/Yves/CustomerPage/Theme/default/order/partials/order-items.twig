@@ -16,9 +16,7 @@
         {% else %}
             <tr>
                 <td class="text-left">
-                    {% if widgetExists('CustomerReorderWidgetPlugin') %}
-                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_checkbox', _view.order, orderItem) }}
-                    {% endif %}
+                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_checkbox', _view.order, orderItem) }}
                     {{ orderItem.sku }}
                 </td>
                 <td class="text-left">

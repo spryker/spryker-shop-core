@@ -9,9 +9,7 @@
 {% endblock %}
 
 {% block customerContent %}
-    {% if widgetExists('CustomerReorderWidgetPlugin') %}
-        {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_start', _view.order) }}
-    {% endif %}
+    {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_start', _view.order) }}
     <div class="callout">
         <h5>{{ 'customer.profile.order_details' | trans }}</h5>
         <hr>
@@ -38,12 +36,8 @@
             <div class="mall-12 medium-6 large-4 column">
                 <a href="{{ url('customer/order') }}" class=" button expanded">{{ 'general.back.button' | trans }}</a>
             </div>
-            {% if widgetExists('CustomerReorderWidgetPlugin') %}
-                {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_buttons', _view.order) }}
-            {% endif %}
+            {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_buttons', _view.order) }}
         </div>
     </div>
-    {% if widgetExists('CustomerReorderWidgetPlugin') %}
-        {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_end', _view.order) }}
-    {% endif %}
+    {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_end', _view.order) }}
 {% endblock %}
