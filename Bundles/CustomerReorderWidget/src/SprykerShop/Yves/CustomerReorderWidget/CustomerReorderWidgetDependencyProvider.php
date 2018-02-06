@@ -11,15 +11,17 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientBridge;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientBridge;
 
 class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CART = 'CLIENT_CART';
-    public const CLIENT_SALES = 'CLIENT_SALES';
-    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    const CLIENT_CART = 'CLIENT_CART';
+    const CLIENT_SALES = 'CLIENT_SALES';
+    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
+    const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -31,6 +33,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addCartClient($container);
         $container = $this->addSalesClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addProductBundleClient($container);
 
         return $container;
     }
@@ -86,6 +89,20 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container[self::CLIENT_CUSTOMER] = function (Container $container) {
             return new CustomerReorderWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductBundleClient(Container $container): Container
+    {
+        $container[self::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
+            return new CustomerReorderWidgetToProductBundleClientBridge($container->getLocator()->productBundle()->client());
         };
 
         return $container;
