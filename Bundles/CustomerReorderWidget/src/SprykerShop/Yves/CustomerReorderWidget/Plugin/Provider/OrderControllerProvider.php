@@ -14,7 +14,7 @@ class OrderControllerProvider extends AbstractYvesControllerProvider
 {
     const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';
     const ROUTE_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
-//    const SKU_PATTERN = '[a-zA-Z0-9-_]+';
+    const PATTERN_ID = '\d+';
 
     /**
      * @param \Silex\Application $app
@@ -25,9 +25,17 @@ class OrderControllerProvider extends AbstractYvesControllerProvider
     {
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
-        $this->createController('/{customer}/order/reorder', static::ROUTE_CART_ORDER_REPEAT, 'CustomerReorderWidget', 'Order', 'reorder')
+        $this->createController(
+            '/{customer}/order/{idOrder}/reorder',
+            static::ROUTE_CART_ORDER_REPEAT,
+            'CustomerReorderWidget',
+            'Order',
+            'reorder'
+        )
             ->assert('customer', $allowedLocalesPattern . 'customer|customer')
-            ->value('customer', 'customer');
+            ->value('customer', 'customer')
+            ->assert('idOrder', static::PATTERN_ID);
+
         $this->createController('/{customer}/order/reorder-items', static::ROUTE_CART_ORDER_ITEMS_REPEAT, 'CustomerReorderWidget', 'Order', 'reorderItems')
             ->assert('customer', $allowedLocalesPattern . 'customer|customer')
             ->value('customer', 'customer')

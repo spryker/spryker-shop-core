@@ -1,5 +1,5 @@
 {% block link %}
-<a href="{{ path('customer/order/reorder', {'id': _widget.order.idSalesOrder}) }}">
+<a href="{{ path('customer/order/reorder', {'idOrder': _widget.order.idSalesOrder}) }}">
     <small><i class="fa fa-repeat"></i> {{ 'customer.order.reorder' | trans }}</small>
 </a>
 {% endblock %}
@@ -19,7 +19,7 @@
 
 {% block form_buttons %}
 <div class="small-12 medium-6 large-4 columns align-bottom">
-    <a href="{{ path('customer/order/reorder', {'id': _widget.order.idSalesOrder}) }}" class="button success expanded">
+    <a href="{{ path('customer/order/reorder', {'idOrder': _widget.order.idSalesOrder}) }}" class="button success expanded">
         {{ 'customer.order.reorder_all' | trans }}
     </a>
 </div>

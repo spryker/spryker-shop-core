@@ -25,22 +25,19 @@ class OrderController extends AbstractController
     const ROUTE_CART = 'cart';
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
+     * @param int $idOrder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function reorderAction(Request $request)
+    public function reorderAction(int $idOrder)
     {
         $customerTransfer = $this->getLoggedInCustomerTransfer();
         if (!$customerTransfer) {
             return $this->redirectResponseInternal('error/404');
         }
 
-        $idSalesOrder = $request->query->getInt(self::ORDER_ID);
-
         $this->getFactory()
             ->createReorderHandler()
-            ->reorder($idSalesOrder, $customerTransfer);
+            ->reorder($idOrder, $customerTransfer);
 
         return $this->gerRedirectToCart();
     }
