@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: khatsko
- * Date: 2/2/18
- * Time: 14:09
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
-
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -17,12 +15,6 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 
-/**
- * Class ReorderHandler
- * @package SprykerShop\Yves\CartPage\Handler
- *
- * @method CustomerTransfer getLoggedInCustomerTransfer()
- */
 class ReorderHandler
 {
     /**
@@ -32,42 +24,56 @@ class ReorderHandler
      */
     const BUNDLE_PRODUCT = 'bundleProduct';
     /**
-     * @var CustomerReorderWidgetToCartClientInterface
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface
      */
     protected $cartClient;
+
     /**
-     * @var CustomerReorderWidgetToSalesClientInterface
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface
      */
     protected $salesClient;
+
     /**
-     * @var CustomerReorderWidgetToProductBundleClientInterface
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface
      */
     protected $productBundleClient;
 
     /**
-     * @param CustomerReorderWidgetToCartClientInterface $cartClient
-     * @param CustomerReorderWidgetToSalesClientInterface $salesClient
-     * @param CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface $salesClient
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,
         CustomerReorderWidgetToSalesClientInterface $salesClient,
         CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
-    )
-    {
+    ) {
         $this->cartClient = $cartClient;
         $this->salesClient = $salesClient;
         $this->productBundleClient = $productBundleClient;
     }
 
-    public function reorder($idSalesOrder, CustomerTransfer $customerTransfer): void
+    /**
+     * @param int $idSalesOrder
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function reorder(int $idSalesOrder, CustomerTransfer $customerTransfer): void
     {
         $items = $this->getOrderItemsTransfer($idSalesOrder, $customerTransfer);
 
         $this->updateCart($items);
     }
 
-    public function reorderItems($idSalesOrder, CustomerTransfer $customerTransfer, $idOrderItems): void
+    /**
+     * @param int $idSalesOrder
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param int[] $idOrderItems
+     *
+     * @return void
+     */
+    public function reorderItems(int $idSalesOrder, CustomerTransfer $customerTransfer, array $idOrderItems): void
     {
         $items = $this->getOrderItemsTransfer($idSalesOrder, $customerTransfer);
 
@@ -90,7 +96,13 @@ class ReorderHandler
         $this->updateCart($itemsToAdd);
     }
 
-    protected function getOrderItemsTransfer($idSalesOrder, CustomerTransfer $customerTransfer): array
+    /**
+     * @param int $idSalesOrder
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getOrderItemsTransfer(int $idSalesOrder, CustomerTransfer $customerTransfer): array
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer
@@ -107,6 +119,11 @@ class ReorderHandler
         return $items;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
+     *
+     * @return void
+     */
     protected function updateCart(array $orderItems)
     {
         $quote = new QuoteTransfer();
@@ -116,6 +133,11 @@ class ReorderHandler
         $this->cartClient->storeQuote($quoteTransfer);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $groupedItems
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
     protected function getProductsFromBundles(array $groupedItems): array
     {
         $items = array_map(function ($groupedItem) {

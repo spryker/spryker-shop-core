@@ -7,13 +7,10 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CustomerReorderWidgetToCartClientInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *

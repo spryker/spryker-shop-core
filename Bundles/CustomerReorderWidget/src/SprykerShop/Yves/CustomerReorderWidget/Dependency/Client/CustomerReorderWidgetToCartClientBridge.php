@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class CustomerReorderWidgetToCartClientBridge implements CustomerReorderWidgetToCartClientInterface
@@ -25,7 +23,6 @@ class CustomerReorderWidgetToCartClientBridge implements CustomerReorderWidgetTo
     {
         $this->cartClient = $cartClient;
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
@@ -46,5 +43,4 @@ class CustomerReorderWidgetToCartClientBridge implements CustomerReorderWidgetTo
     {
         $this->cartClient->storeQuote($quoteTransfer);
     }
-
 }

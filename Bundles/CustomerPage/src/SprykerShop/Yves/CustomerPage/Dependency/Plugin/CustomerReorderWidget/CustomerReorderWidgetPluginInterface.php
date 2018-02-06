@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: khatsko
- * Date: 5/2/18
- * Time: 15:22
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin\CustomerReorderWidget;
@@ -17,8 +16,9 @@ interface CustomerReorderWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'CustomerReorderWidgetPlugin';
 
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param ItemTransfer|null $itemTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
+     *
      * @return void
      */
     public function initialize(OrderTransfer $orderTransfer, ItemTransfer $itemTransfer = null): void;

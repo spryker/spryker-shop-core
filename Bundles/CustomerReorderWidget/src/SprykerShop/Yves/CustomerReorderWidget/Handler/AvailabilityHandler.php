@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: khatsko
- * Date: 6/2/18
- * Time: 21:39
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
-
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -20,20 +18,25 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 class AvailabilityHandler
 {
     /**
-     * @var CustomerReorderWidgetToProductStorageClientInterface
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface
      */
     protected $productStorageClient;
 
     /**
-     * @param CustomerReorderWidgetToProductStorageClientInterface $productStorageClient
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface $productStorageClient
      */
     public function __construct(
         CustomerReorderWidgetToProductStorageClientInterface $productStorageClient
-    )
-    {
+    ) {
         $this->productStorageClient = $productStorageClient;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $locale
+     *
+     * @return bool
+     */
     public function getAvailabilityForItemTransfer(ItemTransfer $itemTransfer, string $locale): bool
     {
         $productConcreteStorageData = $this->productStorageClient

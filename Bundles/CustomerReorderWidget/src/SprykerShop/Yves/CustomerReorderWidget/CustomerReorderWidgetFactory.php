@@ -9,18 +9,17 @@ namespace SprykerShop\Yves\CustomerReorderWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandler;
-use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface;
 
 class CustomerReorderWidgetFactory extends AbstractFactory
 {
-
     /**
-     * @return ReorderHandler
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandler
      */
     public function createReorderHandler(): ReorderHandler
     {
@@ -31,6 +30,9 @@ class CustomerReorderWidgetFactory extends AbstractFactory
         );
     }
 
+    /**
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityHandler
+     */
     public function createAvailabilityHandler(): AvailabilityHandler
     {
         return new AvailabilityHandler(
@@ -39,7 +41,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return CustomerReorderWidgetToCustomerClientInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface
      */
     public function getCustomerClient(): CustomerReorderWidgetToCustomerClientInterface
     {
@@ -55,7 +57,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return CustomerReorderWidgetToSalesClientInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface
      */
     protected function getSalesClient(): CustomerReorderWidgetToSalesClientInterface
     {
@@ -63,7 +65,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return CustomerReorderWidgetToProductBundleClientInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface
      */
     protected function getProductBundleClient(): CustomerReorderWidgetToProductBundleClientInterface
     {
@@ -71,7 +73,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return CustomerReorderWidgetToProductStorageClientInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface
      */
     protected function getProductStorageClient(): CustomerReorderWidgetToProductStorageClientInterface
     {

@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: khatsko
- * Date: 5/2/18
- * Time: 15:26
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Plugin\CustomerPage;
@@ -19,8 +18,9 @@ use SprykerShop\Yves\CustomerPage\Dependency\Plugin\CustomerReorderWidget\Custom
 class CustomerReorderWidgetPlugin extends AbstractWidgetPlugin implements CustomerReorderWidgetPluginInterface
 {
     /**
-     * @param OrderTransfer $orderTransfer
-     * @param ItemTransfer|null $itemTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
+     *
      * @return void
      */
     public function initialize(OrderTransfer $orderTransfer, ItemTransfer $itemTransfer = null): void
@@ -46,9 +46,14 @@ class CustomerReorderWidgetPlugin extends AbstractWidgetPlugin implements Custom
         return '@CustomerReorderWidget/_customer-page/index.twig';
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
+     *
+     * @return bool
+     */
     protected function getItemAvailability(ItemTransfer $itemTransfer = null): bool
     {
-        if(!$itemTransfer) {
+        if (!$itemTransfer) {
             return false;
         }
 

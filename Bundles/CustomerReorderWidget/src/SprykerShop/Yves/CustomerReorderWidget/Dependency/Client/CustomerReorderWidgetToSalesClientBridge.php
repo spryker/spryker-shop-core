@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class CustomerReorderWidgetToSalesClientBridge implements CustomerReorderWidgetToSalesClientInterface
