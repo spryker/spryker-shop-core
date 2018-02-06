@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,9 +28,10 @@ class OrderController extends AbstractController
 
     /**
      * @param int $idOrder
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function reorderAction(int $idOrder)
+    public function reorderAction(int $idOrder): RedirectResponse
     {
         $customerTransfer = $this->getLoggedInCustomerTransfer();
         if (!$customerTransfer) {
@@ -47,7 +50,7 @@ class OrderController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function reorderItemsAction(Request $request)
+    public function reorderItemsAction(Request $request): RedirectResponse
     {
         $customerTransfer = $this->getLoggedInCustomerTransfer();
         if (!$customerTransfer) {
@@ -67,7 +70,7 @@ class OrderController extends AbstractController
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    protected function getLoggedInCustomerTransfer()
+    protected function getLoggedInCustomerTransfer(): ?CustomerTransfer
     {
         if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
             return $this->getFactory()->getCustomerClient()->getCustomer();
@@ -79,7 +82,7 @@ class OrderController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function gerRedirectToCart()
+    protected function gerRedirectToCart(): RedirectResponse
     {
         return $this->redirectResponseInternal(static::ROUTE_CART);
     }
