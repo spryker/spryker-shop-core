@@ -23,7 +23,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
     {
         $currentUrlStorage = $this->getFactory()
             ->getUrlStorageClient()
-            ->getUrlData($request->getPathInfo());
+            ->getUrlTransferFromUrl($request->getPathInfo());
         $localeUrls = [];
 
         if(!is_null($currentUrlStorage) && $currentUrlStorage->getLocaleUrls()->count() !== 0) {
