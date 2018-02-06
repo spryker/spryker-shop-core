@@ -31,8 +31,12 @@ class OrderController extends AbstractController
      */
     public function reorderAction(Request $request)
     {
-        $idSalesOrder = $request->query->getInt(self::ORDER_ID);
         $customerTransfer = $this->getLoggedInCustomerTransfer();
+        if (!$customerTransfer) {
+            return $this->redirectResponseInternal('error/404');
+        }
+
+        $idSalesOrder = $request->query->getInt(self::ORDER_ID);
 
         $this->getFactory()
             ->createReorderHandler()
@@ -48,9 +52,13 @@ class OrderController extends AbstractController
      */
     public function reorderItemsAction(Request $request)
     {
+        $customerTransfer = $this->getLoggedInCustomerTransfer();
+        if (!$customerTransfer) {
+            return $this->redirectResponseInternal('error/404');
+        }
+
         $idSalesOrder = $request->request->getInt(self::ORDER_ID);
         $items = (array)$request->request->get(self::PARAM_ITEMS);
-        $customerTransfer = $this->getLoggedInCustomerTransfer();
 
         $this->getFactory()
             ->createReorderHandler()
