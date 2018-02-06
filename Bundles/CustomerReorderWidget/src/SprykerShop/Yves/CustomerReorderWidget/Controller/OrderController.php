@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CustomerReorderWidget\CustomerReorderWidgetFactory getFactory()
- * @method \SprykerShop\Yves\CustomerReorderWidget\CustomerReorderWidgetConfig getConfig()
  */
 class OrderController extends AbstractController
 {
