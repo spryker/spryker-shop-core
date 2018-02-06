@@ -78,7 +78,6 @@ class ReorderHandler
 
     protected function getOrderItemsTransfer($idSalesOrder, CustomerTransfer $customerTransfer): \ArrayObject
     {
-
         $orderTransfer = new OrderTransfer();
         $orderTransfer
             ->setIdSalesOrder($idSalesOrder)
