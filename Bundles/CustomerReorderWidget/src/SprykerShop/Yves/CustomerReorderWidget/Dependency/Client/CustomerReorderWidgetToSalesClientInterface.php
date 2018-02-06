@@ -13,13 +13,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 interface CustomerReorderWidgetToSalesClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function getPaginatedOrder(OrderListTransfer $orderListTransfer);
-
-    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

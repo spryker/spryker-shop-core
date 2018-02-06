@@ -26,16 +26,6 @@ class CustomerReorderWidgetToSalesClientBridge implements CustomerReorderWidgetT
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function getPaginatedOrder(OrderListTransfer $orderListTransfer)
-    {
-        return $this->salesClient->getPaginatedOrder($orderListTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
