@@ -15,7 +15,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
  * @todo discuss
  * this is hard dependency on availability
  */
-class AvailabilityHandler
+class AvailabilityHandler implements AvailabilityHandlerInterface
 {
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface
