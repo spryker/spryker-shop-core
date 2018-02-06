@@ -43,7 +43,7 @@ class OrderController extends AbstractController
      */
     public function reorderItemsAction(Request $request)
     {
-        $idSalesOrder = $request->query->getInt(self::ORDER_ID);
+        $idSalesOrder = $request->request->getInt(self::ORDER_ID);
         $items = (array)$request->request->get(self::PARAM_ITEMS);
         $customerTransfer = $this->getLoggedInCustomerTransfer();
 

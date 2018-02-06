@@ -81,6 +81,9 @@ class ReorderHandler
 
         $itemsToAdd = [];
         foreach ($items as $item) {
+            if (!$idOrderItems) {
+                break;
+            }
             if (!in_array($item->getId(), $idOrderItems)) {
                 continue;
             }
@@ -90,7 +93,7 @@ class ReorderHandler
             unset($idOrderItems[$key]);
         }
 
-        $quoteTransfer = $this->cartClient->addItems($items->getArrayCopy());
+        $quoteTransfer = $this->cartClient->addItems($itemsToAdd);
         $this->cartClient->storeQuote($quoteTransfer);
 
         //if (!empty($idOrderItems)) show error

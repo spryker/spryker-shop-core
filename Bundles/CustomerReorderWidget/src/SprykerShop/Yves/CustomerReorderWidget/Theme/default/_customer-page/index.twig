@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block form_start %}
-<form action="{{ path('customer/order/reorder-items') }}" method="post">
-    <input type="hidden" name="id" value="{{ _widget.order.idSalesOrder }}">
+<form action="{{ path('customer/order/reorder-items') }}" method="post" class="reorder">
+    <input type="hidden" name="id" value="{{ _widget.order.idSalesOrder }}" />
 {% endblock %}
 
 {% block form_checkbox %}

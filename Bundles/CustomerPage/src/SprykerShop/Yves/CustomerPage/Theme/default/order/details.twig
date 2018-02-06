@@ -44,6 +44,6 @@
         </div>
     </div>
     {% if widgetExists('CustomerReorderWidgetPlugin') %}
-        {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_start', _view.order) }}
+        {{ widgetBlock('CustomerReorderWidgetPlugin', 'form_end', _view.order) }}
     {% endif %}
 {% endblock %}

@@ -29,7 +29,7 @@ class OrderControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{customer}/order/reorder', static::ROUTE_CART_ORDER_REPEAT, 'CustomerReorderWidget', 'Order', 'reorder')
             ->assert('customer', $allowedLocalesPattern . 'customer|customer')
             ->value('customer', 'customer');
-        $this->createController('/{customer}/order/reorder-items', static::ROUTE_CART_ORDER_ITEMS_REPEAT, 'CustomerReorderWidget', 'Order', 'reorder')
+        $this->createController('/{customer}/order/reorder-items', static::ROUTE_CART_ORDER_ITEMS_REPEAT, 'CustomerReorderWidget', 'Order', 'reorderItems')
             ->assert('customer', $allowedLocalesPattern . 'customer|customer')
             ->value('customer', 'customer')
             ->method('POST');
