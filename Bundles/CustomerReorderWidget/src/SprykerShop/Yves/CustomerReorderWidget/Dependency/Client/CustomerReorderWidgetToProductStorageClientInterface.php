@@ -10,19 +10,10 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 interface CustomerReorderWidgetToProductStorageClientInterface
 {
     /**
-     * @param int $idProductAbstract
+     * @param int $idProductConcrete
      * @param string $localeName
      *
      * @return array
      */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName);
-
-    /**
-     * @param array $data
-     * @param string $localeName
-     * @param array $selectedAttributes
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
+    public function getProductConcreteStorageData($idProductConcrete, $localeName);
 }

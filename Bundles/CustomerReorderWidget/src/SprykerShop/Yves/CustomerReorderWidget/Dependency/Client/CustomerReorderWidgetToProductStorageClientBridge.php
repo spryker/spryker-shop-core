@@ -23,25 +23,13 @@ class CustomerReorderWidgetToProductStorageClientBridge implements CustomerReord
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int $idProductConcrete
      * @param string $localeName
      *
      * @return array
      */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName)
+    public function getProductConcreteStorageData($idProductConcrete, $localeName)
     {
-        return $this->productStorageClient->getProductAbstractStorageData($idProductAbstract, $localeName);
-    }
-
-    /**
-     * @param array $data
-     * @param string $localeName
-     * @param array $selectedAttributes
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
-    {
-        return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
+        return $this->productStorageClient->getProductConcreteStorageData($idProductConcrete, $localeName);
     }
 }

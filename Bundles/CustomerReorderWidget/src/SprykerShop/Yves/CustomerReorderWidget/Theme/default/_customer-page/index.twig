@@ -10,7 +10,10 @@
 {% endblock %}
 
 {% block form_checkbox %}
-    <input type="checkbox" name="items[]" value="{{ _widget.item.id }}">
+    <input type="checkbox"
+           {% if _widget.availability %} disabled {% endif %}
+           name="items[]" value="{{ _widget.item.id }}"
+    />
 {% endblock %}
 
 {% block form_buttons %}
