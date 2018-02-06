@@ -5,12 +5,13 @@
 {% endblock %}
 
 {% block form_start %}
-<form action="{{ path('customer/order/reorder-items') }}" method="post" class="reorder">
+<form action="{{ path('customer/order/reorder-items') }}" method="post"
+      class="reorder" data-component="customer-reorder-widget">
     <input type="hidden" name="id" value="{{ _widget.order.idSalesOrder }}" />
 {% endblock %}
 
 {% block form_checkbox %}
-    <input type="checkbox"
+    <input type="checkbox" class="reorder order-item"
            {% if _widget.availability %} disabled {% endif %}
            name="items[]" value="{{ _widget.item.id }}"
     />
@@ -23,7 +24,9 @@
     </a>
 </div>
 <div class="small-12 medium-6 large-4 columns align-bottom">
-    <input type="submit" class="button expanded success" value="{{ 'customer.order.reorder_selected' | trans }}">
+    <input type="submit" class="button expanded success disabled reorder partial"
+           value="{{ 'customer.order.reorder_selected' | trans }}"
+    />
 </div>
 {% endblock %}
 
