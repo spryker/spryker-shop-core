@@ -24,11 +24,11 @@ class NewsletterWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @return string
      */
     protected function createNewsletterSubscriptionFormType()
     {
-        return new NewsletterSubscriptionForm();
+        return NewsletterSubscriptionForm::class;
     }
 
     /**

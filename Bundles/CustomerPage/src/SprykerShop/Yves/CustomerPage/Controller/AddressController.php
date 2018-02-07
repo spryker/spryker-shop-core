@@ -58,14 +58,14 @@ class AddressController extends AbstractCustomerController
         $addressForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->createAddressForm($dataProvider->getOptions())
+            ->getAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
         if ($addressForm->isSubmitted() === false) {
             $addressForm->setData($dataProvider->getData());
         }
 
-        if ($addressForm->isValid()) {
+        if ($addressForm->isSubmitted() && $addressForm->isValid()) {
             $customerTransfer = $this->createAddress($customerTransfer, $addressForm->getData());
 
             if ($customerTransfer) {
@@ -96,14 +96,14 @@ class AddressController extends AbstractCustomerController
         $addressForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->createAddressForm($dataProvider->getOptions())
+            ->getAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
         if ($addressForm->isSubmitted() === false) {
             $idCustomerAddress = $request->query->getInt('id');
 
             $addressForm->setData($dataProvider->getData($idCustomerAddress));
-        } elseif ($addressForm->isValid()) {
+        } elseif ($addressForm->isSubmitted() && $addressForm->isValid()) {
             $customerTransfer = $this->processAddressUpdate($addressForm->getData());
 
             if ($customerTransfer !== null) {

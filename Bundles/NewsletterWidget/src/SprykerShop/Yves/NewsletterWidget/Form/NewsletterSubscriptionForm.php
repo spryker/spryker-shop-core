@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\NewsletterWidget\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewsletterSubscriptionForm extends AbstractType
@@ -21,7 +21,7 @@ class NewsletterSubscriptionForm extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'newsletterSubscriptionForm';
     }
@@ -38,18 +38,6 @@ class NewsletterSubscriptionForm extends AbstractType
                 'id' => self::FORM_ID,
             ],
         ]);
-    }
-
-    /**
-     * @deprecated Use `configureOptions()` instead.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 
     /**
@@ -73,7 +61,7 @@ class NewsletterSubscriptionForm extends AbstractType
      */
     protected function addSubscribeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SUBSCRIBE, 'email', [
+        $builder->add(self::FIELD_SUBSCRIBE, EmailType::class, [
             'label' => 'newsletter.subscribe',
             'required' => false,
             'constraints' => [

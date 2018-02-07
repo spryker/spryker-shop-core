@@ -12,8 +12,8 @@ use ArrayObject;
 interface CheckoutPageToProductBundleClientInterface
 {
     /**
-     * @param ArrayObject $items
-     * @param ArrayObject $bundleItems
+     * @param \ArrayObject $items
+     * @param \ArrayObject $bundleItems
      *
      * @return array
      */

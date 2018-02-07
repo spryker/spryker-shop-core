@@ -7,14 +7,12 @@
 
 namespace SprykerShop\Yves\CatalogPage\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer;
-
 interface CatalogPageToProductCategoryFilterStorageClientInterface
 {
     /**
      * @param int $idCategory
      *
-     * @return ProductCategoryFilterStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer|null
      */
     public function getProductCategoryFilterByIdCategory($idCategory);
 }
