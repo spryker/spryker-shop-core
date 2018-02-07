@@ -36,6 +36,7 @@ class MessengerHandler
 
     /**
      * In all meanings dirty jack copied from CartPage
+     *
      * @TODO discuss with @Nyulas
      *
      * @return void
