@@ -221,7 +221,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCustomerOrderWidgetPlugins(Container $container)
+    protected function addCustomerOrderWidgetPlugins(Container $container): Container
     {
         $container[static::PLUGIN_CUSTOMER_ORDER_WIDGETS] = function () {
             return $this->getCustomerOrderWidgetPlugins();
