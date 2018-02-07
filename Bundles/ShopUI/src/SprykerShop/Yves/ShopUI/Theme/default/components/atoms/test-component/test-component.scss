@@ -1,8 +1,0 @@
-@mixin test-component($name: '.test-component') {
-    #{$name} {
-        color: $color-main;
-        font-size: 30px;
-
-        @content;
-    }
-}
