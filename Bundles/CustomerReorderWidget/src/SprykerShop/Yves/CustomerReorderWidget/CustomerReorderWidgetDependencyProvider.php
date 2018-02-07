@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CustomerReorderWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientBridge;
@@ -23,6 +24,8 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -35,6 +38,8 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addCustomerClient($container);
         $container = $this->addProductBundleClient($container);
         $container = $this->addProductStorageClient($container);
+
+        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -104,6 +109,22 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container[self::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
             return new CustomerReorderWidgetToProductBundleClientBridge($container->getLocator()->productBundle()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addApplication(Container $container): Container
+    {
+        $container[self::PLUGIN_APPLICATION] = function () {
+            $pimplePlugin = new Pimple();
+
+            return $pimplePlugin->getApplication();
         };
 
         return $container;

@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\CustomerReorderWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\Application;
+use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
@@ -15,6 +17,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityHandlerInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderHandlerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandler;
@@ -50,6 +53,17 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     {
         return new OrderHandler(
             $this->getSalesClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerHandler
+     */
+    public function createMessengerHandler(): MessengerHandler
+    {
+        return new MessengerHandler(
+            $this->getFlashMessenger(),
+            $this->getCartClient()
         );
     }
 
@@ -91,5 +105,21 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     protected function getProductStorageClient(): CustomerReorderWidgetToProductStorageClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
+     */
+    protected function getFlashMessenger(): FlashMessengerInterface
+    {
+        return $this->getApplication()['flash_messenger'];
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Application
+     */
+    protected function getApplication(): Application
+    {
+        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::PLUGIN_APPLICATION);
     }
 }

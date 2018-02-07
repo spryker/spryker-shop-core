@@ -43,4 +43,12 @@ class CustomerReorderWidgetToCartClientBridge implements CustomerReorderWidgetTo
     {
         $this->cartClient->storeQuote($quoteTransfer);
     }
+
+    /**
+     * @return \Spryker\Client\Cart\Zed\CartStubInterface
+     */
+    public function getZedStub()
+    {
+        return $this->cartClient->getZedStub();
+    }
 }
