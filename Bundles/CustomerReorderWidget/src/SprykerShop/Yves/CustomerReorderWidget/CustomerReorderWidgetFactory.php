@@ -18,6 +18,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityHandlerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerHandler;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerHandlerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderHandlerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandler;
@@ -57,9 +58,9 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerHandler
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerHandlerInterface
      */
-    public function createMessengerHandler(): MessengerHandler
+    public function createMessengerHandler(): MessengerHandlerInterface
     {
         return new MessengerHandler(
             $this->getFlashMessenger(),
