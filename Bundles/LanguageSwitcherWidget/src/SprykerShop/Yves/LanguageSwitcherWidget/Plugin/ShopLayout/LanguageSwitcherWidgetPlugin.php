@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\LanguageSwitcherWidget\Plugin\ShopLayout;
 
-use Generated\Shared\Transfer\UrlTransfer;
+use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShopLayout\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
     {
         $currentUrlStorage = $this->getFactory()
             ->getUrlStorageClient()
-            ->getUrlTransferFromUrl($request->getPathInfo());
+            ->getUrlStorageTransferFromUrl($request->getPathInfo());
         $localeUrls = [];
 
         if ($currentUrlStorage !== null && $currentUrlStorage->getLocaleUrls()->count() !== 0) {
@@ -85,8 +85,8 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
         foreach ($locales as $locale) {
             $language = $this->getLanguageFromLocale($locale);
             foreach ($localeUrls as $localeUrl) {
-                if ($localeUrl[UrlTransfer::LOCALE_NAME] === $locale) {
-                    $languages[$language] = $localeUrl[UrlTransfer::URL] . '?' . $request->getQueryString();
+                if ($localeUrl[UrlStorageTransfer::LOCALE_NAME] === $locale) {
+                    $languages[$language] = $localeUrl[UrlStorageTransfer::URL] . '?' . $request->getQueryString();
                     break;
                 }
             }

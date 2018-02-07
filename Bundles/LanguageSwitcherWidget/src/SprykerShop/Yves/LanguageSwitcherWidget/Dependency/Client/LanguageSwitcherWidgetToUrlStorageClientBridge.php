@@ -25,10 +25,10 @@ class LanguageSwitcherWidgetToUrlStorageClientBridge implements LanguageSwitcher
     /**
      * @param string $url
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
      */
-    public function getUrlTransferFromUrl($url)
+    public function getUrlStorageTransferFromUrl($url)
     {
-        return $this->urlStorageClient->getUrlTransferFromUrl($url);
+        return $this->urlStorageClient->getUrlStorageTransferFromUrl($url);
     }
 }
