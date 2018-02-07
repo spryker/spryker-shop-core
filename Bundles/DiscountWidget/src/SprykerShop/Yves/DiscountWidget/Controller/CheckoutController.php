@@ -28,7 +28,7 @@ class CheckoutController extends AbstractController
             ->createCheckoutVoucherForm()
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $voucherCode = $form->get(CheckoutVoucherForm::FIELD_VOUCHER_DISCOUNTS)->getData();
 
             $this->getFactory()
