@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\LanguageSwitcherWidget\Plugin\ShopLayout;
 
 use Generated\Shared\Transfer\UrlTransfer;
@@ -16,8 +21,6 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return void
-     *
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function initialize(Request $request): void
     {
@@ -26,7 +29,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
             ->getUrlTransferFromUrl($request->getPathInfo());
         $localeUrls = [];
 
-        if(!is_null($currentUrlStorage) && $currentUrlStorage->getLocaleUrls()->count() !== 0) {
+        if ($currentUrlStorage !== null && $currentUrlStorage->getLocaleUrls()->count() !== 0) {
             $localeUrls = (array)$currentUrlStorage->getLocaleUrls();
         }
 
@@ -55,8 +58,6 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string[]
-     *
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     protected function getLanguages(array $localeUrls, Request $request): array
     {
@@ -64,7 +65,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
             ->getStore()
             ->getLocales();
 
-        if(!empty($localeUrls)) {
+        if (!empty($localeUrls)) {
             return $this->attachLocaleUrlsFromStorageToLanguages($locales, $localeUrls, $request);
         }
 
@@ -83,8 +84,8 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
         $languages = [];
         foreach ($locales as $locale) {
             $language = $this->getLanguageFromLocale($locale);
-            foreach($localeUrls as $localeUrl) {
-                if($localeUrl[UrlTransfer::LOCALE_NAME] === $locale) {
+            foreach ($localeUrls as $localeUrl) {
+                if ($localeUrl[UrlTransfer::LOCALE_NAME] === $locale) {
                     $languages[$language] = $localeUrl[UrlTransfer::URL] . '?' . $request->getQueryString();
                     break;
                 }
@@ -121,7 +122,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      */
     protected function replaceCurrentUrlLanguage($currentUrl, array $languages, $replacementLanguage)
     {
-        if(preg_match('/\/(' . implode('|', $languages) . ')/', $currentUrl)) {
+        if (preg_match('/\/(' . implode('|', $languages) . ')/', $currentUrl)) {
             return preg_replace('/\/(' . implode('|', $languages) . ')/', '/' . $replacementLanguage, $currentUrl, 1);
         }
 
@@ -140,8 +141,6 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
 
     /**
      * @return string
-     *
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     protected function getCurrentLanguage(): string
     {
