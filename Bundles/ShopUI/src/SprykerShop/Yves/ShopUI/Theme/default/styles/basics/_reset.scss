@@ -1,69 +1,71 @@
-* {
-    @include reset;
-    &:hover,
-    &:active,
-    &:focus {
-        outline: 0;
+@mixin basic-reset() {
+    * {
+        @include reset;
+        &:hover,
+        &:active,
+        &:focus {
+            outline: 0;
+        }
+        
+        &::before,
+        &::after {
+            position: relative;
+            box-sizing: border-box;
+            color: inherit;
+        }
     }
-    
-    &::before,
-    &::after {
-        position: relative;
-        box-sizing: border-box;
-        color: inherit;
+
+    html {
+        @include reset;
+        position: static;
     }
-}
 
-html {
-    @include reset;
-    position: static;
-}
+    // HTML5 display-role reset for older browsers
 
-// HTML5 display-role reset for older browsers
-
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-    display: block;
-}
-
-ol,
-ul {
-    list-style: none;
-}
-
-blockquote,
-q {
-    quotes: none;
-
-    &::before,
-    &::after {
-        content: none;
+    article,
+    aside,
+    details,
+    figcaption,
+    figure,
+    footer,
+    header,
+    hgroup,
+    menu,
+    nav,
+    section {
+        display: block;
     }
-}
 
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
+    ol,
+    ul {
+        list-style: none;
+    }
 
-form {
-    width: 100%;
-}
+    blockquote,
+    q {
+        quotes: none;
 
-img {
-    max-width: 100%;
-    max-height: 100%;
-}
+        &::before,
+        &::after {
+            content: none;
+        }
+    }
 
-.custom-element {
-    display: block;
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .custom-element {
+        display: block;
+    }
 }

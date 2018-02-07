@@ -1,5 +1,3 @@
-@import '../../../styles/settings';
-
 @mixin test-component($name: '.test-component') {
     #{$name} {
         color: $color-main;

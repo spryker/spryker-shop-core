@@ -5,6 +5,7 @@
         &__separator {
             margin-left: spacing(.5);
             margin-right: spacing(.5);
+            color: $color-light;
         }
 
         @content

@@ -1,5 +1,6 @@
 $component-icon-size: spacing(2);
-$component-icon-size-small: spacing();
+$component-icon-size-small: spacing(1.5);
+$component-icon-size-smaller: spacing();
 $component-icon-size-big: spacing(3);
 $component-icon-size-bigger: spacing(4);
 
@@ -15,6 +16,11 @@ $component-icon-size-bigger: spacing(4);
         &--small {
             width: $component-icon-size-small;
             height: $component-icon-size-small;
+        }
+
+        &--smaller {
+            width: $component-icon-size-smaller;
+            height: $component-icon-size-smaller;
         }
 
         &--big {

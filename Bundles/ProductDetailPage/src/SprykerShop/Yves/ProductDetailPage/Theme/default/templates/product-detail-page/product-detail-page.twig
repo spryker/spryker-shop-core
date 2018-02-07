@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    {% include organism('product-details', 'ProductDetailPage') with {
+    {% include molecule('details-panel', 'ProductDetailPage') with {
         class: 'box',
         data: {
             description: product.description,
@@ -46,6 +46,5 @@
 
     {# {{ widgetBlock('ProductReviewWidgetPlugin', 'reviews', product.idProductAbstract) }} #}
     {{ widget('SimilarProductsWidgetPlugin', product) }}
-    {# {{ widget('ProductCmsBlockWidgetPlugin', product) }} #}
-
+    {{ widget('ProductCmsBlockWidgetPlugin', product) }}
 {% endblock %}

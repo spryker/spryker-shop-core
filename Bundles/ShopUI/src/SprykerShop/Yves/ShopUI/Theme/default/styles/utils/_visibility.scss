@@ -1,55 +1,57 @@
-.is-hidden {
-    display: none;
+@mixin util-visibility() {
+    .is-hidden {
+        display: none;
 
-    @each $breakpoint-a, $edges-a in $grid-breakpoints {
-        $edge-min: edge-min($edges-a);
-        $edge-max: edge-max($edges-a);
+        @each $breakpoint-a, $edges-a in $grid-breakpoints {
+            $edge-min: edge-min($edges-a);
+            $edge-max: edge-max($edges-a);
 
-        &-#{$breakpoint-a}-only {
-            @if $edge-max == null {
-                @include media-min($edge-min) {
-                    display: none;
-                }
-            } @else {
-                @include media-between($edge-min, $edge-max) {
-                    display: none;
+            &-#{$breakpoint-a}-only {
+                @if $edge-max == null {
+                    @include media-min($edge-min) {
+                        display: none;
+                    }
+                } @else {
+                    @include media-between($edge-min, $edge-max) {
+                        display: none;
+                    }
                 }
             }
-        }
 
-        @each $breakpoint-b, $edges-b in $grid-breakpoints {
-            @if edge-min($edges-b) > edge-min($edges-a) {
-                $edge-min: edge-min($edges-a);
-                $edge-max: edge-max($edges-b);
+            @each $breakpoint-b, $edges-b in $grid-breakpoints {
+                @if edge-min($edges-b) > edge-min($edges-a) {
+                    $edge-min: edge-min($edges-a);
+                    $edge-max: edge-max($edges-b);
 
-                &-#{$breakpoint-a}-#{$breakpoint-b} {
-                    @if $edge-max == null {
-                        @include media-min($edge-min) {
-                            display: none;
-                        }
-                    } @else {
-                        @include media-between($edge-min, $edge-max) {
-                            display: none;
+                    &-#{$breakpoint-a}-#{$breakpoint-b} {
+                        @if $edge-max == null {
+                            @include media-min($edge-min) {
+                                display: none;
+                            }
+                        } @else {
+                            @include media-between($edge-min, $edge-max) {
+                                display: none;
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
 
-.is-visible {
-    @include is-visible;
-}
+    .is-visible {
+        @include is-visible;
+    }
 
-.is-invisible {
-    @include is-invisible;
-}
+    .is-invisible {
+        @include is-invisible;
+    }
 
-.is-scrollable {
-    overflow-y: auto;
-}
+    .is-scrollable {
+        overflow-y: auto;
+    }
 
-.is-not-scrollable {
-    overflow-y: hidden;
+    .is-not-scrollable {
+        overflow-y: hidden;
+    }
 }

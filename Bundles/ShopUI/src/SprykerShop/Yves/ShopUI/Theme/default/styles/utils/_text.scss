@@ -1,20 +1,22 @@
+@mixin util-text() {
+    .text-small {
+        @include font-size(small);
+    }
 
-.text-small {
-    @include font-size(small);
+    .text-big {
+        @include font-size(big);
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-right {
+        text-align: right;
+    }
 }
 
-.text-big {
-    @include font-size(big);
-}
-
-.text-left {
-    text-align: left;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.text-right {
-    text-align: right;
-}

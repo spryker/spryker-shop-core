@@ -1,7 +1,11 @@
-@import 'settings';
-@import 'helpers';
+@import 'shared';
 
 @import 'utils/text';
+@import 'utils/float';
 @import 'utils/visibility';
+
+@include util-text;
+@include util-float;
+@include util-visibility;
 
 @import 'shame';

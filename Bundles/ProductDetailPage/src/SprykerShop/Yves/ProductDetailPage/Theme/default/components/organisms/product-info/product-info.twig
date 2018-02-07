@@ -10,8 +10,23 @@
     maxQuantity: data.maxQuantity | default(10)
 } | merge(data | default({})) %}
 
+{% set options = [] %}
 {% set brand = data.product.attributes.brand | default(null) %}
 {% set sku = data.product.sku %}
+{% set availabilityWidget = '' %}
+{% set disabled = data.product.idProductConcrete is not defined or data.product.price is null %}
+            
+{% for index in 1..data.maxQuantity %}
+    {% set options = options | merge([{
+        label: index,
+        value: index
+    }]) %}
+{% endfor %}
+
+{% if widgetExists('AvailabilityWidgetPlugin') %}
+    {% set availabilityWidget = widget('AvailabilityWidgetPlugin', data.product) %}
+    {% set disabled = availabilityWidget is empty or data.product.price is null %}
+{% endif %}
 
 {% block body %}
     {% if brand is not empty %}
@@ -23,7 +38,13 @@
 
     {{ widget('PriceWidgetPlugin', data.product) }}
     {# {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }} #}
-    {% include '@ProductDetailPage/_product-detail-page/_partials/variants.twig' %}
+    {% include molecule('variant-configurator', 'ProductDetailPage') with {
+        data: {
+            superAttributes: data.product.attributeMap.superAttributes,
+            selectedAttributes: data.product.selectedAttributes,
+            availableAttributes: data.product.availableAttributes
+        }
+    } only %}
     {# {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }} #}
 
     <hr />
@@ -32,17 +53,8 @@
         {{ widget('data.ProductOptionWidgetPlugin', data.product) }}
 
         <div class="col col--sm-5">
-            {% set options = [] %}
-            
-            {% for index in 1..data.maxQuantity %}
-                {% set options = options | merge([{
-                    label: index,
-                    value: index
-                }]) %}
-            {% endfor %}
-
             <label>
-                {{'page.detail.quantity' | trans}}
+                {{'product.quantity' | trans}}
                 {% include atom('select') with {
                     modifiers: ['expand'],
                     data: {
@@ -53,12 +65,6 @@
         </div>
 
         <div class="col col--sm-6">
-            {% if widgetExists('AvailabilityWidgetPlugin') %}
-                {% set disabled = not widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product) or data.product.price is null %}
-            {% else %}
-                {% set disabled = (data.product.idProductConcrete is not defined or data.product.price is null) %}
-            {% endif %}
-
             <button type="submit" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
                 {% include atom('icon') with {
                     data: {
@@ -69,7 +75,7 @@
             </button>
         </div>
 
-        {# {{ widgetBlock('AvailabilityWidgetPlugin', 'outOfStock', data.product) }} #}
+        {{ availabilityWidget | raw }}
     </form>
 
     {# {{ widget('WishlistWidgetPlugin', data.product) }} #}

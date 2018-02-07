@@ -40,7 +40,7 @@ class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements P
      */
     public static function getTemplate(): string
     {
-        return '@ProductLabelWidget/_product-widget/product-abstract-labels.twig';
+        return '@ProductLabelWidget/templates/product-label-group/product-label-group.twig';
     }
 
     /**

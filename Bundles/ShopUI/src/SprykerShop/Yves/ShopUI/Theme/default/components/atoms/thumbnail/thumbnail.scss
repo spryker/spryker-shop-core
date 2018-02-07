@@ -12,6 +12,10 @@
             height: spacing(40);
         }
 
+        &--bigger {
+            height: spacing(60);
+        }
+
         &__image {
             position: absolute;
             left: 0;

@@ -6,6 +6,10 @@
 
 {% block body %}
     <div class="box">
+        {% block labels %}
+            {{ widget('ProductAbstractLabelWidgetPlugin', data.abstractId) }}
+        {% endblock %}
+
         <div class="grid grid--stretch">
             {% block imageContainer %}
                 <div class="col col--sm-3 col--md-2 col--middle">
@@ -25,10 +29,6 @@
             {% endblock %}
 
             <div class="col col--sm-6 col--md-7 col--xl-8 col--middle">
-                {% block labels %}
-                    {{ widget('ProductAbstractLabelWidgetPlugin', data.abstractId) }}
-                {% endblock %}
-
                 {% block groups %}
                     {{ widget('ProductGroupWidgetPlugin', data.abstractId) }}
                 {% endblock %}
@@ -59,6 +59,7 @@
                         <a class="button button--expand" href="{{ data.url }}">
                             {{ 'product.view' | trans }}
                             {% include atom('icon') with {
+                                modifiers: ['small'],
                                 data: {
                                     name: 'angle-double-right'
                                 }

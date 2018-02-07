@@ -1,59 +1,60 @@
-body {
-    @include font-size(default);
-    @include font-weight(regular);
-    @include line-height(default);
-    background-color: $color-bg;
-    color: $color-text;
-    font-family: $font-family;
-}
+@mixin basic-typography() {
+    body {
+        @include font-size(default);
+        @include font-weight(regular);
+        @include line-height(default);
+        background-color: $color-bg;
+        color: $color-text;
+        font-family: $font-family;
+    }
 
-@each $i in (1, 2, 3, 4, 5, 6) {
-    h#{$i} {
-        @include font-size($i);
-        @include line-height($i);
+    @each $i in (1, 2, 3, 4, 5, 6) {
+        h#{$i} {
+            @include font-size($i);
+            @include line-height($i);
 
-        &--margins {
-            margin: spacing(4) 0 spacing(2) 0;
+            &--margins {
+                margin: spacing(4) 0 spacing(2) 0;
+            }
         }
     }
-}
 
-a {
-    color: $color-main;
-    text-decoration: none;
+    a {
+        color: $color-main;
+        text-decoration: none;
 
-    &:hover {
-        text-decoration: underline;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    b,
+    strong {
+        @include font-weight(bold);
+    }
+
+    i,
+    em,
+    cite {
+        font-style: italic;
+    }
+
+    hr {
+        border-bottom: 1px solid $color-lighter;
+        margin: spacing() 0;
+    }
+
+    small {
+        @include font-size(small);
+    }
+
+    big {
+        @include font-size(big);
+    }
+
+    p,
+    blockquote,
+    iframe {
+        margin: spacing() 0;
     }
 }
-
-b,
-strong {
-    @include font-weight(bold);
-}
-
-i,
-em,
-cite {
-    font-style: italic;
-}
-
-hr {
-    border-bottom: 1px solid $color-lighter;
-    margin: spacing() 0;
-}
-
-small {
-    @include font-size(small);
-}
-
-big {
-    @include font-size(big);
-}
-
-p,
-blockquote,
-iframe {
-    margin: spacing() 0;
-}
-

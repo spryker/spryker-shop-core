@@ -1,0 +1,43 @@
+{% extends model('component') %}
+
+{% set config = {
+    name: 'variant-configurator',
+    tag: 'section'
+} | merge(config | default({})) %}
+
+{% set data = {
+    superAttributes: data.superAttributes | default([]),
+    selectedAttributes: data.selectedAttributes | default([]),
+    availableAttributes: data.availableAttributes | default([])
+} | merge(data | default({})) %}
+
+{% block component %}
+    {% if data.superAttributes is not empty %}{{parent()}}{% endif %}
+{% endblock %}
+
+{% block body %}
+    <hr />
+    <form method="GET">
+        {% for name, values in data.superAttributes %}
+            {% set selectedValue = data.selectedAttributes[name] | default(null) %}
+            {% set isAvailable = true %}
+
+            {% if name in data.availableAttributes | keys %}
+                {% set values = data.availableAttributes[name] %}
+            {% else %}
+                {% set isAvailable = data.selectedAttributes | length == 0 %}
+            {% endif %}
+
+            {% include molecule('variant', 'ProductDetailPage') with {
+                data: {
+                    name: name,
+                    formName: 'attribute[' ~ name ~ ']',
+                    values: values,
+                    selectedValue: selectedValue,
+                    label: ('product.attribute.' ~ name) | trans,
+                    isAvailable: isAvailable
+                }
+            } only %}
+        {% endfor %}
+    </form>
+{% endblock %}

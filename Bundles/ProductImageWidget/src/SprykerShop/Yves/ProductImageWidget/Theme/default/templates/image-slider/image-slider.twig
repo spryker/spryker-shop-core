@@ -7,7 +7,13 @@
 } only %}
     {% block slide %}
         <div class="text-center">
-            <img itemprop="image" src="{{ slide.externalUrlLarge }}">
+            {% include atom('thumbnail') with {
+                modifiers: ['bigger'],
+                attributes: {
+                    itemprop: 'image',
+                    src: slide.externalUrlLarge
+                }
+            } only %}
         </div>
     {% endblock %}
 {% endembed %}

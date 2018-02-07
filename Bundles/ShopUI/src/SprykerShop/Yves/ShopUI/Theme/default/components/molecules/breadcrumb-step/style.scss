@@ -1,5 +1,4 @@
-@import '../../../styles/settings';
-@import '../../../styles/helpers';
+@import '../../../styles/shared';
 @import 'breadcrumb-step';
 
 @include component-breadcrumb-step();

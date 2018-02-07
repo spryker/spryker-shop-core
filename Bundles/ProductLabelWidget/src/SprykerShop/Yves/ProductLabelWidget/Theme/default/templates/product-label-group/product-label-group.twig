@@ -1,0 +1,15 @@
+{% set dictionary = dictionary | default(_widget.productLabelDictionaryItemTransfers) %}
+{% set labels = labels | default([]) %}
+
+{% for item in dictionary %}
+    {% set labels = labels | merge([{
+        text: item.getName() | default(''),
+        type: item.frontEndReference | default('')
+    }]) %}
+{% endfor %}
+
+{% include molecule('label-group', 'ProductLabelWidget') with {
+    data: {
+        labels: labels
+    }
+} only %}

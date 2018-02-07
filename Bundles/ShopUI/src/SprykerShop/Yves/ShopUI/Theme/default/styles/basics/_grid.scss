@@ -1,118 +1,119 @@
-.container {
-    display: block;
-    width: 100%;
-    max-width: $grid-max-width;
-    margin: auto;
-}
-
-.grid {
-    @include clearfix;
-    clear: both;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: flex-start;
-    justify-content: flex-start;
-    max-width: 100%;
-
-    &--top {
-        align-items: flex-start;
-    }
-
-    &--bottom {
-        align-items: flex-end;
-    }
-
-    &--left {
-        justify-content: flex-start;
-    }
-
-    &--right {
-        justify-content: flex-end;
-    }
-
-    &--center {
-        justify-content: center;
-    }
-
-    &--middle {
-        align-items: center;
-    }
-
-    &--justify {
-        justify-content: space-between;
-
-        & .col {
-            margin-left: auto;
-            margin-right: auto;
-
-            &:first-child {
-                margin-left: 0;
-            }
-
-            &:last-child {
-                margin-right: 0;
-            }
-        }
-    }
-
-    &--stretch {
-        align-items: stretch;
-
-        & .col {
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-    }
-
-    &.container {
+@mixin basic-grid() {
+    .container {
+        display: block;
+        width: 100%;
         max-width: $grid-max-width;
+        margin: auto;
     }
-}
 
-.col {
-    @include clearfix;
-    float: left;
-    display: block;
-    flex-grow: 0;
-    flex-basis: auto;
-    
-    @each $breakpoint, $edges in $grid-breakpoints {
-        @include media-min(edge-min($edges)) {
-            @for $column from 1 through $grid-columns {
-                &--#{$breakpoint}-#{$column} {
-                    width: span($column);
-                    min-width: span($column);
+    .grid {
+        @include clearfix;
+        clear: both;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        max-width: 100%;
+
+        &--top {
+            align-items: flex-start;
+        }
+
+        &--bottom {
+            align-items: flex-end;
+        }
+
+        &--left {
+            justify-content: flex-start;
+        }
+
+        &--right {
+            justify-content: flex-end;
+        }
+
+        &--center {
+            justify-content: center;
+        }
+
+        &--middle {
+            align-items: center;
+        }
+
+        &--justify {
+            justify-content: space-between;
+
+            & .col {
+                margin-left: auto;
+                margin-right: auto;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &:last-child {
+                    margin-right: 0;
                 }
             }
         }
+
+        &--stretch {
+            align-items: stretch;
+
+            & .col {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
+
+        &.container {
+            max-width: $grid-max-width;
+        }
     }
 
-    &--expand {
-        flex-grow: 1;
-    }
+    .col {
+        @include clearfix;
+        float: left;
+        display: block;
+        flex-grow: 0;
+        flex-basis: auto;
+        
+        @each $breakpoint, $edges in $grid-breakpoints {
+            @include media-min(edge-min($edges)) {
+                @for $column from 1 through $grid-columns {
+                    &--#{$breakpoint}-#{$column} {
+                        width: span($column);
+                        min-width: span($column);
+                    }
+                }
+            }
+        }
 
-    &--top {
-        align-self: flex-start;
-    }
+        &--expand {
+            flex-grow: 1;
+        }
 
-    &--bottom {
-        align-self: flex-end;
-    }
+        &--top {
+            align-self: flex-start;
+        }
 
-    &--left {
-        justify-self: flex-start;
-    }
+        &--bottom {
+            align-self: flex-end;
+        }
 
-    &--right {
-        justify-self: flex-end;
-    }
+        &--left {
+            justify-self: flex-start;
+        }
 
-    &--center {
-        justify-self: center;
-    }
+        &--right {
+            justify-self: flex-end;
+        }
 
-    &--middle {
-        align-self: center;
+        &--center {
+            justify-self: center;
+        }
+
+        &--middle {
+            align-self: center;
+        }
     }
 }
-

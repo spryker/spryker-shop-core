@@ -4,7 +4,8 @@
     {% embed molecule('simple-carousel') with {
         class: 'is-hidden-lg-xl',
         data: {
-            slides: products
+            slides: products,
+            showDots: false
         },
         attributes: {
             'slides-to-show': 1
@@ -19,7 +20,8 @@
         modifiers: ['inset'],
         class: 'is-hidden-sm-md',
         data: {
-            slides: products
+            slides: products,
+            showDots: false
         },
         attributes: {
             'slides-to-show': 4

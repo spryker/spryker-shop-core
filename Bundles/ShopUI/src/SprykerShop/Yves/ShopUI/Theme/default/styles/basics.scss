@@ -1,7 +1,9 @@
-@import 'settings';
-@import 'helpers';
+@import 'shared';
 
 @import 'basics/reset';
-@import 'basics/icon';
 @import 'basics/typography';
 @import 'basics/grid';
+
+@include basic-reset;
+@include basic-typography;
+@include basic-grid;
