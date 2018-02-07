@@ -1,6 +1,6 @@
 {
-  "name": "spryker-shop/permission",
-  "description": "Permission module",
+  "name": "spryker-shop/shop-permission",
+  "description": "Shop Permission module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
