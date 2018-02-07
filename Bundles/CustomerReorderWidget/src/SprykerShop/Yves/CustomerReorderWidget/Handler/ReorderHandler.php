@@ -104,7 +104,7 @@ class ReorderHandler implements ReorderHandlerInterface
      *
      * @return void
      */
-    protected function updateCart(array $orderItems)
+    protected function updateCart(array $orderItems): void
     {
         $quote = new QuoteTransfer();
         $this->cartClient->storeQuote($quote);
