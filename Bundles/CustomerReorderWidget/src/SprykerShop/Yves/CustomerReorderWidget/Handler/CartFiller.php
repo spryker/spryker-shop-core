@@ -17,7 +17,6 @@ class CartFiller implements CartFillerInteface
 {
     /**
      * Name of field in grouped items.
-     * Softlink to ProductBundle
      * @see \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
      */
     public const BUNDLE_PRODUCT = 'bundleProduct';
