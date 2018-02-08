@@ -51,7 +51,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCartClient(Container $container): Container
     {
-        $container[self::CLIENT_CART] = function (Container $container) {
+        $container[static::CLIENT_CART] = function (Container $container) {
             return new CustomerReorderWidgetToCartClientBridge($container->getLocator()->cart()->client());
         };
 
@@ -93,7 +93,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new CustomerReorderWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
@@ -107,7 +107,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductBundleClient(Container $container): Container
     {
-        $container[self::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
+        $container[static::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
             return new CustomerReorderWidgetToProductBundleClientBridge($container->getLocator()->productBundle()->client());
         };
 
@@ -121,7 +121,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addApplication(Container $container): Container
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container[static::PLUGIN_APPLICATION] = function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
