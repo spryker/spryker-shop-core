@@ -1,3 +1,3 @@
 # NewsletterWidget Changelog
 
-[Release Changelog](https://github.com/spryker-shop/NewsletterWidget/releases)
+[Release Changelog](https://github.com/spryker-shop/newsletter-widget/releases)

@@ -1,3 +1,3 @@
 # HomePage Changelog
 
-[Release Changelog](https://github.com/spryker-shop/HomePage/releases)
+[Release Changelog](https://github.com/spryker-shop/home-page/releases)

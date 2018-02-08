@@ -3,6 +3,7 @@
   "description": "ProductNewPage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/catalog": "^5.2.0",
     "spryker/kernel": "^3.16.0",
     "spryker/product-new": "^1.1.0",

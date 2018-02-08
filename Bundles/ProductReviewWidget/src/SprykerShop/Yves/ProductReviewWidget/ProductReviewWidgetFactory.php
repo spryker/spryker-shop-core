@@ -68,11 +68,11 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @return string
      */
     protected function createProductReviewFormType()
     {
-        return new ProductReviewForm();
+        return ProductReviewForm::class;
     }
 
     /**

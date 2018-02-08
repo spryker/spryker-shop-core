@@ -1,19 +1,19 @@
 {
-  "name": "spryker-shop/permission",
-  "description": "Permission module",
+  "name": "spryker-shop/shop-permission",
+  "description": "Shop Permission module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.0.0"
+    "php": ">=7.1",
+    "spryker/kernel": "^3.0.0",
+    "spryker/permission": "^0.0.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/permission": "^0.0.1",
     "spryker/testify": "*",
     "spryker/silex": "^2.0.0",
     "spryker/twig": "^3.0.0"
   },
   "suggest": {
-    "spryker/permission": "^0.0.1 Is you want to use Permission module for ShopApplication",
     "spryker/twig": "^3.0.0 If you want to use the permission plugin for Twig",
     "spryker/silex": "^2.0.0 If you want to use the permission plugin for Twig"
   },

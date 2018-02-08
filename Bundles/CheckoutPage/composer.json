@@ -3,6 +3,7 @@
   "description": "CheckoutPage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker-shop/customer-page": "^0.1.0",
     "spryker-shop/home-page": "^0.1.0",
     "spryker-shop/money-widget": "^0.1.0",

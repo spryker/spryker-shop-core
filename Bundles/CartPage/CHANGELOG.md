@@ -1,3 +1,3 @@
 # CartPage Changelog
 
-[Release Changelog](https://github.com/spryker-shop/CartPage/releases)
+[Release Changelog](https://github.com/spryker-shop/cart-page/releases)

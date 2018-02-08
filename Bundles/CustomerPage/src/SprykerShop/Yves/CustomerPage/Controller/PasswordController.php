@@ -28,10 +28,10 @@ class PasswordController extends AbstractCustomerController
         $form = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->createForgottenPasswordForm()
+            ->getForgottenPasswordForm()
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getData());
 
@@ -63,13 +63,13 @@ class PasswordController extends AbstractCustomerController
         $form = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->createFormRestorePassword()
+            ->getFormRestorePassword()
             ->setData([
                 RestorePasswordForm::FIELD_RESTORE_PASSWORD_KEY => $request->query->get('token'),
             ])
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getData());
 
