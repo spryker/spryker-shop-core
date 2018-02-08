@@ -40,7 +40,7 @@ class OrderController extends AbstractController
             ->getOrderTransfer($idOrder, $customerTransfer);
 
         $this->getFactory()
-            ->createReorderHandler()
+            ->createCartFiller()
             ->reorder($order);
 
         $this->getFactory()
@@ -67,7 +67,7 @@ class OrderController extends AbstractController
             ->getOrderTransfer($idSalesOrder, $customerTransfer);
 
         $this->getFactory()
-            ->createReorderHandler()
+            ->createCartFiller()
             ->reorderItems($order, $items);
 
         $this->getFactory()

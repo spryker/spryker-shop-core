@@ -19,17 +19,17 @@ use SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerHandlerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderHandler;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderHandlerInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandler;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandlerInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\CartFiller;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\CartFillerInteface;
 
 class CustomerReorderWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\ReorderHandlerInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\CartFillerInteface
      */
-    public function createReorderHandler(): ReorderHandlerInterface
+    public function createCartFiller(): CartFillerInteface
     {
-        return new ReorderHandler(
+        return new CartFiller(
             $this->getCartClient(),
             $this->getProductBundleClient()
         );

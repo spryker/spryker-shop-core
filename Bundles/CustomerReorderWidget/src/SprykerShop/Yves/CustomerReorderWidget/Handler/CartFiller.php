@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 
-class ReorderHandler implements ReorderHandlerInterface
+class CartFiller implements CartFillerInteface
 {
     /**
      * Name of field in grouped items.
