@@ -65,8 +65,8 @@ class OrderController extends AbstractController
             return $this->redirectResponseInternal('error/404');
         }
 
-        $idSalesOrder = $request->request->getInt(self::ID_ORDER);
-        $items = (array)$request->request->get(self::PARAM_ITEMS);
+        $idSalesOrder = $request->request->getInt(static::ID_ORDER);
+        $items = (array)$request->request->get(static::PARAM_ITEMS);
 
         $order = $this->getFactory()
             ->createOrderHandler()
