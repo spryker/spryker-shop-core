@@ -38,7 +38,6 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addSalesClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addProductBundleClient($container);
-
         $container = $this->addApplication($container);
 
         return $container;
