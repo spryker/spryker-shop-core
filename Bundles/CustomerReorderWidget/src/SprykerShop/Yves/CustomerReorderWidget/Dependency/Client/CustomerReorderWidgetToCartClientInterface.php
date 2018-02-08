@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Cart\Zed\CartStubInterface;
 
 interface CustomerReorderWidgetToCartClientInterface
 {
@@ -16,17 +17,17 @@ interface CustomerReorderWidgetToCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers);
+    public function addItems(array $itemTransfers): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function storeQuote(QuoteTransfer $quoteTransfer);
+    public function storeQuote(QuoteTransfer $quoteTransfer): void;
 
     /**
      * @return \Spryker\Client\Cart\Zed\CartStubInterface
      */
-    public function getZedStub();
+    public function getZedStub(): CartStubInterface;
 }
