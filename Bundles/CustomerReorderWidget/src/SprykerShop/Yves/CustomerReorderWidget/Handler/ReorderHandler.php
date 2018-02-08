@@ -68,19 +68,12 @@ class ReorderHandler implements ReorderHandlerInterface
 
         $itemsToAdd = [];
         foreach ($items as $item) {
-            if (!$idOrderItems) {
-                break;
-            }
             if (!in_array($item->getId(), $idOrderItems)) {
                 continue;
             }
 
             $itemsToAdd[] = $item;
-            $key = array_search($item->getId(), $idOrderItems);
-            unset($idOrderItems[$key]);
         }
-
-        //if (!empty($idOrderItems)) show error
 
         $this->updateCart($itemsToAdd);
     }
