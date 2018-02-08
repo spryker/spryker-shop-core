@@ -18,11 +18,11 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 
 class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
-    const CLIENT_CART = 'CLIENT_CART';
-    const CLIENT_SALES = 'CLIENT_SALES';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
+    public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
+    public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_SALES = 'CLIENT_SALES';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
 
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 

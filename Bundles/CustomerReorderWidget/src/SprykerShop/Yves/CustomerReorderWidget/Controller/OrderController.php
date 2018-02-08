@@ -17,14 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OrderController extends AbstractController
 {
-    const PARAM_ITEMS = 'items';
-    const ORDER_ID = 'id';
+    public const PARAM_ITEMS = 'items';
+    public const ORDER_ID = 'id';
     /**
      * Route for cart page.
      * Described in CartPage module
      * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
-    const ROUTE_CART = 'cart';
+    public const ROUTE_CART = 'cart';
 
     /**
      * @param int $idOrder

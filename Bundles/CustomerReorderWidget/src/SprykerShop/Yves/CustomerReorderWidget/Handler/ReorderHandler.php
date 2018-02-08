@@ -20,7 +20,7 @@ class ReorderHandler implements ReorderHandlerInterface
      * Softlink to ProductBundle
      * @see \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
      */
-    const BUNDLE_PRODUCT = 'bundleProduct';
+    public const BUNDLE_PRODUCT = 'bundleProduct';
 
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface
