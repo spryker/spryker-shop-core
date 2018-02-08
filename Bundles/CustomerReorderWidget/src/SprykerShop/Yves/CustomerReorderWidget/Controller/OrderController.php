@@ -74,14 +74,6 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    protected function getLoggedInCustomerTransfer(): CustomerTransfer
-    {
-        return $this->getFactory()->getCustomerClient()->getCustomer();
-    }
-
-    /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function gerRedirectToCart(): RedirectResponse
