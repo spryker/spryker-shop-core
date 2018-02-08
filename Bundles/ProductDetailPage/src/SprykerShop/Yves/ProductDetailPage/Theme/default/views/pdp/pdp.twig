@@ -1,28 +1,29 @@
 {% extends template('layout-main') %}
 
-{% set product = product | default(_view.product) %}
-{% set productUrl = productUrl | default(_view.productUrl) %}
-{% set title = title | default(product.metaTitle) %}
-{% set title = title is empty ? product.name : title %}
-{% set metaTitle = metaTitle | default(title) %}
-{% set metaDescription = metaDescription | default(product.metaDescription) %}
-{% set metaKeywords = metaKeywords | default(product.metaKeywords) %}
+{% set data = {
+    product: _view.product,
+    productUrl: _view.productUrl,
+    title: product.metaTitle | default(_view.product.name),
+    metaTitle: product.metaTitle | default(_view.product.name),
+    metaDescription: _view.product.metaDescription | default(''),
+    metaKeywords: _view.product.metaKeywords | default('')
+} | merge(data | default({})) %}
 
 {% block breadcrumbs %}
-    {{ widget('ProductCategoryWidgetPlugin', product, app.locale) }}
+    {{ widget('ProductCategoryWidgetPlugin', data.product, app.locale) }}
 {% endblock %}
 
 {% block title %}
-    <h3 itemprop="name">{{ product.name }}</h3>
-    <link itemprop="url" href="{{ productUrl }}" />
+    <h3 itemprop="name">{{ data.product.name }}</h3>
+    <link itemprop="url" href="{{ data.productUrl }}" />
 {% endblock %}
 
 {% block content %}
     <div class="grid">
         <div class="col col--sm-12 col--lg-7 col--xl-8">
             <div class="box">
-                {{ widget('ProductImageWidgetPlugin', product) }}
-                {{ widget('ProductAbstractLabelWidgetPlugin', product) }}
+                {{ widget('ProductImageWidgetPlugin', data.product) }}
+                {{ widget('ProductAbstractLabelWidgetPlugin', data.product) }}
             </div>
         </div>
 
@@ -30,7 +31,7 @@
             {% include organism('product-info', 'ProductDetailPage') with {
                 class: 'box',
                 data: {
-                    product: product
+                    product: data.product
                 }
             } only %}
         </div>
@@ -39,12 +40,12 @@
     {% include molecule('details-panel', 'ProductDetailPage') with {
         class: 'box',
         data: {
-            description: product.description,
-            attributes: product.attributes
+            description: data.product.description,
+            attributes: data.product.attributes
         }
     } only %}
 
     {# {{ widgetBlock('ProductReviewWidgetPlugin', 'reviews', product.idProductAbstract) }} #}
-    {{ widget('SimilarProductsWidgetPlugin', product) }}
-    {{ widget('ProductCmsBlockWidgetPlugin', product) }}
+    {{ widget('SimilarProductsWidgetPlugin', data.product) }}
+    {{ widget('ProductCmsBlockWidgetPlugin', data.product) }}
 {% endblock %}

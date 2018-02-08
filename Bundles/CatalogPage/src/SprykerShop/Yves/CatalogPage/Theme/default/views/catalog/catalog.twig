@@ -1,24 +1,27 @@
 {% extends template('layout-main') %}
 
-{% set title = title | default(_view.category.name | default('')) %}
-{% set metaTitle = metaTitle | default(_view.pageTitle | default(title)) %}
-{% set metaDescription = metaDescription | default(_view.pageDescription | default('')) %}
-{% set metaKeywords = metaKeywords | default(_view.pageKeywords | default('')) %}
-{% set viewMode = viewMode | default(_view.viewMode | default(null)) %}
-
-{% set products = products | default(_view.products) %}
-{% set category = category | default(_view.category | default(null)) %}
-{% set categoryId = categoryId | default(_view.idCategory | default(null)) %}
-{% set facets = facets | default(_view.facets) %}
-{% set filterPath = filterPath | default(_view.filterPath | default(null)) %}
-
-{% set paginationData = {
+{% set pagination = {
     parameters: app.request.query.all(),
     currentPage: _view.pagination.currentPage,
     paginationPath: app.request.getPathInfo(),
     maxPage: _view.pagination.maxPage,
     showAlwaysFirstAndLast: true
-} | merge(paginationData | default({})) %}
+} | merge(pagination | default({})) %}
+
+{% set data = {
+    pagination: pagination,
+    products: _view.products,
+    facets: _view.facets,
+    category: _view.category | default(null),
+    categories: categories | default([]),
+    categoryId: _view.idCategory | default(null),
+    filterPath: _view.filterPath | default(null),
+    title: _view.category.name | default(''),
+    metaTitle: _view.pageTitle | default(_view.category.name | default('')),
+    metaDescription: _view.pageDescription | default(''),
+    metaKeywords: _view.pageKeywords | default(''),
+    viewMode: _view.viewMode | default(null)
+} | merge(data | default({})) %}
 
 {% macro renderBreadcrumbSteps(categoryNode, isLastLeaf, filterPath) %}
     {% import _self as self %}
@@ -45,7 +48,7 @@
     
     {% embed molecule('breadcrumb') with {
         embed: {
-            breadcrumbs: self.renderBreadcrumbSteps(category, true)
+            breadcrumbs: self.renderBreadcrumbSteps(data.category, true)
         }
     } only %}
         {% block breadcrumbs %}
@@ -56,9 +59,9 @@
 
 {% block content %}
     {% block cmsTop %}
-        {% if categoryId %}
+        {% if data.categoryId %}
             <div class="box">
-                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'top', categoryId) }}
+                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'top', data.categoryId) }}
             </div>
         {% endif %}
     {% endblock %}
@@ -85,16 +88,16 @@
                 {% include organism('filter-section') with {
                     class: 'js-catalog__filters-toggle',
                     data: {
-                        facets: facets,
-                        filterPath: filterPath,
-                        categories: categories
+                        facets: data.facets,
+                        filterPath: data.filterPath,
+                        categories: data.categories
                     }
                 } only %}
 
                 {% block cmsMiddle %}
-                    {% if categoryId %}
+                    {% if data.categoryId %}
                         <div class="box">
-                            {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', categoryId) }}
+                            {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', data.categoryId) }}
                         </div>
                     {% endif %}
                 {% endblock %}
@@ -107,33 +110,33 @@
 
                 {% include organism('active-filter-section') with {
                     data: {
-                        facets: facets
+                        facets: data.facets
                     }
                 } only %}
 
                 {% include molecule('pagination') with {
                     class: 'box',
-                    data: paginationData
+                    data: data.pagination
                 } only %}
 
                 <div class="grid grid--stretch">
-                    {% for product in products %}
-                        {{ widget('ProductWidgetPlugin', product, viewMode) }}
+                    {% for product in data.products %}
+                        {{ widget('ProductWidgetPlugin', product, data.viewMode) }}
                     {% endfor %}
                 </div>
 
                 {% include molecule('pagination') with {
                     class: 'box',
-                    data: paginationData
+                    data: data.pagination
                 } only %}
             </div>
         {% endblock %}
     </form>
 
     {% block cmsBottom %}
-        {% if categoryId %}
+        {% if data.categoryId %}
             <div class="box">
-                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'bottom', categoryId) }}
+                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'bottom', data.categoryId) }}
             </div>
         {% endif %}
     {% endblock %}

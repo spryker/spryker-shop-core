@@ -1,12 +1,14 @@
 {% extends view('catalog', 'CatalogPage') %}
 
-{% set searchString = searchString | default(_view.searchString) %}
-{% set title = title |  default(('global.search.results' | trans) ~ searchString) %}
-{% set suggestion = suggestion | default(_view.spellingSuggestion) %}
-
-{% set paginationData = {
+{% set pagination = {
     paginationPath: app.request.attributes.get('_route')
-} | merge(paginationData | default({})) %}
+} | merge(pagination | default({})) %}
+
+{% set data = {
+    title: ('global.search.results' | trans) ~ _view.searchString,
+    searchString: _view.searchString,
+    suggestion: _view.spellingSuggestion
+} | merge(data | default({})) %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -19,11 +21,11 @@
 {% endblock %}
 
 {% block title %}
-    <h3>{{ 'global.search.results' | trans }} "<strong>{{ searchString }}</strong>"</h3>
+    <h3>{{ 'global.search.results' | trans }} "<strong>{{ data.searchString }}</strong>"</h3>
 
     {% embed molecule('spelling-suggestion') with {
         data: {
-            suggestion: suggestion
+            suggestion: data.suggestion
         }
     } only %}
         {% block body %}
@@ -35,7 +37,7 @@
 
 {% block form %}
     {{parent()}}
-    {% if searchString is not empty %}
-        <input type="hidden" name="q" value="{{ searchString }}" />
+    {% if data.searchString is not empty %}
+        <input type="hidden" name="q" value="{{ data.searchString }}" />
     {% endif %}
 {% endblock %}
