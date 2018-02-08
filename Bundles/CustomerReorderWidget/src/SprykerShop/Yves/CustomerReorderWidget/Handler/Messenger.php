@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 
-class MessengerHandler implements MessengerHandlerInterface
+class Messenger implements MessengerInterface
 {
     /**
      * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
@@ -36,8 +36,6 @@ class MessengerHandler implements MessengerHandlerInterface
 
     /**
      * In all meanings dirty jack copied from CartPage
-     *
-     * @TODO discuss with @Nyulas
      *
      * @return void
      */

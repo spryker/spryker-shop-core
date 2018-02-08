@@ -44,7 +44,7 @@ class OrderController extends AbstractController
             ->reorder($order);
 
         $this->getFactory()
-            ->createMessengerHandler()
+            ->createMessenger()
             ->setFlashMessagesFromLastZedRequest();
 
         return $this->gerRedirectToCart();
@@ -71,7 +71,7 @@ class OrderController extends AbstractController
             ->reorderItems($order, $items);
 
         $this->getFactory()
-            ->createMessengerHandler()
+            ->createMessenger()
             ->setFlashMessagesFromLastZedRequest();
 
         return $this->gerRedirectToCart();

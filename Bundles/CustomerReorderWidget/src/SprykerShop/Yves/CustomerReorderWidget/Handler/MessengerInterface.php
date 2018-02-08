@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
-interface MessengerHandlerInterface
+interface MessengerInterface
 {
     /**
      * In all meanings dirty jack copied from CartPage
