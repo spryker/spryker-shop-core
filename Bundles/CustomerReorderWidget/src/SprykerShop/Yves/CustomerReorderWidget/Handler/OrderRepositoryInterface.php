@@ -14,9 +14,8 @@ interface OrderRepositoryInterface
 {
     /**
      * @param int $idSalesOrder
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderTransfer(int $idSalesOrder, CustomerTransfer $customerTransfer): ?OrderTransfer;
+    public function getOrderTransfer(int $idSalesOrder): OrderTransfer;
 }

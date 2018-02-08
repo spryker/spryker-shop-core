@@ -41,7 +41,8 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     public function createOrderRepository(): OrderRepositoryInterface
     {
         return new OrderRepository(
-            $this->getSalesClient()
+            $this->getSalesClient(),
+            $this->getCustomerClient()
         );
     }
 
@@ -67,7 +68,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface
      */
-    public function getCustomerClient(): CustomerReorderWidgetToCustomerClientInterface
+    protected function getCustomerClient(): CustomerReorderWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_CUSTOMER);
     }
