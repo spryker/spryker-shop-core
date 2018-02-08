@@ -33,10 +33,7 @@ class OrderController extends AbstractController
      */
     public function reorderAction(int $idOrder): RedirectResponse
     {
-        $customerTransfer = $this->getLoggedInCustomerTransfer();
-        if (!$customerTransfer) {
-            return $this->redirectResponseInternal('error/404');
-        }
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         $order = $this->getFactory()
             ->createOrderHandler()
@@ -60,10 +57,7 @@ class OrderController extends AbstractController
      */
     public function reorderItemsAction(Request $request): RedirectResponse
     {
-        $customerTransfer = $this->getLoggedInCustomerTransfer();
-        if (!$customerTransfer) {
-            return $this->redirectResponseInternal('error/404');
-        }
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         $idSalesOrder = $request->request->getInt(static::ID_ORDER);
         $items = (array)$request->request->get(static::PARAM_ITEMS);
@@ -86,13 +80,9 @@ class OrderController extends AbstractController
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    protected function getLoggedInCustomerTransfer(): ?CustomerTransfer
+    protected function getLoggedInCustomerTransfer(): CustomerTransfer
     {
-        if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
-            return $this->getFactory()->getCustomerClient()->getCustomer();
-        }
-
-        return null;
+        return $this->getFactory()->getCustomerClient()->getCustomer();
     }
 
     /**

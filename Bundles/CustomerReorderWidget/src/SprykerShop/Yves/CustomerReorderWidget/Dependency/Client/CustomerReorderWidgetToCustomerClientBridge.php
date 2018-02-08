@@ -29,12 +29,4 @@ class CustomerReorderWidgetToCustomerClientBridge implements CustomerReorderWidg
     {
         return $this->customerClient->getCustomer();
     }
-
-    /**
-     * @return bool
-     */
-    public function isLoggedIn()
-    {
-        return $this->customerClient->isLoggedIn();
-    }
 }
