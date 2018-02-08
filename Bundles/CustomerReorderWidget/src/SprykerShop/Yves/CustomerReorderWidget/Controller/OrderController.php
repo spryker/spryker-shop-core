@@ -36,7 +36,7 @@ class OrderController extends AbstractController
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         $order = $this->getFactory()
-            ->createOrderHandler()
+            ->createOrderRepository()
             ->getOrderTransfer($idOrder, $customerTransfer);
 
         $this->getFactory()
@@ -63,7 +63,7 @@ class OrderController extends AbstractController
         $items = (array)$request->request->get(static::PARAM_ITEMS);
 
         $order = $this->getFactory()
-            ->createOrderHandler()
+            ->createOrderRepository()
             ->getOrderTransfer($idSalesOrder, $customerTransfer);
 
         $this->getFactory()

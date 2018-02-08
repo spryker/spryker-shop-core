@@ -15,12 +15,12 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\Messenger;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderHandler;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderHandlerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\CartFiller;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\CartFillerInteface;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\Messenger;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderRepository;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderRepositoryInterface;
 
 class CustomerReorderWidgetFactory extends AbstractFactory
 {
@@ -36,11 +36,11 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\OrderHandlerInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\OrderRepositoryInterface
      */
-    public function createOrderHandler(): OrderHandlerInterface
+    public function createOrderRepository(): OrderRepositoryInterface
     {
-        return new OrderHandler(
+        return new OrderRepository(
             $this->getSalesClient()
         );
     }
