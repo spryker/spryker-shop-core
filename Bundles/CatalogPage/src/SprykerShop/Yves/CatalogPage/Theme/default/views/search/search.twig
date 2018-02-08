@@ -1,4 +1,4 @@
-{% extends template('catalog', 'CatalogPage') %}
+{% extends view('catalog', 'CatalogPage') %}
 
 {% set searchString = searchString | default(_view.searchString) %}
 {% set title = title |  default(('global.search.results' | trans) ~ searchString) %}

@@ -91,7 +91,11 @@ class CatalogController extends AbstractController
             ->getCatalogClient()
             ->getCatalogViewMode($request);
 
-        return $this->view($searchResults, $this->getFactory()->getCatalogPageWidgetPlugins());
+        return $this->view(
+            $searchResults, 
+            $this->getFactory()->getCatalogPageWidgetPlugins(),
+            '@CatalogPage/views/search/search.twig'
+        );
     }
 
     /**

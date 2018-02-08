@@ -41,7 +41,11 @@ class ProductController extends AbstractController
             'productUrl' => $this->getProductUrl($productViewTransfer),
         ];
 
-        return $this->view($data, $this->getFactory()->getProductDetailPageWidgetPlugins());
+        return $this->view(
+            $data, 
+            $this->getFactory()->getProductDetailPageWidgetPlugins(),
+            '@ProductDetailPage/views/pdp/pdp.twig'
+        );
     }
 
     /**

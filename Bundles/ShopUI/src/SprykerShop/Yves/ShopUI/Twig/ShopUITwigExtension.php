@@ -71,7 +71,7 @@ class ShopUITwigExtension extends TwigExtension
             ]),
 
             new Twig_SimpleFunction(self::FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE, function ($viewName, $viewModule = self::DEFAULT_MODULE) {
-                return $this->getViewTemplate($templateModule, $templateName);
+                return $this->getViewTemplate($viewModule, $viewName);
             }, [
                 $this, 
                 self::FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE
