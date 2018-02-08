@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
@@ -20,13 +19,13 @@ class OrderRepository implements OrderRepositoryInterface
     protected $salesClient;
 
     /**
-     * @var CustomerReorderWidgetToCustomerClientInterface
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface
      */
     protected $customerClient;
 
     /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface $salesClient
-     * @param CustomerReorderWidgetToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface $customerClient
      */
     public function __construct(
         CustomerReorderWidgetToSalesClientInterface $salesClient,
