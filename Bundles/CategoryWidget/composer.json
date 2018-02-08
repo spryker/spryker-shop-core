@@ -3,6 +3,7 @@
   "description": "CategoryWidget module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/category-storage": "^0.1.0 || ^0.2.0",
     "spryker/kernel": "^3.16.0"
   },

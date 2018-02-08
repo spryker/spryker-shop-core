@@ -1,3 +1,3 @@
-# Permission Changelog
+# ShopPermission Changelog
 
-[Release Changelog](https://github.com/spryker/Permission/releases)
+[Release Changelog](https://github.com/spryker-shop/shop-permission/releases)

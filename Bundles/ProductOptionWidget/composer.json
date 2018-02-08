@@ -3,6 +3,7 @@
   "description": "ProductOptionWidget module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.16.0",
     "spryker/product-option-storage": "^0.1.0"
   },

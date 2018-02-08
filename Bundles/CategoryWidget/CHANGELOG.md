@@ -1,3 +1,3 @@
 # CategoryWidget Changelog
 
-[Release Changelog](https://github.com/spryker-shop/CategoryWidget/releases)
+[Release Changelog](https://github.com/spryker-shop/category-widget/releases)
