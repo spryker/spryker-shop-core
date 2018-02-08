@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface CustomerReorderWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'CustomerReorderWidgetPlugin';
+    public const NAME = 'CustomerReorderWidgetPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
