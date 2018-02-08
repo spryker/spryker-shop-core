@@ -17,14 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OrderController extends AbstractController
 {
-    const PARAM_ITEMS = 'items';
-    const ORDER_ID = 'id';
+    public const PARAM_ITEMS = 'items';
+    public const ID_ORDER = 'id';
     /**
      * Route for cart page.
      * Described in CartPage module
      * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
-    const ROUTE_CART = 'cart';
+    public const ROUTE_CART = 'cart';
 
     /**
      * @param int $idOrder
@@ -33,21 +33,16 @@ class OrderController extends AbstractController
      */
     public function reorderAction(int $idOrder): RedirectResponse
     {
-        $customerTransfer = $this->getLoggedInCustomerTransfer();
-        if (!$customerTransfer) {
-            return $this->redirectResponseInternal('error/404');
-        }
-
         $order = $this->getFactory()
-            ->createOrderHandler()
-            ->getOrderTransfer($idOrder, $customerTransfer);
+            ->createOrderRepository()
+            ->getOrderTransfer($idOrder);
 
         $this->getFactory()
-            ->createReorderHandler()
+            ->createCartFiller()
             ->reorder($order);
 
         $this->getFactory()
-            ->createMessengerHandler()
+            ->createMessenger()
             ->setFlashMessagesFromLastZedRequest();
 
         return $this->gerRedirectToCart();
@@ -60,39 +55,22 @@ class OrderController extends AbstractController
      */
     public function reorderItemsAction(Request $request): RedirectResponse
     {
-        $customerTransfer = $this->getLoggedInCustomerTransfer();
-        if (!$customerTransfer) {
-            return $this->redirectResponseInternal('error/404');
-        }
-
-        $idSalesOrder = $request->request->getInt(static::ORDER_ID);
+        $idSalesOrder = $request->request->getInt(static::ID_ORDER);
         $items = (array)$request->request->get(static::PARAM_ITEMS);
 
         $order = $this->getFactory()
-            ->createOrderHandler()
-            ->getOrderTransfer($idSalesOrder, $customerTransfer);
+            ->createOrderRepository()
+            ->getOrderTransfer($idSalesOrder);
 
         $this->getFactory()
-            ->createReorderHandler()
+            ->createCartFiller()
             ->reorderItems($order, $items);
 
         $this->getFactory()
-            ->createMessengerHandler()
+            ->createMessenger()
             ->setFlashMessagesFromLastZedRequest();
 
         return $this->gerRedirectToCart();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    protected function getLoggedInCustomerTransfer(): ?CustomerTransfer
-    {
-        if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
-            return $this->getFactory()->getCustomerClient()->getCustomer();
-        }
-
-        return null;
     }
 
     /**

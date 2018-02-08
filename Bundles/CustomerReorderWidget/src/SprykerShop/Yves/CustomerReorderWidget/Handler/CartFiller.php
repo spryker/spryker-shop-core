@@ -13,14 +13,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 
-class ReorderHandler implements ReorderHandlerInterface
+class CartFiller implements CartFillerInteface
 {
     /**
      * Name of field in grouped items.
-     * Softlink to ProductBundle
      * @see \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
      */
-    const BUNDLE_PRODUCT = 'bundleProduct';
+    public const BUNDLE_PRODUCT = 'bundleProduct';
 
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface
@@ -68,19 +67,12 @@ class ReorderHandler implements ReorderHandlerInterface
 
         $itemsToAdd = [];
         foreach ($items as $item) {
-            if (!$idOrderItems) {
-                break;
-            }
             if (!in_array($item->getId(), $idOrderItems)) {
                 continue;
             }
 
             $itemsToAdd[] = $item;
-            $key = array_search($item->getId(), $idOrderItems);
-            unset($idOrderItems[$key]);
         }
-
-        //if (!empty($idOrderItems)) show error
 
         $this->updateCart($itemsToAdd);
     }

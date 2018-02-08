@@ -30,7 +30,7 @@ class CustomerReorderWidgetToProductBundleClientBridge implements CustomerReorde
      *
      * @return array
      */
-    public function getGroupedBundleItems(ArrayObject $items, ArrayObject $bundleItems)
+    public function getGroupedBundleItems(ArrayObject $items, ArrayObject $bundleItems): array
     {
         return $this->productBundleClient->getGroupedBundleItems($items, $bundleItems);
     }

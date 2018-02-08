@@ -57,9 +57,11 @@ class CustomerReorderWidgetPlugin extends AbstractWidgetPlugin implements Custom
             return false;
         }
 
-        $availability = $this->getFactory()
-            ->createAvailabilityHandler()
-            ->getAvailabilityForItemTransfer($itemTransfer, $this->getLocale());
+        $availabilityTransfer = $this->getFactory()
+            ->getAvailabilityStorageClient()
+            ->getProductAvailabilityByIdProductAbstract($itemTransfer->getIdProductAbstract());
+
+        $availability = $availabilityTransfer->getConcreteProductAvailableItems()[$itemTransfer->getSku()];
 
         return $availability;
     }

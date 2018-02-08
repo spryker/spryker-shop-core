@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class CustomerReorderWidgetToCustomerClientBridge implements CustomerReorderWidgetToCustomerClientInterface
 {
     /**
@@ -25,16 +27,8 @@ class CustomerReorderWidgetToCustomerClientBridge implements CustomerReorderWidg
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getCustomer()
+    public function getCustomer(): CustomerTransfer
     {
         return $this->customerClient->getCustomer();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isLoggedIn()
-    {
-        return $this->customerClient->isLoggedIn();
     }
 }

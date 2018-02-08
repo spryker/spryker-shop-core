@@ -12,9 +12,9 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class OrderControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';
-    const ROUTE_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
-    const PATTERN_ID = '\d+';
+    public const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';
+    public const ROUTE_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
+    public const PATTERN_ID = '\d+';
 
     /**
      * @param \Silex\Application $app

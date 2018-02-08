@@ -9,9 +9,10 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 
-class OrderHandler implements OrderHandlerInterface
+class OrderRepository implements OrderRepositoryInterface
 {
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface
@@ -19,22 +20,30 @@ class OrderHandler implements OrderHandlerInterface
     protected $salesClient;
 
     /**
+     * @var CustomerReorderWidgetToCustomerClientInterface
+     */
+    protected $customerClient;
+
+    /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface $salesClient
+     * @param CustomerReorderWidgetToCustomerClientInterface $customerClient
      */
     public function __construct(
-        CustomerReorderWidgetToSalesClientInterface $salesClient
+        CustomerReorderWidgetToSalesClientInterface $salesClient,
+        CustomerReorderWidgetToCustomerClientInterface $customerClient
     ) {
         $this->salesClient = $salesClient;
+        $this->customerClient = $customerClient;
     }
 
     /**
      * @param int $idSalesOrder
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderTransfer(int $idSalesOrder, CustomerTransfer $customerTransfer): ?OrderTransfer
+    public function getOrderTransfer(int $idSalesOrder): OrderTransfer
     {
+        $customerTransfer = $this->customerClient->getCustomer();
         $orderTransfer = new OrderTransfer();
         $orderTransfer
             ->setIdSalesOrder($idSalesOrder)

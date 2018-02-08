@@ -29,7 +29,7 @@ class CustomerReorderWidgetToSalesClientBridge implements CustomerReorderWidgetT
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderDetails(OrderTransfer $orderTransfer)
+    public function getOrderDetails(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->salesClient->getOrderDetails($orderTransfer);
     }
