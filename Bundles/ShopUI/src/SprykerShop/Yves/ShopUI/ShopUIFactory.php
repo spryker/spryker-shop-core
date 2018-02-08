@@ -5,18 +5,18 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerShop\Yves\ShopUI;
+namespace SprykerShop\Yves\ShopUi;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ShopUI\Twig\ShopUITwigExtension;
+use SprykerShop\Yves\ShopUi\Twig\ShopUiTwigExtension;
 
-class ShopUIFactory extends AbstractFactory
+class ShopUiFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Shared\Twig\TwigExtension
      */
-    public function createShopUITwigExtension()
+    public function createShopUiTwigExtension()
     {
-        return new ShopUITwigExtension();
+        return new ShopUiTwigExtension();
     }
 }

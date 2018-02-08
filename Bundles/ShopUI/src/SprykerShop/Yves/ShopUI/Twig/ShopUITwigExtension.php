@@ -5,13 +5,13 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerShop\Yves\ShopUI\Twig;
+namespace SprykerShop\Yves\ShopUi\Twig;
 
 use Spryker\Shared\Twig\TwigExtension;
 use Twig_SimpleFunction;
 use Twig_SimpleFilter;
 
-class ShopUITwigExtension extends TwigExtension
+class ShopUiTwigExtension extends TwigExtension
 {
     const FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE = 'model';
     const FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE = 'atom';
@@ -19,7 +19,7 @@ class ShopUITwigExtension extends TwigExtension
     const FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE = 'organism';
     const FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE = 'template';
     const FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE = 'view';
-    const DEFAULT_MODULE = 'ShopUI';
+    const DEFAULT_MODULE = 'ShopUi';
 
     /**
      * @return Twig_SimpleFilter[]
@@ -86,7 +86,7 @@ class ShopUITwigExtension extends TwigExtension
      */
     protected function getModelTemplate(String $modelName)
     {
-        return '@ShopUI/models/' . $modelName . '.twig';
+        return '@ShopUi/models/' . $modelName . '.twig';
     }
 
     /**

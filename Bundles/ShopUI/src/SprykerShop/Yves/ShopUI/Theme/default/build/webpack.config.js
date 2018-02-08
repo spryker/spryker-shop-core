@@ -46,12 +46,12 @@ const cssPluginSettings = {
     }]
 };
 
-const basicsCssRegex = /ShopUI\/\S+\/styles\/basics(\/\S+)?\.scss$/;
+const basicsCssRegex = /ShopUi\/\S+\/styles\/basics(\/\S+)?\.scss$/;
 const basicsCssPlugin = new ExtractTextPlugin({
     filename: `css/${settings.name}.basics.css`
 });
 
-const utilsCssRegex = /ShopUI\/\S+\/styles\/utils(\/\S+)?\.scss$/;
+const utilsCssRegex = /ShopUi\/\S+\/styles\/utils(\/\S+)?\.scss$/;
 const utilsCssPlugin = new ExtractTextPlugin({
     filename: `css/${settings.name}.utils.css`
 });
@@ -106,7 +106,7 @@ const config = {
     resolve: {
         extensions: ['.ts', '.js', '.json', '.css', '.scss'],
         alias: {
-            'ShopUI': settings.paths.srcDir
+            'ShopUi': settings.paths.srcDir
         }
     },
 
@@ -128,7 +128,7 @@ const config = {
                     outDir: settings.paths.publicPath,
                     paths: {
                         '*': ['*', settings.paths.srcDir + '/*'],
-                        'ShopUI/*': [settings.paths.srcDir + '/*']
+                        'ShopUi/*': [settings.paths.srcDir + '/*']
                     }
                 }
             },
