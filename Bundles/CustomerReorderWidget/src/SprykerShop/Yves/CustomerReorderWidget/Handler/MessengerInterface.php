@@ -10,10 +10,6 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 interface MessengerInterface
 {
     /**
-     * In all meanings dirty jack copied from CartPage
-     *
-     * @TODO discuss with @Nyulas
-     *
      * @return void
      */
     public function setFlashMessagesFromLastZedRequest(): void;
