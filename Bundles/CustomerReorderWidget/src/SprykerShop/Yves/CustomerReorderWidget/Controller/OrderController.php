@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class OrderController extends AbstractController
 {
     public const PARAM_ITEMS = 'items';
-    public const ORDER_ID = 'id';
+    public const ID_ORDER = 'id';
     /**
      * Route for cart page.
      * Described in CartPage module
@@ -65,7 +65,7 @@ class OrderController extends AbstractController
             return $this->redirectResponseInternal('error/404');
         }
 
-        $idSalesOrder = $request->request->getInt(self::ORDER_ID);
+        $idSalesOrder = $request->request->getInt(self::ID_ORDER);
         $items = (array)$request->request->get(self::PARAM_ITEMS);
 
         $order = $this->getFactory()
