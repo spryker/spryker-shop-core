@@ -1,0 +1,12 @@
+{% set product = product | default(null) %}
+{% set products = products | default([]) %}
+
+<div class="grid grid--stretch">
+    {% for availableProduct in products if availableProduct.available %}
+        {{ widget('ProductGroupWidgetPlugin', availableProduct) }}
+    {% endfor %}
+</div>
+
+{% if product is not empty %}
+    {{ widget('ProductGroupWidgetPlugin', product) }}
+{% endif %}

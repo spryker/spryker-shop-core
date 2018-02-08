@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageFactory getFactory()
  * @method \Spryker\Client\Catalog\CatalogClientInterface getClient()
  */
-class CatalogController extends AbstractController
+class CatalogController extends AbstractController 
 {
     const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
@@ -64,7 +64,11 @@ class CatalogController extends AbstractController
         $searchResults = array_merge($searchResults, $metaAttributes);
         $template = $this->getCategoryNodeTemplate($idCategoryNode);
 
-        return $this->view($searchResults, $this->getFactory()->getCatalogPageWidgetPlugins(), $template);
+        return $this->view(
+            $searchResults, 
+            $this->getFactory()->getCatalogPageWidgetPlugins(), 
+            $template
+        );
     }
 
     /**

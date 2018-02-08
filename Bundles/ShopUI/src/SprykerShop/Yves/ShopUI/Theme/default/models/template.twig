@@ -1,0 +1,40 @@
+
+{#
+ #
+ #
+ # Template API
+ #}
+
+{%- set defaultConfig = {
+    debug: false
+} -%}
+
+{% block implementation %}
+    {%- set config = defaultConfig | merge(config | default({})) -%}
+    {%- set data = data | default({}) -%}
+
+    {#
+     #
+     #
+     # Template blocks
+     #}
+
+    {%- if config.debug -%}
+        {# to use blocks: {{ block('blockname') }} #}
+
+        {# render template #}
+        {%- block renderTemplate -%}
+            {%- block body -%}{%- endblock -%}
+        {%- endblock -%}
+    {%- endif -%}
+
+    {#
+     #
+     #
+     # Template
+     #}
+
+    {%- block template -%}
+        {{-block('renderTemplate')-}}
+    {%- endblock -%}
+{% endblock -%}

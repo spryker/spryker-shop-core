@@ -18,6 +18,7 @@ class ShopUITwigExtension extends TwigExtension
     const FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE = 'molecule';
     const FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE = 'organism';
     const FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE = 'template';
+    const FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE = 'view';
     const DEFAULT_MODULE = 'ShopUI';
 
     /**
@@ -68,6 +69,13 @@ class ShopUITwigExtension extends TwigExtension
                 $this, 
                 self::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE
             ]),
+
+            new Twig_SimpleFunction(self::FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE, function ($viewName, $viewModule = self::DEFAULT_MODULE) {
+                return $this->getViewTemplate($templateModule, $templateName);
+            }, [
+                $this, 
+                self::FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE
+            ]),
         ];
     }
 
@@ -96,5 +104,10 @@ class ShopUITwigExtension extends TwigExtension
     protected function getTemplateTemplate(String $templateModule, String $templateName)
     {
         return '@' . $templateModule . '/templates/' . $templateName . '/' . $templateName . '.twig';
+    }
+
+    protected function getViewTemplate(String $viewModule, String $viewName)
+    {
+        return '@' . $viewModule . '/views/' . $viewName . '/' . $viewName . '.twig';
     }
 }

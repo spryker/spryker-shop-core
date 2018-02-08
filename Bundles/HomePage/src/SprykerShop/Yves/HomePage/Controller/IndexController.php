@@ -27,6 +27,10 @@ class IndexController extends AbstractController
             'featuredProductLimit' => static::FEATURED_PRODUCT_LIMIT,
         ];
 
-        return $this->view($data, $this->getFactory()->getHomePageWidgetPlugins());
+        return $this->view(
+            $data, 
+            $this->getFactory()->getHomePageWidgetPlugins(),
+            '@HomePage/views/home/home.twig'
+        );
     }
 }
