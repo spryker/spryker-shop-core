@@ -1,3 +1,3 @@
 # ProductSetListPage Changelog
 
-[Release Changelog](https://github.com/spryker-shop/ProductSetListPage/releases)
+[Release Changelog](https://github.com/spryker-shop/product-set-list-page/releases)
