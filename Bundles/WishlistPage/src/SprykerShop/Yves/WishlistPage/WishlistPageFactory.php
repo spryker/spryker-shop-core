@@ -70,6 +70,8 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated
+     *
      * @return \SprykerShop\Yves\WishlistPage\Form\WishlistFormType
      */
     protected function createWishlistFormType()
@@ -78,6 +80,8 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated
+     *
      * @return \SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType
      */
     protected function createAddAllAvailableProductsToCartFormType()
