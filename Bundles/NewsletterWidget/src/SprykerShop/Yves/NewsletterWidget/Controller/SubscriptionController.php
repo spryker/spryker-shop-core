@@ -43,7 +43,7 @@ class SubscriptionController extends AbstractController
 
         $subscriptionForm->handleRequest($request);
 
-        if ($subscriptionForm->isValid()) {
+        if ($subscriptionForm->isSubmitted() && $subscriptionForm->isValid()) {
             $customerTransfer = (new CustomerTransfer())
                 ->setEmail($subscriptionForm->get(NewsletterSubscriptionForm::FIELD_SUBSCRIBE)->getData());
 

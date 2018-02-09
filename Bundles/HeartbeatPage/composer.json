@@ -3,6 +3,7 @@
   "description": "HeartbeatPage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker-shop/shop-application": "^0.1.0",
     "spryker/heartbeat": "^3.2.0",
     "spryker/kernel": "^3.16.0",

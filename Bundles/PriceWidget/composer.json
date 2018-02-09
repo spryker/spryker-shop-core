@@ -3,6 +3,7 @@
   "description": "PriceWidget module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.16.0",
     "spryker/price": "^5.1.0",
     "spryker/quote": "^1.1.0",

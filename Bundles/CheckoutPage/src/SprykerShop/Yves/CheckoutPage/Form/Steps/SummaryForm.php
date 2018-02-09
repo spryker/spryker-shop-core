@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class SummaryForm extends AbstractType
@@ -34,7 +34,7 @@ class SummaryForm extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'summaryForm';
     }

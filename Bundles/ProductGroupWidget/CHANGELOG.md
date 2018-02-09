@@ -1,3 +1,3 @@
 # ProductGroupWidget Changelog
 
-[Release Changelog](https://github.com/spryker-shop/ProductGroupWidget/releases)
+[Release Changelog](https://github.com/spryker-shop/product-group-widget/releases)

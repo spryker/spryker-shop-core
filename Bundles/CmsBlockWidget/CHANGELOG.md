@@ -1,3 +1,3 @@
 # CmsBlockWidget Changelog
 
-[Release Changelog](https://github.com/spryker-shop/CmsBlockWidget/releases)
+[Release Changelog](https://github.com/spryker-shop/cms-block-widget/releases)

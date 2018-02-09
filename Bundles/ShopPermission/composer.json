@@ -1,15 +1,16 @@
 {
-  "name": "spryker-shop/permission",
-  "description": "Permission module",
+  "name": "spryker-shop/shop-permission",
+  "description": "ShopPermission module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
     "spryker/permission": "^0.0.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
     "spryker/silex": "^2.0.0",
+    "spryker/testify": "*",
     "spryker/twig": "^3.0.0"
   },
   "suggest": {

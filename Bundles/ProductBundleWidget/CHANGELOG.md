@@ -1,3 +1,3 @@
 # ProductBundleWidget Changelog
 
-[Release Changelog](https://github.com/spryker-shop/ProductBundleWidget/releases)
+[Release Changelog](https://github.com/spryker-shop/product-bundle-widget/releases)

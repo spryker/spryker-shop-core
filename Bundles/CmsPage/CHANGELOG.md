@@ -1,3 +1,3 @@
 # CmsPage Changelog
 
-[Release Changelog](https://github.com/spryker-shop/CmsPage/releases)
+[Release Changelog](https://github.com/spryker-shop/cms-page/releases)
