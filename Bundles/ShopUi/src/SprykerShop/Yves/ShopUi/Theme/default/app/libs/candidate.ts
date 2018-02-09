@@ -1,4 +1,4 @@
-import { IComponentImporter, IComponentContructor } from '../models/component';
+import { IComponentImporter, IComponentContructor } from '../../models/component';
 
 export interface ICandidateMountStats { 
     [key: string]: number

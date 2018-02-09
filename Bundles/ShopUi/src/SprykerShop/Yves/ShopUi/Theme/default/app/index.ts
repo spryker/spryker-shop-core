@@ -1,7 +1,7 @@
 import Logger from './libs/logger';
 import Candidate, { ICandidateMountStats } from './libs/candidate';
-import { IComponentImporter } from './models/component';
-import config from './app.config';
+import { IComponentImporter } from '../models/component';
+import config from '../config';
 
 const logger: Logger = new Logger(config.log.prefix, config.log.level);
 const registry: Map<string, Candidate> = new Map();

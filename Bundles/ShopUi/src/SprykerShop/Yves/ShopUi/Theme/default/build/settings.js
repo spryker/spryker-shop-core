@@ -36,7 +36,9 @@ const settings = {
                 rootDir
             ],
             patterns: [
-                `**/spryker/spryker-shop/**/src/SprykerShop/Yves/*/Theme/${theme}/components/**/index.ts`,
+                `**/spryker-shop/**/src/SprykerShop/Yves/*/Theme/${theme}/components/**/index.ts`,
+                `**/spryker-shop/**/src/SprykerShop/Yves/*/Theme/${theme}/templates/**/index.ts`,
+                `**/spryker-shop/**/src/SprykerShop/Yves/*/Theme/${theme}/views/**/index.ts`,
                 '!/config/**',
                 '!/data/**',
                 '!/deploy/**',
@@ -54,6 +56,8 @@ const settings = {
             ],
             patterns: [
                 `**/Theme/${theme}/components/**/index.ts`,
+                `**/Theme/${theme}/templates/**/index.ts`,
+                `**/Theme/${theme}/views/**/index.ts`,
                 '!config/**',
                 '!data/**',
                 '!deploy/**',

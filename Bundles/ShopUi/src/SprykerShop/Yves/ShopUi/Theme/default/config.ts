@@ -1,6 +1,6 @@
 declare const PRODUCTION: boolean;
 
-import { LogLevel } from './libs/logger';
+import { LogLevel } from './app/libs/logger';
 
 const config = {
     events: {
