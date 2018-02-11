@@ -12,7 +12,7 @@
 
 {% block form_checkbox %}
     <input type="checkbox" class="reorder order-item"
-           {% if _widget.availability %} disabled {% endif %}
+           {% if not _widget.availability %} disabled {% endif %}
            name="items[]" value="{{ _widget.item.id }}"
     />
 {% endblock %}
