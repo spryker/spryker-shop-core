@@ -7,40 +7,32 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 
 class CartFiller implements CartFillerInteface
 {
-    /**
-     * Name of field in grouped items.
-     * @see \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
-     */
-    public const BUNDLE_PRODUCT = 'bundleProduct';
-
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface
      */
     protected $cartClient;
 
     /**
-     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcherInterface
      */
-    protected $productBundleClient;
+    private $itemsFetcher;
 
     /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
-     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcherInterface $itemsFetcher
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,
-        CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
+        ItemsFetcherInterface $itemsFetcher
     ) {
         $this->cartClient = $cartClient;
-        $this->productBundleClient = $productBundleClient;
+        $this->itemsFetcher = $itemsFetcher;
     }
 
     /**
@@ -50,7 +42,7 @@ class CartFiller implements CartFillerInteface
      */
     public function reorder(OrderTransfer $orderTransfer): void
     {
-        $items = $this->getOrderItemsTransfer($orderTransfer);
+        $items = $this->itemsFetcher->getAll($orderTransfer);
 
         $this->updateCart($items);
     }
@@ -63,32 +55,9 @@ class CartFiller implements CartFillerInteface
      */
     public function reorderItems(OrderTransfer $orderTransfer, array $idOrderItems): void
     {
-        $items = $this->getOrderItemsTransfer($orderTransfer);
+        $items = $this->itemsFetcher->getByIds($orderTransfer, $idOrderItems);
 
-        $itemsToAdd = [];
-        foreach ($items as $item) {
-            if (!in_array($item->getId(), $idOrderItems)) {
-                continue;
-            }
-
-            $itemsToAdd[] = $item;
-        }
-
-        $this->updateCart($itemsToAdd);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getOrderItemsTransfer(OrderTransfer $orderTransfer): array
-    {
-        $items = $this->productBundleClient
-            ->getGroupedBundleItems($orderTransfer->getItems(), $orderTransfer->getBundleItems());
-        $items = $this->getProductsFromBundles($items);
-
-        return $items;
+        $this->updateCart($items);
     }
 
     /**
@@ -103,19 +72,5 @@ class CartFiller implements CartFillerInteface
 
         $quoteTransfer = $this->cartClient->addItems($orderItems);
         $this->cartClient->storeQuote($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $groupedItems
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getProductsFromBundles(array $groupedItems): array
-    {
-        $items = array_map(function ($groupedItem) {
-            return $groupedItem instanceof ItemTransfer ? $groupedItem : $groupedItem[static::BUNDLE_PRODUCT];
-        }, $groupedItems);
-
-        return $items;
     }
 }

@@ -17,6 +17,8 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\CartFiller;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\CartFillerInteface;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcher;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcherInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\Messenger;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderRepository;
@@ -63,6 +65,16 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     public function getAvailabilityStorageClient(): CustomerReorderWidgetToAvailabilityStorageClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcherInterface
+     */
+    protected function createItemsFetcher(): ItemsFetcherInterface
+    {
+        return new ItemsFetcher(
+            $this->getProductBundleClient()
+        );
     }
 
     /**
