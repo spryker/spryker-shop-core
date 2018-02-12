@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\NewsletterPage\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -18,7 +18,7 @@ class NewsletterSubscriptionForm extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'newsletterSubscriptionForm';
     }

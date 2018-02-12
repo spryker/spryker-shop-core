@@ -21,7 +21,7 @@
                                 {{ form_label(_view.paymentForm.paymentSelection[key]) }}
                                 <div class="__toggler-target">
                                     <div class="row columns">
-                                        {{ checkout.include_subform(_view.paymentForm[_view.paymentForm.paymentSelection[key].vars.value]) }}
+                                    {{ checkout.include_subform(_view.paymentForm[_view.paymentForm.paymentSelection[key].vars.value]) }}
                                     </div>
                                 </div>
                             </li>

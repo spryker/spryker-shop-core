@@ -1,3 +1,3 @@
 # DiscountWidget Changelog
 
-[Release Changelog](https://github.com/spryker-shop/DiscountWidget/releases)
+[Release Changelog](https://github.com/spryker-shop/discount-widget/releases)

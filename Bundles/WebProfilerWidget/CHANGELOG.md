@@ -1,3 +1,3 @@
 # WebProfilerWidget Changelog
 
-[Release Changelog](https://github.com/spryker-shop/WebProfilerWidget/releases)
+[Release Changelog](https://github.com/spryker-shop/web-profiler-widget/releases)

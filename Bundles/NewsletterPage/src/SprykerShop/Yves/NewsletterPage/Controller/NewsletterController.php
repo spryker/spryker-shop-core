@@ -47,7 +47,7 @@ class NewsletterController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($newsletterSubscriptionForm->isValid()) {
+        if ($newsletterSubscriptionForm->isSubmitted() && $newsletterSubscriptionForm->isValid()) {
             $this->processForm($newsletterSubscriptionForm, $newsletterSubscriptionRequestTransfer);
 
             return $this->redirectResponseInternal(NewsletterPageControllerProvider::ROUTE_CUSTOMER_NEWSLETTER);

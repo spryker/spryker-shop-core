@@ -3,6 +3,7 @@
   "description": "ProductSetListPage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.16.0",
     "spryker/product-set-page-search": "^0.1.0",
     "spryker/symfony": "^3.1.0"
