@@ -19,7 +19,9 @@
 
 {% block form_buttons %}
 <div class="small-12 medium-6 large-4 columns align-bottom">
-    <a href="{{ path('customer/order/reorder', {'idOrder': _widget.order.idSalesOrder}) }}" class="button success expanded">
+    <a href="{{ path('customer/order/reorder', {'idOrder': _widget.order.idSalesOrder}) }}"
+       class="button success expanded"
+    >
         {{ 'customer.order.reorder_all' | trans }}
     </a>
 </div>
