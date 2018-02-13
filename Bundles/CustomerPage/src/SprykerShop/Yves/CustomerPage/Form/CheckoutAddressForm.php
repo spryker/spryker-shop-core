@@ -69,7 +69,7 @@ class CheckoutAddressForm extends AddressForm
         }
 
         $choices = $options[self::OPTION_ADDRESS_CHOICES];
-        $choices[] = ['' => 'customer.account.add_new_address'];
+        $choices[''] = 'customer.account.add_new_address';
 
         $builder->add(self::FIELD_ID_CUSTOMER_ADDRESS, 'choice', [
             'choices' => array_flip($choices),
