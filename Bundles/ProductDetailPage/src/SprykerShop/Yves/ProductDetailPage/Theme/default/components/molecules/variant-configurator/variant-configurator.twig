@@ -1,15 +1,15 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'variant-configurator',
     tag: 'section'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    superAttributes: data.superAttributes | default([]),
-    selectedAttributes: data.selectedAttributes | default([]),
-    availableAttributes: data.availableAttributes | default([])
-} | merge(data | default({})) %}
+{% define data = {
+    superAttributes: [],
+    selectedAttributes: [],
+    availableAttributes: []
+} %}
 
 {% block component %}
     {% if data.superAttributes is not empty %}{{parent()}}{% endif %}

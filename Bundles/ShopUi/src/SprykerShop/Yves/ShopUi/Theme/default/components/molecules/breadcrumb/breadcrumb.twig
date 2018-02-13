@@ -1,14 +1,14 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'breadcrumb',
     tag: 'ul'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    steps: data.steps | default([]),
-    startWithHome: data.startWithHome | default(true)
-} | merge(data | default({})) %}
+{% define data = {
+    steps: [],
+    startWithHome: true
+} %}
 
 {% block body %}
     {% if data.startWithHome %}

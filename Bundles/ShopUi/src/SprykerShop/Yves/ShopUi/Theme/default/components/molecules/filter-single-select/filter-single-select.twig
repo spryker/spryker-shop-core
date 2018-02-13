@@ -1,9 +1,0 @@
-{% extends molecule('filter-enumeration') %}
-
-{% set config = {
-    name: 'filter-single-select'
-} | merge(config | default({})) %}
-
-{% set data = {
-    isMultiSelect: false
-} | merge(data | default({})) %}

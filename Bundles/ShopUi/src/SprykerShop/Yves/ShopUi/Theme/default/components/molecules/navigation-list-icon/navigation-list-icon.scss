@@ -1,9 +1,0 @@
-@mixin component-navigation-list-icon($name: '.navigation-list-icon') {
-    #{$name} {
-        &__icon {
-            color: $color-dark;
-        }
-
-        @content;
-    }
-}

@@ -1,0 +1,18 @@
+{% extends template('widget') %}
+
+{% define data = {
+    concreteProductId: _widget.product.idProductConcrete,
+    isAvailable: _widget.product.available
+} %}
+
+{% block template %}
+    {% if data.concreteProductId and not data.isAvailable %}
+        {{parent()}}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="col col--sm-12">
+        <strong>{{ "product.detail.out_of_stock" | trans }}</strong>
+    </div>
+{% endblock %}

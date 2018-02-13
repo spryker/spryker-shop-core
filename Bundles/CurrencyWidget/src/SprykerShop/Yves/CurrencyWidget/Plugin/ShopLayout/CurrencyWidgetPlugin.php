@@ -43,7 +43,7 @@ class CurrencyWidgetPlugin extends AbstractWidgetPlugin implements CurrencyWidge
      */
     public static function getTemplate(): string
     {
-        return '@CurrencyWidget/templates/currency-switcher/currency-switcher.twig';
+        return '@CurrencyWidget/views/currency-switcher/currency-switcher.twig';
     }
 
     /**

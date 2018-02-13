@@ -1,13 +1,13 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'node',
     tag: 'span'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    node: data.node
-} | merge(data | default({}))  %}
+{% define data = {
+    node: required
+} %}
 
 {% set today = 'now' | date('Ymd') %}
 {% set type = data.node.nodeType %}

@@ -1,18 +1,18 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'logo',
     tag: 'span'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
+{% define data = {
     url: '/'
-} | merge(data | default({})) %}
+} %}
 
-{% set attributes = {
+{% define attributes = {
     src: null,
     alt: 'Logo'
-} | merge(attributes | default({})) %}
+} %}
 
 {% block attributes %}{% endblock %}
 

@@ -1,14 +1,14 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'search-form'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    searchUrl: data.searchUrl | default(path('search')),
-    suggestionUrl: data.suggestionUrl | default(path('search/suggestion')),
-    searchValue: data.searchValue | default(app.request.get('q'))
-} | merge(data | default({})) %}
+{% define data = {
+    searchUrl: path('search'),
+    suggestionUrl: path('search/suggestion'),
+    searchValue: app.request.get('q')
+} %}
 
 {% block body %}
     <form class="grid" action="{{data.searchUrl}}">

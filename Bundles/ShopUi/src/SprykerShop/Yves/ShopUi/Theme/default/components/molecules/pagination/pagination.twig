@@ -12,21 +12,21 @@
     * anchor (string): the anchor to be used after each pagination (default empty)
 #}
 
-{% set config = {
+{% define config = {
     name: 'pagination',
     tag: 'nav'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    parameters: data.parameters | default([]),
-    currentPage: data.currentPage | default(1),
-    paginationPath: data.paginationPath | default(''),
-    showAlwaysFirstAndLast: data.showAlwaysFirstAndLast | default(false),
-    maxPage: data.maxPage | default(10),
-    extremePagesLimit: data.extremePagesLimit | default(1),
-    nearbyPagesLimit: data.nearbyPagesLimit | default(2),
-    anchor: data.anchor | default('#')
-} | merge(data | default({})) %}
+{% define data = {
+    parameters: [],
+    currentPage: 1,
+    paginationPath: '',
+    showAlwaysFirstAndLast: false,
+    maxPage: 10,
+    extremePagesLimit: 1,
+    nearbyPagesLimit: 2,
+    anchor: '#'
+} %}
 
 {% block body %}
     <ul>

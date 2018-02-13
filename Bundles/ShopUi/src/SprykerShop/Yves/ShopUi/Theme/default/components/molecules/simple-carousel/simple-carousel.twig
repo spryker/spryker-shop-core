@@ -1,19 +1,19 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'simple-carousel',
     tag: 'simple-carousel'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    slides: data.slides | default([]),
-    showDots: data.showDots | default(true)
-} | merge(data | default({})) %}
+{% define data = {
+    slides: [],
+    showDots: true
+} %}
 
-{% set attributes = {
-    'slides-to-show': attributes['slides-to-show'] | default(1),
-    'slides-to-scroll': attributes['slides-to-scroll'] | default(1)
-} | merge(attributes | default({})) %}
+{% define attributes = {
+    'slides-to-show': 1,
+    'slides-to-scroll': 1
+} %}
 
 {% set slidesCount = data.slides | length %}
 {% set slideWidth = 100 / attributes['slides-to-show'] %}

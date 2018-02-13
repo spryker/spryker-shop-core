@@ -1,17 +1,17 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'jumbotron',
     tag: 'section'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
+{% define data = {
     imageUrl: null,
     bgColor: null,
     textColor: null,
     headline: 'global.spryker.shop' | trans,
     subHeadline: 'global.spryker.motto' | trans
-} | merge(data | default({})) %}
+} %}
 
 {% set backgroundImage = data.imageUrl is empty ?: 'background-image: url(' ~ data.imageUrl ~ '); ' %}
 {% set backgroundColor = data.bgColor is empty ?: 'background-color: ' ~ data.bgColor ~ '; ' %}

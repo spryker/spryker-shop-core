@@ -1,17 +1,17 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'price',
     tag: 'span'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    amount: data.amount,
-    originalAmount: data.originalAmount | default(null)
-} | merge(data | default({})) %}
+{% define data = {
+    amount: required,
+    originalAmount: null
+} %}
 
 {% block body %}
-    {% if data.originalAmount -%}
+    {% if data.originalAmount is not empty -%}
         <span class="{{config.name}}__amount {{config.name}}__amount--original">{{data.originalAmount}}</span>
     {%- endif -%}
 
@@ -25,4 +25,3 @@
         {{data.amount}}
     </span>
 {% endblock %}
-

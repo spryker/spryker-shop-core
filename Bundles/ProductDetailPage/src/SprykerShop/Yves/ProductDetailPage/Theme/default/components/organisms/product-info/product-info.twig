@@ -1,14 +1,14 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'product-info',
     tag: 'section'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    product: data.product,
-    maxQuantity: data.maxQuantity | default(10)
-} | merge(data | default({})) %}
+{% define data = {
+    product: required,
+    maxQuantity: 10
+} %}
 
 {% set options = [] %}
 {% set brand = data.product.attributes.brand | default(null) %}

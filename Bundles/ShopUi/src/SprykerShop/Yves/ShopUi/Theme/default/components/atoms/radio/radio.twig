@@ -1,9 +1,9 @@
 {% extends atom('checkbox') %}
 
-{% set config = {
+{% define config = {
     name: 'radio'
-} | merge(config | default({})) %}
+} %}
 
-{% set attributes = {
+{% define attributes = {
     type: 'radio'
-} | merge(attributes | default({})) %}
+} %}

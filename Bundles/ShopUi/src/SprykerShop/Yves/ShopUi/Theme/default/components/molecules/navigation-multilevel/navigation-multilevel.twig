@@ -1,15 +1,15 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'navigation-multilevel',
     tag: 'nav'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    nodes: data.nodes | default([]),
-    menuInline: data.menuInline | default(false),
-    menuDropdown: data.menuDropdown | default(false)
-} | merge(data | default({})) %}
+{% define data = {
+    nodes: [],
+    menuInline: false,
+    menuDropdown: false
+} %}
 
 {% set menuClass = data.menuInline ? 'menu--inline' : '' %}
 {% set menuChildrenClass = data.menuDropdown ? 'menu__item--has-children-dropdown' : 'menu__item--has-children-list' %}

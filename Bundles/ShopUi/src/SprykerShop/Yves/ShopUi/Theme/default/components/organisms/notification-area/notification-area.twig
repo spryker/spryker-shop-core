@@ -1,16 +1,16 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'notification-area',
     tag: 'section'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    messages: data.messages | default([]),
-    successMessages: data.successMessages | default([]),
-    warningMessages: data.warningMessages | default([]),
-    alertMessages: data.alertMessages | default([])
-} | merge(data | default({})) %}
+{% define data = {
+    messages: [],
+    successMessages: [],
+    warningMessages: [],
+    alertMessages: []
+} %}
 
 {% set messages = data.messages | merge(app.session.flashbag.get('flash.messages.info')) %}
 {% set successMessages = data.successMessages | merge(app.session.flashbag.get('flash.messages.success')) %}

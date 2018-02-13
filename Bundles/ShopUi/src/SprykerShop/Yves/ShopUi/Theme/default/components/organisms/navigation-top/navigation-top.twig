@@ -1,9 +1,9 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'navigation-top',
     tag: 'nav'
-} | merge(config | default({})) %}
+} %}
 
 {% block body %}
     <div class="text-right">

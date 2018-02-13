@@ -36,6 +36,6 @@ class AvailabilityWidgetPlugin extends AbstractWidgetPlugin implements Availabil
      */
     public static function getTemplate(): string
     {
-        return '@AvailabilityWidget/templates/availability/availability.twig';
+        return '@AvailabilityWidget/views/availability/availability.twig';
     }
 }

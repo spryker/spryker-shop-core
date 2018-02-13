@@ -29,7 +29,7 @@ class PriceWidgetPlugin extends AbstractWidgetPlugin implements PriceWidgetPlugi
      */
     public static function getTemplate(): string
     {
-        return '@PriceWidget/templates/price/price.twig';
+        return '@PriceWidget/views/price/price.twig';
     }
 
     /**

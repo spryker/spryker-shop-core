@@ -1,13 +1,13 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'tag',
     tag: 'span'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    text: data.text | default('')
-} | merge(data | default({})) %}
+{% define data = {
+    text: ''
+} %}
 
 {% block body %}
     <span class="{{config.name}}__text">{{data.text}}</span>

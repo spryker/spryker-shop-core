@@ -1,17 +1,17 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'checkbox',
     tag: 'label'
-} | merge(config | default({})) %}
+} %}
 
-{% set attributes = {
+{% define attributes = {
     type: 'checkbox'
-} | merge(attributes | default({})) %}
+} %}
 
-{% set data = {
-    label: data.label | default('')
-} | merge(data | default({})) %}
+{% define data = {
+    label: ''
+} %}
 
 {% block attributes %}{% endblock %}
 

@@ -1,16 +1,16 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'breadcrumb-step',
     tag: 'li'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    url: data.url | default(null),
-    label: data.label | default(null),
-    itemProp: data.itemProp | default(null),
-    withChevron: data.withChevron | default(true)
-} | merge(data | default({})) %}
+{% define data = {
+    url: null,
+    label: null,
+    itemProp: null,
+    withChevron: true
+} %}
 
 {% set isLink = data.url is not empty %}
 

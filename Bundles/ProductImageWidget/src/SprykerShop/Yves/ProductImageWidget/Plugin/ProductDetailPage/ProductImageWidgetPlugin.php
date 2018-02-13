@@ -36,6 +36,6 @@ class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductIm
      */
     public static function getTemplate(): string
     {
-        return '@ProductImageWidget/templates/image-slider/image-slider.twig';
+        return '@ProductImageWidget/views/image-slider/image-slider.twig';
     }
 }

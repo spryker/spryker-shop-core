@@ -1,0 +1,28 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'active-filter-enumeration'
+} %}
+
+{% define data = {
+    filter: required,
+    isMultiSelect: data.filter.config.isMultiValued | default(false)
+} %}
+
+{% set values = data.isMultiSelect ? data.filter.activeValue : [data.filter.activeValue] %}
+
+{% block attributes %}{% endblock %}
+{% block class %}{% endblock %}
+
+{% block component %}
+    {% for value in values %}
+        {% include molecule('active-filter', 'CatalogPage') with {
+            class: class,
+            attributes: attributes,
+            data: {
+                filter: data.filter,
+                value: value
+            }
+        } only %}
+    {% endfor %}
+{% endblock %}

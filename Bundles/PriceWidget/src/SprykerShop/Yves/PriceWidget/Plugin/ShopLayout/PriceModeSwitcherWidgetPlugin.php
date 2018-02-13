@@ -38,6 +38,6 @@ class PriceModeSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Pric
      */
     public static function getTemplate(): string
     {
-        return '@PriceWidget/templates/price-switch/price-switch.twig';
+        return '@PriceWidget/views/price-switch/price-switch.twig';
     }
 }

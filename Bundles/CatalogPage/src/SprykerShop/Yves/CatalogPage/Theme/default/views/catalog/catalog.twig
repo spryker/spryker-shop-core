@@ -1,143 +1,24 @@
-{% extends template('layout-main') %}
+{% extends template('page-layout-catalog', 'CatalogPage') %}
 
-{% set pagination = {
-    parameters: app.request.query.all(),
-    currentPage: _view.pagination.currentPage,
-    paginationPath: app.request.getPathInfo(),
-    maxPage: _view.pagination.maxPage,
-    showAlwaysFirstAndLast: true
-} | merge(pagination | default({})) %}
-
-{% set data = {
-    pagination: pagination,
+{% define data = {
     products: _view.products,
     facets: _view.facets,
     category: _view.category | default(null),
     categories: categories | default([]),
     categoryId: _view.idCategory | default(null),
     filterPath: _view.filterPath | default(null),
-    title: _view.category.name | default(''),
-    metaTitle: _view.pageTitle | default(_view.category.name | default('')),
-    metaDescription: _view.pageDescription | default(''),
-    metaKeywords: _view.pageKeywords | default(''),
-    viewMode: _view.viewMode | default(null)
-} | merge(data | default({})) %}
+    viewMode: _view.viewMode | default(null),
 
-{% macro renderBreadcrumbSteps(categoryNode, isLastLeaf, filterPath) %}
-    {% import _self as self %}
-    {% set categoryUrl = filterPath is not empty ? url(filterPath, {categoryPath: (categoryNode.url)}) : categoryNode.url %}
-    {% set categoryLabel = categoryNode.name %}
-    {% set categoryPatrentNodes = categoryNode.parents | default(null) %}
+    title: _view.category.name | default,
+    metaTitle: _view.pageTitle | default(_view.category.name | default),
+    metaDescription: _view.pageDescription | default,
+    metaKeywords: _view.pageKeywords | default,
 
-    {% if categoryPatrentNodes is not empty %}
-        {{ self.renderBreadcrumbSteps(categoryPatrentNodes | first, false, filterPath) }}
-        
-        {% if not isLastLeaf %}
-            {% include molecule('breadcrumb-step') with {
-                data: {
-                    url: categoryUrl,
-                    label: categoryLabel
-                }
-            } only %}
-        {% endif %}
-    {% endif %}
-{% endmacro %}
-
-{% block breadcrumbs %}
-    {% import _self as self %}
-    
-    {% embed molecule('breadcrumb') with {
-        embed: {
-            breadcrumbs: self.renderBreadcrumbSteps(data.category, true)
-        }
-    } only %}
-        {% block breadcrumbs %}
-            {{ embed.breadcrumbs }}
-        {% endblock %}
-    {% endembed %}
-{% endblock %}
-
-{% block content %}
-    {% block cmsTop %}
-        {% if data.categoryId %}
-            <div class="box">
-                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'top', data.categoryId) }}
-            </div>
-        {% endif %}
-    {% endblock %}
-
-    <form method="GET" class="grid">
-        {% block form %}
-            <div class="col col--sm-12 col--lg-4 col--xl-3">
-                {% include molecule('view-mode-switch') with {
-                    class: 'box'
-                } only %}
-
-                {% include molecule('class-toggler') with {
-                    class: 'box is-hidden-lg-xl',
-                    attributes: {
-                        'class-to-toggle': 'is-hidden-sm-md',
-                        target: 'js-catalog__filters-toggle',
-                        checked: true
-                    },
-                    data: {
-                        label: 'Show/Hide filters'
-                    }
-                } only %}
-
-                {% include organism('filter-section') with {
-                    class: 'js-catalog__filters-toggle',
-                    data: {
-                        facets: data.facets,
-                        filterPath: data.filterPath,
-                        categories: data.categories
-                    }
-                } only %}
-
-                {% block cmsMiddle %}
-                    {% if data.categoryId %}
-                        <div class="box">
-                            {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', data.categoryId) }}
-                        </div>
-                    {% endif %}
-                {% endblock %}
-            </div>
-
-            <div class="col col--sm-12 col--lg-8 col--xl-9">
-                {% include molecule('sort') with {
-                    class: 'box'
-                } only %}
-
-                {% include organism('active-filter-section') with {
-                    data: {
-                        facets: data.facets
-                    }
-                } only %}
-
-                {% include molecule('pagination') with {
-                    class: 'box',
-                    data: data.pagination
-                } only %}
-
-                <div class="grid grid--stretch">
-                    {% for product in data.products %}
-                        {{ widget('ProductWidgetPlugin', product, data.viewMode) }}
-                    {% endfor %}
-                </div>
-
-                {% include molecule('pagination') with {
-                    class: 'box',
-                    data: data.pagination
-                } only %}
-            </div>
-        {% endblock %}
-    </form>
-
-    {% block cmsBottom %}
-        {% if data.categoryId %}
-            <div class="box">
-                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'bottom', data.categoryId) }}
-            </div>
-        {% endif %}
-    {% endblock %}
-{% endblock %}
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.currentPage,
+        paginationPath: app.request.getPathInfo(),
+        maxPage: _view.pagination.maxPage,
+        showAlwaysFirstAndLast: true
+    }
+} %}

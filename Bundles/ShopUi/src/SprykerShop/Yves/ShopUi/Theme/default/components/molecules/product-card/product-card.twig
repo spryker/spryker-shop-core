@@ -1,18 +1,18 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'product-card',
     tag: 'article'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    name: data.name,
-    abstractId: data.abstractId,
-    url: data.url,
-    imageUrl: data.imageUrl,
-    price: data.price,
-    originalPrice: data.originalPrice | default(null)
-} | merge(data | default({})) %}
+{% define data = {
+    name: required,
+    abstractId: required,
+    url: required,
+    imageUrl: required,
+    price: required,
+    originalPrice: null
+} %}
 
 {% block body %}
     <div class="{{config.name}}__container box box--stretch">   

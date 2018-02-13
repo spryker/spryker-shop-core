@@ -1,13 +1,13 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'select',
     tag: 'label'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    options: data.options | default([])
-} | merge(data | default({})) %}
+{% define data = {
+    options: []
+} %}
 
 {% block attributes %}{% endblock %}
 

@@ -1,13 +1,13 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'icon',
     tag: 'svg'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    name: data.name | default('')
-} | merge(data | default({})) %}
+{% define data = {
+    name: required
+} %}
 
 {% block body %}
     <use href="#{{data.name}}"></use>

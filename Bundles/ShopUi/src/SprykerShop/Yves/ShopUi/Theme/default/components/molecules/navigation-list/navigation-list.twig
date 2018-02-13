@@ -1,13 +1,13 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'navigation-list',
     tag: 'nav'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    nodes: data.nodes | default([])
-} | merge(data | default({})) %}
+{% define data = {
+    nodes: []
+} %}
 
 {% block body %}
     <ul class="list">

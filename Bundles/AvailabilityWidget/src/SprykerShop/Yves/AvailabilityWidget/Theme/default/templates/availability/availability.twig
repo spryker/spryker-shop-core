@@ -1,8 +1,0 @@
-{% set concreteProductId = concreteProductId | default(_widget.product.idProductConcrete) %}
-{% set isAvailable = isAvailable | default(_widget.product.available) %}
-
-{% if concreteProductId and not isAvailable %}
-    <div class="col col--sm-12">
-        <strong>{{ "product.detail.out_of_stock" | trans }}</strong>
-    </div>
-{% endif %}

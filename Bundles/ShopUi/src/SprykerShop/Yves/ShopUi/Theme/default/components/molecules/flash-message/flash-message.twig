@@ -1,16 +1,16 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'flash-message',
     tag: 'flash-message'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    action: data.action | default(''),
-    title: data.title | default(''),
-    text: data.text | default(''),
-    icon: data.icon | default('')
-} | merge(data | default({})) %}
+{% define data = {
+    action: '',
+    title: '',
+    text: '',
+    icon: null
+} %}
 
 {% set modifiers = [data.action] | merge(modifiers | default([])) %}
 

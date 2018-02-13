@@ -106,7 +106,7 @@ const config = {
     resolve: {
         extensions: ['.ts', '.js', '.json', '.css', '.scss'],
         alias: {
-            'ShopUi': settings.paths.srcDir
+            'shop-ui': settings.paths.srcDir
         }
     },
 

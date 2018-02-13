@@ -1,18 +1,18 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'variant',
     tag: 'div'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    name: data.name,
-    formName: data.formName,
-    values: data.values,
-    selectedValue: data.selectedValue | default(null),
-    label: data.label | default(''),
-    isAvailable: data.isAvailable | default(true)
-} | merge(data | default({})) %}
+{% define data = {
+    name: required,
+    formName: required,
+    values: required,
+    selectedValue: null,
+    label: '',
+    isAvailable: true
+} %}
 
 {% block body %}
     <strong>{{data.label}} </strong>

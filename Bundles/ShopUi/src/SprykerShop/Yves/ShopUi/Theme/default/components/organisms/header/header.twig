@@ -1,13 +1,13 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'header',
     tag: 'header'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    showSearchForm: data.showSearchForm | default(true),
-} | merge(data | default({})) %}
+{% define data = {
+    showSearchForm: true
+} %}
 
 {% block body %}
     <div class="container">
@@ -39,7 +39,7 @@
         </div>
 
         <div class="{{config.name}}__row {{config.name}}__navigation-main is-hidden-sm-md">
-            {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', template('navigation-main', 'ShopLayout')) }}
+            {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', view('navigation-main', 'ShopLayout')) }}
         </div>
 
         {% include molecule('search-form') with {

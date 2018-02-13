@@ -1,14 +1,14 @@
 {% extends model('component') %}
 
-{% set config = {
+{% define config = {
     name: 'details-panel',
     tag: 'section'
-} | merge(config | default({})) %}
+} %}
 
-{% set data = {
-    description: data.description | default(''),
-    attributes: data.attributes | default([])
-} | merge(data | default({})) %}
+{% define data = {
+    description: '',
+    attributes: []
+} %}
 
 {% block body %}
     <h5>{{ 'product.attribute.long_description' | trans }}</h5>

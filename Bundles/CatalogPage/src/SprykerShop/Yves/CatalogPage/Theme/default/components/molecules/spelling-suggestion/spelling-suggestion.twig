@@ -1,0 +1,26 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'spelling-suggestion'
+} %}
+
+{% define data = {
+    suggestion: ''
+} %}
+
+{% set href = path('search', {
+    q: data.suggestion
+}) %}
+
+{% block component %}
+    {% if data.suggestion is not empty %}
+        {{parent()}}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <em class="text-big">
+        {{ 'global.search.spellingSuggestion' | trans }}
+        <strong><a href="{{href}}">{{data.suggestion}}</a></strong>?
+    </em>
+{% endblock %}
