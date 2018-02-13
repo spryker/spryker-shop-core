@@ -72,7 +72,7 @@ class CartFiller implements CartFillerInteface
 
         foreach ($orderItems as $item) {
             $quoteTransfer = $this->cartClient->addItem($item);
+            $this->cartClient->storeQuote($quoteTransfer);
         }
-        $this->cartClient->storeQuote($quoteTransfer);
     }
 }
