@@ -33,7 +33,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     {
         return new CartFiller(
             $this->getCartClient(),
-            $this->getProductBundleClient()
+            $this->createItemsFetcher()
         );
     }
 
