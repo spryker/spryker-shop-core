@@ -36,7 +36,7 @@ class WishlistPageFactory extends AbstractFactory
      */
     public function getWishlistForm(WishlistTransfer $data = null, array $options = [])
     {
-        return $this->getFormFactory()->create($this->createWishlistFormType(), $data, $options);
+        return $this->getFormFactory()->create(WishlistFormType::class, $data, $options);
     }
 
     /**
@@ -58,7 +58,7 @@ class WishlistPageFactory extends AbstractFactory
      */
     public function getAddAllAvailableProductsToCartForm(array $data, array $options = [])
     {
-        return $this->getFormFactory()->create($this->createAddAllAvailableProductsToCartFormType(), $data, $options);
+        return $this->getFormFactory()->create(AddAllAvailableProductsToCartFormType::class, $data, $options);
     }
 
     /**
