@@ -32,13 +32,13 @@ class OrderController extends AbstractController
      */
     public function reorderAction(int $idOrder): RedirectResponse
     {
-        $order = $this->getFactory()
+        $orderTransfer = $this->getFactory()
             ->createOrderRepository()
             ->getOrderTransfer($idOrder);
 
         $this->getFactory()
             ->createCartFiller()
-            ->reorder($order);
+            ->reorder($orderTransfer);
 
         $this->getFactory()
             ->createMessenger()
@@ -57,13 +57,13 @@ class OrderController extends AbstractController
         $idSalesOrder = $request->request->getInt(static::ID_ORDER);
         $items = (array)$request->request->get(static::PARAM_ITEMS);
 
-        $order = $this->getFactory()
+        $orderTransfer = $this->getFactory()
             ->createOrderRepository()
             ->getOrderTransfer($idSalesOrder);
 
         $this->getFactory()
             ->createCartFiller()
-            ->reorderItems($order, $items);
+            ->reorderItems($orderTransfer, $items);
 
         $this->getFactory()
             ->createMessenger()
