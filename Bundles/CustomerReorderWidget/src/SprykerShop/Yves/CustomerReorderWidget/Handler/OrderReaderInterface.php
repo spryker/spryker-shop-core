@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface OrderRepositoryInterface
+interface OrderReaderInterface
 {
     /**
      * @param int $idSalesOrder

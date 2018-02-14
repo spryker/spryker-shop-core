@@ -21,8 +21,8 @@ use SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcher;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcherInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\Messenger;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderRepository;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderRepositoryInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderReader;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderReaderInterface;
 
 class CustomerReorderWidgetFactory extends AbstractFactory
 {
@@ -38,11 +38,11 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\OrderRepositoryInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\OrderReaderInterface
      */
-    public function createOrderRepository(): OrderRepositoryInterface
+    public function createOrderRepository(): OrderReaderInterface
     {
-        return new OrderRepository(
+        return new OrderReader(
             $this->getSalesClient(),
             $this->getCustomerClient()
         );
