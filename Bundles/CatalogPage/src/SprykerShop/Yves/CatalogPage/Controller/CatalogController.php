@@ -50,7 +50,7 @@ class CatalogController extends AbstractController
         $metaKeywords = isset($categoryNode['meta_keywords']) ? $categoryNode['meta_keywords'] : '';
 
         $metaAttributes = [
-            'idCategory' => $idCategoryNode,
+            'idCategory' => $idCategory,
             'category' => $categoryNode,
             'pageTitle' => ($metaTitle ?: $categoryNode['name']),
             'pageDescription' => $metaDescription,
