@@ -40,8 +40,8 @@ class ItemsFetcher implements ItemsFetcherInterface
      */
     public function getAll(OrderTransfer $orderTransfer): array
     {
-        $rawItems = $this->getOrderItemsTransfer($orderTransfer);
-        $reducedItems = $this->reduceItemsBySku($rawItems);
+        $sourceItems = $this->getOrderItemsTransfer($orderTransfer);
+        $reducedItems = $this->reduceItemsBySku($sourceItems);
 
         return $reducedItems;
     }
@@ -54,8 +54,8 @@ class ItemsFetcher implements ItemsFetcherInterface
      */
     public function getByIds(OrderTransfer $orderTransfer, array $idOrderItems): array
     {
-        $rawItems = $this->getOrderItemsTransfer($orderTransfer);
-        $filteredItems = $this->filterById($rawItems, $idOrderItems);
+        $sourceItems = $this->getOrderItemsTransfer($orderTransfer);
+        $filteredItems = $this->filterById($sourceItems, $idOrderItems);
         $reducedItems = $this->reduceItemsBySku($filteredItems);
 
         return $reducedItems;
