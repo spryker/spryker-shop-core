@@ -72,7 +72,23 @@ class ItemsFetcher implements ItemsFetcherInterface
             ->getGroupedBundleItems($orderTransfer->getItems(), $orderTransfer->getBundleItems());
         $items = $this->getProductsFromBundles($items);
 
-        return $items;
+        return $this->cleanUpItems($items);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function cleanUpItems(array $items): array
+    {
+        $cleanItems = [];
+        foreach ($items as $item) {
+            $idSaleOrderItem = $item->getIdSalesOrderItem();
+            $item->setIdSalesOrderItem(null);
+            $cleanItems[$idSaleOrderItem] = $item;
+        }
+        return $cleanItems;
     }
 
     /**
@@ -97,12 +113,8 @@ class ItemsFetcher implements ItemsFetcherInterface
      */
     protected function filterById(array $items, array $idOrderItems): array
     {
-        $filteredItems = [];
-        foreach ($items as $item) {
-            if (in_array($item->getId(), $idOrderItems)) {
-                $filteredItems[] = $item;
-            }
-        }
+        $allowed_keys = array_flip($idOrderItems);
+        $filteredItems = array_intersect_key($items, $allowed_keys);
 
         return $filteredItems;
     }
