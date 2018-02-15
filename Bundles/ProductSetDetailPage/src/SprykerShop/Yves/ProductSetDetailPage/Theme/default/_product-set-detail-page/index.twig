@@ -21,12 +21,14 @@
     <div class="row hide-for-xlarge">
         <div class="small-12 columns">
             <div class="__image-viewer-block">
-                {% for image in _view.productSet.imageSets.0.images %}
-                    <div data-viewer-id="{{ image.externalUrlLarge }}" data-viewer-reset>
-                        <a class="close-button">&times;</a>
-                        <img class="thumbnail" src="{{ image.externalUrlLarge }}">
-                    </div>
-                {% endfor %}
+                {% if _view.productSet.imageSets|length %}
+                    {% for image in _view.productSet.imageSets.0.images %}
+                        <div data-viewer-id="{{ image.externalUrlLarge }}" data-viewer-reset>
+                            <a class="close-button">&times;</a>
+                            <img class="thumbnail" src="{{ image.externalUrlLarge }}">
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

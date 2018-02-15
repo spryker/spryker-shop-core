@@ -7,7 +7,7 @@
                     {% include "@ProductSetListPage/_product-set-list-page/_partials/product-set.twig" with {
                         url: productSet.url,
                         name: productSet.name,
-                        imageUrl: (productSet.imageSets.0.images|length ? productSet.imageSets.0.images.0.externalUrlSmall : '')
+                        imageUrl: (productSet.imageSets|length and productSet.imageSets.0.images|length ? productSet.imageSets.0.images.0.externalUrlSmall : '')
                     } %}
                 </div>
             {% else %}
