@@ -12,6 +12,7 @@
 
 {% block form_checkbox %}
     <input type="checkbox" class="reorder order-item"
+           title="Sales order item id, selected for reorder"
            {% if not _widget.availability %} disabled {% endif %}
            name="items[]" value="{{ _widget.item.idSalesOrderItem }}"
     />
