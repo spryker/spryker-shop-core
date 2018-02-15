@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 
 class QuoteWriter implements QuoteWriterInterface
@@ -41,15 +42,7 @@ class QuoteWriter implements QuoteWriterInterface
         if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {
             $quoteTransfer->setBillingSameAsShipping(true);
         }
-        if ($orderTransfer->getShipmentMethods()) {
-//            $shipmentMethodTransfer = new ShipmentMethodsTransfer();
-//            $shipmentMethodTransfer->set
-//
-//            $shipmentTransfer = new ShipmentTransfer();
-//            $shipmentTransfer->se$orderTransfer->getFkShipmentMethod());
-//
-//            $newQuoteTransfer->setShipment($orderTransfer->getShipment());
-        }
+        $quoteTransfer = $this->setShipment($orderTransfer, $quoteTransfer);
 
         $this->cartClient->storeQuote($quoteTransfer);
     }
@@ -96,6 +89,29 @@ class QuoteWriter implements QuoteWriterInterface
         $billingAddressTransfer->setIdCustomerAddress($idCustomerAddress);
 
         $quoteTransfer->setBillingAddress($billingAddressTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setShipment(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        if ($orderTransfer->getFkShipmentMethod()) {
+            return $quoteTransfer;
+        }
+        $shipmentMethodTransfer = $orderTransfer->getShipmentMethods()[0];
+        $shipmentMethodTransfer->setIdShipmentMethod($orderTransfer->getFkShipmentMethod());
+
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setShipmentSelection($orderTransfer->getFkShipmentMethod());
+        $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+        $quoteTransfer->setShipment($shipmentTransfer);
 
         return $quoteTransfer;
     }
