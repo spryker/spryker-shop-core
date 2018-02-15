@@ -18,10 +18,10 @@ export default abstract class Component extends HTMLElement {
         this.name = this.tagName.toLowerCase();
         this.selector = `js-${this.name}`;
 
-        document.addEventListener(config.events.ready, (event: Event) => this.ready(event), false);
+        document.addEventListener(config.events.ready, (event: Event) => this.readyCallback(event), false);
     }
 
-    abstract ready(event?: Event): void
+    abstract readyCallback(event?: Event): void
 
     setAttributeSafe(name: string, value?: string): void {
         if (!value) {

@@ -4,7 +4,7 @@ export default class SideDrawer extends Component {
     triggers: HTMLElement[]
     containers: HTMLElement[]
 
-    ready() { 
+    readyCallback() { 
         this.triggers = Array.from(document.getElementsByClassName(this.triggerSelector));
         this.containers = Array.from(document.getElementsByClassName(this.containerSelector));
         this.mapEvents();

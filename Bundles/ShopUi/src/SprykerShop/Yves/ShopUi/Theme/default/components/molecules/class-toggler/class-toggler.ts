@@ -4,7 +4,7 @@ export default class ClassToggler extends Component {
     trigger: HTMLInputElement
     targets: HTMLElement[]
 
-    ready(): void {
+    readyCallback(): void {
         this.trigger = this.querySelector(`.${this.selector}__checkbox`);
         this.targets = Array.from(document.getElementsByClassName(this.target));
         this.toggle();

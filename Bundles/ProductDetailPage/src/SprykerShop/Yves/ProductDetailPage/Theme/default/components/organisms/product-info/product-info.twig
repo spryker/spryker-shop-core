@@ -14,7 +14,7 @@
 {% set brand = data.product.attributes.brand | default(null) %}
 {% set sku = data.product.sku %}
 {% set availabilityWidget = '' %}
-{% set disabled = data.product.idProductConcrete is not defined or data.product.price is null %}
+{% set disabled = data.product.idProductConcrete is empty or data.product.price is empty %}
             
 {% for index in 1..data.maxQuantity %}
     {% set options = options | merge([{
@@ -24,8 +24,8 @@
 {% endfor %}
 
 {% if widgetExists('AvailabilityWidgetPlugin') %}
-    {% set availabilityWidget = widget('AvailabilityWidgetPlugin', data.product) %}
-    {% set disabled = availabilityWidget is empty or data.product.price is null %}
+    {% set availabilityWidget = widget('AvailabilityWidgetPlugin', data.product) | trim %}
+    {% set disabled = data.product.price is empty or availabilityWidget is empty  %}
 {% endif %}
 
 {% block body %}
@@ -74,7 +74,7 @@
                 {{ 'page.detail.add-to-cart' | trans }}
             </button>
         </div>
-
+        
         {{ availabilityWidget | raw }}
     </form>
 

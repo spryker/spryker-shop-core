@@ -20,7 +20,7 @@ export default class SimpleCarousel extends Component {
         this.dotCurrentModifier = `${this.name}__dot--current`;
     }
 
-    ready(): void {
+    readyCallback(): void {
         this.slidesCount = this.getElementsByClassName(`${this.selector}__slide`).length;
 
         if (this.slidesCount <= 1) {
