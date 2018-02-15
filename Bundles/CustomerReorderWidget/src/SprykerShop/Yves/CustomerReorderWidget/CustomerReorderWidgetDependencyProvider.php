@@ -15,6 +15,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientBridge;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientBridge;
 
 class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -23,6 +24,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_SALES = 'CLIENT_SALES';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
+    public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
 
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
@@ -38,6 +40,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addSalesClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addProductBundleClient($container);
+        $container = $this->addShipmentClient($container);
         $container = $this->addApplication($container);
 
         return $container;
@@ -117,6 +120,22 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         $container[static::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
             return new CustomerReorderWidgetToProductBundleClientBridge(
                 $container->getLocator()->productBundle()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShipmentClient(Container $container): Container
+    {
+        $container[static::CLIENT_SHIPMENT] = function (Container $container) {
+            return new CustomerReorderWidgetToShipmentClientBridge(
+                $container->getLocator()->shipment()->client()
             );
         };
 

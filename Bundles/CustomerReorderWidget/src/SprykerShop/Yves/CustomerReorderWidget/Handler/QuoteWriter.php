@@ -8,24 +8,36 @@
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientInterface;
 
 class QuoteWriter implements QuoteWriterInterface
 {
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface
      */
-    private $cartClient;
+    protected $cartClient;
+
+    /**
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientInterface
+     */
+    protected $shipmentClient;
 
     /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientInterface $shipmentClient
      */
-    public function __construct(CustomerReorderWidgetToCartClientInterface $cartClient)
-    {
+    public function __construct(
+        CustomerReorderWidgetToCartClientInterface $cartClient,
+        CustomerReorderWidgetToShipmentClientInterface $shipmentClient
+    ) {
         $this->cartClient = $cartClient;
+        $this->shipmentClient = $shipmentClient;
     }
 
     /**
@@ -101,14 +113,15 @@ class QuoteWriter implements QuoteWriterInterface
      */
     protected function setShipment(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($orderTransfer->getFkShipmentMethod()) {
+        if (!$orderTransfer->getShipmentMethods()) {
             return $quoteTransfer;
         }
         $shipmentMethodTransfer = $orderTransfer->getShipmentMethods()[0];
-        $shipmentMethodTransfer->setIdShipmentMethod($orderTransfer->getFkShipmentMethod());
+        $idShipmentMethod = $this->getIdShipmentMethod($quoteTransfer, $orderTransfer, $shipmentMethodTransfer);
+        $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
 
         $shipmentTransfer = new ShipmentTransfer();
-        $shipmentTransfer->setShipmentSelection($orderTransfer->getFkShipmentMethod());
+        $shipmentTransfer->setShipmentSelection($idShipmentMethod);
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         $quoteTransfer->setShipment($shipmentTransfer);
@@ -136,6 +149,37 @@ class QuoteWriter implements QuoteWriterInterface
 
             if ($currentAddressArray == $addressArray) {
                 return $idCustomerAddress;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return int|null
+     */
+    protected function getIdShipmentMethod(
+        QuoteTransfer $quoteTransfer,
+        OrderTransfer $orderTransfer,
+        ShipmentMethodTransfer $shipmentMethodTransfer
+    ): ?int
+    {
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode($orderTransfer->getCurrencyIsoCode());
+        $quoteTransfer->setCurrency($currencyTransfer);
+
+        $shipmentMethodsTransfer = $this->shipmentClient
+            ->getMethods($quoteTransfer)
+            ->getMethods();
+        $quoteTransfer->setCurrency(null);
+
+        foreach ($shipmentMethodsTransfer as $currentMethodTransfer) {
+            if ($currentMethodTransfer->getName() === $shipmentMethodTransfer->getName()) {
+                return $currentMethodTransfer->getIdShipmentMethod();
             }
         }
 
