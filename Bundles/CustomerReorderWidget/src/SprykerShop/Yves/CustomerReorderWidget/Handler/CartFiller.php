@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 
 class CartFiller implements CartFillerInteface
@@ -67,9 +66,6 @@ class CartFiller implements CartFillerInteface
      */
     protected function updateCart(array $orderItems): void
     {
-        $quote = new QuoteTransfer();
-        $this->cartClient->storeQuote($quote);
-
         foreach ($orderItems as $item) {
             $quoteTransfer = $this->cartClient->addItem($item);
             $this->cartClient->storeQuote($quoteTransfer);

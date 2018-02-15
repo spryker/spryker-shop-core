@@ -28,6 +28,11 @@ interface CustomerReorderWidgetToCartClientInterface
     public function storeQuote(QuoteTransfer $quoteTransfer): void;
 
     /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote(): QuoteTransfer;
+
+    /**
      * @return \Spryker\Client\Cart\Zed\CartStubInterface
      */
     public function getZedStub(): CartStubInterface;
