@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 
@@ -26,26 +28,101 @@ class QuoteWriter implements QuoteWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
      * @return void
      */
-    public function fill(): void
+    public function fill(OrderTransfer $orderTransfer): void
     {
-        $currentQuoteTransfer = $this->cartClient->getQuote();
-        $newQuoteTransfer = new QuoteTransfer();
+        $quoteTransfer = new QuoteTransfer();
 
-        if ($currentQuoteTransfer->getShippingAddress()) {
-            $newQuoteTransfer->setShippingAddress($currentQuoteTransfer->getShippingAddress());
+        $quoteTransfer = $this->setShippingAddress($orderTransfer, $quoteTransfer);
+        $quoteTransfer = $this->setBillingAddress($orderTransfer, $quoteTransfer);
+        if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {
+            $quoteTransfer->setBillingSameAsShipping(true);
         }
-        if ($currentQuoteTransfer->getBillingAddress()) {
-            $newQuoteTransfer->setBillingAddress($currentQuoteTransfer->getBillingAddress());
-        }
-        if ($currentQuoteTransfer->getBillingSameAsShipping()) {
-            $newQuoteTransfer->setBillingSameAsShipping($currentQuoteTransfer->getBillingSameAsShipping());
-        }
-        if ($currentQuoteTransfer->getShipment()) {
-            $newQuoteTransfer->setShipment($currentQuoteTransfer->getShipment());
+        if ($orderTransfer->getShipmentMethods()) {
+//            $shipmentMethodTransfer = new ShipmentMethodsTransfer();
+//            $shipmentMethodTransfer->set
+//
+//            $shipmentTransfer = new ShipmentTransfer();
+//            $shipmentTransfer->se$orderTransfer->getFkShipmentMethod());
+//
+//            $newQuoteTransfer->setShipment($orderTransfer->getShipment());
         }
 
-        $this->cartClient->storeQuote($newQuoteTransfer);
+        $this->cartClient->storeQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setShippingAddress(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        if (!$orderTransfer->getShippingAddress()) {
+            return $quoteTransfer;
+        }
+
+        $shippingAddressTransfer = $orderTransfer->getShippingAddress();
+        $shippingAddressTransfer->setFKCustomer($orderTransfer->getFkCustomer());
+
+        $idCustomerAddress = $this->getIdCustomerAddress($orderTransfer, $shippingAddressTransfer);
+        $shippingAddressTransfer->setIdCustomerAddress($idCustomerAddress);
+
+        $quoteTransfer->setShippingAddress($shippingAddressTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setBillingAddress(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        if (!$orderTransfer->getBillingAddress()) {
+            return $quoteTransfer;
+        }
+
+        $billingAddressTransfer = $orderTransfer->getBillingAddress();
+        $billingAddressTransfer->setFKCustomer($orderTransfer->getFkCustomer());
+
+        $idCustomerAddress = $this->getIdCustomerAddress($orderTransfer, $billingAddressTransfer);
+        $billingAddressTransfer->setIdCustomerAddress($idCustomerAddress);
+
+        $quoteTransfer->setBillingAddress($billingAddressTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return int|null
+     */
+    protected function getIdCustomerAddress(OrderTransfer $orderTransfer, AddressTransfer $addressTransfer): ?int
+    {
+        $addressTransfer = clone $addressTransfer;
+        foreach ($orderTransfer->getCustomer()->getAddresses()->getAddresses() as $currentAddressTransfer) {
+            $currentAddressTransfer = clone $currentAddressTransfer;
+            $idCustomerAddress = $currentAddressTransfer->getIdCustomerAddress();
+
+            $currentAddressTransfer->setIdCustomerAddress(null);
+            $currentAddressArray = $currentAddressTransfer->toArray();
+            $addressTransfer->setIdSalesOrderAddress(null);
+            $addressArray = $addressTransfer->toArray();
+
+            if ($currentAddressArray == $addressArray) {
+                return $idCustomerAddress;
+            }
+        }
+
+        return null;
     }
 }
