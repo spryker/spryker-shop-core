@@ -28,12 +28,35 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_BUSINESS_UNIT_DELETE = 'company/business-unit/delete';
     public const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE = 'company/business-unit/address/create';
 
+    public const ROUTE_COMPANY_ROLE = 'company/company-role';
+    public const ROUTE_COMPANY_ROLE_CREATE = 'company/company-role/create';
+    public const ROUTE_COMPANY_ROLE_UPDATE = 'company/company-role/update';
+    public const ROUTE_COMPANY_ROLE_DELETE = 'company/company-role/delete';
+    public const ROUTE_COMPANY_ROLE_DETAILS = 'company/company-role/details';
+
+    public const ROUTE_PERMISSION_CONFIGURE = 'company/permission/configure';
+    public const ROUTE_PERMISSION_MANAGE = 'company/permission/manage';
+    public const ROUTE_PERMISSION_ASSIGN = 'company/permission/assign';
+    public const ROUTE_PERMISSION_UNASSIGN = 'company/permission/unassign';
+
     /**
      * @param \Silex\Application $app
      *
      * @return void
      */
     protected function defineControllers(Application $app): void
+    {
+        $this->createCompanyControllers();
+        $this->createCompanyAddressControllers();
+        $this->createCompanyBusinessUnitControllers();
+        $this->createCompanyRoleControllers();
+        $this->createPermissionControllers();
+    }
+
+    /**
+     * @return void
+     */
+    protected function createCompanyControllers(): void
     {
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
@@ -46,6 +69,14 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{company}/overview', self::ROUTE_COMPANY_OVERVIEW, 'CompanyPage', 'Company', 'index')
             ->assert('company', $allowedLocalesPattern . 'company|company')
             ->value('company', 'company');
+    }
+
+    /**
+     * @return void
+     */
+    protected function createCompanyAddressControllers(): void
+    {
+        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
         $this->createController('/{company}/address', self::ROUTE_COMPANY_ADDRESS, 'CompanyPage', 'Address', 'index')
             ->assert('company', $allowedLocalesPattern . 'company|company')
@@ -59,6 +90,14 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{company}/address/delete', self::ROUTE_COMPANY_ADDRESS_DELETE, 'CompanyPage', 'Address', 'delete')
             ->assert('company', $allowedLocalesPattern . 'company|company')
             ->value('company', 'company');
+    }
+
+    /**
+     * @return void
+     */
+    protected function createCompanyBusinessUnitControllers(): void
+    {
+        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
         $this->createController('/{company}/business-unit', self::ROUTE_COMPANY_BUSINESS_UNIT, 'CompanyPage', 'BusinessUnit', 'index')
             ->assert('company', $allowedLocalesPattern . 'company|company')
@@ -76,6 +115,51 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('company', $allowedLocalesPattern . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/business-unit/address/create', self::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, 'CompanyPage', 'BusinessUnitAddress', 'create')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+    }
+
+    /**
+     * @return void
+     */
+    protected function createCompanyRoleControllers(): void
+    {
+        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+
+        $this->createController('/{company}/company-role', self::ROUTE_COMPANY_ROLE, 'CompanyPage', 'CompanyRole', 'index')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/company-role/create', self::ROUTE_COMPANY_ROLE_CREATE, 'CompanyPage', 'CompanyRole', 'create')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/company-role/update', self::ROUTE_COMPANY_ROLE_UPDATE, 'CompanyPage', 'CompanyRole', 'update')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/company-role/delete', self::ROUTE_COMPANY_ROLE_DELETE, 'CompanyPage', 'CompanyRole', 'delete')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/company-role/details', self::ROUTE_COMPANY_ROLE_DETAILS, 'CompanyPage', 'CompanyRole', 'details')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+    }
+
+    /**
+     * @return void
+     */
+    protected function createPermissionControllers(): void
+    {
+        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+
+        $this->createController('/{company}/permission/configure', self::ROUTE_PERMISSION_CONFIGURE, 'CompanyPage', 'Permission', 'configure')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/permission/manage', self::ROUTE_PERMISSION_MANAGE, 'CompanyPage', 'Permission', 'manage')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/permission/assign', self::ROUTE_PERMISSION_ASSIGN, 'CompanyPage', 'Permission', 'assign')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/permission/unassign', self::ROUTE_PERMISSION_UNASSIGN, 'CompanyPage', 'Permission', 'unassign')
             ->assert('company', $allowedLocalesPattern . 'company|company')
             ->value('company', 'company');
     }

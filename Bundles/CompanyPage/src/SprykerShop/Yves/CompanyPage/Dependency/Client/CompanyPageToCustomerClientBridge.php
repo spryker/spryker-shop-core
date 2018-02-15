@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class CompanyPageToCustomerClientBridge implements CompanyPageToCustomerClientInterface
 {
     /**
@@ -22,6 +24,13 @@ class CompanyPageToCustomerClientBridge implements CompanyPageToCustomerClientIn
         $this->customerClient = $customerClient;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomer(): ?CustomerTransfer
+    {
+        return $this->customerClient->getCustomer();
+    }
 
     /**
      * @return bool
@@ -30,4 +39,5 @@ class CompanyPageToCustomerClientBridge implements CompanyPageToCustomerClientIn
     {
         return $this->customerClient->isLoggedIn();
     }
+
 }

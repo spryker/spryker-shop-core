@@ -16,8 +16,6 @@
                 <hr>
                 {% if _view.addresses | length %}
                     {% include "@CompanyPage/address/partials/company-unit-address-list.twig" %}
-                {% else %}
-                    <p>{{ 'company.account.address.no_addresses' | trans }}</p>
                 {% endif %}
                 <div class="row align-right">
                     <div class="small-12 medium-6 large-4 columns">

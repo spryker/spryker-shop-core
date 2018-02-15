@@ -1,1 +1,13 @@
-{% extends "@CompanyPage/auth/login.twig" %}
+{% extends "@ShopLayout/layout/layout.twig" %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block content %}
+
+    <div class="row small-unstack" data-component="viewer">
+        <div class="columns __checkout-proceed-as-method" data-viewer-id="user" data-viewer-default>
+            {% include "@CompanyPage/register/partials/register-form.twig" with {'form': _view.registerForm} %}
+        </div>
+    </div>
+
+{% endblock %}

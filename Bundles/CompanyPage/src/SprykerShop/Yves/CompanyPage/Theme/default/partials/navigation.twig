@@ -6,6 +6,9 @@
     <li {% if active == 'address' %}class="active"{% endif %}>
         <a href="{{ path('company/address') }}" data-id="sidebar-address">{{ 'company.account.address' | trans }}</a>
     </li>
+    <li {% if active == 'company-role' %}class="active"{% endif %}>
+        <a href="{{ path('company/company-role') }}" data-id="sidebar-address">{{ 'company.account.company_role' | trans }}</a>
+    </li>
     <li {% if active == 'business-unit' %}class="active"{% endif %}>
         <a href="{{ path('company/business-unit') }}" data-id="sidebar-business-unit">{{ 'company.account.business_unit' | trans }}</a>
         {% block businessUnitSubmenu %}{% endblock %}

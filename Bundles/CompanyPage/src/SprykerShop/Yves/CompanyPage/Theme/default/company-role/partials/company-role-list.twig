@@ -1,0 +1,29 @@
+{% set actions = actions|default(false) %}
+<table class="stack">
+    <thead>
+    <tr class="active">
+        <th>{{ 'company.account.company_role.name' | trans }}</th>
+        <th>{{ 'company.account.company_role.is_default' | trans }}</th>
+        {% if (actions) %}
+            <th class="text-right">{{ 'company.account.table.actions' | trans }}</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for companyRole in _view.companyRoleCollection %}
+        <tr>
+            <td>{{ companyRole.name }}</td>
+            <td>{% if (companyRole.isDefault) %}<span class="label label-info">{{ 'company.account.company_role.default' | trans }}</span>{% endif %}</td>
+            {% if (actions) %}
+                <td class="text-right">
+                    <a href="{{ path('company/company-role/details', {'id': companyRole.idCompanyRole}) }}">
+                        <small>
+                            <i class="fa fa-users"></i> {{ 'company.account.company_role.view' | trans }}
+                        </small>
+                    </a>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

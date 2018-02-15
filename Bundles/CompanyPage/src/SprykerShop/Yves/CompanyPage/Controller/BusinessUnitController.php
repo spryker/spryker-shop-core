@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,9 +21,6 @@ class BusinessUnitController extends AbstractCompanyController
 {
     public const BUSINESS_UNIT_LIST_SORT_FIELD = 'id_company_business_unit';
     public const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
-
-    public const PARAM_PAGE = 'page';
-    public const DEFAULT_PAGE = 1;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -156,36 +151,6 @@ class BusinessUnitController extends AbstractCompanyController
         $businessUnitCollectionTransfer->setPagination($paginationTransfer);
 
         return $businessUnitCollectionTransfer;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $limit
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
-    protected function createPaginationTransfer(Request $request, $limit = 10): PaginationTransfer
-    {
-        $paginationTransfer = new PaginationTransfer();
-        $paginationTransfer->setPage($request->query->getInt(self::PARAM_PAGE, self::DEFAULT_PAGE));
-        $paginationTransfer->setMaxPerPage($limit);
-
-        return $paginationTransfer;
-    }
-
-    /**
-     * @param string $field
-     * @param string $direction
-     *
-     * @return \Generated\Shared\Transfer\FilterTransfer
-     */
-    protected function createFilterTransfer($field, $direction = 'DESC'): FilterTransfer
-    {
-        $filterTransfer = new FilterTransfer();
-        $filterTransfer->setOrderBy($field);
-        $filterTransfer->setOrderDirection($direction);
-
-        return $filterTransfer;
     }
 
     /**

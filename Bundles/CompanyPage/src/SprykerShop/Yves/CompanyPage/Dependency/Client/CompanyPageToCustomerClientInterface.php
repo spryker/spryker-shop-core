@@ -7,8 +7,15 @@
 
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 interface CompanyPageToCustomerClientInterface
 {
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomer(): ?CustomerTransfer;
+
     /**
      * @return bool
      */

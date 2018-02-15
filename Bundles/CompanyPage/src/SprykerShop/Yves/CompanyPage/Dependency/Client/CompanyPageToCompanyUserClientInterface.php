@@ -18,9 +18,4 @@ interface CompanyPageToCompanyUserClientInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function createCompanyUser(CompanyUserTransfer $companyUserUserTransfer): CompanyUserResponseTransfer;
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    public function getCompanyUser(): ?CompanyUserTransfer;
 }

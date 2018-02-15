@@ -16,6 +16,7 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClien
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientBridge;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientBridge;
 use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
 
 class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -26,9 +27,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_COMPANY_UNIT_ADDRESS = 'CLIENT_COMPANY_UNIT_ADDRESS';
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const CLIENT_COMPANY_ROLE = 'CLIENT_COMPANY_ROLE';
+    public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
     public const STORE = 'STORE';
 
-    public const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
     public const PLUGIN_COMPANY_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_OVERVIEW_WIDGETS';
 
     /**
@@ -46,8 +47,8 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserClient($container);
         $container = $this->addCompanyRoleClient($container);
         $container = $this->addCompanyUnitAddressClient($container);
-        $container = $this->addAuthenticationHandlerPlugin($container);
         $container = $this->addCompanyOverviewWidgetPlugins($container);
+        $container = $this->addPermissionClient($container);
         $container = $this->addStore($container);
 
         return $container;
@@ -166,25 +167,24 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPermissionClient(Container $container): Container
+    {
+        $container[static::CLIENT_PERMISSION] = function (Container $container) {
+            return new CompanyPageToPermissionClientBridge($container->getLocator()->permission()->client());
+        };
+
+        return $container;
+    }
+
+    /**
      * @return array
      */
     protected function getCompanyOverviewWidgetPlugins(): array
     {
         return [];
     }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addAuthenticationHandlerPlugin(Container $container): Container
-    {
-        $container[static::PLUGIN_AUTHENTICATION_HANDLER] = function () {
-            return new AuthenticationHandler();
-        };
-
-        return $container;
-    }
-
 }

@@ -11,10 +11,11 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
-use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
 
 class CompanyPageFactory extends AbstractFactory
 {
@@ -75,18 +76,18 @@ class CompanyPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface
      */
-    public function getAuthenticationHandlerPlugin(): AuthenticationHandler
+    public function getCompanyUnitAddressClient(): CompanyPageToCompanyUnitAddressClientInterface
     {
-        return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_AUTHENTICATION_HANDLER);
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_UNIT_ADDRESS);
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface
      */
-    public function getCompanyUnitAddressClient()
+    public function getPermissionClient(): CompanyPageToPermissionClientInterface
     {
-        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_UNIT_ADDRESS);
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_PERMISSION);
     }
 }

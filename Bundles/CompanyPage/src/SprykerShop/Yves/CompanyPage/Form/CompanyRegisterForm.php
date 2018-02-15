@@ -13,12 +13,13 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RegisterForm extends AbstractType
+class CompanyRegisterForm extends AbstractType
 {
     public const FIELD_SALUTATION = 'salutation';
     public const FIELD_FIRST_NAME = 'first_name';
@@ -64,12 +65,12 @@ class RegisterForm extends AbstractType
     protected function addSalutationField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_SALUTATION, ChoiceType::class, [
-            'choices' => [
+            'choices' => array_flip([
                 'Mr' => 'company.user.salutation.mr',
                 'Ms' => 'company.user.salutation.ms',
                 'Mrs' => 'company.user.salutation.mrs',
                 'Dr' => 'company.user.salutation.dr',
-            ],
+            ]),
             'required' => true,
             'label' => 'address.salutation',
             'constraints' => [
@@ -162,7 +163,7 @@ class RegisterForm extends AbstractType
         $builder->add(static::FIELD_PASSWORD, RepeatedType::class, [
             'first_name' => 'pass',
             'second_name' => 'confirm',
-            'type' => 'password',
+            'type' => PasswordType::class,
             'invalid_message' => 'validator.constraints.password.do_not_match',
             'required' => true,
             'first_options' => [
