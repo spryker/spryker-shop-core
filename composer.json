@@ -60,6 +60,7 @@
     "spryker-shop/product-set-list-page": "*",
     "spryker-shop/product-set-widget": "*",
     "spryker-shop/product-widget": "*",
+    "spryker-shop/quick-order-page": "*",
     "spryker-shop/redirect-page": "*",
     "spryker-shop/shop-application": "*",
     "spryker-shop/shop-layout": "*",
