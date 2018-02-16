@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
 use ArrayObject;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class CustomerReorderWidgetToProductBundleClientBridge implements CustomerReorderWidgetToProductBundleClientInterface
 {
@@ -25,13 +26,12 @@ class CustomerReorderWidgetToProductBundleClientBridge implements CustomerReorde
     }
 
     /**
-     * @param \ArrayObject $items
-     * @param \ArrayObject $bundleItems
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function getGroupedBundleItems(ArrayObject $items, ArrayObject $bundleItems): array
+    public function getItemsWithBundlesItems(QuoteTransfer $quoteTransfer): array
     {
-        return $this->productBundleClient->getGroupedBundleItems($items, $bundleItems);
+        return $this->productBundleClient->getItemsWithBundlesItems($quoteTransfer);
     }
 }

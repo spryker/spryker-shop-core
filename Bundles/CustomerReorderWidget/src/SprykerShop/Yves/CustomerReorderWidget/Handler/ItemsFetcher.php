@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 
 class ItemsFetcher implements ItemsFetcherInterface
@@ -68,25 +69,13 @@ class ItemsFetcher implements ItemsFetcherInterface
      */
     protected function getOrderItemsTransfer(OrderTransfer $orderTransfer): array
     {
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setItems($orderTransfer->getItems());
+        $quoteTransfer->setBundleItems($orderTransfer->getBundleItems());
         $items = $this->productBundleClient
-            ->getGroupedBundleItems($orderTransfer->getItems(), $orderTransfer->getBundleItems());
-        $items = $this->getProductsFromBundles($items);
+            ->getItemsWithBundlesItems($quoteTransfer);
 
         return $this->cleanUpItems($items);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $groupedItems
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getProductsFromBundles(array $groupedItems): array
-    {
-        $items = array_map(function ($groupedItem) {
-            return $groupedItem instanceof ItemTransfer ? $groupedItem : $groupedItem[static::BUNDLE_PRODUCT];
-        }, $groupedItems);
-
-        return $items;
     }
 
     /**

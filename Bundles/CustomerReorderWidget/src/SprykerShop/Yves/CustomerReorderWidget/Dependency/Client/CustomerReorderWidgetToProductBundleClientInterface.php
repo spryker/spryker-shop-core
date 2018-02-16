@@ -8,14 +8,14 @@
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
 use ArrayObject;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CustomerReorderWidgetToProductBundleClientInterface
 {
     /**
-     * @param \ArrayObject $items
-     * @param \ArrayObject $bundleItems
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function getGroupedBundleItems(ArrayObject $items, ArrayObject $bundleItems): array;
+    public function getItemsWithBundlesItems(QuoteTransfer $quoteTransfer): array;
 }
