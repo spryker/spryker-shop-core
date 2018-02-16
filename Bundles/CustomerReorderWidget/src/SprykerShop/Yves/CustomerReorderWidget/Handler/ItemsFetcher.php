@@ -15,12 +15,6 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 class ItemsFetcher implements ItemsFetcherInterface
 {
     /**
-     * The name of field in grouped items.
-     * @see \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
-     */
-    public const BUNDLE_PRODUCT = 'bundleProduct';
-
-    /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface
      */
     protected $productBundleClient;
