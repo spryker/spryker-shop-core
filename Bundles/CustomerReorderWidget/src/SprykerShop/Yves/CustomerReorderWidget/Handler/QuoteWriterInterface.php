@@ -8,13 +8,14 @@
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function fill(OrderTransfer $orderTransfer): void;
+    public function fill(OrderTransfer $orderTransfer): QuoteTransfer;
 }

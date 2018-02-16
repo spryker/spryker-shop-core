@@ -43,9 +43,9 @@ class QuoteWriter implements QuoteWriterInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function fill(OrderTransfer $orderTransfer): void
+    public function fill(OrderTransfer $orderTransfer): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -57,6 +57,8 @@ class QuoteWriter implements QuoteWriterInterface
         $quoteTransfer = $this->setShipment($orderTransfer, $quoteTransfer);
 
         $this->cartClient->storeQuote($quoteTransfer);
+
+        return $quoteTransfer;
     }
 
     /**

@@ -36,7 +36,8 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     {
         return new CartFiller(
             $this->getCartClient(),
-            $this->createItemsFetcher()
+            $this->createItemsFetcher(),
+            $this->createQuoteWriter()
         );
     }
 
@@ -63,22 +64,22 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\QuoteWriterInterface
-     */
-    public function createQuoteWriter(): QuoteWriterInterface
-    {
-        return new QuoteWriter(
-            $this->getCartClient(),
-            $this->getShipmentClient()
-        );
-    }
-
-    /**
      * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface
      */
     public function getAvailabilityStorageClient(): CustomerReorderWidgetToAvailabilityStorageClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\QuoteWriterInterface
+     */
+    protected function createQuoteWriter(): QuoteWriterInterface
+    {
+        return new QuoteWriter(
+            $this->getCartClient(),
+            $this->getShipmentClient()
+        );
     }
 
     /**

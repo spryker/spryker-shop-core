@@ -37,10 +37,6 @@ class OrderController extends AbstractController
             ->getOrderTransfer($idOrder);
 
         $this->getFactory()
-            ->createQuoteWriter()
-            ->fill($orderTransfer);
-
-        $this->getFactory()
             ->createCartFiller()
             ->reorder($orderTransfer);
 
@@ -64,10 +60,6 @@ class OrderController extends AbstractController
         $orderTransfer = $this->getFactory()
             ->createOrderRepository()
             ->getOrderTransfer($idSalesOrder);
-
-        $this->getFactory()
-            ->createQuoteWriter()
-            ->fill($orderTransfer);
 
         $this->getFactory()
             ->createCartFiller()

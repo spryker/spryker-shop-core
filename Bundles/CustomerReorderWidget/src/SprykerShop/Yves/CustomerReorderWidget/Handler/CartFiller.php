@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 
 class CartFiller implements CartFillerInteface
@@ -23,15 +25,23 @@ class CartFiller implements CartFillerInteface
     private $itemsFetcher;
 
     /**
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Handler\QuoteWriterInterface
+     */
+    private $quoteWriter;
+
+    /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcherInterface $itemsFetcher
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Handler\QuoteWriterInterface $quoteWriter
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,
-        ItemsFetcherInterface $itemsFetcher
+        ItemsFetcherInterface $itemsFetcher,
+        QuoteWriterInterface $quoteWriter
     ) {
         $this->cartClient = $cartClient;
         $this->itemsFetcher = $itemsFetcher;
+        $this->quoteWriter = $quoteWriter;
     }
 
     /**
@@ -42,8 +52,9 @@ class CartFiller implements CartFillerInteface
     public function reorder(OrderTransfer $orderTransfer): void
     {
         $items = $this->itemsFetcher->getAll($orderTransfer);
+        $quoteTransfer = $this->quoteWriter->fill($orderTransfer);
 
-        $this->updateCart($items);
+        $this->updateCart($quoteTransfer, $items);
     }
 
     /**
@@ -55,20 +66,25 @@ class CartFiller implements CartFillerInteface
     public function reorderItems(OrderTransfer $orderTransfer, array $idOrderItems): void
     {
         $items = $this->itemsFetcher->getByIds($orderTransfer, $idOrderItems);
+        $quoteTransfer = $this->quoteWriter->fill($orderTransfer);
 
-        $this->updateCart($items);
+        $this->updateCart($quoteTransfer, $items);
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return void
      */
-    protected function updateCart(array $orderItems): void
+    protected function updateCart(QuoteTransfer $quoteTransfer, array $orderItems): void
     {
-        foreach ($orderItems as $item) {
-            $quoteTransfer = $this->cartClient->addItem($item);
-            $this->cartClient->storeQuote($quoteTransfer);
-        }
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setQuote($quoteTransfer);
+        $cartChangeTransfer->setItems($orderItems);
+
+        $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer);
+
+        $this->cartClient->storeQuote($quoteTransfer);
     }
 }
