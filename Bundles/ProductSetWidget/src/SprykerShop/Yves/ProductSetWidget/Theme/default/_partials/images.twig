@@ -2,7 +2,7 @@
     <div class="row show-for-large">
         <div class="small-12 columns">
             <div class="__image-viewer-inline">
-                {% if _view.productSet.imageSets|length %}
+                {% if _widget.productSet.imageSets|length %}
                     {% for image in _widget.productSet.imageSets.0.images %}
                         <div data-viewer-id="{{ image.externalUrlLarge }}" {% if loop.first %}data-viewer-default{% endif %}>
                             <span class="thumbnail __preview-image __preview-image--large">
@@ -17,7 +17,7 @@
     <div class="row">
         <div class="small-12 columns">
             <div class="row">
-                {% if _view.productSet.imageSets|length %}
+                {% if _widget.productSet.imageSets|length %}
                     {% for image in _widget.productSet.imageSets.0.images %}
                         <a class="small-6 medium-6 large-6 xlarge-expand columns" href="{{ image.externalUrlLarge }}" target="_blank" data-viewer-show="{{ image.externalUrlLarge }}">
                             <span class="thumbnail __preview-image __preview-image--small __no-margin-bottom">
