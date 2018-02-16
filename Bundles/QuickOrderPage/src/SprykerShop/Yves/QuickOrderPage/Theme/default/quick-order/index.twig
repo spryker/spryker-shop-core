@@ -1,0 +1,9 @@
+{% extends "@QuickOrderPage/layout.twig" %}
+
+{% block content %}
+<div class="row">
+    <div class="small-12 columns">
+        {% include "@QuickOrderPage/quick-order/partials/product-grid.twig"  with {'form': _view.form} %}
+    </div>
+</div>
+{% endblock %}

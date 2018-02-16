@@ -1,0 +1,42 @@
+{{ form_start(form, {attr: {class: 'quck-order-form'} }) }}
+
+{{ form_errors(form) }}
+
+{% for item in form.items %}
+    <div class="row">
+        <div class="small-12 medium-2 columns">
+            {{ form_widget(item.searchField) }}
+        </div>
+        <div class="small-12 medium-7 columns">
+            {{ form_widget(item.searchQuery, { 'attr': {'class': 'js-autocomplete-input-field', 'placeholder': '' | trans } }) }}
+            {{ form_widget(item.sku) }}
+            {{ form_errors(item.searchQuery) }}
+        </div>
+        <div class="small-12 medium-1 columns">
+            {{ form_widget(item.qty, { 'attr': {'min': 1, 'placeholder': '# Qty' | trans } }) }}
+        </div>
+        <div class="small-12 medium-2 columns">
+            {{ form_widget(item.price) }}
+        </div>
+    </div>
+{% endfor %}
+
+<div class="row __padding-top">
+    <a href="#add-more" class="button secondary expanded __no-margin-bottom js-add-more-rows-button">
+        <i class="fa fa-plus-circle"></i>{{ 'Add More Rows' | trans }}
+    </a>
+</div>
+<div class="row __padding-top">
+    <p class="small-12 large-6 columns">
+        <button type="submit" name="addToCart" class="button expanded success js-add-to-cart-button __no-margin-bottom">
+            <i class="fa fa-cart-plus"></i>{{ 'Add to Cart' | trans }}
+        </button>
+    </p>
+    <p class="small-12 large-6 columns">
+        <button type="submit" name="createOrder" class="button primary expanded __no-margin-bottom">
+            {{ 'Create Order' | trans }}
+        </button>
+    </p>
+</div>
+
+{{ form_end(form) }}
