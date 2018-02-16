@@ -21,7 +21,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     const TRANSLATION_KEY_QUANTITY_ADJUSTED = 'cart.quantity.adjusted';
 
     /**
-     * @var \Spryker\Client\Cart\CartPageToCartClientInterface
+     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface
      */
     protected $cartClient;
 
