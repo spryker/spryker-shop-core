@@ -56,7 +56,7 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
      *
      * @return void
      */
-    public function add($sku, $quantity, $optionValueUsageIds = [])
+    public function add($sku, $quantity, array $optionValueUsageIds = [])
     {
         $this->cartOperationHandler->add($sku, $quantity, $optionValueUsageIds);
     }
