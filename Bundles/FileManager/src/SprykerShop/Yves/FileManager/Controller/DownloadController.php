@@ -9,28 +9,23 @@ namespace SprykerShop\Yves\FileManager\Controller;
 
 use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
-use SprykerShop\Yves\FileManager\FileManagerFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
- * @method FileManagerFactory getFactory()
+ * @method \SprykerShop\Yves\FileManager\FileManagerFactory getFactory()
  */
 class DownloadController extends AbstractController
 {
-
     const CONTENT_DISPOSITION = 'Content-Disposition';
     const CONTENT_TYPE = 'Content-Type';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $fileName
      *
-     * @param string                                    $fileName
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function indexAction(Request $request, string $fileName)
     {
@@ -56,5 +51,4 @@ class DownloadController extends AbstractController
 
         return $response;
     }
-
 }

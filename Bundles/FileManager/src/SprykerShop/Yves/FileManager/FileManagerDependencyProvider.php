@@ -1,19 +1,23 @@
 <?php
 
-namespace SprykerShop\Yves\FileManager;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace SprykerShop\Yves\FileManager;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
 class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FILE_MANAGER_SERVICE = 'FILE_MANAGER_SERVICE';
 
     /**
-     * @param Container $container
-     * @return Container
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
      */
     public function provideDependencies(Container $container)
     {
@@ -24,8 +28,9 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
-     * @return Container
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addFileManagerService(Container $container)
     {
@@ -35,6 +40,4 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
-
 }
