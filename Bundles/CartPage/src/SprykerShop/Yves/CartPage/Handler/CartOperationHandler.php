@@ -21,7 +21,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     const TRANSLATION_KEY_QUANTITY_ADJUSTED = 'cart.quantity.adjusted';
 
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface|\Spryker\Client\Kernel\AbstractClient
+     * @var \Spryker\Client\Cart\CartPageToCartClientInterface
      */
     protected $cartClient;
 
@@ -69,7 +69,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
      *
      * @return void
      */
-    public function add($sku, $quantity, $optionValueUsageIds = [])
+    public function add($sku, $quantity, array $optionValueUsageIds = [])
     {
         $quantity = $this->normalizeQuantity($quantity);
         $quantity = $this->adjustQuantityBasedOnProductAvailability($sku, $quantity);
