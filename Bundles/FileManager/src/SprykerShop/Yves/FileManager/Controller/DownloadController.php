@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\FileManager\Controller;
 
 use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
@@ -21,7 +26,7 @@ class DownloadController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @param string $fileName
+     * @param string                                    $fileName
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
