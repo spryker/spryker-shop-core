@@ -44,7 +44,7 @@ class OrderController extends AbstractController
             ->createMessenger()
             ->setFlashMessagesFromLastZedRequest();
 
-        return $this->gerRedirectToCart();
+        return $this->getSuccessRedirect();
     }
 
     /**
@@ -69,13 +69,13 @@ class OrderController extends AbstractController
             ->createMessenger()
             ->setFlashMessagesFromLastZedRequest();
 
-        return $this->gerRedirectToCart();
+        return $this->getSuccessRedirect();
     }
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function gerRedirectToCart(): RedirectResponse
+    protected function getSuccessRedirect(): RedirectResponse
     {
         return $this->redirectResponseInternal(static::ROUTE_CART);
     }
