@@ -69,5 +69,11 @@
     "spryker-shop/web-profiler-widget": "*",
     "spryker-shop/wishlist-page": "*",
     "spryker-shop/wishlist-widget": "*"
-  }
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:spryker/spryker.git"
+    }
+  ]
 }
