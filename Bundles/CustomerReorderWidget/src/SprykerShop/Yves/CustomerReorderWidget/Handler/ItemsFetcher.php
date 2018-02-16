@@ -76,6 +76,20 @@ class ItemsFetcher implements ItemsFetcherInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $groupedItems
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getProductsFromBundles(array $groupedItems): array
+    {
+        $items = array_map(function ($groupedItem) {
+            return $groupedItem instanceof ItemTransfer ? $groupedItem : $groupedItem[static::BUNDLE_PRODUCT];
+        }, $groupedItems);
+
+        return $items;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
@@ -89,20 +103,6 @@ class ItemsFetcher implements ItemsFetcherInterface
             $cleanItems[$idSaleOrderItem] = $item;
         }
         return $cleanItems;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $groupedItems
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getProductsFromBundles(array $groupedItems): array
-    {
-        $items = array_map(function ($groupedItem) {
-            return $groupedItem instanceof ItemTransfer ? $groupedItem : $groupedItem[static::BUNDLE_PRODUCT];
-        }, $groupedItems);
-
-        return $items;
     }
 
     /**
