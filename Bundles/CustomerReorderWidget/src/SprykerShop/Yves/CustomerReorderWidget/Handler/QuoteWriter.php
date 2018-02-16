@@ -166,8 +166,7 @@ class QuoteWriter implements QuoteWriterInterface
         QuoteTransfer $quoteTransfer,
         OrderTransfer $orderTransfer,
         ShipmentMethodTransfer $shipmentMethodTransfer
-    ): ?int
-    {
+    ): ?int {
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode($orderTransfer->getCurrencyIsoCode());
         $quoteTransfer->setCurrency($currencyTransfer);
