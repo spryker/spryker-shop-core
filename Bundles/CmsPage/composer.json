@@ -16,7 +16,6 @@
     "spryker-shop/shop-router": "*",
     "spryker/silex": "*",
     "spryker/twig": "*"
-
   },
   "suggest": {
     "spryker-shop/shop-router": "TODO: add suggestion description",
