@@ -81,7 +81,8 @@ class CartFiller implements CartFillerInteface
     {
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($quoteTransfer);
-        $cartChangeTransfer->setItems($orderItems);
+        $orderItemsObject = new \ArrayObject($orderItems);
+        $cartChangeTransfer->setItems($orderItemsObject);
 
         $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer);
 
