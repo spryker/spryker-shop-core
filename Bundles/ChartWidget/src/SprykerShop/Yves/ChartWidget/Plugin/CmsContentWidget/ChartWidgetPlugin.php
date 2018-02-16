@@ -10,9 +10,6 @@ namespace SprykerShop\Yves\ChartWidget\Plugin\CmsContentWidget;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CmsContentWidgetChartConnector\Dependency\Plugin\ChartWidget\ChartWidgetPluginInterface;
 
-/**
- * @method \SprykerShop\Yves\ChartWidget\ChartWidgetFactory getFactory()
- */
 class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPluginInterface
 {
     /**
