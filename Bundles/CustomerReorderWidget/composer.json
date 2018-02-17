@@ -22,7 +22,7 @@
   "suggest": {
     "spryker-shop/customer-page": "Module with interface to implement",
     "spryker/silex": "Used for controller",
-    "spryker-shop/cart-page": "Default redirect is cart. So you should use cart or update redirect in controller",
+    "spryker-shop/cart-page": "Default redirect is cart. So you should use cart or update redirect in controller"
   },
   "autoload": {
     "psr-4": {
