@@ -35,9 +35,8 @@ class ItemsFetcher implements ItemsFetcherInterface
     public function getAll(OrderTransfer $orderTransfer): array
     {
         $sourceItems = $this->getOrderItemsTransfer($orderTransfer);
-        $reducedItems = $this->reduceItemsBySku($sourceItems);
 
-        return $reducedItems;
+        return $sourceItems;
     }
 
     /**
@@ -50,9 +49,8 @@ class ItemsFetcher implements ItemsFetcherInterface
     {
         $sourceItems = $this->getOrderItemsTransfer($orderTransfer);
         $filteredItems = $this->filterById($sourceItems, $idOrderItems);
-        $reducedItems = $this->reduceItemsBySku($filteredItems);
 
-        return $reducedItems;
+        return $filteredItems;
     }
 
     /**
@@ -99,27 +97,5 @@ class ItemsFetcher implements ItemsFetcherInterface
         $filteredItems = array_intersect_key($items, $allowed_keys);
 
         return $filteredItems;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function reduceItemsBySku(array $itemsTransfer): array
-    {
-        /** @var array|\Generated\Shared\Transfer\ItemTransfer[] $newItems */
-        $newItems = [];
-        foreach ($itemsTransfer as $itemTransfer) {
-            if (!array_key_exists($itemTransfer->getSku(), $newItems)) {
-                $newItems[$itemTransfer->getSku()] = $itemTransfer;
-                continue;
-            }
-
-            $currentItem = $newItems[$itemTransfer->getSku()];
-            $currentItem->setQuantity($currentItem->getQuantity() + $itemTransfer->getQuantity());
-        }
-
-        return $newItems;
     }
 }
