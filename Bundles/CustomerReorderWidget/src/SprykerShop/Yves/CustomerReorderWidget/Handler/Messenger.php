@@ -35,8 +35,6 @@ class Messenger implements MessengerInterface
     }
 
     /**
-     * In all meanings dirty jack copied from CartPage
-     *
      * @return void
      */
     public function setFlashMessagesFromLastZedRequest(): void
