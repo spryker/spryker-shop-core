@@ -159,7 +159,7 @@ class QuoteWriter implements QuoteWriterInterface
      */
     protected function getIdCustomerAddress(OrderTransfer $orderTransfer, AddressTransfer $addressTransfer): ?int
     {
-        $noAddresses = !$orderTransfer->getCustomer() || $orderTransfer->getCustomer()->getAddresses();
+        $noAddresses = !$orderTransfer->getCustomer() || !$orderTransfer->getCustomer()->getAddresses();
 
         if ($noAddresses) {
             return null;
@@ -195,7 +195,7 @@ class QuoteWriter implements QuoteWriterInterface
         OrderTransfer $orderTransfer,
         ShipmentMethodTransfer $shipmentMethodTransfer
     ): ?int {
-        $notEnoughData = !$orderTransfer->getCurrencyIsoCode() || $shipmentMethodTransfer->getName();
+        $notEnoughData = !$orderTransfer->getCurrencyIsoCode() || !$shipmentMethodTransfer->getName();
 
         if ($notEnoughData) {
             return null;
