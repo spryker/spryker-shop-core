@@ -4,14 +4,15 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/chart": "dev-beta/core-2413-chart as 0.1.0",
     "spryker/cms-content-widget": "^1.2.0",
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
+    "spryker-shop/chart-widget": "dev-beta/core-2413-chart as 0.1.0",
     "spryker/twig": "*"
   },
   "suggest": {
+    "spryker-shop/chart-widget": "If you want to use ChartWidgetPlugin.",
     "spryker/twig": "If you want to use CmsChartContentWidgetPlugin."
   },
   "autoload": {
