@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ShopLayout\Dependency\Plugin\FileWidget;
 
 interface FileWidgetPluginInterface
 {
-
     const NAME = 'FileWidgetPlugin';
 
     /**
@@ -18,5 +17,4 @@ interface FileWidgetPluginInterface
      * @return void
      */
     public function initialize($fileId): void;
-
 }
