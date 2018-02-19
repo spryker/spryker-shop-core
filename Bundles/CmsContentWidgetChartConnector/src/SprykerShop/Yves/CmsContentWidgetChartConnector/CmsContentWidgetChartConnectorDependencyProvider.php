@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\CmsContentWidgetChartConnector;
 
-use Spryker\Yves\CmsContentWidgetChartConnector\CmsContentWidgetChartConnectorDependencyProvider as SprykerCmsContentWidgetChartConnectorDependencyProvider;
+use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
-class CmsContentWidgetChartConnectorDependencyProvider extends SprykerCmsContentWidgetChartConnectorDependencyProvider
+class CmsContentWidgetChartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     const PLUGIN_CMS_CHART_CONTENT_WIDGETS = 'PLUGIN_CMS_CHART_CONTENT_WIDGETS';
 

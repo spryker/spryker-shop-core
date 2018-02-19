@@ -13,15 +13,15 @@ use SprykerShop\Yves\CmsContentWidgetChartConnector\Dependency\Plugin\ChartWidge
 class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPluginInterface
 {
     /**
-     * @param array $chart
+     * @param string $chartPluginName
      * @param string|null $dataIdentifier
      *
      * @return void
      */
-    public function initialize(array $chart, $dataIdentifier = null): void
+    public function initialize($chartPluginName, $dataIdentifier = null): void
     {
         $this
-            ->addParameter('chart', $chart)
+            ->addParameter('chartPluginName', $chartPluginName)
             ->addParameter('dataIdentifier', $dataIdentifier);
     }
 

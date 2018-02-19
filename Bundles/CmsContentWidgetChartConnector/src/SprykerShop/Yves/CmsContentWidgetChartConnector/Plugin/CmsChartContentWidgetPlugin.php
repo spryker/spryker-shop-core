@@ -7,15 +7,30 @@
 
 namespace SprykerShop\Yves\CmsContentWidgetChartConnector\Plugin;
 
-use Spryker\Yves\CmsContentWidgetChartConnector\Plugin\CmsChartContentWidgetPlugin as SprykerCmsChartContentWidgetPlugin;
+use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
+use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
+use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Twig_Environment;
 
 /**
  * @method \SprykerShop\Yves\CmsContentWidgetChartConnector\CmsContentWidgetChartConnectorFactory getFactory()
  */
-class CmsChartContentWidgetPlugin extends SprykerCmsChartContentWidgetPlugin
+class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
+    /**
+     * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
+     */
+    protected $widgetConfiguration;
+
+    /**
+     * @param \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface $widgetConfiguration
+     */
+    public function __construct(CmsContentWidgetConfigurationProviderInterface $widgetConfiguration)
+    {
+        $this->widgetConfiguration = $widgetConfiguration;
+    }
+
     /**
      * @return callable
      */
@@ -27,21 +42,54 @@ class CmsChartContentWidgetPlugin extends SprykerCmsChartContentWidgetPlugin
     /**
      * @param \Twig_Environment $twig
      * @param array $context
-     * @param array|string $chartAbstractSkuList $chartAbstractSkuList
-     * @param null|string $templateIdentifier
+     * @param string $chartPluginName
+     * @param string|null $dataIdentifier
+     * @param string|null $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, $chartAbstractSkuList, $templateIdentifier = null): string
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, $chartPluginName, $dataIdentifier = null, $templateIdentifier = null): string
     {
         $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
         $widgetContainerRegistry->add($this->createCmsChartContentWidgetCollection());
 
-        $result = parent::contentWidgetFunction($twig, $context, $chartAbstractSkuList, $templateIdentifier);
+        $result = $twig->render(
+            $this->resolveTemplatePath($templateIdentifier),
+            $this->getContent($context, $chartPluginName, $dataIdentifier)
+        );
 
         $widgetContainerRegistry->removeLastAdded();
 
         return $result;
+    }
+
+    /**
+     * @param null|string $templateIdentifier
+     *
+     * @return string
+     */
+    protected function resolveTemplatePath($templateIdentifier = null)
+    {
+        if (!$templateIdentifier) {
+            $templateIdentifier = CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
+        }
+
+        return $this->widgetConfiguration->getAvailableTemplates()[$templateIdentifier];
+    }
+
+    /**
+     * @param array $context
+     * @param string $chartPluginName
+     * @param string|null $dataIdentifier
+     *
+     * @return array
+     */
+    protected function getContent(array $context, $chartPluginName, $dataIdentifier = null)
+    {
+        return [
+            'chartPluginName' => $chartPluginName,
+            'dataIdentifier' => $dataIdentifier,
+        ];
     }
 
     /**

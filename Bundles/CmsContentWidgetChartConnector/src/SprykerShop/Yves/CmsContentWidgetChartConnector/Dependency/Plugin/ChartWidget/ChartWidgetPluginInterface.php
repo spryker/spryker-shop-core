@@ -14,10 +14,10 @@ interface ChartWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'ChartWidgetPlugin';
 
     /**
-     * @param array $chart
+     * @param string $chartPluginName
      * @param string|null $dataIdentifier
      *
      * @return void
      */
-    public function initialize(array $chart, $dataIdentifier = null): void;
+    public function initialize($chartPluginName, $dataIdentifier = null): void;
 }

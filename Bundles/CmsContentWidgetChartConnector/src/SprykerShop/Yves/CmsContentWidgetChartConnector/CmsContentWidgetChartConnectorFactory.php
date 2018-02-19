@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\CmsContentWidgetChartConnector;
 
-use Spryker\Yves\CmsContentWidgetChartConnector\CmsContentWidgetChartConnectorFactory as SprykerCmsContentWidgetChartConnectorFactory;
+use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
 
-class CmsContentWidgetChartConnectorFactory extends SprykerCmsContentWidgetChartConnectorFactory
+class CmsContentWidgetChartConnectorFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerRegistry
