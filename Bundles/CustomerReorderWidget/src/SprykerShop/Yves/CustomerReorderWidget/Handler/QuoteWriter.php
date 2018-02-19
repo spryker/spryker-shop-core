@@ -51,9 +51,7 @@ class QuoteWriter implements QuoteWriterInterface
 
         $quoteTransfer = $this->setShippingAddress($orderTransfer, $quoteTransfer);
         $quoteTransfer = $this->setBillingAddress($orderTransfer, $quoteTransfer);
-        if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {
-            $quoteTransfer->setBillingSameAsShipping(true);
-        }
+        $quoteTransfer = $this->setSameAddresses($quoteTransfer);
         $quoteTransfer = $this->setShipment($orderTransfer, $quoteTransfer);
 
         $this->cartClient->storeQuote($quoteTransfer);
@@ -69,7 +67,9 @@ class QuoteWriter implements QuoteWriterInterface
      */
     protected function setShippingAddress(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (!$orderTransfer->getShippingAddress()) {
+        $notEnoughData = !$orderTransfer->getShippingAddress() || !$orderTransfer->getFkCustomer();
+
+        if ($notEnoughData) {
             return $quoteTransfer;
         }
 
@@ -92,7 +92,9 @@ class QuoteWriter implements QuoteWriterInterface
      */
     protected function setBillingAddress(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (!$orderTransfer->getBillingAddress()) {
+        $notEnoughData = !$orderTransfer->getBundleItems() || !$orderTransfer->getFkCustomer();
+
+        if ($notEnoughData) {
             return $quoteTransfer;
         }
 
@@ -103,6 +105,24 @@ class QuoteWriter implements QuoteWriterInterface
         $billingAddressTransfer->setIdCustomerAddress($idCustomerAddress);
 
         $quoteTransfer->setBillingAddress($billingAddressTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setSameAddresses(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        if (!$quoteTransfer->getBillingAddress() || !$quoteTransfer->getBillingAddress()) {
+            return $quoteTransfer;
+        }
+
+        if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {
+            $quoteTransfer->setBillingSameAsShipping(true);
+        }
 
         return $quoteTransfer;
     }
@@ -139,6 +159,12 @@ class QuoteWriter implements QuoteWriterInterface
      */
     protected function getIdCustomerAddress(OrderTransfer $orderTransfer, AddressTransfer $addressTransfer): ?int
     {
+        $noAddresses = !$orderTransfer->getCustomer() || $orderTransfer->getCustomer()->getAddresses();
+
+        if ($noAddresses) {
+            return null;
+        }
+
         $addressTransfer = clone $addressTransfer;
         foreach ($orderTransfer->getCustomer()->getAddresses()->getAddresses() as $currentAddressTransfer) {
             $currentAddressTransfer = clone $currentAddressTransfer;
@@ -169,6 +195,12 @@ class QuoteWriter implements QuoteWriterInterface
         OrderTransfer $orderTransfer,
         ShipmentMethodTransfer $shipmentMethodTransfer
     ): ?int {
+        $notEnoughData = !$orderTransfer->getCurrencyIsoCode() || $shipmentMethodTransfer->getName();
+
+        if ($notEnoughData) {
+            return null;
+        }
+
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode($orderTransfer->getCurrencyIsoCode());
         $quoteTransfer->setCurrency($currencyTransfer);
