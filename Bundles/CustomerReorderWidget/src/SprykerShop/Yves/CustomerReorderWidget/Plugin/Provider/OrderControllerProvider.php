@@ -21,7 +21,7 @@ class OrderControllerProvider extends AbstractYvesControllerProvider
      *
      * @return void
      */
-    protected function defineControllers(Application $app)
+    protected function defineControllers(Application $app): void
     {
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
