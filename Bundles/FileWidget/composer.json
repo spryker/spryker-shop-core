@@ -4,8 +4,7 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.16.0",
-    "spryker/file-manager-storage": "^0.1.0",
-    "spryker/cms-content-widget": "^1.0.0"
+    "spryker/file-manager-storage": "^0.1.0"
   },
   "require-dev": {
     "spryker/file-manager-storage": "*"
