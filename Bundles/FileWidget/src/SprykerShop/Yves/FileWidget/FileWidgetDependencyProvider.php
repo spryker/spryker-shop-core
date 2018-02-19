@@ -7,9 +7,9 @@
 
 namespace SprykerShop\Yves\FileWidget;
 
+use SprykerShop\Yves\FileWidget\Dependency\Client\FileWidgetToFileBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\FileWidget\Dependency\Client\FileWidgetToFileBridge;
 
 class FileWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {

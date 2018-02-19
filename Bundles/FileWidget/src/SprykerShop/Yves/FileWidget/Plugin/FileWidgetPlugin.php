@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig_Environment;
 
 /**
- * @method \Spryker\Yves\FileWidget\FileWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\FileWidget\FileWidgetFactory getFactory()
  */
 class FileWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
