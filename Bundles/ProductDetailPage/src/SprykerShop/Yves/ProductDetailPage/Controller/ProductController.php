@@ -55,7 +55,9 @@ class ProductController extends AbstractController
             return $productViewTransfer->getUrl();
         }
 
-        $variantUriParams[static::PARAM_ATTRIBUTE] = $productViewTransfer->getSelectedAttributes();
+        $variantUriParams = [
+            static::PARAM_ATTRIBUTE => $productViewTransfer->getSelectedAttributes(),
+        ];
 
         return sprintf(
             '%s?%s',

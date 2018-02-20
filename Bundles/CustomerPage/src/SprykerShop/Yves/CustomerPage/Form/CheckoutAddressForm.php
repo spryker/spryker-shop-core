@@ -7,9 +7,9 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CheckoutAddressForm extends AddressForm
@@ -32,18 +32,6 @@ class CheckoutAddressForm extends AddressForm
 
         $resolver->setRequired(self::OPTION_VALIDATION_GROUP);
         $resolver->setDefined(self::OPTION_ADDRESS_CHOICES);
-    }
-
-    /**
-     * @deprecated Use `configureOptions()` instead.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 
     /**
@@ -82,10 +70,11 @@ class CheckoutAddressForm extends AddressForm
         }
 
         $choices = $options[self::OPTION_ADDRESS_CHOICES];
-        $choices[] = ['' => 'customer.account.add_new_address'];
+        $choices[''] = 'customer.account.add_new_address';
 
-        $builder->add(self::FIELD_ID_CUSTOMER_ADDRESS, 'choice', [
-            'choices' => $choices,
+        $builder->add(self::FIELD_ID_CUSTOMER_ADDRESS, ChoiceType::class, [
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => true,
             'expanded' => true,
             'multiple' => false,

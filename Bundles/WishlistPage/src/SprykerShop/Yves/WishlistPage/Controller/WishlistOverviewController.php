@@ -31,7 +31,7 @@ class WishlistOverviewController extends AbstractController
             ->getWishlistForm()
             ->handleRequest($request);
 
-        if ($wishlistForm->isValid()) {
+        if ($wishlistForm->isSubmitted() && $wishlistForm->isValid()) {
             $wishlistResponseTransfer = $this->getFactory()
                 ->getWishlistClient()
                 ->validateAndCreateWishlist($this->getWishlistTransfer($wishlistForm));
@@ -68,7 +68,7 @@ class WishlistOverviewController extends AbstractController
             ->getWishlistForm($wishlistFormDataProvider->getData($wishlistName))
             ->handleRequest($request);
 
-        if ($wishlistForm->isValid()) {
+        if ($wishlistForm->isSubmitted() && $wishlistForm->isValid()) {
             $wishlistResponseTransfer = $this->getFactory()
                 ->getWishlistClient()
                 ->validateAndUpdateWishlist($this->getWishlistTransfer($wishlistForm));

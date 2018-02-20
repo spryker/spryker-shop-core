@@ -178,7 +178,7 @@ class WishlistController extends AbstractController
             ->createAddAllAvailableProductsToCartForm()
             ->handleRequest($request);
 
-        if ($addAllAvailableProductsToCartForm->isValid()) {
+        if ($addAllAvailableProductsToCartForm->isSubmitted() && $addAllAvailableProductsToCartForm->isValid()) {
             $wishlistItemMetaTransferCollection = $addAllAvailableProductsToCartForm
                 ->get(AddAllAvailableProductsToCartFormType::WISHLIST_ITEM_META_COLLECTION)
                 ->getData();

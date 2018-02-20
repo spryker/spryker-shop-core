@@ -21,7 +21,7 @@ class DiscountVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements Di
     public function initialize(): void
     {
         $voucherForm = $this->getFactory()
-            ->createCartVoucherForm();
+            ->getCartVoucherForm();
 
         $this->addParameter('voucherForm', $voucherForm->createView());
     }

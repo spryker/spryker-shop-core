@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\DiscountWidget\Form;
 
+use Spryker\Yves\Kernel\Form\AbstractType;
 use SprykerShop\Yves\DiscountWidget\Plugin\Provider\DiscountWidgetControllerProvider;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -20,7 +20,7 @@ class CartVoucherForm extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return self::FORM_NAME;
     }
