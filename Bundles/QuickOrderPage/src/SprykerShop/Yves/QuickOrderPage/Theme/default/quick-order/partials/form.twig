@@ -1,25 +1,34 @@
-{{ form_start(form, {attr: {class: 'quck-order-form'} }) }}
+
+{{ form_start(form, {attr: {class: "quick-order-form", 'data-component': "quick-order-form"} }) }}
 
 {{ form_errors(form) }}
 
+<div class="items-container">
 {% for item in form.items %}
-    <div class="row">
+    <div class="row" data-index="{{ loop.index0 }}">
         <div class="small-12 medium-2 columns">
             {{ form_widget(item.searchField) }}
         </div>
         <div class="small-12 medium-7 columns">
-            {{ form_widget(item.searchQuery, { 'attr': {'class': 'js-autocomplete-input-field', 'placeholder': '' | trans } }) }}
+            {{ form_widget(item.searchQuery, { 'attr': {
+                   'class': 'js-autocomplete-input-field',
+                   'placeholder': 'Search' | trans,
+                   'autocomplete': 'off'
+                }})
+            }}
             {{ form_widget(item.sku) }}
             {{ form_errors(item.searchQuery) }}
         </div>
         <div class="small-12 medium-1 columns">
-            {{ form_widget(item.qty, { 'attr': {'min': 1, 'placeholder': '# Qty' | trans } }) }}
+            {{ form_widget(item.qty, { 'attr': {'min': 1, 'class': 'js-qty-input-field', 'placeholder': '# Qty' | trans } }) }}
         </div>
         <div class="small-12 medium-2 columns">
             {{ form_widget(item.price) }}
+            {{ form_widget(item.pricePanel) }}
         </div>
     </div>
 {% endfor %}
+</div>
 
 <div class="row __padding-top">
     <a href="#add-more" class="button secondary expanded __no-margin-bottom js-add-more-rows-button">

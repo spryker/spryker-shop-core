@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: matveyev
- * Date: 2/15/18
- * Time: 17:29
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\QuickOrderPage\Form;
@@ -13,7 +12,6 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,8 +19,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class OrderItemEmbeddedForm extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -40,15 +40,19 @@ class OrderItemEmbeddedForm extends AbstractType
                 'required' => false,
             ])
             //->add('unit', ChoiceType::class)
-            ->add('price', TextType::class, [
-                'disabled' => true,
+            ->add('price', HiddenType::class, [
                 'required' => false,
             ])
-        ;
+            ->add('pricePanel', TextType::class, [
+                'disabled' => true,
+                'required' => false,
+            ]);
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -60,7 +64,7 @@ class OrderItemEmbeddedForm extends AbstractType
     protected function getSearchFieldChoices()
     {
         return [
-            'SKU / Name' => 'name'
+            'SKU / Name' => 'name',
         ];
     }
 }

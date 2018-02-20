@@ -15,46 +15,33 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCustomerCl
 
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_SALES = 'CLIENT_SALES';
-    const CLIENT_CART = 'CLIENT_CART';
-    const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
-    const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
-    const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
-    const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
-    const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'PLUGIN_GUEST_AUTHENTICATION_HANDLER';
-    const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER';
-    const FLASH_MESSENGER = 'FLASH_MESSENGER';
-    const STORE = 'STORE';
-    const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
-    const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    public const CLIENT_CART = 'CLIENT_CART';
+
+    public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+
+    public const CLIENT_CATALOG = 'CLIENT_CATALOG';
+
+    public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
+    public const FLASH_MESSENGER = 'FLASH_MESSENGER';
+
+
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
-        $container = $this->addCustomerClient($container);
-        $container = $this->addCartClient($container);
         $container = $this->addApplication($container);
+        $container = $this->addCartClient($container);
+        $container = $this->addCatalogClient($container);
         $container = $this->addFlashMessenger($container);
-        $container = $this->addStore($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addStore(Container $container)
-    {
-        $container[static::STORE] = function () {
-            return Store::getInstance();
-        };
+        $container = $this->addSearchClient($container);
+        $container = $this->addProductClient($container);
 
         return $container;
     }
@@ -94,19 +81,52 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCustomerClient(Container $container): Container
+    protected function addCartClient($container): Container
     {
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
-            return new QuickOrderPageToCustomerClientBridge($container->getLocator()->customer()->client());
+        $container[self::CLIENT_CART] = function (Container $container) {
+            return $container->getLocator()->cart()->client();
         };
 
         return $container;
     }
 
-    protected function addCartClient($container)
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSearchClient($container): Container
     {
-        $container[self::CLIENT_CART] = function (Container $container) {
-            return $container->getLocator()->cart()->client();
+        $container[self::CLIENT_SEARCH] = function (Container $container) {
+            return $container->getLocator()->search()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCatalogClient($container): Container
+    {
+        $container[self::CLIENT_CATALOG] = function (Container $container) {
+            return $container->getLocator()->catalog()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductClient($container): Container
+    {
+        $container[self::CLIENT_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->product()->client();
         };
 
         return $container;

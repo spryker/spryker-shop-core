@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "spryker-shop-quick-order-page",
+  "version": "1.0.0",
+  "dependencies": {
+    "jquery": ">=3.0.0",
+    "jquery-ui": ">=1.12.0",
+  }
+}

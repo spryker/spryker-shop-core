@@ -1,19 +1,16 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: matveyev
- * Date: 2/16/18
- * Time: 10:30
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\QuickOrderPage\Form;
 
-use Generated\Shared\Transfer\QuickOrderItemTransfer;
-
 class QuickOrder
 {
     /**
-     * @var QuickOrderItemTransfer[]
+     * @var \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
     protected $items;
 
@@ -23,7 +20,7 @@ class QuickOrder
     }
 
     /**
-     * @return QuickOrderItemTransfer[]
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
     public function getItems(): array
     {
@@ -31,7 +28,9 @@ class QuickOrder
     }
 
     /**
-     * @param QuickOrderItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $items
+     *
+     * @return void
      */
     public function setItems(array $items): void
     {

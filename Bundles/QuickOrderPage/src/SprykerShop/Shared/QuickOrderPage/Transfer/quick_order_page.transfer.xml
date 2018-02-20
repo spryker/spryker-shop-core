@@ -9,6 +9,7 @@
         <property name="sku" type="string" />
         <property name="qty" type="int" />
         <property name="price" type="int" />
+        <property name="pricePanel" type="string" />
     </transfer>
 
 </transfers>

@@ -1,20 +1,22 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: matveyev
- * Date: 2/15/18
- * Time: 14:15
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
+use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
-use SprykerShop\Yves\CartPage\CartPageDependencyProvider;
+use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
+use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrder;
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,6 +24,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuickOrderController extends AbstractController
 {
+    public const PARAM_SEARCH_QUERY = 'q';
+
+    public const ROWS_NUMBER = 10;
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -39,29 +45,123 @@ class QuickOrderController extends AbstractController
 
         if ($quickOrderForm->isSubmitted() && $quickOrderForm->isValid()) {
             if ($request->get(QuickOrderForm::SUBMIT_BUTTON_ADD_TO_CART) !== null) {
-                $this->addToCart($quickOrder->getItems());
+                $this->addToCart($quickOrder);
 
                 return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
             }
 
             if ($request->get(QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER) !== null) {
-                $this->createOrder($quickOrder->getItems());
+                $this->createOrder($quickOrder);
+
+                return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_INDEX);
             }
         }
 
         $data = [
-            'form' => $quickOrderForm->createView()
+            'form' => $quickOrderForm->createView(),
+            'rowsNumber' => static::ROWS_NUMBER,
         ];
 
         return $this->view($data);
     }
 
     /**
-     * @param QuickOrderItemTransfer[] $quickOrderItemTransfers
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function addToCart(array $quickOrderItemTransfers): void
+    public function suggestionAction(Request $request): JsonResponse
+    {
+        $searchString = $request->query->get(self::PARAM_SEARCH_QUERY);
+
+        if (empty($searchString)) {
+            return $this->jsonResponse();
+        }
+
+        $searchResults = $this
+            ->getFactory()
+            ->getCatalogClient()
+            ->catalogSuggestSearch($searchString, $request->query->all());
+
+        $searchResults = $this->expandSearchResults($searchResults);
+
+        return $this->jsonResponse($searchResults);
+    }
+
+    protected function expandSearchResults(array $searchResults): array
+    {
+        $productAbstracts = $searchResults['suggestionByType']['product_abstract'] ?? [];
+
+        $searchResults = [];
+        foreach ($productAbstracts as $productAbstract) {
+            $productAbstractFromStorage = $this->getFactory()
+                ->getProductClient()
+                ->getProductAbstractFromStorageByIdForCurrentLocale($productAbstract['id_product_abstract']);
+            //$searchResults[] =
+        }
+
+        return  $searchResults;
+    }
+
+    //****** ********* *********  Move to operation separate class ********* *************/
+
+    /**
+     * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrder $quickOrder
+     *
+     * @return void
+     */
+    protected function addToCart(QuickOrder $quickOrder): void
+    {
+        $itemTransfers = $this->getItemTransfers($quickOrder);
+
+        if ($itemTransfers) {
+            $this->addItemsToCart($itemTransfers);
+        }
+    }
+
+    /**
+     * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrder $quickOrder
+     *
+     * @return void
+     */
+    protected function createOrder(QuickOrder $quickOrder): void
+    {
+        $itemTransfers = $this->getItemTransfers($quickOrder);
+
+        if ($itemTransfers) {
+            $this->getFactory()
+                ->getCartClient()
+                ->clearQuote();
+
+            $this->addItemsToCart($itemTransfers);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return void
+     */
+    protected function addItemsToCart(array $itemTransfers): void
+    {
+        $quoteTransfer = $this->getFactory()
+            ->getCartClient()
+            ->addItems($itemTransfers);
+
+        $this->getFactory()
+            ->getCartClient()
+            ->storeQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrder $quickOrder
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getItemTransfers(QuickOrder $quickOrder): array
     {
         $itemTransfers = [];
+        $quickOrderItemTransfers = $quickOrder->getItems();
 
         foreach ($quickOrderItemTransfers as $quickOrderItemTransfer) {
             if ($quickOrderItemTransfer->getSku() && $quickOrderItemTransfer->getQty()) {
@@ -73,37 +173,19 @@ class QuickOrderController extends AbstractController
             }
         }
 
-        if ($itemTransfers) {
-            $this->getFactory()
-                ->getCartClient()
-                ->clearQuote();
-
-            $quoteTransfer = $this->getFactory()
-                ->getCartClient()
-                ->addItems($itemTransfers);
-
-            $this->getFactory()
-                ->getCartClient()
-                ->storeQuote($quoteTransfer);
-        }
+        return $itemTransfers;
     }
 
-    /**
-     * @param QuickOrderItemTransfer[] $items
-     */
-    protected function createOrder(array $items): void
-    {
-        die('Create order');
-    }
+    //******* ********* ********* end moving ********* ************* *************/
 
     /**
-     * @return QuickOrder
+     * @return \SprykerShop\Yves\QuickOrderPage\Form\QuickOrder
      */
     protected function getQuickOrder(): QuickOrder
     {
         $quickOrder = new QuickOrder();
         $orderItems = [];
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < static::ROWS_NUMBER; $i++) {
             $orderItems[] = new QuickOrderItemTransfer();
         }
         $quickOrder->setItems($orderItems);

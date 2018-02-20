@@ -3,7 +3,95 @@
 {% block content %}
 <div class="row">
     <div class="small-12 columns">
-        {% include "@QuickOrderPage/quick-order/partials/product-grid.twig"  with {'form': _view.form} %}
+        {% include "@QuickOrderPage/quick-order/partials/form.twig"  with {'form': _view.form} %}
     </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        jQuery(function($) {
+            var rowsNumber = {{ _view.rowsNumber }};
+
+            $('.quick-order-form')
+                .on('change', '.js-qty-input-field', updatePricePanel)
+                .on('keyup',  '.js-qty-input-field', updatePricePanel);
+
+            $('.js-add-more-rows-button').on('click', addMoreRows);
+
+            initAutocomplete();
+
+            function initAutocomplete() {
+                $('.js-autocomplete-input-field').autocomplete({
+                    minLength: 2,
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "{{ path('quick-order/suggestion') }}",
+                            dataType: "json",
+                            data: {
+                                q: request.term
+                            },
+                            success: function (data) {
+                                if (data) {
+                                    $(data).each(function (n, item) {
+                                        data[n].value = item.abstract_sku + ' - ' + item.abstract_name;
+                                    });
+                                }
+                                response(data);
+                            }
+                        });
+                    },
+                    select: function (e, ui) {
+                        var idSearchInput = $(this).attr('id'),
+                            $skuInput = $('#' + idSearchInput.replace('_searchQuery', '_sku')),
+                            $priceInput = $('#' + idSearchInput.replace('_searchQuery', '_price')),
+                            $qtyInput = $('#' + idSearchInput.replace('_searchQuery', '_qty'));
+
+                        $skuInput.val(ui.item.abstract_sku);
+                        $qtyInput.val(1);
+                        $priceInput.val(ui.item.price);
+                        $qtyInput.trigger('change');
+                        $qtyInput.focus();
+                    }
+                });
+            }
+
+            function updatePricePanel(e) {
+                var $qtyInput = $(e.target),
+                    idQtyInput = $qtyInput.attr('id'),
+                    $priceInput = $('#' + idQtyInput.replace('_qty', '_price')),
+                    $pricePanelInput = $('#' + idQtyInput.replace('_qty', '_pricePanel'));
+
+                if ($qtyInput.val() >= 0 && $priceInput.val()) {
+                    var newPrice = ($qtyInput.val() * $priceInput.val() / 100).toFixed(2);
+                    $pricePanelInput.val(newPrice)
+                }
+            }
+
+            function addMoreRows(e) {
+                e.preventDefault();
+                var $rows = $('.quick-order-form .items-container .row'),
+                    $lastRow = $rows.last(),
+                    index = $lastRow.data('index'),
+                    newRowsHtml = '';
+
+                for (var i = index + 1; i < $rows.length + rowsNumber; i++) {
+                    var newRowHtml = $lastRow[0].outerHTML;
+                    newRowsHtml += newRowHtml
+                        .replace('data-index="' + index + '"', 'data-index="' + i + '"')
+                        .replace(new RegExp('_' + index + '_', 'g'), '_' + i + '_')
+                        .replace(new RegExp('\\[' + index + '\\]', 'g'), '[' + i + ']')
+                        .replace(/value=".*"/g, '')
+                }
+
+                $('.quick-order-form .items-container').append(newRowsHtml)
+
+                initAutocomplete();
+            }
+        });
+    </script>
 {% endblock %}

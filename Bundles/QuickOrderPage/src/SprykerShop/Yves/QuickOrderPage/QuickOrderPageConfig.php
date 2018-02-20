@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class QuickOrderPageConfig extends AbstractBundleConfig
