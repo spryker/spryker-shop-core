@@ -120,7 +120,7 @@ class QuoteWriter implements QuoteWriterInterface
             return $quoteTransfer;
         }
 
-        if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {
+        if ($this->compareAddresses($quoteTransfer->getShippingAddress(), $quoteTransfer->getBillingAddress())) {
             $quoteTransfer->setBillingSameAsShipping(true);
         }
 
@@ -167,19 +167,11 @@ class QuoteWriter implements QuoteWriterInterface
 
         $addressTransfer = clone $addressTransfer;
         foreach ($orderTransfer->getCustomer()->getAddresses()->getAddresses() as $currentAddressTransfer) {
-            $currentAddressTransfer = clone $currentAddressTransfer;
-            $idCustomerAddress = $currentAddressTransfer->getIdCustomerAddress();
-
-            $currentAddressTransfer->setIdCustomerAddress(null);
-            $currentAddressTransfer->setIsDefaultBilling(null);
-            $currentAddressTransfer->setIsDefaultShipping(null);
-            $currentAddressArray = $currentAddressTransfer->toArray();
-            $addressTransfer->setIdSalesOrderAddress(null);
-            $addressArray = $addressTransfer->toArray();
-
-            if ($currentAddressArray == $addressArray) {
-                return $idCustomerAddress;
+            if (!$this->compareAddresses($addressTransfer, $currentAddressTransfer)) {
+                continue;
             }
+
+            return $currentAddressTransfer->getIdCustomerAddress();
         }
 
         return null;
@@ -219,5 +211,35 @@ class QuoteWriter implements QuoteWriterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param AddressTransfer $leftAddressTransfer
+     * @param AddressTransfer $rightAddressTransfer
+     * @return bool
+     */
+    protected function compareAddresses(AddressTransfer $leftAddressTransfer, AddressTransfer $rightAddressTransfer): bool
+    {
+        $leftAddressArray = $this->cleanUpAddress($leftAddressTransfer)->toArray();
+        $rightAddressArray = $this->cleanUpAddress($rightAddressTransfer)->toArray();
+
+        return $leftAddressArray == $rightAddressArray;
+    }
+
+    /**
+     * @param AddressTransfer $addressTransfer
+     * @return AddressTransfer
+     */
+    protected function cleanUpAddress(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        $cleanedAddressTransfer = clone $addressTransfer;
+        $cleanedAddressTransfer
+            ->setIsDefaultShipping(null)
+            ->setIsDefaultBilling(null)
+            ->setIdSalesOrderAddress(null)
+            ->setIdCustomerAddress(null)
+            ->setCustomerId(null);
+
+        return $cleanedAddressTransfer;
     }
 }
