@@ -171,6 +171,8 @@ class QuoteWriter implements QuoteWriterInterface
             $idCustomerAddress = $currentAddressTransfer->getIdCustomerAddress();
 
             $currentAddressTransfer->setIdCustomerAddress(null);
+            $currentAddressTransfer->setIsDefaultBilling(null);
+            $currentAddressTransfer->setIsDefaultShipping(null);
             $currentAddressArray = $currentAddressTransfer->toArray();
             $addressTransfer->setIdSalesOrderAddress(null);
             $addressArray = $addressTransfer->toArray();
