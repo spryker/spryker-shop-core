@@ -214,8 +214,9 @@ class QuoteWriter implements QuoteWriterInterface
     }
 
     /**
-     * @param AddressTransfer $leftAddressTransfer
-     * @param AddressTransfer $rightAddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $leftAddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $rightAddressTransfer
+     *
      * @return bool
      */
     protected function compareAddresses(AddressTransfer $leftAddressTransfer, AddressTransfer $rightAddressTransfer): bool
@@ -227,8 +228,9 @@ class QuoteWriter implements QuoteWriterInterface
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
-     * @return AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function cleanUpAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
