@@ -25,6 +25,11 @@ class AvailabilityChecker implements AvailabilityCheckerInterface
         $this->availabilityStorageClient = $availabilityStorageClient;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
     public function checkBySalesItem(ItemTransfer $itemTransfer): bool
     {
         $itemTransfer
