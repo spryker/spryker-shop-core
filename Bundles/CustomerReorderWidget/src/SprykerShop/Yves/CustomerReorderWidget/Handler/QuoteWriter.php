@@ -78,6 +78,7 @@ class QuoteWriter implements QuoteWriterInterface
 
         $idCustomerAddress = $this->getIdCustomerAddress($orderTransfer, $shippingAddressTransfer);
         $shippingAddressTransfer->setIdCustomerAddress($idCustomerAddress);
+        $shippingAddressTransfer->setIdSalesOrderAddress(null);
 
         $quoteTransfer->setShippingAddress($shippingAddressTransfer);
 
@@ -103,6 +104,7 @@ class QuoteWriter implements QuoteWriterInterface
 
         $idCustomerAddress = $this->getIdCustomerAddress($orderTransfer, $billingAddressTransfer);
         $billingAddressTransfer->setIdCustomerAddress($idCustomerAddress);
+        $billingAddressTransfer->setIdSalesOrderAddress(null);
 
         $quoteTransfer->setBillingAddress($billingAddressTransfer);
 
