@@ -16,6 +16,8 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityChecker;
+use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityCheckerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\CartFiller;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\CartFillerInteface;
 use SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcher;
@@ -64,11 +66,13 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityCheckerInterface
      */
-    public function getAvailabilityStorageClient(): CustomerReorderWidgetToAvailabilityStorageClientInterface
+    public function createAvailabilityChecker(): AvailabilityCheckerInterface
     {
-        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
+        return new AvailabilityChecker(
+            $this->getAvailabilityStorageClient()
+        );
     }
 
     /**
@@ -90,6 +94,14 @@ class CustomerReorderWidgetFactory extends AbstractFactory
         return new ItemsFetcher(
             $this->getProductBundleClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface
+     */
+    protected function getAvailabilityStorageClient(): CustomerReorderWidgetToAvailabilityStorageClientInterface
+    {
+        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
     }
 
     /**
