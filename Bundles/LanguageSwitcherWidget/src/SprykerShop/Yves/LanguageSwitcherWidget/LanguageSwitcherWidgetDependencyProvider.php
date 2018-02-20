@@ -1,10 +1,15 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\LanguageSwitcherWidget;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\LanguageSwitcherWidget\Dependency\Client\LanguageSwitcherWidgetToUrlStorageClientBridge;
 use SprykerShop\Yves\LanguageSwitcherWidget\Dependency\Service\LanguageSwitcherWidgetToSynchronizationServiceBridge;
 
@@ -13,7 +18,6 @@ class LanguageSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
     const STORE = 'STORE';
     const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
-
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

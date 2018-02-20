@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\LanguageSwitcherWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
@@ -8,8 +13,6 @@ class LanguageSwitcherWidgetFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Shared\Kernel\Store
-     *
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getStore()
     {
@@ -18,8 +21,6 @@ class LanguageSwitcherWidgetFactory extends AbstractFactory
 
     /**
      * @return \SprykerShop\Yves\LanguageSwitcherWidget\Dependency\Client\LanguageSwitcherWidgetToUrlStorageClientInterface
-     *
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getUrlStorageClient()
     {
@@ -28,8 +29,6 @@ class LanguageSwitcherWidgetFactory extends AbstractFactory
 
     /**
      * @return \SprykerShop\Yves\LanguageSwitcherWidget\Dependency\Service\LanguageSwitcherWidgetToSynchronizationServiceInterface
-     *
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getSynchronizationService()
     {
