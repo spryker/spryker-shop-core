@@ -142,6 +142,11 @@ class QuoteWriter implements QuoteWriterInterface
         }
         $shipmentMethodTransfer = $orderTransfer->getShipmentMethods()[0];
         $idShipmentMethod = $this->getIdShipmentMethod($quoteTransfer, $orderTransfer, $shipmentMethodTransfer);
+
+        if (!$idShipmentMethod) {
+            return $quoteTransfer;
+        }
+
         $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
 
         $shipmentTransfer = new ShipmentTransfer();
