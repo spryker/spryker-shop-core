@@ -146,11 +146,11 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function buildLoginPath($prefixLocale)
     {
-        $logoutPath = '/login';
+        $loginPath = '/login';
         if ($prefixLocale) {
-            $logoutPath = '/' . $prefixLocale . $logoutPath;
+            $loginPath = '/' . $prefixLocale . $loginPath;
         }
-        return $logoutPath;
+        return $loginPath;
     }
 
     /**
