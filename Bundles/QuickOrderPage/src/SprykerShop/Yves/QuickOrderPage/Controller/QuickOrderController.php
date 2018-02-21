@@ -75,7 +75,7 @@ class QuickOrderController extends AbstractController
         $searchString = $request->query->get(self::PARAM_SEARCH_QUERY);
 
         if (empty($searchString)) {
-            return $this->jsonResponse();
+            return $this->jsonResponse(['suggestions' => []]);
         }
 
         $searchResults = $this
@@ -85,7 +85,7 @@ class QuickOrderController extends AbstractController
 
         $searchResults = $this->expandSearchResults($searchResults);
 
-        return $this->jsonResponse($searchResults);
+        return $this->jsonResponse(['suggestions' => $searchResults]);
     }
 
     protected function expandSearchResults(array $searchResults): array
@@ -95,9 +95,33 @@ class QuickOrderController extends AbstractController
         $searchResults = [];
         foreach ($productAbstracts as $productAbstract) {
             $productAbstractFromStorage = $this->getFactory()
-                ->getProductClient()
-                ->getProductAbstractFromStorageByIdForCurrentLocale($productAbstract['id_product_abstract']);
-            //$searchResults[] =
+                ->getProductStorageClient()
+                ->getProductAbstractStorageData($productAbstract['id_product_abstract'], $this->getLocale());
+
+            $idProductConcreteCollection = $productAbstractFromStorage['attribute_map']['product_concrete_ids'] ?? [];
+
+            foreach ($idProductConcreteCollection as $sku => $idProductConcrete) {
+                $price = $productAbstract['price'];
+
+                $priceProductStorageTransfer = $this->getFactory()
+                    ->getPriceProductStorageClient()
+                    ->getProductConcretePrice($idProductConcrete);
+
+                if ($priceProductStorageTransfer) {
+                    $priceMap = $priceProductStorageTransfer->getPrices();
+                    $priceTransfer = $this->getFactory()->getPriceProductClient()->resolveProductPrice($priceMap);
+                    $price = $priceTransfer->getPrice();
+                }
+
+                $searchResults[] = [
+                    'value' => $sku . ' - ' . $productAbstract['abstract_name'],
+                    'data' => [
+                        'abstractSku' => $productAbstract['abstract_sku'],
+                        'sku' => $sku,
+                        'price' => $price,
+                    ]
+                ];
+            }
         }
 
         return  $searchResults;

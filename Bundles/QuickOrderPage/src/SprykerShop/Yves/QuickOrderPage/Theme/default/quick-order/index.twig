@@ -10,9 +10,19 @@
 
 {% block javascript %}
     {{ parent() }}
+    <style>
+        .autocomplete-suggestions { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid #999; background: #FFF; cursor: default; overflow: auto; -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); }
+        .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+        .autocomplete-no-suggestion { padding: 2px 5px;}
+        .autocomplete-selected { background: #F0F0F0; }
+        .autocomplete-suggestions strong { font-weight: bold; color: #000; }
+        .autocomplete-group { padding: 2px 5px; font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
+    </style>
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {#<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>#}
+    <script src="/assets/default/js/jquery.autocomplete.min.js"></script>
     <script>
         jQuery(function($) {
             var rowsNumber = {{ _view.rowsNumber }};
@@ -21,43 +31,49 @@
                 .on('change', '.js-qty-input-field', updatePricePanel)
                 .on('keyup',  '.js-qty-input-field', updatePricePanel);
 
+            $('.quick-order-form .js-qty-input-field[value!=""]').trigger('change');
+
             $('.js-add-more-rows-button').on('click', addMoreRows);
 
             initAutocomplete();
 
             function initAutocomplete() {
                 $('.js-autocomplete-input-field').autocomplete({
-                    minLength: 2,
-                    source: function (request, response) {
-                        $.ajax({
-                            url: "{{ path('quick-order/suggestion') }}",
-                            dataType: "json",
-                            data: {
-                                q: request.term
-                            },
-                            success: function (data) {
-                                if (data) {
-                                    $(data).each(function (n, item) {
-                                        data[n].value = item.abstract_sku + ' - ' + item.abstract_name;
-                                    });
-                                }
-                                response(data);
-                            }
-                        });
+                    minChars: 2,
+                    serviceUrl: "{{ path('quick-order/suggestion') }}",
+                    paramName: 'q',
+                    params: {}, // add searchField value
+                    //groupBy: 'abstractSku', // if you want to group by abstract product
+                    onSearchComplete: function (query, suggestions) {
+                        // if empty add error
                     },
-                    select: function (e, ui) {
+                    onSelect: function (suggestion) {
                         var idSearchInput = $(this).attr('id'),
                             $skuInput = $('#' + idSearchInput.replace('_searchQuery', '_sku')),
                             $priceInput = $('#' + idSearchInput.replace('_searchQuery', '_price')),
                             $qtyInput = $('#' + idSearchInput.replace('_searchQuery', '_qty'));
 
-                        $skuInput.val(ui.item.abstract_sku);
+                        $skuInput.val(suggestion.data.sku);
                         $qtyInput.val(1);
-                        $priceInput.val(ui.item.price);
+                        $priceInput.val(suggestion.data.price);
                         $qtyInput.trigger('change');
                         $qtyInput.focus();
                     }
                 });
+
+                $('.js-autocomplete-input-field').on('change', function () {
+                    if (this.value === '') {
+                        var idSearchInput = $(this).attr('id'),
+                            $skuInput = $('#' + idSearchInput.replace('_searchQuery', '_sku')),
+                            $priceInput = $('#' + idSearchInput.replace('_searchQuery', '_price')),
+                            $qtyInput = $('#' + idSearchInput.replace('_searchQuery', '_qty'));
+
+                        $skuInput.val('');
+                        $qtyInput.val('');
+                        $priceInput.val('');
+                        $qtyInput.trigger('change');
+                    }
+                })
             }
 
             function updatePricePanel(e) {
@@ -69,6 +85,8 @@
                 if ($qtyInput.val() >= 0 && $priceInput.val()) {
                     var newPrice = ($qtyInput.val() * $priceInput.val() / 100).toFixed(2);
                     $pricePanelInput.val(newPrice)
+                } else {
+                    $pricePanelInput.val('');
                 }
             }
 

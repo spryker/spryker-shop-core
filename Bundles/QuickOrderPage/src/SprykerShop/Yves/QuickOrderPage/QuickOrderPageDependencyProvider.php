@@ -16,12 +16,11 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCustomerCl
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CART = 'CLIENT_CART';
-
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
-
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
-
-    public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
 
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
@@ -41,7 +40,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCatalogClient($container);
         $container = $this->addFlashMessenger($container);
         $container = $this->addSearchClient($container);
-        $container = $this->addProductClient($container);
+        $container = $this->addPriceProductStorageClient($container);
+        $container = $this->addPriceProductClient($container);
+        $container = $this->addProductStorageClient($container);
 
         return $container;
     }
@@ -123,12 +124,43 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductClient($container): Container
+    protected function addProductStorageClient($container): Container
     {
-        $container[self::CLIENT_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->client();
+        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+            return $container->getLocator()->productStorage()->client();
         };
 
         return $container;
     }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPriceProductStorageClient($container): Container
+    {
+        $container[self::CLIENT_PRICE_PRODUCT_STORAGE] = function (Container $container) {
+            return $container->getLocator()->priceProductStorage()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPriceProductClient($container): Container
+    {
+        $container[self::CLIENT_PRICE_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->priceProduct()->client();
+        };
+
+        return $container;
+    }
+
+
+
 }

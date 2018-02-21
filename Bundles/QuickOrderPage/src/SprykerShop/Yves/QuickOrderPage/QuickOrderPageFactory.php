@@ -43,7 +43,7 @@ class QuickOrderPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Cart\CartClientInterface
      */
-    public function getCartClient()
+    public function getCartClient(): \Spryker\Client\Cart\CartClientInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_CART);
     }
@@ -51,17 +51,33 @@ class QuickOrderPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Catalog\CatalogClientInterface
      */
-    public function getCatalogClient()
+    public function getCatalogClient(): \Spryker\Client\Catalog\CatalogClientInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_CATALOG);
     }
 
     /**
-     * @return \Spryker\Client\Product\ProductClientInterface
+     * @return \Spryker\Client\ProductStorage\ProductStorageClientInterface
      */
-    public function getProductClient()
+    public function getProductStorageClient(): \Spryker\Client\ProductStorage\ProductStorageClientInterface
     {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRODUCT);
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\PriceProductStorageClientInterface
+     */
+    public function getPriceProductStorageClient(): \Spryker\Client\PriceProductStorage\PriceProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRICE_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProduct\PriceProductClientInterface
+     */
+    public function getPriceProductClient(): \Spryker\Client\PriceProduct\PriceProductClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRICE_PRODUCT);
     }
 
 }
