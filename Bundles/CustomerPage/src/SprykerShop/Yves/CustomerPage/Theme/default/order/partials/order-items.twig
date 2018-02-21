@@ -32,6 +32,7 @@
                 </td>
             </tr>
             {% include "@CustomerPage/order/partials/order-items-options.twig" %}
+            {{ widget('CartNotesOrderItemNoteWidgetPlugin', orderItem) }}
         {% endif %}
 
     {% endfor %}

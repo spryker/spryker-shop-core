@@ -1,0 +1,13 @@
+{{ form_start(_widget.cartNotesForm) }}
+<li>
+    <hr>
+</li>
+{{ form_widget(_widget.cartNotesForm.sku) }}
+{{ form_widget(_widget.cartNotesForm.groupKey) }}
+<h5>{{ _widget.cartNotesForm.cartNote.vars.label | trans }}</h5>
+<div class="input-group">
+    {{ form_widget(_widget.cartNotesForm.cartNote) }}
+</div>
+{{ form_errors(_widget.cartNotesForm.cartNote) }}
+<button class="button expanded info" type="submit">{{ 'cart_notes.form.save' | trans }}</button>
+{{ form_end(_widget.cartNotesForm) }}

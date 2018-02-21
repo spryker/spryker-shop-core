@@ -22,6 +22,8 @@
         {% endfor %}
     {% endif %}
 
+    {{ widget('CartNotesQuoteItemNoteWidgetPlugin', item) }}
+
     {% if not loop.last %}
         <hr>
     {% else %}
