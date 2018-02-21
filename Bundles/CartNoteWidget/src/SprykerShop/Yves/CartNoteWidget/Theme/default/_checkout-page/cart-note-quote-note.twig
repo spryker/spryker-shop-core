@@ -1,0 +1,7 @@
+{% if _widget.quote.cartNote %}
+<div class="callout">
+    <small>{{ 'cart_note.checkout_page.quote_note' | trans }}:</small>
+    <br>
+    <span>{{ _widget.quote.cartNote | escape | nl2br }}</span>
+</div>
+{% endif %}

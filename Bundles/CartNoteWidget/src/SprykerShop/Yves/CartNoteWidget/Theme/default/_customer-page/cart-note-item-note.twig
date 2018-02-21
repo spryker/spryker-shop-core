@@ -1,0 +1,9 @@
+{% if _widget.item.cartNote %}
+<tr>
+    <td class="text-left" colspan="5">
+        <small>{{ 'cart_note.customer_page.item_note' | trans }}:</small>
+        <br />
+        <span>{{ _widget.item.cartNote | escape | nl2br }}</span>
+    </td>
+</tr>
+{% endif %}

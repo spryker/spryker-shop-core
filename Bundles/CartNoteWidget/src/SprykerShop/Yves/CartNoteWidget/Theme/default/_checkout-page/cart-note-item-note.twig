@@ -1,0 +1,6 @@
+{% if _widget.item.cartNote %}
+    <br />
+    <small>{{ 'cart_note.checkout_page.item_note' | trans }}:</small>
+    <br />
+    <span>{{ _widget.item.cartNote | escape | nl2br }}</span>
+{% endif %}
