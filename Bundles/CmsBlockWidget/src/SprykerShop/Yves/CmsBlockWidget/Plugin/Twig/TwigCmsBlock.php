@@ -12,7 +12,6 @@ use DateTime;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 use Silex\Application;
-use Spryker\Client\Store\StoreClient;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
 use Twig_Environment;
