@@ -4,17 +4,26 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cart": "^4.3.0",
     "spryker-shop/cart-page": "^0.1.0",
-    "spryker-shop/checkout-page": "^0.1.0",
-    "spryker-shop/customer-page": "^0.1.0",
-    "spryker-shop/shop-application": "^0.1.0",
     "spryker/application": "^3.8.0",
     "spryker/kernel": "^3.16.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
+    "spryker-shop/checkout-page": "^0.1.0",
+    "spryker-shop/customer-page": "^0.1.0",
+    "spryker-shop/shop-application": "^0.1.0",
+    "spryker/silex": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker-shop/cart-page": "TODO: add suggestion description",
+    "spryker-shop/checkout-page": "TODO: add suggestion description",
+    "spryker-shop/customer-page": "TODO: add suggestion description",
+    "spryker-shop/shop-application": "TODO: add suggestion description",
+    "spryker/silex": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {
