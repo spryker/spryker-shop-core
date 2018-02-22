@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ItemController extends AbstractController
 {
-    const MESSAGE_CART_NOTES_ADDED_SUCCESS_TO_ITEM = 'cart_note.cart_page.item.note_added';
+    const MESSAGE_CART_NOTE_ADDED_SUCCESS_TO_ITEM = 'cart_note.cart_page.item.note_added';
     const REQUEST_HEADER_PEFERER = 'referer';
 
     /**
@@ -39,7 +39,7 @@ class ItemController extends AbstractController
             $this->getFactory()
                 ->createCartNotesHandler()
                 ->setNoteToQuoteItem($note, $sku, $groupKey);
-            $this->addSuccessMessage(static::MESSAGE_CART_NOTES_ADDED_SUCCESS_TO_ITEM);
+            $this->addSuccessMessage(static::MESSAGE_CART_NOTE_ADDED_SUCCESS_TO_ITEM);
         }
 
         return $this->redirectResponseExternal($this->getRefererUrl($request));

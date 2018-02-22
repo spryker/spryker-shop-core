@@ -1,4 +1,4 @@
-{% if _widget.quote.cartNote %}
+{% if _widget.quote.cartNote is not null %}
 <div class="callout">
     <small>{{ 'cart_note.checkout_page.quote_note' | trans }}:</small>
     <br>

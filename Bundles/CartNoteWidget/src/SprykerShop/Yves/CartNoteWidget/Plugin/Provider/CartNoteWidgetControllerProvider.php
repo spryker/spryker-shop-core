@@ -22,20 +22,26 @@ class CartNoteWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
+        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+
         $this->createPostController(
-            '/cart-note/quote',
+            '/{cartNote}/quote',
             static::ROUTE_CART_NOTE_QUOTE,
             'CartNoteWidget',
             'Quote',
             'index'
-        );
+        )
+            ->assert('cartNote', $allowedLocalesPattern . 'cart-note|cart-note')
+            ->value('cartNote', 'cart-note');
 
         $this->createPostController(
-            '/cart-note/item',
+            '/{cartNote}/item',
             static::ROUTE_CART_NOTE_ITEM,
             'CartNoteWidget',
             'Item',
             'index'
-        );
+        )
+            ->assert('cartNote', $allowedLocalesPattern . 'cart-note|cart-note')
+            ->value('cartNote', 'cart-note');
     }
 }

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteController extends AbstractController
 {
-    const MESSAGE_CART_NOTES_ADDED_TO_CART_SUCCESS = 'cart_note.cart_page.cart.note_added';
+    const MESSAGE_CART_NOTE_ADDED_TO_CART_SUCCESS = 'cart_note.cart_page.cart.note_added';
     const REQUEST_HEADER_PEFERER = 'referer';
 
     /**
@@ -37,7 +37,7 @@ class QuoteController extends AbstractController
             $this->getFactory()
                 ->createCartNotesHandler()
                 ->setNoteToQuote($note);
-            $this->addSuccessMessage(static::MESSAGE_CART_NOTES_ADDED_TO_CART_SUCCESS);
+            $this->addSuccessMessage(static::MESSAGE_CART_NOTE_ADDED_TO_CART_SUCCESS);
         }
 
         return $this->redirectResponseExternal($this->getRefererUrl($request));

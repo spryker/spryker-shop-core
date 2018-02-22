@@ -1,4 +1,4 @@
-{% if _widget.item.cartNote %}
+{% if _widget.item.cartNote is not null %}
 <tr>
     <td class="text-left" colspan="5">
         <small>{{ 'cart_note.customer_page.item_note' | trans }}:</small>
