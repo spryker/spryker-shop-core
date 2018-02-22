@@ -21,72 +21,92 @@
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    {#<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>#}
     <script src="/assets/default/js/jquery.autocomplete.min.js"></script>
     <script>
         jQuery(function($) {
             var rowsNumber = {{ _view.rowsNumber }};
 
             $('.quick-order-form')
-                .on('change', '.js-qty-input-field', updatePricePanel)
-                .on('keyup',  '.js-qty-input-field', updatePricePanel);
+                .on('change', '.js-qty-input-field', qtyInputHandler)
+                .on('keyup',  '.js-qty-input-field', qtyInputHandler);
 
             $('.quick-order-form .js-qty-input-field[value!=""]').trigger('change');
 
             $('.js-add-more-rows-button').on('click', addMoreRows);
 
+            $('.js-verify-text-order').on('click', function (e) {
+                if ($('#quick_order_form_textOrder').val() === '') {
+                    e.preventDefault();
+                }
+            });
+
             initAutocomplete();
 
             function initAutocomplete() {
-                $('.js-autocomplete-input-field').autocomplete({
-                    minChars: 2,
-                    serviceUrl: "{{ path('quick-order/suggestion') }}",
-                    paramName: 'q',
-                    params: {}, // add searchField value
-                    //groupBy: 'abstractSku', // if you want to group by abstract product
-                    onSearchComplete: function (query, suggestions) {
-                        // if empty add error
-                    },
-                    onSelect: function (suggestion) {
-                        var idSearchInput = $(this).attr('id'),
-                            $skuInput = $('#' + idSearchInput.replace('_searchQuery', '_sku')),
-                            $priceInput = $('#' + idSearchInput.replace('_searchQuery', '_price')),
-                            $qtyInput = $('#' + idSearchInput.replace('_searchQuery', '_qty'));
+                $('.js-autocomplete-input-field').each(function (n, input) {
+                    var idSearchInput = $(input).attr('id'),
+                        $skuInput = $('#' + idSearchInput.replace('_searchQuery', '_sku')),
+                        $priceInput = $('#' + idSearchInput.replace('_searchQuery', '_price')),
+                        $qtyInput = $('#' + idSearchInput.replace('_searchQuery', '_qty')),
+                        $searchField = $('#' + idSearchInput.replace('_searchQuery', '_searchField')),
+                        $errorPanel = $('.js-product-error', $(input).parent());
 
-                        $skuInput.val(suggestion.data.sku);
-                        $qtyInput.val(1);
-                        $priceInput.val(suggestion.data.price);
-                        $qtyInput.trigger('change');
-                        $qtyInput.focus();
-                    }
+                    $(input).autocomplete({
+                        minChars: 2,
+                        serviceUrl: "{{ path('quick-order/suggestion') }}",
+                        paramName: 'q',
+                        params: {
+                            field: $('option:selected', $searchField).val()
+                        },
+                        groupBy: null,
+                        onSearchComplete: function (query, suggestions) {
+                            $errorPanel.hide();
+                            if (suggestions.length === 0) {
+                                $errorPanel.text('Item Number Cannot Be Found');
+                                $errorPanel.show();
+                            }
+                        },
+                        onSelect: function (suggestion) {
+                            $skuInput.val(suggestion.data.sku);
+                            if (suggestion.data.available) {
+                                $qtyInput.val(1);
+                                $qtyInput.attr('disabled', false);
+                                $priceInput.val(suggestion.data.price);
+                                $qtyInput.trigger('change');
+                                $qtyInput.focus();
+                            } else {
+                                $errorPanel.text('This Product Is Not Available');
+                                $errorPanel.show();
+                            }
+                        }
+                    });
+
+                    $(input).on('change', function () {
+                        if (this.value === '') {
+                            $skuInput.val('');
+                            $qtyInput.val('');
+                            $priceInput.val('');
+                            $qtyInput.trigger('change');
+                            $qtyInput.attr('disabled', true);
+                        }
+                    });
                 });
-
-                $('.js-autocomplete-input-field').on('change', function () {
-                    if (this.value === '') {
-                        var idSearchInput = $(this).attr('id'),
-                            $skuInput = $('#' + idSearchInput.replace('_searchQuery', '_sku')),
-                            $priceInput = $('#' + idSearchInput.replace('_searchQuery', '_price')),
-                            $qtyInput = $('#' + idSearchInput.replace('_searchQuery', '_qty'));
-
-                        $skuInput.val('');
-                        $qtyInput.val('');
-                        $priceInput.val('');
-                        $qtyInput.trigger('change');
-                    }
-                })
             }
 
-            function updatePricePanel(e) {
+            function qtyInputHandler(e) {
                 var $qtyInput = $(e.target),
                     idQtyInput = $qtyInput.attr('id'),
-                    $priceInput = $('#' + idQtyInput.replace('_qty', '_price')),
+                    qty = $qtyInput.val(),
+                    qtyIntValue = qty.replace(/[^0-9]/g, ''),
+                    price = $('#' + idQtyInput.replace('_qty', '_price')).val(),
                     $pricePanelInput = $('#' + idQtyInput.replace('_qty', '_pricePanel'));
 
-                if ($qtyInput.val() >= 0 && $priceInput.val()) {
-                    var newPrice = ($qtyInput.val() * $priceInput.val() / 100).toFixed(2);
+                $pricePanelInput.val('');
+                $qtyInput.val(qtyIntValue);
+
+                if (qty && price) {
+                    var newPrice = (qty * price / 100).toFixed(2);
                     $pricePanelInput.val(newPrice)
-                } else {
-                    $pricePanelInput.val('');
                 }
             }
 

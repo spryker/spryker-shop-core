@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\QuickOrderPage;
 
-use Spryker\Shared\Kernel\Store;
+
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCustomerClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
 
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -25,8 +25,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     public const FLASH_MESSENGER = 'FLASH_MESSENGER';
-
-
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -85,7 +83,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCartClient($container): Container
     {
         $container[self::CLIENT_CART] = function (Container $container) {
-            return $container->getLocator()->cart()->client();
+            return new QuickOrderPageToCartClientBridge($container->getLocator()->cart()->client());
         };
 
         return $container;

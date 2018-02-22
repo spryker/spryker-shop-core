@@ -7,21 +7,30 @@
 
 namespace SprykerShop\Yves\QuickOrderPage;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCustomerClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use SprykerShop\Yves\QuickOrderPage\Handler\QuickOrderFormOperationHandler;
+use SprykerShop\Yves\QuickOrderPage\Handler\QuickOrderFormOperationHandlerInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
+
 
 class QuickOrderPageFactory extends AbstractFactory
 {
     /**
      * @return \SprykerShop\Yves\QuickOrderPage\Form\FormFactory
      */
-    public function createQuickOrderFormFactory()
+    public function createQuickOrderFormFactory(): FormFactory
     {
         return new FormFactory();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Handler\QuickOrderFormOperationHandlerInterface
+     */
+    public function createFormOperationHandler(): QuickOrderFormOperationHandlerInterface
+    {
+        return new QuickOrderFormOperationHandler($this->getCartClient());
     }
 
     /**
@@ -41,9 +50,9 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\CartClientInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface
      */
-    public function getCartClient(): \Spryker\Client\Cart\CartClientInterface
+    public function getCartClient(): QuickOrderPageToCartClientInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_CART);
     }

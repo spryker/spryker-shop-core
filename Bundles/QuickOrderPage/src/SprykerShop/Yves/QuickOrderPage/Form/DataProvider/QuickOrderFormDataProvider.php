@@ -7,6 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Form\DataProvider;
 
-class QuckOrderFormDataProvider
+class QuickOrderFormDataProvider
 {
 }

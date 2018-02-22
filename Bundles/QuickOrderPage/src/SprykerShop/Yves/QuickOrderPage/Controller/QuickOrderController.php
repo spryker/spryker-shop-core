@@ -7,15 +7,16 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
-use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\ItemTransfer;
+
+
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
-use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
+
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
-use SprykerShop\Yves\QuickOrderPage\Form\QuickOrder;
+use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData;
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,8 +26,9 @@ use Symfony\Component\HttpFoundation\Request;
 class QuickOrderController extends AbstractController
 {
     public const PARAM_SEARCH_QUERY = 'q';
+    public const PARAM_SEARCH_FIELD = 'field';
 
-    public const ROWS_NUMBER = 10;
+    public const PRODUCT_ROWS_NUMBER = 10;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -45,21 +47,31 @@ class QuickOrderController extends AbstractController
 
         if ($quickOrderForm->isSubmitted() && $quickOrderForm->isValid()) {
             if ($request->get(QuickOrderForm::SUBMIT_BUTTON_ADD_TO_CART) !== null) {
-                $this->addToCart($quickOrder);
+                $this->getFactory()
+                    ->createFormOperationHandler()
+                    ->addToCart($quickOrder);
 
                 return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
             }
 
             if ($request->get(QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER) !== null) {
-                $this->createOrder($quickOrder);
+                $this->getFactory()
+                    ->createFormOperationHandler()
+                    ->createOrder($quickOrder);
 
                 return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_INDEX);
+            }
+
+            if ($request->get(QuickOrderForm::SUBMIT_BUTTON_VERIFY) !== null) {
+                $this->getFactory()
+                    ->createFormOperationHandler()
+                    ->verifyTextOrder($quickOrder, $quickOrderForm);
             }
         }
 
         $data = [
             'form' => $quickOrderForm->createView(),
-            'rowsNumber' => static::ROWS_NUMBER,
+            'rowsNumber' => static::PRODUCT_ROWS_NUMBER,
         ];
 
         return $this->view($data);
@@ -88,37 +100,38 @@ class QuickOrderController extends AbstractController
         return $this->jsonResponse(['suggestions' => $searchResults]);
     }
 
+    /**
+     * @param array $searchResults
+     * *
+     * @return array
+     */
     protected function expandSearchResults(array $searchResults): array
     {
         $productAbstracts = $searchResults['suggestionByType']['product_abstract'] ?? [];
 
         $searchResults = [];
         foreach ($productAbstracts as $productAbstract) {
-            $productAbstractFromStorage = $this->getFactory()
+            $data = $this->getFactory()
                 ->getProductStorageClient()
                 ->getProductAbstractStorageData($productAbstract['id_product_abstract'], $this->getLocale());
 
-            $idProductConcreteCollection = $productAbstractFromStorage['attribute_map']['product_concrete_ids'] ?? [];
+            $idProductConcreteCollection = $data['attribute_map']['product_concrete_ids'] ?? [];
 
             foreach ($idProductConcreteCollection as $sku => $idProductConcrete) {
-                $price = $productAbstract['price'];
+                $data['id_product_concrete'] = $idProductConcrete;
+                $data['sku'] = $sku;
 
-                $priceProductStorageTransfer = $this->getFactory()
-                    ->getPriceProductStorageClient()
-                    ->getProductConcretePrice($idProductConcrete);
-
-                if ($priceProductStorageTransfer) {
-                    $priceMap = $priceProductStorageTransfer->getPrices();
-                    $priceTransfer = $this->getFactory()->getPriceProductClient()->resolveProductPrice($priceMap);
-                    $price = $priceTransfer->getPrice();
-                }
+                $productViewTransfer = $this->getFactory()
+                    ->getProductStorageClient()
+                    ->mapProductStorageData($data, $this->getLocale());
 
                 $searchResults[] = [
-                    'value' => $sku . ' - ' . $productAbstract['abstract_name'],
+                    'value' => $productViewTransfer->getSku() . ' - ' . $productViewTransfer->getName(),
                     'data' => [
                         'abstractSku' => $productAbstract['abstract_sku'],
-                        'sku' => $sku,
-                        'price' => $price,
+                        'sku' => $productViewTransfer->getSku(),
+                        'price' => $productViewTransfer->getPrice(),
+                        'available' => $productViewTransfer->getAvailable()
                     ]
                 ];
             }
@@ -127,89 +140,14 @@ class QuickOrderController extends AbstractController
         return  $searchResults;
     }
 
-    //****** ********* *********  Move to operation separate class ********* *************/
-
     /**
-     * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrder $quickOrder
-     *
-     * @return void
+     * @return \SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData
      */
-    protected function addToCart(QuickOrder $quickOrder): void
+    protected function getQuickOrder(): QuickOrderData
     {
-        $itemTransfers = $this->getItemTransfers($quickOrder);
-
-        if ($itemTransfers) {
-            $this->addItemsToCart($itemTransfers);
-        }
-    }
-
-    /**
-     * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrder $quickOrder
-     *
-     * @return void
-     */
-    protected function createOrder(QuickOrder $quickOrder): void
-    {
-        $itemTransfers = $this->getItemTransfers($quickOrder);
-
-        if ($itemTransfers) {
-            $this->getFactory()
-                ->getCartClient()
-                ->clearQuote();
-
-            $this->addItemsToCart($itemTransfers);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return void
-     */
-    protected function addItemsToCart(array $itemTransfers): void
-    {
-        $quoteTransfer = $this->getFactory()
-            ->getCartClient()
-            ->addItems($itemTransfers);
-
-        $this->getFactory()
-            ->getCartClient()
-            ->storeQuote($quoteTransfer);
-    }
-
-    /**
-     * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrder $quickOrder
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getItemTransfers(QuickOrder $quickOrder): array
-    {
-        $itemTransfers = [];
-        $quickOrderItemTransfers = $quickOrder->getItems();
-
-        foreach ($quickOrderItemTransfers as $quickOrderItemTransfer) {
-            if ($quickOrderItemTransfer->getSku() && $quickOrderItemTransfer->getQty()) {
-                $itemTransfer = (new ItemTransfer())
-                    ->setSku($quickOrderItemTransfer->getSku())
-                    ->setQuantity($quickOrderItemTransfer->getQty());
-
-                $itemTransfers[] = $itemTransfer;
-            }
-        }
-
-        return $itemTransfers;
-    }
-
-    //******* ********* ********* end moving ********* ************* *************/
-
-    /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Form\QuickOrder
-     */
-    protected function getQuickOrder(): QuickOrder
-    {
-        $quickOrder = new QuickOrder();
+        $quickOrder = new QuickOrderData();
         $orderItems = [];
-        for ($i = 0; $i < static::ROWS_NUMBER; $i++) {
+        for ($i = 0; $i < static::PRODUCT_ROWS_NUMBER; $i++) {
             $orderItems[] = new QuickOrderItemTransfer();
         }
         $quickOrder->setItems($orderItems);

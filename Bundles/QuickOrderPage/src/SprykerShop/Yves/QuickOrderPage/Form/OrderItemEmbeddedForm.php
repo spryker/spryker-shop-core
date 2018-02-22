@@ -12,12 +12,20 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderItemEmbeddedForm extends AbstractType
 {
+    public const FILED_SEARCH_FIELD = 'searchField';
+    public const FILED_SEARCH_QUERY = 'searchQuery';
+    public const FILED_SKU = 'sku';
+    public const FILED_QTY = 'qty';
+    public const FILED_PRICE = 'price';
+    public const FILED_PRICE_PANEL = 'pricePanel';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -27,23 +35,22 @@ class OrderItemEmbeddedForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('searchField', ChoiceType::class, [
+            ->add(static::FILED_SEARCH_FIELD, ChoiceType::class, [
                 'choices' => $this->getSearchFieldChoices(),
             ])
-            ->add('searchQuery', TextType::class, [
+            ->add(static::FILED_SEARCH_QUERY, SearchType::class, [
                 'required' => false,
             ])
-            ->add('sku', HiddenType::class, [
+            ->add(static::FILED_SKU, HiddenType::class, [
                 'required' => false,
             ])
-            ->add('qty', IntegerType::class, [
+            ->add(static::FILED_QTY, IntegerType::class, [
                 'required' => false,
             ])
-            //->add('unit', ChoiceType::class)
-            ->add('price', HiddenType::class, [
+            ->add(static::FILED_PRICE, HiddenType::class, [
                 'required' => false,
             ])
-            ->add('pricePanel', TextType::class, [
+            ->add(static::FILED_PRICE_PANEL, TextType::class, [
                 'disabled' => true,
                 'required' => false,
             ]);

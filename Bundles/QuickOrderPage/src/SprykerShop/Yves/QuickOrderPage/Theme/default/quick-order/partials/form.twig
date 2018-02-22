@@ -3,38 +3,54 @@
 
 {{ form_errors(form) }}
 
-<div class="items-container">
-{% for item in form.items %}
-    <div class="row" data-index="{{ loop.index0 }}">
-        <div class="small-12 medium-2 columns">
-            {{ form_widget(item.searchField) }}
+<div class="row">
+<div class="medium-9 columns">
+    <div class="items-container">
+    {% for item in form.items %}
+        <div class="row" data-index="{{ loop.index0 }}">
+            <div class="medium-2">
+                {{ form_widget(item.searchField) }}
+            </div>
+            <div class="medium-7 columns">
+                {{ form_widget(item.searchQuery, { 'attr': {
+                       'class': 'js-autocomplete-input-field',
+                       'placeholder': 'Search' | trans,
+                       'autocomplete': 'off'
+                    }})
+                }}
+                {{ form_widget(item.sku) }}
+                <div class="form-error js-product-error"></div>
+            </div>
+            <div class="medium-1 columns">
+                {{ form_widget(item.qty, { 'attr': {'min': 1, 'disabled': true, 'class': 'js-qty-input-field', 'placeholder': '# Qty' | trans } }) }}
+            </div>
+            <div class="medium-2">
+                {{ form_widget(item.price) }}
+                {{ form_widget(item.pricePanel) }}
+            </div>
         </div>
-        <div class="small-12 medium-7 columns">
-            {{ form_widget(item.searchQuery, { 'attr': {
-                   'class': 'js-autocomplete-input-field',
-                   'placeholder': 'Search' | trans,
-                   'autocomplete': 'off'
-                }})
-            }}
-            {{ form_widget(item.sku) }}
-            {{ form_errors(item.searchQuery) }}
-        </div>
-        <div class="small-12 medium-1 columns">
-            {{ form_widget(item.qty, { 'attr': {'min': 1, 'class': 'js-qty-input-field', 'placeholder': '# Qty' | trans } }) }}
-        </div>
-        <div class="small-12 medium-2 columns">
-            {{ form_widget(item.price) }}
-            {{ form_widget(item.pricePanel) }}
-        </div>
+    {% endfor %}
     </div>
-{% endfor %}
+    <div class="row __padding-top">
+        <a href="#add-more" class="button secondary expanded __no-margin-bottom js-add-more-rows-button">
+            <i class="fa fa-plus-circle"></i>{{ 'Add More Rows' | trans }}
+        </a>
+    </div>
+</div>
+<div class="medium-3 columns">
+    <div>
+        <h3>{{ 'Paste your order' | trans }}</h3>
+        <p>Copy and paste your order with item #, quantity, separated by commas, semicolons or spaces.</p>
+        {{ form_errors(form.textOrder) }}
+        {{ form_widget(form.textOrder, { 'attr': {'placeholder': 'Copy and paster order'} }) }}
+
+        <button type="submit" name="verifyTextOrder" class="button secondary js-verify-text-order">
+            <i class="fa fa-check-circle-o"></i>{{ 'Verify' | trans }}
+        </button>
+    </div>
+</div>
 </div>
 
-<div class="row __padding-top">
-    <a href="#add-more" class="button secondary expanded __no-margin-bottom js-add-more-rows-button">
-        <i class="fa fa-plus-circle"></i>{{ 'Add More Rows' | trans }}
-    </a>
-</div>
 <div class="row __padding-top">
     <p class="small-12 large-6 columns">
         <button type="submit" name="addToCart" class="button expanded success js-add-to-cart-button __no-margin-bottom">
@@ -43,7 +59,7 @@
     </p>
     <p class="small-12 large-6 columns">
         <button type="submit" name="createOrder" class="button primary expanded __no-margin-bottom">
-            {{ 'Create Order' | trans }}
+            <i class="fa fa-list-alt"></i>{{ 'Create Order' | trans }}
         </button>
     </p>
 </div>

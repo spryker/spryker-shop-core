@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Form;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuckOrderFormDataProvider;
+use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider;
 use SprykerShop\Yves\QuickOrderPage\QuickOrderPageDependencyProvider;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -36,27 +36,10 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuckOrderFormDataProvider
+     * @return \SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider
      */
-    public function createQuickOrderDataProvider(): QuckOrderFormDataProvider
+    public function createQuickOrderDataProvider(): QuickOrderFormDataProvider
     {
-        //$this->getCustomerClient(), $this->getStore()
-        return new QuckOrderFormDataProvider();
-    }
-
-    /**
-     * @return \Spryker\Client\Customer\CustomerClientInterface
-     */
-    protected function getCustomerClient()
-    {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_CUSTOMER);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::STORE);
+        return new QuickOrderFormDataProvider();
     }
 }

@@ -9,14 +9,19 @@ namespace SprykerShop\Yves\QuickOrderPage\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 class QuickOrderForm extends AbstractType
 {
-    public const SUBMIT_BUTTON_ADD_TO_CART = 'addToCart';
+    public const FIELD_ITEMS = 'items';
+    public const FIELD_TEXT_ORDER = 'textOrder';
 
+    public const SUBMIT_BUTTON_ADD_TO_CART = 'addToCart';
     public const SUBMIT_BUTTON_CREATE_ORDER = 'createOrder';
+    public const SUBMIT_BUTTON_VERIFY = 'verifyTextOrder';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -27,10 +32,12 @@ class QuickOrderForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('items', CollectionType::class, [
+            ->add(static::FIELD_ITEMS, CollectionType::class, [
                 'entry_type' => OrderItemEmbeddedForm::class,
                 'allow_add' => true,
-                //'allow_delete' => true,
+            ])
+            ->add(static::FIELD_TEXT_ORDER, TextareaType::class, [
+                'required' => false,
             ]);
     }
 
@@ -42,7 +49,7 @@ class QuickOrderForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => QuickOrder::class,
+            'data_class' => QuickOrderData::class,
         ]);
     }
 }

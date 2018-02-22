@@ -7,12 +7,17 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Form;
 
-class QuickOrder
+class QuickOrderData
 {
     /**
      * @var \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
     protected $items;
+
+    /**
+     * @var string
+     */
+    protected $textOrder;
 
     public function __construct()
     {
@@ -35,5 +40,21 @@ class QuickOrder
     public function setItems(array $items): void
     {
         $this->items = $items;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTextOrder(): ?string
+    {
+        return $this->textOrder;
+    }
+
+    /**
+     * @param string $textOrder
+     */
+    public function setTextOrder(string $textOrder): void
+    {
+        $this->textOrder = $textOrder;
     }
 }
