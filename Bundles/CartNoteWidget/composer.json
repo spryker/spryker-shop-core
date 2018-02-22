@@ -1,12 +1,12 @@
 {
   "name": "spryker-shop/cart-note-widget",
-  "description": "CartNotesWidget module",
+  "description": "CartNoteWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/cart-page": "*",
-    "spryker-shop/checkout-page": "*",
-    "spryker-shop/customer-page": "*",
+    "spryker-shop/cart-page": "^0.1.0",
+    "spryker-shop/checkout-page": "^0.1.0",
+    "spryker-shop/customer-page": "^0.1.0",
     "spryker-shop/shop-application": "^0.1.0",
     "spryker/application": "^3.8.0",
     "spryker/kernel": "^3.16.0",
