@@ -21,12 +21,13 @@
             }
         }
 
-        &__arrows {
+        &__caret {
             position: absolute;
             top: 0;
             bottom: 0;
             right: spacing(.5);
             margin: auto;
+            color: $color-darker;
             z-index: 1;
         }
 
@@ -39,6 +40,14 @@
         &--naked {
             background-color: $color-transparent;
             border: none;
+        }
+
+        &--error {
+            border-color: map-get($color-actions, alert);
+        }
+
+        &--error &__caret {
+            color: map-get($color-actions, alert);
         }
 
         @content;

@@ -25,6 +25,19 @@
             }
         }
 
+        &--spacing &__item {
+            &:not(:first-child) {
+                margin-top: spacing();
+            }
+        }
+
+        &--bullet &__item {
+            &:before {
+                content: '•';
+                margin-right: spacing(.5);
+            }
+        }
+
         @content;
     }
 }

@@ -18,6 +18,10 @@
             background-color: $color-transparent;
             border: none;
         }
+
+        &--error {
+            border-color: map-get($color-actions, alert);
+        }
         
         @content;
     }

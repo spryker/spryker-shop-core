@@ -1,0 +1,110 @@
+{% extends template('page-layout-checkout', 'CheckoutPage') %}
+
+{% define data = {
+    forms: {
+        address: _view.addressesForm,
+        shipping: _view.addressesForm.shippingAddress,
+        billing: _view.addressesForm.billingAddress
+    },
+    
+    title: 'checkout.step.address.title' | trans
+} %}
+
+{% block content %}
+    {% embed molecule('form') with {
+        data: {
+            form: {
+                data: data.forms.address
+            }
+        },
+        embed: {
+            forms: {
+                shipping: data.forms.shipping,
+                billing: data.forms.billing
+            }
+        }
+    } only %}
+        {% block fields %}
+            <div class="box">
+                {% include molecule('form') with {
+                    data: {
+                        title: 'page.checkout.address.shipping-address' | trans,
+                        form: {
+                            data: embed.forms.shipping
+                        },
+                        submit: {
+                            enable: false
+                        },
+                        cancel: {
+                            enable: false
+                        }
+                    }
+                } only %}
+
+                {{form_row(data.form.data.billingSameAsShipping, {
+                    component: molecule('class-toggler'),
+                    attributes: {
+                        target: 'js-address__billing',
+                        'class-to-toggle': 'is-hidden'
+                    }
+                })}}
+            </div>
+
+            {% include molecule('form') with {
+                class: 'box js-address__billing',
+                data: {
+                    title: 'page.checkout.address.billing-address' | trans,
+                    form: {
+                        data: embed.forms.billing
+                    },
+                    submit: {
+                        enable: false
+                    },
+                    cancel: {
+                        enable: false
+                    }
+                }
+            } only %}
+        {% endblock %}
+    {% endembed %}
+
+
+        {# {{ form_start(_view.addressesForm) }}
+	    <div class="row">
+
+            <div class="small-12 large-6 columns">
+                <div class="callout">
+                    <h4>{{ 'page.checkout.summary.shipping' | trans }}</h4>
+
+                    {% include '@CheckoutPage/_checkout-page/_partials/address-selection.twig' with {'addressForm': _view.addressesForm.shippingAddress} %}
+                </div>
+            </div>
+
+            <div class="small-12 large-6 columns">
+                <div class="callout">
+                    <h4>{{ 'page.checkout.address.billing-address' | trans }}</h4>
+
+                    {{ form_widget(_view.addressesForm.billingSameAsShipping, {'attr': {'class': '__toggler __inverted'}}) }}
+                    <label for="_view.addressesForm_billingSameAsShipping">{{ 'customer.billingSameAsShipping' | trans }}</label>
+
+                    <div class="__toggler-target">
+                        {% include '@CheckoutPage/_checkout-page/_partials/address-selection.twig' with {'addressForm': _view.addressesForm.billingAddress} %}
+                    </div>
+                </div>
+			</div>
+
+            <div class="small-12 columns">
+                <div class="callout">
+                    <div class="row align-right">
+                        <div class="small-12 medium-6 large-4 xlarge-3 columns">
+                            <a href="{% if _view.addressesForm.vars.data.customer.isGuest %}{{ _view.previousStepUrl }}{% else %}{{ url('cart') }}{% endif %}" class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
+                        </div>
+                        <div class="small-12 medium-6 large-4 xlarge-3 columns">
+                            <button type="submit" class="button success expanded __no-margin-bottom">{{ 'checkout.step.shipment' | trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+	    </div>
+    {{ form_end(_view.addressesForm) }} #}
+{% endblock %}

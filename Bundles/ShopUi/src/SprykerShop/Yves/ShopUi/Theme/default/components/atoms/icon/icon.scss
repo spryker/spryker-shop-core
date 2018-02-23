@@ -3,6 +3,7 @@ $component-icon-size-small: spacing(1.5);
 $component-icon-size-smaller: spacing();
 $component-icon-size-big: spacing(3);
 $component-icon-size-bigger: spacing(4);
+$component-icon-size-biggest: spacing(6);
 
 @mixin component-icon($name: '.icon') {
     #{$name} {
@@ -31,6 +32,11 @@ $component-icon-size-bigger: spacing(4);
         &--bigger {
             width: $component-icon-size-bigger;
             height: $component-icon-size-bigger;
+        }
+
+        &--biggest {
+            width: $component-icon-size-biggest;
+            height: $component-icon-size-biggest;
         }
 
         @content

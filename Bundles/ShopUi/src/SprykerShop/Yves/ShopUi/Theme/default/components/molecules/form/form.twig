@@ -1,0 +1,101 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'form',
+    tag: 'div'
+} %}
+
+{% define data = {
+    title: null,
+    form: {
+        data: required,
+        options: {},
+        layout: {},
+        enableStart: true,
+        enableEnd: true
+    },
+    submit: {
+        text: 'forms.submit-btn' | trans,
+        enable: true
+    },
+    cancel: {
+        text: 'general.back.button' | trans,
+        url: '#',
+        enable: false
+    }
+} %}
+
+{% set formOptions = {
+    attr: {
+        novalidate: true
+    }
+} | merge(data.form.options) %}
+
+{% block protected %}
+    {% block separator %}<hr/>{% endblock %}
+{% endblock %}
+
+{% block body %}
+    {% block title %}
+        {% if data.title is not empty %}
+            <h5>{{data.title}}</h5>
+            {{block('separator')}}
+        {% endif %}
+    {% endblock %}
+
+    {% if data.form.enableStart %}
+        {{ form_start(data.form.data, formOptions) }}
+    {% endif %}
+    
+    {% block fields %}
+        <div class="grid">
+            {% for field in data.form.data.children | keys %}
+                {% set class = 'col col--sm-12' %}
+
+                {% if field in data.form.layout | keys %}
+                    {% set class = attribute(data.form.layout, field) %}
+                {% endif %}
+            
+                <div class="{{class}}">
+                    {{ form_row(attribute(data.form.data.children, field)) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+
+    {% block fieldsRest %}
+        {{ form_rest(data.form.data) }}
+    {% endblock %}
+
+    {% block actions %}
+        {% if data.submit.enable or data.cancel.enable %}
+            {{block('separator')}}
+            
+            {% if data.submit.enable and data.cancel.enable %}
+                <div class="form-field grid grid--justify">
+            {% else %}
+                <div class="form-field grid {{ data.submit.enable ? 'grid--right' : 'grid--left'}}">
+            {% endif %}
+                {% if data.cancel.enable %}
+                    {% block cancel %}
+                        <a href="{{data.cancel.url}}" class="button button--secondary button--hollow col col--sm-12 col--md-5 col--lg-3">
+                            {{data.cancel.text}}
+                        </a>
+                    {% endblock %}
+                {% endif %}
+
+                {% if data.submit.enable %}
+                    {% block submit %}
+                        <button type="submit" class="button button--success col col--sm-12 col--md-5 col--lg-3">
+                            {{data.submit.text}}
+                        </button>
+                    {% endblock %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endblock %}
+    
+    {% if data.form.enableEnd %}
+        {{ form_end(data.form.data) }}
+    {% endif %}
+{% endblock %}

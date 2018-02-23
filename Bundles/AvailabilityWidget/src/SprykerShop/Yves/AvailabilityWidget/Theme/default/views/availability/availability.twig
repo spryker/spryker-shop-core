@@ -5,7 +5,18 @@
     isAvailable: _widget.product.available
 } %}
 
-{% block template %}
+{% block protected %}
+    {%- block isAvailable -%}
+        {%- define data = {
+            concreteProductId: _widget.product.idProductConcrete,
+            isAvailable: _widget.product.available
+        } -%}
+
+        {{- data.concreteProductId and data.isAvailable -}}
+    {%- endblock -%}
+{% endblock %}
+
+{% block render %}
     {% if data.concreteProductId and not data.isAvailable %}
         {{parent()}}
     {% endif %}

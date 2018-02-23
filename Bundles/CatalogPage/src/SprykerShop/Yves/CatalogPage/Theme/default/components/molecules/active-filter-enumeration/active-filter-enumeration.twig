@@ -14,7 +14,7 @@
 {% block attributes %}{% endblock %}
 {% block class %}{% endblock %}
 
-{% block component %}
+{% block render %}
     {% for value in values %}
         {% include molecule('active-filter', 'CatalogPage') with {
             class: class,

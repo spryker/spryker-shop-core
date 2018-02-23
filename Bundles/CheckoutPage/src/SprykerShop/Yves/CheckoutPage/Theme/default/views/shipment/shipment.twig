@@ -1,9 +1,8 @@
-{% extends "@CheckoutPage/checkout/layout.twig" %}
-{% import "@CheckoutPage/checkout/_macros.twig" as checkout %}
+{% extends template('page-layout-checkout', 'CheckoutPage') %}
 
-{% block title %}
-    <h3>{{ 'checkout.step.shipment.title' | trans }}</h3>
-{% endblock %}
+{% define data = {
+    title: 'checkout.step.shipment.title' | trans
+} %}
 
 {% block content %}
     <div class="row columns">

@@ -10,7 +10,7 @@
     categories: []
 } %}
 
-{% block component %}
+{% block render %}
     {% if data.categories is not empty %}
         {{parent()}}
     {% endif %}
@@ -50,5 +50,3 @@
         {% endfor %}
     </ul>
 {% endblock %}
-
-

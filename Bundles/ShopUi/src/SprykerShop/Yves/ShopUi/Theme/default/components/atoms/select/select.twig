@@ -12,7 +12,7 @@
 {% block attributes %}{% endblock %}
 
 {% block body %}
-    <select class="{{config.name}}__select {% block selectClass %}{% endblock %}" {{block('renderAttributes')}}>
+    <select class="{{config.name}}__select {% block selectClass %}{% endblock %}" {% block selectAttributes %}{{block('renderAttributes')}}{% endblock %}>
         {% block options %}
             {% for option in data.options %}
                 <option value="{{option.value}}">{{option.label}}</option>
@@ -20,7 +20,7 @@
         {% endblock %}
     </select>
     {% include atom('icon') with {
-        class: config.name ~ '__arrows',
+        class: config.name ~ '__caret',
         data: {
             name: 'caret-down'
         }

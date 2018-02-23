@@ -8,6 +8,14 @@
             color: $color-light;
         }
 
+        &--active {
+            @include font-weight(bold);
+        }
+
+        &--disabled:not(&--active) {
+            color: $color-dark;
+        }
+
         @content
     }
 }

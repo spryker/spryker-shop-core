@@ -1,0 +1,88 @@
+{% extends template('page-layout-checkout', 'CheckoutPage') %}
+
+{% define data = {
+    isGuest: _view.guestForm.vars.value and (_view.guestForm.vars.value.customer and _view.guestForm.vars.value.customer.isGuest),
+    forms: {
+        registration: _view.registerForm,
+        guest: _view.guestForm,
+        login: _view.loginForm
+    }
+} %}
+
+{% block content %}
+    <div class="grid">
+        <div class="col col--sm-12">
+            {% include molecule('class-toggler-selector') with {
+                class: 'box', 
+                data: {
+                    contexts: [{
+                        data: {
+                            label: 'checkout.customer.proceed_as_user' | trans
+                        },
+                        attributes: {
+                            target: 'js-login__register',
+                            'class-to-toggle': 'is-hidden',
+                            id: 'register',
+                            checked: not data.isGuest
+                        }
+                    }, {
+                        data: {
+                            label: 'checkout.customer.proceed_as_guest' | trans
+                        },
+                        attributes: {
+                            target: 'js-login__guest',
+                            'class-to-toggle': 'is-hidden',
+                            id: 'guest',
+                            checked: data.isGuest   
+                        }
+                    }]
+                },
+                attributes: {
+                    'group-name': 'checkoutProceedAs'
+                }
+            } only %}
+        </div>
+    
+        <div class="col col--sm-12 col--lg-6">
+            <div class="box">
+                {% include molecule('form') with {
+                    class: 'js-login__register' ~ (data.isGuest ? ' is-hidden' : ''),
+                    data: {
+                        title: 'customer.registration.title' | trans,
+                        form: {
+                            data: data.forms.registration
+                        },
+                        submit: {
+                            text: 'forms.submit.register' | trans
+                        }
+                    }
+                } only %}
+
+                {% include molecule('form') with {
+                    class: 'js-login__guest' ~ (data.isGuest ? '' : ' is-hidden'),
+                    data: {
+                        title: 'checkout.customer.order_as_guest' | trans,
+                        form: {
+                            data: data.forms.guest
+                        }
+                    }
+                } only %}
+            </div>
+        </div>
+
+        <div class="col col--sm-12 col--lg-6">
+            {% include molecule('form') with {
+                class: 'box',
+                data: {
+                    form: {
+                        data: data.forms.login,
+                        layout: {
+                            email: 'col col--sm-6',
+                            password: 'col col--sm-6'
+                        }
+                    }
+                }
+            } only %}
+        </div>
+    </div>
+{% endblock %}

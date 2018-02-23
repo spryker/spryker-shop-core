@@ -8,7 +8,7 @@
     metaKeywords: ''
 } %}
 
-{% block template %}
+{% block render %}
     {%- if config.debug -%}
         {%- block class -%}{%- endblock -%}
         {%- block attributes -%}{%- endblock -%}
@@ -42,7 +42,7 @@
             {%- if block('class') is not empty %} class="{{-block('class') | trim-}}"{%- endif %}
             {% if block('attributes') is not empty %} {{block('attributes')-}}{%- endif -%}>
 
-            {{block('renderTemplate')}}
+            {{parent()}}
 
             {% block footerScripts %}
                 <script src="{{publicPath('js/yves_default.app.js')}}"></script>

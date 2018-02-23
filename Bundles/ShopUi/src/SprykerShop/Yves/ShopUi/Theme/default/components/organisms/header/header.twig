@@ -6,7 +6,8 @@
 } %}
 
 {% define data = {
-    showSearchForm: true
+    showSearchForm: true,
+    showNavigation: true
 } %}
 
 {% block body %}
@@ -21,9 +22,11 @@
                     class: 'is-hidden-sm-md'
                 } only %}
 
-                {% include molecule('search-form') with {
-                    class: 'is-hidden-sm-md'
-                } only %}
+                {% if data.showSearchForm %}
+                    {% include molecule('search-form') with {
+                        class: 'is-hidden-sm-md'
+                    } only %}
+                {% endif %}
 
                 <div class="is-hidden-lg-xl text-right">
                     {% block mobile %}{% endblock %}
@@ -38,12 +41,16 @@
                 </a> #}
         </div>
 
-        <div class="{{config.name}}__row {{config.name}}__navigation-main is-hidden-sm-md">
-            {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', view('navigation-main', 'ShopLayout')) }}
-        </div>
+        {% if data.showNavigation %}
+            <div class="{{config.name}}__row {{config.name}}__navigation-main is-hidden-sm-md">
+                {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', view('navigation-main', 'ShopLayout')) }}
+            </div>
+        {% endif %}
 
-        {% include molecule('search-form') with {
-            class: config.name ~ '__row is-hidden-lg-xl'
-        } only %}
+        {% if data.showSearchForm %}
+            {% include molecule('search-form') with {
+                class: config.name ~ '__row is-hidden-lg-xl'
+            } only %}
+        {% endif %}
     </div>
 {% endblock %}

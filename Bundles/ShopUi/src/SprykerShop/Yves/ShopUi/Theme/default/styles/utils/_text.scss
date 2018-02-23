@@ -18,5 +18,12 @@
     .text-right {
         text-align: right;
     }
-}
 
+    .text-alt {
+        color: $color-alt;
+    }
+
+    .text-secondary {
+        color: $color-dark;
+    }
+}

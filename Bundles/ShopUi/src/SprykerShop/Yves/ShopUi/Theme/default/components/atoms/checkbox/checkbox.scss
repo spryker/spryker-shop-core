@@ -38,6 +38,10 @@
             width: 100%;
         }
 
+        &--error &__box {
+            border-color: map-get($color-actions, alert);
+        }
+
         @content;
     }
 }

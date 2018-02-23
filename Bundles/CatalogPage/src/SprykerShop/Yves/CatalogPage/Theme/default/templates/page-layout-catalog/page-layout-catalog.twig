@@ -70,13 +70,13 @@
 
                 {% include molecule('class-toggler') with {
                     class: 'box is-hidden-lg-xl',
-                    attributes: {
-                        'class-to-toggle': 'is-hidden-sm-md',
-                        target: 'js-catalog__filters-toggle',
-                        checked: true
-                    },
                     data: {
                         label: 'Show/Hide filters'
+                    },
+                    attributes: {
+                        target: 'js-catalog__filters-toggle',
+                        'class-to-toggle': 'is-hidden-sm-md',
+                        checked: true
                     }
                 } only %}
 

@@ -24,8 +24,8 @@
 {% endfor %}
 
 {% if widgetExists('AvailabilityWidgetPlugin') %}
-    {% set availabilityWidget = widget('AvailabilityWidgetPlugin', data.product) | trim %}
-    {% set disabled = data.product.price is empty or availabilityWidget is empty  %}
+    {% set isAvailable = widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product) %}
+    {% set disabled = not isAvailable or disabled %}
 {% endif %}
 
 {% block body %}
@@ -75,7 +75,7 @@
             </button>
         </div>
         
-        {{ availabilityWidget | raw }}
+        {{ widget('AvailabilityWidgetPlugin', data.product) }}
     </form>
 
     {# {{ widget('WishlistWidgetPlugin', data.product) }} #}

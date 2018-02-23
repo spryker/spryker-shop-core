@@ -1,0 +1,32 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'class-toggler-selector',
+    tag: 'class-toggler-selector'
+} %}
+
+{% define data = {
+    contexts: required
+} %}
+
+{% define attributes = {
+    'group-name': required
+} %}
+
+{% block body %}
+    <ul class="list list--spacing">
+        {% for context in data.contexts %}
+            {% set context = context | merge({
+                class: (context.class | default('') ~ ' ' ~ config.selector ~ '__toggler') | trim,
+                data: context.data | default({}) | merge({
+                    type: 'radio'
+                }),
+                attributes: context.attributes | default({}) | merge({
+                    name: attributes['group-name']
+                })
+            }) %}
+            
+            <li class="list__item">{% include molecule('class-toggler') with context only %}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
