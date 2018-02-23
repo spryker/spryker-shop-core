@@ -52,6 +52,8 @@ class QuickOrderData
 
     /**
      * @param string $textOrder
+     *
+     * @return void
      */
     public function setTextOrder(string $textOrder): void
     {

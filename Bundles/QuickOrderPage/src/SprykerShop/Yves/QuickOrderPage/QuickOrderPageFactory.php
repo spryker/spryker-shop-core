@@ -7,13 +7,11 @@
 
 namespace SprykerShop\Yves\QuickOrderPage;
 
-
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
 use SprykerShop\Yves\QuickOrderPage\Handler\QuickOrderFormOperationHandler;
 use SprykerShop\Yves\QuickOrderPage\Handler\QuickOrderFormOperationHandlerInterface;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
-
 
 class QuickOrderPageFactory extends AbstractFactory
 {
@@ -88,5 +86,4 @@ class QuickOrderPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRICE_PRODUCT);
     }
-
 }

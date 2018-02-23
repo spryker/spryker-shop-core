@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\QuickOrderPage\Form;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider;
-use SprykerShop\Yves\QuickOrderPage\QuickOrderPageDependencyProvider;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 

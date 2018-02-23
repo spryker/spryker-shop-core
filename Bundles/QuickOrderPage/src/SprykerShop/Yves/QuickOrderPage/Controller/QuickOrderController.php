@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
-
-
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
@@ -102,7 +100,7 @@ class QuickOrderController extends AbstractController
 
     /**
      * @param array $searchResults
-     * *
+     *
      * @return array
      */
     protected function expandSearchResults(array $searchResults): array
@@ -131,13 +129,13 @@ class QuickOrderController extends AbstractController
                         'abstractSku' => $productAbstract['abstract_sku'],
                         'sku' => $productViewTransfer->getSku(),
                         'price' => $productViewTransfer->getPrice(),
-                        'available' => $productViewTransfer->getAvailable()
-                    ]
+                        'available' => $productViewTransfer->getAvailable(),
+                    ],
                 ];
             }
         }
 
-        return  $searchResults;
+        return $searchResults;
     }
 
     /**

@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\QuickOrderPage\Handler;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData;
-use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
-use Symfony\Component\Form\Form;
+use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData;
+use Symfony\Component\Form\FormInterface;
 
 class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerInterface
 {
@@ -54,9 +58,11 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
 
     /**
      * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData $quickOrder
-     * @param \Symfony\Component\Form\Form $quickOrderForm
+     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
+     *
+     * @return void
      */
-    public function verifyTextOrder(QuickOrderData $quickOrder, Form $quickOrderForm): void
+    public function verifyTextOrder(QuickOrderData $quickOrder, FormInterface $quickOrderForm): void
     {
         die($quickOrder->getTextOrder());
     }
