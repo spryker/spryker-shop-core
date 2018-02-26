@@ -15,7 +15,6 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientBridge;
-use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientBridge;
 
 class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {

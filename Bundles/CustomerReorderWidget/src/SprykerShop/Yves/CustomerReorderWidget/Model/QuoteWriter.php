@@ -7,14 +7,10 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
-use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientInterface;
 
 class QuoteWriter implements QuoteWriterInterface
 {
