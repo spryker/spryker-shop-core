@@ -68,56 +68,13 @@ class QuoteWriter implements QuoteWriterInterface
             return $quoteTransfer;
         }
         foreach ($orderTransfer->getShipmentMethods() as $shipmentMethodTransfer) {
-            $idShipmentMethod = $this->getIdShipmentMethod($quoteTransfer, $orderTransfer, $shipmentMethodTransfer);
-
-            if (!$idShipmentMethod) {
-                continue;
-            }
-
-            $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
             $shipmentTransfer = new ShipmentTransfer();
-            $shipmentTransfer->setShipmentSelection($idShipmentMethod);
+            $shipmentTransfer->setShipmentSelection($shipmentMethodTransfer->getIdShipmentMethod());
             $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
             $quoteTransfer->setShipment($shipmentTransfer);
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     *
-     * @return int|null
-     */
-    protected function getIdShipmentMethod(
-        QuoteTransfer $quoteTransfer,
-        OrderTransfer $orderTransfer,
-        ShipmentMethodTransfer $shipmentMethodTransfer
-    ): ?int {
-        $notEnoughData = !$orderTransfer->getCurrencyIsoCode() || !$shipmentMethodTransfer->getName();
-
-        if ($notEnoughData) {
-            return null;
-        }
-
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode($orderTransfer->getCurrencyIsoCode());
-        $quoteTransfer->setCurrency($currencyTransfer);
-
-        $shipmentMethodTransfers = $this->shipmentClient
-            ->getMethods($quoteTransfer)
-            ->getMethods();
-        $quoteTransfer->setCurrency(null);
-
-        foreach ($shipmentMethodTransfers as $currentMethodTransfer) {
-            if ($currentMethodTransfer->getName() === $shipmentMethodTransfer->getName()) {
-                return $currentMethodTransfer->getIdShipmentMethod();
-            }
-        }
-
-        return null;
     }
 }
