@@ -49,82 +49,9 @@ class QuoteWriter implements QuoteWriterInterface
     {
         $quoteTransfer = new QuoteTransfer();
 
-        $quoteTransfer = $this->setShippingAddress($orderTransfer, $quoteTransfer);
-        $quoteTransfer = $this->setBillingAddress($orderTransfer, $quoteTransfer);
-        $quoteTransfer = $this->setSameAddresses($quoteTransfer);
         $quoteTransfer = $this->setShipments($orderTransfer, $quoteTransfer);
 
         $this->cartClient->storeQuote($quoteTransfer);
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function setShippingAddress(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        $notEnoughData = !$orderTransfer->getShippingAddress() || !$orderTransfer->getFkCustomer();
-
-        if ($notEnoughData) {
-            return $quoteTransfer;
-        }
-
-        $shippingAddressTransfer = $orderTransfer->getShippingAddress();
-        $shippingAddressTransfer->setFKCustomer($orderTransfer->getFkCustomer());
-
-        $idCustomerAddress = $this->getIdCustomerAddress($orderTransfer, $shippingAddressTransfer);
-        $shippingAddressTransfer->setIdCustomerAddress($idCustomerAddress);
-        $shippingAddressTransfer->setIdSalesOrderAddress(null);
-
-        $quoteTransfer->setShippingAddress($shippingAddressTransfer);
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function setBillingAddress(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        $notEnoughData = !$orderTransfer->getBundleItems() || !$orderTransfer->getFkCustomer();
-
-        if ($notEnoughData) {
-            return $quoteTransfer;
-        }
-
-        $billingAddressTransfer = $orderTransfer->getBillingAddress();
-        $billingAddressTransfer->setFKCustomer($orderTransfer->getFkCustomer());
-
-        $idCustomerAddress = $this->getIdCustomerAddress($orderTransfer, $billingAddressTransfer);
-        $billingAddressTransfer->setIdCustomerAddress($idCustomerAddress);
-        $billingAddressTransfer->setIdSalesOrderAddress(null);
-
-        $quoteTransfer->setBillingAddress($billingAddressTransfer);
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function setSameAddresses(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        if (!$quoteTransfer->getBillingAddress() || !$quoteTransfer->getBillingAddress()) {
-            return $quoteTransfer;
-        }
-
-        if ($this->compareAddresses($quoteTransfer->getShippingAddress(), $quoteTransfer->getBillingAddress())) {
-            $quoteTransfer->setBillingSameAsShipping(true);
-        }
 
         return $quoteTransfer;
     }
@@ -156,32 +83,6 @@ class QuoteWriter implements QuoteWriterInterface
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return int|null
-     */
-    protected function getIdCustomerAddress(OrderTransfer $orderTransfer, AddressTransfer $addressTransfer): ?int
-    {
-        $noAddresses = !$orderTransfer->getCustomer() || !$orderTransfer->getCustomer()->getAddresses();
-
-        if ($noAddresses) {
-            return null;
-        }
-
-        $addressTransfer = clone $addressTransfer;
-        foreach ($orderTransfer->getCustomer()->getAddresses()->getAddresses() as $currentAddressTransfer) {
-            if (!$this->compareAddresses($addressTransfer, $currentAddressTransfer)) {
-                continue;
-            }
-
-            return $currentAddressTransfer->getIdCustomerAddress();
-        }
-
-        return null;
     }
 
     /**
@@ -218,37 +119,5 @@ class QuoteWriter implements QuoteWriterInterface
         }
 
         return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $leftAddressTransfer
-     * @param \Generated\Shared\Transfer\AddressTransfer $rightAddressTransfer
-     *
-     * @return bool
-     */
-    protected function compareAddresses(AddressTransfer $leftAddressTransfer, AddressTransfer $rightAddressTransfer): bool
-    {
-        $leftAddressArray = $this->cleanUpAddress($leftAddressTransfer)->toArray();
-        $rightAddressArray = $this->cleanUpAddress($rightAddressTransfer)->toArray();
-
-        return $leftAddressArray == $rightAddressArray;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function cleanUpAddress(AddressTransfer $addressTransfer): AddressTransfer
-    {
-        $cleanedAddressTransfer = clone $addressTransfer;
-        $cleanedAddressTransfer
-            ->setIsDefaultShipping(null)
-            ->setIsDefaultBilling(null)
-            ->setIdSalesOrderAddress(null)
-            ->setIdCustomerAddress(null)
-            ->setCustomerId(null);
-
-        return $cleanedAddressTransfer;
     }
 }
