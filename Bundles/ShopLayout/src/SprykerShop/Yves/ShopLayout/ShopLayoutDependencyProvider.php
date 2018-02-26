@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ShopLayout;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ShopLayoutExtension\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
 
 class ShopLayoutDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -39,5 +40,13 @@ class ShopLayoutDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @return void
+     */
+    private function requireExtensions()
+    {
+        class_exists(LanguageSwitcherWidgetPluginInterface::class);
     }
 }
