@@ -22,7 +22,7 @@
   "suggest": {
     "spryker-shop/customer-page": "Module with interface to implement, to use the reorder widget on a customer page",
     "spryker/silex": "If you want use the widget's router provider",
-    "spryker-shop/cart-page": "Default redirect is cart. So you should use cart or update redirect in controller"
+    "spryker-shop/cart-page": "The default widget redirect is heading to a cart controller. Please redefine the redirect URL if you would like to use a custom behavior."
   },
   "autoload": {
     "psr-4": {
