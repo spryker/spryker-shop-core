@@ -52,7 +52,7 @@ class QuoteWriter implements QuoteWriterInterface
         $quoteTransfer = $this->setShippingAddress($orderTransfer, $quoteTransfer);
         $quoteTransfer = $this->setBillingAddress($orderTransfer, $quoteTransfer);
         $quoteTransfer = $this->setSameAddresses($quoteTransfer);
-        $quoteTransfer = $this->setShipment($orderTransfer, $quoteTransfer);
+        $quoteTransfer = $this->setShipments($orderTransfer, $quoteTransfer);
 
         $this->cartClient->storeQuote($quoteTransfer);
 
@@ -135,25 +135,25 @@ class QuoteWriter implements QuoteWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setShipment(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function setShipments(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if (!$orderTransfer->getShipmentMethods()) {
             return $quoteTransfer;
         }
-        $shipmentMethodTransfer = $orderTransfer->getShipmentMethods()[0];
-        $idShipmentMethod = $this->getIdShipmentMethod($quoteTransfer, $orderTransfer, $shipmentMethodTransfer);
+        foreach ($orderTransfer->getShipmentMethods() as $shipmentMethodTransfer) {
+            $idShipmentMethod = $this->getIdShipmentMethod($quoteTransfer, $orderTransfer, $shipmentMethodTransfer);
 
-        if (!$idShipmentMethod) {
-            return $quoteTransfer;
+            if (!$idShipmentMethod) {
+                continue;
+            }
+
+            $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
+            $shipmentTransfer = new ShipmentTransfer();
+            $shipmentTransfer->setShipmentSelection($idShipmentMethod);
+            $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+            $quoteTransfer->setShipment($shipmentTransfer);
         }
-
-        $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
-
-        $shipmentTransfer = new ShipmentTransfer();
-        $shipmentTransfer->setShipmentSelection($idShipmentMethod);
-        $shipmentTransfer->setMethod($shipmentMethodTransfer);
-
-        $quoteTransfer->setShipment($shipmentTransfer);
 
         return $quoteTransfer;
     }
