@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
+namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
@@ -21,19 +21,19 @@ class CartFiller implements CartFillerInteface
     protected $cartClient;
 
     /**
-     * @var \SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcherInterface
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcherInterface
      */
     private $itemsFetcher;
 
     /**
-     * @var \SprykerShop\Yves\CustomerReorderWidget\Handler\QuoteWriterInterface
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriterInterface
      */
     private $quoteWriter;
 
     /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
-     * @param \SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcherInterface $itemsFetcher
-     * @param \SprykerShop\Yves\CustomerReorderWidget\Handler\QuoteWriterInterface $quoteWriter
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcherInterface $itemsFetcher
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriterInterface $quoteWriter
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,

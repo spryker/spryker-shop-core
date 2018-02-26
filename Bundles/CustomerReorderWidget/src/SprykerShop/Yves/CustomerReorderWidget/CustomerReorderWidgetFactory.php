@@ -16,23 +16,23 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityChecker;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityCheckerInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\CartFiller;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\CartFillerInteface;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcher;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcherInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\Messenger;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderReader;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\OrderReaderInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\QuoteWriter;
-use SprykerShop\Yves\CustomerReorderWidget\Handler\QuoteWriterInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityChecker;
+use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityCheckerInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Model\CartFiller;
+use SprykerShop\Yves\CustomerReorderWidget\Model\CartFillerInteface;
+use SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcher;
+use SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcherInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Model\Messenger;
+use SprykerShop\Yves\CustomerReorderWidget\Model\MessengerInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Model\OrderReader;
+use SprykerShop\Yves\CustomerReorderWidget\Model\OrderReaderInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriter;
+use SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriterInterface;
 
 class CustomerReorderWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\CartFillerInteface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\CartFillerInteface
      */
     public function createCartFiller(): CartFillerInteface
     {
@@ -44,7 +44,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\OrderReaderInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\OrderReaderInterface
      */
     public function createOrderRepository(): OrderReaderInterface
     {
@@ -55,7 +55,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\MessengerInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\MessengerInterface
      */
     public function createMessenger(): MessengerInterface
     {
@@ -66,7 +66,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\AvailabilityCheckerInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityCheckerInterface
      */
     public function createAvailabilityChecker(): AvailabilityCheckerInterface
     {
@@ -76,7 +76,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\QuoteWriterInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriterInterface
      */
     protected function createQuoteWriter(): QuoteWriterInterface
     {
@@ -87,7 +87,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Handler\ItemsFetcherInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcherInterface
      */
     protected function createItemsFetcher(): ItemsFetcherInterface
     {

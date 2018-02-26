@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CustomerReorderWidget\Handler;
+namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
