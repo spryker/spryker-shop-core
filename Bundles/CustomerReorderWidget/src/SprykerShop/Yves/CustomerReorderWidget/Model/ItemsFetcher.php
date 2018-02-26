@@ -66,7 +66,7 @@ class ItemsFetcher implements ItemsFetcherInterface
         $items = $this->productBundleClient
             ->getItemsWithBundlesItems($quoteTransfer);
 
-        return $this->cleanUpItems($items);
+        return $this->dropIds($items);
     }
 
     /**
@@ -74,7 +74,7 @@ class ItemsFetcher implements ItemsFetcherInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function cleanUpItems(array $items): array
+    protected function dropIds(array $items): array
     {
         $cleanItems = [];
         foreach ($items as $item) {
