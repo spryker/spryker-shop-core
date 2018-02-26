@@ -42,14 +42,27 @@ class OrderReader implements OrderReaderInterface
      */
     public function getOrderTransfer(int $idSalesOrder): OrderTransfer
     {
+        $orderTransfer = $this->prepareOrderTransferForSearch($idSalesOrder);
+
+        $orderTransfer = $this->salesClient
+            ->getOrderDetails($orderTransfer);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function prepareOrderTransferForSearch(int $idSalesOrder): OrderTransfer
+    {
         $customerTransfer = $this->customerClient->getCustomer();
+
         $orderTransfer = new OrderTransfer();
         $orderTransfer
             ->setIdSalesOrder($idSalesOrder)
             ->setFkCustomer($customerTransfer->getIdCustomer());
-
-        $orderTransfer = $this->salesClient
-            ->getOrderDetails($orderTransfer);
 
         return $orderTransfer;
     }
