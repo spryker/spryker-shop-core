@@ -20,7 +20,7 @@
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker-shop/customer-page": "Module with interface to implement",
+    "spryker-shop/customer-page": "Module with interface to implement, to use the reorder widget on a customer page",
     "spryker/silex": "Used for controller",
     "spryker-shop/cart-page": "Default redirect is cart. So you should use cart or update redirect in controller"
   },
