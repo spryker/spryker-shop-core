@@ -14,7 +14,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInt
 class DataContainer implements DataContainerInterface
 {
     /**
-     * @var \Spryker\Client\Quote\QuoteClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface
      */
     protected $quoteClient;
 
