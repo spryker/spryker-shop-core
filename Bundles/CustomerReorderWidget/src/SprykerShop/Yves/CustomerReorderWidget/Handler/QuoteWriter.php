@@ -206,12 +206,12 @@ class QuoteWriter implements QuoteWriterInterface
         $currencyTransfer->setCode($orderTransfer->getCurrencyIsoCode());
         $quoteTransfer->setCurrency($currencyTransfer);
 
-        $shipmentMethodsTransfer = $this->shipmentClient
+        $shipmentMethodTransfers = $this->shipmentClient
             ->getMethods($quoteTransfer)
             ->getMethods();
         $quoteTransfer->setCurrency(null);
 
-        foreach ($shipmentMethodsTransfer as $currentMethodTransfer) {
+        foreach ($shipmentMethodTransfers as $currentMethodTransfer) {
             if ($currentMethodTransfer->getName() === $shipmentMethodTransfer->getName()) {
                 return $currentMethodTransfer->getIdShipmentMethod();
             }
