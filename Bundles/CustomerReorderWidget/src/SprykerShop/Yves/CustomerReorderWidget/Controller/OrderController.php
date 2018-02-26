@@ -19,11 +19,11 @@ class OrderController extends AbstractController
     public const PARAM_ITEMS = 'items';
     public const ID_ORDER = 'id';
     /**
-     * Route for cart page.
-     * Described in CartPage module
+     * Route for redirect after success.
+     * Currently point to cart page. Defined in CartPage module.
      * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
-    public const ROUTE_CART = 'cart';
+    public const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
 
     /**
      * @param int $idOrder
@@ -77,6 +77,6 @@ class OrderController extends AbstractController
      */
     protected function getSuccessRedirect(): RedirectResponse
     {
-        return $this->redirectResponseInternal(static::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_SUCCESSFUL_REDIRECT);
     }
 }
