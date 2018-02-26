@@ -24,20 +24,12 @@ class QuoteWriter implements QuoteWriterInterface
     protected $cartClient;
 
     /**
-     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientInterface
-     */
-    protected $shipmentClient;
-
-    /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
-     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientInterface $shipmentClient
      */
     public function __construct(
-        CustomerReorderWidgetToCartClientInterface $cartClient,
-        CustomerReorderWidgetToShipmentClientInterface $shipmentClient
+        CustomerReorderWidgetToCartClientInterface $cartClient
     ) {
         $this->cartClient = $cartClient;
-        $this->shipmentClient = $shipmentClient;
     }
 
     /**

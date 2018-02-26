@@ -15,7 +15,6 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityChecker;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityCheckerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\CartFiller;
@@ -81,8 +80,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     protected function createQuoteWriter(): QuoteWriterInterface
     {
         return new QuoteWriter(
-            $this->getCartClient(),
-            $this->getShipmentClient()
+            $this->getCartClient()
         );
     }
 
@@ -134,14 +132,6 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     protected function getProductBundleClient(): CustomerReorderWidgetToProductBundleClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_PRODUCT_BUNDLE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToShipmentClientInterface
-     */
-    protected function getShipmentClient(): CustomerReorderWidgetToShipmentClientInterface
-    {
-        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_SHIPMENT);
     }
 
     /**
