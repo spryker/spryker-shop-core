@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\LanguageSwitcherWidget\Plugin\ShopLayout;
 
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShopLayout\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
+use SprykerShop\Yves\ShopLayoutExtension\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

@@ -1,20 +1,19 @@
 {
-  "name": "spryker-shop/shop-layout",
-  "description": "ShopLayout module",
+  "name": "spryker/shop-layout-extension",
+  "description": "ShopLayoutExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/kernel": "^3.16.0"
+    "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/silex": "*"
+    "spryker/symfony": "*"
   },
   "suggest": {
-    "spryker/silex": "TODO: add suggestion description"
+    "spryker/symfony": "3.0.0 for using LanguageSwitcherPluginInterface"
   },
   "autoload": {
     "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

@@ -6,14 +6,13 @@
     "php": ">=7.1",
     "spryker/kernel": "^3.16.0",
     "spryker/synchronization": "^0.2.0",
-    "spryker/url-storage": "^0.1.0"
+    "spryker/url-storage": "^0.1.0",
+    "spryker/shop-layout-extension": "^0.1.0"
   },
   "require-dev": {
-    "spryker-shop/shop-layout": "*",
     "spryker/symfony": "*"
   },
   "suggest": {
-    "spryker-shop/shop-layout": "0.1.1 for the LanguageSwitcherWidgetPluginInterface provided",
     "spryker/symfony": "3.0.0 for using LanguageSwitcherPlugin"
   },
   "autoload": {
