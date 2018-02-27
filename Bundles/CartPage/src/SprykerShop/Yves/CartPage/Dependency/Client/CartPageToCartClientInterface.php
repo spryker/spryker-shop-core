@@ -90,4 +90,9 @@ interface CartPageToCartClientInterface
      * @return int
      */
     public function getItemCount();
+
+    /**
+     * @return void
+     */
+    public function syncQuote();
 }

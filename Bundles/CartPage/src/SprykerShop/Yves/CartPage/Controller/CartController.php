@@ -26,8 +26,9 @@ class CartController extends AbstractController
      */
     public function indexAction(array $selectedAttributes = null)
     {
-        $quoteTransfer = $this->getFactory()
-            ->getCartClient()
+        $cartClient = $this->getFactory()->getCartClient();
+        $cartClient->syncQuote();
+        $quoteTransfer = $cartClient
             ->getQuote();
 
         $cartItems = $this->getFactory()->createCartItemReader()->getCartItems($quoteTransfer);

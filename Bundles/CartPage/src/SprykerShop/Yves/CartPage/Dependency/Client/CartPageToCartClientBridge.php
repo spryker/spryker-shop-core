@@ -137,4 +137,12 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     {
         return $this->cartClient->getItemCount();
     }
+
+    /**
+     * @return void
+     */
+    public function syncQuote()
+    {
+        $this->cartClient->syncQuote();
+    }
 }
