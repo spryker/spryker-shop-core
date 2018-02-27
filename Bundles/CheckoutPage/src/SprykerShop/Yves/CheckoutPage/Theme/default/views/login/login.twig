@@ -9,40 +9,41 @@
     }
 } %}
 
-{% block content %}
-    <div class="grid">
-        <div class="col col--sm-12">
-            {% include molecule('toggler-multiselector') with {
-                class: 'box', 
+{% block title %}
+    <ul class="list list--spacing">
+        <li class="list__item">
+            {% include molecule('toggler-radio') with {
                 data: {
-                    contexts: [{
-                        data: {
-                            label: 'checkout.customer.proceed_as_user' | trans
-                        },
-                        attributes: {
-                            target: 'js-login__register',
-                            'class-to-toggle': 'is-hidden',
-                            id: 'register',
-                            checked: not data.isGuest
-                        }
-                    }, {
-                        data: {
-                            label: 'checkout.customer.proceed_as_guest' | trans
-                        },
-                        attributes: {
-                            target: 'js-login__guest',
-                            'class-to-toggle': 'is-hidden',
-                            id: 'guest',
-                            checked: data.isGuest   
-                        }
-                    }]
+                    label: 'checkout.customer.proceed_as_user' | trans
                 },
                 attributes: {
-                    'group-name': 'checkoutProceedAs'
+                    id: 'register',
+                    checked: not data.isGuest,
+                    name: 'checkoutProceedAs',
+                    target: 'js-login__register',
+                    'class-to-toggle': 'is-hidden'
                 }
             } only %}
-        </div>
-    
+        </li>
+        <li class="list__item">
+            {% include molecule('toggler-radio') with {
+                data: {
+                    label: 'checkout.customer.proceed_as_guest' | trans
+                },
+                attributes: {
+                    id: 'guest',
+                    checked: data.isGuest,
+                    name: 'checkoutProceedAs',
+                    target: 'js-login__guest',
+                    'class-to-toggle': 'is-hidden'
+                }
+            } only %}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="grid">
         <div class="col col--sm-12 col--lg-6">
             <div class="box">
                 {% include molecule('form') with {

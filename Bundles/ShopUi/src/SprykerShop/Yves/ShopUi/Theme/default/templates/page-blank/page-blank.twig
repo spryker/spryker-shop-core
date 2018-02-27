@@ -9,11 +9,6 @@
 } %}
 
 {% block render %}
-    {%- if config.debug -%}
-        {%- block class -%}{%- endblock -%}
-        {%- block attributes -%}{%- endblock -%}
-    {%- endif -%}
-
     <!doctype html>
     <html lang="{{ data.locale }}">
         <head>
@@ -38,9 +33,8 @@
 
             <title>{% block headTitle %}{{ data.title }}{% endblock %}</title>
         </head>
-        <body 
-            {%- if block('class') is not empty %} class="{{-block('class') | trim-}}"{%- endif %}
-            {% if block('attributes') is not empty %} {{block('attributes')-}}{%- endif -%}>
+        <body {%- if block('class') is not empty %} class="{%- block class -%}{%- endblock -%}"{%- endif %}
+            {% block attributes -%}{%- endblock -%}>
 
             {{parent()}}
 

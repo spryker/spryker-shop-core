@@ -1,9 +1,6 @@
 {% extends template('page-blank') %}
 
-{% block class %}
-    {{parent()}}
-    js-page-layout-main__side-drawer-container
-{% endblock %}
+{%- block class -%}js-page-layout-main__side-drawer-container{%- endblock -%}
 
 {% block body %}
     {% block notifications %}

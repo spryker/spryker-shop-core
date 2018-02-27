@@ -12,7 +12,7 @@
         h#{$i} {
             @include font-size($i);
             @include line-height($i);
-            display: inline-block;
+            display: block;
 
             &--margins {
                 margin: spacing(4) 0 spacing(2) 0;

@@ -26,37 +26,30 @@
     {{parent()}}
 {% endblock -%}
 
-{%- block protected -%}
-    {{parent()}}
-    
-    {# render custom component class #}
-    {%- block renderCustomComponentClass -%}
-        {%- if config.name == config.tag and '-' in config.tag -%}custom-element {% endif -%}
-    {%- endblock -%}
-
-    {# render BEM classes (block and modifiers) according to the name #}
-    {%- block renderClass -%}
-        {{config.name | trim-}} 
-        {%- for modifier in modifiers -%}{%- if modifier | trim is not empty %} {{config.name}}--{{modifier | trim}}{% endif -%}{% endfor -%}
-        {%- if class %} {{class-}}{% endif -%}
-    {%- endblock -%}
-
-    {# render html5 attributes #}
-    {%- block renderAttributes -%}
-        {%- for attrname, attrvalue in attributes -%}
-            {%- if attrvalue is sameas(true) -%}
-                {{-' ' ~ attrname-}}
-            {%- elseif attrvalue is not sameas(false) -%}
-                {{-' ' ~ attrname-}}='{{-attrvalue-}}'
-            {%- endif -%}
-        {%- endfor -%}
-    {%- endblock -%}
-{%- endblock -%}
-
 {%- block render -%}
-    <{{-config.tag}} 
-        class="{{-block('renderCustomComponentClass')-}}{%- block class -%}{{-block('renderClass')-}}{%- endblock -%}"
-        {% block attributes -%}{{-block('renderAttributes')-}}{%- endblock -%}>
+    <{{-config.tag}} class="
+        {%- block renderCustomComponentClass -%}
+            {%- if config.name == config.tag and '-' in config.tag -%}custom-element {% endif -%}
+        {%- endblock -%}
+        {%- block class -%}
+            {%- block renderClass -%}
+                {{config.name | trim-}} 
+                {%- for modifier in modifiers -%}{%- if modifier | trim is not empty %} {{config.name}}--{{modifier | trim}}{% endif -%}{% endfor -%}
+                {%- if class %} {{class-}}{% endif -%}
+            {%- endblock -%}
+        {%- endblock -%}"
+
+        {% block attributes -%}
+            {%- block renderAttributes -%}
+                {%- for attrname, attrvalue in attributes -%}
+                    {%- if attrvalue is sameas(true) -%}
+                        {{-' ' ~ attrname-}}
+                    {%- elseif attrvalue is not sameas(false) -%}
+                        {{-' ' ~ attrname-}}='{{-attrvalue-}}'
+                    {%- endif -%}
+                {%- endfor -%}
+            {%- endblock -%}
+        {%- endblock -%}>
         {{parent()}}
     </{{-config.tag-}}>
 {%- endblock -%}

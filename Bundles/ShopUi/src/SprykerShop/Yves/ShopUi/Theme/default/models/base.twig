@@ -4,12 +4,8 @@
  # Template API
  #}
 
-{%- define config = {
-    debug: false
-} -%}
-
 {%- block model -%}
-    {%- if config.debug -%}
+    {%- if false -%}
         {%- block protected -%}{%- endblock -%}
     {%- endif -%}
 
