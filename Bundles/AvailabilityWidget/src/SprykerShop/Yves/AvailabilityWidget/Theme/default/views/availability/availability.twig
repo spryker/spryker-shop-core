@@ -6,6 +6,8 @@
 } %}
 
 {% block protected %}
+    {{parent()}}
+    
     {%- block isAvailable -%}
         {%- define data = {
             concreteProductId: _widget.product.idProductConcrete,

@@ -2,7 +2,8 @@
 
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
-    <input class="input input--expand {% if errors is not empty %}input--error{% endif %}" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    {%- set label = (label | default('')) | trans -%}
+    <input class="input input--expand {% if errors is not empty %}input--error{% endif %}" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} placeholder="{{label}}"/>
 {%- endblock -%}
 
 {%- block choice_widget_collapsed -%}
@@ -73,30 +74,30 @@
 {%- block checkbox_widget -%}
     {%- set type = type | default('checkbox') -%}
     {%- set component = component | default(atom(type)) -%}
-    {%- set label = name | humanize -%}
+    {%- set label = label | default(name | humanize) | trans -%}
     {%- set modifiers = errors is empty ? ['expand'] : ['expand', 'error'] -%}
+
+    {% define attributes = {
+        id: id,
+        name: full_name,
+        checked: checked | default(false),
+        required: required | default(false),
+        disabled: disabled | default(false),
+        value: value | default()
+    } %}    
 
     {% embed embed.component with {
         modifiers: modifiers,
         data: {
             label: label
         },
-        attributes: attributes | default({}),
+        attributes: attributes,
         embed: {
-            component: component,
-            attributes: block('widget_attributes'),
-            value: value | default(),
-            required: required
+            component: component
         }
     } only %}
-        {%- block inputAttributes -%}
-            {{parent()}}
-            {{embed.attributes | raw}}
-            {% if embed.value is not empty %} value="{{embed.value}}"{% endif %}
-        {%- endblock -%}
-
         {%- block labelClass -%}
-            form-field__label{%- if embed.required %} form-field__label--required{%- endif -%}
+            form-field__label{%- if attributes.required %} form-field__label--required{%- endif -%}
         {%- endblock -%}
     {% endembed %}
 {%- endblock -%}

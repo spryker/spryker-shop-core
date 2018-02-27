@@ -1,44 +1,46 @@
 {% extends template('page-layout-checkout', 'CheckoutPage') %}
 
 {% define data = {
+    backUrl: _view.previousStepUrl,
+    forms: {
+        shipment: _view.shipmentForm
+    },
+    
     title: 'checkout.step.shipment.title' | trans
 } %}
 
 {% block content %}
-    <div class="row columns">
+    {% embed molecule('form') with {
+        data: {
+            form: data.forms.shipment,
+            options: {
+                attr: { 
+                    id: 'payment-form' 
+                }
+            },
+            submit: {
+                enable: true,
+                text: 'checkout.step.payment' | trans
+            },
+            cancel: {
+                enable: true,
+                url: data.backUrl,
+                text: 'general.back.button' | trans
+            }
+        }
+    } only %}
+        {% block fields %}
+            {% for name, choices in data.form.idShipmentMethod.vars.choices %}
+                <div class="box">
+                    <h5>{{name}}</h5>
 
-        {{ form_start(_view.shipmentForm, { attr: { id: 'payment-form' }}) }}
-
-            <div class="callout">
-                <ul class="no-bullet">
-
-                      {% for name, choices in _view.shipmentForm.idShipmentMethod.vars.choices %}
-
-                          <h4>{{ name }}</h4>
-
-                          {% for key, choice in choices %}
-                            <li>
-                                <label>
-                                   &nbsp; {{ form_widget(_view.shipmentForm.idShipmentMethod[key], {'attr': {'class': '__toggler'}}) }}
-                                    {{ _view.shipmentForm.idShipmentMethod[key].vars.label | raw }}
-                                </label>
-                            </li>
-                          {% endfor %}
+                    {% for key, choice in choices %}
+                        {{ form_row(data.form.idShipmentMethod[key], {
+                            label: data.form.idShipmentMethod[key].vars.label
+                        }) }}
                     {% endfor %}
-                </ul>
-            </div>
-
-            <div class="callout">
-                <div class="row align-right">
-                    <div class="small-12 medium-6 large-4 xlarge-3 columns">
-                        <a href="{{ _view.previousStepUrl }}" class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
-                    </div>
-                    <div class="small-12 medium-6 large-4 xlarge-3 columns">
-                        <button type="submit" class="button success expanded __no-margin-bottom">{{ 'checkout.step.payment' | trans }}</button>
-                    </div>
                 </div>
-            </div>
-
-        {{ form_end(_view.shipmentForm) }}
-    </div>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

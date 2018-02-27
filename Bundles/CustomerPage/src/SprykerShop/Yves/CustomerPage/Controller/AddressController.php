@@ -39,7 +39,11 @@ class AddressController extends AbstractCustomerController
 
         $responseData = $this->getAddressListResponseData($customerTransfer, $addressesTransfer);
 
-        return $this->view($responseData);
+        return $this->view(
+            $responseData, 
+            [],
+            '@CustomerPage/views/address/address.twig'
+        );
     }
 
     /**
@@ -77,9 +81,15 @@ class AddressController extends AbstractCustomerController
             $this->addErrorMessage(Messages::CUSTOMER_ADDRESS_NOT_ADDED);
         }
 
-        return $this->view([
+        $data = [
             'form' => $addressForm->createView(),
-        ]);
+        ];
+
+        return $this->view(
+            $data, 
+            [], 
+            '@CustomerPage/views/address-create/address-create.twig'
+        );
     }
 
     /**
@@ -117,9 +127,15 @@ class AddressController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
         }
 
-        return $this->view([
+        $data = [
             'form' => $addressForm->createView(),
-        ]);
+        ];
+
+        return $this->view(
+            $data, 
+            [], 
+            '@CustomerPage/views/address-update/address-update.twig'
+        );
     }
 
     /**

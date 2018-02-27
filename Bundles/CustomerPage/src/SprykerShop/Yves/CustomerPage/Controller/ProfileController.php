@@ -54,10 +54,16 @@ class ProfileController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_PROFILE);
         }
 
-        return $this->view([
+        $data = [
             'profileForm' => $profileForm->createView(),
             'passwordForm' => $passwordForm->createView(),
-        ]);
+        ];
+
+        return $this->view(
+            $data,
+            [],
+            '@CustomerPage/views/profile/profile.twig'
+        );
     }
 
     /**

@@ -2,6 +2,10 @@
     #{$name} {
         display: inline-block;
 
+        &__container {
+            display: block;
+        }
+
         &__box {
             display: inline-block;
             width: spacing(2.5);
@@ -35,7 +39,6 @@
 
         &--expand {
             display: block;
-            width: 100%;
         }
 
         &--error &__box {

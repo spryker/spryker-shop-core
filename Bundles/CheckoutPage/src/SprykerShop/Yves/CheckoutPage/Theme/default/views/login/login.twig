@@ -12,7 +12,7 @@
 {% block content %}
     <div class="grid">
         <div class="col col--sm-12">
-            {% include molecule('class-toggler-selector') with {
+            {% include molecule('toggler-multiselector') with {
                 class: 'box', 
                 data: {
                     contexts: [{
@@ -49,10 +49,9 @@
                     class: 'js-login__register' ~ (data.isGuest ? ' is-hidden' : ''),
                     data: {
                         title: 'customer.registration.title' | trans,
-                        form: {
-                            data: data.forms.registration
-                        },
+                        form: data.forms.registration,
                         submit: {
+                            enable: true,
                             text: 'forms.submit.register' | trans
                         }
                     }
@@ -62,8 +61,9 @@
                     class: 'js-login__guest' ~ (data.isGuest ? '' : ' is-hidden'),
                     data: {
                         title: 'checkout.customer.order_as_guest' | trans,
-                        form: {
-                            data: data.forms.guest
+                        form: data.forms.guest,
+                        submit: {
+                            enable: true
                         }
                     }
                 } only %}
@@ -71,18 +71,29 @@
         </div>
 
         <div class="col col--sm-12 col--lg-6">
-            {% include molecule('form') with {
+            {% embed molecule('form') with {
                 class: 'box',
                 data: {
-                    form: {
-                        data: data.forms.login,
-                        layout: {
-                            email: 'col col--sm-6',
-                            password: 'col col--sm-6'
-                        }
+                    form: data.forms.login,
+                    layout: {
+                        email: 'col col--sm-6',
+                        password: 'col col--sm-6'
+                    },
+                    submit: {
+                        enable: true,
+                        text: 'forms.submit.login' | trans
+                    },
+                    cancel: {
+                        enable: true
                     }
                 }
             } only %}
+                {% block cancel %}
+                    <a href="{{ url('password/forgotten') }}">
+                        {{ 'forms.forgot-password' | trans }}
+                    </a>
+                {% endblock %}
+            {% endembed %}
         </div>
     </div>
 {% endblock %}

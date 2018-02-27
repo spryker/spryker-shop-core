@@ -1,47 +1,68 @@
 {% extends template('page-layout-checkout', 'CheckoutPage') %}
 
 {% define data = {
+    backUrl: _view.previousStepUrl,
+    forms: {
+        payment: _view.paymentForm
+    },
+    
     title: 'checkout.step.payment.title' | trans
 } %}
 
 {% block content %}
-    <div class="row columns">
-        {{ form_start(_view.paymentForm, { attr: { id: 'payment-form' }}) }}
+    {% embed molecule('form') with {
+        data: {
+            form: data.forms.payment,
+            options: {
+                attr: { 
+                    id: 'payment-form' 
+                }
+            },
+            submit: {
+                enable: true,
+                text: 'checkout.step.summary' | trans
+            },
+            cancel: {
+                enable: true,
+                url: data.backUrl,
+                text: 'general.back.button' | trans
+            }
+        }
+    } only %}
+        {% block fields %}
+            {% for name, choices in data.form.paymentSelection.vars.choices %}
+                <div class="box">
+                    <h5>{{ ('checkout.payment.provider.' ~ name) | trans }}</h5>
 
-            <div class="callout">
-                <ul class="no-bullet">
-                    {% for name, choices in _view.paymentForm.paymentSelection.vars.choices %}
-
-                        <h4>{{ ('checkout.payment.provider.' ~ name) | trans }}</h4>
-
-                        {% for key, choice in choices %}
-                            <li>  &nbsp;
-                                {{ form_widget(_view.paymentForm.paymentSelection[key], {'attr': {'class': '__toggler'}}) }}
-                                {{ form_label(_view.paymentForm.paymentSelection[key]) }}
-                                <div class="__toggler-target">
-                                    <div class="row columns">
-                                    {{ checkout.include_subform(_view.paymentForm[_view.paymentForm.paymentSelection[key].vars.value]) }}
-                                    </div>
+                    {% for key, choice in choices %}
+                        {% embed molecule('form') with {
+                            data: {
+                                form: data.form[data.form.paymentSelection[key].vars.value],
+                                enableStart: false,
+                                enableEnd: false
+                            },
+                            embed: {
+                                index: loop.index,
+                                toggler: data.form.paymentSelection[key]
+                            }
+                        } only %}
+                            {% block fields %}
+                                {{ form_row(embed.toggler, {
+                                    component: molecule('toggler-radio'),
+                                    attributes: {
+                                        target: 'js-payment-method-' ~ embed.index,
+                                        'class-to-toggle': 'is-hidden'
+                                    }
+                                }) }}
+                                
+                                <div class="col col--sm-12 col--lg-6 is-hidden js-payment-method-{{embed.index}}">
+                                    {{parent()}}
                                 </div>
-                            </li>
-                        {% endfor %}
-
+                            {% endblock %}
+                        {% endembed %}
                     {% endfor %}
-                </ul>
-            </div>
-
-            <div class="callout">
-                <div class="row align-right">
-                    <div class="small-12 medium-6 large-4 xlarge-3 columns">
-                        <a href="{{ _view.previousStepUrl }}" class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
-                    </div>
-                    <div class="small-12 medium-6 large-4 xlarge-3 columns">
-                        <button type="submit" class="button success expanded __no-margin-bottom">{{ 'checkout.step.summary' | trans }}</button>
-                    </div>
                 </div>
-            </div>
-
-        {{ form_end(_view.paymentForm) }}
-    </div>
-
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

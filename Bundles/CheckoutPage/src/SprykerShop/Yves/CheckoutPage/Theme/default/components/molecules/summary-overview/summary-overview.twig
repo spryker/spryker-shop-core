@@ -1,0 +1,80 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'summary-overview',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    shipmentMethod: required,
+    voucherDiscounts: [],
+    cartRuleDiscounts: [],
+    
+    prices: {
+        subTotal: required,
+        storeCurrency: required,
+        tax: required,
+        grandTotal: required,
+        discountTotal: null
+    }
+} %}
+
+{% block protected %}
+    {{parent()}}
+    
+    {% block separator %}
+        <li><hr /></li>
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+    <li>
+        <span class="float-right">{{ app['cart.quantity'] }} {{ 'checkout.step.summary.items' | trans }}</span>
+        <h6>{{ 'checkout.step.summary.overview' | trans }}</h6>
+    </li>
+    {{block('separator')}}
+    <li>
+        {{ 'checkout.step.summary.sub_total' | trans }}
+        <strong class="float-right">{{ data.prices.subTotal | money }}</strong>
+    </li>
+    {{block('separator')}}
+
+    {% if data.prices.discountTotal %}
+        {% if data.voucherDiscounts is not empty %}
+            <li><strong>{{ 'cart.vouchers' | trans }}</strong></li>
+            <li>
+                {% for voucherDiscount in data.voucherDiscounts %}
+                    <span class="float-right">{{ voucherDiscount.amount | money }}</span>
+                    {{ voucherDiscount.displayName }}
+                {% endfor %}
+            </li>
+        {% endif %}
+
+        {% if data.cartRuleDiscounts|length %}
+            <li><strong>{{ 'cart.discounts' | trans }}</strong></li>
+            <li>
+                {% for ruleDiscount in data.cartRuleDiscounts %}
+                    <span class="float-right">- {{ ruleDiscount.amount | money }}</span>
+                    {{ ruleDiscount.displayName }}
+                {% endfor %}
+            </li>
+        {% endif %}
+        
+        {{block('separator')}}
+    {% endif %}
+    
+    <li>
+        <span class="float-right">{{ data.prices.storeCurrency | money }}</span>
+        {{ 'checkout.step.summary.shipping' | trans }} (<strong>{{ data.shipmentMethod }}</strong>)
+    </li>
+    {{block('separator')}}
+    <li>
+        {{ 'checkout.step.summary.tax' | trans }}
+        <span class="float-right">{{ data.prices.tax | money }}</span>
+    </li>
+    {{block('separator')}}
+    <li>
+        <h6 class="float-right">{{ data.prices.grandTotal | money }}</h6>
+        <h6>{{ 'checkout.step.summary.grand_total' | trans }}</h6>
+    </li>
+{% endblock %}

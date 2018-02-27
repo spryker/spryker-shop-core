@@ -68,7 +68,8 @@
                     class: 'box'
                 } only %}
 
-                {% include molecule('class-toggler') with {
+                {% include molecule('toggler-checkbox') with {
+                    modifiers: ['expand'],
                     class: 'box is-hidden-lg-xl',
                     data: {
                         label: 'Show/Hide filters'

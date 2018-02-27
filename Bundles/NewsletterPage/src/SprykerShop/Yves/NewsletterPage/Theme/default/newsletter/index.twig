@@ -1,15 +1,12 @@
-{% extends "@CustomerPage/layout.twig" %}
+{% extends template('page-layout-customer', 'CustomerPage') %}
 
-{% block title %}
-    <h3>{{ 'customer.account.newsletter' | trans }}</h3>
-{% endblock %}
-
-{% block customerNavigation %}
-    {% include "@CustomerPage/partials/navigation.twig" with {'active': 'newsletter'} %}
-{% endblock %}
+{% define data = {
+    title: 'customer.account.newsletter' | trans,
+    activePage: 'newsletter'
+} %}
 
 {% block customerContent %}
-    <div class="callout">
+    <div class="box">
         {{ form_start(_view.form) }}
             <h5>{{ 'customer.newsletter.subscription' | trans }}</h5>
             <hr>

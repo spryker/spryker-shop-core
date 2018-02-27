@@ -26,4 +26,16 @@
     .text-secondary {
         color: $color-dark;
     }
+
+    @each $action, $color-action in $color-actions {
+        @include util-text-action($action, $color-action);
+    }
+}
+
+@mixin util-text-action($action, $color-action) {
+    .text-#{$action} {
+        color: $color-action;
+    }
+
+    @content;
 }

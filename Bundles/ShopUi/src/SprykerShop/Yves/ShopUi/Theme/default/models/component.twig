@@ -27,6 +27,8 @@
 {% endblock -%}
 
 {%- block protected -%}
+    {{parent()}}
+    
     {# render custom component class #}
     {%- block renderCustomComponentClass -%}
         {%- if config.name == config.tag and '-' in config.tag -%}custom-element {% endif -%}

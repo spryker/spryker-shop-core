@@ -1,0 +1,37 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    addresses: _view.addresses,
+
+    title: 'customer.account.address' | trans,
+    activePage: 'address'
+} %}
+
+{% block customerContent %}
+    <div class="box text-right">
+        <a class="button" href="{{url('customer/address/new')}}">{{ 'customer.account.add_new_address' | trans }}</a>
+    </div>
+
+    {% for address in data.addresses %}
+        <div class="box">
+            <ul class="menu menu--inline float-right">
+                <li class="menu__item">
+                    <a href="{{ url('customer/address/update', {'id': address.idCustomerAddress }) }}">
+                        {{ "customer.profile.address.edit" | trans }}
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a href="{{ url('customer/address/delete', {'id': address.idCustomerAddress }) }}">
+                        {{ "customer.profile.address.delete" | trans }}
+                    </a>
+                </li>
+            </ul>
+            
+            {% include molecule('display-address') with {
+                data: {
+                    address: address
+                }
+            } only %}
+        </div>
+    {% endfor %}
+{% endblock %}

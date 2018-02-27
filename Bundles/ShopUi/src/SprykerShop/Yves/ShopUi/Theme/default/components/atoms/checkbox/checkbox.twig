@@ -16,12 +16,14 @@
 {% block attributes %}{% endblock %}
 
 {% block body %}
-    <span class="{{config.name}}__box"></span>
-    <input class="{{config.name}}__input {% block inputClass %}{% endblock %}" {% block inputAttributes %}{{block('renderAttributes')}}{% endblock %}/>
-    <span class="{{config.name}}__check"></span>
-    {%- block labelContainer -%}    
-        <span class="{{config.name}}__label {% block labelClass %}{% endblock %}">
-            {%- block label -%}{{data.label}}{%- endblock -%}
-        </span>
-    {%- endblock -%}
+    <label class="{{config.name}}__container">
+        <span class="{{config.name}}__box"></span>
+        <input class="{{config.name}}__input {% block inputClass %}{% endblock %}" {% block inputAttributes %}{{block('renderAttributes')}}{% endblock %}/>
+        <span class="{{config.name}}__check"></span>
+        {%- block labelContainer -%}    
+            <span class="{{config.name}}__label {% block labelClass %}{% endblock %}">
+                {%- block label -%}{{data.label}}{%- endblock -%}
+            </span>
+        {%- endblock -%}
+    </label>
 {% endblock %}

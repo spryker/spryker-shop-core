@@ -3,6 +3,10 @@
         &__item {
             margin: spacing() 0;
 
+            &--active {
+                @include font-weight(bold);
+            }
+
             &--has-children-list {
                 margin-bottom: spacing(2);
                 

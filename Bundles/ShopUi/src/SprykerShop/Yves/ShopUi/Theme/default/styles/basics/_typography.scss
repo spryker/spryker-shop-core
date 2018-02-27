@@ -12,6 +12,7 @@
         h#{$i} {
             @include font-size($i);
             @include line-height($i);
+            display: inline-block;
 
             &--margins {
                 margin: spacing(4) 0 spacing(2) 0;
@@ -40,6 +41,7 @@
     }
 
     hr {
+        @include clearfix;
         border-bottom: 1px solid $color-lighter;
         margin: spacing() 0;
     }
