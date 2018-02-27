@@ -1,5 +1,5 @@
 {
-  "name": "spryker/shop-layout-extension",
+  "name": "spryker-shop/shop-layout-extension",
   "description": "ShopLayoutExtension module",
   "license": "proprietary",
   "require": {
