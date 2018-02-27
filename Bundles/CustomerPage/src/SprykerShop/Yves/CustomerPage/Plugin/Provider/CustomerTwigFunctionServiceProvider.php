@@ -28,7 +28,7 @@ class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements Serv
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
+            $app->extend('twig', function (\Twig_Environment $twig) {
                 return $this->registerCustomerTwigFunction($twig);
             })
         );

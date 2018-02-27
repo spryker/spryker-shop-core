@@ -76,7 +76,7 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
      */
     public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        return $quoteTransfer = $this->cartClient->increaseItemQuantity($sku, $groupKey, $quantity);
+        return $this->cartClient->increaseItemQuantity($sku, $groupKey, $quantity);
     }
 
     /**
