@@ -11,11 +11,6 @@
   "suggest": {
     "spryker/symfony": "3.0.0 for using LanguageSwitcherPluginInterface"
   },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
