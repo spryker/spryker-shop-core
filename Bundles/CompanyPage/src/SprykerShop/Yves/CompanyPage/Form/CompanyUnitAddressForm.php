@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -223,10 +224,10 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected function addIso2CodeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_ISO_2_CODE, 'choice', [
+        $builder->add(static::FIELD_ISO_2_CODE, ChoiceType::class, [
             'label' => 'company.account.address.country',
             'required' => true,
-            'choices' => $options[static::OPTION_COUNTRY_CHOICES],
+            'choices' => array_flip($options[static::OPTION_COUNTRY_CHOICES]),
             'constraints' => [
                 $this->createNotBlankConstraint($options),
             ],

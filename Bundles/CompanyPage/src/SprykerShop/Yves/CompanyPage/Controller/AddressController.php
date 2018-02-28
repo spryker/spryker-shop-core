@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,7 @@ class AddressController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
-        $companyUnitAddressCollectionTransfer = $this->createCompanyUnitAddressCollectionTransfer($request);
+        $companyUnitAddressCollectionTransfer = $this->createCriteriaFilterTransfer($request);
         $companyUnitAddressCollectionTransfer = $this->getFactory()
             ->getCompanyUnitAddressClient()
             ->getCompanyUnitAddressCollection($companyUnitAddressCollectionTransfer);
@@ -143,20 +144,20 @@ class AddressController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
      */
-    protected function createCompanyUnitAddressCollectionTransfer(
+    protected function createCriteriaFilterTransfer(
         Request $request
-    ): CompanyUnitAddressCollectionTransfer {
-        $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
-        $companyUnitAddressCollectionTransfer->setFkCompany($this->getCompanyUser()->getFkCompany());
+    ): CompanyUnitAddressCriteriaFilterTransfer {
+        $criteriaFilterTransfer = new CompanyUnitAddressCriteriaFilterTransfer();
+        $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
 
         $filterTransfer = $this->createFilterTransfer(static::COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD);
-        $companyUnitAddressCollectionTransfer->setFilter($filterTransfer);
+        $criteriaFilterTransfer->setFilter($filterTransfer);
 
         $paginationTransfer = $this->createPaginationTransfer($request);
-        $companyUnitAddressCollectionTransfer->setPagination($paginationTransfer);
+        $criteriaFilterTransfer->setPagination($paginationTransfer);
 
-        return $companyUnitAddressCollectionTransfer;
+        return $criteriaFilterTransfer;
     }
 }
