@@ -141,7 +141,6 @@ class BusinessUnitController extends AbstractCompanyController
         $criteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
 
         $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
-        $criteriaFilterTransfer->setIdCompanyUser($this->getCompanyUser()->getIdCompanyUser());
 
         $filterTransfer = $this->createFilterTransfer(self::BUSINESS_UNIT_LIST_SORT_FIELD);
         $criteriaFilterTransfer->setFilter($filterTransfer);
