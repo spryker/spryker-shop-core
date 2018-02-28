@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuickOrderPage\Handler;
 
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData;
-use Symfony\Component\Form\FormInterface;
 
 interface QuickOrderFormOperationHandlerInterface
 {
@@ -25,10 +24,4 @@ interface QuickOrderFormOperationHandlerInterface
      * @return void
      */
     public function createOrder(QuickOrderData $quickOrder): void;
-
-    /**
-     * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData $quickOrder
-     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
-     */
-    public function verifyTextOrder(QuickOrderData $quickOrder, FormInterface $quickOrderForm): void;
 }

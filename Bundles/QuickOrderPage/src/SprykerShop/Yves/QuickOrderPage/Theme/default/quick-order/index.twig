@@ -59,6 +59,13 @@
                             field: $('option:selected', $searchField).val()
                         },
                         groupBy: null,
+                        onSearchStart: function () {
+                            var sku = $skuInput.val();
+                            // prevent repeated query on input focus
+                            if (sku && this.value.indexOf(sku) !== -1) {
+                                return false;
+                            }
+                        },
                         onSearchComplete: function (query, suggestions) {
                             $errorPanel.hide();
                             if (suggestions.length === 0) {

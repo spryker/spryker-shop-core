@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Handler;
 use Generated\Shared\Transfer\ItemTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData;
-use Symfony\Component\Form\FormInterface;
+use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 
 class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerInterface
 {
@@ -20,11 +20,18 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     protected $cartClient;
 
     /**
+     * @var \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig
+     */
+    protected $config;
+
+    /**
+     * @param \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig $config
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface $cartClient
      */
-    public function __construct(QuickOrderPageToCartClientInterface $cartClient)
+    public function __construct(QuickOrderPageConfig $config, QuickOrderPageToCartClientInterface $cartClient)
     {
         $this->cartClient = $cartClient;
+        $this->config = $config;
     }
 
     /**
@@ -54,17 +61,6 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
             $this->cartClient->clearQuote();
             $this->addItemsToCart($itemTransfers);
         }
-    }
-
-    /**
-     * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData $quickOrder
-     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
-     *
-     * @return void
-     */
-    public function verifyTextOrder(QuickOrderData $quickOrder, FormInterface $quickOrderForm): void
-    {
-        die($quickOrder->getTextOrder());
     }
 
     /**

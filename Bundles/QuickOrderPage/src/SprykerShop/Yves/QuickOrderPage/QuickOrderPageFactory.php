@@ -7,14 +7,31 @@
 
 namespace SprykerShop\Yves\QuickOrderPage;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
+use SprykerShop\Yves\QuickOrderPage\Form\Validator\TextOrderValidator;
 use SprykerShop\Yves\QuickOrderPage\Handler\QuickOrderFormOperationHandler;
 use SprykerShop\Yves\QuickOrderPage\Handler\QuickOrderFormOperationHandlerInterface;
+use SprykerShop\Yves\QuickOrderPage\Model\ProductFinder;
+use SprykerShop\Yves\QuickOrderPage\Model\ProductFinderInterface;
+use SprykerShop\Yves\QuickOrderPage\Model\TextOrderParser;
+use SprykerShop\Yves\QuickOrderPage\Model\TextOrderParserInterface;
 
+/**
+ * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig getConfig()
+ */
 class QuickOrderPageFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig
+     */
+    public function getBundleConfig(): QuickOrderPageConfig
+    {
+        return $this->getConfig();
+    }
+
     /**
      * @return \SprykerShop\Yves\QuickOrderPage\Form\FormFactory
      */
@@ -28,23 +45,39 @@ class QuickOrderPageFactory extends AbstractFactory
      */
     public function createFormOperationHandler(): QuickOrderFormOperationHandlerInterface
     {
-        return new QuickOrderFormOperationHandler($this->getCartClient());
+        return new QuickOrderFormOperationHandler($this->getConfig(), $this->getCartClient());
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \SprykerShop\Yves\QuickOrderPage\Form\Validator\TextOrderValidator
      */
-    public function getApplication()
+    public function createTextOrderValidator(): TextOrderValidator
     {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGIN_APPLICATION);
+        return new TextOrderValidator($this->getConfig());
     }
 
     /**
-     * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
+     * @param string $textOrder
+     *
+     * @return \SprykerShop\Yves\QuickOrderPage\Model\TextOrderParserInterface
      */
-    public function getMessenger()
+    public function createTextOrderParser(string $textOrder): TextOrderParserInterface
     {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::FLASH_MESSENGER);
+        return new TextOrderParser($textOrder, $this->getConfig(), $this->createProductFinder());
+    }
+
+    /**
+     * @return ProductFinderInterface
+     */
+    public function createProductFinder(): ProductFinderInterface
+    {
+        return new ProductFinder(
+            $this->getStore(),
+            $this->getSearchClient(),
+            $this->getProductStorageClient(),
+            $this->getLocale(),
+            $this->getBundleConfig()
+        );
     }
 
     /**
@@ -56,14 +89,6 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Catalog\CatalogClientInterface
-     */
-    public function getCatalogClient(): \Spryker\Client\Catalog\CatalogClientInterface
-    {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_CATALOG);
-    }
-
-    /**
      * @return \Spryker\Client\ProductStorage\ProductStorageClientInterface
      */
     public function getProductStorageClient(): \Spryker\Client\ProductStorage\ProductStorageClientInterface
@@ -72,18 +97,34 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\PriceProductStorageClientInterface
+     * @return \Spryker\Client\Search\SearchClientInterface
      */
-    public function getPriceProductStorageClient(): \Spryker\Client\PriceProductStorage\PriceProductStorageClientInterface
+    public function getSearchClient(): \Spryker\Client\Search\SearchClientInterface
     {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRICE_PRODUCT_STORAGE);
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_SEARCH);
     }
 
     /**
-     * @return \Spryker\Client\PriceProduct\PriceProductClientInterface
+     * @return \Spryker\Shared\Kernel\Store
      */
-    public function getPriceProductClient(): \Spryker\Client\PriceProduct\PriceProductClientInterface
+    public function getStore(): Store
     {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRICE_PRODUCT);
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Silex\Application
+     */
+    public function getApplication()
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->getApplication()['locale'];
     }
 }
