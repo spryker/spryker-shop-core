@@ -57,7 +57,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class, [
+        $builder->add(static::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class, [
             'required' => false,
         ]);
 
@@ -71,7 +71,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addFkCompanyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_COMPANY, HiddenType::class, [
+        $builder->add(static::FIELD_FK_COMPANY, HiddenType::class, [
             'required' => true,
             'constraints' => [
                 new NotBlank(),
@@ -88,7 +88,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'company.account.business_unit.name',
             'required' => true,
             'constraints' => [
@@ -106,7 +106,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EMAIL, EmailType::class, [
+        $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'company.account.business_unit.email',
             'required' => true,
             'constraints' => [
@@ -125,7 +125,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addPhoneField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PHONE, TextType::class, [
+        $builder->add(static::FIELD_PHONE, TextType::class, [
             'label' => 'company.account.business_unit.phone',
             'required' => false,
         ]);
@@ -140,7 +140,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addExternalUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EXTERNAL_URL, UrlType::class, [
+        $builder->add(static::FIELD_EXTERNAL_URL, UrlType::class, [
             'label' => 'company.account.business_unit.external_url',
             'required' => false,
         ]);

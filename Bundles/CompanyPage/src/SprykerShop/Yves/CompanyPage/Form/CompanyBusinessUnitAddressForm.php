@@ -43,7 +43,7 @@ class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
      */
     protected function addIsDefaultBillingField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_IS_DEFAULT_BILLING, CheckboxType::class, [
+        $builder->add(static::FIELD_IS_DEFAULT_BILLING, CheckboxType::class, [
             'label' => 'company.account.address.is_default_billing',
             'required' => false,
         ]);

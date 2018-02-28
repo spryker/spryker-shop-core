@@ -47,7 +47,7 @@ class CompanyUnitAddressForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
+        $resolver->setRequired(static::OPTION_COUNTRY_CHOICES);
     }
 
     /**
@@ -79,7 +79,7 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected function addFkCompanyField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_FK_COMPANY, HiddenType::class, [
+        $builder->add(static::FIELD_FK_COMPANY, HiddenType::class, [
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
@@ -97,7 +97,7 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected function addIdCompanyUnitAddressField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ID_COMPANY_UNIT_ADDRESS, HiddenType::class, [
+        $builder->add(static::FIELD_ID_COMPANY_UNIT_ADDRESS, HiddenType::class, [
             'required' => false,
         ]);
 
@@ -112,7 +112,7 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected function addFkCompanyBusinessUnitField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_FK_COMPANY_BUSINESS_UNIT, HiddenType::class, [
+        $builder->add(static::FIELD_FK_COMPANY_BUSINESS_UNIT, HiddenType::class, [
             'required' => false,
         ]);
 
@@ -127,7 +127,7 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected function addAddress1Field(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ADDRESS_1, TextType::class, [
+        $builder->add(static::FIELD_ADDRESS_1, TextType::class, [
             'label' => 'company.account.address.address1',
             'required' => true,
             'constraints' => [
@@ -147,7 +147,7 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected function addAddress2Field(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ADDRESS_2, TextType::class, [
+        $builder->add(static::FIELD_ADDRESS_2, TextType::class, [
             'label' => 'company.account.address.number',
             'required' => true,
             'constraints' => [
@@ -167,7 +167,7 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected function addAddress3Field(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ADDRESS_3, TextType::class, [
+        $builder->add(static::FIELD_ADDRESS_3, TextType::class, [
             'label' => 'company.account.address.address3',
             'required' => false,
         ]);
@@ -183,7 +183,7 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected function addZipCodeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ZIP_CODE, TextType::class, [
+        $builder->add(static::FIELD_ZIP_CODE, TextType::class, [
             'label' => 'company.account.address.zip_code',
             'required' => true,
             'constraints' => [
@@ -203,7 +203,7 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected function addCityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_CITY, TextType::class, [
+        $builder->add(static::FIELD_CITY, TextType::class, [
             'label' => 'company.account.address.city',
             'required' => true,
             'constraints' => [
@@ -223,10 +223,10 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected function addIso2CodeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ISO_2_CODE, 'choice', [
+        $builder->add(static::FIELD_ISO_2_CODE, 'choice', [
             'label' => 'company.account.address.country',
             'required' => true,
-            'choices' => $options[self::OPTION_COUNTRY_CHOICES],
+            'choices' => $options[static::OPTION_COUNTRY_CHOICES],
             'constraints' => [
                 $this->createNotBlankConstraint($options),
             ],
@@ -243,7 +243,7 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected function addPhoneField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_PHONE, TextType::class, [
+        $builder->add(static::FIELD_PHONE, TextType::class, [
             'label' => 'company.account.address.phone',
             'required' => false,
         ]);
