@@ -13,10 +13,12 @@ use SprykerShop\Yves\CompanyPage\CompanyPageDependencyProvider;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRoleDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUnitAddressFormDataProvider;
+use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserFormDataProvider;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -75,6 +77,29 @@ class FormFactory extends AbstractFactory
     }
 
     /**
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyUserForm(array $formOptions): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyUserForm::class, null, $formOptions);
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD)
+     *
+     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserFormDataProvider
+     */
+    public function createCompanyUserFormDataProvider(): CompanyUserFormDataProvider
+    {
+        return new CompanyUserFormDataProvider(
+            $this->getCompanyUserClient(),
+            $this->getCompanyBusinessUnitClient()
+        );
+    }
+
+    /**
      * @SuppressWarnings(PHPMD)
      *
      * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitFormDataProvider
@@ -124,7 +149,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToKernelStoreInterface
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface
      */
     protected function getStore(): CompanyPageToKernelStoreInterface
     {
@@ -137,5 +162,13 @@ class FormFactory extends AbstractFactory
     protected function getCompanyRoleClient(): CompanyPageToCompanyRoleClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_ROLE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface
+     */
+    protected function getCompanyUserClient(): CompanyPageToCompanyUserClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_USER);
     }
 }

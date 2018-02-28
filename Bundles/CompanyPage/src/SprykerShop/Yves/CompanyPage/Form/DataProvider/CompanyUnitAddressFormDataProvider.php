@@ -29,7 +29,7 @@ class CompanyUnitAddressFormDataProvider
 
     /**
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToKernelStoreInterface $store
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface $store
      */
     public function __construct(
         CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient,

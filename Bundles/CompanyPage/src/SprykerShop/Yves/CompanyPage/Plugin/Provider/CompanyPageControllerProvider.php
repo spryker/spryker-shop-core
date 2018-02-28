@@ -39,6 +39,11 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_PERMISSION_ASSIGN = 'company/permission/assign';
     public const ROUTE_PERMISSION_UNASSIGN = 'company/permission/unassign';
 
+    public const ROUTE_COMPANY_USER = 'company/user';
+    public const ROUTE_COMPANY_USER_CREATE = 'company/user/create';
+    public const ROUTE_COMPANY_USER_UPDATE = 'company/user/update';
+    public const ROUTE_COMPANY_USER_DELETE = 'company/user/delete';
+
     /**
      * @param \Silex\Application $app
      *
@@ -51,6 +56,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->createCompanyBusinessUnitControllers();
         $this->createCompanyRoleControllers();
         $this->createPermissionControllers();
+        $this->createCompanyUserControllers();
     }
 
     /**
@@ -160,6 +166,27 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('company', $allowedLocalesPattern . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/permission/unassign', self::ROUTE_PERMISSION_UNASSIGN, 'CompanyPage', 'Permission', 'unassign')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+    }
+
+    /**
+     * @return void
+     */
+    protected function createCompanyUserControllers(): void
+    {
+        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+
+        $this->createController('/{company}/user', self::ROUTE_COMPANY_USER, 'CompanyPage', 'User', 'index')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/user/create', self::ROUTE_COMPANY_USER_CREATE, 'CompanyPage', 'User', 'create')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/user/update', self::ROUTE_COMPANY_USER_UPDATE, 'CompanyPage', 'User', 'update')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/user/delete', self::ROUTE_COMPANY_USER_DELETE, 'CompanyPage', 'User', 'delete')
             ->assert('company', $allowedLocalesPattern . 'company|company')
             ->value('company', 'company');
     }
