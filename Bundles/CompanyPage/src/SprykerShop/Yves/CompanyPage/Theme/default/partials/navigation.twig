@@ -3,6 +3,9 @@
     <li {% if active == 'overview' %}class="active"{% endif %}>
         <a href="{{ path('company/overview') }}" data-id="sidebar-overview">{{ 'company.account.overview' | trans }}</a>
     </li>
+    <li {% if active == 'company-user' %}class="active"{% endif %}>
+        <a href="{{ path('company/user') }}" data-id="sidebar-address">{{ 'company.account.company_user' | trans }}</a>
+    </li>
     <li {% if active == 'address' %}class="active"{% endif %}>
         <a href="{{ path('company/address') }}" data-id="sidebar-address">{{ 'company.account.address' | trans }}</a>
     </li>

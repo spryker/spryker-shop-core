@@ -1,0 +1,30 @@
+{% set actions = actions|default(false) %}
+<table class="stack">
+    <thead>
+    <tr class="active">
+        <th>{{ 'company.account.company_user.name' | trans }}</th>
+        <th>{{ 'company.account.company_user.business_unit' | trans }}</th>
+        {% if (actions) %}
+            <th class="text-right">{{ 'company.account.table.actions' | trans }}</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for companyUser in _view.companyUserCollection %}
+        <tr>
+            <td>{{ companyUser.customer.firstName }} {{ companyUser.customer.lastName }}</td>
+            <td>{{ companyUser.companyBusinessUnit.name }}</td>
+            {% if (actions) %}
+                <td class="text-right">
+                    <a href="{{ url('company/user/update', {'id': companyUser.idCompanyUser}) }}" class="float-right">
+                        <small><i class="fa fa-users"></i> {{ "company.account.company_user.edit" | trans }}</small>
+                    </a>
+                    <a href="{{ url('company/user/delete', {'id': companyUser.idCompanyUser }) }}" class="float-right">
+                        <small><i class="fa fa-remove"></i> {{ "company.account.company_user.delete" | trans }}</small>
+                    </a>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
