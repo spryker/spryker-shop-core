@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CartPage\Handler;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Yves\Kernel\CanAwareTrait;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
@@ -19,7 +19,7 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 // TODO: this needs to be moved from this module
 class ProductBundleCartOperationHandler extends BaseHandler implements CartOperationInterface
 {
-    use CanAwareTrait;
+    use PermissionAwareTrait;
 
     public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
 
