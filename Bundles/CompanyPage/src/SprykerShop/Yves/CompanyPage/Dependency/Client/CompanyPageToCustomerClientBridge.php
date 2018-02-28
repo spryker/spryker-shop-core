@@ -39,5 +39,4 @@ class CompanyPageToCustomerClientBridge implements CompanyPageToCustomerClientIn
     {
         return $this->customerClient->isLoggedIn();
     }
-
 }

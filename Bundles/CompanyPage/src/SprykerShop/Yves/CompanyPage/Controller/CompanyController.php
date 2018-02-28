@@ -30,6 +30,9 @@ class CompanyController extends AbstractCompanyController
         return $this->view($data, $this->getFactory()->getCompanyOverviewWidgetPlugins());
     }
 
+    /**
+     * @return bool
+     */
     protected function isCompanyActive(): bool
     {
         $companyUser = $this->getCompanyUser();
@@ -41,5 +44,4 @@ class CompanyController extends AbstractCompanyController
         $idCompany = $companyUser->getFkCompany();
         $this->getFactory()->getCompanyClient();
     }
-
 }

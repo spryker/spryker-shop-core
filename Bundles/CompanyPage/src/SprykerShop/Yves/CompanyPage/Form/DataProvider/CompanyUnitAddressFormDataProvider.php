@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToKernelStoreInterface;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUnitAddressForm;
 
 class CompanyUnitAddressFormDataProvider
@@ -29,11 +29,11 @@ class CompanyUnitAddressFormDataProvider
 
     /**
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToKernelStoreInterface $store
      */
     public function __construct(
         CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient,
-        Store $store
+        CompanyPageToKernelStoreInterface $store
     ) {
         $this->companyUnitAddressClient = $companyUnitAddressClient;
         $this->store = $store;

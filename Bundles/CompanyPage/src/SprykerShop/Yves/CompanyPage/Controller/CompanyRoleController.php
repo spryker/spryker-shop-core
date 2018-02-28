@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
@@ -187,6 +192,8 @@ class CompanyRoleController extends AbstractCompanyController
 
     /**
      * @param array $data
+     *
+     * @return void
      */
     protected function updateCompanyRole(array $data): void
     {

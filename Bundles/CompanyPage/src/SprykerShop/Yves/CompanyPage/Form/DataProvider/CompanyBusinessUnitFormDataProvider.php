@@ -77,5 +77,4 @@ class CompanyBusinessUnitFormDataProvider
 
         return $this->businessUnitClient->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
     }
-
 }

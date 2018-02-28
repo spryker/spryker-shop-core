@@ -8,12 +8,12 @@
 namespace SprykerShop\Yves\CompanyPage\Form;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CompanyPage\CompanyPageDependencyProvider;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToKernelStoreInterface;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRoleDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUnitAddressFormDataProvider;
@@ -68,7 +68,6 @@ class FormFactory extends AbstractFactory
 
     /**
      * @return \Symfony\Component\Form\FormInterface
-     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function getCompanyRoleForm(): FormInterface
     {
@@ -125,11 +124,9 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @SuppressWarnings(PHPMD)
-     *
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToKernelStoreInterface
      */
-    protected function getStore(): Store
+    protected function getStore(): CompanyPageToKernelStoreInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::STORE);
     }

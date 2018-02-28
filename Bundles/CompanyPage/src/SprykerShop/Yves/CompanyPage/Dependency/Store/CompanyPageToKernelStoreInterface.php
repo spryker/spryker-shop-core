@@ -7,12 +7,10 @@
 
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
-use Generated\Shared\Transfer\PermissionCollectionTransfer;
-
-interface CompanyPageToPermissionClientInterface
+interface CompanyPageToKernelStoreInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     * @return array
      */
-    public function findAll(): PermissionCollectionTransfer;
+    public function getCountries();
 }

@@ -16,8 +16,8 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClien
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientBridge;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToKernelStoreBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientBridge;
-use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
 
 class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -62,7 +62,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStore(Container $container)
     {
         $container[static::STORE] = function () {
-            return Store::getInstance();
+            return new CompanyPageToKernelStoreBridge(Store::getInstance());
         };
 
         return $container;

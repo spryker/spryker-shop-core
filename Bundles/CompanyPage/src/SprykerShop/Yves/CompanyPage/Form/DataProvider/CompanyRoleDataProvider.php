@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
@@ -13,6 +18,9 @@ class CompanyRoleDataProvider
      */
     protected $companyRoleClient;
 
+    /**
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface $companyRoleClient
+     */
     public function __construct(CompanyPageToCompanyRoleClientInterface $companyRoleClient)
     {
         $this->companyRoleClient = $companyRoleClient;
