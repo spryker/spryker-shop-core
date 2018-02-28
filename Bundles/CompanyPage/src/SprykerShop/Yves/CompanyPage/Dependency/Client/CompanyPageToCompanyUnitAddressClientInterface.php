@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
@@ -40,6 +41,15 @@ interface CompanyPageToCompanyUnitAddressClientInterface
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return void
+     */
+    public function saveCompanyBusinessUnitAddresses(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): void;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer

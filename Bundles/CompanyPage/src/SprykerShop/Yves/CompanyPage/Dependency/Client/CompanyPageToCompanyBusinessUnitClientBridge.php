@@ -74,11 +74,11 @@ class CompanyPageToCompanyBusinessUnitClientBridge implements CompanyPageToCompa
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     public function deleteCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): bool {
+    ): CompanyBusinessUnitResponseTransfer {
         return $this->companyBusinessUnitClient->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 }

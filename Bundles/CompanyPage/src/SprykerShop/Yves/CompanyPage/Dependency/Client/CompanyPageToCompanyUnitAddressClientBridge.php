@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
@@ -68,5 +69,16 @@ class CompanyPageToCompanyUnitAddressClientBridge implements CompanyPageToCompan
     public function deleteCompanyUnitAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
     {
         $this->companyUnitAddressClient->deleteCompanyUnitAddress($companyUnitAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return void
+     */
+    public function saveCompanyBusinessUnitAddresses(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): void {
+        $this->companyUnitAddressClient->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
     }
 }
