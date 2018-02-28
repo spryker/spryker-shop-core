@@ -64,6 +64,7 @@ class RegisterController extends AbstractCompanyController
         $companyName = $data['company_name'];
         $companyTransfer = new CompanyTransfer();
         $companyTransfer->setInitialUserTransfer($this->createCompanyUserTransfer($data));
+
         $companyTransfer->setName($companyName);
 
         return $this->getFactory()->getCompanyClient()->createCompany($companyTransfer);
@@ -80,7 +81,7 @@ class RegisterController extends AbstractCompanyController
         $customerTransfer->fromArray($data, true);
 
         $companyUserTransfer = new CompanyUserTransfer();
-        $companyUserTransfer->setCustomerTransfer($customerTransfer);
+        $companyUserTransfer->setCustomer($customerTransfer);
 
         return $companyUserTransfer;
     }
