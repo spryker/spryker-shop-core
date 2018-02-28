@@ -1,22 +1,28 @@
 {
-  "name": "spryker/company-page",
+  "name": "spryker-shop/company-page",
   "description": "CompanyPage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker-shop/shop-application": "^0.1.0",
+    "spryker/application": "^3.8.0",
+    "spryker/company": "^0.0.3",
+    "spryker/company-business-unit": "^0.0.3",
+    "spryker/company-role": "^0.0.4",
+    "spryker/company-unit-address": "^0.0.3",
+    "spryker/company-user": "^0.0.4",
+    "spryker/customer": "^7.4.0",
+    "spryker/kernel": "^3.16.0",
+    "spryker/permission": "^0.0.4",
+    "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
+  "suggest": {
+    "spryker/silex": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

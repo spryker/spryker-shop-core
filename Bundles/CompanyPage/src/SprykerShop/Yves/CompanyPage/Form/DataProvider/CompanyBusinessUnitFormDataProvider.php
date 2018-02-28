@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
@@ -42,8 +41,7 @@ class CompanyBusinessUnitFormDataProvider
         }
 
         if ($idCompanyBusinessUnit !== null) {
-            $companyBusinessUnitResponseTransfer = $this->loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
-            $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
+            $companyBusinessUnitTransfer = $this->loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
 
             return $companyBusinessUnitTransfer->modifiedToArray();
         }
@@ -68,9 +66,9 @@ class CompanyBusinessUnitFormDataProvider
     /**
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    protected function loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit): CompanyBusinessUnitResponseTransfer
+    protected function loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit): CompanyBusinessUnitTransfer
     {
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
