@@ -15,8 +15,8 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker/silex": "*",
-    "spryker/permission": "*"
+    "spryker/permission": "*",
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker/silex": "TODO: add suggestion description",
