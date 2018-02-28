@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
+namespace SprykerShop\Yves\CompanyPage\Dependency\Store;
 
 class CompanyPageToKernelStoreBridge implements CompanyPageToKernelStoreInterface
 {

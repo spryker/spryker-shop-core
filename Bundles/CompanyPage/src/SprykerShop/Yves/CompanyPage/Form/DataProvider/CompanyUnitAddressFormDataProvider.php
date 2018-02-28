@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToKernelStoreInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUnitAddressForm;
 
 class CompanyUnitAddressFormDataProvider
