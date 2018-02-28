@@ -11,7 +11,7 @@ use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
 
 class RemoveCartItemPermissionPlugin implements PermissionPluginInterface
 {
-    public const KEY = 'allow.cart.item.remove';
+    public const KEY = 'RemoveCartItemPermissionPlugin';
 
     /**
      * @return string

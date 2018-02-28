@@ -11,7 +11,7 @@ use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
 
 class AddCartItemPermissionPlugin implements PermissionPluginInterface
 {
-    public const KEY = 'allow.cart.item.add';
+    public const KEY = 'AddCartItemPermissionPlugin';
 
     /**
      * @return string
