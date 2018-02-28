@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
@@ -36,12 +37,12 @@ interface CompanyPageToCompanyRoleClientInterface
     public function deleteCompanyRole(CompanyRoleTransfer $companyRoleUserTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
     public function getCompanyRoleCollection(
-        CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+        CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyRoleCollectionTransfer;
 
     /**

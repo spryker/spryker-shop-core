@@ -91,9 +91,7 @@ class CompanyUnitAddressFormDataProvider
         $addressTransfer = new CompanyUnitAddressTransfer();
         $addressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
-        $responseTransfer = $this->companyUnitAddressClient->getCompanyUnitAddressById($addressTransfer);
-
-        return $responseTransfer->getCompanyUnitAddressTransfer();
+        return $this->companyUnitAddressClient->getCompanyUnitAddressById($addressTransfer);
     }
 
     /**

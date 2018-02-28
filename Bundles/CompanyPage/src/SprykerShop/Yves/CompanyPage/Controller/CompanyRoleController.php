@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
@@ -147,7 +148,7 @@ class CompanyRoleController extends AbstractCompanyController
      */
     protected function getCompanyRoleResponseData(Request $request): array
     {
-        $collectionTransfer = $this->createCompanyRoleCollectionTransfer($request);
+        $collectionTransfer = $this->createCriteriaFilterTransfer($request);
         $collectionTransfer = $this->getFactory()
             ->getCompanyRoleClient()
             ->getCompanyRoleCollection($collectionTransfer);
@@ -161,18 +162,18 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     * @return \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer
      */
-    protected function createCompanyRoleCollectionTransfer(Request $request): CompanyRoleCollectionTransfer
+    protected function createCriteriaFilterTransfer(Request $request): CompanyRoleCriteriaFilterTransfer
     {
-        $collectionTransfer = new CompanyRoleCollectionTransfer();
+        $criteriaFilterTransfer = new CompanyRoleCriteriaFilterTransfer();
 
         $idCompany = $this->getCompanyUser()->getFkCompany();
-        $collectionTransfer->setIdCompany($idCompany);
-        $collectionTransfer->setPagination($this->createPaginationTransfer($request));
-        $collectionTransfer->setFilter($this->createFilterTransfer(static::COMPANY_ROLE_SORT_FIELD));
+        $criteriaFilterTransfer->setIdCompany($idCompany);
+        $criteriaFilterTransfer->setPagination($this->createPaginationTransfer($request));
+        $criteriaFilterTransfer->setFilter($this->createFilterTransfer(static::COMPANY_ROLE_SORT_FIELD));
 
-        return $collectionTransfer;
+        return $criteriaFilterTransfer;
     }
 
     /**
