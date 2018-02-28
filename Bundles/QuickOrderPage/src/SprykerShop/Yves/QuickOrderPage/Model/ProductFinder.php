@@ -8,11 +8,9 @@
 namespace SprykerShop\Yves\QuickOrderPage\Model;
 
 use Generated\Shared\Search\PageIndexMap;
-use ReflectionClass;
-use Spryker\Client\Catalog\CatalogClientInterface;
-use Spryker\Client\ProductStorage\ProductStorageClientInterface;
-use Spryker\Client\Search\SearchClientInterface;
 use Spryker\Shared\Kernel\Store;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface;
 use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 
 class ProductFinder implements ProductFinderInterface
@@ -23,7 +21,7 @@ class ProductFinder implements ProductFinderInterface
     protected $store;
 
     /**
-     * @var QuickOrderPageConfig
+     * @var \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig
      */
     protected $config;
 
@@ -33,26 +31,26 @@ class ProductFinder implements ProductFinderInterface
     protected $locale;
 
     /**
-     * @return \Spryker\Client\Search\SearchClientInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface
      */
     protected $searchClient;
 
     /**
-     * @var \Spryker\Client\ProductStorage\ProductStorageClientInterface
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface
      */
     protected $productStorageClient;
 
     /**
      * @param \Spryker\Shared\Kernel\Store $store
-     * @param \Spryker\Client\Search\SearchClientInterface $searchClient
-     * @param \Spryker\Client\ProductStorage\ProductStorageClientInterface $productStorageClient
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface $searchClient
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface $productStorageClient
      * @param string $locale
-     * @param QuickOrderPageConfig $config
+     * @param \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig $config
      */
     public function __construct(
         Store $store,
-        SearchClientInterface $searchClient,
-        ProductStorageClientInterface $productStorageClient,
+        QuickOrderPageToSearchClientInterface $searchClient,
+        QuickOrderPageToProductStorageClientInterface $productStorageClient,
         string $locale,
         QuickOrderPageConfig $config
     ) {

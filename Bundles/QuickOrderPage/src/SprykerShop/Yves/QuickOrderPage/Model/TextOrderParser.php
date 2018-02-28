@@ -36,7 +36,7 @@ class TextOrderParser implements TextOrderParserInterface
     /**
      * @param string $textOrder
      * @param \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig $config
-     * @param ProductFinderInterface $productFinder
+     * @param \SprykerShop\Yves\QuickOrderPage\Model\ProductFinderInterface $productFinder
      */
     public function __construct(string $textOrder, QuickOrderPageConfig $config, ProductFinderInterface $productFinder)
     {
@@ -46,7 +46,6 @@ class TextOrderParser implements TextOrderParserInterface
     }
 
     /**
-     *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
     public function getOrderItems(): array
@@ -81,10 +80,10 @@ class TextOrderParser implements TextOrderParserInterface
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int|null $quantity
      *
-     * @return QuickOrderItemTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
     protected function getOrderItem(ProductViewTransfer $productViewTransfer, int $quantity = null): QuickOrderItemTransfer
     {

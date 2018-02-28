@@ -12,10 +12,13 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientBridge;
 
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
@@ -31,10 +34,25 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container): Container
     {
         $container = $this->addCartClient($container);
+        $container = $this->addGlossaryClient($container);
         $container = $this->addSearchClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addStore($container);
         $container = $this->addApplication($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlossaryClient(Container $container): Container
+    {
+        $container[self::CLIENT_GLOSSARY] = function (Container $container) {
+            return new QuickOrderPageToGlossaryClientBridge($container->getLocator()->glossary()->client());
+        };
 
         return $container;
     }
@@ -77,7 +95,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSearchClient($container): Container
     {
         $container[self::CLIENT_SEARCH] = function (Container $container) {
-            return $container->getLocator()->search()->client();
+            return new QuickOrderPageToSearchClientBridge($container->getLocator()->search()->client());
         };
 
         return $container;
@@ -91,7 +109,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addProductStorageClient($container): Container
     {
         $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
-            return $container->getLocator()->productStorage()->client();
+            return new QuickOrderPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
         };
 
         return $container;

@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\QuickOrderPage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
 use SprykerShop\Yves\QuickOrderPage\Form\Validator\TextOrderValidator;
 use SprykerShop\Yves\QuickOrderPage\Handler\QuickOrderFormOperationHandler;
@@ -67,7 +69,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductFinderInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\Model\ProductFinderInterface
      */
     public function createProductFinder(): ProductFinderInterface
     {
@@ -89,19 +91,27 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\ProductStorageClientInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface
      */
-    public function getProductStorageClient(): \Spryker\Client\ProductStorage\ProductStorageClientInterface
+    public function getProductStorageClient(): QuickOrderPageToProductStorageClientInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 
     /**
-     * @return \Spryker\Client\Search\SearchClientInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface
      */
-    public function getSearchClient(): \Spryker\Client\Search\SearchClientInterface
+    public function getSearchClient(): QuickOrderPageToSearchClientInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_SEARCH);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToGlossaryClientInterface
+     */
+    public function getGlossaryClient(): QuickOrderPageToGlossaryClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_GLOSSARY);
     }
 
     /**

@@ -43,7 +43,7 @@ class QuickOrderForm extends AbstractType
             ->addItemsCollection($builder)
             ->addTextOrderField($builder)
             ->addPreSetData($builder)
-            ->addPrePreSubmitData($builder);
+            ->addPreSubmitData($builder);
     }
 
     /**
@@ -85,7 +85,7 @@ class QuickOrderForm extends AbstractType
             'required' => false,
             'constraints' => [
                 new Callback([
-                    'callback' => function (string $textOrder, ExecutionContextInterface $context) {
+                    'callback' => function ($textOrder, ExecutionContextInterface $context) {
                         if ($textOrder) {
                             $isTextOrderFormatCorrect = $this->getFactory()
                                 ->createTextOrderValidator()
@@ -136,7 +136,7 @@ class QuickOrderForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPrePreSubmitData(FormBuilderInterface $builder): FormTypeInterface
+    protected function addPreSubmitData(FormBuilderInterface $builder): FormTypeInterface
     {
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
@@ -156,7 +156,6 @@ class QuickOrderForm extends AbstractType
                     if ($parsedItems) {
                         $parsedItems = array_map(function (QuickOrderItemTransfer $quickOrderItemTransfer) {
                             return [
-                                OrderItemEmbeddedForm::FILED_SEARCH_FIELD => 'name_sku',
                                 OrderItemEmbeddedForm::FILED_SEARCH_QUERY => $quickOrderItemTransfer->getSearchQuery(),
                                 OrderItemEmbeddedForm::FILED_SKU => $quickOrderItemTransfer->getSku(),
                                 OrderItemEmbeddedForm::FILED_QTY => $quickOrderItemTransfer->getQty(),

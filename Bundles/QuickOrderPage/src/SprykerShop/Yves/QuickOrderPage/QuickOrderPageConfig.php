@@ -37,7 +37,6 @@ class QuickOrderPageConfig extends AbstractBundleConfig
         return $this->get(QuickOrderPageConstants::SUGGESTION_RESULTS_LIMIT, 10);
     }
 
-
     public function getSearchFieldMapping(): array
     {
         return $this->get(QuickOrderPageConstants::SEARCH_FIELD_MAPPING, [

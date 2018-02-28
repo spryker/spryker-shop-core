@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Form;
 
-use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
