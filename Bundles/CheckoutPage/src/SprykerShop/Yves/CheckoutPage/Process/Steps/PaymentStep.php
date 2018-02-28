@@ -12,6 +12,7 @@ use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginWithMessengerInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
@@ -27,21 +28,29 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $flashMessenger;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
+     */
+    protected $calculationClient;
+
+    /**
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $paymentPlugins
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      */
     public function __construct(
         StepHandlerPluginCollection $paymentPlugins,
         $stepRoute,
         $escapeRoute,
-        FlashMessengerInterface $flashMessenger
+        FlashMessengerInterface $flashMessenger,
+        CheckoutPageToCalculationClientInterface $calculationClient
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->paymentPlugins = $paymentPlugins;
         $this->flashMessenger = $flashMessenger;
+        $this->calculationClient = $calculationClient;
     }
 
     /**
@@ -70,6 +79,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
                 $paymentHandler->setFlashMessenger($this->flashMessenger);
             }
             $paymentHandler->addToDataClass($request, $quoteTransfer);
+            $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
         }
 
         return $quoteTransfer;
