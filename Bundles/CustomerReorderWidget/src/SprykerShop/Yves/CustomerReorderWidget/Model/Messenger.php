@@ -20,7 +20,7 @@ class Messenger implements MessengerInterface
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface
      */
-    private $client;
+    protected $client;
 
     /**
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger

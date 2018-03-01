@@ -23,12 +23,12 @@ class CartFiller implements CartFillerInteface
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcherInterface
      */
-    private $itemsFetcher;
+    protected $itemsFetcher;
 
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriterInterface
      */
-    private $quoteWriter;
+    protected $quoteWriter;
 
     /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
