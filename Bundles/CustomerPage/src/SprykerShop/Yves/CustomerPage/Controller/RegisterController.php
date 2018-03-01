@@ -52,14 +52,12 @@ class RegisterController extends AbstractCustomerController
             ->createCustomerFormFactory()
             ->getLoginForm();
 
-        return $this->view(
-            [
-                'loginForm' => $loginForm->createView(),
-                'registerForm' => $registerForm->createView(),
-            ],
-            [],
-            '@CustomerPage/views/register/register.twig'
-        );
+        $data = [
+            'loginForm' => $loginForm->createView(),
+            'registerForm' => $registerForm->createView(),
+        ];
+
+        return $this->view($data, [], '@CustomerPage/views/register/register.twig');
     }
 
     /**

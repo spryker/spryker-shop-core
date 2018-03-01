@@ -85,11 +85,7 @@ class AddressController extends AbstractCustomerController
             'form' => $addressForm->createView(),
         ];
 
-        return $this->view(
-            $data,
-            [],
-            '@CustomerPage/views/address-create/address-create.twig'
-        );
+        return $this->view($data, [], '@CustomerPage/views/address-create/address-create.twig');
     }
 
     /**
@@ -131,11 +127,7 @@ class AddressController extends AbstractCustomerController
             'form' => $addressForm->createView(),
         ];
 
-        return $this->view(
-            $data,
-            [],
-            '@CustomerPage/views/address-update/address-update.twig'
-        );
+        return $this->view($data, [], '@CustomerPage/views/address-update/address-update.twig');
     }
 
     /**

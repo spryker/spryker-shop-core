@@ -33,13 +33,11 @@ class AuthController extends AbstractCustomerController
             ->createCustomerFormFactory()
             ->getRegisterForm();
 
-        return $this->view(
-            [
-                'loginForm' => $loginForm->createView(),
-                'registerForm' => $registerForm->createView(),
-            ],
-            [],
-            '@CustomerPage/views/login/login.twig'
-        );
+        $data = [
+            'loginForm' => $loginForm->createView(),
+            'registerForm' => $registerForm->createView(),
+        ];
+
+        return $this->view($data, [], '@CustomerPage/views/login/login.twig');
     }
 }

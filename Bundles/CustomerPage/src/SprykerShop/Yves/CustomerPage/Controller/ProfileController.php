@@ -59,11 +59,7 @@ class ProfileController extends AbstractCustomerController
             'passwordForm' => $passwordForm->createView(),
         ];
 
-        return $this->view(
-            $data,
-            [],
-            '@CustomerPage/views/profile/profile.twig'
-        );
+        return $this->view($data, [], '@CustomerPage/views/profile/profile.twig');
     }
 
     /**
