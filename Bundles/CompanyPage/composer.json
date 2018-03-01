@@ -24,6 +24,11 @@
   "suggest": {
     "spryker/silex": "*"
   },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
