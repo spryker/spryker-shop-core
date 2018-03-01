@@ -42,7 +42,7 @@ class OrderController extends AbstractCustomerController
                 'pagination' => $orderListTransfer->getPagination(),
                 'orderList' => $orderList,
             ],
-            $this->getFactory()->getCustomerOrderWidgetPlugins()
+            $this->getFactory()->getCustomerOrderListWidgetPlugins()
         );
     }
 
@@ -57,7 +57,7 @@ class OrderController extends AbstractCustomerController
 
         return $this->view(
             $responseData,
-            $this->getFactory()->getCustomerOrderWidgetPlugins()
+            $this->getFactory()->getCustomerOrderViewWidgetPlugins()
         );
     }
 
