@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface ItemsFetcherInterface
+interface ItemFetcherInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

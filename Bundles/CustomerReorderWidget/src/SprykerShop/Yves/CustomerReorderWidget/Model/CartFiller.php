@@ -21,7 +21,7 @@ class CartFiller implements CartFillerInterface
     protected $cartClient;
 
     /**
-     * @var \SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcherInterface
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface
      */
     protected $itemsFetcher;
 
@@ -32,12 +32,12 @@ class CartFiller implements CartFillerInterface
 
     /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
-     * @param \SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcherInterface $itemsFetcher
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface $itemsFetcher
      * @param \SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriterInterface $quoteWriter
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,
-        ItemsFetcherInterface $itemsFetcher,
+        ItemFetcherInterface $itemsFetcher,
         QuoteWriterInterface $quoteWriter
     ) {
         $this->cartClient = $cartClient;

@@ -19,8 +19,8 @@ use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityChecker;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityCheckerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\CartFiller;
 use SprykerShop\Yves\CustomerReorderWidget\Model\CartFillerInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcher;
-use SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcherInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcher;
+use SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\Messenger;
 use SprykerShop\Yves\CustomerReorderWidget\Model\MessengerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\OrderReader;
@@ -85,11 +85,11 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcherInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface
      */
-    protected function createItemsFetcher(): ItemsFetcherInterface
+    protected function createItemsFetcher(): ItemFetcherInterface
     {
-        return new ItemsFetcher(
+        return new ItemFetcher(
             $this->getProductBundleClient()
         );
     }
