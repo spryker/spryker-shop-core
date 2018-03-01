@@ -45,7 +45,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CustomerReorderWidget\Model\OrderReaderInterface
      */
-    public function createOrderRepository(): OrderReaderInterface
+    public function createOrderReader(): OrderReaderInterface
     {
         return new OrderReader(
             $this->getSalesClient(),
