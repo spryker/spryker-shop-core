@@ -1,0 +1,33 @@
+{% set actions = actions|default(false) %}
+<table class="stack">
+    <thead>
+    <tr class="active">
+        <th>{{ 'company.account.business_unit.name' | trans }}</th>
+        <th>{{ 'company.account.business_unit.email' | trans }}</th>
+        <th>{{ 'company.account.business_unit.phone' | trans }}</th>
+        <th>{{ 'company.account.business_unit.external_url' | trans }}</th>
+        {% if (actions) %}
+            <th class="text-right">{{ 'company.account.table.actions' | trans }}</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for businessUnit in _view.businessUnitCollection %}
+        <tr>
+            <td>{{ businessUnit.name }}</td>
+            <td>{{ businessUnit.email }}</td>
+            <td>{{ businessUnit.phone }}</td>
+            <td><a href="{{ businessUnit.externalUrl }}" target="_blank">{{ businessUnit.externalUrl }}</a></td>
+            {% if (actions) %}
+                <td class="text-right">
+                    <a href="{{ path('company/business-unit/details', {'id': businessUnit.idCompanyBusinessUnit}) }}">
+                        <small>
+                            <i class="fa fa-users"></i> {{ 'company.account.business_unit.view' | trans }}
+                        </small>
+                    </a>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

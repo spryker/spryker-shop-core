@@ -35,6 +35,7 @@
     "spryker-shop/cms-content-widget-product-connector": "*",
     "spryker-shop/cms-content-widget-product-set-connector": "*",
     "spryker-shop/cms-page": "*",
+    "spryker-shop/company-page": "*",
     "spryker-shop/currency-widget": "*",
     "spryker-shop/customer-page": "*",
     "spryker-shop/discount-promotion-widget": "*",
