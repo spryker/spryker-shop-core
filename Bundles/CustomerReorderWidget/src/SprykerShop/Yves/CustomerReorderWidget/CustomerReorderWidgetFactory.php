@@ -8,11 +8,10 @@
 namespace SprykerShop\Yves\CustomerReorderWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Kernel\Application;
-use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityChecker;
@@ -21,8 +20,6 @@ use SprykerShop\Yves\CustomerReorderWidget\Model\CartFiller;
 use SprykerShop\Yves\CustomerReorderWidget\Model\CartFillerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcher;
 use SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Model\Messenger;
-use SprykerShop\Yves\CustomerReorderWidget\Model\MessengerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\OrderReader;
 use SprykerShop\Yves\CustomerReorderWidget\Model\OrderReaderInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriter;
@@ -54,17 +51,6 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\MessengerInterface
-     */
-    public function createMessenger(): MessengerInterface
-    {
-        return new Messenger(
-            $this->getFlashMessenger(),
-            $this->getCartClient()
-        );
-    }
-
-    /**
      * @return \SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityCheckerInterface
      */
     public function createAvailabilityChecker(): AvailabilityCheckerInterface
@@ -72,6 +58,14 @@ class CustomerReorderWidgetFactory extends AbstractFactory
         return new AvailabilityChecker(
             $this->getAvailabilityStorageClient()
         );
+    }
+
+    /**
+     * @return CustomerReorderWidgetToMessengerClientInterface
+     */
+    public function getMessengerClient(): CustomerReorderWidgetToMessengerClientInterface
+    {
+        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_MESSENGER);
     }
 
     /**
@@ -134,19 +128,4 @@ class CustomerReorderWidgetFactory extends AbstractFactory
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_PRODUCT_BUNDLE);
     }
 
-    /**
-     * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
-     */
-    protected function getFlashMessenger(): FlashMessengerInterface
-    {
-        return $this->getApplication()['flash_messenger'];
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\Application
-     */
-    protected function getApplication(): Application
-    {
-        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::PLUGIN_APPLICATION);
-    }
 }

@@ -41,8 +41,8 @@ class OrderController extends AbstractController
             ->fillFromOrder($orderTransfer);
 
         $this->getFactory()
-            ->createMessenger()
-            ->setFlashMessagesFromLastZedRequest();
+            ->getMessengerClient()
+            ->processFlashMessagesFromLastZedRequest();
 
         return $this->getSuccessRedirect();
     }
@@ -66,8 +66,8 @@ class OrderController extends AbstractController
             ->fillSelectedFromOrder($orderTransfer, $items);
 
         $this->getFactory()
-            ->createMessenger()
-            ->setFlashMessagesFromLastZedRequest();
+            ->getMessengerClient()
+            ->processFlashMessagesFromLastZedRequest();
 
         return $this->getSuccessRedirect();
     }

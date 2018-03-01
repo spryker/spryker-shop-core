@@ -26,9 +26,4 @@ interface CustomerReorderWidgetToCartClientInterface
      * @return void
      */
     public function storeQuote(QuoteTransfer $quoteTransfer): void;
-
-    /**
-     * @return \Spryker\Client\Cart\Zed\CartStubInterface
-     */
-    public function getZedStub(): CartStubInterface;
 }

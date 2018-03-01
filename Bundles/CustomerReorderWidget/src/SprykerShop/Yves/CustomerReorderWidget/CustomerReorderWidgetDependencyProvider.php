@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientBridge;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientBridge;
 
@@ -23,8 +24,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_SALES = 'CLIENT_SALES';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
-
-    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -38,7 +38,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addSalesClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addProductBundleClient($container);
-        $container = $this->addApplication($container);
+        $container = $this->addMessengerClient($container);
 
         return $container;
     }
@@ -128,12 +128,12 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addApplication(Container $container): Container
+    protected function addMessengerClient(Container $container): Container
     {
-        $container[static::PLUGIN_APPLICATION] = function () {
-            $pimplePlugin = new Pimple();
-
-            return $pimplePlugin->getApplication();
+        $container[static::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
+            return new CustomerReorderWidgetToMessengerClientBridge(
+                $container->getLocator()->messenger()->client()
+            );
         };
 
         return $container;
