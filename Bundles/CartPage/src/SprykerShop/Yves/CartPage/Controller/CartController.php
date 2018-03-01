@@ -43,7 +43,7 @@ class CartController extends AbstractController
         ];
 
         return $this->view(
-            $data, 
+            $data,
             $this->getFactory()->getCartPageWidgetPlugins(),
             '@CartPage/views/cart/cart.twig'
         );

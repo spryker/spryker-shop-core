@@ -1,5 +1,3 @@
-{% extends model('base') %}
-
 {#
  #
  #
@@ -9,7 +7,9 @@
 {%- define config = {
     name: required,
     tag: 'div',
-    selector: ''
+    selector: '',
+    renderClass: true,
+    renderAttributes: true
 } -%}
 {%- define data = {} -%}
 {%- define embed = {} -%}
@@ -18,38 +18,34 @@
 {%- define modifiers = [] -%}
 {%- define attributes = {} -%}
 
-{% block model %}
+{% block component %}
     {%- set config = config | merge({
         selector: config.selector is empty ? ('js-' ~ config.name) : config.selector
     }) -%}
 
-    {{parent()}}
-{% endblock -%}
-
-{%- block render -%}
     <{{-config.tag}} class="
-        {%- block renderCustomComponentClass -%}
-            {%- if config.name == config.tag and '-' in config.tag -%}custom-element {% endif -%}
-        {%- endblock -%}
-        {%- block class -%}
-            {%- block renderClass -%}
+        {%- if config.name == config.tag and '-' in config.tag -%}custom-element {% endif -%}
+        {%- if config.renderClass -%}
+            {%- block class -%}
                 {{config.name | trim-}} 
                 {%- for modifier in modifiers -%}{%- if modifier | trim is not empty %} {{config.name}}--{{modifier | trim}}{% endif -%}{% endfor -%}
                 {%- if class %} {{class-}}{% endif -%}
             {%- endblock -%}
-        {%- endblock -%}"
+        {%- endif -%}"
 
-        {% block attributes -%}
-            {%- block renderAttributes -%}
-                {%- for attrname, attrvalue in attributes -%}
-                    {%- if attrvalue is sameas(true) -%}
-                        {{-' ' ~ attrname-}}
-                    {%- elseif attrvalue is not sameas(false) -%}
-                        {{-' ' ~ attrname-}}='{{-attrvalue-}}'
+        {% if config.renderAttributes -%}
+            {%- block attributes -%}
+                {%- for name, value in attributes -%}
+                    {%- if value is sameas(true) -%}
+                        {{-' ' ~ name-}}
+                    {%- elseif value is not sameas(false) -%}
+                        {{-' ' ~ name-}}='{{-value-}}'
                     {%- endif -%}
                 {%- endfor -%}
             {%- endblock -%}
-        {%- endblock -%}>
-        {{parent()}}
+        {%- endif -%}
+        
+        {%- block extraAttributes -%}{%- endblock -%}>
+            {%- block body -%}{%- endblock -%}
     </{{-config.tag-}}>
-{%- endblock -%}
+{% endblock -%}

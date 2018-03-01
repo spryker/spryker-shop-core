@@ -5,7 +5,7 @@
     originalPrice: _widget.product.prices.ORIGINAL | default(null)
 } %}
 
-{% block render %}
+{% block template %}
     {% if data.price is not empty %}
         {{parent()}}
     {% endif %}

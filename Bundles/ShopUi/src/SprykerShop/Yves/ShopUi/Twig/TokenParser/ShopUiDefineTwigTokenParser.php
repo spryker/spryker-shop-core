@@ -5,20 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShopUi\Twig\Tag;
+namespace SprykerShop\Yves\ShopUi\Twig\TokenParser;
 
-use SprykerShop\Yves\ShopUi\Twig\Tag\ShopUiDefineTwigNode;
-use Twig_TokenParser;
+use SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode;
 use Twig_Token;
+use Twig_TokenParser;
 
 class ShopUiDefineTwigTokenParser extends Twig_TokenParser
 {
-    public function getTag()
+    /**
+     * @return string
+     */
+    public function getTag(): string
     {
         return 'define';
     }
 
-    public function parse(Twig_Token $token)
+    /**
+     * @param \Twig_Token $token
+     *
+     * @return \ShopUiDefineTwigNode
+     */
+    public function parse(Twig_Token $token): ShopUiDefineTwigNode
     {
         $parser = $this->parser;
         $stream = $parser->getStream();

@@ -18,7 +18,7 @@
 {% set alertMessages = data.alertMessages | merge(app.session.flashbag.get('flash.messages.error')) %}
 {% set hasNoMessage = messages is empty and successMessages is empty and warningMessages is empty and alertMessages is empty %}
 
-{% block render %}
+{% block component %}
     {% if not hasNoMessage %}{{parent()}}{% endif %}
 {% endblock %}
 

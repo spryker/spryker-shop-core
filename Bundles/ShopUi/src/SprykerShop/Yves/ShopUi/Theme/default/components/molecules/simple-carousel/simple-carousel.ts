@@ -31,7 +31,7 @@ export default class SimpleCarousel extends Component {
         this.triggerNext = this.querySelector(`.${this.selector}__next`);
         this.slider = this.querySelector(`.${this.selector}__slider`);
         this.slideWidth = 100 / this.slidesToShow;
-        this.dots = Array.from(this.getElementsByClassName(this.dotSelector));
+        this.dots = <HTMLElement[]>Array.from(this.getElementsByClassName(this.dotSelector));
         this.viewsCount = this.getViewsCount();
         
         this.mapEvents();

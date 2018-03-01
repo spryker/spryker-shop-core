@@ -28,7 +28,7 @@ class IndexController extends AbstractController
         ];
 
         return $this->view(
-            $data, 
+            $data,
             $this->getFactory()->getHomePageWidgetPlugins(),
             '@HomePage/views/home/home.twig'
         );

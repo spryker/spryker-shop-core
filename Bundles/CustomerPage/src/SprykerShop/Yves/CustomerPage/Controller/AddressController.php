@@ -40,7 +40,7 @@ class AddressController extends AbstractCustomerController
         $responseData = $this->getAddressListResponseData($customerTransfer, $addressesTransfer);
 
         return $this->view(
-            $responseData, 
+            $responseData,
             [],
             '@CustomerPage/views/address/address.twig'
         );
@@ -86,8 +86,8 @@ class AddressController extends AbstractCustomerController
         ];
 
         return $this->view(
-            $data, 
-            [], 
+            $data,
+            [],
             '@CustomerPage/views/address-create/address-create.twig'
         );
     }
@@ -132,8 +132,8 @@ class AddressController extends AbstractCustomerController
         ];
 
         return $this->view(
-            $data, 
-            [], 
+            $data,
+            [],
             '@CustomerPage/views/address-update/address-update.twig'
         );
     }

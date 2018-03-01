@@ -42,7 +42,7 @@ class ProductController extends AbstractController
         ];
 
         return $this->view(
-            $data, 
+            $data,
             $this->getFactory()->getProductDetailPageWidgetPlugins(),
             '@ProductDetailPage/views/pdp/pdp.twig'
         );

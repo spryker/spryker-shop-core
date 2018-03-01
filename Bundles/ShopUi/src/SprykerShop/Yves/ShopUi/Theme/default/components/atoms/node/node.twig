@@ -16,7 +16,7 @@
 {% set isValidTo = data.node.validFrom is empty or data.node.validFrom | date('Ymd') <= today %}
 {% set isActiveAndValid = isActive and isValidFrom and isValidTo %}
 
-{% block render %}
+{% block component %}
     {% if isActiveAndValid %}
         {{ parent() }}
     {% endif %}

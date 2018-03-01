@@ -8,7 +8,7 @@
     metaKeywords: ''
 } %}
 
-{% block render %}
+{% block template %}
     <!doctype html>
     <html lang="{{ data.locale }}">
         <head>
@@ -28,7 +28,7 @@
             {% endblock %}
 
             {% block headScripts %}
-                <script src="{{publicPath('js/yves_default.manifest.js')}}"></script>
+                {# <script src="{{publicPath('js/yves_default.manifest.js')}}"></script> #}
             {% endblock %}
 
             <title>{% block headTitle %}{{ data.title }}{% endblock %}</title>

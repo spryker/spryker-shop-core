@@ -14,7 +14,7 @@
     href: (data.value is not empty) ? generateUrlWithoutActiveSearchFilter(data.filter, data.value) : null
 } %}
 
-{% block render %}
+{% block component %}
     {% if data.value is not empty %}
         {{parent()}}
     {% endif %}

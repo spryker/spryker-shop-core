@@ -2,7 +2,8 @@
 
 {% define config = {
     name: 'logo',
-    tag: 'span'
+    tag: 'span',
+    renderAttributes: false
 } %}
 
 {% define data = {
@@ -13,8 +14,6 @@
     src: null,
     alt: 'Logo'
 } %}
-
-{% block attributes %}{% endblock %}
 
 {% block body %}
     <a href="{{data.url}}">
@@ -28,7 +27,7 @@
                 </g>
             </svg>
         {% else %}
-            <img {{block('renderAttributes')}} />
+            <img {{block('attributes')}} />
         {% endif %}
     </a>
 {% endblock %}

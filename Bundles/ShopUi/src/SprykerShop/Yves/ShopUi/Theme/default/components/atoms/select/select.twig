@@ -2,17 +2,16 @@
 
 {% define config = {
     name: 'select',
-    tag: 'label'
+    tag: 'label',
+    renderAttributes: false
 } %}
 
 {% define data = {
     options: []
 } %}
 
-{% block attributes %}{% endblock %}
-
 {% block body %}
-    <select class="{{config.name}}__select {% block selectClass %}{% endblock %}" {% block selectAttributes %}{{block('renderAttributes')}}{% endblock %}>
+    <select class="{{config.name}}__select {% block selectClass %}{% endblock %}" {{block('attributes')}}>
         {% block options %}
             {% for option in data.options %}
                 <option value="{{option.value}}">{{option.label}}</option>

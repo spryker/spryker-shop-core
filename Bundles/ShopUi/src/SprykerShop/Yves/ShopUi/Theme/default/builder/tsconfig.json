@@ -14,9 +14,6 @@
         ]
     },
     "files": [
-        "../main.ts"
-    ],
-    "exclude": [
-        "./"
+        "./main.ts"
     ]
 }

@@ -1,4 +1,5 @@
-declare const PRODUCTION: boolean;
+declare const __NAME__: string;
+declare const __PRODUCTION__: boolean;
 
 import { LogLevel } from './app/libs/logger';
 
@@ -9,8 +10,8 @@ const config = {
     },
 
     log: {
-        prefix: 'yves-ui',
-        level: PRODUCTION ? LogLevel.ERRORS_ONLY : LogLevel.DEBUG
+        prefix: __NAME__,
+        level: __PRODUCTION__ ? LogLevel.ERRORS_ONLY : LogLevel.DEBUG
     }
 }
 

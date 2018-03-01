@@ -2,7 +2,8 @@
 
 {% define config = {
     name: 'checkbox',
-    tag: 'label'
+    tag: 'label',
+    renderAttributes: false
 } %}
 
 {% define attributes = {
@@ -13,12 +14,10 @@
     label: ''
 } %}
 
-{% block attributes %}{% endblock %}
-
 {% block body %}
     <label class="{{config.name}}__container">
         <span class="{{config.name}}__box"></span>
-        <input class="{{config.name}}__input {% block inputClass %}{% endblock %}" {% block inputAttributes %}{{block('renderAttributes')}}{% endblock %}/>
+        <input class="{{config.name}}__input {% block inputClass %}{% endblock %}" {{block('attributes')}}/>
         <span class="{{config.name}}__check"></span>
         {%- block labelContainer -%}    
             <span class="{{config.name}}__label {% block labelClass %}{% endblock %}">

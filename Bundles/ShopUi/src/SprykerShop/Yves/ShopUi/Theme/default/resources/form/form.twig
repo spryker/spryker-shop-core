@@ -28,7 +28,7 @@
             choice_translation_domain: choice_translation_domain
         }
     } only %}
-        {% block selectAttributes %}
+        {% block attributes %}
             {{parent()}}
             {{embed.attributes | raw}}
             {% if embed.multiple %} multiple="multiple"{% endif %}

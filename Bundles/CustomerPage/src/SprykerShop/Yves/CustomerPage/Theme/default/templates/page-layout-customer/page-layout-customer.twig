@@ -14,28 +14,16 @@
     } only %}
 {% endblock %}
 
-{% block protected %}
-    {{parent()}}
-    {% block customerWishlistNavigation %}{% endblock %}
-{% endblock %}
-
 {% block content %}
     <div class="grid">
         <div class="col col--sm-12 col--md-3">
             {% block customerNavigation %}
-                {% embed molecule('customer-navigation', 'CustomerPage') with {
+                {% include molecule('customer-navigation', 'CustomerPage') with {
                     class: 'box',
                     data: {
                         activePage: data.activePage
-                    },
-                    embed: {
-                        wishlistNavigation: block('customerWishlistNavigation')
                     }
                 } only %}
-                    {% block wishlistNavigation %}
-                        {{embed.wishlistNavigation | raw}}
-                    {% endblock %}
-                {% endembed %}
             {% endblock %}
         </div>
 

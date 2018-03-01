@@ -1,9 +1,11 @@
-{% extends model('base') %}
-
 {#
  #
  #
  # Template API
  #}
-
+ 
 {%- define data = {} -%}
+
+{%- block template -%}
+    {%- block body -%}{%- endblock -%}
+{%- endblock -%}

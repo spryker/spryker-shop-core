@@ -46,7 +46,7 @@ class CheckoutController extends AbstractController
         }
 
         return $this->view(
-            $response, 
+            $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
             '@CheckoutPage/views/login/login.twig'
         );
@@ -71,7 +71,7 @@ class CheckoutController extends AbstractController
         }
 
         return $this->view(
-            $response, 
+            $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
             '@CheckoutPage/views/address/address.twig'
         );
@@ -96,7 +96,7 @@ class CheckoutController extends AbstractController
         }
 
         return $this->view(
-            $response, 
+            $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
             '@CheckoutPage/views/shipment/shipment.twig'
         );
@@ -121,7 +121,7 @@ class CheckoutController extends AbstractController
         }
 
         return $this->view(
-            $response, 
+            $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
             '@CheckoutPage/views/payment/payment.twig'
         );
@@ -146,7 +146,7 @@ class CheckoutController extends AbstractController
         }
 
         return $this->view(
-            $viewData, 
+            $viewData,
             $this->getFactory()->getSummaryPageWidgetPlugins(),
             '@CheckoutPage/views/summary/summary.twig'
         );
@@ -176,7 +176,7 @@ class CheckoutController extends AbstractController
         }
 
         return $this->view(
-            $response, 
+            $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
             '@CheckoutPage/views/order-success/order-success.twig'
         );
@@ -188,7 +188,7 @@ class CheckoutController extends AbstractController
     public function errorAction()
     {
         return $this->view(
-            null, 
+            null,
             null,
             '@CheckoutPage/views/order-fail/order-fail.twig'
         );

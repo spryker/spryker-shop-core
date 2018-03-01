@@ -49,7 +49,7 @@ class CustomerController extends AbstractCustomerController
         ];
 
         return $this->view(
-            $data, 
+            $data,
             $this->getFactory()->getCustomerOverviewWidgetPlugins(),
             '@CustomerPage/views/overview/overview.twig'
         );
