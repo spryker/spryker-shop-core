@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\Zed\CartStubInterface;
 
 interface CustomerReorderWidgetToCartClientInterface
 {

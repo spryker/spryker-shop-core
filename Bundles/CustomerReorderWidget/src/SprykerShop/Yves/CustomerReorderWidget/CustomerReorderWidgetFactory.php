@@ -61,7 +61,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return CustomerReorderWidgetToMessengerClientInterface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientInterface
      */
     public function getMessengerClient(): CustomerReorderWidgetToMessengerClientInterface
     {
@@ -127,5 +127,4 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_PRODUCT_BUNDLE);
     }
-
 }
