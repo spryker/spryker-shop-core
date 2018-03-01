@@ -38,7 +38,7 @@ class OrderController extends AbstractController
 
         $this->getFactory()
             ->createCartFiller()
-            ->reorder($orderTransfer);
+            ->fillFromOrder($orderTransfer);
 
         $this->getFactory()
             ->createMessenger()
@@ -63,7 +63,7 @@ class OrderController extends AbstractController
 
         $this->getFactory()
             ->createCartFiller()
-            ->reorderItems($orderTransfer, $items);
+            ->fillSelectedFromOrder($orderTransfer, $items);
 
         $this->getFactory()
             ->createMessenger()

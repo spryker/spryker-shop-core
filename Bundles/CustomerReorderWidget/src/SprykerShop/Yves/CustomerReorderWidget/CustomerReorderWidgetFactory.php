@@ -18,7 +18,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityChecker;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityCheckerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\CartFiller;
-use SprykerShop\Yves\CustomerReorderWidget\Model\CartFillerInteface;
+use SprykerShop\Yves\CustomerReorderWidget\Model\CartFillerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcher;
 use SprykerShop\Yves\CustomerReorderWidget\Model\ItemsFetcherInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\Messenger;
@@ -31,9 +31,9 @@ use SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriterInterface;
 class CustomerReorderWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\CartFillerInteface
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\CartFillerInterface
      */
-    public function createCartFiller(): CartFillerInteface
+    public function createCartFiller(): CartFillerInterface
     {
         return new CartFiller(
             $this->getCartClient(),

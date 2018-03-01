@@ -9,14 +9,14 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface CartFillerInteface
+interface CartFillerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    public function reorder(OrderTransfer $orderTransfer): void;
+    public function fillFromOrder(OrderTransfer $orderTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -24,5 +24,5 @@ interface CartFillerInteface
      *
      * @return void
      */
-    public function reorderItems(OrderTransfer $orderTransfer, array $idOrderItems): void;
+    public function fillSelectedFromOrder(OrderTransfer $orderTransfer, array $idOrderItems): void;
 }

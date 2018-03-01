@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 
-class CartFiller implements CartFillerInteface
+class CartFiller implements CartFillerInterface
 {
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface
@@ -50,7 +50,7 @@ class CartFiller implements CartFillerInteface
      *
      * @return void
      */
-    public function reorder(OrderTransfer $orderTransfer): void
+    public function fillFromOrder(OrderTransfer $orderTransfer): void
     {
         $items = $this->itemsFetcher->getAll($orderTransfer);
         $quoteTransfer = $this->quoteWriter->fill($orderTransfer);
@@ -64,7 +64,7 @@ class CartFiller implements CartFillerInteface
      *
      * @return void
      */
-    public function reorderItems(OrderTransfer $orderTransfer, array $idOrderItems): void
+    public function fillSelectedFromOrder(OrderTransfer $orderTransfer, array $idOrderItems): void
     {
         $items = $this->itemsFetcher->getByIds($orderTransfer, $idOrderItems);
         $quoteTransfer = $this->quoteWriter->fill($orderTransfer);
