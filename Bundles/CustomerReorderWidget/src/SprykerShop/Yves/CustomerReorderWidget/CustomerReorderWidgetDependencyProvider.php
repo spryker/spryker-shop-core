@@ -130,7 +130,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addMessengerClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
+        $container[static::CLIENT_MESSENGER] = function (Container $container) {
             return new CustomerReorderWidgetToMessengerClientBridge(
                 $container->getLocator()->messenger()->client()
             );
