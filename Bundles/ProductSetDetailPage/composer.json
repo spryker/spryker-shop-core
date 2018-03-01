@@ -6,8 +6,8 @@
     "php": ">=7.1",
     "spryker-shop/shop-application": "^0.1.0",
     "spryker/kernel": "^3.16.0",
-    "spryker/product-set-storage": "^0.1.0",
-    "spryker/product-storage": "^0.1.0"
+    "spryker/product-set-storage": "^1.0.0",
+    "spryker/product-storage": "^1.0.0"
   },
   "require-dev": {
     "spryker-shop/shop-router": "*",
