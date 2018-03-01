@@ -53,7 +53,7 @@ class CartFiller implements CartFillerInterface
     public function fillFromOrder(OrderTransfer $orderTransfer): void
     {
         $items = $this->itemsFetcher->getAll($orderTransfer);
-        $quoteTransfer = $this->quoteWriter->fill($orderTransfer);
+        $quoteTransfer = $this->quoteWriter->write($orderTransfer);
 
         $this->updateCart($quoteTransfer, $items);
     }
@@ -67,7 +67,7 @@ class CartFiller implements CartFillerInterface
     public function fillSelectedFromOrder(OrderTransfer $orderTransfer, array $idOrderItems): void
     {
         $items = $this->itemsFetcher->getByIds($orderTransfer, $idOrderItems);
-        $quoteTransfer = $this->quoteWriter->fill($orderTransfer);
+        $quoteTransfer = $this->quoteWriter->write($orderTransfer);
 
         $this->updateCart($quoteTransfer, $items);
     }

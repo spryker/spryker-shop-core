@@ -33,7 +33,7 @@ class QuoteWriter implements QuoteWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function fill(OrderTransfer $orderTransfer): QuoteTransfer
+    public function write(OrderTransfer $orderTransfer): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
