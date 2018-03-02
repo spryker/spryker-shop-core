@@ -26,23 +26,15 @@ class CartFiller implements CartFillerInterface
     protected $itemsFetcher;
 
     /**
-     * @var \SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriterInterface
-     */
-    protected $quoteWriter;
-
-    /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface $itemsFetcher
-     * @param \SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriterInterface $quoteWriter
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,
-        ItemFetcherInterface $itemsFetcher,
-        QuoteWriterInterface $quoteWriter
+        ItemFetcherInterface $itemsFetcher
     ) {
         $this->cartClient = $cartClient;
         $this->itemsFetcher = $itemsFetcher;
-        $this->quoteWriter = $quoteWriter;
     }
 
     /**
@@ -53,9 +45,8 @@ class CartFiller implements CartFillerInterface
     public function fillFromOrder(OrderTransfer $orderTransfer): void
     {
         $items = $this->itemsFetcher->getAll($orderTransfer);
-        $quoteTransfer = $this->quoteWriter->write($orderTransfer);
 
-        $this->updateCart($quoteTransfer, $items);
+        $this->updateCart($items);
     }
 
     /**
@@ -67,19 +58,20 @@ class CartFiller implements CartFillerInterface
     public function fillSelectedFromOrder(OrderTransfer $orderTransfer, array $idOrderItems): void
     {
         $items = $this->itemsFetcher->getByIds($orderTransfer, $idOrderItems);
-        $quoteTransfer = $this->quoteWriter->write($orderTransfer);
 
-        $this->updateCart($quoteTransfer, $items);
+        $this->updateCart($items);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
      * @return void
      */
-    protected function updateCart(QuoteTransfer $quoteTransfer, array $orderItems): void
+    protected function updateCart(array $orderItems): void
     {
+        $quoteTransfer = new QuoteTransfer();
+        $this->cartClient->storeQuote($quoteTransfer);
+
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($quoteTransfer);
         $orderItemsObject = new ArrayObject($orderItems);

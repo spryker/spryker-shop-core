@@ -22,8 +22,6 @@ use SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcher;
 use SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\OrderReader;
 use SprykerShop\Yves\CustomerReorderWidget\Model\OrderReaderInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriter;
-use SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriterInterface;
 
 class CustomerReorderWidgetFactory extends AbstractFactory
 {
@@ -34,8 +32,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     {
         return new CartFiller(
             $this->getCartClient(),
-            $this->createItemsFetcher(),
-            $this->createQuoteWriter()
+            $this->createItemsFetcher()
         );
     }
 
@@ -66,16 +63,6 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     public function getMessengerClient(): CustomerReorderWidgetToMessengerClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_MESSENGER);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\QuoteWriterInterface
-     */
-    protected function createQuoteWriter(): QuoteWriterInterface
-    {
-        return new QuoteWriter(
-            $this->getCartClient()
-        );
     }
 
     /**
