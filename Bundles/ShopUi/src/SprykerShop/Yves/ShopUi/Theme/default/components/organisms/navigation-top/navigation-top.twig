@@ -5,48 +5,45 @@
     tag: 'nav'
 } %}
 
+{% define data = {
+    currentLanguage: currentLanguage,
+    availableLanguages: availableLanguages | default([]),
+    cartQuantity: app['cart.quantity'],
+    showUserMenu: not (hideUserMenu | default(false))
+} %}
+
 {% block body %}
-    <div class="text-right">
-        <ul class="menu menu--inline">
+    <ul class="menu menu--inline">
+        <li class="menu__item">{{ widgetGlobal('PriceModeSwitcherWidgetPlugin') }}</li>
+        <li class="menu__separator"></li>
+        <li class="menu__item">{{ widgetGlobal('CurrencyWidgetPlugin') }}</li>
+        <li class="menu__separator"></li>
+
+        {% for availableLanguage in data.availableLanguages %}
             <li class="menu__item">
-                <span class="float-left small-10 columns">
-                    {{ widgetGlobal('CurrencyWidgetPlugin') }}
-                </span>
-            </li>
-            
-            <li class="menu__separator"></li>
-
-            {% if availableLanguages is defined and availableLanguages|length > 0 %}
-                {% for availableLanguage in availableLanguages %}
-                    <li class="menu__item">
-                        {% if availableLanguage != currentLanguage %}
-                            <a href="/{{ availableLanguage }}">{{ availableLanguage }}</a>
-                        {% else %}
-                            <span>{{ availableLanguage }}</span>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            {% endif %}
-
-            <li class="menu__separator"></li>
-            
-            {% if app['cart.quantity'] > 0 %}
-                <li class="menu__item"><span class="warning badge float-left">{{ app['cart.quantity'] }}</span></li>
-            {% endif %}
-            
-            <li class="menu__item"><a href="{{ url('cart') }}"><i class="fa fa-shopping-cart"></i>{{ 'global.cart' | trans }}</a></li>
-            
-            <li class="menu__separator"></li>
-            
-            {% if hideUserMenu is not defined or hideUserMenu != true %}
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <li class="menu__item"><a href="{{ url('customer/overview') }}"><i class="fa fa-user"></i>{{ 'customer.profile'|trans }}</a></li>
-                    <li class="menu__item"><a href="{{ url('wishlist/overview') }}"><i class="fa fa-list"></i>{{ 'wishlist.wishlist'|trans }}</a></li>
-                    <li class="menu__item"><a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i>{{ 'customer.logout'|trans }}</a></li>
+                {% if availableLanguage != data.currentLanguage %}
+                    <a href="/{{ availableLanguage }}">{{ availableLanguage }}</a>
                 {% else %}
-                    <li class="menu__item"><a href="{{ url('login') }}"><i class="fa fa-sign-in"></i>{{ 'customer.login'|trans }}</a></li>
+                    <span>{{ availableLanguage }}</span>
                 {% endif %}
+            </li>
+        {% endfor %}
+
+        <li class="menu__separator"></li>
+        {% if data.cartQuantity > 0 %}
+            <li class="menu__item">{{data.cartQuantity}}</li>
+        {% endif %}
+        <li class="menu__item"><a href="{{ url('cart') }}">{{ 'global.cart' | trans }}</a></li>
+        <li class="menu__separator"></li>
+        
+        {% if data.showUserMenu %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li class="menu__item"><a href="{{ url('customer/overview') }}">{{ 'customer.profile'|trans }}</a></li>
+                <li class="menu__item"><a href="{{ url('wishlist/overview') }}">{{ 'wishlist.wishlist'|trans }}</a></li>
+                <li class="menu__item"><a href="{{ url('logout') }}">{{ 'customer.logout'|trans }}</a></li>
+            {% else %}
+                <li class="menu__item"><a href="{{ url('login') }}">{{ 'customer.login'|trans }}</a></li>
             {% endif %}
-        </ul>
-    </div>
+        {% endif %}
+    </ul>
 {% endblock %}

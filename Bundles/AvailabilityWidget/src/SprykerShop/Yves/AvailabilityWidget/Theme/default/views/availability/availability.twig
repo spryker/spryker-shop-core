@@ -6,12 +6,7 @@
 } %}
 
 {%- block isAvailable -%}
-    {%- define data = {
-        concreteProductId: _widget.product.idProductConcrete,
-        isAvailable: _widget.product.available
-    } -%}
-
-    {{- data.concreteProductId and data.isAvailable -}}
+    {{- _widget.product.idProductConcrete and _widget.product.available -}}
 {%- endblock -%}
 
 {% block template %}
