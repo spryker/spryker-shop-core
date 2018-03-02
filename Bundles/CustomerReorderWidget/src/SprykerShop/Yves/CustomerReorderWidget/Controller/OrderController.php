@@ -20,7 +20,6 @@ class OrderController extends AbstractController
     public const PARAM_ID_ORDER = 'id';
     /**
      * Route for redirect after success.
-     * Currently point to cart page. Defined in CartPage module.
      * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
     public const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
