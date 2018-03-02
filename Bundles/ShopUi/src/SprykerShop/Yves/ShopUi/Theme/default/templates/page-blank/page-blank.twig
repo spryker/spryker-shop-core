@@ -34,7 +34,7 @@
             <title>{% block headTitle %}{{ data.title }}{% endblock %}</title>
         </head>
         <body {%- if block('class') is not empty %} class="{%- block class -%}{%- endblock -%}"{%- endif %}
-            {% block attributes -%}{%- endblock -%}>
+            {%- block attributes -%}{{qa('page')}}{%- endblock -%}>
 
             {{parent()}}
 

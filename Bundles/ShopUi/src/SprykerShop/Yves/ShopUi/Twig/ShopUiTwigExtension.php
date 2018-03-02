@@ -62,6 +62,7 @@ class ShopUiTwigExtension extends TwigExtension
             }, [
                 $this,
                 self::FUNCTION_GET_QA_ID_ATTRIBUTE,
+                'is_safe' => ['html'],
             ]),
 
             new Twig_SimpleFunction(self::FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE, function ($modelName) {
