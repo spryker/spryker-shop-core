@@ -16,8 +16,8 @@
   },
   "require-dev": {
     "spryker-shop/customer-page": "^0.2.0",
-    "spryker/silex": "*",
     "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
