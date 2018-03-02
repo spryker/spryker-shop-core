@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class OrderController extends AbstractController
 {
     public const PARAM_ITEMS = 'items';
-    public const ID_ORDER = 'id';
+    public const PARAM_ID_ORDER = 'id';
     /**
      * Route for redirect after success.
      * Currently point to cart page. Defined in CartPage module.
@@ -54,7 +54,7 @@ class OrderController extends AbstractController
      */
     public function reorderItemsAction(Request $request): RedirectResponse
     {
-        $idSalesOrder = $request->request->getInt(static::ID_ORDER);
+        $idSalesOrder = $request->request->getInt(static::PARAM_ID_ORDER);
         $items = (array)$request->request->get(static::PARAM_ITEMS);
 
         $orderTransfer = $this->getFactory()
