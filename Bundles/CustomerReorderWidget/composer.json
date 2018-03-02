@@ -16,7 +16,9 @@
   },
   "require-dev": {
     "spryker-shop/customer-page": "^1.0.0",
-    "spryker/silex": "*"
+    "spryker/silex": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "Module with interface to implement, to use the reorder widget on a customer page",
