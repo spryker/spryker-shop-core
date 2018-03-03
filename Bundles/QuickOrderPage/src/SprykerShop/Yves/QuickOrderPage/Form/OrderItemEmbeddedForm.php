@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
+ */
 class OrderItemEmbeddedForm extends AbstractType
 {
     public const FILED_SEARCH_FIELD = 'searchField';
@@ -56,13 +59,6 @@ class OrderItemEmbeddedForm extends AbstractType
         ]);
     }
 
-    protected function getSearchFieldChoices()
-    {
-        return [
-            'SKU / Name' => '',
-        ];
-    }
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -71,7 +67,9 @@ class OrderItemEmbeddedForm extends AbstractType
     protected function addSearchField(FormBuilderInterface $builder): FormTypeInterface
     {
         $builder->add(static::FILED_SEARCH_FIELD, ChoiceType::class, [
-            'choices' => $this->getSearchFieldChoices(),
+            'choices' => $this->getFactory()
+                ->createSearchFieldChoicesDataProvider()
+                ->getChoices(),
             'required' => false,
         ]);
 

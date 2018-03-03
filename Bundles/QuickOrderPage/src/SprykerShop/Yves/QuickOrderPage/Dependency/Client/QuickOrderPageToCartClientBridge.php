@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\CartClientInterface;
 
 class QuickOrderPageToCartClientBridge implements QuickOrderPageToCartClientInterface
 {
@@ -20,7 +19,7 @@ class QuickOrderPageToCartClientBridge implements QuickOrderPageToCartClientInte
     /**
      * @param \Spryker\Client\Cart\CartClientInterface $cartClient
      */
-    public function __construct(CartClientInterface $cartClient)
+    public function __construct($cartClient)
     {
         $this->cartClient = $cartClient;
     }

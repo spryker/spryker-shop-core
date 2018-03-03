@@ -7,11 +7,17 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
+use ArrayObject;
+use Generated\Shared\Transfer\QuickOrderItemTransfer;
+use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
+use SprykerShop\Yves\QuickOrderPage\Form\TextOrderForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,12 +37,61 @@ class QuickOrderController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $textOrderForm = $this
+            ->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getTextOrderForm()
+            ->handleRequest($request);
+
+        $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
+
+        $quickOrder = $this->getQuickOrder($textOrderParsedItems);
         $quickOrderForm = $this
             ->getFactory()
             ->createQuickOrderFormFactory()
-            ->getQuickOrderForm()
+            ->getQuickOrderForm($quickOrder)
             ->handleRequest($request);
 
+        $response = $this->handleQuickOrderForm($quickOrderForm, $request);
+        if ($response !== null) {
+            return $response;
+        }
+
+        $data = [
+            'itemsForm' => $quickOrderForm->createView(),
+            'textOrderForm' => $textOrderForm->createView(),
+            'rowsNumber' => $this->getFactory()->getBundleConfig()->getProductRowsNumber(),
+        ];
+
+        return $this->view($data);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $textOrderForm
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     */
+    protected function handleTextOrderForm(FormInterface $textOrderForm): array
+    {
+        if ($textOrderForm->isSubmitted() && $textOrderForm->isValid()) {
+            $data = $textOrderForm->getData();
+
+            return $this->getFactory()
+                ->createTextOrderParser($data[TextOrderForm::FIELD_TEXT_ORDER])
+                ->getOrderItems();
+        }
+
+        return [];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return null|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleQuickOrderForm(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
+    {
         if ($quickOrderForm->isSubmitted() && $quickOrderForm->isValid()) {
             $quickOrder = $quickOrderForm->getData();
 
@@ -57,12 +112,7 @@ class QuickOrderController extends AbstractController
             }
         }
 
-        $data = [
-            'form' => $quickOrderForm->createView(),
-            'rowsNumber' => $this->getFactory()->getBundleConfig()->getProductRowsNumber(),
-        ];
-
-        return $this->view($data);
+        return null;
     }
 
     /**
@@ -72,16 +122,16 @@ class QuickOrderController extends AbstractController
      */
     public function suggestionAction(Request $request): JsonResponse
     {
-        $searchString = $request->query->get(self::PARAM_SEARCH_QUERY, '');
-        $searchField = $request->query->get(self::PARAM_SEARCH_FIELD, '');
+        $searchString = $request->query->get(static::PARAM_SEARCH_QUERY, '');
+        $searchField = $request->query->get(static::PARAM_SEARCH_FIELD, '');
 
         if (empty($searchString)) {
-            return $this->jsonResponse([self::RESPONSE_SUGGESTION => []]);
+            return $this->jsonResponse([static::RESPONSE_SUGGESTION => []]);
         }
 
         $suggestions = $this->getSuggestionCollection($searchString, $searchField);
 
-        return $this->jsonResponse([self::RESPONSE_SUGGESTION => $suggestions]);
+        return $this->jsonResponse([static::RESPONSE_SUGGESTION => $suggestions]);
     }
 
     /**
@@ -92,6 +142,8 @@ class QuickOrderController extends AbstractController
      */
     protected function getSuggestionCollection(string $searchString, string $searchField): array
     {
+        //todo move it to separate class
+
         $suggestions = [];
         $limit = $this->getFactory()->getBundleConfig()->getSuggestionResultsLimit();
 
@@ -112,5 +164,26 @@ class QuickOrderController extends AbstractController
         }
 
         return $suggestions;
+    }
+
+    /**
+     * @param array $orderItems
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     */
+    protected function getQuickOrder(array $orderItems = []): QuickOrderTransfer
+    {
+        $quickOrder = new QuickOrderTransfer();
+        $orderItemCollection = new ArrayObject($orderItems);
+        if ($orderItemCollection->count() === 0) {
+            $productRowsNumber = $this->getFactory()->getBundleConfig()->getProductRowsNumber();
+            for ($i = 0; $i < $productRowsNumber; $i++) {
+                $orderItemCollection->append(new QuickOrderItemTransfer());
+            }
+        }
+
+        $quickOrder->setItems($orderItemCollection);
+
+        return $quickOrder;
     }
 }

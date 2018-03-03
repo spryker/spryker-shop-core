@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\Handler;
+namespace SprykerShop\Yves\QuickOrderPage\Form\Handler;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
-use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData;
 use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 
 class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerInterface
@@ -35,11 +35,11 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     }
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData $quickOrder
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
      *
      * @return void
      */
-    public function addToCart(QuickOrderData $quickOrder): void
+    public function addToCart(QuickOrderTransfer $quickOrder): void
     {
         $itemTransfers = $this->getItemTransfers($quickOrder);
 
@@ -49,11 +49,11 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     }
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData $quickOrder
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
      *
      * @return void
      */
-    public function createOrder(QuickOrderData $quickOrder): void
+    public function createOrder(QuickOrderTransfer $quickOrder): void
     {
         $itemTransfers = $this->getItemTransfers($quickOrder);
 
@@ -76,11 +76,11 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     }
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPage\Form\QuickOrderData $quickOrder
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getItemTransfers(QuickOrderData $quickOrder): array
+    protected function getItemTransfers(QuickOrderTransfer $quickOrder): array
     {
         $itemTransfers = [];
         $quickOrderItemTransfers = $quickOrder->getItems();

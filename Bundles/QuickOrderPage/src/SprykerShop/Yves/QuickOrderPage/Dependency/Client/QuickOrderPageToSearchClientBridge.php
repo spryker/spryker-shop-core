@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
-use Spryker\Client\Search\SearchClientInterface;
-
 class QuickOrderPageToSearchClientBridge implements QuickOrderPageToSearchClientInterface
 {
     /**
@@ -19,7 +17,7 @@ class QuickOrderPageToSearchClientBridge implements QuickOrderPageToSearchClient
     /**
      * @param \Spryker\Client\Search\SearchClientInterface $searchClient
      */
-    public function __construct(SearchClientInterface $searchClient)
+    public function __construct($searchClient)
     {
         $this->searchClient = $searchClient;
     }

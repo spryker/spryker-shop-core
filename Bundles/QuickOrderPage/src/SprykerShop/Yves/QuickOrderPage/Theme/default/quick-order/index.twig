@@ -1,11 +1,18 @@
 {% extends "@QuickOrderPage/layout.twig" %}
 
 {% block content %}
-<div class="row">
+
     <div class="small-12 columns">
-        {% include "@QuickOrderPage/quick-order/partials/form.twig"  with {'form': _view.form} %}
+        <div class="row">
+            <div class="medium-9 columns">
+                {% include "@QuickOrderPage/quick-order/partials/items-form.twig"  with {'form': _view.itemsForm} %}
+            </div>
+            <div class="medium-3 columns">
+                {% include "@QuickOrderPage/quick-order/partials/text-order-form.twig"  with {'form': _view.textOrderForm} %}
+            </div>
+        </div>
     </div>
-</div>
+
 {% endblock %}
 
 {% block javascript %}

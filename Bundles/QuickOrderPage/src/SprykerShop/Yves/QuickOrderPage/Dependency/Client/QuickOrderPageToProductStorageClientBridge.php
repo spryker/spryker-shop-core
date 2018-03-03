@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\ProductStorage\ProductStorageClientInterface;
 
 class QuickOrderPageToProductStorageClientBridge implements QuickOrderPageToProductStorageClientInterface
 {
@@ -20,7 +19,7 @@ class QuickOrderPageToProductStorageClientBridge implements QuickOrderPageToProd
     /**
      * @param \Spryker\Client\ProductStorage\ProductStorageClientInterface $productStorageClient
      */
-    public function __construct(ProductStorageClientInterface $productStorageClient)
+    public function __construct($productStorageClient)
     {
         $this->productStorageClient = $productStorageClient;
     }

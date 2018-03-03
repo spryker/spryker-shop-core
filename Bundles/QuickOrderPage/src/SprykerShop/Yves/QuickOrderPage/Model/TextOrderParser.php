@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Model;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
+use SprykerShop\Yves\QuickOrderPage\Exception\TextOrderParserException;
 use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 
 class TextOrderParser implements TextOrderParserInterface
@@ -55,28 +56,38 @@ class TextOrderParser implements TextOrderParserInterface
 
         if (count($rows) > 0) {
             $separator = $this->detectSeparator($rows);
-
             foreach ($rows as $row) {
-                $row = trim($row);
-                [$skuProductConcrete, $quantity] = explode($separator, $row);
+                [$skuProductConcrete, $quantity] = explode($separator, trim($row));
 
-                if ($skuProductConcrete) {
-                    $productViewTransferConcrete = null;
-                    $productViewTransfers = $this->productFinder->getSearchResults($skuProductConcrete);
-                    foreach ($productViewTransfers as $productViewTransfer) {
-                        if ($productViewTransfer->getSku() === $skuProductConcrete) {
-                            $productViewTransferConcrete = $productViewTransfer;
-                        }
-                    }
+                if (empty($skuProductConcrete)) {
+                    continue;
+                }
 
-                    if ($productViewTransferConcrete !== null) {
-                        $parsedTextOrderItems[] = $this->getOrderItem($productViewTransferConcrete, $quantity);
-                    }
+                $productViewTransferConcrete = $this->findProductConcreteBySku($skuProductConcrete);
+                if ($productViewTransferConcrete !== null) {
+                    $parsedTextOrderItems[] = $this->getOrderItem($productViewTransferConcrete, $quantity);
                 }
             }
         }
 
         return $parsedTextOrderItems;
+    }
+
+    /**
+     * @param string $skuProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    protected function findProductConcreteBySku(string $skuProductConcrete): ?ProductViewTransfer
+    {
+        $productViewTransfers = $this->productFinder->getSearchResults($skuProductConcrete);
+        foreach ($productViewTransfers as $productViewTransfer) {
+            if ($productViewTransfer->getSku() === $skuProductConcrete) {
+                return $productViewTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -103,13 +114,13 @@ class TextOrderParser implements TextOrderParserInterface
      */
     protected function getTextOrderRows(): array
     {
-        return array_filter(preg_split('/\r\n|\r|\n/', $this->textOrder));
+        return array_filter(preg_split('/[\r\n]+/', $this->textOrder));
     }
 
     /**
      * @param array $rows
      *
-     * @throws \SprykerShop\Yves\QuickOrderPage\Model\TextOrderParserException
+     * @throws \SprykerShop\Yves\QuickOrderPage\Exception\TextOrderParserException
      *
      * @return string
      */

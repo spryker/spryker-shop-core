@@ -7,6 +7,10 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Form\DataProvider;
 
-class QuickOrderFormDataProvider
+interface SearchFieldChoicesDataProviderInterface
 {
+    /**
+     * @return array
+     */
+    public function getChoices(): array;
 }

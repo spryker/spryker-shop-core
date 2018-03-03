@@ -8,17 +8,18 @@
 namespace SprykerShop\Yves\QuickOrderPage\Model;
 
 use Generated\Shared\Search\PageIndexMap;
-use Spryker\Shared\Kernel\Store;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToStoreClientInterface;
 use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 
 class ProductFinder implements ProductFinderInterface
 {
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToStoreClientInterface
      */
-    protected $store;
+    protected $storeClient;
 
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig
@@ -26,9 +27,9 @@ class ProductFinder implements ProductFinderInterface
     protected $config;
 
     /**
-     * @var string
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface
      */
-    protected $locale;
+    protected $localeClient;
 
     /**
      * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface
@@ -41,23 +42,23 @@ class ProductFinder implements ProductFinderInterface
     protected $productStorageClient;
 
     /**
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToStoreClientInterface $storeClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface $searchClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface $productStorageClient
-     * @param string $locale
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface $localeClient
      * @param \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig $config
      */
     public function __construct(
-        Store $store,
+        QuickOrderPageToStoreClientInterface $storeClient,
         QuickOrderPageToSearchClientInterface $searchClient,
         QuickOrderPageToProductStorageClientInterface $productStorageClient,
-        string $locale,
+        QuickOrderPageToLocaleClientInterface $localeClient,
         QuickOrderPageConfig $config
     ) {
-        $this->store = $store;
+        $this->storeClient = $storeClient;
         $this->searchClient = $searchClient;
         $this->productStorageClient = $productStorageClient;
-        $this->locale = $locale;
+        $this->localeClient = $localeClient;
         $this->config = $config;
     }
 
@@ -97,8 +98,8 @@ class ProductFinder implements ProductFinderInterface
 
         $queryData = [
             PageIndexMap::IS_ACTIVE . ':' . 'true',
-            PageIndexMap::LOCALE . ':' . $this->locale,
-            PageIndexMap::STORE . ':' . $this->store->getStoreName(),
+            PageIndexMap::LOCALE . ':' . $this->localeClient->getCurrentLocale(),
+            PageIndexMap::STORE . ':' . $this->storeClient->getCurrentStore()->getName(),
             PageIndexMap::TYPE . ':' . 'product_abstract',
             $searchField . ':' . "\"$searchString\"",
         ];
@@ -117,7 +118,7 @@ class ProductFinder implements ProductFinderInterface
 
         foreach ($searchResults as $productAbstractData) {
             $data = $this->productStorageClient
-                ->getProductAbstractStorageData($productAbstractData['id_product_abstract'], $this->locale);
+                ->getProductAbstractStorageData($productAbstractData['id_product_abstract'], $this->localeClient->getCurrentLocale());
 
             $idProductConcreteCollection = $data['attribute_map']['product_concrete_ids'] ?? [];
 
@@ -126,7 +127,7 @@ class ProductFinder implements ProductFinderInterface
                 $data['sku'] = $sku;
 
                 $productViewTransfers[] = $this->productStorageClient
-                    ->mapProductStorageData($data, $this->locale);
+                    ->mapProductStorageData($data, $this->localeClient->getCurrentLocale());
             }
         }
 

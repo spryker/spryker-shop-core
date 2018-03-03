@@ -1,0 +1,14 @@
+{{ form_start(form, {attr: {class: "text-order-form"} }) }}
+
+{{ form_errors(form) }}
+<div>
+    <h3>{{ 'Paste your order' | trans }}</h3>
+    <p>Copy and paste your order with item#, quantity, separated by commas, semicolons or spaces.</p>
+    {{ form_errors(form.textOrder) }}
+    {{ form_widget(form.textOrder, { 'attr': {'placeholder': 'Copy and paster order'} }) }}
+
+    <button type="submit" name="verifyTextOrder" class="button secondary js-verify-text-order">
+        <i class="fa fa-check-circle-o"></i>{{ 'Verify' | trans }}
+    </button>
+</div>
+{{ form_end(form) }}

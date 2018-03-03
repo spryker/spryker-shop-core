@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\Model;
+namespace SprykerShop\Yves\QuickOrderPage\Exception;
 
 use Exception;
 

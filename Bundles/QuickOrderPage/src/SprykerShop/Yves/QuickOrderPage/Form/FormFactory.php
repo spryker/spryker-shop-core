@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\QuickOrderPage\Form;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -35,10 +34,13 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider
+     * @param mixed $data
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createQuickOrderDataProvider(): QuickOrderFormDataProvider
+    public function getTextOrderForm($data = null, array $formOptions = []): FormInterface
     {
-        return new QuickOrderFormDataProvider();
+        return $this->getFormFactory()->create(TextOrderForm::class, $data, $formOptions);
     }
 }

@@ -7,15 +7,18 @@
 
 namespace SprykerShop\Yves\QuickOrderPage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToGlossaryClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToStoreClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderCorrectConstraintValidator;
+use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\SearchFieldChoicesDataProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
-use SprykerShop\Yves\QuickOrderPage\Form\Validator\TextOrderValidator;
-use SprykerShop\Yves\QuickOrderPage\Handler\QuickOrderFormOperationHandler;
-use SprykerShop\Yves\QuickOrderPage\Handler\QuickOrderFormOperationHandlerInterface;
+use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandler;
+use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandlerInterface;
 use SprykerShop\Yves\QuickOrderPage\Model\ProductFinder;
 use SprykerShop\Yves\QuickOrderPage\Model\ProductFinderInterface;
 use SprykerShop\Yves\QuickOrderPage\Model\TextOrderParser;
@@ -43,19 +46,16 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Handler\QuickOrderFormOperationHandlerInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandlerInterface
      */
     public function createFormOperationHandler(): QuickOrderFormOperationHandlerInterface
     {
         return new QuickOrderFormOperationHandler($this->getConfig(), $this->getCartClient());
     }
 
-    /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Form\Validator\TextOrderValidator
-     */
-    public function createTextOrderValidator(): TextOrderValidator
+    public function createTextOrderValidator()
     {
-        return new TextOrderValidator($this->getConfig());
+        return new TextOrderCorrectConstraintValidator();
     }
 
     /**
@@ -68,16 +68,21 @@ class QuickOrderPageFactory extends AbstractFactory
         return new TextOrderParser($textOrder, $this->getConfig(), $this->createProductFinder());
     }
 
+    public function createSearchFieldChoicesDataProvider()
+    {
+        return new SearchFieldChoicesDataProvider($this->getGlossaryClient(), $this->getLocaleClient());
+    }
+
     /**
      * @return \SprykerShop\Yves\QuickOrderPage\Model\ProductFinderInterface
      */
     public function createProductFinder(): ProductFinderInterface
     {
         return new ProductFinder(
-            $this->getStore(),
+            $this->getStoreClient(),
             $this->getSearchClient(),
             $this->getProductStorageClient(),
-            $this->getLocale(),
+            $this->getLocaleClient(),
             $this->getBundleConfig()
         );
     }
@@ -115,26 +120,18 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToStoreClientInterface
      */
-    public function getStore(): Store
+    public function getStoreClient(): QuickOrderPageToStoreClientInterface
     {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::STORE);
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_STORE);
     }
 
     /**
-     * @return \Silex\Application
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface
      */
-    public function getApplication()
+    public function getLocaleClient(): QuickOrderPageToLocaleClientInterface
     {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGIN_APPLICATION);
-    }
-
-    /**
-     * @return string
-     */
-    public function getLocale(): string
-    {
-        return $this->getApplication()['locale'];
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_LOCALE);
     }
 }
