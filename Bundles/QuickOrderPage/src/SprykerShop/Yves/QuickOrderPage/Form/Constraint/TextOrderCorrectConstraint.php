@@ -15,7 +15,7 @@ class TextOrderCorrectConstraint extends SymfonyConstraint
 {
     public const OPTION_BUNDLE_CONFIG = 'config';
 
-    public $message = 'Order format is incorrect. Please use this symbols as separator: {{ separators }}.';
+    public $message = 'quick-order.errors.text-order-format-incorrect';
 
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig

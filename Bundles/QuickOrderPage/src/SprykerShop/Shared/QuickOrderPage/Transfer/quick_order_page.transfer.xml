@@ -5,9 +5,8 @@
 
     <transfer name="QuickOrder">
         <property name="items" type="QuickOrderItem[]" />
-        <property name="textOrder" type="string" />
     </transfer>
-        
+
     <transfer name="QuickOrderItem">
         <property name="searchField" type="string" />
         <property name="searchQuery" type="string" />
