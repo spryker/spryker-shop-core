@@ -15,7 +15,8 @@ use Twig_SimpleFunction;
 class ShopUiTwigExtension extends TwigExtension
 {
     const FUNCTION_GET_PUBLIC_FOLDER_PATH = 'publicPath';
-    const FUNCTION_GET_QA_ID_ATTRIBUTE = 'qa';
+    const FUNCTION_GET_QA_ATTRIBUTE = 'qa';
+    const FUNCTION_GET_QA_ATTRIBUTE_SUB = 'qa_*';
 
     const FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE = 'model';
     const FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE = 'atom';
@@ -57,12 +58,22 @@ class ShopUiTwigExtension extends TwigExtension
                 self::FUNCTION_GET_PUBLIC_FOLDER_PATH,
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_QA_ID_ATTRIBUTE, function ($qaId) {
-                return $this->getQaIdAttribute($qaId);
+            new Twig_SimpleFunction(self::FUNCTION_GET_QA_ATTRIBUTE, function (array $qaValues = []) {
+                return $this->getQaAttribute($qaValues);
             }, [
                 $this,
-                self::FUNCTION_GET_QA_ID_ATTRIBUTE,
+                self::FUNCTION_GET_QA_ATTRIBUTE,
                 'is_safe' => ['html'],
+                'is_variadic' => true,
+            ]),
+
+            new Twig_SimpleFunction(self::FUNCTION_GET_QA_ATTRIBUTE_SUB, function ($qaName, array $qaValues = []) {
+                return $this->getQaAttribute($qaValues, $qaName);
+            }, [
+                $this,
+                self::FUNCTION_GET_QA_ATTRIBUTE_SUB,
+                'is_safe' => ['html'],
+                'is_variadic' => true,
             ]),
 
             new Twig_SimpleFunction(self::FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE, function ($modelName) {
@@ -128,13 +139,30 @@ class ShopUiTwigExtension extends TwigExtension
     }
 
     /**
-     * @param string $qaId
+     * @param array $qaValues
+     * @param string|null $qaName
      *
      * @return string
      */
-    protected function getQaIdAttribute(string $qaId): string
+    protected function getQaAttribute(array $qaValues = [], string $qaName = null): string
     {
-        return 'data-qa="' . $qaId . '"';
+        $value = '';
+
+        if (empty($qaValues)) {
+            return '';
+        }
+
+        foreach ($qaValues as $qaValue) {
+            if (!empty($qaValue)) {
+                $value .= $qaValue . ' ';
+            }
+        }
+
+        if (empty($qaName)) {
+            return 'data-qa="' . trim($value) . '"';
+        }
+
+        return 'data-qa-' . $qaName . '="' . trim($value) . '"';
     }
 
     /**

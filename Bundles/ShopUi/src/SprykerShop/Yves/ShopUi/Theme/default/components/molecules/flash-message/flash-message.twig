@@ -29,9 +29,9 @@
 
         <div class="col col--sm-10">
             {% if data.title is not empty %}
-                <h6>{{data.title}}</h6>
+                <h6>{{data.title | trans}}</h6>
             {% endif %}
-            {{data.text}}
+            {{data.text | trans}}
         </div>
 
         {% include atom('icon') with {

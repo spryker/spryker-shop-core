@@ -11,8 +11,10 @@
     renderClass: true,
     renderAttributes: true
 } -%}
+
 {%- define data = {} -%}
 {%- define embed = {} -%}
+{%- set qa = qa | default('') -%}
 
 {%- set class = class | default('') -%}
 {%- define modifiers = [] -%}
@@ -32,6 +34,14 @@
                 {%- if class %} {{class-}}{% endif -%}
             {%- endblock -%}
         {%- endif -%}"
+
+        {{qa(
+            'component',
+            config.name, 
+            attributes.name | default,
+            attributes.id | default, 
+            qa
+        )}}
 
         {% if config.renderAttributes -%}
             {%- block attributes -%}

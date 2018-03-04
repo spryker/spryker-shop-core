@@ -55,7 +55,8 @@
                             enable: true,
                             text: 'forms.submit.register' | trans
                         }
-                    }
+                    },
+                    qa: 'register-form'
                 } only %}
 
                 {% include molecule('form') with {
@@ -90,7 +91,7 @@
                 }
             } only %}
                 {% block cancel %}
-                    <a href="{{ url('password/forgotten') }}">
+                    <a href="{{ url('password/forgotten') }}" {{qa('customer-forgot-password-link')}}>
                         {{ 'forms.forgot-password' | trans }}
                     </a>
                 {% endblock %}
