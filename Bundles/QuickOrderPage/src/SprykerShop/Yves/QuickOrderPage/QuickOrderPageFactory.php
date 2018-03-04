@@ -21,6 +21,8 @@ use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandler;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandlerInterface;
 use SprykerShop\Yves\QuickOrderPage\Model\ProductFinder;
 use SprykerShop\Yves\QuickOrderPage\Model\ProductFinderInterface;
+use SprykerShop\Yves\QuickOrderPage\Model\SuggestionDataProvider;
+use SprykerShop\Yves\QuickOrderPage\Model\SuggestionDataProviderInterface;
 use SprykerShop\Yves\QuickOrderPage\Model\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\Model\TextOrderParserInterface;
 
@@ -85,6 +87,14 @@ class QuickOrderPageFactory extends AbstractFactory
             $this->getLocaleClient(),
             $this->getBundleConfig()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Model\SuggestionDataProviderInterface
+     */
+    public function createSuggestionDataProvider(): SuggestionDataProviderInterface
+    {
+        return new SuggestionDataProvider($this->getBundleConfig(), $this->createProductFinder());
     }
 
     /**

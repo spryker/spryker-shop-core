@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Form\Constraint;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class TextOrderCorrectConstraintValidator extends ConstraintValidator implements TextOrderCorrectConstraintValidatorInterface
+class TextOrderCorrectConstraintValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value The value that should be validated
@@ -35,7 +35,7 @@ class TextOrderCorrectConstraintValidator extends ConstraintValidator implements
      *
      * @return bool
      */
-    public function checkFormat(string $textOrder, array $allowedSeparators): bool
+    protected function checkFormat(string $textOrder, array $allowedSeparators): bool
     {
         foreach ($allowedSeparators as $separator) {
             if (strpos($textOrder, $separator) !== false && $this->checkEachRow($textOrder, $separator)) {

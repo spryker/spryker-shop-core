@@ -44,8 +44,8 @@ class QuickOrderController extends AbstractController
             ->handleRequest($request);
 
         $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
-
         $quickOrder = $this->getQuickOrder($textOrderParsedItems);
+
         $quickOrderForm = $this
             ->getFactory()
             ->createQuickOrderFormFactory()
@@ -129,41 +129,11 @@ class QuickOrderController extends AbstractController
             return $this->jsonResponse([static::RESPONSE_SUGGESTION => []]);
         }
 
-        $suggestions = $this->getSuggestionCollection($searchString, $searchField);
+        $suggestions = $this->getFactory()
+            ->createSuggestionDataProvider()
+            ->getSuggestionCollection($searchString, $searchField);
 
         return $this->jsonResponse([static::RESPONSE_SUGGESTION => $suggestions]);
-    }
-
-    /**
-     * @param string $searchString
-     * @param string $searchField
-     *
-     * @return array
-     */
-    protected function getSuggestionCollection(string $searchString, string $searchField): array
-    {
-        //todo move it to separate class
-
-        $suggestions = [];
-        $limit = $this->getFactory()->getBundleConfig()->getSuggestionResultsLimit();
-
-        $productViewTransfers = $this->getFactory()
-            ->createProductFinder()
-            ->getSearchResults($searchString, $searchField, $limit);
-
-        foreach ($productViewTransfers as $productViewTransfer) {
-            $suggestions[] = [
-                'value' => $productViewTransfer->getSku() . ' - ' . $productViewTransfer->getName(),
-                'data' => [
-                    'idAbstractProduct' => $productViewTransfer->getIdProductAbstract(),
-                    'sku' => $productViewTransfer->getSku(),
-                    'price' => $productViewTransfer->getPrice(),
-                    'available' => $productViewTransfer->getAvailable(),
-                ],
-            ];
-        }
-
-        return $suggestions;
     }
 
     /**
