@@ -3,8 +3,7 @@
 {{ form_errors(form) }}
 <div>
     <h3>{{ 'quick-order.labels.paste-order' | trans }}</h3>
-    <p>{{ 'quick-order.labels.paste-order-description' | trans }}
-        Copy and paste your order with item#, quantity, separated by commas, semicolons or spaces.</p>
+    <p>{{ 'quick-order.labels.paste-order-description' | trans }}</p>
     {{ form_errors(form.textOrder) }}
     {{ form_widget(form.textOrder, { 'attr': {'placeholder': 'quick-order.hints.copy-paste-order'} }) }}
 
