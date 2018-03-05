@@ -13,7 +13,7 @@
                 </li>
                 <li>
                     <span class="float-left small-15 columns">
-                        {% include '@ShopLayout/layout/partials/language-navigation.twig' %}
+                        {{ widgetGlobal('LanguageSwitcherWidgetPlugin', app.request) }}
                     </span>
                 </li>
                 {% if app['cart.quantity'] > 0 %}
