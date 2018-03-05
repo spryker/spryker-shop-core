@@ -11,13 +11,13 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientBridge;
-use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCartClientBridge;
+use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClientBridge;
 
 class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
-    const CLIENT_CART = 'CLIENT_CART';
     const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -27,7 +27,7 @@ class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addCalculationClient($container);
-        $container = $this->addCartClient($container);
+        $container = $this->addQuoteClient($container);
         $container = $this->addApplication($container);
 
         return $container;
@@ -52,10 +52,10 @@ class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCartClient(Container $container): Container
+    protected function addQuoteClient(Container $container): Container
     {
-        $container[self::CLIENT_CART] = function (Container $container) {
-            return new DiscountWidgetToCartClientBridge($container->getLocator()->cart()->client());
+        $container[self::CLIENT_QUOTE] = function (Container $container) {
+            return new DiscountWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 
         return $container;

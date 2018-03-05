@@ -104,16 +104,6 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function storeQuote(QuoteTransfer $quoteTransfer)
-    {
-        $this->cartClient->storeQuote($quoteTransfer);
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote()
@@ -136,13 +126,5 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     public function getItemCount()
     {
         return $this->cartClient->getItemCount();
-    }
-
-    /**
-     * @return void
-     */
-    public function syncQuote()
-    {
-        $this->cartClient->syncQuote();
     }
 }

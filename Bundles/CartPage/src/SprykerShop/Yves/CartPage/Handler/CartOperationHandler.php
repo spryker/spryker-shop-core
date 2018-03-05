@@ -81,8 +81,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
 
         $this->addProductOptions($optionValueUsageIds, $itemTransfer);
 
-        $quoteTransfer = $this->cartClient->addItem($itemTransfer);
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->cartClient->addItem($itemTransfer);
     }
 
     /**
@@ -92,8 +91,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
      */
     public function addItems(array $itemTransfers)
     {
-        $quoteTransfer = $this->cartClient->addItems($itemTransfers);
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->cartClient->addItems($itemTransfers);
     }
 
     /**
@@ -104,8 +102,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
      */
     public function remove($sku, $groupKey = null)
     {
-        $quoteTransfer = $this->cartClient->removeItem($sku, $groupKey);
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->cartClient->removeItem($sku, $groupKey);
     }
 
     /**
@@ -116,8 +113,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
      */
     public function increase($sku, $groupKey = null)
     {
-        $quoteTransfer = $this->cartClient->increaseItemQuantity($sku, $groupKey);
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->cartClient->increaseItemQuantity($sku, $groupKey);
     }
 
     /**
@@ -128,8 +124,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
      */
     public function decrease($sku, $groupKey = null)
     {
-        $quoteTransfer = $this->cartClient->decreaseItemQuantity($sku, $groupKey);
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->cartClient->decreaseItemQuantity($sku, $groupKey);
     }
 
     /**
@@ -141,8 +136,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
      */
     public function changeQuantity($sku, $quantity, $groupKey = null)
     {
-        $quoteTransfer = $this->cartClient->changeItemQuantity($sku, $groupKey, $quantity);
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->cartClient->changeItemQuantity($sku, $groupKey, $quantity);
     }
 
     /**

@@ -81,14 +81,12 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
     {
         $bundledItemsToRemove = $this->getBundledItems($groupKey);
         if (count($bundledItemsToRemove) > 0) {
-            $quoteTransfer = $this->cartClient->removeItems($bundledItemsToRemove);
-            $this->cartClient->storeQuote($quoteTransfer);
+            $this->cartClient->removeItems($bundledItemsToRemove);
 
             return;
         }
 
-        $quoteTransfer = $this->cartClient->removeItem($sku, $groupKey);
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->cartClient->removeItem($sku, $groupKey);
     }
 
     /**
@@ -132,8 +130,7 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
             return;
         }
 
-        $quoteTransfer = $this->cartClient->changeItemQuantity($sku, $groupKey, $quantity);
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->cartClient->changeItemQuantity($sku, $groupKey, $quantity);
     }
 
     /**
@@ -154,8 +151,7 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
 
         if ($bundledProductTotalQuantity > $quantity) {
             $bundledItemsToRemove = $this->getBundledItems($groupKey, $delta);
-            $quoteTransfer = $this->cartClient->removeItems($bundledItemsToRemove);
-            $this->cartClient->storeQuote($quoteTransfer);
+            $this->cartClient->removeItems($bundledItemsToRemove);
 
             return;
         }
@@ -165,9 +161,7 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
         $itemTransfer->setQuantity($delta);
         $itemTransfer->setProductOptions($this->getBundleProductOptions($groupKey));
 
-        $quoteTransfer = $this->cartClient->addItem($itemTransfer);
-
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->cartClient->addItem($itemTransfer);
     }
 
     /**

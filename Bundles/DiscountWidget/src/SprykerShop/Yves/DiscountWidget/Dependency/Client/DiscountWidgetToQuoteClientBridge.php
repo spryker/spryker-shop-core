@@ -9,19 +9,19 @@ namespace SprykerShop\Yves\DiscountWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class DiscountWidgetToCartClientBridge implements DiscountWidgetToCartClientInterface
+class DiscountWidgetToQuoteClientBridge implements DiscountWidgetToQuoteClientInterface
 {
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
+     * @var \Spryker\Client\Quote\QuoteClientInterface
      */
-    protected $cartClient;
+    protected $quoteClient;
 
     /**
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param \Spryker\Client\Quote\QuoteClientInterface $quoteClient
      */
-    public function __construct($cartClient)
+    public function __construct($quoteClient)
     {
-        $this->cartClient = $cartClient;
+        $this->quoteClient = $quoteClient;
     }
 
     /**
@@ -29,7 +29,7 @@ class DiscountWidgetToCartClientBridge implements DiscountWidgetToCartClientInte
      */
     public function getQuote()
     {
-        return $this->cartClient->getQuote();
+        return $this->quoteClient->getQuote();
     }
 
     /**
@@ -37,8 +37,8 @@ class DiscountWidgetToCartClientBridge implements DiscountWidgetToCartClientInte
      *
      * @return void
      */
-    public function storeQuote(QuoteTransfer $quoteTransfer)
+    public function setQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->quoteClient->setQuote($quoteTransfer);
     }
 }

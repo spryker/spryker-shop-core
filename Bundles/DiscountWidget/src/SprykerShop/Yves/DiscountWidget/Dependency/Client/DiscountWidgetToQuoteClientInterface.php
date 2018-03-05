@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\DiscountWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface DiscountWidgetToCartClientInterface
+interface DiscountWidgetToQuoteClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -21,5 +21,5 @@ interface DiscountWidgetToCartClientInterface
      *
      * @return void
      */
-    public function storeQuote(QuoteTransfer $quoteTransfer);
+    public function setQuote(QuoteTransfer $quoteTransfer);
 }

@@ -70,13 +70,6 @@ interface CartPageToCartClientInterface
     public function changeItemQuantity($sku, $groupKey = null, $quantity = 1);
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function storeQuote(QuoteTransfer $quoteTransfer);
-
-    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote();
@@ -90,9 +83,4 @@ interface CartPageToCartClientInterface
      * @return int
      */
     public function getItemCount();
-
-    /**
-     * @return void
-     */
-    public function syncQuote();
 }

@@ -9,9 +9,9 @@
     "spryker-shop/shop-application": "^0.1.0",
     "spryker/application": "^3.8.0",
     "spryker/calculation": "^4.2.0",
-    "spryker/cart": "^4.3.0",
     "spryker/kernel": "^3.16.0",
     "spryker/messenger": "^3.1.0",
+    "spryker/quote": "^1.1.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
