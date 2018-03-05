@@ -18,8 +18,10 @@
         <li class="menu__separator"></li>
         <li class="menu__item">{{ widgetGlobal('CurrencyWidgetPlugin') }}</li>
         <li class="menu__separator"></li>
+        <li class="menu__item">{{ widgetGlobal('LanguageSwitcherWidgetPlugin', app.request) }}</li>
+        <li class="menu__separator"></li>
 
-        {% for availableLanguage in data.availableLanguages %}
+        {# {% for availableLanguage in data.availableLanguages %}
             <li class="menu__item">
                 {% if availableLanguage != data.currentLanguage %}
                     <a href="/{{ availableLanguage }}">{{ availableLanguage }}</a>
@@ -27,9 +29,8 @@
                     <span>{{ availableLanguage }}</span>
                 {% endif %}
             </li>
-        {% endfor %}
+        {% endfor %} #}
 
-        <li class="menu__separator"></li>
         {% if data.cartQuantity > 0 %}
             <li class="menu__item">{{data.cartQuantity}}</li>
         {% endif %}
