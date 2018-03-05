@@ -1,11 +1,16 @@
 
-{{ form_start(form, {attr: {class: "quick-order-form", 'data-component': "quick-order-form"} }) }}
+{{ form_start(form, {attr: {
+    'class': "quick-order-form",
+    'data-component': "quick-order-form",
+    'data-suggestions-url': path('quick-order/suggestion'),
+    'data-rows-number': rowsNumber
+}}) }}
 
 {{ form_errors(form) }}
 
     <div class="items-container">
     {% for item in form.items %}
-        <div class="row" data-index="{{ loop.index0 }}">
+        <div class="row product-item-row" data-index="{{ loop.index0 }}">
             <div class="medium-2">
                 {{ form_widget(item.searchField) }}
             </div>
@@ -19,12 +24,19 @@
                 {{ form_widget(item.sku) }}
                 <div class="form-error js-product-error"></div>
             </div>
-            <div class="medium-1 columns">
-                {{ form_widget(item.qty, { 'attr': {'min': 1, 'class': 'js-qty-input-field', 'placeholder': 'quick-order.input-placeholder.qty' | trans } }) }}
-            </div>
-            <div class="medium-2">
-                {{ form_widget(item.price) }}
-                {{ form_widget(item.pricePanel) }}
+            <div class="medium-3">
+                <div class="row">
+                    <div class="medium-5 columns">
+                        {{ form_widget(item.qty, { 'attr': {'min': 1, 'class': 'js-qty-input-field', 'placeholder': 'quick-order.input-placeholder.qty' | trans } }) }}
+                    </div>
+                    <div class="medium-5">
+                        {{ form_widget(item.price) }}
+                        {{ form_widget(item.pricePanel) }}
+                    </div>
+                    <div class="medium-1 columns">
+                        <a href="#remove" class="inline js-delete-row-button">☓</a>
+                    </div>
+                </div>
             </div>
         </div>
     {% endfor %}
@@ -47,5 +59,12 @@
         </button>
     </p>
 </div>
-
 {{ form_end(form) }}
+
+
+<script type="application/json" id="quick-order-form-translations">
+{
+    "error-item-not-found": "{{ 'quick-order.errors.item-not-found' | trans }}",
+    "error-item-not-available": "{{ 'quick-order.errors.item-not-available' | trans }}"
+}
+</script>
