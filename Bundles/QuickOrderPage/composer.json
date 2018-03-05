@@ -3,6 +3,13 @@
   "description": "QuickOrderPage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/cart": ">=3.1.0",
+    "spryker/glossary": ">=0.20.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/product-storage": "^0.1.0",
+    "spryker/search": "^7.2.0",
+    "spryker/store": "^1.4.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
