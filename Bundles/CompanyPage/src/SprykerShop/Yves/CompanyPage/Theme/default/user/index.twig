@@ -1,0 +1,36 @@
+{% extends "@CompanyPage/layout.twig" %}
+
+{% block title %}
+    <h3>{{ 'company.account.company_user' | trans }}</h3>
+{% endblock %}
+
+{% block companyNavigation %}
+    {% include "@CompanyPage/partials/navigation.twig" with {'active': 'company-user'} %}
+{% endblock %}
+
+{% block companyContent %}
+    <div class="callout">
+        <h5>{{ 'company.account.company_user' | trans }}</h5>
+        <hr>
+        {% if _view.companyUserCollection | length %}
+
+            {% include "@CompanyPage/user/partials/user-list.twig"  with {'actions': true} %}
+
+            <div class="row align-center">
+                {% include '@ShopLayout/layout/partials/pagination.twig' with {
+                    parameters: {},
+                    currentPage: _view.pagination.page,
+                    paginationPath: 'company/user',
+                    maxPage: _view.pagination.lastPage,
+                    showAlwaysFirstAndLast: true
+                } %}
+            </div>
+        {% endif %}
+        <div class="row align-right">
+            <div class="small-12 medium-6 large-4 columns">
+                <a class="button expanded __no-margin-bottom" href="{{ url('company/user/create') }}"
+                   data-id="customer-add-new-address">{{ 'company.account.company_user.add' | trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

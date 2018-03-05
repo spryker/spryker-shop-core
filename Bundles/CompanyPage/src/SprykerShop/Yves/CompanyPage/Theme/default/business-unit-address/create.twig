@@ -1,0 +1,17 @@
+{% extends "@CompanyPage/layout.twig" %}
+
+{% block title %}
+    <h3>{{ 'company.account.address' | trans }}</h3>
+{% endblock %}
+
+{% block companyNavigation %}
+    {% include "@CompanyPage/partials/navigation.twig" with {'active': 'address'} %}
+{% endblock %}
+
+{% block companyContent %}
+    <div class="callout">
+        <h5>{{ 'company.account.edit_address_information' | trans }}</h5>
+        <hr>
+        {% include "@CompanyPage/business-unit-address/partials/form.twig" with {'form': _view.form, 'formAction': url('company/business-unit/address/create')} %}
+    </div>
+{% endblock %}

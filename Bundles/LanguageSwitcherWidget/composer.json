@@ -1,0 +1,33 @@
+{
+  "name": "spryker-shop/language-switcher-widget",
+  "description": "LanguageSwitcherWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker-shop/shop-layout-extension": "^1.0.0",
+    "spryker/kernel": "^3.16.0",
+    "spryker/synchronization": "^0.2.0",
+    "spryker/url-storage": "^0.1.0"
+  },
+  "require-dev": {
+    "spryker/symfony": "*"
+  },
+  "suggest": {
+    "spryker/symfony": "3.0.0 for using LanguageSwitcherPlugin"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
