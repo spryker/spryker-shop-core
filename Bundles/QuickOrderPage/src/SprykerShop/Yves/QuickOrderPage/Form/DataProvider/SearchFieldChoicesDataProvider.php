@@ -48,7 +48,7 @@ class SearchFieldChoicesDataProvider implements SearchFieldChoicesDataProviderIn
     {
         $currentLocale = $this->localeClient->getCurrentLocale();
         return [
-            $this->glossaryClient->translate('quick-order.labels.sku-name', $currentLocale) => '',
+            $this->glossaryClient->translate('quick-order.search-field.sku-name', $currentLocale) => '',
         ];
     }
 }

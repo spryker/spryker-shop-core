@@ -41,12 +41,6 @@
 
             $('.js-add-more-rows-button').on('click', addMoreRows);
 
-            $('.js-verify-text-order').on('click', function (e) {
-                if ($('#quick_order_form_textOrder').val() === '') {
-                    e.preventDefault();
-                }
-            });
-
             initAutocomplete();
 
             function initAutocomplete() {
@@ -76,7 +70,7 @@
                         onSearchComplete: function (query, suggestions) {
                             $errorPanel.hide();
                             if (suggestions.length === 0) {
-                                $errorPanel.text('Item Number Cannot Be Found');
+                                $errorPanel.text("{{ 'quick-order.errors.item-not-found' | trans }}");
                                 $errorPanel.show();
                             }
                         },
@@ -89,7 +83,7 @@
                                 $qtyInput.trigger('change');
                                 $qtyInput.focus();
                             } else {
-                                $errorPanel.text('This Product Is Not Available');
+                                $errorPanel.text("{{ 'quick-order.errors.item-not-available' | trans }}");
                                 $errorPanel.show();
                             }
                         }

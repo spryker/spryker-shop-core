@@ -2,13 +2,13 @@
 
 {{ form_errors(form) }}
 <div>
-    <h3>{{ 'quick-order.labels.paste-order' | trans }}</h3>
-    <p>{{ 'quick-order.labels.paste-order-description' | trans }}</p>
+    <h3>{{ 'quick-order.paste-order.title' | trans }}</h3>
+    <p>{{ 'quick-order.paste-order.description' | trans }}</p>
     {{ form_errors(form.textOrder) }}
-    {{ form_widget(form.textOrder, { 'attr': {'placeholder': 'quick-order.hints.copy-paste-order'} }) }}
+    {{ form_widget(form.textOrder, { 'attr': {'placeholder': 'quick-order.paste-order.input-placeholder.copy-paste-order'} }) }}
 
-    <button type="submit" name="verifyTextOrder" class="button secondary js-verify-text-order">
-        <i class="fa fa-check-circle-o"></i>{{ 'quick-order.buttons.verify' | trans }}
+    <button type="submit" name="verifyTextOrder" class="button secondary">
+        <i class="fa fa-check-circle-o"></i>{{ 'quick-order.paste-order.button.verify' | trans }}
     </button>
 </div>
 {{ form_end(form) }}
