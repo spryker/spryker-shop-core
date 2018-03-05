@@ -11,6 +11,11 @@
   "suggest": {
     "spryker/symfony": "3.0.0 for using LanguageSwitcherPluginInterface"
   },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
