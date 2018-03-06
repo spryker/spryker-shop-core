@@ -25,6 +25,8 @@ interface QuickOrderPageToCartClientInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
      */
     public function storeQuote(QuoteTransfer $quoteTransfer): void;
 }

@@ -34,6 +34,14 @@ class SuggestionDataProvider implements SuggestionDataProviderInterface
         $this->productFinder = $productFinder;
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @param string $searchString
+     * @param string $searchField
+     *
+     * @return array
+     */
     public function getSuggestionCollection(string $searchString, string $searchField): array
     {
         $limit = $this->config->getSuggestionResultsLimit();

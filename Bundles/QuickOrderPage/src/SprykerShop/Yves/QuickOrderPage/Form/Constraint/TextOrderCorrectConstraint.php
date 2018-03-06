@@ -15,6 +15,9 @@ class TextOrderCorrectConstraint extends SymfonyConstraint
 {
     public const OPTION_BUNDLE_CONFIG = 'config';
 
+    /**
+     * @var string
+     */
     public $message = 'quick-order.paste-order.errors.text-order-format-incorrect';
 
     /**

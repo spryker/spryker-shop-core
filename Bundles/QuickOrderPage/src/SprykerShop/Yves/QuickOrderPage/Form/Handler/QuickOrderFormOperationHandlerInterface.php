@@ -14,14 +14,14 @@ interface QuickOrderFormOperationHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
      *
-     * @return void
+     * @return bool
      */
-    public function addToCart(QuickOrderTransfer $quickOrder): void;
+    public function addToCart(QuickOrderTransfer $quickOrder): bool;
 
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
      *
-     * @return void
+     * @return bool
      */
-    public function createOrder(QuickOrderTransfer $quickOrder): void;
+    public function createOrder(QuickOrderTransfer $quickOrder): bool;
 }

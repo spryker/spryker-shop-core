@@ -9,5 +9,13 @@ namespace SprykerShop\Yves\QuickOrderPage\Model;
 
 interface SuggestionDataProviderInterface
 {
+    /**
+     * Returns array for product search suggestions autocomplete
+     *
+     * @param string $searchString
+     * @param string $searchField
+     *
+     * @return array
+     */
     public function getSuggestionCollection(string $searchString, string $searchField): array;
 }

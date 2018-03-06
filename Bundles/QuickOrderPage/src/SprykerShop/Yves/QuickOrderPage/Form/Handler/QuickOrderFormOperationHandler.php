@@ -37,30 +37,38 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
      *
-     * @return void
+     * @return bool
      */
-    public function addToCart(QuickOrderTransfer $quickOrder): void
+    public function addToCart(QuickOrderTransfer $quickOrder): bool
     {
         $itemTransfers = $this->getItemTransfers($quickOrder);
 
         if ($itemTransfers) {
             $this->addItemsToCart($itemTransfers);
+
+            return true;
         }
+
+        return false;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
      *
-     * @return void
+     * @return bool
      */
-    public function createOrder(QuickOrderTransfer $quickOrder): void
+    public function createOrder(QuickOrderTransfer $quickOrder): bool
     {
         $itemTransfers = $this->getItemTransfers($quickOrder);
 
         if ($itemTransfers) {
             $this->cartClient->clearQuote();
             $this->addItemsToCart($itemTransfers);
+
+            return true;
         }
+
+        return false;
     }
 
     /**

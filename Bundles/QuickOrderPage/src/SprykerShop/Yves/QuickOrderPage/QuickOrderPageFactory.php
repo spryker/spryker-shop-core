@@ -14,8 +14,8 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClie
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToStoreClientInterface;
-use SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderCorrectConstraintValidator;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\SearchFieldChoicesDataProvider;
+use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\SearchFieldChoicesDataProviderInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandler;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandlerInterface;
@@ -55,11 +55,6 @@ class QuickOrderPageFactory extends AbstractFactory
         return new QuickOrderFormOperationHandler($this->getConfig(), $this->getCartClient());
     }
 
-    public function createTextOrderValidator()
-    {
-        return new TextOrderCorrectConstraintValidator();
-    }
-
     /**
      * @param string $textOrder
      *
@@ -70,7 +65,10 @@ class QuickOrderPageFactory extends AbstractFactory
         return new TextOrderParser($textOrder, $this->getConfig(), $this->createProductFinder());
     }
 
-    public function createSearchFieldChoicesDataProvider()
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Form\DataProvider\SearchFieldChoicesDataProviderInterface
+     */
+    public function createSearchFieldChoicesDataProvider(): SearchFieldChoicesDataProviderInterface
     {
         return new SearchFieldChoicesDataProvider($this->getGlossaryClient(), $this->getLocaleClient());
     }

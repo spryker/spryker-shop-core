@@ -96,17 +96,25 @@ class QuickOrderController extends AbstractController
             $quickOrder = $quickOrderForm->getData();
 
             if ($request->get(QuickOrderForm::SUBMIT_BUTTON_ADD_TO_CART) !== null) {
-                $this->getFactory()
+                $result = $this->getFactory()
                     ->createFormOperationHandler()
                     ->addToCart($quickOrder);
+
+                if (!$result) {
+                    return null;
+                }
 
                 return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
             }
 
             if ($request->get(QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER) !== null) {
-                $this->getFactory()
+                $result = $this->getFactory()
                     ->createFormOperationHandler()
                     ->createOrder($quickOrder);
+
+                if (!$result) {
+                    return null;
+                }
 
                 return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_INDEX);
             }

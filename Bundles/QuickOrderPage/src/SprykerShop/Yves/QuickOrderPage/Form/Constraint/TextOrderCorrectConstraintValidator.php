@@ -20,11 +20,9 @@ class TextOrderCorrectConstraintValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        $allowedSeparators = $constraint->getAllowedSeparators();
-        if (!$this->checkFormat($value, $allowedSeparators)) {
+        if (!$this->checkFormat($value, $constraint->getAllowedSeparators())) {
             $this->context
                 ->buildViolation($constraint->message)
-                ->setParameter('{{ separators }}', '"' . implode('" "', $allowedSeparators) . '"')
                 ->addViolation();
         }
     }

@@ -32,7 +32,7 @@ class ProductFinder implements ProductFinderInterface
     protected $localeClient;
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface
      */
     protected $searchClient;
 
