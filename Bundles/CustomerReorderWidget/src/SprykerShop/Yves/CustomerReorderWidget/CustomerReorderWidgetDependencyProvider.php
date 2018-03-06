@@ -15,6 +15,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientBridge;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToZedRequestClientBridge;
 
 class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -23,7 +24,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_SALES = 'CLIENT_SALES';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
-    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -37,7 +38,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addSalesClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addProductBundleClient($container);
-        $container = $this->addMessengerClient($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -127,11 +128,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addMessengerClient(Container $container): Container
+    protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
-            return new CustomerReorderWidgetToMessengerClientBridge(
-                $container->getLocator()->messenger()->client()
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new CustomerReorderWidgetToZedRequestClientBridge(
+                $container->getLocator()->zedRequest()->client()
             );
         };
 
