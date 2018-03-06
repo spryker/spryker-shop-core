@@ -1,25 +1,21 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: khatsko
- * Date: 5/3/18
- * Time: 16:58
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
-
-use Spryker\Client\ZedRequest\ZedRequestClientInterface;
-
 class CustomerReorderWidgetToZedRequestClientBridge implements CustomerReorderWidgetToZedRequestClientInterface
 {
     /**
-     * @var ZedRequestClientInterface
+     * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
     private $zedRequestClient;
 
     /**
-     * @param ZedRequestClientInterface $zedRequestClient
+     * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
      */
     public function __construct($zedRequestClient)
     {
