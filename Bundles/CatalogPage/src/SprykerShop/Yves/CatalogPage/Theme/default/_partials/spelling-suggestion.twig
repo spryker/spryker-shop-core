@@ -1,7 +1,0 @@
-{% if _view.spellingSuggestion is defined and _view.spellingSuggestion is not null  %}
-    <div class="small-12 columns">
-        <div class="callout warning">
-            {{ 'global.search.spellingSuggestion' | trans }}: <strong><a href="{{ path('search', {'q': _view.spellingSuggestion}) }}">{{ _view.spellingSuggestion }}</a></strong>
-        </div>
-    </div>
-{% endif %}
