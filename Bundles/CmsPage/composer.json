@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-application": "^0.1.0",
+    "spryker-shop/shop-application": "^0.2.0",
     "spryker/cms": "^6.4.0",
     "spryker/cms-content-widget": "^1.2.0",
     "spryker/cms-storage": "^0.1.0 || ^0.2.0",
