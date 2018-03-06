@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CartPage\Dependency\Client;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 interface CartPageToCartClientInterface
 {
@@ -83,4 +83,9 @@ interface CartPageToCartClientInterface
      * @return int
      */
     public function getItemCount();
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote(): QuoteValidationResponseTransfer;
 }

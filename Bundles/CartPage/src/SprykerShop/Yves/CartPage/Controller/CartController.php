@@ -26,6 +26,8 @@ class CartController extends AbstractController
      */
     public function indexAction(array $selectedAttributes = null)
     {
+        $isQuoteValid = $this->getFactory()->createQuoteValidationHandler()
+            ->validateQuote();
         $quoteTransfer = $this->getFactory()->getCartClient()
             ->getQuote();
 
@@ -39,6 +41,7 @@ class CartController extends AbstractController
             'cart' => $quoteTransfer,
             'cartItems' => $cartItems,
             'attributes' => $itemAttributesBySku,
+            'isQuoteValid' => $isQuoteValid,
         ];
 
         return $this->view($data, $this->getFactory()->getCartPageWidgetPlugins());

@@ -28,7 +28,7 @@
 
     {% if _view.cart.items | length %}
         <p class="__padding-top">
-            <a class="button expanded success __no-margin-bottom" href="{{ url('checkout-index') }}">
+            <a class="button expanded success __no-margin-bottom{{ _view.isQuoteValid ? '' : ' disabled' }}" href="{{ url('checkout-index') }}">
                 <i class="fa fa-check"></i>{{ 'cart.checkout'|trans }}
             </a>
         </p>
