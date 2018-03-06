@@ -1,0 +1,15 @@
+{% extends template('page-layout-checkout', 'CheckoutPage') %}
+
+{% define data = {
+    title: required,
+    message: required
+} %}
+
+{% block pageInfo %}{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <h3>{{data.title}}</h3>
+        <p>{{data.message}}</p>
+    </div>
+{% endblock %}

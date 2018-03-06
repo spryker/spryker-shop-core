@@ -1,0 +1,3 @@
+@function spacing($number: 1) {
+    @return $unit-spacing * $number;
+}
