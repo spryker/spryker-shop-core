@@ -35,13 +35,13 @@
 
                     <td class="text-right">
                         {% if (isAssigned) %}
-                            <a href="{{ path('company/permission/unassign', {'id-permission': permission.idPermission, 'id-company-role': _view.idCompanyRole}) }}">
+                            <a href="{{ path('company/company-role-permission/unassign', {'id-permission': permission.idPermission, 'id-company-role': _view.idCompanyRole}) }}">
                                 <small>
                                     <i class="fa fa-trash"></i>{{ 'company.account.company_role.permission.unassign' | trans }}
                                 </small>
                             </a>
                         {% else %}
-                            <a href="{{ path('company/permission/assign', {'id-permission': permission.idPermission, 'id-company-role': _view.idCompanyRole}) }}">
+                            <a href="{{ path('company/company-role-permission/assign', {'id-permission': permission.idPermission, 'id-company-role': _view.idCompanyRole}) }}">
                                 <small>
                                     <i class="fa fa-caret-right"></i>{{ 'company.account.company_role.permission.assign' | trans }}
                                 </small>

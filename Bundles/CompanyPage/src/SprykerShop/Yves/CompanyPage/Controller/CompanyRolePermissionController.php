@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
-class PermissionController extends AbstractCompanyController
+class CompanyRolePermissionController extends AbstractCompanyController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -52,7 +52,7 @@ class PermissionController extends AbstractCompanyController
         $this->saveCompanyRolePermissions($idCompanyRole, $companyRolePermissions);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_PERMISSION_MANAGE,
+            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_PERMISSION_MANAGE,
             ['id' => $idCompanyRole]
         );
     }
@@ -79,7 +79,7 @@ class PermissionController extends AbstractCompanyController
         $this->saveCompanyRolePermissions($idCompanyRole, $permissions);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_PERMISSION_MANAGE,
+            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_PERMISSION_MANAGE,
             ['id' => $idCompanyRole]
         );
     }
