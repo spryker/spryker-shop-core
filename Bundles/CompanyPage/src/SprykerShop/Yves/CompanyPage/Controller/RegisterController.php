@@ -27,7 +27,7 @@ class RegisterController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
-        if ($this->isLoggedInCustomer()) {
+        if ($this->getCompanyUser() !== null) {
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_OVERVIEW);
         }
 

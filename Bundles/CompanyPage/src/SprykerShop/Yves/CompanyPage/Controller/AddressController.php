@@ -58,8 +58,7 @@ class AddressController extends AbstractCompanyController
             ->handleRequest($request);
 
         if ($addressForm->isSubmitted() === false) {
-            $companyUserTransfer = $this->getCompanyUser();
-            $addressForm->setData($dataProvider->getData($companyUserTransfer));
+            $addressForm->setData($dataProvider->getData($this->getCompanyUser()));
         }
 
         if ($addressForm->isValid()) {
@@ -130,6 +129,7 @@ class AddressController extends AbstractCompanyController
      */
     protected function saveAddress(array $data)
     {
+
         $addressTransfer = new CompanyUnitAddressTransfer();
         $addressTransfer->fromArray($data, true);
         $addressTransfer = $this

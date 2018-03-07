@@ -11,9 +11,10 @@
     </thead>
     <tbody>
     {% for companyUser in _view.companyUserCollection %}
+        {% set companyBusinessUnitName = companyUser.companyBusinessUnit.name|default('') %}
         <tr>
             <td>{{ companyUser.customer.firstName }} {{ companyUser.customer.lastName }}</td>
-            <td>{{ companyUser.companyBusinessUnit.name }}</td>
+            <td>{{ companyBusinessUnitName }}</td>
             {% if (actions) %}
                 <td class="text-right">
                     <a href="{{ url('company/user/update', {'id': companyUser.idCompanyUser}) }}" class="float-right">

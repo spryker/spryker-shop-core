@@ -103,7 +103,12 @@ class BusinessUnitController extends AbstractCompanyController
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
             $companyBusinessUnitId = $request->query->getInt('id');
-            $companyBusinessUnitForm->setData($dataProvider->getData($this->getCompanyUser(), $companyBusinessUnitId));
+            $companyBusinessUnitForm->setData(
+                $dataProvider->getData(
+                    $this->getCompanyUser(),
+                    $companyBusinessUnitId
+                )
+            );
         } elseif ($companyBusinessUnitForm->isValid()) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 

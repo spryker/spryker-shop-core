@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -19,8 +20,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractCompanyController extends AbstractController
 {
+    public const COMPANY_APPROVED_STATUS = 'approved';
     public const PARAM_PAGE = 'page';
     public const DEFAULT_PAGE = 1;
+
 
     /**
      * @return bool
@@ -31,14 +34,37 @@ abstract class AbstractCompanyController extends AbstractController
     }
 
     /**
+     * @return bool
+     */
+    protected function isCompanyActive(): bool
+    {
+        $companyUser = $this->getCompanyUser();
+
+        if ($companyUser === null) {
+            return false;
+        }
+
+        $companyTransfer = (new CompanyTransfer())->setIdCompany($companyUser->getFkCompany());
+        $companyTransfer = $this->getFactory()
+            ->getCompanyClient()
+            ->getCompanyById($companyTransfer);
+
+        return ($companyTransfer->getIsActive() === true && $companyTransfer->getStatus() === static::COMPANY_APPROVED_STATUS);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     protected function getCompanyUser(): ?CompanyUserTransfer
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        if ($this->isLoggedInCustomer()) {
+            $customerTransfer = $this->getFactory()
+                ->getCustomerClient()
+                ->getCustomer();
 
-        if ($customerTransfer !== null) {
-            return $customerTransfer->getCompanyUserTransfer();
+            if ($customerTransfer !== null) {
+                return $customerTransfer->getCompanyUserTransfer();
+            }
         }
 
         return null;

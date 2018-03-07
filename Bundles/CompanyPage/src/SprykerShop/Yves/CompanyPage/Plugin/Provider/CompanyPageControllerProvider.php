@@ -34,6 +34,10 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_ROLE_DELETE = 'company/company-role/delete';
     public const ROUTE_COMPANY_ROLE_DETAILS = 'company/company-role/details';
 
+    public const ROUTE_COMPANY_ROLE_USER_MANAGE = 'company/company-role/user/manage';
+    public const ROUTE_COMPANY_ROLE_USER_ASSIGN = 'company/company-role/user/assign';
+    public const ROUTE_COMPANY_ROLE_USER_UNASSIGN = 'company/company-role/user/unassign';
+
     public const ROUTE_PERMISSION_CONFIGURE = 'company/permission/configure';
     public const ROUTE_PERMISSION_MANAGE = 'company/permission/manage';
     public const ROUTE_PERMISSION_ASSIGN = 'company/permission/assign';
@@ -57,6 +61,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->createCompanyRoleControllers();
         $this->createPermissionControllers();
         $this->createCompanyUserControllers();
+        $this->createCompanyRoleUserControllers();
     }
 
     /**
@@ -187,6 +192,24 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('company', $allowedLocalesPattern . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/user/delete', self::ROUTE_COMPANY_USER_DELETE, 'CompanyPage', 'User', 'delete')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+    }
+
+    /**
+     * @return void
+     */
+    protected function createCompanyRoleUserControllers(): void
+    {
+        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+
+        $this->createController('/{company}/company-role/user/manage', self::ROUTE_COMPANY_ROLE_USER_MANAGE, 'CompanyPage', 'CompanyRoleUser', 'manage')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/company-role/user/assign', self::ROUTE_COMPANY_ROLE_USER_ASSIGN, 'CompanyPage', 'CompanyRoleUser', 'assign')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/company-role/user/unassign', self::ROUTE_COMPANY_ROLE_USER_UNASSIGN, 'CompanyPage', 'CompanyRoleUser', 'unassign')
             ->assert('company', $allowedLocalesPattern . 'company|company')
             ->value('company', 'company');
     }

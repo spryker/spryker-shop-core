@@ -41,13 +41,21 @@
     <div class="callout">
         <h5>{{ 'company.account.company_role.users' | trans }}</h5>
         <hr>
+        {% if _view.companyUserCollection | length %}
+            {% include "@CompanyPage/user/partials/user-list.twig"  with {'actions': false} %}
+        {% endif %}
+        <div class="row align-right">
+            <div class="small-12 medium-6 large-4 columns">
+                <a class="button expanded __no-margin-bottom" href="{{ url('company/company-role/user/manage', {'id': companyRole.idCompanyRole}) }}" data-id="company-role-manage">{{ 'company.account.company_role.user.manage' | trans }}</a>
+            </div>
+        </div>
     </div>
 
     <div class="callout">
         <h5>{{ 'company.account.company_role.permissions' | trans }}</h5>
         <hr>
         {% if _view.permissions | length %}
-            {% include "@CompanyPage/company-role/permission/company-role-permission-list.twig"  with {'actions': true} %}
+            {% include "@CompanyPage/company-role/partials/company-role-permission-list.twig"  with {'actions': true} %}
         {% endif %}
         <div class="row align-right">
             <div class="small-12 medium-6 large-4 columns">

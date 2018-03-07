@@ -7,9 +7,11 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +27,15 @@ class CompanyRoleController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
-        $data = $this->getCompanyRoleResponseData($request);
+        $collectionTransfer = $this->createCriteriaFilterTransfer($request);
+        $collectionTransfer = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->getCompanyRoleCollection($collectionTransfer);
+
+        $data = [
+            'companyRoleCollection' => $collectionTransfer->getRoles(),
+            'pagination' => $collectionTransfer->getPagination(),
+        ];
 
         return $this->view($data);
     }
@@ -48,9 +58,12 @@ class CompanyRoleController extends AbstractCompanyController
             ->getCompanyRoleClient()
             ->findCompanyRolePermissions($companyRoleTransfer);
 
+        $companyUserCollection = $this->prepareCompanyUsers($companyRoleTransfer->getCompanyUserCollection());
+
         return $this->view([
             'companyRole' => $companyRoleTransfer,
             'permissions' => $companyRolePermissions->getPermissions(),
+            'companyUserCollection' => $companyUserCollection->getCompanyUsers(),
         ]);
     }
 
@@ -143,32 +156,13 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
-     */
-    protected function getCompanyRoleResponseData(Request $request): array
-    {
-        $collectionTransfer = $this->createCriteriaFilterTransfer($request);
-        $collectionTransfer = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleCollection($collectionTransfer);
-
-        return [
-            'companyRoleCollection' => $collectionTransfer->getRoles(),
-            'pagination' => $collectionTransfer->getPagination(),
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer
      */
     protected function createCriteriaFilterTransfer(Request $request): CompanyRoleCriteriaFilterTransfer
     {
         $criteriaFilterTransfer = new CompanyRoleCriteriaFilterTransfer();
 
-        $idCompany = $this->getCompanyUser()->getFkCompany();
-        $criteriaFilterTransfer->setIdCompany($idCompany);
+        $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
         $criteriaFilterTransfer->setPagination($this->createPaginationTransfer($request));
         $criteriaFilterTransfer->setFilter($this->createFilterTransfer(static::COMPANY_ROLE_SORT_FIELD));
 
@@ -203,5 +197,28 @@ class CompanyRoleController extends AbstractCompanyController
         $this->getFactory()
             ->getCompanyRoleClient()
             ->updateCompanyRole($companyRoleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollection
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    protected function prepareCompanyUsers(CompanyUserCollectionTransfer $companyUserCollection)
+    {
+        foreach ($companyUserCollection->getCompanyUsers() as $companyUser) {
+            if ($companyUser->getFkCompanyBusinessUnit()) {
+                $companyBusinessUnitTransfer = $this->getFactory()
+                    ->getCompanyBusinessUnitClient()
+                    ->getCompanyBusinessUnitById(
+                        (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit(
+                            $companyUser->getFkCompanyBusinessUnit()
+                        )
+                    );
+                $companyUser->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+            }
+        }
+
+        return $companyUserCollection;
     }
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 
 class CompanyPageToCompanyRoleClientBridge implements CompanyPageToCompanyRoleClientInterface
@@ -87,5 +88,15 @@ class CompanyPageToCompanyRoleClientBridge implements CompanyPageToCompanyRoleCl
     public function findCompanyRolePermissions(CompanyRoleTransfer $companyRoleTransfer): PermissionCollectionTransfer
     {
         return $this->companyRoleClient->findCompanyRolePermissions($companyRoleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return void
+     */
+    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void
+    {
+        $this->companyRoleClient->saveCompanyUser($companyUserTransfer);
     }
 }

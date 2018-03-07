@@ -22,26 +22,8 @@ class CompanyController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
-        if (!$this->isLoggedInCustomer()) {
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_REGISTER);
-        }
-
         $data = [];
+
         return $this->view($data, $this->getFactory()->getCompanyOverviewWidgetPlugins());
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isCompanyActive(): bool
-    {
-        $companyUser = $this->getCompanyUser();
-
-        if ($companyUser === null) {
-            return false;
-        }
-
-        $idCompany = $companyUser->getFkCompany();
-        $this->getFactory()->getCompanyClient();
     }
 }
