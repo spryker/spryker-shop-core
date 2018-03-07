@@ -1,0 +1,118 @@
+<?php
+
+
+namespace SprykerShop\Yves\CompanyPage\Form;
+
+
+use Generated\Shared\Transfer\PermissionTransfer;
+use Spryker\Shared\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class CompanyRolePermissionConfigurationType extends AbstractType
+{
+    protected const FIELD_ID_COMPANY_ROLE = 'idCompanyRole';
+    protected const FIELD_ID_PERMISSION = 'idPermission';
+
+    public const OPTION_CONFIGURATION_SIGNATURE = 'OPTION_CONFIGURATION_SIGNATURE';
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return 'CompanyRolePermissionConfigurationType';
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder = $this->addHiddenFieldIdCompanyRole($builder);
+        $builder = $this->addHiddenIdPermission($builder);
+        $this->addFieldsBySignature($builder, $builder->getData());
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return FormBuilderInterface
+     */
+    protected function addHiddenFieldIdCompanyRole(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ID_COMPANY_ROLE, HiddenType::class);
+
+        return $builder;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return FormBuilderInterface
+     */
+    protected function addHiddenIdPermission(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ID_PERMISSION, HiddenType::class);
+
+        return $builder;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param PermissionTransfer
+     *
+     * @return CompanyRolePermissionConfigurationType
+     */
+    protected function addFieldsBySignature(FormBuilderInterface $builder, PermissionTransfer $permissionTransfer): self
+    {
+        foreach ($permissionTransfer->getConfigurationSignature() as $fieldName => $fieldType) {
+            $this->addFieldBySignature($builder, $fieldName, $fieldType);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $fieldName
+     * @param string $fieldType
+     *
+     * @return CompanyRolePermissionConfigurationType
+     */
+    protected function addFieldBySignature(FormBuilderInterface $builder, $fieldName, $fieldType)
+    {
+        $builder->add($fieldName, $this->getSymfonyTypeByFieldType($fieldType), [
+            'property_path' => PermissionTransfer::CONFIGURATION . '[' . $fieldName . ']',
+            'required' => false,
+        ]);
+    }
+
+    /**
+     * @param string $fieldType
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    protected function getSymfonyTypeByFieldType(string $fieldType)
+    {
+        $fieldTypes = [
+            ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT => NumberType::class,
+            ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_STRING => TextType::class
+        ];
+
+        if (!isset($fieldTypes[$fieldType])) {
+            throw new \Exception('Required type is not defined. Please update your executable permission field type to Symfony type map');
+        }
+
+        return $fieldTypes[$fieldType];
+    }
+}

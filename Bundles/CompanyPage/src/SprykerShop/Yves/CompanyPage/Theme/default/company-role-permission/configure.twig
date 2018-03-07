@@ -1,0 +1,29 @@
+{% extends "@CompanyPage/layout.twig" %}
+{% block title %}
+    <h3>{{ 'company.account.company_role' | trans }}</h3>
+{% endblock %}
+
+{% block companyNavigation %}
+    {% include "@CompanyPage/partials/navigation.twig" with {'active': 'company-role'} %}
+{% endblock %}
+
+{% set form = _view.form %}
+
+{% block companyContent %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <div class="small-12 medium-6 columns">
+        <div class="row">
+            <div class="small-12 medium-6 columns align-bottom __padding-top">
+                <a href="{{ url('company/company-role') }}" class="button expanded">{{ 'general.back.button' | trans }}</a>
+            </div>
+
+            <div class="small-12 medium-6 columns align-bottom __padding-top">
+                <button class="button success expanded">{{ 'forms.submit-btn' | trans }}</button>
+            </div>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

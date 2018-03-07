@@ -62,11 +62,11 @@ class BusinessUnitController extends AbstractCompanyController
     public function createAction(Request $request)
     {
         $dataProvider = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createBusinessUnitFormDataProvider();
 
         $companyBusinessUnitForm = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getBusinessUnitForm()
             ->handleRequest($request);
 
@@ -93,11 +93,11 @@ class BusinessUnitController extends AbstractCompanyController
     public function updateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createBusinessUnitFormDataProvider();
 
         $companyBusinessUnitForm = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getBusinessUnitForm()
             ->handleRequest($request);
 

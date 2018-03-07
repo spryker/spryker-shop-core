@@ -48,12 +48,12 @@ class AddressController extends AbstractCompanyController
     {
         $dataProvider = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyUnitAddressFormDataProvider();
 
         $addressForm = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
@@ -83,12 +83,12 @@ class AddressController extends AbstractCompanyController
     {
         $dataProvider = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyUnitAddressFormDataProvider();
 
         $addressForm = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 

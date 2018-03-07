@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -46,7 +46,7 @@ class CompanyRoleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this
+     * @return CompanyRoleForm
      */
     protected function addIdCompanyRoleField(FormBuilderInterface $builder): self
     {
@@ -60,7 +60,7 @@ class CompanyRoleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this
+     * @return CompanyRoleForm
      */
     protected function addNameField(FormBuilderInterface $builder): self
     {
@@ -78,7 +78,7 @@ class CompanyRoleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this
+     * @return CompanyRoleForm
      */
     protected function addFkCompanyField(FormBuilderInterface $builder): self
     {
@@ -95,7 +95,7 @@ class CompanyRoleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this
+     * @return CompanyRoleForm
      */
     protected function addIsDefaultField(FormBuilderInterface $builder): self
     {

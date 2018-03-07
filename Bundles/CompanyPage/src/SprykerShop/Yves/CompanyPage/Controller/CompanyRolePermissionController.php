@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
@@ -20,6 +21,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CompanyRolePermissionController extends AbstractCompanyController
 {
+    protected const MESSAGE_ERROR_PERMISSION_NOT_FOUND = 'Permission was not found';
+    protected const MESSAGE_ERROR_PERMISSION_SAVE_FAILED = 'Permission configuration has not been updated';
+    protected const MESSAGE_SUCCESSFUL_PERMISSION_SAVED = 'Permission configuration has been updated';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -82,6 +87,49 @@ class CompanyRolePermissionController extends AbstractCompanyController
             CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_PERMISSION_MANAGE,
             ['id' => $idCompanyRole]
         );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array|\Spryker\Yves\Kernel\View\View|RedirectResponse
+     */
+    public function configureAction(Request $request)
+    {
+        $idCompanyRole = $request->query->getInt('id-company-role');
+        $idPermission = $request->query->getInt('id-permission');
+
+        $form = $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->getCompanyRolePermissionType($idCompanyRole, $idPermission)
+            ->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $companyRolePermissionResponse = $this->getFactory()
+                ->getCompanyRoleClient()
+                ->updateCompanyRolePermission($form->getData());
+
+            $this->generateMessagesByCompanyRolePermissionResponse($companyRolePermissionResponse);
+        }
+
+        return $this->view([
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @param CompanyRolePermissionResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function generateMessagesByCompanyRolePermissionResponse(CompanyRolePermissionResponseTransfer $responseTransfer)
+    {
+        if ($responseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::MESSAGE_SUCCESSFUL_PERMISSION_SAVED);
+            return;
+        }
+
+        $this->addErrorMessage(static::MESSAGE_ERROR_PERMISSION_SAVE_FAILED);
     }
 
     /**
