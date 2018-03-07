@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\DiscountWidget;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface;
-use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCartClientInterface;
+use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClientInterface;
 use SprykerShop\Yves\DiscountWidget\Form\CartVoucherForm;
 use SprykerShop\Yves\DiscountWidget\Form\CheckoutVoucherForm;
 use SprykerShop\Yves\DiscountWidget\Handler\VoucherHandler;
@@ -32,7 +32,7 @@ class DiscountWidgetFactory extends AbstractFactory
     {
         return new VoucherHandler(
             $this->getCalculationClient(),
-            $this->getCartClient(),
+            $this->getQuoteClient(),
             $this->getFlashMessenger()
         );
     }
@@ -46,11 +46,11 @@ class DiscountWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCartClientInterface
+     * @return \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClientInterface
      */
-    public function getCartClient(): DiscountWidgetToCartClientInterface
+    public function getQuoteClient(): DiscountWidgetToQuoteClientInterface
     {
-        return $this->getProvidedDependency(DiscountWidgetDependencyProvider::CLIENT_CART);
+        return $this->getProvidedDependency(DiscountWidgetDependencyProvider::CLIENT_QUOTE);
     }
 
     /**

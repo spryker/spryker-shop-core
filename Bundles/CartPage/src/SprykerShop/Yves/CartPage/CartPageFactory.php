@@ -14,6 +14,7 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientIn
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Handler\CartOperationHandler;
 use SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler;
+use SprykerShop\Yves\CartPage\Handler\QuoteValidationHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
@@ -65,6 +66,17 @@ class CartPageFactory extends AbstractFactory
             $this->createCartOperationHandler(),
             $this->getCartClient(),
             $this->getProductStorageClient(),
+            $this->getFlashMessenger()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Handler\QuoteValidationHandlerInterface
+     */
+    public function createQuoteValidationHandler()
+    {
+        return new QuoteValidationHandler(
+            $this->getCartClient(),
             $this->getFlashMessenger()
         );
     }
