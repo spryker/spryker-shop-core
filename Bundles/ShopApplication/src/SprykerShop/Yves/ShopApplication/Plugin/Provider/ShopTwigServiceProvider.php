@@ -20,6 +20,7 @@ use Twig_Environment;
 use Twig_Loader_Chain;
 use Twig_Loader_Filesystem;
 use Twig_SimpleFilter;
+use Twig_SimpleFunction;
 
 /**
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
@@ -142,10 +143,40 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
                 }
 
                 $this->registerWidgetTwigFilter($twig);
+                $this->registerTwigFunctionCan($twig);
 
                 return $twig;
             })
         );
+    }
+
+    /**
+     * @param Twig_Environment $twig
+     *
+     * @return void
+     */
+    protected function registerTwigFunctionCan(\Twig_Environment $twig)
+    {
+        $canFunction = new Twig_SimpleFunction('can', [
+            $this,
+            'can',
+        ], [
+            'needs_context' => false,
+            'needs_environment' => false,
+        ]);
+
+        $twig->addFunction($canFunction->getName(), $canFunction);
+    }
+
+    /**
+     * @param string $permissionKey
+     * @param string|int|mixed|null $context
+     *
+     * @return bool
+     */
+    public function can($permissionKey, $context = null)
+    {
+        return true;
     }
 
     /**
