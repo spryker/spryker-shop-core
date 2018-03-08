@@ -49,9 +49,11 @@ class RegisterController extends AbstractCompanyController
             $this->processResponseMessages($companyResponseTransfer);
         }
 
-        return $this->view([
+        $data = [
             'registerForm' => $registerForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/register/register.twig');
     }
 
     /**
