@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Shared\CartPage\Plugin;
+namespace SprykerShop\Client\CheckoutPage\Plugin;
 
 use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
 
-class AddCartItemWithAmountUpToPermissionPlugin implements ExecutablePermissionPluginInterface
+class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPluginInterface
 {
-    public const KEY = 'AddCartItemWithAmountUpToPermissionPlugin';
+    public const KEY = 'PlaceOrderWithAmountUpToPermissionPlugin';
 
-    protected const FIELD_AMOUNT = 'FIELD_AMOUNT';
+    protected const FIELD_AMOUNT = 'amount';
 
     /**
      * @param array $configuration
@@ -40,7 +40,7 @@ class AddCartItemWithAmountUpToPermissionPlugin implements ExecutablePermissionP
     public function getConfigurationSignature(): array
     {
         return [
-            'amount' => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT
+            static::FIELD_AMOUNT => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT
         ];
     }
 

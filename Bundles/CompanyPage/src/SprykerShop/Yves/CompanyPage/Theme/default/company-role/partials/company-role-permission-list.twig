@@ -14,6 +14,7 @@
             <td>{{ permission.key | trans }}</td>
             {% if (actions) %}
                 <td class="text-right">
+                {% if (permission.configurationSignature) %}
                     <a href="{{ path('company/company-role-permission/configure', {
                         'id-permission': permission.idPermission,
                         'id-company-role': companyRole.idCompanyRole
@@ -22,6 +23,7 @@
                             <i class="fa fa-users"></i> {{ 'company.account.company_role.permission.configure' | trans }}
                         </small>
                     </a>
+                {% endif %}
                 </td>
             {% endif %}
         </tr>

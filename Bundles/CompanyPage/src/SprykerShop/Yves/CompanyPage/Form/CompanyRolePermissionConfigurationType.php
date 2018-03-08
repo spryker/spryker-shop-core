@@ -67,7 +67,7 @@ class CompanyRolePermissionConfigurationType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param PermissionTransfer
+     * @param PermissionTransfer $permissionTransfer
      *
      * @return CompanyRolePermissionConfigurationType
      */
