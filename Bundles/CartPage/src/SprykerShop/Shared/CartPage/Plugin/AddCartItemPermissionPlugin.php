@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Shared\CartPage\Plugin;
 
-use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
+use Spryker\Client\Permission\Dependency\Plugin\PermissionPluginInterface;
 
 class AddCartItemPermissionPlugin implements PermissionPluginInterface
 {

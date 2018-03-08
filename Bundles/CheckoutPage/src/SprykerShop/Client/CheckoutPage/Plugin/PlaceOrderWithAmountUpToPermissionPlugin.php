@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Client\CheckoutPage\Plugin;
 
-use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Client\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPluginInterface
 {
@@ -51,7 +51,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return static::KEY;
     }
