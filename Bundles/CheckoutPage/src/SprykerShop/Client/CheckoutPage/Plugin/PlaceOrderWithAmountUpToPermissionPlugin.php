@@ -13,21 +13,25 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
 {
     public const KEY = 'PlaceOrderWithAmountUpToPermissionPlugin';
 
-    protected const FIELD_AMOUNT = 'amount';
+    protected const FIELD_CENT_AMOUNT = 'cent_amount';
 
     /**
      * @param array $configuration
-     * @param null $amount
+     * @param null $centAmount
      *
      * @return bool
      */
-    public function can(array $configuration, $amount = null): bool
+    public function can(array $configuration, $centAmount = null): bool
     {
-        if (!$amount) {
+        if (!$centAmount) {
             return false;
         }
 
-        if ((int)$configuration[static::FIELD_AMOUNT] > (int)$amount) {
+        if (!isset($configuration[static::FIELD_CENT_AMOUNT])) {
+            return false;
+        }
+
+        if ((int)$configuration[static::FIELD_CENT_AMOUNT] <= (int)$centAmount) {
             return false;
         }
 
@@ -40,7 +44,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
     public function getConfigurationSignature(): array
     {
         return [
-            static::FIELD_AMOUNT => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT
+            static::FIELD_CENT_AMOUNT => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT
         ];
     }
 

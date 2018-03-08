@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
+use Spryker\Yves\Kernel\PermissionAwareTrait;
+use SprykerShop\Client\CheckoutPage\Plugin\PlaceOrderWithAmountUpToPermissionPlugin;
+use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,6 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CheckoutController extends AbstractController
 {
+    use PermissionAwareTrait;
+
+    public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -159,6 +166,11 @@ class CheckoutController extends AbstractController
      */
     public function placeOrderAction(Request $request)
     {
+        if (!$this->can(PlaceOrderWithAmountUpToPermissionPlugin::KEY, $this->getFactory()->getQuoteClient()->getQuote()->getTotals()->getGrandTotal())) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
+        }
+
         return $this->createStepProcess()->process($request);
     }
 
