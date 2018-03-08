@@ -107,14 +107,6 @@
     {{block('checkbox_widget')}}
 {%- endblock -%}
 
-{%- block form_widget_compound -%}
-    {%- if form is rootform -%}
-        {{ form_errors(form) }}
-    {%- endif -%}
-    
-    {{- block('form_rows') -}}
-{%- endblock -%}
-
 {%- block form_row -%}
     <div class="form-field">
         {{- form_label(form) -}}
