@@ -91,12 +91,12 @@ class CompanyRoleController extends AbstractCompanyController
     public function createAction(Request $request)
     {
         $dataProvider = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyRoleDataProvider();
 
         $companyRoleForm = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyRoleForm()
             ->handleRequest($request);
 
@@ -127,12 +127,12 @@ class CompanyRoleController extends AbstractCompanyController
     public function updateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyRoleDataProvider();
 
         $companyRoleForm = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyRoleForm()
             ->handleRequest($request);
 

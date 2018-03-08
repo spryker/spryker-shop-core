@@ -9,10 +9,12 @@ namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 
 class CompanyPageToCompanyRoleClientBridge implements CompanyPageToCompanyRoleClientInterface
 {
@@ -88,6 +90,26 @@ class CompanyPageToCompanyRoleClientBridge implements CompanyPageToCompanyRoleCl
     public function findCompanyRolePermissions(CompanyRoleTransfer $companyRoleTransfer): PermissionCollectionTransfer
     {
         return $this->companyRoleClient->findCompanyRolePermissions($companyRoleTransfer);
+    }
+
+    /**
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return PermissionTransfer
+     */
+    public function findPermissionByIdCompanyRoleByIdPermission(PermissionTransfer $permissionTransfer): PermissionTransfer
+    {
+        return $this->companyRoleClient->findPermissionByIdCompanyRoleByIdPermission($permissionTransfer);
+    }
+
+    /**
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return CompanyRolePermissionResponseTransfer
+     */
+    public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer
+    {
+        return $this->companyRoleClient->updateCompanyRolePermission($permissionTransfer);
     }
 
     /**

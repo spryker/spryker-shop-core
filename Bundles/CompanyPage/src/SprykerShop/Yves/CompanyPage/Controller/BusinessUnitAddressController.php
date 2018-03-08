@@ -24,12 +24,12 @@ class BusinessUnitAddressController extends AbstractCompanyController
     {
         $dataProvider = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyUnitAddressFormDataProvider();
 
         $addressForm = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyBusinessUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 

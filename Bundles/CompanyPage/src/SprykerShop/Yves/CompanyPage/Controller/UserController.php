@@ -50,11 +50,11 @@ class UserController extends AbstractCompanyController
     public function createAction(Request $request)
     {
         $dataProvider = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyUserFormDataProvider();
 
         $companyUserForm = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyUserForm(
                 $dataProvider->getOptions(
                     $this->getCompanyUser()->getFkCompany()
@@ -85,11 +85,11 @@ class UserController extends AbstractCompanyController
     public function updateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyUserFormDataProvider();
 
         $companyUserForm = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyUserForm(
                 $dataProvider->getOptions(
                     $this->getCompanyUser()->getFkCompany()

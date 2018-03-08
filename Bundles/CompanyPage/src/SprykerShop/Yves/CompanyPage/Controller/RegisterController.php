@@ -33,7 +33,7 @@ class RegisterController extends AbstractCompanyController
 
         $registerForm = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyRegisterForm()
             ->handleRequest($request);
 
