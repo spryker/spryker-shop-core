@@ -1,0 +1,68 @@
+{% extends template('page-layout-checkout', 'CheckoutPage') %}
+
+{% define data = {
+    backUrl: _view.previousStepUrl,
+    forms: {
+        payment: _view.paymentForm
+    },
+    
+    title: 'checkout.step.payment.title' | trans
+} %}
+
+{% block content %}
+    {% embed molecule('form') with {
+        data: {
+            form: data.forms.payment,
+            options: {
+                attr: { 
+                    id: 'payment-form' 
+                }
+            },
+            submit: {
+                enable: true,
+                text: 'checkout.step.summary' | trans
+            },
+            cancel: {
+                enable: true,
+                url: data.backUrl,
+                text: 'general.back.button' | trans
+            }
+        }
+    } only %}
+        {% block fields %}
+            {% for name, choices in data.form.paymentSelection.vars.choices %}
+                <div class="box">
+                    <h5>{{ ('checkout.payment.provider.' ~ name) | trans }}</h5>
+
+                    {% for key, choice in choices %}
+                        {% embed molecule('form') with {
+                            data: {
+                                form: data.form[data.form.paymentSelection[key].vars.value],
+                                enableStart: false,
+                                enableEnd: false
+                            },
+                            embed: {
+                                index: loop.index,
+                                toggler: data.form.paymentSelection[key]
+                            }
+                        } only %}
+                            {% block fields %}
+                                {{ form_row(embed.toggler, {
+                                    component: molecule('toggler-radio'),
+                                    attributes: {
+                                        target: 'js-payment-method-' ~ embed.index,
+                                        'class-to-toggle': 'is-hidden'
+                                    }
+                                }) }}
+                                
+                                <div class="col col--sm-12 col--lg-6 is-hidden js-payment-method-{{embed.index}}">
+                                    {{parent()}}
+                                </div>
+                            {% endblock %}
+                        {% endembed %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

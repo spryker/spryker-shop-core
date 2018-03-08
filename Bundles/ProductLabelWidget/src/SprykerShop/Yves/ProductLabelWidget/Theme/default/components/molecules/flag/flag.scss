@@ -1,0 +1,19 @@
+$component-burst-size: spacing(3);
+
+@mixin component-flag($name: '.flag') {
+    #{$name} {
+        @include font-size(small);
+        @include line-height(tight);
+        display: inline-block;
+        padding: spacing();
+        margin-bottom: spacing();
+        background: rgba($color-light, 0.5);
+        color: $color-text;
+
+        &__icon {
+            color: $color-main;
+        }
+
+        @content;
+    }
+}

@@ -43,9 +43,11 @@ class PasswordController extends AbstractCustomerController
             }
         }
 
-        return $this->view([
+        $data = [
             'form' => $form->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@customerPage/views/password-forgotten/password-forgotten.twig');
     }
 
     /**
@@ -90,9 +92,11 @@ class PasswordController extends AbstractCustomerController
             $this->processResponseErrors($customerResponseTransfer);
         }
 
-        return $this->view([
+        $data = [
             'form' => $form->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@customerPage/views/password-forgotten-recovery/password-forgotten-recovery.twig');
     }
 
     /**
