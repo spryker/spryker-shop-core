@@ -39,7 +39,7 @@ class UserController extends AbstractCompanyController
             'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
         ];
 
-        return $this->view($data);
+        return $this->view($data, [], '@CompanyPage/views/user/user.twig');
     }
 
     /**
@@ -72,9 +72,11 @@ class UserController extends AbstractCompanyController
             }
         }
 
-        return $this->view([
+        $data = [
             'companyUserForm' => $companyUserForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/user-create/user-create.twig');
     }
 
     /**
@@ -112,10 +114,12 @@ class UserController extends AbstractCompanyController
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
             }
         }
-
-        return $this->view([
+        
+        $data = [
             'companyUserForm' => $companyUserForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/user-update/user-update.twig');
     }
 
     /**

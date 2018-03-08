@@ -36,7 +36,7 @@ class AddressController extends AbstractCompanyController
             'addresses' => $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses(),
         ];
 
-        return $this->view($data);
+        return $this->view($data, [], '@CompanyPage/views/address/address.twig');
     }
 
     /**
@@ -69,9 +69,11 @@ class AddressController extends AbstractCompanyController
             }
         }
 
-        return $this->view([
+        $data = [
             'form' => $addressForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/address-create/address-create.twig');
     }
 
     /**
@@ -101,9 +103,11 @@ class AddressController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ADDRESS);
         }
 
-        return $this->view([
+        $data = [
             'form' => $addressForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/address-update/address-update.twig');
     }
 
     /**

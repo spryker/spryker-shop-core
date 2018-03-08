@@ -20,7 +20,7 @@
         <li class="menu__item {{macros.isActive('overview', data.activePage)}}">
             <a href="{{ path('company/overview') }}">{{ 'company.account.overview' | trans }}</a>
         </li>
-        <li class="menu__item {{macros.isActive('company-user', data.activePage)}}">
+        <li class="menu__item {{macros.isActive('users', data.activePage)}}">
             <a href="{{ path('company/user') }}" data-id="sidebar-address">{{ 'company.account.company_user' | trans }}</a>
         </li>
         <li class="menu__item {{macros.isActive('address', data.activePage)}}">
