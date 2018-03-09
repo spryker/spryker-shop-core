@@ -1,0 +1,31 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    permissions: _view.permissions,
+    idCompanyRole: _view.idCompanyRole,
+    
+    title: 'company.account.company_role.permissions' | trans,
+    activePage: 'role'
+} %}
+
+{% block companyContent %}
+    <div class="box text-right">
+        <a class="button button--hollow" href="{{ path('company/company-role/details', {'id': data.idCompanyRole}) }}">
+            {{ 'general.back.button' | trans }}
+        </a>
+    </div>
+    
+    <div class="box">
+        <h5>{{ 'company.account.company_role.permissions' | trans }}</h5>
+        <hr/>
+        {% include molecule('permission-table', 'CompanyPage') with {
+            data: {
+                permissions: data.permissions,
+                actions: {
+                    configure: false,
+                    switch: true
+                }
+            }
+        } only %}
+    </div>
+{% endblock %}

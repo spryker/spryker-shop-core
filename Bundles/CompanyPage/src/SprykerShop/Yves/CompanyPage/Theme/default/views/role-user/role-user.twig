@@ -1,69 +1,28 @@
-{# {% extends "@CompanyPage/layout.twig" %}
-{% block title %}
-    <h3>{{ 'company.account.company_role' | trans }}</h3>
-{% endblock %}
+{% extends template('page-layout-company', 'CompanyPage') %}
 
-{% block companyNavigation %}
-    {% include "@CompanyPage/partials/navigation.twig" with {'active': 'company-role'} %}
-{% endblock %}
+{% define data = {
+    users: _view.companyUserCollection,
+    idCompanyRole: _view.idCompanyRole,
+    
+    title: 'company.account.company_role.users' | trans,
+    activePage: 'role'
+} %}
 
 {% block companyContent %}
-    <div class="callout">
-        <h5>{{ 'company.account.company_role.users' | trans }}</h5>
-        <hr>
-        <table class="stack">
-            <thead>
-            <tr class="active">
-                <th>{{ 'company.account.company_user.name' | trans }}</th>
-                <th>{{ 'company.account.company_user.business_unit' | trans }}</th>
-                <th>{{ 'company.account.company_role.permission.status' | trans }}</th>
-                <th class="text-right">{{ 'company.account.table.actions' | trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for companyUser in _view.companyUserCollection %}
-                {% set isAssigned = companyUser.idCompanyRole|default(false) %}
-                {% set companyBusinessUnitName = companyUser.companyBusinessUnit.name|default('') %}
-                <tr>
-                    <td>{{ companyUser.customer.firstName }} {{ companyUser.customer.lastName }}</td>
-                    <td>{{ companyBusinessUnitName }}</td>
-                    <td>
-                        {% if (isAssigned) %}
-                            <span class="label success">{{ 'company.account.company_role.permission.assigned' | trans }}</span>
-                        {% else %}
-                            <span class="label warning">{{ 'company.account.company_role.permission.unassigned' | trans }}</span>
-                        {% endif %}
-                    </td>
-
-                    <td class="text-right">
-                        {% if (isAssigned) %}
-                            <a href="{{ path('company/company-role/user/unassign', {'id-company-user': companyUser.idCompanyUser, 'id-company-role': _view.idCompanyRole}) }}">
-                                <small>
-                                    <i class="fa fa-trash"></i>{{ 'company.account.company_role.permission.unassign' | trans }}
-                                </small>
-                            </a>
-                        {% else %}
-                            <a href="{{ path('company/company-role/user/assign', {'id-company-user': companyUser.idCompanyUser, 'id-company-role': _view.idCompanyRole}) }}">
-                                <small>
-                                    <i class="fa fa-caret-right"></i>{{ 'company.account.company_role.permission.assign' | trans }}
-                                </small>
-                            </a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <div class="box text-right">
+        <a class="button button--hollow" href="{{ path('company/company-role/details', {'id': data.idCompanyRole}) }}">
+            {{ 'general.back.button' | trans }}
+        </a>
     </div>
-
-    <div class="callout">
-        <div class="row align-right">
-            <div class="small-12 medium-6 large-4 columns align-bottom">
-                <a href="{{ path('company/company-role/details', {'id': _view.idCompanyRole}) }}"
-                   class="button expanded __no-margin-bottom">{{ 'general.back.button' | trans }}</a>
-            </div>
-        </div>
-    </div>
-{% endblock %} #}
-
-hello!
+    
+    {% include molecule('role-user-table', 'CompanyPage') with {
+        class: 'box',
+        data: {
+            users: data.users,
+            idCompanyRole: data.idCompanyRole,
+            actions: {
+                switch: true
+            }
+        }
+    } only %}
+{% endblock %}

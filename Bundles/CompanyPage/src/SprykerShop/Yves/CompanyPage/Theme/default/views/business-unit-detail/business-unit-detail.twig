@@ -27,12 +27,12 @@
             }
     } only %}
 
-    {% if data.addresses is not empty %}
-        <div class="box">
-            <a class="float-right" href="{{ url('company/business-unit/address/create', {'id': businessUnit.idCompanyBusinessUnit}) }}">
-                {{ 'company.account.add_new_address' | trans }}
-            </a>
-            <h5>{{ 'company.account.business_unit.address' | trans }}</h5>
+    <div class="box">
+        <a class="float-right" href="{{ url('company/business-unit/address/create', {'id': data.businessUnit.idCompanyBusinessUnit}) }}">
+            {{ 'company.account.add_new_address' | trans }}
+        </a>
+        <h5>{{ 'company.account.business_unit.address' | trans }}</h5>
+        {% if data.addresses is not empty %}
             <hr/>
             {% for address in data.addresses %}
                 <ul class="menu menu--inline float-right">
@@ -56,6 +56,6 @@
                 
                 {% if not loop.last %}<hr />{% endif %}
             {% endfor %}
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}
