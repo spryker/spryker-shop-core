@@ -15,6 +15,9 @@ use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 class TextOrderParser implements TextOrderParserInterface
 {
     public const ERROR_SEPARATOR_NOT_DETECTED = 'quick-order.paste-order.errors.parser.separator-not-detected';
+
+    protected const ROWS_SPLITTER_PATTERN = '/\r\n|\r|\n/';
+
     /**
      * @var string
      */
@@ -153,7 +156,7 @@ class TextOrderParser implements TextOrderParserInterface
      */
     protected function getTextOrderRows(): array
     {
-        return array_filter(preg_split('/[\r\n]+/', $this->textOrder));
+        return array_filter(preg_split(static::ROWS_SPLITTER_PATTERN, $this->textOrder));
     }
 
     /**
