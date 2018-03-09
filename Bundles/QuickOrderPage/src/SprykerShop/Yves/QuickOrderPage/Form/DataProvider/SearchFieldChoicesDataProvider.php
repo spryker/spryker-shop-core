@@ -7,9 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Form\DataProvider;
 
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToGlossaryStorageClientInterface;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface;
-
 class SearchFieldChoicesDataProvider implements SearchFieldChoicesDataProviderInterface
 {
     /**

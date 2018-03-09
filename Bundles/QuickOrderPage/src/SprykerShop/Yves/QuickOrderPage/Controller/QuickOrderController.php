@@ -94,14 +94,18 @@ class QuickOrderController extends AbstractController
 
     /**
      * @param string[] $skuCollection
+     *
+     * @return void
      */
     protected function setNotFoundProductFlashMessage(array $skuCollection): void
     {
         $notFoundProductsMessage = $this->getFactory()
             ->getGlossaryClient()
-            ->translate(static::TEXT_ORDER_ITEMS_NOT_FOUND_MESSAGE, $this->getLocale(), [
-                '%itemSkus%' => implode(', ', $skuCollection)
-            ]);
+            ->translate(
+                static::TEXT_ORDER_ITEMS_NOT_FOUND_MESSAGE,
+                $this->getLocale(),
+                ['%itemSkus%' => implode(', ', $skuCollection)]
+            );
 
         $this->getFactory()
             ->getMessengerClient()

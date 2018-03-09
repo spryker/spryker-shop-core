@@ -86,7 +86,7 @@ class TextOrderParser implements TextOrderParserInterface
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $quantity
      *
      * @return void
@@ -188,7 +188,7 @@ class TextOrderParser implements TextOrderParserInterface
     }
 
     /**
-     * @return QuickOrderItemTransfer[]
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
     public function getParsedTextOrderItems(): array
     {

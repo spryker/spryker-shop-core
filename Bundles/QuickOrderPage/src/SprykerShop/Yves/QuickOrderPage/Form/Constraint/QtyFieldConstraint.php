@@ -16,6 +16,9 @@ class QtyFieldConstraint extends SymfonyConstraint
      */
     public $message = 'quick-order.errors.quantity-required';
 
+    /**
+     * @return string|array One or more constant values
+     */
     public function getTargets()
     {
         return static::CLASS_CONSTRAINT;
