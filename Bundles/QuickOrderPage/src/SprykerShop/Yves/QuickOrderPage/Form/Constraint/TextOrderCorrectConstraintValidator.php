@@ -12,6 +12,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class TextOrderCorrectConstraintValidator extends ConstraintValidator
 {
+    protected const ROWS_SPLITTER_PATTERN = '/\r\n|\r|\n/';
+
     /**
      * @param mixed $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderCorrectConstraint $constraint The constraint for the validation
@@ -69,6 +71,6 @@ class TextOrderCorrectConstraintValidator extends ConstraintValidator
      */
     protected function getTextOrderRows(string $textOrder): array
     {
-        return array_filter(preg_split('/\r\n|\r|\n/', $textOrder));
+        return array_filter(preg_split(static::ROWS_SPLITTER_PATTERN, $textOrder));
     }
 }

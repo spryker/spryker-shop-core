@@ -21,14 +21,14 @@
                        'autocomplete': 'off'
                     }})
                 }}
-                {{ form_widget(item.sku, { 'attr': { 'class': 'js-sku-input-field' }})
-                }}
+                {{ form_widget(item.sku, { 'attr': { 'class': 'js-sku-input-field' }}) }}
                 <div class="form-error js-product-error"></div>
             </div>
             <div class="medium-3">
                 <div class="row">
                     <div class="medium-5 columns">
                         {{ form_widget(item.qty, { 'attr': {'min': 1, 'class': 'js-qty-input-field', 'placeholder': 'quick-order.input-placeholder.qty' | trans } }) }}
+                        {{ form_errors(item.qty) }}
                     </div>
                     <div class="medium-5">
                         {{ form_widget(item.price) }}
