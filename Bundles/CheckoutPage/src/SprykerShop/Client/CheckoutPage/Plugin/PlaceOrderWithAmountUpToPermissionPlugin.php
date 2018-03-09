@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Client\CheckoutPage\Plugin;
 
-use Spryker\Client\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPluginInterface
 {
