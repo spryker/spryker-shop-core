@@ -1,34 +1,30 @@
 {% extends template('page-layout-company', 'CompanyPage') %}
 
 {% define data = {
-    users: _view.companyUserCollection,
+    roles: _view.companyRoleCollection,
 
     pagination: {
         parameters: {},
         currentPage: _view.pagination.page,
-        paginationPath: 'company/user',
+        paginationPath: 'company/company-role',
         maxPage: _view.pagination.lastPage,
         showAlwaysFirstAndLast: true
     },
 
-    title: 'company.account.company_user' | trans,
-    activePage: 'users'
+    title: 'company.account.company_role' | trans,
+    activePage: 'role'
 } %}
 
 {% block companyContent %}
     <div class="box text-right">
-        <a class="button" href="{{url('company/user/create')}}">{{ 'company.account.company_user.add' | trans }}</a>
+        <a class="button" href="{{url('company/company-role/create')}}">{{ 'company.account.company_role.add' | trans }}</a>
     </div>
 
-    {% if data.users is not empty %}
+    {% if data.roles is not empty %}
         <div class="box">
-            {% include molecule('user-table', 'CompanyPage') with {
+            {% include molecule('role-table', 'CompanyPage') with {
                 data: {
-                    users: data.users,
-                    actions: {
-                        update: true,
-                        delete: true
-                    }
+                    roles: data.roles
                 }
             } only %}
             <hr/>

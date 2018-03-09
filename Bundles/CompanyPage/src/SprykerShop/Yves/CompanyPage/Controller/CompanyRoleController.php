@@ -37,7 +37,7 @@ class CompanyRoleController extends AbstractCompanyController
             'pagination' => $collectionTransfer->getPagination(),
         ];
 
-        return $this->view($data);
+        return $this->view($data, [], '@CompanyPage/views/role/role.twig');
     }
 
     /**
@@ -60,11 +60,13 @@ class CompanyRoleController extends AbstractCompanyController
 
         $companyUserCollection = $this->prepareCompanyUsers($companyRoleTransfer->getCompanyUserCollection());
 
-        return $this->view([
+        $data = [
             'companyRole' => $companyRoleTransfer,
             'permissions' => $companyRolePermissions->getPermissions(),
             'companyUserCollection' => $companyUserCollection->getCompanyUsers(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/role-detail/role-detail.twig');
     }
 
     /**
@@ -114,9 +116,11 @@ class CompanyRoleController extends AbstractCompanyController
             $this->processResponseMessages($companyRoleResponseTransfer);
         }
 
-        return $this->view([
+        $data = [
             'companyRoleForm' => $companyRoleForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/role-create/role-create.twig');
     }
 
     /**
@@ -148,9 +152,11 @@ class CompanyRoleController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
         }
 
-        return $this->view([
+        $data = [
             'companyRoleForm' => $companyRoleForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/role-update/role-update.twig');
     }
 
     /**

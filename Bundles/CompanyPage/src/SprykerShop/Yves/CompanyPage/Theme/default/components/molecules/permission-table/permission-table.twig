@@ -1,0 +1,48 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'permission-table',
+    tag: 'div'
+} %}
+
+{% define data = {
+    permissions: required,
+    actions: {
+        configure: false
+    }
+} %}
+
+{% set showActions = data.actions.configure %}
+
+{% block body %}
+    <table class="table table--expand">
+        <thead>
+            <tr>
+                <th>{{ 'company.account.company_role.permission.key' | trans }}</th>
+                {% if showActions %}
+                    <th>{{ 'company.account.table.actions' | trans }}</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for permission in data.permissions %}
+            <tr>
+                <td>{{ permission.key | trans }}</td>
+                {% if showActions %}
+                    <td>
+                        <ul class="menu menu--inline">
+                            {% if data.actions.configure %}
+                                <li class="menu__item">
+                                    <a href="{{ path('company/permission/configure', {'id': permission.idPermission}) }}">
+                                        {{ 'company.account.company_role.permission.configure' | trans }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

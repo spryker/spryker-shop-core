@@ -1,0 +1,61 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    businessUnit: _view.businessUnit,
+    addresses: _view.addresses,
+
+    title: 'company.account.business_unit.details' | trans,
+    activePage: 'business-unit'
+} %}
+
+{% block companyContent %}
+    <div class="box text-right">
+        <a class="button button--hollow" href="{{ url('company/business-unit') }}">
+            {{ 'general.back.button' | trans }}
+        </a>
+    </div>
+    
+    {% include molecule('business-unit-table', 'CompanyPage') with {
+            class: 'box',
+            data: {
+                businessUnits: [data.businessUnit],
+                actions: {
+                    view: false,
+                    update: true,
+                    delete: true
+                }
+            }
+    } only %}
+
+    {% if data.addresses is not empty %}
+        <div class="box">
+            <a class="float-right" href="{{ url('company/business-unit/address/create', {'id': businessUnit.idCompanyBusinessUnit}) }}">
+                {{ 'company.account.add_new_address' | trans }}
+            </a>
+            <h5>{{ 'company.account.business_unit.address' | trans }}</h5>
+            <hr/>
+            {% for address in data.addresses %}
+                <ul class="menu menu--inline float-right">
+                    <li class="menu__item">
+                        <a href="{{ url('company/address/update', {'id': address.idCompanyUnitAddress }) }}">
+                            {{ "company.account.address.edit" | trans }}
+                        </a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="{{ url('company/address/delete', {'id': address.idCompanyUnitAddress }) }}">
+                            {{ "company.account.address.delete" | trans }}
+                        </a>
+                    </li>
+                </ul>
+
+                {% include molecule('display-company-address', 'CompanyPage') with {
+                    data: {
+                        address: address
+                    }
+                } only %}
+                
+                {% if not loop.last %}<hr />{% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
