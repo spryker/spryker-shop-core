@@ -9,8 +9,6 @@ namespace SprykerShop\Yves\QuickOrderPage\Form\Constraint;
 
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
-;
-
 class TextOrderCorrectConstraint extends SymfonyConstraint
 {
     public const OPTION_BUNDLE_CONFIG = 'config';

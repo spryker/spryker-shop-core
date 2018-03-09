@@ -36,6 +36,11 @@ class TextOrderParser implements TextOrderParserInterface
     protected $parsedTextOrderItems = [];
 
     /**
+     * @var array
+     */
+    protected $notFoundProducts = [];
+
+    /**
      * @param string $textOrder
      * @param \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig $config
      * @param \SprykerShop\Yves\QuickOrderPage\Model\ProductFinderInterface $productFinder
@@ -48,11 +53,10 @@ class TextOrderParser implements TextOrderParserInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return $this
      */
-    public function getOrderItems(): array
+    public function parse(): TextOrderParserInterface
     {
-        $parsedTextOrderItems = [];
         $rows = $this->getTextOrderRows();
 
         if (count($rows) > 0) {
@@ -65,13 +69,47 @@ class TextOrderParser implements TextOrderParserInterface
                 }
 
                 $productViewTransferConcrete = $this->findProductConcreteBySku($skuProductConcrete);
-                if ($productViewTransferConcrete !== null) {
-                    $parsedTextOrderItems[] = $this->getOrderItem($productViewTransferConcrete, $quantity);
+
+                if ($productViewTransferConcrete === null) {
+                    $this->addNotFoundProduct($skuProductConcrete);
+                    continue;
                 }
+
+                $this->addParsedItem($productViewTransferConcrete, $quantity);
             }
         }
 
-        return $parsedTextOrderItems;
+        return $this;
+    }
+
+    /**
+     * @param ProductViewTransfer $productViewTransfer
+     * @param int $quantity
+     *
+     * @return void
+     */
+    protected function addParsedItem(ProductViewTransfer $productViewTransfer, int $quantity): void
+    {
+        if (isset($this->parsedTextOrderItems[$productViewTransfer->getSku()])) {
+            $quickOrderItemTransfer = $this->parsedTextOrderItems[$productViewTransfer->getSku()];
+            $quickOrderItemTransfer->setQty($quickOrderItemTransfer->getQty() + $quantity);
+
+            return;
+        }
+
+        $this->parsedTextOrderItems[$productViewTransfer->getSku()] = $this->getOrderItem($productViewTransfer, $quantity);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return void
+     */
+    protected function addNotFoundProduct(string $sku): void
+    {
+        if (!isset($this->notFoundProducts[$sku])) {
+            $this->notFoundProducts[$sku] = $sku;
+        }
     }
 
     /**
@@ -93,17 +131,17 @@ class TextOrderParser implements TextOrderParserInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param int|null $quantity
+     * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    protected function getOrderItem(ProductViewTransfer $productViewTransfer, int $quantity = null): QuickOrderItemTransfer
+    protected function getOrderItem(ProductViewTransfer $productViewTransfer, int $quantity): QuickOrderItemTransfer
     {
         $quickOrderItemTransfer = new QuickOrderItemTransfer();
         $quickOrderItemTransfer->setSku($productViewTransfer->getSku());
         $quickOrderItemTransfer->setSearchQuery($productViewTransfer->getSku() . ' - ' . $productViewTransfer->getName());
         if ($productViewTransfer->getAvailable()) {
-            $quickOrderItemTransfer->setQty($quantity ?? 1);
+            $quickOrderItemTransfer->setQty($quantity ?: 1);
             $quickOrderItemTransfer->setPrice($productViewTransfer->getPrice());
         }
 
@@ -136,5 +174,21 @@ class TextOrderParser implements TextOrderParserInterface
         }
 
         throw new TextOrderParserException(static::ERROR_SEPARATOR_NOT_DETECTED);
+    }
+
+    /**
+     * @return array
+     */
+    public function getNotFoundProducts(): array
+    {
+        return array_values($this->notFoundProducts);
+    }
+
+    /**
+     * @return QuickOrderItemTransfer[]
+     */
+    public function getParsedTextOrderItems(): array
+    {
+        return array_values($this->parsedTextOrderItems);
     }
 }

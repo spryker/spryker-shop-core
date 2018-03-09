@@ -54,7 +54,7 @@ class TextOrderCorrectConstraintValidator extends ConstraintValidator
     {
         $rows = $this->getTextOrderRows($textOrder);
         foreach ($rows as $row) {
-            if (strpos($row, $separator) === false) {
+            if (!preg_match("/\w[$separator]\d+$/", $row)) {
                 return false;
             }
         }

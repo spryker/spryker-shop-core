@@ -21,7 +21,8 @@
                        'autocomplete': 'off'
                     }})
                 }}
-                {{ form_widget(item.sku) }}
+                {{ form_widget(item.sku, { 'attr': { 'class': 'js-sku-input-field' }})
+                }}
                 <div class="form-error js-product-error"></div>
             </div>
             <div class="medium-3">

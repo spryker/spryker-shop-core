@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Cart\Zed\CartStubInterface;
 
 interface QuickOrderPageToCartClientInterface
 {
@@ -29,4 +30,9 @@ interface QuickOrderPageToCartClientInterface
      * @return void
      */
     public function storeQuote(QuoteTransfer $quoteTransfer): void;
+
+    /**
+     * @return \Spryker\Client\Cart\Zed\CartStubInterface
+     */
+    public function getZedStub(): CartStubInterface;
 }

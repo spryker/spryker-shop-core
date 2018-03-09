@@ -30,6 +30,8 @@ class QuickOrderController extends AbstractController
 
     public const RESPONSE_SUGGESTION = 'suggestions';
 
+    public const TEXT_ORDER_ITEMS_NOT_FOUND_MESSAGE = 'quick-order.paste-order.errors.parser.items-not-found';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -76,12 +78,34 @@ class QuickOrderController extends AbstractController
         if ($textOrderForm->isSubmitted() && $textOrderForm->isValid()) {
             $data = $textOrderForm->getData();
 
-            return $this->getFactory()
+            $textOrderParser = $this->getFactory()
                 ->createTextOrderParser($data[TextOrderForm::FIELD_TEXT_ORDER])
-                ->getOrderItems();
+                ->parse();
+
+            if (count($textOrderParser->getNotFoundProducts()) > 0) {
+                $this->setNotFoundProductFlashMessage($textOrderParser->getNotFoundProducts());
+            }
+
+            return $textOrderParser->getParsedTextOrderItems();
         }
 
         return [];
+    }
+
+    /**
+     * @param string[] $skuCollection
+     */
+    protected function setNotFoundProductFlashMessage(array $skuCollection): void
+    {
+        $notFoundProductsMessage = $this->getFactory()
+            ->getGlossaryClient()
+            ->translate(static::TEXT_ORDER_ITEMS_NOT_FOUND_MESSAGE, $this->getLocale(), [
+                '%itemSkus%' => implode(', ', $skuCollection)
+            ]);
+
+        $this->getFactory()
+            ->getMessengerClient()
+            ->addInfoMessage($notFoundProductsMessage);
     }
 
     /**

@@ -10,8 +10,9 @@ namespace SprykerShop\Yves\QuickOrderPage;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToGlossaryClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToGlossaryStorageStorageClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToMessengerClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToStoreClientBridge;
@@ -24,6 +25,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -38,6 +40,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductStorageClient($container);
         $container = $this->addStoreClient($container);
         $container = $this->addLocaleClient($container);
+        $container = $this->addMessengerClient($container);
 
         return $container;
     }
@@ -50,7 +53,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addGlossaryClient(Container $container): Container
     {
         $container[static::CLIENT_GLOSSARY] = function (Container $container) {
-            return new QuickOrderPageToGlossaryClientBridge($container->getLocator()->glossary()->client());
+            return new QuickOrderPageToGlossaryStorageStorageClientBridge($container->getLocator()->glossaryStorage()->client());
         };
 
         return $container;
@@ -121,6 +124,20 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_LOCALE] = function (Container $container) {
             return new QuickOrderPageToLocaleClientBridge($container->getLocator()->locale()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMessengerClient($container): Container
+    {
+        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+            return new QuickOrderPageToMessengerClientBridge($container->getLocator()->messenger()->client());
         };
 
         return $container;

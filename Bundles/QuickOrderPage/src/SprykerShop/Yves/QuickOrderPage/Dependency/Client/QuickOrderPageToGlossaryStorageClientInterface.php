@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
-interface QuickOrderPageToGlossaryClientInterface
+interface QuickOrderPageToGlossaryStorageClientInterface
 {
     /**
      * @param string $id

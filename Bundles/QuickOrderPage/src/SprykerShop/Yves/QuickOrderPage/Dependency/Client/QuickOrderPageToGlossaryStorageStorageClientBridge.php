@@ -7,19 +7,19 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
-class QuickOrderPageToGlossaryClientBridge implements QuickOrderPageToGlossaryClientInterface
+class QuickOrderPageToGlossaryStorageStorageClientBridge implements QuickOrderPageToGlossaryStorageClientInterface
 {
     /**
-     * @var \Spryker\Client\Glossary\GlossaryClientInterface
+     * @var \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface
      */
-    protected $glossaryClient;
+    protected $glossaryStorageClient;
 
     /**
-     * @param \Spryker\Client\Glossary\GlossaryClientInterface $glossaryClient
+     * @param \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface $glossaryClient
      */
     public function __construct($glossaryClient)
     {
-        $this->glossaryClient = $glossaryClient;
+        $this->glossaryStorageClient = $glossaryClient;
     }
 
     /**
@@ -31,6 +31,6 @@ class QuickOrderPageToGlossaryClientBridge implements QuickOrderPageToGlossaryCl
      */
     public function translate($id, $localeName, array $parameters = []): string
     {
-        return $this->glossaryClient->translate($id, $localeName, $parameters);
+        return $this->glossaryStorageClient->translate($id, $localeName, $parameters);
     }
 }

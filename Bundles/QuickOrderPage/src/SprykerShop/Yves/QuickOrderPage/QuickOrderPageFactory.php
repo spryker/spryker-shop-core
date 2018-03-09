@@ -9,8 +9,9 @@ namespace SprykerShop\Yves\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToGlossaryClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToMessengerClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToSearchClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToStoreClientInterface;
@@ -52,7 +53,7 @@ class QuickOrderPageFactory extends AbstractFactory
      */
     public function createFormOperationHandler(): QuickOrderFormOperationHandlerInterface
     {
-        return new QuickOrderFormOperationHandler($this->getConfig(), $this->getCartClient());
+        return new QuickOrderFormOperationHandler($this->getCartClient(), $this->getMessengerClient());
     }
 
     /**
@@ -70,7 +71,7 @@ class QuickOrderPageFactory extends AbstractFactory
      */
     public function createSearchFieldChoicesDataProvider(): SearchFieldChoicesDataProviderInterface
     {
-        return new SearchFieldChoicesDataProvider($this->getGlossaryClient(), $this->getLocaleClient());
+        return new SearchFieldChoicesDataProvider();
     }
 
     /**
@@ -120,9 +121,9 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToGlossaryClientInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToGlossaryStorageClientInterface
      */
-    public function getGlossaryClient(): QuickOrderPageToGlossaryClientInterface
+    public function getGlossaryClient(): QuickOrderPageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_GLOSSARY);
     }
@@ -141,5 +142,13 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getLocaleClient(): QuickOrderPageToLocaleClientInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToMessengerClientInterface
+     */
+    public function getMessengerClient(): QuickOrderPageToMessengerClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_MESSENGER);
     }
 }

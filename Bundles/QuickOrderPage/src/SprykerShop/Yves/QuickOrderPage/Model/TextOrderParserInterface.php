@@ -10,7 +10,17 @@ namespace SprykerShop\Yves\QuickOrderPage\Model;
 interface TextOrderParserInterface
 {
     /**
+     * @return $this
+     */
+    public function parse(): self;
+
+    /**
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
-    public function getOrderItems(): array;
+    public function getParsedTextOrderItems(): array;
+
+    /**
+     * @return array
+     */
+    public function getNotFoundProducts(): array;
 }
