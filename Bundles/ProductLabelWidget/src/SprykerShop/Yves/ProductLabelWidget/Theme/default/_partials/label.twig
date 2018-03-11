@@ -1,9 +1,0 @@
-{% if productLabelDictionaryItemTransfer.frontEndReference == 'template:tag' %}
-    {% include '@ProductLabelWidget/_partials/labels/tag.twig' with {
-        productLabelDictionaryItemTransfer: productLabelDictionaryItemTransfer
-    } %}
-{% else %}
-    {% include '@ProductLabelWidget/_partials/labels/flag.twig' with {
-        productLabelDictionaryItemTransfer: productLabelDictionaryItemTransfer
-    } %}
-{% endif %}

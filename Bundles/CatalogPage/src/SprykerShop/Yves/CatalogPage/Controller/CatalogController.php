@@ -64,7 +64,11 @@ class CatalogController extends AbstractController
         $searchResults = array_merge($searchResults, $metaAttributes);
         $template = $this->getCategoryNodeTemplate($idCategoryNode);
 
-        return $this->view($searchResults, $this->getFactory()->getCatalogPageWidgetPlugins(), $template);
+        return $this->view(
+            $searchResults,
+            $this->getFactory()->getCatalogPageWidgetPlugins(),
+            $template
+        );
     }
 
     /**
@@ -87,7 +91,11 @@ class CatalogController extends AbstractController
             ->getCatalogClient()
             ->getCatalogViewMode($request);
 
-        return $this->view($searchResults, $this->getFactory()->getCatalogPageWidgetPlugins());
+        return $this->view(
+            $searchResults,
+            $this->getFactory()->getCatalogPageWidgetPlugins(),
+            '@CatalogPage/views/search/search.twig'
+        );
     }
 
     /**

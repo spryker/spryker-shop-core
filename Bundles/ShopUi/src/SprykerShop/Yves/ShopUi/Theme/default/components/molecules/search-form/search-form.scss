@@ -1,0 +1,7 @@
+@mixin component-search-form($name: '.search-form') {
+    #{$name} {
+        
+
+        @content;
+    }
+}

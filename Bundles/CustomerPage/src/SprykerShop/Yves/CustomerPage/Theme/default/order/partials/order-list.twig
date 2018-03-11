@@ -18,6 +18,7 @@
                 <a href="{{ path('customer/order/details', {'id': order.idSalesOrder}) }}">
                     <small><i class="fa fa-cart-arrow-down"></i> {{ 'customer.order.view_order' | trans }}</small>
                 </a>
+                {#@TODO: new FE. next line is change#}
                 {{ widgetBlock('CustomerReorderWidgetPlugin', 'link', order) }}
             </td>
         </tr>

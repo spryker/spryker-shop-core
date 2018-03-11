@@ -1,0 +1,47 @@
+{% extends template('widget') %}
+
+{% define data = {
+    addCartBreadcrumb: true,
+    isCartPage: true,
+    checkoutBreadcrumbs: _widget.stepBreadcrumbs.breadcrumbs | default([])
+} %}
+
+{% set steps = data.addCartBreadcrumb ? [{
+    label: 'cart.cart' | trans,
+    url: url('cart'),
+    isActive: data.isCartPage,
+    isEnabled: not data.isCartPage
+}] : [] %}
+
+{% for checkoutBreadcrumb in data.checkoutBreadcrumbs %}
+    {% set steps = steps | merge([{
+        label: checkoutBreadcrumb.title | trans,
+        url: url(checkoutBreadcrumb.route),
+        isActive: checkoutBreadcrumb.isActive,
+        isEnabled: checkoutBreadcrumb.isEnabled
+    }]) %}
+{% endfor %}
+
+{% block body %}
+    {% embed molecule('breadcrumb') with {
+        data: {
+            steps: steps
+        }
+    } only %}
+        {% block breadcrumbs %}
+            {% for step in data.steps %}
+                {% set modifiers = step.isActive ? ['active'] : [] %}
+                {% set modifiers = step.isEnabled ? modifiers : modifiers | merge(['disabled']) %}
+                
+                {% include molecule('breadcrumb-step') with {
+                    modifiers: modifiers,
+                    data: {
+                        label: step.label,
+                        url: (step.isActive or not step.isEnabled) ? '' : step.url,
+                        withChevron: not loop.last
+                    }
+                } only %}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

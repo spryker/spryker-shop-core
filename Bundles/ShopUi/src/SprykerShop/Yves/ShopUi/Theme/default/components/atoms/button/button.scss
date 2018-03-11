@@ -1,0 +1,74 @@
+@mixin component-button($name: '.button') {
+    #{$name} {
+        @include transition(background-color);
+        display: inline-block;
+        padding: spacing(.5) + 1 spacing() + 1;
+        background-color: $color-main;
+        border: none;
+        color: $color-white;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+            background-color: dark($color-main);
+            text-decoration: none;
+        }
+
+        &--hollow {
+            padding: spacing(.5) spacing();
+            background-color: $color-white;
+            border: 1px solid $color-main;
+            color: $color-main;
+
+            &:hover,
+            &:focus {
+                background-color: light($color-main);
+            }
+        }
+
+        @each $action, $color-action in $color-actions {
+            @include component-button-action($action, $color-action);
+        }
+
+        &--expand {
+            width: 100%;
+        }
+
+        &[disabled],
+        &--disabled {
+            background-color: $color-light;
+            border-color: $color-light;
+            cursor: not-allowed;
+
+            &:hover,
+            &:focus {
+                background-color: $color-light;
+            }
+        }
+    }
+}
+
+@mixin component-button-action($action, $color-action) {
+    &--#{$action} {
+        background-color: $color-action;
+
+        &:hover,
+        &:focus {
+            background-color: dark($color-action);
+        }
+    }
+
+    &--#{$action}#{&}--hollow {
+        background-color: $color-white;
+        border-color: $color-action;
+        color: $color-action;
+
+        &:hover,
+        &:focus {
+            background-color: light($color-action);
+        }
+    }
+
+    @content;
+}

@@ -1,0 +1,33 @@
+@mixin component-box($name: '.box') {
+    #{$name} {
+        @include clearfix;
+        padding: spacing();
+        margin: spacing();
+        background-color: $color-white;
+        border: 1px solid $color-lighter;
+        
+        hr,
+        &__separator {
+            display: block;
+            margin-top: spacing();
+            margin-bottom: spacing();
+            border-bottom: 1px solid $color-lighter;
+            left: - spacing();
+            width: calc(100% + #{spacing(2)});
+        }
+
+        &--borderless {
+            border-color: $color-transparent;
+        }
+
+        &--stretch {
+            height: calc(100% - #{spacing(2)});
+        }
+
+        & + & {
+            margin-top: spacing(2);
+        }
+
+        @content;
+    }
+}
