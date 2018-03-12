@@ -1,0 +1,28 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    form: _view.quoteForm,
+    formAction: url('multi-cart/update'),
+    title: 'cart.cart' | trans,
+} %}
+
+{% block breadcrumbs %}
+    {{ widget('CheckoutBreadcrumbWidgetPlugin', data.cart) }}
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        {% include molecule('form') with {
+            data: {
+                title: 'multi_cart.form.edit_cart' | trans,
+                form: data.form,
+                options: {
+                    action: data.formAction
+                },
+                submit: {
+                    enable: true
+                },
+            }
+        } only %}
+    </div>
+{% endblock %}

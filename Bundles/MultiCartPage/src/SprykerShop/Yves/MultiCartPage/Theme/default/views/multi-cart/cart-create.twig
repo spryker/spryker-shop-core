@@ -1,0 +1,24 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    form: _view.quoteForm,
+    formAction: url('multi-cart/create'),
+    title: 'cart.cart' | trans,
+} %}
+
+{% block content %}
+    <div class="box">
+        {% include molecule('form') with {
+            data: {
+                title: 'multi_cart.form.create_cart' | trans,
+                form: data.form,
+                options: {
+                    action: data.formAction
+                },
+                submit: {
+                    enable: true
+                },
+            }
+        } only %}
+    </div>
+{% endblock %}
