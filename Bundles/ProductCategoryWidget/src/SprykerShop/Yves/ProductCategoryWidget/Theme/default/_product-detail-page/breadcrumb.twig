@@ -1,6 +1,0 @@
-<li><a href="/">{{ 'global.home' | trans }}</a></li>
-{% if _widget.categories|length %}
-    {% for category in _widget.categories %}
-        <li><a href="{{ category.url }}"><span itemprop="category">{{ category.name }}</span></a></li>
-    {% endfor %}
-{% endif %}

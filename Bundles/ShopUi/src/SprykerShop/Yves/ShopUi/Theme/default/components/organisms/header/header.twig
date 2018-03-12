@@ -1,0 +1,56 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'header',
+    tag: 'header'
+} %}
+
+{% define data = {
+    showSearchForm: true,
+    showNavigation: true
+} %}
+
+{% block body %}
+    <div class="container">
+        <div class="{{config.name}}__row grid grid--middle">
+            {% include molecule('logo') with {
+                class: 'col col--sm-7 col--lg-5 col--xl-6'
+            } only %}
+
+            <div class="col col--expand">
+                {% include organism('navigation-top') with {
+                    class: 'is-hidden-sm-md text-right'
+                } only %}
+
+                {% if data.showSearchForm %}
+                    {% include molecule('search-form') with {
+                        class: 'is-hidden-sm-md'
+                    } only %}
+                {% endif %}
+
+                <div class="is-hidden-lg-xl text-right">
+                    {% block mobile %}{% endblock %}
+                </div>
+            </div>
+
+                {# <a class="shrink columns text-right align-middle hide-for-large" href="#aside" data-aside-toggle>
+                    {% if app['cart.quantity'] > 0 %}
+                        <span class="warning badge">{{ app['cart.quantity'] }}</span>
+                    {% endif %}
+                    <i class="fa fa-bars"></i>
+                </a> #}
+        </div>
+
+        {% if data.showNavigation %}
+            <div class="{{config.name}}__row {{config.name}}__navigation-main is-hidden-sm-md">
+                {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', view('navigation-main', 'ShopLayout')) }}
+            </div>
+        {% endif %}
+
+        {% if data.showSearchForm %}
+            {% include molecule('search-form') with {
+                class: config.name ~ '__row is-hidden-lg-xl'
+            } only %}
+        {% endif %}
+    </div>
+{% endblock %}

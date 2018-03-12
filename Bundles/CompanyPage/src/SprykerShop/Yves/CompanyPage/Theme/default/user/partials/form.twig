@@ -1,0 +1,63 @@
+{% set form = form %}
+
+{{ form_start(form) }}
+<div class="row">
+    <div class="small-12 large-5 columns">
+        <label>
+            {{ form.salutation.vars.label | trans }}*
+            {{ form_widget(form.salutation, { 'attr': {'placeholder': form.salutation.vars.label | trans } }) }}
+            {{ form_errors(form.salutation) }}
+        </label>
+    </div>
+
+    <div class="small-12 large-5 columns">
+        <label>
+            {{ form.first_name.vars.label | trans }}*
+            {{ form_widget(form.first_name, { 'attr': {'placeholder': form.first_name.vars.label | trans } }) }}
+            {{ form_errors(form.first_name) }}
+        </label>
+    </div>
+
+    <div class="small-12 large-5 columns">
+        <label>
+            {{ form.last_name.vars.label | trans }}*
+            {{ form_widget(form.last_name, { 'attr': {'placeholder': form.last_name.vars.label | trans } }) }}
+            {{ form_errors(form.last_name) }}
+        </label>
+    </div>
+
+    <div class="small-12 large-5 columns">
+        <label>
+            {{ form.email.vars.label | trans }}*
+            <span class="input-group">
+                <span class="input-group-label">
+                    <i class="fa fa-at"></i>
+                </span>
+                {{ form_widget(form.email, { 'attr': {'class': 'input-group-field', 'placeholder': form.email.vars.label | trans } }) }}
+            </span>
+            {{ form_errors(form.email) }}
+        </label>
+    </div>
+    <div class="small-6 large-5 columns">
+        <label>{{ form.fk_company_business_unit.vars.label | trans }}*
+            {{ form_widget(form.fk_company_business_unit) }}
+            {{ form_errors(form.fk_company_business_unit) }}
+        </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="small-12 medium-6 columns">
+        <div class="row">
+            <div class="small-12 medium-6 columns align-bottom __padding-top">
+                <a href="{{ url('company/user') }}"
+                   class="button expanded">{{ 'general.back.button' | trans }}</a>
+            </div>
+
+            <div class="small-12 medium-6 columns align-bottom __padding-top">
+                <button class="button success expanded">{{ 'forms.submit-btn' | trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}

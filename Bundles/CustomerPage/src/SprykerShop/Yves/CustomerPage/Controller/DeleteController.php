@@ -16,6 +16,7 @@ class DeleteController extends AbstractCustomerController
      */
     public function indexAction()
     {
+        return $this->view([], [], '@CustomerPage/views/profile-delete/profile-delete.twig');
     }
 
     /**
