@@ -44,7 +44,11 @@ class CartController extends AbstractController
             'isQuoteValid' => $isQuoteValid,
         ];
 
-        return $this->view($data, $this->getFactory()->getCartPageWidgetPlugins());
+        return $this->view(
+            $data,
+            $this->getFactory()->getCartPageWidgetPlugins(),
+            '@CartPage/views/cart/cart.twig'
+        );
     }
 
     /**

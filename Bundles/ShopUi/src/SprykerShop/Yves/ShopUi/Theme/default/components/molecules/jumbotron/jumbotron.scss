@@ -1,0 +1,33 @@
+@mixin component-jumbotron($name: '.jumbotron') {
+    #{$name} {
+        &__container {
+            height: spacing(20);
+            background: $color-main;
+            background: linear-gradient(to left top, dark($color-main), light($color-main));
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            text-align: center;
+
+            @include breakpoint(md) {
+                height: spacing(30);
+            }
+
+            @include breakpoint(xl) {
+                height: spacing(40);
+            }
+        }
+
+        &__headline,
+        &__sub-headline {
+            color: $color-white;
+            text-shadow: 0 1px 3px $color-darkest;
+        }
+
+        &__sub-headline {
+            font-style: italic;
+        }
+
+        @content
+    }
+}

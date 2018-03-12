@@ -34,6 +34,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     const STORE = 'STORE';
     const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    const PLUGIN_CUSTOMER_ORDER_DETAILS_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_DETAILS_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -54,6 +55,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addCustomerOverviewWidgetPlugins($container);
         $container = $this->addUtilValidateService($container);
+        $container = $this->addCustomerOrderDetailsWidgetPlugins($container);
 
         return $container;
     }
@@ -229,9 +231,31 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerOrderDetailsWidgetPlugins(Container $container)
+    {
+        $container[static::PLUGIN_CUSTOMER_ORDER_DETAILS_WIDGETS] = function () {
+            return $this->getCustomerOrderDetailsWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return string[]
      */
     protected function getCustomerOverviewWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCustomerOrderDetailsWidgetPlugins(): array
     {
         return [];
     }

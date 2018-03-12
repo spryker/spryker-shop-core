@@ -1,0 +1,24 @@
+{% extends template('page-layout-catalog', 'CatalogPage') %}
+
+{% define data = {
+    products: _view.products,
+    facets: _view.facets,
+    category: _view.category | default(null),
+    categories: categories | default([]),
+    categoryId: _view.idCategory | default(null),
+    filterPath: _view.filterPath | default(null),
+    viewMode: _view.viewMode | default(null),
+
+    title: _view.category.name | default,
+    metaTitle: _view.pageTitle | default(_view.category.name | default),
+    metaDescription: _view.pageDescription | default,
+    metaKeywords: _view.pageKeywords | default,
+
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.currentPage,
+        paginationPath: app.request.getPathInfo(),
+        maxPage: _view.pagination.maxPage,
+        showAlwaysFirstAndLast: true
+    }
+} %}

@@ -1,0 +1,44 @@
+$component-burst-size: spacing(5);
+
+@mixin component-tag($name: '.tag') {
+    #{$name} {
+        display: flex;
+        align-items: center;
+        width: $component-burst-size;
+        height: $component-burst-size;
+        margin-bottom: spacing(.4);
+        background: $color-alt;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: $component-burst-size;
+            width: $component-burst-size;
+            background: $color-alt;
+            z-index: 1;
+        }
+
+        &::before {
+            transform: rotate(30deg);
+        }
+
+        &::after {
+            transform: rotate(60deg);
+        }
+
+        &__text {
+            @include font-size(small);
+            @include line-height(tight);
+            display: block;
+            width: 100%;
+            color: $color-white;
+            text-align: center;
+            z-index: 2;
+        }
+
+        @content;
+    }
+}

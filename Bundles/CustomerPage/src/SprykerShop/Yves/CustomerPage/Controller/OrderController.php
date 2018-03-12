@@ -37,10 +37,12 @@ class OrderController extends AbstractCustomerController
 
         $orderList = $orderListTransfer->getOrders();
 
-        return $this->view([
+        $data = [
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderList,
-        ]);
+        ];
+
+        return $this->view($data, [], '@CustomerPage/views/order/order.twig');
     }
 
     /**
@@ -52,7 +54,11 @@ class OrderController extends AbstractCustomerController
     {
         $responseData = $this->getOrderDetailsResponseData($request->query->getInt('id'));
 
-        return $this->view($responseData);
+        return $this->view(
+        		$responseData,
+        		$this->getFactory()->getCustomerOrderDetailsWidgetPlugins(),
+        		'@CustomerPage/views/order-detail/order-detail.twig'
+        	);
     }
 
     /**

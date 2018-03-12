@@ -1,0 +1,5 @@
+@import '../../../styles/shared';
+@import '../checkbox/checkbox';
+@import 'radio';
+
+@include component-radio;

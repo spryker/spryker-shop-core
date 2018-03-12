@@ -4,21 +4,23 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-application": "^0.1.0",
+    "spryker-shop/shop-application": "^0.2.0",
     "spryker/availability": "^5.4.0 || ^6.0.0",
     "spryker/availability-storage": "^0.1.0 || ^0.2.0",
     "spryker/cart": "^4.3.0",
     "spryker/cart-variant": "^1.0.0",
-    "spryker/kernel": "^3.16.0",
+    "spryker/kernel": "^3.19.0",
     "spryker/messenger": "^3.1.0",
-    "spryker/product-storage": "^0.1.0",
+    "spryker/product-storage": "^0.1.0 || ^0.2.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
+    "spryker/permission": "*",
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker/silex": "TODO: add suggestion description"
+    "spryker/silex": "TODO: add suggestion description",
+    "spryker/permission": "If you want to use permissions plugins"
   },
   "autoload": {
     "psr-4": {

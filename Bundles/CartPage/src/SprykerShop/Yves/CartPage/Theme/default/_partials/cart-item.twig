@@ -13,6 +13,8 @@
                 {{ widget('ProductBundleItemsWidgetPlugin', cartItem, _view.cart) }}
 
                 {% include '@CartPage/_partials/cart-product-variants.twig' %}
+
+                {{ widget('CartNoteQuoteItemWidgetPlugin', cartItem) }}
             </ul>
         </div>
 

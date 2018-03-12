@@ -1,0 +1,50 @@
+@mixin component-link($name: '.link') {
+    #{$name} {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+        color: $color-main;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        @each $action, $color-action in $color-actions {
+            @include component-link-action($action, $color-action);
+        }
+
+        &--small {
+            @include font-size(small);
+        }
+
+        &--alt {
+            @include transition(color);
+
+            &:hover {
+                text-decoration: none;
+                color: dark($color-alt);
+            }
+        }
+
+        &[disabled],
+        &--disabled {
+            color: $color-dark;
+            cursor: not-allowed;
+
+            &:hover {
+                color: $color-dark;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+@mixin component-link-action($action, $color-action) {
+    &--#{$action} {
+        color: $color-action;
+    }
+
+    @content;
+}

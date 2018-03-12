@@ -1,0 +1,28 @@
+@mixin component-form-field($name: '.form-field') {
+    #{$name} {
+        margin: spacing(.5) spacing();
+
+        &__label {
+            @include font-size(small);
+
+            &--required {
+                &::after {
+                    content: '*';
+                    margin-left: spacing(.25);
+                    color: $color-main;
+                }
+            }
+        }
+
+        &__error-list {
+            @include font-size(small);
+            color: map-get($color-actions, alert);
+        }
+
+        &--spacing {
+            padding: spacing() 0;
+        }
+
+        @content;
+    }
+}

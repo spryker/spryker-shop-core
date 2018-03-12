@@ -42,7 +42,7 @@ class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSe
      */
     public static function getTemplate(): string
     {
-        return '@ProductRelationWidget/_cart-page/up-selling.twig';
+        return '@ProductRelationWidget/views/similar-products/similar-products.twig';
     }
 
     /**

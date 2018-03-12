@@ -1,0 +1,47 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    forms: {
+        profile: _view.profileForm,
+        password: _view.passwordForm
+    },
+
+    title: 'customer.account.profile_data' | trans,
+    activePage: 'profile'
+} %}
+
+{% block customerContent %}
+    {% include molecule('form') with {
+        class: 'box',
+        data: {
+            title: 'customer.profile.update' | trans,
+            form: data.forms.profile,
+            layout: {
+                salutation: 'col col--sm-12 col--lg-2',
+                first_name: 'col col--sm-12 col--lg-5',
+                last_name: 'col col--sm-12 col--lg-5'
+            },
+            submit: {
+                enable: true
+            }
+        }
+    } only %}
+
+    {% include molecule('form') with {
+        class: 'box',
+        data: {
+            title: 'customer.password.update' | trans,
+            form: data.forms.password,
+            submit: {
+                enable: true
+            }
+        }
+    } only %}
+
+    <div class="box">
+        <h5>{{ "customer.profile.delete" | trans }}</h5>
+        <hr />
+        {{ "customer.profile.delete.description" | trans }}
+        <a href="{{url('customer/delete')}}" class="button button--alert float-right">{{ "customer.profile.delete" | trans }}</a>
+    </div>
+{% endblock %}

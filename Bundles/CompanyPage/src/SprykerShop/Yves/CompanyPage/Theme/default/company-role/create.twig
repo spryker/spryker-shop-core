@@ -1,0 +1,17 @@
+{% extends "@CompanyPage/layout.twig" %}
+
+{% block title %}
+    <h3>{{ 'company.account.company_role' | trans }}</h3>
+{% endblock %}
+
+{% block companyNavigation %}
+    {% include "@CompanyPage/partials/navigation.twig" with {'active': 'company-role'} %}
+{% endblock %}
+
+{% block companyContent %}
+    <div class="callout">
+        <h5>{{ 'company.account.company_role.edit_information' | trans }}</h5>
+        <hr>
+        {% include "@CompanyPage/company-role/partials/form.twig" with {'form': _view.companyRoleForm, 'formAction': url('company/company-role/create')} %}
+    </div>
+{% endblock %}
