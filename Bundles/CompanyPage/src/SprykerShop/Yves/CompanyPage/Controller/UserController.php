@@ -70,6 +70,8 @@ class UserController extends AbstractCompanyController
             if ($companyUserResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
             }
+
+            $this->addErrorMessages($companyUserResponseTransfer);
         }
 
         $data = [
@@ -191,5 +193,17 @@ class UserController extends AbstractCompanyController
         $companyUserTransfer->setCustomer($customerTransfer);
 
         return $this->getFactory()->getCompanyUserClient()->updateCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * @param CompanyUserResponseTransfer $companyUserResponseTransfer
+     *
+     * @return void
+     */
+    protected function addErrorMessages(CompanyUserResponseTransfer $companyUserResponseTransfer)
+    {
+        foreach ($companyUserResponseTransfer->getMessages() as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getText());
+        }
     }
 }
