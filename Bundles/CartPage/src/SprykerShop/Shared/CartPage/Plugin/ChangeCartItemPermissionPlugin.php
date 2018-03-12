@@ -9,6 +9,9 @@ namespace SprykerShop\Shared\CartPage\Plugin;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
+/**
+ * For Client PermissionDependencyProvider::getPermissionPlugins() registration
+ */
 class ChangeCartItemPermissionPlugin implements PermissionPluginInterface
 {
     public const KEY = 'ChangeCartItemPermissionPlugin';

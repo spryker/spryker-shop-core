@@ -9,6 +9,9 @@ namespace SprykerShop\Client\CheckoutPage\Plugin;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
+/**
+ * For Client PermissionDependencyProvider::getPermissionPlugins() registration
+ */
 class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPluginInterface
 {
     public const KEY = 'PlaceOrderWithAmountUpToPermissionPlugin';
