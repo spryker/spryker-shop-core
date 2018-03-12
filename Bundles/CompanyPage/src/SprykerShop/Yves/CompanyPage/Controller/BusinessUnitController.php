@@ -39,7 +39,7 @@ class BusinessUnitController extends AbstractCompanyController
             'businessUnitCollection' => $businessUnitCollectionTransfer->getCompanyBusinessUnits(),
         ];
 
-        return $this->view($data);
+        return $this->view($data, [], '@CompanyPage/views/business-unit/business-unit.twig');
     }
 
     /**
@@ -49,9 +49,9 @@ class BusinessUnitController extends AbstractCompanyController
      */
     public function detailsAction(Request $request)
     {
-        $responseData = $this->getCompanyBusinessUnitDetailsResponseData($request);
+        $data = $this->getCompanyBusinessUnitDetailsResponseData($request);
 
-        return $this->view($responseData);
+        return $this->view($data, [], '@CompanyPage/views/business-unit-detail/business-unit-detail.twig');
     }
 
     /**
@@ -80,9 +80,11 @@ class BusinessUnitController extends AbstractCompanyController
             }
         }
 
-        return $this->view([
+        $data = [
             'form' => $companyBusinessUnitForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/business-unit-create/business-unit-create.twig');
     }
 
     /**
@@ -117,9 +119,11 @@ class BusinessUnitController extends AbstractCompanyController
             }
         }
 
-        return $this->view([
+        $data = [
             'form' => $companyBusinessUnitForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/business-unit-update/business-unit-update.twig');
     }
 
     /**

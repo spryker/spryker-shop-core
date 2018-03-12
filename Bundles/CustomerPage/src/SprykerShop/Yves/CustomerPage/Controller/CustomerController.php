@@ -48,7 +48,11 @@ class CustomerController extends AbstractCustomerController
             'addresses' => $this->getDefaultAddresses($customerTransfer),
         ];
 
-        return $this->view($data, $this->getFactory()->getCustomerOverviewWidgetPlugins());
+        return $this->view(
+            $data,
+            $this->getFactory()->getCustomerOverviewWidgetPlugins(),
+            '@CustomerPage/views/overview/overview.twig'
+        );
     }
 
     /**

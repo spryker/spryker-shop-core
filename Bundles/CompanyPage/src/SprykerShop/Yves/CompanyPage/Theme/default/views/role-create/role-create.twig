@@ -1,0 +1,31 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    form: _view.companyRoleForm,
+
+    title: 'company.account.company_role' | trans,
+    activePage: 'role'
+} %}
+
+{% block companyContent %}
+    <div class="box">
+        {% include molecule('form') with {
+            data: {
+                title: 'company.account.company_role.edit_information' | trans,
+                form: data.form,
+                layout: {
+                    name: 'col col--sm-12 col--lg-6',
+                    is_default: 'col col--sm-12 col--lg-6'
+                },
+                submit: {
+                    enable: true
+                },
+                cancel: {
+                    enable: true,
+                    url: url('company/company-role'),
+                    text: 'general.back.button' | trans
+                }
+            }
+        } only %}
+    </div>
+{% endblock %}

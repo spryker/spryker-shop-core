@@ -32,10 +32,12 @@ class CompanyRolePermissionController extends AbstractCompanyController
      */
     public function manageAction(Request $request)
     {
-        return $this->view([
+        $data = [
             'idCompanyRole' => $request->query->getInt('id'),
             'permissions' => $this->getPermissionsList($request),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/role-permission/role-permission.twig');
     }
 
     /**

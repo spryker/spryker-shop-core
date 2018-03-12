@@ -57,9 +57,11 @@ class BusinessUnitAddressController extends AbstractCompanyController
             }
         }
 
-        return $this->view([
+        $data = [
             'form' => $addressForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/business-unit-address-create/business-unit-address-create.twig');
     }
 
     /**

@@ -24,6 +24,10 @@ class CompanyController extends AbstractCompanyController
     {
         $data = [];
 
-        return $this->view($data, $this->getFactory()->getCompanyOverviewWidgetPlugins());
+        return $this->view(
+            $data, 
+            $this->getFactory()->getCompanyOverviewWidgetPlugins(),
+            '@CompanyPage/views/overview/overview.twig'
+        );
     }
 }

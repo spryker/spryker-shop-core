@@ -42,7 +42,11 @@ class CartController extends AbstractController
             'attributes' => $itemAttributesBySku,
         ];
 
-        return $this->view($data, $this->getFactory()->getCartPageWidgetPlugins());
+        return $this->view(
+            $data,
+            $this->getFactory()->getCartPageWidgetPlugins(),
+            '@CartPage/views/cart/cart.twig'
+        );
     }
 
     /**

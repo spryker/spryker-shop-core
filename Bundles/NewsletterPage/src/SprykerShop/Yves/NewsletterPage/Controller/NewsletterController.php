@@ -53,10 +53,12 @@ class NewsletterController extends AbstractController
             return $this->redirectResponseInternal(NewsletterPageControllerProvider::ROUTE_CUSTOMER_NEWSLETTER);
         }
 
-        return $this->view([
+        $data = [
             'customer' => $customerTransfer,
             'form' => $newsletterSubscriptionForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@NewsletterPage/views/newsletter/newsletter.twig');
     }
 
     /**

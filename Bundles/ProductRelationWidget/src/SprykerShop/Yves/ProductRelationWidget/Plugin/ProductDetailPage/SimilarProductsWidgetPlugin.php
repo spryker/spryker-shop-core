@@ -42,7 +42,7 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
      */
     public static function getTemplate(): string
     {
-        return '@ProductRelationWidget/_product-detail-page/similar-products.twig';
+        return '@ProductRelationWidget/views/similar-products/similar-products.twig';
     }
 
     /**

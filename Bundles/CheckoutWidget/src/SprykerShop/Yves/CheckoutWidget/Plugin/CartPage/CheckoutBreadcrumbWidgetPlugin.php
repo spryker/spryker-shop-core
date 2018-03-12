@@ -40,7 +40,7 @@ class CheckoutBreadcrumbWidgetPlugin extends AbstractWidgetPlugin implements Che
      */
     public static function getTemplate(): string
     {
-        return '@CheckoutWidget/_cart-page/checkout-breadcrumbs.twig';
+        return '@CheckoutWidget/views/cart-checkout-breadcrumb/cart-checkout-breadcrumb.twig';
     }
 
     /**
