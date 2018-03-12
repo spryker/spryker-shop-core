@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -24,6 +25,20 @@ abstract class AbstractCompanyController extends AbstractController
     public const PARAM_PAGE = 'page';
     public const DEFAULT_PAGE = 1;
 
+
+    /**
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if (!$customerTransfer->getCompanyUserTransfer()) {
+            throw new NotFoundHttpException();
+        }
+    }
 
     /**
      * @return bool
