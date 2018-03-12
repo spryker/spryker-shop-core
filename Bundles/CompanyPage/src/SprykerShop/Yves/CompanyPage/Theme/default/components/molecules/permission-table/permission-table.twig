@@ -7,6 +7,7 @@
 
 {% define data = {
     permissions: required,
+    idCompanyRole: required,
     actions: {
         configure: false,
         switch: false
@@ -49,7 +50,7 @@
                                 <li class="menu__item">
                                     <a href="{{ path('company/company-role-permission/configure', {
                                         'id-permission': permission.idPermission,
-                                        'id-company-role': companyRole.idCompanyRole
+                                        'id-company-role': data.idCompanyRole
                                     }) }}">
                                         {{ 'company.account.company_role.permission.configure' | trans }}
                                     </a>

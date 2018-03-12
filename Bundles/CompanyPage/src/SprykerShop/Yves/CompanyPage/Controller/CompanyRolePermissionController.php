@@ -114,9 +114,11 @@ class CompanyRolePermissionController extends AbstractCompanyController
             $this->generateMessagesByCompanyRolePermissionResponse($companyRolePermissionResponse);
         }
 
-        return $this->view([
-            'form' => $form->createView()
-        ]);
+        $data = [
+            'form' => $form->createView(),
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/role-permission-configure/role-permission-configure.twig');
     }
 
     /**

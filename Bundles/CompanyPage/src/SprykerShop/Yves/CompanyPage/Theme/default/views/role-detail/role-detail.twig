@@ -48,7 +48,7 @@
     </div>
     
     <div class="box">
-        <a class="float-right" href="{{ url('company/permission/manage', {'id': data.role.idCompanyRole}) }}">
+        <a class="float-right" href="{{ url('company/company-role-permission/manage', {'id': data.role.idCompanyRole}) }}">
             {{ 'company.account.company_role.permission.manage' | trans }}
         </a>
         <h5>{{ 'company.account.company_role.permissions' | trans }}</h5>
@@ -57,6 +57,7 @@
             {% include molecule('permission-table', 'CompanyPage') with {
                 data: {
                     permissions: data.permissions,
+                    idCompanyRole: data.role.idCompanyRole,
                     actions: {
                         configure: true
                     }
