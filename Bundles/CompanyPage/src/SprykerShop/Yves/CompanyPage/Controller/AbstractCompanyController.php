@@ -35,7 +35,7 @@ abstract class AbstractCompanyController extends AbstractController
 
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if (!$customerTransfer->getCompanyUserTransfer()) {
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
             throw new NotFoundHttpException();
         }
     }

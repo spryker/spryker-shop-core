@@ -13,12 +13,13 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Company\Code\Messages;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
-class RegisterController extends AbstractCompanyController
+class RegisterController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -27,10 +28,6 @@ class RegisterController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
-        if ($this->getCompanyUser() !== null) {
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_OVERVIEW);
-        }
-
         $registerForm = $this
             ->getFactory()
             ->createCompanyPageFormFactory()
