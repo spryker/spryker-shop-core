@@ -204,4 +204,12 @@ class CustomerPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_UTIL_VALIDATE);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getCustomerOrderDetailsWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CUSTOMER_ORDER_DETAILS_WIDGETS);
+    }
 }
