@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\PriceWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToCustomerAccessStorageClientBridge;
+use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToCustomerClientBridge;
 use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToPriceClientBridge;
 use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToQuoteClientBridge;
 
@@ -16,6 +18,8 @@ class PriceWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_QUOTE = 'CLIENT_QUOTE';
     const CLIENT_PRICE = 'CLIENT_PRICE';
+    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    const CLIENT_CUSTOMER_ACCESS_STORAGE = 'CLIENT_CUSTOMER_ACCESS_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -26,6 +30,8 @@ class PriceWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addQuoteClient($container);
         $container = $this->addPriceClient($container);
+        $container = $this->addCustomerAccessStorageClient($container);
+        $container = $this->addCustomerClient($container);
 
         return $container;
     }
@@ -53,6 +59,34 @@ class PriceWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_PRICE] = function (Container $container) {
             return new PriceWidgetToPriceClientBridge($container->getLocator()->price()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerAccessStorageClient($container)
+    {
+        $container[self::CLIENT_CUSTOMER_ACCESS_STORAGE] = function (Container $container) {
+            return new PriceWidgetToCustomerAccessStorageClientBridge($container->getLocator()->customerAccessStorage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerClient($container)
+    {
+        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
+            return new PriceWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;

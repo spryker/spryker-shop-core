@@ -17,6 +17,11 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\PriceWidget\PriceWidget
 class PriceWidgetPlugin extends AbstractWidgetPlugin implements PriceWidgetPluginInterface
 {
     /**
+     * @see \Spryker\Zed\CustomerAccess\CustomerAccessConfig::CONTENT_TYPE_PRICE
+     */
+    const CONTENT_TYPE_PRICE = 'price';
+
+    /**
      * @return string
      */
     public static function getName(): string

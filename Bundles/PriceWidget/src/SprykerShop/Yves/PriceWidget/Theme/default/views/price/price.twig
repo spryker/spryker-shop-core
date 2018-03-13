@@ -5,19 +5,17 @@
     originalPrice: _widget.product.prices.ORIGINAL | default(null)
 } %}
 
-{% block template %}
-    {% if data.price is not empty %}
-        {{parent()}}
-    {% endif %}
-{% endblock %}
-
 {% block body %}
     <p>
-        {% include molecule('price') with {
-            data: {
-                amount: data.price | money,
-                originalAmount: data.originalPrice is empty ?: (data.originalPrice | money)
-            }
-        } only %}
+        {% if data.price is not empty %}
+            {% include molecule('price') with {
+                data: {
+                    amount: data.price | money,
+                    originalAmount: data.originalPrice is empty ?: (data.originalPrice | money)
+                }
+            } only %}
+        {% else %}
+            {{ 'customer.access.cannot_see_price' | trans }}
+        {% endif %}
     </p>
 {% endblock %}
