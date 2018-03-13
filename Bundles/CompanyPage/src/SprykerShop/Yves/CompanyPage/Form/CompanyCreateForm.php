@@ -63,12 +63,12 @@ class CompanyCreateForm extends AbstractType
     protected function addSalutationField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_SALUTATION, ChoiceType::class, [
-            'choices' => [
+            'choices' => array_flip([
                 'Mr' => 'customer.salutation.mr',
                 'Ms' => 'customer.salutation.ms',
                 'Mrs' => 'customer.salutation.mrs',
                 'Dr' => 'customer.salutation.dr',
-            ],
+            ]),
             'required' => true,
             'label' => 'address.salutation',
             'constraints' => [
