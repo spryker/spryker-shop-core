@@ -137,7 +137,10 @@ class BusinessUnitController extends AbstractCompanyController
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($companyBusinessUnitId);
 
-        $this->getFactory()->getCompanyBusinessUnitClient()->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
+        $companyBusinessUnitResponseTransfer = $this->getFactory()
+            ->getCompanyBusinessUnitClient()
+            ->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
+        $this->processResponseMessages($companyBusinessUnitResponseTransfer);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
     }
