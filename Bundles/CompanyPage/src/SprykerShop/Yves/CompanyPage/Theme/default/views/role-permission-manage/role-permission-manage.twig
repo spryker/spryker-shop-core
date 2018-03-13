@@ -21,6 +21,7 @@
         {% include molecule('permission-table', 'CompanyPage') with {
             data: {
                 permissions: data.permissions,
+                idCompanyRole: data.idCompanyRole,
                 actions: {
                     configure: false,
                     switch: true

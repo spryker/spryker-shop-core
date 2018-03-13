@@ -59,11 +59,11 @@
                             {% if data.actions.switch %}
                                 <li class="menu__item">
                                     {% if isAssigned %}
-                                        <a href="{{ path('company/permission/unassign', {'id-permission': permission.idPermission, 'id-company-role': _view.idCompanyRole}) }}">
+                                        <a href="{{ path('company/company-role-permission/unassign', {'id-permission': permission.idPermission, 'id-company-role': _view.idCompanyRole}) }}">
                                             {{ 'company.account.company_role.permission.unassign' | trans }}
                                         </a>
                                     {% else %}
-                                        <a href="{{ path('company/permission/assign', {'id-permission': permission.idPermission, 'id-company-role': _view.idCompanyRole}) }}">
+                                        <a href="{{ path('company/company-role-permission/assign', {'id-permission': permission.idPermission, 'id-company-role': _view.idCompanyRole}) }}">
                                             {{ 'company.account.company_role.permission.assign' | trans }}
                                         </a>
                                     {% endif %}
