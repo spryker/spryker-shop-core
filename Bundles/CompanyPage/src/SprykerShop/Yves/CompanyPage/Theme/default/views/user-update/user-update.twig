@@ -1,1 +1,35 @@
-{% extends view('user-create', 'CompanyPage') %}
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+form: _view.companyUserForm,
+
+title: 'company.account.company_user' | trans,
+activePage: 'users'
+} %}
+
+{% block companyContent %}
+    <div class="box">
+        {% include molecule('form') with {
+            data: {
+                title: 'company.account.company_user.edit_information' | trans,
+                form: data.form,
+                options: {
+                    action: url('company/user/update')
+                },
+                layout: {
+                    salutation: 'col col--sm-12 col--lg-2',
+                    first_name: 'col col--sm-12 col--lg-5',
+                    last_name: 'col col--sm-12 col--lg-5'
+                },
+                submit: {
+                    enable: true
+                },
+                cancel: {
+                    enable: true,
+                    url: url('company/user'),
+                    text: 'general.back.button' | trans
+                }
+            }
+        } only %}
+    </div>
+{% endblock %}
