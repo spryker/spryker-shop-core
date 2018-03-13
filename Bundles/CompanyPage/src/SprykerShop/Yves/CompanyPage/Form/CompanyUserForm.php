@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CompanyUserForm extends AbstractType
 {
+    public const FIELD_ID_CUSTOMER = 'id_customer';
     public const FIELD_ID_COMPANY_USER = 'id_company_user';
     public const FIELD_SALUTATION = 'salutation';
     public const FIELD_FIRST_NAME = 'first_name';
@@ -30,6 +31,7 @@ class CompanyUserForm extends AbstractType
     public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
 
     public const OPTION_BUSINESS_UNIT_CHOICES = 'business_unit_choices';
+
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -59,6 +61,7 @@ class CompanyUserForm extends AbstractType
     {
         $this
             ->addIdCompanyUserField($builder)
+            ->addIdCustomerField($builder)
             ->addFkCompanyField($builder)
             ->addFkCustomerField($builder)
             ->addFkCompanyBusinessUnitField($builder, $options)
@@ -94,6 +97,20 @@ class CompanyUserForm extends AbstractType
     protected function addIdCompanyUserField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_COMPANY_USER, HiddenType::class, [
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdCustomerField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ID_CUSTOMER, HiddenType::class, [
             'required' => false,
         ]);
 
