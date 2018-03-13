@@ -43,7 +43,9 @@ class RegisterController extends AbstractController
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_OVERVIEW);
             }
 
-            $this->processResponseMessages($companyResponseTransfer);
+            foreach ($companyResponseTransfer->getMessages() as $responseMessage) {
+                $this->addErrorMessage($responseMessage->getText());
+            }
         }
 
         $data = [
