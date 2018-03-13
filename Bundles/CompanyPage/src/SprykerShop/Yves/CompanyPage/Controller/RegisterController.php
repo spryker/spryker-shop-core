@@ -28,6 +28,12 @@ class RegisterController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if ($customerTransfer && $customerTransfer->getCompanyUserTransfer()) {
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_OVERVIEW);
+        }
+
         $registerForm = $this
             ->getFactory()
             ->createCompanyPageFormFactory()
