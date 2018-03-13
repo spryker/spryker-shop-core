@@ -44,14 +44,6 @@ abstract class AbstractCompanyController extends AbstractController
     /**
      * @return bool
      */
-    protected function isLoggedInCustomer(): bool
-    {
-        return $this->getFactory()->getCustomerClient()->isLoggedIn();
-    }
-
-    /**
-     * @return bool
-     */
     protected function isCompanyActive(): bool
     {
         $companyUser = $this->getCompanyUser();
@@ -73,17 +65,15 @@ abstract class AbstractCompanyController extends AbstractController
      */
     protected function getCompanyUser(): ?CompanyUserTransfer
     {
-        if ($this->isLoggedInCustomer()) {
-            $customerTransfer = $this->getFactory()
-                ->getCustomerClient()
-                ->getCustomer();
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
 
-            if ($customerTransfer !== null) {
-                return $customerTransfer->getCompanyUserTransfer();
-            }
+        if (!$customerTransfer) {
+            return null;
         }
 
-        return null;
+        return $customerTransfer->getCompanyUserTransfer();
     }
 
     /**
