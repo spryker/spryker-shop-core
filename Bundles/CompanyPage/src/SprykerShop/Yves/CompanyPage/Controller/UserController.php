@@ -21,6 +21,8 @@ class UserController extends AbstractCompanyController
 {
     public const COMPANY_USER_LIST_SORT_FIELD = 'id_company_user';
 
+    protected const SUCCESS_MESSAGE_DELETED = 'company.account.company_user.delete.successful';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -137,6 +139,8 @@ class UserController extends AbstractCompanyController
         $companyUserTransfer = new CompanyUserTransfer();
         $companyUserTransfer->setIdCompanyUser($idCompanyUser);
         $this->getFactory()->getCompanyUserClient()->deleteCompanyUser($companyUserTransfer);
+
+        $this->addSuccessMessage(static::SUCCESS_MESSAGE_DELETED);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
     }
