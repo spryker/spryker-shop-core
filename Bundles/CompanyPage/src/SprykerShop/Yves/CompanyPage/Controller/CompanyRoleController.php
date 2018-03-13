@@ -80,7 +80,8 @@ class CompanyRoleController extends AbstractCompanyController
         $companyRoleTransfer = new CompanyRoleTransfer();
         $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
 
-        $this->getFactory()->getCompanyRoleClient()->deleteCompanyRole($companyRoleTransfer);
+        $companyRoleResponseTransfer = $this->getFactory()->getCompanyRoleClient()->deleteCompanyRole($companyRoleTransfer);
+        $this->processResponseMessages($companyRoleResponseTransfer);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
     }

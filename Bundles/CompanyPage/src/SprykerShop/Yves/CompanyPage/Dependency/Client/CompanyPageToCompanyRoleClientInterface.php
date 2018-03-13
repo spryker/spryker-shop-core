@@ -34,11 +34,11 @@ interface CompanyPageToCompanyRoleClientInterface
     public function updateCompanyRole(CompanyRoleTransfer $companyRoleUserTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
      */
-    public function deleteCompanyRole(CompanyRoleTransfer $companyRoleUserTransfer): void;
+    public function deleteCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer

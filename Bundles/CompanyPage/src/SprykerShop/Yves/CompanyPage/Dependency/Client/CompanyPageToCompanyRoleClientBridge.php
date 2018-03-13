@@ -75,11 +75,11 @@ class CompanyPageToCompanyRoleClientBridge implements CompanyPageToCompanyRoleCl
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleUserTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
      */
-    public function deleteCompanyRole(CompanyRoleTransfer $companyRoleUserTransfer): void
+    public function deleteCompanyRole(CompanyRoleTransfer $companyRoleUserTransfer): CompanyRoleResponseTransfer
     {
-        $this->companyRoleClient->deleteCompanyRole($companyRoleUserTransfer);
+        return $this->companyRoleClient->deleteCompanyRole($companyRoleUserTransfer);
     }
 
     /**
