@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Zed\CompanyRole\Business\Model\CompanyRole;
 
 interface CompanyPageToCompanyRoleClientInterface
 {
@@ -64,16 +63,16 @@ interface CompanyPageToCompanyRoleClientInterface
     public function findCompanyRolePermissions(CompanyRoleTransfer $companyRoleTransfer): PermissionCollectionTransfer;
 
     /**
-     * @param PermissionTransfer $permissionTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return PermissionTransfer
+     * @return \Generated\Shared\Transfer\PermissionTransfer
      */
     public function findPermissionByIdCompanyRoleByIdPermission(PermissionTransfer $permissionTransfer): PermissionTransfer;
 
     /**
-     * @param PermissionTransfer $permissionTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return CompanyRolePermissionResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer
      */
     public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer;
 

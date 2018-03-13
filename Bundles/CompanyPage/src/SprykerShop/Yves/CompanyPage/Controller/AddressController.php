@@ -133,7 +133,6 @@ class AddressController extends AbstractCompanyController
      */
     protected function saveAddress(array $data)
     {
-
         $addressTransfer = new CompanyUnitAddressTransfer();
         $addressTransfer->fromArray($data, true);
         $addressTransfer = $this

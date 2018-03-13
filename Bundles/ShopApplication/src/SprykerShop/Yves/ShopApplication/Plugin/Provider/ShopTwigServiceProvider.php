@@ -151,11 +151,11 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
     }
 
     /**
-     * @param Twig_Environment $twig
+     * @param \Twig_Environment $twig
      *
      * @return void
      */
-    protected function registerTwigFunctionCan(\Twig_Environment $twig)
+    protected function registerTwigFunctionCan(Twig_Environment $twig)
     {
         $canFunction = new Twig_SimpleFunction('can', [
             $this,

@@ -100,19 +100,25 @@ class FormFactory extends AbstractFactory
         );
     }
 
+    /**
+     * @param int $idCompanyRole
+     * @param int $idPermission
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function getCompanyRolePermissionType(int $idCompanyRole, int $idPermission)
     {
         $dataProvider = $this->createCompanyRolePermissionDataProvider();
 
         return $this->getFormFactory()->create(
             CompanyRolePermissionConfigurationType::class,
-                $dataProvider->getData($idCompanyRole, $idPermission),
-                $dataProvider->getOptions()
-            );
+            $dataProvider->getData($idCompanyRole, $idPermission),
+            $dataProvider->getOptions()
+        );
     }
 
     /**
-     * @return CompanyRolePermissionDataProvider
+     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRolePermissionDataProvider
      */
     public function createCompanyRolePermissionDataProvider()
     {

@@ -25,8 +25,9 @@ abstract class AbstractCompanyController extends AbstractController
     public const PARAM_PAGE = 'page';
     public const DEFAULT_PAGE = 1;
 
-
     /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return void
      */
     public function initialize()

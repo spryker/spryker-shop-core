@@ -40,7 +40,8 @@ class BusinessUnitAddressController extends AbstractCompanyController
                 $dataProvider->getData(
                     $this->getCompanyUser(),
                     null,
-                    $idCompanyBusinessUnit)
+                    $idCompanyBusinessUnit
+                )
             );
         }
 

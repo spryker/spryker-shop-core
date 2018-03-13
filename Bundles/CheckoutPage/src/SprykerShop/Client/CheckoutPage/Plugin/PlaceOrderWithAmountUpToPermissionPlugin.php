@@ -20,7 +20,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
 
     /**
      * @param array $configuration
-     * @param null $centAmount
+     * @param int|null $centAmount
      *
      * @return bool
      */
@@ -47,7 +47,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
     public function getConfigurationSignature(): array
     {
         return [
-            static::FIELD_CENT_AMOUNT => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT
+            static::FIELD_CENT_AMOUNT => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT,
         ];
     }
 

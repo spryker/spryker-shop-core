@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -25,7 +24,7 @@ class CompanyController extends AbstractCompanyController
         $data = [];
 
         return $this->view(
-            $data, 
+            $data,
             $this->getFactory()->getCompanyOverviewWidgetPlugins(),
             '@CompanyPage/views/overview/overview.twig'
         );

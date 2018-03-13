@@ -32,7 +32,6 @@ class CompanyUserForm extends AbstractType
 
     public const OPTION_BUSINESS_UNIT_CHOICES = 'business_unit_choices';
 
-
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *

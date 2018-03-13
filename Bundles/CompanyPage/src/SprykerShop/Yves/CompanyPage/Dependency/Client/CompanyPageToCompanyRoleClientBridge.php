@@ -93,9 +93,9 @@ class CompanyPageToCompanyRoleClientBridge implements CompanyPageToCompanyRoleCl
     }
 
     /**
-     * @param PermissionTransfer $permissionTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return PermissionTransfer
+     * @return \Generated\Shared\Transfer\PermissionTransfer
      */
     public function findPermissionByIdCompanyRoleByIdPermission(PermissionTransfer $permissionTransfer): PermissionTransfer
     {
@@ -103,9 +103,9 @@ class CompanyPageToCompanyRoleClientBridge implements CompanyPageToCompanyRoleCl
     }
 
     /**
-     * @param PermissionTransfer $permissionTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return CompanyRolePermissionResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer
      */
     public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer
     {

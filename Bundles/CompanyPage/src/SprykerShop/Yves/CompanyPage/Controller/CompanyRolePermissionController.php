@@ -92,9 +92,9 @@ class CompanyRolePermissionController extends AbstractCompanyController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|RedirectResponse
+     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function configureAction(Request $request)
     {
@@ -122,7 +122,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
     }
 
     /**
-     * @param CompanyRolePermissionResponseTransfer $responseTransfer
+     * @param \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer $responseTransfer
      *
      * @return void
      */
