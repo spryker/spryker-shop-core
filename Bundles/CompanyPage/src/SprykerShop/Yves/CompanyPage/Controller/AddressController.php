@@ -36,7 +36,7 @@ class AddressController extends AbstractCompanyController
             'addresses' => $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses(),
         ];
 
-        return $this->view($data);
+        return $this->view($data, [], '@CompanyPage/views/address/address.twig');
     }
 
     /**
@@ -48,18 +48,17 @@ class AddressController extends AbstractCompanyController
     {
         $dataProvider = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyUnitAddressFormDataProvider();
 
         $addressForm = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
         if ($addressForm->isSubmitted() === false) {
-            $companyUserTransfer = $this->getCompanyUser();
-            $addressForm->setData($dataProvider->getData($companyUserTransfer));
+            $addressForm->setData($dataProvider->getData($this->getCompanyUser()));
         }
 
         if ($addressForm->isValid()) {
@@ -70,9 +69,11 @@ class AddressController extends AbstractCompanyController
             }
         }
 
-        return $this->view([
+        $data = [
             'form' => $addressForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/address-create/address-create.twig');
     }
 
     /**
@@ -84,12 +85,12 @@ class AddressController extends AbstractCompanyController
     {
         $dataProvider = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyUnitAddressFormDataProvider();
 
         $addressForm = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
@@ -102,9 +103,11 @@ class AddressController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ADDRESS);
         }
 
-        return $this->view([
+        $data = [
             'form' => $addressForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/address-update/address-update.twig');
     }
 
     /**

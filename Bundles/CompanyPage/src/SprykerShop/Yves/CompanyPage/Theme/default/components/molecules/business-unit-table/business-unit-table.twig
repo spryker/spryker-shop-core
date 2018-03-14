@@ -1,0 +1,70 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'business-unit-table',
+    tag: 'div'
+} %}
+
+{% define data = {
+    businessUnits: required,
+    actions: {
+        view: true,
+        update: false,
+        delete: false
+    }
+} %}
+
+{% set showActions = data.actions.view or data.actions.update or data.actions.delete %}
+
+{% block body %}
+    <table class="table table--expand">
+        <thead>
+            <tr>
+                <th>{{ 'company.account.business_unit.name' | trans }}</th>
+                <th>{{ 'company.account.business_unit.email' | trans }}</th>
+                <th>{{ 'company.account.business_unit.phone' | trans }}</th>
+                <th>{{ 'company.account.business_unit.external_url' | trans }}</th>
+                {% if showActions %}
+                    <th>{{ 'company.account.table.actions' | trans }}</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for unit in data.businessUnits %}
+                <tr>
+                    <td>{{ unit.name }}</td>
+                    <td>{{ unit.email }}</td>
+                    <td>{{ unit.phone }}</td>
+                    <td><a href="{{ unit.externalUrl }}" target="_blank">{{ unit.externalUrl }}</a></td>
+                    {% if showActions %}
+                        <td> 
+                            <ul class="menu menu--inline">
+                                {% if data.actions.view %}
+                                    <li class="menu__item">
+                                        <a href="{{ path('company/business-unit/details', {'id': unit.idCompanyBusinessUnit}) }}">
+                                            {{ 'company.account.business_unit.view' | trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if data.actions.update %}
+                                    <li class="menu__item">
+                                        <a href="{{ url('company/business-unit/update', {'id': unit.idCompanyBusinessUnit}) }}">
+                                            {{ "company.account.business_unit.edit" | trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if data.actions.delete %}
+                                    <li class="menu__item">
+                                        <a href="{{ url('company/business-unit/delete', {'id': unit.idCompanyBusinessUnit }) }}">
+                                            {{ "company.account.business_unit.delete" | trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
