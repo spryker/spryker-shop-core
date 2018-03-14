@@ -21,7 +21,10 @@
         <li class="menu__separator"></li>
         <li class="menu__item">{{ widgetGlobal('LanguageSwitcherWidgetPlugin', app.request) }}</li>
         <li class="menu__separator"></li>
-        <li class="menu__item"><a href="{{ url('cart') }}">{{cartQuantity}}{{ 'global.cart' | trans }}</a></li>
+        <li class="menu__item">
+            <a href="{{ url('cart') }}">{{cartQuantity}}{{ 'global.cart' | trans }}</a>
+            {{ widgetGlobal('MiniCartWidgetPlugin') }}
+        </li>
         <li class="menu__separator"></li>
         
         {% if data.showUserMenu %}

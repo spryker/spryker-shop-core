@@ -1,0 +1,20 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'mini-cart-detail',
+    tag: 'div'
+} %}
+
+{% define data = {
+    cart: required,
+    actions: {
+        view: true,
+        set_active: true
+    }
+} %}
+
+{% set showActions = data.actions.view or data.actions.set_active %}
+
+{% block body %}
+
+{% endblock %}

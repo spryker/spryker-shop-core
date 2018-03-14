@@ -1,8 +1,9 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
+    cart: _view.cart,
     form: _view.quoteForm,
-    formAction: url('multi-cart/update'),
+    formAction: url('multi-cart/update', {quoteName: _view.cart.name}),
     title: 'cart.cart' | trans,
 } %}
 

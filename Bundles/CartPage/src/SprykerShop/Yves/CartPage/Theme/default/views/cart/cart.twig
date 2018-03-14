@@ -13,6 +13,8 @@
 {% endblock %}
 
 {% block content %}
+    {{ widget('MultiCartListWidgetPlugin', data.cart) }}
+    {{ widget('CartOperationsWidgetPlugin', data.cart) }}
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {

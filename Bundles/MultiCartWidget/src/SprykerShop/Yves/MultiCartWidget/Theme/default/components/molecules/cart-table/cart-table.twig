@@ -1,0 +1,91 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-table',
+    tag: 'div'
+} %}
+
+{% define data = {
+    carts: required,
+    actions: {
+        view: true,
+        update: true,
+        set_active: true,
+        delete: false
+    }
+} %}
+
+{% set showActions = data.actions.view or data.actions.update or data.actions.delete or data.actions.set_active %}
+
+{% block body %}
+    {{ 'multi_cart_widget.cart.list' | trans }}:
+    <table class="table table--expand">
+        <thead>
+            <tr>
+                <th>{{ 'multi_cart_widget.cart.name' | trans }}</th>
+                <th>{{ 'multi_cart_widget.cart.status' | trans }}</th>
+                <th>{{ 'multi_cart_widget.cart.items' | trans }}</th>
+                <th>{{ 'multi_cart_widget.cart.grand_total' | trans }}</th>
+                {% if showActions %}
+                    <th>{{ 'multi_cart_widget.cart.actions' | trans }}</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for cart in data.carts %}
+            <tr>
+                <td>{{ cart.name }}</td>
+                <td>{% if cart.isActive == true %}{{ 'multi_cart_widget.cart.active' | trans }}{% endif %}</td>
+                <td>
+                    {% if cart.items is not empty %}
+                        {% include atom('cart-item-list', 'MultiCartWidget') with {
+                            data: {
+                                items: cart.items
+                            }
+                        } only %}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if cart.totals is not empty and cart.items is not empty %}
+                    {{ cart.totals.grandTotal | money }}
+                    {% endif %}
+                </td>
+                {% if showActions %}
+                    <td>
+                        <ul class="menu menu--inline">
+                            {% if data.actions.view %}
+                                <li class="menu__item">
+                                    <a href="">
+                                        {{ 'multi_cart_widget.cart.action.view' | trans }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if cart.isActive == false and data.actions.set_active %}
+                                <li class="menu__item">
+                                    <a href="{{ path('multi-cart/set-active', {quoteName: cart.name}) }}">
+                                        {{ 'multi_cart_widget.cart.action.set_active' | trans }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if data.actions.update %}
+                                <li class="menu__item">
+                                    <a href="{{ path('multi-cart/update', {quoteName: cart.name}) }}">
+                                        {{ "multi_cart_widget.cart.action.change_name" | trans }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if data.actions.delete %}
+                                <li class="menu__item">
+                                    <a href="{{ path('multi-cart/delete', {quoteName: cart.name}) }}">
+                                        {{ "multi_cart_widget.cart.action.delete" | trans }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

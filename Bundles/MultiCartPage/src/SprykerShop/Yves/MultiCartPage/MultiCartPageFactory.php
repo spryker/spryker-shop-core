@@ -9,16 +9,45 @@ namespace SprykerShop\Yves\MultiCartPage;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProvider;
 use SprykerShop\Yves\MultiCartPage\Form\QuoteForm;
+use SprykerShop\Yves\MultiCartPage\Model\CartOperations;
 
 class MultiCartPageFactory extends AbstractFactory
 {
     /**
+     * @param null|string $quoteName
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getQuoteForm()
+    public function getQuoteForm($quoteName = null)
     {
-        return $this->getFormFactory()->create(QuoteForm::class);
+        return $this->getFormFactory()->create(
+            QuoteForm::class,
+            $this->createQuoteFormDataProvider()->getData($quoteName)
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProviderInterface
+     */
+    protected function createQuoteFormDataProvider()
+    {
+        return new QuoteFormDataProvider(
+            $this->getMultiCartClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MultiCartPage\Model\CartOperationsInterface
+     */
+    public function createCartOperations()
+    {
+        return new CartOperations(
+            $this->getPersistentCartClent(),
+            $this->getMultiCartClient(),
+            $this->getQuoteClient()
+        );
     }
 
     /**
@@ -27,6 +56,22 @@ class MultiCartPageFactory extends AbstractFactory
     public function getMultiCartClient()
     {
         return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_MULTI_CART);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToQuoteClientInterface
+     */
+    public function getQuoteClient()
+    {
+        return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToPersistentCartClientInterface
+     */
+    public function getPersistentCartClent()
+    {
+        return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_PERSISTENT_CART);
     }
 
     /**

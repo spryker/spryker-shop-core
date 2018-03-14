@@ -1,0 +1,33 @@
+{% extends template('widget') %}
+
+{% define data = {
+    activeCart: _widget.activeCart,
+    carts: _widget.cartList,
+    isMultiCartAllowed: _widget.isMultiCartAllowed
+} %}
+
+{% block body %}
+    {% if data.isMultiCartAllowed is not empty %}
+    <div class="box">
+        {% if data.carts is not empty and data.carts|length > 1 %}
+            {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                data: {
+                    cart: data.carts
+                }
+            } only %}
+        {% endif %}
+        {% if data.carts is not empty and data.carts|length > 1 %}
+            <div class="row">
+                {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                    data: {
+                        cart: data.carts
+                    }
+                } only %}
+            </div>
+        {% endif %}
+        <div class="row text-center">
+            <a class="button" href="{{url('multi-cart/create')}}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

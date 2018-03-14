@@ -13,28 +13,29 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface MultiCartPageToMultiCartClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return null|\Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function findActiveCart(): ?QuoteTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function updateCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function getQuoteCollection();
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @param string $quoteName
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function getActiveCart(): QuoteTransfer;
+    public function findQuoteByName($quoteName): ?QuoteTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return bool
      */
-    public function deleteCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function isMultiCartAllowed();
+
+    /**
+     * @return string
+     */
+    public function getDuplicatedQuoteNameSuffix();
 }

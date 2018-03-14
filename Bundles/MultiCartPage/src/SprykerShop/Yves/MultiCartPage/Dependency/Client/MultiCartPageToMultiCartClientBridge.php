@@ -26,40 +26,44 @@ class MultiCartPageToMultiCartClientBridge implements MultiCartPageToMultiCartCl
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return null|\Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function findActiveCart(): ?QuoteTransfer
     {
-        return $this->multiCartClient->createCart($quoteTransfer);
+        return $this->multiCartClient->findActiveCart();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function updateCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function getQuoteCollection()
     {
-        return $this->multiCartClient->updateCart($quoteTransfer);
+        return $this->multiCartClient->getQuoteCollection();
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @param string $quoteName
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function getActiveCart(): QuoteTransfer
+    public function findQuoteByName($quoteName): ?QuoteTransfer
     {
-        return $this->multiCartClient->getActiveCart();
+        return $this->multiCartClient->findQuoteByName($quoteName);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return bool
      */
-    public function deleteCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function isMultiCartAllowed()
     {
-        return $this->multiCartClient->deleteCart($quoteTransfer);
+        return $this->multiCartClient->isMultiCartAllowed();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDuplicatedQuoteNameSuffix()
+    {
+        return $this->multiCartClient->getDuplicatedQuoteNameSuffix();
     }
 }

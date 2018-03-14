@@ -15,6 +15,9 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_MULTI_CART_CREATE = 'multi-cart/create';
     public const ROUTE_MULTI_CART_UPDATE = 'multi-cart/update';
     public const ROUTE_MULTI_CART_DELETE = 'multi-cart/delete';
+    public const ROUTE_MULTI_CART_SET_ACTIVE = 'multi-cart/set-active';
+    public const ROUTE_MULTI_CART_CLEAR = 'multi-cart/clear';
+    public const ROUTE_MULTI_CART_DUPLICATE = 'multi-cart/duplicate';
 
     /**
      * @param \Silex\Application $app
@@ -34,6 +37,21 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
         $controller->value('multiCart', 'multi-cart');
 
         $controller = $this->createGetController('/{multiCart}/delete/{quoteName}', self::ROUTE_MULTI_CART_DELETE, 'MultiCartPage', 'MultiCart', 'delete');
+        $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
+            ->assert('quoteName', '.+');
+        $controller->value('multiCart', 'multi-cart');
+
+        $controller = $this->createGetController('/{multiCart}/clear/{quoteName}', self::ROUTE_MULTI_CART_CLEAR, 'MultiCartPage', 'MultiCart', 'clear');
+        $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
+            ->assert('quoteName', '.+');
+        $controller->value('multiCart', 'multi-cart');
+
+        $controller = $this->createGetController('/{multiCart}/duplicate/{quoteName}', self::ROUTE_MULTI_CART_DUPLICATE, 'MultiCartPage', 'MultiCart', 'duplicate');
+        $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
+            ->assert('quoteName', '.+');
+        $controller->value('multiCart', 'multi-cart');
+
+        $controller = $this->createGetController('/{multiCart}/set-active/{quoteName}', self::ROUTE_MULTI_CART_SET_ACTIVE, 'MultiCartPage', 'MultiCart', 'setActive');
         $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
             ->assert('quoteName', '.+');
         $controller->value('multiCart', 'multi-cart');
