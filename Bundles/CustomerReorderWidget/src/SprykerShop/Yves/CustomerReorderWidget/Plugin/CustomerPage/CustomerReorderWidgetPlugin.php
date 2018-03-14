@@ -43,7 +43,7 @@ class CustomerReorderWidgetPlugin extends AbstractWidgetPlugin implements Custom
      */
     public static function getTemplate(): string
     {
-        return '@CustomerReorderWidget/_customer-page/index.twig';
+        return '@CustomerReorderWidget/views/customer-reorder/customer-reorder.twig';
     }
 
     /**

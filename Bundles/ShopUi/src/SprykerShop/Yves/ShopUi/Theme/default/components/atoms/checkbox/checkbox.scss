@@ -45,6 +45,12 @@
             border-color: map-get($color-actions, alert);
         }
 
+        &[disabled] &__box,
+        &--disabled &__box {
+            background-color: $color-lighter;
+            cursor: not-allowed;
+        }
+
         @content;
     }
 }
