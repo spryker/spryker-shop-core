@@ -101,7 +101,7 @@ class ProductFinder implements ProductFinderInterface
             PageIndexMap::LOCALE . ':' . $this->localeClient->getCurrentLocale(),
             PageIndexMap::STORE . ':' . $this->storeClient->getCurrentStore()->getName(),
             PageIndexMap::TYPE . ':' . 'product_abstract',
-            $searchField . ':' . "\"$searchString\"",
+            $searchField . ':("' . $searchString . '" ' . $searchString . ')',
         ];
 
         return implode(' AND ', $queryData);
