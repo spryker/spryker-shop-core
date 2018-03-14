@@ -13,12 +13,13 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Company\Code\Messages;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
-class RegisterController extends AbstractCompanyController
+class RegisterController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -27,13 +28,15 @@ class RegisterController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
-        if ($this->isLoggedInCustomer()) {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if ($customerTransfer && $customerTransfer->getCompanyUserTransfer()) {
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_OVERVIEW);
         }
 
         $registerForm = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyRegisterForm()
             ->handleRequest($request);
 
@@ -46,12 +49,16 @@ class RegisterController extends AbstractCompanyController
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_OVERVIEW);
             }
 
-            $this->processResponseMessages($companyResponseTransfer);
+            foreach ($companyResponseTransfer->getMessages() as $responseMessage) {
+                $this->addErrorMessage($responseMessage->getText());
+            }
         }
 
-        return $this->view([
+        $data = [
             'registerForm' => $registerForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/register/register.twig');
     }
 
     /**

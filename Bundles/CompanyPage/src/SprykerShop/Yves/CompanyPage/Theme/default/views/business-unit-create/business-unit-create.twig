@@ -1,0 +1,31 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    form: _view.form,
+
+    title: 'company.account.business_unit' | trans,
+    activePage: 'business-unit'
+} %}
+
+{% block companyContent %}
+    <div class="box">
+        {% include molecule('form') with {
+            data: {
+                title: 'company.account.business_unit.edit_information' | trans,
+                form: data.form,
+                layout: {
+                    email: 'col col--sm-12 col--lg-6',
+                    phone: 'col col--sm-12 col--lg-6'
+                },
+                submit: {
+                    enable: true
+                },
+                cancel: {
+                    enable: true,
+                    url: url('company/business-unit'),
+                    text: 'general.back.button' | trans
+                }
+            }
+        } only %}
+    </div>
+{% endblock %}

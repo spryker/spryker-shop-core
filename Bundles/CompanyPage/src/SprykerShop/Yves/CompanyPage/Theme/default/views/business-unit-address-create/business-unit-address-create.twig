@@ -1,0 +1,37 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    form: _view.form,
+
+    title: 'company.account.address' | trans,
+    activePage: 'business-unit'
+} %}
+
+{% block companyContent %}
+    <div class="box">
+        {% include molecule('form') with {
+            data: {
+                title: 'company.account.edit_address_information' | trans,
+                form: data.form,
+                options: {
+                    action: url('company/business-unit/address/create')
+                },
+                layout: {
+                    address1: 'col col--sm-12 col--lg-10',
+                    address2: 'col col--sm-12 col--lg-2',
+                    zip_code: 'col col--sm-12 col--lg-4',
+                    city: 'col col--sm-12 col--lg-4',
+                    iso2code: 'col col--sm-12 col--lg-4'
+                },
+                submit: {
+                    enable: true
+                },
+                cancel: {
+                    enable: true,
+                    url: url('company/address'),
+                    text: 'general.back.button' | trans
+                }
+            }
+        } only %}
+    </div>
+{% endblock %}

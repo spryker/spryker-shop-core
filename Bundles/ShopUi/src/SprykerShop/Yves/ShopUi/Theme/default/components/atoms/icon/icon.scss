@@ -39,6 +39,6 @@ $component-icon-size-biggest: spacing(6);
             height: $component-icon-size-biggest;
         }
 
-        @content
+        @content;
     }
 }
