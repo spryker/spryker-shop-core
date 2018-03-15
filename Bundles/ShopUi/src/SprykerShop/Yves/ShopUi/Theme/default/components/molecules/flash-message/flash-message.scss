@@ -1,0 +1,39 @@
+@mixin component-flash-message($name: '.flash-message') {
+    #{$name} {
+        @include shadow;
+        @include is-invisible;
+        @include transition(max-height opacity visibility, 500ms);
+        max-height: 0;
+        background-color: rgba(light($color-main), .97);
+        cursor: pointer;
+        overflow-y: hidden;
+
+        &__message {
+            padding: spacing(2) spacing();
+            color: dark($color-main);
+        }
+
+        &--show {   
+            @include is-visible;
+            max-height: spacing(15);
+        }
+
+        @each $action, $color-action in $color-actions {
+            @include component-flash-message-action($action, $color-action);
+        }
+
+        @content;
+    }
+}
+
+@mixin component-flash-message-action($action, $color-action) {
+    &--#{$action} {
+        background-color: rgba(light($color-action), .97);
+    }
+
+    &--#{$action} &__message {
+        color: dark($color-action);
+    }
+
+    @content;
+}
