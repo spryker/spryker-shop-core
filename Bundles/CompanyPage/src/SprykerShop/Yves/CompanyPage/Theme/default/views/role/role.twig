@@ -1,0 +1,36 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    roles: _view.companyRoleCollection,
+
+    pagination: {
+        parameters: {},
+        currentPage: _view.pagination.page,
+        paginationPath: 'company/company-role',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true
+    },
+
+    title: 'company.account.company_role' | trans,
+    activePage: 'role'
+} %}
+
+{% block companyContent %}
+    <div class="box text-right">
+        <a class="button" href="{{url('company/company-role/create')}}">{{ 'company.account.company_role.add' | trans }}</a>
+    </div>
+
+    {% if data.roles is not empty %}
+        <div class="box">
+            {% include molecule('role-table', 'CompanyPage') with {
+                data: {
+                    roles: data.roles
+                }
+            } only %}
+            <hr/>
+            {% include molecule('pagination') with {
+                data: data.pagination
+            } only %}
+        </div>
+    {% endif %}
+{% endblock %}

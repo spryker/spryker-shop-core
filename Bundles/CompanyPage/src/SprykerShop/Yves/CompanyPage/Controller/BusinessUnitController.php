@@ -39,7 +39,7 @@ class BusinessUnitController extends AbstractCompanyController
             'businessUnitCollection' => $businessUnitCollectionTransfer->getCompanyBusinessUnits(),
         ];
 
-        return $this->view($data);
+        return $this->view($data, [], '@CompanyPage/views/business-unit/business-unit.twig');
     }
 
     /**
@@ -49,9 +49,9 @@ class BusinessUnitController extends AbstractCompanyController
      */
     public function detailsAction(Request $request)
     {
-        $responseData = $this->getCompanyBusinessUnitDetailsResponseData($request);
+        $data = $this->getCompanyBusinessUnitDetailsResponseData($request);
 
-        return $this->view($responseData);
+        return $this->view($data, [], '@CompanyPage/views/business-unit-detail/business-unit-detail.twig');
     }
 
     /**
@@ -62,11 +62,11 @@ class BusinessUnitController extends AbstractCompanyController
     public function createAction(Request $request)
     {
         $dataProvider = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createBusinessUnitFormDataProvider();
 
         $companyBusinessUnitForm = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getBusinessUnitForm()
             ->handleRequest($request);
 
@@ -80,9 +80,11 @@ class BusinessUnitController extends AbstractCompanyController
             }
         }
 
-        return $this->view([
+        $data = [
             'form' => $companyBusinessUnitForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/business-unit-create/business-unit-create.twig');
     }
 
     /**
@@ -93,17 +95,22 @@ class BusinessUnitController extends AbstractCompanyController
     public function updateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createBusinessUnitFormDataProvider();
 
         $companyBusinessUnitForm = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getBusinessUnitForm()
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
             $companyBusinessUnitId = $request->query->getInt('id');
-            $companyBusinessUnitForm->setData($dataProvider->getData($this->getCompanyUser(), $companyBusinessUnitId));
+            $companyBusinessUnitForm->setData(
+                $dataProvider->getData(
+                    $this->getCompanyUser(),
+                    $companyBusinessUnitId
+                )
+            );
         } elseif ($companyBusinessUnitForm->isValid()) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 
@@ -112,9 +119,11 @@ class BusinessUnitController extends AbstractCompanyController
             }
         }
 
-        return $this->view([
+        $data = [
             'form' => $companyBusinessUnitForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/business-unit-update/business-unit-update.twig');
     }
 
     /**
@@ -128,7 +137,10 @@ class BusinessUnitController extends AbstractCompanyController
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($companyBusinessUnitId);
 
-        $this->getFactory()->getCompanyBusinessUnitClient()->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
+        $companyBusinessUnitResponseTransfer = $this->getFactory()
+            ->getCompanyBusinessUnitClient()
+            ->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
+        $this->processResponseMessages($companyBusinessUnitResponseTransfer);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
     }

@@ -21,6 +21,8 @@ class UserController extends AbstractCompanyController
 {
     public const COMPANY_USER_LIST_SORT_FIELD = 'id_company_user';
 
+    protected const SUCCESS_MESSAGE_DELETED = 'company.account.company_user.delete.successful';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -39,7 +41,7 @@ class UserController extends AbstractCompanyController
             'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
         ];
 
-        return $this->view($data);
+        return $this->view($data, [], '@CompanyPage/views/user/user.twig');
     }
 
     /**
@@ -50,11 +52,11 @@ class UserController extends AbstractCompanyController
     public function createAction(Request $request)
     {
         $dataProvider = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyUserFormDataProvider();
 
         $companyUserForm = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyUserForm(
                 $dataProvider->getOptions(
                     $this->getCompanyUser()->getFkCompany()
@@ -70,11 +72,15 @@ class UserController extends AbstractCompanyController
             if ($companyUserResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
             }
+
+            $this->processResponseMessages($companyUserResponseTransfer);
         }
 
-        return $this->view([
+        $data = [
             'companyUserForm' => $companyUserForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/user-create/user-create.twig');
     }
 
     /**
@@ -85,11 +91,11 @@ class UserController extends AbstractCompanyController
     public function updateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyUserFormDataProvider();
 
         $companyUserForm = $this->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyUserForm(
                 $dataProvider->getOptions(
                     $this->getCompanyUser()->getFkCompany()
@@ -111,11 +117,15 @@ class UserController extends AbstractCompanyController
             if ($companyUserResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
             }
+
+            $this->processResponseMessages($companyUserResponseTransfer);
         }
 
-        return $this->view([
+        $data = [
             'companyUserForm' => $companyUserForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/user-update/user-update.twig');
     }
 
     /**
@@ -129,6 +139,8 @@ class UserController extends AbstractCompanyController
         $companyUserTransfer = new CompanyUserTransfer();
         $companyUserTransfer->setIdCompanyUser($idCompanyUser);
         $this->getFactory()->getCompanyUserClient()->deleteCompanyUser($companyUserTransfer);
+
+        $this->addSuccessMessage(static::SUCCESS_MESSAGE_DELETED);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
     }
