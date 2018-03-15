@@ -17,6 +17,7 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClien
 use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRoleDataProvider;
+use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRolePermissionDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUnitAddressFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserFormDataProvider;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -96,6 +97,33 @@ class FormFactory extends AbstractFactory
         return new CompanyUserFormDataProvider(
             $this->getCompanyUserClient(),
             $this->getCompanyBusinessUnitClient()
+        );
+    }
+
+    /**
+     * @param int $idCompanyRole
+     * @param int $idPermission
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyRolePermissionType(int $idCompanyRole, int $idPermission)
+    {
+        $dataProvider = $this->createCompanyRolePermissionDataProvider();
+
+        return $this->getFormFactory()->create(
+            CompanyRolePermissionConfigurationType::class,
+            $dataProvider->getData($idCompanyRole, $idPermission),
+            $dataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRolePermissionDataProvider
+     */
+    public function createCompanyRolePermissionDataProvider()
+    {
+        return new CompanyRolePermissionDataProvider(
+            $this->getCompanyRoleClient()
         );
     }
 

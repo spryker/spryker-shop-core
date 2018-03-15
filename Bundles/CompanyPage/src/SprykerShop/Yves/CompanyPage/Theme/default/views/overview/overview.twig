@@ -1,0 +1,13 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    title: 'company.account.overview' | trans
+} %}
+
+{% block companyContent %}
+    <div class="box">
+        <h5>{{ 'company.account.overview' | trans }}</h5>
+        <hr />
+        <p>{{ 'Company Information' | trans }}</p>
+    </div>
+{% endblock %}
