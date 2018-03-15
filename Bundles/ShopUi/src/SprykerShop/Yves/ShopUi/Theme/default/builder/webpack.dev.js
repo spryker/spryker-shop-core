@@ -40,11 +40,10 @@ const appCssPlugin = new ExtractTextPlugin({
 
 /**
  * 
- * settingsuration
+ * configuration
  */
-const config = {
+const configuration = {
     context: settings.paths.rootDir,
-    mode: 'development',
     stats: {
         colors: true,
         chunks: false,
@@ -71,20 +70,9 @@ const config = {
 
     resolve: {
         extensions: ['.ts', '.js', '.json', '.css', '.scss'],
-        modules: [
-            'node_modules/@spryker/shop-ui-builder/node_modules',
-            'node_modules'
-        ],
         alias: {
             'shop-ui': settings.paths.srcDir
         }
-    },
-
-    resolveLoader: {
-        modules: [
-            'node_modules/@spryker/shop-ui-builder/node_modules',
-            'node_modules'
-        ]
     },
 
     module: {
@@ -92,15 +80,11 @@ const config = {
             test: /\.ts$/,
             loader: 'ts-loader',
             options: {
-                context: settings.paths.srcDir,
-                configFile: path.join(__dirname, 'tsconfig.json'),
+                context: settings.paths.rootDir,
+                configFile: path.join(settings.paths.rootDir, './tsconfig.json'),
                 compilerOptions: {
                     baseUrl: settings.paths.rootDir,
-                    outDir: settings.paths.publicPath,
-                    paths: {
-                        '*': ['*', settings.paths.srcDir + '/*'],
-                        'ShopUi/*': [settings.paths.srcDir + '/*']
-                    }
+                    outDir: settings.paths.publicPath
                 }
             },
         }, {
@@ -124,17 +108,21 @@ const config = {
         utilsCssPlugin,
         appCssPlugin,
 
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                context: settings.paths.rootDir
-            }
-        }),
-
         new webpack.DefinePlugin({
             __NAME__: `'${settings.name}'`,
             __PRODUCTION__: false
+        }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'app',
+            minChunks: 2
+        }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest',
+            minChunks: Infinity
         })
     ]
 };
 
-module.exports = config;
+module.exports = configuration;
