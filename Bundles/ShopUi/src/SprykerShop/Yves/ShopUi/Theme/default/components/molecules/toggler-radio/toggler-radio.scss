@@ -1,5 +1,0 @@
-@mixin component-toggler-radio($name: '.toggler-radio') {
-    @include component-radio($name) {
-        @content;
-    };
-}

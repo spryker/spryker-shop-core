@@ -1,7 +1,0 @@
-@function dark($color, $degree: 10) {
-    @return darken($color, $degree);
-}
-
-@function light($color, $degree: 35) {
-    @return lighten($color, $degree);
-}
