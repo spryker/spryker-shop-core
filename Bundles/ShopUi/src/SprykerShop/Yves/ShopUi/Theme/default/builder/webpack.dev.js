@@ -56,7 +56,7 @@ const configuration = {
 
     entry: {
         app: [
-            path.join(settings.paths.srcDir, 'main.ts'),
+            path.join(settings.paths.srcDir, './main.ts'),
             ...scanner.scan()
         ]
     },
