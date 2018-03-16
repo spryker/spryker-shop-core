@@ -1,6 +1,6 @@
 import { AppConfig, AppLogLevel } from './config';
 
-const DUMMY_FUNCTION = function () { };
+const VOID_FUNCTION = function () { };
 
 export default class Logger {
     protected readonly config: AppConfig
@@ -9,14 +9,14 @@ export default class Logger {
         this.config = config;
 
         if (this.config.log.level < AppLogLevel.VERBOSE) { 
-            this.debug = DUMMY_FUNCTION;
+            this.debug = VOID_FUNCTION;
         }
 
         if (this.config.log.level < AppLogLevel.DEFAULT) {
-            this.log = DUMMY_FUNCTION;
+            this.log = VOID_FUNCTION;
         }
 
-        this.log('application log level:', AppLogLevel[this.config.log.level]);
+        this.log('mode:', this.config.isProduction ? 'PRODUCTION,' : 'DEVELOPMENT,', 'log-level:', AppLogLevel[this.config.log.level]);
     }
 
     protected prefix(type: string): string { 

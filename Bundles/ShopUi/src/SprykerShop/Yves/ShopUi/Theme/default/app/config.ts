@@ -8,6 +8,9 @@ export enum AppLogLevel {
 }
 
 export interface AppConfig { 
+    readonly name: string
+    readonly isProduction: boolean
+
     events: {
         ready: string
         error: string
@@ -22,6 +25,9 @@ export interface AppConfig {
 }
 
 export default <AppConfig>{
+    name: __NAME__,
+    isProduction: __PRODUCTION__,
+
     events: {
         ready: 'app-ready',
         error: 'app-error'
