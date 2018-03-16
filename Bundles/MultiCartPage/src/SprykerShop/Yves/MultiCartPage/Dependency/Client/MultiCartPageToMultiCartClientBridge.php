@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MultiCartPage\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -26,11 +27,21 @@ class MultiCartPageToMultiCartClientBridge implements MultiCartPageToMultiCartCl
     }
 
     /**
-     * @return null|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function findActiveCart(): ?QuoteTransfer
+    public function getActiveCart(): QuoteTransfer
     {
-        return $this->multiCartClient->findActiveCart();
+        return $this->multiCartClient->getActiveCart();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setActiveQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->multiCartClient->setActiveQuote($quoteActivatorRequestTransfer);
     }
 
     /**

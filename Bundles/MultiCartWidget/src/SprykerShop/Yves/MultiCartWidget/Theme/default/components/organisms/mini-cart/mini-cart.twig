@@ -1,0 +1,38 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'mini-cart',
+    tag: 'div'
+} %}
+
+{% define data = {
+} %}
+
+{% set cartAmount = data.carts | length + 1 %}
+
+{% block body %}
+    <a href="{{ url('cart') }}">{{cartAmount}} {{ cartAmount == 1 ? 'multi_cart_widget.cart.cart' | trans : 'multi_cart_widget.cart.carts' | trans }}</a>
+    <div class="box">
+        <div class="callout text-left">
+        {% if data.activeCart is not empty %}
+            {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                data: {
+                    cart: data.activeCart
+                }
+            } only %}
+        {% endif %}
+        {% if data.carts is not empty %}
+            {% for cart in data.carts %}
+                {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                    data: {
+                        cart: cart
+                    }
+                } only %}
+            {% endfor %}
+        {% endif %}
+        </div>
+        <div class="row text-center">
+            <a class="button" href="{{url('multi-cart/create')}}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
+        </div>
+    </div>
+{% endblock %}

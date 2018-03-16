@@ -73,6 +73,7 @@
                 } only %}
                 {{ 'page.detail.add-to-cart' | trans }}
             </button>
+            {{ widget('MultiCartWidgetPlugin', data.product, disabled) }}
         </div>
         
         {{ widget('AvailabilityWidgetPlugin', data.product) }}

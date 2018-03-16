@@ -27,31 +27,31 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
     protected function defineControllers(Application $app)
     {
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
-        $controller = $this->createController('/{multiCart}/create', self::ROUTE_MULTI_CART_CREATE, 'MultiCartPage', 'MultiCart', 'create');
+        $controller = $this->createController('/{multiCart}/create', static::ROUTE_MULTI_CART_CREATE, 'MultiCartPage', 'MultiCart', 'create');
         $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart');
         $controller->value('multiCart', 'multi-cart');
 
-        $controller = $this->createController('/{multiCart}/update/{quoteName}', self::ROUTE_MULTI_CART_UPDATE, 'MultiCartPage', 'MultiCart', 'update');
+        $controller = $this->createController('/{multiCart}/update/{quoteName}', static::ROUTE_MULTI_CART_UPDATE, 'MultiCartPage', 'MultiCart', 'update');
         $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
             ->assert('quoteName', '.+');
         $controller->value('multiCart', 'multi-cart');
 
-        $controller = $this->createGetController('/{multiCart}/delete/{quoteName}', self::ROUTE_MULTI_CART_DELETE, 'MultiCartPage', 'MultiCart', 'delete');
+        $controller = $this->createGetController('/{multiCart}/delete/{quoteName}', static::ROUTE_MULTI_CART_DELETE, 'MultiCartPage', 'MultiCart', 'delete');
         $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
             ->assert('quoteName', '.+');
         $controller->value('multiCart', 'multi-cart');
 
-        $controller = $this->createGetController('/{multiCart}/clear/{quoteName}', self::ROUTE_MULTI_CART_CLEAR, 'MultiCartPage', 'MultiCart', 'clear');
+        $controller = $this->createGetController('/{multiCart}/clear/{quoteName}', static::ROUTE_MULTI_CART_CLEAR, 'MultiCartPage', 'MultiCart', 'clear');
         $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
             ->assert('quoteName', '.+');
         $controller->value('multiCart', 'multi-cart');
 
-        $controller = $this->createGetController('/{multiCart}/duplicate/{quoteName}', self::ROUTE_MULTI_CART_DUPLICATE, 'MultiCartPage', 'MultiCart', 'duplicate');
+        $controller = $this->createGetController('/{multiCart}/duplicate/{quoteName}', static::ROUTE_MULTI_CART_DUPLICATE, 'MultiCartPage', 'MultiCart', 'duplicate');
         $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
             ->assert('quoteName', '.+');
         $controller->value('multiCart', 'multi-cart');
 
-        $controller = $this->createGetController('/{multiCart}/set-active/{quoteName}', self::ROUTE_MULTI_CART_SET_ACTIVE, 'MultiCartPage', 'MultiCart', 'setActive');
+        $controller = $this->createGetController('/{multiCart}/set-active/{quoteName}', static::ROUTE_MULTI_CART_SET_ACTIVE, 'MultiCartPage', 'MultiCart', 'setActive');
         $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
             ->assert('quoteName', '.+');
         $controller->value('multiCart', 'multi-cart');

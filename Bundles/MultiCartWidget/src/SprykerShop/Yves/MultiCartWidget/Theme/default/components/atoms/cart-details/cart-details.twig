@@ -1,0 +1,28 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-details',
+    tag: 'div'
+} %}
+
+{% define data = {
+    cart: required
+} %}
+
+{% set itemAmount = data.cart.items | length %}
+
+{% block body %}
+    {% if itemAmount > 0 %}
+    <span class="float-right">
+        {{ itemAmount }} {{ itemAmount == 1 ? 'multi_cart_widget.cart.item' | trans : 'multi_cart_widget.cart.items' | trans }} | {{ data.cart.totals.subTotal | money }}<br>
+        {% if data.cart.isActive == false %}
+            <a href="{{ path('multi-cart/set-active', {quoteName: data.cart.name}) }}">
+                {{ 'multi_cart_widget.cart.action.set_active' | trans }}
+            </a>
+        {% else %}
+            ({{ 'multi_cart_widget.cart.active' | trans }})
+        {% endif %}
+    </span>
+    {% endif %}
+    <span>{{ data.cart.name }}</span>
+{% endblock %}

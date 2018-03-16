@@ -23,25 +23,28 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
     public function initialize(): void
     {
         $quoteCollectionTransfer = $this->getFactory()->getMultiCartClient()->getQuoteCollection();
-        $this->addParameter('cartList', $quoteCollectionTransfer->getQuotes());
-        $this->addParameter('activeCart', $this->findActiveCart($quoteCollectionTransfer));
+        $activeQuoteTransfer = $this->getFactory()->getMultiCartClient()->getActiveCart();
+        $this->addParameter('activeCart', $activeQuoteTransfer);
+        $this->addParameter('cartList', $this->getInActiveQuoteList($activeQuoteTransfer, $quoteCollectionTransfer));
         $this->addParameter('isMultiCartAllowed', $this->getFactory()->getMultiCartClient()->isMultiCartAllowed());
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $activeQuoteTransfer
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer[]
      */
-    protected function findActiveCart(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteTransfer
+    protected function getInActiveQuoteList(QuoteTransfer $activeQuoteTransfer, QuoteCollectionTransfer $quoteCollectionTransfer)
     {
+        $inActiveQuoteTransferList = [];
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getIsActive()) {
-                return $quoteTransfer;
+            if ($quoteTransfer->getIdQuote() !== $activeQuoteTransfer->getIdQuote()) {
+                $inActiveQuoteTransferList[] = $quoteTransfer;
             }
         }
 
-        return null;
+        return $inActiveQuoteTransferList;
     }
 
     /**

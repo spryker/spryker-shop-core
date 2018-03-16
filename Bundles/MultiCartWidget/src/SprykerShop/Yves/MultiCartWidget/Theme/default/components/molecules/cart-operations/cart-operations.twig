@@ -20,10 +20,7 @@
 {% set showActions = data.actions.view or data.actions.update or data.actions.set_active or data.actions.duplicate or data.actions.clear or data.actions.delete %}
 
 {% block body %}
-    <h2>{{ 'multi_cart_widget.cart_page.cart_name' | trans }}: {{ data.cart.name }}</h2>
-    {% if data.cart.isActive == true %}
-        ({{ 'multi_cart_widget.cart_page.active' | trans }})
-    {% endif %}
+    <h2>{{ 'multi_cart_widget.cart.cart_name' | trans }}: {{ data.cart.name }}</h2>
     {% if showActions %}
     <ul class="menu menu--inline">
         {% if data.actions.update %}

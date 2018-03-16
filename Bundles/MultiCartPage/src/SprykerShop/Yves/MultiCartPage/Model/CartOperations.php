@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\MultiCartPage\Model;
 
 use ArrayObject;
+use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientInterface;
@@ -96,8 +97,9 @@ class CartOperations implements CartOperationsInterface
             $quoteTransfer->getName() . $this->multiCartClient->getDuplicatedQuoteNameSuffix()
         );
         $quoteTransfer->setIdQuote(null);
+        $quoteTransfer->setIsActive(true);
 
-        return $this->setActiveQuote($quoteTransfer);
+        return $this->persistentCartClient->persistQuote($quoteTransfer);
     }
 
     /**
@@ -107,28 +109,10 @@ class CartOperations implements CartOperationsInterface
      */
     public function setActiveQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $activeQuoteTransfer = $this->multiCartClient->findActiveCart();
-        if (!$activeQuoteTransfer) {
-            return $this->saveActiveQuote($quoteTransfer);
-        }
-        $activeQuoteTransfer->setIsActive(false);
-        $quoteResponseTransfer = $this->persistentCartClient->persistQuote($activeQuoteTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            return $this->saveActiveQuote($quoteTransfer);
-        }
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function saveActiveQuote(QuoteTransfer $quoteTransfer)
-    {
-        $quoteTransfer->setIsActive(true);
-        $quoteResponseTransfer = $this->persistentCartClient->persistQuote($quoteTransfer);
+        $quoteActivatorRequestTransfer = new QuoteActivatorRequestTransfer();
+        $quoteActivatorRequestTransfer->setCustomer($quoteTransfer->getCustomer());
+        $quoteActivatorRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
+        $quoteResponseTransfer = $this->multiCartClient->setActiveQuote($quoteActivatorRequestTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }

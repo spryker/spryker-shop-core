@@ -5,30 +5,34 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\MultiCartWidget\Plugin\CartPage;
+namespace SprykerShop\Yves\MultiCartWidget\Plugin\ProductDetailPage;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CartPage\Dependency\Plugin\MultiCartWidget\MultiCartListWidgetPluginInterface;
+use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\MultiCartWidget\MultiCartWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
-class CustomerCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCartListWidgetPluginInterface
+class AddToExactCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWidgetPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param bool $idButtonDisabled
      *
      * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer): void
+    public function initialize(ProductViewTransfer $productViewTransfer, $idButtonDisabled): void
     {
         $quoteCollectionTransfer = $this->getFactory()->getMultiCartClient()->getQuoteCollection();
+        $activeQuoteTransfer = $this->getFactory()->getMultiCartClient()->getActiveCart();
         $this->addParameter(
             'cartCollection',
-            $this->getInActiveQuoteList($quoteTransfer, $quoteCollectionTransfer)
+            $this->getInActiveQuoteList($activeQuoteTransfer, $quoteCollectionTransfer)
         );
+        $this->addParameter('idButtonDisabled', $idButtonDisabled);
         $this->addParameter('isMultiCartAllowed', $this->getFactory()->getMultiCartClient()->isMultiCartAllowed());
     }
 
@@ -71,6 +75,6 @@ class CustomerCartListWidgetPlugin extends AbstractWidgetPlugin implements Multi
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/_cart-page/customer-cart-list.twig';
+        return '@MultiCartWidget/_product-detail-page/cart-selector.twig';
     }
 }
