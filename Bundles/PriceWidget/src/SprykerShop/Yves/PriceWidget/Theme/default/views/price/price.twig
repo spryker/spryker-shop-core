@@ -5,9 +5,15 @@
     originalPrice: _widget.product.prices.ORIGINAL | default(null)
 } %}
 
+{% block template %}
+    {% if data.price is not empty %}
+        {{parent()}}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     <p>
-        {% if data.price is not empty %}
+        {% if can('SeePrice') %}
             {% include molecule('price') with {
                 data: {
                     amount: data.price | money,
