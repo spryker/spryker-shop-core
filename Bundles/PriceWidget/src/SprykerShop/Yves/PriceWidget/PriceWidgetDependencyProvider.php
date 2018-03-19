@@ -16,8 +16,6 @@ class PriceWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_QUOTE = 'CLIENT_QUOTE';
     const CLIENT_PRICE = 'CLIENT_PRICE';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_CUSTOMER_ACCESS_STORAGE = 'CLIENT_CUSTOMER_ACCESS_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
