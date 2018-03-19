@@ -8,8 +8,6 @@
 namespace SprykerShop\Yves\PriceWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToCustomerAccessStorageClientInterface;
-use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToCustomerClientInterface;
 use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToPriceClientInterface;
 use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToQuoteClientInterface;
 

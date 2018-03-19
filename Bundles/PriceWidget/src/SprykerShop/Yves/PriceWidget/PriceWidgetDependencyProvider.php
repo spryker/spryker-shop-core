@@ -9,8 +9,6 @@ namespace SprykerShop\Yves\PriceWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToCustomerAccessStorageClientBridge;
-use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToCustomerClientBridge;
 use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToPriceClientBridge;
 use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToQuoteClientBridge;
 
