@@ -19,9 +19,7 @@
                 {{ form_errors(item.qty) }}
             </div>
             <div class="medium-1 columns">
-                {% if loop.index0 > 0 %}
                 <a href="#remove" class="inline js-delete-row-button">☓</a>
-                {% endif %}
             </div>
         </div>
     {% endfor %}
@@ -45,11 +43,3 @@
     </p>
 </div>
 {{ form_end(form) }}
-
-
-<script type="application/json" id="quick-order-form-translations">
-{
-    "error-item-not-found": "{{ 'quick-order.errors.item-not-found' | trans }}",
-    "error-item-not-available": "{{ 'quick-order.errors.item-not-available' | trans }}"
-}
-</script>
