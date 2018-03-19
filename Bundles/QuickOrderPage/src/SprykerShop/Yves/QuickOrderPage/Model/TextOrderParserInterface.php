@@ -18,9 +18,4 @@ interface TextOrderParserInterface
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
     public function getParsedTextOrderItems(): array;
-
-    /**
-     * @return array
-     */
-    public function getNotFoundProducts(): array;
 }

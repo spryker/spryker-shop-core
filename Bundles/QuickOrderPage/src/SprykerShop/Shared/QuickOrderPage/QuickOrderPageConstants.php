@@ -12,8 +12,4 @@ interface QuickOrderPageConstants
     public const ALLOWED_SEPARATORS = 'ALLOWED_SEPARATORS';
 
     public const PRODUCT_ROWS_NUMBER = 'PRODUCT_ROWS_NUMBER';
-
-    public const SUGGESTION_RESULTS_LIMIT = 'SUGGESTION_RESULTS_LIMIT';
-
-    public const SEARCH_FIELD_MAPPING = 'SEARCH_FIELD_MAPPING';
 }

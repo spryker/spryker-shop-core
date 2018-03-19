@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Model;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use SprykerShop\Yves\QuickOrderPage\Exception\TextOrderParserException;
 use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
@@ -46,13 +45,11 @@ class TextOrderParser implements TextOrderParserInterface
     /**
      * @param string $textOrder
      * @param \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig $config
-     * @param \SprykerShop\Yves\QuickOrderPage\Model\ProductFinderInterface $productFinder
      */
-    public function __construct(string $textOrder, QuickOrderPageConfig $config, ProductFinderInterface $productFinder)
+    public function __construct(string $textOrder, QuickOrderPageConfig $config)
     {
         $this->textOrder = $textOrder;
         $this->config = $config;
-        $this->productFinder = $productFinder;
     }
 
     /**
@@ -71,14 +68,7 @@ class TextOrderParser implements TextOrderParserInterface
                     continue;
                 }
 
-                $productViewTransferConcrete = $this->findProductConcreteBySku($skuProductConcrete);
-
-                if ($productViewTransferConcrete === null) {
-                    $this->addNotFoundProduct($skuProductConcrete);
-                    continue;
-                }
-
-                $this->addParsedItem($productViewTransferConcrete, $quantity);
+                $this->addParsedItem($skuProductConcrete, $quantity);
             }
         }
 
@@ -86,67 +76,34 @@ class TextOrderParser implements TextOrderParserInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $sku
      * @param int $quantity
      *
      * @return void
      */
-    protected function addParsedItem(ProductViewTransfer $productViewTransfer, int $quantity): void
+    protected function addParsedItem(string $sku, int $quantity): void
     {
-        if (isset($this->parsedTextOrderItems[$productViewTransfer->getSku()])) {
-            $quickOrderItemTransfer = $this->parsedTextOrderItems[$productViewTransfer->getSku()];
+        if (isset($this->parsedTextOrderItems[$sku])) {
+            $quickOrderItemTransfer = $this->parsedTextOrderItems[$sku];
             $quickOrderItemTransfer->setQty($quickOrderItemTransfer->getQty() + $quantity);
 
             return;
         }
 
-        $this->parsedTextOrderItems[$productViewTransfer->getSku()] = $this->getOrderItem($productViewTransfer, $quantity);
+        $this->parsedTextOrderItems[$sku] = $this->getOrderItem($sku, $quantity);
     }
 
     /**
      * @param string $sku
-     *
-     * @return void
-     */
-    protected function addNotFoundProduct(string $sku): void
-    {
-        if (!isset($this->notFoundProducts[$sku])) {
-            $this->notFoundProducts[$sku] = $sku;
-        }
-    }
-
-    /**
-     * @param string $skuProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
-     */
-    protected function findProductConcreteBySku(string $skuProductConcrete): ?ProductViewTransfer
-    {
-        $productViewTransfers = $this->productFinder->getSearchResults($skuProductConcrete);
-        foreach ($productViewTransfers as $productViewTransfer) {
-            if ($productViewTransfer->getSku() === $skuProductConcrete) {
-                return $productViewTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    protected function getOrderItem(ProductViewTransfer $productViewTransfer, int $quantity): QuickOrderItemTransfer
+    protected function getOrderItem(string $sku, int $quantity): QuickOrderItemTransfer
     {
         $quickOrderItemTransfer = new QuickOrderItemTransfer();
-        $quickOrderItemTransfer->setSku($productViewTransfer->getSku());
-        $quickOrderItemTransfer->setSearchQuery($productViewTransfer->getSku() . ' - ' . $productViewTransfer->getName());
-        if ($productViewTransfer->getAvailable()) {
-            $quickOrderItemTransfer->setQty($quantity ?: 1);
-            $quickOrderItemTransfer->setPrice($productViewTransfer->getPrice());
-        }
+        $quickOrderItemTransfer->setSku($sku);
+        $quickOrderItemTransfer->setQty($quantity ?: 1);
 
         return $quickOrderItemTransfer;
     }

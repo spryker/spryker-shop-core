@@ -16,7 +16,6 @@ use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\TextOrderForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,10 +26,6 @@ class QuickOrderController extends AbstractController
 {
     public const PARAM_SEARCH_QUERY = 'q';
     public const PARAM_SEARCH_FIELD = 'field';
-
-    public const RESPONSE_SUGGESTION = 'suggestions';
-
-    public const TEXT_ORDER_ITEMS_NOT_FOUND_MESSAGE = 'quick-order.paste-order.errors.parser.items-not-found';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -82,34 +77,10 @@ class QuickOrderController extends AbstractController
                 ->createTextOrderParser($data[TextOrderForm::FIELD_TEXT_ORDER])
                 ->parse();
 
-            if (count($textOrderParser->getNotFoundProducts()) > 0) {
-                $this->setNotFoundProductFlashMessage($textOrderParser->getNotFoundProducts());
-            }
-
             return $textOrderParser->getParsedTextOrderItems();
         }
 
         return [];
-    }
-
-    /**
-     * @param string[] $skuCollection
-     *
-     * @return void
-     */
-    protected function setNotFoundProductFlashMessage(array $skuCollection): void
-    {
-        $notFoundProductsMessage = $this->getFactory()
-            ->getGlossaryClient()
-            ->translate(
-                static::TEXT_ORDER_ITEMS_NOT_FOUND_MESSAGE,
-                $this->getLocale(),
-                ['%itemSkus%' => implode(', ', $skuCollection)]
-            );
-
-        $this->getFactory()
-            ->getMessengerClient()
-            ->addInfoMessage($notFoundProductsMessage);
     }
 
     /**
@@ -149,27 +120,6 @@ class QuickOrderController extends AbstractController
         }
 
         return null;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function suggestionAction(Request $request): JsonResponse
-    {
-        $searchString = $request->query->get(static::PARAM_SEARCH_QUERY, '');
-        $searchField = $request->query->get(static::PARAM_SEARCH_FIELD, '');
-
-        if (empty($searchString)) {
-            return $this->jsonResponse([static::RESPONSE_SUGGESTION => []]);
-        }
-
-        $suggestions = $this->getFactory()
-            ->createSuggestionDataProvider()
-            ->getSuggestionCollection($searchString, $searchField);
-
-        return $this->jsonResponse([static::RESPONSE_SUGGESTION => $suggestions]);
     }
 
     /**
