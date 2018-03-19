@@ -7,7 +7,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master",
-    "spryker/spryker": "dev-feature/core-975-quick-order-page"
+    "spryker/spryker": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
