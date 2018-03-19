@@ -30,20 +30,4 @@ class PriceWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(PriceWidgetDependencyProvider::CLIENT_PRICE);
     }
-
-    /**
-     * @return \SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToCustomerAccessStorageClientInterface
-     */
-    public function getCustomerAccessStorageClient(): PriceWidgetToCustomerAccessStorageClientInterface
-    {
-        return $this->getProvidedDependency(PriceWidgetDependencyProvider::CLIENT_CUSTOMER_ACCESS_STORAGE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToCustomerClientInterface
-     */
-    public function getCustomerClient(): PriceWidgetToCustomerClientInterface
-    {
-        return $this->getProvidedDependency(PriceWidgetDependencyProvider::CLIENT_CUSTOMER);
-    }
 }

@@ -30,8 +30,6 @@ class PriceWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addQuoteClient($container);
         $container = $this->addPriceClient($container);
-        $container = $this->addCustomerAccessStorageClient($container);
-        $container = $this->addCustomerClient($container);
 
         return $container;
     }
@@ -59,34 +57,6 @@ class PriceWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_PRICE] = function (Container $container) {
             return new PriceWidgetToPriceClientBridge($container->getLocator()->price()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addCustomerAccessStorageClient($container)
-    {
-        $container[self::CLIENT_CUSTOMER_ACCESS_STORAGE] = function (Container $container) {
-            return new PriceWidgetToCustomerAccessStorageClientBridge($container->getLocator()->customerAccessStorage()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addCustomerClient($container)
-    {
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
-            return new PriceWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;
