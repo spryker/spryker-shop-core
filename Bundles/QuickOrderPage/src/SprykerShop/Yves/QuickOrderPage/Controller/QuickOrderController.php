@@ -60,7 +60,7 @@ class QuickOrderController extends AbstractController
             'rowsNumber' => $this->getFactory()->getBundleConfig()->getProductRowsNumber(),
         ];
 
-        return $this->view($data);
+        return $this->view($data, [], '@QuickOrderPage/views/quick-order/index.twig');
     }
 
     /**
