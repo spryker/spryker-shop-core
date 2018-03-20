@@ -22,7 +22,7 @@ class CompanyPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CompanyPage\Form\FormFactory
      */
-    public function createCompanyFormFactory(): FormFactory
+    public function createCompanyPageFormFactory(): FormFactory
     {
         return new FormFactory();
     }

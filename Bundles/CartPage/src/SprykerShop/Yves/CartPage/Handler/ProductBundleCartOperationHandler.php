@@ -11,9 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
-use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
-use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
-use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 
 // TODO: this needs to be moved from this module
@@ -66,7 +63,7 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
      */
     public function add($sku, $quantity, array $optionValueUsageIds = [])
     {
-        if (!$this->can(AddCartItemPermissionPlugin::KEY)) {
+        if (!$this->can('AddCartItemPermissionPlugin')) {
             $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
             return;
         }
@@ -81,7 +78,7 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
      */
     public function addItems(array $itemTransfers)
     {
-        if (!$this->can(AddCartItemPermissionPlugin::KEY)) {
+        if (!$this->can('AddCartItemPermissionPlugin')) {
             $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
             return;
         }
@@ -97,7 +94,7 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
      */
     public function remove($sku, $groupKey = null)
     {
-        if (!$this->can(RemoveCartItemPermissionPlugin::KEY)) {
+        if (!$this->can('RemoveCartItemPermissionPlugin')) {
             $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
             return;
         }
@@ -147,7 +144,7 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
      */
     public function changeQuantity($sku, $quantity, $groupKey = null)
     {
-        if (!$this->can(ChangeCartItemPermissionPlugin::KEY)) {
+        if (!$this->can('ChangeCartItemPermissionPlugin')) {
             $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
             return;
         }

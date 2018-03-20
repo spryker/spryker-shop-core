@@ -9,9 +9,12 @@ namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 
 interface CompanyPageToCompanyRoleClientInterface
 {
@@ -30,11 +33,11 @@ interface CompanyPageToCompanyRoleClientInterface
     public function updateCompanyRole(CompanyRoleTransfer $companyRoleUserTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
      */
-    public function deleteCompanyRole(CompanyRoleTransfer $companyRoleUserTransfer): void;
+    public function deleteCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
@@ -58,4 +61,25 @@ interface CompanyPageToCompanyRoleClientInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findCompanyRolePermissions(CompanyRoleTransfer $companyRoleTransfer): PermissionCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer
+     */
+    public function findPermissionByIdCompanyRoleByIdPermission(PermissionTransfer $permissionTransfer): PermissionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer
+     */
+    public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return void
+     */
+    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void;
 }

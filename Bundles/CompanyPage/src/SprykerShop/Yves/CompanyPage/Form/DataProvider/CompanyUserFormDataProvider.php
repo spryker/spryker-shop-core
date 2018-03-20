@@ -54,8 +54,8 @@ class CompanyUserFormDataProvider
             $customerTransfer = $companyUserTransfer->getCustomer();
 
             return array_merge(
-                $companyUserTransfer->modifiedToArray(),
-                $customerTransfer->modifiedToArray()
+                $companyUserTransfer->toArray(),
+                $customerTransfer->toArray()
             );
         }
 

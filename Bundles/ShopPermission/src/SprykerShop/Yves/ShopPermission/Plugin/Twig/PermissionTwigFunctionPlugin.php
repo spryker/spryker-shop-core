@@ -19,7 +19,7 @@ class PermissionTwigFunctionPlugin extends AbstractPlugin implements TwigFunctio
 {
     /**
      * @example for a twig template
-     * {{if (can('permission.allow.product.price'))}}
+     * {{if can('permission.allow.product.price') }}
      *      {% productAbstract.price %}
      * {{ endif }}
      *

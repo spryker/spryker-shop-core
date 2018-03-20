@@ -7,8 +7,11 @@
 
 namespace SprykerShop\Shared\CartPage\Plugin;
 
-use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
+/**
+ * For Client PermissionDependencyProvider::getPermissionPlugins() registration
+ */
 class ChangeCartItemPermissionPlugin implements PermissionPluginInterface
 {
     public const KEY = 'ChangeCartItemPermissionPlugin';
@@ -16,7 +19,7 @@ class ChangeCartItemPermissionPlugin implements PermissionPluginInterface
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return static::KEY;
     }

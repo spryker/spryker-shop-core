@@ -11,9 +11,21 @@
             "es5",
             "es6",
             "es7"
-        ]
+        ],
+        "paths": {
+            "*": [
+                "*"
+            ],
+            "shop-ui/*": [
+                "*"
+            ]
+        }
     },
     "files": [
-        "./main.ts"
+        "../main.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
     ]
 }
