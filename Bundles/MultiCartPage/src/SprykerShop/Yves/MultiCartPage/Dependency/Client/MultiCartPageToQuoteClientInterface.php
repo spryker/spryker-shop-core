@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface MultiCartPageToQuoteClientInterface
 {
     /**
-	 * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */

@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\MultiCartPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCustomerClientBridge;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientBridge;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToPersistentCartClientBridge;

@@ -40,7 +40,6 @@ class QuoteForm extends AbstractType
         ]);
     }
 
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
