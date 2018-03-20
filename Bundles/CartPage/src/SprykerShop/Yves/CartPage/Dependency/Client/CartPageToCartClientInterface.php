@@ -15,17 +15,19 @@ interface CartPageToCartClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItem(ItemTransfer $itemTransfer);
+    public function addItem(ItemTransfer $itemTransfer, array $params = []);
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers);
+    public function addItems(array $itemTransfers, array $params = []);
 
     /**
      * @param string $sku
@@ -75,11 +77,6 @@ interface CartPageToCartClientInterface
     public function getQuote();
 
     /**
-     * @return \Spryker\Client\Cart\Zed\CartStubInterface
-     */
-    public function getZedStub();
-
-    /**
      * @return int
      */
     public function getItemCount();
@@ -88,4 +85,14 @@ interface CartPageToCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(): QuoteResponseTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateQuote(): QuoteResponseTransfer;
+
+    /**
+     * @return void
+     */
+    public function addFlashMessagesFromLastZedRequest();
 }
