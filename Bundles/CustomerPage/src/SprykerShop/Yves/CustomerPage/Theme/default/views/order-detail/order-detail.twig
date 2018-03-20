@@ -17,12 +17,12 @@
         <hr />
         <ul>
             <li>
-                {{ 'customer.order.order_id' | trans }}: 
+                {{ 'customer.order.order_id' | trans }}:
                 <strong>{{ _view.order.orderReference }}</strong>
             </li>
             <li>
-                {{ 'customer.order.date' | trans }}: 
-                <strong>{{ _view.order.createdAt| formatDateTime }}</strong>
+                {{ 'customer.order.date' | trans }}:
+                <strong>{{ _view.order.createdAt | formatDateTime }}</strong>
             </li>
         </ul>
         <hr />
@@ -41,7 +41,8 @@
             {% endblock %}
             {% block row %}
                 <td>
-                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order) }}
+                    {% set concreteItem = item.bundleProduct | default(item) %}
+                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, concreteItem) }}
                 </td>
                 {{parent()}}
             {% endblock %}
@@ -74,7 +75,7 @@
             }
         } only %}
     </div>
-    
+
     {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }}
     {{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }}
 {% endblock %}

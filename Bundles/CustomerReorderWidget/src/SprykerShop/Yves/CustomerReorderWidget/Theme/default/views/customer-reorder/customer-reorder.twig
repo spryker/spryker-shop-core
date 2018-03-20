@@ -16,7 +16,8 @@
     {% embed atom('checkbox') with {
         attributes: {
             name: 'items[]',
-            value: _widget.item.idSalesOrderItem | default('')
+            disabled: not _widget.availability,
+            value: _widget.item.idSalesOrderItem
         }
     } only %}
         {%- block inputClass -%}
