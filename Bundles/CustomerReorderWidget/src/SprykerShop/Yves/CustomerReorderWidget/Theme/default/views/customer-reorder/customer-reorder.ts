@@ -4,29 +4,29 @@ export default class CustomerReorder extends Component {
     readonly selections: HTMLInputElement[]
     readonly trigger: HTMLElement
 
-    constructor() { 
+    constructor() {
         super();
-        this.selections = <HTMLInputElement[]>Array.from(this.querySelectorAll(`.${this.selector}__selection`));
-        this.trigger = <HTMLElement>this.querySelector(`.${this.selector}__trigger`);
+        this.selections = <HTMLInputElement[]>Array.from(this.querySelectorAll(`.${this.componentSelector}__selection`));
+        this.trigger = <HTMLElement>this.querySelector(`.${this.componentSelector}__trigger`);
     }
 
-    readyCallback() { 
+    readyCallback() {
         this.mapEvents();
     }
 
-    mapEvents() { 
+    mapEvents() {
         this.selections.forEach((selection: HTMLInputElement) =>
             selection.addEventListener('change', (event: Event) => this.onSelectionChange(event))
         );
     }
 
-    onSelectionChange(event: Event) { 
+    onSelectionChange(event: Event) {
         const enable = this.selections.some((selection: HTMLInputElement) => selection.checked);
         this.enableTrigger(enable);
     }
 
-    enableTrigger(enable: boolean) { 
-        if (enable) { 
+    enableTrigger(enable: boolean) {
+        if (enable) {
             this.trigger.removeAttribute('disabled');
             return;
         }
