@@ -57,6 +57,9 @@
                 {{'product.quantity' | trans}}
                 {% include atom('select') with {
                     modifiers: ['expand'],
+                    attributes: {
+                        name: 'quantity'
+                    },
                     data: {
                         options: options
                     }
