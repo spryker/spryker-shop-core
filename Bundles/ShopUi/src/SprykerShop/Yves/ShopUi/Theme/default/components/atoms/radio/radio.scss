@@ -1,0 +1,10 @@
+@mixin component-radio($name: '.radio') {
+    @include component-checkbox($name) {
+        &__box,
+        &__check {
+            border-radius: 100%;
+        }
+
+        @content;
+    }
+}

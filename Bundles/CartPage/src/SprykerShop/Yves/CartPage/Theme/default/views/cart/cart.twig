@@ -1,0 +1,52 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    cart: _view.cart,
+    cartItems: _view.cartItems,
+    request: app.request,
+
+    title: 'cart.cart' | trans 
+} %}
+
+{% block breadcrumbs %}
+    {{ widget('CheckoutBreadcrumbWidgetPlugin', data.cart) }}
+{% endblock %}
+
+{% block content %}
+    {% if data.cart.items is empty %}
+        <div class="box text-center">
+            {% include atom('icon') with {
+                modifiers: ['biggest'],
+                class: 'text-alt',
+                data: {
+                    name: 'shopping-cart'
+                }
+            } only %}
+            <h6>{{ 'cart.empty' | trans }}</h6>
+        </div>
+    {% else %}
+        <div class="grid">
+            <div class="col col--sm-12 col--lg-8">
+                <div class="box">
+                    {% for cartItem in data.cartItems %}
+                        {% include '@CartPage/_partials/cart-item.twig' %}
+                    {% endfor %}
+                    <hr/>
+                    {{ widget('DiscountPromotionItemListWidgetPlugin', data.cart, data.request) }}
+                </div>
+            </div>
+
+            <div class="col col--sm-12 col--lg-4">
+                <div class="box">
+                    {{ widget('DiscountVoucherFormWidgetPlugin') }}
+                    <hr/>
+                    {% include '@CartPage/_partials/cart-summary.twig' %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {{ widget('UpSellingProductsWidgetPlugin', data.cart) }}
+{% endblock %}
+
+{% block footer %}{% endblock %}

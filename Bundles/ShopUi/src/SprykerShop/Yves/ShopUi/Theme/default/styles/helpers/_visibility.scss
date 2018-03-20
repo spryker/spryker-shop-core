@@ -1,0 +1,11 @@
+@mixin is-visible {
+    pointer-events: all;
+    visibility: visible;
+    opacity: 1;
+}
+
+@mixin is-invisible {
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+}
