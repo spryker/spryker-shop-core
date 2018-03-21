@@ -139,7 +139,7 @@ class MultiCartController extends AbstractController
 
         $this->getFactory()->createCartOperations()->deleteQuote($quoteTransfer);
         $customerQuoteTransferList = $multiCartClient->getQuoteCollection()->getQuotes();
-        if ($quoteTransfer->getIsActive() && count($customerQuoteTransferList)) {
+        if ($quoteTransfer->getIsDefault() && count($customerQuoteTransferList)) {
             $quoteTransfer = reset($customerQuoteTransferList);
 
             return $this->redirectResponseInternal(
