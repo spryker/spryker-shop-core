@@ -16,8 +16,9 @@ interface ProductMeasurementUnitWidgetPluginInterface extends WidgetPluginInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param array $qtyOptions
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer): void;
+    public function initialize(ProductViewTransfer $productViewTransfer, array $qtyOptions = []): void;
 }

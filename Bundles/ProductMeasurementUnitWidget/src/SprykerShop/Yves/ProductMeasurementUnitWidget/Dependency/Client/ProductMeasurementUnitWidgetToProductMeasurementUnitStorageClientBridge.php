@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
 
 class ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge implements ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface
@@ -33,5 +34,15 @@ class ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge im
     public function getProductMeasurementUnit(int $idProductMeasurementUnit): ?ProductMeasurementUnitStorageTransfer
     {
         return $this->productMeasurementUnitStorageClient->getProductMeasurementUnit($idProductMeasurementUnit);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
+     */
+    public function getProductConcreteMeasurementUnit(int $idProduct): ?ProductConcreteMeasurementUnitStorageTransfer
+    {
+        return $this->productMeasurementUnitStorageClient->getProductConcreteMeasurementUnit($idProduct);
     }
 }

@@ -1,0 +1,53 @@
+{% extends template('widget') %}
+
+{% define data = {
+    salesUnits: _widget.productConcreteMeasurementUnits.salesUnits | default([]),
+    baseUnit: _widget.productConcreteMeasurementUnits.baseUnit | default(null),
+    qtyOptions: _widget.qtyOptions
+} %}
+{% block body %}
+    <div class="col col--sm-5">
+        <label>
+            {{ 'product.quantity' | trans }}
+            {% include atom('select') with {
+                modifiers: ['expand'],
+                attributes: {
+                    name: 'quantity'
+                },
+                data: {
+                    options: data.qtyOptions
+                }
+            } only %}
+        </label>
+        {% if data.salesUnits|length %}
+            <label>
+                {{ 'product.measurement.sales_unit' | trans }}
+                {% embed atom('select') with {
+                    modifiers: ['expand'],
+                    attributes: {
+                        name: 'id-product-measurement-unit'
+                    },
+                    embed: {
+                        salesUnits: data.salesUnits
+                    }
+                } only %}
+                    {% block options %}
+                        {% for salesUnit in embed.salesUnits %}
+                            <option value="{{ salesUnit.measurementUnitId }}" {{ (salesUnit.isDefault) ? 'selected' : '' }}>{{ salesUnit.measurementUnit.name | trans }}</option>
+                        {% endfor %}
+                    {% endblock %}
+                {% endembed %}
+            </label>
+        {% endif %}
+    </div>
+    {% if data.salesUnits|length %}
+        <hr/>
+        <div class="col col--sm-6">
+            {% for salesUnit in data.salesUnits %}
+                {% if salesUnit.measurementUnitId != data.baseUnit.measurementUnitId %}
+                    <span>1 {{ data.baseUnit.measurementUnit.name | trans }} = {{ 1 * salesUnit.conversion }} {{ salesUnit.measurementUnit.name | trans }}</span><br/>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
