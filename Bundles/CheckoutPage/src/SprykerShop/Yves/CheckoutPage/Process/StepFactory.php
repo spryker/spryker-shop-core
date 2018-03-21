@@ -32,6 +32,9 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class StepFactory extends AbstractFactory
 {
     /**
@@ -208,6 +211,7 @@ class StepFactory extends AbstractFactory
         return new SuccessStep(
             $this->getCustomerClient(),
             $this->getCartClient(),
+            $this->getConfig(),
             CheckoutPageControllerProvider::CHECKOUT_SUCCESS,
             HomePageControllerProvider::ROUTE_HOME
         );
