@@ -29,9 +29,9 @@ class MultiCartPageToMultiCartClientBridge implements MultiCartPageToMultiCartCl
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getActiveCart(): QuoteTransfer
+    public function getDefaultCart(): QuoteTransfer
     {
-        return $this->multiCartClient->getActiveCart();
+        return $this->multiCartClient->getDefaultCart();
     }
 
     /**
@@ -39,9 +39,9 @@ class MultiCartPageToMultiCartClientBridge implements MultiCartPageToMultiCartCl
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setActiveQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
+    public function setDefaultQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
     {
-        return $this->multiCartClient->setActiveQuote($quoteActivatorRequestTransfer);
+        return $this->multiCartClient->setDefaultQuote($quoteActivatorRequestTransfer);
     }
 
     /**

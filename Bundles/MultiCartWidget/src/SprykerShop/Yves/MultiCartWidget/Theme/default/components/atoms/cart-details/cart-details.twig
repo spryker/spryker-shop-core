@@ -15,12 +15,12 @@
     {% if itemAmount > 0 %}
     <span class="float-right">
         {{ itemAmount }} {{ itemAmount == 1 ? 'multi_cart_widget.cart.item' | trans : 'multi_cart_widget.cart.items' | trans }} | {{ data.cart.totals.subTotal | money }}<br>
-        {% if data.cart.isActive == false %}
-            <a href="{{ path('multi-cart/set-active', {quoteName: data.cart.name}) }}">
-                {{ 'multi_cart_widget.cart.action.set_active' | trans }}
+        {% if data.cart.isDefault == false %}
+            <a href="{{ path('multi-cart/set-default', {quoteName: data.cart.name}) }}">
+                {{ 'multi_cart_widget.cart.action.set_default' | trans }}
             </a>
         {% else %}
-            ({{ 'multi_cart_widget.cart.active' | trans }})
+            ({{ 'multi_cart_widget.cart.default' | trans }})
         {% endif %}
     </span>
     {% endif %}

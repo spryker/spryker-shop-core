@@ -23,7 +23,7 @@
             }
         } only %}
     {% endif %}
-    <a href="{{ path('multi-cart/set-active', {quoteName: data.cart.name}) }}">
+    <a href="{{ path('multi-cart/set-default', {quoteName: data.cart.name}) }}">
         {{ 'multi_cart_widget.cart.action.view' | trans }}
     </a>
 {% endblock %}

@@ -87,11 +87,11 @@ class MultiCartController extends AbstractController
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function setActiveAction($quoteName)
+    public function setDefaultAction($quoteName)
     {
         $quoteTransfer = $this->getFactory()->getMultiCartClient()->findQuoteByName($quoteName);
         $this->getFactory()->createCartOperations()
-            ->setActiveQuote($quoteTransfer);
+            ->setDefaultQuote($quoteTransfer);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -139,11 +139,11 @@ class MultiCartController extends AbstractController
 
         $this->getFactory()->createCartOperations()->deleteQuote($quoteTransfer);
         $customerQuoteTransferList = $multiCartClient->getQuoteCollection()->getQuotes();
-        if ($quoteTransfer->getIsActive() && count($customerQuoteTransferList)) {
+        if ($quoteTransfer->getIsDefault() && count($customerQuoteTransferList)) {
             $quoteTransfer = reset($customerQuoteTransferList);
 
             return $this->redirectResponseInternal(
-                MultiCartPageControllerProvider::ROUTE_MULTI_CART_SET_ACTIVE,
+                MultiCartPageControllerProvider::ROUTE_MULTI_CART_SET_DEFAULT,
                 ['quoteName' => $quoteTransfer->getName()]
             );
         }

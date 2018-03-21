@@ -47,8 +47,8 @@ class MultiCartWidgetToMultiCartClientBridge implements MultiCartWidgetToMultiCa
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getActiveCart(): QuoteTransfer
+    public function getDefaultCart(): QuoteTransfer
     {
-        return $this->multiCartClient->getActiveCart();
+        return $this->multiCartClient->getDefaultCart();
     }
 }

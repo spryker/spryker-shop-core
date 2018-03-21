@@ -10,14 +10,14 @@
     actions: {
         view: true,
         update: true,
-        set_active: true,
+        set_default: true,
         duplicate: true,
         clear: true,
         delete: true
     }
 } %}
 
-{% set showActions = data.actions.view or data.actions.update or data.actions.set_active or data.actions.duplicate or data.actions.clear or data.actions.delete %}
+{% set showActions = data.actions.view or data.actions.update or data.actions.set_default or data.actions.duplicate or data.actions.clear or data.actions.delete %}
 
 {% block body %}
     <h2>{{ 'multi_cart_widget.cart.cart_name' | trans }}: {{ data.cart.name }}</h2>
@@ -30,10 +30,10 @@
                 </a>
             </li>
         {% endif %}
-        {% if data.cart.isActive == false and data.actions.set_active %}
+        {% if data.cart.isDefault == false and data.actions.set_default %}
             <li class="menu__item">
-                <a href="{{ path('multi-cart/set-active', {quoteName: data.cart.name}) }}" class="button set-active">
-                    {{ 'multi_cart_widget.cart.action.set_active' | trans }}
+                <a href="{{ path('multi-cart/set-default', {quoteName: data.cart.name}) }}" class="button set-default">
+                    {{ 'multi_cart_widget.cart.action.set_default' | trans }}
                 </a>
             </li>
         {% endif %}

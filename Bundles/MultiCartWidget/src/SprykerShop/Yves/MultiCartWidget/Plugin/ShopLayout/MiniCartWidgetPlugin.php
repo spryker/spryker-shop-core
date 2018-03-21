@@ -23,7 +23,7 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
     public function initialize(): void
     {
         $quoteCollectionTransfer = $this->getFactory()->getMultiCartClient()->getQuoteCollection();
-        $activeQuoteTransfer = $this->getFactory()->getMultiCartClient()->getActiveCart();
+        $activeQuoteTransfer = $this->getFactory()->getMultiCartClient()->getDefaultCart();
         $this->addParameter('activeCart', $activeQuoteTransfer);
         $this->addParameter('cartList', $this->getInActiveQuoteList($activeQuoteTransfer, $quoteCollectionTransfer));
         $this->addParameter('isMultiCartAllowed', $this->getFactory()->getMultiCartClient()->isMultiCartAllowed());

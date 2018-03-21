@@ -97,7 +97,7 @@ class CartOperations implements CartOperationsInterface
             $quoteTransfer->getName() . $this->multiCartClient->getDuplicatedQuoteNameSuffix()
         );
         $quoteTransfer->setIdQuote(null);
-        $quoteTransfer->setIsActive(true);
+        $quoteTransfer->setIsDefault(true);
 
         return $this->persistentCartClient->persistQuote($quoteTransfer);
     }
@@ -107,12 +107,12 @@ class CartOperations implements CartOperationsInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setActiveQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteActivatorRequestTransfer = new QuoteActivatorRequestTransfer();
         $quoteActivatorRequestTransfer->setCustomer($quoteTransfer->getCustomer());
         $quoteActivatorRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
-        $quoteResponseTransfer = $this->multiCartClient->setActiveQuote($quoteActivatorRequestTransfer);
+        $quoteResponseTransfer = $this->multiCartClient->setDefaultQuote($quoteActivatorRequestTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }

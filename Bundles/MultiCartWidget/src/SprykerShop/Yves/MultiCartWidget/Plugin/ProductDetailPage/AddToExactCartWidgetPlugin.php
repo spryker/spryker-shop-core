@@ -27,7 +27,7 @@ class AddToExactCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCa
     public function initialize(ProductViewTransfer $productViewTransfer, $idButtonDisabled): void
     {
         $quoteCollectionTransfer = $this->getFactory()->getMultiCartClient()->getQuoteCollection();
-        $activeQuoteTransfer = $this->getFactory()->getMultiCartClient()->getActiveCart();
+        $activeQuoteTransfer = $this->getFactory()->getMultiCartClient()->getDefaultCart();
         $this->addParameter(
             'cartCollection',
             $this->getInActiveQuoteList($activeQuoteTransfer, $quoteCollectionTransfer)

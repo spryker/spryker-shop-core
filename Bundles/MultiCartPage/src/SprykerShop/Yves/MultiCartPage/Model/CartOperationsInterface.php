@@ -45,7 +45,7 @@ interface CartOperationsInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setActiveQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

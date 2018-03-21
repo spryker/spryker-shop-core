@@ -24,5 +24,5 @@ interface MultiCartWidgetToMultiCartClientInterface
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getActiveCart(): QuoteTransfer;
+    public function getDefaultCart(): QuoteTransfer;
 }
