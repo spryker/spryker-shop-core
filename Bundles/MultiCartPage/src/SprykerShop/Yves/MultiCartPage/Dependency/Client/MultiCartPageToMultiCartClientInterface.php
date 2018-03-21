@@ -16,14 +16,14 @@ interface MultiCartPageToMultiCartClientInterface
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getActiveCart(): QuoteTransfer;
+    public function getDefaultCart(): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setActiveQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer;
+    public function setDefaultQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
