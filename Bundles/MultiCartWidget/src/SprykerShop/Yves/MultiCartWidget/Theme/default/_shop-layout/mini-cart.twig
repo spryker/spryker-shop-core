@@ -1,6 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
+    cartQuantity: _widget.cartQuantity,
     activeCart: _widget.activeCart,
     carts: _widget.cartList,
     isMultiCartAllowed: _widget.isMultiCartAllowed
@@ -11,5 +12,7 @@
         {% include organism('mini-cart', 'MultiCartWidget') with {
             data: data
         } only %}
+    {% else %}
+        <a href="{{ url('cart') }}">{{ data.cartQuantity }}{{ 'global.cart' | trans }}</a>
     {% endif %}
 {% endblock %}
