@@ -12,7 +12,9 @@ interface MiniCartWidgetPluginInterface
     const NAME = 'MiniCartWidgetPlugin';
 
     /**
+     * @param int $cartQuantity
+     *
      * @return void
      */
-    public function initialize(): void;
+    public function initialize($cartQuantity): void;
 }

@@ -100,6 +100,9 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
             new Twig_SimpleFunction('widgetExists', [$this, 'widgetExists'], [
                 'needs_context' => false,
             ]),
+            new Twig_SimpleFunction('widgetGlobalExists', [$this, 'widgetGlobalExists'], [
+                'needs_context' => false,
+            ]),
         ];
     }
 
@@ -240,6 +243,16 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
     public function widgetExists($name)
     {
         return $this->getWidgetContainer()->hasWidget($name);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function widgetGlobalExists($name)
+    {
+        return $this->getFactory()->createWidgetCollection()->hasWidget($name);
     }
 
     /**
