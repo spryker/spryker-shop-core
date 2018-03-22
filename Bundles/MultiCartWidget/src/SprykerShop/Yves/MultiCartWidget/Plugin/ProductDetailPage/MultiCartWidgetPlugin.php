@@ -16,7 +16,7 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\MultiCartWidget\MultiCa
 /**
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
-class AddToExactCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWidgetPluginInterface
+class MultiCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWidgetPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -75,6 +75,6 @@ class AddToExactCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCa
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/_product-detail-page/cart-selector.twig';
+        return '@MultiCartWidget/views/add-to-multi-cart/add-to-multi-cart.twig';
     }
 }

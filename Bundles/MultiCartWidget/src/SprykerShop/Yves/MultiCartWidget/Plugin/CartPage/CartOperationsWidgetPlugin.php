@@ -48,6 +48,6 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/_cart-page/cart-operations.twig';
+        return '@MultiCartWidget/views/cart-operations/cart-operations.twig';
     }
 }

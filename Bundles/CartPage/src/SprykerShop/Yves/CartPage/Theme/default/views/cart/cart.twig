@@ -5,16 +5,22 @@
     cartItems: _view.cartItems,
     request: app.request,
 
-    title: 'cart.cart' | trans 
+    title: 'cart.cart' | trans
 } %}
 
 {% block breadcrumbs %}
     {{ widget('CheckoutBreadcrumbWidgetPlugin', data.cart) }}
 {% endblock %}
 
+{% block title %}
+    {% if widgetExists('CartOperationsWidgetPlugin') %}
+        {{ widget('CartOperationsWidgetPlugin', data.cart) }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block content %}
-    {{ widget('MultiCartListWidgetPlugin', data.cart) }}
-    {{ widget('CartOperationsWidgetPlugin', data.cart) }}
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
@@ -47,6 +53,8 @@
             </div>
         </div>
     {% endif %}
+
+    {{ widget('MultiCartListWidgetPlugin', data.cart) }}
 
     {{ widget('UpSellingProductsWidgetPlugin', data.cart) }}
 {% endblock %}

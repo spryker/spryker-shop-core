@@ -8,6 +8,14 @@
             padding: spacing();
         }
 
+        &__navigation-top {
+            z-index: $zi-header + 3;
+        }
+
+        &__search-form {
+            z-index: $zi-header + 2;
+        }
+
         &__navigation-main {
             z-index: $zi-header + 1;
         }

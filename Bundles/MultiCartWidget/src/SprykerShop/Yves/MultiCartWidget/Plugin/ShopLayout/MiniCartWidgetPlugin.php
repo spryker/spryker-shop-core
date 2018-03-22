@@ -71,6 +71,6 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/_shop-layout/mini-cart.twig';
+        return '@MultiCartWidget/views/mini-cart/mini-cart.twig';
     }
 }

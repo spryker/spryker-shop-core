@@ -71,6 +71,6 @@ class CustomerCartListWidgetPlugin extends AbstractWidgetPlugin implements Multi
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/_cart-page/customer-cart-list.twig';
+        return '@MultiCartWidget/views/customer-cart-list/customer-cart-list.twig';
     }
 }

@@ -44,15 +44,30 @@
                     margin-right: spacing();
                 }
             }
+
+            &--has-children-list,
+            &--has-children-dropdown {
+                & #{$name}__separator {
+
+                }
+            }
         }
 
         &__separator {
-            display: inline-block;
-            margin: 0 spacing();
+            &:not(&--horizontal-line) {
+                display: inline-block;
+                margin: 0 spacing();
 
-            &::after {
-                content: '|';
-                color: $color-lighter;
+                &::after {
+                    content: '|';
+                    color: $color-lighter;
+                }
+            }
+
+
+            &--horizontal-line {
+                display: block;
+                border-top: 1px solid $color-lighter;
             }
         }
 
