@@ -1,0 +1,27 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'display-compoany-address',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    address: required
+} %}
+
+{% set isDefaultShipping = address.isDefaultShipping | default(false) %}
+{% set isDefaultBilling = address.isDefaultBilling | default(false) %}
+
+{% block body %}
+    <li>{{ data.address.address1 }} {{ data.address.address2 }}</li>
+    <li>{{ data.address.zipCode }} {{ data.address.city }}, {{ ('countries.iso.' ~ data.address.iso2code) | trans }}</li>
+    {% if data.address.phone is not empty %}
+        <li>{{ data.address.phone }}</li>
+    {% endif %}
+    {% if isDefaultShipping %}
+        <li><strong>{{ 'company.account.shipping_address' | trans }}</strong></li>
+    {% endif %}
+    {% if isDefaultBilling %}
+        <li><strong>{{ 'company.account.billing_address' | trans }}</strong></li>
+    {% endif %}
+{% endblock %}

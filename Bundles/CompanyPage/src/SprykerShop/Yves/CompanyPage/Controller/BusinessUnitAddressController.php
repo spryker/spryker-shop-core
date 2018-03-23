@@ -24,20 +24,25 @@ class BusinessUnitAddressController extends AbstractCompanyController
     {
         $dataProvider = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->createCompanyUnitAddressFormDataProvider();
 
         $addressForm = $this
             ->getFactory()
-            ->createCompanyFormFactory()
+            ->createCompanyPageFormFactory()
             ->getCompanyBusinessUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
         if ($addressForm->isSubmitted() === false) {
             $idCompanyBusinessUnit = $request->query->getInt('id');
 
-            $companyUserTransfer = $this->getCompanyUser();
-            $addressForm->setData($dataProvider->getData($companyUserTransfer, null, $idCompanyBusinessUnit));
+            $addressForm->setData(
+                $dataProvider->getData(
+                    $this->getCompanyUser(),
+                    null,
+                    $idCompanyBusinessUnit
+                )
+            );
         }
 
         if ($addressForm->isValid()) {
@@ -53,9 +58,11 @@ class BusinessUnitAddressController extends AbstractCompanyController
             }
         }
 
-        return $this->view([
+        $data = [
             'form' => $addressForm->createView(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@CompanyPage/views/business-unit-address-create/business-unit-address-create.twig');
     }
 
     /**

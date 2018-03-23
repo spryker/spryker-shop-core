@@ -1,0 +1,36 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    activePage: 'overview'
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'company.account' | trans
+            }]
+        }
+    } only %}
+{% endblock %}
+
+{% block content %}
+    <div class="grid">
+        <div class="col col--sm-12 col--md-3">
+            {% block companyNavigation %}
+                {% include molecule('company-navigation', 'CompanyPage') with {
+                    class: 'box',
+                    data: {
+                        activePage: data.activePage
+                    }
+                } only %}
+            {% endblock %}
+        </div>
+
+        <div class="col col--sm-12 col--md-9">
+            {% block companyContent %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

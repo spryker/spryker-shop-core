@@ -7,27 +7,57 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
 abstract class AbstractCompanyController extends AbstractController
 {
+    public const COMPANY_APPROVED_STATUS = 'approved';
     public const PARAM_PAGE = 'page';
     public const DEFAULT_PAGE = 1;
 
     /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+            throw new NotFoundHttpException("Regular customers are not allowed to operate on company pages");
+        }
+    }
+
+    /**
      * @return bool
      */
-    protected function isLoggedInCustomer(): bool
+    protected function isCompanyActive(): bool
     {
-        return $this->getFactory()->getCustomerClient()->isLoggedIn();
+        $companyUser = $this->getCompanyUser();
+
+        if ($companyUser === null) {
+            return false;
+        }
+
+        $companyTransfer = (new CompanyTransfer())->setIdCompany($companyUser->getFkCompany());
+        $companyTransfer = $this->getFactory()
+            ->getCompanyClient()
+            ->getCompanyById($companyTransfer);
+
+        return ($companyTransfer->getIsActive() === true && $companyTransfer->getStatus() === static::COMPANY_APPROVED_STATUS);
     }
 
     /**
@@ -35,13 +65,15 @@ abstract class AbstractCompanyController extends AbstractController
      */
     protected function getCompanyUser(): ?CompanyUserTransfer
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
 
-        if ($customerTransfer !== null) {
-            return $customerTransfer->getCompanyUserTransfer();
+        if (!$customerTransfer) {
+            return null;
         }
 
-        return null;
+        return $customerTransfer->getCompanyUserTransfer();
     }
 
     /**
