@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MultiCartWidget\Plugin\CartPage;
 
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\MultiCartWidget\MultiCartListWidgetPluginInterface;
@@ -24,30 +23,9 @@ class CustomerCartListWidgetPlugin extends AbstractWidgetPlugin implements Multi
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $quoteCollectionTransfer = $this->getFactory()->getMultiCartClient()->getQuoteCollection();
-        $this->addParameter(
-            'cartCollection',
-            $this->getInActiveQuoteList($quoteTransfer, $quoteCollectionTransfer)
-        );
-        $this->addParameter('isMultiCartAllowed', $this->getFactory()->getMultiCartClient()->isMultiCartAllowed());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $activeQuoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer[]
-     */
-    protected function getInActiveQuoteList(QuoteTransfer $activeQuoteTransfer, QuoteCollectionTransfer $quoteCollectionTransfer)
-    {
-        $inActiveQuoteTransferList = [];
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getIdQuote() !== $activeQuoteTransfer->getIdQuote()) {
-                $inActiveQuoteTransferList[] = $quoteTransfer;
-            }
-        }
-
-        return $inActiveQuoteTransferList;
+        $this
+            ->addParameter('cartCollection', $this->getInactiveQuoteList($quoteTransfer))
+            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
     }
 
     /**
@@ -72,5 +50,36 @@ class CustomerCartListWidgetPlugin extends AbstractWidgetPlugin implements Multi
     public static function getTemplate()
     {
         return '@MultiCartWidget/views/customer-cart-list/customer-cart-list.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $activeQuoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer[]
+     */
+    protected function getInactiveQuoteList(QuoteTransfer $activeQuoteTransfer)
+    {
+        $quoteCollectionTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->getQuoteCollection();
+
+        $inActiveQuoteTransferList = [];
+        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            if ($quoteTransfer->getIdQuote() !== $activeQuoteTransfer->getIdQuote()) {
+                $inActiveQuoteTransferList[] = $quoteTransfer;
+            }
+        }
+
+        return $inActiveQuoteTransferList;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isMultiCartAllowed(): bool
+    {
+        return $this->getFactory()
+            ->getMultiCartClient()
+            ->isMultiCartAllowed();
     }
 }

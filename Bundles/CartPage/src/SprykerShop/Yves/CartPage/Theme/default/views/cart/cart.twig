@@ -54,9 +54,10 @@
         </div>
     {% endif %}
 
+    {{ widget('UpSellingProductsWidgetPlugin', data.cart) }}
+
     {{ widget('MultiCartListWidgetPlugin', data.cart) }}
 
-    {{ widget('UpSellingProductsWidgetPlugin', data.cart) }}
 {% endblock %}
 
 {% block footer %}{% endblock %}

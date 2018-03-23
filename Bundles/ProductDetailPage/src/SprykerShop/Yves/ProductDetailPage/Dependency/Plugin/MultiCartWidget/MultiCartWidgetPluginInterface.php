@@ -15,9 +15,9 @@ interface MultiCartWidgetPluginInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param bool $idButtonDisabled
+     * @param bool $isButtonDisabled
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, $idButtonDisabled): void;
+    public function initialize(ProductViewTransfer $productViewTransfer, $isButtonDisabled): void;
 }

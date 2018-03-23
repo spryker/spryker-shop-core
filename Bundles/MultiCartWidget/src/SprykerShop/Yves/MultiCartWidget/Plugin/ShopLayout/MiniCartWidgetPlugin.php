@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MultiCartWidget\Plugin\ShopLayout;
 
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShopLayoutExtension\Dependency\Plugin\MultiCart\MiniCartWidgetPluginInterface;
@@ -24,30 +23,13 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
      */
     public function initialize($cartQuantity): void
     {
-        $quoteCollectionTransfer = $this->getFactory()->getMultiCartClient()->getQuoteCollection();
-        $activeQuoteTransfer = $this->getFactory()->getMultiCartClient()->getDefaultCart();
-        $this->addParameter('cartQuantity', $cartQuantity);
-        $this->addParameter('activeCart', $activeQuoteTransfer);
-        $this->addParameter('cartList', $this->getInActiveQuoteList($activeQuoteTransfer, $quoteCollectionTransfer));
-        $this->addParameter('isMultiCartAllowed', $this->getFactory()->getMultiCartClient()->isMultiCartAllowed());
-    }
+        $activeQuoteTransfer = $this->getActiveCart();
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $activeQuoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer[]
-     */
-    protected function getInActiveQuoteList(QuoteTransfer $activeQuoteTransfer, QuoteCollectionTransfer $quoteCollectionTransfer)
-    {
-        $inActiveQuoteTransferList = [];
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getIdQuote() !== $activeQuoteTransfer->getIdQuote()) {
-                $inActiveQuoteTransferList[] = $quoteTransfer;
-            }
-        }
-
-        return $inActiveQuoteTransferList;
+        $this
+            ->addParameter('cartQuantity', $cartQuantity)
+            ->addParameter('activeCart', $activeQuoteTransfer)
+            ->addParameter('cartList', $this->getInActiveQuoteList($activeQuoteTransfer))
+            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
     }
 
     /**
@@ -72,5 +54,44 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
     public static function getTemplate()
     {
         return '@MultiCartWidget/views/mini-cart/mini-cart.twig';
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getActiveCart(): QuoteTransfer
+    {
+        return $this->getFactory()->getMultiCartClient()->getDefaultCart();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $activeQuoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer[]
+     */
+    protected function getInActiveQuoteList(QuoteTransfer $activeQuoteTransfer): array
+    {
+        $quoteCollectionTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->getQuoteCollection();
+
+        $inActiveQuoteTransferList = [];
+        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            if ($quoteTransfer->getIdQuote() !== $activeQuoteTransfer->getIdQuote()) {
+                $inActiveQuoteTransferList[] = $quoteTransfer;
+            }
+        }
+
+        return $inActiveQuoteTransferList;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isMultiCartAllowed(): bool
+    {
+        return $this->getFactory()
+            ->getMultiCartClient()
+            ->isMultiCartAllowed();
     }
 }
