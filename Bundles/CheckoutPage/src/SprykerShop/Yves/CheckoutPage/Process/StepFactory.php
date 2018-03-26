@@ -199,6 +199,7 @@ class StepFactory extends AbstractFactory
             HomePageControllerProvider::ROUTE_HOME,
             [
                 'payment failed' => CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
+                'shipment failed' => CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
             ]
         );
     }
