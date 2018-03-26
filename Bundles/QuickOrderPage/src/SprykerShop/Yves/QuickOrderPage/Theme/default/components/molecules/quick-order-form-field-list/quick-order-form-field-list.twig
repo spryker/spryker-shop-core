@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quick-order-form-field-list',
+    tag: 'div'
+} %}
+
+{% define data = {
+    items: required
+} %}
+
+{% block body %}
+    <div class="grid grid--bottom">
+        {% for item in data.items %}     
+            <div class="col col--sm-7">
+                {{ form_row(item.sku) }}
+            </div>
+            <div class="col col--sm-4">
+                {{ form_row(item.qty) }}
+            </div>
+            <div class="col col--sm-1 col--middle">
+                {% if not loop.first %}
+                    <a href="#remove" class="{% block removeActionClass %}{% endblock %}" data-row-index="{{loop.index0}}">
+                        {% include atom('icon') with {
+                            data: {
+                                name: 'times'
+                            }
+                        } only %}
+                    </a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

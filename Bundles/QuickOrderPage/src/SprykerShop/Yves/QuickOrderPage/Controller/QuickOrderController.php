@@ -60,7 +60,72 @@ class QuickOrderController extends AbstractController
             'rowsNumber' => $this->getFactory()->getBundleConfig()->getProductRowsNumber(),
         ];
 
-        return $this->view($data, [], '@QuickOrderPage/views/quick-order/index.twig');
+        return $this->view($data, [], '@QuickOrderPage/views/quick-order/quick-order.twig');
+    }
+
+    public function partialFormRendererAction(Request $request)
+    {
+        $textOrderForm = $this
+            ->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getTextOrderForm()
+            ->handleRequest($request);
+            
+        $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
+        $quickOrder = $this->getQuickOrder($textOrderParsedItems);
+        
+        $quickOrderForm = $this
+            ->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getQuickOrderForm($quickOrder)
+            ->handleRequest($request);
+
+        return $this->view(['form' => $quickOrderForm->createView()], [], '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig');
+    }
+
+    public function addRowAction(Request $request)
+    {
+        //todo: add a new empty row
+        $textOrderForm = $this
+            ->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getTextOrderForm()
+            ->handleRequest($request);
+            
+        $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
+        $quickOrder = $this->getQuickOrder($textOrderParsedItems);
+        
+        $quickOrderForm = $this
+            ->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getQuickOrderForm($quickOrder)
+            ->handleRequest($request);
+
+        return $this->view(['form' => $quickOrderForm->createView()], [], '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig');
+    }
+
+    public function removeRowAction(Request $request)
+    {
+        //todo: remove a row
+        //it's a name of a row in product collection in the TextOrderForm
+        $rowIndex = $request->get('row-index');
+
+        $textOrderForm = $this
+            ->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getTextOrderForm()
+            ->handleRequest($request);
+            
+        $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
+        $quickOrder = $this->getQuickOrder($textOrderParsedItems);
+        
+        $quickOrderForm = $this
+            ->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getQuickOrderForm($quickOrder)
+            ->handleRequest($request);
+
+        return $this->view(['form' => $quickOrderForm->createView()], [], '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig');
     }
 
     /**

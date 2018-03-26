@@ -13,6 +13,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_QUICK_ORDER = 'quick-order';
+    public const ROUTE_QUICK_ORDER_AJAX = 'quick-order/ajax';
 
     /**
      * @param \Silex\Application $app
@@ -24,6 +25,10 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
         $this->createController('/{quickOrder}', self::ROUTE_QUICK_ORDER, 'QuickOrderPage', 'QuickOrder')
+            ->assert('quickOrder', $allowedLocalesPattern . 'quick-order|quick-order')
+            ->value('quickOrder', 'quick-order');
+
+        $this->createController('/{quickOrder}/ajax', self::ROUTE_QUICK_ORDER_AJAX, 'QuickOrderPage', 'QuickOrder', 'partialFormRenderer')
             ->assert('quickOrder', $allowedLocalesPattern . 'quick-order|quick-order')
             ->value('quickOrder', 'quick-order');
     }
