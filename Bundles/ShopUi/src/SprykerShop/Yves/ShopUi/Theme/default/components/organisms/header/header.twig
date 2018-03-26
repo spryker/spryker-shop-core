@@ -12,19 +12,19 @@
 
 {% block body %}
     <div class="container">
-        <div class="{{config.name}}__row grid grid--middle">
+        <div class="{{config.name}}__row {{config.name}}__navigation-top grid grid--middle">
             {% include molecule('logo') with {
                 class: 'col col--sm-12 col--md-4'
             } only %}
 
             <div class="col col--sm-12 col--md-8">
                 {% include organism('navigation-top') with {
-                    class: 'is-hidden-sm-md text-right'
+                    class: config.name ~ '__navigation-top is-hidden-sm-md text-right'
                 } only %}
 
                 {% if data.showSearchForm %}
                     {% include molecule('search-form') with {
-                        class: 'is-hidden-sm-md'
+                        class: config.name ~ '__search-form is-hidden-sm-md'
                     } only %}
                 {% endif %}
 
@@ -32,13 +32,6 @@
                     {% block mobile %}{% endblock %}
                 </div>
             </div>
-
-                {# <a class="shrink columns text-right align-middle hide-for-large" href="#aside" data-aside-toggle>
-                    {% if app['cart.quantity'] > 0 %}
-                        <span class="warning badge">{{ app['cart.quantity'] }}</span>
-                    {% endif %}
-                    <i class="fa fa-bars"></i>
-                </a> #}
         </div>
 
         {% if data.showNavigation %}
@@ -49,7 +42,7 @@
 
         {% if data.showSearchForm %}
             {% include molecule('search-form') with {
-                class: config.name ~ '__row is-hidden-lg-xl'
+                class: config.name ~ '__row' ~ config.name ~ '__search-form is-hidden-lg-xl'
             } only %}
         {% endif %}
     </div>

@@ -74,6 +74,7 @@ class SuccessStep extends AbstractBaseStep
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
         $this->customerClient->markCustomerAsDirty();
+
         if ($this->checkoutPageConfig->cleanCartAfterOrderCreation()) {
             $this->cartClient->clearQuote();
         }

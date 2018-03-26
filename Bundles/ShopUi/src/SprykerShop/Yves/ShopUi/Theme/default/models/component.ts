@@ -1,7 +1,8 @@
-import config from '../config';
+import Logger from '../app/logger';
+import { AppConfig } from '../app/config';
 
 export interface IComponentContructor {
-    new(): HTMLElement
+    new(): Component
 }
 
 export interface IComponentImporter {
@@ -9,19 +10,23 @@ export interface IComponentImporter {
 }
 
 export default abstract class Component extends HTMLElement { 
-    readonly name: string
-    readonly selector: string
+    readonly componentName: string
+    readonly componentSelector: string
+    protected logger: Logger
+    protected config: AppConfig
 
     constructor() {
         super();
-
-        this.name = this.tagName.toLowerCase();
-        this.selector = `js-${this.name}`;
-
-        document.addEventListener(config.events.ready, (event: Event) => this.readyCallback(event), false);
+        this.componentName = this.tagName.toLowerCase();
+        this.componentSelector = `js-${this.componentName}`;
     }
 
-    abstract readyCallback(event?: Event): void
+    mountCallback(config: AppConfig, logger: Logger): void { 
+        this.config = config;
+        this.logger = logger;
+    }
+
+    abstract readyCallback(): void
 
     setAttributeSafe(name: string, value?: string): void {
         if (!value) {

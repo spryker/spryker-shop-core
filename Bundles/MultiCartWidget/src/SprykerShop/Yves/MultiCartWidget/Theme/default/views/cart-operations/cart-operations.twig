@@ -1,0 +1,35 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cart: _widget.cart,
+    isMultiCartAllowed: _widget.isMultiCartAllowed
+} %}
+
+{% block body %}
+    {% if data.isMultiCartAllowed is not empty %}
+        <h3>{{ data.cart.name }}</h3>
+
+        <ul class="menu menu--inline">
+            <li class="menu__item">
+                <a href="{{ path('multi-cart/update', {quoteName: data.cart.name}) }}" class="button update">
+                    {{ "multi_cart_widget.cart.action.change_name" | trans }}
+                </a>
+            </li>
+            <li class="menu__item">
+                <a href="{{ path('multi-cart/duplicate', {quoteName: data.cart.name}) }}" class="button duplicate">
+                    {{ "multi_cart_widget.cart.action.duplicate" | trans }}
+                </a>
+            </li>
+            <li class="menu__item">
+                <a href="{{ path('multi-cart/clear', {quoteName: data.cart.name}) }}" class="button clear">
+                    {{ "multi_cart_widget.cart.action.clear" | trans }}
+                </a>
+            </li>
+            <li class="menu__item">
+                <a href="{{ path('multi-cart/delete', {quoteName: data.cart.name}) }}" class="button delete">
+                    {{ "multi_cart_widget.cart.action.delete" | trans }}
+                </a>
+            </li>
+        </ul>
+    {% endif %}
+{% endblock %}

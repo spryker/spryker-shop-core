@@ -29,12 +29,17 @@ class MultiCartController extends AbstractController
             ->handleRequest($request);
 
         if ($quoteForm->isSubmitted() && $quoteForm->isValid()) {
+            $customerTransfer = $this->getFactory()
+                ->getCustomerClient()
+                ->getCustomer();
+
             $quoteTransfer = $quoteForm->getData();
-            $quoteTransfer->setCustomer(
-                $this->getFactory()->getCustomerClient()->getCustomer()
-            );
-            $quoteResponseTransfer = $this->getFactory()->createCartOperations()
+            $quoteTransfer->setCustomer($customerTransfer);
+
+            $quoteResponseTransfer = $this->getFactory()
+                ->createCartOperations()
                 ->createQuote($quoteTransfer);
+
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
             }
@@ -61,16 +66,20 @@ class MultiCartController extends AbstractController
 
         $quoteTransfer = $quoteForm->getData();
         if ($quoteForm->isSubmitted() && $quoteForm->isValid()) {
-            $quoteTransfer->setCustomer(
-                $this->getFactory()->getCustomerClient()->getCustomer()
-            );
-            $quoteResponseTransfer = $this->getFactory()->createCartOperations()
+            $customerTransfer = $this->getFactory()
+                ->getCustomerClient()
+                ->getCustomer();
+
+            $quoteTransfer->setCustomer($customerTransfer);
+
+            $quoteResponseTransfer = $this->getFactory()
+                ->createCartOperations()
                 ->updateQuote($quoteTransfer);
+
             if ($quoteResponseTransfer->getIsSuccessful()) {
-                return $this->redirectResponseInternal(
-                    MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE,
-                    ['quoteName' => $quoteResponseTransfer->getQuoteTransfer()->getName()]
-                );
+                return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE, [
+                    MultiCartPageControllerProvider::PARAM_QUOTE_NAME => $quoteResponseTransfer->getQuoteTransfer()->getName(),
+                ]);
             }
         }
 
@@ -89,8 +98,12 @@ class MultiCartController extends AbstractController
      */
     public function setDefaultAction($quoteName)
     {
-        $quoteTransfer = $this->getFactory()->getMultiCartClient()->findQuoteByName($quoteName);
-        $this->getFactory()->createCartOperations()
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteByName($quoteName);
+
+        $this->getFactory()
+            ->createCartOperations()
             ->setDefaultQuote($quoteTransfer);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -103,8 +116,12 @@ class MultiCartController extends AbstractController
      */
     public function duplicateAction($quoteName)
     {
-        $quoteTransfer = $this->getFactory()->getMultiCartClient()->findQuoteByName($quoteName);
-        $this->getFactory()->createCartOperations()
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteByName($quoteName);
+
+        $this->getFactory()
+            ->createCartOperations()
             ->duplicateQuote($quoteTransfer);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -117,8 +134,12 @@ class MultiCartController extends AbstractController
      */
     public function clearAction($quoteName)
     {
-        $quoteTransfer = $this->getFactory()->getMultiCartClient()->findQuoteByName($quoteName);
-        $this->getFactory()->createCartOperations()
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteByName($quoteName);
+
+        $this->getFactory()
+            ->createCartOperations()
             ->clearQuote($quoteTransfer);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -132,20 +153,24 @@ class MultiCartController extends AbstractController
     public function deleteAction($quoteName)
     {
         $multiCartClient = $this->getFactory()->getMultiCartClient();
-        $quoteTransfer = $multiCartClient->findQuoteByName($quoteName);
-        $quoteTransfer->setCustomer(
-            $this->getFactory()->getCustomerClient()->getCustomer()
-        );
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
 
-        $this->getFactory()->createCartOperations()->deleteQuote($quoteTransfer);
+        $quoteTransfer = $multiCartClient->findQuoteByName($quoteName);
+        $quoteTransfer->setCustomer($customerTransfer);
+
+        $this->getFactory()
+            ->createCartOperations()
+            ->deleteQuote($quoteTransfer);
+
         $customerQuoteTransferList = $multiCartClient->getQuoteCollection()->getQuotes();
         if ($quoteTransfer->getIsDefault() && count($customerQuoteTransferList)) {
             $quoteTransfer = reset($customerQuoteTransferList);
 
-            return $this->redirectResponseInternal(
-                MultiCartPageControllerProvider::ROUTE_MULTI_CART_SET_DEFAULT,
-                ['quoteName' => $quoteTransfer->getName()]
-            );
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_SET_DEFAULT, [
+                MultiCartPageControllerProvider::PARAM_QUOTE_NAME => $quoteTransfer->getName(),
+            ]);
         }
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);

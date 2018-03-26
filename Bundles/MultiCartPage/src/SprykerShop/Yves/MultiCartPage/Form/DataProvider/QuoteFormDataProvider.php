@@ -20,9 +20,8 @@ class QuoteFormDataProvider implements QuoteFormDataProviderInterface
     /**
      * @param \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientInterface $multiCartClient
      */
-    public function __construct(
-        MultiCartPageToMultiCartClientInterface $multiCartClient
-    ) {
+    public function __construct(MultiCartPageToMultiCartClientInterface $multiCartClient)
+    {
         $this->multiCartClient = $multiCartClient;
     }
 

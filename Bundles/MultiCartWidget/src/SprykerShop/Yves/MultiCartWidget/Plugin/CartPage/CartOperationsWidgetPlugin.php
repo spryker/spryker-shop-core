@@ -23,8 +23,9 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('cart', $quoteTransfer);
-        $this->addParameter('isMultiCartAllowed', $this->getFactory()->getMultiCartClient()->isMultiCartAllowed());
+        $this
+            ->addParameter('cart', $quoteTransfer)
+            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
     }
 
     /**
@@ -48,6 +49,16 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/_cart-page/cart-operations.twig';
+        return '@MultiCartWidget/views/cart-operations/cart-operations.twig';
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isMultiCartAllowed(): bool
+    {
+        return $this->getFactory()
+            ->getMultiCartClient()
+            ->isMultiCartAllowed();
     }
 }

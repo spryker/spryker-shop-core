@@ -5,30 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\MultiCartWidget\Plugin\ShopLayout;
+namespace SprykerShop\Yves\MultiCartWidget\Plugin\ProductDetailPage;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShopLayoutExtension\Dependency\Plugin\MultiCart\MiniCartWidgetPluginInterface;
+use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\MultiCartWidget\MultiCartWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
-class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidgetPluginInterface
+class MultiCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWidgetPluginInterface
 {
     /**
-     * @param int $cartQuantity
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param bool $isButtonDisabled
      *
      * @return void
      */
-    public function initialize($cartQuantity): void
+    public function initialize(ProductViewTransfer $productViewTransfer, $isButtonDisabled): void
     {
-        $activeQuoteTransfer = $this->getActiveCart();
-
         $this
-            ->addParameter('cartQuantity', $cartQuantity)
-            ->addParameter('activeCart', $activeQuoteTransfer)
-            ->addParameter('cartList', $this->getInActiveQuoteList($activeQuoteTransfer))
+            ->addParameter('cartCollection', $this->getInactiveQuoteList())
+            ->addParameter('isButtonDisabled', $isButtonDisabled)
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
     }
 
@@ -53,27 +51,21 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/views/mini-cart/mini-cart.twig';
+        return '@MultiCartWidget/views/add-to-multi-cart/add-to-multi-cart.twig';
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function getActiveCart(): QuoteTransfer
-    {
-        return $this->getFactory()->getMultiCartClient()->getDefaultCart();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $activeQuoteTransfer
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer[]
      */
-    protected function getInActiveQuoteList(QuoteTransfer $activeQuoteTransfer): array
+    protected function getInactiveQuoteList()
     {
         $quoteCollectionTransfer = $this->getFactory()
             ->getMultiCartClient()
             ->getQuoteCollection();
+
+        $activeQuoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->getDefaultCart();
 
         $inActiveQuoteTransferList = [];
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {

@@ -1,17 +1,17 @@
 {% extends template('widget') %}
 
 {% define data = {
-    idButtonDisabled: _widget.idButtonDisabled,
+    isButtonDisabled: _widget.isButtonDisabled,
     isMultiCartAllowed: _widget.isMultiCartAllowed,
     carts: _widget.cartCollection
 } %}
 
 {% block body %}
-    {% if data.isMultiCartAllowed is not empty and data.carts | length > 0 %}
+    {% if data.isMultiCartAllowed and data.carts | length > 0 %}
         {% include molecule('add-to-cart-seletor', 'MultiCartWidget') with {
             data: {
-                idButtonDisabled: data.idButtonDisabled,
-                carts: data.carts
+                carts: data.carts,
+                isButtonDisabled: data.isButtonDisabled
             }
         } only %}
     {% endif %}
