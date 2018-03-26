@@ -1,0 +1,66 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-table-detail',
+    tag: 'tr'
+} %}
+
+{% define data = {
+    cart: required,
+    actions: required
+} %}
+
+{% set showActions = data.actions.view or data.actions.update or data.actions.delete or data.actions.set_default %}
+{% set cart = data.cart %}
+
+{% block body %}
+    <td>{{ cart.name }}</td>
+    <td>
+        {% if cart.items is not empty %}
+            {% include atom('cart-item-list', 'MultiCartWidget') with {
+                data: {
+                    items: cart.items
+                }
+            } only %}
+        {% endif %}
+    </td>
+    <td>
+        {% if cart.totals is not empty and cart.items is not empty %}
+        {{ cart.totals.subTotal | money }}
+        {% endif %}
+    </td>
+    {% if showActions %}
+        <td>
+            <ul class="menu">
+                {% if data.actions.view %}
+                    <li class="menu__item">
+                        <a href="{{ path('multi-cart/set-default', {quoteName: cart.name}) }}">
+                            {{ 'multi_cart_widget.cart.action.view' | trans }}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if data.actions.set_default %}
+                    <li class="menu__item">
+                        <a href="{{ path('multi-cart/set-default', {quoteName: cart.name}) }}">
+                            {{ 'multi_cart_widget.cart.action.set_default' | trans }}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if data.actions.update %}
+                    <li class="menu__item">
+                        <a href="{{ path('multi-cart/update', {quoteName: cart.name}) }}">
+                            {{ "multi_cart_widget.cart.action.change_name" | trans }}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if data.actions.delete %}
+                    <li class="menu__item">
+                        <a href="{{ path('multi-cart/delete', {quoteName: cart.name}) }}">
+                            {{ "multi_cart_widget.cart.action.delete" | trans }}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </td>
+    {% endif %}
+{% endblock %}

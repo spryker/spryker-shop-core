@@ -23,6 +23,7 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
         $this
             ->addParameter('cart', $quoteTransfer)
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());

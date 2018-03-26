@@ -23,9 +23,11 @@ class CustomerCartListWidgetPlugin extends AbstractWidgetPlugin implements Multi
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
         $this
             ->addParameter('cartCollection', $this->getInactiveQuoteList($quoteTransfer))
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
+        $this->addParameter('isMultiCartAllowed', $this->getFactory()->getMultiCartClient()->isMultiCartAllowed());
     }
 
     /**
@@ -65,7 +67,7 @@ class CustomerCartListWidgetPlugin extends AbstractWidgetPlugin implements Multi
 
         $inActiveQuoteTransferList = [];
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getIdQuote() !== $activeQuoteTransfer->getIdQuote()) {
+            if (!$quoteTransfer->getIsDefault()) {
                 $inActiveQuoteTransferList[] = $quoteTransfer;
             }
         }

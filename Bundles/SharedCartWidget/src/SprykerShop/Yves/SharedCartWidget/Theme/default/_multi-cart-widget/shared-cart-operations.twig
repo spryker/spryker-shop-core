@@ -1,0 +1,15 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cart: _widget.cart,
+    actions: _widget.actions
+} %}
+
+{% block body %}
+    {% include molecule('cart-operations', 'MultiCartWidget') with {
+        data: {
+            cart: data.cart,
+            actions: data.actions
+        }
+    } only %}
+{% endblock %}

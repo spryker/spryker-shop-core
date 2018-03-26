@@ -18,4 +18,12 @@ class MultiCartWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(MultiCartWidgetDependencyProvider::CLIENT_MULTI_CART);
     }
+
+    /**
+     * @return array
+     */
+    public function getViewExtendWidgetPlugins()
+    {
+        return $this->getProvidedDependency(MultiCartWidgetDependencyProvider::PLUGINS_VIEW_EXTEND);
+    }
 }

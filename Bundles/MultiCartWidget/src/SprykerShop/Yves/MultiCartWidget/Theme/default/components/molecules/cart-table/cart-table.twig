@@ -7,8 +7,15 @@
 
 {% define data = {
     carts: required,
-    cartItemLimit: 2
+    actions: {
+        view: true,
+        update: false,
+        set_default: true,
+        delete: true
+    }
 } %}
+
+{% set showActions = data.actions.view or data.actions.update or data.actions.delete or data.actions.set_default %}
 
 {% block body %}
     <h3 class="float-left">{{ 'multi_cart_widget.cart.list' | trans }}</h3>
@@ -23,54 +30,23 @@
                 <th>{{ 'multi_cart_widget.cart.cart_name' | trans }}</th>
                 <th>{{ 'multi_cart_widget.cart.items' | trans }}</th>
                 <th>{{ 'multi_cart_widget.cart.sub_total' | trans }}</th>
-                <th>{{ 'multi_cart_widget.cart.actions' | trans }}</th>
+                {% if showActions %}
+                    <th>{{ 'multi_cart_widget.cart.actions' | trans }}</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
         {% for cart in data.carts %}
-            <tr>
-                <td>{{ cart.name }}</td>
-                <td>
-                    {% if cart.items is not empty %}
-                        <ul>
-                            {% for item in cart.items | slice(0, data.cartItemLimit) %}
-                                <li>{{ item.name }}</li>
-                            {% endfor %}
-                            {% if data.cartItemLimit < cart.items|length %}
-                                <li>&hellip;</li>
-                            {% endif %}
-                        </ul>
-                    {% else %}
-                        N/A
-                    {% endif %}
-                </td>
-                <td>
-                    {% if cart.totals is not empty and cart.items is not empty %}
-                        {{ cart.totals.subTotal | money }}
-                    {% else %}
-                        N/A
-                    {% endif %}
-                </td>
-                <td>
-                    <ul class="menu">
-                        <li class="menu__item">
-                            <a href="{{ path('multi-cart/set-default', {quoteName: cart.name}) }}">
-                                {{ 'multi_cart_widget.cart.action.set_default' | trans }}
-                            </a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="{{ path('multi-cart/update', {quoteName: cart.name}) }}">
-                                {{ "multi_cart_widget.cart.action.change_name" | trans }}
-                            </a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="{{ path('multi-cart/delete', {quoteName: cart.name}) }}">
-                                {{ "multi_cart_widget.cart.action.delete" | trans }}
-                            </a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+            {% if widgetExists('SharedCartDetailsWidgetPlugin') %}
+                {{ widget('SharedCartDetailsWidgetPlugin', cart, data.actions) }}
+            {% else %}
+                {% include atom('cart-table-detail', 'MultiCartWidget') with {
+                    data: {
+                        cart: cart,
+                        actions: data.actions
+                    }
+                } only %}
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>
