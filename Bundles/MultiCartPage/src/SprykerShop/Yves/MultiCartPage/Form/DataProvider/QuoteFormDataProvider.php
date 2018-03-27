@@ -26,14 +26,14 @@ class QuoteFormDataProvider implements QuoteFormDataProviderInterface
     }
 
     /**
-     * @param null|string $quoteName
+     * @param null|int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteName = null)
+    public function getData(int $idQuote = null): QuoteTransfer
     {
-        if ($quoteName) {
-            return $this->multiCartClient->findQuoteByName($quoteName);
+        if ($idQuote) {
+            return $this->multiCartClient->findQuoteById($idQuote);
         }
 
         return new QuoteTransfer();

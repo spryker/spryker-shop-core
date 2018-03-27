@@ -53,19 +53,19 @@ class MultiCartPageToMultiCartClientBridge implements MultiCartPageToMultiCartCl
     }
 
     /**
-     * @param string $quoteName
+     * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByName($quoteName): ?QuoteTransfer
+    public function findQuoteById(int $idQuote): ?QuoteTransfer
     {
-        return $this->multiCartClient->findQuoteByName($quoteName);
+        return $this->multiCartClient->findQuoteById($idQuote);
     }
 
     /**
      * @return string
      */
-    public function getDuplicatedQuoteNameSuffix()
+    public function getDuplicatedQuoteNameSuffix(): string
     {
         return $this->multiCartClient->getDuplicatedQuoteNameSuffix();
     }

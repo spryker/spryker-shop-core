@@ -51,7 +51,7 @@
                 </li>
             {% else %}
                 <li class="menu__item">
-                    <a href="{{ path('multi-cart/set-default', {quoteName: data.cart.name}) }}">
+                    <a href="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
                         {{ 'multi_cart_widget.cart.action.set_default' | trans }}
                     </a>
                 </li>

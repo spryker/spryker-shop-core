@@ -38,28 +38,28 @@
             <ul class="menu">
                 {% if data.actions.view %}
                     <li class="menu__item">
-                        <a href="{{ path('multi-cart/set-default', {quoteName: cart.name}) }}">
+                        <a href="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
                             {{ 'multi_cart_widget.cart.action.view' | trans }}
                         </a>
                     </li>
                 {% endif %}
                 {% if data.actions.set_default %}
                     <li class="menu__item">
-                        <a href="{{ path('multi-cart/set-default', {quoteName: cart.name}) }}">
+                        <a href="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
                             {{ 'multi_cart_widget.cart.action.set_default' | trans }}
                         </a>
                     </li>
                 {% endif %}
                 {% if data.actions.update %}
                     <li class="menu__item">
-                        <a href="{{ path('multi-cart/update', {quoteName: cart.name}) }}">
+                        <a href="{{ path('multi-cart/update', {idQuote: data.cart.idQuote}) }}">
                             {{ "multi_cart_widget.cart.action.change_name" | trans }}
                         </a>
                     </li>
                 {% endif %}
                 {% if data.actions.delete %}
                     <li class="menu__item">
-                        <a href="{{ path('multi-cart/delete', {quoteName: cart.name}) }}">
+                        <a href="{{ path('multi-cart/delete', {idQuote: data.cart.idQuote}) }}">
                             {{ "multi_cart_widget.cart.action.delete" | trans }}
                         </a>
                     </li>

@@ -16,15 +16,15 @@ use SprykerShop\Yves\MultiCartPage\Model\CartOperations;
 class MultiCartPageFactory extends AbstractFactory
 {
     /**
-     * @param null|string $quoteName
+     * @param null|int $idQuote
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getQuoteForm($quoteName = null)
+    public function getQuoteForm(int $idQuote = null)
     {
         return $this->getFormFactory()->create(
             QuoteForm::class,
-            $this->createQuoteFormDataProvider()->getData($quoteName)
+            $this->createQuoteFormDataProvider()->getData($idQuote)
         );
     }
 

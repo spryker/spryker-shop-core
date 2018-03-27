@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MultiCartPage\Controller;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -53,15 +54,15 @@ class MultiCartController extends AbstractController
     }
 
     /**
-     * @param string $quoteName
+     * @param int $idQuote
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function updateAction($quoteName, Request $request)
+    public function updateAction(int $idQuote, Request $request)
     {
         $quoteForm = $this->getFactory()
-            ->getQuoteForm($quoteName)
+            ->getQuoteForm($idQuote)
             ->handleRequest($request);
 
         $quoteTransfer = $quoteForm->getData();
@@ -78,7 +79,7 @@ class MultiCartController extends AbstractController
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE, [
-                    MultiCartPageControllerProvider::PARAM_QUOTE_NAME => $quoteResponseTransfer->getQuoteTransfer()->getName(),
+                    MultiCartPageControllerProvider::PARAM_ID_QUOTE => $quoteResponseTransfer->getQuoteTransfer()->getIdQuote(),
                 ]);
             }
         }
@@ -92,15 +93,15 @@ class MultiCartController extends AbstractController
     }
 
     /**
-     * @param string $quoteName
+     * @param int $idQuote
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function setDefaultAction($quoteName)
+    public function setDefaultAction(int $idQuote)
     {
         $quoteTransfer = $this->getFactory()
             ->getMultiCartClient()
-            ->findQuoteByName($quoteName);
+            ->findQuoteById($idQuote);
 
         $this->getFactory()
             ->createCartOperations()
@@ -110,15 +111,15 @@ class MultiCartController extends AbstractController
     }
 
     /**
-     * @param string $quoteName
+     * @param int $idQuote
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function duplicateAction($quoteName)
+    public function duplicateAction(int $idQuote)
     {
         $quoteTransfer = $this->getFactory()
             ->getMultiCartClient()
-            ->findQuoteByName($quoteName);
+            ->findQuoteById($idQuote);
 
         $this->getFactory()
             ->createCartOperations()
@@ -128,15 +129,15 @@ class MultiCartController extends AbstractController
     }
 
     /**
-     * @param string $quoteName
+     * @param int $idQuote
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function clearAction($quoteName)
+    public function clearAction(int $idQuote)
     {
         $quoteTransfer = $this->getFactory()
             ->getMultiCartClient()
-            ->findQuoteByName($quoteName);
+            ->findQuoteById($idQuote);
 
         $this->getFactory()
             ->createCartOperations()
@@ -146,18 +147,19 @@ class MultiCartController extends AbstractController
     }
 
     /**
-     * @param string $quoteName
+     * @param int $idQuote
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($quoteName)
+    public function deleteAction(int $idQuote)
     {
         $multiCartClient = $this->getFactory()->getMultiCartClient();
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
             ->getCustomer();
 
-        $quoteTransfer = $multiCartClient->findQuoteByName($quoteName);
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setIdQuote($idQuote);
         $quoteTransfer->setCustomer($customerTransfer);
 
         $this->getFactory()
@@ -169,10 +171,10 @@ class MultiCartController extends AbstractController
             $quoteTransfer = reset($customerQuoteTransferList);
 
             return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_SET_DEFAULT, [
-                MultiCartPageControllerProvider::PARAM_QUOTE_NAME => $quoteTransfer->getName(),
+                MultiCartPageControllerProvider::PARAM_ID_QUOTE => $quoteTransfer->getIdQuote(),
             ]);
         }
 
-        return $this->redirectResponseInternal('/');
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
 }

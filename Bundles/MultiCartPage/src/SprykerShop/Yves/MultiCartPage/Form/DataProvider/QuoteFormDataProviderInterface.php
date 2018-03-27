@@ -7,12 +7,14 @@
 
 namespace SprykerShop\Yves\MultiCartPage\Form\DataProvider;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface QuoteFormDataProviderInterface
 {
     /**
-     * @param null|string $quoteName
+     * @param int|null $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteName = null);
+    public function getData(int $idQuote = null): QuoteTransfer;
 }

@@ -31,14 +31,14 @@ interface MultiCartPageToMultiCartClientInterface
     public function getQuoteCollection();
 
     /**
-     * @param string $quoteName
+     * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByName($quoteName): ?QuoteTransfer;
+    public function findQuoteById(int $idQuote): ?QuoteTransfer;
 
     /**
      * @return string
      */
-    public function getDuplicatedQuoteNameSuffix();
+    public function getDuplicatedQuoteNameSuffix(): string;
 }
