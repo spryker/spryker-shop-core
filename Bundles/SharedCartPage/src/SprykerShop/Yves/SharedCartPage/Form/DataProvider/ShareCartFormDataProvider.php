@@ -83,6 +83,9 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
         $businessUnitCompanyUserList = $this->getBusinessUnitCustomers($companyBusinessUnitTransfer);
         $customerListData = [];
         foreach ($businessUnitCompanyUserList as $companyUserTransfer) {
+            if ($customer->getIdCustomer() === $companyUserTransfer->getFkCustomer()) {
+                continue;
+            }
             $customerTransfer = $companyUserTransfer->getCustomer();
             $customerListData[$companyUserTransfer->getIdCompanyUser()] =
                 $customerTransfer->getLastName() . ' ' . $customerTransfer->getFirstName();

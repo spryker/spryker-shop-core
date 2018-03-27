@@ -8,14 +8,15 @@
 {% block body %}
     {% if data.isMultiCartAllowed is not empty %}
         <h3>{{ data.cart.name }}</h3>
-    {% if widgetExists('SharedCartOperationsWidgetPlugin') %}
-        {{ widget('SharedCartOperationsWidgetPlugin', data.cart) }}
-    {% else %}
-        {% include molecule('cart-operations', 'MultiCartWidget') with {
-            data: {
-                cart: data.cart
-            }
-        } only %}
-    {% endif %}
+        {% if widgetExists('SharedCartOperationsWidgetPlugin') %}
+            {{ widget('SharedCartOperationsWidgetPlugin', data.cart) }}
+        {% else %}
+            {% include molecule('cart-operations', 'MultiCartWidget') with {
+                data: {
+                    cart: data.cart
+                }
+            } only %}
+        {% endif %}
+        {{ widget('SharedCartShareWidgetPlugin', data.cart) }}
     {% endif %}
 {% endblock %}
