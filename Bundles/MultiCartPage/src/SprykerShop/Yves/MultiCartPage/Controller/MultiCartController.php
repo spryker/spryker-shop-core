@@ -173,6 +173,6 @@ class MultiCartController extends AbstractController
             ]);
         }
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal('/');
     }
 }

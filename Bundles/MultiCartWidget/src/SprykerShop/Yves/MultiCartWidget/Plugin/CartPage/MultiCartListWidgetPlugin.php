@@ -14,7 +14,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\MultiCartWidget\MultiCartListWid
 /**
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
-class CustomerCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCartListWidgetPluginInterface
+class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCartListWidgetPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

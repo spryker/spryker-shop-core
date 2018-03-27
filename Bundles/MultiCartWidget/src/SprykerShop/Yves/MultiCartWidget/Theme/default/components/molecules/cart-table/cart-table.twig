@@ -40,7 +40,7 @@
             {% if widgetExists('SharedCartDetailsWidgetPlugin') %}
                 {{ widget('SharedCartDetailsWidgetPlugin', cart, data.actions) }}
             {% else %}
-                {% include atom('cart-table-detail', 'MultiCartWidget') with {
+                {% include molecule('cart-table-detail', 'MultiCartWidget') with {
                     data: {
                         cart: cart,
                         actions: data.actions

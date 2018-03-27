@@ -25,6 +25,11 @@ class MultiCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWid
     public function initialize(ProductViewTransfer $productViewTransfer, $isButtonDisabled): void
     {
         $this
+            ->addWidgets($this->getFactory()->getViewExtendWidgetPlugins())
+            ->addParameter(
+                'cart',
+                $this->getFactory()->getMultiCartClient()->getDefaultCart()
+            )
             ->addParameter('cartCollection', $this->getInactiveQuoteList())
             ->addParameter('isButtonDisabled', $isButtonDisabled)
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());

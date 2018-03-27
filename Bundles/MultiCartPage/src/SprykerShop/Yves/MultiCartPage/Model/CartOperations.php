@@ -94,7 +94,7 @@ class CartOperations implements CartOperationsInterface
     {
         $quoteTransfer = clone $quoteTransfer;
         $quoteTransfer->setName(
-            $quoteTransfer->getName() . $this->multiCartClient->getDuplicatedQuoteNameSuffix()
+            $quoteTransfer->getName() . $this->multiCartClient->getDuplicatedQuoteNameSuffix() . ' ' . date('Y-m-d H:i:s')
         );
         $quoteTransfer->setIdQuote(null);
         $quoteTransfer->setIsDefault(true);

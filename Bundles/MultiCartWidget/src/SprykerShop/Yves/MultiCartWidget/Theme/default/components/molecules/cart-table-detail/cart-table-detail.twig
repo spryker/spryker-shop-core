@@ -17,16 +17,20 @@
     <td>{{ cart.name }}</td>
     <td>
         {% if cart.items is not empty %}
-            {% include atom('cart-item-list', 'MultiCartWidget') with {
-                data: {
-                    items: cart.items
-                }
-            } only %}
+            <ul>
+                {% for item in cart.items %}
+                    <li>{{ item.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            N/A
         {% endif %}
     </td>
     <td>
         {% if cart.totals is not empty and cart.items is not empty %}
-        {{ cart.totals.subTotal | money }}
+            {{ cart.totals.subTotal | money }}
+        {% else %}
+            N/A
         {% endif %}
     </td>
     {% if showActions %}

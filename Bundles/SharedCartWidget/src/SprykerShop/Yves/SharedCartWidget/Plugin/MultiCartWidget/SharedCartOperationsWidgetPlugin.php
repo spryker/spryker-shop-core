@@ -48,7 +48,7 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
             'set_default' => $viewAllowed,
             'duplicate' => $writeAllowed,
             'clear' => $writeAllowed,
-            'delete' => $writeAllowed
+            'delete' => $writeAllowed,
         ];
     }
 
@@ -75,6 +75,6 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public static function getTemplate()
     {
-        return '@SharedCartWidget/_multi-cart-widget/shared-cart-operations.twig';
+        return '@SharedCartWidget/views/multi-cart-widget/shared-cart-operations.twig';
     }
 }
