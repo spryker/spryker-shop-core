@@ -107,7 +107,7 @@ export default class MeasurementQuantitySelector extends Component {
             choiceElem.textContent = `(${valueInSalesUnits} ${measurementSalesUnitCode}) = (${valueInBaseUnits} ${measurementBaseUnitCode})`;
             choiceElem.onclick = function (event: Event) {
                 let elem = event.srcElement as HTMLElement;
-                this.selectQty(parseInt(elem.dataset.qty));
+                this.selectQty(parseFloat(elem.dataset.qty));
             }.bind(this);
 
             choiceElem.style.display = 'block';
