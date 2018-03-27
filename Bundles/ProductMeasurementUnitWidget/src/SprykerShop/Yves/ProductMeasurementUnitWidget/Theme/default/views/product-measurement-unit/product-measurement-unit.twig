@@ -14,17 +14,7 @@
     <div class="col col--sm-5">
         <label>
             {{ 'product.quantity' | trans }}
-            {% embed atom('select') with {
-                modifiers: ['expand'],
-                attributes: {
-                    name: 'quantity'
-                },
-                data: {
-                    options: data.qtyOptions
-                }
-            } only %}
-                {% block selectClass %}select-quantity{% endblock %}
-            {% endembed %}
+            <input class="select-quantity input" type="number" value="1" name="quantity"/>
         </label>
         {% if data.salesUnits|length %}
             <label>
