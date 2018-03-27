@@ -20,8 +20,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class TextOrderForm extends AbstractType
 {
     public const FIELD_TEXT_ORDER = 'textOrder';
-
     public const SUBMIT_BUTTON_VERIFY = 'verifyTextOrder';
+    public const FIELD_TEXT_ORDER_PLACEHOLDER = 'quick-order.paste-order.input-placeholder.copy-paste-order';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -43,6 +43,8 @@ class TextOrderForm extends AbstractType
     protected function addTextOrderField(FormBuilderInterface $builder): FormTypeInterface
     {
         $builder->add(static::FIELD_TEXT_ORDER, TextareaType::class, [
+            'label' => false,
+            'attr' => ['placeholder' => static::FIELD_TEXT_ORDER_PLACEHOLDER],
             'constraints' => [
                 new NotBlank(),
                 new TextOrderCorrectConstraint([

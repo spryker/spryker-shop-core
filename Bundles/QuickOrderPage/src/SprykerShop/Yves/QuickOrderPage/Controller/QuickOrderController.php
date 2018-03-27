@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -18,14 +16,15 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
  */
 class QuickOrderController extends AbstractController
 {
-    public const PARAM_SEARCH_QUERY = 'q';
-    public const PARAM_SEARCH_FIELD = 'field';
+    public const PARAM_ROW_INDEX = 'row-index';
+    public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -34,8 +33,7 @@ class QuickOrderController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $textOrderForm = $this
-            ->getFactory()
+        $textOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
             ->getTextOrderForm()
             ->handleRequest($request);
@@ -43,8 +41,7 @@ class QuickOrderController extends AbstractController
         $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
         $quickOrder = $this->getQuickOrder($textOrderParsedItems);
 
-        $quickOrderForm = $this
-            ->getFactory()
+        $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
             ->getQuickOrderForm($quickOrder)
             ->handleRequest($request);
@@ -57,73 +54,75 @@ class QuickOrderController extends AbstractController
         $data = [
             'itemsForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
-            'rowsNumber' => $this->getFactory()->getBundleConfig()->getProductRowsNumber(),
         ];
 
         return $this->view($data, [], '@QuickOrderPage/views/quick-order/quick-order.twig');
     }
 
-    public function partialFormRendererAction(Request $request)
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return mixed
+     */
+    public function addRowsAction(Request $request)
     {
-        $textOrderForm = $this
-            ->getFactory()
+        if (!$request->isMethod('post')) {
+            return $this->jsonResponse();
+        }
+
+        $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
+        $formDataItems = $formData['items'] ?? [];
+
+        $dataProvider = $this->getFactory()
+            ->createQuickOrderFormDataProvider();
+
+        $orderItems = $dataProvider->getOrderItemsFromFormData($formDataItems);
+        $quickOrder = $this->getQuickOrder($orderItems);
+
+        $emptyProductsNumber = $this->getFactory()
+            ->getBundleConfig()
+            ->getProductRowsNumber();
+
+        $dataProvider->appendEmptyOrderItems($quickOrder, $emptyProductsNumber);
+
+        $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getTextOrderForm()
-            ->handleRequest($request);
-            
-        $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
-        $quickOrder = $this->getQuickOrder($textOrderParsedItems);
-        
-        $quickOrderForm = $this
-            ->getFactory()
-            ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrder)
-            ->handleRequest($request);
+            ->getQuickOrderForm($quickOrder);
 
         return $this->view(['form' => $quickOrderForm->createView()], [], '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig');
     }
 
-    public function addRowAction(Request $request)
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     *
+     * @return mixed
+     */
+    public function deleteRowAction(Request $request)
     {
-        //todo: add a new empty row
-        $textOrderForm = $this
-            ->getFactory()
-            ->createQuickOrderFormFactory()
-            ->getTextOrderForm()
-            ->handleRequest($request);
-            
-        $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
-        $quickOrder = $this->getQuickOrder($textOrderParsedItems);
-        
-        $quickOrderForm = $this
-            ->getFactory()
-            ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrder)
-            ->handleRequest($request);
+        if (!$request->isMethod('post')) {
+            return $this->jsonResponse();
+        }
 
-        return $this->view(['form' => $quickOrderForm->createView()], [], '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig');
-    }
+        $rowIndex = $request->get(static::PARAM_ROW_INDEX);
+        $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
+        $formDataItems = $formData['items'] ?? [];
 
-    public function removeRowAction(Request $request)
-    {
-        //todo: remove a row
-        //it's a name of a row in product collection in the TextOrderForm
-        $rowIndex = $request->get('row-index');
+        if (!isset($formDataItems[$rowIndex])) {
+            throw new HttpException(400, '"row-index" is out of the bound.');
+        }
+        unset($formDataItems[$rowIndex]);
 
-        $textOrderForm = $this
-            ->getFactory()
+        $orderItems = $this->getFactory()
+            ->createQuickOrderFormDataProvider()
+            ->getOrderItemsFromFormData($formDataItems);
+
+        $quickOrder = $this->getQuickOrder($orderItems);
+
+        $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getTextOrderForm()
-            ->handleRequest($request);
-            
-        $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
-        $quickOrder = $this->getQuickOrder($textOrderParsedItems);
-        
-        $quickOrderForm = $this
-            ->getFactory()
-            ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrder)
-            ->handleRequest($request);
+            ->getQuickOrderForm($quickOrder);
 
         return $this->view(['form' => $quickOrderForm->createView()], [], '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig');
     }
@@ -194,17 +193,12 @@ class QuickOrderController extends AbstractController
      */
     protected function getQuickOrder(array $orderItems = []): QuickOrderTransfer
     {
-        $quickOrder = new QuickOrderTransfer();
-        $orderItemCollection = new ArrayObject($orderItems);
-        if ($orderItemCollection->count() === 0) {
-            $productRowsNumber = $this->getFactory()->getBundleConfig()->getProductRowsNumber();
-            for ($i = 0; $i < $productRowsNumber; $i++) {
-                $orderItemCollection->append(new QuickOrderItemTransfer());
-            }
-        }
+        $emptyProductsNumber = $this->getFactory()
+            ->getBundleConfig()
+            ->getProductRowsNumber();
 
-        $quickOrder->setItems($orderItemCollection);
-
-        return $quickOrder;
+        return $this->getFactory()
+            ->createQuickOrderFormDataProvider()
+            ->getQuickOrderTransfer($orderItems, $emptyProductsNumber);
     }
 }

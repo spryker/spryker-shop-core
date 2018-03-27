@@ -14,7 +14,7 @@
         class: config.selector ~ '__provider ' ~ config.selector ~ '__add-row-provider',
         attributes: {
             method: 'post',
-            url: '/en/quick-order/ajax'
+            url: '/en/quick-order/add-rows'
         }
     } only %}
 
@@ -22,7 +22,7 @@
         class: config.selector ~ '__provider ' ~ config.selector ~ '__remove-row-provider',
         attributes: {
             method: 'post',
-            url: '/en/quick-order/ajax'
+            url: '/en/quick-order/delete-row'
         }
     } only %}
 
@@ -53,7 +53,7 @@
                         items: data.form.items
                     },
                     embed: embed
-                } only %}   
+                } only %}
                     {% block removeActionClass %}{{embed.selector}}__remove-row-trigger{% endblock %}
                 {% endembed %}
             </div>

@@ -22,6 +22,10 @@ class TextOrderCorrectConstraintValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
+        if ($value === null) {
+            return;
+        }
+
         if (!$this->checkFormat($value, $constraint->getAllowedSeparators())) {
             $this->context
                 ->buildViolation($constraint->message)

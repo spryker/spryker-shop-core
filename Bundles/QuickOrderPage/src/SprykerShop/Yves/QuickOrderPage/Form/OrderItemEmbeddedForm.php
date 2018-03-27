@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\QtyFieldConstraint;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,7 +22,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class OrderItemEmbeddedForm extends AbstractType
 {
     public const FILED_SKU = 'sku';
+    public const FILED_SKU_LABEL = 'quick-order.input-label.sku';
     public const FILED_QTY = 'qty';
+    public const FILED_QTY_LABEL = 'quick-order.input-label.qty';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -60,8 +62,9 @@ class OrderItemEmbeddedForm extends AbstractType
     protected function addSku(FormBuilderInterface $builder): FormTypeInterface
     {
         $builder
-            ->add(static::FILED_SKU, SearchType::class, [
+            ->add(static::FILED_SKU, TextType::class, [
                 'required' => false,
+                'label' => static::FILED_SKU_LABEL,
             ]);
 
         return $this;
@@ -76,6 +79,8 @@ class OrderItemEmbeddedForm extends AbstractType
     {
         $builder->add(static::FILED_QTY, IntegerType::class, [
             'required' => false,
+            'label' => static::FILED_QTY_LABEL,
+            'attr' => ['min' => 1]
         ]);
 
         return $this;
