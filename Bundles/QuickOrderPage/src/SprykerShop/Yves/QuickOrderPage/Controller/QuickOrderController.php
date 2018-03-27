@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -25,7 +23,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  */
 class QuickOrderController extends AbstractController
 {
-    public const PARAM_REMOVE_INDEX = 'row-index';
+    public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
 
     /**
@@ -72,11 +70,20 @@ class QuickOrderController extends AbstractController
             return $this->jsonResponse();
         }
 
-        $formDataItems = $request->get(static::PARAM_QUICK_ORDER_FORM)['items'];
+        $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
+        $formDataItems = $formData['items'] ?? [];
 
-        $orderItems = $this->getOrderItemsFromFormData($formDataItems);
+        $dataProvider = $this->getFactory()
+            ->createQuickOrderFormDataProvider();
+
+        $orderItems = $dataProvider->getOrderItemsFromFormData($formDataItems);
         $quickOrder = $this->getQuickOrder($orderItems);
-        $this->appendEmptyItems($quickOrder);
+
+        $emptyProductsNumber = $this->getFactory()
+            ->getBundleConfig()
+            ->getProductRowsNumber();
+
+        $dataProvider->appendEmptyOrderItems($quickOrder, $emptyProductsNumber);
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
@@ -98,15 +105,19 @@ class QuickOrderController extends AbstractController
             return $this->jsonResponse();
         }
 
-        $rowIndex = $request->get(static::PARAM_REMOVE_INDEX);
-        $formDataItems = $request->get(static::PARAM_QUICK_ORDER_FORM)['items'];
+        $rowIndex = $request->get(static::PARAM_ROW_INDEX);
+        $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
+        $formDataItems = $formData['items'] ?? [];
 
         if (!isset($formDataItems[$rowIndex])) {
             throw new HttpException(400, '"row-index" is out of the bound.');
         }
         unset($formDataItems[$rowIndex]);
 
-        $orderItems = $this->getOrderItemsFromFormData($formDataItems);
+        $orderItems = $this->getFactory()
+            ->createQuickOrderFormDataProvider()
+            ->getOrderItemsFromFormData($formDataItems);
+
         $quickOrder = $this->getQuickOrder($orderItems);
 
         $quickOrderForm = $this->getFactory()
@@ -176,52 +187,18 @@ class QuickOrderController extends AbstractController
     }
 
     /**
-     * @param array $formDataItems
-     *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
-     */
-    protected function getOrderItemsFromFormData(array $formDataItems): array
-    {
-        $orderItems = [];
-
-        foreach ($formDataItems as $item) {
-            $orderItems[] = (new QuickOrderItemTransfer())
-                ->setSku($item['sku'])
-                ->setQty($item['qty'] ? (int)$item['qty'] : null);
-        }
-
-        return $orderItems;
-    }
-
-    /**
      * @param array $orderItems
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
     protected function getQuickOrder(array $orderItems = []): QuickOrderTransfer
     {
-        $quickOrder = new QuickOrderTransfer();
-        $orderItemCollection = new ArrayObject($orderItems);
-        $quickOrder->setItems($orderItemCollection);
+        $emptyProductsNumber = $this->getFactory()
+            ->getBundleConfig()
+            ->getProductRowsNumber();
 
-        if ($orderItemCollection->count() === 0) {
-            $this->appendEmptyItems($quickOrder);
-        }
-
-        return $quickOrder;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
-     *
-     * @return void
-     */
-    protected function appendEmptyItems(QuickOrderTransfer $quickOrder): void
-    {
-        $productRowsNumber = $this->getFactory()->getBundleConfig()->getProductRowsNumber();
-        $orderItemCollection = $quickOrder->getItems();
-        for ($i = 0; $i < $productRowsNumber; $i++) {
-            $orderItemCollection->append(new QuickOrderItemTransfer());
-        }
+        return $this->getFactory()
+            ->createQuickOrderFormDataProvider()
+            ->getQuickOrderTransfer($orderItems, $emptyProductsNumber);
     }
 }

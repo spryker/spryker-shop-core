@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\QuickOrderPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToMessengerClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider;
+use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProviderInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandler;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandlerInterface;
@@ -43,6 +45,14 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createFormOperationHandler(): QuickOrderFormOperationHandlerInterface
     {
         return new QuickOrderFormOperationHandler($this->getCartClient(), $this->getMessengerClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProviderInterface
+     */
+    public function createQuickOrderFormDataProvider(): QuickOrderFormDataProviderInterface
+    {
+        return new QuickOrderFormDataProvider();
     }
 
     /**
