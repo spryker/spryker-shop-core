@@ -21,7 +21,7 @@ class QtyFieldConstraintValidator extends ConstraintValidator
      */
     public function validate($orderItemTransfer, Constraint $constraint): void
     {
-        if ($orderItemTransfer->getSku() && !$orderItemTransfer->getQty()) {
+        if ($orderItemTransfer->getSku() && (!$orderItemTransfer->getQty() || $orderItemTransfer->getQty() < 1)) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->atPath(OrderItemEmbeddedForm::FILED_QTY)
