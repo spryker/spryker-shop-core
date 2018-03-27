@@ -17,12 +17,16 @@ interface ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInter
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
      */
-    public function getProductMeasurementUnit(int $idProductMeasurementUnit): ?ProductMeasurementUnitStorageTransfer;
+    public function findProductMeasurementUnitStorage(
+        int $idProductMeasurementUnit
+    ): ?ProductMeasurementUnitStorageTransfer;
 
     /**
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
-    public function getProductConcreteMeasurementUnit(int $idProduct): ?ProductConcreteMeasurementUnitStorageTransfer;
+    public function findProductConcreteMeasurementUnitStorage(
+        int $idProduct
+    ): ?ProductConcreteMeasurementUnitStorageTransfer;
 }

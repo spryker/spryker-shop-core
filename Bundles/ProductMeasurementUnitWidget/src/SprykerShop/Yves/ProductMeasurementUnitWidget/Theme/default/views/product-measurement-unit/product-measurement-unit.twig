@@ -1,15 +1,20 @@
 {% extends template('widget') %}
 
 {% define data = {
-    salesUnits: _widget.productConcreteMeasurementUnits.salesUnits | default([]),
-    baseUnit: _widget.productConcreteMeasurementUnits.baseUnit | default(null),
-    qtyOptions: _widget.qtyOptions
+    idProductConcrete: _widget.product.idProductConcrete | default(null),
+    product: _widget.product,
+    qtyOptions: _widget.qtyOptions,
+    baseUnit: _widget.baseUnit | default(null),
+    salesUnits: _widget.salesUnits | default([]),
+    jsonScheme: _widget.jsonScheme | default('')
 } %}
+{% set disabled = data.product.idProductConcrete is empty or data.product.price is empty %}
+
 {% block body %}
     <div class="col col--sm-5">
         <label>
             {{ 'product.quantity' | trans }}
-            {% include atom('select') with {
+            {% embed atom('select') with {
                 modifiers: ['expand'],
                 attributes: {
                     name: 'quantity'
@@ -18,6 +23,8 @@
                     options: data.qtyOptions
                 }
             } only %}
+                {% block selectClass %}select-quantity{% endblock %}
+            {% endembed %}
         </label>
         {% if data.salesUnits|length %}
             <label>
@@ -25,29 +32,56 @@
                 {% embed atom('select') with {
                     modifiers: ['expand'],
                     attributes: {
-                        name: 'id-product-measurement-unit'
+                        name: 'id-product-measurement-sales-unit'
                     },
                     embed: {
                         salesUnits: data.salesUnits
                     }
                 } only %}
+                    {% block selectClass %}select-measurement-unit{% endblock %}
                     {% block options %}
                         {% for salesUnit in embed.salesUnits %}
-                            <option value="{{ salesUnit.measurementUnitId }}" {{ (salesUnit.isDefault) ? 'selected' : '' }}>{{ salesUnit.measurementUnit.name | trans }}</option>
+                            <option value="{{ salesUnit.idProductMeasurementSalesUnit }}" {{ (salesUnit.isDefault) ? 'selected' : '' }}>{{ salesUnit.productMeasurementUnit.name | trans }}</option>
                         {% endfor %}
                     {% endblock %}
                 {% endembed %}
             </label>
+            <input type="hidden" value="{{ data.idProductConcrete }}" name="id-product-concrete">
         {% endif %}
+    </div>
+    <div class="col col--sm-6">
+        <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}
+        ">
+        {% include atom('icon') with {
+            data: {
+                name: 'cart-plus'
+            }
+        } only %}
+        {{ 'page.detail.add-to-cart' | trans }}
+        </button>
     </div>
     {% if data.salesUnits|length %}
         <hr/>
-        <div class="col col--sm-6">
+        <div class="col col--sm-12">
             {% for salesUnit in data.salesUnits %}
-                {% if salesUnit.measurementUnitId != data.baseUnit.measurementUnitId %}
-                    <span>1 {{ data.baseUnit.measurementUnit.name | trans }} = {{ 1 * salesUnit.conversion }} {{ salesUnit.measurementUnit.name | trans }}</span><br/>
+                {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
+                    <span>1 {{ data.baseUnit.name | trans }}
+                        = {{ 1 / salesUnit.conversion }} {{ salesUnit.productMeasurementUnit.name | trans }}</span><br/>
                 {% endif %}
             {% endfor %}
+        </div>
+        {% include molecule('measurement-quantity-selector') with {
+            data: {
+                json: data.jsonScheme
+            }
+        } only %}
+        <br/>
+        <div class="col col--sm-12 is-hidden measurement-unit-choice">
+            <span>The quantity you have chosen (<span id="current-choice"></span>) is in between 2 base units</span>
+            <span>Would you like to add:</span>
+            <div id="measurement-unit-choices" class="col col--sm-12">
+                <ul class="list"></ul>
+            </div>
         </div>
     {% endif %}
 {% endblock %}

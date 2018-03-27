@@ -86,7 +86,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
         $itemTransfer->setQuantity($quantity);
         $this->addProductOptions($optionValueUsageIds, $itemTransfer);
 
-        //$this->executeCartItemBeforeAddPlugins($itemTransfer);
+        $this->executeCartItemBeforeAddPlugins($itemTransfer);
 
         $quantity = $this->adjustQuantityBasedOnProductAvailability($sku, $itemTransfer->getQuantity());
         $itemTransfer->setQuantity($quantity);

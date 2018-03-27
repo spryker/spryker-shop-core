@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface;
+use SprykerShop\Yves\ProductMeasurementUnitWidget\Mapper\ProductMeasurementSalesUnitMapper;
+use SprykerShop\Yves\ProductMeasurementUnitWidget\Mapper\ProductMeasurementSalesUnitMapperInterface;
 
 class ProductMeasurementUnitWidgetFactory extends AbstractFactory
 {
@@ -18,5 +20,13 @@ class ProductMeasurementUnitWidgetFactory extends AbstractFactory
     public function getProductMeasurementUnitStorageClient(): ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitWidgetDependencyProvider::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Mapper\ProductMeasurementSalesUnitMapperInterface
+     */
+    public function createProductMeasurementSalesUnitMapper(): ProductMeasurementSalesUnitMapperInterface
+    {
+        return new ProductMeasurementSalesUnitMapper();
     }
 }

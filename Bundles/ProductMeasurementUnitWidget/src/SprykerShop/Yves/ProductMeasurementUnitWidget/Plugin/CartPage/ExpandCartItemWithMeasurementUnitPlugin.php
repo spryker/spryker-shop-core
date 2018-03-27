@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Plugin\CartPage;
 
 use Generated\Shared\Transfer\ItemTransfer;
@@ -13,7 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ExpandCartItemWithMeasurementUnitPlugin extends AbstractPlugin implements CartItemBeforeAddPluginInterface
 {
-    public const URL_PARAM_ID_PRODUCT_MEASUREMENT_UNIT = 'id-product-measurement-unit';
+    public const URL_PARAM_ID_PRODUCT_MEASUREMENT_SALES_UNIT = 'id-product-measurement-sales-unit';
+    public const URL_PARAM_ID_PRODUCT_CONCRETE = 'id-product-concrete';
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -34,35 +40,37 @@ class ExpandCartItemWithMeasurementUnitPlugin extends AbstractPlugin implements 
      */
     protected function addProductMeasurementSalesUnitTransfer(ItemTransfer $itemTransfer, Request $request): ItemTransfer
     {
-        $idProductMeasurementUnit = $request->request->getInt(static::URL_PARAM_ID_PRODUCT_MEASUREMENT_UNIT);
+        $idProductMeasurementSalesUnit = $request->request->getInt(static::URL_PARAM_ID_PRODUCT_MEASUREMENT_SALES_UNIT);
+        $idProductConcrete = $request->request->getInt(static::URL_PARAM_ID_PRODUCT_CONCRETE);
 
         $productMeasurementSalesUnitTransfer = new ProductMeasurementSalesUnitTransfer();
-        $productMeasurementSalesUnitTransfer->setIdProductMeasurementSalesUnit($idProductMeasurementUnit);
+        $productMeasurementSalesUnitTransfer->setIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit);
         $itemTransfer->setQuantitySalesUnit($productMeasurementSalesUnitTransfer);
-        $itemTransfer->setQuantity($this->calculateQuantity($itemTransfer));
+        $itemTransfer->setQuantity($this->calculateQuantity($itemTransfer, $idProductConcrete));
 
         return $itemTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $idProductConcrete
      *
      * @return int
      */
-    protected function calculateQuantity(ItemTransfer $itemTransfer): int
+    protected function calculateQuantity(ItemTransfer $itemTransfer, int $idProductConcrete): int
     {
         $quantity = $itemTransfer->getQuantity();
 
         $quantitySalesUnitTransfer = $itemTransfer->getQuantitySalesUnit();
         $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
             ->getProductMeasurementUnitStorageClient()
-            ->getProductConcreteMeasurementUnit($itemTransfer->getProductConcrete()->getIdProductConcrete());
+            ->findProductConcreteMeasurementUnitStorage($idProductConcrete);
 
         if ($productConcreteMeasurementUnitStorageTransfer !== null
             && $productConcreteMeasurementUnitStorageTransfer->getSalesUnits() !== null
         ) {
             foreach ($productConcreteMeasurementUnitStorageTransfer->getSalesUnits() as $salesUnit) {
-                if ($salesUnit->getMeasurementUnitId() === $quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit()) {
+                if ($salesUnit->getId() === $quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit()) {
                     $quantity *= $salesUnit->getConversion();
 
                     return $quantity;

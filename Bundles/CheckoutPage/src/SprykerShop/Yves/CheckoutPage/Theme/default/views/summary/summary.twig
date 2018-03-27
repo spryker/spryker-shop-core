@@ -12,7 +12,7 @@
     forms: {
         summary: _view.summaryForm
     },
-    
+
     overview: {
         shipmentMethod: _view.quoteTransfer.shipment.method.name,
         voucherDiscounts: _view.quoteTransfer.voucherDiscounts,
@@ -48,7 +48,7 @@
                     }
                 } only %}
             </div>
-        
+
             <div class="box">
                 <span class="float-right">{{ 'checkout.step.summary.with_method' | trans }} <strong>{{ data.shipmentMethod }}</strong></span>
                 <h6>{{ 'checkout.step.summary.shipping' | trans }}</h6>
@@ -62,16 +62,22 @@
                 } only %}
             </div>
         </div>
-                        
+
         <div class="col col--sm-12 col--lg-8">
             <div class="box">
                 {% for item in data.cartItems %}
                     {% set item = item.bundleProduct is defined ? item.bundleProduct : item %}
-                    
+                    {% set salesUnitName = item.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+                    {% if salesUnitName %}
+                        {% set salesUnitName = item.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+                        {% set quantity = item.quantity ~ ' ' ~ salesUnitName | trans %}
+                    {% else %}
+                {% set quantity = item.quantity %}
+                    {% endif %}
                     {% embed molecule('summary-item', 'CheckoutPage') with {
                         data: {
                             name: item.name,
-                            quantity: item.quantity,
+                            quantity: quantity,
                             price: item.sumPrice | money,
                             options: item.productOptions | default({}),
                             bundleItems: item.bundleItems | default([])
@@ -87,7 +93,7 @@
                     {% endembed %}
                 {% endfor %}
             </div>
-            
+
             {% include molecule('summary-overview', 'CheckoutPage') with {
                 class: 'box',
                 data: data.overview

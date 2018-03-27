@@ -31,9 +31,11 @@ class ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge im
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
      */
-    public function getProductMeasurementUnit(int $idProductMeasurementUnit): ?ProductMeasurementUnitStorageTransfer
-    {
-        return $this->productMeasurementUnitStorageClient->getProductMeasurementUnit($idProductMeasurementUnit);
+    public function findProductMeasurementUnitStorage(
+        int $idProductMeasurementUnit
+    ): ?ProductMeasurementUnitStorageTransfer {
+
+        return $this->productMeasurementUnitStorageClient->findProductMeasurementUnitStorage($idProductMeasurementUnit);
     }
 
     /**
@@ -41,8 +43,9 @@ class ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge im
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
-    public function getProductConcreteMeasurementUnit(int $idProduct): ?ProductConcreteMeasurementUnitStorageTransfer
-    {
-        return $this->productMeasurementUnitStorageClient->getProductConcreteMeasurementUnit($idProduct);
+    public function findProductConcreteMeasurementUnitStorage(
+        int $idProduct
+    ): ?ProductConcreteMeasurementUnitStorageTransfer {
+        return $this->productMeasurementUnitStorageClient->findProductConcreteMeasurementUnitStorage($idProduct);
     }
 }
