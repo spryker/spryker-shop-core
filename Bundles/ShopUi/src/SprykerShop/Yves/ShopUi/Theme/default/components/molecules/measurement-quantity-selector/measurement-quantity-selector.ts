@@ -58,7 +58,6 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     qtyInputChange() {
-        debugger;
         let userQty = (this.qtyInput as HTMLInputElement).value;
         let qtyInBaseUnits = +userQty * +this.currentSalesUnit.conversion;
         if (qtyInBaseUnits % 1 != 0) {
@@ -73,7 +72,6 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     askCustomerForCorrectInput() {
-        debugger;
         let userQty = (this.qtyInput as HTMLInputElement).value;
         let qtyInBaseUnits = +userQty * +this.currentSalesUnit.conversion;
         let choicesList = document.querySelector('#measurement-unit-choices .list');
@@ -82,7 +80,7 @@ export default class MeasurementQuantitySelector extends Component {
         let minChoice = this.getMinChoice(qtyInBaseUnits);
         choicesList.innerHTML = '';
         currentChoice.innerHTML = '';
-        currentChoice.textContent = `${userQty} ${this.currentSalesUnit.product_measurement_unit.code}`;
+        currentChoice.textContent = `${userQty} ${this.currentSalesUnit.product_measurement_unit.codeg}`;
 
         [minChoice, maxChoice]
             .filter((v, i, a) => a.indexOf(v) === i)
