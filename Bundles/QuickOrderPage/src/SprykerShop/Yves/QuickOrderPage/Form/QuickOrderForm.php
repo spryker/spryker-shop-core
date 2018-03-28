@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Form;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\QuickOrderPage\Form\Constraint\§;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -59,7 +60,10 @@ class QuickOrderForm extends AbstractType
             'entry_type' => OrderItemEmbeddedForm::class,
             'allow_add' => true,
             'allow_delete' => true,
-        ]);
+            'constraints' => [
+                    new ItemsFieldConstraint(),
+                ],
+            ]);
 
         return $this;
     }
