@@ -80,7 +80,7 @@ export default class MeasurementQuantitySelector extends Component {
         let minChoice = this.getMinChoice(qtyInBaseUnits);
         choicesList.innerHTML = '';
         currentChoice.innerHTML = '';
-        currentChoice.textContent = `${userQty} ${this.currentSalesUnit.product_measurement_unit.codeg}`;
+        currentChoice.textContent = `${userQty} ${this.currentSalesUnit.product_measurement_unit.code}`;
 
         [minChoice, maxChoice]
             .filter((v, i, a) => a.indexOf(v) === i)
@@ -129,6 +129,7 @@ export default class MeasurementQuantitySelector extends Component {
 
     getMinChoice(qtyInBaseUnits: number) {
         let minChoice = Math.floor(qtyInBaseUnits);
+        minChoice = minChoice - (minChoice % this.getQuantityInterval());
 
         if (minChoice >= this.getMinQuantity()) {
             return minChoice;
@@ -139,6 +140,7 @@ export default class MeasurementQuantitySelector extends Component {
 
     getMaxChoice(qtyInBaseUnits: number) {
         let maxChoice = Math.ceil(qtyInBaseUnits);
+        maxChoice = maxChoice - (maxChoice % this.getQuantityInterval());
 
         if (this.getMaxQuantity() > 0 && maxChoice >= this.getMaxQuantity()) {
             return maxChoice;
@@ -161,6 +163,14 @@ export default class MeasurementQuantitySelector extends Component {
         }
 
         return 0;
+    }
+
+    getQuantityInterval() {
+        if (this.productQuantityStorage.hasOwnProperty('quantity_interval')) {
+            return this.productQuantityStorage.quantity_interval;
+        }
+
+        return 1;
     }
 
     measurementUnitInputChange(event: Event) {
