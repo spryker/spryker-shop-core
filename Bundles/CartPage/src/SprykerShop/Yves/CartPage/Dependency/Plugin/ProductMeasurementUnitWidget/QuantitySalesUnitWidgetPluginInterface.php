@@ -5,9 +5,9 @@ namespace SprykerShop\Yves\CartPage\Dependency\Plugin\ProductMeasurementUnitWidg
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface ProductMeasurementUnitQuantityWidgetPluginInterface extends WidgetPluginInterface
+interface QuantitySalesUnitWidgetPluginInterface extends WidgetPluginInterface
 {
-    public const NAME = 'ProductMeasurementUnitQuantityWidgetPlugin';
+    public const NAME = 'QuantitySalesUnitWidgetPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer

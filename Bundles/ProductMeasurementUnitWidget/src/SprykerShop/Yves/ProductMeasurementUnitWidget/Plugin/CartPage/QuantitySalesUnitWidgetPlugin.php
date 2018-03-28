@@ -9,12 +9,12 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Plugin\CartPage;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductMeasurementUnitWidget\ProductMeasurementUnitQuantityWidgetPluginInterface;
+use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductMeasurementUnitWidget\QuantitySalesUnitWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetFactory getFactory()
  */
-class ProductMeasurementUnitQuantityWidgetPlugin extends AbstractWidgetPlugin implements ProductMeasurementUnitQuantityWidgetPluginInterface
+class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements QuantitySalesUnitWidgetPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer

@@ -30,20 +30,24 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
     {
         $salesUnits = [];
         $baseUnit = null;
-        $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
-            ->getProductMeasurementUnitStorageClient()
-            ->findProductConcreteMeasurementUnitStorage($productViewTransfer->getIdProductConcrete());
+        $productQuantityStorageTransfer = null;
 
-        if ($productConcreteMeasurementUnitStorageTransfer !== null) {
-            $baseUnit = $this->prepareBaseUnit($productConcreteMeasurementUnitStorageTransfer->getBaseUnit());
+        if ($productViewTransfer->getIdProductConcrete()) {
+            $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
+                ->getProductMeasurementUnitStorageClient()
+                ->findProductConcreteMeasurementUnitStorage($productViewTransfer->getIdProductConcrete());
 
-            $salesUnits = $this->prepareSalesUnits(
-                $productConcreteMeasurementUnitStorageTransfer->getSalesUnits()->getArrayCopy()
+            if ($productConcreteMeasurementUnitStorageTransfer !== null) {
+                $baseUnit = $this->prepareBaseUnit($productConcreteMeasurementUnitStorageTransfer->getBaseUnit());
+
+                $salesUnits = $this->prepareSalesUnits(
+                    $productConcreteMeasurementUnitStorageTransfer->getSalesUnits()->getArrayCopy()
+                );
+            }
+            $productQuantityStorageTransfer = $this->findProductQuantityStorageTransfer(
+                $productViewTransfer->getIdProductConcrete()
             );
         }
-        $productQuantityStorageTransfer = $this->findProductQuantityStorageTransfer(
-            $productViewTransfer->getIdProductConcrete()
-        );
 
         $this
             ->addParameter('product', $productViewTransfer)

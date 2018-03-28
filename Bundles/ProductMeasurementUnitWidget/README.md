@@ -1,6 +1,6 @@
 # ProductMeasurementUnitWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Provides YVES widget for handling measurement units for products.
 
 ## Installation
 

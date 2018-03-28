@@ -189,6 +189,8 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated
+     *
      * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemBeforeAddPluginInterface[]
      */
     public function getCartItemBeforeAddPlugins(): array
