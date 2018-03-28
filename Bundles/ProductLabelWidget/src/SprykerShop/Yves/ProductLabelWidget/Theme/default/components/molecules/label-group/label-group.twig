@@ -15,9 +15,11 @@
 
     {% for label in data.labels %}
         {% set componentName = 'flag' %}
+        {% set componentModifiers = [label.type] %}
 
         {% if label.type == 'template:tag' %}
             {% set componentName = 'tag' %}
+            {% set componentModifiers = [] %}
         {% endif %}
 
         {% set component = include(
@@ -25,6 +27,7 @@
                 molecule(componentName, 'ProductLabelWidget')
             ],
             {
+                modifiers: componentModifiers,
                 data: {
                     text: label.text
                 }
@@ -32,6 +35,7 @@
             with_context = false
         ) %}
 
+        {% set component = '<div>' ~ component ~ '</div>' %}
         {% if label.type == 'template:tag' %}
             {% set leftColumnComponents = leftColumnComponents | merge([component]) %}
         {% else %}
@@ -40,7 +44,11 @@
     {% endfor %}
 
     <div class="grid grid--justify">
-        <div class="col col--expand">{{leftColumnComponents | join('<br/>') | raw}}</div>
-        <div class="col col--expand text-right">{{rightColumnComponents | join('<br/>') | raw}}</div>
+        {% if leftColumnComponents is not empty %}
+            <div class="col col--expand">{{leftColumnComponents | join | raw}}</div>
+        {% endif %}
+        {% if rightColumnComponents is not empty %}
+            <div class="col col--expand text-right">{{rightColumnComponents | join | raw}}</div>
+        {% endif %}
     </div>
 {% endblock %}
