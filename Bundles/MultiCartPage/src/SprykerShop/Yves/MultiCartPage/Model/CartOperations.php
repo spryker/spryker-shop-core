@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\MultiCartPage\Model;
 
 use ArrayObject;
-use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
+use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientInterface;
@@ -94,7 +94,7 @@ class CartOperations implements CartOperationsInterface
     {
         $quoteTransfer = clone $quoteTransfer;
         $quoteTransfer->setName(
-            $quoteTransfer->getName() . $this->multiCartClient->getDuplicatedQuoteNameSuffix()
+            $quoteTransfer->getName() . $this->multiCartClient->getDuplicatedQuoteNameSuffix() . ' ' . date('Y-m-d H:i:s')
         );
         $quoteTransfer->setIdQuote(null);
         $quoteTransfer->setIsDefault(true);
@@ -109,10 +109,10 @@ class CartOperations implements CartOperationsInterface
      */
     public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteActivatorRequestTransfer = new QuoteActivatorRequestTransfer();
-        $quoteActivatorRequestTransfer->setCustomer($quoteTransfer->getCustomer());
-        $quoteActivatorRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
-        $quoteResponseTransfer = $this->multiCartClient->setDefaultQuote($quoteActivatorRequestTransfer);
+        $quoteActivationRequestTransfer = new QuoteActivationRequestTransfer();
+        $quoteActivationRequestTransfer->setCustomer($quoteTransfer->getCustomer());
+        $quoteActivationRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
+        $quoteResponseTransfer = $this->multiCartClient->setDefaultQuote($quoteActivationRequestTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }

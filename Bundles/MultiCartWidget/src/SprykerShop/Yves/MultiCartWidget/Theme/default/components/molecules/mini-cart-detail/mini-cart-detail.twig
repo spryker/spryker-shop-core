@@ -6,24 +6,56 @@
 } %}
 
 {% define data = {
-    cart: required
+    cart: required,
+    itemDisplayLimit: 2
 } %}
 
+{% set itemCount = data.cart.items | length %}
+
 {% block body %}
-    {% include atom('cart-details', 'MultiCartWidget') with {
-        data: {
-            cart: data.cart
-        }
-    } only %}
-    {% if data.cart.items is not empty %}
-        {% include atom('cart-item-list', 'MultiCartWidget') with {
-            data: {
-                items: data.cart.items,
-                limit: 2
-            }
-        } only %}
-    {% endif %}
-    <a href="{{ path('multi-cart/set-default', {quoteName: data.cart.name}) }}">
-        {{ 'multi_cart_widget.cart.action.view' | trans }}
-    </a>
+    <div class="text-small text-left">
+        <div>
+            {% if itemCount > 0 %}
+                <span class=" float-right">
+                    {{ itemCount }} {{ itemCount == 1 ? 'multi_cart_widget.cart.item' | trans : 'multi_cart_widget.cart.items' | trans }} | {{ data.cart.totals.subTotal | money }}<br>
+                </span>
+            {% endif %}
+
+            <strong>{{ data.cart.name }}</strong>
+            {% if data.cart.isDefault %}
+                ({{ 'multi_cart_widget.cart.default' | trans }})
+            {% endif %}
+        </div>
+
+        <div>
+            {% if data.cart.items is not empty %}
+                <ul class="list list--bullet">
+                    {% for item in data.cart.items | slice(0, data.itemDisplayLimit) %}
+                        <li class="list__item">{{ item.name }}</li>
+                    {% endfor %}
+                    {% if data.itemDisplayLimit < data.cart.items|length %}
+                        <li class="list__item">&hellip;</li>
+                    {% endif %}
+                </ul>
+            {% else %}
+                {{ 'cart.empty' | trans }}
+            {% endif %}
+        </div>
+
+        <ul class="menu menu--inline">
+            {% if data.cart.isDefault %}
+                <li class="menu__item">
+                    <a href="{{ path('cart') }}">
+                        {{ 'multi_cart_widget.cart.action.view' | trans }}
+                    </a>
+                </li>
+            {% else %}
+                <li class="menu__item">
+                    <a href="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
+                        {{ 'multi_cart_widget.cart.action.set_default' | trans }}
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
 {% endblock %}

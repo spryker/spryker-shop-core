@@ -6,12 +6,13 @@
 } %}
 
 {% define data = {
-    carts: required
+    carts: required,
+    isButtonDisabled: false
 } %}
 
 {% set options = [{ label: '', value: ''}] %}
 {% set attributes = {
-    name: 'quote-id',
+    name: 'id_quote',
     onchange: 'this.form.submit(); this.disabled="disabled"; return false;',
 } %}
 {% for cart in data.carts %}
@@ -20,7 +21,7 @@
         value: cart.idQuote
     }]) %}
 {% endfor %}
-{% if data.idButtonDisabled %}
+{% if data.isButtonDisabled %}
     {% set attributes = attributes | merge({
         disabled: true
     }) %}

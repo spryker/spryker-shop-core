@@ -14,6 +14,7 @@ use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToMultiCar
 class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
+    public const PLUGINS_VIEW_EXTEND = 'PLUGINS_VIEW_EXTEND';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -23,6 +24,7 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addMultiCartClient($container);
+        $container = $this->addViewExtendWidgetPlugins($container);
 
         return $container;
     }
@@ -39,5 +41,27 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addViewExtendWidgetPlugins(Container $container)
+    {
+        $container[static::PLUGINS_VIEW_EXTEND] = function () {
+            return $this->getViewExtendWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getViewExtendWidgetPlugins(): array
+    {
+        return [];
     }
 }

@@ -20,8 +20,8 @@ export default class SideDrawer extends Component {
     }
 
     toggle() { 
-        const isShown = !this.classList.contains(`${this.name}--show`);
-        this.classList.toggle(`${this.name}--show`, isShown);
+        const isShown = !this.classList.contains(`${this.componentName}--show`);
+        this.classList.toggle(`${this.componentName}--show`, isShown);
         this.containers.forEach((conatiner: HTMLElement) => conatiner.classList.toggle(`is-not-scrollable`, isShown));
     }
 

@@ -1,0 +1,30 @@
+{% extends template('widget') %}
+
+{% define data = {
+    disabled: _widget.isButtonDisabled,
+    isMultiCartAllowed: _widget.isMultiCartAllowed,
+    cartDefault: _widget.cart,
+    carts: _widget.cartCollection
+} %}
+
+{% set defaultCartName = (data.isMultiCartAllowed and data.carts | length > 0) ? ': ' ~ data.cartDefault.name : '' %}
+
+{% block body %}
+    {{ widget('SharedCartAddSeparateProductWidgetPlugin') }}
+    <button type="submit" class="button button--success button--expand" {{ data.disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}">
+        {% include atom('icon') with {
+            data: {
+                name: 'cart-plus'
+            }
+        } only %}
+        {{ 'page.detail.add-to-cart' | trans }}{{ defaultCartName }}
+    </button>
+    {% if data.isMultiCartAllowed and data.carts | length > 0 %}
+        {% include molecule('add-to-cart-seletor', 'MultiCartWidget') with {
+            data: {
+                carts: data.carts,
+                isButtonDisabled: data.disabled
+            }
+        } only %}
+    {% endif %}
+{% endblock %}

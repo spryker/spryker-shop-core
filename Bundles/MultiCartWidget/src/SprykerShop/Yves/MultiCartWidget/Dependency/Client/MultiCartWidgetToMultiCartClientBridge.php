@@ -25,10 +25,6 @@ class MultiCartWidgetToMultiCartClientBridge implements MultiCartWidgetToMultiCa
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollection()

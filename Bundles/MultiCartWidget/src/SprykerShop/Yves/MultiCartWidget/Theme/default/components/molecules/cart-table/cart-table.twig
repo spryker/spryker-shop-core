@@ -18,7 +18,12 @@
 {% set showActions = data.actions.view or data.actions.update or data.actions.delete or data.actions.set_default %}
 
 {% block body %}
-    {{ 'multi_cart_widget.cart.list' | trans }}:
+    <h3 class="float-left">{{ 'multi_cart_widget.cart.list' | trans }}</h3>
+
+    <span class="float-right">
+        <a class="button" href="{{url('multi-cart/create')}}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
+    </span>
+
     <table class="table table--expand">
         <thead>
             <tr>
@@ -32,57 +37,16 @@
         </thead>
         <tbody>
         {% for cart in data.carts %}
-            <tr>
-                <td>{{ cart.name }}</td>
-                <td>
-                    {% if cart.items is not empty %}
-                        {% include atom('cart-item-list', 'MultiCartWidget') with {
-                            data: {
-                                items: cart.items
-                            }
-                        } only %}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if cart.totals is not empty and cart.items is not empty %}
-                    {{ cart.totals.subTotal | money }}
-                    {% endif %}
-                </td>
-                {% if showActions %}
-                    <td>
-                        <ul class="menu">
-                            {% if data.actions.view %}
-                                <li class="menu__item">
-                                    <a href="">
-                                        {{ 'multi_cart_widget.cart.action.view' | trans }}
-                                    </a>
-                                </li>
-                            {% endif %}
-                            {% if data.actions.set_default %}
-                                <li class="menu__item">
-                                    <a href="{{ path('multi-cart/set-default', {quoteName: cart.name}) }}">
-                                        {{ 'multi_cart_widget.cart.action.set_default' | trans }}
-                                    </a>
-                                </li>
-                            {% endif %}
-                            {% if data.actions.update %}
-                                <li class="menu__item">
-                                    <a href="{{ path('multi-cart/update', {quoteName: cart.name}) }}">
-                                        {{ "multi_cart_widget.cart.action.change_name" | trans }}
-                                    </a>
-                                </li>
-                            {% endif %}
-                            {% if data.actions.delete %}
-                                <li class="menu__item">
-                                    <a href="{{ path('multi-cart/delete', {quoteName: cart.name}) }}">
-                                        {{ "multi_cart_widget.cart.action.delete" | trans }}
-                                    </a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </td>
-                {% endif %}
-            </tr>
+            {% if widgetExists('SharedCartDetailsWidgetPlugin') %}
+                {{ widget('SharedCartDetailsWidgetPlugin', cart, data.actions) }}
+            {% else %}
+                {% include molecule('cart-table-detail', 'MultiCartWidget') with {
+                    data: {
+                        cart: cart,
+                        actions: data.actions
+                    }
+                } only %}
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>

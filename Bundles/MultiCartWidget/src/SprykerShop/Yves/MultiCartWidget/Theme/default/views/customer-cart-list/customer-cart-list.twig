@@ -1,0 +1,20 @@
+{% extends template('widget') %}
+
+{% define data = {
+    carts: _widget.cartCollection,
+    isMultiCartAllowed: _widget.isMultiCartAllowed
+} %}
+
+{% block body %}
+    {% if data.isMultiCartAllowed is not empty %}
+        {% if data.carts is not empty and data.carts | length > 0 %}
+            <div class="box">
+                {% include molecule('cart-table', 'MultiCartWidget') with {
+                    data: {
+                        carts: data.carts
+                    }
+                } only %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

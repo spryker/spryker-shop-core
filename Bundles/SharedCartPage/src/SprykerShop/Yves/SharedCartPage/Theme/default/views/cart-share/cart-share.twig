@@ -1,0 +1,21 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    form: _view.sharedCartForm,
+    title: 'shared_cart.form.share_cart' | trans,
+} %}
+
+{% block content %}
+    <div class="box">
+        {% include molecule('form') with {
+            data: {
+                title: 'shared_cart.form.share_cart' | trans,
+                form: data.form,
+                submit: {
+                    enable: true,
+                    text: 'shared_cart.form.share_button' | trans
+                },
+            }
+        } only %}
+    </div>
+{% endblock %}

@@ -3,7 +3,7 @@
 {% define data = {
     cart: _view.cart,
     form: _view.quoteForm,
-    formAction: url('multi-cart/update', {quoteName: _view.cart.name}),
+    formAction: url('multi-cart/update', {idQuote: _view.cart.idQuote}),
     title: 'cart.cart' | trans,
 } %}
 

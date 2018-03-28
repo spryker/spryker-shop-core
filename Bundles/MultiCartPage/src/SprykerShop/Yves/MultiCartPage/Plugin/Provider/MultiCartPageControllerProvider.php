@@ -19,6 +19,8 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_MULTI_CART_CLEAR = 'multi-cart/clear';
     public const ROUTE_MULTI_CART_DUPLICATE = 'multi-cart/duplicate';
 
+    public const PARAM_ID_QUOTE = 'idQuote';
+
     /**
      * @param \Silex\Application $app
      *
@@ -27,33 +29,101 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
     protected function defineControllers(Application $app)
     {
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
-        $controller = $this->createController('/{multiCart}/create', static::ROUTE_MULTI_CART_CREATE, 'MultiCartPage', 'MultiCart', 'create');
-        $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart');
-        $controller->value('multiCart', 'multi-cart');
 
-        $controller = $this->createController('/{multiCart}/update/{quoteName}', static::ROUTE_MULTI_CART_UPDATE, 'MultiCartPage', 'MultiCart', 'update');
-        $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
-            ->assert('quoteName', '.+');
-        $controller->value('multiCart', 'multi-cart');
+        $this->addMultiCartCreateRoute($allowedLocalesPattern)
+            ->addMultiCartUpdateRoute($allowedLocalesPattern)
+            ->addMultiCartDeleteRoute($allowedLocalesPattern)
+            ->addMultiCartClearRoute($allowedLocalesPattern)
+            ->addMultiCartDuplicateRoute($allowedLocalesPattern)
+            ->addMultiCartSetDefaultRoute($allowedLocalesPattern);
+    }
 
-        $controller = $this->createGetController('/{multiCart}/delete/{quoteName}', static::ROUTE_MULTI_CART_DELETE, 'MultiCartPage', 'MultiCart', 'delete');
-        $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
-            ->assert('quoteName', '.+');
-        $controller->value('multiCart', 'multi-cart');
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addMultiCartCreateRoute($allowedLocalesPattern)
+    {
+        $this->createController('/{multiCart}/create', static::ROUTE_MULTI_CART_CREATE, 'MultiCartPage', 'MultiCart', 'create')
+            ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
+            ->value('multiCart', 'multi-cart');
 
-        $controller = $this->createGetController('/{multiCart}/clear/{quoteName}', static::ROUTE_MULTI_CART_CLEAR, 'MultiCartPage', 'MultiCart', 'clear');
-        $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
-            ->assert('quoteName', '.+');
-        $controller->value('multiCart', 'multi-cart');
+        return $this;
+    }
 
-        $controller = $this->createGetController('/{multiCart}/duplicate/{quoteName}', static::ROUTE_MULTI_CART_DUPLICATE, 'MultiCartPage', 'MultiCart', 'duplicate');
-        $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
-            ->assert('quoteName', '.+');
-        $controller->value('multiCart', 'multi-cart');
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addMultiCartUpdateRoute($allowedLocalesPattern)
+    {
+        $this->createController('/{multiCart}/update/{idQuote}', static::ROUTE_MULTI_CART_UPDATE, 'MultiCartPage', 'MultiCart', 'update')
+            ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
+            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->value('multiCart', 'multi-cart');
 
-        $controller = $this->createGetController('/{multiCart}/set-default/{quoteName}', static::ROUTE_MULTI_CART_SET_DEFAULT, 'MultiCartPage', 'MultiCart', 'setDefault');
-        $controller->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
-            ->assert('quoteName', '.+');
-        $controller->value('multiCart', 'multi-cart');
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addMultiCartDeleteRoute($allowedLocalesPattern)
+    {
+        $this->createGetController('/{multiCart}/delete/{idQuote}', static::ROUTE_MULTI_CART_DELETE, 'MultiCartPage', 'MultiCart', 'delete')
+            ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
+            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->value('multiCart', 'multi-cart');
+
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addMultiCartClearRoute($allowedLocalesPattern)
+    {
+        $this->createGetController('/{multiCart}/clear/{idQuote}', static::ROUTE_MULTI_CART_CLEAR, 'MultiCartPage', 'MultiCart', 'clear')
+            ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
+            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->value('multiCart', 'multi-cart');
+
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addMultiCartDuplicateRoute($allowedLocalesPattern)
+    {
+        $this->createGetController('/{multiCart}/duplicate/{idQuote}', static::ROUTE_MULTI_CART_DUPLICATE, 'MultiCartPage', 'MultiCart', 'duplicate')
+            ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
+            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->value('multiCart', 'multi-cart');
+
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addMultiCartSetDefaultRoute($allowedLocalesPattern)
+    {
+        $this->createGetController('/{multiCart}/set-default/{idQuote}', static::ROUTE_MULTI_CART_SET_DEFAULT, 'MultiCartPage', 'MultiCart', 'setDefault')
+            ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
+            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->value('multiCart', 'multi-cart');
+
+        return $this;
     }
 }

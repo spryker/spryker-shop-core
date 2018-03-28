@@ -1,0 +1,21 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cart: _widget.cart,
+    isQuoteOwner: _widget.isQuoteOwner
+} %}
+
+{% block body %}
+    {% if data.isQuoteOwner %}
+        <div class="box text-right">
+            <a class="button" href="{{ path('shared-cart/share', {idQuote: data.cart.idQuote}) }}" title="{{ 'shared_cart_widget.cart.share' | trans }}">{{ 'shared_cart_widget.cart.share' | trans }}</a>
+        </div>
+        {% if data.cart.shareDetails is not empty %}
+            {% include molecule('shared-cart-customers-table', 'SharedCartWidget') with {
+                data: {
+                    cart: data.cart
+                }
+            } only %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
