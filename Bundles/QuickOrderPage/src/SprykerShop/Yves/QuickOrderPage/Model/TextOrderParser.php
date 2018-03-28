@@ -58,6 +58,7 @@ class TextOrderParser implements TextOrderParserInterface
             $separator = $this->detectSeparator($rows);
             foreach ($rows as $row) {
                 [$skuProductConcrete, $quantity] = explode($separator, trim($row));
+                $quantity = (int)$quantity;
 
                 if (empty($skuProductConcrete)) {
                     continue;
