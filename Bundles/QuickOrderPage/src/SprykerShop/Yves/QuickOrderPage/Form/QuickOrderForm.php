@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Form;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\QuickOrderPage\Form\Constraint\§;
+use SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
