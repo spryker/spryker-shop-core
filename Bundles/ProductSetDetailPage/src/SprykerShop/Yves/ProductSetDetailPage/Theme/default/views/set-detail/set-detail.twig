@@ -1,4 +1,13 @@
-{% block pageTitle -%}
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    set: _view.productSet,
+    views: _view.productViews,
+
+    title: _view.productSet.name
+} %}
+
+{# {% block pageTitle -%}
     {{ _view.productSet.metaTitle | default(_view.productSet.name) }}
 {%- endblock %}
 {% block pageKeywords -%}
@@ -30,8 +39,8 @@
             </div>
         </div>
     </div>
-{% endblock %}
+{% endblock %} #}
 
 {% block content %}
-    {{ widget('ProductSetWidgetPlugin', _view.productSet, _view.productViews) }}
+    {{ widget('ProductSetWidgetPlugin', data.set, data.views) }}
 {% endblock %}
