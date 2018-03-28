@@ -21,10 +21,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class OrderItemEmbeddedForm extends AbstractType
 {
-    public const FILED_SKU = 'sku';
-    public const FILED_SKU_LABEL = 'quick-order.input-label.sku';
-    public const FILED_QTY = 'qty';
-    public const FILED_QTY_LABEL = 'quick-order.input-label.qty';
+    public const FIELD_SKU = 'sku';
+    public const FIELD_SKU_LABEL = 'quick-order.input-label.sku';
+    public const FIELD_QTY = 'qty';
+    public const FIELD_QTY_LABEL = 'quick-order.input-label.qty';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -62,9 +62,9 @@ class OrderItemEmbeddedForm extends AbstractType
     protected function addSku(FormBuilderInterface $builder): FormTypeInterface
     {
         $builder
-            ->add(static::FILED_SKU, TextType::class, [
+            ->add(static::FIELD_SKU, TextType::class, [
                 'required' => false,
-                'label' => static::FILED_SKU_LABEL,
+                'label' => static::FIELD_SKU_LABEL,
             ]);
 
         return $this;
@@ -77,9 +77,9 @@ class OrderItemEmbeddedForm extends AbstractType
      */
     protected function addQty(FormBuilderInterface $builder): FormTypeInterface
     {
-        $builder->add(static::FILED_QTY, IntegerType::class, [
+        $builder->add(static::FIELD_QTY, IntegerType::class, [
             'required' => false,
-            'label' => static::FILED_QTY_LABEL,
+            'label' => static::FIELD_QTY_LABEL,
             'attr' => ['min' => 1],
         ]);
 

@@ -24,7 +24,7 @@ class QtyFieldConstraintValidator extends ConstraintValidator
         if ($orderItemTransfer->getSku() && (!$orderItemTransfer->getQty() || $orderItemTransfer->getQty() < 1)) {
             $this->context
                 ->buildViolation($constraint->message)
-                ->atPath(OrderItemEmbeddedForm::FILED_QTY)
+                ->atPath(OrderItemEmbeddedForm::FIELD_QTY)
                 ->addViolation();
         }
     }

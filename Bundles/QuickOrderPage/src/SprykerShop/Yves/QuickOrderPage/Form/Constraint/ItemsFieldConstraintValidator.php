@@ -26,7 +26,7 @@ class ItemsFieldConstraintValidator extends ConstraintValidator
             $this->context
                 ->buildViolation($constraint->message)
                 ->atPath('[0]')
-                ->atPath(OrderItemEmbeddedForm::FILED_SKU)
+                ->atPath(OrderItemEmbeddedForm::FIELD_SKU)
                 ->addViolation();
         }
     }
