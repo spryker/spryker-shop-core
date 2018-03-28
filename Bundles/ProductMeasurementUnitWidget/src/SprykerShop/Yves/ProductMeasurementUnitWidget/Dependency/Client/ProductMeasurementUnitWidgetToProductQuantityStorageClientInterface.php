@@ -11,5 +11,5 @@ interface ProductMeasurementUnitWidgetToProductQuantityStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
-    public function getProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer;
+    public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer;
 }

@@ -94,7 +94,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
     {
         return $this->getFactory()
             ->getProductQuantityStorageClient()
-            ->getProductQuantityStorage($idProduct);
+            ->findProductQuantityStorage($idProduct);
     }
 
     /**

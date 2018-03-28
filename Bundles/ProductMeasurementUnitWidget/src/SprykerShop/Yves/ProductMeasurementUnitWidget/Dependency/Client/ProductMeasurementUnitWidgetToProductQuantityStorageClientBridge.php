@@ -24,8 +24,8 @@ class ProductMeasurementUnitWidgetToProductQuantityStorageClientBridge implement
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
-    public function getProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer
+    public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer
     {
-        return $this->productQuantityStorageClient->getProductQuantityStorage($idProduct);
+        return $this->productQuantityStorageClient->findProductQuantityStorage($idProduct);
     }
 }
