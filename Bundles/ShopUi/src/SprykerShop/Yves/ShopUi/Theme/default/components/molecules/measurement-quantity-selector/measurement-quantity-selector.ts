@@ -142,11 +142,11 @@ export default class MeasurementQuantitySelector extends Component {
         let maxChoice = Math.ceil(qtyInBaseUnits);
         maxChoice = maxChoice - (maxChoice % this.getQuantityInterval());
 
-        if (this.getMaxQuantity() > 0 && maxChoice >= this.getMaxQuantity()) {
+        if (this.getMaxQuantity() > 0 && maxChoice <= this.getMaxQuantity()) {
             return maxChoice;
         }
 
-        return this.getMinQuantity();
+        return this.getMaxQuantity();
     }
 
     getMinQuantity() {
