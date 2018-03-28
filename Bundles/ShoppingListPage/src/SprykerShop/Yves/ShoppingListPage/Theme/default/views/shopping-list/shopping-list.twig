@@ -1,0 +1,160 @@
+{% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
+
+{% define data = {
+    activePage: 'shoppingList',
+    shoppingList: _view.shoppingListOverview.shoppingList,
+    shoppingListCollection: _view.shoppingListOverview.shoppingLists,
+    items: _view.shoppingListOverview.itemsCollection.items,
+    addAllAvailableProductsToCartForm: _view.addAllAvailableProductsToCartForm,
+    shoppingListItems: _view.shoppingListItems,
+    pagination: {
+        currentPage: _view.currentPage,
+        totalPages: _view.totalPages
+    },
+    labels: {
+        addAllToCartLabel: 'customer.account.shopping_list.add_all_available_to_cart' | trans,
+        productLabel: 'customer.account.shopping_list.product' | trans,
+        priceLabel: 'customer.account.shopping_list.price' | trans,
+        variantLabel: 'customer.account.shopping_list.overview.variant' | trans,
+        availabilityLabel: 'customer.account.shopping_list.availability' | trans,
+        itemAvailableLabel: 'customer.account.shopping_list.available' | trans,
+        itemNotAvailableLabel: 'customer.account.shopping_list.not_available' | trans,
+        shoppingListEmptyLabel: 'customer.account.shopping_list.empty' | trans,
+        quantityLabel: 'customer.account.shopping_list.quantity' | trans,
+        addItemToCartLabel: 'customer.account.shopping_list.add-to-cart' | trans,
+        removeItemFromShoppingListLabel: 'customer.account.shopping_list.remove' | trans
+    }
+} %}
+
+{% block customerNavigation %}
+    {% embed molecule('customer-navigation', 'CustomerPage') with {
+        class: 'box',
+        data: {
+            activePage: data.activePage
+        },
+        embed: {
+            activeShoppingList: data.shoppingList.name,
+            shoppingListCollection: data.shoppingListCollection
+        }
+    } only %}
+        {% block shoppingListNavigation %}
+            {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
+                data: {
+                    activeShoppingList: embed.activeShoppingList,
+                    shoppingListCollection: embed.shoppingListCollection
+                }
+            } only %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block customerContent %}
+    <div class="box">
+        <h4>{{ data.shoppingList.name }}</h4>
+
+        {% if data.items|length %}
+            {% include molecule('form') with {
+                data: {
+                    form: data.addAllAvailableProductsToCartForm,
+                    options: {
+                        action: path('shopping-list/add-all-available-to-cart', { shoppingListName: data.shoppingList.name })
+                    },
+                    submit: {
+                        enable: true,
+                        text: data.labels.addAllToCartLabel,
+                    }
+                }
+            } only %}
+        {% endif %}
+
+        {% if data.shoppingListItems|length %}
+            <table class="table table--expand">
+                <thead>
+                <tr>
+                    <th>{{ data.labels.productLabel }}</th>
+                    <th>{{ data.labels.priceLabel  }}</th>
+                    <th>{{ data.labels.quantityLabel }}</th>
+                    <th>{{ data.labels.variantLabel  }}</th>
+                    <th>{{ data.labels.availabilityLabel  }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in data.shoppingListItems %}
+                    <tr>
+                        <td>
+                            <a href="{{ item.url }}">{{ item.name }}</a>
+                            <div><small>{{ item.sku }}</small></div>
+                            {% if item.images is defined %}
+                                <img width="75" src="{{ item.images[0].externalUrlSmall }}" />
+                            {% endif %}
+                        </td>
+                        <td nowrap="nowrap">
+                            {% if item.price is defined and item.price is not null %}
+                                {% if item.prices.ORIGINAL is defined %}
+                                    <span class="price__amount">{{ item.price | money }}</span> <span class="price__amount price__amount--original">{{ item.prices.ORIGINAL | money }}</span>
+                                {% else %}
+                                    {{ item.price | money }}
+                                {% endif %}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>{{ item.quantity }}</td>
+                        <td>
+                            {% for attribute in item.superAttributesDefinition %}
+                                {% if item.attributes[attribute] is defined %}
+                                    {{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }} <br/>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% if item.available %}
+                                {{ data.labels.itemAvailableLabel }}
+                            {% else %}
+                                {{ data.labels.itemNotAvailableLabel }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.available is defined and item.available and item.price is defined and item.price is not null %}
+                                <form method="POST" action="{{ path('shopping-list/add-to-cart') }}">
+                                    <input type="hidden" name="sku" value="{{ item.sku}}" />
+                                    <input type="hidden" name="quantity" value="{{ item.quantity}}" />
+                                    <input type="hidden" name="shopping-list-item-id" value="{{ item.idShoppingListItem }}" />
+                                    <input type="hidden" name="shopping-list-name" value="{{ data.shoppingList.name }}" />
+                                    <button type="submit" class="button button--success">
+                                        {{data.labels.addItemToCartLabel}}
+                                    </button>
+                                </form>
+                            {% endif %}
+                            <div>
+                                <form method="POST" action="{{ path('shopping-list/remove-item') }}">
+                                    <input type="hidden" name="shopping-list-item-id" value="{{ item.idShoppingListItem }}" />
+                                    <input type="hidden" name="shopping-list-name" value="{{ data.shoppingList.name }}" />
+                                    <button type="submit" class="button button--alert">
+                                        {{data.labels.removeItemFromShoppingListLabel}}
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {% include molecule('pagination') with {
+                data: {
+                    parameters: {
+                        shoppingListName: data.shoppingList.name
+                    },
+                    currentPage: data.pagination.currentPage,
+                    paginationPath: 'shopping-list/details',
+                    maxPage: data.pagination.totalPages,
+                    showAlwaysFirstAndLast: true
+                }
+            } only %}
+        {% else %}
+            {{ data.labels.shoppingListEmptyLabel }}
+        {% endif %}
+    </div>
+{% endblock %}

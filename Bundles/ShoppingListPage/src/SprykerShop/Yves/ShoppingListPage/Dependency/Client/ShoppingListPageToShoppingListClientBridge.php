@@ -1,0 +1,141 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
+
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
+
+class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToShoppingListClientInterface
+{
+    /**
+     * @var \Spryker\Client\ShoppingList\ShoppingListClientInterface
+     */
+    protected $shoppingListClient;
+
+    /**
+     * @param \Spryker\Client\ShoppingList\ShoppingListClientInterface $shoppingListClient
+     */
+    public function __construct($shoppingListClient)
+    {
+        $this->shoppingListClient = $shoppingListClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function createShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->shoppingListClient->createShoppingList($shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function updateShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->shoppingListClient->updateShoppingList($shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): void
+    {
+        $this->shoppingListClient->removeShoppingList($shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        return $this->shoppingListClient->addItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return void
+     */
+    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    {
+        $this->shoppingListClient->removeItemById($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return void
+     */
+    public function removeItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): void
+    {
+        $this->shoppingListClient->removeItemCollection($shoppingListItemCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    {
+        return $this->shoppingListClient->getShoppingList($shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
+     */
+    public function getShoppingListOverviewWithoutProductDetails(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
+    {
+        return $this->shoppingListClient->getShoppingListOverviewWithoutProductDetails($shoppingListOverviewRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
+     */
+    public function getShoppingListOverview(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
+    {
+        return $this->shoppingListClient->getShoppingListOverview($shoppingListOverviewRequestTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
+    {
+        return $this->shoppingListClient->getCustomerShoppingListCollection();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer $shoppingListMoveToCartRequestCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
+     */
+    public function addCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListMoveToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer
+    {
+        return $this->shoppingListClient->addCollectionToCart($shoppingListMoveToCartRequestCollectionTransfer);
+    }
+}

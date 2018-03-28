@@ -1,0 +1,55 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-overview-table',
+} %}
+
+{% define data = {
+    shoppingLists: required,
+    idShoppingList: null,
+    shoppingListForm: null,
+    labels: {
+        editLabel: 'customer.account.shopping_list.overview.edit' | trans,
+        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans
+    }
+} %}
+
+{% block body %}
+    <table class="table table--expand">
+        <thead>
+            <tr>
+                <th width="40%">{{ 'customer.account.shopping_list.overview.name' | trans }}</th>
+                <th width="30%">{{ 'customer.account.shopping_list.overview.item_count' | trans }}</th>
+                <th width="20%">{{ 'customer.account.shopping_list.overview.modified_date' | trans }}</th>
+                <th width="10%"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for shoppingList in data.shoppingLists %}
+            <tr>
+                <td>
+                    {% if data.shoppingListForm is not null and shoppingList.idShoppingList == data.idShoppingList %}
+                        {% include molecule('form') with {
+                            class: '',
+                            data: {
+                                form: data.shoppingListForm,
+                                submit: {
+                                    enable: true
+                                }
+                            }
+                        } only %}
+                    {% else %}
+                        <a href="{{ path('shopping-list/details', { shoppingListName: shoppingList.name }) }}">{{ shoppingList.name }}</a>
+                    {% endif %}
+                </td>
+                <td>{{ shoppingList.numberOfItems }}</td>
+                <td>{{ shoppingList.updatedAt | formatDate }}</td>
+                <td>
+                    <a href="{{ url('shopping-list/update', { shoppingListName: shoppingList.name }) }}">{{ data.labels.editLabel }}</a>
+                    <a href="{{ url('shopping-list/delete', { shoppingListName: shoppingList.name }) }}">{{ data.labels.deleteLabel }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

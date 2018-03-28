@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-navigation',
+    tag: 'nav'
+} %}
+
+{% define data = {
+    activeShoppingList: '',
+    shoppingListCollection: required
+} %}
+
+{% block body %}
+    {% if data.shoppingListCollection.shoppingLists|length %}
+        <ul class="nested vertical menu">
+            {% for shoppingList in data.shoppingListCollection.shoppingLists %}
+                <li class="menu__item {%- if shoppingList.name == data.activeShoppingList -%}menu__item--active{%- endif -%}"><a href="{{ path('shopping-list/details', { shoppingListName: (shoppingList.name ) })  }}">{{ shoppingList.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

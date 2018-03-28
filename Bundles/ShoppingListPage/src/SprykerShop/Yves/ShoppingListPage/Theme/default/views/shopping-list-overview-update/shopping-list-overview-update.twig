@@ -1,0 +1,46 @@
+{% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
+
+{% define data = {
+    activePage: 'shoppingList',
+    shoppingListForm: _view.shoppingListForm,
+    shoppingListCollection: _view.shoppingListCollection,
+    idShoppingList: _view.idShoppingList
+} %}
+
+{% block customerNavigation %}
+    {% embed molecule('customer-navigation', 'CustomerPage') with {
+        class: 'box',
+        data: {
+            activePage: data.activePage
+        },
+        embed: {
+            shoppingListCollection: data.shoppingListCollection,
+            activeShoppingList: data.shoppingListForm.vars.value.name
+        }
+    } only %}
+        {% block shoppingListNavigation %}
+            {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
+                data: {
+                    shoppingListCollection: embed.shoppingListCollection,
+                    activeShoppingList: embed.activeShoppingList
+                }
+            } only %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block customerContent %}
+    <div class="box">
+        <h4>{{ 'customer.account.shopping_list.overview.title' | trans }}</h4>
+
+        {% if data.shoppingListCollection.shoppingLists | length %}
+            {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
+                data: {
+                    shoppingLists: data.shoppingListCollection.shoppingLists,
+                    shoppingListForm: data.shoppingListForm,
+                    idShoppingList: data.idShoppingList
+                }
+            } only %}
+        {% endif %}
+    </div>
+{% endblock %}
