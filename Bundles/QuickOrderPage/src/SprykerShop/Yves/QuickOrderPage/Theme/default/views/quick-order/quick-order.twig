@@ -1,22 +1,12 @@
 {% extends template('page-layout-main') %}
 
-{% block headTitle %}{{ 'quick-order.page-title' | trans }}{% endblock %}
-
-{% block title %}<h3>{{ 'quick-order.page-title' | trans }}</h3>{% endblock %}
-
-{% block breadcrumbs %}
-    {% include molecule('breadcrumb') with {
-        data: {
-            steps: [{ label: 'quick-order.page-title' | trans, withChevron: false }]
-        }
-    } only %}
-{% endblock %}
-
 {% define data = {
     forms: {
         items: _view.itemsForm,
         textOrder: _view.textOrderForm
-    }
+    },
+
+    title: 'quick-order.page-title' | trans
 } %}
 
 {% block content %}
@@ -36,7 +26,6 @@
                 {% include molecule('form') with {
                     data: {
                         form: data.forms.textOrder,
-                        options: {attr: { validate: true }},
                         submit: {
                             enable: true,
                             text: 'quick-order.paste-order.button.verify' | trans
