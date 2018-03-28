@@ -39,7 +39,7 @@ class QuickOrderController extends AbstractController
             ->handleRequest($request);
 
         $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
-        $quickOrder = $this->getQuickOrder($textOrderParsedItems);
+        $quickOrder = $this->getQuickOrderTransfer($textOrderParsedItems);
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
@@ -77,7 +77,7 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormDataProvider();
 
         $orderItems = $dataProvider->getOrderItemsFromFormData($formDataItems);
-        $quickOrder = $this->getQuickOrder($orderItems);
+        $quickOrder = $this->getQuickOrderTransfer($orderItems);
 
         $emptyProductsNumber = $this->getFactory()
             ->getBundleConfig()
@@ -118,7 +118,7 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormDataProvider()
             ->getOrderItemsFromFormData($formDataItems);
 
-        $quickOrder = $this->getQuickOrder($orderItems);
+        $quickOrder = $this->getQuickOrderTransfer($orderItems);
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
@@ -191,14 +191,20 @@ class QuickOrderController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    protected function getQuickOrder(array $orderItems = []): QuickOrderTransfer
+    protected function getQuickOrderTransfer(array $orderItems = []): QuickOrderTransfer
     {
-        $emptyProductsNumber = $this->getFactory()
-            ->getBundleConfig()
-            ->getProductRowsNumber();
+        $dataProvider = $this->getFactory()
+            ->createQuickOrderFormDataProvider();
 
-        return $this->getFactory()
-            ->createQuickOrderFormDataProvider()
-            ->getQuickOrderTransfer($orderItems, $emptyProductsNumber);
+        $quickOrderTransfer = $dataProvider->getQuickOrderTransfer($orderItems);
+        if ($quickOrderTransfer->getItems()->count() === 0) {
+            $emptyProductsNumber = $this->getFactory()
+                ->getBundleConfig()
+                ->getProductRowsNumber();
+
+            $dataProvider->appendEmptyOrderItems($quickOrderTransfer, $emptyProductsNumber);
+        }
+
+        return $quickOrderTransfer;
     }
 }

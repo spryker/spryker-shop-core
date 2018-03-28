@@ -14,7 +14,7 @@
         class: config.selector ~ '__provider ' ~ config.selector ~ '__add-row-provider',
         attributes: {
             method: 'post',
-            url: '/en/quick-order/add-rows'
+            url: url('quick-order/add-rows')
         }
     } only %}
 
@@ -22,7 +22,7 @@
         class: config.selector ~ '__provider ' ~ config.selector ~ '__remove-row-provider',
         attributes: {
             method: 'post',
-            url: '/en/quick-order/delete-row'
+            url: url('quick-order/delete-row')
         }
     } only %}
 

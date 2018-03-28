@@ -80,7 +80,7 @@ class OrderItemEmbeddedForm extends AbstractType
         $builder->add(static::FILED_QTY, IntegerType::class, [
             'required' => false,
             'label' => static::FILED_QTY_LABEL,
-            'attr' => ['min' => 1]
+            'attr' => ['min' => 1],
         ]);
 
         return $this;

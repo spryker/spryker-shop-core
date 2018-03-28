@@ -16,7 +16,7 @@ interface QuickOrderFormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function getQuickOrderTransfer(array $orderItems = [], $emptyOrderItemsNumber = null): QuickOrderTransfer;
+    public function getQuickOrderTransfer(array $orderItems = []): QuickOrderTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
@@ -24,7 +24,7 @@ interface QuickOrderFormDataProviderInterface
      *
      * @return void
      */
-    public function appendEmptyOrderItems(QuickOrderTransfer $quickOrder, int $itemsNumber = 1): void;
+    public function appendEmptyOrderItems(QuickOrderTransfer $quickOrder, int $itemsNumber): void;
 
     /**
      * @param array $formDataItems

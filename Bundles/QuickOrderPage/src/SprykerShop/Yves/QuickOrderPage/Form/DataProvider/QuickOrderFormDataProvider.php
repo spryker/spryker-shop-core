@@ -19,15 +19,11 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function getQuickOrderTransfer(array $orderItems = [], $emptyOrderItemsNumber = null): QuickOrderTransfer
+    public function getQuickOrderTransfer(array $orderItems = []): QuickOrderTransfer
     {
         $quickOrder = new QuickOrderTransfer();
         $orderItemCollection = new ArrayObject($orderItems);
         $quickOrder->setItems($orderItemCollection);
-
-        if ($orderItemCollection->count() === 0) {
-            $this->appendEmptyOrderItems($quickOrder, $emptyOrderItemsNumber);
-        }
 
         return $quickOrder;
     }
@@ -38,7 +34,7 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
      *
      * @return void
      */
-    public function appendEmptyOrderItems(QuickOrderTransfer $quickOrder, int $itemsNumber = 1): void
+    public function appendEmptyOrderItems(QuickOrderTransfer $quickOrder, int $itemsNumber): void
     {
         $orderItemCollection = $quickOrder->getItems();
         for ($i = 0; $i < $itemsNumber; $i++) {
