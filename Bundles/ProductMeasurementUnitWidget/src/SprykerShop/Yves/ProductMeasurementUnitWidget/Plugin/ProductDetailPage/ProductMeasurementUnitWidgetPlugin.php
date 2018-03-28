@@ -83,7 +83,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
     ): ?ProductMeasurementUnitTransfer {
         $productMeasurementUnitStorageTransfer = $this->getFactory()
             ->getProductMeasurementUnitStorageClient()
-            ->findProductMeasurementUnitStorage($productConcreteMeasurementBaseUnit->getMeasurementUnitId());
+            ->findProductMeasurementUnitStorage($productConcreteMeasurementBaseUnit->getIdProductMeasurementUnit());
 
         if ($productMeasurementUnitStorageTransfer !== null) {
             return $this->getFactory()
@@ -108,13 +108,13 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
         $saleUnits = [];
         $mapper = $this->getFactory()->createProductMeasurementSalesUnitMapper();
         foreach ($productConcreteMeasurementSalesUnits as $productConcreteMeasurementSalesUnitTransfer) {
-            if ($productConcreteMeasurementSalesUnitTransfer->getIsDisplay() !== true) {
+            if ($productConcreteMeasurementSalesUnitTransfer->getIsDisplayed() !== true) {
                 //continue;
             }
 
             $productMeasurementUnitStorageTransfer = $this->getFactory()
                 ->getProductMeasurementUnitStorageClient()
-                ->findProductMeasurementUnitStorage($productConcreteMeasurementSalesUnitTransfer->getMeasurementUnitId());
+                ->findProductMeasurementUnitStorage($productConcreteMeasurementSalesUnitTransfer->getIdProductMeasurementUnit());
 
             if ($productMeasurementUnitStorageTransfer !== null) {
                 $productMeasurementSalesUnitTransfer = $mapper->mapProductMeasurementSalesUnitTransfer(

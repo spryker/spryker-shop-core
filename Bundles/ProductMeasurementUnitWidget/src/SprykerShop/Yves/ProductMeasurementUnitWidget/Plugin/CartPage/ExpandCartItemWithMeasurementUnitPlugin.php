@@ -43,6 +43,10 @@ class ExpandCartItemWithMeasurementUnitPlugin extends AbstractPlugin implements 
         $idProductMeasurementSalesUnit = $request->request->getInt(static::URL_PARAM_ID_PRODUCT_MEASUREMENT_SALES_UNIT);
         $idProductConcrete = $request->request->getInt(static::URL_PARAM_ID_PRODUCT_CONCRETE);
 
+        if ($idProductMeasurementSalesUnit === 0) {
+            return $itemTransfer;
+        }
+
         $productMeasurementSalesUnitTransfer = new ProductMeasurementSalesUnitTransfer();
         $productMeasurementSalesUnitTransfer->setIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit);
         $itemTransfer->setQuantitySalesUnit($productMeasurementSalesUnitTransfer);
@@ -70,7 +74,7 @@ class ExpandCartItemWithMeasurementUnitPlugin extends AbstractPlugin implements 
             && $productConcreteMeasurementUnitStorageTransfer->getSalesUnits() !== null
         ) {
             foreach ($productConcreteMeasurementUnitStorageTransfer->getSalesUnits() as $salesUnit) {
-                if ($salesUnit->getId() === $quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit()) {
+                if ($salesUnit->getIdProductMeasurementSalesUnit() === $quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit()) {
                     $quantity *= $salesUnit->getConversion();
 
                     return $quantity;

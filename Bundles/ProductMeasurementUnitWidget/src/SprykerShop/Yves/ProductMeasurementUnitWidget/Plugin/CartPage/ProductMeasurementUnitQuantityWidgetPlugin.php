@@ -45,7 +45,7 @@ class ProductMeasurementUnitQuantityWidgetPlugin extends AbstractWidgetPlugin im
             if ($productConcreteMeasurementUnitStorageTransfer !== null) {
                 $baseUnitTransfer = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit();
 
-                if ($baseUnitTransfer->getId() === $quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit()) {
+                if ($baseUnitTransfer->getIdProductMeasurementBaseUnit() === $quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit()) {
                     return true;
                 }
             }

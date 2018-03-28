@@ -29,10 +29,6 @@ class ProductMeasurementSalesUnitMapper implements ProductMeasurementSalesUnitMa
             true
         );
 
-        $measurementSalesUnitTransfer->setIdProductMeasurementSalesUnit(
-            $concreteMeasurementSalesUnitTransfer->getId()
-        );
-
         return $measurementSalesUnitTransfer;
     }
 
@@ -49,9 +45,6 @@ class ProductMeasurementSalesUnitMapper implements ProductMeasurementSalesUnitMa
         $measurementUnitTransfer->fromArray(
             $measurementUnitStorageTransfer->toArray(),
             true
-        );
-        $measurementUnitTransfer->setIdProductMeasurementUnit(
-            $measurementUnitStorageTransfer->getId()
         );
 
         return $measurementUnitTransfer;
