@@ -28,11 +28,6 @@ class TextOrderParser implements TextOrderParserInterface
     protected $config;
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPage\Model\ProductFinderInterface
-     */
-    protected $productFinder;
-
-    /**
      * @var \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
     protected $parsedTextOrderItems = [];
