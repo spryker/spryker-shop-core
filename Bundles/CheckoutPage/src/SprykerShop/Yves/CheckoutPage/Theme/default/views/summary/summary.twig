@@ -68,16 +68,16 @@
                 {% for item in data.cartItems %}
                     {% set item = item.bundleProduct is defined ? item.bundleProduct : item %}
                     {% set salesUnitName = item.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+                    {% set salesUnitSummary = '' %}
                     {% if salesUnitName %}
-                        {% set salesUnitName = item.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-                        {% set quantity = item.quantity ~ ' ' ~ salesUnitName | trans %}
-                    {% else %}
-                {% set quantity = item.quantity %}
+                        {% set salesUnitSummary = item.quantitySalesUnit.value / item.quantitySalesUnit.precision ~ ' ' ~ salesUnitName | trans %}
                     {% endif %}
+                    {% set quantity = item.quantity %}
                     {% embed molecule('summary-item', 'CheckoutPage') with {
                         data: {
                             name: item.name,
                             quantity: quantity,
+                            salesUnitSummary: salesUnitSummary,
                             price: item.sumPrice | money,
                             options: item.productOptions | default({}),
                             bundleItems: item.bundleItems | default([])

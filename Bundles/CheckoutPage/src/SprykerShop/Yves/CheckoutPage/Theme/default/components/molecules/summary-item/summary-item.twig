@@ -8,6 +8,7 @@
 {% define data = {
     name: required,
     quantity: required,
+    salesUnitSummary: '',
     price: 0,
     options: [],
     bundleItems: []
@@ -15,7 +16,7 @@
 
 {% block body %}
     <strong class="float-right">{{data.price}}</strong>
-    {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}}
+    {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if data.salesUnitSummary is not empty %}(= {{ data.salesUnitSummary }}){% endif %}
     
     {% if data.bundleItems is not empty %}
         <ul>
