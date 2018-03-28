@@ -37,7 +37,7 @@ class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDepen
      */
     protected function addProductMeasurementUnitStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE] = function (Container $container) {
+        $container[static::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE] = function (Container $container) {
             return new ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge($container->getLocator()->productMeasurementUnitStorage()->client());
         };
 
@@ -51,7 +51,7 @@ class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDepen
      */
     protected function addProductQuantityStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_PRODUCT_QUANTITY_STORAGE] = function (Container $container) {
+        $container[static::CLIENT_PRODUCT_QUANTITY_STORAGE] = function (Container $container) {
             return new ProductMeasurementUnitWidgetToProductQuantityStorageClientBridge($container->getLocator()->productQuantityStorage()->client());
         };
 

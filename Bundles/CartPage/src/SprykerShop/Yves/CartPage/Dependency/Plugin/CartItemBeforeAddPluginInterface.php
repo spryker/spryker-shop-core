@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CartPage\Dependency\Plugin;
 use Generated\Shared\Transfer\ItemTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated
+ */
 interface CartItemBeforeAddPluginInterface
 {
     /**

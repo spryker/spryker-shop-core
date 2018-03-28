@@ -41,6 +41,8 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     protected $availabilityClient;
 
     /**
+     * @deprecated
+     *
      * @var \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemBeforeAddPluginInterface[]
      */
     protected $cartItemBeforeAddPlugins;
@@ -105,7 +107,6 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
         foreach ($itemTransfers as &$itemTransfer) {
             $itemTransfer = $this->executeCartItemBeforeAddPlugins($itemTransfer);
         }
-        unset($itemTransfer);
 
         $quoteTransfer = $this->cartClient->addItems($itemTransfers);
         $this->cartClient->storeQuote($quoteTransfer);
@@ -228,6 +229,8 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     }
 
     /**
+     * @deprecated
+     *
      * @todo Move this into cart client plugin, @see CORE-2347
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer

@@ -6,8 +6,8 @@
                     <strong>{{ 'cart.item_quantity' | trans }}</strong>
                     <span class="input-group __no-margin-bottom">
 
-                        {% if widgetExists('ProductMeasurementUnitQuantityWidgetPlugin') %}
-                        {{ widget('ProductMeasurementUnitQuantityWidgetPlugin', cartItem) }}
+                        {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
+                        {{ widget('QuantitySalesUnitWidgetPlugin', cartItem) }}
                         {% else %}
                             {% if not cartItem.maxQuantity or cartItem.maxQuantity < 0 %}
                                 <input class="input-group-field" type="number" value="{{ cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>

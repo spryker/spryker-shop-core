@@ -149,6 +149,8 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated
+     *
      * @param $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -163,7 +165,8 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     * Returns a list of widget plugin class names that implement
+     * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
      * @return string[]
      */
@@ -195,6 +198,8 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated
+     *
      * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemBeforeAddPluginInterface[]
      */
     protected function getCartItemBeforeAddPlugins(): array
