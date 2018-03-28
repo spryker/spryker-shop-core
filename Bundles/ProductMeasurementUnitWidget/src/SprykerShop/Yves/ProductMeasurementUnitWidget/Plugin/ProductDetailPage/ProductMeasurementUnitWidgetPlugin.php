@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Plugin\ProductDetailPage
 use Generated\Shared\Transfer\ProductConcreteMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
+use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetPluginInterface;
@@ -40,13 +41,24 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
                 $productConcreteMeasurementUnitStorageTransfer->getSalesUnits()->getArrayCopy()
             );
         }
+        $productQuantityStorageTransfer = $this->findProductQuantityStorageTransfer(
+            $productViewTransfer->getIdProductConcrete()
+        );
 
         $this
             ->addParameter('product', $productViewTransfer)
             ->addParameter('qtyOptions', $qtyOptions)
             ->addParameter('baseUnit', $baseUnit)
             ->addParameter('salesUnits', $salesUnits)
-            ->addParameter('jsonScheme', $this->prepareJsonData($baseUnit, $salesUnits));
+            ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
+            ->addParameter(
+                'jsonScheme',
+                $this->prepareJsonData(
+                    $baseUnit,
+                    $salesUnits,
+                    $productQuantityStorageTransfer
+                )
+            );
     }
 
     /**
@@ -71,6 +83,18 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
     public static function getTemplate()
     {
         return '@ProductMeasurementUnitWidget/views/product-measurement-unit/product-measurement-unit.twig';
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
+     */
+    protected function findProductQuantityStorageTransfer(int $idProduct): ?ProductQuantityStorageTransfer
+    {
+        return $this->getFactory()
+            ->getProductQuantityStorageClient()
+            ->getProductQuantityStorage($idProduct);
     }
 
     /**
@@ -139,12 +163,14 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null $baseUnit
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $salesUnits
+     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
      *
      * @return string
      */
     protected function prepareJsonData(
         ProductMeasurementUnitTransfer $baseUnit = null,
-        array $salesUnits = []
+        array $salesUnits = [],
+        ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
     ): string {
         $jsonData = [];
 
@@ -153,6 +179,10 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
         }
         foreach ($salesUnits as $salesUnit) {
             $jsonData['salesUnits'][] = $salesUnit->toArray();
+        }
+
+        if ($productQuantityStorageTransfer !== null) {
+            $jsonData['productQuantityStorage'] = $productQuantityStorageTransfer->toArray();
         }
 
         return \json_encode($jsonData, true);
