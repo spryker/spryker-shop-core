@@ -58,9 +58,9 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     qtyInputChange() {
-        let userQty = (this.qtyInput as HTMLInputElement).value;
-        let qtyInBaseUnits = +userQty * +this.currentSalesUnit.conversion;
-        if (qtyInBaseUnits % 1 != 0 || +userQty % 1 != 0) {
+        let qtyInSalesUnits = +(this.qtyInput as HTMLInputElement).value;
+        let qtyInBaseUnits = qtyInSalesUnits * +this.currentSalesUnit.conversion;
+        if (qtyInBaseUnits % 1 != 0 || qtyInSalesUnits * this.currentSalesUnit.precision % 1 !== 0) {
             this.addToCartButton.setAttribute("disabled", "disabled");
             this.askCustomerForCorrectInput();
             return;
@@ -127,7 +127,6 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     getMinChoice(qtyInSalesUnits: number) {
-        qtyInSalesUnits = this.floor(qtyInSalesUnits);
         let qtyInBaseUnits = this.floor(qtyInSalesUnits * this.currentSalesUnit.conversion);
         qtyInBaseUnits = this.floor(qtyInBaseUnits - (qtyInBaseUnits % this.getQuantityInterval()));
 
@@ -136,7 +135,7 @@ export default class MeasurementQuantitySelector extends Component {
         }
 
         qtyInSalesUnits = qtyInBaseUnits / this.currentSalesUnit.conversion;
-        if (qtyInSalesUnits % 1 !== 0) {
+        if (qtyInSalesUnits * this.currentSalesUnit.precision % 1 !== 0) {
             return this.getMinChoice((qtyInBaseUnits + this.getQuantityInterval()) / this.currentSalesUnit.conversion)
         }
 
@@ -144,7 +143,6 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     getMaxChoice(qtyInSalesUnits: number) {
-        qtyInSalesUnits = this.ceil(qtyInSalesUnits);
         let qtyInBaseUnits = this.ceil(qtyInSalesUnits * this.currentSalesUnit.conversion);
         qtyInBaseUnits = this.ceil(qtyInBaseUnits - (qtyInBaseUnits % this.getQuantityInterval()));
 
@@ -153,7 +151,7 @@ export default class MeasurementQuantitySelector extends Component {
         }
 
         qtyInSalesUnits = qtyInBaseUnits / this.currentSalesUnit.conversion;
-        if (qtyInSalesUnits % 1 !== 0) {
+        if (qtyInSalesUnits * this.currentSalesUnit.precision % 1 !== 0) {
             return this.getMaxChoice((qtyInBaseUnits + this.getQuantityInterval()) / this.currentSalesUnit.conversion)
         }
 

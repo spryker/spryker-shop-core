@@ -6,7 +6,8 @@
     qtyOptions: _widget.qtyOptions,
     baseUnit: _widget.baseUnit | default(null),
     salesUnits: _widget.salesUnits | default([]),
-    jsonScheme: _widget.jsonScheme | default('')
+    jsonScheme: _widget.jsonScheme | default(''),
+    salesUnitCount : _widget.salesUnits|length
 } %}
 {% set disabled = data.product.idProductConcrete is empty or data.product.price is empty %}
 
@@ -16,7 +17,7 @@
             {{ 'product.quantity' | trans }}
             <input class="select-quantity input" type="number" value="1" step="1" name="sales-unit-value"/>
         </label>
-        {% if data.salesUnits|length %}
+        {% if data.salesUnitCount > 1 %}
             <label>
                 {{ 'product.measurement.sales_unit' | trans }}
                 {% embed atom('select') with {
@@ -37,6 +38,9 @@
                 {% endembed %}
             </label>
             <input type="hidden" value="{{ data.idProductConcrete }}" name="id-product-concrete">
+        {% elseif data.salesUnitCount == 1 %}
+            <input type="hidden" value="{{ data.salesUnits|first.idProductMeasurementSalesUnit  }}" name="id-product-measurement-sales-unit">
+            <input type="hidden" value="{{ data.idProductConcrete }}" name="id-product-concrete">
         {% endif %}
     </div>
     <div class="col col--sm-6">
@@ -50,7 +54,7 @@
         {{ 'page.detail.add-to-cart' | trans }}
         </button>
     </div>
-    {% if data.salesUnits|length %}
+    {% if data.salesUnitCount > 1 %}
         <hr/>
         <div class="col col--sm-12">
             {% for salesUnit in data.salesUnits %}

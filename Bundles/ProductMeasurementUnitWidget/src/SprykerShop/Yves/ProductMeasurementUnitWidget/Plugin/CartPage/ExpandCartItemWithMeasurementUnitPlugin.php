@@ -43,7 +43,7 @@ class ExpandCartItemWithMeasurementUnitPlugin extends AbstractPlugin implements 
     {
         $idProductMeasurementSalesUnit = $request->request->getInt(static::URL_PARAM_ID_PRODUCT_MEASUREMENT_SALES_UNIT);
         $idProductConcrete = $request->request->getInt(static::URL_PARAM_ID_PRODUCT_CONCRETE);
-        $salesUnitValue = $request->request->getInt(static::URL_PARAM_SALES_UNIT_VALUE);
+        $salesUnitValue = (float)$request->request->get(static::URL_PARAM_SALES_UNIT_VALUE);
 
         if ($idProductMeasurementSalesUnit === 0) {
             return $itemTransfer;
@@ -60,11 +60,11 @@ class ExpandCartItemWithMeasurementUnitPlugin extends AbstractPlugin implements 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $idProductConcrete
-     * @param int $salesUnitValue
+     * @param float $salesUnitValue
      *
      * @return int
      */
-    protected function calculateQuantity(ItemTransfer $itemTransfer, int $idProductConcrete, int $salesUnitValue): int
+    protected function calculateQuantity(ItemTransfer $itemTransfer, int $idProductConcrete, float $salesUnitValue): int
     {
         $quantitySalesUnitTransfer = $itemTransfer->getQuantitySalesUnit();
         $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
@@ -78,7 +78,7 @@ class ExpandCartItemWithMeasurementUnitPlugin extends AbstractPlugin implements 
                 if ($salesUnit->getIdProductMeasurementSalesUnit() === $quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit()) {
                     $salesUnitValue *= $salesUnit->getConversion();
 
-                    return $salesUnitValue;
+                    return (int)$salesUnitValue;
                 }
             }
         }
