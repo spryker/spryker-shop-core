@@ -46,6 +46,7 @@
 
             <div class="col col--sm-12 col--lg-4">
                 <div class="box">
+                    {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
                     {{ widget('DiscountVoucherFormWidgetPlugin') }}
                     <hr/>
                     {% include '@CartPage/_partials/cart-summary.twig' %}

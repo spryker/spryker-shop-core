@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Dependency\Client;
 
-
 class SharedCartPageToCustomerClientBridge implements SharedCartPageToCustomerClientInterface
 {
     /**

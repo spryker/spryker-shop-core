@@ -3,14 +3,24 @@
 {% define data = {
     form: _view.quoteForm,
     formAction: url('multi-cart/create'),
-    title: 'cart.cart' | trans,
+    title: 'multi_cart.form.create_cart' | trans,
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'cart.cart' | trans
+            }]
+        }
+    } only %}
+{% endblock %}
 
 {% block content %}
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'multi_cart.form.create_cart' | trans,
+                title: 'multi_cart.form.edit_cart_information' | trans,
                 form: data.form,
                 options: {
                     action: data.formAction
@@ -18,6 +28,11 @@
                 submit: {
                     enable: true
                 },
+                cancel: {
+                    enable: true,
+                    url: url('cart'),
+                    text: 'general.back.button' | trans
+                }
             }
         } only %}
     </div>

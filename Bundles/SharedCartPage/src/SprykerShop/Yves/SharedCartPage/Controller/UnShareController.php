@@ -32,7 +32,7 @@ class UnShareController extends AbstractController
         $quoteResponseTransfer = $this->getFactory()->getSharedCartClient()
                         ->removeShareCart($shareCartRequestTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage('shared_cart_page.un_share.success');
+            $this->addSuccessMessage('shared_cart_page.unshare.success');
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 

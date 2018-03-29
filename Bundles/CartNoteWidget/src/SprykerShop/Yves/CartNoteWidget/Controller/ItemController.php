@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ItemController extends AbstractController
 {
-    const MESSAGE_CART_NOTE_ADDED_SUCCESS_TO_ITEM = 'cart_note.cart_page.item.note_added';
-    const REQUEST_HEADER_PEFERER = 'referer';
+    public const MESSAGE_CART_NOTE_ADDED_SUCCESS_TO_ITEM = 'cart_note.cart_page.item.note_added';
+    public const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,9 +37,8 @@ class ItemController extends AbstractController
             $groupKey = $form->get(QuoteItemCartNoteForm::FIELD_GROUP_KEY)->getData();
 
             $this->getFactory()
-                ->createCartNotesHandler()
+                ->getCartNoteClient()
                 ->setNoteToQuoteItem($note, $sku, $groupKey);
-            $this->addSuccessMessage(static::MESSAGE_CART_NOTE_ADDED_SUCCESS_TO_ITEM);
         }
 
         return $this->redirectResponseExternal($this->getRefererUrl($request));
@@ -52,8 +51,8 @@ class ItemController extends AbstractController
      */
     protected function getRefererUrl(Request $request)
     {
-        if ($request->headers->has(static::REQUEST_HEADER_PEFERER)) {
-            return $request->headers->get(static::REQUEST_HEADER_PEFERER);
+        if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
+            return $request->headers->get(static::REQUEST_HEADER_REFERER);
         }
 
         return CartControllerProvider::ROUTE_CART;

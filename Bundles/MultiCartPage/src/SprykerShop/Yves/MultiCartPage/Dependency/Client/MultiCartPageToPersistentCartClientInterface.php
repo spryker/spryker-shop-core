@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\MultiCartPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 
 interface MultiCartPageToPersistentCartClientInterface
 {
@@ -24,5 +25,12 @@ interface MultiCartPageToPersistentCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
 }

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\MultiCartWidget\Plugin\ShopLayout;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShopLayoutExtension\Dependency\Plugin\MultiCart\MiniCartWidgetPluginInterface;
 
@@ -16,6 +17,8 @@ use SprykerShop\Yves\ShopLayoutExtension\Dependency\Plugin\MultiCart\MiniCartWid
  */
 class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidgetPluginInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @param int $cartQuantity
      *
@@ -28,7 +31,7 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
         $this
             ->addParameter('cartQuantity', $cartQuantity)
             ->addParameter('activeCart', $activeQuoteTransfer)
-            ->addParameter('cartList', $this->getInActiveQuoteList($activeQuoteTransfer))
+            ->addParameter('cartList', $this->getInActiveQuoteList())
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
     }
 
@@ -65,11 +68,9 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $activeQuoteTransfer
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer[]
      */
-    protected function getInActiveQuoteList(QuoteTransfer $activeQuoteTransfer): array
+    protected function getInActiveQuoteList(): array
     {
         $quoteCollectionTransfer = $this->getFactory()
             ->getMultiCartClient()
@@ -77,7 +78,7 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
 
         $inActiveQuoteTransferList = [];
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getIdQuote() !== $activeQuoteTransfer->getIdQuote()) {
+            if (!$quoteTransfer->getIsDefault() && $this->can('ReadSharedCartPermissionPlugin', $quoteTransfer->getIdQuote())) {
                 $inActiveQuoteTransferList[] = $quoteTransfer;
             }
         }

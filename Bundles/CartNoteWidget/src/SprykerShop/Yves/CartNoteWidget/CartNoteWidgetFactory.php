@@ -11,14 +11,15 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CartNoteWidget\Form\QuoteCartNoteForm;
 use SprykerShop\Yves\CartNoteWidget\Form\QuoteItemCartNoteForm;
-use SprykerShop\Yves\CartNoteWidget\Handler\CartNoteHandler;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class CartNoteWidgetFactory extends AbstractFactory
 {
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCartNoteQuoteForm()
+    public function getCartNoteQuoteForm(): FormInterface
     {
         return $this->getFormFactory()->create(QuoteCartNoteForm::class);
     }
@@ -26,31 +27,23 @@ class CartNoteWidgetFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCartNoteQuoteItemForm()
+    public function getCartNoteQuoteItemForm(): FormInterface
     {
         return $this->getFormFactory()->create(QuoteItemCartNoteForm::class);
     }
 
     /**
-     * @return \SprykerShop\Yves\CartNoteWidget\Handler\CartNoteHandlerInterface
+     * @return \SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToCartNoteClientInterface
      */
-    public function createCartNotesHandler()
+    public function getCartNoteClient()
     {
-        return new CartNoteHandler($this->getCartClient());
+        return $this->getProvidedDependency(CartNoteWidgetDependencyProvider::CLIENT_CART_NOTE);
     }
 
     /**
-     * @return \SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToCartClientInterface
+     * @return \Symfony\Component\Form\FormFactoryInterface
      */
-    protected function getCartClient()
-    {
-        return $this->getProvidedDependency(CartNoteWidgetDependencyProvider::CLIENT_CART);
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormFactory
-     */
-    protected function getFormFactory()
+    public function getFormFactory(): FormFactoryInterface
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }

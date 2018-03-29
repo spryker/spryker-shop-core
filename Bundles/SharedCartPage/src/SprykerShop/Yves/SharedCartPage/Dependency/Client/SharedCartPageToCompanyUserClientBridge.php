@@ -25,7 +25,7 @@ class SharedCartPageToCompanyUserClientBridge implements SharedCartPageToCompany
     }
 
     /**
-	 * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */

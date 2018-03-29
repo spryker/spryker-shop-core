@@ -1,20 +1,26 @@
 {% extends template('widget') %}
 
 {% define data = {
+    cart: _widget.cart,
     carts: _widget.cartCollection,
     isMultiCartAllowed: _widget.isMultiCartAllowed
 } %}
 
 {% block body %}
     {% if data.isMultiCartAllowed is not empty %}
+        {{ widget('SharedCartShareWidgetPlugin', data.cart) }}
+        <div class="box">
+            <h3 class="float-left">{{ 'multi_cart_widget.cart.list' | trans }}</h3>
+            <span class="float-right">
+                <a class="button" href="{{url('multi-cart/create')}}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
+            </span>
         {% if data.carts is not empty and data.carts | length > 0 %}
-            <div class="box">
                 {% include molecule('cart-table', 'MultiCartWidget') with {
                     data: {
                         carts: data.carts
                     }
                 } only %}
-            </div>
         {% endif %}
+        </div>
     {% endif %}
 {% endblock %}

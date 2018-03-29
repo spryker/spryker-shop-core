@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 interface SharedCartPageToCompanyUserClientInterface
 {
     /**
-	 * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */

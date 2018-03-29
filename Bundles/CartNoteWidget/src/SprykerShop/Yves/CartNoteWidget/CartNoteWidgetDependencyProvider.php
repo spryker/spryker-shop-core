@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\CartNoteWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToCartClientBridge;
+use SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToCartNoteClientBridge;
 
 class CartNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_CART_NOTE = 'CLIENT_CART_NOTE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -22,7 +22,7 @@ class CartNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addCartClient($container);
+        $container = $this->addCartNoteClient($container);
 
         return $container;
     }
@@ -32,10 +32,10 @@ class CartNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCartClient(Container $container): Container
+    protected function addCartNoteClient(Container $container): Container
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
-            return new CartNoteWidgetToCartClientBridge($container->getLocator()->cart()->client());
+        $container[static::CLIENT_CART_NOTE] = function (Container $container) {
+            return new CartNoteWidgetToCartNoteClientBridge($container->getLocator()->cartNote()->client());
         };
 
         return $container;

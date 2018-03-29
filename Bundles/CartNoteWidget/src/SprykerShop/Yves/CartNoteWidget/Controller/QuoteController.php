@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteController extends AbstractController
 {
-    const MESSAGE_CART_NOTE_ADDED_TO_CART_SUCCESS = 'cart_note.cart_page.cart.note_added';
-    const REQUEST_HEADER_PEFERER = 'referer';
+    public const MESSAGE_CART_NOTE_ADDED_TO_CART_SUCCESS = 'cart_note.cart_page.cart.note_added';
+    public const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,9 +35,8 @@ class QuoteController extends AbstractController
             $note = $form->get(QuoteCartNoteForm::FIELD_CART_NOTE)->getData();
 
             $this->getFactory()
-                ->createCartNotesHandler()
+                ->getCartNoteClient()
                 ->setNoteToQuote($note);
-            $this->addSuccessMessage(static::MESSAGE_CART_NOTE_ADDED_TO_CART_SUCCESS);
         }
 
         return $this->redirectResponseExternal($this->getRefererUrl($request));
@@ -50,8 +49,8 @@ class QuoteController extends AbstractController
      */
     protected function getRefererUrl(Request $request)
     {
-        if ($request->headers->has(static::REQUEST_HEADER_PEFERER)) {
-            return $request->headers->get(static::REQUEST_HEADER_PEFERER);
+        if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
+            return $request->headers->get(static::REQUEST_HEADER_REFERER);
         }
 
         return CartControllerProvider::ROUTE_CART;

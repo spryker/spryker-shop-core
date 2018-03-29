@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ShareCartRequestTransfer;
 interface SharedCartPageToSharedCartClientInterface
 {
     /**
-	 * @param \Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
      */

@@ -26,8 +26,9 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      */
     public function initialize(QuoteTransfer $quoteTransfer, array $actions): void
     {
-        $this->addParameter('cart', $quoteTransfer);
-        $this->addParameter('actions', $this->checkActionsPermission($quoteTransfer, $actions));
+        $this
+            ->addParameter('cart', $quoteTransfer)
+            ->addParameter('actions', $this->checkActionsPermission($quoteTransfer, $actions));
     }
 
     /**
@@ -38,8 +39,8 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      */
     protected function checkActionsPermission(QuoteTransfer $quoteTransfer, array $actions)
     {
-        $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
         $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
+        $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote()) || $writeAllowed;
         $actions['view'] = isset($actions['view']) ? $actions['view'] && $viewAllowed : $viewAllowed;
         $actions['update'] = isset($actions['update']) ? $actions['update'] && $writeAllowed : $writeAllowed;
         $actions['set_default'] = isset($actions['set_default']) ? $actions['set_default'] && $viewAllowed : $viewAllowed;
