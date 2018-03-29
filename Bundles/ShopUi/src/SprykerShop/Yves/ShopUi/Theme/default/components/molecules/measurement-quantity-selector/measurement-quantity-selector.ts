@@ -60,7 +60,7 @@ export default class MeasurementQuantitySelector extends Component {
     qtyInputChange() {
         let userQty = (this.qtyInput as HTMLInputElement).value;
         let qtyInBaseUnits = +userQty * +this.currentSalesUnit.conversion;
-        if (qtyInBaseUnits % 1 != 0) {
+        if (qtyInBaseUnits % 1 != 0 || +userQty % 1 != 0) {
             this.addToCartButton.setAttribute("disabled", "disabled");
             this.askCustomerForCorrectInput();
             return;
@@ -72,12 +72,11 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     askCustomerForCorrectInput() {
-        let userQty = (this.qtyInput as HTMLInputElement).value;
-        let qtyInBaseUnits = +userQty * +this.currentSalesUnit.conversion;
+        let userQty = +(this.qtyInput as HTMLInputElement).value;
         let choicesList = document.querySelector('#measurement-unit-choices .list');
         let currentChoice = document.querySelector('.measurement-unit-choice #current-choice');
-        let maxChoice = this.getMaxChoice(qtyInBaseUnits);
-        let minChoice = this.getMinChoice(qtyInBaseUnits);
+        let maxChoice = this.getMaxChoice(userQty);
+        let minChoice = this.getMinChoice(userQty);
         choicesList.innerHTML = '';
         currentChoice.innerHTML = '';
         currentChoice.textContent = `${userQty} ${this.currentSalesUnit.product_measurement_unit.code}`;
@@ -127,26 +126,50 @@ export default class MeasurementQuantitySelector extends Component {
         this.qtyInputChange()
     }
 
-    getMinChoice(qtyInBaseUnits: number) {
-        let minChoice = Math.floor(qtyInBaseUnits);
-        minChoice = minChoice - (minChoice % this.getQuantityInterval());
+    getMinChoice(qtyInSalesUnits: number) {
+        qtyInSalesUnits = this.floor(qtyInSalesUnits);
+        let qtyInBaseUnits = this.floor(qtyInSalesUnits * this.currentSalesUnit.conversion);
+        qtyInBaseUnits = this.floor(qtyInBaseUnits - (qtyInBaseUnits % this.getQuantityInterval()));
 
-        if (minChoice >= this.getMinQuantity()) {
-            return minChoice;
+        if (qtyInBaseUnits < this.getMinQuantity()) {
+            qtyInBaseUnits = this.getMinQuantity();
         }
 
-        return this.getMinQuantity();
+        qtyInSalesUnits = qtyInBaseUnits / this.currentSalesUnit.conversion;
+        if (qtyInSalesUnits % 1 !== 0) {
+            return this.getMinChoice((qtyInBaseUnits + this.getQuantityInterval()) / this.currentSalesUnit.conversion)
+        }
+
+        return qtyInBaseUnits;
     }
 
-    getMaxChoice(qtyInBaseUnits: number) {
-        let maxChoice = Math.ceil(qtyInBaseUnits);
-        maxChoice = maxChoice - (maxChoice % this.getQuantityInterval());
+    getMaxChoice(qtyInSalesUnits: number) {
+        qtyInSalesUnits = this.ceil(qtyInSalesUnits);
+        let qtyInBaseUnits = this.ceil(qtyInSalesUnits * this.currentSalesUnit.conversion);
+        qtyInBaseUnits = this.ceil(qtyInBaseUnits - (qtyInBaseUnits % this.getQuantityInterval()));
 
-        if (this.getMaxQuantity() > 0 && maxChoice <= this.getMaxQuantity()) {
-            return maxChoice;
+        if (this.getMaxQuantity() > 0 && qtyInBaseUnits > this.getMaxQuantity()) {
+            qtyInBaseUnits = this.getMaxQuantity();
         }
 
-        return this.getMaxQuantity();
+        qtyInSalesUnits = qtyInBaseUnits / this.currentSalesUnit.conversion;
+        if (qtyInSalesUnits % 1 !== 0) {
+            return this.getMaxChoice((qtyInBaseUnits + this.getQuantityInterval()) / this.currentSalesUnit.conversion)
+        }
+
+        return qtyInBaseUnits;
+    }
+
+    floor(value: number): number {
+        if (Math.floor(value) > 0) {
+            return Math.floor(value);
+        }
+
+        return Math.ceil(value);
+    }
+
+    ceil(value: number): number {
+        return Math.ceil(value);
     }
 
     getMinQuantity() {
@@ -181,6 +204,7 @@ export default class MeasurementQuantitySelector extends Component {
         let qtyInSalesUnits = +qtyInBaseUnits / +salesUnit.conversion;
         this.currentSalesUnit = salesUnit;
         (this.qtyInput as HTMLInputElement).value = qtyInSalesUnits.toString();
+        this.qtyInputChange();
     }
 
 
