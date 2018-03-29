@@ -66,11 +66,13 @@ class SubscriptionController extends AbstractController
             }
         }
 
-        return $this->view([
+        $data = [
             'newsletterSubscriptionForm' => $subscriptionForm->createView(),
             'error' => $error,
             'success' => $success,
-        ]);
+        ];
+
+        return $this->view($data, [], '@NewsletterWidget/views/subscription-form/subscription-form.twig');
     }
 
     /**

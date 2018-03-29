@@ -1,0 +1,38 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    businessUnits: _view.businessUnitCollection,
+
+    pagination: {
+        parameters: {},
+        currentPage: _view.pagination.page,
+        paginationPath: 'company/business-unit',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true
+    },
+
+    title: 'company.account.business_unit' | trans,
+    activePage: 'business-unit'
+} %}
+
+{% block companyContent %}
+    <div class="box text-right">
+        <a class="button" href="{{url('company/business-unit/create')}}">{{ 'company.account.business_unit.add' | trans }}</a>
+    </div>
+
+    <div class="box">
+        {% if data.businessUnits is empty %}
+            <p>{{ 'company.account.business_unit.no_units' | trans }}</p>
+        {% else %}
+            {% include molecule('business-unit-table', 'CompanyPage') with {
+                data: {
+                    businessUnits: data.businessUnits
+                }
+            } only %}
+            <hr/>
+            {% include molecule('pagination') with {
+                data: data.pagination
+            } only %}
+        {% endif %}
+    </div>
+{% endblock %}

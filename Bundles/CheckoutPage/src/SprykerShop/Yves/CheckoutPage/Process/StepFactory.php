@@ -167,7 +167,8 @@ class StepFactory extends AbstractFactory
             $this->createPaymentMethodHandler(),
             CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
             HomePageControllerProvider::ROUTE_HOME,
-            $this->getFlashMessenger()
+            $this->getFlashMessenger(),
+            $this->getCalculationClient()
         );
     }
 
@@ -195,6 +196,7 @@ class StepFactory extends AbstractFactory
             HomePageControllerProvider::ROUTE_HOME,
             [
                 'payment failed' => CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
+                'shipment failed' => CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
             ]
         );
     }

@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
+use Spryker\Yves\Kernel\PermissionAwareTrait;
+use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,6 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CheckoutController extends AbstractController
 {
+    use PermissionAwareTrait;
+
+    public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -45,7 +51,11 @@ class CheckoutController extends AbstractController
             return $response;
         }
 
-        return $this->view($response, $this->getFactory()->getCustomerPageWidgetPlugins());
+        return $this->view(
+            $response,
+            $this->getFactory()->getCustomerPageWidgetPlugins(),
+            '@CheckoutPage/views/login/login.twig'
+        );
     }
 
     /**
@@ -66,7 +76,11 @@ class CheckoutController extends AbstractController
             return $response;
         }
 
-        return $this->view($response, $this->getFactory()->getCustomerPageWidgetPlugins());
+        return $this->view(
+            $response,
+            $this->getFactory()->getCustomerPageWidgetPlugins(),
+            '@CheckoutPage/views/address/address.twig'
+        );
     }
 
     /**
@@ -87,7 +101,11 @@ class CheckoutController extends AbstractController
             return $response;
         }
 
-        return $this->view($response, $this->getFactory()->getCustomerPageWidgetPlugins());
+        return $this->view(
+            $response,
+            $this->getFactory()->getCustomerPageWidgetPlugins(),
+            '@CheckoutPage/views/shipment/shipment.twig'
+        );
     }
 
     /**
@@ -108,7 +126,11 @@ class CheckoutController extends AbstractController
             return $response;
         }
 
-        return $this->view($response, $this->getFactory()->getCustomerPageWidgetPlugins());
+        return $this->view(
+            $response,
+            $this->getFactory()->getCustomerPageWidgetPlugins(),
+            '@CheckoutPage/views/payment/payment.twig'
+        );
     }
 
     /**
@@ -129,7 +151,11 @@ class CheckoutController extends AbstractController
             return $viewData;
         }
 
-        return $this->view($viewData, $this->getFactory()->getSummaryPageWidgetPlugins());
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getSummaryPageWidgetPlugins(),
+            '@CheckoutPage/views/summary/summary.twig'
+        );
     }
 
     /**
@@ -139,6 +165,11 @@ class CheckoutController extends AbstractController
      */
     public function placeOrderAction(Request $request)
     {
+        if (!$this->can('PlaceOrderWithAmountUpToPermissionPlugin', $this->getFactory()->getQuoteClient()->getQuote()->getTotals()->getGrandTotal())) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
+        }
+
         return $this->createStepProcess()->process($request);
     }
 
@@ -155,15 +186,23 @@ class CheckoutController extends AbstractController
             return $response;
         }
 
-        return $this->view($response, $this->getFactory()->getCustomerPageWidgetPlugins());
+        return $this->view(
+            $response,
+            $this->getFactory()->getCustomerPageWidgetPlugins(),
+            '@CheckoutPage/views/order-success/order-success.twig'
+        );
     }
 
     /**
-     * @return array
+     * @return mixed
      */
     public function errorAction()
     {
-        return [];
+        return $this->view(
+            null,
+            null,
+            '@CheckoutPage/views/order-fail/order-fail.twig'
+        );
     }
 
     /**

@@ -1,0 +1,9 @@
+{% extends molecule('filter-range', 'CatalogPage') %}
+
+{% set name = 'filter-price-range' %}
+
+{% set filter = data.filter %}
+{% set min = (filter.min | default(0)) | moneyRaw | floor %}
+{% set activeMin = (filter.activeMin | default(0)) | moneyRaw | floor %}
+{% set max = (filter.max | default(0)) | moneyRaw | ceil %}
+{% set activeMax = (filter.activeMax | default(0)) | moneyRaw | ceil %}

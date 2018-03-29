@@ -1,0 +1,28 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    users: _view.companyUserCollection,
+    idCompanyRole: _view.idCompanyRole,
+    
+    title: 'company.account.company_role.users' | trans,
+    activePage: 'role'
+} %}
+
+{% block companyContent %}
+    <div class="box text-right">
+        <a class="button button--hollow" href="{{ path('company/company-role/details', {'id': data.idCompanyRole}) }}">
+            {{ 'general.back.button' | trans }}
+        </a>
+    </div>
+    
+    {% include molecule('role-user-table', 'CompanyPage') with {
+        class: 'box',
+        data: {
+            users: data.users,
+            idCompanyRole: data.idCompanyRole,
+            actions: {
+                switch: true
+            }
+        }
+    } only %}
+{% endblock %}

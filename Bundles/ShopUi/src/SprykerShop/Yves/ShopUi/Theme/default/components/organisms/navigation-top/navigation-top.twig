@@ -1,0 +1,39 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'navigation-top',
+    tag: 'nav'
+} %}
+
+{% define data = {
+    cartQuantity: app['cart.quantity'],
+    showUserMenu: not (hideUserMenu | default(false)),
+    isUserAuthenticated: is_granted('IS_AUTHENTICATED_FULLY')
+} %}
+
+{% set cartQuantity = data.cartQuantity > 0 ? data.cartQuantity ~ ' ' : '' %}
+
+{% block body %}
+    <ul class="menu menu--inline">
+        <li class="menu__item">{{ widgetGlobal('PriceModeSwitcherWidgetPlugin') }}</li>
+        <li class="menu__separator"></li>
+        <li class="menu__item">{{ widgetGlobal('CurrencyWidgetPlugin') }}</li>
+        <li class="menu__separator"></li>
+        <li class="menu__item">{{ widgetGlobal('LanguageSwitcherWidgetPlugin', app.request) }}</li>
+        <li class="menu__separator"></li>
+        <li class="menu__item"><a href="{{ url('cart') }}">{{cartQuantity}}{{ 'global.cart' | trans }}</a></li>
+        <li class="menu__separator"></li>
+        <li class="menu__item"><a href="{{ url('quick-order') }}">{{ 'quick-order.page-title'|trans }}</a></li>
+        <li class="menu__separator"></li>
+
+        {% if data.showUserMenu %}
+            {% if data.isUserAuthenticated %}
+                <li class="menu__item"><a href="{{ url('customer/overview') }}">{{ 'customer.profile'|trans }}</a></li>
+                <li class="menu__item"><a href="{{ url('wishlist/overview') }}">{{ 'wishlist.wishlist'|trans }}</a></li>
+                <li class="menu__item"><a href="{{ url('logout') }}">{{ 'customer.logout'|trans }}</a></li>
+            {% else %}
+                <li class="menu__item"><a href="{{ url('login') }}">{{ 'customer.login'|trans }}</a></li>
+            {% endif %}
+        {% endif %}
+    </ul>
+{% endblock %}

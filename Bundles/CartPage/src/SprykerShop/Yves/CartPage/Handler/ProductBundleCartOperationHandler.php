@@ -9,12 +9,17 @@ namespace SprykerShop\Yves\CartPage\Handler;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 
 // TODO: this needs to be moved from this module
 class ProductBundleCartOperationHandler extends BaseHandler implements CartOperationInterface
 {
+    use PermissionAwareTrait;
+
+    public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+
     /**
      * @var \SprykerShop\Yves\CartPage\Handler\CartOperationInterface
      */
@@ -58,6 +63,11 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
      */
     public function add($sku, $quantity, array $optionValueUsageIds = [])
     {
+        if (!$this->can('AddCartItemPermissionPlugin')) {
+            $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+            return;
+        }
+
         $this->cartOperationHandler->add($sku, $quantity, $optionValueUsageIds);
     }
 
@@ -68,6 +78,11 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
      */
     public function addItems(array $itemTransfers)
     {
+        if (!$this->can('AddCartItemPermissionPlugin')) {
+            $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+            return;
+        }
+
         $this->cartOperationHandler->addItems($itemTransfers);
     }
 
@@ -79,6 +94,11 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
      */
     public function remove($sku, $groupKey = null)
     {
+        if (!$this->can('RemoveCartItemPermissionPlugin')) {
+            $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+            return;
+        }
+
         $bundledItemsToRemove = $this->getBundledItems($groupKey);
         if (count($bundledItemsToRemove) > 0) {
             $quoteTransfer = $this->cartClient->removeItems($bundledItemsToRemove);
@@ -124,6 +144,11 @@ class ProductBundleCartOperationHandler extends BaseHandler implements CartOpera
      */
     public function changeQuantity($sku, $quantity, $groupKey = null)
     {
+        if (!$this->can('ChangeCartItemPermissionPlugin')) {
+            $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+            return;
+        }
+
         $bundledProductTotalQuantity = $this->getBundledProductTotalQuantity($groupKey);
 
         if ($bundledProductTotalQuantity > 0) {

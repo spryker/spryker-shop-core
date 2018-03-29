@@ -1,0 +1,30 @@
+{% if _widget.viewMode == 'list' %}
+    {% set productTemplate = molecule('product-list-item') %}
+    {% set class = 'col col--sm-12' %}
+{% else %}
+    {% set productTemplate = molecule('product-card') %}
+    {% set class = 'col col--sm-12 col--md-6 col--lg-6 col--xl-4' %}
+{% endif %}
+
+{% embed productTemplate with {
+    productTemplate: productTemplate,
+    class: class,
+    data: {
+        name: _widget.product.abstract_name,
+        abstractId: _widget.product.id_product_abstract,
+        url: _widget.product.url,
+        imageUrl: (_widget.product.images|length ? _widget.product.images.0.external_url_small : ''),
+        price: _widget.product.price,
+        originalPrice: (_widget.product.prices.ORIGINAL is defined ? _widget.product.prices.ORIGINAL : null)
+    }
+} only %}
+    {% block labels %}
+        {{ widget('ProductLabelWidgetPlugin', _widget.product.id_product_labels) }}
+    {% endblock %}
+
+    {% block rating %}
+        {% if _widget.product.rating is defined %}
+            {{ widget('ProductReviewWidgetPlugin', _widget.product.rating) }}
+        {% endif %}
+    {% endblock %}
+{% endembed %}

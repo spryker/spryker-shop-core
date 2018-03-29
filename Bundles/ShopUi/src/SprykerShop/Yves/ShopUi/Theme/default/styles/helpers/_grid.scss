@@ -1,0 +1,64 @@
+@function span($column, $columns: $grid-columns) {
+    @return (100% / $columns) * $column;
+}
+
+@function edge-min($edges) {
+    @if length($edges) > 0 {
+        @return nth($edges, 1);
+    }
+
+    @return 0;
+}
+
+@function edge-max($edges) {
+    @if length($edges) > 1 {
+        @return nth($edges, 2);
+    }
+
+    @return null;
+}
+
+@mixin media-min($min: 0) {
+    @media only screen and (min-width: $min) {
+        @content;
+    }
+}
+
+@mixin media-between($min: 0, $max: $grid-max-width) {
+    @media only screen and (min-width: $min) and (max-width: $max) {
+        @content;
+    }
+}
+
+@mixin media-max($max: $grid-max-width) {
+    @media only screen and (max-width: $max) {
+        @content;
+    }
+}
+
+@mixin breakpoint($min-bp, $max-bp: null) {
+    $edges-min: map-get($grid-breakpoints, $min-bp);
+    $edge-min: edge-min($edges-min);
+
+    @if $max-bp == null {
+        @include media-min($edge-min) {
+            @content;
+        }
+    } @else {
+        $edges-max: map-get($grid-breakpoints, $max-bp);
+        $edge-max: edge-max($edges-max);
+
+        @if $edge-max == null {
+            @include media-min($edge-min) {
+                @content;
+            }
+        } @else {
+            @include media-between($edge-min, $edge-max) {
+                @content;
+            }
+        }
+    }
+}
+
+
+

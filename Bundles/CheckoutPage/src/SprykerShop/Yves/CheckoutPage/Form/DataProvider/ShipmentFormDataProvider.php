@@ -167,7 +167,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected function appendShipmentPrice(ShipmentMethodTransfer $shipmentMethodTransfer, $shipmentDescription)
     {
         $shipmentPrice = $this->getFormattedShipmentPrice($shipmentMethodTransfer);
-        $shipmentDescription .= ': <strong>' . $shipmentPrice . '</strong>';
+        $shipmentDescription .= ': ' . $shipmentPrice;
 
         return $shipmentDescription;
     }
