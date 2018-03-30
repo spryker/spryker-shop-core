@@ -1,5 +1,17 @@
-{% set productImage = cartItem.images | first %}
+{% extends model('component') %}
 
+{% define config = {
+    name: 'cart-image',
+    tag: 'div'
+} %}
+
+{% define data = {
+    cartItem: required
+} %}
+
+{% set productImage = data.cartItem.images | first %}
+
+{% block body %}
 {% if productImage is not empty %}
     <div class="cart-item__image-container small-3 large-2 columns">
         <img class="thumbnail cart-item__image" src="{{ productImage.externalUrlLarge }}"/>
@@ -9,3 +21,4 @@
         <small>{{ 'global.no_image_available' | trans }}</small>
     </div>
 {% endif %}
+{% endblock %}

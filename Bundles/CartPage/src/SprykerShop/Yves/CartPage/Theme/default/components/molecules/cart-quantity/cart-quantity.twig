@@ -1,0 +1,49 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-quantity',
+    tag: 'div'
+} %}
+
+{% define data = {
+    cartItem: required
+} %}
+
+{% block body %}
+
+    <div class="small-4 medium-3 large-2 columns">
+        <ul class="no-bullet">
+            <li>
+                <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.cartItem.sku }) }}">
+                    <label>
+                        <strong>{{ 'cart.item_quantity' | trans }}</strong>
+                        <span class="input-group __no-margin-bottom">
+
+                             {% if not data.cartItem.maxQuantity or data.cartItem.maxQuantity < 0 %}
+                                 <input class="input-group-field" type="number" value="{{ data.cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>
+                             {% else %}
+                                 <select name="quantity">
+                                    {% for i in range(1, data.cartItem.maxQuantity) %}
+                                        <option {{ (i == data.cartItem.quantity) ? 'selected' : '' }} value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                 </select>
+                             {% endif %}
+
+                            <span class="input-group-button">
+                                <button type="submit" class="button expanded __no-margin-bottom" {{qa('cart-update-quantity-button')}}><i class="fa fa-refresh"></i></button>
+                            </span>
+
+                         </span>
+                    </label>
+                    <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
+                </form>
+            </li>
+            <li>
+                <a href="/cart/remove/{{ data.cartItem.sku }}/{{ data.cartItem.groupKey }}">&times;
+                    <small>{{ 'remove' | trans }}</small>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+{% endblock %}
