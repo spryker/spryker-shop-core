@@ -47,7 +47,9 @@
             <div class="col col--sm-12 col--lg-4">
                 <div class="box">
                     {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
+                    {% if can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
                     {{ widget('DiscountVoucherFormWidgetPlugin') }}
+                    {% endif %}
                     <hr/>
                     {% include '@CartPage/_partials/cart-summary.twig' %}
                 </div>

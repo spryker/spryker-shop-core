@@ -16,6 +16,8 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
  */
 class UnShareController extends AbstractController
 {
+    public const KEY_GLOSSARY_SHARED_CART_PAGE_UNSHARE_SUCCESS = '';
+
     /**
      * @param int $idQuote
      * @param int $idCompanyUser
@@ -32,7 +34,7 @@ class UnShareController extends AbstractController
         $quoteResponseTransfer = $this->getFactory()->getSharedCartClient()
                         ->removeShareCart($shareCartRequestTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage('shared_cart_page.unshare.success');
+            $this->addSuccessMessage(static::KEY_GLOSSARY_SHARED_CART_PAGE_UNSHARE_SUCCESS);
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 

@@ -47,4 +47,12 @@ class CartNoteWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
+
+    /**
+     * @return \SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToGlossaryClientInterface
+     */
+    public function getGlossaryClient()
+    {
+        return $this->getProvidedDependency(CartNoteWidgetDependencyProvider::CLIENT_GLOSSARY);
+    }
 }

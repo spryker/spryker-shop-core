@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CartNoteWidget\Controller;
 
+use Spryker\Shared\CartNote\Code\Messages;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use SprykerShop\Yves\CartNoteWidget\Form\QuoteItemCartNoteForm;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
@@ -17,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ItemController extends AbstractController
 {
-    public const MESSAGE_CART_NOTE_ADDED_SUCCESS_TO_ITEM = 'cart_note.cart_page.item.note_added';
     public const REQUEST_HEADER_REFERER = 'referer';
 
     /**
@@ -36,9 +36,14 @@ class ItemController extends AbstractController
             $sku = $form->get(QuoteItemCartNoteForm::FIELD_SKU)->getData();
             $groupKey = $form->get(QuoteItemCartNoteForm::FIELD_GROUP_KEY)->getData();
 
-            $this->getFactory()
+            $quoteResponseTransfer = $this->getFactory()
                 ->getCartNoteClient()
                 ->setNoteToQuoteItem($note, $sku, $groupKey);
+            if ($quoteResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage(
+                    $this->getSuccessMessage($sku)
+                );
+            }
         }
 
         return $this->redirectResponseExternal($this->getRefererUrl($request));
@@ -56,5 +61,16 @@ class ItemController extends AbstractController
         }
 
         return CartControllerProvider::ROUTE_CART;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return string
+     */
+    protected function getSuccessMessage($sku): string
+    {
+        return $this->getFactory()->getGlossaryClient()
+            ->translate(Messages::MESSAGE_CART_NOTE_ADDED_TO_ITEM_SUCCESS, $this->getLocale(), ['%sku%' => $sku]);
     }
 }
