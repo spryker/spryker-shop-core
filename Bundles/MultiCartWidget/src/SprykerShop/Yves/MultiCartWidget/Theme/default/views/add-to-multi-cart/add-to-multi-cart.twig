@@ -10,7 +10,9 @@
 {% set defaultCartName = (data.isMultiCartAllowed and data.carts | length > 0) ? ': ' ~ data.cartDefault.name : '' %}
 
 {% block body %}
+    {% if data.isMultiCartAllowed %}
     {{ widget('SharedCartAddSeparateProductWidgetPlugin') }}
+    {% endif %}
     {% if widgetExists('SharedCartMultiCartAddWidgetPlugin') and data.isMultiCartAllowed %}
         {{ widget('SharedCartMultiCartAddWidgetPlugin', data.cartDefault, data.carts, data.disabled) }}
     {% else %}
@@ -20,7 +22,7 @@
                     name: 'cart-plus'
                 }
             } only %}
-            {{ 'page.detail.add-to-cart' | trans }}{{ defaultCartName }}
+            {{ 'page.detail.add-to-cart' | trans }} {{ defaultCartName }}
         </button>
         {% if data.isMultiCartAllowed and data.carts | length > 0 %}
             {% include molecule('add-to-cart-seletor', 'MultiCartWidget') with {

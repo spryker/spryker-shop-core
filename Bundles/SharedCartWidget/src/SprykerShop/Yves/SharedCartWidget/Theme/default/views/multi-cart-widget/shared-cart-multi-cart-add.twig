@@ -14,7 +14,7 @@
                 name: 'cart-plus'
             }
         } only %}
-        {{ 'page.detail.add-to-cart' | trans }}{{ data.cart.name }}
+        {{ 'page.detail.add-to-cart' | trans }} {{ data.cart.name }}
     </button>
     {% if data.carts | length > 0 %}
         {% include molecule('add-to-cart-seletor', 'MultiCartWidget') with {
