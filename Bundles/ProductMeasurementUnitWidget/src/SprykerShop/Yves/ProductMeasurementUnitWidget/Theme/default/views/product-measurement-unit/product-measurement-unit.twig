@@ -15,7 +15,8 @@
     <div class="col col--sm-5">
         <label>
             {{ 'product.quantity' | trans }}
-            <input class="select-quantity input" type="number" value="1" step="1" name="sales-unit-value"/>
+            <input id="sales-unit-quantity" class="input" type="number" value="1" step="1" name="sales-unit-value"/>
+            <input id="base-unit-quantity" type="hidden" name="quantity"/>
         </label>
         {% if data.salesUnitCount > 1 %}
             <label>
@@ -37,10 +38,8 @@
                     {% endblock %}
                 {% endembed %}
             </label>
-            <input type="hidden" value="{{ data.idProductConcrete }}" name="id-product-concrete">
         {% elseif data.salesUnitCount == 1 %}
-            <input type="hidden" value="{{ data.salesUnits|first.idProductMeasurementSalesUnit  }}" name="id-product-measurement-sales-unit">
-            <input type="hidden" value="{{ data.idProductConcrete }}" name="id-product-concrete">
+            <input type="hidden" value="{{ data.salesUnits|first.idProductMeasurementSalesUnit }}" name="id-product-measurement-sales-unit">
         {% endif %}
     </div>
     <div class="col col--sm-6">
@@ -60,11 +59,12 @@
             {% for salesUnit in data.salesUnits %}
                 {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
                     <span>1 {{ data.baseUnit.name | trans }}
-                        = {{ 1 / salesUnit.conversion }} {{ salesUnit.productMeasurementUnit.name | trans }}</span><br/>
+                        = {{ ((1 / salesUnit.conversion) * 100)|round / 100 }} {{ salesUnit.productMeasurementUnit.name | trans }}</span>
+                    <br/>
                 {% endif %}
             {% endfor %}
         </div>
-        {% include molecule('measurement-quantity-selector') with {
+        {% include molecule('measurement-quantity-selector', 'ProductMeasurementUnitWidget') with {
             data: {
                 json: data.jsonScheme
             }

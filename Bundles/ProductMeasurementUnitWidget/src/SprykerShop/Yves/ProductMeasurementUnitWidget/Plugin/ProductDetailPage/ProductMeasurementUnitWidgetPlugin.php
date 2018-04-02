@@ -49,6 +49,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
             );
         }
 
+
         $this
             ->addParameter('product', $productViewTransfer)
             ->addParameter('qtyOptions', $qtyOptions)

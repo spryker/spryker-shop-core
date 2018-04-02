@@ -1,9 +1,10 @@
-import Component from '../../../models/component';
+import Component from 'shop-ui/models/component';
 
 export default class MeasurementQuantitySelector extends Component {
-    qtyInput: HTMLElement;
-    measurementUnitInput: HTMLElement;
-    addToCartButton: HTMLElement;
+    qtyInSalesUnitInput: HTMLInputElement;
+    qtyInBaseUnitInput: HTMLInputElement;
+    measurementUnitInput: HTMLSelectElement;
+    addToCartButton: HTMLButtonElement;
 
     baseUnit: any;
     salesUnits: any;
@@ -13,9 +14,10 @@ export default class MeasurementQuantitySelector extends Component {
 
 
     readyCallback(event?: Event): void {
-        this.qtyInput = document.querySelector('.select-quantity');
-        this.measurementUnitInput = document.querySelector('.select-measurement-unit');
-        this.addToCartButton = document.getElementById('add-to-cart-button');
+        this.qtyInSalesUnitInput = <HTMLInputElement>document.querySelector('#sales-unit-quantity');
+        this.qtyInBaseUnitInput = <HTMLInputElement>document.querySelector('#base-unit-quantity');
+        this.measurementUnitInput = <HTMLSelectElement>document.querySelector('.select-measurement-unit');
+        this.addToCartButton = <HTMLButtonElement>document.getElementById('add-to-cart-button');
 
         this.initJson();
         this.initCurrentSalesUnit();
@@ -53,16 +55,18 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     mapEvents() {
-        this.qtyInput.addEventListener('change', (event: Event) => this.qtyInputChange());
+        this.qtyInSalesUnitInput.addEventListener('change', (event: Event) => this.qtyInputChange());
         this.measurementUnitInput.addEventListener('change', (event: Event) => this.measurementUnitInputChange(event));
     }
 
-    qtyInputChange() {
-        let qtyInSalesUnits = +(this.qtyInput as HTMLInputElement).value;
+    qtyInputChange(qtyInSalesUnits?: number) {
+        if (typeof qtyInSalesUnits === 'undefined') {
+            qtyInSalesUnits = +this.qtyInSalesUnitInput.value;
+        }
         let qtyInBaseUnits = qtyInSalesUnits * +this.currentSalesUnit.conversion;
-        if (qtyInBaseUnits % 1 != 0 || qtyInSalesUnits * this.currentSalesUnit.precision % 1 !== 0) {
+        if (qtyInBaseUnits % 1 != 0) {
             this.addToCartButton.setAttribute("disabled", "disabled");
-            this.askCustomerForCorrectInput();
+            this.askCustomerForCorrectInput(qtyInSalesUnits);
             return;
         }
 
@@ -71,42 +75,41 @@ export default class MeasurementQuantitySelector extends Component {
         return;
     }
 
-    askCustomerForCorrectInput() {
-        let userQty = +(this.qtyInput as HTMLInputElement).value;
+    askCustomerForCorrectInput(qtyInSalesUnits: number) {
         let choicesList = document.querySelector('#measurement-unit-choices .list');
         let currentChoice = document.querySelector('.measurement-unit-choice #current-choice');
-        let maxChoice = this.getMaxChoice(userQty);
-        let minChoice = this.getMinChoice(userQty);
+        let minChoice = this.getMinChoice(qtyInSalesUnits);
+        let maxChoice = this.getMaxChoice(qtyInSalesUnits);
         choicesList.innerHTML = '';
         currentChoice.innerHTML = '';
-        currentChoice.textContent = `${userQty} ${this.currentSalesUnit.product_measurement_unit.code}`;
+        currentChoice.textContent = `${qtyInSalesUnits} ${this.currentSalesUnit.product_measurement_unit.code}`;
 
-        [minChoice, maxChoice]
-            .filter((v, i, a) => a.indexOf(v) === i)
-            .forEach(function (choice) {
-                let elem = this.createChoiceElement(choice);
-                if (elem !== null) {
-                    choicesList.appendChild(elem);
-                }
+        let choiceElements = [];
+        choiceElements.push(this.createChoiceElement(minChoice));
+        if (maxChoice != minChoice) {
+            choiceElements.push(this.createChoiceElement(maxChoice));
+        }
 
-            }.bind(this));
+        choiceElements.forEach((element) => (element !== null) ? choicesList.appendChild(element) : null);
 
         document.querySelector('.measurement-unit-choice').classList.remove('is-hidden');
     }
 
-    createChoiceElement(choice: number) {
-        if (choice > 0) {
+    createChoiceElement(qtyInBaseUnits: number) {
+        if (qtyInBaseUnits > 0) {
             let choiceElem = document.createElement('span');
-            let valueInSalesUnits = choice / this.currentSalesUnit.conversion;
+            let qtyInSalesUnits = qtyInBaseUnits / this.currentSalesUnit.conversion;
             let measurementSalesUnitCode = this.currentSalesUnit.product_measurement_unit.code;
-            let valueInBaseUnits = valueInSalesUnits * this.currentSalesUnit.conversion;
             let measurementBaseUnitCode = this.baseUnit.code;
             choiceElem.classList.add('link');
-            choiceElem.setAttribute('data-qty', valueInSalesUnits.toString());
-            choiceElem.textContent = `(${valueInSalesUnits} ${measurementSalesUnitCode}) = (${valueInBaseUnits} ${measurementBaseUnitCode})`;
+            choiceElem.setAttribute('data-base-unit-qty', qtyInBaseUnits.toString());
+            choiceElem.setAttribute('data-sales-unit-qty', qtyInSalesUnits.toString());
+            choiceElem.textContent = `(${(Math.round(qtyInSalesUnits * 100) / 100).toString()} ${measurementSalesUnitCode}) = (${qtyInBaseUnits} ${measurementBaseUnitCode})`;
             choiceElem.onclick = function (event: Event) {
-                let elem = event.srcElement as HTMLElement;
-                this.selectQty(parseFloat(elem.dataset.qty));
+                let element = event.srcElement as HTMLSelectElement;
+                let qtyInBaseUnits = parseFloat(element.dataset.baseUnitQty);
+                let qtyInSalesUnits = parseFloat(element.dataset.salesUnitQty);
+                this.selectQty(qtyInBaseUnits, qtyInSalesUnits);
             }.bind(this);
 
             choiceElem.style.display = 'block';
@@ -117,13 +120,12 @@ export default class MeasurementQuantitySelector extends Component {
         return null;
     }
 
-    selectQty(qty) {
-        let qtyInput = document.querySelector('.select-quantity') as HTMLSelectElement;
-
-        qtyInput.value = qty.toString();
+    selectQty(qtyInBaseUnits: number, qtyInSalesUnits: number) {
+        this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
+        this.qtyInSalesUnitInput.value = (Math.round(qtyInSalesUnits * 100) / 100).toString();
         this.addToCartButton.removeAttribute("disabled");
         document.querySelector('.measurement-unit-choice').classList.add('is-hidden');
-        this.qtyInputChange()
+        this.qtyInputChange(qtyInSalesUnits);
     }
 
     getMinChoice(qtyInSalesUnits: number) {
@@ -134,25 +136,15 @@ export default class MeasurementQuantitySelector extends Component {
             qtyInBaseUnits = this.getMinQuantity();
         }
 
-        qtyInSalesUnits = qtyInBaseUnits / this.currentSalesUnit.conversion;
-        if (qtyInSalesUnits * this.currentSalesUnit.precision % 1 !== 0) {
-            return this.getMinChoice((qtyInBaseUnits + this.getQuantityInterval()) / this.currentSalesUnit.conversion)
-        }
-
         return qtyInBaseUnits;
     }
 
     getMaxChoice(qtyInSalesUnits: number) {
         let qtyInBaseUnits = this.ceil(qtyInSalesUnits * this.currentSalesUnit.conversion);
-        qtyInBaseUnits = this.ceil(qtyInBaseUnits - (qtyInBaseUnits % this.getQuantityInterval()));
+        qtyInBaseUnits = this.ceil(qtyInBaseUnits + (qtyInBaseUnits % this.getQuantityInterval()));
 
         if (this.getMaxQuantity() > 0 && qtyInBaseUnits > this.getMaxQuantity()) {
             qtyInBaseUnits = this.getMaxQuantity();
-        }
-
-        qtyInSalesUnits = qtyInBaseUnits / this.currentSalesUnit.conversion;
-        if (qtyInSalesUnits * this.currentSalesUnit.precision % 1 !== 0) {
-            return this.getMaxChoice((qtyInBaseUnits + this.getQuantityInterval()) / this.currentSalesUnit.conversion)
         }
 
         return qtyInBaseUnits;
@@ -197,14 +189,13 @@ export default class MeasurementQuantitySelector extends Component {
     measurementUnitInputChange(event: Event) {
         let salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
         let salesUnit = this.getSalesUnitById(salesUnitId);
-        let userQty = (this.qtyInput as HTMLInputElement).value;
-        let qtyInBaseUnits = +userQty * +this.currentSalesUnit.conversion;
-        let qtyInSalesUnits = +qtyInBaseUnits / +salesUnit.conversion;
+        let qtyInSalesUnits = +this.qtyInSalesUnitInput.value;
+        let qtyInBaseUnits = qtyInSalesUnits * this.currentSalesUnit.conversion;
+        qtyInSalesUnits = qtyInBaseUnits / salesUnit.conversion;
         this.currentSalesUnit = salesUnit;
-        (this.qtyInput as HTMLInputElement).value = qtyInSalesUnits.toString();
-        this.qtyInputChange();
+        this.qtyInSalesUnitInput.value = (Math.round(qtyInSalesUnits * 100) / 100).toString();
+        this.qtyInputChange(qtyInSalesUnits);
     }
-
 
     getSalesUnitById(salesUnitId: number) {
         for (let key in this.salesUnits) {

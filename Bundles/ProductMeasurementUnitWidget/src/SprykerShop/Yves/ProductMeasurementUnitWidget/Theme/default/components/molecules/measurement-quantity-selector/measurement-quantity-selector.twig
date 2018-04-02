@@ -10,7 +10,7 @@
 } %}
 
 {% block body %}
-    {% include atom('json-scheme') with {
+    {% include atom('json-scheme', 'ProductMeasurementUnitWidget') with {
         class: config.name,
         data: {
             name: config.name,
