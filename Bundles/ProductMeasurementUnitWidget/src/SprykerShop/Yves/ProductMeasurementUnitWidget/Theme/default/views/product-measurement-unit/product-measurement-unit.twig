@@ -7,6 +7,7 @@
     minQuantityInBaseUnits: _widget.minQuantityInBaseUnits,
     minQuantityInSalesUnits: _widget.minQuantityInSalesUnits,
     baseUnit: _widget.baseUnit | default(null),
+    idBaseUnit: _widget.idBaseUnit | default(null),
     salesUnits: _widget.salesUnits | default([]),
     jsonScheme: _widget.jsonScheme | default(''),
     salesUnitCount : _widget.salesUnits|length
@@ -17,28 +18,42 @@
     <div class="col col--sm-5">
         <label>
             {{ 'product.quantity' | trans }}
-            <input id="sales-unit-quantity" class="input" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
-            <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
+            {% if data.salesUnitCount > 1 %}
+                <input id="sales-unit-quantity" class="input" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
+                <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
+            {% elseif data.salesUnitCount == 1 %}
+                <input id="base-unit-quantity" class="input" type="number" step="1" value="1" name="quantity"/>
+                <input type="hidden" value="{{ data.idBaseUnit }}" name="id-product-measurement-sales-unit">
+            {% else %}
+                {% include atom('select') with {
+                    modifiers: ['expand'],
+                    data: {
+                        options: data.qtyOptions
+                    }
+                } only %}
+            {% endif %}
         </label>
-        <label>
-            {{ 'product.measurement.sales_unit' | trans }}
-            {% embed atom('select') with {
-                modifiers: ['expand'],
-                attributes: {
-                    name: 'id-product-measurement-sales-unit'
-                },
-                embed: {
-                    salesUnits: data.salesUnits
-                }
-            } only %}
-                {% block selectClass %}select-measurement-unit{% endblock %}
-                {% block options %}
-                    {% for salesUnit in embed.salesUnits %}
-                        <option value="{{ salesUnit.idProductMeasurementSalesUnit }}" {{ (salesUnit.isDefault) ? 'selected' : '' }}>{{ salesUnit.productMeasurementUnit.name | trans }}</option>
-                    {% endfor %}
-                {% endblock %}
-            {% endembed %}
-        </label>
+        {% if data.salesUnitCount > 1 %}
+            <label>
+                {{ 'product.measurement.sales_unit' | trans }}
+                {% embed atom('select') with {
+                    modifiers: ['expand'],
+                    attributes: {
+                        name: 'id-product-measurement-sales-unit'
+                    },
+                    embed: {
+                        salesUnits: data.salesUnits
+                    }
+                } only %}
+                    {% block selectClass %}select-measurement-unit{% endblock %}
+                    {% block options %}
+                        {% for salesUnit in embed.salesUnits %}
+                            <option value="{{ salesUnit.idProductMeasurementSalesUnit }}" {{ (salesUnit.isDefault) ? 'selected' : '' }}>{{ salesUnit.productMeasurementUnit.name | trans }}</option>
+                        {% endfor %}
+                    {% endblock %}
+                {% endembed %}
+            </label>
+        {% endif %}
     </div>
     <div class="col col--sm-6">
         <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}
@@ -51,27 +66,29 @@
         {{ 'page.detail.add-to-cart' | trans }}
         </button>
     </div>
-    <hr/>
-    <div class="col col--sm-12">
-        {% for salesUnit in data.salesUnits %}
-            {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
-                <span>1 {{ data.baseUnit.name | trans }}
-                    = {{ (1 / salesUnit.conversion)|round(3) }} {{ salesUnit.productMeasurementUnit.name | trans }}</span>
-                <br/>
-            {% endif %}
-        {% endfor %}
-    </div>
-    {% include molecule('measurement-quantity-selector', 'ProductMeasurementUnitWidget') with {
-        data: {
-            json: data.jsonScheme
-        }
-    } only %}
-    <br/>
-    <div class="col col--sm-12 is-hidden measurement-unit-choice">
-        <span>The quantity you have chosen (<span id="current-choice"></span>) is in between 2 base units</span>
-        <span>Would you like to add:</span>
-        <div id="measurement-unit-choices" class="col col--sm-12">
-            <ul class="list"></ul>
+    {% if data.salesUnitCount > 1 %}
+        <hr/>
+        <div class="col col--sm-12">
+            {% for salesUnit in data.salesUnits %}
+                {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
+                    <span>1 {{ data.baseUnit.name | trans }}
+                        = {{ (1 / salesUnit.conversion)|round(3) }} {{ salesUnit.productMeasurementUnit.name | trans }}</span>
+                    <br/>
+                {% endif %}
+            {% endfor %}
         </div>
-    </div>
+        {% include molecule('measurement-quantity-selector', 'ProductMeasurementUnitWidget') with {
+            data: {
+                json: data.jsonScheme
+            }
+        } only %}
+        <br/>
+        <div class="col col--sm-12 is-hidden measurement-unit-choice">
+            <span>The quantity you have chosen (<span id="current-choice"></span>) is in between 2 base units</span>
+            <span>Would you like to add:</span>
+            <div id="measurement-unit-choices" class="col col--sm-12">
+                <ul class="list"></ul>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

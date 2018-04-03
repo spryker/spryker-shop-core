@@ -27,6 +27,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
     public function initialize(ProductViewTransfer $productViewTransfer, array $qtyOptions = []): void
     {
         $salesUnits = null;
+        $idBaseUnit = null;
         $baseUnit = null;
         $productQuantityStorageTransfer = null;
 
@@ -42,7 +43,16 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
             $productQuantityStorageTransfer = $this->getFactory()
                 ->getProductQuantityStorageClient()
                 ->findProductQuantityStorage($productViewTransfer->getIdProductConcrete());
+
+            $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
+                ->getProductMeasurementUnitStorageClient()
+                ->findProductConcreteMeasurementUnitStorage($productViewTransfer->getIdProductConcrete());
+
+            if ($productConcreteMeasurementUnitStorageTransfer !== null) {
+                $idBaseUnit = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementBaseUnit();
+            }
         }
+
         $minQuantityInBaseUnits = $this->getMinQuantityInBaseUnits($productQuantityStorageTransfer);
         $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($salesUnits, $minQuantityInBaseUnits);
 
@@ -52,6 +62,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
             ->addParameter('minQuantityInBaseUnits', $minQuantityInBaseUnits)
             ->addParameter('minQuantityInSalesUnits', $minQuantityInSalesUnits)
             ->addParameter('baseUnit', $baseUnit)
+            ->addParameter('idBaseUnit', $idBaseUnit)
             ->addParameter('salesUnits', $salesUnits)
             ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
             ->addParameter(
