@@ -21,9 +21,10 @@
         </thead>
         <tbody>
         {% for shareDetail in data.cart.shareDetails %}
+            {% set permissionGroupName = 'shared_cart.share_list.permissions.' ~ shareDetail.quotePermissionGroup.name %}
             <tr>
                 <td>{{ shareDetail.customerName }}</td>
-                <td>{{ shareDetail.quotePermissionGroup.name | trans }}</td>
+                <td>{{ permissionGroupName | trans }}</td>
                 <td>
                     <ul class="menu">
                         <li class="menu__item">

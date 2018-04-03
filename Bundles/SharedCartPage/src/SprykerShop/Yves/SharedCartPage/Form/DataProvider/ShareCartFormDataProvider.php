@@ -127,7 +127,8 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
         }
         $quotePermissionGroupData = [];
         foreach ($quotePermissionGroupResponseTransfer->getQuotePermissionGroups() as $quotePermissionGroupTransfer) {
-            $quotePermissionGroupData[$quotePermissionGroupTransfer->getIdQuotePermissionGroup()] = $quotePermissionGroupTransfer->getName();
+            $quotePermissionGroupData[$quotePermissionGroupTransfer->getIdQuotePermissionGroup()]
+                = 'shared_cart.share_list.permissions.' . $quotePermissionGroupTransfer->getName();
         }
 
         return $quotePermissionGroupData;

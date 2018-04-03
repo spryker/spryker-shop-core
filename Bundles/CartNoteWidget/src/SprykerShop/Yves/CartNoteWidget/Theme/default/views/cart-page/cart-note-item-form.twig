@@ -1,11 +1,20 @@
-{{ form_start(_widget.cartNoteForm) }}
-<hr>
-{{ form_widget(_widget.cartNoteForm.sku) }}
-{{ form_widget(_widget.cartNoteForm.groupKey) }}
-<h5>{{ _widget.cartNoteForm.cartNote.vars.label | trans }}</h5>
-<div class="input-group">
-    {{ form_widget(_widget.cartNoteForm.cartNote) }}
-</div>
-{{ form_errors(_widget.cartNoteForm.cartNote) }}
-<button class="button expanded info" type="submit">{{ 'cart_note.form.save' | trans }}</button>
-{{ form_end(_widget.cartNoteForm) }}
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.cartNoteForm
+} %}
+
+{% block body %}
+    <hr>
+    {% include molecule('form') with {
+        data: {
+            title: 'cart_note.item_form.enter_note' | trans,
+            form: data.form,
+            submit: {
+                enable: true,
+                text: 'cart_note.form.save' | trans
+            }
+        }
+    } only %}
+    <hr>
+{% endblock %}

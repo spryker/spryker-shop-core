@@ -77,15 +77,16 @@
                             bundleItems: item.bundleItems | default([])
                         },
                         embed: {
-                            isLast: not loop.last
+                            isLast: not loop.last,
+                            item: item
                         }
                     } only %}
                         {% block body %}
                             {{parent()}}
+                            {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }}
                             {% if embed.isLast %}<hr/>{% endif %}
                         {% endblock %}
                     {% endembed %}
-                    {{ widget('CartNoteQuoteItemNoteWidgetPlugin', item) }}
                 {% endfor %}
             </div>
             {{ widget('CartNoteQuoteNoteWidgetPlugin', data.transfer) }}

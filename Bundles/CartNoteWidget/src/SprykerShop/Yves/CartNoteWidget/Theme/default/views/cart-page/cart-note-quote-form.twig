@@ -1,14 +1,19 @@
-{{ form_start(_widget.cartNoteForm) }}
-<div class="callout">
-    <div class="row">
-        <div class="small-12 columns">
-            <h5>{{ _widget.cartNoteForm.cartNote.vars.label | trans }}</h5>
-            <div class="input-group">
-                {{ form_widget(_widget.cartNoteForm.cartNote) }}
-            </div>
-            {{ form_errors(_widget.cartNoteForm.cartNote) }}
-            <button class="button expanded info" type="submit">{{ 'cart_note.form.save' | trans }}</button>
-        </div>
-    </div>
-</div>
-{{ form_end(_widget.cartNoteForm) }}
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.cartNoteForm
+} %}
+
+{% block body %}
+    {% include molecule('form') with {
+        data: {
+            title: 'cart_note.quote_form.enter_note' | trans,
+            form: data.form,
+            submit: {
+                enable: true,
+                text: 'cart_note.form.save' | trans
+            }
+        }
+    } only %}
+    <hr>
+{% endblock %}
