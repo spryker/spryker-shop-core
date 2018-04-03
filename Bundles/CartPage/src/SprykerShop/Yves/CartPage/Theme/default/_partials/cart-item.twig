@@ -19,8 +19,6 @@
         </div>
 
         {% include '@CartPage/_partials/cart-item-prices.twig' %}
-        {% if can('WriteSharedCartPermissionPlugin', _view.cart.idQuote) %}
         {% include '@CartPage/_partials/cart-add-to-cart.twig' %}
-        {% endif %}
     </div>
 </div>

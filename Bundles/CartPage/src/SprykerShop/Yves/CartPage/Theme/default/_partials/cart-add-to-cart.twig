@@ -1,6 +1,7 @@
 <div class="small-4 medium-3 large-2 columns">
     <ul class="no-bullet">
         <li>
+            {% if can('WriteSharedCartPermissionPlugin', _view.cart.idQuote) %}
             <form method="POST" action="{{ path('cart/change/quantity', {'sku': cartItem.sku }) }}">
                 <label>
                     <strong>{{ 'cart.item_quantity' | trans }}</strong>
@@ -24,11 +25,21 @@
                 </label>
                 <input type="hidden" value="{{ cartItem.groupKey }}" name="groupKey">
             </form>
+            {% else %}
+                <label>
+                    <strong>{{ 'cart.item_quantity' | trans }}</strong>
+                    <span class="input-group __no-margin-bottom">
+                        {{ cartItem.quantity }}
+                     </span>
+                </label>
+            {% endif %}
         </li>
+        {% if can('WriteSharedCartPermissionPlugin', _view.cart.idQuote) %}
         <li>
             <a href="/cart/remove/{{ cartItem.sku }}/{{ cartItem.groupKey }}">&times;
                 <small>{{ 'remove' | trans }}</small>
             </a>
         </li>
+        {% endif %}
     </ul>
 </div>
