@@ -67,20 +67,14 @@
             <div class="box">
                 {% for item in data.cartItems %}
                     {% set item = item.bundleProduct is defined ? item.bundleProduct : item %}
-                    {% set salesUnitName = item.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-                    {% set salesUnitSummary = '' %}
-                    {% if salesUnitName %}
-                        {% set salesUnitSummary = item.quantitySalesUnit.value / item.quantitySalesUnit.precision ~ ' ' ~ salesUnitName | trans %}
-                    {% endif %}
-                    {% set quantity = item.quantity %}
                     {% embed molecule('summary-item', 'CheckoutPage') with {
                         data: {
                             name: item.name,
-                            quantity: quantity,
-                            salesUnitSummary: salesUnitSummary,
+                            quantity: item.quantity,
                             price: item.sumPrice | money,
                             options: item.productOptions | default({}),
-                            bundleItems: item.bundleItems | default([])
+                            bundleItems: item.bundleItems | default([]),
+                            quantitySalesUnit: item.quantitySalesUnit
                         },
                         embed: {
                             isLast: not loop.last

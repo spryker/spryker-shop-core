@@ -8,16 +8,23 @@
 {% define data = {
     name: required,
     quantity: required,
-    salesUnitSummary: '',
     price: 0,
     options: [],
-    bundleItems: []
+    bundleItems: [],
+    quantitySalesUnit: null
 } %}
 
+
 {% block body %}
+    {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+    {% set salesUnitSummary = '' %}
+    {% if salesUnitName %}
+        {% set salesUnitSummary = data.quantitySalesUnit.value ~ ' ' ~ salesUnitName | trans %}
+    {% endif %}
+
     <strong class="float-right">{{data.price}}</strong>
-    {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if data.salesUnitSummary is not empty %}(= {{ data.salesUnitSummary }}){% endif %}
-    
+    {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(= {{ salesUnitSummary }}){% endif %}
+
     {% if data.bundleItems is not empty %}
         <ul>
             <li>{{ 'checkout.summary.item.bundle.description' | trans }}</li>
