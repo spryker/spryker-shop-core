@@ -26,7 +26,7 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
     {
         $shoppingListCollection = new ShoppingListCollectionTransfer();
 
-        if($this->getFactory()->getCustomerClient()->isLoggedIn()) {
+        if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
             $shoppingListCollection = $this->getFactory()->getShoppingListClient()->getCustomerShoppingListCollection();
         }
 

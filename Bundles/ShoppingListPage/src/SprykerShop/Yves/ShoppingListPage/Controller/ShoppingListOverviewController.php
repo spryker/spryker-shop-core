@@ -194,8 +194,8 @@ class ShoppingListOverviewController extends AbstractController
         $shoppingListCollectionTransfer = new ShoppingListCollectionTransfer();
         $customerReference = $this->getCustomerReference();
 
-        if($shoppingLists) {
-            foreach($shoppingLists as $shoppingList) {
+        if ($shoppingLists) {
+            foreach ($shoppingLists as $shoppingList) {
                 $shoppingList = (new ShoppingListTransfer())
                     ->setName($shoppingList)
                     ->setCustomerReference($customerReference);

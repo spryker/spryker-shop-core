@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
 
-
 class ShoppingListPageToProductStorageClientBridge implements ShoppingListPageToProductStorageClientInterface
 {
     /**

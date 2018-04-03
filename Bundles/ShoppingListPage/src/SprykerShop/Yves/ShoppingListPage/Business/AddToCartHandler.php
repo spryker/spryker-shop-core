@@ -7,9 +7,9 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Business;
 
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 

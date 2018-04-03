@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\ShoppingListPage\Form\AddAvailableProductsToCartForm;
@@ -258,7 +257,7 @@ class ShoppingListController extends AbstractController
             ->setShoppingListName($shoppingListName);
 
         $requestIdShoppingListItem = (int)$request->get(static::PARAM_ID_SHOPPING_LIST_ITEM);
-        if($requestIdShoppingListItem) {
+        if ($requestIdShoppingListItem) {
             $shoppingListItemTransfer->setIdShoppingListItem($requestIdShoppingListItem);
         }
 
@@ -273,7 +272,7 @@ class ShoppingListController extends AbstractController
     protected function getShoppingListItemCollectionTransferFromRequest(Request $request): ShoppingListItemCollectionTransfer
     {
         $shoppingListCollectionTransfer = new ShoppingListItemCollectionTransfer();
-        foreach($request->get(static::PARAM_ID_SHOPPING_LIST_ITEM) as $idShoppingListItem) {
+        foreach ($request->get(static::PARAM_ID_SHOPPING_LIST_ITEM) as $idShoppingListItem) {
             $shoppingListItemTransfer = (new ShoppingListItemTransfer())
                 ->setShoppingListName($request->get(static::PARAM_SHOPPING_LIST_NAME))
                 ->setIdShoppingListItem((int)$idShoppingListItem);

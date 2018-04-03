@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ShoppingListWidget\Dependency\Client;
 
-
 interface ShoppingListWidgetToCustomerClientInterface
 {
     /**

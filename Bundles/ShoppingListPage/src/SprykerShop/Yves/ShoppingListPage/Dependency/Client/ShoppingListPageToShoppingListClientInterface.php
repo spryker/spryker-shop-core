@@ -26,7 +26,7 @@ interface ShoppingListPageToShoppingListClientInterface
     public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer;
 
     /**
-     * @param ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
