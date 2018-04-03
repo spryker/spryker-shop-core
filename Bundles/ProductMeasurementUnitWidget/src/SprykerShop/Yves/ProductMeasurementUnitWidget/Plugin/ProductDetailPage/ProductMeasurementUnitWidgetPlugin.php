@@ -64,6 +64,11 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
             );
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
+     *
+     * @return int
+     */
     protected function getMinQuantityInBaseUnits(
         ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
     ): int {
@@ -136,7 +141,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      *
      * @return float
      */
-    protected function getMinQuantityInSalesUnits(array $salesUnits = null, int $minQuantityInBaseUnits): float
+    protected function getMinQuantityInSalesUnits(array $salesUnits, int $minQuantityInBaseUnits): float
     {
         if ($salesUnits !== null) {
             foreach ($salesUnits as $salesUnit) {

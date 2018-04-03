@@ -9,8 +9,6 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Mapper;
 
 use Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
-use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
-use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 
 interface ProductMeasurementSalesUnitMapperInterface
 {
