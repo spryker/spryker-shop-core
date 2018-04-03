@@ -14,14 +14,13 @@
                 name: 'cart-plus'
             }
         } only %}
-        {{ 'page.detail.add-to-cart' | trans }} {{ data.cart.name }}
+        {{ 'page.detail.add-to-cart' | trans }}
     </button>
-    {% if data.carts | length > 0 %}
-        {% include molecule('add-to-cart-seletor', 'MultiCartWidget') with {
-            data: {
-                carts: data.carts,
-                isButtonDisabled: data.disabled
-            }
-        } only %}
-    {% endif %}
+    {% include molecule('add-to-cart-seletor', 'MultiCartWidget') with {
+        data: {
+            cart: data.cart,
+            carts: data.carts,
+            isButtonDisabled: data.disabled
+        }
+    } only %}
 {% endblock %}

@@ -49,7 +49,7 @@ class CartNoteWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToGlossaryClientInterface
+     * @return \SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToGlossaryStorageClientInterface
      */
     public function getGlossaryClient()
     {

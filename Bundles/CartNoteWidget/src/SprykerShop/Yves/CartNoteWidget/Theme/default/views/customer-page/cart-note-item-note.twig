@@ -1,9 +1,17 @@
-{% if _widget.item.cartNote is not null %}
-<tr>
-    <td class="text-left" colspan="5">
-        <small>{{ 'cart_note.customer_page.item_note' | trans }}:</small>
-        <br />
-        <span>{{ _widget.item.cartNote | escape | nl2br }}</span>
-    </td>
-</tr>
-{% endif %}
+{% extends template('widget') %}
+
+{% define data = {
+    item: _widget.item
+} %}
+
+{% block body %}
+    {% if data.item.cartNote is not null %}
+    <tr>
+        <td class="text-left" colspan="5">
+            <small>{{ 'cart_note.customer_page.item_note' | trans }}:</small>
+            <br />
+            <span>{{ data.item.cartNote | escape | nl2br }}</span>
+        </td>
+    </tr>
+    {% endif %}
+{% endblock %}

@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CartNoteWidget;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToCartNoteClientBridge;
-use SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToGlossaryClientBridge;
+use SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToGlossaryStorageClientBridge;
 
 class CartNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -52,7 +52,7 @@ class CartNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
     protected function addGlossaryClient(Container $container): Container
     {
         $container[static::CLIENT_GLOSSARY] = function (Container $container) {
-            return new CartNoteWidgetToGlossaryClientBridge($container->getLocator()->glossary()->client());
+            return new CartNoteWidgetToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
         };
 
         return $container;
