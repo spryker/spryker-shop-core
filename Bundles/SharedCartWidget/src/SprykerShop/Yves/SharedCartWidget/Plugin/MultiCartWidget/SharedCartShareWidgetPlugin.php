@@ -23,8 +23,9 @@ class SharedCartShareWidgetPlugin extends AbstractWidgetPlugin implements Shared
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('cart', $quoteTransfer);
-        $this->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer));
+        $this
+            ->addParameter('cart', $quoteTransfer)
+            ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer));
     }
 
     /**

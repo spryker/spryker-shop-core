@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CartNoteWidget\Controller;
 
+use Spryker\Shared\CartNote\Code\Messages;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use SprykerShop\Yves\CartNoteWidget\Form\QuoteItemCartNoteForm;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
@@ -17,8 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ItemController extends AbstractController
 {
-    const MESSAGE_CART_NOTE_ADDED_SUCCESS_TO_ITEM = 'cart_note.cart_page.item.note_added';
-    const REQUEST_HEADER_PEFERER = 'referer';
+    public const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,10 +36,14 @@ class ItemController extends AbstractController
             $sku = $form->get(QuoteItemCartNoteForm::FIELD_SKU)->getData();
             $groupKey = $form->get(QuoteItemCartNoteForm::FIELD_GROUP_KEY)->getData();
 
-            $this->getFactory()
-                ->createCartNotesHandler()
+            $quoteResponseTransfer = $this->getFactory()
+                ->getCartNoteClient()
                 ->setNoteToQuoteItem($note, $sku, $groupKey);
-            $this->addSuccessMessage(static::MESSAGE_CART_NOTE_ADDED_SUCCESS_TO_ITEM);
+            if ($quoteResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage(
+                    $this->getSuccessMessage($sku)
+                );
+            }
         }
 
         return $this->redirectResponseExternal($this->getRefererUrl($request));
@@ -52,10 +56,21 @@ class ItemController extends AbstractController
      */
     protected function getRefererUrl(Request $request)
     {
-        if ($request->headers->has(static::REQUEST_HEADER_PEFERER)) {
-            return $request->headers->get(static::REQUEST_HEADER_PEFERER);
+        if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
+            return $request->headers->get(static::REQUEST_HEADER_REFERER);
         }
 
         return CartControllerProvider::ROUTE_CART;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return string
+     */
+    protected function getSuccessMessage($sku): string
+    {
+        return $this->getFactory()->getGlossaryClient()
+            ->translate(Messages::MESSAGE_CART_NOTE_ADDED_TO_ITEM_SUCCESS, $this->getLocale(), ['%sku%' => $sku]);
     }
 }

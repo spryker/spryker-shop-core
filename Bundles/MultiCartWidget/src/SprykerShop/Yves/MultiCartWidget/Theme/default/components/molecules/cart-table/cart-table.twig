@@ -18,12 +18,6 @@
 {% set showActions = data.actions.view or data.actions.update or data.actions.delete or data.actions.set_default %}
 
 {% block body %}
-    <h3 class="float-left">{{ 'multi_cart_widget.cart.list' | trans }}</h3>
-
-    <span class="float-right">
-        <a class="button" href="{{url('multi-cart/create')}}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
-    </span>
-
     <table class="table table--expand">
         <thead>
             <tr>

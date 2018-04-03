@@ -25,9 +25,9 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
     {
         $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
         $this
-            ->addParameter('cartCollection', $this->getInactiveQuoteList($quoteTransfer))
-            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
-        $this->addParameter('isMultiCartAllowed', $this->getFactory()->getMultiCartClient()->isMultiCartAllowed());
+            ->addParameter('cartCollection', $this->getInactiveQuoteList())
+            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
+            ->addParameter('cart', $quoteTransfer);
     }
 
     /**
@@ -55,11 +55,9 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $activeQuoteTransfer
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer[]
      */
-    protected function getInactiveQuoteList(QuoteTransfer $activeQuoteTransfer)
+    protected function getInactiveQuoteList()
     {
         $quoteCollectionTransfer = $this->getFactory()
             ->getMultiCartClient()

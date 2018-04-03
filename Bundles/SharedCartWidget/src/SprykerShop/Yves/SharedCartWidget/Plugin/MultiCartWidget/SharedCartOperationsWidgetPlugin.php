@@ -28,8 +28,10 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('cart', $quoteTransfer);
-        $this->addParameter('actions', $this->getCartActions($quoteTransfer));
+        $this
+            ->addParameter('cart', $quoteTransfer)
+            ->addParameter('actions', $this->getCartActions($quoteTransfer))
+            ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer));
     }
 
     /**
@@ -39,17 +41,28 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     protected function getCartActions(QuoteTransfer $quoteTransfer): array
     {
-        $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
         $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
+        $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote()) || $writeAllowed;
 
         return [
             'view' => $viewAllowed,
             'update' => $writeAllowed,
-            'set_default' => $viewAllowed,
+            'set_default' => $viewAllowed && !$quoteTransfer->getIsDefault(),
             'duplicate' => $writeAllowed,
             'clear' => $writeAllowed,
             'delete' => $writeAllowed,
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer)
+    {
+        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
+        return strcmp($customer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
     }
 
     /**

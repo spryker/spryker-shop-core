@@ -78,9 +78,7 @@ class MultiCartController extends AbstractController
                 ->updateQuote($quoteTransfer);
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
-                return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE, [
-                    MultiCartPageControllerProvider::PARAM_ID_QUOTE => $quoteResponseTransfer->getQuoteTransfer()->getIdQuote(),
-                ]);
+                return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
             }
         }
 
@@ -139,9 +137,12 @@ class MultiCartController extends AbstractController
             ->getMultiCartClient()
             ->findQuoteById($idQuote);
 
-        $this->getFactory()
+        $quoteResponseTransfer = $this->getFactory()
             ->createCartOperations()
             ->clearQuote($quoteTransfer);
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage('multi_cart_page.cart_clear.success');
+        }
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }

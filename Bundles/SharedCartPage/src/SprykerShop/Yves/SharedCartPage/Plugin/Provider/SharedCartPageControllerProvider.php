@@ -13,7 +13,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_SHARED_CART_SHARE = 'shared-cart/share';
-    public const ROUTE_SHARED_CART_UN_SHARE = 'shared-cart/un-share';
+    public const ROUTE_SHARED_CART_UNSHARE = 'shared-cart/unshare';
 
     /**
      * @param \Silex\Application $app
@@ -27,7 +27,7 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
         $controller->assert('sharedCart', $allowedLocalesPattern . 'shared-cart|shared-cart');
         $controller->value('sharedCart', 'shared-cart');
 
-        $controller = $this->createController('/{sharedCart}/un-share/{idQuote}/{idCompanyUser}/{idPermissionGroup}', static::ROUTE_SHARED_CART_UN_SHARE, 'SharedCartPage', 'UnShare', 'index');
+        $controller = $this->createController('/{sharedCart}/unshare/{idQuote}/{idCompanyUser}/{idPermissionGroup}', static::ROUTE_SHARED_CART_UNSHARE, 'SharedCartPage', 'UnShare', 'index');
         $controller->assert('sharedCart', $allowedLocalesPattern . 'shared-cart|shared-cart');
         $controller->value('sharedCart', 'shared-cart');
     }

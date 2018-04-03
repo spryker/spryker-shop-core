@@ -46,7 +46,8 @@ class MultiCartPageFactory extends AbstractFactory
         return new CartOperations(
             $this->getPersistentCartClent(),
             $this->getMultiCartClient(),
-            $this->getQuoteClient()
+            $this->getQuoteClient(),
+            $this->getCustomerClient()
         );
     }
 

@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\SharedCartWidget\Dependency\Client;
 
-
 interface SharedCartWidgetToCustomerClientInterface
 {
     /**

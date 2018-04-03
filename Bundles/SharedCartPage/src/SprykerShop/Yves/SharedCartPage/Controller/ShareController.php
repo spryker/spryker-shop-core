@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ShareController extends AbstractController
 {
+    public const KEY_GLOSSARY_SHARED_CART_PAGE_SHARE_SUCCESS = 'shared_cart_page.share.success';
+
     /**
      * @param int $idQuote
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -33,7 +35,7 @@ class ShareController extends AbstractController
             $quoteResponseTransfer = $this->getFactory()->getSharedCartClient()
                 ->addShareCart($shareCartRequestTransfer);
             if ($quoteResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage('shared_cart_page.share.success');
+                $this->addSuccessMessage(static::KEY_GLOSSARY_SHARED_CART_PAGE_SHARE_SUCCESS);
                 return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
             }
         }

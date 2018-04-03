@@ -10,7 +10,7 @@
 } %}
 
 {% block body %}
-    {{ 'shared_cart_widget.share_list.shared_with' | trans }}:
+    <h3 class="float-left">{{ 'shared_cart_widget.share_list.shared_with' | trans }}</h3>
     <table class="table table--expand">
         <thead>
             <tr>
@@ -21,17 +21,19 @@
         </thead>
         <tbody>
         {% for shareDetail in data.cart.shareDetails %}
-            <td>{{ shareDetail.customerName }}</td>
-            <td>{{ shareDetail.quotePermissionGroup.name | trans }}</td>
-            <td>
-                <ul class="menu">
-                    <li class="menu__item">
-                        <a href="{{ path('shared-cart/un-share', {idQuote: data.cart.idQuote, idCompanyUser: shareDetail.idCompanyUser, idPermissionGroup: shareDetail.quotePermissionGroup.idQuotePermissionGroup}) }}">
-                            {{ 'multi_cart_widget.share_list.action.un_share' | trans }}
-                        </a>
-                    </li>
-                </ul>
-            </td>
+            <tr>
+                <td>{{ shareDetail.customerName }}</td>
+                <td>{{ shareDetail.quotePermissionGroup.name | trans }}</td>
+                <td>
+                    <ul class="menu">
+                        <li class="menu__item">
+                            <a href="{{ path('shared-cart/unshare', {idQuote: data.cart.idQuote, idCompanyUser: shareDetail.idCompanyUser, idPermissionGroup: shareDetail.quotePermissionGroup.idQuotePermissionGroup}) }}">
+                                {{ 'shared_cart_widget.share_list.action.unshare' | trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>

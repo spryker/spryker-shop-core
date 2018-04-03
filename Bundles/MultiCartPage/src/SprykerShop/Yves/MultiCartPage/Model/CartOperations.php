@@ -11,6 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCustomerClientInterface;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientInterface;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToPersistentCartClientInterface;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToQuoteClientInterface;
@@ -33,18 +36,26 @@ class CartOperations implements CartOperationsInterface
     protected $quoteClient;
 
     /**
+     * @var \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCustomerClientInterface
+     */
+    protected $customerClient;
+
+    /**
      * @param \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToPersistentCartClientInterface $persistentCartClient
      * @param \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientInterface $multiCartClient
      * @param \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToQuoteClientInterface $quoteClient
+     * @param \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCustomerClientInterface $customerClient
      */
     public function __construct(
         MultiCartPageToPersistentCartClientInterface $persistentCartClient,
         MultiCartPageToMultiCartClientInterface $multiCartClient,
-        MultiCartPageToQuoteClientInterface $quoteClient
+        MultiCartPageToQuoteClientInterface $quoteClient,
+        MultiCartPageToCustomerClientInterface $customerClient
     ) {
         $this->persistentCartClient = $persistentCartClient;
         $this->multiCartClient = $multiCartClient;
         $this->quoteClient = $quoteClient;
+        $this->customerClient = $customerClient;
     }
 
     /**
@@ -55,7 +66,10 @@ class CartOperations implements CartOperationsInterface
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->setIdQuote(null);
-        $quoteResponseTransfer = $this->persistentCartClient->persistQuote($quoteTransfer);
+        $quoteTransfer->setCustomer(
+            $this->customerClient->getCustomer()
+        );
+        $quoteResponseTransfer = $this->persistentCartClient->createQuote($quoteTransfer);
 
         return $quoteResponseTransfer;
     }
@@ -68,7 +82,12 @@ class CartOperations implements CartOperationsInterface
     public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->requireIdQuote();
-        $quoteResponseTransfer = $this->persistentCartClient->persistQuote($quoteTransfer);
+        $quoteTransfer->setCustomer(
+            $this->customerClient->getCustomer()
+        );
+        $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
+        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->fromArray($quoteTransfer->modifiedToArray(), true);
+        $quoteResponseTransfer = $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
 
         return $quoteResponseTransfer;
     }
@@ -80,6 +99,9 @@ class CartOperations implements CartOperationsInterface
      */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
+        $quoteTransfer->setCustomer(
+            $this->customerClient->getCustomer()
+        );
         $quoteResponseTransfer = $this->persistentCartClient->deleteQuote($quoteTransfer);
 
         return $quoteResponseTransfer;
@@ -98,8 +120,11 @@ class CartOperations implements CartOperationsInterface
         );
         $quoteTransfer->setIdQuote(null);
         $quoteTransfer->setIsDefault(true);
+        $quoteTransfer->setCustomer(
+            $this->customerClient->getCustomer()
+        );
 
-        return $this->persistentCartClient->persistQuote($quoteTransfer);
+        return $this->persistentCartClient->createQuote($quoteTransfer);
     }
 
     /**
@@ -109,6 +134,9 @@ class CartOperations implements CartOperationsInterface
      */
     public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
+        $quoteTransfer->setCustomer(
+            $this->customerClient->getCustomer()
+        );
         $quoteActivationRequestTransfer = new QuoteActivationRequestTransfer();
         $quoteActivationRequestTransfer->setCustomer($quoteTransfer->getCustomer());
         $quoteActivationRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
@@ -127,9 +155,28 @@ class CartOperations implements CartOperationsInterface
      */
     public function clearQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer->setItems(new ArrayObject());
-        $quoteResponseTransfer = $this->persistentCartClient->persistQuote($quoteTransfer);
+        $quoteTransfer->setCustomer(
+            $this->customerClient->getCustomer()
+        );
+        $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
+        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->setItems(new ArrayObject());
 
-        return $quoteResponseTransfer;
+        return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteUpdateRequestTransfer
+     */
+    protected function createQuoteUpdateRequest(QuoteTransfer $quoteTransfer): QuoteUpdateRequestTransfer
+    {
+        $quoteUpdateRequestTransfer = new QuoteUpdateRequestTransfer();
+        $quoteUpdateRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
+        $quoteUpdateRequestTransfer->setCustomer($quoteTransfer->getCustomer());
+        $quoteUpdateRequestAttributesTransfer = new QuoteUpdateRequestAttributesTransfer();
+        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
+
+        return $quoteUpdateRequestTransfer;
     }
 }
