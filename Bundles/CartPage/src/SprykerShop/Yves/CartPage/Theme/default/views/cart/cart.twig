@@ -13,6 +13,10 @@
     {{ widget('CheckoutBreadcrumbWidgetPlugin', data.cart) }}
 {% endblock %}
 
+  {% block title %}
+      <h1 class="page-title">{{data.title}}</h1>
+  {% endblock %}
+
 {% block content %}
     {% if data.cart.items is empty %}
         <div class="box text-center">
@@ -30,7 +34,6 @@
             <div class="col col--sm-12 col--lg-8">
                 <div class="box">
                     {% for cartItem in data.cartItems %}
-                        {#{% include '@CartPage/_partials/cart-item.twig' %}#}
                         {% include molecule('cart-item', 'CartPage') with {
                             data: {
                                 cart: data.cart,

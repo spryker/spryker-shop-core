@@ -13,11 +13,11 @@
 
 {% block body %}
 {% if productImage is not empty %}
-    <div class="cart-item__image-container small-3 large-2 columns">
-        <img class="thumbnail cart-item__image" src="{{ productImage.externalUrlLarge }}"/>
+    <div class="cart-item__image-container">
+        <img class="cart-item__image" src="{{ productImage.externalUrlLarge }}"/>
     </div>
 {% else %}
-    <div class="small-3 large-2 columns text-center">
+    <div class="col col--sm-3 col--lg-2 text-center">
         <small>{{ 'global.no_image_available' | trans }}</small>
     </div>
 {% endif %}

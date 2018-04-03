@@ -1,0 +1,16 @@
+$component-cart-item-sku-background: $color-dark;
+
+@mixin component-cart-item($name: '.cart-item') {
+    #{$name} {
+        &__title {
+            @include font-size(big);
+        }
+
+        &__sku {
+            @include font-size(small);
+            color: $component-cart-item-sku-background;
+        }
+
+        @content;
+    }
+}

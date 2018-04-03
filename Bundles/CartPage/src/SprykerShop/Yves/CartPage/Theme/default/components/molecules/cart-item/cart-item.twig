@@ -12,45 +12,55 @@
 } %}
 
 {% block body %}
-    <div class="row">
+    <div class="grid">
 
-        {% include molecule('cart-image', 'CartPage') with {
-            data: {
-                cartItem: data.cartItem
-            }
-        } only %}
-
-        <div class="small-9 large-expand columns">
-            <ul class="no-bullet">
-                <li class="lead">{{ data.cartItem.name }}</li>
-                <li class="__secondary">
-                    <small>{{ 'cart.item.sku' | trans }} {{ data.cartItem.sku }}</small>
-                </li>
-
-                {{ widget('ProductBundleItemsWidgetPlugin', data.cartItem, data.cart) }}
-
-
-                {% include molecule('cart-item-attributes', 'CartPage') with {
-                    data: {
-                        cartItem: data.cartItem,
-                        attributes: data.attributes
-                    }
-                } only %}
-
-            </ul>
+        <div class="col col--sm-12 col--lg-3">
+            {% include molecule('cart-image', 'CartPage') with {
+                data: {
+                    cartItem: data.cartItem
+                }
+            } only %}
         </div>
 
-        {% include molecule('cart-item-price', 'CartPage') with {
-            data: {
-                cartItem: data.cartItem
-            }
-        } only %}
+        <div class="col col--sm-12 col--lg-3">
+            <h2 class="cart-item__title">{{ data.cartItem.name }}</h2>
+            <div class="cart-item__sku">
+                {{ 'cart.item.sku' | trans }} {{ data.cartItem.sku }}
+            </div>
 
-        {% include molecule('cart-quantity', 'CartPage') with {
-            data: {
-                cartItem: data.cartItem
-            }
-        } only %}
+            {#<ul class="no-bullet">#}
+                {#<li class="lead">{{ data.cartItem.name }}</li>#}
+                {#<li class="__secondary">#}
+                    {#<small>{{ 'cart.item.sku' | trans }} {{ data.cartItem.sku }}</small>#}
+                {#</li>#}
+
+                {#{{ widget('ProductBundleItemsWidgetPlugin', data.cartItem, data.cart) }}#}
+
+
+                {#{% include molecule('cart-item-attributes', 'CartPage') with {#}
+                    {#data: {#}
+                        {#cartItem: data.cartItem,#}
+                        {#attributes: data.attributes#}
+                    {#}#}
+                {#} only %}#}
+
+            {#</ul>#}
+        </div>
+        <div class="col col--sm-12 col--lg-3">
+            {% include molecule('cart-item-price', 'CartPage') with {
+                data: {
+                    cartItem: data.cartItem
+                }
+            } only %}
+        </div>
+
+        <div class="col col--sm-12 col--lg-3">
+            {% include molecule('cart-quantity', 'CartPage') with {
+                data: {
+                    cartItem: data.cartItem
+                }
+            } only %}
+        </div>
 
     </div>
 

@@ -1,0 +1,9 @@
+$component-cart-item-spacing: spacing(1);
+
+@mixin component-cart-item-price($name: '.cart-item-price') {
+    #{$name} {
+        padding: 0 $component-cart-item-spacing;
+
+        @content;
+    }
+}

@@ -12,14 +12,12 @@
 
 {% block body %}
     {# Prices and Product Options #}
-    <div class="small-12 large-4 columns">
-        <ul class="no-bullet">
-            <li>{{ 'cart.item.item_price' | trans }} <span class="float-right">{{ data.cartItem.unitPrice | money }}</span></li>
+    <ul class="no-bullet">
+        <li>{{ 'cart.item.item_price' | trans }} <span class="float-right">{{ data.cartItem.unitPrice | money }}</span></li>
 
-            {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }}
+        {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }}
 
-            <li><hr/></li>
-            <li><strong>{{ 'cart.item.item_total' | trans }}</strong> <strong class="float-right">{{ data.cartItem.sumSubtotalAggregation | money }}</strong></li>
-        </ul>
-    </div>
+        <li><hr/></li>
+        <li><strong>{{ 'cart.item.item_total' | trans }}</strong> <strong class="float-right">{{ data.cartItem.sumSubtotalAggregation | money }}</strong></li>
+    </ul>
 {% endblock %}
