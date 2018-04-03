@@ -105,7 +105,7 @@ class ShareCartForm extends AbstractType
         $builder->add(static::FIELD_QUOTE_PERMISSION_GROUP_ID, ChoiceType::class, [
             'choices' => array_flip($options[static::OPTION_PERMISSION_GROUPS]),
             'choices_as_values' => true,
-            'expanded' => true,
+            'expanded' => false,
             'required' => true,
             'constraints' => [
                 new NotBlank(),

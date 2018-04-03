@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MultiCartController extends AbstractController
 {
+    const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -78,6 +80,7 @@ class MultiCartController extends AbstractController
                 ->updateQuote($quoteTransfer);
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage(static::GLOSSARY_KEY_CART_UPDATED_SUCCESS);
                 return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
             }
         }

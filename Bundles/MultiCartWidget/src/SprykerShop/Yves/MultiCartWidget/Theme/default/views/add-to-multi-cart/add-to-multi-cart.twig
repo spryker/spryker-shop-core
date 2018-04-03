@@ -7,8 +7,6 @@
     carts: _widget.cartCollection
 } %}
 
-{% set defaultCartName = (data.isMultiCartAllowed and data.carts | length > 0) ? ': ' ~ data.cartDefault.name : '' %}
-
 {% block body %}
     {% if data.isMultiCartAllowed %}
     {{ widget('SharedCartAddSeparateProductWidgetPlugin') }}
@@ -22,11 +20,12 @@
                     name: 'cart-plus'
                 }
             } only %}
-            {{ 'page.detail.add-to-cart' | trans }} {{ defaultCartName }}
+            {{ 'page.detail.add-to-cart' | trans }}
         </button>
-        {% if data.isMultiCartAllowed and data.carts | length > 0 %}
+        {% if data.isMultiCartAllowed and data.carts %}
             {% include molecule('add-to-cart-seletor', 'MultiCartWidget') with {
                 data: {
+                    cart: cartDefault,
                     carts: data.carts,
                     isButtonDisabled: data.disabled
                 }

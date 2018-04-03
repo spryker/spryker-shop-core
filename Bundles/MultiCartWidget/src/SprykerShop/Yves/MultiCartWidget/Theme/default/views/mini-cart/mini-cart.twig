@@ -39,6 +39,9 @@
                             <li class="menu__separator menu__separator--horizontal-line"></li>
                         {% endfor %}
                     {% endif %}
+                    <li class="menu__item">
+                        <a class="button" href="{{url('multi-cart/create')}}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
+                    </li>
                 </ul>
             </li>
         </ul>

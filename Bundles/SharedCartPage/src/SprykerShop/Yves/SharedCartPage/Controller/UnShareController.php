@@ -16,7 +16,7 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
  */
 class UnShareController extends AbstractController
 {
-    public const KEY_GLOSSARY_SHARED_CART_PAGE_UNSHARE_SUCCESS = '';
+    public const KEY_GLOSSARY_SHARED_CART_PAGE_UNSHARE_SUCCESS = 'shared_cart_page.unshare.success';
 
     /**
      * @param int $idQuote

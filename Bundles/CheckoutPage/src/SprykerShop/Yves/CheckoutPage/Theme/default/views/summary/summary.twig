@@ -85,8 +85,10 @@
                             {% if embed.isLast %}<hr/>{% endif %}
                         {% endblock %}
                     {% endembed %}
+                    {{ widget('CartNoteQuoteItemNoteWidgetPlugin', item) }}
                 {% endfor %}
             </div>
+            {{ widget('CartNoteQuoteNoteWidgetPlugin', data.transfer) }}
             
             {% include molecule('summary-overview', 'CheckoutPage') with {
                 class: 'box',

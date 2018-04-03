@@ -69,6 +69,7 @@ class CartOperations implements CartOperationsInterface
         $quoteTransfer->setCustomer(
             $this->customerClient->getCustomer()
         );
+        $quoteTransfer->setIsDefault(true);
         $quoteResponseTransfer = $this->persistentCartClient->createQuote($quoteTransfer);
 
         return $quoteResponseTransfer;

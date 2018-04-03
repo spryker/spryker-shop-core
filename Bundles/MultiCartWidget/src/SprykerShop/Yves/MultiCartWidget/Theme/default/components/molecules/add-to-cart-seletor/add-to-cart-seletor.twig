@@ -10,7 +10,7 @@
     isButtonDisabled: false
 } %}
 
-{% set options = [{ label: '', value: ''}] %}
+{% set options = [{ label: data.cart.name, value: data.cart.idQuote}] %}
 {% set attributes = {
     name: 'id_quote',
     onchange: 'this.form.submit(); this.disabled="disabled"; return false;',
@@ -26,6 +26,10 @@
         disabled: true
     }) %}
 {% endif %}
+{% set options = options | merge([{
+    label: 'multi_cart_widget.cart.add' | trans,
+    value: 0
+}]) %}
 {% block body %}
     {% include atom('select') with {
         modifiers: ['expand'],

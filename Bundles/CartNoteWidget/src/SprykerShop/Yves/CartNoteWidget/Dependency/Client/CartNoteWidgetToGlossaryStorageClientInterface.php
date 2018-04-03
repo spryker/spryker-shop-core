@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CartNoteWidget\Dependency\Client;
 
-interface CartNoteWidgetToGlossaryClientInterface
+interface CartNoteWidgetToGlossaryStorageClientInterface
 {
     /**
      * @param string $id

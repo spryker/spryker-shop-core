@@ -7,15 +7,15 @@
 
 namespace SprykerShop\Yves\CartNoteWidget\Dependency\Client;
 
-class CartNoteWidgetToGlossaryClientBridge implements CartNoteWidgetToGlossaryClientInterface
+class CartNoteWidgetToGlossaryStorageClientBridge implements CartNoteWidgetToGlossaryStorageClientInterface
 {
     /**
-     * @var \Spryker\Client\Glossary\GlossaryClientInterface
+     * @var \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface
      */
     protected $glossaryClient;
 
     /**
-     * @param \Spryker\Client\Glossary\GlossaryClientInterface $glossaryClient
+     * @param \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface $glossaryClient
      */
     public function __construct($glossaryClient)
     {

@@ -1,7 +1,17 @@
-{% if _widget.quote.cartNote is not null %}
-<div class="callout">
-    <small>{{ 'cart_note.checkout_page.quote_note' | trans }}:</small>
-    <br>
-    <span>{{ _widget.quote.cartNote | escape | nl2br }}</span>
+{% extends template('widget') %}
+
+{% define data = {
+    quote: _widget.quote
+} %}
+
+{% block body %}
+    {% if data.quote.cartNote is not null %}
+<div class="box">
+    <div class="callout">
+        <small>{{ 'cart_note.checkout_page.quote_note' | trans }}:</small>
+        <br>
+        <span>{{ data.quote.cartNote | escape | nl2br }}</span>
+    </div>
 </div>
-{% endif %}
+    {% endif %}
+{% endblock %}
