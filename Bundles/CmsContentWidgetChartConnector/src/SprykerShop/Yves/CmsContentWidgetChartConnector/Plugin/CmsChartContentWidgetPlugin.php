@@ -46,8 +46,6 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      * @param string|null $dataIdentifier
      * @param string|null $templateIdentifier
      *
-     * @throws \Twig_Error
-     *
      * @return string
      */
     public function contentWidgetFunction(Twig_Environment $twig, array $context, $chartPluginName, $dataIdentifier = null, $templateIdentifier = null): string
