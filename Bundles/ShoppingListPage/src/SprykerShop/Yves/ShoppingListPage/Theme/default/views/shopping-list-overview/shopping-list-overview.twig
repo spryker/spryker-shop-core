@@ -1,6 +1,7 @@
 {% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
 
 {% define data = {
+    activePage: 'shoppingList',
     shoppingListCollection: _view.shoppingListCollection,
     shoppingListForm: _view.shoppingListForm,
     labels: {
@@ -14,7 +15,7 @@
     {% embed molecule('customer-navigation', 'CustomerPage') with {
         class: 'box',
         data: {
-            activePage: ''
+            activePage: data.activePage
         },
         embed: {
             shoppingListCollection: data.shoppingListCollection
@@ -49,11 +50,12 @@
         {% if data.shoppingListCollection.shoppingLists | length %}
             {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
                 data: {
-                    shoppingLists: data.shoppingListCollection.shoppingLists
+                    shoppingLists: data.shoppingListCollection.shoppingLists,
+                    enableTableForm: true
                 }
             } only %}
         {% else %}
-            {{ emptyShoppingListsLabel }}
+            {{ data.labels.emptyShoppingListsLabel }}
         {% endif %}
     </div>
 {% endblock %}

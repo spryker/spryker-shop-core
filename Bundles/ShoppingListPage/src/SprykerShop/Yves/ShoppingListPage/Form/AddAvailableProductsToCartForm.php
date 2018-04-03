@@ -7,13 +7,11 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Form;
 
-use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class AddAllAvailableProductsToCartForm extends AbstractType
+class AddAvailableProductsToCartForm extends AbstractType
 {
     public const SHOPPING_LIST_ITEM_COLLECTION = 'shoppingListItemCollection';
 
@@ -42,7 +40,7 @@ class AddAllAvailableProductsToCartForm extends AbstractType
                 'label' => false,
             ],
             'allow_add' => true,
-            'required' => false
+            'required' => false,
         ]);
 
         return $this;

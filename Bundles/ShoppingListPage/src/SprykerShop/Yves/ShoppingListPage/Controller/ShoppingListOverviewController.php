@@ -7,10 +7,9 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Generated\Shared\Transfer\WishlistResponseTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\Form\FormError;
@@ -23,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ShoppingListOverviewController extends AbstractController
 {
+    protected const PARAM_SHOPPING_LISTS = 'shoppingLists';
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -57,7 +57,7 @@ class ShoppingListOverviewController extends AbstractController
             'shoppingListForm' => $shoppingListForm->createView(),
         ];
 
-        return $this->view($data, [],'@ShoppingListPage/views/shopping-list-overview/shopping-list-overview.twig');
+        return $this->view($data, [], '@ShoppingListPage/views/shopping-list-overview/shopping-list-overview.twig');
     }
 
     /**
@@ -121,13 +121,37 @@ class ShoppingListOverviewController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addShoppingListToCartAction(Request $request): RedirectResponse
+    {
+        $shoppingListItems = $this->getFactory()
+            ->getShoppingListClient()
+            ->getShoppingListItemCollection($this->getShoppingListCollectionTransfer($request));
+
+        $result = $this->getFactory()
+            ->createAddToCartHandler()
+            ->addAllAvailableToCart($shoppingListItems->getItems()->getArrayCopy());
+
+        if ($result->getRequests()->count()) {
+            $this->addErrorMessage('customer.account.shopping_list.items.added_to_cart.failed');
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_OVERVIEW);
+        }
+
+        $this->addSuccessMessage('customer.account.shopping_list.items.added_to_cart');
+        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_OVERVIEW);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormInterface $shoppingListForm
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     protected function getShoppingListTransfer(FormInterface $shoppingListForm): ShoppingListTransfer
     {
-        /** @var ShoppingListTransfer $shoppingListTransfer */
+        /** @var \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer */
         $shoppingListTransfer = $shoppingListForm->getData();
         $shoppingListTransfer->setCustomerReference($this->getCustomerReference());
 
@@ -157,5 +181,28 @@ class ShoppingListOverviewController extends AbstractController
         foreach ($shoppingListResponseTransfer->getErrors() as $error) {
             $shoppingListForm->addError(new FormError($error));
         }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    protected function getShoppingListCollectionTransfer(Request $request): ShoppingListCollectionTransfer
+    {
+        $shoppingLists = $request->get(static::PARAM_SHOPPING_LISTS);
+        $shoppingListCollectionTransfer = new ShoppingListCollectionTransfer();
+        $customerReference = $this->getCustomerReference();
+
+        if($shoppingLists) {
+            foreach($shoppingLists as $shoppingList) {
+                $shoppingList = (new ShoppingListTransfer())
+                    ->setName($shoppingList)
+                    ->setCustomerReference($customerReference);
+                $shoppingListCollectionTransfer->addShoppingList($shoppingList);
+            }
+        }
+
+        return $shoppingListCollectionTransfer;
     }
 }

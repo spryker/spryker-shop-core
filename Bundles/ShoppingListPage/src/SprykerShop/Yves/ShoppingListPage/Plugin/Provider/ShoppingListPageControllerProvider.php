@@ -19,7 +19,9 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_ADD_ITEM = 'shopping-list/add-item';
     public const ROUTE_REMOVE_ITEM = 'shopping-list/remove-item';
     public const ROUTE_ADD_TO_CART = 'shopping-list/add-to-cart';
+    public const ROUTE_MULTI_ADD_TO_CART = 'shopping-list/multi-add-to-cart';
     public const ROUTE_ADD_ALL_AVAILABLE_TO_CART = 'shopping-list/add-all-available-to-cart';
+    public const ROUTE_ADD_SHOPPING_LIST_TO_CART = 'shopping-list/add-shopping-list-to-cart';
 
     /**
      * @param \Silex\Application $app
@@ -44,6 +46,10 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
             ->value('shoppingList', 'shopping-list')
             ->assert('shoppingListName', '.+');
 
+        $this->createPostController('/{shoppingList}/add-shopping-list-to-cart', static::ROUTE_ADD_SHOPPING_LIST_TO_CART, 'ShoppingListPage', 'ShoppingListOverview', 'addShoppingListToCart')
+            ->assert('shopping-list', $allowedLocalesPattern . 'shopping-list|shopping-list')
+            ->value('shoppingList', 'shopping-list');
+
         $this->createGetController('/{shoppingList}/details/{shoppingListName}', static::ROUTE_SHOPPING_LIST_DETAILS, 'ShoppingListPage', 'ShoppingList')
             ->assert('shopping-list', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
@@ -53,16 +59,20 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('shopping-list', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list');
 
-        $this->createPostController('/{shoppingList}/remove-item', static::ROUTE_REMOVE_ITEM, 'ShoppingListPage', 'ShoppingList', 'removeItem')
+        $this->createGetController('/{shoppingList}/remove-item', static::ROUTE_REMOVE_ITEM, 'ShoppingListPage', 'ShoppingList', 'removeItem')
             ->assert('shopping-list', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list');
 
-        $this->createPostController('/{shoppingList}/add-to-cart', static::ROUTE_ADD_TO_CART, 'ShoppingListPage', 'ShoppingList', 'addToCart')
+        $this->createGetController('/{shoppingList}/add-to-cart', static::ROUTE_ADD_TO_CART, 'ShoppingListPage', 'ShoppingList', 'addToCart')
             ->assert('shopping-list', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('sku', '[a-zA-Z0-9-_]+');
 
-        $this->createPostController('/{shoppingList}/add-all-available-to-cart/{shoppingListName}', static::ROUTE_ADD_ALL_AVAILABLE_TO_CART, 'ShoppingListPage', 'ShoppingList', 'addAllAvailableToCart')
+        $this->createPostController('/{shoppingList}/multi-add-to-cart', static::ROUTE_MULTI_ADD_TO_CART, 'ShoppingListPage', 'ShoppingList', 'multiAddToCart')
+            ->assert('shopping-list', $allowedLocalesPattern . 'shopping-list|shopping-list')
+            ->value('shoppingList', 'shopping-list');
+
+        $this->createPostController('/{shoppingList}/add-all-available-to-cart/{shoppingListName}', static::ROUTE_ADD_ALL_AVAILABLE_TO_CART, 'ShoppingListPage', 'ShoppingList', 'addAvailableProductsToCart')
             ->assert('shopping-list', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('shoppingListName', '.+');

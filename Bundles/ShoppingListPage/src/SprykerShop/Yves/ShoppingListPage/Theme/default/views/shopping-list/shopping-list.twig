@@ -4,8 +4,7 @@
     activePage: 'shoppingList',
     shoppingList: _view.shoppingListOverview.shoppingList,
     shoppingListCollection: _view.shoppingListOverview.shoppingLists,
-    items: _view.shoppingListOverview.itemsCollection.items,
-    addAllAvailableProductsToCartForm: _view.addAllAvailableProductsToCartForm,
+    addAvailableProductsToCartForm: _view.addAvailableProductsToCartForm,
     shoppingListItems: _view.shoppingListItems,
     pagination: {
         currentPage: _view.currentPage,
@@ -22,7 +21,8 @@
         shoppingListEmptyLabel: 'customer.account.shopping_list.empty' | trans,
         quantityLabel: 'customer.account.shopping_list.quantity' | trans,
         addItemToCartLabel: 'customer.account.shopping_list.add-to-cart' | trans,
-        removeItemFromShoppingListLabel: 'customer.account.shopping_list.remove' | trans
+        removeItemFromShoppingListLabel: 'customer.account.shopping_list.remove' | trans,
+        addSelectedItemsToCartLabel: 'customer.account.shopping_list.add_selected_items_to_cart' | trans
     }
 } %}
 
@@ -52,10 +52,10 @@
     <div class="box">
         <h4>{{ data.shoppingList.name }}</h4>
 
-        {% if data.items|length %}
+        {% if data.shoppingListItems|length %}
             {% include molecule('form') with {
                 data: {
-                    form: data.addAllAvailableProductsToCartForm,
+                    form: data.addAvailableProductsToCartForm,
                     options: {
                         action: path('shopping-list/add-all-available-to-cart', { shoppingListName: data.shoppingList.name })
                     },
@@ -68,9 +68,12 @@
         {% endif %}
 
         {% if data.shoppingListItems|length %}
+            <form method="POST" action="{{ path('shopping-list/multi-add-to-cart') }}">
+            <input type="hidden" value="{{ data.shoppingList.name }}" name="shoppingListName"/>
             <table class="table table--expand">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>{{ data.labels.productLabel }}</th>
                     <th>{{ data.labels.priceLabel  }}</th>
                     <th>{{ data.labels.quantityLabel }}</th>
@@ -83,9 +86,12 @@
                 {% for item in data.shoppingListItems %}
                     <tr>
                         <td>
+                            <input type="checkbox" name="idShoppingListItem[]" value="{{ item.idShoppingListItem }}"/>
+                        </td>
+                        <td>
                             <a href="{{ item.url }}">{{ item.name }}</a>
                             <div><small>{{ item.sku }}</small></div>
-                            {% if item.images is defined %}
+                            {% if item.images is defined and item.images is not empty %}
                                 <img width="75" src="{{ item.images[0].externalUrlSmall }}" />
                             {% endif %}
                         </td>
@@ -117,30 +123,24 @@
                         </td>
                         <td>
                             {% if item.available is defined and item.available and item.price is defined and item.price is not null %}
-                                <form method="POST" action="{{ path('shopping-list/add-to-cart') }}">
-                                    <input type="hidden" name="sku" value="{{ item.sku}}" />
-                                    <input type="hidden" name="quantity" value="{{ item.quantity}}" />
-                                    <input type="hidden" name="shopping-list-item-id" value="{{ item.idShoppingListItem }}" />
-                                    <input type="hidden" name="shopping-list-name" value="{{ data.shoppingList.name }}" />
-                                    <button type="submit" class="button button--success">
-                                        {{data.labels.addItemToCartLabel}}
-                                    </button>
-                                </form>
+                                <a class="button button--success" href="{{ path('shopping-list/add-to-cart', {sku: item.sku, quantity: item.quantity, idShoppingListItem: item.idShoppingListItem, shoppingListName: data.shoppingList.name}) }}">
+                                    {{data.labels.addItemToCartLabel}}
+                                </a>
                             {% endif %}
                             <div>
-                                <form method="POST" action="{{ path('shopping-list/remove-item') }}">
-                                    <input type="hidden" name="shopping-list-item-id" value="{{ item.idShoppingListItem }}" />
-                                    <input type="hidden" name="shopping-list-name" value="{{ data.shoppingList.name }}" />
-                                    <button type="submit" class="button button--alert">
-                                        {{data.labels.removeItemFromShoppingListLabel}}
-                                    </button>
-                                </form>
+                                <a class="button button--alert" href="{{ path('shopping-list/remove-item', {idShoppingListItem: item.idShoppingListItem, shoppingListName: data.shoppingList.name}) }}">
+                                    {{data.labels.removeItemFromShoppingListLabel}}
+                                </a>
                             </div>
                         </td>
                     </tr>
                 {% endfor %}
+                <button type="submit" class="button button--success col col--sm-12 col--md-5 col--lg-3" {{qa('submit-button')}}>
+                    {{ data.labels.addSelectedItemsToCartLabel }}
+                </button>
                 </tbody>
             </table>
+            </form>
 
             {% include molecule('pagination') with {
                 data: {

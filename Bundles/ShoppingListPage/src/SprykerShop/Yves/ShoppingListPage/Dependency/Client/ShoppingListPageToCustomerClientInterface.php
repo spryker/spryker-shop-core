@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface ShoppingListPageToCustomerClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    public function getCustomer(): ?CustomerTransfer;
-
-    /**
      * @return bool
      */
     public function isLoggedIn(): bool;
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomer(): ?CustomerTransfer;
 }

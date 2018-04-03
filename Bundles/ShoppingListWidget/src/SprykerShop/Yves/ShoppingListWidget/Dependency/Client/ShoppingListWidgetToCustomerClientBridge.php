@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
+namespace SprykerShop\Yves\ShoppingListWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 
-class ShoppingListPageToCustomerClientBridge implements ShoppingListPageToCustomerClientInterface
+class ShoppingListWidgetToCustomerClientBridge implements ShoppingListWidgetToCustomerClientInterface
 {
     /**
      * @var \Spryker\Client\Customer\CustomerClientInterface
@@ -30,13 +29,5 @@ class ShoppingListPageToCustomerClientBridge implements ShoppingListPageToCustom
     public function isLoggedIn(): bool
     {
         return $this->customerClient->isLoggedIn();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    public function getCustomer(): ?CustomerTransfer
-    {
-        return $this->customerClient->getCustomer();
     }
 }

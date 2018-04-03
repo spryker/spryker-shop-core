@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use SprykerShop\Yves\ShoppingListPage\Form\AddAllAvailableProductsToCartForm;
+use SprykerShop\Yves\ShoppingListPage\Form\AddAvailableProductsToCartForm;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,11 +30,11 @@ class ShoppingListController extends AbstractController
 {
     protected const PARAM_ITEMS_PER_PAGE = 'ipp';
     protected const PARAM_PAGE = 'page';
-    protected const PARAM_PRODUCT_ID = 'product-id';
+    protected const PARAM_PRODUCT_ID = 'productId';
     protected const PARAM_SKU = 'sku';
-    protected const PARAM_SHOPPING_LIST_NAME = 'shopping-list-name';
+    protected const PARAM_SHOPPING_LIST_NAME = 'shoppingListName';
     protected const PARAM_QUANTITY = 'quantity';
-    protected const PARAM_SHOPPING_LIST_ITEM_ID = 'shopping-list-item-id';
+    protected const PARAM_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
 
     /**
      * @param string $shoppingListName
@@ -49,13 +49,9 @@ class ShoppingListController extends AbstractController
         $pageNumber = $this->getPageNumber($request);
         $itemsPerPage = $this->getItemsPerPage($request);
 
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
         $shoppingListTransfer = (new ShoppingListTransfer())
             ->setName($shoppingListName)
-            ->setCustomerReference($customerTransfer->getCustomerReference());
+            ->setCustomerReference($this->getCustomerReference());
 
         $shoppingListOverviewRequest = (new ShoppingListOverviewRequestTransfer())
             ->setShoppingList($shoppingListTransfer)
@@ -72,7 +68,7 @@ class ShoppingListController extends AbstractController
 
         $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);
 
-        $addAllAvailableProductsToCartForm = $this->createAddAllAvailableProductsToCartForm($shoppingListOverviewResponseTransfer);
+        $addAvailableProductsToCartForm = $this->createAddAvailableProductsToCartForm($shoppingListOverviewResponseTransfer);
 
         $data = [
             'shoppingListItems' => $shoppingListItems,
@@ -80,7 +76,7 @@ class ShoppingListController extends AbstractController
             'currentPage' => $shoppingListOverviewResponseTransfer->getPagination()->getPage(),
             'totalPages' => $shoppingListOverviewResponseTransfer->getPagination()->getPagesTotal(),
             'shoppingListName' => $shoppingListName,
-            'addAllAvailableProductsToCartForm' => $addAllAvailableProductsToCartForm->createView(),
+            'addAvailableProductsToCartForm' => $addAvailableProductsToCartForm->createView(),
         ];
 
         return $this->view($data, [], '@ShoppingListPage/views/shopping-list/shopping-list.twig');
@@ -142,15 +138,43 @@ class ShoppingListController extends AbstractController
             ->addAllAvailableToCart([$shoppingListItemTransfer]);
 
         if ($result->getRequests()->count()) {
-            $this->addErrorMessage('customer.account.shopping_list.item.moved_to_cart.failed');
+            $this->addErrorMessage('customer.account.shopping_list.item.added_to_cart.failed');
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'shoppingListName' => $shoppingListItemTransfer->getShoppingListName(),
             ]);
         }
 
-        $this->addSuccessMessage('customer.account.shopping_list.item.moved_to_cart');
+        $this->addSuccessMessage('customer.account.shopping_list.item.added_to_cart');
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
             'shoppingListName' => $shoppingListItemTransfer->getShoppingListName(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function multiAddToCartAction(Request $request): RedirectResponse
+    {
+        $shoppingListItemCollectionTransfer = $this->getFactory()
+            ->getShoppingListClient()
+            ->getShoppingListItemCollectionTransfer($this->getShoppingListItemCollectionTransferFromRequest($request));
+
+        $result = $this->getFactory()
+            ->createAddToCartHandler()
+            ->addAllAvailableToCart($shoppingListItemCollectionTransfer->getItems()->getArrayCopy());
+
+        if ($result->getRequests()->count()) {
+            $this->addErrorMessage('customer.account.shopping_list.item.added_to_cart.failed');
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+                'shoppingListName' => $request->get(static::PARAM_SHOPPING_LIST_NAME),
+            ]);
+        }
+
+        $this->addSuccessMessage('customer.account.shopping_list.item.added_to_cart');
+        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+            'shoppingListName' => $request->get(static::PARAM_SHOPPING_LIST_NAME),
         ]);
     }
 
@@ -160,15 +184,15 @@ class ShoppingListController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addAllAvailableToCartAction(string $shoppingListName, Request $request): RedirectResponse
+    public function addAvailableProductsToCartAction(string $shoppingListName, Request $request): RedirectResponse
     {
-        $addAllAvailableProductsToCartForm = $this
-            ->createAddAllAvailableProductsToCartForm()
+        $addAvailableProductsToCartForm = $this
+            ->createAddAvailableProductsToCartForm()
             ->handleRequest($request);
 
-        if ($addAllAvailableProductsToCartForm->isSubmitted() && $addAllAvailableProductsToCartForm->isValid()) {
-            $shoppingListItemCollection = $addAllAvailableProductsToCartForm
-                ->get(AddAllAvailableProductsToCartForm::SHOPPING_LIST_ITEM_COLLECTION)
+        if ($addAvailableProductsToCartForm->isSubmitted() && $addAvailableProductsToCartForm->isValid()) {
+            $shoppingListItemCollection = $addAvailableProductsToCartForm
+                ->get(AddAvailableProductsToCartForm::SHOPPING_LIST_ITEM_COLLECTION)
                 ->getData();
 
             $result = $this->getFactory()
@@ -176,13 +200,13 @@ class ShoppingListController extends AbstractController
                 ->addAllAvailableToCart($shoppingListItemCollection);
 
             if ($result->getRequests()->count()) {
-                $this->addErrorMessage('customer.account.shopping_list.item.moved_all_available_to_cart.failed');
+                $this->addErrorMessage('customer.account.shopping_list.item.added_all_available_to_cart.failed');
                 return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                     'shoppingListName' => $shoppingListName,
                 ]);
             }
 
-            $this->addSuccessMessage('customer.account.shopping_list.item.moved_all_available_to_cart');
+            $this->addSuccessMessage('customer.account.shopping_list.item.added_all_available_to_cart');
         }
 
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
@@ -220,22 +244,20 @@ class ShoppingListController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected function getShoppingListItemTransferFromRequest(Request $request): ?ShoppingListItemTransfer
+    protected function getShoppingListItemTransferFromRequest(Request $request): ShoppingListItemTransfer
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        $shoppingListName = $request->request->get(static::PARAM_SHOPPING_LIST_NAME) ?: $this->getFactory()->getBundleConfig()->getShoppingListDefaultName();
+        $shoppingListName = $request->get(static::PARAM_SHOPPING_LIST_NAME) ?: $this->getFactory()->getBundleConfig()->getShoppingListDefaultName();
 
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setIdProduct($request->request->getInt(static::PARAM_PRODUCT_ID))
-            ->setSku($request->request->get(static::PARAM_SKU))
-            ->setQuantity($request->request->getInt(static::PARAM_QUANTITY))
-            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdProduct((int)$request->get(static::PARAM_PRODUCT_ID))
+            ->setSku($request->get(static::PARAM_SKU))
+            ->setQuantity((int)$request->get(static::PARAM_QUANTITY))
+            ->setCustomerReference($this->getCustomerReference())
             ->setShoppingListName($shoppingListName);
 
-        $requestIdShoppingListItem = $request->request->getInt(static::PARAM_SHOPPING_LIST_ITEM_ID);
+        $requestIdShoppingListItem = (int)$request->get(static::PARAM_ID_SHOPPING_LIST_ITEM);
         if($requestIdShoppingListItem) {
             $shoppingListItemTransfer->setIdShoppingListItem($requestIdShoppingListItem);
         }
@@ -244,18 +266,37 @@ class ShoppingListController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function getShoppingListItemCollectionTransferFromRequest(Request $request): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListCollectionTransfer = new ShoppingListItemCollectionTransfer();
+        foreach($request->get(static::PARAM_ID_SHOPPING_LIST_ITEM) as $idShoppingListItem) {
+            $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+                ->setShoppingListName($request->get(static::PARAM_SHOPPING_LIST_NAME))
+                ->setIdShoppingListItem((int)$idShoppingListItem);
+
+            $shoppingListCollectionTransfer->addItem($shoppingListItemTransfer);
+        }
+
+        return $shoppingListCollectionTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer|null $shoppingListOverviewResponseTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createAddAllAvailableProductsToCartForm(ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer = null): FormInterface
+    protected function createAddAvailableProductsToCartForm(ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer = null): FormInterface
     {
-        $addAllAvailableProductsToCartFormDataProvider = $this->getFactory()->createAddAllAvailableProductsToCartFormDataProvider();
-        $addAllAvailableProductsToCartForm = $this->getFactory()->getAddAllAvailableProductsToCartForm(
-            $addAllAvailableProductsToCartFormDataProvider->getData($shoppingListOverviewResponseTransfer)
+        $addAvailableProductsToCartFormDataProvider = $this->getFactory()->createAddAvailableProductsToCartFormDataProvider();
+        $addAvailableProductsToCartForm = $this->getFactory()->getAddAvailableProductsToCartForm(
+            $addAvailableProductsToCartFormDataProvider->getData($shoppingListOverviewResponseTransfer)
         );
 
-        return $addAllAvailableProductsToCartForm;
+        return $addAvailableProductsToCartForm;
     }
 
     /**
@@ -299,5 +340,13 @@ class ShoppingListController extends AbstractController
         }
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCustomerReference(): string
+    {
+        return $this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference();
     }
 }

@@ -15,11 +15,10 @@ use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandlerInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
-use SprykerShop\Yves\ShoppingListPage\Form\AddAllAvailableProductsToCartForm;
-use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\AddAllAvailableProductsToCartFormDataProvider;
+use SprykerShop\Yves\ShoppingListPage\Form\AddAvailableProductsToCartForm;
+use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\AddAvailableProductsToCartFormDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -59,19 +58,19 @@ class ShoppingListPageFactory extends AbstractFactory
      * @param array $data
      * @param array $options
      *
-     * @return \Symfony\Component\Form\FormInterface|\SprykerShop\Yves\ShoppingListPage\Form\AddAllAvailableProductsToCartForm
+     * @return \Symfony\Component\Form\FormInterface|\SprykerShop\Yves\ShoppingListPage\Form\AddAvailableProductsToCartForm
      */
-    public function getAddAllAvailableProductsToCartForm(array $data, array $options = []): FormInterface
+    public function getAddAvailableProductsToCartForm(array $data, array $options = []): FormInterface
     {
-        return $this->getFormFactory()->create(AddAllAvailableProductsToCartForm::class, $data, $options);
+        return $this->getFormFactory()->create(AddAvailableProductsToCartForm::class, $data, $options);
     }
 
     /**
-     * @return \SprykerShop\Yves\ShoppingListPage\Form\DataProvider\AddAllAvailableProductsToCartFormDataProvider
+     * @return \SprykerShop\Yves\ShoppingListPage\Form\DataProvider\AddAvailableProductsToCartFormDataProvider
      */
-    public function createAddAllAvailableProductsToCartFormDataProvider(): AddAllAvailableProductsToCartFormDataProvider
+    public function createAddAvailableProductsToCartFormDataProvider(): AddAvailableProductsToCartFormDataProvider
     {
-        return new AddAllAvailableProductsToCartFormDataProvider();
+        return new AddAvailableProductsToCartFormDataProvider();
     }
 
     /**

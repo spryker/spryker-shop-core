@@ -85,5 +85,9 @@
         {{ widget('AvailabilityWidgetPlugin', data.product) }}
     </form>
 
+    {% if widgetExists('ShoppingListWidgetPlugin') %}
+        {{ widget('ShoppingListWidgetPlugin', sku, disabled) }}
+    {% endif %}
+
     {# {{ widget('WishlistWidgetPlugin', data.product) }} #}
 {% endblock %}

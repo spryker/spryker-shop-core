@@ -52,7 +52,7 @@ class AddToCartHandler implements AddToCartHandlerInterface
             return $shoppingListMoveToCartRequestCollectionTransfer;
         }
 
-        return $this->shoppingListClient->addCollectionToCart($shoppingListMoveToCartRequestCollectionTransfer);
+        return $this->shoppingListClient->addItemCollectionToCart($shoppingListMoveToCartRequestCollectionTransfer);
     }
 
     /**

@@ -8,9 +8,9 @@
 namespace SprykerShop\Yves\ShoppingListPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
-use SprykerShop\Yves\ShoppingListPage\Form\AddAllAvailableProductsToCartForm;
+use SprykerShop\Yves\ShoppingListPage\Form\AddAvailableProductsToCartForm;
 
-class AddAllAvailableProductsToCartFormDataProvider
+class AddAvailableProductsToCartFormDataProvider
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer|null $shoppingListOverviewResponseTransfer
@@ -20,7 +20,7 @@ class AddAllAvailableProductsToCartFormDataProvider
     public function getData(?ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer): array
     {
         $data = [
-            AddAllAvailableProductsToCartForm::SHOPPING_LIST_ITEM_COLLECTION => $this->getShoppingListItemCollection($shoppingListOverviewResponseTransfer),
+            AddAvailableProductsToCartForm::SHOPPING_LIST_ITEM_COLLECTION => $this->getShoppingListItemCollection($shoppingListOverviewResponseTransfer),
         ];
 
         return $data;

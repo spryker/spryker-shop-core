@@ -8,9 +8,11 @@
     shoppingLists: required,
     idShoppingList: null,
     shoppingListForm: null,
+    enableTableForm: false,
     labels: {
         editLabel: 'customer.account.shopping_list.overview.edit' | trans,
-        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans
+        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
+        addShoppingListToCartLabel: 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans,
     }
 } %}
 
@@ -18,6 +20,7 @@
     <table class="table table--expand">
         <thead>
             <tr>
+                <th></th>
                 <th width="40%">{{ 'customer.account.shopping_list.overview.name' | trans }}</th>
                 <th width="30%">{{ 'customer.account.shopping_list.overview.item_count' | trans }}</th>
                 <th width="20%">{{ 'customer.account.shopping_list.overview.modified_date' | trans }}</th>
@@ -25,8 +28,16 @@
             </tr>
         </thead>
         <tbody>
+        {% if data.enableTableForm %}
+            <form method="POST" action="{{ path('shopping-list/add-shopping-list-to-cart') }}">
+        {% endif %}
         {% for shoppingList in data.shoppingLists %}
             <tr>
+                <td>
+                    {% if data.enableTableForm %}
+                        <input title="{{ data.labels.addShoppingListToCartLabel }}" type="checkbox" name="shoppingLists[]" value="{{ shoppingList.name }}" />
+                    {% endif %}
+                </td>
                 <td>
                     {% if data.shoppingListForm is not null and shoppingList.idShoppingList == data.idShoppingList %}
                         {% include molecule('form') with {
@@ -50,6 +61,12 @@
                 </td>
             </tr>
         {% endfor %}
+        {% if data.enableTableForm %}
+                <button type="submit" class="button button--success col col--sm-12 col--md-5 col--lg-3" {{qa('submit-button')}}>
+                    {{ data.labels.addShoppingListToCartLabel }}
+                </button>
+            </form>
+        {% endif %}
         </tbody>
     </table>
 {% endblock %}
