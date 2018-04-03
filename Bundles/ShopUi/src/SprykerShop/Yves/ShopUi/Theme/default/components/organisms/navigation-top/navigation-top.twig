@@ -23,7 +23,9 @@
         <li class="menu__separator"></li>
         <li class="menu__item"><a href="{{ url('cart') }}">{{cartQuantity}}{{ 'global.cart' | trans }}</a></li>
         <li class="menu__separator"></li>
-        
+        <li class="menu__item"><a href="{{ url('quick-order') }}">{{ 'quick-order.page-title'|trans }}</a></li>
+        <li class="menu__separator"></li>
+
         {% if data.showUserMenu %}
             {% if data.isUserAuthenticated %}
                 <li class="menu__item"><a href="{{ url('customer/overview') }}">{{ 'customer.profile'|trans }}</a></li>

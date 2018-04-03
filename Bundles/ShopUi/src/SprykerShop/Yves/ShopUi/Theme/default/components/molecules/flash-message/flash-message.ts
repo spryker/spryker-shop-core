@@ -19,12 +19,12 @@ export default class FlashMessage extends Component {
     }
 
     showFor(duration: number) {
-        this.classList.add(`${this.name}--show`);
+        this.classList.add(`${this.componentName}--show`);
         this.durationTimeoutId = setTimeout(() => this.hide(), duration);
     }
 
     hide() { 
         clearTimeout(this.durationTimeoutId);
-        this.classList.remove(`${this.name}--show`);
+        this.classList.remove(`${this.componentName}--show`);
     }
 }

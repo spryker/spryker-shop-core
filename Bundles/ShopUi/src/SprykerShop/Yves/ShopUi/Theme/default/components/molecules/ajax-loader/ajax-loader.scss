@@ -1,0 +1,29 @@
+@mixin component-ajax-loader($name: '.ajax-loader') {
+    #{$name} {
+        @include transition();
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba($color-lighter, .5);
+        z-index: $zi-element-floating;
+        
+        &__spinner {
+            animation-name: spin;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        &__label {
+            margin-left: spacing();
+        }
+
+        &--big &__label {
+            @include font-size(big);
+        }
+
+        @content;
+    }
+}

@@ -16,20 +16,20 @@ export default class SimpleCarousel extends Component {
     constructor() {
         super();
 
-        this.dotSelector = `${this.selector}__dot`;
-        this.dotCurrentModifier = `${this.name}__dot--current`;
+        this.dotSelector = `${this.componentSelector}__dot`;
+        this.dotCurrentModifier = `${this.componentName}__dot--current`;
     }
 
     readyCallback(): void {
-        this.slidesCount = this.getElementsByClassName(`${this.selector}__slide`).length;
+        this.slidesCount = this.getElementsByClassName(`${this.componentSelector}__slide`).length;
 
         if (this.slidesCount <= 1) {
             return;
         }
 
-        this.triggerPrev = this.querySelector(`.${this.selector}__prev`);
-        this.triggerNext = this.querySelector(`.${this.selector}__next`);
-        this.slider = this.querySelector(`.${this.selector}__slider`);
+        this.triggerPrev = this.querySelector(`.${this.componentSelector}__prev`);
+        this.triggerNext = this.querySelector(`.${this.componentSelector}__next`);
+        this.slider = this.querySelector(`.${this.componentSelector}__slider`);
         this.slideWidth = 100 / this.slidesToShow;
         this.dots = <HTMLElement[]>Array.from(this.getElementsByClassName(this.dotSelector));
         this.viewsCount = this.getViewsCount();

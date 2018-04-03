@@ -7,29 +7,28 @@
 
 {% define data = {
     form: required,
-    title: null,
-    options: {},
-    layout: {},
     enableStart: true,
     enableEnd: true,
-    
+    layout: {},
+    options: {
+        attr: {
+            novalidate: 'novalidate'
+        }
+    },
+
+    title: null,
+
     submit: {
         text: 'forms.submit-btn' | trans,
         enable: false
     },
-    
+
     cancel: {
         text: 'general.back.button' | trans,
         url: '#',
         enable: false
     }
 } %}
-
-{% set options = {
-    attr: {
-        novalidate: true
-    }
-} | merge(data.options) %}
 
 {% block body %}
     {% block title %}
@@ -39,9 +38,9 @@
     {% endblock %}
 
     {% if data.enableStart %}
-        {{ form_start(data.form, options) }}
+        {{ form_start(data.form, data.options) }}
     {% endif %}
-    
+
     {% block fields %}
         <div class="grid grid--bottom">
             {% for field in data.form.children | keys %}
@@ -50,7 +49,7 @@
                 {% if field in data.layout | keys %}
                     {% set class = attribute(data.layout, field) %}
                 {% endif %}
-            
+
                 <div class="{{class}}">
                     {{ form_row(attribute(data.form.children, field)) }}
                 </div>
@@ -85,7 +84,7 @@
             {% endif %}
         </div>
     {% endblock %}
-    
+
     {% if data.enableEnd %}
         {{ form_end(data.form) }}
     {% endif %}
