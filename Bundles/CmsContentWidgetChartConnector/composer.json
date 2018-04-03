@@ -8,7 +8,7 @@
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
-    "spryker-shop/chart-widget": "dev-beta/core-2413-chart as 0.1.0",
+    "spryker-shop/chart-widget": "dev-master",
     "spryker/twig": "*"
   },
   "suggest": {

@@ -4,8 +4,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/cms-content-widget-chart-connector": "dev-beta/core-2413-chart as 0.1.0",
-    "spryker/chart": "dev-beta/core-2413-chart as 0.1.0",
+    "spryker-shop/cms-content-widget-chart-connector": "dev-master",
+    "spryker/chart": "dev-master",
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
