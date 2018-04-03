@@ -104,7 +104,7 @@ export default class MeasurementQuantitySelector extends Component {
             choiceElem.classList.add('link');
             choiceElem.setAttribute('data-base-unit-qty', qtyInBaseUnits.toString());
             choiceElem.setAttribute('data-sales-unit-qty', qtyInSalesUnits.toString());
-            choiceElem.textContent = `(${(Math.round(qtyInSalesUnits * 100) / 100).toString()} ${measurementSalesUnitCode}) = (${qtyInBaseUnits} ${measurementBaseUnitCode})`;
+            choiceElem.textContent = `(${this.round(qtyInSalesUnits, 3).toString().toString()} ${measurementSalesUnitCode}) = (${qtyInBaseUnits} ${measurementBaseUnitCode})`;
             choiceElem.onclick = function (event: Event) {
                 let element = event.srcElement as HTMLSelectElement;
                 let qtyInBaseUnits = parseFloat(element.dataset.baseUnitQty);
@@ -122,7 +122,7 @@ export default class MeasurementQuantitySelector extends Component {
 
     selectQty(qtyInBaseUnits: number, qtyInSalesUnits: number) {
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
-        this.qtyInSalesUnitInput.value = (Math.round(qtyInSalesUnits * 100) / 100).toString();
+        this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 3).toString().toString();
         this.addToCartButton.removeAttribute("disabled");
         document.querySelector('.measurement-unit-choice').classList.add('is-hidden');
         this.qtyInputChange(qtyInSalesUnits);
@@ -162,6 +162,10 @@ export default class MeasurementQuantitySelector extends Component {
         return Math.ceil(value);
     }
 
+    round(value: number, decimals: number): number {
+        return Number(Math.round(parseFloat(value + 'e' + decimals)) + 'e-' + decimals);
+    }
+
     getMinQuantity() {
         if (this.productQuantityStorage.hasOwnProperty('quantity_min')) {
             return this.productQuantityStorage.quantity_min;
@@ -193,7 +197,7 @@ export default class MeasurementQuantitySelector extends Component {
         let qtyInBaseUnits = qtyInSalesUnits * this.currentSalesUnit.conversion;
         qtyInSalesUnits = qtyInBaseUnits / salesUnit.conversion;
         this.currentSalesUnit = salesUnit;
-        this.qtyInSalesUnitInput.value = (Math.round(qtyInSalesUnits * 100) / 100).toString();
+        this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 3).toString();
         this.qtyInputChange(qtyInSalesUnits);
     }
 

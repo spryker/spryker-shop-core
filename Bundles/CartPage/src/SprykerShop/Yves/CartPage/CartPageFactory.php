@@ -39,8 +39,7 @@ class CartPageFactory extends AbstractFactory
             $this->getLocale(),
             $this->getFlashMessenger(),
             $this->getRequest(),
-            $this->getAvailabilityClient(),
-            $this->getCartItemBeforeAddPlugins()
+            $this->getAvailabilityClient()
         );
     }
 
@@ -186,15 +185,5 @@ class CartPageFactory extends AbstractFactory
     public function createCartItemsAvailabilityMapper()
     {
         return new CartItemsAvailabilityMapper($this->getAvailabilityStorageClient());
-    }
-
-    /**
-     * @deprecated
-     *
-     * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemBeforeAddPluginInterface[]
-     */
-    public function getCartItemBeforeAddPlugins(): array
-    {
-        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_CART_ITEM_BEFORE_ADD);
     }
 }

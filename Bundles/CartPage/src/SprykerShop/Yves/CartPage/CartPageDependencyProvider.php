@@ -25,7 +25,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
     public const PLUGIN_CART_ITEM_TRANSFORMERS = 'PLUGIN_CART_ITEM_TRANSFORMERS';
-    public const PLUGIN_CART_ITEM_BEFORE_ADD = 'PLUGIN_CART_ITEM_BEFORE_ADD';
     public const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
 
     /**
@@ -43,7 +42,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartVariantAttributeMapperPlugin($container);
         $container = $this->addCartPageWidgetPlugins($container);
         $container = $this->addCartItemTransformerPlugins($container);
-        $container = $this->addCartItemBeforeAddPlugins($container);
 
         return $container;
     }
@@ -149,22 +147,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated
-     *
-     * @param $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addCartItemBeforeAddPlugins($container): Container
-    {
-        $container[self::PLUGIN_CART_ITEM_BEFORE_ADD] = function () {
-            return $this->getCartItemBeforeAddPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
      * Returns a list of widget plugin class names that implement
      * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
@@ -193,16 +175,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
      */
     protected function getCartItemTransformerPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @deprecated
-     *
-     * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemBeforeAddPluginInterface[]
-     */
-    protected function getCartItemBeforeAddPlugins(): array
     {
         return [];
     }

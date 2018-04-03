@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CartPage\Handler;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
@@ -41,27 +42,18 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     protected $availabilityClient;
 
     /**
-     * @deprecated
-     *
-     * @var \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemBeforeAddPluginInterface[]
-     */
-    protected $cartItemBeforeAddPlugins;
-
-    /**
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $cartClient
      * @param string $locale
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface $availabilityClient
-     * @param \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemBeforeAddPluginInterface[] $cartItemBeforeAddPlugins
      */
     public function __construct(
         CartPageToCartClientInterface $cartClient,
         $locale,
         FlashMessengerInterface $flashMessenger,
         Request $request,
-        CartPageToAvailabilityClientInterface $availabilityClient,
-        array $cartItemBeforeAddPlugins = []
+        CartPageToAvailabilityClientInterface $availabilityClient
     ) {
         parent::__construct($flashMessenger);
         $this->cartClient = $cartClient;
@@ -69,7 +61,6 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
         $this->request = $request;
         $this->availabilityClient = $availabilityClient;
         $this->flashMessenger = $flashMessenger;
-        $this->cartItemBeforeAddPlugins = $cartItemBeforeAddPlugins;
     }
 
     /**
@@ -88,7 +79,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
         $itemTransfer->setQuantity($quantity);
         $this->addProductOptions($optionValueUsageIds, $itemTransfer);
 
-        $this->executeCartItemBeforeAddPlugins($itemTransfer);
+        $this->addProductMeasurementSalesUnitTransfer($itemTransfer);
 
         $quantity = $this->adjustQuantityBasedOnProductAvailability($sku, $itemTransfer->getQuantity());
         $itemTransfer->setQuantity($quantity);
@@ -105,7 +96,7 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     public function addItems(array $itemTransfers)
     {
         foreach ($itemTransfers as &$itemTransfer) {
-            $itemTransfer = $this->executeCartItemBeforeAddPlugins($itemTransfer);
+            $itemTransfer = $this->addProductMeasurementSalesUnitTransfer($itemTransfer);
         }
 
         $quoteTransfer = $this->cartClient->addItems($itemTransfers);
@@ -229,19 +220,25 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     }
 
     /**
-     * @deprecated
+     * @todo Move into plugin
      *
-     * @todo Move this into cart client plugin, @see CORE-2347
+     * @deprecated
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function executeCartItemBeforeAddPlugins(ItemTransfer $itemTransfer): ItemTransfer
+    protected function addProductMeasurementSalesUnitTransfer(ItemTransfer $itemTransfer): ItemTransfer
     {
-        foreach ($this->cartItemBeforeAddPlugins as $cartItemBeforeAddPlugin) {
-            $itemTransfer = $cartItemBeforeAddPlugin->add($itemTransfer, $this->request);
+        $idProductMeasurementSalesUnit = $this->request->request->getInt('id-product-measurement-sales-unit');
+
+        if ($idProductMeasurementSalesUnit === 0) {
+            return $itemTransfer;
         }
+
+        $productMeasurementSalesUnitTransfer = new ProductMeasurementSalesUnitTransfer();
+        $productMeasurementSalesUnitTransfer->setIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit);
+        $itemTransfer->setQuantitySalesUnit($productMeasurementSalesUnitTransfer);
 
         return $itemTransfer;
     }

@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Plugin\ProductDetailPage;
 
-use Generated\Shared\Transfer\ProductConcreteMeasurementBaseUnitTransfer;
-use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -28,31 +26,31 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      */
     public function initialize(ProductViewTransfer $productViewTransfer, array $qtyOptions = []): void
     {
-        $salesUnits = [];
+        $salesUnits = null;
         $baseUnit = null;
         $productQuantityStorageTransfer = null;
 
         if ($productViewTransfer->getIdProductConcrete()) {
-            $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
-                ->getProductMeasurementUnitStorageClient()
-                ->findProductConcreteMeasurementUnitStorage($productViewTransfer->getIdProductConcrete());
+            $baseUnit = $this->getFactory()
+                ->createProductMeasurementBaseUnitReader()
+                ->findProductMeasurementBaseUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());
 
-            if ($productConcreteMeasurementUnitStorageTransfer !== null) {
-                $baseUnit = $this->prepareBaseUnit($productConcreteMeasurementUnitStorageTransfer->getBaseUnit());
+            $salesUnits = $this->getFactory()
+                ->createProductMeasurementSalesUnitReader()
+                ->findProductMeasurementSalesUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());
 
-                $salesUnits = $this->prepareSalesUnits(
-                    $productConcreteMeasurementUnitStorageTransfer->getSalesUnits()->getArrayCopy()
-                );
-            }
-            $productQuantityStorageTransfer = $this->findProductQuantityStorageTransfer(
-                $productViewTransfer->getIdProductConcrete()
-            );
+            $productQuantityStorageTransfer = $this->getFactory()
+                ->getProductQuantityStorageClient()
+                ->findProductQuantityStorage($productViewTransfer->getIdProductConcrete());
         }
-
+        $minQuantityInBaseUnits = $this->getMinQuantityInBaseUnits($productQuantityStorageTransfer);
+        $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($salesUnits, $minQuantityInBaseUnits);
 
         $this
             ->addParameter('product', $productViewTransfer)
             ->addParameter('qtyOptions', $qtyOptions)
+            ->addParameter('minQuantityInBaseUnits', $minQuantityInBaseUnits)
+            ->addParameter('minQuantityInSalesUnits', $minQuantityInSalesUnits)
             ->addParameter('baseUnit', $baseUnit)
             ->addParameter('salesUnits', $salesUnits)
             ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
@@ -64,6 +62,17 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
                     $productQuantityStorageTransfer
                 )
             );
+    }
+
+    protected function getMinQuantityInBaseUnits(
+        ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
+    ): int {
+        $quantityMin = 1;
+        if ($productQuantityStorageTransfer !== null) {
+            $quantityMin = $productQuantityStorageTransfer->getQuantityMin() ?: 1;
+        }
+
+        return $quantityMin;
     }
 
     /**
@@ -91,90 +100,15 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
     }
 
     /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
-     */
-    protected function findProductQuantityStorageTransfer(int $idProduct): ?ProductQuantityStorageTransfer
-    {
-        return $this->getFactory()
-            ->getProductQuantityStorageClient()
-            ->findProductQuantityStorage($idProduct);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteMeasurementBaseUnitTransfer $productConcreteMeasurementBaseUnit
-     *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
-     */
-    protected function prepareBaseUnit(
-        ProductConcreteMeasurementBaseUnitTransfer $productConcreteMeasurementBaseUnit
-    ): ?ProductMeasurementUnitTransfer {
-        $productMeasurementUnitStorageTransfer = $this->getFactory()
-            ->getProductMeasurementUnitStorageClient()
-            ->findProductMeasurementUnitStorage($productConcreteMeasurementBaseUnit->getIdProductMeasurementUnit());
-
-        if ($productMeasurementUnitStorageTransfer !== null) {
-            return $this->getFactory()
-                ->createProductMeasurementSalesUnitMapper()
-                ->mapProductMeasurementUnit(
-                    $productMeasurementUnitStorageTransfer,
-                    new ProductMeasurementUnitTransfer()
-                );
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer[] $productConcreteMeasurementSalesUnits
-     *
-     * @return array
-     */
-    protected function prepareSalesUnits(
-        array $productConcreteMeasurementSalesUnits = []
-    ): array {
-        $saleUnits = [];
-        $mapper = $this->getFactory()->createProductMeasurementSalesUnitMapper();
-        foreach ($productConcreteMeasurementSalesUnits as $productConcreteMeasurementSalesUnitTransfer) {
-            if ($productConcreteMeasurementSalesUnitTransfer->getIsDisplayed() !== true) {
-                //continue;
-            }
-
-            $productMeasurementUnitStorageTransfer = $this->getFactory()
-                ->getProductMeasurementUnitStorageClient()
-                ->findProductMeasurementUnitStorage($productConcreteMeasurementSalesUnitTransfer->getIdProductMeasurementUnit());
-
-            if ($productMeasurementUnitStorageTransfer !== null) {
-                $productMeasurementSalesUnitTransfer = $mapper->mapProductMeasurementSalesUnitTransfer(
-                    $productConcreteMeasurementSalesUnitTransfer,
-                    new ProductMeasurementSalesUnitTransfer()
-                );
-
-                $productMeasurementSalesUnitTransfer->setProductMeasurementUnit(
-                    $mapper->mapProductMeasurementUnit(
-                        $productMeasurementUnitStorageTransfer,
-                        new ProductMeasurementUnitTransfer()
-                    )
-                );
-
-                $saleUnits[] = $productMeasurementSalesUnitTransfer;
-            }
-        }
-
-        return $saleUnits;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null $baseUnit
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $salesUnits
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
      *
      * @return string
      */
     protected function prepareJsonData(
         ProductMeasurementUnitTransfer $baseUnit = null,
-        array $salesUnits = [],
+        array $salesUnits = null,
         ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
     ): string {
         $jsonData = [];
@@ -182,8 +116,11 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
         if ($baseUnit !== null) {
             $jsonData['baseUnit'] = $baseUnit->toArray();
         }
-        foreach ($salesUnits as $salesUnit) {
-            $jsonData['salesUnits'][] = $salesUnit->toArray();
+
+        if ($salesUnits !== null) {
+            foreach ($salesUnits as $salesUnit) {
+                $jsonData['salesUnits'][] = $salesUnit->toArray();
+            }
         }
 
         if ($productQuantityStorageTransfer !== null) {
@@ -191,5 +128,26 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
         }
 
         return \json_encode($jsonData, true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
+     * @param int $minQuantityInBaseUnits
+     *
+     * @return float
+     */
+    protected function getMinQuantityInSalesUnits(array $salesUnits = null, int $minQuantityInBaseUnits): float
+    {
+        if ($salesUnits !== null) {
+            foreach ($salesUnits as $salesUnit) {
+                if ($salesUnit->getIsDefault()) {
+                    $qtyInSalesUnits = $minQuantityInBaseUnits / $salesUnit->getConversion();
+
+                    return round($qtyInSalesUnits, 3);
+                }
+            }
+        }
+
+        return $minQuantityInBaseUnits;
     }
 }

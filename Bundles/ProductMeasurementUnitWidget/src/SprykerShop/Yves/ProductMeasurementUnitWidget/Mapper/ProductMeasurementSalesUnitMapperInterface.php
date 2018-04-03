@@ -24,15 +24,4 @@ interface ProductMeasurementSalesUnitMapperInterface
         ProductConcreteMeasurementSalesUnitTransfer $concreteMeasurementSalesUnitTransfer,
         ProductMeasurementSalesUnitTransfer $measurementSalesUnitTransfer
     ): ProductMeasurementSalesUnitTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer $measurementUnitStorageTransfer
-     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $measurementUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
-     */
-    public function mapProductMeasurementUnit(
-        ProductMeasurementUnitStorageTransfer $measurementUnitStorageTransfer,
-        ProductMeasurementUnitTransfer $measurementUnitTransfer
-    ): ProductMeasurementUnitTransfer;
 }
