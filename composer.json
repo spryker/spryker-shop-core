@@ -7,7 +7,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master",
-    "spryker/spryker": "dev-beta/core-2413-chart"
+    "spryker/spryker":"dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
