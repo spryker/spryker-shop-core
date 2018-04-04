@@ -30,6 +30,10 @@ class DetailController extends AbstractController
             'productViews' => $productViewTransfers,
         ];
 
-        return $this->view($data, $this->getFactory()->getProductSetDetailPageWidgetPlugins());
+        return $this->view(
+            $data,
+            $this->getFactory()->getProductSetDetailPageWidgetPlugins(),
+            '@ProductSetDetailPage/views/set-detail/set-detail.twig'
+        );
     }
 }

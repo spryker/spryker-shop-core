@@ -9,13 +9,13 @@
         overflow-y: hidden;
 
         &__message {
-            padding: spacing(2) spacing();
+            padding: 1rem .5rem;
             color: dark($color-main);
         }
 
         &--show {   
             @include is-visible;
-            max-height: spacing(15);
+            max-height: 8rem;
         }
 
         @each $action, $color-action in $color-actions {

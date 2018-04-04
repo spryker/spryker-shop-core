@@ -1,9 +1,0 @@
-{% if product.attributeMap.superAttributes|length > 0 %}
-    <p>
-        {% for attributeName,attributes in product.attributeMap.superAttributes %}
-            {% include '@ProductDetailPage/_product-detail-page/_partials/variant.twig' with {
-                attributeFieldName: 'attributes[' ~ product.idProductAbstract ~ '][' ~ attributeName ~ ']'
-            } %}
-        {% endfor %}
-    </p>
-{% endif %}

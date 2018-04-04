@@ -1,7 +1,7 @@
 @mixin component-jumbotron($name: '.jumbotron') {
     #{$name} {
         &__container {
-            height: spacing(20);
+            height: 10rem;
             background: $color-main;
             background: linear-gradient(to left top, dark($color-main), light($color-main));
             background-position: center center;
@@ -10,11 +10,11 @@
             text-align: center;
 
             @include breakpoint(md) {
-                height: spacing(30);
+                height: 15rem;
             }
 
             @include breakpoint(xl) {
-                height: spacing(40);
+                height: 20rem;
             }
         }
 

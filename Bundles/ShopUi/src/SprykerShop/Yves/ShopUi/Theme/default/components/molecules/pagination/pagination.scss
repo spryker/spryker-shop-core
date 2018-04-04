@@ -9,7 +9,7 @@
 
         &__step {
             display: inline-block;
-            padding: spacing(.25) spacing();
+            padding: .25rem .5rem;
 
             &--current {
                 background-color: $color-main;
