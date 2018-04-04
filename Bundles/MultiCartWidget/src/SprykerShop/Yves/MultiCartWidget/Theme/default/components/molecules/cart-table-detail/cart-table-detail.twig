@@ -52,7 +52,7 @@
                 {% endif %}
                 {% if data.actions.delete %}
                     <li class="menu__item">
-                        <a href="{{ path('multi-cart/delete', {idQuote: data.cart.idQuote}) }}">
+                        <a href="{{ path('multi-cart/delete', {idQuote: data.cart.idQuote}) }}" onclick="return confirm('{{ 'multi_cart_widget.cart.remove.confirm' | trans }}')">
                             {{ "multi_cart_widget.cart.action.delete" | trans }}
                         </a>
                     </li>

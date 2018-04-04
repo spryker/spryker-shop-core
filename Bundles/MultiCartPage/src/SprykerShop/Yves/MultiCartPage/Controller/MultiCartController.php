@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MultiCartController extends AbstractController
 {
-    const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
+    public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

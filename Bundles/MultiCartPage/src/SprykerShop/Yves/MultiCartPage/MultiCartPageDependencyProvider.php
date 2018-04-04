@@ -42,7 +42,7 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addMultiCartClient($container)
+    protected function addMultiCartClient($container): Container
     {
         $container[static::CLIENT_MULTI_CART] = function (Container $container) {
             return new MultiCartPageToMultiCartClientBridge($container->getLocator()->multiCart()->client());
@@ -56,7 +56,7 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addPersistentCartClient($container)
+    protected function addPersistentCartClient($container): Container
     {
         $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
             return new MultiCartPageToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
@@ -70,7 +70,7 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCustomerClient(Container $container)
+    protected function addCustomerClient(Container $container): Container
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new MultiCartPageToCustomerClientBridge($container->getLocator()->customer()->client());
@@ -84,7 +84,7 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addQuoteClient(Container $container)
+    protected function addQuoteClient(Container $container): Container
     {
         $container[static::CLIENT_QUOTE] = function (Container $container) {
             return new MultiCartPageToQuoteClientBridge($container->getLocator()->quote()->client());
