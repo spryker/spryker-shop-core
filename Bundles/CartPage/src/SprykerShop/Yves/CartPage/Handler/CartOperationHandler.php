@@ -220,8 +220,6 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     }
 
     /**
-     * @todo Move into plugin
-     *
      * @deprecated
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
