@@ -75,7 +75,7 @@ export default class MeasurementQuantitySelector extends Component {
             this.askCustomerForCorrectInput(qtyInSalesUnits);
             return;
         }
-
+        this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.addToCartButton.removeAttribute("disabled");
         document.querySelector('.measurement-unit-choice').classList.add('is-hidden');
         return;
