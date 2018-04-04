@@ -72,7 +72,7 @@
             {% for salesUnit in data.salesUnits %}
                 {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
                     <span>1 {{ data.baseUnit.name | trans }}
-                        = {{ (1 / salesUnit.conversion)|round(3) }} {{ salesUnit.productMeasurementUnit.name | trans }}</span>
+                        = {{ (1 / salesUnit.conversion)|round(4) }} {{ salesUnit.productMeasurementUnit.name | trans }}</span>
                     <br/>
                 {% endif %}
             {% endfor %}

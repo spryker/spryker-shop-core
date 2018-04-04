@@ -159,7 +159,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
                 if ($salesUnit->getIsDefault()) {
                     $qtyInSalesUnits = $minQuantityInBaseUnits / $salesUnit->getConversion();
 
-                    return round($qtyInSalesUnits, 3);
+                    return round($qtyInSalesUnits, 4);
                 }
             }
         }
