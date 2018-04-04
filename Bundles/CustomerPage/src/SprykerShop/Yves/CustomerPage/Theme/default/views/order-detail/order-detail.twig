@@ -41,8 +41,7 @@
             {% endblock %}
             {% block row %}
                 <td>
-                    {% set concreteItem = item.bundleProduct | default(item) %}
-                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, concreteItem) }}
+                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, item) }}
                 </td>
                 {{parent()}}
             {% endblock %}

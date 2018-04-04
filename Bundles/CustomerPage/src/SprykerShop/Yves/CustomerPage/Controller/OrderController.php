@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -57,6 +58,16 @@ class OrderController extends AbstractCustomerController
     public function detailsAction(Request $request)
     {
         $responseData = $this->getOrderDetailsResponseData($request->query->getInt('id'));
+//        var_dump(array_keys($responseData));
+//        var_dump(array_keys($responseData['items']));
+//        foreach ($responseData['items'] as $item) {
+//            if (is_array($item)) {
+//                var_dump(array_keys($item));
+//                var_dump(array_keys($item['bundleItems']));
+//                var_dump($item['bundleProduct']);
+//            }
+//        }
+//        die;
 
         return $this->view(
             $responseData,
@@ -136,6 +147,14 @@ class OrderController extends AbstractCustomerController
                 $orderTransfer->getItems(),
                 $orderTransfer->getBundleItems()
             );
+
+        $items = array_map(function ($groupedItem) {
+            if ($groupedItem instanceof ItemTransfer) {
+                return $groupedItem;
+            }
+
+            return $groupedItem['bundleProduct'];
+        }, $items);
 
         return [
             'order' => $orderTransfer,
