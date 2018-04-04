@@ -2,7 +2,7 @@
     #{$name} {
         @include transition(background-color);
         display: inline-block;
-        padding: spacing(.5) + 1 spacing() + 1;
+        padding: calc(.25rem + 1px) calc(.5rem + 1px);
         background-color: $color-main;
         border: none;
         color: $color-white;
@@ -16,7 +16,7 @@
         }
 
         &--hollow {
-            padding: spacing(.5) spacing();
+            padding: .25rem .5rem;
             background-color: $color-white;
             border: 1px solid $color-main;
             color: $color-main;

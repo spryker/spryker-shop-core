@@ -1,7 +1,0 @@
-{% if _widget.cartItem.productOptions|length > 0 %}
-    {% for productOption in _widget.cartItem.productOptions %}
-        <li>+ {{ productOption.value | trans }}
-            <span class="float-right">{{ productOption.unitPrice | money }}</span>
-        </li>
-    {% endfor %}
-{% endif %}

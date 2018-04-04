@@ -2,6 +2,7 @@
     #{$name} {
         @include transition(border-color);
         display: inline-block;
+        position: relative;
         max-width: 100%;
         background-color: $color-white;
         border: 1px solid $color-input-border;
@@ -10,8 +11,8 @@
             display: block;
             max-width: 100%;
             background-color: $color-transparent;
-            border: spacing(.5) solid $color-transparent;
-            border-right-width: spacing(3);
+            border: .25rem solid $color-transparent;
+            border-right-width: 1.5rem;
             z-index: 2;
             appearance: none;
             -webkit-appearance: none;
@@ -25,7 +26,7 @@
             position: absolute;
             top: 0;
             bottom: 0;
-            right: spacing(.5);
+            right: .25rem;
             margin: auto;
             color: $color-darker;
             z-index: 1;
