@@ -39,7 +39,7 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
      */
     public static function getTemplate(): string
     {
-        return '@ProductOptionWidget/_product-detail-page/product-options.twig';
+        return '@ProductOptionWidget/views/option-configurator/option-configurator.twig';
     }
 
     /**

@@ -14,6 +14,8 @@ export default class Logger {
 
         if (this.config.log.level < AppLogLevel.DEFAULT) {
             this.log = VOID_FUNCTION;
+            this.info = VOID_FUNCTION;
+            this.warn = VOID_FUNCTION;
         }
 
         this.log('mode:', this.config.isProduction ? 'PRODUCTION,' : 'DEVELOPMENT,', 'log-level:', AppLogLevel[this.config.log.level]);
@@ -36,7 +38,7 @@ export default class Logger {
     }
 
     warn(...args): void {
-        console.warn(this.prefix('warning'), ...args);
+        console.warn(this.prefix('warn'), ...args);
     }
 
     error(...args): void {

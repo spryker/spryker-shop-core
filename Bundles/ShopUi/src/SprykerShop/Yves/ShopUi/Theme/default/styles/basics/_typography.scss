@@ -1,8 +1,13 @@
 @mixin basic-typography() {
+    html {
+        font-size: $font-size-base;
+    }
+
     body {
         @include font-size(default);
         @include font-weight(regular);
         @include line-height(default);
+        position: relative;
         background-color: $color-bg;
         color: $color-text;
         font-family: $font-family;
@@ -15,7 +20,7 @@
             display: block;
 
             &--margins {
-                margin: spacing(4) 0 spacing(2) 0;
+                margin: 2rem 0 1rem 0;
             }
         }
     }
@@ -43,7 +48,7 @@
     hr {
         @include clearfix;
         border-bottom: 1px solid $color-lighter;
-        margin: spacing() 0;
+        margin: .5rem 0;
     }
 
     small {
@@ -57,6 +62,6 @@
     p,
     blockquote,
     iframe {
-        margin: spacing() 0;
+        margin: .5rem 0;
     }
 }

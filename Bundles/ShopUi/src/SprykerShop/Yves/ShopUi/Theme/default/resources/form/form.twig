@@ -6,6 +6,10 @@
     <input class="input input--expand {% if errors is not empty %}input--error{% endif %}" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} placeholder="{{label}}"/>
 {%- endblock -%}
 
+{%- block textarea_widget -%}
+    <textarea  class="textarea textarea--expand" {{ block('widget_attributes') }}>{% if value is not empty %}{{ value }}{% endif %}</textarea>
+{%- endblock textarea_widget -%}
+
 {%- block choice_widget_collapsed -%}
     {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
         {% set required = false %}

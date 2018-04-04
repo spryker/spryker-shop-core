@@ -16,10 +16,10 @@
         }
 
         th, td {
-            padding: spacing() spacing(.5);
+            padding: .5rem .25rem;
             text-align: left;
         }
-        
+
         &--expand {
             width: 100%;
         }

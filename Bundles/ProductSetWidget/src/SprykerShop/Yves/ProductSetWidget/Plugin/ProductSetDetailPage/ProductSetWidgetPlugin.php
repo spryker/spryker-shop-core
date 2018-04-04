@@ -39,6 +39,6 @@ class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetW
      */
     public static function getTemplate(): string
     {
-        return '@ProductSetWidget/_product-set-detail-page/product-set-widget.twig';
+        return '@ProductSetWidget/views/product-set-page/product-set-page.twig';
     }
 }

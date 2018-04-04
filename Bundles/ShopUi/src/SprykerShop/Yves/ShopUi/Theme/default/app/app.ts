@@ -23,13 +23,13 @@ export default class App {
 
     protected ready(components: Component[]): void {
         components.forEach((component: Component) => component.readyCallback());
-        this.fireReadyEvent();
         this.logger.log('application ready');
+        this.fireReadyEvent();
     }
 
     protected error(error: Error): void {
-        this.fireErrorEvent(error);
         this.logger.error('application bootstrap failed\n', error);
+        this.fireErrorEvent(error);
     }
 
     protected fireReadyEvent() { 
