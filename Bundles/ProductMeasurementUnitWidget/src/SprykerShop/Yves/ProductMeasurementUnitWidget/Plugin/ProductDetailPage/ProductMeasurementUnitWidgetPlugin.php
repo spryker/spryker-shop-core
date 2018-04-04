@@ -54,7 +54,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
         }
 
         $minQuantityInBaseUnits = $this->getMinQuantityInBaseUnits($productQuantityStorageTransfer);
-        $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($salesUnits, $minQuantityInBaseUnits);
+        $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($minQuantityInBaseUnits, $salesUnits);
 
         $this
             ->addParameter('product', $productViewTransfer)
@@ -147,12 +147,12 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
      * @param int $minQuantityInBaseUnits
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
      *
      * @return float
      */
-    protected function getMinQuantityInSalesUnits(array $salesUnits, int $minQuantityInBaseUnits): float
+    protected function getMinQuantityInSalesUnits(int $minQuantityInBaseUnits, array $salesUnits = null): float
     {
         if ($salesUnits !== null) {
             foreach ($salesUnits as $salesUnit) {
