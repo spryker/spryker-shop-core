@@ -18,12 +18,9 @@
     <div class="col col--sm-5">
         <label>
             {{ 'cart.item_quantity' | trans }}
-            {% if data.salesUnitCount > 1 %}
+            {% if data.salesUnitCount >= 1 %}
                 <input id="sales-unit-quantity" class="input" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
                 <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
-            {% elseif data.salesUnitCount == 1 %}
-                <input id="base-unit-quantity" class="input" type="number" step="1" value="1" name="quantity"/>
-                <input type="hidden" value="{{ data.idBaseUnit }}" name="id-product-measurement-sales-unit">
             {% else %}
                 {% include atom('select') with {
                     modifiers: ['expand'],
@@ -36,7 +33,7 @@
                 } only %}
             {% endif %}
         </label>
-        {% if data.salesUnitCount > 1 %}
+        {% if data.salesUnitCount >= 1 %}
             <label>
                 {{ 'product.measurement.sales_unit' | trans }}
                 {% embed atom('select') with {
@@ -69,7 +66,7 @@
         {{ 'page.detail.add-to-cart' | trans }}
         </button>
     </div>
-    {% if data.salesUnitCount > 1 %}
+    {% if data.salesUnitCount >= 1 %}
         <hr/>
         <div class="col col--sm-12">
             {% for salesUnit in data.salesUnits %}
