@@ -20,11 +20,11 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $qtyOptions
+     * @param array $quantityOptions
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, array $qtyOptions = []): void
+    public function initialize(ProductViewTransfer $productViewTransfer, array $quantityOptions = []): void
     {
         $salesUnits = null;
         $idBaseUnit = null;
@@ -58,7 +58,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
 
         $this
             ->addParameter('product', $productViewTransfer)
-            ->addParameter('qtyOptions', $qtyOptions)
+            ->addParameter('quantityOptions', $quantityOptions)
             ->addParameter('minQuantityInBaseUnits', $minQuantityInBaseUnits)
             ->addParameter('minQuantityInSalesUnits', $minQuantityInSalesUnits)
             ->addParameter('baseUnit', $baseUnit)
