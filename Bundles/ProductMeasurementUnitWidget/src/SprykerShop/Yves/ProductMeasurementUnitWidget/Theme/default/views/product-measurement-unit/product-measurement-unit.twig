@@ -17,7 +17,7 @@
 {% block body %}
     <div class="col col--sm-5">
         <label>
-            {{'cart.item_quantity' | trans}}
+            {{ 'cart.item_quantity' | trans }}
             {% if data.salesUnitCount > 1 %}
                 <input id="sales-unit-quantity" class="input" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
                 <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
@@ -59,7 +59,8 @@
         {% endif %}
     </div>
     <div class="col col--sm-6">
-        <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}">
+        <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}
+        ">
         {% include atom('icon') with {
             data: {
                 name: 'cart-plus'
@@ -93,4 +94,13 @@
             </div>
         </div>
     {% endif %}
+
+    {% set translations = [] %}
+    {% for key, salesUnit in data.salesUnits %}
+        {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
+    {% endfor %}
+
+    <script type="application/json" id="measurement-unit-translation">
+      {{ translations|json_encode|raw }}
+    </script>
 {% endblock %}

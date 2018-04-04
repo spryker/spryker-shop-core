@@ -11,6 +11,7 @@ export default class MeasurementQuantitySelector extends Component {
     currentSalesUnit: any;
     productQuantityStorage: any;
     currentValue: Number;
+    translations: any;
 
 
     readyCallback(event?: Event): void {
@@ -20,6 +21,7 @@ export default class MeasurementQuantitySelector extends Component {
         this.addToCartButton = <HTMLButtonElement>document.getElementById('add-to-cart-button');
 
         this.initJson();
+        this.initTranslations();
         this.initCurrentSalesUnit();
         this.mapEvents();
     }
@@ -42,6 +44,10 @@ export default class MeasurementQuantitySelector extends Component {
                 this.productQuantityStorage = jsonData.productQuantityStorage;
             }
         }
+    }
+
+    initTranslations() {
+        this.translations = JSON.parse(document.getElementById('measurement-unit-translation').innerHTML)
     }
 
     initCurrentSalesUnit() {
@@ -99,12 +105,13 @@ export default class MeasurementQuantitySelector extends Component {
         if (qtyInBaseUnits > 0) {
             let choiceElem = document.createElement('span');
             let qtyInSalesUnits = qtyInBaseUnits / this.currentSalesUnit.conversion;
-            let measurementSalesUnitCode = this.currentSalesUnit.product_measurement_unit.code;
-            let measurementBaseUnitCode = this.baseUnit.code;
+            let measurementSalesUnitName = this.getUnitName(this.currentSalesUnit.product_measurement_unit.code);
+            let measurementBaseUnitName = this.getUnitName(this.baseUnit.code);
+
             choiceElem.classList.add('link');
             choiceElem.setAttribute('data-base-unit-qty', qtyInBaseUnits.toString());
             choiceElem.setAttribute('data-sales-unit-qty', qtyInSalesUnits.toString());
-            choiceElem.textContent = `(${this.round(qtyInSalesUnits, 3).toString().toString()} ${measurementSalesUnitCode}) = (${qtyInBaseUnits} ${measurementBaseUnitCode})`;
+            choiceElem.textContent = `(${this.round(qtyInSalesUnits, 3).toString().toString()} ${measurementSalesUnitName}) = (${qtyInBaseUnits} ${measurementBaseUnitName})`;
             choiceElem.onclick = function (event: Event) {
                 let element = event.srcElement as HTMLSelectElement;
                 let qtyInBaseUnits = parseFloat(element.dataset.baseUnitQty);
@@ -218,5 +225,13 @@ export default class MeasurementQuantitySelector extends Component {
                 }
             }
         }
+    }
+
+    getUnitName(key) {
+        if (this.translations.hasOwnProperty(key)) {
+            return this.translations[key];
+        }
+
+        return key;
     }
 }
