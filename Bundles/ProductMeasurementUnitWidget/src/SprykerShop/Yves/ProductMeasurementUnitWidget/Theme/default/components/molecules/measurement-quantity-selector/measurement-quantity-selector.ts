@@ -125,7 +125,6 @@ export default class MeasurementQuantitySelector extends Component {
         this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 3).toString().toString();
         this.addToCartButton.removeAttribute("disabled");
         document.querySelector('.measurement-unit-choice').classList.add('is-hidden');
-        this.qtyInputChange(qtyInSalesUnits);
     }
 
     getMinChoice(qtyInSalesUnits: number) {
