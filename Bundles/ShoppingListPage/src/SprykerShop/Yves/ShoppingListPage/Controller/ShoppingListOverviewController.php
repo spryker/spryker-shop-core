@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
@@ -48,12 +49,8 @@ class ShoppingListOverviewController extends AbstractController
             $this->handleResponseErrors($shoppingListResponseTransfer, $shoppingListForm);
         }
 
-        $shoppingListCollection = $this->getFactory()
-            ->getShoppingListClient()
-            ->getCustomerShoppingListCollection();
-
         $data = [
-            'shoppingListCollection' => $shoppingListCollection,
+            'shoppingListCollection' => $this->getCustomerShoppingListCollection(),
             'shoppingListForm' => $shoppingListForm->createView(),
         ];
 
@@ -87,9 +84,7 @@ class ShoppingListOverviewController extends AbstractController
             $this->handleResponseErrors($shoppingListResponseTransfer, $shoppingListForm);
         }
 
-        $shoppingListCollection = $this->getFactory()
-            ->getShoppingListClient()
-            ->getCustomerShoppingListCollection();
+        $shoppingListCollection = $this->getCustomerShoppingListCollection();
 
         $data = [
             'shoppingListCollection' => $shoppingListCollection,
@@ -142,6 +137,42 @@ class ShoppingListOverviewController extends AbstractController
 
         $this->addSuccessMessage('customer.account.shopping_list.items.added_to_cart');
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_OVERVIEW);
+    }
+
+    /**
+     * @param string $shoppingListName
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function shareShoppingListAction(string $shoppingListName, Request $request)
+    {
+        $shareShoppingListForm = $this->getFactory()
+            ->getShareShoppingListForm($shoppingListName, $this->getCustomerReference())
+            ->handleRequest($request);
+
+        if ($shareShoppingListForm->isSubmitted() && $shareShoppingListForm->isValid()) {
+            /** @var ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer */
+            $shoppingListShareRequestTransfer = $shareShoppingListForm->getData();
+            $shoppingListShareResponseTransfer = $this->getFactory()
+                ->getShoppingListClient()
+                ->shareShoppingList($shoppingListShareRequestTransfer);
+
+            if($shoppingListShareResponseTransfer->getIsSuccess()) {
+                $this->addSuccessMessage('customer.account.shopping_list.share.share_shopping_list_successful');
+                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_OVERVIEW);
+            }
+
+            $this->addErrorMessage('customer.account.shopping_list.share.share_shopping_list_fail');
+        }
+
+        $data = [
+            'shoppingListName' => $shoppingListName,
+            'shareShoppingListForm' => $shareShoppingListForm->createView(),
+            'shoppingListCollection' => $this->getCustomerShoppingListCollection(),
+        ];
+
+        return $this->view($data, [], '@ShoppingListPage/views/share-shopping-list/share-shopping-list.twig');
     }
 
     /**
@@ -204,5 +235,16 @@ class ShoppingListOverviewController extends AbstractController
         }
 
         return $shoppingListCollectionTransfer;
+    }
+
+    /**
+     *
+     * @return ShoppingListCollectionTransfer
+     */
+    protected function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
+    {
+        return $this->getFactory()
+            ->getShoppingListClient()
+            ->getCustomerShoppingListCollection();
     }
 }

@@ -41,6 +41,10 @@
         {{ form_start(data.form, data.options) }}
     {% endif %}
 
+    {% block formErrors %}
+        {{ form_errors(data.form) }}
+    {% endblock %}
+
     {% block fields %}
         <div class="grid grid--bottom">
             {% for field in data.form.children | keys %}

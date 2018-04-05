@@ -12,12 +12,17 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandler;
 use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandlerInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\AddAvailableProductsToCartForm;
+use SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\AddAvailableProductsToCartFormDataProvider;
+use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShareShoppingListDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProvider;
+use SprykerShop\Yves\ShoppingListPage\Form\ShareShoppingListForm;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -119,5 +124,58 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getBundleConfig(): ShoppingListPageConfig
     {
         return $this->getConfig();
+    }
+
+    /**
+     * @param string $shoppingListName
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getShareShoppingListForm(string $shoppingListName, string $customerReference): FormInterface
+    {
+        $shareShoppingListFormDataProvider = $this->createShareShoppingListFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            ShareShoppingListForm::class,
+            $shareShoppingListFormDataProvider->getData($shoppingListName, $customerReference),
+            $shareShoppingListFormDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShareShoppingListDataProvider
+     */
+    public function createShareShoppingListFormDataProvider(): ShareShoppingListDataProvider
+    {
+        return new ShareShoppingListDataProvider(
+            $this->getCompanyBusinessUnitClient(),
+            $this->getCompanyUserClient(),
+            $this->getCustomerClient(),
+            $this->getShoppingListClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface
+     */
+    public function getCompanyBusinessUnitClient(): ShoppingListPageToCompanyBusinessUnitClientInterface
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface
+     */
+    public function getCompanyUserClient(): ShoppingListPageToCompanyUserClientInterface
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::CLIENT_COMPANY_USER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint
+     */
+    public function createShareShoppingListRequiredIdConstraint(): ShareShoppingListRequiredIdConstraint
+    {
+        return new ShareShoppingListRequiredIdConstraint();
     }
 }

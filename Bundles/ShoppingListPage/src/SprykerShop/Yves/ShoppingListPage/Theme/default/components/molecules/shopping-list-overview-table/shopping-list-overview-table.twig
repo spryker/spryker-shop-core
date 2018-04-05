@@ -13,6 +13,7 @@
         editLabel: 'customer.account.shopping_list.overview.edit' | trans,
         deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
         addShoppingListToCartLabel: 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans,
+        shareLabel: 'customer.account.shopping_list.overview.share' | trans
     }
 } %}
 
@@ -22,9 +23,9 @@
             <tr>
                 <th></th>
                 <th width="40%">{{ 'customer.account.shopping_list.overview.name' | trans }}</th>
-                <th width="30%">{{ 'customer.account.shopping_list.overview.item_count' | trans }}</th>
+                <th width="25%">{{ 'customer.account.shopping_list.overview.item_count' | trans }}</th>
                 <th width="20%">{{ 'customer.account.shopping_list.overview.modified_date' | trans }}</th>
-                <th width="10%"></th>
+                <th width="15%"></th>
             </tr>
         </thead>
         <tbody>
@@ -58,6 +59,7 @@
                 <td>
                     <a href="{{ url('shopping-list/update', { shoppingListName: shoppingList.name }) }}">{{ data.labels.editLabel }}</a>
                     <a href="{{ url('shopping-list/delete', { shoppingListName: shoppingList.name }) }}">{{ data.labels.deleteLabel }}</a>
+                    <a href="{{ url('shopping-list/share', { shoppingListName: shoppingList.name }) }}">{{ data.labels.shareLabel }}</a>
                 </td>
             </tr>
         {% endfor %}
