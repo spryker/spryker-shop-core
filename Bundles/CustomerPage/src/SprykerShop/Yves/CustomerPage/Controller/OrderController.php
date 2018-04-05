@@ -42,7 +42,11 @@ class OrderController extends AbstractCustomerController
             'orderList' => $orderList,
         ];
 
-        return $this->view($data, [], '@CustomerPage/views/order/order.twig');
+        return $this->view(
+            $data,
+            $this->getFactory()->getCustomerOrderListWidgetPlugins(),
+            '@CustomerPage/views/order/order.twig'
+        );
     }
 
     /**
@@ -54,7 +58,11 @@ class OrderController extends AbstractCustomerController
     {
         $responseData = $this->getOrderDetailsResponseData($request->query->getInt('id'));
 
-        return $this->view($responseData, [], '@CustomerPage/views/order-detail/order-detail.twig');
+        return $this->view(
+            $responseData,
+            $this->getFactory()->getCustomerOrderViewWidgetPlugins(),
+            '@CustomerPage/views/order-detail/order-detail.twig'
+        );
     }
 
     /**

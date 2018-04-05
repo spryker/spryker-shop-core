@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'order-list',
+    name: 'order-table',
     tag: 'div'
 } %}
 
@@ -29,9 +29,18 @@
                         <td>{{ date(order.createdAt) | formatDateTime }}</td>
                         <td>{{ order.totals.grandTotal | default(0) | money(true, order.currencyIsoCode) }}</td>
                         <td>
-                            <a href="{{ path('customer/order/details', {'id': order.idSalesOrder}) }}">
-                                {{ 'customer.order.view_order' | trans }}
-                            </a>
+                            <ul class="menu menu--inline">
+                                <li class="menu__item">
+                                    <a href="{{ path('customer/order/details', {'id': order.idSalesOrder}) }}">
+                                        {{ 'customer.order.view_order' | trans }}
+                                    </a>
+                                </li>
+                                {% if widgetExists('CustomerReorderWidgetPlugin') %}
+                                    <li class="menu__item">
+                                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'reorderAction', order) }}
+                                    </li>
+                                {% endif %}
+                            </ul>
                         </td>
                     </tr>
                 {% endfor %}
