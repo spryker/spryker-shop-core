@@ -110,7 +110,7 @@ export default class MeasurementQuantitySelector extends Component {
         let maxChoice = this.getMaxChoice(qtyInSalesUnits, minChoice);
         choicesList.innerHTML = '';
         currentChoice.innerHTML = '';
-        currentChoice.textContent = `${this.round(qtyInSalesUnits, 4)} ${this.currentSalesUnit.product_measurement_unit.code}`;
+        currentChoice.textContent = `${this.round(qtyInSalesUnits, 4)} ${this.getUnitName(this.currentSalesUnit.product_measurement_unit.code)}`;
 
         let choiceElements = [];
         choiceElements.push(this.createChoiceElement(minChoice));
