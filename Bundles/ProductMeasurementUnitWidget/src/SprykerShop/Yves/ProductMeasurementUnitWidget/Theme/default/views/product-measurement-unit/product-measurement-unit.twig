@@ -84,9 +84,19 @@
         } only %}
         <br/>
         <div class="col col--sm-12 is-hidden measurement-unit-choice">
-            <span>The quantity you have chosen (<span id="current-choice"></span>) is in between 2 base units</span>
-            <span>Would you like to add:</span>
+            <div class="measurement-unit-notifications">
+                <div id="quantity-between-units" class="is-hidden">
+                    <span>The quantity you have chosen (<span id="current-choice"></span>) is in between 2 base units</span>
+                </div>
+                <div id="minimum-quantity" class="is-hidden">
+                    <span>Minimum quantity requirements for product are not fulfilled</span>
+                </div>
+                <div id="maximum-quantity" class="is-hidden">
+                    <span>Maximum quantity requirements for product are not fulfilled</span>
+                </div>
+            </div>
             <div id="measurement-unit-choices" class="col col--sm-12">
+                <span>Would you like to add:</span>
                 <ul class="list"></ul>
             </div>
         </div>
@@ -97,7 +107,5 @@
         {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
     {% endfor %}
 
-    <script type="application/json" id="measurement-unit-translation">
-      {{ translations|json_encode|raw }}
-    </script>
+    <script type="application/json" id="measurement-unit-translation">{{ translations|json_encode|raw }}</script>
 {% endblock %}
