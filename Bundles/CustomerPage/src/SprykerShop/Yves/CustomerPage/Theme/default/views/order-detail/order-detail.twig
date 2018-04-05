@@ -39,9 +39,18 @@
                 <td></td>
                 {{parent()}}
             {% endblock %}
+            {% block bundleDetailRow %}
+                <td></td>
+                {{parent()}}
+            {% endblock %}
+            {% block detailRow %}
+                <td></td>
+                {{parent()}}
+            {% endblock %}
+
             {% block row %}
                 <td>
-                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, item) }}
+                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, concreteItem) }}
                 </td>
                 {{parent()}}
             {% endblock %}

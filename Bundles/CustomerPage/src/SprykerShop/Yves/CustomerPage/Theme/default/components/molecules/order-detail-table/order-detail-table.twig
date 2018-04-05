@@ -26,23 +26,24 @@
         <tbody>
                 {% for item in data.items %}
                     {% set isBundle = item.bundleItems is defined %}
+                    {% set concreteItem = item.bundleProduct | default(item) %}
 
                     <tr>
                         {% block row %}
                             <td>
-                                {{ item.sku }}
+                                {{ concreteItem.sku }}
                             </td>
                             <td>
-                                {{ item.name }}
+                                {{ concreteItem.name }}
                             </td>
                             <td>
-                                {{ item.unitPrice | money(true, data.currencyIsoCode) }}
+                                {{ concreteItem.unitPrice | money(true, data.currencyIsoCode) }}
                             </td>
                             <td>
-                                {{ item.quantity }}
+                                {{ concreteItem.quantity }}
                             </td>
                             <td>
-                                {{ item.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+                                {{ concreteItem.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
                             </td>
                         {% endblock %}
                     </tr>
@@ -56,9 +57,9 @@
                                         - {{ bundledItem.quantity }} x {{ bundledItem.name }} <br />
                                     {% endfor %}
 
-                                    {% if item.bundleProduct.productOptions is not empty %}
+                                    {% if concreteItem.productOptions is not empty %}
                                         {{ "customer.order.options" | trans }} <br />
-                                        {% for productOption in item.bundleProduct.productOptions %}
+                                        {% for productOption in concreteItem.productOptions %}
                                             &nbsp; - {{ productOption.value | trans }} {{ productOption.unitPrice | money(true, data.currencyIsoCode) }}  <br />
                                         {% endfor %}
                                     {% endif %}
@@ -66,8 +67,8 @@
                             {% endblock %}
                         </tr>
                     {% else %}
-                        {% if item.productOptions is not empty %}
-                            {% for productOption in item.productOptions %}
+                        {% if concreteItem.productOptions is not empty %}
+                            {% for productOption in concreteItem.productOptions %}
                                 <tr>
                                     {% block detailRow %}
                                         <td>

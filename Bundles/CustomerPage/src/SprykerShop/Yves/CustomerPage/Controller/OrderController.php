@@ -138,14 +138,6 @@ class OrderController extends AbstractCustomerController
                 $orderTransfer->getBundleItems()
             );
 
-        $items = array_map(function ($groupedItem) {
-            if ($groupedItem instanceof ItemTransfer) {
-                return $groupedItem;
-            }
-
-            return $groupedItem['bundleProduct'];
-        }, $items);
-
         return [
             'order' => $orderTransfer,
             'items' => $items,
