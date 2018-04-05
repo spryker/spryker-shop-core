@@ -17,11 +17,15 @@
     <td>{{ cart.name }}</td>
     <td>
         {% if cart.items is not empty %}
+            {% if widgetExists('ProductBundleCartItemsWidgetPlugin') %}
+                {{ widget('ProductBundleCartItemsWidgetPlugin', data.cart) }}
+            {% else %}
             <ul>
                 {% for item in cart.items %}
                     <li>{{ item.name }}</li>
                 {% endfor %}
             </ul>
+            {% endif %}
         {% else %}
             N/A
         {% endif %}

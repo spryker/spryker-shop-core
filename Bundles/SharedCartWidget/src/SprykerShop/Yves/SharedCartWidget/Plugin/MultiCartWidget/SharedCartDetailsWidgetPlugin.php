@@ -21,14 +21,18 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param array $actions
+     * @param null|\Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[] $widgetList
      *
      * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer, array $actions): void
+    public function initialize(QuoteTransfer $quoteTransfer, array $actions, array $widgetList = null): void
     {
         $this
             ->addParameter('cart', $quoteTransfer)
             ->addParameter('actions', $this->checkActionsPermission($quoteTransfer, $actions));
+        if ($widgetList) {
+            $this->addWidgets($widgetList);
+        }
     }
 
     /**

@@ -1,0 +1,12 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cart: _widget.cart,
+    items: _widget.items
+} %}
+
+{% set itemCount = data.items | length %}
+
+{% block body %}
+    {{ itemCount }} {{ itemCount == 1 ? 'multi_cart_widget.cart.item' | trans : 'multi_cart_widget.cart.items' | trans }} | {{ data.cart.totals.subTotal | money }}<br>
+{% endblock %}

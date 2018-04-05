@@ -13,7 +13,6 @@
 {% set options = [{ label: data.cart.name, value: data.cart.idQuote}] %}
 {% set attributes = {
     name: 'id_quote',
-    onchange: 'this.form.submit(); this.disabled="disabled"; return false;',
 } %}
 {% for cart in data.carts %}
     {% set options = options | merge([{
