@@ -29,6 +29,7 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
         $activeQuoteTransfer = $this->getActiveCart();
 
         $this
+            ->addWidgets($this->getFactory()->getViewExtendWidgetPlugins())
             ->addParameter('cartQuantity', $cartQuantity)
             ->addParameter('activeCart', $activeQuoteTransfer)
             ->addParameter('cartList', $this->getInActiveQuoteList())

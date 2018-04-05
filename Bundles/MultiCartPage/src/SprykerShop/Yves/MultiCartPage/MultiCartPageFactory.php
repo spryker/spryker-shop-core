@@ -10,8 +10,12 @@ namespace SprykerShop\Yves\MultiCartPage;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProvider;
+use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProviderInterface;
 use SprykerShop\Yves\MultiCartPage\Form\QuoteForm;
 use SprykerShop\Yves\MultiCartPage\Model\CartOperations;
+use SprykerShop\Yves\MultiCartPage\Model\CartOperationsInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class MultiCartPageFactory extends AbstractFactory
 {
@@ -20,7 +24,7 @@ class MultiCartPageFactory extends AbstractFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getQuoteForm(int $idQuote = null)
+    public function getQuoteForm(int $idQuote = null): FormInterface
     {
         return $this->getFormFactory()->create(
             QuoteForm::class,
@@ -31,7 +35,7 @@ class MultiCartPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProviderInterface
      */
-    protected function createQuoteFormDataProvider()
+    public function createQuoteFormDataProvider(): QuoteFormDataProviderInterface
     {
         return new QuoteFormDataProvider(
             $this->getMultiCartClient()
@@ -41,7 +45,7 @@ class MultiCartPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\MultiCartPage\Model\CartOperationsInterface
      */
-    public function createCartOperations()
+    public function createCartOperations(): CartOperationsInterface
     {
         return new CartOperations(
             $this->getPersistentCartClent(),
@@ -84,9 +88,9 @@ class MultiCartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormFactory
+     * @return \Symfony\Component\Form\FormFactoryInterface
      */
-    protected function getFormFactory()
+    protected function getFormFactory(): FormFactoryInterface
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }

@@ -1,0 +1,87 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quick-order-form',
+    tag: 'quick-order-form'
+} %}
+
+{% define data = {
+    form: required
+} %}
+
+{% block body %}
+    {% include molecule('ajax-provider') with {
+        class: config.selector ~ '__provider ' ~ config.selector ~ '__add-row-provider',
+        attributes: {
+            method: 'post',
+            url: url('quick-order/add-rows')
+        }
+    } only %}
+
+    {% include molecule('ajax-provider') with {
+        class: config.selector ~ '__provider ' ~ config.selector ~ '__remove-row-provider',
+        attributes: {
+            method: 'post',
+            url: url('quick-order/delete-row')
+        }
+    } only %}
+
+    {% include molecule('ajax-loader') with {
+        modifiers: ['big'],
+        attributes: {
+            'provider-selector': '.' ~ config.selector ~ '__provider'
+        }
+    } only %}
+
+    {% embed molecule('form') with {
+        data: {
+            form: data.form,
+            options: {
+                attr: {
+                    class: config.selector ~ '__form'
+                }
+            }
+        },
+        embed: {
+            selector: config.selector
+        }
+    } only %}
+        {% block fields %}
+            <div class="{{embed.selector}}__list">
+                {% embed molecule('quick-order-form-field-list', 'QuickOrderPage') with {
+                    data: {
+                        items: data.form.items
+                    },
+                    embed: embed
+                } only %}
+                    {% block removeActionClass %}{{embed.selector}}__remove-row-trigger{% endblock %}
+                {% endembed %}
+            </div>
+        {% endblock %}
+
+        {% block actions %}
+            <hr/>
+            <div class="grid grid--bottom grid--justify">
+                <div class="col col--sm-12 col--md-3">
+                    <a href="#add-more" class="{{embed.selector}}__add-row-trigger button button--hollow button--expand">
+                        {{ 'quick-order.button.add-more-rows' | trans }}
+                    </a>
+                </div>
+
+                <div class="col col--sm-12 col--md-2"></div>
+
+                <div class="col col--sm-12 col--md-3">
+                    <button type="submit" name="addToCart" class="button button--expand button--success js-add-to-cart-button">
+                        {{ 'page.detail.add-to-cart' | trans }}
+                    </button>
+                </div>
+
+                <div class="col col--sm-12 col--md-3">
+                    <button type="submit" name="createOrder" class="button button--expand button--success">
+                        {{ 'quick-order.button.create-order' | trans }}
+                    </button>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

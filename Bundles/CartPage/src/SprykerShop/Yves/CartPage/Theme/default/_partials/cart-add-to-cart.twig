@@ -36,7 +36,7 @@
         </li>
         {% if can('WriteSharedCartPermissionPlugin', _view.cart.idQuote) %}
         <li>
-            <a href="/cart/remove/{{ cartItem.sku }}/{{ cartItem.groupKey }}">&times;
+            <a href="/cart/remove/{{ cartItem.sku }}/{{ cartItem.groupKey }}" onclick="return confirm('{{ 'cart.item.remove.confirm' | trans }}')">&times;
                 <small>{{ 'remove' | trans }}</small>
             </a>
         </li>

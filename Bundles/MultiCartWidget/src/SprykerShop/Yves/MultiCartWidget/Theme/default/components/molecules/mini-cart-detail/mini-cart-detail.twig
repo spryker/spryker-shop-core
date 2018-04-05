@@ -17,7 +17,11 @@
         <div>
             {% if itemCount > 0 %}
                 <span class=" float-right">
+                    {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
+                        {{ widget('ProductBundleItemCounterWidgetPlugin', data.cart) }}
+                    {% else %}
                     {{ itemCount }} {{ itemCount == 1 ? 'multi_cart_widget.cart.item' | trans : 'multi_cart_widget.cart.items' | trans }} | {{ data.cart.totals.subTotal | money }}<br>
+                    {% endif %}
                 </span>
             {% endif %}
 
@@ -29,6 +33,9 @@
 
         <div>
             {% if data.cart.items is not empty %}
+                {% if widgetExists('ProductBundleItemsWidgetPlugin') %}
+                    {{ widget('ProductBundleItemsWidgetPlugin', data.cart, data.itemDisplayLimit) }}
+                {% else %}
                 <ul class="list list--bullet">
                     {% for item in data.cart.items | slice(0, data.itemDisplayLimit) %}
                         <li class="list__item">{{ item.name }}</li>
@@ -37,6 +44,7 @@
                         <li class="list__item">&hellip;</li>
                     {% endif %}
                 </ul>
+                {% endif %}
             {% else %}
                 {{ 'cart.empty' | trans }}
             {% endif %}

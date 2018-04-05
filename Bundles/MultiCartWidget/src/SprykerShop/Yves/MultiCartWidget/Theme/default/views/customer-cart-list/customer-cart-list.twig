@@ -1,6 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
+    widgets: _widget.widgetList,
     cart: _widget.cart,
     carts: _widget.cartCollection,
     isMultiCartAllowed: _widget.isMultiCartAllowed
@@ -17,7 +18,8 @@
         {% if data.carts is not empty and data.carts | length > 0 %}
                 {% include molecule('cart-table', 'MultiCartWidget') with {
                     data: {
-                        carts: data.carts
+                        carts: data.carts,
+                        widgets: data.widgets
                     }
                 } only %}
         {% endif %}
