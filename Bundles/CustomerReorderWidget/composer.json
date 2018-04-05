@@ -4,9 +4,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-application": "^0.1.0",
-    "spryker/availability-storage": "^5.0.0",
-    "spryker/cart": "^1.0.0",
+    "spryker-shop/shop-application": "^0.3.0",
+    "spryker/availability-storage": "^0.2.0",
+    "spryker/cart": "^4.6.0",
     "spryker/customer": "^7.4.0",
     "spryker/kernel": "^3.16.0",
     "spryker/product-bundle": "^4.1.0",
@@ -15,7 +15,7 @@
     "spryker/zed-request": "^3.4.0"
   },
   "require-dev": {
-    "spryker-shop/customer-page": "^0.2.0",
+    "spryker-shop/customer-page": "^0.3.0",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
