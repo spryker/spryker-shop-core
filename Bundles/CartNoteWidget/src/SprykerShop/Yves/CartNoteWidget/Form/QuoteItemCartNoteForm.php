@@ -36,8 +36,6 @@ class QuoteItemCartNoteForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setAction(CartNoteWidgetControllerProvider::ROUTE_CART_NOTE_ITEM);
-
         $this->addCartNoteField($builder);
         $this->addItemSkuField($builder);
         $this->addGroupKeyField($builder);

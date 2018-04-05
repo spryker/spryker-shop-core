@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CartNoteWidget\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\CartNoteWidget\Plugin\Provider\CartNoteWidgetControllerProvider;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -33,8 +32,6 @@ class QuoteCartNoteForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setAction(CartNoteWidgetControllerProvider::ROUTE_CART_NOTE_QUOTE);
-
         $this->addCartNoteField($builder);
     }
 

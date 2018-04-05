@@ -1,13 +1,17 @@
 {% extends template('widget') %}
 
 {% define data = {
-    form: _widget.cartNoteForm
+    form: _widget.cartNoteForm,
+    formAction: url('cart-note/item')
 } %}
 
 {% block body %}
     <hr>
     {% include molecule('form') with {
         data: {
+            options: {
+                action: data.formAction
+            },
             title: 'cart_note.item_form.enter_note' | trans,
             form: data.form,
             submit: {
