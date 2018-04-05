@@ -12,7 +12,7 @@
     forms: {
         summary: _view.summaryForm
     },
-    
+
     overview: {
         shipmentMethod: _view.quoteTransfer.shipment.method.name,
         voucherDiscounts: _view.quoteTransfer.voucherDiscounts,
@@ -48,7 +48,7 @@
                     }
                 } only %}
             </div>
-        
+
             <div class="box">
                 <span class="float-right">{{ 'checkout.step.summary.with_method' | trans }} <strong>{{ data.shipmentMethod }}</strong></span>
                 <h6>{{ 'checkout.step.summary.shipping' | trans }}</h6>
@@ -62,19 +62,19 @@
                 } only %}
             </div>
         </div>
-                        
+
         <div class="col col--sm-12 col--lg-8">
             <div class="box">
                 {% for item in data.cartItems %}
                     {% set item = item.bundleProduct is defined ? item.bundleProduct : item %}
-                    
                     {% embed molecule('summary-item', 'CheckoutPage') with {
                         data: {
                             name: item.name,
                             quantity: item.quantity,
                             price: item.sumPrice | money,
                             options: item.productOptions | default({}),
-                            bundleItems: item.bundleItems | default([])
+                            bundleItems: item.bundleItems | default([]),
+                            quantitySalesUnit: item.quantitySalesUnit
                         },
                         embed: {
                             isLast: not loop.last,
@@ -89,8 +89,9 @@
                     {% endembed %}
                 {% endfor %}
             </div>
+
             {{ widget('CartNoteQuoteNoteWidgetPlugin', data.transfer) }}
-            
+
             {% include molecule('summary-overview', 'CheckoutPage') with {
                 class: 'box',
                 data: data.overview

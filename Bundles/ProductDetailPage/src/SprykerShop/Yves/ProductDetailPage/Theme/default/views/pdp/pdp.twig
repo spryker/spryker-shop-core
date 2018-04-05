@@ -3,7 +3,7 @@
 {% define data = {
     product: _view.product,
     productUrl: _view.productUrl,
-    
+
     title: product.metaTitle | default(_view.product.name),
     metaTitle: product.metaTitle | default(_view.product.name),
     metaDescription: _view.product.metaDescription | default,
@@ -22,14 +22,16 @@
 {% block content %}
     <div class="grid">
         <div class="col col--sm-12 col--lg-7 col--xl-8">
-            <div class="box">
-                {{ widget('ProductImageWidgetPlugin', data.product) }}
-                {{ widget('ProductAbstractLabelWidgetPlugin', data.product) }}
-            </div>
+            {% include molecule('product-carousel', 'ProductDetailPage') with {
+                class: 'box',
+                data: {
+                    product: data.product
+                }
+            } only %}
         </div>
 
         <div class="col col--sm-12 col--lg-5 col--xl-4">
-            {% include organism('product-info', 'ProductDetailPage') with {
+            {% include molecule('product-configurator', 'ProductDetailPage') with {
                 class: 'box',
                 data: {
                     product: data.product
@@ -38,7 +40,7 @@
         </div>
     </div>
 
-    {% include molecule('details-panel', 'ProductDetailPage') with {
+    {% include molecule('product-detail', 'ProductDetailPage') with {
         class: 'box',
         data: {
             description: data.product.description,

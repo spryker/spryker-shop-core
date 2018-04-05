@@ -1,12 +1,13 @@
-$component-burst-size: spacing(5);
+$component-burst-size: 2rem;
 
 @mixin component-tag($name: '.tag') {
     #{$name} {
+        position: relative;
         display: flex;
         align-items: center;
         width: $component-burst-size;
         height: $component-burst-size;
-        margin-bottom: spacing(.4);
+        margin-bottom: $component-burst-size;
         background: $color-alt;
 
         &::before,
@@ -33,6 +34,7 @@ $component-burst-size: spacing(5);
             @include font-size(small);
             @include line-height(tight);
             display: block;
+            position: relative;
             width: 100%;
             color: $color-white;
             text-align: center;

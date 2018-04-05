@@ -1,9 +1,9 @@
-$component-icon-size: spacing(2);
-$component-icon-size-small: spacing(1.5);
-$component-icon-size-smaller: spacing();
-$component-icon-size-big: spacing(3);
-$component-icon-size-bigger: spacing(4);
-$component-icon-size-biggest: spacing(6);
+$component-icon-size: 1rem;
+$component-icon-size-small: .75rem;
+$component-icon-size-smaller: .5rem;
+$component-icon-size-big: 1.5rem;
+$component-icon-size-bigger: 2rem;
+$component-icon-size-biggest: 3rem;
 
 @mixin component-icon($name: '.icon') {
     #{$name} {

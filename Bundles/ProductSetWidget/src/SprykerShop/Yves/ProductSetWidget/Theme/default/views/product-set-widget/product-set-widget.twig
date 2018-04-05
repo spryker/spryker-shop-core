@@ -1,0 +1,30 @@
+{% extends template('product-set', 'ProductSetWidget') %}
+
+{% define data = {
+    products: _widget.productViews,
+    name: _widget.productSet.name,
+    description: _widget.productSet.description,
+    images: _widget.productSet.imageSets.0.images | default([]),
+} %}
+
+{% block title %}
+    <h5>{{data.name}}</h5>
+{% endblock %}
+
+{% block description %}
+    <hr />{{parent()}}
+{% endblock %}
+
+{% block body %}
+    {% block header %}
+        <hr />{{parent()}}<hr />
+    {% endblock %}
+
+    {% block carousel %}
+        {{parent()}}<hr />
+    {% endblock %}
+
+    {% block productSet %}
+        {{parent()}}
+    {% endblock %}
+{% endblock %}

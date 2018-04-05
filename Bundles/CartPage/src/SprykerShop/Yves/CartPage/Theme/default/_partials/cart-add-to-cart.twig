@@ -7,15 +7,19 @@
                     <strong>{{ 'cart.item_quantity' | trans }}</strong>
                     <span class="input-group __no-margin-bottom">
 
-                         {% if not cartItem.maxQuantity or cartItem.maxQuantity < 0 %}
-                             <input class="input-group-field" type="number" value="{{ cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>
-                         {% else %}
-                             <select name="quantity">
+                        {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
+                            {{ widget('QuantitySalesUnitWidgetPlugin', cartItem) }}
+                        {% else %}
+                            {% if not cartItem.maxQuantity or cartItem.maxQuantity < 0 %}
+                                <input class="input-group-field" type="number" value="{{ cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>
+                            {% else %}
+                                <select name="quantity">
                                 {% for i in range(1, cartItem.maxQuantity) %}
                                     <option {{ (i == cartItem.quantity) ? 'selected' : '' }} value="{{ i }}">{{ i }}</option>
                                 {% endfor %}
                              </select>
-                         {% endif %}
+                            {% endif %}
+                        {% endif %}
 
                         <span class="input-group-button">
                             <button type="submit" class="button expanded __no-margin-bottom" {{qa('cart-update-quantity-button')}}><i class="fa fa-refresh"></i></button>
