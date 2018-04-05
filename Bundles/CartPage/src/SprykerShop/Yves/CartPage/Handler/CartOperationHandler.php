@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CartPage\Handler;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
@@ -72,14 +73,16 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     public function add($sku, $quantity, array $optionValueUsageIds = [])
     {
         $quantity = $this->normalizeQuantity($quantity);
-        $quantity = $this->adjustQuantityBasedOnProductAvailability($sku, $quantity);
-
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku($sku);
-        $itemTransfer->setQuantity($quantity);
         $itemTransfer->setIdDiscountPromotion($this->getIdDiscountPromotion());
-
+        $itemTransfer->setQuantity($quantity);
         $this->addProductOptions($optionValueUsageIds, $itemTransfer);
+
+        $this->addProductMeasurementSalesUnitTransfer($itemTransfer);
+
+        $quantity = $this->adjustQuantityBasedOnProductAvailability($sku, $itemTransfer->getQuantity());
+        $itemTransfer->setQuantity($quantity);
 
         $quoteTransfer = $this->cartClient->addItem($itemTransfer);
         $this->cartClient->storeQuote($quoteTransfer);
@@ -92,6 +95,10 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
      */
     public function addItems(array $itemTransfers)
     {
+        foreach ($itemTransfers as &$itemTransfer) {
+            $itemTransfer = $this->addProductMeasurementSalesUnitTransfer($itemTransfer);
+        }
+
         $quoteTransfer = $this->cartClient->addItems($itemTransfers);
         $this->cartClient->storeQuote($quoteTransfer);
     }
@@ -210,5 +217,27 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
         }
 
         return $quantity;
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function addProductMeasurementSalesUnitTransfer(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        $idProductMeasurementSalesUnit = $this->request->request->getInt('id-product-measurement-sales-unit');
+
+        if ($idProductMeasurementSalesUnit === 0) {
+            return $itemTransfer;
+        }
+
+        $productMeasurementSalesUnitTransfer = new ProductMeasurementSalesUnitTransfer();
+        $productMeasurementSalesUnitTransfer->setIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit);
+        $itemTransfer->setQuantitySalesUnit($productMeasurementSalesUnitTransfer);
+
+        return $itemTransfer;
     }
 }
