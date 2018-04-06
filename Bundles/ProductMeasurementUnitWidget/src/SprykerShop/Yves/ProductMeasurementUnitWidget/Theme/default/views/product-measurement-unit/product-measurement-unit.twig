@@ -103,12 +103,8 @@
     {% endif %}
 
     {% set translations = [] %}
-    {% set translations = translations | merge({(data.baseUnit.code) : (data.baseUnit.name | trans)}) %}
     {% for key, salesUnit in data.salesUnits %}
-        {% if salesUnit.productMeasurementUnit.code not in translations %}
-            {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
-        {% endif %}
-
+        {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
     {% endfor %}
 
     <script type="application/json" id="measurement-unit-translation">{{ translations|json_encode|raw }}</script>
