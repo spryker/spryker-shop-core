@@ -6,41 +6,64 @@
 } %}
 
 {% define data = {
-    cartItem: required
+    cartItem: required,
 } %}
 
+{% set options = [] %}
+
+{% for index in 1..data.cartItem.maxQuantity %}
+    {% set options = options | merge([{
+        label: index,
+        value: index
+    }]) %}
+{% endfor %}
+
 {% block body %}
-    <ul class="no-bullet">
-        <li>
-            <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.cartItem.sku }) }}">
-                <label>
-                    <strong>{{ 'cart.item_quantity' | trans }}</strong>
-                    <span class="input-group __no-margin-bottom">
+    <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.cartItem.sku }) }}">
+        <div class="cart-quantity__title">
+            <strong>{{ 'cart.item_quantity' | trans }}</strong>
+        </div>
+        <div class="grid">
+            <div class="col col--sm-8">
+                {% if not data.cartItem.maxQuantity or data.cartItem.maxQuantity < 0 %}
 
-                         {% if not data.cartItem.maxQuantity or data.cartItem.maxQuantity < 0 %}
-                             <input class="input-group-field" type="number" value="{{ data.cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>
-                         {% else %}
-                             <select name="quantity">
-                                {% for i in range(1, data.cartItem.maxQuantity) %}
-                                    <option {{ (i == data.cartItem.quantity) ? 'selected' : '' }} value="{{ i }}">{{ i }}</option>
-                                {% endfor %}
-                             </select>
-                         {% endif %}
+                <input class="input input--expand" type="number" value="{{ data.cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>
 
-                        <span class="input-group-button">
-                            <button type="submit" class="button expanded __no-margin-bottom" {{qa('cart-update-quantity-button')}}><i class="fa fa-refresh"></i></button>
-                        </span>
+                {% else %}
 
-                     </span>
-                </label>
-                <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
-            </form>
-        </li>
-        <li>
-            <a href="/cart/remove/{{ data.cartItem.sku }}/{{ data.cartItem.groupKey }}">&times;
-                <small>{{ 'remove' | trans }}</small>
-            </a>
-        </li>
-    </ul>
+                    {% include atom('select') with {
+                        modifiers: ['expand'],
+                        data: {
+                            options: options
+                        },
+                        attributes: {
+                            name: 'quantity'
+                        }
+                    } only %}
 
+                {% endif %}
+
+            </div>
+
+            <div class="col col--sm-3">
+
+                <button type="submit" class="button button--expand" {{qa('cart-update-quantity-button')}}>
+                    {% include atom('icon') with {
+                        class: config.name ~ '__sync',
+                        data: {
+                            name: 'sync'
+                        }
+                    } only %}
+                </button>
+            </div>
+
+            <div class="col col-sm-12">
+                <a class="cart-item__remove" href="{{ path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': data.cartItem.groupKey }) }}">
+                    &times; {{ 'remove' | trans }}
+                </a>
+            </div>
+
+         </div>
+        <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
+    </form>
 {% endblock %}

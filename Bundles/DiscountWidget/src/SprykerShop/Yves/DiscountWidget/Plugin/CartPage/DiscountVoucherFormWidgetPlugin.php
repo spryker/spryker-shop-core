@@ -43,6 +43,6 @@ class DiscountVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements Di
      */
     public static function getTemplate(): string
     {
-        return '@DiscountWidget/_cart-page/discount-voucher-form.twig';
+        return '@DiscountWidget/views/discount-voucher-form/discount-voucher-form.twig';
     }
 }

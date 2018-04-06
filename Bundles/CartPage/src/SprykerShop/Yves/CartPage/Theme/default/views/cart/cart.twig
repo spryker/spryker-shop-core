@@ -32,7 +32,7 @@
     {% else %}
         <div class="grid">
             <div class="col col--sm-12 col--lg-8">
-                <div class="box">
+                <div class="cart-items-box">
                     {% for cartItem in data.cartItems %}
                         {% include molecule('cart-item', 'CartPage') with {
                             data: {

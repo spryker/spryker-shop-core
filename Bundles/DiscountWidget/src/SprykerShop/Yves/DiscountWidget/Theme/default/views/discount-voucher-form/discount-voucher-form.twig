@@ -1,0 +1,35 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'discount-voucher-form',
+    tag: 'div'
+} %}
+
+{% define data = {
+    forms: {
+        voucher: _widget.voucherForm
+    }
+} %}
+
+{% block body %}
+
+    {% include molecule('form') with {
+        data: {
+            title: data.forms.voucher.voucher_code.vars.label | trans,
+            form: data.forms.voucher,
+            enableStart: true,
+            enableEnd: true,
+            layout: {
+
+            },
+            submit: {
+                enable: true,
+                text: 'cart.voucher.redeem' | trans
+            },
+            cancel: {
+                enable: false
+            }
+        }
+    } only %}
+
+{% endblock %}

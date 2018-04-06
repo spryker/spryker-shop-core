@@ -4,11 +4,21 @@ $component-cart-item-sku-background: $color-dark;
     #{$name} {
         &__title {
             @include font-size(big);
+            margin-bottom: $unit-spacing;
         }
 
         &__sku {
             @include font-size(small);
             color: $component-cart-item-sku-background;
+            margin-bottom: $unit-spacing;
+        }
+
+        &__image {
+            padding: 0 spacing(2);
+        }
+
+        &__list {
+            padding: 0 $unit-spacing;
         }
 
         @content;
