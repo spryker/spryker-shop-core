@@ -128,12 +128,4 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     {
         return $this->cartClient->validateQuote();
     }
-
-    /**
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest()
-    {
-        $this->cartClient->addFlashMessagesFromLastZedRequest();
-    }
 }

@@ -14,6 +14,7 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientBrid
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientBridge;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientBridge;
 use SprykerShop\Yves\CartPage\Plugin\CartVariantAttributeMapperPlugin;
 
 class CartPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -26,6 +27,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
     public const PLUGIN_CART_ITEM_TRANSFORMERS = 'PLUGIN_CART_ITEM_TRANSFORMERS';
     public const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -42,6 +44,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartVariantAttributeMapperPlugin($container);
         $container = $this->addCartPageWidgetPlugins($container);
         $container = $this->addCartItemTransformerPlugins($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -97,6 +100,20 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_AVAILABILITY_STORAGE] = function (Container $container) {
             return new CartPageToAvailabilityStorageClientBridge($container->getLocator()->availabilityStorage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container): Container
+    {
+        $container[self::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new CartPageToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;

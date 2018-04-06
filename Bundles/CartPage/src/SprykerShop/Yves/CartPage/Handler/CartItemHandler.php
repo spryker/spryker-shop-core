@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Shared\CartVariant\CartVariantConstants;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
 
 class CartItemHandler implements CartItemHandlerInterface
 {
@@ -28,15 +29,23 @@ class CartItemHandler implements CartItemHandlerInterface
     protected $productClient;
 
     /**
+     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface
+     */
+    protected $zedRequestClient;
+
+    /**
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface $productClient
+     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface $zedRequestClient
      */
     public function __construct(
         CartPageToCartClientInterface $cartClient,
-        CartPageToProductStorageClientInterface $productClient
+        CartPageToProductStorageClientInterface $productClient,
+        CartPageToZedRequestClientInterface $zedRequestClient
     ) {
         $this->cartClient = $cartClient;
         $this->productClient = $productClient;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -75,9 +84,9 @@ class CartItemHandler implements CartItemHandlerInterface
         $this->addProductOptions($optionValueIds, $itemTransfer);
 
         $this->cartClient->addItem($itemTransfer);
-        $this->cartClient->addFlashMessagesFromLastZedRequest();
+        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
 
-        if (count($this->cartClient->getZedStub()->getErrorMessages()) === 0) {
+        if (count($this->zedRequestClient->getLastResponseErrorMessages()) === 0) {
             $this->cartClient->removeItem($currentItemSku, $groupKey);
         }
     }
