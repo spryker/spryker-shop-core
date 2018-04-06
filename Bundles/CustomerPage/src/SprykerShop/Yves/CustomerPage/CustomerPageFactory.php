@@ -198,18 +198,26 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToUtilValidateServiceInterface
+     * @return string[]
      */
-    public function getUtilValidateService()
+    public function getCustomerOrderListWidgetPlugins(): array
     {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_UTIL_VALIDATE);
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS);
     }
 
     /**
      * @return string[]
      */
-    public function getCustomerOrderDetailsWidgetPlugins(): array
+    public function getCustomerOrderViewWidgetPlugins(): array
     {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CUSTOMER_ORDER_DETAILS_WIDGETS);
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToUtilValidateServiceInterface
+     */
+    public function getUtilValidateService()
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_UTIL_VALIDATE);
     }
 }
