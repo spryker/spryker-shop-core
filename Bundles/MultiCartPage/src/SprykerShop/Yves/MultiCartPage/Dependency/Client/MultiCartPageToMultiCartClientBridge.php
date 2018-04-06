@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MultiCartPage\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
