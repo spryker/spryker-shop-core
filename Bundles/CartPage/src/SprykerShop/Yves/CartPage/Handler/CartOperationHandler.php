@@ -95,10 +95,6 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
      */
     public function addItems(array $itemTransfers)
     {
-        foreach ($itemTransfers as &$itemTransfer) {
-            $itemTransfer = $this->addProductMeasurementSalesUnitTransfer($itemTransfer);
-        }
-
         $quoteTransfer = $this->cartClient->addItems($itemTransfers);
         $this->cartClient->storeQuote($quoteTransfer);
     }
