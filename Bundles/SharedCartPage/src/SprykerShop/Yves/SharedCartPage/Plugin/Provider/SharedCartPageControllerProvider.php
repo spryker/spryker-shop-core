@@ -27,7 +27,7 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
         $controller->assert('sharedCart', $allowedLocalesPattern . 'shared-cart|shared-cart');
         $controller->value('sharedCart', 'shared-cart');
 
-        $controller = $this->createController('/{sharedCart}/unshare/{idQuote}/{idCompanyUser}/{idPermissionGroup}', static::ROUTE_SHARED_CART_UNSHARE, 'SharedCartPage', 'UnShare', 'index');
+        $controller = $this->createController('/{sharedCart}/unshare/{idQuote}/{idCompanyUser}/{idPermissionGroup}', static::ROUTE_SHARED_CART_UNSHARE, 'SharedCartPage', 'Unshare', 'index');
         $controller->assert('sharedCart', $allowedLocalesPattern . 'shared-cart|shared-cart');
         $controller->value('sharedCart', 'shared-cart');
     }

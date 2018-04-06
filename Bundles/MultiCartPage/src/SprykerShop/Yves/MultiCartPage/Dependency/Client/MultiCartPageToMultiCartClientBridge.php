@@ -35,13 +35,13 @@ class MultiCartPageToMultiCartClientBridge implements MultiCartPageToMultiCartCl
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteActivationRequestTransfer $quoteActivationRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setDefaultQuote(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer
+    public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->multiCartClient->setDefaultQuote($quoteActivationRequestTransfer);
+        return $this->multiCartClient->setDefaultQuote($quoteTransfer);
     }
 
     /**
@@ -63,10 +63,52 @@ class MultiCartPageToMultiCartClientBridge implements MultiCartPageToMultiCartCl
     }
 
     /**
-     * @return string
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getDuplicatedQuoteNameSuffix(): string
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->multiCartClient->getDuplicatedQuoteNameSuffix();
+        return $this->multiCartClient->createQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->multiCartClient->updateQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->multiCartClient->deleteQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function duplicateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->multiCartClient->duplicateQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function clearQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->multiCartClient->clearQuote($quoteTransfer);
     }
 }

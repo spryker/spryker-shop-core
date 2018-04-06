@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShopLayoutExtension\Dependency\Plugin\MultiCart;
+namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\MultiCart;
 
 interface MiniCartWidgetPluginInterface
 {

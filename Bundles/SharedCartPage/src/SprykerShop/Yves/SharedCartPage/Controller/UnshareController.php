@@ -14,7 +14,7 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 /**
  * @method \SprykerShop\Yves\SharedCartPage\SharedCartPageFactory getFactory()
  */
-class UnShareController extends AbstractController
+class UnshareController extends AbstractController
 {
     public const KEY_GLOSSARY_SHARED_CART_PAGE_UNSHARE_SUCCESS = 'shared_cart_page.unshare.success';
 

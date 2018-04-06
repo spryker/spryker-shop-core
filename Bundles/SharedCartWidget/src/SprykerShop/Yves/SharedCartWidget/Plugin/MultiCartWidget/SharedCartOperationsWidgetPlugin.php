@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartWidget;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
@@ -28,10 +29,12 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $this
             ->addParameter('cart', $quoteTransfer)
             ->addParameter('actions', $this->getCartActions($quoteTransfer))
-            ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer));
+            ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer, $customerTransfer))
+            ->addParameter('isSharedCartAllowed', $this->isSharedCartAllowed($customerTransfer));
     }
 
     /**
@@ -56,13 +59,27 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer)
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer)
     {
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-        return strcmp($customer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
+        return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isSharedCartAllowed(CustomerTransfer $customerTransfer): bool
+    {
+        if ($customerTransfer->getCompanyUserTransfer()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

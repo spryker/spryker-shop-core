@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\MultiCartWidget\Plugin\ShopLayout;
+namespace SprykerShop\Yves\MultiCartWidget\Plugin\ShopUi;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShopLayoutExtension\Dependency\Plugin\MultiCart\MiniCartWidgetPluginInterface;
+use SprykerShop\Yves\ShopUi\Dependency\Plugin\MultiCart\MiniCartWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
