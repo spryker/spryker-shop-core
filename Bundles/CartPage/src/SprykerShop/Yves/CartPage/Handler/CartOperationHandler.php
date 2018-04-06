@@ -17,7 +17,7 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 // TODO: adapt measurement unit changes and remove this file
-class CartOperationHandler extends BaseHandler implements CartOperationInterface
+class CartOperationHandler
 {
     const URL_PARAM_ID_DISCOUNT_PROMOTION = 'idDiscountPromotion';
     const TRANSLATION_KEY_QUANTITY_ADJUSTED = 'cart.quantity.adjusted';
