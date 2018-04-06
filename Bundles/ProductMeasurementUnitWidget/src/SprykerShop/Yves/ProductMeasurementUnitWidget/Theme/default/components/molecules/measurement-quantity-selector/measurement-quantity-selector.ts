@@ -69,26 +69,48 @@ export default class MeasurementQuantitySelector extends Component {
         if (typeof qtyInSalesUnits === 'undefined') {
             qtyInSalesUnits = +this.qtyInSalesUnitInput.value;
         }
+        let error = false;
         let qtyInBaseUnits = this.multiply(qtyInSalesUnits, +this.currentSalesUnit.conversion);
-        if (qtyInBaseUnits % 1 != 0) {
+        if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0) {
+            error = true;
+            this.hideNotifications();
+            document.getElementById('quantity-between-units').classList.remove('is-hidden');
+        } else if (qtyInBaseUnits < this.getMinQuantity()) {
+            error = true;
+            this.hideNotifications();
+            document.getElementById('minimum-quantity').classList.remove('is-hidden');
+        } else if (this.getMaxQuantity() > 0 && qtyInBaseUnits > this.getMaxQuantity()) {
+            error = true;
+            this.hideNotifications();
+            document.getElementById('maximum-quantity').classList.remove('is-hidden');
+        }
+
+        if (error) {
             this.addToCartButton.setAttribute("disabled", "disabled");
             this.askCustomerForCorrectInput(qtyInSalesUnits);
             return;
         }
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.addToCartButton.removeAttribute("disabled");
-        document.querySelector('.measurement-unit-choice').classList.add('is-hidden');
+        this.hideNotifications();
         return;
+    }
+
+    hideNotifications() {
+        document.querySelector('.measurement-unit-choice').classList.add('is-hidden');
+        document.getElementById('quantity-between-units').classList.add('is-hidden');
+        document.getElementById('minimum-quantity').classList.add('is-hidden');
+        document.getElementById('maximum-quantity').classList.add('is-hidden');
     }
 
     askCustomerForCorrectInput(qtyInSalesUnits: number) {
         let choicesList = document.querySelector('#measurement-unit-choices .list');
         let currentChoice = document.querySelector('.measurement-unit-choice #current-choice');
         let minChoice = this.getMinChoice(qtyInSalesUnits);
-        let maxChoice = this.getMaxChoice(qtyInSalesUnits);
+        let maxChoice = this.getMaxChoice(qtyInSalesUnits, minChoice);
         choicesList.innerHTML = '';
         currentChoice.innerHTML = '';
-        currentChoice.textContent = `${this.round(qtyInSalesUnits, 4)} ${this.currentSalesUnit.product_measurement_unit.code}`;
+        currentChoice.textContent = `${this.round(qtyInSalesUnits, 4)} ${this.getUnitName(this.currentSalesUnit.product_measurement_unit.code)}`;
 
         let choiceElements = [];
         choiceElements.push(this.createChoiceElement(minChoice));
@@ -136,21 +158,33 @@ export default class MeasurementQuantitySelector extends Component {
 
     getMinChoice(qtyInSalesUnits: number) {
         let qtyInBaseUnits = this.floor(this.multiply(qtyInSalesUnits, this.currentSalesUnit.conversion));
-        qtyInBaseUnits = this.floor(qtyInBaseUnits - (qtyInBaseUnits % this.getQuantityInterval()));
 
         if (qtyInBaseUnits < this.getMinQuantity()) {
-            qtyInBaseUnits = this.getMinQuantity();
+            return this.getMinQuantity();
+        }
+
+        if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0 || qtyInBaseUnits > this.getMaxQuantity()) {
+            return this.getMinChoice((qtyInBaseUnits - 1) / this.currentSalesUnit.conversion)
         }
 
         return qtyInBaseUnits;
     }
 
-    getMaxChoice(qtyInSalesUnits: number) {
+    getMaxChoice(qtyInSalesUnits: number, minChoice: number) {
         let qtyInBaseUnits = this.ceil(this.multiply(qtyInSalesUnits, this.currentSalesUnit.conversion));
-        qtyInBaseUnits = this.ceil(qtyInBaseUnits + (qtyInBaseUnits % this.getQuantityInterval()));
 
         if (this.getMaxQuantity() > 0 && qtyInBaseUnits > this.getMaxQuantity()) {
             qtyInBaseUnits = this.getMaxQuantity();
+
+            if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0) {
+                qtyInBaseUnits = qtyInBaseUnits - ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval());
+            }
+
+            return qtyInBaseUnits;
+        }
+
+        if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0 || qtyInBaseUnits <= minChoice) {
+            return this.getMaxChoice((qtyInBaseUnits + 1) / this.currentSalesUnit.conversion, minChoice)
         }
 
         return qtyInBaseUnits;
@@ -174,7 +208,7 @@ export default class MeasurementQuantitySelector extends Component {
 
     multiply(a: number, b: number): number {
         let result = ((a * 10) * (b * 10)) / 100;
-        return Math.floor( result * 1000 ) / 1000;
+        return Math.floor(result * 1000) / 1000;
     }
 
     getMinQuantity() {
