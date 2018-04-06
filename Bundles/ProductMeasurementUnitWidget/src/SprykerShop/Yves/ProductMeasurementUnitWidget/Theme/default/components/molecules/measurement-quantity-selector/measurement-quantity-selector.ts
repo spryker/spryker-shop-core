@@ -79,7 +79,7 @@ export default class MeasurementQuantitySelector extends Component {
             error = true;
             this.hideNotifications();
             document.getElementById('minimum-quantity').classList.remove('is-hidden');
-        } else if (qtyInBaseUnits > this.getMaxQuantity()) {
+        } else if (this.getMaxQuantity() > 0 && qtyInBaseUnits > this.getMaxQuantity()) {
             error = true;
             this.hideNotifications();
             document.getElementById('maximum-quantity').classList.remove('is-hidden');
