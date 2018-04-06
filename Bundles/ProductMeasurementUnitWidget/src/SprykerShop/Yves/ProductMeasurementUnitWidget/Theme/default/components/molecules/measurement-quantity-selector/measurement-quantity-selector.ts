@@ -164,7 +164,7 @@ export default class MeasurementQuantitySelector extends Component {
         }
 
         if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0) {
-            return this.getMinChoice((qtyInBaseUnits + 1) / this.currentSalesUnit.conversion)
+            return this.getMinChoice((qtyInBaseUnits - 1) / this.currentSalesUnit.conversion)
         }
 
         return qtyInBaseUnits;
