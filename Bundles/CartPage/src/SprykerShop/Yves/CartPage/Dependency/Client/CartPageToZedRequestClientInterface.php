@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CartPage\Dependency\Client;
 
-
 interface CartPageToZedRequestClientInterface
 {
     /**
