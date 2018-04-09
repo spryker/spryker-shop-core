@@ -198,11 +198,7 @@ class CheckoutController extends AbstractController
      */
     public function errorAction()
     {
-        return $this->view(
-            null,
-            null,
-            '@CheckoutPage/views/order-fail/order-fail.twig'
-        );
+        return $this->view([], [], '@CheckoutPage/views/order-fail/order-fail.twig');
     }
 
     /**
