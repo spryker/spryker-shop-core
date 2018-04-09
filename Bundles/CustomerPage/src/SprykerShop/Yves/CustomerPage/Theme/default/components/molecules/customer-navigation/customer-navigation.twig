@@ -36,5 +36,8 @@
             <a href="{{ path('wishlist/overview') }}" data-id="sidebar-wishlist">{{ 'wishlist.wishlist' | trans }}</a>
             {% block wishlistNavigation %}{% endblock %}
         </li>
+        <li class="menu__item {{macros.isActive('companyUserInvitation', data.activePage)}}">
+            <a href="{{ path('company-user-invitation/overview') }}" data-id="sidebar-wishlist">{{ 'company.user.invitation' | trans }}</a>
+        </li>
     </ul>
 {% endblock %}
