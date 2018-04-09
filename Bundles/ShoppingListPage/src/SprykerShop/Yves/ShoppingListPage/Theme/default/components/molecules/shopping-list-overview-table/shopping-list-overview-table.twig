@@ -13,7 +13,11 @@
         editLabel: 'customer.account.shopping_list.overview.edit' | trans,
         deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
         addShoppingListToCartLabel: 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans,
-        shareLabel: 'customer.account.shopping_list.overview.share' | trans
+        shareLabel: 'customer.account.shopping_list.overview.share' | trans,
+        nameLabel: 'customer.account.shopping_list.overview.name' | trans,
+        itemCountLabel: 'customer.account.shopping_list.overview.item_count' | trans,
+        modifiedDateLabel: 'customer.account.shopping_list.overview.modified_date' | trans,
+        ownerLabel: 'customer.account.shopping_list.overview.owner' | trans
     }
 } %}
 
@@ -22,10 +26,11 @@
         <thead>
             <tr>
                 <th></th>
-                <th width="40%">{{ 'customer.account.shopping_list.overview.name' | trans }}</th>
-                <th width="25%">{{ 'customer.account.shopping_list.overview.item_count' | trans }}</th>
-                <th width="20%">{{ 'customer.account.shopping_list.overview.modified_date' | trans }}</th>
-                <th width="15%"></th>
+                <th>{{ data.labels.nameLabel }}</th>
+                <th>{{ data.labels.ownerLabel }}</th>
+                <th>{{ data.labels.itemCountLabel }}</th>
+                <th>{{ data.labels.modifiedDateLabel }}</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -36,7 +41,7 @@
             <tr>
                 <td>
                     {% if data.enableTableForm %}
-                        <input title="{{ data.labels.addShoppingListToCartLabel }}" type="checkbox" name="shoppingLists[]" value="{{ shoppingList.name }}" />
+                        <input title="{{ data.labels.addShoppingListToCartLabel }}" type="checkbox" name="shoppingLists[]" value="{{ shoppingList.idShoppingList }}" />
                     {% endif %}
                 </td>
                 <td>
@@ -54,12 +59,15 @@
                         <a href="{{ path('shopping-list/details', { shoppingListName: shoppingList.name }) }}">{{ shoppingList.name }}</a>
                     {% endif %}
                 </td>
+                <td>{{ shoppingList.owner }}</td>
                 <td>{{ shoppingList.numberOfItems }}</td>
                 <td>{{ shoppingList.updatedAt | formatDate }}</td>
                 <td>
-                    <a href="{{ url('shopping-list/update', { shoppingListName: shoppingList.name }) }}">{{ data.labels.editLabel }}</a>
-                    <a href="{{ url('shopping-list/delete', { shoppingListName: shoppingList.name }) }}">{{ data.labels.deleteLabel }}</a>
-                    <a href="{{ url('shopping-list/share', { shoppingListName: shoppingList.name }) }}">{{ data.labels.shareLabel }}</a>
+                    {% if can('WriteShoppingListPermissionPlugin', shoppingList.idShoppingList) %}
+                        <a href="{{ url('shopping-list/update', { shoppingListName: shoppingList.name }) }}">{{ data.labels.editLabel }}</a>
+                        <a href="{{ url('shopping-list/delete', { shoppingListName: shoppingList.name }) }}">{{ data.labels.deleteLabel }}</a>
+                        <a href="{{ url('shopping-list/share', { shoppingListName: shoppingList.name }) }}">{{ data.labels.shareLabel }}</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

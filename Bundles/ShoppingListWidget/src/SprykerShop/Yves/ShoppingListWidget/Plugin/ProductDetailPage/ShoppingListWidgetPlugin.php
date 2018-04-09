@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ShoppingListWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ShoppingListWidget\ShoppingListWidgetPluginInterface;
 
@@ -16,6 +17,8 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ShoppingListWidget\Shop
  */
 class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListWidgetPluginInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @param string $sku
      * @param bool $disabled
@@ -28,6 +31,15 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
 
         if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
             $shoppingListCollection = $this->getFactory()->getShoppingListClient()->getCustomerShoppingListCollection();
+            $shoppingLists = $shoppingListCollection->getShoppingLists();
+
+            foreach($shoppingLists as $offset => $shoppingList) {
+                if(!$this->can('WriteShoppingListPermissionPlugin', $shoppingList->getIdShoppingList())) {
+                    $shoppingLists->offsetUnset($offset);
+                }
+            }
+
+            $shoppingListCollection->setShoppingLists($shoppingLists);
         }
 
         $this->addParameter('sku', $sku)

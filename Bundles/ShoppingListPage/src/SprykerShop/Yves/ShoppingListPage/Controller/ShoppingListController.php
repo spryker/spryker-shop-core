@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
@@ -47,10 +48,12 @@ class ShoppingListController extends AbstractController
     {
         $pageNumber = $this->getPageNumber($request);
         $itemsPerPage = $this->getItemsPerPage($request);
+        $customerTransfer = $this->getCustomer();
 
         $shoppingListTransfer = (new ShoppingListTransfer())
             ->setName($shoppingListName)
-            ->setCustomerReference($this->getCustomerReference());
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setRequesterId($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
 
         $shoppingListOverviewRequest = (new ShoppingListOverviewRequestTransfer())
             ->setShoppingList($shoppingListTransfer)
@@ -253,7 +256,7 @@ class ShoppingListController extends AbstractController
             ->setIdProduct((int)$request->get(static::PARAM_PRODUCT_ID))
             ->setSku($request->get(static::PARAM_SKU))
             ->setQuantity((int)$request->get(static::PARAM_QUANTITY))
-            ->setCustomerReference($this->getCustomerReference())
+            ->setCustomerReference($this->getCustomer()->getCustomerReference())
             ->setShoppingListName($shoppingListName);
 
         $requestIdShoppingListItem = (int)$request->get(static::PARAM_ID_SHOPPING_LIST_ITEM);
@@ -342,10 +345,10 @@ class ShoppingListController extends AbstractController
     }
 
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function getCustomerReference(): string
+    protected function getCustomer(): CustomerTransfer
     {
-        return $this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference();
+        return $this->getFactory()->getCustomerClient()->getCustomer();
     }
 }

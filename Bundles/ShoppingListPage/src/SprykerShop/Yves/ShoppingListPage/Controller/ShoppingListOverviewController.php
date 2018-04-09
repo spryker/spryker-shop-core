@@ -221,15 +221,13 @@ class ShoppingListOverviewController extends AbstractController
      */
     protected function getShoppingListCollectionTransfer(Request $request): ShoppingListCollectionTransfer
     {
-        $shoppingLists = $request->get(static::PARAM_SHOPPING_LISTS);
+        $shoppingListIds = $request->get(static::PARAM_SHOPPING_LISTS);
         $shoppingListCollectionTransfer = new ShoppingListCollectionTransfer();
-        $customerReference = $this->getCustomerReference();
 
-        if ($shoppingLists) {
-            foreach ($shoppingLists as $shoppingList) {
-                $shoppingList = (new ShoppingListTransfer())
-                    ->setName($shoppingList)
-                    ->setCustomerReference($customerReference);
+        if ($shoppingListIds) {
+            foreach ($shoppingListIds as $idShoppingList) {
+                $shoppingList = (new ShoppingListTransfer())->setIdShoppingList($idShoppingList);
+
                 $shoppingListCollectionTransfer->addShoppingList($shoppingList);
             }
         }
