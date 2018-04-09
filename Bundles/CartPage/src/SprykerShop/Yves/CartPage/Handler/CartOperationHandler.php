@@ -43,6 +43,11 @@ class CartOperationHandler
     protected $availabilityClient;
 
     /**
+     * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
+     */
+    protected $flashMessenger;
+
+    /**
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $cartClient
      * @param string $locale
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
@@ -56,7 +61,6 @@ class CartOperationHandler
         Request $request,
         CartPageToAvailabilityClientInterface $availabilityClient
     ) {
-        parent::__construct($flashMessenger);
         $this->cartClient = $cartClient;
         $this->locale = $locale;
         $this->request = $request;
