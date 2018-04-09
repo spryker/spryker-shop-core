@@ -28,14 +28,20 @@
                     {{ 'cart.item.sku' | trans }} {{ data.cartItem.sku }}
                 </div>
 
-                {{ widget('ProductBundleItemsWidgetPlugin', data.cartItem, data.cart) }}
+                <ul class="list">
+                    {{ widget('ProductBundleItemsWidgetPlugin', data.cartItem, data.cart) }}
 
-                {% include molecule('cart-item-attributes', 'CartPage') with {
-                    data: {
-                        cartItem: data.cartItem,
-                        attributes: data.attributes
-                    }
-                } only %}
+                    <li>
+                        {% include molecule('cart-item-attributes', 'CartPage') with {
+                            data: {
+                                cartItem: data.cartItem,
+                                attributes: data.attributes
+                            }
+                        } only %}
+
+                    </li>
+
+                </ul>
 
             </div>
 
