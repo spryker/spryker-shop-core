@@ -1,11 +1,11 @@
-# WishlistPage Module
+# ShoppingListWidget Module
 
 {{ADD DESCRIPTION HERE}}
 
 ## Installation
 
 ```
-composer require spryker-shop/wishlist-page
+composer require spryker-shop/shopping-list-widget
 ```
 
 ## Documentation

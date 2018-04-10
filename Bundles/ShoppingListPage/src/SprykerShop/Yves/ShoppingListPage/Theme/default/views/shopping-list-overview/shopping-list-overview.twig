@@ -3,6 +3,7 @@
 {% define data = {
     shoppingListCollection: _view.shoppingListCollection,
     shoppingListForm: _view.shoppingListForm,
+    shoppingListResponse: _view.shoppingListResponse,
     labels: {
         addNewSubmitLabel: 'customer.account.shopping_list.overview.add_new' | trans,
         overviewTitle: 'customer.account.shopping_list.overview.title' | trans,
@@ -50,7 +51,8 @@
             {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
                 data: {
                     shoppingLists: data.shoppingListCollection.shoppingLists,
-                    enableTableForm: true
+                    enableTableForm: true,
+                    shoppingListResponse: data.shoppingListResponse
                 }
             } only %}
         {% else %}

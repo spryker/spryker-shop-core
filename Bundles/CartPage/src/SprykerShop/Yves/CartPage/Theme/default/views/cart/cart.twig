@@ -18,6 +18,9 @@
     {% else %}
         {{ parent() }}
     {% endif %}
+    {% if widgetExists('CartToShoppingListWidgetPlugin') %}
+        {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
+    {% endif %}
 {% endblock %}
 
 {% block content %}

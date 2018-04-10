@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -32,6 +33,16 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
     public function __construct($shoppingListClient)
     {
         $this->shoppingListClient = $shoppingListClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->shoppingListClient->removeShoppingList($shoppingListTransfer);
     }
 
     /**
@@ -93,43 +104,13 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return void
-     */
-    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): void
-    {
-        $this->shoppingListClient->removeShoppingList($shoppingListTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        return $this->shoppingListClient->addItem($shoppingListItemTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return void
-     */
-    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): void
-    {
-        $this->shoppingListClient->removeItemById($shoppingListItemTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
-     *
-     * @return void
-     */
-    public function removeItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): void
-    {
-        $this->shoppingListClient->removeItemCollection($shoppingListItemCollectionTransfer);
+        return $this->shoppingListClient->removeItemById($shoppingListItemTransfer);
     }
 
     /**

@@ -37,7 +37,7 @@
             {% block wishlistNavigation %}{% endblock %}
         </li>
         <li class="menu__item {{macros.isActive('shoppingList', data.activePage)}}">
-            <a href="{{ path('shopping-list/overview') }}" data-id="sidebar-shopping-list">{{ 'shopping_list.shopping_list' | trans }}</a>
+            <a href="{{ path('shopping-list') }}" data-id="sidebar-shopping-list">{{ 'shopping_list.shopping_list' | trans }}</a>
             {% block shoppingListNavigation %}{% endblock %}
         </li>
     </ul>

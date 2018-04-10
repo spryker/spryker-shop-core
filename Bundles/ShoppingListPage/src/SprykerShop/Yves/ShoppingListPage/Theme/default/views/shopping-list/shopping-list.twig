@@ -56,7 +56,7 @@
                 data: {
                     form: data.addAvailableProductsToCartForm,
                     options: {
-                        action: path('shopping-list/add-all-available-to-cart', { shoppingListName: data.shoppingList.name })
+                        action: path('shopping-list/add-all-available-to-cart', { idShoppingList: data.shoppingList.idShoppingList })
                     },
                     submit: {
                         enable: true,
@@ -68,16 +68,16 @@
 
         {% if data.shoppingListItems|length %}
             <form method="POST" action="{{ path('shopping-list/multi-add-to-cart') }}">
-            <input type="hidden" value="{{ data.shoppingList.name }}" name="shoppingListName"/>
+            <input type="hidden" value="{{ data.shoppingList.idShoppingList }}" name="idShoppingList"/>
             <table class="table table--expand">
                 <thead>
                 <tr>
                     <th></th>
-                    <th>{{ data.labels.productLabel }}</th>
-                    <th>{{ data.labels.priceLabel  }}</th>
-                    <th>{{ data.labels.quantityLabel }}</th>
-                    <th>{{ data.labels.variantLabel  }}</th>
-                    <th>{{ data.labels.availabilityLabel  }}</th>
+                    <th class="text-center">{{ data.labels.productLabel }}</th>
+                    <th class="text-center">{{ data.labels.priceLabel  }}</th>
+                    <th class="text-center">{{ data.labels.quantityLabel }}</th>
+                    <th class="text-center">{{ data.labels.variantLabel  }}</th>
+                    <th class="text-center">{{ data.labels.availabilityLabel  }}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -87,14 +87,14 @@
                         <td>
                             <input type="checkbox" name="idShoppingListItem[]" value="{{ item.idShoppingListItem }}"/>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <a href="{{ item.url }}">{{ item.name }}</a>
                             <div><small>{{ item.sku }}</small></div>
                             {% if item.images is defined and item.images is not empty %}
                                 <img width="75" src="{{ item.images[0].externalUrlSmall }}" />
                             {% endif %}
                         </td>
-                        <td nowrap="nowrap">
+                        <td nowrap="nowrap" class="text-center">
                             {% if item.price is defined and item.price is not null %}
                                 {% if item.prices.ORIGINAL is defined %}
                                     <span class="price__amount">{{ item.price | money }}</span> <span class="price__amount price__amount--original">{{ item.prices.ORIGINAL | money }}</span>
@@ -105,15 +105,15 @@
                                 N/A
                             {% endif %}
                         </td>
-                        <td>{{ item.quantity }}</td>
-                        <td>
+                        <td class="text-center">{{ item.quantity }}</td>
+                        <td class="text-center">
                             {% for attribute in item.superAttributesDefinition %}
                                 {% if item.attributes[attribute] is defined %}
                                     {{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }} <br/>
                                 {% endif %}
                             {% endfor %}
                         </td>
-                        <td>
+                        <td class="text-center">
                             {% if item.available %}
                                 {{ data.labels.itemAvailableLabel }}
                             {% else %}
@@ -122,14 +122,16 @@
                         </td>
                         <td>
                             {% if item.available is defined and item.available and item.price is defined and item.price is not null %}
-                                <a class="button button--success" href="{{ path('shopping-list/add-to-cart', {sku: item.sku, quantity: item.quantity, idShoppingListItem: item.idShoppingListItem, shoppingListName: data.shoppingList.name}) }}">
+                                <a class="button button--success" href="{{ path('shopping-list/add-to-cart', {sku: item.sku, quantity: item.quantity, idShoppingListItem: item.idShoppingListItem, idShoppingList: data.shoppingList.idShoppingList}) }}">
                                     {{data.labels.addItemToCartLabel}}
                                 </a>
                             {% endif %}
                             <div>
-                                <a class="button button--alert" href="{{ path('shopping-list/remove-item', {idShoppingListItem: item.idShoppingListItem, shoppingListName: data.shoppingList.name}) }}">
-                                    {{data.labels.removeItemFromShoppingListLabel}}
-                                </a>
+                                {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+                                    <a class="button button--alert" href="{{ path('shopping-list/remove-item', {idShoppingListItem: item.idShoppingListItem, idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                        {{data.labels.removeItemFromShoppingListLabel}}
+                                    </a>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>
@@ -144,7 +146,7 @@
             {% include molecule('pagination') with {
                 data: {
                     parameters: {
-                        shoppingListName: data.shoppingList.name
+                        idShoppingList: data.shoppingList.idShoppingList
                     },
                     currentPage: data.pagination.currentPage,
                     paginationPath: 'shopping-list/details',

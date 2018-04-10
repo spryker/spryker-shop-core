@@ -3,7 +3,8 @@
 {% define data = {
     shoppingListForm: _view.shoppingListForm,
     shoppingListCollection: _view.shoppingListCollection,
-    idShoppingList: _view.idShoppingList
+    idShoppingList: _view.idShoppingList,
+    shoppingListResponse: _view.shoppingListResponse
 } %}
 
 {% block customerNavigation %}
@@ -37,7 +38,8 @@
                 data: {
                     shoppingLists: data.shoppingListCollection.shoppingLists,
                     shoppingListForm: data.shoppingListForm,
-                    idShoppingList: data.idShoppingList
+                    idShoppingList: data.idShoppingList,
+                    shoppingListResponse: data.shoppingListResponse,
                 }
             } only %}
         {% endif %}

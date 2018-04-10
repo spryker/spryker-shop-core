@@ -47,9 +47,9 @@ class ShoppingListForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this
+     * @return void
      */
-    protected function addNameField(FormBuilderInterface $builder): self
+    protected function addNameField(FormBuilderInterface $builder): void
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
@@ -58,19 +58,15 @@ class ShoppingListForm extends AbstractType
                 new NotBlank(),
             ],
         ]);
-
-        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this
+     * @return void
      */
-    protected function addIdField(FormBuilderInterface $builder): self
+    protected function addIdField(FormBuilderInterface $builder): void
     {
         $builder->add(static::FIELD_ID, HiddenType::class);
-
-        return $this;
     }
 }

@@ -55,16 +55,15 @@ class ShareShoppingListDataProvider
     }
 
     /**
-     * @param string $shoppingListName
-     * @param string $customerReference
+     * @param int $idShoppingList
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareRequestTransfer
      */
-    public function getData(string $shoppingListName, string $customerReference): ShoppingListShareRequestTransfer
+    public function getData(int $idShoppingList): ShoppingListShareRequestTransfer
     {
         $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
-            ->setShoppingListName($shoppingListName)
-            ->setCustomerReference($customerReference)
+            ->setRequesterId($this->customerClient->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser())
+            ->setIdShoppingList($idShoppingList)
             ->setIdShoppingListPermissionGroup($this->shoppingListClient->getShoppingListPermissionGroup()->getIdShoppingListPermissionGroup());
 
         return $shoppingListShareRequestTransfer;

@@ -81,7 +81,7 @@ class ShoppingListPageFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormFactory
      */
-    protected function getFormFactory(): FormFactory
+    public function getFormFactory(): FormFactory
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
@@ -127,17 +127,17 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @param string $shoppingListName
+     * @param int $idShoppingList
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getShareShoppingListForm(string $shoppingListName, string $customerReference): FormInterface
+    public function getShareShoppingListForm(int $idShoppingList): FormInterface
     {
         $shareShoppingListFormDataProvider = $this->createShareShoppingListFormDataProvider();
 
         return $this->getFormFactory()->create(
             ShareShoppingListForm::class,
-            $shareShoppingListFormDataProvider->getData($shoppingListName, $customerReference),
+            $shareShoppingListFormDataProvider->getData($idShoppingList),
             $shareShoppingListFormDataProvider->getOptions()
         );
     }

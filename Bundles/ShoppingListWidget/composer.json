@@ -1,16 +1,18 @@
 {
-  "name": "spryker-shop/wishlist-page",
-  "description": "WishlistPage module",
+  "name": "spryker-shop/shopping-list-widget",
+  "description": "ShoppingListWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shop-application": "^0.3.0",
     "spryker/customer": "^7.4.0",
     "spryker/kernel": "^3.16.0",
-    "spryker/shopping-list": "^1.0.0"
+    "spryker/shopping-list": "^1.0.0",
+    "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker/silex": "*",
-    "spryker/product-detail-page": "*"
+    "spryker/product-detail-page": "*",
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker/silex": "TODO: add suggestion description",

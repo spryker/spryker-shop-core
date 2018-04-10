@@ -33,8 +33,8 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
             $shoppingListCollection = $this->getFactory()->getShoppingListClient()->getCustomerShoppingListCollection();
             $shoppingLists = $shoppingListCollection->getShoppingLists();
 
-            foreach($shoppingLists as $offset => $shoppingList) {
-                if(!$this->can('WriteShoppingListPermissionPlugin', $shoppingList->getIdShoppingList())) {
+            foreach ($shoppingLists as $offset => $shoppingList) {
+                if (!$this->can('WriteShoppingListPermissionPlugin', $shoppingList->getIdShoppingList())) {
                     $shoppingLists->offsetUnset($offset);
                 }
             }

@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -21,6 +22,13 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 
 interface ShoppingListPageToShoppingListClientInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
      *
@@ -62,32 +70,11 @@ interface ShoppingListPageToShoppingListClientInterface
     public function updateShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return void
-     */
-    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): void;
-
-    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return void
-     */
-    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
-     *
-     * @return void
-     */
-    public function removeItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): void;
+    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer

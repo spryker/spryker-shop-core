@@ -31,4 +31,12 @@ class ShoppingListWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::CLIENT_CUSTOMER);
     }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetConfig
+     */
+    public function getBundleConfig(): ShoppingListWidgetConfig
+    {
+        return $this->getConfig();
+    }
 }

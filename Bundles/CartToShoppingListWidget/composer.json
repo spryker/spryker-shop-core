@@ -1,0 +1,37 @@
+{
+  "name": "spryker-shop/cart-to-shopping-list-widget",
+  "description": "CartToShoppingListWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker-shop/shop-application": "^0.3.0",
+    "spryker/application": "^3.8.0",
+    "spryker/customer": "^7.4.0",
+    "spryker/kernel": "^3.16.0",
+    "spryker/shopping-list": "^1.0.0",
+    "spryker/symfony": "^3.1.0"
+  },
+  "require-dev": {
+    "spryker-shop/cart-page": "*",
+    "spryker/silex": "*"
+  },
+  "suggest": {
+    "spryker/silex": "TODO: add suggestion description",
+    "spryker-shop/cart-page": "If CartToShoppingListWidgetPlugin is to be used, minimum version is 0.5.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
