@@ -14,6 +14,8 @@ interface ShoppingListWidgetPluginInterface
     /**
      * @param string $sku
      * @param bool $disabled
+     *
+     * @return void
      */
     public function initialize(string $sku, bool $disabled): void;
 }
