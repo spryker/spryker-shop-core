@@ -1,5 +1,6 @@
 @mixin component-header($name: '.header') {
     #{$name} {
+        position: relative;
         background-color: light($color-main);
         margin-bottom: 1rem;
         z-index: $zi-header;
