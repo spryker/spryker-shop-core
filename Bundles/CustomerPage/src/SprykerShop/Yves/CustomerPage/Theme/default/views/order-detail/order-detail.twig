@@ -84,6 +84,7 @@
         } only %}
     </div>
 
+    {{ widget('CartNoteOrderNoteWidgetPlugin', data.order) }}
     {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }}
     {{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }}
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    breadcrumbs: _view.stepBreadcrumbs.breadcrumbs
+    breadcrumbs: _view.stepBreadcrumbs.breadcrumbs | default([])
 } %}
 
 {% block sidebar %}{% endblock %}

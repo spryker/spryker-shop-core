@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CartPage\Dependency\Client;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 class CartPageToCartClientBridge implements CartPageToCartClientInterface
 {
@@ -28,22 +28,24 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItem(ItemTransfer $itemTransfer)
+    public function addItem(ItemTransfer $itemTransfer, array $params = [])
     {
-        return $this->cartClient->addItem($itemTransfer);
+        return $this->cartClient->addItem($itemTransfer, $params);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers)
+    public function addItems(array $itemTransfers, array $params = [])
     {
-        return $this->cartClient->addItems($itemTransfers);
+        return $this->cartClient->addItems($itemTransfers, $params);
     }
 
     /**
@@ -104,16 +106,6 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function storeQuote(QuoteTransfer $quoteTransfer)
-    {
-        $this->cartClient->storeQuote($quoteTransfer);
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote()
@@ -122,19 +114,18 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     }
 
     /**
-     * @return \Spryker\Client\Cart\Zed\CartStubInterface
-     */
-    public function getZedStub()
-    {
-        // TODO: get rid of this after https://github.com/spryker/spryker/pull/2925
-        return $this->cartClient->getZedStub();
-    }
-
-    /**
      * @return int
      */
     public function getItemCount()
     {
         return $this->cartClient->getItemCount();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateQuote(): QuoteResponseTransfer
+    {
+        return $this->cartClient->validateQuote();
     }
 }
