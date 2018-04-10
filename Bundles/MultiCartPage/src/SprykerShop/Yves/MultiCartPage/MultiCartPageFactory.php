@@ -9,11 +9,10 @@ namespace SprykerShop\Yves\MultiCartPage;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientInterface;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProvider;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProviderInterface;
 use SprykerShop\Yves\MultiCartPage\Form\QuoteForm;
-use SprykerShop\Yves\MultiCartPage\Model\CartOperations;
-use SprykerShop\Yves\MultiCartPage\Model\CartOperationsInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -43,48 +42,11 @@ class MultiCartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\MultiCartPage\Model\CartOperationsInterface
-     */
-    public function createCartOperations(): CartOperationsInterface
-    {
-        return new CartOperations(
-            $this->getPersistentCartClent(),
-            $this->getMultiCartClient(),
-            $this->getQuoteClient(),
-            $this->getCustomerClient()
-        );
-    }
-
-    /**
      * @return \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientInterface
      */
-    public function getMultiCartClient()
+    public function getMultiCartClient(): MultiCartPageToMultiCartClientInterface
     {
         return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_MULTI_CART);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToQuoteClientInterface
-     */
-    public function getQuoteClient()
-    {
-        return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_QUOTE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToPersistentCartClientInterface
-     */
-    public function getPersistentCartClent()
-    {
-        return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_PERSISTENT_CART);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCustomerClientInterface
-     */
-    public function getCustomerClient()
-    {
-        return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**

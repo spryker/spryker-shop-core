@@ -33,8 +33,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     const FLASH_MESSENGER = 'FLASH_MESSENGER';
     const STORE = 'STORE';
     const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
+    const PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS';
+    const PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS';
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
-    const PLUGIN_CUSTOMER_ORDER_DETAILS_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_DETAILS_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -54,8 +55,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFlashMessenger($container);
         $container = $this->addStore($container);
         $container = $this->addCustomerOverviewWidgetPlugins($container);
+        $container = $this->addCustomerOrderListWidgetPlugins($container);
+        $container = $this->addCustomerOrderViewWidgetPlugins($container);
         $container = $this->addUtilValidateService($container);
-        $container = $this->addCustomerOrderDetailsWidgetPlugins($container);
 
         return $container;
     }
@@ -221,10 +223,10 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addUtilValidateService(Container $container): Container
+    protected function addCustomerOrderListWidgetPlugins(Container $container): Container
     {
-        $container[self::SERVICE_UTIL_VALIDATE] = function (Container $container) {
-            return new CheckoutPageToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
+        $container[static::PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS] = function () {
+            return $this->getCustomerOrderListWidgetPlugins();
         };
 
         return $container;
@@ -235,10 +237,24 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCustomerOrderDetailsWidgetPlugins(Container $container)
+    protected function addCustomerOrderViewWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CUSTOMER_ORDER_DETAILS_WIDGETS] = function () {
-            return $this->getCustomerOrderDetailsWidgetPlugins();
+        $container[static::PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS] = function () {
+            return $this->getCustomerOrderListWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilValidateService(Container $container): Container
+    {
+        $container[self::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+            return new CheckoutPageToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
         };
 
         return $container;
@@ -255,7 +271,15 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return string[]
      */
-    protected function getCustomerOrderDetailsWidgetPlugins(): array
+    protected function getCustomerOrderListWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCustomerOrderViewWidgetPlugins(): array
     {
         return [];
     }

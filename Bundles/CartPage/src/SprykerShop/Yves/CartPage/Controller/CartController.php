@@ -32,7 +32,7 @@ class CartController extends AbstractController
             ->validateQuote();
 
         $this->getFactory()
-            ->getCartClient()
+            ->getZedRequestClient()
             ->addFlashMessagesFromLastZedRequest();
 
         $quoteTransfer = $validateQuoteResponseTransfer->getQuoteTransfer();
@@ -74,9 +74,11 @@ class CartController extends AbstractController
         $itemTransfer->setQuantity($quantity);
         $this->addProductOptions($optionValueIds, $itemTransfer);
 
-        $cartClient = $this->getFactory()->getCartClient();
-        $cartClient->addItem($itemTransfer, $request->request->all());
-        $cartClient->addFlashMessagesFromLastZedRequest();
+        $this->getFactory()->getCartClient()
+            ->addItem($itemTransfer, $request->request->all());
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -89,9 +91,11 @@ class CartController extends AbstractController
      */
     public function removeAction($sku, $groupKey = null)
     {
-        $cartClient = $this->getFactory()->getCartClient();
-        $cartClient->removeItem($sku, $groupKey);
-        $cartClient->addFlashMessagesFromLastZedRequest();
+        $this->getFactory()->getCartClient()
+            ->removeItem($sku, $groupKey);
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -105,9 +109,11 @@ class CartController extends AbstractController
      */
     public function changeAction($sku, $quantity, $groupKey = null)
     {
-        $cartClient = $this->getFactory()->getCartClient();
-        $cartClient->changeItemQuantity($sku, $groupKey, $quantity);
-        $cartClient->addFlashMessagesFromLastZedRequest();
+        $this->getFactory()->getCartClient()
+            ->changeItemQuantity($sku, $groupKey, $quantity);
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -122,9 +128,11 @@ class CartController extends AbstractController
         $items = (array)$request->request->get(self::PARAM_ITEMS);
         $itemTransfers = $this->mapItems($items);
 
-        $cartClient = $this->getFactory()->getCartClient();
-        $cartClient->addItems($itemTransfers, $request->request->all());
-        $cartClient->addFlashMessagesFromLastZedRequest();
+        $this->getFactory()->getCartClient()
+            ->addItems($itemTransfers, $request->request->all());
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }

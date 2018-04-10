@@ -2,14 +2,14 @@
     @include component-list($name) {
         &__item {
             @include font-weight(regular);
-            margin: spacing() 0;
+            margin: .5rem 0;
 
             &--active {
                 @include font-weight(bold);
             }
 
             &--has-children-list {
-                margin-bottom: spacing(2);
+                margin-bottom: 1rem;
 
                 &:last-child {
                     margin-bottom: 0;
@@ -17,11 +17,12 @@
 
                 & #{$name}__item {
                     @include font-size(small);
-                    margin: spacing();
+                    margin: .5rem;
                 }
             }
 
             &--has-children-dropdown {
+                position: relative;
                 z-index: $zi-element + 1;
 
                 & > #{$name} {
@@ -30,8 +31,8 @@
                     @include transition;
                     position: absolute;
                     left: 0;
-                    width: spacing(30);
-                    margin-left: - spacing();
+                    width: 15rem;
+                    margin-left: - .5rem;
                     border: 1px solid $color-light;
                     background-color: $color-white;
                 }
@@ -41,8 +42,8 @@
                 }
 
                 & > #{$name} > #{$name}__item {
-                    margin-left: spacing();
-                    margin-right: spacing();
+                    margin-left: .5rem;
+                    margin-right: .5rem;
                 }
             }
 
@@ -57,7 +58,7 @@
         &__separator {
             &:not(&--horizontal-line) {
                 display: inline-block;
-                margin: 0 spacing();
+                margin: 0 .5rem;
 
                 &::after {
                     content: '|';

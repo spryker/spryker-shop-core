@@ -1,11 +1,11 @@
 @mixin component-header($name: '.header') {
     #{$name} {
         background-color: light($color-main);
-        margin-bottom: spacing(2);
+        margin-bottom: 1rem;
         z-index: $zi-header;
 
         &__row {
-            padding: spacing();
+            padding: .5rem;
         }
 
         &__navigation-top {

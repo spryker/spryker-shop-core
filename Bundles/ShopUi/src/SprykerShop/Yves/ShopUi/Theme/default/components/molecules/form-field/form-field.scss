@@ -1,6 +1,6 @@
 @mixin component-form-field($name: '.form-field') {
     #{$name} {
-        margin: spacing(.5) spacing();
+        margin: .25rem .5rem;
 
         &__label {
             @include font-size(small);
@@ -8,7 +8,7 @@
             &--required {
                 &::after {
                     content: '*';
-                    margin-left: spacing(.25);
+                    margin-left: .2rem;
                     color: $color-main;
                 }
             }
@@ -20,7 +20,7 @@
         }
 
         &--spacing {
-            padding: spacing() 0;
+            padding: .5rem 0;
         }
 
         @content;

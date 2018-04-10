@@ -3,11 +3,13 @@ $component-simple-carousel-icon-size: $component-icon-size-big;
 @mixin component-simple-carousel($name: '.simple-carousel') {
     #{$name} {
         &__container {
+            position: relative;
             padding-left: $component-simple-carousel-icon-size;
             padding-right: $component-simple-carousel-icon-size;
         }
 
         &__view {
+            position: relative;
             max-width: 100%;
             overflow: hidden;
             z-index: 1;
@@ -25,14 +27,14 @@ $component-simple-carousel-icon-size: $component-icon-size-big;
 
         &__dot {
             display: inline-block;
-            padding: spacing(.5);
+            padding: .25rem;
 
             &::before {
                 @include transition(background-color, 150ms);
                 content: '';
                 display: block;
-                width: spacing();
-                height: spacing();
+                width: .5rem;
+                height: .5rem;
                 background-color: $color-light;
                 border-radius: 100%;
             }
@@ -83,7 +85,7 @@ $component-simple-carousel-icon-size: $component-icon-size-big;
         }
 
         &--inset &__arrow {
-            padding: spacing();
+            padding: .5rem;
             background-color: rgba($color-lightest, .75);
         }
 

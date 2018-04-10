@@ -32,15 +32,10 @@ class MultiCartController extends AbstractController
             ->handleRequest($request);
 
         if ($quoteForm->isSubmitted() && $quoteForm->isValid()) {
-            $customerTransfer = $this->getFactory()
-                ->getCustomerClient()
-                ->getCustomer();
-
             $quoteTransfer = $quoteForm->getData();
-            $quoteTransfer->setCustomer($customerTransfer);
 
             $quoteResponseTransfer = $this->getFactory()
-                ->createCartOperations()
+                ->getMultiCartClient()
                 ->createQuote($quoteTransfer);
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
@@ -69,14 +64,8 @@ class MultiCartController extends AbstractController
 
         $quoteTransfer = $quoteForm->getData();
         if ($quoteForm->isSubmitted() && $quoteForm->isValid()) {
-            $customerTransfer = $this->getFactory()
-                ->getCustomerClient()
-                ->getCustomer();
-
-            $quoteTransfer->setCustomer($customerTransfer);
-
             $quoteResponseTransfer = $this->getFactory()
-                ->createCartOperations()
+                ->getMultiCartClient()
                 ->updateQuote($quoteTransfer);
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
@@ -105,7 +94,7 @@ class MultiCartController extends AbstractController
             ->findQuoteById($idQuote);
 
         $this->getFactory()
-            ->createCartOperations()
+            ->getMultiCartClient()
             ->setDefaultQuote($quoteTransfer);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -123,7 +112,7 @@ class MultiCartController extends AbstractController
             ->findQuoteById($idQuote);
 
         $this->getFactory()
-            ->createCartOperations()
+            ->getMultiCartClient()
             ->duplicateQuote($quoteTransfer);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -141,7 +130,7 @@ class MultiCartController extends AbstractController
             ->findQuoteById($idQuote);
 
         $quoteResponseTransfer = $this->getFactory()
-            ->createCartOperations()
+            ->getMultiCartClient()
             ->clearQuote($quoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage('multi_cart_page.cart_clear.success');
@@ -158,16 +147,12 @@ class MultiCartController extends AbstractController
     public function deleteAction(int $idQuote)
     {
         $multiCartClient = $this->getFactory()->getMultiCartClient();
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
 
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setIdQuote($idQuote);
-        $quoteTransfer->setCustomer($customerTransfer);
 
         $this->getFactory()
-            ->createCartOperations()
+            ->getMultiCartClient()
             ->deleteQuote($quoteTransfer);
 
         $customerQuoteTransferList = $multiCartClient->getQuoteCollection()->getQuotes();

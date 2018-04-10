@@ -1,12 +1,12 @@
 {% extends template('widget') %}
 
 {% define data = {
-    price: _widget.product.price,
-    originalPrice: _widget.product.prices.ORIGINAL | default(null)
+    amount: _widget.product.price,
+    originalAmount: _widget.product.prices.ORIGINAL | default(null)
 } %}
 
 {% block template %}
-    {% if data.price is not empty %}
+    {% if data.amount is not empty %}
         {{parent()}}
     {% endif %}
 {% endblock %}
@@ -15,8 +15,8 @@
     <p>
         {% include molecule('price') with {
             data: {
-                amount: data.price | money,
-                originalAmount: data.originalPrice is empty ?: (data.originalPrice | money)
+                amount: data.amount | money,
+                originalAmount: data.originalAmount is empty ? null : data.originalAmount | money
             }
         } only %}
     </p>

@@ -85,9 +85,4 @@ interface CartPageToCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(): QuoteResponseTransfer;
-
-    /**
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest();
 }
