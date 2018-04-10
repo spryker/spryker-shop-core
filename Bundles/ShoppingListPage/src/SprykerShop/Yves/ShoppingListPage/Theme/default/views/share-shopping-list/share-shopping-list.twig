@@ -2,7 +2,7 @@
 
 {% define data = {
     shareShoppingListForm: _view.shareShoppingListForm,
-    shoppingListName: _view.shoppingListName,
+    idShoppingList: _view.idShoppingList,
     shoppingListCollection: _view.shoppingListCollection
 } %}
 
@@ -13,14 +13,14 @@
             activePage: data.activePage
         },
         embed: {
-            activeShoppingList: data.shoppingListName,
+            activeShoppingListId: data.idShoppingList,
             shoppingListCollection: data.shoppingListCollection
         }
     } only %}
         {% block shoppingListNavigation %}
             {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
                 data: {
-                    activeShoppingList: embed.activeShoppingList,
+                    activeShoppingListId: embed.activeShoppingListId,
                     shoppingListCollection: embed.shoppingListCollection
                 }
             } only %}

@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
@@ -15,7 +14,6 @@ use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\View\View;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\ShoppingListPage\Form\AddAvailableProductsToCartForm;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\Form\FormInterface;
@@ -26,7 +24,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
  */
-class ShoppingListController extends AbstractController
+class ShoppingListController extends AbstractShoppingListController
 {
     protected const PARAM_ITEMS_PER_PAGE = 'ipp';
     protected const PARAM_PAGE = 'page';
@@ -254,12 +252,15 @@ class ShoppingListController extends AbstractController
     protected function getShoppingListItemCollectionTransferFromRequest(Request $request): ShoppingListItemCollectionTransfer
     {
         $shoppingListCollectionTransfer = new ShoppingListItemCollectionTransfer();
-        foreach ($request->get(static::PARAM_ID_SHOPPING_LIST_ITEM) as $idShoppingListItem) {
-            $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-                ->setIdShoppingListItem((int)$idShoppingListItem)
-                ->setFkShoppingList($request->request->getInt(static::PARAM_ID_SHOPPING_LIST));
 
-            $shoppingListCollectionTransfer->addItem($shoppingListItemTransfer);
+        if ($request->get(static::PARAM_ID_SHOPPING_LIST_ITEM)) {
+            foreach ($request->get(static::PARAM_ID_SHOPPING_LIST_ITEM) as $idShoppingListItem) {
+                $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+                    ->setIdShoppingListItem((int)$idShoppingListItem)
+                    ->setFkShoppingList($request->request->getInt(static::PARAM_ID_SHOPPING_LIST));
+
+                $shoppingListCollectionTransfer->addItem($shoppingListItemTransfer);
+            }
         }
 
         return $shoppingListCollectionTransfer;
@@ -323,13 +324,5 @@ class ShoppingListController extends AbstractController
         }
 
         return $productViewTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function getCustomer(): CustomerTransfer
-    {
-        return $this->getFactory()->getCustomerClient()->getCustomer();
     }
 }

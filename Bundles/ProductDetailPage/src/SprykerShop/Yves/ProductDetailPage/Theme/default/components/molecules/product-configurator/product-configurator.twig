@@ -97,9 +97,8 @@
     </form>
 
     {% if widgetExists('ShoppingListWidgetPlugin') %}
-        <div class="box">
-            {{ widget('ShoppingListWidgetPlugin', sku, disabled) }}
-        </div>
+        <hr/>
+        {{ widget('ShoppingListWidgetPlugin', sku, disabled) }}
     {% endif %}
 
     {# {{ widget('WishlistWidgetPlugin', data.product) }} #}

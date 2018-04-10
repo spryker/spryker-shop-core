@@ -32,14 +32,14 @@
             activePage: data.activePage
         },
         embed: {
-            activeShoppingList: data.shoppingList.name,
+            activeShoppingListId: data.shoppingList.idShoppingList,
             shoppingListCollection: data.shoppingListCollection
         }
     } only %}
         {% block shoppingListNavigation %}
             {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
                 data: {
-                    activeShoppingList: embed.activeShoppingList,
+                    activeShoppingListId: embed.activeShoppingListId,
                     shoppingListCollection: embed.shoppingListCollection
                 }
             } only %}
@@ -68,6 +68,9 @@
 
         {% if data.shoppingListItems|length %}
             <form method="POST" action="{{ path('shopping-list/multi-add-to-cart') }}">
+            <button type="submit" class="button button--success col col--sm-12 col--md-5 col--lg-3" {{qa('submit-button')}}>
+                {{ data.labels.addSelectedItemsToCartLabel }}
+            </button>
             <input type="hidden" value="{{ data.shoppingList.idShoppingList }}" name="idShoppingList"/>
             <table class="table table--expand">
                 <thead>
@@ -126,19 +129,14 @@
                                     {{data.labels.addItemToCartLabel}}
                                 </a>
                             {% endif %}
-                            <div>
-                                {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
-                                    <a class="button button--alert" href="{{ path('shopping-list/remove-item', {idShoppingListItem: item.idShoppingListItem, idShoppingList: data.shoppingList.idShoppingList}) }}">
-                                        {{data.labels.removeItemFromShoppingListLabel}}
-                                    </a>
-                                {% endif %}
-                            </div>
+                            {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+                                <a class="button button--alert" href="{{ path('shopping-list/remove-item', {idShoppingListItem: item.idShoppingListItem, idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                    {{data.labels.removeItemFromShoppingListLabel}}
+                                </a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
-                <button type="submit" class="button button--success col col--sm-12 col--md-5 col--lg-3" {{qa('submit-button')}}>
-                    {{ data.labels.addSelectedItemsToCartLabel }}
-                </button>
                 </tbody>
             </table>
             </form>

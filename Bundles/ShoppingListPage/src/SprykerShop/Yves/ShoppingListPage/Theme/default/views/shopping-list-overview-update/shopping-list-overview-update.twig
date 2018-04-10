@@ -15,14 +15,14 @@
         },
         embed: {
             shoppingListCollection: data.shoppingListCollection,
-            activeShoppingList: data.shoppingListForm.vars.value.name
+            activeShoppingListId: data.shoppingListForm.vars.value.idShoppingList
         }
     } only %}
         {% block shoppingListNavigation %}
             {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
                 data: {
                     shoppingListCollection: embed.shoppingListCollection,
-                    activeShoppingList: embed.activeShoppingList
+                    activeShoppingListId: embed.activeShoppingListId
                 }
             } only %}
         {% endblock %}

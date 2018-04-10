@@ -6,15 +6,21 @@
 } %}
 
 {% define data = {
-    activeShoppingList: '',
+    activeShoppingListId: '',
     shoppingListCollection: required
 } %}
+
+{%- macro isActive(idShoppingList, activeShoppingListId) -%}
+    {%- if idShoppingList == activeShoppingListId -%}menu__item--active{%- endif -%}
+{%- endmacro -%}
+
+{%- import _self as macros -%}
 
 {% block body %}
     {% if data.shoppingListCollection.shoppingLists|length %}
         <ul class="nested vertical menu">
             {% for shoppingList in data.shoppingListCollection.shoppingLists %}
-                <li class="menu__item {%- if shoppingList.name == data.activeShoppingList -%}menu__item--active{%- endif -%}"><a href="{{ path('shopping-list/details', { idShoppingList: (shoppingList.idShoppingList ) })  }}">{{ shoppingList.name }}</a></li>
+                <li class="menu__item {{macros.isActive(shoppingList.idShoppingList, data.activeShoppingListId)}}"><a href="{{ path('shopping-list/details', { idShoppingList: (shoppingList.idShoppingList ) })  }}">{{ shoppingList.name }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}

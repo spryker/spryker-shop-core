@@ -19,6 +19,7 @@ class ShoppingListForm extends AbstractType
 {
     public const FIELD_NAME = 'name';
     public const FIELD_ID = 'idShoppingList';
+    public const SHOW_NAME_LABEL = 'showNameLabel';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -27,6 +28,7 @@ class ShoppingListForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $resolver->setDefined(static::SHOW_NAME_LABEL);
         $resolver->setDefaults([
             'data_class' => ShoppingListTransfer::class,
         ]);
@@ -40,19 +42,20 @@ class ShoppingListForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addNameField($builder);
+        $this->addNameField($builder, $options);
         $this->addIdField($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return void
      */
-    protected function addNameField(FormBuilderInterface $builder): void
+    protected function addNameField(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
-            'label' => 'Name',
+            'label' => $options[static::SHOW_NAME_LABEL]? 'customer.account.shopping_list.overview.name': false,
             'required' => true,
             'constraints' => [
                 new NotBlank(),

@@ -21,11 +21,10 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
 
     /**
      * @param string $sku
-     * @param bool $disabled
      *
      * @return void
      */
-    public function initialize(string $sku, bool $disabled): void
+    public function initialize(string $sku): void
     {
         $shoppingListCollection = new ShoppingListCollectionTransfer();
 
@@ -43,7 +42,6 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
         }
 
         $this->addParameter('sku', $sku)
-            ->addParameter('disabled', $disabled)
             ->addParameter('shoppingListCollection', $shoppingListCollection);
     }
 

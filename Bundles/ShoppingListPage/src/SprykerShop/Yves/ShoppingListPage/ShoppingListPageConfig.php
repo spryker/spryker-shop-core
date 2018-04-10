@@ -14,6 +14,8 @@ class ShoppingListPageConfig extends AbstractBundleConfig
     public const DEFAULT_NAME = 'My shopping list';
     public const DEFAULT_ITEMS_PER_PAGE = 10;
 
+    public const CART_REDIRECT_URL = 'cart';
+
     /**
      * @return string
      */

@@ -7,12 +7,13 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Spryker\Yves\Kernel\Controller\AbstractController;
+use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
+use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
  */
-class ShoppingListOverviewController extends AbstractController
+class ShoppingListOverviewController extends AbstractShoppingListController
 {
     protected const PARAM_SHOPPING_LISTS = 'shoppingLists';
 
@@ -32,7 +33,10 @@ class ShoppingListOverviewController extends AbstractController
     public function indexAction(Request $request)
     {
         $shoppingListForm = $this->getFactory()
-            ->getShoppingListForm()
+            ->getShoppingListForm(
+                null,
+                [ ShoppingListForm::SHOW_NAME_LABEL => true ]
+            )
             ->handleRequest($request);
         $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
 
@@ -46,6 +50,8 @@ class ShoppingListOverviewController extends AbstractController
 
                 return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
             }
+
+            $this->handleResponseErrors($shoppingListResponseTransfer, $shoppingListForm);
         }
 
         $data = [
@@ -67,8 +73,12 @@ class ShoppingListOverviewController extends AbstractController
     {
         $shoppingListFormDataProvider = $this->getFactory()->createShoppingListFormDataProvider();
         $shoppingListForm = $this->getFactory()
-            ->getShoppingListForm($shoppingListFormDataProvider->getData($idShoppingList))
+            ->getShoppingListForm(
+                $shoppingListFormDataProvider->getData($idShoppingList),
+                [ ShoppingListForm::SHOW_NAME_LABEL => false ]
+            )
             ->handleRequest($request);
+
         $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
 
         if ($shoppingListForm->isSubmitted() && $shoppingListForm->isValid()) {
@@ -141,7 +151,7 @@ class ShoppingListOverviewController extends AbstractController
         }
 
         $this->addSuccessMessage('customer.account.shopping_list.items.added_to_cart');
-        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+        return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
     }
 
     /**
@@ -172,7 +182,7 @@ class ShoppingListOverviewController extends AbstractController
         }
 
         $data = [
-            'shoppingListName' => $idShoppingList,
+            'idShoppingList' => $idShoppingList,
             'shareShoppingListForm' => $shareShoppingListForm->createView(),
             'shoppingListCollection' => $this->getCustomerShoppingListCollection(),
         ];
@@ -188,22 +198,13 @@ class ShoppingListOverviewController extends AbstractController
     protected function getShoppingListTransfer(FormInterface $shoppingListForm): ShoppingListTransfer
     {
         $customerTransfer = $this->getCustomer();
+        $customerTransfer->requireCompanyUserTransfer();
         /** @var \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer */
         $shoppingListTransfer = $shoppingListForm->getData();
         $shoppingListTransfer->setCustomerReference($customerTransfer->getCustomerReference());
         $shoppingListTransfer->setRequesterId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         return $shoppingListTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function getCustomer(): ?CustomerTransfer
-    {
-        return $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
     }
 
     /**
@@ -238,5 +239,18 @@ class ShoppingListOverviewController extends AbstractController
         return $this->getFactory()
             ->getShoppingListClient()
             ->getCustomerShoppingListCollection();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
+     * @param \Symfony\Component\Form\FormInterface $shoppingListForm
+     *
+     * @return void
+     */
+    protected function handleResponseErrors(ShoppingListResponseTransfer $shoppingListResponseTransfer, FormInterface $shoppingListForm): void
+    {
+        foreach ($shoppingListResponseTransfer->getErrors() as $error) {
+            $shoppingListForm->addError(new FormError($error));
+        }
     }
 }

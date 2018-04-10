@@ -18,7 +18,9 @@
         nameLabel: 'customer.account.shopping_list.overview.name' | trans,
         itemCountLabel: 'customer.account.shopping_list.overview.item_count' | trans,
         modifiedDateLabel: 'customer.account.shopping_list.overview.modified_date' | trans,
-        ownerLabel: 'customer.account.shopping_list.overview.owner' | trans
+        ownerLabel: 'customer.account.shopping_list.overview.owner' | trans,
+        actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
+        submitLabel: 'forms.submit-btn' | trans
     }
 } %}
 
@@ -31,7 +33,7 @@
                 <th>{{ data.labels.ownerLabel }}</th>
                 <th>{{ data.labels.itemCountLabel }}</th>
                 <th>{{ data.labels.modifiedDateLabel }}</th>
-                <th></th>
+                <th>{{ data.labels.actionsLabel }}</th>
             </tr>
         </thead>
         <tbody>
@@ -47,27 +49,26 @@
                 </td>
                 <td>
                     {% if data.shoppingListForm is not null and shoppingList.idShoppingList == data.idShoppingList %}
-                        {% embed molecule('form') with {
-                            data: {
-                                form: data.shoppingListForm,
-                                submit: {
-                                    enable: true
-                                }
-                            },
-                            embed: {
-                                shoppingListResponse: data.shoppingListResponse
-                            }
-                        } only %}
-                            {% block formErrors %}
-                                {% if embed.shoppingListResponse is not null and embed.shoppingListResponse.errors is not empty %}
-                                    <ul class="form-field__error-list list list--bullet">
-                                    {% for error in  embed.shoppingListResponse.errors %}
-                                        <li class="form-field__error list__item">{{ error | trans }}</li>
-                                    {% endfor %}
-                                    </ul>
-                                {% endif %}
-                            {% endblock %}
-                        {% endembed %}
+                        {% if data.shoppingListResponse is not null and data.shoppingListResponse.errors is not empty %}
+                            <ul class="form-field__error-list list list--bullet">
+                                {% for error in  data.shoppingListResponse.errors %}
+                                    <li class="form-field__error list__item">{{ error | trans }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        {{ form_start(data.shoppingListForm) }}
+                            {{ form_errors(data.shoppingListForm) }}
+
+                            {% for field in data.shoppingListForm.children | keys %}
+                                <div>
+                                    {{ form_row(attribute(data.shoppingListForm.children, field)) }}
+                                </div>
+                            {% endfor %}
+
+                            <button type="submit" class="button button--success float-right">
+                                {{data.labels.submitLabel}}
+                            </button>
+                        {{ form_end(data.shoppingListForm) }}
                     {% else %}
                         <a class="text-center" href="{{ path('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">{{ shoppingList.name }}</a>
                     {% endif %}

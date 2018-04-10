@@ -7,11 +7,13 @@
 
 namespace SprykerShop\Yves\ShoppingListWidget\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
@@ -21,6 +23,22 @@ class ShoppingListWidgetController extends AbstractController
     const PARAM_SKU = 'sku';
     const PARAM_QUANTITY = 'quantity';
     const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $customerTransfer = $this->getCustomer();
+
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+            throw new NotFoundHttpException("Only company users are allowed to access this page");
+        }
+    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -61,5 +79,15 @@ class ShoppingListWidgetController extends AbstractController
             ->setRequesterId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         return $shoppingListItemTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function getCustomer(): ?CustomerTransfer
+    {
+        return $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
     }
 }
