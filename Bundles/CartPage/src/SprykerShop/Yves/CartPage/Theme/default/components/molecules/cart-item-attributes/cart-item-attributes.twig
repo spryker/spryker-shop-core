@@ -7,21 +7,48 @@
 
 {% define data = {
     cartItem: required,
-    attributes: required
+    attributes: required,
+    attributeOptions: {}
 } %}
 
 {% set itemAttributes = data.attributes[data.cartItem.sku] | default(null) %}
 
+{% set options = [] %}
+
 {% block body %}
+
     {% if itemAttributes|length > 0 %}
         {# Product Variants #}
         <li><strong>{{ 'product.variants' | trans }}:</strong></li>
         <li>
             <form method="POST" action="{{ path('cart/update', {'sku': data.cartItem.sku }) }}">
                 {% for attributeName, attributeOptions in itemAttributes %}
-                    <div class="row">
-                        <div class="small-12  columns" data-component="cart-item">
+                        <div data-component="cart-item">
                             {% if attributeOptions|length > 1 %}
+
+                                {% for optionName, properties in attributeOptions %}
+                                    {% set element = {value: optionName, label: optionName} %}
+                                    {% if attribute(properties,'selected') %}
+                                        {% set element = element|merge({selected: "selected"}) %}
+                                    {% endif %}
+                                    {% if not attribute(properties,'available') %}
+                                        {% set element = element|merge({disabled: "disabled"}) %}
+                                    {% endif %}
+                                    {% set options = options|merge([element]) %}
+                                {% endfor %}
+
+                                {% include atom('select') with {
+                                    modifiers: ['expand'],
+
+                                    data: {
+                                        options: options,
+                                        label: 'product.attribute.' | trans
+                                    },
+                                    attributes: {
+                                        name: 'preselectedAttributes[' ~ attributeName ~ ']'
+                                    }
+                                } only %}
+
                                 <label>{{ ('product.attribute.' ~ attributeName) | trans }}:
 
                                     <select class="js-cart-item-select" name="preselectedAttributes[{{ attributeName }}]">
@@ -50,7 +77,6 @@
                                 </label>
                             {% endif %}
                         </div>
-                    </div>
                 {% endfor %}
 
                 <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
