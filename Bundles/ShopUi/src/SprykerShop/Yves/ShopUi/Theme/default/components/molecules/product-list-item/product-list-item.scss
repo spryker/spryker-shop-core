@@ -1,0 +1,9 @@
+@mixin component-product-list-item($name: '.product-list-item') {
+    #{$name} {
+        position: relative;
+
+        &__container {
+            position: relative;
+        }
+    }
+}

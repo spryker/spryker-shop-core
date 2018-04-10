@@ -8,7 +8,8 @@
 {% define data = {
     superAttributes: [],
     selectedAttributes: [],
-    availableAttributes: []
+    availableAttributes: [],
+    useExternalForm: false
 } %}
 
 {% block component %}
@@ -16,28 +17,40 @@
 {% endblock %}
 
 {% block body %}
-    <hr />
-    <form method="GET">
-        {% for name, values in data.superAttributes %}
-            {% set selectedValue = data.selectedAttributes[name] | default(null) %}
-            {% set isAvailable = true %}
+    {% if not data.useExternalForm %}
+        <form method="GET">
+    {% endif %}
 
-            {% if name in data.availableAttributes | keys %}
-                {% set values = data.availableAttributes[name] %}
-            {% else %}
-                {% set isAvailable = data.selectedAttributes | length == 0 %}
-            {% endif %}
+    {% for name, values in data.superAttributes %}
+        {% set selectedValue = data.selectedAttributes[name] | default %}
+        {% set selectedValue = selectedValue in values ? selectedValue : null %}
+        {% set isAvailable = true %}
 
-            {% include molecule('variant', 'ProductDetailPage') with {
-                data: {
-                    name: name,
-                    formName: 'attribute[' ~ name ~ ']',
-                    values: values,
-                    selectedValue: selectedValue,
-                    label: ('product.attribute.' ~ name) | trans,
-                    isAvailable: isAvailable
-                }
-            } only %}
-        {% endfor %}
-    </form>
+        {% if name in data.availableAttributes | keys %}
+            {% set values = data.availableAttributes[name] %}
+        {% else %}
+            {% set isAvailable = selectedValue is empty %}
+        {% endif %}
+
+        <ul class="list list--spacing">
+            {% block variant %}
+                <li class="list__item">
+                    {% include molecule('variant', 'ProductDetailPage') with {
+                        data: {
+                            name: name,
+                            formName: 'attribute[' ~ name ~ ']',
+                            values: values,
+                            selectedValue: selectedValue,
+                            label: ('product.attribute.' ~ name) | trans,
+                            isAvailable: isAvailable
+                        }
+                    } only %}
+                </li>
+            {% endblock %}
+        </ul>
+    {% endfor %}
+
+    {% if not data.useExternalForm %}
+        </form>
+    {% endif %}
 {% endblock %}

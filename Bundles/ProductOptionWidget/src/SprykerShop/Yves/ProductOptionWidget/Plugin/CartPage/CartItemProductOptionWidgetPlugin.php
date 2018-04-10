@@ -36,6 +36,6 @@ class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getTemplate(): string
     {
-        return '@ProductOptionWidget/_cart-page/cart-item-product-options.twig';
+        return '@ProductOptionWidget/views/option-display/option-display.twig';
     }
 }

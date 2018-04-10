@@ -1,6 +1,6 @@
 {% extends template('widget') %}
 
-{% define data = {  
+{% define data = {
     dictionary: _widget.productLabelDictionaryItemTransfers
 } %}
 
@@ -8,7 +8,7 @@
 {% for item in data.dictionary %}
     {% set labels = labels | merge([{
         text: item.getName() | default(''),
-        type: item.frontEndReference | default('')
+        type: item.getFrontEndReference() | default('')
     }]) %}
 {% endfor %}
 
