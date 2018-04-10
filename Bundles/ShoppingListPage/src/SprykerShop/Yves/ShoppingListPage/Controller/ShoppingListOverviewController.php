@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -250,7 +249,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected function handleResponseErrors(ShoppingListResponseTransfer $shoppingListResponseTransfer, FormInterface $shoppingListForm): void
     {
         foreach ($shoppingListResponseTransfer->getErrors() as $error) {
-            $shoppingListForm->addError(new FormError($error));
+            $this->addErrorMessage($error);
         }
     }
 }
