@@ -15,7 +15,7 @@
     "spryker/zed-request": "^3.4.0"
   },
   "require-dev": {
-    "spryker-shop/customer-page": "^0.3.0",
+    "spryker-shop/customer-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
