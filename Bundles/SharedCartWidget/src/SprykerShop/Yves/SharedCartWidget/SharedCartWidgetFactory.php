@@ -18,4 +18,12 @@ class SharedCartWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(SharedCartWidgetDependencyProvider::CLIENT_CUSTOMER);
     }
+
+    /**
+     * @return \SprykerShop\Yves\SharedCartWidget\Dependency\Client\SharedCartWidgetToMultiCartClientInterface
+     */
+    public function getMultiCartClient()
+    {
+        return $this->getProvidedDependency(SharedCartWidgetDependencyProvider::CLIENT_MULTI_CART);
+    }
 }

@@ -32,17 +32,18 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $this
             ->addParameter('cart', $quoteTransfer)
-            ->addParameter('actions', $this->getCartActions($quoteTransfer))
+            ->addParameter('actions', $this->getCartActions($quoteTransfer, $customerTransfer))
             ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer, $customerTransfer))
             ->addParameter('isSharedCartAllowed', $this->isSharedCartAllowed($customerTransfer));
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return array
      */
-    protected function getCartActions(QuoteTransfer $quoteTransfer): array
+    protected function getCartActions(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): array
     {
         $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
         $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote()) || $writeAllowed;
@@ -53,7 +54,7 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
             'set_default' => $viewAllowed && !$quoteTransfer->getIsDefault(),
             'duplicate' => $writeAllowed,
             'clear' => $writeAllowed,
-            'delete' => $writeAllowed,
+            'delete' => $writeAllowed && $this->isDeleteCartAllowed($customerTransfer),
         ];
     }
 
@@ -80,6 +81,22 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isDeleteCartAllowed(CustomerTransfer $customerTransfer): bool
+    {
+        $ownedQuoteNumber = 0;
+        foreach ($this->getFactory()->getMultiCartClient()->getQuoteCollection()->getQuotes() as $quoteTransfer) {
+            if ($this->isQuoteOwner($quoteTransfer, $customerTransfer)) {
+                $ownedQuoteNumber++;
+            }
+        }
+        return $ownedQuoteNumber > 1;
     }
 
     /**

@@ -148,11 +148,11 @@ class MultiCartController extends AbstractController
     {
         $multiCartClient = $this->getFactory()->getMultiCartClient();
 
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setIdQuote($idQuote);
-
-        $this->getFactory()
+        $quoteTransfer = $this->getFactory()
             ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
+        $multiCartClient
             ->deleteQuote($quoteTransfer);
 
         $customerQuoteTransferList = $multiCartClient->getQuoteCollection()->getQuotes();
