@@ -52,15 +52,17 @@
                 } only %}
                 {{ 'page.detail.add-to-shopping-list' | trans }}
             </button>
-            {% include atom('select') with {
-                modifiers: ['expand'],
-                attributes: {
-                    name: 'idShoppingList'
-                },
-                data: {
-                    options: shoppingListOptions
-                }
-            } only %}
+            {% if shoppingListOptions is not empty %}
+                {% include atom('select') with {
+                    modifiers: ['expand'],
+                    attributes: {
+                        name: 'idShoppingList'
+                    },
+                    data: {
+                        options: shoppingListOptions
+                    }
+                } only %}
+            {% endif %}
         </div>
     </form>
 {% endblock %}
