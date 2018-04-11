@@ -56,7 +56,11 @@ class QuickOrderController extends AbstractController
             'textOrderForm' => $textOrderForm->createView(),
         ];
 
-        return $this->view($data, [], '@QuickOrderPage/views/quick-order/quick-order.twig');
+        return $this->view(
+            $data,
+            $this->getFactory()->getQuickOrderPageWidgetPlugins(),
+            '@QuickOrderPage/views/quick-order/quick-order.twig'
+        );
     }
 
     /**
@@ -89,7 +93,15 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormFactory()
             ->getQuickOrderForm($quickOrder);
 
-        return $this->view(['form' => $quickOrderForm->createView()], [], '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig');
+        $data = [
+            'form' => $quickOrderForm->createView(),
+        ];
+
+        return $this->view(
+            $data,
+            $this->getFactory()->getQuickOrderPageWidgetPlugins(),
+            '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig'
+        );
     }
 
     /**
@@ -124,7 +136,15 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormFactory()
             ->getQuickOrderForm($quickOrder);
 
-        return $this->view(['form' => $quickOrderForm->createView()], [], '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig');
+        $data = [
+            'form' => $quickOrderForm->createView(),
+        ];
+
+        return $this->view(
+            $data,
+            $this->getFactory()->getQuickOrderPageWidgetPlugins(),
+            '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig'
+        );
     }
 
     /**

@@ -11,6 +11,7 @@
     "spryker-shop/cart-page": "*",
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/shop-ui": "*",
+    "spryker-shop/quick-order-page": "*",
     "spryker/permission": "*",
     "spryker/silex": "*"
   },
@@ -18,6 +19,7 @@
     "spryker-shop/cart-page": "TODO: add suggestion description",
     "spryker-shop/product-detail-page": "TODO: add suggestion description",
     "spryker-shop/shop-ui": "TODO: add suggestion description",
+    "spryker-shop/quick-order-page": "If you want to use quick order page widget",
     "spryker/silex": "TODO: add suggestion description",
     "spryker/permission": "If you want to use permissions plugins"
   },

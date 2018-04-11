@@ -10,8 +10,8 @@
     "spryker/application": "^3.0.0",
     "spryker/cart": "^4.0.0 || ^5.0.0",
     "spryker/kernel": "^3.19.0",
-    "spryker/messenger": "^3.1.0",
-    "spryker/symfony": "^3.1.0"
+    "spryker/symfony": "^3.1.0",
+    "spryker/zed-request": "^3.4.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
