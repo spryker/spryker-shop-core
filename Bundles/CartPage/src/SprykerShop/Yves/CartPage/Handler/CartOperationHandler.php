@@ -100,10 +100,6 @@ class CartOperationHandler
      */
     public function addItems(array $itemTransfers)
     {
-        foreach ($itemTransfers as &$itemTransfer) {
-            $itemTransfer = $this->addProductMeasurementSalesUnitTransfer($itemTransfer);
-        }
-
         $quoteTransfer = $this->cartClient->addItems($itemTransfers);
         $this->cartClient->storeQuote($quoteTransfer);
     }
