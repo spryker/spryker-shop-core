@@ -7,7 +7,7 @@ const rootDir = process.cwd();
 const publicPath = process.env.npm_package_config_shopUi_publicPath;
 const publicDir = path.join(rootDir, publicPath);
 const modulesDir = path.join(rootDir, process.env.npm_package_config_shopUi_modulePath, '..');
-const srcDir = path.join(rootDir, process.env.npm_package_config_shopUi_modulePath, './src/SprykerShop/Yves/ShopUi/Theme/default');
+const srcDir = path.join(rootDir, process.env.npm_package_config_shopUi_modulePath, './src/SprykerShop/Yves/ShopUi/Theme', theme);
 
 const settings = {
     name,
@@ -22,7 +22,7 @@ const settings = {
     },
 
     glob: {
-        spryker: {
+        core: {
             dirs: [
                 modulesDir
             ],
@@ -51,7 +51,6 @@ const settings = {
                 '!deploy',
                 '!node_modules',
                 '!public',
-                '!src',
                 '!test'
             ]
         }
