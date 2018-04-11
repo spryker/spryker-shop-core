@@ -21,20 +21,16 @@ class MultiCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWid
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param bool $isButtonDisabled
+     * @param bool $disabled
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, $isButtonDisabled): void
+    public function initialize(ProductViewTransfer $productViewTransfer, $disabled): void
     {
         $this
             ->addWidgets($this->getFactory()->getViewExtendWidgetPlugins())
-            ->addParameter(
-                'cart',
-                $this->getFactory()->getMultiCartClient()->getDefaultCart()
-            )
-            ->addParameter('cartCollection', $this->getInactiveQuoteList())
-            ->addParameter('isButtonDisabled', $isButtonDisabled)
+            ->addParameter('carts', $this->getQuoteCollection())
+            ->addParameter('disabled', $disabled)
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
     }
 
@@ -65,20 +61,22 @@ class MultiCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWid
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer[]
      */
-    protected function getInactiveQuoteList(): array
+    protected function getQuoteCollection(): array
     {
         $quoteCollectionTransfer = $this->getFactory()
             ->getMultiCartClient()
             ->getQuoteCollection();
 
-        $inActiveQuoteTransferList = [];
+        $quoteTransferCollection = [
+            $this->getFactory()->getMultiCartClient()->getDefaultCart(),
+        ];
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if (!$quoteTransfer->getIsDefault() && $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote())) {
-                $inActiveQuoteTransferList[] = $quoteTransfer;
+                $quoteTransferCollection[] = $quoteTransfer;
             }
         }
 
-        return $inActiveQuoteTransferList;
+        return $quoteTransferCollection;
     }
 
     /**
