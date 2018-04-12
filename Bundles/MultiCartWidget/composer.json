@@ -10,8 +10,8 @@
   "require-dev": {
     "spryker-shop/cart-page": "*",
     "spryker-shop/product-detail-page": "*",
-    "spryker-shop/shop-ui": "*",
     "spryker-shop/quick-order-page": "*",
+    "spryker-shop/shop-ui": "*",
     "spryker/permission": "*",
     "spryker/silex": "*"
   },
