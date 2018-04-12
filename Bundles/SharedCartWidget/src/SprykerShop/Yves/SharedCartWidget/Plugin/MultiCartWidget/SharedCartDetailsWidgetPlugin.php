@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartWidget;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
@@ -14,6 +15,9 @@ use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCartDetailsWidgetPluginInterface;
 
+/**
+ * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
+ */
 class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements SharedCartDetailsWidgetPluginInterface
 {
     use PermissionAwareTrait;
@@ -41,16 +45,43 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      *
      * @return array
      */
-    protected function checkActionsPermission(QuoteTransfer $quoteTransfer, array $actions)
+    protected function checkActionsPermission(QuoteTransfer $quoteTransfer, array $actions): array
     {
         $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
         $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote()) || $writeAllowed;
+        $deleteAllowed = $this->isDeleteCartAllowed() || $writeAllowed;
         $actions['view'] = isset($actions['view']) ? $actions['view'] && $viewAllowed : $viewAllowed;
         $actions['update'] = isset($actions['update']) ? $actions['update'] && $writeAllowed : $writeAllowed;
         $actions['set_default'] = isset($actions['set_default']) ? $actions['set_default'] && $viewAllowed : $viewAllowed;
-        $actions['delete'] = isset($actions['delete']) ? $actions['delete'] && $writeAllowed : $writeAllowed;
+        $actions['delete'] = isset($actions['delete']) ? $actions['delete'] && $deleteAllowed : $deleteAllowed;
 
         return $actions;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDeleteCartAllowed(): bool
+    {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $ownedQuoteNumber = 0;
+        foreach ($this->getFactory()->getMultiCartClient()->getQuoteCollection()->getQuotes() as $quoteTransfer) {
+            if ($this->isQuoteOwner($quoteTransfer, $customerTransfer)) {
+                $ownedQuoteNumber++;
+            }
+        }
+        return $ownedQuoteNumber > 1;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer)
+    {
+        return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
     }
 
     /**

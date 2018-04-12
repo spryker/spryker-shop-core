@@ -64,7 +64,7 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      *
      * @return bool
      */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer)
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
         return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
     }
