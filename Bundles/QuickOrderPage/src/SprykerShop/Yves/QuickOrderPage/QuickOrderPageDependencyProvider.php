@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientBridge;
 
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -19,6 +20,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -29,6 +31,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addApplication($container);
         $container = $this->addCartClient($container);
+        $container = $this->addQuoteClient($container);
         $container = $this->addQuickOrderPageWidgetPlugins($container);
         $container = $this->addZedRequestClient($container);
 
@@ -56,10 +59,24 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCartClient($container): Container
+    protected function addCartClient(Container $container): Container
     {
         $container[static::CLIENT_CART] = function (Container $container) {
             return new QuickOrderPageToCartClientBridge($container->getLocator()->cart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient(Container $container): Container
+    {
+        $container[static::CLIENT_QUOTE] = function (Container $container) {
+            return new QuickOrderPageToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 
         return $container;

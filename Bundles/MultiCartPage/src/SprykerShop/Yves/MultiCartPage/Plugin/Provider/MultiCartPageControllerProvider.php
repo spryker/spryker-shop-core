@@ -43,7 +43,7 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return $this
      */
-    protected function addMultiCartCreateRoute($allowedLocalesPattern)
+    protected function addMultiCartCreateRoute($allowedLocalesPattern): self
     {
         $this->createController('/{multiCart}/create', static::ROUTE_MULTI_CART_CREATE, 'MultiCartPage', 'MultiCart', 'create')
             ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
@@ -57,7 +57,7 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return $this
      */
-    protected function addMultiCartUpdateRoute($allowedLocalesPattern)
+    protected function addMultiCartUpdateRoute($allowedLocalesPattern): self
     {
         $this->createController('/{multiCart}/update/{idQuote}', static::ROUTE_MULTI_CART_UPDATE, 'MultiCartPage', 'MultiCart', 'update')
             ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
@@ -72,7 +72,7 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return $this
      */
-    protected function addMultiCartDeleteRoute($allowedLocalesPattern)
+    protected function addMultiCartDeleteRoute($allowedLocalesPattern): self
     {
         $this->createGetController('/{multiCart}/delete/{idQuote}', static::ROUTE_MULTI_CART_DELETE, 'MultiCartPage', 'MultiCart', 'delete')
             ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
@@ -87,7 +87,7 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return $this
      */
-    protected function addMultiCartClearRoute($allowedLocalesPattern)
+    protected function addMultiCartClearRoute($allowedLocalesPattern): self
     {
         $this->createGetController('/{multiCart}/clear/{idQuote}', static::ROUTE_MULTI_CART_CLEAR, 'MultiCartPage', 'MultiCart', 'clear')
             ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
@@ -102,7 +102,7 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return $this
      */
-    protected function addMultiCartDuplicateRoute($allowedLocalesPattern)
+    protected function addMultiCartDuplicateRoute($allowedLocalesPattern): self
     {
         $this->createGetController('/{multiCart}/duplicate/{idQuote}', static::ROUTE_MULTI_CART_DUPLICATE, 'MultiCartPage', 'MultiCart', 'duplicate')
             ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
@@ -117,9 +117,39 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return $this
      */
-    protected function addMultiCartSetDefaultRoute($allowedLocalesPattern)
+    protected function addMultiCartSetDefaultRoute($allowedLocalesPattern): self
     {
         $this->createGetController('/{multiCart}/set-default/{idQuote}', static::ROUTE_MULTI_CART_SET_DEFAULT, 'MultiCartPage', 'MultiCart', 'setDefault')
+            ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
+            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->value('multiCart', 'multi-cart');
+
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addMultiCartReorderRoute($allowedLocalesPattern): self
+    {
+        $this->createGetController('/{multiCart}/reorder/{idQuote}', static::ROUTE_MULTI_CART_SET_DEFAULT, 'MultiCartPage', 'Reorder', 'reorder')
+            ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
+            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->value('multiCart', 'multi-cart');
+
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addMultiCartReorderItemsRoute($allowedLocalesPattern): self
+    {
+        $this->createGetController('/{multiCart}/reorder-items/{idQuote}', static::ROUTE_MULTI_CART_SET_DEFAULT, 'MultiCartPage', 'Reorder', 'reorderItems')
             ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
             ->assert(self::PARAM_ID_QUOTE, '\d+')
             ->value('multiCart', 'multi-cart');

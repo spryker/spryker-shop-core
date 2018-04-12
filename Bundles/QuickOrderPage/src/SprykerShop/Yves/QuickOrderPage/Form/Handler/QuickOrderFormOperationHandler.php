@@ -9,7 +9,9 @@ namespace SprykerShop\Yves\QuickOrderPage\Form\Handler;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,18 +33,26 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     protected $request;
 
     /**
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface
+     */
+    protected $quoteClient;
+
+    /**
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface $cartClient
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface $zedRequestClient
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(
         QuickOrderPageToCartClientInterface $cartClient,
+        QuickOrderPageToQuoteClientInterface $quoteClient,
         QuickOrderPageToZedRequestClientInterface $zedRequestClient,
         Request $request
     ) {
         $this->cartClient = $cartClient;
         $this->zedRequestClient = $zedRequestClient;
         $this->request = $request;
+        $this->quoteClient = $quoteClient;
     }
 
     /**
@@ -71,7 +81,7 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
         $itemTransfers = $this->getItemTransfers($quickOrder);
 
         if ($itemTransfers) {
-            $this->cartClient->clearQuote();
+            $this->clearQuote();
 
             return $this->addItemsToCart($itemTransfers);
         }
@@ -119,5 +129,13 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
         }
 
         return array_values($itemTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearQuote(): void
+    {
+        $this->quoteClient->setQuote(new QuoteTransfer());
     }
 }

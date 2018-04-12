@@ -15,6 +15,8 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 
 class CartFiller implements CartFillerInterface
 {
+    public const PARAM_ORDER_REFERENCE = 'orderReference';
+
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface
      */
@@ -46,7 +48,7 @@ class CartFiller implements CartFillerInterface
     {
         $items = $this->itemsFetcher->getAll($orderTransfer);
 
-        $this->updateCart($items);
+        $this->updateCart($items, $orderTransfer);
     }
 
     /**
@@ -59,26 +61,22 @@ class CartFiller implements CartFillerInterface
     {
         $items = $this->itemsFetcher->getByIds($orderTransfer, $idOrderItems);
 
-        $this->updateCart($items);
+        $this->updateCart($items, $orderTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    protected function updateCart(array $orderItems): void
+    protected function updateCart(array $orderItems, OrderTransfer $orderTransfer): void
     {
-        $quoteTransfer = new QuoteTransfer();
-        $this->cartClient->storeQuote($quoteTransfer);
-
         $cartChangeTransfer = new CartChangeTransfer();
-        $cartChangeTransfer->setQuote($quoteTransfer);
+        $cartChangeTransfer->setQuote(new QuoteTransfer());
         $orderItemsObject = new ArrayObject($orderItems);
         $cartChangeTransfer->setItems($orderItemsObject);
 
-        $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer);
-
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->cartClient->addValidItems($cartChangeTransfer, [self::PARAM_ORDER_REFERENCE => $orderTransfer->getOrderReference()]);
     }
 }
