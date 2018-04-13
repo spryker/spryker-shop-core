@@ -67,9 +67,11 @@ class MultiCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWid
             ->getMultiCartClient()
             ->getQuoteCollection();
 
-        $quoteTransferCollection = [
-            $this->getFactory()->getMultiCartClient()->getDefaultCart(),
-        ];
+        $quoteTransferCollection = [];
+        $defaultQuoteTransfer = $this->getFactory()->getMultiCartClient()->getDefaultCart();
+        if ($this->can('WriteSharedCartPermissionPlugin', $defaultQuoteTransfer->getIdQuote())) {
+            $quoteTransferCollection[] = $defaultQuoteTransfer;
+        }
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if (!$quoteTransfer->getIsDefault() && $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote())) {
                 $quoteTransferCollection[] = $quoteTransfer;

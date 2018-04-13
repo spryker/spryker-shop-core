@@ -49,7 +49,7 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
     {
         $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
         $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote()) || $writeAllowed;
-        $deleteAllowed = $this->isDeleteCartAllowed() || $writeAllowed;
+        $deleteAllowed = $this->isDeleteCartAllowed($quoteTransfer) && $writeAllowed;
         $actions['view'] = isset($actions['view']) ? $actions['view'] && $viewAllowed : $viewAllowed;
         $actions['update'] = isset($actions['update']) ? $actions['update'] && $writeAllowed : $writeAllowed;
         $actions['set_default'] = isset($actions['set_default']) ? $actions['set_default'] && $viewAllowed : $viewAllowed;
@@ -59,9 +59,11 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
+     *
      * @return bool
      */
-    protected function isDeleteCartAllowed(): bool
+    protected function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer): bool
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $ownedQuoteNumber = 0;
@@ -70,7 +72,8 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
                 $ownedQuoteNumber++;
             }
         }
-        return $ownedQuoteNumber > 1;
+
+        return $ownedQuoteNumber > 1 || (!$this->isQuoteOwner($currentQuoteTransfer, $customerTransfer) && $ownedQuoteNumber > 0);
     }
 
     /**
@@ -79,7 +82,7 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      *
      * @return bool
      */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer)
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
         return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
     }
