@@ -27,6 +27,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
+    const PLUGIN_POST_CUSTOMER_REGISTRATION = 'PLUGIN_POST_CUSTOMER_REGISTRATION';
     const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
     const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'PLUGIN_GUEST_AUTHENTICATION_HANDLER';
     const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER';
@@ -54,6 +55,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addCustomerOverviewWidgetPlugins($container);
         $container = $this->addUtilValidateService($container);
+        $container = $this->addPostCustomerRegistrationPlugins($container);
 
         return $container;
     }
@@ -232,6 +234,28 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return string[]
      */
     protected function getCustomerOverviewWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPostCustomerRegistrationPlugins(Container $container): Container
+    {
+        $container[self::PLUGIN_POST_CUSTOMER_REGISTRATION] = function (Container $container) {
+            return $this->getPostCustomerRegistrationPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     */
+    protected function getPostCustomerRegistrationPlugins(): array
     {
         return [];
     }
