@@ -13,10 +13,6 @@
     {{ widget('CheckoutBreadcrumbWidgetPlugin', data.cart) }}
 {% endblock %}
 
-  {% block title %}
-      <h1 class="page-title">{{data.title}}</h1>
-  {% endblock %}
-
 {% block content %}
     {% if data.cart.items is empty %}
         <div class="box text-center">

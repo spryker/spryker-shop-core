@@ -11,21 +11,17 @@
 
 {% block body %}
 
-    <h5 class="cart-summary__subheader float-right">{{ app['cart.quantity'] }} {{ 'item' | trans }}</h5>
+    <h5 class="{{ config.name }}__subheader float-right">{{ app['cart.quantity'] }} {{ 'item' | trans }}</h5>
     <h5>{{ 'cart.your-order' | trans }}</h5>
-
-    <ul class="list cart-summary__list">
-        <li class="cart-summary__item">{{ 'cart.price.subtotal' | trans }} <span class="float-right">{{ data.cart.totals.subtotal | money }}</span></li>
-
+    <ul class="list {{ config.name }}__list">
+        <li class="{{ config.name }}__item">{{ 'cart.price.subtotal' | trans }} <span class="float-right">{{ data.cart.totals.subtotal | money }}</span></li>
         <li><hr/></li>
-
         {{ widget('DiscountSummaryWidgetPlugin', data.cart) }}
-
         {% if data.cart.shipment is not null and data.cart.shipment.method is not null %}
 
-            <li class="cart-summary__list-item"><strong>{{ 'cart.shipping' | trans }}</strong></li>
+            <li class="{{ config.name }}__list-item"><strong>{{ 'cart.shipping' | trans }}</strong></li>
 
-            <li class="cart-summary__list-item">
+            <li class="{{ config.name }}__list-item">
                 {{ data.cart.shipment.method.name }}
                 <span class="float-right">{{ data.cart.shipment.method.storeCurrencyPrice | money }}</span>
             </li>
@@ -33,15 +29,15 @@
             <li><hr/></li>
         {% endif %}
 
-        <li class="cart-summary__item">{{ 'cart.price.grand.total' | trans }} <strong class="float-right">{{ data.cart.totals.grandTotal | money }}</strong></li>
+        <li class="{{ config.name }}__item">{{ 'cart.price.grand.total' | trans }} <strong class="float-right">{{ data.cart.totals.grandTotal | money }}</strong></li>
 
-        <li class="cart-summary__item">{{ 'cart.total.tax_total' | trans }} <span class="float-right">{{ data.cart.totals.taxTotal.amount | money }}</span></li>
+        <li class="{{ config.name }}__item">{{ 'cart.total.tax_total' | trans }} <span class="float-right">{{ data.cart.totals.taxTotal.amount | money }}</span></li>
     </ul>
 
     {% if data.cart.items | length %}
         <div>
-            <a class="button button--expand success" href="{{ url('checkout-index') }}" {{qa('data.cart-go-to-checkout')}}>
-                <i class="fa fa-check"></i>{{ 'cart.checkout'|trans }}
+            <a class="button button--expand" href="{{ url('checkout-index') }}" {{qa('data.cart-go-to-checkout')}}>
+                {{ 'cart.checkout'|trans }}
             </a>
         </div>
     {% endif %}

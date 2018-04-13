@@ -2,7 +2,7 @@
 
 {% define config = {
     name: 'cart-item-price',
-    tag: 'div'
+    tag: 'ul'
 } %}
 
 {% define data = {
@@ -11,15 +11,10 @@
 
 
 {% block body %}
-    {# Prices and Product Options #}
-    <ul class="list cart-item-price__list">
-        <li>{{ 'cart.item.item_price' | trans }} <span class="float-right">{{ data.cartItem.unitPrice | money }}</span></li>
-
-        <li class="cart-item-price__options">
-            {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }}
-        </li>
-
-        <li><hr/></li>
-        <li><strong>{{ 'cart.item.item_total' | trans }}</strong> <strong class="float-right">{{ data.cartItem.sumSubtotalAggregation | money }}</strong></li>
-    </ul>
+    <li>{{ 'cart.item.item_price' | trans }} <span class="float-right">{{ data.cartItem.unitPrice | money }}</span></li>
+    <li class="{{ config.name }}__options">
+        {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }}
+    </li>
+    <li><hr/></li>
+    <li><strong>{{ 'cart.item.item_total' | trans }}</strong> <strong class="float-right">{{ data.cartItem.sumSubtotalAggregation | money }}</strong></li>
 {% endblock %}

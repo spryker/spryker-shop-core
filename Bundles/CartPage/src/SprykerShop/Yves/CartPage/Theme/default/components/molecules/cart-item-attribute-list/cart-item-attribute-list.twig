@@ -1,0 +1,57 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-item-attribute-list',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    cartItem: required,
+    cartItemAttributes: []
+} %}
+
+{% block component %}
+    {% if data.cartItemAttributes is not empty %}{{parent()}}{% endif %}
+{% endblock %}
+
+{% block body %}
+    {# Product Variants #}
+    <li><strong>{{ 'product.variants' | trans }}:</strong></li>
+    <li>
+        <form method="POST" action="{{ path('cart/update', {'sku': data.cartItem.sku }) }}">
+            {% for attributeName, attributeOptions in data.cartItemAttributes if attributeOptions | length > 1 %}
+                {% embed atom('select') with {
+                    modifiers: ['expand'],
+                    data: {
+                        label: ('product.attribute.' ~ attributeName) | trans
+                    },
+                    attributes: {
+                        name: 'preselectedAttributes[' ~ attributeName ~ ']'
+                    },
+                    embed: {
+                        attributeOptions: attributeOptions
+                    }
+                } only %}
+                    {% block options %}
+                        {% for optionName, properties in embed.attributeOptions %}
+                            {% set isSelected = attribute(properties, 'selected') ? 'selected' : '' %}
+                            {% set isDisabled = attribute(properties, 'available') ? 'disabled' : '' %}
+                            <option {{isSelected}} {{isDisabled}} value="{{optionName}}">{{optionName}}</option>
+                        {% endfor %}
+                    {% endblock %}
+                {% endembed %}
+
+                <input name="selectedAttributes[{{ attributeName }}]" type="hidden">
+            {% endfor %}
+
+            <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
+            <input type="hidden" value="{{ data.cartItem.quantity }}" name="quantity">
+
+            {% if data.cartItem.productOptions is not empty %}
+                {% for productOption in data.cartItem.productOptions %}
+                    <input name="product-option[{{ productOption.groupName }}]" type="hidden" value="{{ productOption.idProductOptionValue }}">
+                {% endfor %}
+            {% endif %}
+        </form>
+    </li>
+{% endblock %}

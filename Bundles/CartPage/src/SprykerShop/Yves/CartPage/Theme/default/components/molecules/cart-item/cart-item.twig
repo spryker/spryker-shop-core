@@ -2,7 +2,7 @@
 
 {% define config = {
     name: 'cart-item',
-    tag: 'div'
+    tag: 'article'
 } %}
 
 {% define data = {
@@ -23,19 +23,19 @@
             </div>
 
             <div class="col col--sm-12 col--lg-3">
-                <h2 class="cart-item__title">{{ data.cartItem.name }}</h2>
-                <div class="cart-item__sku">
+                <h2 class="{{ config.name }}__title">{{ data.cartItem.name }}</h2>
+                <div class="{{ config.name }}__sku">
                     {{ 'cart.item.sku' | trans }} {{ data.cartItem.sku }}
                 </div>
 
-                <ul class="list cart-item__bundles">
+                <ul class="list {{ config.name }}__bundles">
                     {{ widget('ProductBundleItemsWidgetPlugin', data.cartItem, data.cart) }}
 
                     <li>
-                        {% include molecule('cart-item-attributes', 'CartPage') with {
+                        {% include molecule('cart-item-attribute-list', 'CartPage') with {
                             data: {
                                 cartItem: data.cartItem,
-                                attributes: data.attributes
+                                cartItemAttributes: data.attributes
                             }
                         } only %}
 
