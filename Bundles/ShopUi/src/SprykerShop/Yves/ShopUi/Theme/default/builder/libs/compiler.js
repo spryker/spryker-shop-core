@@ -1,16 +1,21 @@
 const webpack = require('webpack');
 
 class Compiler {
-    run(configuration) {
-        console.log(`Building${configuration.mode ? ' for ' + configuration.mode : ''}...`);
+    constructor(configurationFactory) {
+        this.configuration = configurationFactory.getConfiguration();
+    }
 
-        if (configuration.watch) {
+    run() {
+        console.log(`Building for ${this.configuration.mode}...`);
+
+        if (this.configuration.watch) {
             console.log('Watch mode: ON');
         }
 
-        webpack(configuration, (err, stats) => {
+        webpack(this.configuration, (err, stats) => {
             if (err) {
                 console.error(err.stack || err);
+
                 if (err.details) {
                     console.error(err.details);
                 }
@@ -18,7 +23,7 @@ class Compiler {
                 return;
             }
 
-            console.log(stats.toString(configuration.stats), '\n');
+            console.log(stats.toString(this.configuration.stats), '\n');
         });
     }
 }

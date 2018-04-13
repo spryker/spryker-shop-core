@@ -8,8 +8,8 @@ const defaultGlobSettings = {
 
 class Finder {
 
-    constructor(settings, globSettings = {}) {
-        this.settings = settings;
+    constructor(settingFactory, globSettings = {}) {
+        this.settings = settingFactory.getSettings();
         this.globSettings = Object.assign({}, defaultGlobSettings, globSettings);
     }
 

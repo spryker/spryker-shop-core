@@ -5,8 +5,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 class ConfigurationFactoryForDevelopment {
 
-    constructor(settings, finder) {
-        this.settings = settings;
+    constructor(settingFactory, finder) {
+        this.settings = settingFactory.getSettings();
         this.finder = finder;
     }
 
@@ -149,8 +149,8 @@ class ConfigurationFactoryForDevelopment {
             },
 
             plugins: [
-                new CleanWebpackPlugin(this.getCleanWebpackPluginPaths(), this.getCleanWebpackPluginOptions()),
                 new webpack.DefinePlugin(this.getGlobalVariables()),
+                new CleanWebpackPlugin(this.getCleanWebpackPluginPaths(), this.getCleanWebpackPluginOptions()),
                 new MiniCssExtractPlugin(this.getMiniCssExtractPluginOptions())
             ]
         }
