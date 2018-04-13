@@ -42,6 +42,6 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
      */
     public static function getTemplate(): string
     {
-        return '@ProductWidget/_catalog-page/product.twig';
+        return '@ProductWidget/views/catalog-page/catalog-page.twig';
     }
 }

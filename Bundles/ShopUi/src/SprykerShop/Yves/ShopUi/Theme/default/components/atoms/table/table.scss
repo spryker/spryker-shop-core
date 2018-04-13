@@ -1,0 +1,29 @@
+@mixin component-table($name: '.table') {
+    #{$name} {
+        thead,
+        &__head {
+            @include font-weight(bold);
+            border-bottom: 1px solid $color-light;
+        }
+
+        tbody,
+        &__body {
+            tr {
+                &:nth-child(even) {
+                    background-color: $color-lightest;
+                }
+            }
+        }
+
+        th, td {
+            padding: .5rem .25rem;
+            text-align: left;
+        }
+
+        &--expand {
+            width: 100%;
+        }
+
+        @content;
+    }
+}

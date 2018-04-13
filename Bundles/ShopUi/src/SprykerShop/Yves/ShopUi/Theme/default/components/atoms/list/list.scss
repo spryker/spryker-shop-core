@@ -1,0 +1,43 @@
+@mixin component-list($name: '.list') {
+    #{$name} {
+        &__item {
+            display: block;
+
+            & > #{$name} {
+                margin-left: .5rem;
+            }
+        }
+
+        &--inline {
+            display: inline-block;
+        }
+
+        &--inline > &__item {
+            display: inline-block;
+            margin: 0 .5rem;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        &--spacing &__item {
+            &:not(:first-child) {
+                margin-top: .5rem;
+            }
+        }
+
+        &--bullet &__item {
+            &:before {
+                content: '•';
+                margin-right: .25rem;
+            }
+        }
+
+        @content;
+    }
+}

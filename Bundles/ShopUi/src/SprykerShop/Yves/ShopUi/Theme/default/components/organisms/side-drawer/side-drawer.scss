@@ -1,0 +1,53 @@
+@mixin component-side-drawer($name: '.side-drawer') {
+    $drawer-width: 15rem;
+
+    #{$name} {
+        position: relative;
+        z-index: $zi-side-drawer;
+
+        &__overlay {
+            @include is-invisible;
+            @include transition(opacity visibility);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: $color-overlay;
+        }
+
+        &__drawer {
+            @include shadow;
+            @include is-invisible;
+            @include transition(opacity visibility right);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: - $drawer-width;
+            width: $drawer-width;
+            background-color: $color-bg;
+            overflow-y: auto;
+        }
+
+        &__close {
+            padding: .5rem 1rem;
+            background-color: $color-lighter;
+            text-align: right;
+        }
+
+        &__navigation {
+            padding: 1rem;
+        }
+
+        &--show &__overlay {
+            @include is-visible;
+        }
+
+        &--show &__drawer {
+            @include is-visible;
+            right: 0;
+        }
+
+        @content;
+    }
+}

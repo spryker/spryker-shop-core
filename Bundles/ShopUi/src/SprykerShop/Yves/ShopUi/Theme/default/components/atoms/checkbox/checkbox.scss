@@ -1,0 +1,57 @@
+@mixin component-checkbox($name: '.checkbox') {
+    #{$name} {
+        position: relative;
+        display: inline-block;
+
+        &__container {
+            display: block;
+        }
+
+        &__box {
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 1px solid $color-input-border;
+            background-color: $color-white;
+            margin-right: .25rem;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        &__input {
+            @include is-invisible;
+            position: absolute;
+        }
+
+        &__check {
+            @include is-invisible;
+            @include transition;
+            position: absolute;
+            top: .25rem;
+            left: .25rem;
+            width: .75rem;
+            height: .75rem;
+            background-color: $color-main;
+        }
+
+        &__input:checked + &__check {
+            @include is-visible;
+        }
+
+        &--expand {
+            display: block;
+        }
+
+        &--error &__box {
+            border-color: map-get($color-actions, alert);
+        }
+
+        &[disabled] &__box,
+        &--disabled &__box {
+            background-color: $color-lighter;
+            cursor: not-allowed;
+        }
+
+        @content;
+    }
+}

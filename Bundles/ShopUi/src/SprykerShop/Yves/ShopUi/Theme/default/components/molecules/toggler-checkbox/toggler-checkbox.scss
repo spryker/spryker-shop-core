@@ -1,0 +1,5 @@
+@mixin component-toggler-checkbox($name: '.toggler-checkbox') {
+    @include component-checkbox($name) {
+        @content;
+    };
+}

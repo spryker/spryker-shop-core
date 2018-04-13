@@ -1,0 +1,67 @@
+@mixin basic-typography() {
+    html {
+        font-size: $font-size-base;
+    }
+
+    body {
+        @include font-size(default);
+        @include font-weight(regular);
+        @include line-height(default);
+        position: relative;
+        background-color: $color-bg;
+        color: $color-text;
+        font-family: $font-family;
+    }
+
+    @each $i in (1, 2, 3, 4, 5, 6) {
+        h#{$i} {
+            @include font-size($i);
+            @include line-height($i);
+            display: block;
+
+            &--margins {
+                margin: 2rem 0 1rem 0;
+            }
+        }
+    }
+
+    a {
+        color: $color-main;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    b,
+    strong {
+        @include font-weight(bold);
+    }
+
+    i,
+    em,
+    cite {
+        font-style: italic;
+    }
+
+    hr {
+        @include clearfix;
+        border-bottom: 1px solid $color-lighter;
+        margin: .5rem 0;
+    }
+
+    small {
+        @include font-size(small);
+    }
+
+    big {
+        @include font-size(big);
+    }
+
+    p,
+    blockquote,
+    iframe {
+        margin: .5rem 0;
+    }
+}

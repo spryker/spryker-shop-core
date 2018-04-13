@@ -1,0 +1,101 @@
+{% extends template('page-layout-checkout', 'CheckoutPage') %}
+
+{% define data = {
+    isGuest: _view.guestForm.vars.value and (_view.guestForm.vars.value.customer and _view.guestForm.vars.value.customer.isGuest),
+    forms: {
+        registration: _view.registerForm,
+        guest: _view.guestForm,
+        login: _view.loginForm
+    }
+} %}
+
+{% block title %}
+    <ul class="list list--spacing">
+        <li class="list__item">
+            {% include molecule('toggler-radio') with {
+                data: {
+                    label: 'checkout.customer.proceed_as_user' | trans
+                },
+                attributes: {
+                    id: 'register',
+                    checked: not data.isGuest,
+                    name: 'checkoutProceedAs',
+                    target: 'js-login__register',
+                    'class-to-toggle': 'is-hidden'
+                }
+            } only %}
+        </li>
+        <li class="list__item">
+            {% include molecule('toggler-radio') with {
+                data: {
+                    label: 'checkout.customer.proceed_as_guest' | trans
+                },
+                attributes: {
+                    id: 'guest',
+                    checked: data.isGuest,
+                    name: 'checkoutProceedAs',
+                    target: 'js-login__guest',
+                    'class-to-toggle': 'is-hidden'
+                }
+            } only %}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="grid">
+        <div class="col col--sm-12 col--lg-6">
+            <div class="box">
+                {% include molecule('form') with {
+                    class: 'js-login__register' ~ (data.isGuest ? ' is-hidden' : ''),
+                    data: {
+                        title: 'customer.registration.title' | trans,
+                        form: data.forms.registration,
+                        submit: {
+                            enable: true,
+                            text: 'forms.submit.register' | trans
+                        }
+                    },
+                    qa: 'register-form'
+                } only %}
+
+                {% include molecule('form') with {
+                    class: 'js-login__guest' ~ (data.isGuest ? '' : ' is-hidden'),
+                    data: {
+                        title: 'checkout.customer.order_as_guest' | trans,
+                        form: data.forms.guest,
+                        submit: {
+                            enable: true
+                        }
+                    }
+                } only %}
+            </div>
+        </div>
+
+        <div class="col col--sm-12 col--lg-6">
+            {% embed molecule('form') with {
+                class: 'box',
+                data: {
+                    form: data.forms.login,
+                    layout: {
+                        email: 'col col--sm-6',
+                        password: 'col col--sm-6'
+                    },
+                    submit: {
+                        enable: true,
+                        text: 'forms.submit.login' | trans
+                    },
+                    cancel: {
+                        enable: true
+                    }
+                }
+            } only %}
+                {% block cancel %}
+                    <a href="{{ url('password/forgotten') }}" {{qa('customer-forgot-password-link')}}>
+                        {{ 'forms.forgot-password' | trans }}
+                    </a>
+                {% endblock %}
+            {% endembed %}
+        </div>
+    </div>
+{% endblock %}

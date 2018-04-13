@@ -6,7 +6,8 @@
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-master"
+    "spryker/code-sniffer": "dev-master",
+    "spryker/spryker": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -20,7 +21,7 @@
     ]
   },
   "scripts": {
-    "cs-check": "vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p"
+    "cs-check": "phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p -v"
   },
   "replace": {
     "spryker-shop/availability-widget": "*",
@@ -34,6 +35,7 @@
     "spryker-shop/cms-content-widget-product-connector": "*",
     "spryker-shop/cms-content-widget-product-set-connector": "*",
     "spryker-shop/cms-page": "*",
+    "spryker-shop/company-page": "*",
     "spryker-shop/currency-widget": "*",
     "spryker-shop/customer-page": "*",
     "spryker-shop/discount-promotion-widget": "*",
@@ -60,6 +62,7 @@
     "spryker-shop/product-set-list-page": "*",
     "spryker-shop/product-set-widget": "*",
     "spryker-shop/product-widget": "*",
+    "spryker-shop/quick-order-page": "*",
     "spryker-shop/redirect-page": "*",
     "spryker-shop/shop-application": "*",
     "spryker-shop/shop-layout": "*",
@@ -68,5 +71,11 @@
     "spryker-shop/web-profiler-widget": "*",
     "spryker-shop/wishlist-page": "*",
     "spryker-shop/wishlist-widget": "*"
-  }
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:spryker/spryker.git"
+    }
+  ]
 }

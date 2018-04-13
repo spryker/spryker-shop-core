@@ -1,0 +1,69 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'role-user-table',
+    tag: 'div'
+} %}
+
+{% define data = {
+    users: required,
+    idCompanyRole: required,
+    actions: {
+        switch: false
+    }
+} %}
+
+{% set showActions = data.actions.switch %}
+
+{% block body %}
+    <table class="table table--expand">
+        <thead>
+            <tr>
+                <th>{{ 'company.account.company_user.name' | trans }}</th>
+                <th>{{ 'company.account.company_user.business_unit' | trans }}</th>
+                <th>{{ 'company.account.company_role.permission.status' | trans }}</th>
+                {% if showActions %}
+                    <th>{{ 'company.account.table.actions' | trans }}</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in data.users %}
+            {% set isAssigned = user.idCompanyRole | default(false) %}
+            {% set unitName = user.companyBusinessUnit.name | default('') %}
+            <tr>
+                <td>{{ user.customer.firstName }} {{ user.customer.lastName }}</td>
+                <td>{{ unitName }}</td>
+                {% if data.actions.switch %}
+                    <td>
+                        {% if isAssigned %}
+                            {{ 'company.account.company_role.permission.assigned' | trans }}
+                        {% else %}
+                            {{ 'company.account.company_role.permission.unassigned' | trans }}
+                        {% endif %}
+                    </td>
+                {% endif %}
+                {% if showActions %}
+                    <td>
+                        <ul class="menu menu--inline">
+                            {% if data.actions.switch %}
+                                <li class="menu__item">
+                                    {% if isAssigned %}
+                                        <a href="{{ path('company/company-role/user/unassign', {'id-company-user': user.idCompanyUser, 'id-company-role': data.idCompanyRole}) }}">
+                                            {{ 'company.account.company_role.permission.unassign' | trans }}
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ path('company/company-role/user/assign', {'id-company-user': user.idCompanyUser, 'id-company-role': data.idCompanyRole}) }}">
+                                            {{ 'company.account.company_role.permission.assign' | trans }}
+                                        </a>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

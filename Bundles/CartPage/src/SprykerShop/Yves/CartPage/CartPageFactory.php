@@ -11,9 +11,8 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
-use SprykerShop\Yves\CartPage\Handler\CartOperationHandler;
-use SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
@@ -30,42 +29,14 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CartPage\Handler\CartOperationHandler
-     */
-    public function createCartOperationHandler()
-    {
-        return new CartOperationHandler(
-            $this->getCartClient(),
-            $this->getLocale(),
-            $this->getFlashMessenger(),
-            $this->getRequest(),
-            $this->getAvailabilityClient()
-        );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler
-     */
-    public function createProductBundleCartOperationHandler()
-    {
-        return new ProductBundleCartOperationHandler(
-            $this->createCartOperationHandler(),
-            $this->getCartClient(),
-            $this->getLocale(),
-            $this->getFlashMessenger()
-        );
-    }
-
-    /**
      * @return \SprykerShop\Yves\CartPage\Handler\CartItemHandlerInterface
      */
     public function createCartItemHandler()
     {
         return new CartItemHandler(
-            $this->createCartOperationHandler(),
             $this->getCartClient(),
             $this->getProductStorageClient(),
-            $this->getFlashMessenger()
+            $this->getZedRequestClient()
         );
     }
 
@@ -150,6 +121,14 @@ class CartPageFactory extends AbstractFactory
     protected function getAvailabilityClient(): CartPageToAvailabilityClientInterface
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_AVAILABILITY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): CartPageToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
     /**

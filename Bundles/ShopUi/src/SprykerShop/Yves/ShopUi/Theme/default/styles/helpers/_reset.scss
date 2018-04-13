@@ -1,0 +1,14 @@
+// https://www.paulirish.com/2012/box-sizing-border-box-ftw/
+
+@mixin reset {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    color: inherit;
+    z-index: $zi-element;
+    
+    -webkit-tap-highlight-color: rgba(#fff, 0);
+}

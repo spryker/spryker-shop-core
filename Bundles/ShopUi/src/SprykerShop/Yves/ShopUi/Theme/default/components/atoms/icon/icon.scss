@@ -1,0 +1,44 @@
+$component-icon-size: 1rem;
+$component-icon-size-small: .75rem;
+$component-icon-size-smaller: .5rem;
+$component-icon-size-big: 1.5rem;
+$component-icon-size-bigger: 2rem;
+$component-icon-size-biggest: 3rem;
+
+@mixin component-icon($name: '.icon') {
+    #{$name} {
+        fill: currentColor;
+        width: $component-icon-size;
+        height: $component-icon-size;
+        display: inline-block;
+        vertical-align: middle;
+        user-select: none;
+
+        &--small {
+            width: $component-icon-size-small;
+            height: $component-icon-size-small;
+        }
+
+        &--smaller {
+            width: $component-icon-size-smaller;
+            height: $component-icon-size-smaller;
+        }
+
+        &--big {
+            width: $component-icon-size-big;
+            height: $component-icon-size-big;
+        }
+
+        &--bigger {
+            width: $component-icon-size-bigger;
+            height: $component-icon-size-bigger;
+        }
+
+        &--biggest {
+            width: $component-icon-size-biggest;
+            height: $component-icon-size-biggest;
+        }
+
+        @content;
+    }
+}

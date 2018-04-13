@@ -7,7 +7,7 @@
     "spryker/calculation": "^4.2.0",
     "spryker/config": "^3.1.0",
     "spryker/kernel": "^3.16.0",
-    "spryker/quote": "^1.1.0",
+    "spryker/quote": "^1.1.0 || ^2.0.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {

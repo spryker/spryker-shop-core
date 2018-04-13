@@ -32,6 +32,9 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class StepFactory extends AbstractFactory
 {
     /**
@@ -167,7 +170,8 @@ class StepFactory extends AbstractFactory
             $this->createPaymentMethodHandler(),
             CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
             HomePageControllerProvider::ROUTE_HOME,
-            $this->getFlashMessenger()
+            $this->getFlashMessenger(),
+            $this->getCalculationClient()
         );
     }
 
@@ -195,6 +199,7 @@ class StepFactory extends AbstractFactory
             HomePageControllerProvider::ROUTE_HOME,
             [
                 'payment failed' => CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
+                'shipment failed' => CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
             ]
         );
     }
@@ -207,6 +212,7 @@ class StepFactory extends AbstractFactory
         return new SuccessStep(
             $this->getCustomerClient(),
             $this->getCartClient(),
+            $this->getConfig(),
             CheckoutPageControllerProvider::CHECKOUT_SUCCESS,
             HomePageControllerProvider::ROUTE_HOME
         );

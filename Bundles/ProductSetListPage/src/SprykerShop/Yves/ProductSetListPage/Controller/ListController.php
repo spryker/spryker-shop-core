@@ -33,6 +33,10 @@ class ListController extends AbstractController
             ->getProductSetPageSearchClient()
             ->getProductSetList($limit, $offset);
 
-        return $this->view($searchResults, $this->getFactory()->getProductSetListPageWidgets());
+        return $this->view(
+            $searchResults,
+            $this->getFactory()->getProductSetListPageWidgets(),
+            '@ProductSetListPage/views/set-list/set-list.twig'
+        );
     }
 }

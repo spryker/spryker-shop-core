@@ -41,7 +41,11 @@ class ProductController extends AbstractController
             'productUrl' => $this->getProductUrl($productViewTransfer),
         ];
 
-        return $this->view($data, $this->getFactory()->getProductDetailPageWidgetPlugins());
+        return $this->view(
+            $data,
+            $this->getFactory()->getProductDetailPageWidgetPlugins(),
+            '@ProductDetailPage/views/pdp/pdp.twig'
+        );
     }
 
     /**
@@ -55,7 +59,9 @@ class ProductController extends AbstractController
             return $productViewTransfer->getUrl();
         }
 
-        $variantUriParams[static::PARAM_ATTRIBUTE] = $productViewTransfer->getSelectedAttributes();
+        $variantUriParams = [
+            static::PARAM_ATTRIBUTE => $productViewTransfer->getSelectedAttributes(),
+        ];
 
         return sprintf(
             '%s?%s',

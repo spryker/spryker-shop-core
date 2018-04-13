@@ -1,0 +1,3 @@
+@mixin component-product-card($name: '.product-card') {
+    @include component-card($name);
+}
