@@ -37,44 +37,26 @@
                                     {% set options = options|merge([element]) %}
                                 {% endfor %}
 
-                                {% include atom('select') with {
-                                    modifiers: ['expand'],
-
-                                    data: {
-                                        options: options,
-                                        label: 'product.attribute.' | trans
-                                    },
-                                    attributes: {
-                                        name: 'preselectedAttributes[' ~ attributeName ~ ']'
-                                    }
-                                } only %}
-
                                 <label>{{ ('product.attribute.' ~ attributeName) | trans }}:
 
-                                    <select class="js-cart-item-select" name="preselectedAttributes[{{ attributeName }}]">
-                                        <option value="">
-                                            {{ 'product.attribute._none' | trans }}
-                                        </option>
-                                        {% for option, properties in attributeOptions %}
-                                            <option value="{{ option }}"
-                                                    {% if attribute(properties,'selected') %}  selected{% endif %} {% if not attribute(properties,'available') %}disabled{% endif %}>
-                                                {{ option }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
+                                    {% include atom('select') with {
+                                        modifiers: ['expand'],
+
+                                        config: {
+                                            tag: 'div'
+                                        },
+                                        data: {
+                                            options: options,
+                                            label: 'product.attribute.' | trans
+                                        },
+                                        attributes: {
+                                            name: 'preselectedAttributes[' ~ attributeName ~ ']'
+                                        }
+                                    } only %}
                                 </label>
+
                                 <input name="selectedAttributes[{{ attributeName }}]" type="hidden">
-                            {% else %}
-                                <label>
-                                    {{ ('product.attribute.' ~ attributeName) | trans }}: <a href="{{ url("cart") }}">{{ 'reset' | trans }}</a>
-                                    {% for option, properties in attributeOptions %}
-                                        <select class="js-cart-item-select" name="selectedAttributes[{{ attributeName }}]">
-                                            <option value="{{ option }}" selected>
-                                                {{ option }}
-                                            </option>
-                                        </select>
-                                    {% endfor %}
-                                </label>
+
                             {% endif %}
                         </div>
                 {% endfor %}

@@ -1,0 +1,19 @@
+$cart-summary-subheader-font-size: 1.25rem;
+
+@mixin component-cart-summary($name: '.cart-summary') {
+    #{$name} {
+        &__subheader {
+            margin-bottom: .5rem;
+            color: $color-dark;
+            font-size: $cart-summary-subheader-font-size;
+        }
+
+        &__item {
+            width: 100%;
+            overflow: hidden;
+            padding-bottom: .5rem;
+        }
+
+        @content;
+    }
+}

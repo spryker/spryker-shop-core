@@ -1,6 +1,17 @@
 @mixin component-cart-item-price($name: '.cart-item-price') {
     #{$name} {
-        padding: 0 spacing(2);
+        @include breakpoint(lg) {
+            padding: 0 1rem;
+        }
+
+        &__options {
+            @include font-size(small);
+            padding-bottom: .5rem;
+
+            @include breakpoint(lg) {
+                padding: .5rem 0;
+            }
+        }
 
         @content;
     }

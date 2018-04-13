@@ -1,7 +1,7 @@
 @mixin component-cart-quantity($name: '.cart-quantity') {
     #{$name} {
         &__title {
-            margin-bottom: $unit-spacing;
+            margin-bottom: .5rem;
         }
 
         @content;

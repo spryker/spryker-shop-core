@@ -31,7 +31,7 @@
         </div>
     {% else %}
         <div class="grid">
-            <div class="col col--sm-12 col--lg-8">
+            <div class="col col--sm-12 col--xl-8">
                 <div class="cart-items-box">
                     {% for cartItem in data.cartItems %}
                         {% include molecule('cart-item', 'CartPage') with {
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="col col--sm-12 col--lg-4">
+            <div class="col col--sm-12 col--xl-4">
                 <div class="box">
                     {{ widget('DiscountVoucherFormWidgetPlugin') }}
                     <hr/>
