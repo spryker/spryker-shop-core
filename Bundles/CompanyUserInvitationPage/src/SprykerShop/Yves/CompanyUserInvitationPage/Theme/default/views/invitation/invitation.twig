@@ -1,0 +1,57 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    form: _view.form,
+    importedWithErrors: _view.importedWithErrors,
+    invitations: _view.invitations,
+    title: 'company.user.invitation.title.plural' | trans,
+    formAction: url('company-user-invitation'),
+    activePage: 'companyUserInvitation',
+    pagination: {
+        parameters: {},
+        currentPage: _view.pagination.page,
+        paginationPath: 'company-user-invitation',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true
+    }
+} %}
+
+{% block customerContent %}
+
+    {% if data.importedWithErrors %}
+        Download invitation errors <a href="{{ path('company-user-invitation/get-import-errors') }}">here</a>
+    {%  endif %}
+
+    <div class="box">
+        {% include molecule('form') with {
+            data: {
+                title: 'company.user.invitation.import.title' | trans,
+                form: data.form,
+                options: {
+                    action: data.formAction
+                },
+                layout: {
+                    invitations_list: 'col col--sm-12 col--lg-6',
+                },
+                submit: {
+                    enable: true
+                }
+            }
+        } only %}
+    </div>
+
+    {% if data.invitations is not empty %}
+        <div class="box">
+            {% include molecule('invitation-table', 'CompanyUserInvitationPage') with {
+                data: {
+                    invitations: data.invitations,
+                }
+            } only %}
+            <hr/>
+            {% include molecule('pagination') with {
+                data: data.pagination
+            } only %}
+        </div>
+    {% endif %}
+
+{% endblock %}

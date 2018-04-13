@@ -1,0 +1,16 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    id: _view.id,
+    title: 'company.user.invitation.title.plural' | trans,
+    activePage: 'companyUserInvitation'
+} %}
+
+{% block customerContent %}
+    <div class="box">
+        <h5>{{ "company.user.invitation.resend.title" | trans }}</h5>
+        <hr />
+        {{ "company.user.invitation.resend.confirmation.question" | trans }}
+        <a href="{{url('company-user-invitation/resend/confirm', {'id': data.id})}}" class="button button--alert float-right">{{ "company.user.invitation.resend.button" | trans }}</a>
+    </div>
+{% endblock %}

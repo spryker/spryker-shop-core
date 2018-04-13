@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CompanyUserInvitationForm extends AbstractType
 {
-    const FIELD_INVITATIONS_LIST = 'invitations_list';
+    public const FIELD_INVITATIONS_LIST = 'invitations_list';
 
     /**
      * @return string
@@ -33,7 +33,7 @@ class CompanyUserInvitationForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_INVITATIONS_LIST, FileType::class, [
-            'label' => 'company.user.invitation.name',
+            'label' => 'company.user.invitation.file',
             'required' => true,
             'constraints' => [
                 new NotBlank(),

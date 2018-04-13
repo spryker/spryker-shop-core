@@ -1,0 +1,62 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'invitation-table',
+    tag: 'div'
+} %}
+
+{% define data = {
+    invitations: required
+} %}
+
+{% block body %}
+    <a href="{{ path('company-user-invitation/send-all') }}">
+        {{ 'company.user.invitation.send.all.button' | trans }}
+    </a>
+    <table class="table table--expand">
+        <thead>
+        <tr class="active">
+            <th>{{ 'company.user.invitation.first.name' | trans }}</th>
+            <th>{{ 'company.user.invitation.last.name' | trans }}</th>
+            <th>{{ 'company.user.invitation.mail' | trans }}</th>
+            <th>{{ 'company.user.invitation.business.unit' | trans }}</th>
+            <th>{{ 'company.user.invitation.status' | trans }}</th>
+            <th>{{ 'company.user.invitation.actions' | trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for invitation in data.invitations %}
+            <tr>
+              <td>{{ invitation.firstName }}</td>
+              <td>{{ invitation.lastName }}</td>
+              <td>{{ invitation.email }}</td>
+              <td>{{ invitation.companyBusinessUnitName }}</td>
+              <td>{{ ('company.user.invitation.status.'~invitation.companyUserInvitationStatusKey) | trans }}</td>
+              <td>
+                  <ul class="menu menu--inline">
+                      {% if invitation.companyUserInvitationStatusKey == 'new'  %}
+                          <li class="menu__item">
+                              <a href="{{ path('company-user-invitation/send', {'id': invitation.idCompanyUserInvitation}) }}">
+                                {{ 'company.user.invitation.send.button' | trans }}
+                              </a>
+                          </li>
+                      {% endif %}
+                      {% if invitation.companyUserInvitationStatusKey == 'pending'  %}
+                          <li class="menu__item">
+                              <a href="{{ path('company-user-invitation/resend', {'id': invitation.idCompanyUserInvitation}) }}">
+                                  {{ 'company.user.invitation.resend.button' | trans }}
+                              </a>
+                          </li>
+                          <li class="menu__item">
+                              <a href="{{ path('company-user-invitation/delete', {'id': invitation.idCompanyUserInvitation}) }}">
+                                  {{ 'company.user.invitation.delete.button' | trans }}
+                              </a>
+                          </li>
+                      {% endif %}
+                  </ul>
+              </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

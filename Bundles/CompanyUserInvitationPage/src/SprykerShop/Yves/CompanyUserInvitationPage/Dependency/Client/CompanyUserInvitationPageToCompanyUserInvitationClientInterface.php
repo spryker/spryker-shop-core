@@ -16,23 +16,9 @@ use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Client\CompanyUserInvitation\CompanyUserInvitationClientInterface;
 
-class CompanyUserInvitationPageToCompanyUserInvitationClientBridge implements CompanyUserInvitationPageToCompanyUserInvitationClientInterface
+interface CompanyUserInvitationPageToCompanyUserInvitationClientInterface
 {
-    /**
-     * @var \Spryker\Client\CompanyUserInvitation\CompanyUserInvitationClientInterface
-     */
-    protected $companyUserInvitationClient;
-
-    /**
-     * @param \Spryker\Client\CompanyUserInvitation\CompanyUserInvitationClientInterface $companyUserInvitationClient
-     */
-    public function __construct(CompanyUserInvitationClientInterface $companyUserInvitationClient)
-    {
-        $this->companyUserInvitationClient = $companyUserInvitationClient;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
@@ -40,9 +26,7 @@ class CompanyUserInvitationPageToCompanyUserInvitationClientBridge implements Co
      */
     public function importCompanyUserInvitations(
         CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-    ): CompanyUserInvitationImportResultTransfer {
-        return $this->companyUserInvitationClient->importCompanyUserInvitations($companyUserInvitationCollectionTransfer);
-    }
+    ): CompanyUserInvitationImportResultTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
@@ -51,9 +35,7 @@ class CompanyUserInvitationPageToCompanyUserInvitationClientBridge implements Co
      */
     public function getCompanyUserInvitationCollection(
         CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationCollectionTransfer {
-        return $this->companyUserInvitationClient->getCompanyUserInvitationCollection($criteriaFilterTransfer);
-    }
+    ): CompanyUserInvitationCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
@@ -62,9 +44,7 @@ class CompanyUserInvitationPageToCompanyUserInvitationClientBridge implements Co
      */
     public function sendCompanyUserInvitation(
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): CompanyUserInvitationSendResultTransfer {
-        return $this->companyUserInvitationClient->sendCompanyUserInvitation($companyUserInvitationTransfer);
-    }
+    ): CompanyUserInvitationSendResultTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
@@ -73,9 +53,7 @@ class CompanyUserInvitationPageToCompanyUserInvitationClientBridge implements Co
      */
     public function sendCompanyUserInvitations(
         CompanyUserTransfer $companyUserTransfer
-    ): CompanyUserInvitationSendBatchResultTransfer {
-        return $this->companyUserInvitationClient->sendCompanyUserInvitations($companyUserTransfer);
-    }
+    ): CompanyUserInvitationSendBatchResultTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
@@ -84,9 +62,7 @@ class CompanyUserInvitationPageToCompanyUserInvitationClientBridge implements Co
      */
     public function updateCompanyUserInvitationStatus(
         CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
-    ): CompanyUserInvitationUpdateStatusResultTransfer {
-        return $this->companyUserInvitationClient->updateCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer);
-    }
+    ): CompanyUserInvitationUpdateStatusResultTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
@@ -95,7 +71,5 @@ class CompanyUserInvitationPageToCompanyUserInvitationClientBridge implements Co
      */
     public function findCompanyUserInvitationByHash(
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): ?CompanyUserInvitationTransfer {
-        return $this->companyUserInvitationClient->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
-    }
+    ): ?CompanyUserInvitationTransfer;
 }
