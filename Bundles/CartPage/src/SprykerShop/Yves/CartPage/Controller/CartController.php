@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CartPage\Controller;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,11 +27,19 @@ class CartController extends AbstractController
      */
     public function indexAction(array $selectedAttributes = null)
     {
-        $quoteTransfer = $this->getFactory()
+        $validateQuoteResponseTransfer = $this->getFactory()
             ->getCartClient()
-            ->getQuote();
+            ->validateQuote();
 
-        $cartItems = $this->getFactory()->createCartItemReader()->getCartItems($quoteTransfer);
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
+
+        $quoteTransfer = $validateQuoteResponseTransfer->getQuoteTransfer();
+
+        $cartItems = $this->getFactory()
+            ->createCartItemReader()
+            ->getCartItems($quoteTransfer);
 
         $itemAttributesBySku = $this->getFactory()
             ->createCartItemsAttributeProvider()
@@ -40,6 +49,7 @@ class CartController extends AbstractController
             'cart' => $quoteTransfer,
             'cartItems' => $cartItems,
             'attributes' => $itemAttributesBySku,
+            'isQuoteValid' => $validateQuoteResponseTransfer->getIsSuccessful(),
         ];
 
         return $this->view(
@@ -53,14 +63,22 @@ class CartController extends AbstractController
      * @param string $sku
      * @param int $quantity
      * @param array $optionValueIds
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addAction($sku, $quantity, array $optionValueIds = [])
+    public function addAction($sku, $quantity, array $optionValueIds, Request $request)
     {
-        $cartOperationHandler = $this->getCartOperationHandler();
-        $cartOperationHandler->add($sku, $quantity, $optionValueIds);
-        $cartOperationHandler->setFlashMessagesFromLastZedRequest($this->getFactory()->getCartClient());
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($sku);
+        $itemTransfer->setQuantity($quantity);
+        $this->addProductOptions($optionValueIds, $itemTransfer);
+
+        $this->getFactory()->getCartClient()
+            ->addItem($itemTransfer, $request->request->all());
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -73,9 +91,11 @@ class CartController extends AbstractController
      */
     public function removeAction($sku, $groupKey = null)
     {
-        $cartOperationHandler = $this->getCartOperationHandler();
-        $cartOperationHandler->remove($sku, $groupKey);
-        $cartOperationHandler->setFlashMessagesFromLastZedRequest($this->getFactory()->getCartClient());
+        $this->getFactory()->getCartClient()
+            ->removeItem($sku, $groupKey);
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -89,9 +109,11 @@ class CartController extends AbstractController
      */
     public function changeAction($sku, $quantity, $groupKey = null)
     {
-        $cartOperationHandler = $this->getCartOperationHandler();
-        $cartOperationHandler->changeQuantity($sku, $quantity, $groupKey);
-        $cartOperationHandler->setFlashMessagesFromLastZedRequest($this->getFactory()->getCartClient());
+        $this->getFactory()->getCartClient()
+            ->changeItemQuantity($sku, $groupKey, $quantity);
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -106,9 +128,11 @@ class CartController extends AbstractController
         $items = (array)$request->request->get(self::PARAM_ITEMS);
         $itemTransfers = $this->mapItems($items);
 
-        $cartOperationHandler = $this->getCartOperationHandler();
-        $cartOperationHandler->addItems($itemTransfers);
-        $cartOperationHandler->setFlashMessagesFromLastZedRequest($this->getFactory()->getCartClient());
+        $this->getFactory()->getCartClient()
+            ->addItems($itemTransfers, $request->request->all());
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -153,14 +177,6 @@ class CartController extends AbstractController
     }
 
     /**
-     * @return \SprykerShop\Yves\CartPage\Handler\ProductBundleCartOperationHandler
-     */
-    protected function getCartOperationHandler()
-    {
-        return $this->getFactory()->createProductBundleCartOperationHandler();
-    }
-
-    /**
      * @param array $items
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
@@ -176,5 +192,25 @@ class CartController extends AbstractController
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param array $optionValueUsageIds
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addProductOptions(array $optionValueUsageIds, ItemTransfer $itemTransfer)
+    {
+        foreach ($optionValueUsageIds as $idOptionValueUsage) {
+            if (!$idOptionValueUsage) {
+                continue;
+            }
+
+            $productOptionTransfer = new ProductOptionTransfer();
+            $productOptionTransfer->setIdProductOptionValue($idOptionValueUsage);
+
+            $itemTransfer->addProductOption($productOptionTransfer);
+        }
     }
 }

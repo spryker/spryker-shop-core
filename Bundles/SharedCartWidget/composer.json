@@ -1,0 +1,37 @@
+{
+  "name": "spryker-shop/shared-cart-widget",
+  "description": "SharedCartWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/customer": "^7.0.0",
+    "spryker/kernel": "^3.19.0"
+  },
+  "require-dev": {
+    "spryker-shop/multi-cart-widget": "*",
+    "spryker/permission": "*",
+    "spryker/shared-cart": "*",
+    "spryker/silex": "*"
+  },
+  "suggest": {
+    "spryker-shop/multi-cart-widget": "TODO: add suggestion description",
+    "spryker/shared-cart": "TODO: add suggestion description",
+    "spryker/silex": "TODO: add suggestion description",
+    "spryker/permission": "If you want to use permissions plugins"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

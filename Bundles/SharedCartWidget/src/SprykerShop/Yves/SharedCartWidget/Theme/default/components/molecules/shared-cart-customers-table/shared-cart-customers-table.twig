@@ -1,0 +1,41 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shared-cart-customers-table',
+    tag: 'div'
+} %}
+
+{% define data = {
+    cart: required
+} %}
+
+{% block body %}
+    <h3 class="float-left">{{ 'shared_cart_widget.share_list.shared_with' | trans }}</h3>
+    <table class="table table--expand">
+        <thead>
+            <tr>
+                <th>{{ 'shared_cart_widget.share_list.customer_name' | trans }}</th>
+                <th>{{ 'shared_cart_widget.share_list.permission' | trans }}</th>
+                <th>{{ 'shared_cart_widget.share_list.actions' | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for shareDetail in data.cart.shareDetails %}
+            {% set permissionGroupName = 'shared_cart.share_list.permissions.' ~ shareDetail.quotePermissionGroup.name %}
+            <tr>
+                <td>{{ shareDetail.customerName }}</td>
+                <td>{{ permissionGroupName | trans }}</td>
+                <td>
+                    <ul class="menu">
+                        <li class="menu__item">
+                            <a href="{{ path('shared-cart/unshare', {idQuote: data.cart.idQuote, idCompanyUser: shareDetail.idCompanyUser, idPermissionGroup: shareDetail.quotePermissionGroup.idQuotePermissionGroup}) }}">
+                                {{ 'shared_cart_widget.share_list.action.unshare' | trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

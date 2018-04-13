@@ -1,6 +1,7 @@
 @mixin component-menu($name: '.menu') {
     @include component-list($name) {
         &__item {
+            @include font-weight(regular);
             margin: .5rem 0;
 
             &--active {
@@ -45,15 +46,30 @@
                     margin-right: .5rem;
                 }
             }
+
+            &--has-children-list,
+            &--has-children-dropdown {
+                & #{$name}__separator {
+
+                }
+            }
         }
 
         &__separator {
-            display: inline-block;
-            margin: 0 .5rem;
+            &:not(&--horizontal-line) {
+                display: inline-block;
+                margin: 0 .5rem;
 
-            &::after {
-                content: '|';
-                color: $color-lighter;
+                &::after {
+                    content: '|';
+                    color: $color-lighter;
+                }
+            }
+
+
+            &--horizontal-line {
+                display: block;
+                border-top: 1px solid $color-lighter;
             }
         }
 

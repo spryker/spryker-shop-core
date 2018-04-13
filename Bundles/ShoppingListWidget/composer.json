@@ -1,0 +1,36 @@
+{
+  "name": "spryker-shop/shopping-list-widget",
+  "description": "ShoppingListWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker-shop/shop-application": "^0.3.0",
+    "spryker/customer": "^7.4.0",
+    "spryker/kernel": "^3.16.0",
+    "spryker/shopping-list": "^0.1.0",
+    "spryker/symfony": "^3.1.0"
+  },
+  "require-dev": {
+    "spryker/product-detail-page": "*",
+    "spryker/silex": "*"
+  },
+  "suggest": {
+    "spryker/silex": "TODO: add suggestion description",
+    "spryker/product-detail-page": "To use ShoppingListWidget plugin, ShoppingListWidgetPluginInterface from product-detail-page v0.2.2 is needed"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
