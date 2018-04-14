@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCompanyUserClientBridge;
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCompanyUserInvitationClientBridge;
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCustomerClientBridge;
+use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToSessionClientBridge;
 
 class CompanyUserInvitationPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -42,8 +43,8 @@ class CompanyUserInvitationPageDependencyProvider extends AbstractBundleDependen
      */
     protected function addSessionClient(Container $container): Container
     {
-        $container[self::CLIENT_COMPANY_USER_INVITATION] = function (Container $container) {
-            return new CompanyUserInvitationPageToCompanyUserInvitationClientBridge(
+        $container[self::CLIENT_SESSION] = function (Container $container) {
+            return new CompanyUserInvitationPageToSessionClientBridge(
                 $container->getLocator()->session()->client()
             );
         };
@@ -90,8 +91,8 @@ class CompanyUserInvitationPageDependencyProvider extends AbstractBundleDependen
      */
     protected function addCompanyUserInvitationClient(Container $container): Container
     {
-        $container[self::CLIENT_COMPANY_USER] = function (Container $container) {
-            return new CompanyUserInvitationPageToCompanyUserClientBridge(
+        $container[self::CLIENT_COMPANY_USER_INVITATION] = function (Container $container) {
+            return new CompanyUserInvitationPageToCompanyUserInvitationClientBridge(
                 $container->getLocator()->companyUserInvitation()->client()
             );
         };

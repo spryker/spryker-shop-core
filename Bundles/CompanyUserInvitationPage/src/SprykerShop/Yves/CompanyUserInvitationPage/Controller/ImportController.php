@@ -40,7 +40,7 @@ class ImportController extends AbstractController
 
         if ($companyUserInvitationForm->isSubmitted() && $companyUserInvitationForm->isValid()) {
             $companyUserInvitationImportResultTransfer = $this->importCompanyUserInvitations($companyUserInvitationForm);
-            if ($companyUserInvitationImportResultTransfer->getNotImportedInvitations()->count()) {
+            if ($companyUserInvitationImportResultTransfer->getErrors()) {
                 $this->getFactory()
                     ->createImportErrorsHandler()
                     ->storeCompanyUserInvitationImportErrors($companyUserInvitationImportResultTransfer);

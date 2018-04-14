@@ -55,6 +55,11 @@ class SendController extends AbstractController
             ->getCompanyUserInvitationClient()
             ->sendCompanyUserInvitations($companyUserTransfer);
 
+        if (!$companyUserInvitationSendBatchResultTransfer->getInvitationsTotal()) {
+            $this->addInfoMessage('company.user.invitation.sent.all.nome.found.message');
+            return $this->redirectResponseInternal(CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW);
+        }
+
         if (!$companyUserInvitationSendBatchResultTransfer->getInvitationsFailed()) {
             $this->addSuccessMessage('company.user.invitation.sent.all.success.message');
             return $this->redirectResponseInternal(CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW);

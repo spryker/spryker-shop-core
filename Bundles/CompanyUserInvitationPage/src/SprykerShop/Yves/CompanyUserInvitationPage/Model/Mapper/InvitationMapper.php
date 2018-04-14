@@ -61,6 +61,7 @@ class InvitationMapper implements InvitationMapperInterface
         return (new CompanyUserInvitationTransfer())
             ->setFirstName($record[static::COLUMN_FIRST_NAME])
             ->setLastName($record[static::COLUMN_LAST_NAME])
+            ->setEmail($record[static::COLUMN_EMAIL])
             ->setCompanyBusinessUnitName($record[static::COLUMN_BUSINESS_UNIT]);
     }
 }

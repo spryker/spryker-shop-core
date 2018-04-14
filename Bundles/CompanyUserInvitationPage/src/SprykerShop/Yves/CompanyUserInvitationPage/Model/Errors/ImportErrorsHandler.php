@@ -39,8 +39,8 @@ class ImportErrorsHandler implements ImportErrorsHandlerInterface
     ) {
         $importErrorsFile = $this->getImportErrorsFile();
         $writer = Writer::createFromPath($importErrorsFile, 'w+');
-        foreach ($companyUserInvitationImportResultTransfer->getNotImportedInvitations() as $notImportedInvitation) {
-            $writer->insertOne($notImportedInvitation->getImportError());
+        foreach ($companyUserInvitationImportResultTransfer->getErrors() as $error) {
+            $writer->insertOne($error);
         }
 
         return $this->sessionClient->set(
