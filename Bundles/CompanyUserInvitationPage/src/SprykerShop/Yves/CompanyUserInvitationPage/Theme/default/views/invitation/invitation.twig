@@ -37,7 +37,7 @@
 
         {% if data.importedWithErrors %}
                 {{ 'company.user.invitation.import.download.errors.file' | trans({
-                    "%Link%":path('company-user-invitation/get-import-errors')}) | raw
+                    "%link%":path('company-user-invitation/get-import-errors')}) | raw
                 }}
         {%  endif %}
     </div>
