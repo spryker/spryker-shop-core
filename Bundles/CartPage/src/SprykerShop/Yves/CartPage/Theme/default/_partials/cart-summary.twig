@@ -26,7 +26,7 @@
         <li>{{ 'cart.total.tax_total' | trans }} <span class="float-right">{{ _view.cart.totals.taxTotal.amount | money }}</span></li>
     </ul>
 
-    {% if _view.cart.items | length %}
+    {% if _view.cart.items|length and _view.isQuoteValid and (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', _view.cart.idQuote)) %}
         <p class="__padding-top">
             <a class="button expanded success __no-margin-bottom" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}>
                 <i class="fa fa-check"></i>{{ 'cart.checkout'|trans }}

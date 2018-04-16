@@ -1,0 +1,67 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-table-detail',
+    tag: 'tr'
+} %}
+
+{% define data = {
+    cart: required,
+    actions: required
+} %}
+
+{% set showActions = data.actions.view or data.actions.update or data.actions.delete or data.actions.set_default %}
+{% set cart = data.cart %}
+
+{% block body %}
+    <td>{{ cart.name }}</td>
+    <td>
+        {% if cart.items is not empty %}
+            {% if widgetExists('ProductBundleCartItemsWidgetPlugin') %}
+                {{ widget('ProductBundleCartItemsWidgetPlugin', data.cart) }}
+            {% else %}
+            <ul>
+                {% for item in cart.items %}
+                    <li>{{ item.name }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% else %}
+            N/A
+        {% endif %}
+    </td>
+    <td>
+        {% if cart.totals is not empty and cart.items is not empty %}
+            {{ cart.totals.subTotal | money }}
+        {% else %}
+            N/A
+        {% endif %}
+    </td>
+    {% if showActions %}
+        <td>
+            <ul class="menu">
+                {% if data.actions.view %}
+                    <li class="menu__item">
+                        <a href="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
+                            {{ 'multi_cart_widget.cart.action.view' | trans }}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if data.actions.update %}
+                    <li class="menu__item">
+                        <a href="{{ path('multi-cart/update', {idQuote: data.cart.idQuote}) }}">
+                            {{ "multi_cart_widget.cart.action.change_name" | trans }}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if data.actions.delete %}
+                    <li class="menu__item">
+                        <a href="{{ path('multi-cart/delete', {idQuote: data.cart.idQuote}) }}" onclick="return confirm('{{ 'multi_cart_widget.cart.remove.confirm' | trans }}')">
+                            {{ "multi_cart_widget.cart.action.delete" | trans }}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </td>
+    {% endif %}
+{% endblock %}

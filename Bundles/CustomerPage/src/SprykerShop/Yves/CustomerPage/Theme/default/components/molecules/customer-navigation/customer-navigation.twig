@@ -38,6 +38,9 @@
         </li>
         <li class="menu__item {{macros.isActive('companyUserInvitation', data.activePage)}}">
             <a href="{{ path('company-user-invitation') }}" data-id="sidebar-wishlist">{{ 'company.user.invitation.label' | trans }}</a>
+        <li class="menu__item menu__item--has-children-list {{macros.isActive('shoppingList', data.activePage)}}">
+            <a href="{{ path('shopping-list') }}" data-id="sidebar-shopping-list">{{ 'shopping_list.shopping_list' | trans }}</a>
+            {% block shoppingListNavigation %}{% endblock %}
         </li>
     </ul>
 {% endblock %}

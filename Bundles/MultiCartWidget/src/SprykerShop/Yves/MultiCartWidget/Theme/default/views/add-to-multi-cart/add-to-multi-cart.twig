@@ -1,0 +1,35 @@
+{% extends template('widget') %}
+
+{% define data = {
+    disabled: _widget.isButtonDisabled,
+    isMultiCartAllowed: _widget.isMultiCartAllowed,
+    cartDefault: _widget.cart,
+    carts: _widget.cartCollection
+} %}
+
+{% block body %}
+    {% if data.isMultiCartAllowed %}
+    {{ widget('SharedCartAddSeparateProductWidgetPlugin') }}
+    {% endif %}
+    {% if widgetExists('SharedCartMultiCartAddWidgetPlugin') and data.isMultiCartAllowed %}
+        {{ widget('SharedCartMultiCartAddWidgetPlugin', data.cartDefault, data.carts, data.disabled) }}
+    {% else %}
+        <button type="submit" class="button button--success button--expand" {{ data.disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}">
+            {% include atom('icon') with {
+                data: {
+                    name: 'cart-plus'
+                }
+            } only %}
+            {{ 'page.detail.add-to-cart' | trans }}
+        </button>
+        {% if data.isMultiCartAllowed and data.carts %}
+            {% include molecule('add-to-cart-seletor', 'MultiCartWidget') with {
+                data: {
+                    cart: cartDefault,
+                    carts: data.carts,
+                    isButtonDisabled: data.disabled
+                }
+            } only %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

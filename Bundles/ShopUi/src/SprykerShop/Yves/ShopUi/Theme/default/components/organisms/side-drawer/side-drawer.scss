@@ -1,7 +1,8 @@
 @mixin component-side-drawer($name: '.side-drawer') {
-    $drawer-width: spacing(30);
+    $drawer-width: 15rem;
 
     #{$name} {
+        position: relative;
         z-index: $zi-side-drawer;
 
         &__overlay {
@@ -29,13 +30,13 @@
         }
 
         &__close {
-            padding: spacing(1) spacing(2);
+            padding: .5rem 1rem;
             background-color: $color-lighter;
             text-align: right;
         }
 
         &__navigation {
-            padding: spacing(2);
+            padding: 1rem;
         }
 
         &--show &__overlay {
