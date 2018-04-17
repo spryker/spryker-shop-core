@@ -9,7 +9,6 @@
         
         &::before,
         &::after {
-            position: relative;
             box-sizing: border-box;
             color: inherit;
         }
@@ -17,7 +16,6 @@
 
     html {
         @include reset;
-        position: static;
     }
 
     // HTML5 display-role reset for older browsers

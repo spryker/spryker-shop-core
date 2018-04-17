@@ -21,7 +21,7 @@
     ]
   },
   "scripts": {
-    "cs-check": "vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p"
+    "cs-check": "phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p -v"
   },
   "replace": {
     "spryker-shop/availability-widget": "*",
@@ -62,6 +62,7 @@
     "spryker-shop/product-set-list-page": "*",
     "spryker-shop/product-set-widget": "*",
     "spryker-shop/product-widget": "*",
+    "spryker-shop/quick-order-page": "*",
     "spryker-shop/redirect-page": "*",
     "spryker-shop/shop-application": "*",
     "spryker-shop/shop-layout": "*",

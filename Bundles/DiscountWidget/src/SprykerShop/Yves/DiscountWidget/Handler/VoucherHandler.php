@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface;
-use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCartClientInterface;
+use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClientInterface;
 
 class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 {
@@ -22,23 +22,23 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
     protected $calculationClient;
 
     /**
-     * @var \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCartClientInterface
+     * @var \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClientInterface
      */
-    protected $cartClient;
+    protected $quoteClient;
 
     /**
      * @param \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface $calculationClient
-     * @param \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCartClientInterface $cartClient
+     * @param \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClientInterface $quoteClient
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      */
     public function __construct(
         DiscountWidgetToCalculationClientInterface $calculationClient,
-        DiscountWidgetToCartClientInterface $cartClient,
+        DiscountWidgetToQuoteClientInterface $quoteClient,
         FlashMessengerInterface $flashMessenger
     ) {
         parent::__construct($flashMessenger);
         $this->calculationClient = $calculationClient;
-        $this->cartClient = $cartClient;
+        $this->quoteClient = $quoteClient;
     }
 
     /**
@@ -48,7 +48,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
      */
     public function add($voucherCode)
     {
-        $quoteTransfer = $this->cartClient->getQuote();
+        $quoteTransfer = $this->quoteClient->getQuote();
 
         $voucherDiscount = new DiscountTransfer();
         $voucherDiscount->setVoucherCode($voucherCode);
@@ -57,7 +57,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
         $this->addFlashMessages($quoteTransfer, $voucherCode);
 
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->quoteClient->setQuote($quoteTransfer);
     }
 
     /**
@@ -87,7 +87,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
      */
     public function remove($voucherCode)
     {
-        $quoteTransfer = $this->cartClient->getQuote();
+        $quoteTransfer = $this->quoteClient->getQuote();
 
         $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
         $this->unsetVoucherCode($voucherCode, $voucherDiscounts);
@@ -95,7 +95,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
 
         $this->setFlashMessagesFromLastZedRequest($this->calculationClient);
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->quoteClient->setQuote($quoteTransfer);
     }
 
     /**
@@ -103,13 +103,13 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
      */
     public function clear()
     {
-        $quoteTransfer = $this->cartClient->getQuote();
+        $quoteTransfer = $this->quoteClient->getQuote();
         $quoteTransfer->setVoucherDiscounts(new ArrayObject());
 
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
 
         $this->setFlashMessagesFromLastZedRequest($this->calculationClient);
-        $this->cartClient->storeQuote($quoteTransfer);
+        $this->quoteClient->setQuote($quoteTransfer);
     }
 
     /**

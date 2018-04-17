@@ -6,7 +6,7 @@ export default class TogglerCheckbox extends Component {
 
     constructor() { 
         super();
-        this.trigger = <HTMLInputElement>this.querySelector(`.${this.selector}__trigger`);
+        this.trigger = <HTMLInputElement>this.querySelector(`.${this.componentSelector}__trigger`);
         this.targets = <HTMLElement[]>Array.from(document.getElementsByClassName(this.target));
     }
 

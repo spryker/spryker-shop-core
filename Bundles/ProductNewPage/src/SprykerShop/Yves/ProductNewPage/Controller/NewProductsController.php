@@ -54,7 +54,11 @@ class NewProductsController extends AbstractController
             ->getCatalogClient()
             ->getCatalogViewMode($request);
 
-        return $this->view($searchResults, $this->getFactory()->getProductNewPageWidgetPlugins());
+        return $this->view(
+            $searchResults,
+            $this->getFactory()->getProductNewPageWidgetPlugins(),
+            '@ProductNewPage/views/new-product/new-product.twig'
+        );
     }
 
     /**

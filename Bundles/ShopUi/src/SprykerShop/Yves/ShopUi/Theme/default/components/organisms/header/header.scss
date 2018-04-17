@@ -1,11 +1,20 @@
 @mixin component-header($name: '.header') {
     #{$name} {
+        position: relative;
         background-color: light($color-main);
-        margin-bottom: spacing(2);
+        margin-bottom: 1rem;
         z-index: $zi-header;
 
         &__row {
-            padding: spacing();
+            padding: .5rem;
+        }
+
+        &__navigation-top {
+            z-index: $zi-header + 3;
+        }
+
+        &__search-form {
+            z-index: $zi-header + 2;
         }
 
         &__navigation-main {

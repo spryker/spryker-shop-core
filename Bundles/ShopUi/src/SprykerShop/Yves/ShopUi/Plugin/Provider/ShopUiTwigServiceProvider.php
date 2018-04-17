@@ -12,7 +12,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @method \SprykerShop\Yves\UI\UIFactory getFactory()
+ * @method \SprykerShop\Yves\ShopUi\ShopUiFactory getFactory()
  */
 class ShopUiTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

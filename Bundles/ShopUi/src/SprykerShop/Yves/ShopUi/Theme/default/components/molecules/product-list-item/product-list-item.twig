@@ -5,7 +5,7 @@
 } %}
 
 {% block body %}
-    <div class="box">
+    <div class="{{config.name}}__container box">
         {% block labels %}
             {{ widget('ProductAbstractLabelWidgetPlugin', data.abstractId) }}
         {% endblock %}
