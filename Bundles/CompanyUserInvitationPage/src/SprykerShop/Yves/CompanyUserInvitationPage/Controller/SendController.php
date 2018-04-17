@@ -10,14 +10,13 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Controller;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
 use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider\CompanyUserInvitationPageControllerProvider;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()
  */
-class SendController extends AbstractController
+class SendController extends AbstractModuleController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,20 +34,22 @@ class SendController extends AbstractController
             ->sendCompanyUserInvitation($companyUserInvitationTransfer);
 
         if ($companyUserInvitationSendResultTransfer->getSuccess()) {
-            $this->addSuccessMessage('company.user.invitation.sent.success.message');
-            return $this->redirectResponseInternal(CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW);
+            return $this->redirectToRouteWithSuccessMessage(
+                CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+                'company.user.invitation.sent.success.message'
+            );
         }
 
-        $this->addErrorMessage('company.user.invitation.sent.error.message');
-        return $this->redirectResponseInternal(CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW);
+        return $this->redirectToRouteWithErrorMessage(
+            CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+            'company.user.invitation.sent.error.message'
+        );
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function sendCompanyUserInvitationsAction(Request $request)
+    public function sendCompanyUserInvitationsAction()
     {
         $companyUserTransfer = $this->getFactory()->getCustomerClient()->getCustomer()->getCompanyUserTransfer();
         $companyUserInvitationSendBatchResultTransfer = $this->getFactory()
@@ -56,16 +57,22 @@ class SendController extends AbstractController
             ->sendCompanyUserInvitations($companyUserTransfer);
 
         if (!$companyUserInvitationSendBatchResultTransfer->getInvitationsTotal()) {
-            $this->addInfoMessage('company.user.invitation.sent.all.nome.found.message');
-            return $this->redirectResponseInternal(CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW);
+            return $this->redirectToRouteWithInfoMessage(
+                CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+                'company.user.invitation.sent.all.nome.found.message'
+            );
         }
 
         if (!$companyUserInvitationSendBatchResultTransfer->getInvitationsFailed()) {
-            $this->addSuccessMessage('company.user.invitation.sent.all.success.message');
-            return $this->redirectResponseInternal(CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW);
+            return $this->redirectToRouteWithSuccessMessage(
+                CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+                'company.user.invitation.sent.all.success.message'
+            );
         }
 
-        $this->addErrorMessage('company.user.invitation.sent.all.error.message');
-        return $this->redirectResponseInternal(CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW);
+        return $this->redirectToRouteWithErrorMessage(
+            CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+            'company.user.invitation.sent.all.error.message'
+        );
     }
 }

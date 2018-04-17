@@ -11,14 +11,15 @@ use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
 use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()
  */
-class AcceptController extends AbstractController
+class AcceptController extends AbstractModuleController
 {
+    public const COMPANY_USER_REQUIRED = false;
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -32,25 +33,31 @@ class AcceptController extends AbstractController
 
         $companyUserInvitationTransfer = $this->getFactory()
             ->getCompanyUserInvitationClient()
-            ->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
+            ->getCompanyUserInvitationByHash($companyUserInvitationTransfer);
 
-        if (!$companyUserInvitationTransfer) {
-            $this->addErrorMessage('company.user.invitation.invalid');
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_REGISTER);
+        if (!$companyUserInvitationTransfer->getIdCompanyUserInvitation()) {
+            return $this->redirectToRouteWithErrorMessage(
+                CustomerPageControllerProvider::ROUTE_REGISTER,
+                'company.user.invitation.invalid'
+            );
         }
 
         if ($companyUserInvitationTransfer->getCompanyUserInvitationStatusKey() === CompanyUserInvitationConstants::INVITATION_STATUS_DELETED) {
-            $this->addErrorMessage('company.user.invitation.expired');
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_REGISTER);
+            return $this->redirectToRouteWithErrorMessage(
+                CustomerPageControllerProvider::ROUTE_REGISTER,
+                'company.user.invitation.expired'
+            );
         }
 
         if ($companyUserInvitationTransfer->getCompanyUserInvitationStatusKey() === CompanyUserInvitationConstants::INVITATION_STATUS_ACCEPTED) {
-            $this->addErrorMessage('company.user.invitation.accepted');
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_REGISTER);
+            return $this->redirectToRouteWithErrorMessage(
+                CustomerPageControllerProvider::ROUTE_REGISTER,
+                'company.user.invitation.accepted'
+            );
         }
 
         $this->getFactory()->getSessionClient()->set(CompanyUserInvitationPageConstants::INVITATION_SESSION_ID, $invitationHash);
 
-        return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_REGISTER);
+        return $this->redirectToRoute(CustomerPageControllerProvider::ROUTE_REGISTER);
     }
 }

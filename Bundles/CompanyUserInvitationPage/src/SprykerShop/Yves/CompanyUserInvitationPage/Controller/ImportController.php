@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
 use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
 use SprykerShop\Yves\CompanyUserInvitationPage\Form\CompanyUserInvitationForm;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +23,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 /**
  * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()
  */
-class ImportController extends AbstractController
+class ImportController extends AbstractModuleController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

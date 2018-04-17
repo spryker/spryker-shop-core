@@ -57,7 +57,7 @@ class CompanyUserInvitationPostCustomerRegistrationHandler implements CompanyUse
     public function handle(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         $companyUserInvitationTransfer = $this->getCompanyUserInvitationTransfer();
-        if (!$this->isValidCompanyUserInvitationTransfer($companyUserInvitationTransfer)) {
+        if (!$this->isValidCompanyUserInvitationStatus($companyUserInvitationTransfer)) {
             return $customerTransfer;
         }
 
@@ -70,7 +70,7 @@ class CompanyUserInvitationPostCustomerRegistrationHandler implements CompanyUse
         $companyUserResponseTransfer = $this->companyUserClient->updateCompanyUser($companyUserTransfer);
         if ($companyUserResponseTransfer->getIsSuccessful()) {
             $companyUserInvitationUpdateStatusRequestTransfer = (new CompanyUserInvitationUpdateStatusRequestTransfer())
-                ->setInvitation($companyUserInvitationTransfer)
+                ->setCompanyUserInvitation($companyUserInvitationTransfer)
                 ->setStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_ACCEPTED);
             $this->companyUserInvitationClient->updateCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer);
         }
@@ -86,7 +86,7 @@ class CompanyUserInvitationPostCustomerRegistrationHandler implements CompanyUse
         $invitationHash = $this->sessionClient->get(CompanyUserInvitationPageConstants::INVITATION_SESSION_ID);
         $companyUserInvitationTransfer = (new CompanyUserInvitationTransfer())->setHash($invitationHash);
 
-        return $this->companyUserInvitationClient->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
+        return $this->companyUserInvitationClient->getCompanyUserInvitationByHash($companyUserInvitationTransfer);
     }
 
     /**
@@ -94,10 +94,9 @@ class CompanyUserInvitationPostCustomerRegistrationHandler implements CompanyUse
      *
      * @return bool
      */
-    protected function isValidCompanyUserInvitationTransfer(CompanyUserInvitationTransfer $companyUserInvitationTransfer): bool
+    protected function isValidCompanyUserInvitationStatus(CompanyUserInvitationTransfer $companyUserInvitationTransfer): bool
     {
-        return $companyUserInvitationTransfer &&
-            $companyUserInvitationTransfer->getCompanyUserInvitationStatusKey()
+        return $companyUserInvitationTransfer->getCompanyUserInvitationStatusKey()
             === CompanyUserInvitationConstants::INVITATION_STATUS_PENDING;
     }
 }

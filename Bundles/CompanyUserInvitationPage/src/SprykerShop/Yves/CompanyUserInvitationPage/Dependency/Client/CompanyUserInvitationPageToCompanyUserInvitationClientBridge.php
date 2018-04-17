@@ -91,11 +91,11 @@ class CompanyUserInvitationPageToCompanyUserInvitationClientBridge implements Co
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    public function findCompanyUserInvitationByHash(
+    public function getCompanyUserInvitationByHash(
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): ?CompanyUserInvitationTransfer {
-        return $this->companyUserInvitationClient->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
+    ): CompanyUserInvitationTransfer {
+        return $this->companyUserInvitationClient->getCompanyUserInvitationByHash($companyUserInvitationTransfer);
     }
 }

@@ -12,14 +12,13 @@ use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
 use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
 use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
 use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider\CompanyUserInvitationPageControllerProvider;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()
  */
-class DeleteController extends AbstractController
+class DeleteController extends AbstractModuleController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -45,7 +44,7 @@ class DeleteController extends AbstractController
             ->setIdCompanyUserInvitation($invitationId);
 
         $companyUserInvitationUpdateStatusRequestTransfer = (new CompanyUserInvitationUpdateStatusRequestTransfer())
-            ->setInvitation($companyUserInvitationTransfer)
+            ->setCompanyUserInvitation($companyUserInvitationTransfer)
             ->setStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_DELETED);
 
         $companyUserInvitationUpdateStatusResultTransfer = $this->getFactory()
@@ -53,11 +52,15 @@ class DeleteController extends AbstractController
             ->updateCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer);
 
         if ($companyUserInvitationUpdateStatusResultTransfer->getSuccess()) {
-            $this->addSuccessMessage('company.user.invitation.deleted.success.message');
-            return $this->redirectResponseInternal(CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW);
+            return $this->redirectToRouteWithSuccessMessage(
+                CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+                'company.user.invitation.deleted.success.message'
+            );
         }
 
-        $this->addErrorMessage('company.user.invitation.deleted.error.message');
-        return $this->redirectResponseInternal(CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW);
+        return $this->redirectToRouteWithErrorMessage(
+            CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+            'company.user.invitation.deleted.error.message'
+        );
     }
 }
