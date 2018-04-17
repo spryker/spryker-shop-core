@@ -51,12 +51,12 @@ class CurrencyWidgetPlugin extends AbstractWidgetPlugin implements CurrencyWidge
      */
     protected function getCurrencies()
     {
-        $currencyBuilder = $this->getFactory()->createCurrencyBuilder();
+        $currencyClient = $this->getFactory()->getCurrencyClient();
         $availableCurrencyCodes = $this->getFactory()->getStore()->getCurrencyIsoCodes();
 
         $currencies = [];
         foreach ($availableCurrencyCodes as $currency) {
-            $currencies[$currency] = $currencyBuilder->fromIsoCode($currency);
+            $currencies[$currency] = $currencyClient->fromIsoCode($currency);
         }
 
         return $currencies;
@@ -67,7 +67,7 @@ class CurrencyWidgetPlugin extends AbstractWidgetPlugin implements CurrencyWidge
      */
     protected function getCurrentCurrency()
     {
-        $currentCurrencyIsoCode = $this->getFactory()->createCurrencyPersistence()->getCurrentCurrencyIsoCode();
+        $currentCurrencyIsoCode = $this->getFactory()->getCurrencyClient()->getCurrent()->getCode();
 
         if (!$currentCurrencyIsoCode) {
             return $this->getFactory()->getStore()->getCurrencyIsoCode();
