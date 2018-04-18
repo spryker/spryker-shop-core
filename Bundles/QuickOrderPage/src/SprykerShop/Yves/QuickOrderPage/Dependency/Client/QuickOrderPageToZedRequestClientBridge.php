@@ -23,10 +23,6 @@ class QuickOrderPageToZedRequestClientBridge implements QuickOrderPageToZedReque
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest()
@@ -35,10 +31,6 @@ class QuickOrderPageToZedRequestClientBridge implements QuickOrderPageToZedReque
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages()

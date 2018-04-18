@@ -23,10 +23,6 @@ class SharedCartWidgetToMultiCartClientBridge implements SharedCartWidgetToMulti
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollection()

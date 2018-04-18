@@ -10,11 +10,6 @@ namespace SprykerShop\Yves\SharedCartWidget\Dependency\Client;
 interface SharedCartWidgetToMultiCartClientInterface
 {
     /**
-     * Specification:
-     * - Gets customer quote collection.
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollection();
