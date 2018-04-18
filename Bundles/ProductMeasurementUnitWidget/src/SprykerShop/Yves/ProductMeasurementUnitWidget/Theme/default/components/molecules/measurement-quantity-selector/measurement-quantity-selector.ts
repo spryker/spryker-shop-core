@@ -163,7 +163,7 @@ export default class MeasurementQuantitySelector extends Component {
             return this.getMinQuantity();
         }
 
-        if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0 || qtyInBaseUnits > this.getMaxQuantity()) {
+        if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0 || (this.getMaxQuantity() > 0 && qtyInBaseUnits > this.getMaxQuantity())) {
             return this.getMinChoice((qtyInBaseUnits - 1) / this.currentSalesUnit.conversion)
         }
 
@@ -220,7 +220,7 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     getMaxQuantity() {
-        if (this.productQuantityStorage.hasOwnProperty('quantity_max')) {
+        if (this.productQuantityStorage.hasOwnProperty('quantity_max') && this.productQuantityStorage.quantity_max !== null) {
             return this.productQuantityStorage.quantity_max;
         }
 
