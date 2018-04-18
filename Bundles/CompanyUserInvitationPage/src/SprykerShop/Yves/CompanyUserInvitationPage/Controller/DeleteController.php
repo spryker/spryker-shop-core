@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()
  */
-class DeleteController extends AbstractModuleController
+class DeleteController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -44,14 +44,15 @@ class DeleteController extends AbstractModuleController
             ->setIdCompanyUserInvitation($invitationId);
 
         $companyUserInvitationUpdateStatusRequestTransfer = (new CompanyUserInvitationUpdateStatusRequestTransfer())
+            ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitation($companyUserInvitationTransfer)
             ->setStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_DELETED);
 
-        $companyUserInvitationUpdateStatusResultTransfer = $this->getFactory()
+        $companyUserInvitationUpdateStatusResponseTransfer = $this->getFactory()
             ->getCompanyUserInvitationClient()
             ->updateCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer);
 
-        if ($companyUserInvitationUpdateStatusResultTransfer->getSuccess()) {
+        if ($companyUserInvitationUpdateStatusResponseTransfer->getIsSuccess()) {
             return $this->redirectToRouteWithSuccessMessage(
                 CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
                 'company.user.invitation.deleted.success.message'

@@ -70,6 +70,7 @@ class CompanyUserInvitationPostCustomerRegistrationHandler implements CompanyUse
         $companyUserResponseTransfer = $this->companyUserClient->updateCompanyUser($companyUserTransfer);
         if ($companyUserResponseTransfer->getIsSuccessful()) {
             $companyUserInvitationUpdateStatusRequestTransfer = (new CompanyUserInvitationUpdateStatusRequestTransfer())
+                ->setIdCompanyUser($companyUserInvitationTransfer->getFkCompanyUser())
                 ->setCompanyUserInvitation($companyUserInvitationTransfer)
                 ->setStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_ACCEPTED);
             $this->companyUserInvitationClient->updateCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer);

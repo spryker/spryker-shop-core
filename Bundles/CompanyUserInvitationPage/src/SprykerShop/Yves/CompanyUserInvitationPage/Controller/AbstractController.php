@@ -7,17 +7,21 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Controller;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController as SprykerAbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()
  */
-class AbstractModuleController extends AbstractController
+class AbstractController extends SprykerAbstractController
 {
     public const COMPANY_USER_REQUIRED = true;
+
+    /**
+     * @var \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    protected $companyUserTransfer;
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -28,23 +32,13 @@ class AbstractModuleController extends AbstractController
     {
         parent::initialize();
 
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         if (static::COMPANY_USER_REQUIRED) {
-            $customerTransfer = $this->getCustomer();
-
             if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
                 throw new NotFoundHttpException("Only company users are allowed to access this page");
             }
+            $this->companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
         }
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function getCustomer(): ?CustomerTransfer
-    {
-        return $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
     }
 
     /**

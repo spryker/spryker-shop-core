@@ -7,17 +7,17 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Errors;
 
-use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 
 interface ImportErrorsHandlerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer $companyUserInvitationImportReportTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer $companyUserInvitationImportReportTransfer
      *
      * @return mixed
      */
     public function storeCompanyUserInvitationImportErrors(
-        CompanyUserInvitationImportResultTransfer $companyUserInvitationImportReportTransfer
+        CompanyUserInvitationImportResponseTransfer $companyUserInvitationImportReportTransfer
     );
 
     /**

@@ -45,7 +45,7 @@ class InvitationMapper implements InvitationMapperInterface
         foreach ($invitations as $invitation) {
             $companyUserInvitationTransfer = $this->getCompanyUserInvitationTransfer($invitation);
             $companyUserInvitationTransfer->setFkCompanyUser($idCompanyUser);
-            $companyUserInvitationCollectionTransfer->addInvitation($companyUserInvitationTransfer);
+            $companyUserInvitationCollectionTransfer->addCompanyUserInvitation($companyUserInvitationTransfer);
         }
 
         return $companyUserInvitationCollectionTransfer;

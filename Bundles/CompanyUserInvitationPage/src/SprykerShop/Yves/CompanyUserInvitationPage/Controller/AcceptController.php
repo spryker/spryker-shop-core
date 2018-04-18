@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()
  */
-class AcceptController extends AbstractModuleController
+class AcceptController extends AbstractController
 {
     public const COMPANY_USER_REQUIRED = false;
 
@@ -42,14 +42,16 @@ class AcceptController extends AbstractModuleController
             );
         }
 
-        if ($companyUserInvitationTransfer->getCompanyUserInvitationStatusKey() === CompanyUserInvitationConstants::INVITATION_STATUS_DELETED) {
+        if ($companyUserInvitationTransfer->getCompanyUserInvitationStatusKey()
+            === CompanyUserInvitationConstants::INVITATION_STATUS_DELETED) {
             return $this->redirectToRouteWithErrorMessage(
                 CustomerPageControllerProvider::ROUTE_REGISTER,
                 'company.user.invitation.expired'
             );
         }
 
-        if ($companyUserInvitationTransfer->getCompanyUserInvitationStatusKey() === CompanyUserInvitationConstants::INVITATION_STATUS_ACCEPTED) {
+        if ($companyUserInvitationTransfer->getCompanyUserInvitationStatusKey()
+            === CompanyUserInvitationConstants::INVITATION_STATUS_ACCEPTED) {
             return $this->redirectToRouteWithErrorMessage(
                 CustomerPageControllerProvider::ROUTE_REGISTER,
                 'company.user.invitation.accepted'

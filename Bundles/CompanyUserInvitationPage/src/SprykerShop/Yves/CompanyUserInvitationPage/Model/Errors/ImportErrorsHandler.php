@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Errors;
 
-use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 use League\Csv\Reader;
 use League\Csv\Writer;
 use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
@@ -30,16 +30,16 @@ class ImportErrorsHandler implements ImportErrorsHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer $companyUserInvitationImportResultTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer $companyUserInvitationImportResponseTransfer
      *
      * @return mixed
      */
     public function storeCompanyUserInvitationImportErrors(
-        CompanyUserInvitationImportResultTransfer $companyUserInvitationImportResultTransfer
+        CompanyUserInvitationImportResponseTransfer $companyUserInvitationImportResponseTransfer
     ) {
         $importErrorsFile = $this->getImportErrorsFile();
         $writer = Writer::createFromPath($importErrorsFile, 'w+');
-        foreach ($companyUserInvitationImportResultTransfer->getErrors() as $error) {
+        foreach ($companyUserInvitationImportResponseTransfer->getErrors() as $error) {
             $writer->insertOne($error);
         }
 

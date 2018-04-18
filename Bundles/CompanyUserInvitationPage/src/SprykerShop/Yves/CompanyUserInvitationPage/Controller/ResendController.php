@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Controller;
 
+use Generated\Shared\Transfer\CompanyUserInvitationSendRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
 use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider\CompanyUserInvitationPageControllerProvider;
@@ -16,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()
  */
-class ResendController extends AbstractModuleController
+class ResendController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -38,14 +39,17 @@ class ResendController extends AbstractModuleController
     public function confirmAction(Request $request): RedirectResponse
     {
         $invitationId = (int)$request->get(CompanyUserInvitationPageConstants::INVITATION_ID);
-        $companyUserInvitationTransfer = (new CompanyUserInvitationTransfer())
-            ->setIdCompanyUserInvitation($invitationId);
+        $companyUserInvitationSendRequestTransfer = (new CompanyUserInvitationSendRequestTransfer())
+            ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
+            ->setCompanyUserInvitation(
+                (new CompanyUserInvitationTransfer())->setIdCompanyUserInvitation($invitationId)
+            );
 
-        $companyUserInvitationSendResultTransfer = $this->getFactory()
+        $companyUserInvitationSendResponseTransfer = $this->getFactory()
             ->getCompanyUserInvitationClient()
-            ->sendCompanyUserInvitation($companyUserInvitationTransfer);
+            ->sendCompanyUserInvitation($companyUserInvitationSendRequestTransfer);
 
-        if ($companyUserInvitationSendResultTransfer->getSuccess()) {
+        if ($companyUserInvitationSendResponseTransfer->getIsSuccess()) {
             return $this->redirectToRouteWithSuccessMessage(
                 CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
                 'company.user.invitation.resent.success.message'

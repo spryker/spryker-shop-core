@@ -9,12 +9,15 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Controller;
 
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationGetCollectionRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
 use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
 use SprykerShop\Yves\CompanyUserInvitationPage\Form\CompanyUserInvitationForm;
+use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider\CompanyUserInvitationPageControllerProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,12 +26,12 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 /**
  * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()
  */
-class ImportController extends AbstractModuleController
+class ImportController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View
+     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -38,25 +41,33 @@ class ImportController extends AbstractModuleController
             ->handleRequest($request);
 
         if ($companyUserInvitationForm->isSubmitted() && $companyUserInvitationForm->isValid()) {
-            $companyUserInvitationImportResultTransfer = $this->importCompanyUserInvitations($companyUserInvitationForm);
-            if ($companyUserInvitationImportResultTransfer->getErrors()) {
+            $companyUserInvitationImportResponseTransfer = $this->importCompanyUserInvitations($companyUserInvitationForm);
+            if (!$companyUserInvitationImportResponseTransfer->getIsSuccess() && !$companyUserInvitationImportResponseTransfer->getErrors()) {
+                return $this->redirectToRouteWithErrorMessage(
+                    CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+                    'company.user.invitation.import.error.message'
+                );
+            }
+            if ($companyUserInvitationImportResponseTransfer->getErrors()) {
                 $this->getFactory()
                     ->createImportErrorsHandler()
-                    ->storeCompanyUserInvitationImportErrors($companyUserInvitationImportResultTransfer);
+                    ->storeCompanyUserInvitationImportErrors($companyUserInvitationImportResponseTransfer);
                 $importedWithErrors = true;
             }
         }
 
+        $companyUserInvitationGetCollectionRequest = (new CompanyUserInvitationGetCollectionRequestTransfer())
+            ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
+            ->setCriteriaFilter($this->getCriteriaFilterTransfer($request));
+
         $companyUserInvitationCollection = $this->getFactory()
             ->getCompanyUserInvitationClient()
-            ->getCompanyUserInvitationCollection(
-                $this->getCriteriaFilterTransfer($request)
-            );
+            ->getCompanyUserInvitationCollection($companyUserInvitationGetCollectionRequest);
 
         return $this->view([
             'form' => $companyUserInvitationForm->createView(),
             'importedWithErrors' => isset($importedWithErrors) ?? false,
-            'invitations' => $companyUserInvitationCollection->getInvitations(),
+            'invitations' => $companyUserInvitationCollection->getCompanyUserInvitations(),
             'pagination' => $companyUserInvitationCollection->getPagination(),
         ], [], '@CompanyUserInvitationPage/views/invitation/invitation.twig');
     }
@@ -88,17 +99,20 @@ class ImportController extends AbstractModuleController
     /**
      * @param \Symfony\Component\Form\FormInterface $companyUserInvitationForm
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer
      */
     protected function importCompanyUserInvitations(
         FormInterface $companyUserInvitationForm
-    ): CompanyUserInvitationImportResultTransfer {
+    ): CompanyUserInvitationImportResponseTransfer {
         $importFilePath = $this->getImportFilePath($companyUserInvitationForm);
-        $invitationCollectionTransfer = $this->getCompanyUserInvitationCollection($importFilePath);
+        $companyUserInvitationImportRequestTransfer = new CompanyUserInvitationImportRequestTransfer();
+        $companyUserInvitationImportRequestTransfer
+            ->setCompanyUserInvitationCollection($this->getCompanyUserInvitationCollection($importFilePath))
+            ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser());
 
         return $this->getFactory()
             ->getCompanyUserInvitationClient()
-            ->importCompanyUserInvitations($invitationCollectionTransfer);
+            ->importCompanyUserInvitations($companyUserInvitationImportRequestTransfer);
     }
 
     /**
@@ -126,18 +140,6 @@ class ImportController extends AbstractModuleController
     }
 
     /**
-     * @return int
-     */
-    protected function getIdCompanyUser(): int
-    {
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-        $customer->requireCompanyUserTransfer();
-        $customer->getCompanyUserTransfer()->requireIdCompanyUser();
-
-        return $customer->getCompanyUserTransfer()->getIdCompanyUser();
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer
@@ -149,7 +151,7 @@ class ImportController extends AbstractModuleController
             ->setOrderDirection(CompanyUserInvitationPageConstants::DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_DIRECTION);
 
         $companyUserInvitationCriteriaFilterTransfer = (new CompanyUserInvitationCriteriaFilterTransfer())
-            ->setFkCompanyUser($this->getIdCompanyUser())
+            ->setFkCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitationStatusKeyNotIn([CompanyUserInvitationConstants::INVITATION_STATUS_DELETED])
             ->setFilter($filterTransfer);
 
