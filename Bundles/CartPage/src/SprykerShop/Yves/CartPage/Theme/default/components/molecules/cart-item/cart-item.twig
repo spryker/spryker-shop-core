@@ -11,6 +11,8 @@
     attributes: required
 } %}
 
+{% set canWrite = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
+
 {% block body %}
     <div class="box">
         <div class="grid grid--stretch">
@@ -22,39 +24,46 @@
                 } only %}
             </div>
 
-            <div class="col col--sm-12 col--lg-3">
+            <div class="col col--sm-12 col--lg-5">
                 <h2 class="{{ config.name }}__title">{{ data.cartItem.name }}</h2>
                 <div class="{{ config.name }}__sku">
                     {{ 'cart.item.sku' | trans }} {{ data.cartItem.sku }}
                 </div>
+                {% include molecule('cart-quantity', 'CartPage') with {
+                    data: {
+                        cartItem: data.cartItem,
+                        cart: data.cart
+                    }
+                } only %}
 
-                <ul class="list {{ config.name }}__bundles">
+                <div class="{{ config.name }}__bundles">
                     {{ widget('ProductBundleItemsWidgetPlugin', data.cartItem, data.cart) }}
 
-                    <li>
+                    {% if data.attributes | length > 1 %}
                         {% include molecule('cart-item-attribute-list', 'CartPage') with {
                             data: {
                                 cartItem: data.cartItem,
                                 cartItemAttributes: data.attributes
                             }
                         } only %}
+                    {% endif %}
 
-                    </li>
+                </div>
 
-                </ul>
+                {{ widget('CartNoteQuoteItemWidgetPlugin', data.cartItem) }}
+
+                {% if canWrite %}
+                <div class="">
+                    <a href="{{ path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': data.cartItem.groupKey }) }}">
+                        &times; {{ 'remove' | trans }}
+                    </a>
+                </div>
+                {% endif %}
 
             </div>
 
             <div class="col col--sm-12 col--lg-5">
                 {% include molecule('cart-item-price', 'CartPage') with {
-                    data: {
-                        cartItem: data.cartItem
-                    }
-                } only %}
-            </div>
-
-            <div class="col col--sm-12 col--lg-2">
-                {% include molecule('cart-quantity', 'CartPage') with {
                     data: {
                         cartItem: data.cartItem
                     }

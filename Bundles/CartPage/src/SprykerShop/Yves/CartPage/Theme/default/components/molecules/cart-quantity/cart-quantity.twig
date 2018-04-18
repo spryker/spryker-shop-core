@@ -7,6 +7,7 @@
 
 {% define data = {
     cartItem: required,
+    cart: required
 } %}
 
 {% set options = [] %}
@@ -18,7 +19,10 @@
     }]) %}
 {% endfor %}
 
+{% set canWrite = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
+
 {% block body %}
+    {% if canWrite %}
     <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.cartItem.sku }) }}">
         <div class="{{ config.name }}__title">
             <strong>{{ 'cart.item_quantity' | trans }}</strong>
@@ -26,21 +30,29 @@
         <div class="grid">
             <div class="col col--sm-8">
 
-                {% if not data.cartItem.maxQuantity or data.cartItem.maxQuantity < 0 %}
+                {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
 
-                <input class="input input--expand" type="number" value="{{ data.cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>
+                    {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
 
                 {% else %}
 
-                    {% include atom('select') with {
-                        modifiers: ['expand'],
-                        data: {
-                            options: options
-                        },
-                        attributes: {
-                            name: 'quantity'
-                        }
-                    } only %}
+                    {% if not data.cartItem.maxQuantity or data.cartItem.maxQuantity < 0 %}
+
+                    <input class="input input--expand" type="number" value="{{ data.cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>
+
+                    {% else %}
+
+                        {% include atom('select') with {
+                            modifiers: ['expand'],
+                            data: {
+                                options: options
+                            },
+                            attributes: {
+                                name: 'quantity'
+                            }
+                        } only %}
+
+                    {% endif %}
 
                 {% endif %}
 
@@ -58,13 +70,15 @@
                 </button>
             </div>
 
-            <div class="col col-sm-12">
-                <a href="{{ path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': data.cartItem.groupKey }) }}">
-                    &times; {{ 'remove' | trans }}
-                </a>
-            </div>
-
          </div>
         <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
     </form>
+    {% else %}
+        <label>
+            <strong>{{ 'cart.item_quantity' | trans }}</strong>
+            <span class="input-group __no-margin-bottom">
+                        {{ cartItem.quantity }}
+                     </span>
+        </label>
+    {% endif %}
 {% endblock %}

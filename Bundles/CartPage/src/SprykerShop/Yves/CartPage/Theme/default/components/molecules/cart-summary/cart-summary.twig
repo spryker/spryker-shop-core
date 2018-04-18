@@ -34,10 +34,10 @@
         <li class="{{ config.name }}__item">{{ 'cart.total.tax_total' | trans }} <span class="float-right">{{ data.cart.totals.taxTotal.amount | money }}</span></li>
     </ul>
 
-    {% if data.cart.items | length %}
+    {% if _view.cart.items|length and _view.isQuoteValid and (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', _view.cart.idQuote)) %}
         <div>
-            <a class="button button--expand" href="{{ url('checkout-index') }}" {{qa('data.cart-go-to-checkout')}}>
-                {{ 'cart.checkout'|trans }}
+            <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('data.cart-go-to-checkout')}}>
+                <i class="fa fa-check"></i>{{ 'cart.checkout'|trans }}
             </a>
         </div>
     {% endif %}

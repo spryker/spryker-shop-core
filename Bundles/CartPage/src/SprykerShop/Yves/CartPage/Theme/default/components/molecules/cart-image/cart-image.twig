@@ -10,13 +10,18 @@
 } %}
 
 {% set productImage = data.cartItem.images | first %}
+{% set productName = data.cartItem.name %}
 
 {% block body %}
     {% if productImage is not empty %}
 
-        <div>
-            <img src="{{ productImage.externalUrlLarge }}"/>
-        </div>
+        {% include atom('thumbnail') with {
+            modifiers: ['small'],
+            attributes: {
+                alt: productName,
+                src: productImage.externalUrlLarge
+            }
+        } only %}
 
     {% else %}
 
