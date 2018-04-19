@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader;
 
 use Iterator;
 use League\Csv\Reader;
+use SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig;
 
 class CsvInvitationReader implements InvitationReaderInterface
 {
@@ -18,11 +19,20 @@ class CsvInvitationReader implements InvitationReaderInterface
     protected $importFilePath;
 
     /**
-     * @param string $importFilePath
+     * @var \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig
      */
-    public function __construct(string $importFilePath)
-    {
+    protected $config;
+
+    /**
+     * @param string $importFilePath
+     * @param \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig|\Spryker\Yves\Kernel\AbstractBundleConfig $config
+     */
+    public function __construct(
+        string $importFilePath,
+        CompanyUserInvitationPageConfig $config
+    ) {
         $this->importFilePath = $importFilePath;
+        $this->config = $config;
     }
 
     /**
@@ -30,6 +40,8 @@ class CsvInvitationReader implements InvitationReaderInterface
      */
     public function getInvitations(): Iterator
     {
-        return Reader::createFromPath($this->importFilePath, 'r')->fetchAssoc();
+        return Reader::createFromPath($this->importFilePath, 'r')
+            ->setDelimiter($this->config->getInvitationFileDelimiter())
+            ->fetchAssoc();
     }
 }

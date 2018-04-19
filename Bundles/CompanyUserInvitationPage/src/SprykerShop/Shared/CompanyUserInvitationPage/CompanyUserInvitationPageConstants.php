@@ -9,6 +9,8 @@ namespace SprykerShop\Shared\CompanyUserInvitationPage;
 
 interface CompanyUserInvitationPageConstants
 {
+    public const INVITATION_FILE_DELIMITER = 'COMPANY_USER_INVITATION:INVITATION_FILE_DELIMITER';
+    
     public const ID_COMPANY_USER_INVITATION = 'id';
     public const INVITATION_HASH = 'hash';
     public const ROUTE_INVITATION_ACCEPT = 'invitation/accept';

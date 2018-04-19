@@ -222,10 +222,10 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPage\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
      */
-    public function getPostCustomerRegistrationPlugins(): array
+    public function getPreRegistrationCustomerTransferExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_POST_CUSTOMER_REGISTRATION);
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER);
     }
 }

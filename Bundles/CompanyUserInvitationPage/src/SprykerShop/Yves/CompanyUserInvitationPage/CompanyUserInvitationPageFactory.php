@@ -8,14 +8,12 @@
 namespace SprykerShop\Yves\CompanyUserInvitationPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCompanyUserClientInterface;
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCompanyUserInvitationClientInterface;
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCustomerClientInterface;
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToSessionClientInterface;
 use SprykerShop\Yves\CompanyUserInvitationPage\Form\FormFactory;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Errors\ImportErrorsHandler;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Errors\ImportErrorsHandlerInterface;
-use SprykerShop\Yves\CompanyUserInvitationPage\Model\Handler\CompanyUserInvitationPostCustomerRegistrationHandler;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Mapper\InvitationMapper;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Mapper\InvitationMapperInterface;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader\CsvInvitationReader;
@@ -38,7 +36,10 @@ class CompanyUserInvitationPageFactory extends AbstractFactory
      */
     public function createCsvInvitationReader(string $importFilePath): InvitationReaderInterface
     {
-        return new CsvInvitationReader($importFilePath);
+        return new CsvInvitationReader(
+            $importFilePath,
+            $this->getConfig()
+        );
     }
 
     /**
@@ -58,18 +59,6 @@ class CompanyUserInvitationPageFactory extends AbstractFactory
     {
         return new ImportErrorsHandler(
             $this->getSessionClient()
-        );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CompanyUserInvitationPage\Model\Handler\CompanyUserInvitationPostCustomerRegistrationHandlerInterface
-     */
-    public function createCompanyUserInvitationPostCustomerRegistrationHandler()
-    {
-        return new CompanyUserInvitationPostCustomerRegistrationHandler(
-            $this->getSessionClient(),
-            $this->getCompanyUserInvitationClient(),
-            $this->getCompanyUserClient()
         );
     }
 
@@ -95,13 +84,5 @@ class CompanyUserInvitationPageFactory extends AbstractFactory
     public function getSessionClient(): CompanyUserInvitationPageToSessionClientInterface
     {
         return $this->getProvidedDependency(CompanyUserInvitationPageDependencyProvider::CLIENT_SESSION);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCompanyUserClientInterface
-     */
-    public function getCompanyUserClient(): CompanyUserInvitationPageToCompanyUserClientInterface
-    {
-        return $this->getProvidedDependency(CompanyUserInvitationPageDependencyProvider::CLIENT_COMPANY_USER);
     }
 }
