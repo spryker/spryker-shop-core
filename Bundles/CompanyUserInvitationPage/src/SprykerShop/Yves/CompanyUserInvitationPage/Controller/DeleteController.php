@@ -28,7 +28,7 @@ class DeleteController extends AbstractController
     public function indexAction(Request $request)
     {
         return $this->view([
-            'id' => (int)$request->get(CompanyUserInvitationPageConstants::INVITATION_ID),
+            'id' => (int)$request->get(CompanyUserInvitationPageConstants::ID_COMPANY_USER_INVITATION),
         ], [], '@CompanyUserInvitationPage/views/invitation-delete/invitation-delete.twig');
     }
 
@@ -39,7 +39,7 @@ class DeleteController extends AbstractController
      */
     public function confirmAction(Request $request): RedirectResponse
     {
-        $invitationId = (int)$request->get(CompanyUserInvitationPageConstants::INVITATION_ID);
+        $invitationId = (int)$request->get(CompanyUserInvitationPageConstants::ID_COMPANY_USER_INVITATION);
         $companyUserInvitationTransfer = (new CompanyUserInvitationTransfer())
             ->setIdCompanyUserInvitation($invitationId);
 

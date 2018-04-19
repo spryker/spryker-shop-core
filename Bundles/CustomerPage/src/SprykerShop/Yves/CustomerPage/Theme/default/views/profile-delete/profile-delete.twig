@@ -1,4 +1,4 @@
-{% extends template('page-layout-company-user-invitation', 'CustomerPage') %}
+{% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
     title: 'customer.account.profile_data' | trans,
@@ -10,6 +10,6 @@
         <h5>{{ "customer.profile.delete" | trans }}</h5>
         <hr />
         {{ "customer.profile.delete.confirmation_question" | trans }}
-        <a href="{{url('company-user-invitation')}}" class="button button--alert float-right">{{ "customer.profile.delete" | trans }}</a>
+        <a href="{{url('customer/delete/confirm')}}" class="button button--alert float-right">{{ "customer.profile.delete" | trans }}</a>
     </div>
 {% endblock %}

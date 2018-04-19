@@ -9,7 +9,7 @@ namespace SprykerShop\Shared\CompanyUserInvitationPage;
 
 interface CompanyUserInvitationPageConstants
 {
-    public const INVITATION_ID = 'id';
+    public const ID_COMPANY_USER_INVITATION = 'id';
     public const INVITATION_HASH = 'hash';
     public const ROUTE_INVITATION_ACCEPT = 'invitation/accept';
     public const IMPORT_ERRORS_FILE_PATH = '/tmp';

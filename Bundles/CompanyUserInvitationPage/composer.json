@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/application": "^3.8.0",
     "spryker/company-user": "^1.1.1",
-    "spryker/company-user-invitation": "dev-master",
+    "spryker/company-user-invitation": "1.0.0",
     "spryker/csv": "2.0.1",
     "spryker/customer": "^7.7.1",
     "spryker/kernel": "^3.19.0",
