@@ -19,7 +19,6 @@
     <strong>{{ 'product.variants' | trans }}:</strong>
     <form method="POST" action="{{ path('cart/update', {'sku': data.cartItem.sku }) }}">
         {% for attributeName, attributeOptions in data.cartItemAttributes %}
-            {#<pre>{{ dump(attributeName, attributeOptions) }}</pre>#}
             {% embed atom('select') with {
                 modifiers: ['expand'],
                 data: {

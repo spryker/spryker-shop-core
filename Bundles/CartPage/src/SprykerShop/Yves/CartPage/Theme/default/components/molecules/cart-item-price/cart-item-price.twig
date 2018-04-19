@@ -12,9 +12,11 @@
 
 {% block body %}
     <li>{{ 'cart.item.item_price' | trans }} <span class="float-right">{{ data.cartItem.unitPrice | money }}</span></li>
-    <li class="{{ config.name }}__options">
-        {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }}
-    </li>
+    {% if (data.cartItem.productOptions | length > 0) %}
+        <li class="{{ config.name }}__options">
+            {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }}
+        </li>
+    {% endif %}
     <li><hr/></li>
     <li><strong>{{ 'cart.item.item_total' | trans }}</strong> <strong class="float-right">{{ data.cartItem.sumSubtotalAggregation | money }}</strong></li>
 {% endblock %}

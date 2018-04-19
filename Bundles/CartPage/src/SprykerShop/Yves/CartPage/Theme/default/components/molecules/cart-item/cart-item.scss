@@ -17,9 +17,27 @@ $component-cart-item-sku-background: $color-dark;
             padding: 0 .5rem;
         }
 
-        &__bundles {
+        &__wrap-details {
             @include font-size(small);
-            padding: 0 0 .2rem;
+        }
+
+        &__quantity {
+            padding: 0 0 0.8rem;
+        }
+
+        &__attributes {
+            border-top: solid 1px $color-lighter;
+            padding: 0.8rem 0;
+        }
+
+        &__note {
+            border-top: solid 1px $color-lighter;
+            padding: 1rem 0;
+        }
+
+        .cart-bundles {
+            border-top: solid 1px $color-lighter;
+            padding: 0.8rem 0;
         }
 
         @content;

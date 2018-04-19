@@ -49,6 +49,6 @@ class CartNoteQuoteItemWidgetPlugin extends AbstractWidgetPlugin implements Cart
      */
     public static function getTemplate()
     {
-        return '@CartNoteWidget/views/cart-page/cart-note-item-form.twig';
+        return '@CartNoteWidget/views/cart-note-item-form/cart-note-item-form.twig';
     }
 }

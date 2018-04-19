@@ -6,13 +6,12 @@
 } %}
 
 {% block body %}
-    <hr>
-    {% include molecule('form') with {
+
+    {% embed molecule('form') with {
         data: {
             options: {
                 action: data.formAction
             },
-            title: 'cart_note.item_form.enter_note' | trans,
             form: data.form,
             submit: {
                 enable: true,
@@ -20,5 +19,8 @@
             }
         }
     } only %}
-    <hr>
+        {% block title %}
+            {{ 'cart_note.item_form.enter_note' | trans }}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

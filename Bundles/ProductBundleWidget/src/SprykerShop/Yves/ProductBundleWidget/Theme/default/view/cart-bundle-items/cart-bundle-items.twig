@@ -1,10 +1,10 @@
 {% if _widget.bundleItems %}
-    <li>
+    <div class="cart-bundles">
         <strong>{{ 'cart.item.bundle.description' | trans }}</strong>
         <ul class="list--bullet">
             {% for bundleItem in _widget.bundleItems %}
                 <li class="list__item">{{ bundleItem.quantity }} x {{ bundleItem.name }}</li>
             {% endfor %}
         </ul>
-    </li>
+    </div>
 {% endif %}

@@ -23,25 +23,17 @@
 
 {% block body %}
     {% if canWrite %}
-    <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.cartItem.sku }) }}">
-        <div class="{{ config.name }}__title">
-            <strong>{{ 'cart.item_quantity' | trans }}</strong>
-        </div>
-        <div class="grid">
-            <div class="col col--sm-8">
 
-                {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
+        <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.cartItem.sku }) }}">
 
-                    {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
-
-                {% else %}
-
+            <label class="grid">
+                <span class="col col--sm-12">
+                    {{ 'cart.item_quantity' | trans }}
+                </span>
+                <div class="col col--expand">
                     {% if not data.cartItem.maxQuantity or data.cartItem.maxQuantity < 0 %}
-
-                    <input class="input input--expand" type="number" value="{{ data.cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>
-
+                        <input class="input input--expand" type="number" value="{{ data.cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>
                     {% else %}
-
                         {% include atom('select') with {
                             modifiers: ['expand'],
                             data: {
@@ -51,34 +43,33 @@
                                 name: 'quantity'
                             }
                         } only %}
-
                     {% endif %}
+                </div>
 
-                {% endif %}
+                <div class="col">
+                    <button type="submit" class="button button--expand" {{qa('cart-update-quantity-button')}}>
+                        {% include atom('icon') with {
+                            class: config.name ~ '__sync',
+                            data: {
+                                name: 'sync'
+                            }
+                        } only %}
+                    </button>
+                </div>
+            </label>
 
-            </div>
+            {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
+                {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
+            {% endif %}
 
-            <div class="col col--sm-3">
-
-                <button type="submit" class="button button--expand" {{qa('cart-update-quantity-button')}}>
-                    {% include atom('icon') with {
-                        class: config.name ~ '__sync',
-                        data: {
-                            name: 'sync'
-                        }
-                    } only %}
-                </button>
-            </div>
-
-         </div>
-        <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
-    </form>
+            <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
+        </form>
     {% else %}
         <label>
             <strong>{{ 'cart.item_quantity' | trans }}</strong>
             <span class="input-group __no-margin-bottom">
-                        {{ cartItem.quantity }}
-                     </span>
+                {{ cartItem.quantity }}
+             </span>
         </label>
     {% endif %}
 {% endblock %}

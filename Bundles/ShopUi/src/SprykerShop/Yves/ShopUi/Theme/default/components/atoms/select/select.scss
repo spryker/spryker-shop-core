@@ -30,6 +30,7 @@
             margin: auto;
             color: $color-darker;
             z-index: 1;
+            pointer-events: none;
         }
 
         &--expand,
