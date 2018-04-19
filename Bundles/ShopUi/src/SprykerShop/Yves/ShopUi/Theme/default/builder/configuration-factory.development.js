@@ -2,14 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ConfigurationFactory = require('./configuration-factory');
 
-class ConfigurationFactoryForDevelopment {
-
-    constructor(settingFactory, finder) {
-        this.settings = settingFactory.getSettings();
-        this.finder = finder;
-    }
-
+module.exports = class ConfigurationFactoryForDevelopment extends ConfigurationFactory {
     getGlobalVariables() {
         return {
             __NAME__: `'${this.settings.name}'`,
@@ -19,27 +14,26 @@ class ConfigurationFactoryForDevelopment {
 
     getAppEntryPoint() {
         return [
-            path.join(this.settings.paths.srcDir, './app.ts'),
-            path.join(this.settings.paths.srcDir, './styles/basics.scss'),
+            path.join(this.settings.dirs.ui.project, './app.ts'),
+            path.join(this.settings.dirs.ui.project, './styles/basics.scss'),
             ...this.finder.findComponents(),
-            path.join(this.settings.paths.srcDir, './styles/utils.scss')
+            path.join(this.settings.dirs.ui.project, './styles/utils.scss')
         ]
     }
 
     getVendorEntryPoint() {
         return [
-            '@webcomponents/webcomponentsjs/custom-elements-es5-adapter',
-            '@webcomponents/webcomponentsjs/webcomponents-sd-ce'
+            path.join(this.settings.dirs.ui.project, './vendor.ts'),
         ]
     }
 
     getTSLoaderOptions() {
         return {
-            context: this.settings.paths.rootDir,
-            configFile: path.join(this.settings.paths.rootDir, './tsconfig.json'),
+            context: this.settings.dirs.context,
+            configFile: path.join(this.settings.dirs.context, './tsconfig.json'),
             compilerOptions: {
-                baseUrl: this.settings.paths.rootDir,
-                outDir: this.settings.paths.publicPath
+                baseUrl: this.settings.dirs.context,
+                outDir: this.settings.paths.public
             }
         }
     }
@@ -63,7 +57,7 @@ class ConfigurationFactoryForDevelopment {
 
     getSassResourcesLoaderOptions() {
         return {
-            resources: path.join(this.settings.paths.srcDir, './styles/shared.scss')
+            resources: path.join(this.settings.paths.ui.project, './styles/shared.scss')
         }
     }
 
@@ -82,20 +76,21 @@ class ConfigurationFactoryForDevelopment {
 
     getCleanWebpackPluginOptions() {
         return {
-            root: this.settings.paths.publicDir,
+            root: this.settings.dirs.public,
             verbose: true,
             beforeEmit: true
         }
     }
 
-    getConfiguration() {
+    createConfiguration() {
         /**
          *
          * configuration
          */
         return {
-            context: this.settings.paths.rootDir,
-            mode: 'development',
+            context: this.settings.dirs.context,
+            mode: this.settings.mode,
+            watch: this.settings.watch,
             devtool: 'inline-source-map',
 
             stats: {
@@ -113,7 +108,7 @@ class ConfigurationFactoryForDevelopment {
             },
 
             output: {
-                path: this.settings.paths.publicDir,
+                path: this.settings.dirs.public,
                 filename: `./js/${this.settings.name}.[name].js`,
                 publicPath: '/assets/',
                 jsonpFunction: `webpackJsonp_${this.settings.name}`
@@ -122,7 +117,8 @@ class ConfigurationFactoryForDevelopment {
             resolve: {
                 extensions: ['.ts', '.js', '.json', '.css', '.scss'],
                 alias: {
-                    'shop-ui': this.settings.paths.srcDir
+                    'ui-shop': this.settings.dirs.ui.shop,
+                    'ui-project': this.settings.dirs.ui.project
                 }
             },
 
@@ -162,7 +158,4 @@ class ConfigurationFactoryForDevelopment {
             ]
         }
     }
-
 }
-
-module.exports = ConfigurationFactoryForDevelopment;

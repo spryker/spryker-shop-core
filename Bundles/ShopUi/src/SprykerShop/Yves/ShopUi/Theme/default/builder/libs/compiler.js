@@ -1,11 +1,11 @@
 const webpack = require('webpack');
 
-class Compiler {
+module.exports = class Compiler {
     constructor(configurationFactory) {
-        this.configuration = configurationFactory.getConfiguration();
+        this.configuration = configurationFactory.createConfiguration();
     }
 
-    run() {
+    build() {
         console.log(`Building for ${this.configuration.mode}...`);
 
         if (this.configuration.watch) {
@@ -27,5 +27,3 @@ class Compiler {
         });
     }
 }
-
-module.exports = Compiler;

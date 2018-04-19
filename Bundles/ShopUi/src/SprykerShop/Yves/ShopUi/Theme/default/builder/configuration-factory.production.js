@@ -2,10 +2,9 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const ConfigurationFactoryForDevelopment = require('./configuration-factory.dev');
+const ConfigurationFactoryForDevelopment = require('./configuration-factory.development');
 
-class ConfigurationFactoryForProduction extends ConfigurationFactoryForDevelopment {
-
+module.exports = class ConfigurationFactoryForProduction extends ConfigurationFactoryForDevelopment {
     getGlobalVariables() {
         return {
             __NAME__: `'${this.settings.name}'`,
@@ -42,13 +41,12 @@ class ConfigurationFactoryForProduction extends ConfigurationFactoryForDevelopme
         }
     }
 
-    getConfiguration() {
-        const devConfiguration = super.getConfiguration();
+    createConfiguration() {
+        const devConfiguration = super.createConfiguration();
 
         return {
             ...devConfiguration,
 
-            mode: 'production',
             devtool: false,
 
             optimization: {
@@ -61,7 +59,4 @@ class ConfigurationFactoryForProduction extends ConfigurationFactoryForDevelopme
             }
         };
     }
-
 }
-
-module.exports = ConfigurationFactoryForProduction;

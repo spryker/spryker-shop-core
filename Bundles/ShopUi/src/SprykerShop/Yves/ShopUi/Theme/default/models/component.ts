@@ -1,5 +1,5 @@
 import Logger from '../app/logger';
-import { AppConfig } from '../app/config';
+import { Config } from '../app/config';
 
 export interface IComponentContructor {
     new(): Component
@@ -9,11 +9,11 @@ export interface IComponentImporter {
     (): Promise<{ default: IComponentContructor }>
 }
 
-export default abstract class Component extends HTMLElement { 
+export default abstract class Component extends HTMLElement {
     readonly componentName: string
     readonly componentSelector: string
     protected logger: Logger
-    protected config: AppConfig
+    protected config: Config
 
     constructor() {
         super();
@@ -21,7 +21,7 @@ export default abstract class Component extends HTMLElement {
         this.componentSelector = `js-${this.componentName}`;
     }
 
-    mountCallback(config: AppConfig, logger: Logger): void { 
+    mountCallback(config: Config, logger: Logger): void {
         this.config = config;
         this.logger = logger;
     }

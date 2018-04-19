@@ -1,8 +1,9 @@
+import '../models/component';
 import Logger from './logger';
 import App from './app';
-import defaultAppConfig from './config';
 
-const logger = new Logger(defaultAppConfig);
-const app = new App(defaultAppConfig, logger);
-
-document.addEventListener('WebComponentsReady', () => app.bootstrap());
+export default function bootstrap(config) {
+    const logger = new Logger(config);
+    const app = new App(config, logger);
+    document.addEventListener('WebComponentsReady', () => app.bootstrap());
+}

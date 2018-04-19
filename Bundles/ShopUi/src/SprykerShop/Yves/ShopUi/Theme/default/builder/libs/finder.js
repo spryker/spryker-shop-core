@@ -6,10 +6,9 @@ const defaultGlobSettings = {
     absolute: true
 };
 
-class Finder {
-
-    constructor(settingFactory, globSettings = {}) {
-        this.settings = settingFactory.getSettings();
+module.exports = class Finder {
+    constructor(settings, globSettings = {}) {
+        this.settings = settings;
         this.globSettings = Object.assign({}, defaultGlobSettings, globSettings);
     }
 
@@ -24,37 +23,23 @@ class Finder {
     }
 
     toUniqueItemArray(array) {
-        const map = array.reduce((map, fullPath) => {
-            const dir = path.dirname(fullPath);
-            const componentName = path.basename(dir);
-            const componentType = path.basename(path.dirname(dir));
-            return map.set(`${componentType}/${componentName}`, fullPath);
+        const map = array.reduce((map, dir) => {
+            const dirName = path.dirname(dir);
+            const name = path.basename(dirName);
+            const type = path.basename(path.dirname(dirName));
+            return map.set(`${type}/${name}`, dir);
         }, new Map());
 
         return Array.from(map.values());
     }
 
-    findCoreComponents() {
-        process.stdout.write('Scanning for core components... ');
-        const components = this.glob(this.settings.glob.core.dirs, this.settings.glob.core.patterns);
-        console.log(`${components.length} found`);
-        return components;
-    }
-
-    findProjectComponents() {
-        process.stdout.write('Scanning for project components... ');
-        const components = this.glob(this.settings.glob.project.dirs, this.settings.glob.project.patterns);
-        console.log(`${components.length} found`);
-        return components;
-    }
-
     findComponents() {
-        return this.toUniqueItemArray([
-            ...this.findCoreComponents(),
-            ...this.findProjectComponents()
-        ]);
+        process.stdout.write('Scanning for components... ');
+
+        const components = this.glob(this.settings.find.components.dirs, this.settings.find.components.patterns);
+        const uniqueComponents = this.toUniqueItemArray(components);
+
+        console.log(`${uniqueComponents.length} found`);
+        return uniqueComponents;
     }
-
 }
-
-module.exports = Finder;
