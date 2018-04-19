@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
-use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
 use SprykerShop\Yves\CompanyUserInvitationPage\Form\CompanyUserInvitationForm;
 use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider\CompanyUserInvitationPageControllerProvider;
 use Symfony\Component\Form\FormInterface;

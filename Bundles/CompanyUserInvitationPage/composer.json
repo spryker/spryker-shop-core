@@ -22,9 +22,7 @@
     "spryker/twig": "*"
   },
   "suggest": {
-    "spryker-shop/shop-router": "TODO: add suggestion description",
-    "spryker/silex": "TODO: add suggestion description",
-    "spryker/twig": "TODO: add suggestion description"
+    "spryker/silex": "If you want to use the shops router provider"
   },
   "autoload": {
     "psr-4": {

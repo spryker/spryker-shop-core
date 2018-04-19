@@ -162,7 +162,7 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
     {
         $canFunction = new Twig_SimpleFunction('can', [
             $this,
-            'checkPermission',
+            'can',
         ], [
             'needs_context' => false,
             'needs_environment' => false,
@@ -177,9 +177,9 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
      *
      * @return bool
      */
-    public function checkPermission($permissionKey, $context = null)
+    public function can($permissionKey, $context = null)
     {
-        return $this->can($permissionKey, $context);
+        return true;
     }
 
     /**
