@@ -61,6 +61,12 @@ class ConfigurationFactoryForDevelopment {
         return {}
     }
 
+    getSassResourcesLoaderOptions() {
+        return {
+            resources: path.join(this.settings.paths.srcDir, './styles/shared.scss')
+        }
+    }
+
     getMiniCssExtractPluginOptions() {
         return {
             filename: `./css/${this.settings.name}.[name].css`,
@@ -129,7 +135,8 @@ class ConfigurationFactoryForDevelopment {
                             MiniCssExtractPlugin.loader,
                             { loader: 'css-loader', options: this.getCssLoaderOptions() },
                             { loader: 'postcss-loader', options: this.getPostcssLoaderOptions() },
-                            { loader: 'sass-loader', options: this.getSassLoaderOptions() }
+                            { loader: 'sass-loader', options: this.getSassLoaderOptions() },
+                            { loader: 'sass-resources-loader', options: this.getSassResourcesLoaderOptions() }
                         ]
                     }
                 ]
