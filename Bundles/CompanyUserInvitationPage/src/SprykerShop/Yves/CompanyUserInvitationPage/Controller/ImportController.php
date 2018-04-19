@@ -28,6 +28,12 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class ImportController extends AbstractController
 {
+    public const DEFAULT_COMPANY_USER_INVITATION_LIST_PAGE = 1;
+    public const DEFAULT_COMPANY_USER_INVITATION_LIST_LIMIT = 10;
+    public const DEFAULT_COMPANY_USER_INVITATION_LIST_PARAM_PAGE = 'page';
+    public const DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_FIELD = 'email';
+    public const DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_DIRECTION = 'ASC';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -147,8 +153,8 @@ class ImportController extends AbstractController
     protected function getCriteriaFilterTransfer(Request $request): CompanyUserInvitationCriteriaFilterTransfer
     {
         $filterTransfer = (new FilterTransfer())
-            ->setOrderBy(CompanyUserInvitationPageConstants::DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_FIELD)
-            ->setOrderDirection(CompanyUserInvitationPageConstants::DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_DIRECTION);
+            ->setOrderBy(static::DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_FIELD)
+            ->setOrderDirection(static::DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_DIRECTION);
 
         $companyUserInvitationCriteriaFilterTransfer = (new CompanyUserInvitationCriteriaFilterTransfer())
             ->setFkCompanyUser($this->companyUserTransfer->getIdCompanyUser())
@@ -156,13 +162,13 @@ class ImportController extends AbstractController
             ->setFilter($filterTransfer);
 
         $page = $request->query->getInt(
-            CompanyUserInvitationPageConstants::DEFAULT_COMPANY_USER_INVITATION_LIST_PARAM_PAGE,
-            CompanyUserInvitationPageConstants::DEFAULT_COMPANY_USER_INVITATION_LIST_PAGE
+            static::DEFAULT_COMPANY_USER_INVITATION_LIST_PARAM_PAGE,
+            static::DEFAULT_COMPANY_USER_INVITATION_LIST_PAGE
         );
 
         $paginationTransfer = (new PaginationTransfer())
             ->setPage($page)
-            ->setMaxPerPage(CompanyUserInvitationPageConstants::DEFAULT_COMPANY_USER_INVITATION_LIST_LIMIT);
+            ->setMaxPerPage(static::DEFAULT_COMPANY_USER_INVITATION_LIST_LIMIT);
 
         $companyUserInvitationCriteriaFilterTransfer->setPagination($paginationTransfer);
 

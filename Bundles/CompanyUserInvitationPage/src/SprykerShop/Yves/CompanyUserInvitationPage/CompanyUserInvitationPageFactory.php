@@ -100,7 +100,7 @@ class CompanyUserInvitationPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCompanyUserClientInterface
      */
-    protected function getCompanyUserClient(): CompanyUserInvitationPageToCompanyUserClientInterface
+    public function getCompanyUserClient(): CompanyUserInvitationPageToCompanyUserClientInterface
     {
         return $this->getProvidedDependency(CompanyUserInvitationPageDependencyProvider::CLIENT_COMPANY_USER);
     }
