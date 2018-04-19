@@ -18,6 +18,9 @@
     {% else %}
         {{ parent() }}
     {% endif %}
+    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty %}
+        {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
