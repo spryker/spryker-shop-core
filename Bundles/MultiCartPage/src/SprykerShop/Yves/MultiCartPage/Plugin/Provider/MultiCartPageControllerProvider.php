@@ -126,34 +126,4 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
 
         return $this;
     }
-
-    /**
-     * @param string $allowedLocalesPattern
-     *
-     * @return $this
-     */
-    protected function addMultiCartReorderRoute($allowedLocalesPattern): self
-    {
-        $this->createGetController('/{multiCart}/reorder/{idQuote}', static::ROUTE_MULTI_CART_SET_DEFAULT, 'MultiCartPage', 'Reorder', 'reorder')
-            ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
-            ->assert(self::PARAM_ID_QUOTE, '\d+')
-            ->value('multiCart', 'multi-cart');
-
-        return $this;
-    }
-
-    /**
-     * @param string $allowedLocalesPattern
-     *
-     * @return $this
-     */
-    protected function addMultiCartReorderItemsRoute($allowedLocalesPattern): self
-    {
-        $this->createGetController('/{multiCart}/reorder-items/{idQuote}', static::ROUTE_MULTI_CART_SET_DEFAULT, 'MultiCartPage', 'Reorder', 'reorderItems')
-            ->assert('multiCart', $allowedLocalesPattern . 'multi-cart|multi-cart')
-            ->assert(self::PARAM_ID_QUOTE, '\d+')
-            ->value('multiCart', 'multi-cart');
-
-        return $this;
-    }
 }
