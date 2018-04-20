@@ -1,6 +1,4 @@
-$component-burst-size: .75rem;
-
-@mixin component-flag($name: '.flag') {
+@mixin product-label-widget-flag($name: '.flag') {
     #{$name} {
         @include font-size(small);
         @include line-height(tight);

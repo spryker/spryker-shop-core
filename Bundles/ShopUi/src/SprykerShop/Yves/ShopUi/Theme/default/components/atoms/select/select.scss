@@ -1,4 +1,4 @@
-@mixin component-select($name: '.select') {
+@mixin shop-ui-select($name: '.select') {
     #{$name} {
         @include transition(border-color);
         display: inline-block;

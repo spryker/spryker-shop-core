@@ -1,4 +1,4 @@
-import Component from 'ui-shop/models/component';
+import Component from 'ShopUi/models/component';
 
 export default class CustomerReorder extends Component {
     readonly selections: HTMLInputElement[]

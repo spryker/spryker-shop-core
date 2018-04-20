@@ -1,4 +1,4 @@
-@mixin component-input($name: '.input') {
+@mixin shop-ui-input($name: '.input') {
     #{$name} {
         @include transition(border-color);
         display: inline-block;
@@ -26,7 +26,7 @@
         &--error {
             border-color: map-get($color-actions, alert);
         }
-        
+
         @content;
     }
 }

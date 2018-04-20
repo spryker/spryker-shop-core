@@ -1,10 +1,10 @@
-@mixin component-price($name: '.price') {
+@mixin shop-ui-price($name: '.price') {
     #{$name} {
         display: block;
 
         &__amount {
             @include font-size(big);
-            
+
             &--original {
                 @include font-size(small);
                 display: block;

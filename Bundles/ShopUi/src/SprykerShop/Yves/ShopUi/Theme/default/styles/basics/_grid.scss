@@ -76,7 +76,7 @@
         display: block;
         flex-grow: 0;
         flex-basis: auto;
-        
+
         @each $breakpoint, $edges in $grid-breakpoints {
             @include media-min(edge-min($edges)) {
                 @for $column from 1 through $grid-columns {

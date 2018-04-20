@@ -1,4 +1,4 @@
-@mixin component-side-drawer($name: '.side-drawer') {
+@mixin shop-ui-side-drawer($name: '.side-drawer') {
     $drawer-width: 15rem;
 
     #{$name} {

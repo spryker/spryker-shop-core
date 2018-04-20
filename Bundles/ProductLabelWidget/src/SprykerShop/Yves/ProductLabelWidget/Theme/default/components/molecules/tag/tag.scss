@@ -1,13 +1,13 @@
-$component-burst-size: 2rem;
+$product-label-widget-tag-burst-size: 2rem;
 
-@mixin component-tag($name: '.tag') {
+@mixin product-label-widget-tag($name: '.tag') {
     #{$name} {
         position: relative;
         display: flex;
         align-items: center;
-        width: $component-burst-size;
-        height: $component-burst-size;
-        margin-bottom: $component-burst-size;
+        width: $product-label-widget-tag-burst-size;
+        height: $product-label-widget-tag-burst-size;
+        margin-bottom: $product-label-widget-tag-burst-size;
         background: $color-alt;
 
         &::before,
@@ -16,8 +16,8 @@ $component-burst-size: 2rem;
             position: absolute;
             top: 0;
             left: 0;
-            height: $component-burst-size;
-            width: $component-burst-size;
+            height: $product-label-widget-tag-burst-size;
+            width: $product-label-widget-tag-burst-size;
             background: $color-alt;
             z-index: 1;
         }

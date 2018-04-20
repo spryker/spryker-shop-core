@@ -1,4 +1,4 @@
-@mixin component-label-group($name: '.label-group') {
+@mixin product-label-widget-label-group($name: '.label-group') {
     #{$name} {
         position: absolute;
         top: 0;

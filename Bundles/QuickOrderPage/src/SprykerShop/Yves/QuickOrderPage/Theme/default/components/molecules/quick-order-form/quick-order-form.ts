@@ -1,5 +1,5 @@
-import Component from 'ui-shop/models/component';
-import AjaxProvider from 'ui-shop/components/molecules/ajax-provider/ajax-provider';
+import Component from 'ShopUi/models/component';
+import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 
 export default class QuickOrderForm extends Component {
     form: HTMLFormElement

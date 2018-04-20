@@ -1,4 +1,4 @@
-@mixin component-pagination($name: '.pagination') {
+@mixin shop-ui-pagination($name: '.pagination') {
     #{$name} {
         @include font-size(small);
         text-align: center;

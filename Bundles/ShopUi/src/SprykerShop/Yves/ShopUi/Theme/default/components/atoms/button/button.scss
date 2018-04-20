@@ -1,4 +1,4 @@
-@mixin component-button($name: '.button') {
+@mixin shop-ui-button($name: '.button') {
     #{$name} {
         @include transition(background-color);
         display: inline-block;
@@ -28,7 +28,7 @@
         }
 
         @each $action, $color-action in $color-actions {
-            @include component-button-action($action, $color-action);
+            @include shop-ui-button-action($action, $color-action);
         }
 
         &--expand {
@@ -49,7 +49,7 @@
     }
 }
 
-@mixin component-button-action($action, $color-action) {
+@mixin shop-ui-button-action($action, $color-action) {
     &--#{$action} {
         background-color: $color-action;
 

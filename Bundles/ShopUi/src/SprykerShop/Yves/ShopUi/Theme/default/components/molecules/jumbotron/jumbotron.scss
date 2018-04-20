@@ -1,4 +1,4 @@
-@mixin component-jumbotron($name: '.jumbotron') {
+@mixin shop-ui-jumbotron($name: '.jumbotron') {
     #{$name} {
         &__container {
             height: 10rem;

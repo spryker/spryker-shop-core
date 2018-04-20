@@ -1,4 +1,4 @@
-@mixin component-flash-message($name: '.flash-message') {
+@mixin shop-ui-flash-message($name: '.flash-message') {
     #{$name} {
         @include shadow;
         @include is-invisible;
@@ -13,20 +13,20 @@
             color: dark($color-main);
         }
 
-        &--show {   
+        &--show {
             @include is-visible;
             max-height: 8rem;
         }
 
         @each $action, $color-action in $color-actions {
-            @include component-flash-message-action($action, $color-action);
+            @include shop-ui-flash-message-action($action, $color-action);
         }
 
         @content;
     }
 }
 
-@mixin component-flash-message-action($action, $color-action) {
+@mixin shop-ui-flash-message-action($action, $color-action) {
     &--#{$action} {
         background-color: rgba(light($color-action), .97);
     }

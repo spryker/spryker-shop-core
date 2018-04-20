@@ -1,11 +1,11 @@
-$component-simple-carousel-icon-size: $component-icon-size-big;
+$shop-ui-simple-carousel-icon-size: $shop-ui-icon-size-big;
 
-@mixin component-simple-carousel($name: '.simple-carousel') {
+@mixin shop-ui-simple-carousel($name: '.simple-carousel') {
     #{$name} {
         &__container {
             position: relative;
-            padding-left: $component-simple-carousel-icon-size;
-            padding-right: $component-simple-carousel-icon-size;
+            padding-left: $shop-ui-simple-carousel-icon-size;
+            padding-right: $shop-ui-simple-carousel-icon-size;
         }
 
         &__view {

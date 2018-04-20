@@ -1,4 +1,4 @@
-@mixin component-notification-area($name: '.notification-area') {
+@mixin shop-ui-notification-area($name: '.notification-area') {
     #{$name} {
         position: fixed;
         top: 0;

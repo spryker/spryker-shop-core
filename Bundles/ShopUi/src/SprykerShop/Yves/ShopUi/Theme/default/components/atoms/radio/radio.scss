@@ -1,5 +1,5 @@
-@mixin component-radio($name: '.radio') {
-    @include component-checkbox($name) {
+@mixin shop-ui-radio($name: '.radio') {
+    @include shop-ui-checkbox($name) {
         &__box,
         &__check {
             border-radius: 100%;

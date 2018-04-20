@@ -2,9 +2,9 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const ConfigurationFactoryForDevelopment = require('./configuration-factory.development');
+const DevelopmentConfigurationFactory = require('./configuration-factory.dev');
 
-module.exports = class ConfigurationFactoryForProduction extends ConfigurationFactoryForDevelopment {
+module.exports = class ProductionConfigurationFactory extends DevelopmentConfigurationFactory {
     getGlobalVariables() {
         return {
             __NAME__: `'${this.settings.name}'`,
@@ -42,15 +42,16 @@ module.exports = class ConfigurationFactoryForProduction extends ConfigurationFa
     }
 
     createConfiguration() {
-        const devConfiguration = super.createConfiguration();
+        const configuration = super.createConfiguration();
 
         return {
-            ...devConfiguration,
+            ...configuration,
 
+            mode: 'production',
             devtool: false,
 
             optimization: {
-                ...devConfiguration.optimization,
+                ...configuration.optimization,
 
                 minimizer: [
                     new UglifyJsPlugin(this.getUglifyJsPluginOptions()),

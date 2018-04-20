@@ -1,4 +1,4 @@
-@mixin component-table($name: '.table') {
+@mixin shop-ui-table($name: '.table') {
     #{$name} {
         thead,
         &__head {

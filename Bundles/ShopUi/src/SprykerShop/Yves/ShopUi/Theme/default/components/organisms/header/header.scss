@@ -1,4 +1,4 @@
-@mixin component-header($name: '.header') {
+@mixin shop-ui-header($name: '.header') {
     #{$name} {
         background-color: light($color-main);
         margin-bottom: 1rem;

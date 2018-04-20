@@ -1,11 +1,11 @@
-@mixin component-box($name: '.box') {
+@mixin shop-ui-box($name: '.box') {
     #{$name} {
         @include clearfix;
         padding: .5rem;
         margin: .5rem;
         background-color: $color-white;
         border: 1px solid $color-lighter;
-        
+
         hr,
         &__separator {
             position: relative;

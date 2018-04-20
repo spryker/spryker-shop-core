@@ -1,4 +1,4 @@
-@mixin component-link($name: '.link') {
+@mixin shop-ui-link($name: '.link') {
     #{$name} {
         display: inline-block;
         padding: 0;
@@ -12,7 +12,7 @@
         }
 
         @each $action, $color-action in $color-actions {
-            @include component-link-action($action, $color-action);
+            @include shop-ui-link-action($action, $color-action);
         }
 
         &--small {
@@ -41,7 +41,7 @@
     }
 }
 
-@mixin component-link-action($action, $color-action) {
+@mixin shop-ui-link-action($action, $color-action) {
     &--#{$action} {
         color: $color-action;
     }
