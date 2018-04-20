@@ -20,7 +20,7 @@ interface LanguageSwitcherWidgetPluginInterface
      */
     public function initialize(
         string $pathInfo,
-        string $queryString,
+        string $queryString = null,
         string $requestUri
     ): void;
 }
