@@ -18,7 +18,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
 {
     /**
      * @param string $pathInfo
-     * @param string|null $queryString
+     * @param string $queryString
      * @param string $requestUri
      *
      * @return void
@@ -59,14 +59,14 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
 
     /**
      * @param array $localeUrls
-     * @param string|null $queryString
+     * @param string $queryString
      * @param string $requestUri
      *
      * @return string[]
      */
     protected function getLanguages(
         array $localeUrls,
-        string $queryString = null,
+        $queryString,
         string $requestUri
     ): array {
         $locales = $this->getFactory()
@@ -83,14 +83,14 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
     /**
      * @param array $locales
      * @param array $localeUrls
-     * @param string|null $queryString
+     * @param string $queryString
      *
      * @return array
      */
     protected function attachLocaleUrlsFromStorageToLanguages(
         array $locales,
         array $localeUrls,
-        string $queryString = null
+        $queryString
     ): array {
         $languages = [];
         foreach ($locales as $locale) {
