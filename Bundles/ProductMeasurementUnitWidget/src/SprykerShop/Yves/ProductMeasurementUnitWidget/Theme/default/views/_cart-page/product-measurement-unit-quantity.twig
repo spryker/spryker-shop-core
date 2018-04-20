@@ -1,10 +1,14 @@
 {% extends template('widget') %}
 {% define data = {
     cartItem: _widget.itemTransfer,
-    isBaseUnit: _widget.isBaseUnit
+    isBaseUnit: _widget.isBaseUnit | default(true)
 } %}
 {% set cartItem = data.cartItem %}
 {% set salesUnitName = cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+
+{%- block hasSalesUnit -%}
+    {{- _widget.itemTransfer.quantitySalesUnit.idProductMeasurementSalesUnit | default(false) -}}
+{%- endblock -%}
 
 {% block body %}
     {% if not cartItem.maxQuantity or cartItem.maxQuantity < 0 %}

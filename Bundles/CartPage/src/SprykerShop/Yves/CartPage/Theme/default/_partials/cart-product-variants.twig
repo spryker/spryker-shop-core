@@ -1,6 +1,11 @@
 {% set itemAttributes = _view.attributes[cartItem.sku] | default(null) %}
 
-{% if itemAttributes|length > 0 %}
+{% set isItemVariantReplaceAvailable = itemAttributes|length > 0 %}
+{% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
+    {% set isItemVariantReplaceAvailable = not widgetBlock('QuantitySalesUnitWidgetPlugin', 'hasSalesUnit', cartItem) and isItemVariantReplaceAvailable %}
+{% endif %}
+
+{% if isItemVariantReplaceAvailable %}
     {# Product Variants #}
     <li><strong>{{ 'product.variants' | trans }}:</strong></li>
     <li>
