@@ -16,9 +16,10 @@ interface ProductMeasurementUnitWidgetPluginInterface extends WidgetPluginInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param bool $addToCartDisabled
      * @param array $quantityOptions
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, array $quantityOptions = []): void;
+    public function initialize(ProductViewTransfer $productViewTransfer, bool $addToCartDisabled, array $quantityOptions = []): void;
 }

@@ -59,7 +59,7 @@
 
         <div class="grid grid--justify grid--bottom">
             {% if widgetExists('ProductMeasurementUnitWidgetPlugin') %}
-                {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, options) }}
+                {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, disabled, options) }}
             {% else %}
                 <div class="col col--sm-5">
                     <label>
