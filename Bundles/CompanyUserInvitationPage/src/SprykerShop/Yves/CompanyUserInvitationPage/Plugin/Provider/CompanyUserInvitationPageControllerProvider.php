@@ -37,35 +37,35 @@ class CompanyUserInvitationPageControllerProvider extends AbstractYvesController
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
         $this->createController('/{companyUserInvitation}', static::ROUTE_OVERVIEW, 'CompanyUserInvitationPage', 'Import')
-            ->assert('company-user-invitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
+            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
             ->value('companyUserInvitation', 'company-user-invitation');
 
         $this->createController('/{companyUserInvitation}/get-import-errors', static::ROUTE_GET_IMPORT_ERRORS, 'CompanyUserInvitationPage', 'Import', 'getErrors')
-            ->assert('company-user-invitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
+            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
             ->value('companyUserInvitation', 'company-user-invitation');
 
         $this->createController('/{companyUserInvitation}/send', static::ROUTE_INVITATION_SEND, 'CompanyUserInvitationPage', 'Send', 'sendCompanyUserInvitation')
-            ->assert('company-user-invitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
+            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
             ->value('companyUserInvitation', 'company-user-invitation');
 
         $this->createController('/{companyUserInvitation}/send-all', static::ROUTE_INVITATION_SEND_ALL, 'CompanyUserInvitationPage', 'Send', 'sendCompanyUserInvitations')
-            ->assert('company-user-invitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
+            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
             ->value('companyUserInvitation', 'company-user-invitation');
 
         $this->createController('/{companyUserInvitation}/resend', static::ROUTE_INVITATION_RESEND, 'CompanyUserInvitationPage', 'Resend')
-            ->assert('company-user-invitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
+            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
             ->value('companyUserInvitation', 'company-user-invitation');
 
         $this->createController('/{companyUserInvitation}/resend/confirm', static::ROUTE_INVITATION_RESEND_CONFIRM, 'CompanyUserInvitationPage', 'Resend', 'confirm')
-            ->assert('company-user-invitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
+            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
             ->value('companyUserInvitation', 'company-user-invitation');
 
         $this->createController('/{companyUserInvitation}/delete', static::ROUTE_INVITATION_DELETE, 'CompanyUserInvitationPage', 'Delete')
-            ->assert('company-user-invitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
+            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
             ->value('companyUserInvitation', 'company-user-invitation');
 
         $this->createController('/{companyUserInvitation}/delete/confirm', static::ROUTE_INVITATION_DELETE_CONFIRM, 'CompanyUserInvitationPage', 'Delete', 'confirm')
-            ->assert('company-user-invitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
+            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company-user-invitation|company-user-invitation')
             ->value('companyUserInvitation', 'company-user-invitation');
 
         $this->createController('/{invitation}/accept', static::ROUTE_INVITATION_ACCEPT, 'CompanyUserInvitationPage', 'Accept')

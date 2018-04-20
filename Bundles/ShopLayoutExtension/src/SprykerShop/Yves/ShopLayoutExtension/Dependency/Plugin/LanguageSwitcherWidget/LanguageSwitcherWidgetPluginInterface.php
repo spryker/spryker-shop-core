@@ -13,7 +13,7 @@ interface LanguageSwitcherWidgetPluginInterface
 
     /**
      * @param string $pathInfo
-     * @param string $queryString
+     * @param string|null $queryString
      * @param string $requestUri
      *
      * @return void

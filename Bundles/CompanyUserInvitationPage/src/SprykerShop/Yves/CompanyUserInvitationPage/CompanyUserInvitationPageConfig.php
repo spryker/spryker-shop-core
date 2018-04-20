@@ -8,15 +8,16 @@
 namespace SprykerShop\Yves\CompanyUserInvitationPage;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
-use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
 
 class CompanyUserInvitationPageConfig extends AbstractBundleConfig
 {
+    public const INVITATION_FILE_DELIMITER = ',';
+
     /**
      * @return string
      */
     public function getInvitationFileDelimiter(): string
     {
-        return $this->get(CompanyUserInvitationPageConstants::INVITATION_FILE_DELIMITER);
+        return static::INVITATION_FILE_DELIMITER;
     }
 }
