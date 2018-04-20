@@ -13,11 +13,11 @@ module.exports = class DevelopmentConfigurationFactory extends ConfigurationFact
         this.vendorEntryPointFile = path.join(this.settings.dirs.ui.project, './vendor.ts');
         this.basicStyleFile = path.join(this.settings.dirs.ui.project, './styles/basics.scss');
         this.utilStyleFile = path.join(this.settings.dirs.ui.project, './styles/utils.scss');
-        this.sharedStyleFile = path.join(this.settings.paths.ui.project, './styles/shared.scss');
+        this.sharedStyleFile = path.join(this.settings.dirs.ui.project, './styles/shared.scss');
     }
 
-    getComponentsEntryPoints() {
-        process.stdout.write('Scanning for components entry points... ');
+    findComponentEntryPoints() {
+        process.stdout.write('Scanning for component entry points... ');
         const files = this.finder.find(this.settings.find.componentEntryPoints);
 
         const entryPoints = Object.values(files.reduce((map, file) => {
@@ -32,15 +32,18 @@ module.exports = class DevelopmentConfigurationFactory extends ConfigurationFact
         return entryPoints;
     }
 
-    getComponentsStyles() {
-        return this.finder.find(this.settings.find.componentStyles);
+    findComponentStyles() {
+        process.stdout.write('Scanning for component styles... ');
+        const styles = this.finder.find(this.settings.find.componentStyles);
+        console.log(`${styles.length} found`);
+        return styles;
     }
 
-    getShopModulesAliasesFromTsConfig() {
+    getShopModuleAliasesFromTsConfig() {
         const tsConfig = require(this.tsConfigFile);
         const tsConfigPaths = tsConfig.compilerOptions.paths;
 
-        const aliases = Object.keys(tsConfigPaths).reduce((map, pathName) => {
+        return Object.keys(tsConfigPaths).reduce((map, pathName) => {
             if (pathName === '*') {
                 return map;
             }
@@ -55,9 +58,6 @@ module.exports = class DevelopmentConfigurationFactory extends ConfigurationFact
             map[alias] = aliasDir;
             return map;
         }, {});
-
-        console.log(`Available aliases: ${Object.keys(aliases).join(', ')}`);
-        return aliases;
     }
 
     getGlobalVariables() {
@@ -71,7 +71,7 @@ module.exports = class DevelopmentConfigurationFactory extends ConfigurationFact
         return [
             this.mainEntryPointFile,
             this.basicStyleFile,
-            ...this.getComponentsEntryPoints(),
+            ...this.findComponentEntryPoints(),
             this.utilStyleFile
         ]
     }
@@ -114,7 +114,7 @@ module.exports = class DevelopmentConfigurationFactory extends ConfigurationFact
         return {
             resources: [
                 this.sharedStyleFile,
-                ...this.getComponentsStyles()
+                ...this.findComponentStyles()
             ]
         }
     }
@@ -169,7 +169,7 @@ module.exports = class DevelopmentConfigurationFactory extends ConfigurationFact
 
             resolve: {
                 extensions: ['.ts', '.js', '.json', '.css', '.scss'],
-                alias: this.getShopModulesAliasesFromTsConfig()
+                alias: this.getShopModuleAliasesFromTsConfig()
             },
 
             module: {

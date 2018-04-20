@@ -27,7 +27,13 @@ module.exports = class ProductionConfigurationFactory extends DevelopmentConfigu
         return {
             cache: true,
             parallel: true,
-            sourceMap: false
+            sourceMap: false,
+            uglifyOptions: {
+                output: {
+                    comments: false,
+                    beautify: false
+                }
+            }
         }
     }
 
