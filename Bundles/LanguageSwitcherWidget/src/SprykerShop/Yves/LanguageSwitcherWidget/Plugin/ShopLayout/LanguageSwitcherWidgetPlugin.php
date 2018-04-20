@@ -25,7 +25,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      */
     public function initialize(
         string $pathInfo,
-        string $queryString = null,
+        $queryString,
         string $requestUri
     ): void {
         $currentUrlStorage = $this->getFactory()
