@@ -10,7 +10,10 @@
     <div class="box">
         <h5>{{ "company.user.invitation.resend.title" | trans }}</h5>
         <hr />
-        {{ "company.user.invitation.resend.confirmation.question" | trans }}
-        <a href="{{url('company-user-invitation/resend/confirm', {'id': data.id})}}" class="button button--alert float-right">{{ "company.user.invitation.resend.button" | trans }}</a>
+        {{ "company.user.invitation.resend.confirmation.question" | trans }}<br/><br/>
+        <div class="row">
+            <a href="javascript:history.go(-1)" class="button button--info float-left">{{ "general.back.button" | trans }}</a>
+            <a href="{{url('company-user-invitation/resend/confirm', {'id': data.id})}}" class="button button--alert float-right">{{ "company.user.invitation.resend.button" | trans }}</a>
+        </div>
     </div>
 {% endblock %}

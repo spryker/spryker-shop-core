@@ -38,7 +38,7 @@
         </li>
         {% if can('ManageCompanyUserInvitationPermissionPlugin') %}
             <li class="menu__item {{macros.isActive('companyUserInvitation', data.activePage)}}">
-                <a href="{{ path('company-user-invitation') }}" data-id="sidebar-invitations">{{ 'company.user.invitation.label' | trans }}</a>
+                <a href="{{ path('company-user-invitation') }}" data-id="sidebar-invitations">{{ 'company.user.invitation.title.plural' | trans }}</a>
             </li>
         {%  endif %}
         <li class="menu__item menu__item--has-children-list {{macros.isActive('shoppingList', data.activePage)}}">
