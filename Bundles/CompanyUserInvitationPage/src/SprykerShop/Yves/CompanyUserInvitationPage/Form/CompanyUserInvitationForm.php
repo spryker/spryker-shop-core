@@ -10,8 +10,13 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Form;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()
+ */
 class CompanyUserInvitationForm extends AbstractType
 {
     public const FIELD_INVITATIONS_LIST = 'invitations_list';
@@ -37,6 +42,13 @@ class CompanyUserInvitationForm extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
+                new Callback([
+                    'callback' => function ($uploadedFile, ExecutionContextInterface $context) {
+                        if ($uploadedFile && !$this->getFactory()->createImportFileValidator()->isValidImportFile($uploadedFile)) {
+                            $context->buildViolation('company.user.invitation.import.file.invalid')->addViolation();
+                        }
+                    },
+                ]),
             ],
         ]);
     }

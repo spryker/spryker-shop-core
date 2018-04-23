@@ -127,7 +127,7 @@ class ImportController extends AbstractController
      */
     protected function getCompanyUserInvitationCollection(string $importFilePath): CompanyUserInvitationCollectionTransfer
     {
-        $invitationsArray = $this->getFactory()->createCsvInvitationReader($importFilePath)->getInvitations();
+        $invitationsArray = $this->getFactory()->createCsvInvitationReader()->getData($importFilePath);
 
         return $this->getFactory()->createInvitationMapper()->mapInvitations($invitationsArray);
     }

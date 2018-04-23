@@ -12,7 +12,16 @@ use Iterator;
 interface InvitationReaderInterface
 {
     /**
+     * @param string $importFilePath
+     *
+     * @return mixed
+     */
+    public function getHeaders(string $importFilePath);
+
+    /**
+     * @param string $importFilePath
+     *
      * @return \Iterator
      */
-    public function getInvitations(): Iterator;
+    public function getData(string $importFilePath): Iterator;
 }

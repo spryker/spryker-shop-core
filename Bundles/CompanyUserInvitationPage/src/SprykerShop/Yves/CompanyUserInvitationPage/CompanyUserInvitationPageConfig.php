@@ -13,6 +13,11 @@ class CompanyUserInvitationPageConfig extends AbstractBundleConfig
 {
     public const INVITATION_FILE_DELIMITER = ',';
 
+    public const COLUMN_FIRST_NAME = 'first_name';
+    public const COLUMN_LAST_NAME = 'last_name';
+    public const COLUMN_EMAIL = 'email';
+    public const COLUMN_BUSINESS_UNIT = 'business_unit';
+
     /**
      * @return string
      */

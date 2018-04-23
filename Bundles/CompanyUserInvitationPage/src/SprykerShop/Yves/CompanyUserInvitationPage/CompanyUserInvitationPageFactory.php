@@ -18,6 +18,7 @@ use SprykerShop\Yves\CompanyUserInvitationPage\Model\Mapper\InvitationMapper;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Mapper\InvitationMapperInterface;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader\CsvInvitationReader;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader\InvitationReaderInterface;
+use SprykerShop\Yves\CompanyUserInvitationPage\Model\Validator\ImportFileValidator;
 
 class CompanyUserInvitationPageFactory extends AbstractFactory
 {
@@ -30,14 +31,11 @@ class CompanyUserInvitationPageFactory extends AbstractFactory
     }
 
     /**
-     * @param string $importFilePath
-     *
      * @return \SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader\InvitationReaderInterface
      */
-    public function createCsvInvitationReader(string $importFilePath): InvitationReaderInterface
+    public function createCsvInvitationReader(): InvitationReaderInterface
     {
         return new CsvInvitationReader(
-            $importFilePath,
             $this->getConfig()
         );
     }
@@ -59,6 +57,16 @@ class CompanyUserInvitationPageFactory extends AbstractFactory
     {
         return new ImportErrorsHandler(
             $this->getSessionClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyUserInvitationPage\Model\Validator\ImportFileValidatorInterface
+     */
+    public function createImportFileValidator()
+    {
+        return new ImportFileValidator(
+            $this->createCsvInvitationReader()
         );
     }
 
