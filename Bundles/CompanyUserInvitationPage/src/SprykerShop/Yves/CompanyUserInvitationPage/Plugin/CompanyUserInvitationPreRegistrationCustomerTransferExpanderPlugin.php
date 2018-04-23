@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Plugin;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
-use SprykerShop\Yves\CustomerPage\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface;
+use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()

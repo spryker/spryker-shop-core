@@ -13,7 +13,6 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -29,8 +28,6 @@ use Twig_SimpleFunction;
  */
 class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    use PermissionAwareTrait;
-
     /**
      * @param \Silex\Application $app
      *

@@ -277,7 +277,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPage\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
      */
     protected function getPreRegistrationCustomerTransferExpanderPlugins(): array
     {

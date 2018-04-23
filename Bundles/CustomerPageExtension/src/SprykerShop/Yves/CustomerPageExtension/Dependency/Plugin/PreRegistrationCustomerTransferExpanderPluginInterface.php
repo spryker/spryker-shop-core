@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin;
+namespace SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 

@@ -12,6 +12,7 @@
     "spryker/company-user-invitation": "^1.0.0",
     "spryker/csv": "^2.0.1",
     "spryker/customer": "^7.7.1",
+    "spryker/customer-page-extension": "^1.0.0",
     "spryker/kernel": "^3.19.0",
     "spryker/session": "^3.2.4",
     "spryker/symfony": "^3.1.4"
