@@ -33,19 +33,19 @@
                   <ul class="menu menu--inline">
                       {% if invitation.companyUserInvitationStatusKey == 'new'  %}
                           <li class="menu__item">
-                              <a href="{{ path('company-user-invitation/send', {'id': invitation.idCompanyUserInvitation}) }}">
+                              <a href="{{ path('company/user-invitation/send', {'id': invitation.idCompanyUserInvitation}) }}">
                                 {{ 'company.user.invitation.send.button' | trans }}
                               </a>
                           </li>
                       {% endif %}
                       {% if invitation.companyUserInvitationStatusKey == 'pending'  %}
                           <li class="menu__item">
-                              <a href="{{ path('company-user-invitation/resend', {'id': invitation.idCompanyUserInvitation}) }}">
+                              <a href="{{ path('company/user-invitation/resend', {'id': invitation.idCompanyUserInvitation}) }}">
                                   {{ 'company.user.invitation.resend.button' | trans }}
                               </a>
                           </li>
                           <li class="menu__item">
-                              <a href="{{ path('company-user-invitation/delete', {'id': invitation.idCompanyUserInvitation}) }}">
+                              <a href="{{ path('company/user-invitation/delete', {'id': invitation.idCompanyUserInvitation}) }}">
                                   {{ 'company.user.invitation.delete.button' | trans }}
                               </a>
                           </li>

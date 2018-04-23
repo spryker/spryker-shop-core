@@ -1,4 +1,4 @@
-{% extends template('page-layout-customer', 'CustomerPage') %}
+{% extends template('page-layout-company', 'CompanyPage') %}
 
 {% define data = {
     id: _view.id,
@@ -6,14 +6,14 @@
     activePage: 'companyUserInvitation'
 } %}
 
-{% block customerContent %}
+{% block companyContent %}
     <div class="box">
         <h5>{{ "company.user.invitation.delete.title" | trans }}</h5>
         <hr />
         {{ "company.user.invitation.delete.confirmation.question" | trans }} <br/><br/>
         <div class="row">
             <a href="javascript:history.go(-1)" class="button button--info float-left">{{ "general.back.button" | trans }}</a>
-            <a href="{{url('company-user-invitation/delete/confirm', {'id': data.id})}}" class="button button--alert float-right">{{ "company.user.invitation.delete.button" | trans }}</a>
+            <a href="{{url('company/user-invitation/delete/confirm', {'id': data.id})}}" class="button button--alert float-right">{{ "company.user.invitation.delete.button" | trans }}</a>
         </div>
      </div>
 {% endblock %}
