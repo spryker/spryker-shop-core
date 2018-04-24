@@ -77,16 +77,20 @@
                             quantitySalesUnit: item.quantitySalesUnit
                         },
                         embed: {
-                            isLast: not loop.last
+                            isLast: not loop.last,
+                            item: item
                         }
                     } only %}
                         {% block body %}
                             {{parent()}}
+                            {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }}
                             {% if embed.isLast %}<hr/>{% endif %}
                         {% endblock %}
                     {% endembed %}
                 {% endfor %}
             </div>
+
+            {{ widget('CartNoteQuoteNoteWidgetPlugin', data.transfer) }}
 
             {% include molecule('summary-overview', 'CheckoutPage') with {
                 class: 'box',

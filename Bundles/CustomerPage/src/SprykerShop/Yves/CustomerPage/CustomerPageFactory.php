@@ -210,7 +210,7 @@ class CustomerPageFactory extends AbstractFactory
      */
     public function getCustomerOrderViewWidgetPlugins(): array
     {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS);
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS);
     }
 
     /**

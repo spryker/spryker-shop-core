@@ -16,7 +16,8 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInte
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class CartOperationHandler extends BaseHandler implements CartOperationInterface
+// TODO: adapt measurement unit changes and remove this file
+class CartOperationHandler
 {
     const URL_PARAM_ID_DISCOUNT_PROMOTION = 'idDiscountPromotion';
     const TRANSLATION_KEY_QUANTITY_ADJUSTED = 'cart.quantity.adjusted';
@@ -42,6 +43,11 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
     protected $availabilityClient;
 
     /**
+     * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
+     */
+    protected $flashMessenger;
+
+    /**
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $cartClient
      * @param string $locale
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
@@ -55,7 +61,6 @@ class CartOperationHandler extends BaseHandler implements CartOperationInterface
         Request $request,
         CartPageToAvailabilityClientInterface $availabilityClient
     ) {
-        parent::__construct($flashMessenger);
         $this->cartClient = $cartClient;
         $this->locale = $locale;
         $this->request = $request;
