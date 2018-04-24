@@ -89,7 +89,7 @@ $shop-ui-simple-carousel-icon-size: $shop-ui-icon-size-big;
             background-color: rgba($setting-color-lightest, .75);
         }
 
-        @include helper-grid-breakpoint(lg) {
+        @include helper-breakpoint(lg) {
             &__navigation {
                 @include helper-visibility-invisible;
                 @include helper-effect-transition;

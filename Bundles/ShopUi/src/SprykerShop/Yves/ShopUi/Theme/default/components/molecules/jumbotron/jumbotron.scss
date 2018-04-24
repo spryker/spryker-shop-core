@@ -9,11 +9,11 @@
             background-repeat: no-repeat;
             text-align: center;
 
-            @include helper-grid-breakpoint(md) {
+            @include helper-breakpoint(md) {
                 height: 15rem;
             }
 
-            @include helper-grid-breakpoint(xl) {
+            @include helper-breakpoint(xl) {
                 height: 20rem;
             }
         }

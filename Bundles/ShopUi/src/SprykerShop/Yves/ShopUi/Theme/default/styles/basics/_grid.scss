@@ -77,8 +77,8 @@
         flex-grow: 0;
         flex-basis: auto;
 
-        @each $breakpoint, $edges in $setting-grid-breakpoints {
-            @include helper-grid-media-min(helper-grid-edge-min($edges)) {
+        @each $breakpoint, $edges in $setting-breakpoints {
+            @include helper-breakpoint-media-min(helper-breakpoint-edge-min($edges)) {
                 @for $column from 1 through $setting-grid-columns {
                     &--#{$breakpoint}-#{$column} {
                         width: helper-grid-span($column);
