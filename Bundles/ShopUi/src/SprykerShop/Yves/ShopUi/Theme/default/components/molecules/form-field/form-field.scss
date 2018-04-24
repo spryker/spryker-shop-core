@@ -3,20 +3,20 @@
         margin: .25rem .5rem;
 
         &__label {
-            @include font-size(small);
+            @include helper-font-size(small);
 
             &--required {
                 &::after {
                     content: '*';
                     margin-left: .2rem;
-                    color: $color-main;
+                    color: $setting-color-main;
                 }
             }
         }
 
         &__error-list {
-            @include font-size(small);
-            color: map-get($color-actions, alert);
+            @include helper-font-size(small);
+            color: map-get($setting-color-actions, alert);
         }
 
         &--spacing {

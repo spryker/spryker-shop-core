@@ -4,7 +4,7 @@
             margin: .5rem 0;
 
             &--active {
-                @include font-weight(bold);
+                @include helper-font-weight(bold);
             }
 
             &--has-children-list {
@@ -15,29 +15,29 @@
                 }
 
                 & #{$name}__item {
-                    @include font-size(small);
+                    @include helper-font-size(small);
                     margin: .5rem;
                 }
             }
 
             &--has-children-dropdown {
                 position: relative;
-                z-index: $zi-element + 1;
+                z-index: $setting-zi-element + 1;
 
                 & > #{$name} {
-                    @include shadow;
-                    @include is-invisible;
-                    @include transition;
+                    @include helper-ui-shadow;
+                    @include helper-visibility-invisible;
+                    @include helper-effect-transition;
                     position: absolute;
                     left: 0;
                     width: 15rem;
                     margin-left: - .5rem;
-                    border: 1px solid $color-light;
-                    background-color: $color-white;
+                    border: 1px solid $setting-color-light;
+                    background-color: $setting-color-white;
                 }
 
                 &:hover > #{$name} {
-                    @include is-visible;
+                    @include helper-visibility-visible;
                 }
 
                 & > #{$name} > #{$name}__item {
@@ -53,7 +53,7 @@
 
             &::after {
                 content: '|';
-                color: $color-lighter;
+                color: $setting-color-lighter;
             }
         }
 

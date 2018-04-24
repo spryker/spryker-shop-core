@@ -1,15 +1,15 @@
 @mixin shop-ui-header($name: '.header') {
     #{$name} {
-        background-color: light($color-main);
+        background-color: helper-color-light($setting-color-main);
         margin-bottom: 1rem;
-        z-index: $zi-header;
+        z-index: $setting-zi-header;
 
         &__row {
             padding: .5rem;
         }
 
         &__navigation-main {
-            z-index: $zi-header + 1;
+            z-index: $setting-zi-header + 1;
         }
 
         @content;

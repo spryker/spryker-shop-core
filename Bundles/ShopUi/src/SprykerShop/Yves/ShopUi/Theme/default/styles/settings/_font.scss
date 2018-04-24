@@ -1,8 +1,8 @@
-$font-family: 'Arial', sans-serif !default;
-$font-family-code: 'Menlo', monospace !default;
-$font-size-base: 16px !default;
+$setting-font-family: 'Arial', sans-serif !default;
+$setting-font-family-code: 'Menlo', monospace !default;
+$setting-font-size-base: 16px !default;
 
-$font-size: (
+$setting-font-size: (
     1: 38px,
     2: 34px,
     3: 30px,
@@ -14,13 +14,13 @@ $font-size: (
     small: 12px
 ) !default;
 
-$font-weight: (
+$setting-font-weight: (
     light: 300,
     regular: 400,
     bold: 900
 ) !default;
 
-$font-line-height: (
+$setting-font-line-height: (
     1: 1.1,
     2: 1.2,
     3: 1.4,

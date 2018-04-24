@@ -3,35 +3,35 @@
 
     #{$name} {
         position: relative;
-        z-index: $zi-side-drawer;
+        z-index: $setting-zi-side-drawer;
 
         &__overlay {
-            @include is-invisible;
-            @include transition(opacity visibility);
+            @include helper-visibility-invisible;
+            @include helper-effect-transition(opacity visibility);
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: $color-overlay;
+            background-color: $setting-color-overlay;
         }
 
         &__drawer {
-            @include shadow;
-            @include is-invisible;
-            @include transition(opacity visibility right);
+            @include helper-ui-shadow;
+            @include helper-visibility-invisible;
+            @include helper-effect-transition(opacity visibility right);
             position: fixed;
             top: 0;
             bottom: 0;
             right: - $drawer-width;
             width: $drawer-width;
-            background-color: $color-bg;
+            background-color: $setting-color-bg;
             overflow-y: auto;
         }
 
         &__close {
             padding: .5rem 1rem;
-            background-color: $color-lighter;
+            background-color: $setting-color-lighter;
             text-align: right;
         }
 
@@ -40,11 +40,11 @@
         }
 
         &--show &__overlay {
-            @include is-visible;
+            @include helper-visibility-visible;
         }
 
         &--show &__drawer {
-            @include is-visible;
+            @include helper-visibility-visible;
             right: 0;
         }
 

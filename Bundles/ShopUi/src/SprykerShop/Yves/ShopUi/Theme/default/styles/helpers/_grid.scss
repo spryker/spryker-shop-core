@@ -1,8 +1,8 @@
-@function span($column, $columns: $grid-columns) {
+@function helper-grid-span($column, $columns: $setting-grid-columns) {
     @return (100% / $columns) * $column;
 }
 
-@function edge-min($edges) {
+@function helper-grid-edge-min($edges) {
     @if length($edges) > 0 {
         @return nth($edges, 1);
     }
@@ -10,7 +10,7 @@
     @return 0;
 }
 
-@function edge-max($edges) {
+@function helper-grid-edge-max($edges) {
     @if length($edges) > 1 {
         @return nth($edges, 2);
     }
@@ -18,47 +18,44 @@
     @return null;
 }
 
-@mixin media-min($min: 0) {
+@mixin helper-grid-media-min($min: 0) {
     @media only screen and (min-width: $min) {
         @content;
     }
 }
 
-@mixin media-between($min: 0, $max: $grid-max-width) {
+@mixin helper-grid-media-between($min: 0, $max: $setting-grid-max-width) {
     @media only screen and (min-width: $min) and (max-width: $max) {
         @content;
     }
 }
 
-@mixin media-max($max: $grid-max-width) {
+@mixin helper-grid-media-max($max: $setting-grid-max-width) {
     @media only screen and (max-width: $max) {
         @content;
     }
 }
 
-@mixin breakpoint($min-bp, $max-bp: null) {
-    $edges-min: map-get($grid-breakpoints, $min-bp);
-    $edge-min: edge-min($edges-min);
+@mixin helper-grid-breakpoint($min-bp, $max-bp: null) {
+    $edges-min: map-get($setting-grid-breakpoints, $min-bp);
+    $edge-min: helper-grid-edge-min($edges-min);
 
     @if $max-bp == null {
-        @include media-min($edge-min) {
+        @include helper-grid-media-min($edge-min) {
             @content;
         }
     } @else {
-        $edges-max: map-get($grid-breakpoints, $max-bp);
-        $edge-max: edge-max($edges-max);
+        $edges-max: map-get($setting-grid-breakpoints, $max-bp);
+        $edge-max: helper-grid-edge-max($edges-max);
 
         @if $edge-max == null {
-            @include media-min($edge-min) {
+            @include helper-grid-media-min($edge-min) {
                 @content;
             }
         } @else {
-            @include media-between($edge-min, $edge-max) {
+            @include helper-grid-media-between($edge-min, $edge-max) {
                 @content;
             }
         }
     }
 }
-
-
-

@@ -5,15 +5,15 @@
         &__separator {
             margin-left: .25rem;
             margin-right: .25rem;
-            color: $color-light;
+            color: $setting-color-light;
         }
 
         &--active {
-            @include font-weight(bold);
+            @include helper-font-weight(bold);
         }
 
         &--disabled:not(&--active) {
-            color: $color-dark;
+            color: $setting-color-dark;
         }
 
         @content

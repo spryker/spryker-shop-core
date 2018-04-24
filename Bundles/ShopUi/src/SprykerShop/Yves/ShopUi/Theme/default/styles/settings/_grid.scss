@@ -1,7 +1,7 @@
-$grid-columns: 12 !default;
-$grid-max-width: 1160px !default;
+$setting-grid-columns: 12 !default;
+$setting-grid-max-width: 1160px !default;
 
-$grid-breakpoints: (
+$setting-grid-breakpoints: (
     sm: (0, 549px),
     md: (550px, 769px),
     lg: (770px, 969px),
