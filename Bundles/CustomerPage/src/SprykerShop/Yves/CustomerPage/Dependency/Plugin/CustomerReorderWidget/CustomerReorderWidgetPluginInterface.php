@@ -21,5 +21,5 @@ interface CustomerReorderWidgetPluginInterface extends WidgetPluginInterface
      *
      * @return void
      */
-    public function initialize(OrderTransfer $orderTransfer, ItemTransfer $itemTransfer = null): void;
+    public function initialize(OrderTransfer $orderTransfer, ?ItemTransfer $itemTransfer = null): void;
 }
