@@ -157,6 +157,7 @@ class ImportController extends AbstractController
 
         $companyUserInvitationCriteriaFilterTransfer = (new CompanyUserInvitationCriteriaFilterTransfer())
             ->setFkCompanyUser($this->companyUserTransfer->getIdCompanyUser())
+            ->setFkCompany($this->companyUserTransfer->getFkCompany())
             ->setCompanyUserInvitationStatusKeyNotIn([CompanyUserInvitationConstants::INVITATION_STATUS_DELETED])
             ->setFilter($filterTransfer);
 
