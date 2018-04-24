@@ -48,7 +48,7 @@ class QuoteItemCartNoteForm extends AbstractType
     protected function addCartNoteField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CART_NOTE, TextareaType::class, [
-            'label' => false,
+            'label' => 'cart_note.item_form.enter_note',
             'empty_data' => 'cart_note.item_form.placeholder',
             'required' => false,
         ]);

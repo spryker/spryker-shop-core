@@ -1,0 +1,49 @@
+{% extends model('component') %}
+
+
+{% define config = {
+    name: 'quantity-selector',
+    tag: 'div'
+} %}
+
+{% define data = {
+    label: 'cart.item_quantity' | trans,
+    maxQuantity: required,
+    hasButton: false
+} %}
+
+{% block body %}
+    <label class="grid">
+        <span class="col col--sm-12">
+            {{ data.label }}
+        </span>
+        <div class="col col--expand">
+            {% if not data.maxQuantity or data.maxQuantity < 0 %}
+                <input class="input input--expand" type="number" value="{{ data.quantity }}" name="quantity">
+            {% else %}
+                {% include atom('select') with {
+                    modifiers: ['expand'],
+                    data: {
+                        options: options
+                    },
+                    attributes: {
+                        name: 'quantity'
+                    }
+                } only %}
+            {% endif %}
+        </div>
+
+        {% if data.hasButton %}
+            <div class="col">
+                <button type="submit" class="button button--expand">
+                    {% include atom('icon') with {
+                        class: config.name ~ '__sync',
+                        data: {
+                            name: 'sync'
+                        }
+                    } only %}
+                </button>
+            </div>
+        {% endif %}
+    </label>
+{% endblock %}

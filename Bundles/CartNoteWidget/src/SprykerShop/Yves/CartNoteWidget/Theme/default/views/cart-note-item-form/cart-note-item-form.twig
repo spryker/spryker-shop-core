@@ -6,8 +6,7 @@
 } %}
 
 {% block body %}
-
-    {% embed molecule('form') with {
+    {% include molecule('form') with {
         data: {
             options: {
                 action: data.formAction
@@ -19,8 +18,4 @@
             }
         }
     } only %}
-        {% block title %}
-            {{ 'cart_note.item_form.enter_note' | trans }}
-        {% endblock %}
-    {% endembed %}
 {% endblock %}

@@ -25,38 +25,15 @@
     {% if canWrite %}
 
         <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.cartItem.sku }) }}">
-
-            <label class="grid">
-                <span class="col col--sm-12">
-                    {{ 'cart.item_quantity' | trans }}
-                </span>
-                <div class="col col--expand">
-                    {% if not data.cartItem.maxQuantity or data.cartItem.maxQuantity < 0 %}
-                        <input class="input input--expand" type="number" value="{{ data.cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>
-                    {% else %}
-                        {% include atom('select') with {
-                            modifiers: ['expand'],
-                            data: {
-                                options: options
-                            },
-                            attributes: {
-                                name: 'quantity'
-                            }
-                        } only %}
-                    {% endif %}
-                </div>
-
-                <div class="col">
-                    <button type="submit" class="button button--expand" {{qa('cart-update-quantity-button')}}>
-                        {% include atom('icon') with {
-                            class: config.name ~ '__sync',
-                            data: {
-                                name: 'sync'
-                            }
-                        } only %}
-                    </button>
-                </div>
-            </label>
+            {% include molecule('quantity-selector') with {
+                data: {
+                    label: 'cart.item_quantity' | trans,
+                    maxQuantity: data.cartItem.maxQuantity,
+                    quantity: data.cartItem.quantity,
+                    options: options,
+                    hasButton: true
+                }
+            } only %}
 
             {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
                 {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
