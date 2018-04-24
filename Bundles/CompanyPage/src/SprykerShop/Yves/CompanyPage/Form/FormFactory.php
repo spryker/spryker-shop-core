@@ -38,7 +38,7 @@ class FormFactory extends AbstractFactory
      */
     public function getCompanyRegisterForm(): FormInterface
     {
-        return $this->getFormFactory()->create(CartQuantityForm::class);
+        return $this->getFormFactory()->create(CompanyRegisterForm::class);
     }
 
     /**
