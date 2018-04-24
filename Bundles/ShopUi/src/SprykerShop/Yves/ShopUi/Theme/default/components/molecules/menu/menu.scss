@@ -1,7 +1,7 @@
 @mixin shop-ui-menu($name: '.menu') {
     @include shop-ui-list($name) {
         &__item {
-            @include font-weight(regular);
+            @include helper-font-weight(regular);
             margin: .5rem 0;
 
             &--active {
@@ -46,13 +46,6 @@
                     margin-right: .5rem;
                 }
             }
-
-            &--has-children-list,
-            &--has-children-dropdown {
-                & #{$name}__separator {
-
-                }
-            }
         }
 
         &__separator {
@@ -62,13 +55,13 @@
 
                 &::after {
                     content: '|';
-                    color: $color-lighter;
+                    color: $setting-color-lighter;
                 }
             }
 
             &--horizontal-line {
                 display: block;
-                border-top: 1px solid $color-lighter;
+                border-top: 1px solid $setting-color-lighter;
             }
         }
 
