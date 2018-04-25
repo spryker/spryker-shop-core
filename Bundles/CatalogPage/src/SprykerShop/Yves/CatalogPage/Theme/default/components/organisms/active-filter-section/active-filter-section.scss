@@ -1,4 +1,4 @@
-@mixin component-active-filter-section($name: '.active-filter-section') {
+@mixin catalog-page-active-filter-section($name: '.active-filter-section') {
     #{$name} {
         &__item {
             margin: 0 .5rem;

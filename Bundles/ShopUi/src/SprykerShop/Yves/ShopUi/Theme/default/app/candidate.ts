@@ -1,5 +1,5 @@
 import Logger from '../app/logger';
-import { AppConfig } from '../app/config';
+import { Config } from '../app/config';
 import Component, { IComponentImporter, IComponentContructor } from '../models/component';
 
 export default class Candidate {
@@ -13,7 +13,7 @@ export default class Candidate {
         this.elements = Array.from(document.getElementsByTagName(tagName));
     }
 
-    async mountComponents(config: AppConfig, logger: Logger): Promise<Component[]> {
+    async mountComponents(config: Config, logger: Logger): Promise<Component[]> {
         if (this.elements.length === 0) {
             return [];
         }
@@ -28,7 +28,7 @@ export default class Candidate {
             logger.log(this.elements.length, this.tagName, 'mounted');
 
             return <Component[]>this.elements;
-        } catch (error) { 
+        } catch (error) {
             logger.error(this.tagName, 'mounting aborted:', error);
             return [];
         }
