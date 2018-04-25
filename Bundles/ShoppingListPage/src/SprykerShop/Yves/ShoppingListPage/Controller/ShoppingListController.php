@@ -271,7 +271,7 @@ class ShoppingListController extends AbstractShoppingListController
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createAddAvailableProductsToCartForm(ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer = null): FormInterface
+    protected function createAddAvailableProductsToCartForm(?ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer = null): FormInterface
     {
         $addAvailableProductsToCartFormDataProvider = $this->getFactory()->createAddAvailableProductsToCartFormDataProvider();
         $addAvailableProductsToCartForm = $this->getFactory()->getAddAvailableProductsToCartForm(
