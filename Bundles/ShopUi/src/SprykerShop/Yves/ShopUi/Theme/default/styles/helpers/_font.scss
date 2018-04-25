@@ -1,11 +1,11 @@
-@mixin font-size($size) {
-    font-size: map-get($font-size, $size);
+@mixin helper-font-size($size) {
+    font-size: map-get($setting-font-size, $size);
 }
 
-@mixin font-weight($weight) {
-    font-weight: map-get($font-weight, $weight);
+@mixin helper-font-weight($weight) {
+    font-weight: map-get($setting-font-weight, $weight);
 }
 
-@mixin line-height($height) {
-    line-height: map-get($font-line-height, $height);
+@mixin helper-font-line-height($height) {
+    line-height: map-get($setting-font-line-height, $height);
 }

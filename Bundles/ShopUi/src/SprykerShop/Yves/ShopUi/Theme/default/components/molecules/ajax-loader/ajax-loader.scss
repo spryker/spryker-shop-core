@@ -1,14 +1,14 @@
-@mixin component-ajax-loader($name: '.ajax-loader') {
+@mixin shop-ui-ajax-loader($name: '.ajax-loader') {
     #{$name} {
-        @include transition();
+        @include helper-effect-transition();
         position: absolute;
         top: 0;
         left: 0;
         bottom: 0;
         right: 0;
-        background-color: rgba($color-lighter, .5);
-        z-index: $zi-element-floating;
-        
+        background-color: rgba($setting-color-lighter, .5);
+        z-index: $setting-zi-element-floating;
+
         &__spinner {
             animation-name: spin;
             animation-duration: 1s;
@@ -21,7 +21,7 @@
         }
 
         &--big &__label {
-            @include font-size(big);
+            @include helper-font-size(big);
         }
 
         @content;

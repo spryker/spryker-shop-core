@@ -1,4 +1,4 @@
-@mixin component-product-list-item($name: '.product-list-item') {
+@mixin shop-ui-product-list-item($name: '.product-list-item') {
     #{$name} {
         position: relative;
 

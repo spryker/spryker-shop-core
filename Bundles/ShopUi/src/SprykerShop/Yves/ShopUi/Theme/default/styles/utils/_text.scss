@@ -1,10 +1,10 @@
 @mixin util-text() {
     .text-small {
-        @include font-size(small);
+        @include helper-font-size(small);
     }
 
     .text-big {
-        @include font-size(big);
+        @include helper-font-size(big);
     }
 
     .text-left {
@@ -20,21 +20,21 @@
     }
 
     .text-alt {
-        color: $color-alt;
+        color: $setting-color-alt;
     }
 
     .text-secondary {
-        color: $color-dark;
+        color: $setting-color-dark;
     }
 
-    @each $action, $color-action in $color-actions {
-        @include util-text-action($action, $color-action);
+    @each $action, $setting-color-action in $setting-color-actions {
+        @include util-text-action($action, $setting-color-action);
     }
 }
 
-@mixin util-text-action($action, $color-action) {
+@mixin util-text-action($action, $setting-color-action) {
     .text-#{$action} {
-        color: $color-action;
+        color: $setting-color-action;
     }
 
     @content;
