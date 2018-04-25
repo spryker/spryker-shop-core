@@ -46,7 +46,7 @@ class ShoppingListPageFactory extends AbstractFactory
      *
      * @return \Symfony\Component\Form\FormInterface|\SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm
      */
-    public function getShoppingListForm(ShoppingListTransfer $data = null, array $options = []): FormInterface
+    public function getShoppingListForm(?ShoppingListTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ShoppingListForm::class, $data, $options);
     }

@@ -23,7 +23,7 @@ class CustomerReorderWidgetPlugin extends AbstractWidgetPlugin implements Custom
      *
      * @return void
      */
-    public function initialize(OrderTransfer $orderTransfer, ItemTransfer $itemTransfer = null): void
+    public function initialize(OrderTransfer $orderTransfer, ?ItemTransfer $itemTransfer = null): void
     {
         $this->addParameter('order', $orderTransfer);
         $this->addParameter('item', $itemTransfer);
@@ -51,7 +51,7 @@ class CustomerReorderWidgetPlugin extends AbstractWidgetPlugin implements Custom
      *
      * @return bool
      */
-    protected function getItemAvailability(ItemTransfer $itemTransfer = null): bool
+    protected function getItemAvailability(?ItemTransfer $itemTransfer = null): bool
     {
         if (!$itemTransfer) {
             return false;

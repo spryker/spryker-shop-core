@@ -144,7 +144,7 @@ class ShopUiTwigExtension extends TwigExtension
      *
      * @return string
      */
-    protected function getQaAttribute(array $qaValues = [], string $qaName = null): string
+    protected function getQaAttribute(array $qaValues = [], ?string $qaName = null): string
     {
         $value = '';
 
