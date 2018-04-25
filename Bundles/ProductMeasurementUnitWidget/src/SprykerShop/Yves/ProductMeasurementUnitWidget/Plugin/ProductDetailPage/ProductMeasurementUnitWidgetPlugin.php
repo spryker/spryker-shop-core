@@ -83,7 +83,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      * @return int
      */
     protected function getMinQuantityInBaseUnits(
-        ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
+        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
     ): int {
         $quantityMin = 1;
         if ($productQuantityStorageTransfer !== null) {
@@ -125,9 +125,9 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      * @return string
      */
     protected function prepareJsonData(
-        ProductMeasurementUnitTransfer $baseUnit = null,
-        array $salesUnits = null,
-        ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
+        ?ProductMeasurementUnitTransfer $baseUnit = null,
+        ?array $salesUnits = null,
+        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
     ): string {
         $jsonData = [];
 
@@ -154,7 +154,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      *
      * @return float
      */
-    protected function getMinQuantityInSalesUnits(int $minQuantityInBaseUnits, array $salesUnits = null): float
+    protected function getMinQuantityInSalesUnits(int $minQuantityInBaseUnits, ?array $salesUnits = null): float
     {
         if ($salesUnits !== null) {
             foreach ($salesUnits as $salesUnit) {

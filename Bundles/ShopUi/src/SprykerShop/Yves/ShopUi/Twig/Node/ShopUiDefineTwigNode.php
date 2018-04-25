@@ -21,7 +21,7 @@ class ShopUiDefineTwigNode extends Twig_Node
      * @param int $line
      * @param string|null $tag
      */
-    public function __construct(string $name, Twig_Node_Expression $value, int $line, string $tag = null)
+    public function __construct(string $name, Twig_Node_Expression $value, int $line, ?string $tag = null)
     {
         parent::__construct(['value' => $value], ['name' => $name], $line, $tag);
     }

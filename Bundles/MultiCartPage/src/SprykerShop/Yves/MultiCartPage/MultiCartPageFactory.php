@@ -23,7 +23,7 @@ class MultiCartPageFactory extends AbstractFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getQuoteForm(int $idQuote = null): FormInterface
+    public function getQuoteForm(?int $idQuote = null): FormInterface
     {
         return $this->getFormFactory()->create(
             QuoteForm::class,
