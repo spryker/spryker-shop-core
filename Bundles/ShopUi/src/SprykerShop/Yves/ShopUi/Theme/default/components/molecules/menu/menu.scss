@@ -55,6 +55,12 @@
             }
         }
 
+        &__link {
+            &--active {
+                @include font-weight(bold);
+            }
+        }
+
         &__separator {
             &:not(&--horizontal-line) {
                 display: inline-block;

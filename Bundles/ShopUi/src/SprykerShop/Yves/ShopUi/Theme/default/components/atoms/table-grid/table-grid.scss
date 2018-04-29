@@ -1,0 +1,8 @@
+@mixin component-table-grid($name: '.table-grid') {
+    @include component-table($name) {
+        th {
+        }
+
+        @content;
+    }
+}

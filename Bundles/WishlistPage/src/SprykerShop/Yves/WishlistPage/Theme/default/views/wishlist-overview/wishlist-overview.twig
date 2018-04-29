@@ -1,0 +1,44 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% block title %}
+    <h3>{{ 'customer.account.wishlist' | trans }}</h3>
+{% endblock %}
+
+{% block customerNavigation %}
+    {% embed molecule('customer-navigation', 'CustomerPage') with {
+        class: 'box',
+        data: {
+            activePage: 'wishlist'
+        }
+    } only %}
+
+        {% block wishlistNavigation %}
+            {% if _view.wishlistCollection|length %}
+                {% include molecule('wishlist-navigation', 'WishlistPage') with {
+                    class: 'menu',
+                    data: {
+                        wishlistCollection: _view.wishlistCollection
+                    }
+                } only %}
+            {% endif %}
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}
+
+{% block customerContent %}
+    <div class="box">
+        <h4>{{ 'customer.account.wishlist.overview.title' | trans }}</h4>
+
+        {% include molecule('wishlist-form', 'WishlistPage') only %}
+
+        <hr>
+
+        {% include molecule('wishlist-overview-table', 'WishlistPage') with {
+            data: {
+                wishlists: _view.wishlistCollection.wishlists
+            }
+        } only %}
+
+    </div>
+{% endblock %}

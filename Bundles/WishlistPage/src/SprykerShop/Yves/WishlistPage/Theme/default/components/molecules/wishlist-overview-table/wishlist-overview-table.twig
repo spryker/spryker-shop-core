@@ -1,0 +1,86 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'wishlist-overview-table',
+    tag: 'div'
+} %}
+
+{% define data = {
+    wishlists: required,
+    hasEditName: false
+} %}
+
+{% block body %}
+
+    {% if data.wishlists|length %}
+        <table class="table table--expand table-grid">
+            <thead>
+                <tr>
+                    <th width="40%">{{ 'customer.account.wishlist.overview.name' | trans }}</th>
+                    <th width="30%">{{ 'customer.account.wishlist.overview.item_count' | trans }}</th>
+                    <th width="20%">{{ 'customer.account.wishlist.overview.date' | trans }}</th>
+                    <th width="10%"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for wishlist in data.wishlists %}
+                <tr>
+                    <td>
+                        {% if not data.hasEditName %}
+                            <a href="{{ path('wishlist/details', { wishlistName: wishlist.name }) }}">{{ wishlist.name }}</a>
+                        {% else %}
+                            {% if wishlist.idWishlist == _view.wishlistForm.vars.data.idWishlist %}
+                                {{ form_start(_view.wishlistForm) }}
+                                    <div class="grid grid--nowrap">
+                                        <div class="col col--expand"></div>
+                                        {{ form_widget(_view.wishlistForm.name, {attr: {placeholder: 'customer.account.wishlist.overview.enter_name'|trans}}) }}
+                                        <div class="col">
+                                            <button type="submit" class="button">
+                                                {% include atom('icon') with {
+                                                    data: {
+                                                        name: 'save'
+                                                    }
+                                                } only %}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {{ form_errors(_view.wishlistForm) }}
+                                {{ form_end(_view.wishlistForm) }}
+                            {% else %}
+                                <a href="{{ path('wishlist/details', { wishlistName: wishlist.name }) }}">{{ wishlist.name }}</a>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td>{{ wishlist.numberOfItems }}</td>
+                    <td>{{ wishlist.createdAt | formatDate }}</td>
+                    <td>
+                        <form id="deleteWishlist_{{ loop.index }}"
+                              method="POST"
+                              action="{{ path('wishlist/delete', {wishlistName: wishlist.name}) }}"
+                              class="grid grid--right">
+                            <a class="space-x-small" href="{{ url('wishlist/update', {wishlistName: wishlist.name}) }}" title="{{ 'customer.account.wishlist.overview.edit' | trans }}">
+                                {% include atom('icon') with {
+                                    data: {
+                                        name: 'edit'
+                                    }
+                                } only %}
+                            </a>
+                            <span class="link space-x-small" title="{{ 'customer.account.wishlist.overview.delete' | trans }}" onclick="document.getElementById('deleteWishlist_{{ loop.index }}').submit()">
+                                {% include atom('icon') with {
+                                    data: {
+                                        name: 'remove'
+                                    }
+                                } only %}
+                            </span>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="text-center space-y-big">
+            <h6>{{ 'customer.account.wishlist.overview.empty' | trans }}</h6>
+        </div>
+    {% endif %}
+{% endblock %}

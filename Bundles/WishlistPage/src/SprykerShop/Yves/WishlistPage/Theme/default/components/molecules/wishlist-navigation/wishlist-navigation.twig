@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'wishlist-navigation',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    wishlistCollection: required,
+    activeSubmenu: false
+} %}
+
+{% block body %}
+
+    {% for wishlist in data.wishlistCollection.wishlists %}
+        <li {% if data.activeSubmenu == wishlist.name %}class="menu__link--active"{% endif %}>
+            <a href="{{ path('wishlist/details', { wishlistName: (wishlist.name) }) }}">{{ wishlist.name }}</a>
+        </li>
+    {% endfor %}
+
+{% endblock %}
