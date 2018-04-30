@@ -43,7 +43,7 @@
 
                 {% block price %}
                     <div>
-                        {% if can('SeePrice') %}
+                        {% if can('SeePricePermissionPlugin') %}
                             {% include molecule('price') with {
                                 data: {
                                     amount: data.price | money,
