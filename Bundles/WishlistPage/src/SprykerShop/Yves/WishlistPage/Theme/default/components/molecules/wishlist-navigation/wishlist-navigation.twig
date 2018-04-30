@@ -6,13 +6,13 @@
 } %}
 
 {% define data = {
-    wishlistCollection: required,
+    wishlists: required,
     activeSubmenu: false
 } %}
 
 {% block body %}
 
-    {% for wishlist in data.wishlistCollection.wishlists %}
+    {% for wishlist in data.wishlists %}
         <li {% if data.activeSubmenu == wishlist.name %}class="menu__link--active"{% endif %}>
             <a href="{{ path('wishlist/details', { wishlistName: (wishlist.name) }) }}">{{ wishlist.name }}</a>
         </li>

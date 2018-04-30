@@ -1,5 +1,20 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
+{% define data = {
+    wishlistName: _view.wishlistName,
+    wishlistItems: _view.wishlistItems,
+    addAllProductsToCart: _view.addAllAvailableProductsToCartForm,
+    pagination: {
+        currentPage: _view.currentPage,
+        maxPage: _view.totalPages,
+        parameters: {
+            wishlistName: _view.wishlistName
+        },
+        paginationPath: 'wishlist/details',
+        showAlwaysFirstAndLast: true
+    }
+} %}
+
 {% block title %}
     <h3>{{ 'customer.account.wishlist' | trans }}</h3>
 {% endblock %}
@@ -18,7 +33,7 @@
                 {% include molecule('wishlist-navigation', 'WishlistPage') with {
                     class: 'menu',
                     data: {
-                        wishlistCollection: _view.wishlistOverview.meta.wishlistCollection,
+                        wishlists: _view.wishlistOverview.meta.wishlistCollection.wishlists,
                         activeSubmenu: _view.wishlistName
                     }
                 } only %}
@@ -34,12 +49,12 @@
     <div class="box">
         <div class="grid grid--middle space-bottom-big">
             <div class="col col--expand">
-                <h4>{{ _view.wishlistName }}</h4>
+                <h4>{{ data.wishlistName }}</h4>
             </div>
 
-            {% if _view.wishlistItems|length %}
+            {% if data.wishlistItems|length %}
                 <div class="col">
-                    {{ form_start(_view.addAllAvailableProductsToCartForm, {action: path('wishlist/move-all-available-to-cart', { wishlistName: _view.wishlistName })}) }}
+                    {{ form_start(data.addAllProductsToCart, {action: path('wishlist/move-all-available-to-cart', { wishlistName: data.wishlistName })}) }}
                         <button type="submit" class="button">
                             {% include atom('icon') with {
                                 data: {
@@ -48,18 +63,19 @@
                             } only %}
                             {{ 'customer.account.wishlist.add_all_available_to_cart' | trans }}
                         </button>
-                        {% for wishlistItemMetaField in _view.addAllAvailableProductsToCartForm.wishlistItemMetaCollection %}
+                        {% for wishlistItemMetaField in data.addAllProductsToCart.wishlistItemMetaCollection %}
                             {{ form_widget(wishlistItemMetaField) }}
                         {% endfor %}
-                    {{ form_end(_view.addAllAvailableProductsToCartForm) }}
+                    {{ form_end(data.addAllProductsToCart) }}
                 </div>
             {% endif %}
         </div>
 
-
         {% include molecule('wishlist-table', 'WishlistPage') with {
             data: {
-                wishlistItems: _view.wishlistItems
+                wishlistItems: data.wishlistItems,
+                wishlistName: data.wishlistName,
+                pagination: data.pagination
             }
         } only %}
 

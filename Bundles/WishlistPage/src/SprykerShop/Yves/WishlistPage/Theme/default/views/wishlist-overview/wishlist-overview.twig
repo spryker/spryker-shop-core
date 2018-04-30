@@ -1,5 +1,10 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
+{% define data = {
+    wishlists: _view.wishlistCollection.wishlists,
+    wishlistForm: _view.wishlistForm
+} %}
+
 {% block title %}
     <h3>{{ 'customer.account.wishlist' | trans }}</h3>
 {% endblock %}
@@ -17,7 +22,7 @@
                 {% include molecule('wishlist-navigation', 'WishlistPage') with {
                     class: 'menu',
                     data: {
-                        wishlistCollection: _view.wishlistCollection
+                        wishlists: _view.wishlistCollection.wishlists
                     }
                 } only %}
             {% endif %}
@@ -30,13 +35,17 @@
     <div class="box">
         <h4>{{ 'customer.account.wishlist.overview.title' | trans }}</h4>
 
-        {% include molecule('wishlist-form', 'WishlistPage') only %}
+        {% include molecule('add-wishlist', 'WishlistPage') with {
+            data: {
+                wishlistForm: data.wishlistForm
+            }
+        }  only %}
 
         <hr>
 
         {% include molecule('wishlist-overview-table', 'WishlistPage') with {
             data: {
-                wishlists: _view.wishlistCollection.wishlists
+                wishlists: data.wishlists
             }
         } only %}
 

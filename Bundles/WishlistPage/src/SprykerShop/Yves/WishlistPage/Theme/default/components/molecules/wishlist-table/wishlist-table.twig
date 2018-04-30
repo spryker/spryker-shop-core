@@ -6,12 +6,14 @@
 } %}
 
 {% define data = {
-    wishlistItems: required
+    wishlistItems: required,
+    wishlistName: required,
+    pagination: required
 } %}
 
 {% block body %}
 
-    {% if _view.wishlistItems|length %}
+    {% if data.wishlistItems|length %}
         <table class="table table--expand table-grid">
             <thead>
                 <tr>
@@ -71,7 +73,7 @@
                                 <form id="addToCart_{{ loop.index }}"
                                       class="col space-x-small"
                                       method="POST"
-                                      action="{{ path('wishlist/move-to-cart', {sku: item.sku, 'wishlist-name': _view.wishlistName}) }}">
+                                      action="{{ path('wishlist/move-to-cart', {sku: item.sku, 'wishlist-name': data.wishlistName}) }}">
                                             <span class="link" title="{{ 'customer.account.wishlist.add-to-cart' | trans }}" onclick="document.getElementById('addToCart_{{ loop.index }}').submit()">
                                                 {% include atom('icon') with {
                                                     data: {
@@ -84,7 +86,7 @@
                             <form id="deleteWishlistItem_{{ loop.index }}"
                                   class="col space-x-small"
                                   method="POST"
-                                  action="{{ path('wishlist/remove-item', {sku: item.sku, 'wishlist-name': _view.wishlistName}) }}">
+                                  action="{{ path('wishlist/remove-item', {sku: item.sku, 'wishlist-name': data.wishlistName}) }}">
                                         <span class="link" title="{{ 'customer.account.wishlist.remove' | trans }}" onclick="document.getElementById('deleteWishlistItem_{{ loop.index }}').submit()">
                                             {% include atom('icon') with {
                                                 data: {
@@ -99,17 +101,12 @@
             {% endfor %}
             </tbody>
         </table>
-        <div class="row align-center">
-            {#{% include '@ShopLayout/layout/partials/pagination.twig' with {#}
-            {#parameters: {#}
-            {#wishlistName: _view.wishlistName#}
-            {#},#}
-            {#currentPage: _view.currentPage,#}
-            {#paginationPath: 'wishlist/details',#}
-            {#maxPage: _view.totalPages,#}
-            {#showAlwaysFirstAndLast: true#}
-            {#} %}#}
-        </div>
+
+        {% include molecule('pagination') with {
+            class: 'box',
+            data: data.pagination
+        } only %}
+
     {% else %}
         <div class="text-center space-y-big">
             <h6>{{ 'customer.account.wishlist.empty' | trans }}</h6>

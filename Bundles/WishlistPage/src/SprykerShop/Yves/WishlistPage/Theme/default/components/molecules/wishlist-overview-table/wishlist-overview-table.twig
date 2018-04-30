@@ -7,6 +7,7 @@
 
 {% define data = {
     wishlists: required,
+    wishlistForm: var|default('form is not defined'),
     hasEditName: false
 } %}
 
@@ -29,11 +30,11 @@
                         {% if not data.hasEditName %}
                             <a href="{{ path('wishlist/details', { wishlistName: wishlist.name }) }}">{{ wishlist.name }}</a>
                         {% else %}
-                            {% if wishlist.idWishlist == _view.wishlistForm.vars.data.idWishlist %}
-                                {{ form_start(_view.wishlistForm) }}
+                            {% if wishlist.idWishlist == data.wishlistForm.vars.data.idWishlist %}
+                                {{ form_start(data.wishlistForm) }}
                                     <div class="grid grid--nowrap">
                                         <div class="col col--expand"></div>
-                                        {{ form_widget(_view.wishlistForm.name, {attr: {placeholder: 'customer.account.wishlist.overview.enter_name'|trans}}) }}
+                                        {{ form_widget(data.wishlistForm.name, {attr: {placeholder: 'customer.account.wishlist.overview.enter_name'|trans}}) }}
                                         <div class="col">
                                             <button type="submit" class="button">
                                                 {% include atom('icon') with {
@@ -44,8 +45,8 @@
                                             </button>
                                         </div>
                                     </div>
-                                    {{ form_errors(_view.wishlistForm) }}
-                                {{ form_end(_view.wishlistForm) }}
+                                    {{ form_errors(data.wishlistForm) }}
+                                {{ form_end(data.wishlistForm) }}
                             {% else %}
                                 <a href="{{ path('wishlist/details', { wishlistName: wishlist.name }) }}">{{ wishlist.name }}</a>
                             {% endif %}
