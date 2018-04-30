@@ -25,7 +25,7 @@ class CartController extends AbstractController
      *
      * @return array
      */
-    public function indexAction(array $selectedAttributes = null)
+    public function indexAction(?array $selectedAttributes = null)
     {
         $validateQuoteResponseTransfer = $this->getFactory()
             ->getCartClient()

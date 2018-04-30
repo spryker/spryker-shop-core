@@ -1,24 +1,24 @@
-@mixin component-box($name: '.box') {
+@mixin shop-ui-box($name: '.box') {
     #{$name} {
-        @include clearfix;
+        @include helper-ui-clearfix;
         padding: .5rem;
         margin: .5rem;
-        background-color: $color-white;
-        border: 1px solid $color-lighter;
-        
+        background-color: $setting-color-white;
+        border: 1px solid $setting-color-lighter;
+
         hr,
         &__separator {
             position: relative;
             display: block;
             margin-top: .5rem;
             margin-bottom: .5rem;
-            border-bottom: 1px solid $color-lighter;
+            border-bottom: 1px solid $setting-color-lighter;
             left: - .5rem;
             width: calc(100% + #{1rem});
         }
 
         &--borderless {
-            border-color: $color-transparent;
+            border-color: $setting-color-transparent;
         }
 
         &--stretch {

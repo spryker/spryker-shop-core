@@ -153,7 +153,7 @@ class FormFactory extends AbstractFactory
      *
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
-    protected function createFormCollection(array $formTypes, StepEngineFormDataProviderInterface $dataProvider = null)
+    protected function createFormCollection(array $formTypes, ?StepEngineFormDataProviderInterface $dataProvider = null)
     {
         return new FormCollectionHandler($formTypes, $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY), $dataProvider);
     }

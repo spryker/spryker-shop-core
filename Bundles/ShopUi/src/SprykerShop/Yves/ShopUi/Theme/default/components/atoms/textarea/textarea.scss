@@ -1,16 +1,16 @@
-@mixin component-textarea($name: '.textarea') {
+@mixin shop-ui-textarea($name: '.textarea') {
     #{$name} {
-        @include transition(border-color);
+        @include helper-effect-transition(border-color);
         display: inline-block;
         padding: spacing(.5) spacing();
-        border: 1px solid $color-input-border;
+        border: 1px solid $setting-color-input-border;
 
         &:focus {
-            border-color: $color-input-border-focus;
+            border-color: $setting-color-input-border-focus;
         }
 
         &::placeholder {
-            color: $color-dark;
+            color: $setting-color-dark;
         }
 
         &--expand {
@@ -19,9 +19,9 @@
         }
 
         &--error {
-            border-color: map-get($color-actions, alert);
+            border-color: map-get($setting-color-actions, alert);
         }
-        
+
         @content;
     }
 }

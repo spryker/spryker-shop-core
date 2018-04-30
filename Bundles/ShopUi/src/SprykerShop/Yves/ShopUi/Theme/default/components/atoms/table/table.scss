@@ -1,16 +1,16 @@
-@mixin component-table($name: '.table') {
+@mixin shop-ui-table($name: '.table') {
     #{$name} {
         thead,
         &__head {
-            @include font-weight(bold);
-            border-bottom: 1px solid $color-light;
+            @include helper-font-weight(bold);
+            border-bottom: 1px solid $setting-color-light;
         }
 
         tbody,
         &__body {
             tr {
                 &:nth-child(even) {
-                    background-color: $color-lightest;
+                    background-color: $setting-color-lightest;
                 }
             }
         }

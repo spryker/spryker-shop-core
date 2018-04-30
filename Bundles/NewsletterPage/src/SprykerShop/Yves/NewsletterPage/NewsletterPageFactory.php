@@ -30,7 +30,7 @@ class NewsletterPageFactory extends AbstractFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createNewsletterSubscriptionForm(array $data = null, array $options = [])
+    public function createNewsletterSubscriptionForm(?array $data = null, array $options = [])
     {
         return $this->getFormFactory()->create(NewsletterSubscriptionForm::class, $data, $options);
     }
