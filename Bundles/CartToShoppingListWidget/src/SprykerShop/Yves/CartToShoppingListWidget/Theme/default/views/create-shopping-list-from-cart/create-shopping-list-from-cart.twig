@@ -1,4 +1,4 @@
-{% extends template('page-layout-main') %}
+{% extends template('widget') %}
 
 {% if _widget is defined %}
     {% set viewForm = _widget.form %}
@@ -8,14 +8,21 @@
 
 {% define data = {
     form: viewForm,
+    formAction: url('shopping-list/create-from-cart'),
     labels: {
+        formLabel: 'cart.add-to-shopping-list.form' | trans,
         submitLabel: 'cart.add-to-shopping-list' | trans
     }
 } %}
 
 {% block body %}
+    <hr>
     {% include molecule('form') with {
         data: {
+            options: {
+                action: data.formAction
+            },
+            title: data.labels.formLabel,
             form: data.form,
             submit: {
                 enable: true,

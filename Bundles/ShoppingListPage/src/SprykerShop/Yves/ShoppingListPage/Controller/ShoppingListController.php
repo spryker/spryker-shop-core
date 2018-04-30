@@ -31,6 +31,7 @@ class ShoppingListController extends AbstractShoppingListController
     protected const PARAM_SKU = 'sku';
     protected const PARAM_QUANTITY = 'quantity';
     protected const PARAM_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
+    protected const PARAM_SHOPPING_LIST_ITEM = 'shoppingListItem';
     protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
 
     /**
@@ -48,7 +49,7 @@ class ShoppingListController extends AbstractShoppingListController
 
         $shoppingListTransfer = (new ShoppingListTransfer())
             ->setIdShoppingList($idShoppingList)
-            ->setRequesterId($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
 
         $shoppingListOverviewRequest = (new ShoppingListOverviewRequestTransfer())
             ->setShoppingList($shoppingListTransfer)
@@ -139,13 +140,22 @@ class ShoppingListController extends AbstractShoppingListController
      */
     public function multiAddToCartAction(Request $request): RedirectResponse
     {
+        $shoppingListItemTransferCollection = $this->getShoppingListItemCollectionTransferFromRequest($request);
+        if (count($shoppingListItemTransferCollection->getItems())  === 0) {
+            $this->addErrorMessage('customer.account.shopping_list.item.select_item');
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+                'idShoppingList' => $request->get(static::PARAM_ID_SHOPPING_LIST),
+            ]);
+        }
+
         $shoppingListItemCollectionTransfer = $this->getFactory()
             ->getShoppingListClient()
-            ->getShoppingListItemCollectionTransfer($this->getShoppingListItemCollectionTransferFromRequest($request));
+            ->getShoppingListItemCollectionTransfer($shoppingListItemTransferCollection);
 
+        $quantity = $request->get(static::PARAM_SHOPPING_LIST_ITEM)[static::PARAM_QUANTITY] ?? [];
         $result = $this->getFactory()
             ->createAddToCartHandler()
-            ->addAllAvailableToCart($shoppingListItemCollectionTransfer->getItems()->getArrayCopy());
+            ->addAllAvailableToCart($shoppingListItemCollectionTransfer->getItems()->getArrayCopy(), $quantity);
 
         if ($result->getRequests()->count()) {
             $this->addErrorMessage('customer.account.shopping_list.item.added_to_cart.failed');
@@ -234,7 +244,7 @@ class ShoppingListController extends AbstractShoppingListController
             ->setSku($request->get(static::PARAM_SKU))
             ->setQuantity((int)$request->get(static::PARAM_QUANTITY))
             ->setFkShoppingList($request->get(static::PARAM_ID_SHOPPING_LIST))
-            ->setRequesterId($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
 
         $requestIdShoppingListItem = (int)$request->get(static::PARAM_ID_SHOPPING_LIST_ITEM);
         if ($requestIdShoppingListItem) {
@@ -252,9 +262,9 @@ class ShoppingListController extends AbstractShoppingListController
     protected function getShoppingListItemCollectionTransferFromRequest(Request $request): ShoppingListItemCollectionTransfer
     {
         $shoppingListCollectionTransfer = new ShoppingListItemCollectionTransfer();
-
-        if ($request->get(static::PARAM_ID_SHOPPING_LIST_ITEM)) {
-            foreach ($request->get(static::PARAM_ID_SHOPPING_LIST_ITEM) as $idShoppingListItem) {
+        $shoppingListItemRequest = $request->get(static::PARAM_SHOPPING_LIST_ITEM);
+        if (!empty($shoppingListItemRequest[self::PARAM_ID_SHOPPING_LIST_ITEM])) {
+            foreach ($shoppingListItemRequest[self::PARAM_ID_SHOPPING_LIST_ITEM] as $idShoppingListItem) {
                 $shoppingListItemTransfer = (new ShoppingListItemTransfer())
                     ->setIdShoppingListItem((int)$idShoppingListItem)
                     ->setFkShoppingList($request->request->getInt(static::PARAM_ID_SHOPPING_LIST));

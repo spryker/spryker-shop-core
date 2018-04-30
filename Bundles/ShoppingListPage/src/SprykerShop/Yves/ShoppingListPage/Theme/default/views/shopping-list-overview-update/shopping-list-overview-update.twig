@@ -1,7 +1,7 @@
 {% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
 
 {% define data = {
-    shoppingListForm: _view.shoppingListForm,
+    form: _view.shoppingListForm,
     shoppingListCollection: _view.shoppingListCollection,
     idShoppingList: _view.idShoppingList,
     shoppingListResponse: _view.shoppingListResponse
@@ -15,7 +15,7 @@
         },
         embed: {
             shoppingListCollection: data.shoppingListCollection,
-            activeShoppingListId: data.shoppingListForm.vars.value.idShoppingList
+            activeShoppingListId: data.idShoppingList
         }
     } only %}
         {% block shoppingListNavigation %}
@@ -31,17 +31,20 @@
 
 {% block customerContent %}
     <div class="box">
-        <h4>{{ 'customer.account.shopping_list.overview.title' | trans }}</h4>
-
-        {% if data.shoppingListCollection.shoppingLists | length %}
-            {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
-                data: {
-                    shoppingLists: data.shoppingListCollection.shoppingLists,
-                    shoppingListForm: data.shoppingListForm,
-                    idShoppingList: data.idShoppingList,
-                    shoppingListResponse: data.shoppingListResponse,
+        {% include molecule('form') with {
+            data: {
+                title: 'customer.account.shopping_list.overview.edit' | trans,
+                form: data.form,
+                submit: {
+                    enable: true,
+                    text: 'forms.submit-btn' | trans
+                },
+                cancel: {
+                    enable: true,
+                    url: url('shopping-list'),
+                    text: 'general.back.button' | trans
                 }
-            } only %}
-        {% endif %}
+            }
+        } only %}
     </div>
 {% endblock %}

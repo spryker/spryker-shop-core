@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\ShoppingListPage\Controller;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\Form\FormInterface;
@@ -32,10 +31,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     public function indexAction(Request $request)
     {
         $shoppingListForm = $this->getFactory()
-            ->getShoppingListForm(
-                null,
-                [ ShoppingListForm::SHOW_NAME_LABEL => true ]
-            )
+            ->getShoppingListForm()
             ->handleRequest($request);
         $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
 
@@ -72,9 +68,8 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     {
         $shoppingListFormDataProvider = $this->getFactory()->createShoppingListFormDataProvider();
         $shoppingListForm = $this->getFactory()
-            ->getShoppingListForm(
-                $shoppingListFormDataProvider->getData($idShoppingList),
-                [ ShoppingListForm::SHOW_NAME_LABEL => false ]
+            ->getShoppingListUpdateForm(
+                $shoppingListFormDataProvider->getData($idShoppingList)
             )
             ->handleRequest($request);
 
@@ -114,7 +109,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $shoppingListTransfer = new ShoppingListTransfer();
         $shoppingListTransfer
             ->setIdShoppingList($idShoppingList)
-            ->setRequesterId($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
 
         $shoppingListResponseTransfer = $this->getFactory()
             ->getShoppingListClient()
@@ -139,6 +134,11 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $shoppingListItems = $this->getFactory()
             ->getShoppingListClient()
             ->getShoppingListItemCollection($this->getShoppingListCollectionTransfer($request));
+        if (count($shoppingListItems->getItems())  === 0) {
+            $this->addErrorMessage('customer.account.shopping_list.items.added_to_cart.');
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+        }
+
 
         $result = $this->getFactory()
             ->createAddToCartHandler()
@@ -154,7 +154,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     }
 
     /**
-     * @param string $idShoppingList
+     * @param int $idShoppingList
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -201,7 +201,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         /** @var \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer */
         $shoppingListTransfer = $shoppingListForm->getData();
         $shoppingListTransfer->setCustomerReference($customerTransfer->getCustomerReference());
-        $shoppingListTransfer->setRequesterId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+        $shoppingListTransfer->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         return $shoppingListTransfer;
     }
@@ -221,7 +221,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             foreach ($shoppingListIds as $idShoppingList) {
                 $shoppingList = (new ShoppingListTransfer())
                     ->setIdShoppingList($idShoppingList)
-                    ->setRequesterId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+                    ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
                 $shoppingListCollectionTransfer->addShoppingList($shoppingList);
             }

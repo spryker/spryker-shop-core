@@ -3,7 +3,11 @@
 {% define data = {
     shareShoppingListForm: _view.shareShoppingListForm,
     idShoppingList: _view.idShoppingList,
-    shoppingListCollection: _view.shoppingListCollection
+    shoppingListCollection: _view.shoppingListCollection,
+    labels: {
+        shareFormLabel: 'customer.account.shopping_list.share.from.share_with' | trans,
+        shareFormSubmit: 'customer.account.shopping_list.share.from.share' | trans,
+    }
 } %}
 
 {% block customerNavigation %}
@@ -32,9 +36,16 @@
     {% include molecule('form') with {
         class: 'box',
         data: {
+            title: data.labels.shareFormLabel,
             form: data.shareShoppingListForm,
             submit: {
+                text: data.labels.shareFormSubmit,
                 enable: true
+            },
+            cancel: {
+                enable: true,
+                url: url('shopping-list'),
+                text: 'general.back.button' | trans
             }
         }
     } only %}

@@ -69,14 +69,14 @@ class ShoppingListWidgetController extends AbstractController
      */
     protected function getShoppingListItemTransferFromRequest(Request $request): ShoppingListItemTransfer
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $customerTransfer = $this->getCustomer();
 
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setSku($request->get(static::PARAM_SKU))
             ->setQuantity((int)$request->get(static::PARAM_QUANTITY))
             ->setFkShoppingList($request->get(static::PARAM_ID_SHOPPING_LIST))
             ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setRequesterId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         return $shoppingListItemTransfer;
     }

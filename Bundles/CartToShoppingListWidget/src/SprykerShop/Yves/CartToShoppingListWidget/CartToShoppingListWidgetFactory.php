@@ -41,13 +41,11 @@ class CartToShoppingListWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \SprykerShop\Yves\CartToShoppingListWidget\Form\DataProvider\ShoppingListFromCartFormDataProvider
      */
     public function createCartFromShoppingListFormDataProvider(): ShoppingListFromCartFormDataProvider
     {
-        return new ShoppingListFromCartFormDataProvider();
+        return new ShoppingListFromCartFormDataProvider($this->getShoppingListClient());
     }
 
     /**
