@@ -48,10 +48,26 @@
     }
 
     .is-scrollable {
-        overflow-y: auto;
+        overflow: auto;
     }
 
     .is-not-scrollable {
+        overflow: hidden;
+    }
+
+    .is-scrollable-x {
+        overflow-x: auto;
+    }
+
+    .is-not-scrollable-x {
+        overflow-x: hidden;
+    }
+
+    .is-scrollable-y {
+        overflow-y: auto;
+    }
+
+    .is-not-scrollable-y {
         overflow-y: hidden;
     }
 }

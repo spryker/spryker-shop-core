@@ -1,6 +1,7 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
+    wishlists: _view.wishlistOverview.meta.wishlistCollection.wishlists,
     wishlistName: _view.wishlistName,
     wishlistItems: _view.wishlistItems,
     addAllProductsToCart: _view.addAllAvailableProductsToCartForm,
@@ -12,12 +13,11 @@
         },
         paginationPath: 'wishlist/details',
         showAlwaysFirstAndLast: true
-    }
+    },
+
+    title: 'customer.account.wishlist' | trans
 } %}
 
-{% block title %}
-    <h3>{{ 'customer.account.wishlist' | trans }}</h3>
-{% endblock %}
 
 {% block customerNavigation %}
 
@@ -25,16 +25,20 @@
         class: 'box',
         data: {
             activePage: 'wishlist'
+        },
+        embed: {
+            wishlists: data.wishlists,
+            wishlistName: data.wishlistName
         }
     } only %}
 
         {% block wishlistNavigation %}
-            {% if _view.wishlistOverview.meta.wishlistCollection.wishlists|length %}
+            {% if embed.wishlists|length %}
                 {% include molecule('wishlist-navigation', 'WishlistPage') with {
                     class: 'menu',
                     data: {
-                        wishlists: _view.wishlistOverview.meta.wishlistCollection.wishlists,
-                        activeSubmenu: _view.wishlistName
+                        wishlists: embed.wishlists,
+                        activeSubmenu: embed.wishlistName
                     }
                 } only %}
             {% endif %}
@@ -71,13 +75,25 @@
             {% endif %}
         </div>
 
-        {% include molecule('wishlist-table', 'WishlistPage') with {
-            data: {
-                wishlistItems: data.wishlistItems,
-                wishlistName: data.wishlistName,
-                pagination: data.pagination
-            }
-        } only %}
+        {% if data.wishlistItems|length %}
+
+            {% include molecule('wishlist-table', 'WishlistPage') with {
+                data: {
+                    wishlistItems: data.wishlistItems,
+                    wishlistName: data.wishlistName
+                }
+            } only %}
+
+            {% include molecule('pagination') with {
+                class: 'space-y-big',
+                data: data.pagination
+            } only %}
+
+        {% else %}
+            <div class="text-center space-y-big">
+                <h6>{{ 'customer.account.wishlist.empty' | trans }}</h6>
+            </div>
+        {% endif %}
 
     </div>
 

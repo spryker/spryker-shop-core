@@ -88,7 +88,7 @@ class WishlistOverviewController extends AbstractController
         return $this->view([
             'wishlistCollection' => $wishlistCollection,
             'wishlistForm' => $wishlistForm->createView(),
-        ], [], '@WishlistPage/views/wishlist-update/wishlist-update.twig');
+        ], [], '@WishlistPage/views/wishlist-update-name/wishlist-update-name.twig');
     }
 
     /**

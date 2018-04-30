@@ -7,13 +7,16 @@
 
 {% define data = {
     wishlists: required,
-    wishlistForm: var|default('form is not defined'),
-    hasEditName: false
+    wishlistForm: null,
+
+    actions: {
+        editName: false
+    }
 } %}
 
 {% block body %}
 
-    {% if data.wishlists|length %}
+    <div class="is-scrollable-x">
         <table class="table table--expand table-grid">
             <thead>
                 <tr>
@@ -25,31 +28,28 @@
             </thead>
             <tbody>
             {% for wishlist in data.wishlists %}
+                {% set hasWishlistForm = data.wishlistForm is not empty and wishlist.idWishlist == data.wishlistForm.vars.data.idWishlist %}
                 <tr>
                     <td>
-                        {% if not data.hasEditName %}
-                            <a href="{{ path('wishlist/details', { wishlistName: wishlist.name }) }}">{{ wishlist.name }}</a>
+                        {% if hasWishlistForm %}
+                            {{ form_start(data.wishlistForm) }}
+                            <div class="grid grid--nowrap">
+                                <div class="col col--expand"></div>
+                                {{ form_widget(data.wishlistForm.name, {attr: {placeholder: 'customer.account.wishlist.overview.enter_name'|trans}}) }}
+                                <div class="col">
+                                    <button type="submit" class="button">
+                                        {% include atom('icon') with {
+                                            data: {
+                                                name: 'save'
+                                            }
+                                        } only %}
+                                    </button>
+                                </div>
+                            </div>
+                            {{ form_errors(data.wishlistForm) }}
+                            {{ form_end(data.wishlistForm) }}
                         {% else %}
-                            {% if wishlist.idWishlist == data.wishlistForm.vars.data.idWishlist %}
-                                {{ form_start(data.wishlistForm) }}
-                                    <div class="grid grid--nowrap">
-                                        <div class="col col--expand"></div>
-                                        {{ form_widget(data.wishlistForm.name, {attr: {placeholder: 'customer.account.wishlist.overview.enter_name'|trans}}) }}
-                                        <div class="col">
-                                            <button type="submit" class="button">
-                                                {% include atom('icon') with {
-                                                    data: {
-                                                        name: 'save'
-                                                    }
-                                                } only %}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    {{ form_errors(data.wishlistForm) }}
-                                {{ form_end(data.wishlistForm) }}
-                            {% else %}
-                                <a href="{{ path('wishlist/details', { wishlistName: wishlist.name }) }}">{{ wishlist.name }}</a>
-                            {% endif %}
+                            <a href="{{ path('wishlist/details', { wishlistName: wishlist.name }) }}">{{ wishlist.name }}</a>
                         {% endif %}
                     </td>
                     <td>{{ wishlist.numberOfItems }}</td>
@@ -79,9 +79,6 @@
             {% endfor %}
             </tbody>
         </table>
-    {% else %}
-        <div class="text-center space-y-big">
-            <h6>{{ 'customer.account.wishlist.overview.empty' | trans }}</h6>
-        </div>
-    {% endif %}
+    </div>
+
 {% endblock %}

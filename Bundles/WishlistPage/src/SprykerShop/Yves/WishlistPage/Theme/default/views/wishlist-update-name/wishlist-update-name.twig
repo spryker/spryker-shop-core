@@ -8,22 +8,15 @@
 
 {% block customerContent %}
     <div class="box">
-        <h4>{{ 'customer.account.wishlist.overview.title' | trans }}</h4>
-
-        {% include molecule('add-wishlist', 'WishlistPage') with {
-            data: {
-                wishlistForm: data.wishlistForm
-            }
-        }  only %}
-
-        <hr>
+        <h4 class="space-bottom-default">{{ 'customer.account.wishlist.overview.title' | trans }}</h4>
 
         {% if data.wishlists|length %}
 
             {% include molecule('wishlist-overview-table', 'WishlistPage') with {
                 data: {
-                    wishlists: data.wishlists
-
+                    wishlists: data.wishlists,
+                    wishlistForm: data.wishlistForm,
+                    hasEditName: true
                 }
             } only %}
 

@@ -7,13 +7,12 @@
 
 {% define data = {
     wishlistItems: required,
-    wishlistName: required,
-    pagination: required
+    wishlistName: required
 } %}
 
 {% block body %}
 
-    {% if data.wishlistItems|length %}
+    <div class="is-scrollable-x">
         <table class="table table--expand table-grid">
             <thead>
                 <tr>
@@ -101,15 +100,6 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
 
-        {% include molecule('pagination') with {
-            class: 'box',
-            data: data.pagination
-        } only %}
-
-    {% else %}
-        <div class="text-center space-y-big">
-            <h6>{{ 'customer.account.wishlist.empty' | trans }}</h6>
-        </div>
-    {% endif %}
 {% endblock %}
