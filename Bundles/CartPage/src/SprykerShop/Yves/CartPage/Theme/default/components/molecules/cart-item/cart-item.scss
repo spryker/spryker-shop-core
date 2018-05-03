@@ -1,15 +1,13 @@
-$component-cart-item-sku-background: $color-dark;
-
-@mixin component-cart-item($name: '.cart-item') {
+@mixin cart-page-cart-item($name: '.cart-item') {
     #{$name} {
         &__title {
-            @include font-size(big);
+            @include helper-font-size(big);
             margin-bottom: .5rem;
         }
 
         &__sku {
-            @include font-size(small);
-            color: $component-cart-item-sku-background;
+            @include helper-font-size(small);
+            color: $setting-color-dark;
             margin-bottom: .5rem;
         }
 
@@ -18,7 +16,7 @@ $component-cart-item-sku-background: $color-dark;
         }
 
         &__wrap-details {
-            @include font-size(small);
+            @include helper-font-size(small);
         }
 
         &__quantity {
@@ -26,19 +24,19 @@ $component-cart-item-sku-background: $color-dark;
         }
 
         &__attributes {
-            border-top: solid 1px $color-lighter;
+            border-top: solid 1px $setting-color-lighter;
             padding: 0.8rem 0;
         }
 
         &__note {
-            border-top: solid 1px $color-lighter;
+            border-top: solid 1px $setting-color-lighter;
             padding: 1rem 0;
         }
 
-        .cart-bundles {
-            border-top: solid 1px $color-lighter;
-            padding: 0.8rem 0;
-        }
+        // .cart-bundles {
+        //     border-top: solid 1px $setting-color-lighter;
+        //     padding: 0.8rem 0;
+        // }
 
         @content;
     }

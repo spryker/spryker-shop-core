@@ -6,13 +6,13 @@
 } %}
 
 {% define data = {
-    cart: required,
+    cart: required
 } %}
 
 {% block body %}
-
     <h5 class="{{ config.name }}__subheader float-right">{{ app['cart.quantity'] }} {{ 'item' | trans }}</h5>
-    <h5>{{ 'cart.your-order' | trans }}</h5>
+    <h6>{{ 'cart.your-order' | trans }}</h6>
+
     <ul class="list {{ config.name }}__list">
         <li class="{{ config.name }}__item">{{ 'cart.price.subtotal' | trans }} <span class="float-right">{{ data.cart.totals.subtotal | money }}</span></li>
         <li><hr/></li>

@@ -1,6 +1,5 @@
-@mixin component-cart-quantity($name: '.cart-quantity') {
+@mixin cart-page-cart-quantity($name: '.cart-quantity') {
     #{$name} {
-
         @content;
     }
 }
