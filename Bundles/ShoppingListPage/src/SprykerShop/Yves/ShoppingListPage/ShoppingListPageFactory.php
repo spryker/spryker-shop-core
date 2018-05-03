@@ -17,9 +17,7 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompan
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
-use SprykerShop\Yves\ShoppingListPage\Form\AddAvailableProductsToCartForm;
 use SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint;
-use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\AddAvailableProductsToCartFormDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShareShoppingListDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\ShareShoppingListForm;
@@ -69,25 +67,6 @@ class ShoppingListPageFactory extends AbstractFactory
     public function createShoppingListFormDataProvider(): ShoppingListFormDataProvider
     {
         return new ShoppingListFormDataProvider($this->getShoppingListClient(), $this->getCustomerClient());
-    }
-
-    /**
-     * @param array $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface|\SprykerShop\Yves\ShoppingListPage\Form\AddAvailableProductsToCartForm
-     */
-    public function getAddAvailableProductsToCartForm(array $data, array $options = []): FormInterface
-    {
-        return $this->getFormFactory()->create(AddAvailableProductsToCartForm::class, $data, $options);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ShoppingListPage\Form\DataProvider\AddAvailableProductsToCartFormDataProvider
-     */
-    public function createAddAvailableProductsToCartFormDataProvider(): AddAvailableProductsToCartFormDataProvider
-    {
-        return new AddAvailableProductsToCartFormDataProvider();
     }
 
     /**

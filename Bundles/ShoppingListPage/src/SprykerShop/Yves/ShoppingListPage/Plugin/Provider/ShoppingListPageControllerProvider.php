@@ -32,50 +32,161 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     {
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
+        $this->addShoppingListRoute($allowedLocalesPattern)
+            ->addShoppingListUpdateRoute($allowedLocalesPattern)
+            ->addShoppingListDeleteRoute($allowedLocalesPattern)
+            ->addShoppingListAddToCartRoute($allowedLocalesPattern)
+            ->addShoppingListDetailsRoute($allowedLocalesPattern)
+            ->addShoppingListRemoveItemRoute($allowedLocalesPattern)
+            ->addShoppingListAddListsToCartRoute($allowedLocalesPattern)
+            ->addShoppingListMultiAddToCartRoute($allowedLocalesPattern)
+            ->addShoppingListAddAvailableToCartRoute($allowedLocalesPattern)
+            ->addShoppingListShareRoute($allowedLocalesPattern);
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addShoppingListRoute($allowedLocalesPattern): self
+    {
         $this->createController('/{shoppingList}', static::ROUTE_SHOPPING_LIST, 'ShoppingListPage', 'ShoppingListOverview')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list');
 
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addShoppingListUpdateRoute($allowedLocalesPattern): self
+    {
         $this->createController('/{shoppingList}/update/{idShoppingList}', static::ROUTE_SHOPPING_LIST_UPDATE, 'ShoppingListPage', 'ShoppingListOverview', 'update')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idShoppingList', '\d+');
 
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addShoppingListDeleteRoute($allowedLocalesPattern): self
+    {
         $this->createGetController('/{shoppingList}/delete/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DELETE, 'ShoppingListPage', 'ShoppingListOverview', 'delete')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idShoppingList', '\d+');
 
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addShoppingListAddListsToCartRoute($allowedLocalesPattern): self
+    {
         $this->createPostController('/{shoppingList}/add-shopping-list-to-cart', static::ROUTE_ADD_SHOPPING_LIST_TO_CART, 'ShoppingListPage', 'ShoppingListOverview', 'addShoppingListToCart')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list');
 
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addShoppingListDetailsRoute($allowedLocalesPattern): self
+    {
         $this->createGetController('/{shoppingList}/details/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DETAILS, 'ShoppingListPage', 'ShoppingList')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idShoppingList', '\d+');
 
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addShoppingListRemoveItemRoute($allowedLocalesPattern): self
+    {
         $this->createGetController('/{shoppingList}/remove-item', static::ROUTE_REMOVE_ITEM, 'ShoppingListPage', 'ShoppingList', 'removeItem')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list');
 
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addShoppingListAddToCartRoute($allowedLocalesPattern): self
+    {
         $this->createGetController('/{shoppingList}/add-to-cart', static::ROUTE_ADD_TO_CART, 'ShoppingListPage', 'ShoppingList', 'addToCart')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('sku', '[a-zA-Z0-9-_]+');
 
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addShoppingListMultiAddToCartRoute($allowedLocalesPattern): self
+    {
         $this->createPostController('/{shoppingList}/multi-add-to-cart', static::ROUTE_MULTI_ADD_TO_CART, 'ShoppingListPage', 'ShoppingList', 'multiAddToCart')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list');
 
-        $this->createPostController('/{shoppingList}/add-all-available-to-cart/{idShoppingList}', static::ROUTE_ADD_ALL_AVAILABLE_TO_CART, 'ShoppingListPage', 'ShoppingList', 'addAvailableProductsToCart')
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addShoppingListAddAvailableToCartRoute($allowedLocalesPattern): self
+    {
+        $this->createGetController('/{shoppingList}/add-all-available-to-cart/{idShoppingList}', static::ROUTE_ADD_ALL_AVAILABLE_TO_CART, 'ShoppingListPage', 'ShoppingList', 'addAvailableProductsToCart')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idShoppingList', '\d+');
 
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addShoppingListShareRoute($allowedLocalesPattern): self
+    {
         $this->createController('/{shoppingList}/share/{idShoppingList}', static::ROUTE_SHOPPING_LIST_SHARE, 'ShoppingListPage', 'ShoppingListOverview', 'shareShoppingList')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idShoppingList', '\d+');
+
+        return $this;
     }
 }

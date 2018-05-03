@@ -41,12 +41,11 @@ class ShoppingListOverviewController extends AbstractShoppingListController
                 ->createShoppingList($this->getShoppingListTransfer($shoppingListForm));
 
             if ($shoppingListResponseTransfer->getIsSuccess()) {
-                $this->addSuccessMessage('customer.account.shopping_list.create.success');
-
-                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+                $shoppingListForm = $this->getFactory()
+                    ->getShoppingListForm();
             }
 
-            $this->handleResponseErrors($shoppingListResponseTransfer, $shoppingListForm);
+            $this->handleResponseErrors($shoppingListResponseTransfer);
         }
 
         $data = [
@@ -85,6 +84,8 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
                 return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
             }
+
+            $this->handleResponseErrors($shoppingListResponseTransfer);
         }
 
         $shoppingListCollection = $this->getCustomerShoppingListCollection();
@@ -242,11 +243,10 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
-     * @param \Symfony\Component\Form\FormInterface $shoppingListForm
      *
      * @return void
      */
-    protected function handleResponseErrors(ShoppingListResponseTransfer $shoppingListResponseTransfer, FormInterface $shoppingListForm): void
+    protected function handleResponseErrors(ShoppingListResponseTransfer $shoppingListResponseTransfer): void
     {
         foreach ($shoppingListResponseTransfer->getErrors() as $error) {
             $this->addErrorMessage($error);
