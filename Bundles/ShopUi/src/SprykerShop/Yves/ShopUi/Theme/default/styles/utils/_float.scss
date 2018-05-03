@@ -1,12 +1,12 @@
 @mixin util-float() {
     .float-left {
         float: left;
-        z-index: $zi-element + 1;
+        z-index: $setting-zi-element + 1;
     }
 
     .float-right {
         float: right;
-        z-index: $zi-element + 1;
+        z-index: $setting-zi-element + 1;
     }
 
     .float-none {
@@ -14,6 +14,6 @@
     }
 
     .float-clear {
-        @include clearfix;
+        @include helper-ui-clearfix;
     }
 }

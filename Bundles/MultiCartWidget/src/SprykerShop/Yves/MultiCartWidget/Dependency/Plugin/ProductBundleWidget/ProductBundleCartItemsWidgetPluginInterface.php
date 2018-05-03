@@ -19,5 +19,5 @@ interface ProductBundleCartItemsWidgetPluginInterface
      *
      * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer, int $itemDisplayLimit = null): void;
+    public function initialize(QuoteTransfer $quoteTransfer, ?int $itemDisplayLimit = null): void;
 }

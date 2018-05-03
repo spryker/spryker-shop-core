@@ -2,12 +2,12 @@
     .container {
         display: block;
         width: 100%;
-        max-width: $grid-max-width;
+        max-width: $setting-grid-max-width;
         margin: auto;
     }
 
     .grid {
-        @include clearfix;
+        @include helper-ui-clearfix;
         clear: both;
         display: flex;
         flex-flow: row wrap;
@@ -66,23 +66,23 @@
         }
 
         &.container {
-            max-width: $grid-max-width;
+            max-width: $setting-grid-max-width;
         }
     }
 
     .col {
-        @include clearfix;
+        @include helper-ui-clearfix;
         float: left;
         display: block;
         flex-grow: 0;
         flex-basis: auto;
-        
-        @each $breakpoint, $edges in $grid-breakpoints {
-            @include media-min(edge-min($edges)) {
-                @for $column from 1 through $grid-columns {
+
+        @each $breakpoint, $edges in $setting-breakpoints {
+            @include helper-breakpoint-media-min(helper-breakpoint-edge-min($edges)) {
+                @for $column from 1 through $setting-grid-columns {
                     &--#{$breakpoint}-#{$column} {
-                        width: span($column);
-                        min-width: span($column);
+                        width: helper-grid-span($column);
+                        min-width: helper-grid-span($column);
                     }
                 }
             }
