@@ -58,6 +58,9 @@ class QuickOrderPageToCartClientBridge implements QuickOrderPageToCartClientInte
      */
     public function getZedStub(): CartStubInterface
     {
-        return $this->cartClient->getZedStub();
+        /** @var \Spryker\Client\Cart\CartClient $cartClient */
+        $cartClient = $this->cartClient;
+
+        return $cartClient->getZedStub();
     }
 }

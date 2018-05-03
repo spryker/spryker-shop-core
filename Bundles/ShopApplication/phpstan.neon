@@ -1,11 +1,8 @@
-# !!! This is a deprecated file and running core phpstan check !!!
-# Please use phpstan.neon file per module now and console code:phpstan -m ModuleName instead.
-# Never excludes_analyse files from now on, instead use ignoreErrors where necessary then.
-# Also set up a phpstan.json config per module and set the highest defaultLevel possible.
 parameters:
-    reportUnmatchedIgnoredErrors: true
-
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
+
+    ignoreErrors:
+    - '#PHPDoc tag @param for parameter \$arguments with type array is not subtype of native type array<int, mixed>#'
 
 services:
     -

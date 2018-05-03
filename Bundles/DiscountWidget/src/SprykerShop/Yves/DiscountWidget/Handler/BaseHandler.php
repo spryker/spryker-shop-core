@@ -26,7 +26,7 @@ class BaseHandler
     }
 
     /**
-     * @param \Spryker\Client\Kernel\AbstractClient $client
+     * @param \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface $client
      *
      * @return void
      */
