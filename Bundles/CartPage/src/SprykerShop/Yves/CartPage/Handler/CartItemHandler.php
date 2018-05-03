@@ -134,7 +134,7 @@ class CartItemHandler implements CartItemHandlerInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param array $itemAttributesBySku
-     * @param array|null $selectedAttributes
+     * @param array $selectedAttributes
      * @param string $localeName
      *
      * @return array

@@ -1,14 +1,14 @@
 import Logger from './logger';
 import Candidate from './candidate';
 import { entries as getCandidateRegistryEntries, clear as clearCandidateRegistry } from './registry';
-import { AppConfig } from './config';
+import { Config } from './config';
 import Component from '../models/component';
 
-export default class App { 
-    protected readonly config: AppConfig
+export default class App {
+    protected readonly config: Config
     protected readonly logger: Logger
 
-    constructor(config: AppConfig, logger: Logger) { 
+    constructor(config: Config, logger: Logger) {
         this.config = config;
         this.logger = logger;
     }
@@ -32,7 +32,7 @@ export default class App {
         this.fireErrorEvent(error);
     }
 
-    protected fireReadyEvent() { 
+    protected fireReadyEvent() {
         const readyEvent = new CustomEvent(this.config.events.ready);
         document.dispatchEvent(readyEvent);
     }
@@ -42,7 +42,7 @@ export default class App {
         document.dispatchEvent(errorEvent);
     }
 
-    async bootstrap() { 
+    async bootstrap() {
         this.logger.debug('application bootstrap');
 
         try {
@@ -51,7 +51,7 @@ export default class App {
             this.ready(components);
         } catch (error) {
             this.error(error);
-        } finally { 
+        } finally {
             clearCandidateRegistry();
         }
     }

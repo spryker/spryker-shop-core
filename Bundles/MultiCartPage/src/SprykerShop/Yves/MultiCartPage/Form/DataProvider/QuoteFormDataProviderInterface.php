@@ -16,5 +16,5 @@ interface QuoteFormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData(int $idQuote = null): QuoteTransfer;
+    public function getData(?int $idQuote = null): QuoteTransfer;
 }

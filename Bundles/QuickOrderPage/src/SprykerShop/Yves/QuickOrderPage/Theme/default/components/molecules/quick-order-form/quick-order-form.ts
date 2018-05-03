@@ -1,5 +1,5 @@
-import Component from 'shop-ui/models/component';
-import AjaxProvider from 'shop-ui/components/molecules/ajax-provider/ajax-provider';
+import Component from 'ShopUi/models/component';
+import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 
 export default class QuickOrderForm extends Component {
     form: HTMLFormElement
@@ -8,7 +8,7 @@ export default class QuickOrderForm extends Component {
     removeRowTriggers: HTMLElement[]
     addRowAjaxProvider: AjaxProvider
     removeRowAjaxProvider: AjaxProvider
-    
+
     async readyCallback() {
         this.form = <HTMLFormElement>this.querySelector(`.${this.componentSelector}__form`);
         this.fieldList = <HTMLElement>this.querySelector(`.${this.componentSelector}__list`);
@@ -19,20 +19,20 @@ export default class QuickOrderForm extends Component {
         this.mapEvents();
     }
 
-    registerRemoveRowTriggers() { 
+    registerRemoveRowTriggers() {
         this.removeRowTriggers = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.componentSelector}__remove-row-trigger`));
     }
 
-    mapEvents() { 
+    mapEvents() {
         this.addRowTrigger.addEventListener('click', (event: Event) => this.onAddRowClick(event));
         this.mapRemoveRowTriggersEvents();
     }
 
-    mapRemoveRowTriggersEvents() { 
+    mapRemoveRowTriggersEvents() {
         this.removeRowTriggers.forEach((trigger: HTMLElement) => trigger.addEventListener('click', (event: Event) => this.onRemoveRowClick(event)));
     }
 
-    onAddRowClick(event: Event) { 
+    onAddRowClick(event: Event) {
         event.preventDefault();
         this.addRow();
     }
@@ -45,17 +45,17 @@ export default class QuickOrderForm extends Component {
         this.removeRow(rowIndex);
     }
 
-    async addRow(): Promise<void> { 
+    async addRow(): Promise<void> {
         const data = this.getFormData();
         const response = await this.addRowAjaxProvider.fetch(data);
-        
+
         this.fieldList.innerHTML = response;
         this.registerRemoveRowTriggers();
         this.mapRemoveRowTriggersEvents();
     }
 
     async removeRow(rowIndex: string): Promise<void> {
-        const data = this.getFormData({ 
+        const data = this.getFormData({
             'row-index': rowIndex
         });
         const response = await this.removeRowAjaxProvider.fetch(data);
@@ -65,10 +65,10 @@ export default class QuickOrderForm extends Component {
         this.mapRemoveRowTriggersEvents();
     }
 
-    getFormData(appendData?: object): FormData { 
+    getFormData(appendData?: object): FormData {
         const data = new FormData(this.form);
 
-        if (appendData) { 
+        if (appendData) {
             Object.keys(appendData).forEach((key: string) => data.append(key, appendData[key]));
         }
 

@@ -24,7 +24,7 @@ class ProductBundleCartItemsWidgetPlugin extends AbstractWidgetPlugin implements
      *
      * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer, int $itemDisplayLimit = null): void
+    public function initialize(QuoteTransfer $quoteTransfer, ?int $itemDisplayLimit = null): void
     {
         $items = $this->transformCartItems($quoteTransfer->getItems(), $quoteTransfer);
         if (!$itemDisplayLimit) {
