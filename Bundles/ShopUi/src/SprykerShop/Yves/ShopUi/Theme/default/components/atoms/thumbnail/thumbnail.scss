@@ -1,4 +1,4 @@
-@mixin component-thumbnail($name: '.thumbnail') {
+@mixin shop-ui-thumbnail($name: '.thumbnail') {
     #{$name} {
         position: relative;
         display: block;

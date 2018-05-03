@@ -1,12 +1,12 @@
 @mixin basic-reset() {
     * {
-        @include reset;
+        @include helper-reset;
         &:hover,
         &:active,
         &:focus {
             outline: 0;
         }
-        
+
         &::before,
         &::after {
             box-sizing: border-box;
@@ -15,7 +15,7 @@
     }
 
     html {
-        @include reset;
+        @include helper-reset;
     }
 
     // HTML5 display-role reset for older browsers

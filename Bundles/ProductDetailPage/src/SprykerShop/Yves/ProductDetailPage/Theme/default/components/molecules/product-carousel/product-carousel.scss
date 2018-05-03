@@ -1,4 +1,4 @@
-@mixin component-product-carousel($name: '.product-carousel') {
+@mixin product-detail-page-product-carousel($name: '.product-carousel') {
     #{$name} {
         position: relative;
 

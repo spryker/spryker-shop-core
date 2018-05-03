@@ -43,7 +43,7 @@ class CompanyUserFormDataProvider
      *
      * @return array
      */
-    public function getData(int $idCompany, int $idCompanyUser = null): array
+    public function getData(int $idCompany, ?int $idCompanyUser = null): array
     {
         if ($idCompanyUser === null) {
             return $this->getDefaultCompanyUserData($idCompany);

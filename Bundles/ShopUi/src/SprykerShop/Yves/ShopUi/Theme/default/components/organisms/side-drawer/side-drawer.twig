@@ -29,6 +29,14 @@
 
         <div class="{{config.name}}__navigation">
             {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', view('navigation-main-mobile', 'ShopLayout')) }}
+            <hr />
+            {% include organism('navigation-top') with {
+                class: 'text-left',
+                data: {
+                    isInline: false,
+                    withSeparators: false
+                }
+            } only %}
         </div>
 
         {{block('close')}}

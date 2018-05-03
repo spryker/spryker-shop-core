@@ -1,7 +1,7 @@
-@mixin transition(
+@mixin helper-effect-transition(
     $props: opacity visibility,
-    $duration: $effect-default-duration,
-    $ease: $effect-default-ease
+    $duration: $setting-effect-default-duration,
+    $ease: $setting-effect-default-ease
 ) {
     $transition: null;
 

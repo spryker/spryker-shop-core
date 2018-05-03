@@ -178,7 +178,7 @@ class AddressController extends AbstractCustomerController
      *
      * @return array
      */
-    protected function getAddressListResponseData(CustomerTransfer $customerTransfer, AddressesTransfer $addressesTransfer = null)
+    protected function getAddressListResponseData(CustomerTransfer $customerTransfer, ?AddressesTransfer $addressesTransfer = null)
     {
         $responseData = [
             self::KEY_DEFAULT_BILLING_ADDRESS => null,
