@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Dependency\Plugin\MultiCartWidget;
 
 interface MultiCartListWidgetPluginInterface
 {
-    const NAME = 'MultiCartListWidgetPlugin';
+    public const NAME = 'MultiCartListWidgetPlugin';
 
     /**
      * @return void

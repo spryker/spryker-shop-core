@@ -45,7 +45,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplication(Container $container): Container
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container[static::PLUGIN_APPLICATION] = function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
@@ -89,7 +89,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderPageWidgetPlugins(Container $container): Container
     {
-        $container[self::PLUGINS_QUICK_ORDER_PAGE_WIDGETS] = function () {
+        $container[static::PLUGINS_QUICK_ORDER_PAGE_WIDGETS] = function () {
             return $this->getQuickOrderPageWidgetPlugins();
         };
 

@@ -77,6 +77,6 @@ class CartFiller implements CartFillerInterface
         $orderItemsObject = new ArrayObject($orderItems);
         $cartChangeTransfer->setItems($orderItemsObject);
 
-        $this->cartClient->addValidItems($cartChangeTransfer, [self::PARAM_ORDER_REFERENCE => $orderTransfer->getOrderReference()]);
+        $this->cartClient->addValidItems($cartChangeTransfer, [static::PARAM_ORDER_REFERENCE => $orderTransfer->getOrderReference()]);
     }
 }
