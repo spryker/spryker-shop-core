@@ -14,7 +14,7 @@ interface CurrencyWidgetToCurrencyClientInterface
      *
      * @return void
      */
-    public function setCurrentCurrencyIsoCode(string $currencyIsoCode);
+    public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void;
 
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
