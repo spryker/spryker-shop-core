@@ -20,7 +20,7 @@ interface MultiCartWidgetToMultiCartClientInterface
     /**
      * @return bool
      */
-    public function isMultiCartAllowed(): bool ;
+    public function isMultiCartAllowed(): bool;
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
