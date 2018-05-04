@@ -47,8 +47,6 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer
-     *
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
     public function createShipmentFormCollection()
@@ -57,7 +55,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface[]
+     * @return string[]
      */
     protected function getShipmentFormTypes()
     {
@@ -104,8 +102,6 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer
-     *
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
     public function createSummaryFormCollection()
@@ -159,7 +155,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param \Symfony\Component\Form\FormTypeInterface $formType
+     * @param string $formType
      * @param \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface $dataProvider
      *
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface

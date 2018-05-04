@@ -23,7 +23,7 @@ class CartOperationHandler
     const TRANSLATION_KEY_QUANTITY_ADJUSTED = 'cart.quantity.adjusted';
 
     /**
-     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface
+     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface|\Spryker\Client\Cart\CartClient
      */
     protected $cartClient;
 
