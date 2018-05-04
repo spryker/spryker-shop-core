@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\SharedCartWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+
 class SharedCartWidgetToMultiCartClientBridge implements SharedCartWidgetToMultiCartClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class SharedCartWidgetToMultiCartClientBridge implements SharedCartWidgetToMulti
     /**
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollection()
+    public function getQuoteCollection(): QuoteCollectionTransfer
     {
         return $this->multiCartClient->getQuoteCollection();
     }
