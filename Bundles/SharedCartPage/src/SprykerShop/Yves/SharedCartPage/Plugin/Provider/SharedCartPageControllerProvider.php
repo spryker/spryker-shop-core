@@ -33,7 +33,7 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return $this
      */
-    protected function addShareController($allowedLocalesPattern): self
+    protected function addShareController(string $allowedLocalesPattern): self
     {
         $this->createController('/{sharedCart}/share/{idQuote}', static::ROUTE_SHARED_CART_SHARE, 'SharedCartPage', 'Share', 'index')
             ->assert('sharedCart', $allowedLocalesPattern . 'shared-cart|shared-cart')
@@ -47,7 +47,7 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return $this
      */
-    protected function addUnshareController($allowedLocalesPattern): self
+    protected function addUnshareController(string $allowedLocalesPattern): self
     {
         $this->createController('/{sharedCart}/unshare/{idQuote}/{idCompanyUser}/{idPermissionGroup}', static::ROUTE_SHARED_CART_UNSHARE, 'SharedCartPage', 'Unshare', 'index')
             ->assert('sharedCart', $allowedLocalesPattern . 'shared-cart|shared-cart')
