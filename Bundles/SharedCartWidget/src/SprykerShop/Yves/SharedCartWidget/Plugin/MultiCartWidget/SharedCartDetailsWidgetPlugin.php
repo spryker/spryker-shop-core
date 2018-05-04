@@ -29,7 +29,7 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      *
      * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer, array $actions, array $widgetList = null): void
+    public function initialize(QuoteTransfer $quoteTransfer, array $actions, ?array $widgetList = null): void
     {
         $this
             ->addParameter('cart', $quoteTransfer)

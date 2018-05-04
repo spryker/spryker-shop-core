@@ -1,5 +1,5 @@
-@mixin component-toggler-checkbox($name: '.toggler-checkbox') {
-    @include component-checkbox($name) {
+@mixin shop-ui-toggler-checkbox($name: '.toggler-checkbox') {
+    @include shop-ui-checkbox($name) {
         @content;
     };
 }

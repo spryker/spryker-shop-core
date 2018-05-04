@@ -1,5 +1,5 @@
-@mixin component-toggler-radio($name: '.toggler-radio') {
-    @include component-radio($name) {
+@mixin shop-ui-toggler-radio($name: '.toggler-radio') {
+    @include shop-ui-radio($name) {
         @content;
     };
 }

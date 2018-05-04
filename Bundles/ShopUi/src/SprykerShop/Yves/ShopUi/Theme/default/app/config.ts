@@ -1,13 +1,13 @@
 declare const __NAME__: string;
 declare const __PRODUCTION__: boolean;
 
-export enum AppLogLevel {
+export enum LogLevel {
     ERRORS_ONLY = 0,
     DEFAULT,
     VERBOSE
 }
 
-export interface AppConfig { 
+export interface Config {
     readonly name: string
     readonly isProduction: boolean
 
@@ -18,13 +18,13 @@ export interface AppConfig {
 
     log: {
         prefix: string
-        level: AppLogLevel
+        level: LogLevel
     },
 
     extra?: any
 }
 
-export default <AppConfig>{
+export default <Config>{
     name: __NAME__,
     isProduction: __PRODUCTION__,
 
@@ -35,6 +35,6 @@ export default <AppConfig>{
 
     log: {
         prefix: __NAME__,
-        level: __PRODUCTION__ ? AppLogLevel.ERRORS_ONLY : AppLogLevel.VERBOSE
+        level: __PRODUCTION__ ? LogLevel.ERRORS_ONLY : LogLevel.VERBOSE
     }
 }

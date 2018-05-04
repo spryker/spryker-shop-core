@@ -34,7 +34,7 @@ class WishlistPageFactory extends AbstractFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getWishlistForm(WishlistTransfer $data = null, array $options = [])
+    public function getWishlistForm(?WishlistTransfer $data = null, array $options = [])
     {
         return $this->getFormFactory()->create(WishlistFormType::class, $data, $options);
     }

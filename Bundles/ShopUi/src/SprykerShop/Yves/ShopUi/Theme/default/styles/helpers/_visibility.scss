@@ -1,10 +1,10 @@
-@mixin is-visible {
+@mixin helper-visibility-visible {
     pointer-events: all;
     visibility: visible;
     opacity: 1;
 }
 
-@mixin is-invisible {
+@mixin helper-visibility-invisible {
     pointer-events: none;
     visibility: hidden;
     opacity: 0;

@@ -1,27 +1,27 @@
-import { AppConfig, AppLogLevel } from './config';
+import { LogLevel, Config } from './config';
 
 const VOID_FUNCTION = function () { };
 
 export default class Logger {
-    protected readonly config: AppConfig
+    protected readonly config: Config
 
-    constructor(config: AppConfig) {
+    constructor(config: Config) {
         this.config = config;
 
-        if (this.config.log.level < AppLogLevel.VERBOSE) { 
+        if (this.config.log.level < LogLevel.VERBOSE) {
             this.debug = VOID_FUNCTION;
         }
 
-        if (this.config.log.level < AppLogLevel.DEFAULT) {
+        if (this.config.log.level < LogLevel.DEFAULT) {
             this.log = VOID_FUNCTION;
             this.info = VOID_FUNCTION;
             this.warn = VOID_FUNCTION;
         }
 
-        this.log('mode:', this.config.isProduction ? 'PRODUCTION,' : 'DEVELOPMENT,', 'log-level:', AppLogLevel[this.config.log.level]);
+        this.log('mode:', this.config.isProduction ? 'PRODUCTION,' : 'DEVELOPMENT,', 'log-level:', LogLevel[this.config.log.level]);
     }
 
-    protected prefix(type: string): string { 
+    protected prefix(type: string): string {
         return `[${this.config.log.prefix}@${type}]`;
     }
 
