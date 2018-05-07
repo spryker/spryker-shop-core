@@ -34,7 +34,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
@@ -51,7 +51,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
@@ -80,16 +80,16 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function getShippingAddress(QuoteTransfer $quoteTransfer)
     {
-        $shippingAddressTransfer = new AddressTransfer();
+        $addressTransfer = new AddressTransfer();
         if ($quoteTransfer->getShippingAddress() !== null) {
-            $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
+            $addressTransfer = $quoteTransfer->getShippingAddress();
         }
 
         if ($this->customerTransfer !== null && $quoteTransfer->getShippingAddress() === null) {
-            $shippingAddressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultShippingAddress());
+            $addressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultShippingAddress());
         }
 
-        return $shippingAddressTransfer;
+        return $addressTransfer;
     }
 
     /**
