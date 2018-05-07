@@ -79,7 +79,7 @@ class WishlistController extends AbstractController
             'totalPages' => $wishlistOverviewResponse->getPagination()->getPagesTotal(),
             'wishlistName' => $wishlistName,
             'addAllAvailableProductsToCartForm' => $addAllAvailableProductsToCartForm->createView(),
-        ], [], '@WishlistPage/views/wishlist/wishlist.twig');
+        ], [], '@WishlistPage/views/wishlist-detail/wishlist-detail.twig');
     }
 
     /**

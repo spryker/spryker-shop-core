@@ -55,25 +55,28 @@
                     <td>{{ wishlist.numberOfItems }}</td>
                     <td>{{ wishlist.createdAt | formatDate }}</td>
                     <td>
-                        <form id="deleteWishlist_{{ loop.index }}"
-                              method="POST"
-                              action="{{ path('wishlist/delete', {wishlistName: wishlist.name}) }}"
-                              class="grid grid--right">
-                            <a class="space-x-small" href="{{ url('wishlist/update', {wishlistName: wishlist.name}) }}" title="{{ 'customer.account.wishlist.overview.edit' | trans }}">
-                                {% include atom('icon') with {
-                                    data: {
-                                        name: 'edit'
-                                    }
-                                } only %}
-                            </a>
-                            <span class="link space-x-small" title="{{ 'customer.account.wishlist.overview.delete' | trans }}" onclick="document.getElementById('deleteWishlist_{{ loop.index }}').submit()">
-                                {% include atom('icon') with {
-                                    data: {
-                                        name: 'remove'
-                                    }
-                                } only %}
-                            </span>
-                        </form>
+                        <ul class="menu menu--inline float-right">
+                            <li class="menu__item">
+                                <a href="{{ url('wishlist/update', {wishlistName: wishlist.name}) }}" title="{{ 'customer.account.wishlist.overview.edit' | trans }}">
+                                    {% include atom('icon') with {
+                                        data: {
+                                            name: 'edit'
+                                        }
+                                    } only %}
+                                </a>
+                            </li>
+                            <li class="menu__item">
+                                <form method="POST" action="{{ path('wishlist/delete', {wishlistName: wishlist.name}) }}">
+                                    <button type="submit" class="link space-x-small" title="{{ 'customer.account.wishlist.overview.delete' | trans }}">
+                                        {% include atom('icon') with {
+                                            data: {
+                                                name: 'remove'
+                                            }
+                                        } only %}
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                     </td>
                 </tr>
             {% endfor %}
