@@ -27,7 +27,7 @@ class ResendController extends AbstractController
     public function indexAction(Request $request)
     {
         return $this->view([
-            'id' => (int)$request->get(CompanyUserInvitationPageConstants::INVITATION_ID),
+            'id' => (int)$request->get(CompanyUserInvitationPageConstants::ID_COMPANY_USER_INVITATION),
         ], [], '@CompanyUserInvitationPage/views/invitation-resend/invitation-resend.twig');
     }
 
@@ -38,7 +38,7 @@ class ResendController extends AbstractController
      */
     public function confirmAction(Request $request): RedirectResponse
     {
-        $invitationId = (int)$request->get(CompanyUserInvitationPageConstants::INVITATION_ID);
+        $invitationId = (int)$request->get(CompanyUserInvitationPageConstants::ID_COMPANY_USER_INVITATION);
         $companyUserInvitationSendRequestTransfer = (new CompanyUserInvitationSendRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitation(

@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Controller;
 
+use Spryker\Client\CompanyUserInvitation\Plugin\ManageCompanyUserInvitationPermissionPlugin;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController as SprykerAbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -16,7 +18,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class AbstractController extends SprykerAbstractController
 {
-    public const COMPANY_USER_REQUIRED = true;
+    use PermissionAwareTrait;
+
+    public const COMPANY_USER_WITH_PERMISSIONS_REQUIRED = true;
 
     /**
      * @var \Generated\Shared\Transfer\CompanyUserTransfer
@@ -33,10 +37,16 @@ class AbstractController extends SprykerAbstractController
         parent::initialize();
 
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        if (static::COMPANY_USER_REQUIRED) {
+
+        if (static::COMPANY_USER_WITH_PERMISSIONS_REQUIRED) {
             if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
                 throw new NotFoundHttpException("Only company users are allowed to access this page");
             }
+
+            if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())) {
+                throw new NotFoundHttpException("You don't have the permission to access this page");
+            }
+
             $this->companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
         }
     }

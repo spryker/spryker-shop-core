@@ -25,7 +25,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormFactoryInterface
      */
-    protected function getFormFactory(): FormFactoryInterface
+    public function getFormFactory(): FormFactoryInterface
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }

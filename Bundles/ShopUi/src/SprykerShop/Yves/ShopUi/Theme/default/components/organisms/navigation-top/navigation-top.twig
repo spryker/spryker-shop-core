@@ -17,11 +17,11 @@
     <ul class="menu menu--inline">
         <li class="menu__item">{{ widgetGlobal('PriceModeSwitcherWidgetPlugin') }}</li>
         <li class="menu__separator"></li>
-        <li class="menu__item">{{ widgetGlobal('CurrencyWidgetPlugin') }}</li>
+            <li class="menu__item">{{ widgetGlobal('CurrencyWidgetPlugin') }}</li>
         <li class="menu__separator"></li>
         <li class="menu__item">
             {{ widgetGlobal(
-                'LanguageSwitcherWidgetPlugin`',
+                'LanguageSwitcherWidgetPlugin',
                 app.request.pathInfo,
                 app.request.queryString,
                 app.request.requestUri

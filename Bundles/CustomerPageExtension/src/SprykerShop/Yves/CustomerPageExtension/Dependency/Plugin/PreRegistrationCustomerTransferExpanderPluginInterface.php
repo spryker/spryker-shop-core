@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin;
+namespace SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface PostCustomerRegistrationPluginInterface
+interface PreRegistrationCustomerTransferExpanderPluginInterface
 {
     /**
-     * This plugin allows to execute additional actions after customer registration.
+     * This plugin allows to expand the CustomerTransfer before registration.
      *
      * @api
      *
@@ -20,5 +20,5 @@ interface PostCustomerRegistrationPluginInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function execute(CustomerTransfer $customerTransfer): CustomerTransfer;
+    public function expand(CustomerTransfer $customerTransfer): CustomerTransfer;
 }

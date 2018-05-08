@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AcceptController extends AbstractController
 {
-    public const COMPANY_USER_REQUIRED = false;
+    public const COMPANY_USER_WITH_PERMISSIONS_REQUIRED = false;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

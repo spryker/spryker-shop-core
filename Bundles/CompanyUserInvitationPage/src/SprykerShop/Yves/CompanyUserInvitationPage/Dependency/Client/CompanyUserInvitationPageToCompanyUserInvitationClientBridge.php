@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Client\CompanyUserInvitation\CompanyUserInvitationClientInterface;
 
 class CompanyUserInvitationPageToCompanyUserInvitationClientBridge implements CompanyUserInvitationPageToCompanyUserInvitationClientInterface
 {
@@ -30,7 +29,7 @@ class CompanyUserInvitationPageToCompanyUserInvitationClientBridge implements Co
     /**
      * @param \Spryker\Client\CompanyUserInvitation\CompanyUserInvitationClientInterface $companyUserInvitationClient
      */
-    public function __construct(CompanyUserInvitationClientInterface $companyUserInvitationClient)
+    public function __construct($companyUserInvitationClient)
     {
         $this->companyUserInvitationClient = $companyUserInvitationClient;
     }

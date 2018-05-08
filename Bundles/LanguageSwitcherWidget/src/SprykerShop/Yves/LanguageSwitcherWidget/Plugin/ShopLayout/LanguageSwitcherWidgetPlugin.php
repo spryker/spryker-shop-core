@@ -25,7 +25,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      */
     public function initialize(
         string $pathInfo,
-        string $queryString,
+        $queryString,
         string $requestUri
     ): void {
         $currentUrlStorage = $this->getFactory()
@@ -66,7 +66,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      */
     protected function getLanguages(
         array $localeUrls,
-        string $queryString,
+        $queryString,
         string $requestUri
     ): array {
         $locales = $this->getFactory()
@@ -90,7 +90,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
     protected function attachLocaleUrlsFromStorageToLanguages(
         array $locales,
         array $localeUrls,
-        string $queryString
+        $queryString
     ): array {
         $languages = [];
         foreach ($locales as $locale) {

@@ -27,7 +27,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
-    const PLUGIN_POST_CUSTOMER_REGISTRATION = 'PLUGIN_POST_CUSTOMER_REGISTRATION';
+    const PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER = 'PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER';
     const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
     const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'PLUGIN_GUEST_AUTHENTICATION_HANDLER';
     const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER';
@@ -59,7 +59,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerOrderListWidgetPlugins($container);
         $container = $this->addCustomerOrderViewWidgetPlugins($container);
         $container = $this->addUtilValidateService($container);
-        $container = $this->addPostCustomerRegistrationPlugins($container);
+        $container = $this->addPreRegistrationCustomerTransferExpanderPlugins($container);
 
         return $container;
     }
@@ -267,19 +267,19 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addPostCustomerRegistrationPlugins(Container $container): Container
+    protected function addPreRegistrationCustomerTransferExpanderPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_POST_CUSTOMER_REGISTRATION] = function (Container $container) {
-            return $this->getPostCustomerRegistrationPlugins();
+        $container[self::PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER] = function () {
+            return $this->getPreRegistrationCustomerTransferExpanderPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPage\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
      */
-    protected function getPostCustomerRegistrationPlugins(): array
+    protected function getPreRegistrationCustomerTransferExpanderPlugins(): array
     {
         return [];
     }

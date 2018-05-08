@@ -16,14 +16,14 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class AuthenticationHandler extends AbstractPlugin
 {
     /**
-     * @var \SprykerShop\Yves\CustomerPage\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     * @var \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
      */
-    protected $postCustomerRegistrationPlugins;
+    protected $preRegistrationCustomerTransferExpanderPlugins;
 
     public function __construct()
     {
-        $this->postCustomerRegistrationPlugins = $this->getFactory()
-            ->getPostCustomerRegistrationPlugins();
+        $this->preRegistrationCustomerTransferExpanderPlugins = $this->getFactory()
+            ->getPreRegistrationCustomerTransferExpanderPlugins();
     }
 
     /**
@@ -33,13 +33,14 @@ class AuthenticationHandler extends AbstractPlugin
      */
     public function registerCustomer(CustomerTransfer $customerTransfer)
     {
+        $this->executePreRegistrationCustomerTransferExpanderPlugins($customerTransfer);
+
         $customerResponseTransfer = $this
             ->getFactory()
             ->getCustomerClient()
             ->registerCustomer($customerTransfer);
 
         if ($customerResponseTransfer->getIsSuccess()) {
-            $this->executePostCustomerRegistrationPlugins($customerResponseTransfer->getCustomerTransfer());
             $this->loginAfterSuccessfulRegistration($customerResponseTransfer->getCustomerTransfer());
         }
 
@@ -76,10 +77,10 @@ class AuthenticationHandler extends AbstractPlugin
      *
      * @return void
      */
-    protected function executePostCustomerRegistrationPlugins(CustomerTransfer $customerTransfer): void
+    protected function executePreRegistrationCustomerTransferExpanderPlugins(CustomerTransfer $customerTransfer): void
     {
-        foreach ($this->postCustomerRegistrationPlugins as $postCustomerRegistrationPlugin) {
-            $postCustomerRegistrationPlugin->execute($customerTransfer);
+        foreach ($this->preRegistrationCustomerTransferExpanderPlugins as $preRegistrationCustomerTransferExpanderPlugin) {
+            $preRegistrationCustomerTransferExpanderPlugin->expand($customerTransfer);
         }
     }
 }

@@ -9,27 +9,45 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader;
 
 use Iterator;
 use League\Csv\Reader;
+use SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig;
 
 class CsvInvitationReader implements InvitationReaderInterface
 {
     /**
-     * @var string
+     * @var \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig
      */
-    protected $importFilePath;
+    protected $config;
 
     /**
-     * @param string $importFilePath
+     * @param \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig|\Spryker\Yves\Kernel\AbstractBundleConfig $config
      */
-    public function __construct(string $importFilePath)
+    public function __construct(CompanyUserInvitationPageConfig $config)
     {
-        $this->importFilePath = $importFilePath;
+        $this->config = $config;
     }
 
     /**
+     * @param string $importFilePath
+     *
+     * @return mixed
+     */
+    public function getHeaders(string $importFilePath)
+    {
+        return Reader::createFromPath($importFilePath, 'r')
+            ->setDelimiter($this->config->getInvitationFileDelimiter())
+            ->getIterator()
+            ->current();
+    }
+
+    /**
+     * @param string $importFilePath
+     *
      * @return \Iterator
      */
-    public function getInvitations(): Iterator
+    public function getData(string $importFilePath): Iterator
     {
-        return Reader::createFromPath($this->importFilePath, 'r')->fetchAssoc();
+        return Reader::createFromPath($importFilePath, 'r')
+            ->setDelimiter($this->config->getInvitationFileDelimiter())
+            ->fetchAssoc();
     }
 }

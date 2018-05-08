@@ -26,7 +26,7 @@ class SendController extends AbstractController
      */
     public function sendCompanyUserInvitationAction(Request $request): RedirectResponse
     {
-        $invitationId = (int)$request->get(CompanyUserInvitationPageConstants::INVITATION_ID);
+        $invitationId = (int)$request->get(CompanyUserInvitationPageConstants::ID_COMPANY_USER_INVITATION);
         $companyUserInvitationSendRequestTransfer = (new CompanyUserInvitationSendRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitation(
