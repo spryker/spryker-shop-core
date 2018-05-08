@@ -38,6 +38,10 @@
             }
         }
 
+        &--alert {
+            color: map-get($setting-color-actions, alert);
+        }
+
         @content;
     }
 }

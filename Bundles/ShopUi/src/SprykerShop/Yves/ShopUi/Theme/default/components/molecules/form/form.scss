@@ -1,0 +1,51 @@
+$shop-ui-form-field-margin: .5rem;
+
+@mixin shop-ui-form($name: '.form') {
+    #{$name} {
+        &__fields {
+            margin-left: - $shop-ui-form-field-margin;
+            margin-right: - $shop-ui-form-field-margin;
+        }
+
+        &__field {
+            padding: $shop-ui-form-field-margin;
+        }
+
+        &__actions {
+            margin-left: - $shop-ui-form-field-margin;
+            margin-right: - $shop-ui-form-field-margin;
+            text-align: right;
+        }
+
+        &__action {
+            margin: $shop-ui-form-field-margin;
+        }
+
+        &--inline &__container {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: flex-end;
+        }
+
+        &--inline &__fields {
+            float: left;
+            flex-grow: 1;
+            flex-basis: auto;
+        }
+
+        &--inline &__field:not(:last-child) {
+            margin-right: 0;
+        }
+
+        &--inline &__actions {
+            flex-grow: 0;
+            flex-basis: auto;
+        }
+
+        &--inline &__action {
+            min-width: auto;
+        }
+
+        @content;
+    }
+}

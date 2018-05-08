@@ -14,11 +14,12 @@
 {% endblock %}
 
 {% block title %}
+    {{ parent() }}
+
     {% if widgetExists('CartOperationsWidgetPlugin') %}
         {{ widget('CartOperationsWidgetPlugin', data.cart) }}
-    {% else %}
-        {{ parent() }}
     {% endif %}
+
     {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty %}
         {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
     {% endif %}
@@ -55,27 +56,28 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
+                    {% if widgetExists('CartNoteQuoteWidgetPlugin') %}
+                        {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
+                        <hr />
+                    {% endif %}
+
                     {% if not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
                         {{ widget('DiscountVoucherFormWidgetPlugin') }}
+                        <hr />
                     {% endif %}
-                    <hr/>
 
                     {% include molecule('cart-summary', 'CartPage') with {
                         data: {
                             cart: data.cart
                         }
                     } only %}
-
                 </div>
             </div>
         </div>
     {% endif %}
 
     {{ widget('UpSellingProductsWidgetPlugin', data.cart) }}
-
     {{ widget('MultiCartListWidgetPlugin', data.cart) }}
-
 {% endblock %}
 
 {% block footer %}{% endblock %}

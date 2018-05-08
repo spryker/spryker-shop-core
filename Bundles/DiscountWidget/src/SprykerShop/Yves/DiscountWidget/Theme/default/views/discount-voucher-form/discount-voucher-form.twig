@@ -10,39 +10,16 @@
 } %}
 
 {% block body %}
-
-    {% embed molecule('form') with {
+    {% include molecule('form') with {
+        modifiers: ['inline'],
         data: {
-            title: data.form.voucher_code.vars.label | trans,
             form: data.form,
-            enableStart: true,
-            enableEnd: true,
-            options: {
-                attr: {
-                    class: config.selector ~ '__form'
-                }
-            },
             submit: {
                 enable: true,
-                text: 'cart.voucher.redeem' | trans
-
+                text: 'cart.voucher.redeem' | trans,
+                icon: 'gift',
+                class: 'button'
             }
         }
     } only %}
-
-        {% block actions %}
-            <div class="form-field grid grid--right">
-                <button type="submit" class="button button--secondary button--hollow col col--sm-12 col--md-5" {{qa('submit-button')}}>
-                    {% include atom('icon') with {
-                        class: config.name ~ '__gift',
-                        data: {
-                            name: 'gift'
-                        }
-                    } only %}
-                    {{data.submit.text}}
-                </button>
-            </div>
-        {% endblock %}
-    {% endembed %}
-
 {% endblock %}

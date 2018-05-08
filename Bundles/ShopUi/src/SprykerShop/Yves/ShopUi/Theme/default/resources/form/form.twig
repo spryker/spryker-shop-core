@@ -1,13 +1,16 @@
 {% extends 'form_div_layout.html.twig' %}
 
+{# widgets #}
+
 {%- block form_widget_simple -%}
-    {%- set type = type|default('text') -%}
+    {%- set type = type | default('text') -%}
     {%- set label = (label | default('')) | trans -%}
     <input class="input input--expand {% if errors is not empty %}input--error{% endif %}" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} placeholder="{{label}}"/>
 {%- endblock -%}
 
 {%- block textarea_widget -%}
-    <textarea  class="textarea textarea--expand" {{ block('widget_attributes') }}>{% if value is not empty %}{{ value }}{% endif %}</textarea>
+    {%- set label = (label | default('')) | trans -%}
+    <textarea class="textarea textarea--expand" {{ block('widget_attributes') }} placeholder="{{label}}">{% if value is not empty %}{{ value }}{% endif %}</textarea>
 {%- endblock textarea_widget -%}
 
 {%- block choice_widget_collapsed -%}
@@ -15,7 +18,7 @@
         {% set required = false %}
     {%- endif -%}
 
-    {%- set modifiers = errors is empty ? ['expand'] : ['expand', 'error'] -%}    
+    {%- set modifiers = errors is empty ? ['expand'] : ['expand', 'error'] -%}
 
     {% embed atom('select') with {
         modifiers: modifiers,
@@ -37,26 +40,26 @@
             {{embed.attributes | raw}}
             {% if embed.multiple %} multiple="multiple"{% endif %}
         {% endblock %}
-        
+
         {% block options %}
             {%- if embed.placeholder is not none -%}
                 <option value=""{% if embed.required and embed.value is empty %} selected="selected"{% endif %}>
                     {{ embed.placeholder != '' ? (embed.translation_domain is same as(false) ? embed.placeholder : embed.placeholder|trans({}, embed.translation_domain)) }}
                 </option>
             {%- endif -%}
-            
+
             {%- if embed.preferred_choices|length > 0 -%}
                 {% set options = embed.preferred_choices %}
-                
+
                 {{- block('renderOptions') -}}
-                
+
                 {%- if embed.choices|length > 0 and embed.separator is not none -%}
                     <option disabled="disabled">{{ embed.separator }}</option>
                 {%- endif -%}
             {%- endif -%}
-            
+
             {%- set options = embed.choices -%}
-            
+
             {%- block renderOptions -%}
                 {% for group_label, choice in options %}
                     {%- if choice is iterable -%}
@@ -88,22 +91,15 @@
         required: required | default(false),
         disabled: disabled | default(false),
         value: value | default()
-    } %}    
+    } %}
 
-    {% embed embed.component with {
+    {% include component with {
         modifiers: modifiers,
         data: {
             label: label
         },
-        attributes: attributes,
-        embed: {
-            component: component
-        }
+        attributes: attributes
     } only %}
-        {%- block labelClass -%}
-            form-field__label{%- if attributes.required %} form-field__label--required{%- endif -%}
-        {%- endblock -%}
-    {% endembed %}
 {%- endblock -%}
 
 {%- block radio_widget -%}
@@ -111,16 +107,30 @@
     {{block('checkbox_widget')}}
 {%- endblock -%}
 
+{# rows #}
+
 {%- block form_row -%}
-    <div class="form-field">
+    {%- set rowClass = attr.class | default('') -%}
+
+    <div class="{{rowClass}}">
         {{- form_label(form) -}}
         {{- form_errors(form) -}}
         {{- form_widget(form) -}}
     </div>
 {%- endblock -%}
 
+{%- block form_rows -%}
+    {% for child in form %}
+        {{- form_row(child, {
+            attr: attr | default({})
+        }) -}}
+    {% endfor %}
+{%- endblock form_rows -%}
+
 {%- block checkbox_row -%}
-    <div class="form-field form-field--spacing">
+    {%- set rowClass = attr.class | default('') -%}
+
+    <div class="{{rowClass}}">
         {{- form_widget(form) -}}
         {{- form_errors(form) -}}
     </div>
@@ -130,13 +140,15 @@
     {{- block('checkbox_row') -}}
 {%- endblock -%}
 
+{# labels #}
+
 {%- block form_label -%}
     {% if label is not same as(false) -%}
         {% if not compound -%}
-            {% set label_attr = label_attr|merge({'for': id, 'class': (label_attr.class|default('') ~ ' form-field__label')|trim}) %}
+            {% set label_attr = label_attr|merge({'for': id, 'class': (label_attr.class|default('') ~ ' label')|trim}) %}
         {%- endif -%}
         {% if required -%}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' form-field__label--required')|trim}) %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' label--required')|trim}) %}
         {%- endif -%}
         {% if label is empty -%}
             {%- if label_format is not empty -%}
@@ -152,12 +164,14 @@
     {%- endif -%}
 {%- endblock -%}
 
+{# errors #}
+
 {% block form_errors %}
     {% spaceless %}
         {% if errors | length > 0 %}
-            <ul class="form-field__error-list list list--bullet">
+            <ul class="list list--bullet list--alert">
                 {% for error in errors %}
-                    <li class="form-field__error list__item">{{ error.message }}</li>
+                    <li class="list__item">{{ error.message }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
