@@ -16,6 +16,8 @@
         }
     },
 
+    title: null,
+
     submit: {
         text: 'forms.submit-btn' | trans,
         class: 'button button--success',
@@ -41,6 +43,12 @@
 }) %}
 
 {% block body %}
+    {% block title %}
+        {% if data.title is not empty %}
+            <h5>{{data.title}}</h5>
+        {% endif %}
+    {% endblock %}
+
     {% if data.enableStart %}
         {{ form_start(data.form, data.options) }}
     {% else %}
@@ -79,7 +87,7 @@
             {% if data.cancel.enable %}
                 {% block cancel %}
                     <a href="{{data.cancel.url}}" class="{{config.name}}__action {{data.cancel.class}}" {{qa('cancel-button')}}>
-                        {% if data.cancel.icon %}
+                        {% if data.cancel.icon is not empty %}
                             {% include atom('icon') with {
                                 modifiers: ['small'],
                                 data: {
@@ -95,7 +103,7 @@
             {% if data.submit.enable %}
                 {% block submit %}
                     <button type="submit" class="{{config.name}}__action {{data.submit.class}}" {{qa('submit-button')}}>
-                        {% if data.submit.icon %}
+                        {% if data.submit.icon is not empty %}
                             {% include atom('icon') with {
                                 modifiers: ['small'],
                                 data: {
