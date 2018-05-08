@@ -24,7 +24,7 @@ class CartToShoppingListWidgetFactory extends AbstractFactory
     /**
      * @param int|null $idQuote
      *
-     * @return \Symfony\Component\Form\FormInterface|\SprykerShop\Yves\CartToShoppingListWidget\Form\ShoppingListFromCartForm
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function getCartFromShoppingListForm(?int $idQuote): FormInterface
     {
@@ -41,8 +41,6 @@ class CartToShoppingListWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \SprykerShop\Yves\CartToShoppingListWidget\Form\DataProvider\ShoppingListFromCartFormDataProvider
      */
     public function createCartFromShoppingListFormDataProvider(): ShoppingListFromCartFormDataProvider

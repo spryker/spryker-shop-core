@@ -24,7 +24,7 @@ class ShopUiDefineTwigTokenParser extends Twig_TokenParser
     /**
      * @param \Twig_Token $token
      *
-     * @return \ShopUiDefineTwigNode
+     * @return \SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode
      */
     public function parse(Twig_Token $token): ShopUiDefineTwigNode
     {
