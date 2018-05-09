@@ -14,7 +14,6 @@
 
 {% block body %}
     {% if productImage is not empty %}
-
         {% include atom('thumbnail') with {
             modifiers: ['small'],
             attributes: {
@@ -22,12 +21,9 @@
                 src: productImage.externalUrlLarge
             }
         } only %}
-
     {% else %}
-
         <div class="text-center">
             <small>{{ 'global.no_image_available' | trans }}</small>
         </div>
     {% endif %}
-
 {% endblock %}

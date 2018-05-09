@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'cart-quantity',
+    name: 'cart-quantity-selector',
     tag: 'div'
 } %}
 
@@ -10,28 +10,16 @@
     cart: required
 } %}
 
-{% set options = [] %}
-
-{% for index in 1..data.cartItem.maxQuantity %}
-    {% set options = options | merge([{
-        label: index,
-        value: index
-    }]) %}
-{% endfor %}
-
 {% set canWrite = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
 
 {% block body %}
     {% if canWrite %}
-
         <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.cartItem.sku }) }}">
             {% include molecule('quantity-selector') with {
                 data: {
-                    label: 'cart.item_quantity' | trans,
                     maxQuantity: data.cartItem.maxQuantity,
-                    quantity: data.cartItem.quantity,
-                    options: options,
-                    hasButton: true
+                    value: data.cartItem.quantity,
+                    hasUpdateButton: true
                 }
             } only %}
 
@@ -39,7 +27,7 @@
                 {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
             {% endif %}
 
-            <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
+            <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey" />
         </form>
     {% else %}
         <label>

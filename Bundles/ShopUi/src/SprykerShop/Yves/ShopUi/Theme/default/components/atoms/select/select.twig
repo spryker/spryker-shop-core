@@ -14,11 +14,11 @@
     <select class="{{config.name}}__select {% block selectClass %}{% endblock %}" {{block('attributes')}}>
         {% block options %}
             {% for option in data.options %}
-                <option value="{{option.value}}"
-                    {% if option.selected is defined %}
-                        selected
-                    {% endif %}
-                >{{option.label}}</option>
+                {% set selected = option.selected | default(false) %}
+
+                <option value="{{option.value}}" {% if selected %}selected{% endif %}>
+                    {{option.label}}
+                </option>
             {% endfor %}
         {% endblock %}
     </select>

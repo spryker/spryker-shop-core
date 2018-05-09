@@ -1,5 +1,0 @@
-@mixin cart-page-cart-quantity($name: '.cart-quantity') {
-    #{$name} {
-        @content;
-    }
-}

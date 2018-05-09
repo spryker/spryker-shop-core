@@ -33,17 +33,14 @@ $shop-ui-form-field-margin: .5rem;
             flex-basis: auto;
         }
 
-        &--inline &__field:not(:last-child) {
-            margin-right: 0;
-        }
-
         &--inline &__actions {
             flex-grow: 0;
             flex-basis: auto;
         }
 
-        &--inline &__action {
-            min-width: auto;
+        &--inline &__field:not(:last-child),
+        &--inline &__action:not(:last-child) {
+            margin-right: 0;
         }
 
         @content;

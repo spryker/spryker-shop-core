@@ -33,11 +33,6 @@
             padding: 1rem 0;
         }
 
-        // .cart-bundles {
-        //     border-top: solid 1px $setting-color-lighter;
-        //     padding: 0.8rem 0;
-        // }
-
         @content;
     }
 }
