@@ -45,7 +45,7 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
             if ($productConcreteMeasurementUnitStorageTransfer !== null) {
                 $baseUnitTransfer = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit();
 
-                if ($baseUnitTransfer->getIdProductMeasurementUnit() === $quantitySalesUnitTransfer->getFkProductMeasurementUnit()) {
+                if ($baseUnitTransfer->getIdProductMeasurementUnit() === $quantitySalesUnitTransfer->getProductMeasurementUnit()->getIdProductMeasurementUnit()) {
                     return true;
                 }
             }

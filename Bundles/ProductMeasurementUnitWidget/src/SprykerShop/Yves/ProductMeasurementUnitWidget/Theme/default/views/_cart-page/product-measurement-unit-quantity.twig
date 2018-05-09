@@ -1,7 +1,7 @@
 {% extends template('widget') %}
 {% define data = {
     cartItem: _widget.itemTransfer,
-    isBaseUnit: _widget.isBaseUnit | default(true)
+    isBaseUnit: _widget.isBaseUnit ?? true
 } %}
 {% set cartItem = data.cartItem %}
 {% set salesUnitName = cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
@@ -12,15 +12,15 @@
 
 {% block body %}
     {% if not cartItem.maxQuantity or cartItem.maxQuantity < 0 %}
-        <input class="input-group-field" type="number" value="{{ cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}}>
+        <input class="input-group-field" type="number" value="{{ cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}} {% if not data.isBaseUnit%}disabled{% endif %} >
     {% else %}
-        <select name="quantity">
+        <select name="quantity"  {% if not data.isBaseUnit%}disabled{% endif %} >
             {% for i in range(1, cartItem.maxQuantity) %}
                 <option {{ (i == cartItem.quantity) ? 'selected' : '' }} value="{{ i }}">{{ i }}</option>
             {% endfor %}
         </select>
     {% endif %}
     {% if cartItem.quantitySalesUnit is not empty %}
-        {{  cartItem.quantitySalesUnit.value / cartItem.quantitySalesUnit.precision }} <span>{{ salesUnitName | trans }}</span>
+        (= {{  cartItem.quantitySalesUnit.value / cartItem.quantitySalesUnit.precision }} <span>{{ salesUnitName | trans }}</span>)
     {% endif %}
 {% endblock %}
