@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'cart-quantity-selector',
+    name: 'cart-quantity-input',
     tag: 'div'
 } %}
 
@@ -15,7 +15,7 @@
 {% block body %}
     {% if canWrite %}
         <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.cartItem.sku }) }}">
-            {% include molecule('quantity-selector') with {
+            {% include molecule('quantity-input') with {
                 data: {
                     maxQuantity: data.cartItem.maxQuantity,
                     value: data.cartItem.quantity,
@@ -30,11 +30,7 @@
             <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey" />
         </form>
     {% else %}
-        <label>
-            <strong>{{ 'cart.item_quantity' | trans }}</strong>
-            <span class="input-group __no-margin-bottom">
-                {{ cartItem.quantity }}
-             </span>
-        </label>
+        {{ 'cart.item_quantity' | trans }}
+        <strong>{{ cartItem.quantity }}</strong>
     {% endif %}
 {% endblock %}

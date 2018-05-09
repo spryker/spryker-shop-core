@@ -1,73 +1,35 @@
-{% extends model('component') %}
+{% extends molecule('quantity-input') %}
 
 {% define config = {
-    name: 'quantity-selector',
-    tag: 'label'
+    name: 'quantity-selector'
 } %}
 
 {% define data = {
-    label: 'cart.item_quantity' | trans,
-    maxQuantity: null,
-    minQuantity: 1,
-    value: 1,
-    options: [],
-    hasUpdateButton: false,
-    useSelect: false
+    maxQuantity: required,
+    step: 1
 } %}
 
-{%- block class -%}{{parent()}} grid{%- endblock -%}
+{% block input %}
+    {% set maxQuantity = data.maxQuantity < 0 or data.maxQuantity < data.minQuantity ? data.minQuantity : data.maxQuantity %}
+    {% set stepsCount = ((maxQuantity - data.minQuantity) / data.step) | floor %}
+    {% set options = [] %}
 
-{% block body %}
-    <span class="col col--sm-12">
-        {{ data.label }}
-    </span>
+    {% for stepIndex in 0..stepsCount %}
+        {% set value = data.minQuantity + (stepIndex * data.step) %}
+        {% set options = options | merge([{
+            label: value,
+            value: value,
+            selected: value == data.value
+        }]) %}
+    {% endfor %}
 
-    <span class="col col--expand">
-        {% if data.useSelect %}
-            {% set maxQuantity = data.maxQuantity | default(10) %}
-            {% set options = data.options %}
-
-            {% if options is empty %}
-                {% for quantity in data.minQuantity..maxQuantity %}
-                    {% set options = options | merge([{
-                        label: quantity,
-                        value: quantity,
-                        selected: quantity == data.value
-                    }]) %}
-                {% endfor %}
-            {% endif %}
-
-            {% include atom('select') with {
-                modifiers: ['expand'],
-                data: {
-                    options: options
-                },
-                attributes: {
-                    name: 'quantity'
-                }
-            } only %}
-        {% else %}
-            <input
-                class="input input--expand"
-                type="number"
-                value="{{ data.value }}"
-                name="quantity"
-                min="{{data.minQuantity}}"
-                {% if data.maxQuantity is not empty %}max="{{data.maxQuantity}}"{% endif %} />
-        {% endif %}
-    </span>
-
-    {% if data.hasUpdateButton %}
-        <span class="col">
-            <button type="submit" class="button button--expand">
-                {% include atom('icon') with {
-                    modifiers: ['small'],
-                    class: config.name ~ '__sync',
-                    data: {
-                        name: 'sync'
-                    }
-                } only %}
-            </button>
-        </span>
-    {% endif %}
+    {% include atom('select') with {
+        modifiers: ['expand'],
+        data: {
+            options: options
+        },
+        attributes: {
+            name: 'quantity'
+        }
+    } only %}
 {% endblock %}
