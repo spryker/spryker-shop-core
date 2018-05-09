@@ -212,7 +212,9 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     getMinQuantity() {
-        if (this.productQuantityStorage.hasOwnProperty('quantity_min')) {
+        if (typeof this.productQuantityStorage !== 'undefined'
+            && this.productQuantityStorage.hasOwnProperty('quantity_min')
+        ) {
             return this.productQuantityStorage.quantity_min;
         }
 
@@ -220,7 +222,10 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     getMaxQuantity() {
-        if (this.productQuantityStorage.hasOwnProperty('quantity_max') && this.productQuantityStorage.quantity_max !== null) {
+        if (typeof this.productQuantityStorage !== 'undefined'
+            && this.productQuantityStorage.hasOwnProperty('quantity_max')
+            && this.productQuantityStorage.quantity_max !== null
+        ) {
             return this.productQuantityStorage.quantity_max;
         }
 
@@ -228,7 +233,9 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     getQuantityInterval() {
-        if (this.productQuantityStorage.hasOwnProperty('quantity_interval')) {
+        if (typeof this.productQuantityStorage !== 'undefined'
+            && this.productQuantityStorage.hasOwnProperty('quantity_interval')
+        ) {
             return this.productQuantityStorage.quantity_interval;
         }
 
