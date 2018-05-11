@@ -36,9 +36,9 @@
                 <th></th>
                 <th class="text-left">{{ data.labels.nameLabel }}</th>
                 <th>{{ data.labels.ownerLabel }}</th>
+                <th>{{ data.labels.createdDateLabel }}</th>
                 <th>{{ data.labels.itemCountLabel }}</th>
                 <th>{{ data.labels.sum }}</th>
-                <th>{{ data.labels.createdDateLabel }}</th>
                 <th>{{ data.labels.actionsLabel }}</th>
             </tr>
         </thead>
@@ -54,9 +54,9 @@
                     <a class="text-center" href="{{ path('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">{{ shoppingList.name }}</a>
                 </td>
                 <td class="text-center">{{ shoppingList.owner }}</td>
+                <td class="text-center">{{ shoppingList.createdAt | formatDate }}</td>
                 <td class="text-center">{{ shoppingList.numberOfItems }}</td>
                 <td class="text-center">{{ shoppingList.sum }}</td>
-                <td class="text-center">{{ shoppingList.createdAt | formatDate }}</td>
                 <td>
                     <a href="{{ url('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.viewLabel }}</a>
                     {% if can('WriteShoppingListPermissionPlugin', shoppingList.idShoppingList) %}

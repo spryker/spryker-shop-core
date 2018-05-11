@@ -1,11 +1,24 @@
 {% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
 
 {% define data = {
+    title: _view.shoppingList.name,
     form: _view.shoppingListForm,
     shoppingListCollection: _view.shoppingListCollection,
     idShoppingList: _view.idShoppingList,
     shoppingListResponse: _view.shoppingListResponse
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+            },{
+                label: 'customer.account.shopping_list' | trans,
+            }]
+        }
+    } only %}
+{% endblock %}
 
 {% block customerNavigation %}
     {% embed molecule('customer-navigation', 'CustomerPage') with {

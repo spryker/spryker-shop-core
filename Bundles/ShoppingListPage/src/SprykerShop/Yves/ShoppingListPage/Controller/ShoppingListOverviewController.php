@@ -75,9 +75,11 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
 
         if ($shoppingListForm->isSubmitted() && $shoppingListForm->isValid()) {
+            $shoppingListTransfer = $shoppingListForm->getData();
+            $shoppingListTransfer->setIdShoppingList($idShoppingList);
             $shoppingListResponseTransfer = $this->getFactory()
                 ->getShoppingListClient()
-                ->updateShoppingList($shoppingListForm->getData());
+                ->updateShoppingList($shoppingListTransfer);
 
             if ($shoppingListResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage('customer.account.shopping_list.updated');
@@ -89,8 +91,10 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         }
 
         $shoppingListCollection = $this->getCustomerShoppingListCollection();
+        $shoppingListTransfer = $this->getShoppingListById($idShoppingList, $shoppingListCollection);
 
         $data = [
+            'shoppingList' => $shoppingListTransfer,
             'shoppingListCollection' => $shoppingListCollection,
             'shoppingListForm' => $shoppingListForm->createView(),
             'idShoppingList' => $shoppingListForm->getData()->getIdShoppingList(),
@@ -181,10 +185,14 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             $this->addErrorMessage($shoppingListShareResponseTransfer->getError());
         }
 
+        $shippingListTransferCollection = $this->getCustomerShoppingListCollection();
+        $shoppingListTransfer = $this->getShoppingListById($idShoppingList, $shippingListTransferCollection);
+
         $data = [
             'idShoppingList' => $idShoppingList,
+            'shoppingList' => $shoppingListTransfer,
             'shareShoppingListForm' => $shareShoppingListForm->createView(),
-            'shoppingListCollection' => $this->getCustomerShoppingListCollection(),
+            'shoppingListCollection' => $shippingListTransferCollection,
         ];
 
         return $this->view($data, [], '@ShoppingListPage/views/share-shopping-list/share-shopping-list.twig');
@@ -210,7 +218,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     * @return ShoppingListCollectionTransfer
      */
     protected function getShoppingListCollectionTransfer(Request $request): ShoppingListCollectionTransfer
     {
@@ -232,7 +240,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     * @return ShoppingListCollectionTransfer
      */
     protected function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
     {
@@ -251,5 +259,22 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         foreach ($shoppingListResponseTransfer->getErrors() as $error) {
             $this->addErrorMessage($error);
         }
+    }
+
+    /**
+     * @param int $idShoppingList
+     * @param ShoppingListCollectionTransfer $shippingListTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function getShoppingListById(int $idShoppingList, ShoppingListCollectionTransfer $shippingListTransferCollection): ShoppingListTransfer
+    {
+        foreach ($shippingListTransferCollection->getShoppingLists() as $shoppingListTransfer) {
+            if ($idShoppingList === $shoppingListTransfer->getIdShoppingList()) {
+                return $shoppingListTransfer;
+            }
+        }
+
+        return new ShoppingListTransfer();
     }
 }

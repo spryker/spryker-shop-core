@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -305,6 +304,11 @@ class ShoppingListController extends AbstractShoppingListController
             ->getProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
 
         $productViewTransfer = new ProductViewTransfer();
+        if (empty($productConcreteStorageData)) {
+            $productConcreteStorageData = [
+                'sku' => $shoppingListItemTransfer->getSku(),
+            ];
+        }
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         foreach ($this->getFactory()->getShoppingListItemExpanderPlugins() as $productViewExpanderPlugin) {
