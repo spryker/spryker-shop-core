@@ -69,7 +69,7 @@ class ShoppingListController extends AbstractShoppingListController
             'shoppingListItems' => $shoppingListItems,
             'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
             'currentPage' => $shoppingListOverviewResponseTransfer->getPagination()->getPage(),
-            'totalPages' => $shoppingListOverviewResponseTransfer->getPagination()->getPagesTotal(),
+            'totalPages' => $shoppingListOverviewResponseTransfer->getPagination()->getLastPage(),
         ];
 
         return $this->view($data, [], '@ShoppingListPage/views/shopping-list/shopping-list.twig');
