@@ -20,6 +20,8 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppi
 use SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShareShoppingListDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProvider;
+use SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandler;
+use SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandlerInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\ShareShoppingListForm;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListUpdateForm;
@@ -51,12 +53,12 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer|null $data
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface|\SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm
      */
-    public function getShoppingListUpdateForm(?ShoppingListTransfer $data, array $options = []): FormInterface
+    public function getShoppingListUpdateForm(ShoppingListTransfer $data, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ShoppingListUpdateForm::class, $data, $options);
     }
@@ -83,6 +85,14 @@ class ShoppingListPageFactory extends AbstractFactory
     public function createAddToCartHandler(): AddToCartHandlerInterface
     {
         return new AddToCartHandler($this->getShoppingListClient(), $this->getCustomerClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandlerInterface
+     */
+    public function createAddToCartFormHandler(): AddToCartFormHandlerInterface
+    {
+        return new AddToCartFormHandler();
     }
 
     /**

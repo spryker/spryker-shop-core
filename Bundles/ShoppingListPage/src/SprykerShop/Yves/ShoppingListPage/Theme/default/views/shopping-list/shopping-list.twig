@@ -82,7 +82,7 @@
         </div>
         <hr>
         {% if data.shoppingListItems|length %}
-            <form method="POST" action="{{ path('shopping-list/multi-add-to-cart') }}">
+            <form method="POST" action="{{ path('shopping-list/add-to-cart') }}">
                 <div class="grid grid--justify">
                     <div class="col">
                         <button type="submit" class="button button--success" {{qa('submit-button')}}>
@@ -146,9 +146,9 @@
                         </td>
                         <td>
                             {% if isItemAvalable %}
-                                <a class="button button--success" href="{{ path('shopping-list/add-to-cart', {sku: item.sku, quantity: item.quantity, idShoppingListItem: item.idShoppingListItem, idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                <button type="submit" name="add-item" class="button button--success" value="{{ item.idShoppingListItem }}" {{qa('submit-button')}}>
                                     {{data.labels.addItemToCartLabel}}
-                                </a>
+                                </button>
                             {% endif %}
                             {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
                                 <a class="button button--alert" href="{{ path('shopping-list/remove-item', {idShoppingListItem: item.idShoppingListItem, idShoppingList: data.shoppingList.idShoppingList}) }}">

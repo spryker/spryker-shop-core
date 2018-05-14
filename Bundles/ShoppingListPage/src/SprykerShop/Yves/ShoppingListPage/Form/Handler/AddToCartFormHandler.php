@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerShop\Yves\ShoppingListPage\Form\Handler;
+
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Symfony\Component\HttpFoundation\Request;
+
+class AddToCartFormHandler implements AddToCartFormHandlerInterface
+{
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function handleAddToCartRequest(Request $request): ShoppingListItemCollectionTransfer
+    {
+        if ($request->get('add-item')) {
+            return $this->getShoppingListItemTransferFromRequest($request);
+        }
+
+        return $this->getShoppingListItemCollectionTransferFromRequest($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function getShoppingListItemTransferFromRequest(Request $request): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListCollectionTransfer = new ShoppingListItemCollectionTransfer();
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdShoppingListItem((int)$request->get('add-item'))
+            ->setFkShoppingList($request->request->getInt(static::PARAM_ID_SHOPPING_LIST));
+
+        $shoppingListCollectionTransfer->addItem($shoppingListItemTransfer);
+
+        return $shoppingListCollectionTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function getShoppingListItemCollectionTransferFromRequest(Request $request): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListCollectionTransfer = new ShoppingListItemCollectionTransfer();
+        $shoppingListItemRequest = $request->get(static::PARAM_SHOPPING_LIST_ITEM);
+        if (!empty($shoppingListItemRequest[static::PARAM_ID_SHOPPING_LIST_ITEM])) {
+            foreach ($shoppingListItemRequest[static::PARAM_ID_SHOPPING_LIST_ITEM] as $idShoppingListItem) {
+                $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+                    ->setIdShoppingListItem((int)$idShoppingListItem)
+                    ->setFkShoppingList($request->request->getInt(static::PARAM_ID_SHOPPING_LIST));
+
+                $shoppingListCollectionTransfer->addItem($shoppingListItemTransfer);
+            }
+        }
+
+        return $shoppingListCollectionTransfer;
+    }
+}
