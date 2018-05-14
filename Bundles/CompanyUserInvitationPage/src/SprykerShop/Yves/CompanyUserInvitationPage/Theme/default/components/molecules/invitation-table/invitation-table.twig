@@ -44,12 +44,12 @@
                                   {{ 'company.user.invitation.resend.button' | trans }}
                               </a>
                           </li>
-                          <li class="menu__item">
-                              <a href="{{ path('company/user-invitation/delete', {'id': invitation.idCompanyUserInvitation}) }}">
-                                  {{ 'company.user.invitation.delete.button' | trans }}
-                              </a>
-                          </li>
                       {% endif %}
+                      <li class="menu__item">
+                          <a href="{{ path('company/user-invitation/delete', {'id': invitation.idCompanyUserInvitation}) }}">
+                              {{ 'company.user.invitation.delete.button' | trans }}
+                          </a>
+                      </li>
                   </ul>
               </td>
             </tr>
