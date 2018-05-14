@@ -29,7 +29,7 @@ export default class ToggleSelectForm extends Component {
     }
 
     get addClass(): boolean {
-        return this.trigger.value !== '0';
+        return this.trigger.value !== '';
     }
 
     get target(): string {

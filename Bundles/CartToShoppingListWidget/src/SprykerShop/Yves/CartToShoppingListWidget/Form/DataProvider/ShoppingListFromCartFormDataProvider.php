@@ -60,12 +60,12 @@ class ShoppingListFromCartFormDataProvider
         $shoppingListCollection = [];
         $shoppingListTransferCollection = $this->shoppingListClient->getCustomerShoppingListCollection()->getShoppingLists();
 
+        $shoppingListCollection[null] = 'cart.add-to-shopping-list.form.add_new';
         foreach ($shoppingListTransferCollection as $shoppingListTransfer) {
             if ($this->can('WriteShoppingListPermissionPlugin', $shoppingListTransfer->getIdShoppingList())) {
                 $shoppingListCollection[$shoppingListTransfer->getName()] = $shoppingListTransfer->getName();
             }
         }
-        $shoppingListCollection[] = 'cart.add-to-shopping-list.form.add_new';
 
         return $shoppingListCollection;
     }
