@@ -1,6 +1,8 @@
 {% extends model('component') %}
 
-{% set name = name | default('filter-range') %}
+{% define config = {
+    name: 'filter-range'
+} %}
 
 {% set filter = data.filter | default(null) %}
 {% set parameter = parameter | default(filter.config.parameterName) %}
@@ -14,7 +16,7 @@
         <div class="col col--sm-6">
             <label>
                 {{ "catalog.filter.rangeFrom"|trans }}
-                <input type="number" name="{{ parameter }}[min]" data-default-value="{{ min }}"
+                <input class="input" type="number" name="{{ parameter }}[min]" data-default-value="{{ min }}"
                         value="{{ activeMin }}"
                         required="required"
                         min="{{ min }}"
@@ -26,7 +28,7 @@
         <div class="col col--sm-6">
             <label>
                 {{ "catalog.filter.rangeTo"|trans }}
-                <input type="number" name="{{ parameter }}[max]" data-default-value="{{ max }}"
+                <input class="input" type="number" name="{{ parameter }}[max]" data-default-value="{{ max }}"
                     value="{{ activeMax }}"
                     required="required"
                     min="{{ min }}"
