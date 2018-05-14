@@ -8,10 +8,10 @@
 {% block body %}
     {% include molecule('form') with {
         data: {
+            form: data.form,
             options: {
                 action: data.formAction
             },
-            form: data.form,
             submit: {
                 enable: true,
                 text: 'cart_note.form.save' | trans
