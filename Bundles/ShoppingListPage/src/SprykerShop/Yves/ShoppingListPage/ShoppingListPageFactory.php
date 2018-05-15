@@ -56,7 +56,7 @@ class ShoppingListPageFactory extends AbstractFactory
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $data
      * @param array $options
      *
-     * @return \Symfony\Component\Form\FormInterface|\SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function getShoppingListUpdateForm(ShoppingListTransfer $data, array $options = []): FormInterface
     {
