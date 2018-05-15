@@ -6,6 +6,12 @@
             & > #{$name} {
                 margin-left: .5rem;
             }
+
+            &--spacing {
+                &:not(:first-child) {
+                    margin-top: .5rem;
+                }
+            }
         }
 
         &--inline {
@@ -25,12 +31,6 @@
             }
         }
 
-        &--spacing &__item {
-            &:not(:first-child) {
-                margin-top: .5rem;
-            }
-        }
-
         &--bullet &__item {
             &:before {
                 content: '•';
@@ -40,6 +40,11 @@
 
         &--alert {
             color: map-get($setting-color-actions, alert);
+        }
+
+        &--spacing {
+            margin-top: .5rem;
+            margin-bottom: .5rem;
         }
 
         @content;

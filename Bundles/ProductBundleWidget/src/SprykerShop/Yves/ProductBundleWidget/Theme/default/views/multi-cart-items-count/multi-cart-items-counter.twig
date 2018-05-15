@@ -6,7 +6,8 @@
 } %}
 
 {% set itemCount = data.items | length %}
+{% set label = (itemCount == 1) ? 'multi_cart_widget.cart.item' : 'multi_cart_widget.cart.items' %}
 
 {% block body %}
-    {{ itemCount }} {{ itemCount == 1 ? 'multi_cart_widget.cart.item' | trans : 'multi_cart_widget.cart.items' | trans }} | {{ data.cart.totals.subTotal | money }}<br>
+    {{ itemCount }} {{ label | trans }} | {{ data.cart.totals.subTotal | money }}
 {% endblock %}
