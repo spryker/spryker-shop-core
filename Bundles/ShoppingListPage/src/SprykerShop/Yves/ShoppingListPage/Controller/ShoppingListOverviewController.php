@@ -122,10 +122,12 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
         if (!$shoppingListResponseTransfer->getIsSuccess()) {
             $this->addErrorMessage('customer.account.shopping_list.delete.failed');
+
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
         $this->addSuccessMessage('customer.account.shopping_list.delete.success');
+
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
     }
 
@@ -139,11 +141,11 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $shoppingListItems = $this->getFactory()
             ->getShoppingListClient()
             ->getShoppingListItemCollection($this->getShoppingListCollectionTransfer($request));
-        if (count($shoppingListItems->getItems())  === 0) {
+        if (count($shoppingListItems->getItems()) === 0) {
             $this->addErrorMessage('customer.account.shopping_list.items.added_to_cart.');
+
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
-
 
         $result = $this->getFactory()
             ->createAddToCartHandler()
@@ -151,10 +153,12 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
         if ($result->getRequests()->count()) {
             $this->addErrorMessage('customer.account.shopping_list.items.added_to_cart.failed');
+
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
         $this->addSuccessMessage('customer.account.shopping_list.items.added_to_cart');
+
         return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
     }
 
@@ -179,6 +183,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
             if ($shoppingListShareResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage('customer.account.shopping_list.share.share_shopping_list_successful');
+
                 return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
             }
 
@@ -218,7 +223,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return ShoppingListCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     protected function getShoppingListCollectionTransfer(Request $request): ShoppingListCollectionTransfer
     {
@@ -240,7 +245,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     }
 
     /**
-     * @return ShoppingListCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     protected function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
     {
@@ -263,7 +268,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
     /**
      * @param int $idShoppingList
-     * @param ShoppingListCollectionTransfer $shippingListTransferCollection
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shippingListTransferCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */

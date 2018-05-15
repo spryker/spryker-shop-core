@@ -122,9 +122,11 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addShoppingListRemoveItemRoute($allowedLocalesPattern): self
     {
-        $this->createGetController('/{shoppingList}/remove-item', static::ROUTE_REMOVE_ITEM, 'ShoppingListPage', 'ShoppingList', 'removeItem')
+        $this->createGetController('/{shoppingList}/remove-item/{idShoppingList}/{idShoppingListItem}', static::ROUTE_REMOVE_ITEM, 'ShoppingListPage', 'ShoppingList', 'removeItem')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
-            ->value('shoppingList', 'shopping-list');
+            ->value('shoppingList', 'shopping-list')
+            ->assert('idShoppingList', '\d+')
+            ->assert('idShoppingListItem', '\d+');
 
         return $this;
     }

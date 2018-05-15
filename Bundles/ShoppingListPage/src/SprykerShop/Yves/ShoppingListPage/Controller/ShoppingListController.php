@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -77,13 +76,17 @@ class ShoppingListController extends AbstractShoppingListController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $idShoppingList
+     * @param int $idShoppingListItem
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function removeItemAction(Request $request): RedirectResponse
+    public function removeItemAction(int $idShoppingList, int $idShoppingListItem): RedirectResponse
     {
-        $shoppingListItemTransfer = $this->getShoppingListItemTransferFromRequest($request);
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdShoppingListItem($idShoppingListItem)
+            ->setFkShoppingList($idShoppingList)
+            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
 
         $shoppingListItemResponseTransfer = $this->getFactory()
             ->getShoppingListClient()
