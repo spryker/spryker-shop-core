@@ -142,7 +142,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             ->getShoppingListClient()
             ->getShoppingListItemCollection($this->getShoppingListCollectionTransfer($request));
         if (count($shoppingListItems->getItems()) === 0) {
-            $this->addErrorMessage('customer.account.shopping_list.items.added_to_cart.');
+            $this->addErrorMessage('customer.account.shopping_list.items.added_to_cart.not_found');
 
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
