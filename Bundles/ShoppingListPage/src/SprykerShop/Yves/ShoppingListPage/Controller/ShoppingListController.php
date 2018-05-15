@@ -145,6 +145,8 @@ class ShoppingListController extends AbstractShoppingListController
     /**
      * @param int $idShoppingList
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addAvailableProductsToCartAction(int $idShoppingList): RedirectResponse
