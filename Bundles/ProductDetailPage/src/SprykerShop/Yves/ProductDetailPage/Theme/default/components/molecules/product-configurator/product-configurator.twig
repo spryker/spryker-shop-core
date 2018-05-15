@@ -57,46 +57,48 @@
             <hr />
         {% endif %}
 
-        <div class="grid grid--justify grid--bottom">
-            {% if widgetExists('ProductMeasurementUnitWidgetPlugin') %}
-                {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, options) }}
-            {% else %}
-                <div class="col col--sm-5">
-                    <label>
-                        {{'cart.item_quantity' | trans}}
-                        {% include atom('select') with {
-                            modifiers: ['expand'],
-                            data: {
-                                options: options
-                            },
-                            attributes: {
-                                name: 'quantity'
-                            }
-                        } only %}
-                    </label>
-                </div>
-
-                <div class="col col--sm-6">
-                    {% if widgetExists('MultiCartWidgetPlugin') %}
-                        {{ widget('MultiCartWidgetPlugin', data.product, disabled) }}
-                    {% else %}
-                        <button type="submit" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}">
-                            {% include atom('icon') with {
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="grid grid--justify grid--bottom">
+                {% if widgetExists('ProductMeasurementUnitWidgetPlugin') %}
+                    {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, options) }}
+                {% else %}
+                    <div class="col col--sm-5">
+                        <label>
+                            {{'cart.item_quantity' | trans}}
+                            {% include atom('select') with {
+                                modifiers: ['expand'],
                                 data: {
-                                    name: 'cart-plus'
+                                    options: options
+                                },
+                                attributes: {
+                                    name: 'quantity'
                                 }
                             } only %}
-                            {{ 'page.detail.add-to-cart' | trans }}
-                        </button>
-                    {% endif %}
-                </div>
-            {% endif %}
-        </div>
+                        </label>
+                    </div>
 
-        {{ widget('AvailabilityWidgetPlugin', data.product) }}
+                    <div class="col col--sm-6">
+                        {% if widgetExists('MultiCartWidgetPlugin') %}
+                            {{ widget('MultiCartWidgetPlugin', data.product, disabled) }}
+                        {% else %}
+                            <button type="submit" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}">
+                                {% include atom('icon') with {
+                                    data: {
+                                        name: 'cart-plus'
+                                    }
+                                } only %}
+                                {{ 'page.detail.add-to-cart' | trans }}
+                            </button>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+
+            {{ widget('AvailabilityWidgetPlugin', data.product) }}
+        {% endif %}
     </form>
 
-    {% if widgetExists('ShoppingListWidgetPlugin') %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') and widgetExists('ShoppingListWidgetPlugin') %}
         <hr/>
         {{ widget('ShoppingListWidgetPlugin', sku, disabled) }}
     {% endif %}

@@ -108,7 +108,7 @@
         data: {
             form: data.forms.summary,
             submit: {
-                enable: true,
+                enable: is_granted('IS_AUTHENTICATED_FULLY'),
                 text: 'checkout.step.place.order' | trans
             },
             cancel: {
