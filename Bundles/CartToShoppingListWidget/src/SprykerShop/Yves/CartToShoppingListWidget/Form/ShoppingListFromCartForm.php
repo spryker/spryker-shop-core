@@ -102,10 +102,9 @@ class ShoppingListFromCartForm extends AbstractType
      */
     protected function nameValidateCallback(FormBuilderInterface $builder): callable
     {
-        return function ($object, ExecutionContextInterface $context) use ($builder)
-        {
+        return function ($object, ExecutionContextInterface $context) use ($builder) {
             $data = $builder->getData();
-            if(!$object && !$data[static::FIELD_SHOPPING_LIST_NAME]){
+            if (!$object && !$data[static::FIELD_SHOPPING_LIST_NAME]) {
                 $context->buildViolation('cart.add-to-shopping-list.form.error.empty_name')
                     ->addViolation();
             }
