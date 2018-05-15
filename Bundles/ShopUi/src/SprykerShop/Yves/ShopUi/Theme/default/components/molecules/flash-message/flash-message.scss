@@ -1,38 +1,38 @@
-@mixin component-flash-message($name: '.flash-message') {
+@mixin shop-ui-flash-message($name: '.flash-message') {
     #{$name} {
-        @include shadow;
-        @include is-invisible;
-        @include transition(max-height opacity visibility, 500ms);
+        @include helper-ui-shadow;
+        @include helper-visibility-invisible;
+        @include helper-effect-transition(max-height opacity visibility, 500ms);
         max-height: 0;
-        background-color: rgba(light($color-main), .97);
+        background-color: rgba(helper-color-light($setting-color-main), .97);
         cursor: pointer;
         overflow-y: hidden;
 
         &__message {
             padding: 1rem .5rem;
-            color: dark($color-main);
+            color: helper-color-dark($setting-color-main);
         }
 
-        &--show {   
-            @include is-visible;
+        &--show {
+            @include helper-visibility-visible;
             max-height: 8rem;
         }
 
-        @each $action, $color-action in $color-actions {
-            @include component-flash-message-action($action, $color-action);
+        @each $action, $setting-color-action in $setting-color-actions {
+            @include shop-ui-flash-message-action($action, $setting-color-action);
         }
 
         @content;
     }
 }
 
-@mixin component-flash-message-action($action, $color-action) {
+@mixin shop-ui-flash-message-action($action, $setting-color-action) {
     &--#{$action} {
-        background-color: rgba(light($color-action), .97);
+        background-color: rgba(helper-color-light($setting-color-action), .97);
     }
 
     &--#{$action} &__message {
-        color: dark($color-action);
+        color: helper-color-dark($setting-color-action);
     }
 
     @content;

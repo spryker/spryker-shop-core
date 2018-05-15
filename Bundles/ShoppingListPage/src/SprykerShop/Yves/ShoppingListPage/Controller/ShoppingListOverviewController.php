@@ -154,7 +154,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     }
 
     /**
-     * @param string $idShoppingList
+     * @param int $idShoppingList
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse

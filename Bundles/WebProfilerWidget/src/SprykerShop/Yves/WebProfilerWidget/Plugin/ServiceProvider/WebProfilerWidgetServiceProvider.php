@@ -19,7 +19,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class WebProfilerWidgetServiceProvider extends AbstractPlugin implements ServiceProviderInterface, ControllerProviderInterface
 {
     /**
-     * @var \Silex\ServiceProviderInterface[]|\Silex\ControllerProviderInterface[]
+     * @var \Silex\ServiceProviderInterface[]
      */
     protected $webProfiler;
 
@@ -68,7 +68,7 @@ class WebProfilerWidgetServiceProvider extends AbstractPlugin implements Service
     }
 
     /**
-     * @return \Silex\ControllerProviderInterface[]|\Silex\ServiceProviderInterface[]
+     * @return \Silex\ServiceProviderInterface[]
      */
     protected function getWebProfiler()
     {

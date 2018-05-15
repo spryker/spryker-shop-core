@@ -68,7 +68,7 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
     protected function determineTargetUrl($request)
     {
         if ($request->headers->has('Referer')) {
-            return $request->headers->get('Referer');
+            return (string)$request->headers->get('Referer');
         }
 
         return HomePageControllerProvider::ROUTE_HOME;

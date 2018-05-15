@@ -1,5 +1,5 @@
 {
-  "require": {
-    "SprykerShop.ShopLayoutExtension": "Plugin interfaces provider"
+  "include": {
+    "ShopLayoutExtension": "Plugin interfaces provider"
   }
 }

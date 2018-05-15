@@ -12,7 +12,7 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider
 class DeleteController extends AbstractCustomerController
 {
     /**
-     * @return void
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction()
     {

@@ -1,11 +1,11 @@
-$component-simple-carousel-icon-size: $component-icon-size-big;
+$shop-ui-simple-carousel-icon-size: $shop-ui-icon-size-big;
 
-@mixin component-simple-carousel($name: '.simple-carousel') {
+@mixin shop-ui-simple-carousel($name: '.simple-carousel') {
     #{$name} {
         &__container {
             position: relative;
-            padding-left: $component-simple-carousel-icon-size;
-            padding-right: $component-simple-carousel-icon-size;
+            padding-left: $shop-ui-simple-carousel-icon-size;
+            padding-right: $shop-ui-simple-carousel-icon-size;
         }
 
         &__view {
@@ -16,7 +16,7 @@ $component-simple-carousel-icon-size: $component-icon-size-big;
         }
 
         &__slider {
-            @include transition(transform, 500ms);
+            @include helper-effect-transition(transform, 500ms);
             flex-wrap: nowrap;
         }
 
@@ -30,19 +30,19 @@ $component-simple-carousel-icon-size: $component-icon-size-big;
             padding: .25rem;
 
             &::before {
-                @include transition(background-color, 150ms);
+                @include helper-effect-transition(background-color, 150ms);
                 content: '';
                 display: block;
                 width: .5rem;
                 height: .5rem;
-                background-color: $color-light;
+                background-color: $setting-color-light;
                 border-radius: 100%;
             }
 
             &:hover,
             &--current {
                 &::before {
-                    background-color: $color-main;
+                    background-color: $setting-color-main;
                 }
             }
         }
@@ -66,12 +66,12 @@ $component-simple-carousel-icon-size: $component-icon-size-big;
         }
 
         &__arrow {
-            @include transition(color);
-            color: $color-light;
+            @include helper-effect-transition(color);
+            color: $setting-color-light;
             pointer-events: all;
 
             &:hover {
-                color: $color-main;
+                color: $setting-color-main;
             }
         }
 
@@ -86,17 +86,17 @@ $component-simple-carousel-icon-size: $component-icon-size-big;
 
         &--inset &__arrow {
             padding: .5rem;
-            background-color: rgba($color-lightest, .75);
+            background-color: rgba($setting-color-lightest, .75);
         }
 
-        @include breakpoint(lg) {
+        @include helper-breakpoint(lg) {
             &__navigation {
-                @include is-invisible;
-                @include transition;
+                @include helper-visibility-invisible;
+                @include helper-effect-transition;
             }
 
             &:hover &__navigation {
-                @include is-visible;
+                @include helper-visibility-visible;
                 pointer-events: none;
             }
         }

@@ -1,6 +1,6 @@
-@mixin component-search-form($name: '.search-form') {
+@mixin shop-ui-search-form($name: '.search-form') {
     #{$name} {
-        
+
 
         @content;
     }

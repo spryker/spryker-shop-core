@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Yves\Currency\CurrencyFactory getFactory()
+ * @method \SprykerShop\Yves\CurrencyWidget\CurrencyWidgetFactory getFactory()
  */
 class CurrencySwitchController extends AbstractController
 {
