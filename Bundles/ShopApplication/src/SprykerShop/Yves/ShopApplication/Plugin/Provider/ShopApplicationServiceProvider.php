@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ShopApplicationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     const LOCALE = 'locale';
+    const STORE = 'store';
     const REQUEST_URI = 'REQUEST_URI';
 
     /**
@@ -46,6 +47,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
         $this->setDebugMode();
         $this->setControllerResolver();
         $this->setLocale();
+        $this->setStore();
         $this->setLogLevel();
 
         $this->addGlobalTemplateVariables($app, [
@@ -109,6 +111,16 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
                 ApplicationEnvironment::initializeLocale($store->getCurrentLocale());
             }
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function setStore()
+    {
+        $store = Store::getInstance();
+
+        $this->application[self::STORE] = $store->getStoreName();
     }
 
     /**
