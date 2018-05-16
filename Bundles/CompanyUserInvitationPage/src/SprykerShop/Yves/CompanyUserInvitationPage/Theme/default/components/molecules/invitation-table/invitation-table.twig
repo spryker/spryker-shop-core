@@ -33,7 +33,8 @@
                   <ul class="menu menu--inline">
                       {% if invitation.companyUserInvitationStatusKey == 'new'  %}
                           <li class="menu__item">
-                              <a href="{{ path('company/user-invitation/send', {'id': invitation.idCompanyUserInvitation}) }}">
+                              <a href="{{ path('company/user-invitation/send', {'id': invitation.idCompanyUserInvitation}) }}"
+                                 class="js-disable-click">
                                 {{ 'company.user.invitation.send.button' | trans }}
                               </a>
                           </li>
