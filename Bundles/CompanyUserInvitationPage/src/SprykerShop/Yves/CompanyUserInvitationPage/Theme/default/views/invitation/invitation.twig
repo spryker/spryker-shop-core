@@ -61,12 +61,6 @@
             {% include molecule('pagination') with {
                 data: data.pagination
             } only %}
-
-            {% include molecule('action-disable-after-click') with {
-                attributes: {
-                    'disable-selector': 'js-disable-click'
-                }
-            } only %}
         </div>
     {% endif %}
 
