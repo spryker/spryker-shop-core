@@ -3,8 +3,9 @@
 {% define data = {
     cart: _view.cart,
     cartItems: _view.cartItems,
-    request: app.request,
+    isQuoteValid: _view.isQuoteValid,
     attributes: _view.attributes,
+    request: app.request,
 
     title: 'cart.cart' | trans
 } %}
@@ -68,7 +69,8 @@
 
                     {% include molecule('cart-summary', 'CartPage') with {
                         data: {
-                            cart: data.cart
+                            cart: data.cart,
+                            isQuoteValid: data.isQuoteValid
                         }
                     } only %}
                 </div>

@@ -88,6 +88,6 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implemen
      */
     public static function getTemplate()
     {
-        return '@ProductBundleWidget/view/multi-cart-items-counter/multi-cart-items-counter.twig';
+        return '@ProductBundleWidget/views/multi-cart-items-counter/multi-cart-items-counter.twig';
     }
 }

@@ -93,6 +93,6 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate()
     {
-        return '@ProductBundleWidget/view/multi-cart-items-list/multi-cart-items-list.twig';
+        return '@ProductBundleWidget/views/multi-cart-items-list/multi-cart-items-list.twig';
     }
 }

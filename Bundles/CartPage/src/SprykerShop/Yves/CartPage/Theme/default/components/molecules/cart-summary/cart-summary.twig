@@ -6,40 +6,52 @@
 } %}
 
 {% define data = {
-    cart: required
+    cart: required,
+    isQuoteValid: required
 } %}
 
+{% set canProceedToCheckout = data.cart.items is not empty
+    and data.isQuoteValid
+    and (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote))
+%}
+
 {% block body %}
-    <h5 class="{{ config.name }}__subheader float-right">{{ app['cart.quantity'] }} {{ 'item' | trans }}</h5>
+    <h6 class="text-secondary float-right">{{ app['cart.quantity'] }} {{ 'item' | trans }}</h6>
     <h6>{{ 'cart.your-order' | trans }}</h6>
 
-    <ul class="list {{ config.name }}__list">
-        <li class="{{ config.name }}__item">{{ 'cart.price.subtotal' | trans }} <span class="float-right">{{ data.cart.totals.subtotal | money }}</span></li>
-        <li><hr/></li>
-        {{ widget('DiscountSummaryWidgetPlugin', data.cart) }}
-        {% if data.cart.shipment is not null and data.cart.shipment.method is not null %}
+    <ul class="list list--spacing">
+        <li class="list__item">
+            {{ 'cart.price.subtotal' | trans }}
+            <span class="float-right">{{ data.cart.totals.subtotal | money }}</span>
+        </li>
 
-            <li class="{{ config.name }}__list-item"><strong>{{ 'cart.shipping' | trans }}</strong></li>
+        {% if widgetExists('DiscountSummaryWidgetPlugin') %}
+            <li class="list__item">
+                {{ widget('DiscountSummaryWidgetPlugin', data.cart) }}
+            </li>
+        {% endif %}
 
-            <li class="{{ config.name }}__list-item">
+        {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
+            <li class="list__item">
                 {{ data.cart.shipment.method.name }}
                 <span class="float-right">{{ data.cart.shipment.method.storeCurrencyPrice | money }}</span>
             </li>
-
-            <li><hr/></li>
         {% endif %}
 
-        <li class="{{ config.name }}__item">{{ 'cart.price.grand.total' | trans }} <strong class="float-right">{{ data.cart.totals.grandTotal | money }}</strong></li>
-
-        <li class="{{ config.name }}__item">{{ 'cart.total.tax_total' | trans }} <span class="float-right">{{ data.cart.totals.taxTotal.amount | money }}</span></li>
+        <li class="list__item">
+            {{ 'cart.total.tax_total' | trans }}
+            <span class="float-right">{{ data.cart.totals.taxTotal.amount | money }}</span>
+        </li>
+        <li class="list__item">
+            {{ 'cart.price.grand.total' | trans }}
+            <strong class="float-right">{{ data.cart.totals.grandTotal | money }}</strong>
+        </li>
     </ul>
 
-    {% if _view.cart.items|length and _view.isQuoteValid and (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', _view.cart.idQuote)) %}
-        <div>
-            <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('data.cart-go-to-checkout')}}>
-                <i class="fa fa-check"></i>{{ 'cart.checkout'|trans }}
-            </a>
-        </div>
+    {% if canProceedToCheckout %}
+        <hr />
+        <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('data.cart-go-to-checkout')}}>
+            {{ 'cart.checkout' | trans }}
+        </a>
     {% endif %}
-
 {% endblock %}

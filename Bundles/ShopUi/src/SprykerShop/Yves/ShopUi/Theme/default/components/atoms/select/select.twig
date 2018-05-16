@@ -14,9 +14,10 @@
     <select class="{{config.name}}__select {% block selectClass %}{% endblock %}" {{block('attributes')}}>
         {% block options %}
             {% for option in data.options %}
-                {% set selected = option.selected | default(false) %}
+                {% set isSelected = option.selected | default(false) %}
+                {% set isDisabled = option.disabled | default(false) %}
 
-                <option value="{{option.value}}" {% if selected %}selected{% endif %}>
+                <option value="{{option.value}}" {% if isSelected %}selected{% endif %} {% if isDisabled %}disabled{% endif %}>
                     {{option.label}}
                 </option>
             {% endfor %}
