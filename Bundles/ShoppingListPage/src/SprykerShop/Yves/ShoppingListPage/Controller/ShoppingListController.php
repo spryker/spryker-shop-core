@@ -197,6 +197,43 @@ class ShoppingListController extends AbstractShoppingListController
     }
 
     /**
+     * @param int $idShoppingList
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function printShoppingListAction(int $idShoppingList, Request $request): RedirectResponse
+    {
+        exit($idShoppingList);
+        $addAvailableProductsToCartForm = $this
+            ->createAddAvailableProductsToCartForm()
+            ->handleRequest($request);
+
+        if ($addAvailableProductsToCartForm->isSubmitted() && $addAvailableProductsToCartForm->isValid()) {
+            $shoppingListItemCollection = $addAvailableProductsToCartForm
+                ->get(AddAvailableProductsToCartForm::SHOPPING_LIST_ITEM_COLLECTION)
+                ->getData();
+
+            $result = $this->getFactory()
+                ->createAddToCartHandler()
+                ->addAllAvailableToCart($shoppingListItemCollection);
+
+            if ($result->getRequests()->count()) {
+                $this->addErrorMessage('customer.account.shopping_list.item.added_all_available_to_cart.failed');
+                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+                    'idShoppingList' => $idShoppingList,
+                ]);
+            }
+
+            $this->addSuccessMessage('customer.account.shopping_list.item.added_all_available_to_cart');
+        }
+
+        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+            'idShoppingList' => $idShoppingList,
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return int
