@@ -5,13 +5,11 @@ export default class ActionSingleClickEnforcer extends Component {
 
     constructor() {
         super();
-        this.targets = this.hasSelector ? <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector)) : [];
+        this.targets = <HTMLElement[]>this.getValidSelector();
     }
 
     readyCallback(): void {
-        if(this.hasSelector) {
-            this.mapEvents();
-        }
+        this.mapEvents();
     }
 
     mapEvents(): void {
@@ -22,24 +20,26 @@ export default class ActionSingleClickEnforcer extends Component {
 
     onTargetsClick(event: Event): void {
         const targetElement = <HTMLElement> event.currentTarget;
-        const hasAttribute: boolean= targetElement.hasAttribute('disabled');
+        const hasAttribute: boolean = targetElement.hasAttribute('isDisabled');
 
-        if(hasAttribute) {
+        if (hasAttribute) {
             event.preventDefault();
             return;
         }
-        targetElement.setAttribute('disabled', 'disabled');
+        targetElement.setAttribute('isDisabled', '');
+    }
+
+    getValidSelector(): HTMLElement[] {
+        try {
+            document.querySelectorAll(this.targetSelector);
+        } catch (e) {
+            return [];
+        }
+        return <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
     }
 
     get targetSelector(): string {
         return this.getAttribute('target-selector');
-    }
-
-    get hasSelector(): boolean {
-        if(this.targetSelector) {
-            return true;
-        }
-        return false;
     }
 
 }
