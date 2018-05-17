@@ -20,7 +20,7 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
      */
     public function handleAddToCartRequest(Request $request): ShoppingListItemCollectionTransfer
     {
-        if ($request->get('add-item')) {
+        if ($request->get(static::PARAM_ID_ADD_ITEM)) {
             return $this->getShoppingListItemTransferFromRequest($request);
         }
 
@@ -36,7 +36,7 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
     {
         $shoppingListCollectionTransfer = new ShoppingListItemCollectionTransfer();
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setIdShoppingListItem((int)$request->get('add-item'))
+            ->setIdShoppingListItem((int)$request->get(static::PARAM_ID_ADD_ITEM))
             ->setFkShoppingList($request->request->getInt(static::PARAM_ID_SHOPPING_LIST));
 
         $shoppingListCollectionTransfer->addItem($shoppingListItemTransfer);

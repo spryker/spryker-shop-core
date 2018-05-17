@@ -20,9 +20,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ShoppingListWidgetController extends AbstractController
 {
-    const PARAM_SKU = 'sku';
-    const PARAM_QUANTITY = 'quantity';
-    const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+    public const PARAM_SKU = 'sku';
+    public const PARAM_QUANTITY = 'quantity';
+    public const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -54,7 +55,7 @@ class ShoppingListWidgetController extends AbstractController
             ->addItem($shoppingListItemTransfer);
 
         if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
-            $this->addErrorMessage('customer.account.shopping_list.item.not_added');
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED);
         }
 
         return $this->redirectResponseInternal(ShoppingListWidgetConfig::SHOPPING_LIST_REDIRECT_URL, [

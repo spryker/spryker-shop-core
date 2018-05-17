@@ -15,6 +15,7 @@ interface AddToCartFormHandlerInterface
     public const PARAM_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
     public const PARAM_SHOPPING_LIST_ITEM = 'shoppingListItem';
     public const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+    public const PARAM_ID_ADD_ITEM = 'add-item';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -22,6 +22,13 @@ use Symfony\Component\HttpFoundation\Request;
 class ShoppingListOverviewController extends AbstractShoppingListController
 {
     protected const PARAM_SHOPPING_LISTS = 'shoppingLists';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_UPDATED = 'customer.account.shopping_list.updated';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS = 'customer.account.shopping_list.delete.success';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_NOT_FOUND = 'customer.account.shopping_list.items.added_to_cart.not_found';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_FAILED = 'customer.account.shopping_list.items.added_to_cart.failed';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART = 'customer.account.shopping_list.items.added_to_cart';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_SHARE_SHOPPING_LIST_SUCCESSFUL = 'customer.account.shopping_list.share.share_shopping_list_successful';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -82,7 +89,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
                 ->updateShoppingList($shoppingListTransfer);
 
             if ($shoppingListResponseTransfer->getIsSuccess()) {
-                $this->addSuccessMessage('customer.account.shopping_list.updated');
+                $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_UPDATED);
 
                 return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
             }
@@ -121,12 +128,12 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             ->removeShoppingList($shoppingListTransfer);
 
         if (!$shoppingListResponseTransfer->getIsSuccess()) {
-            $this->addErrorMessage('customer.account.shopping_list.delete.failed');
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
 
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
-        $this->addSuccessMessage('customer.account.shopping_list.delete.success');
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS);
 
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
     }
@@ -142,7 +149,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             ->getShoppingListClient()
             ->getShoppingListItemCollection($this->getShoppingListCollectionTransfer($request));
         if (count($shoppingListItems->getItems()) === 0) {
-            $this->addErrorMessage('customer.account.shopping_list.items.added_to_cart.not_found');
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_NOT_FOUND);
 
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
@@ -152,12 +159,12 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             ->addAllAvailableToCart($shoppingListItems->getItems()->getArrayCopy());
 
         if ($result->getRequests()->count()) {
-            $this->addErrorMessage('customer.account.shopping_list.items.added_to_cart.failed');
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_FAILED);
 
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
-        $this->addSuccessMessage('customer.account.shopping_list.items.added_to_cart');
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART);
 
         return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
     }
@@ -182,7 +189,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
                 ->shareShoppingList($shoppingListShareRequestTransfer);
 
             if ($shoppingListShareResponseTransfer->getIsSuccess()) {
-                $this->addSuccessMessage('customer.account.shopping_list.share.share_shopping_list_successful');
+                $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_SHARE_SHOPPING_LIST_SUCCESSFUL);
 
                 return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
             }

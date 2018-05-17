@@ -32,6 +32,13 @@ class ShoppingListController extends AbstractShoppingListController
     protected const PARAM_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
     protected const PARAM_SHOPPING_LIST_ITEM = 'shoppingListItem';
     protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_FAILED = 'customer.account.shopping_list.item.remove.failed';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_SUCCESS = 'customer.account.shopping_list.item.remove.success';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART_FAILED = 'customer.account.shopping_list.item.added_to_cart.failed';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART = 'customer.account.shopping_list.item.added_to_cart';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_ALL_AVAILABLE_TO_CART_FAILED = 'customer.account.shopping_list.item.added_all_available_to_cart.failed';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_ALL_AVAILABLE_TO_CART = 'customer.account.shopping_list.item.added_all_available_to_cart';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_SELECT_ITEM = 'customer.account.shopping_list.item.select_item';
 
     /**
      * @param int $idShoppingList
@@ -93,14 +100,14 @@ class ShoppingListController extends AbstractShoppingListController
             ->removeItemById($shoppingListItemTransfer);
 
         if (!$shoppingListItemResponseTransfer->getIsSuccess()) {
-            $this->addErrorMessage('customer.account.shopping_list.item.remove.failed');
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_FAILED);
 
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $shoppingListItemTransfer->getFkShoppingList(),
             ]);
         }
 
-        $this->addSuccessMessage('customer.account.shopping_list.item.remove.success');
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_SUCCESS);
 
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
             'idShoppingList' => $shoppingListItemTransfer->getFkShoppingList(),
@@ -116,7 +123,7 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $shoppingListItemTransferCollection = $this->getFactory()->createAddToCartFormHandler()->handleAddToCartRequest($request);
         if (count($shoppingListItemTransferCollection->getItems()) === 0) {
-            $this->addErrorMessage('customer.account.shopping_list.item.select_item');
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_SELECT_ITEM);
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $request->get(static::PARAM_ID_SHOPPING_LIST),
             ]);
@@ -132,13 +139,13 @@ class ShoppingListController extends AbstractShoppingListController
             ->addAllAvailableToCart($shoppingListItemCollectionTransfer->getItems()->getArrayCopy(), $quantity);
 
         if ($result->getRequests()->count()) {
-            $this->addErrorMessage('customer.account.shopping_list.item.added_to_cart.failed');
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART_FAILED);
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $request->get(static::PARAM_ID_SHOPPING_LIST),
             ]);
         }
 
-        $this->addSuccessMessage('customer.account.shopping_list.item.added_to_cart');
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART);
         return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
     }
 
@@ -171,13 +178,13 @@ class ShoppingListController extends AbstractShoppingListController
             ->addAllAvailableToCart((array)$shoppingListOverviewResponseTransfer->getItems());
 
         if ($result->getRequests()->count()) {
-            $this->addErrorMessage('customer.account.shopping_list.item.added_all_available_to_cart.failed');
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_ALL_AVAILABLE_TO_CART_FAILED);
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $idShoppingList,
             ]);
         }
 
-        $this->addSuccessMessage('customer.account.shopping_list.item.added_all_available_to_cart');
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_ALL_AVAILABLE_TO_CART);
         return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
     }
 
@@ -239,7 +246,7 @@ class ShoppingListController extends AbstractShoppingListController
         $productViewTransfer = new ProductViewTransfer();
         if (empty($productConcreteStorageData)) {
             $productConcreteStorageData = [
-                'sku' => $shoppingListItemTransfer->getSku(),
+                ProductViewTransfer::SKU => $shoppingListItemTransfer->getSku(),
             ];
         }
         $productViewTransfer->fromArray($productConcreteStorageData, true);
