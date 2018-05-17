@@ -5,7 +5,7 @@ export default class ActionSingleClickEnforcer extends Component {
 
     constructor() {
         super();
-        this.targets = <HTMLElement[]>this.getValidSelector();
+        this.targets = <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
     }
 
     readyCallback(): void {
@@ -14,32 +14,24 @@ export default class ActionSingleClickEnforcer extends Component {
 
     mapEvents(): void {
         this.targets.forEach((element: HTMLElement) => {
-            element.addEventListener('click', (event: Event) => this.onTargetsClick(event));
+            element.addEventListener('click', (event: Event) => this.onTargetClick(event));
         });
     }
 
-    onTargetsClick(event: Event): void {
+    onTargetClick(event: Event): void {
         const targetElement = <HTMLElement> event.currentTarget;
-        const hasAttribute: boolean = targetElement.hasAttribute('isDisabled');
+        const isDisabled: boolean = targetElement.hasAttribute('disabled');
 
-        if (hasAttribute) {
+        if (isDisabled) {
             event.preventDefault();
             return;
         }
-        targetElement.setAttribute('isDisabled', '');
-    }
 
-    getValidSelector(): HTMLElement[] {
-        try {
-            document.querySelectorAll(this.targetSelector);
-        } catch (e) {
-            return [];
-        }
-        return <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
+        targetElement.setAttribute('disabled', 'disabled');
     }
 
     get targetSelector(): string {
-        return this.getAttribute('target-selector');
+        return this.getAttribute('target-selector') || '';
     }
 
 }
