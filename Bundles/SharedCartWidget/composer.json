@@ -5,7 +5,8 @@
   "require": {
     "php": ">=7.1",
     "spryker/customer": "^7.0.0",
-    "spryker/kernel": "^3.19.0"
+    "spryker/kernel": "^3.19.0",
+    "spryker/multi-cart": "^1.0.0"
   },
   "require-dev": {
     "spryker-shop/multi-cart-widget": "*",
