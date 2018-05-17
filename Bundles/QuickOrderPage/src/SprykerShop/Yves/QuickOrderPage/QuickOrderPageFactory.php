@@ -8,8 +8,10 @@
 namespace SprykerShop\Yves\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToMessengerClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProviderInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
@@ -17,6 +19,7 @@ use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandler;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandlerInterface;
 use SprykerShop\Yves\QuickOrderPage\Model\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\Model\TextOrderParserInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig getConfig()
@@ -44,7 +47,7 @@ class QuickOrderPageFactory extends AbstractFactory
      */
     public function createFormOperationHandler(): QuickOrderFormOperationHandlerInterface
     {
-        return new QuickOrderFormOperationHandler($this->getCartClient(), $this->getMessengerClient());
+        return new QuickOrderFormOperationHandler($this->getCartClient(), $this->getQuoteClient(), $this->getZedRequestClient(), $this->getRequest());
     }
 
     /**
@@ -74,10 +77,45 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToMessengerClientInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface
      */
-    public function getMessengerClient(): QuickOrderPageToMessengerClientInterface
+    public function getZedRequestClient(): QuickOrderPageToZedRequestClientInterface
     {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_MESSENGER);
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface
+     */
+    public function getQuoteClient(): QuickOrderPageToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequest(): Request
+    {
+        return $this->getApplication()['request'];
+    }
+
+    /**
+     * Returns a list of widget plugin class names that implement
+     * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     *
+     * @return string[]
+     */
+    public function getQuickOrderPageWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_PAGE_WIDGETS);
     }
 }

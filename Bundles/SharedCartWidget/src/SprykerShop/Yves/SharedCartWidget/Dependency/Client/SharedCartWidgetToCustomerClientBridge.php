@@ -23,10 +23,6 @@ class SharedCartWidgetToCustomerClientBridge implements SharedCartWidgetToCustom
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer()

@@ -7,49 +7,11 @@
 
 namespace SprykerShop\Yves\CurrencyWidget;
 
-use Spryker\Shared\Currency\Builder\CurrencyBuilder;
-use Spryker\Shared\Currency\Persistence\CurrencyPersistence;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CurrencyWidget\CurrencyChange\CurrencyPostChangePluginExecutor;
+use SprykerShop\Yves\CurrencyWidget\Dependency\Client\CurrencyWidgetToCurrencyClientInterface;
 
 class CurrencyWidgetFactory extends AbstractFactory
 {
-    /**
-     * @return \Spryker\Shared\Currency\Builder\CurrencyBuilderInterface
-     */
-    public function createCurrencyBuilder()
-    {
-        return new CurrencyBuilder(
-            $this->getInternationalization(),
-            $this->getStore()->getDefaultCurrencyCode(),
-            $this->createCurrencyPersistence()->getCurrentCurrencyIsoCode()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface
-     */
-    public function createCurrencyPersistence()
-    {
-        return new CurrencyPersistence($this->getSessionClient(), $this->getStore());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CurrencyWidget\CurrencyChange\CurrencyPostChangePluginExecutorInterface
-     */
-    public function createCurrencyPostChangePluginExecutor()
-    {
-        return new CurrencyPostChangePluginExecutor($this->getCurrencyPostChangePlugins());
-    }
-
-    /**
-     * @return \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
-     */
-    protected function getInternationalization()
-    {
-        return $this->getProvidedDependency(CurrencyWidgetDependencyProvider::INTERNATIONALIZATION);
-    }
-
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
@@ -59,26 +21,10 @@ class CurrencyWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface
+     * @return \SprykerShop\Yves\CurrencyWidget\Dependency\Client\CurrencyWidgetToCurrencyClientInterface
      */
-    protected function getSessionClient()
+    public function getCurrencyClient(): CurrencyWidgetToCurrencyClientInterface
     {
-        return $this->getProvidedDependency(CurrencyWidgetDependencyProvider::CLIENT_SESSION);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CurrencyWidget\Dependency\Client\CurrencyWidgetToCartClientInterface
-     */
-    public function getCartClient()
-    {
-        return $this->getProvidedDependency(CurrencyWidgetDependencyProvider::CLIENT_CART);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CurrencyWidget\Dependency\CurrencyPostChangePluginInterface[]
-     */
-    protected function getCurrencyPostChangePlugins()
-    {
-        return $this->getProvidedDependency(CurrencyWidgetDependencyProvider::CURRENCY_POST_CHANGE_PLUGINS);
+        return $this->getProvidedDependency(CurrencyWidgetDependencyProvider::CLIENT_CURRENCY);
     }
 }

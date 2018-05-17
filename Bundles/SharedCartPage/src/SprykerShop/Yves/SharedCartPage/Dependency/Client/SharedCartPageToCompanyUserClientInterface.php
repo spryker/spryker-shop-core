@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Dependency\Client;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 
 interface SharedCartPageToCompanyUserClientInterface
@@ -16,5 +17,5 @@ interface SharedCartPageToCompanyUserClientInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollection(CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer);
+    public function getCompanyUserCollection(CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer): CompanyUserCollectionTransfer;
 }
