@@ -40,5 +40,9 @@
             <a href="{{ path('shopping-list') }}" data-id="sidebar-shopping-list">{{ 'shopping_list.shopping_list' | trans }}</a>
             {% block shoppingListNavigation %}{% endblock %}
         </li>
+        <li class="menu__item {{macros.isActive('companyUser', data.activePage)}}">
+            <a href="{{ path('company-user/change') }}" data-id="sidebar-change-company-user">{{ 'company-user.change_company_user' | trans }}</a>
+            {% block createCompanyUser %}{% endblock %}
+        </li>
     </ul>
 {% endblock %}
