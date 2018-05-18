@@ -1,3 +1,3 @@
-# DispayOnBehalfBusinessWidget Changelog
+# BusinessOnBehalfWidget Changelog
 
-[Release Changelog](https://github.com/spryker-shop/dispay-on-behalf-business-widget/releases)
+[Release Changelog](https://github.com/spryker-shop/business-on-behalf-widget/releases)

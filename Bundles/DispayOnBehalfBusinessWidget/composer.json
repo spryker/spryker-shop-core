@@ -1,6 +1,6 @@
 {
-  "name": "spryker-shop/dispay-on-behalf-business-widget",
-  "description": "DispayOnBehalfBusinessWidget module",
+  "name": "spryker-shop/business-on-behalf-widget",
+  "description": "BusinessOnBehalfWidget module",
   "license": "proprietary",
   "require": {
   },

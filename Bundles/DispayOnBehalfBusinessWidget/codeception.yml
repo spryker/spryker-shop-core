@@ -1,4 +1,4 @@
-namespace: DispayOnBehalfBusinessWidget
+namespace: BusinessOnBehalfWidget
 actor: Tester
 paths:
     tests: tests

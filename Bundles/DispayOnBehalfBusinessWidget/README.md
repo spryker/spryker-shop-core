@@ -1,13 +1,13 @@
-# DispayOnBehalfBusinessWidget Module
-[![Build Status](https://travis-ci.org/spryker-shop/dispay-on-behalf-business-widget.svg)](https://travis-ci.org/spryker/dispay-on-behalf-business-widget)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/dispay-on-behalf-business-widget/badge.svg)](https://coveralls.io/github/spryker/dispay-on-behalf-business-widget)
+# BusinessOnBehalfWidget Module
+[![Build Status](https://travis-ci.org/spryker-shop/business-on-behalf-widget.svg)](https://travis-ci.org/spryker/business-on-behalf-widget)
+[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/business-on-behalf-widget/badge.svg)](https://coveralls.io/github/spryker/business-on-behalf-widget)
 
 {{ADD DESCRIPTION HERE}}
 
 ## Installation
 
 ```
-composer require spryker-shop/dispay-on-behalf-business-widget
+composer require spryker-shop/business-on-behalf-widget
 ```
 
 ## Documentation
