@@ -33,7 +33,8 @@
                   <ul class="menu menu--inline">
                       {% if invitation.companyUserInvitationStatusKey == 'new'  %}
                           <li class="menu__item">
-                              <a href="{{ path('company/user-invitation/send', {'id': invitation.idCompanyUserInvitation}) }}">
+                              <a href="{{ path('company/user-invitation/send', {'id': invitation.idCompanyUserInvitation}) }}"
+                                 class="{{config.selector}}__invitation-sender">
                                 {{ 'company.user.invitation.send.button' | trans }}
                               </a>
                           </li>
@@ -54,6 +55,11 @@
               </td>
             </tr>
         {% endfor %}
+        {% include molecule('action-single-click-enforcer') with {
+            attributes: {
+                'target-selector': '.' ~ config.selector ~ '__invitation-sender'
+            }
+        } only %}
         </tbody>
     </table>
 {% endblock %}
