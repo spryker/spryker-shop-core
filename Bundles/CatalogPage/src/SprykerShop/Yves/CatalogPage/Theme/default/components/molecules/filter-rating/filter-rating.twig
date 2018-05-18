@@ -4,6 +4,10 @@
     name: 'filter-rating'
 } %}
 
+{% define data = {
+    filter: required
+} %}
+
 {% block body %}
 
     {#{{ widget('ProductRatingFilterWidgetPlugin', data.filter, app.request) }}#}

@@ -4,23 +4,28 @@
     name: 'filter-range'
 } %}
 
-{% set filter = data.filter | default(null) %}
-{% set parameter = parameter | default(filter.config.parameterName) %}
-{% set min = min | default(filter.min) %}
-{% set activeMin = activeMin | default(filter.activeMin) %}
-{% set max = max | default(filter.max) %}
-{% set activeMax = activeMax | default(filter.activeMax) %}
+{% define data = {
+    filter: required
+} %}
+
+{% set parameter = parameter | default(data.filter.config.parameterName) %}
+{% set min = min | default(data.filter.min) %}
+{% set activeMin = activeMin | default(data.filter.activeMin) %}
+{% set max = max | default(data.filter.max) %}
+{% set activeMax = activeMax | default(data.filter.activeMax) %}
 
 {% block body %}
     <div class="grid">
         <div class="col col--sm-6">
             <label>
                 {{ "catalog.filter.rangeFrom"|trans }}
-                <input class="input" type="number" name="{{ parameter }}[min]" data-default-value="{{ min }}"
-                        value="{{ activeMin }}"
-                        required="required"
-                        min="{{ min }}"
-                        max="{{ max }}"
+                <input class="input"
+                       type="number"
+                       name="{{ parameter }}[min]"
+                       value="{{ activeMin }}"
+                       required="required"
+                       min="{{ min }}"
+                       max="{{ max }}"
                 />
             </label>
         </div>
@@ -28,11 +33,13 @@
         <div class="col col--sm-6">
             <label>
                 {{ "catalog.filter.rangeTo"|trans }}
-                <input class="input" type="number" name="{{ parameter }}[max]" data-default-value="{{ max }}"
-                    value="{{ activeMax }}"
-                    required="required"
-                    min="{{ min }}"
-                    max="{{ max }}"
+                <input class="input"
+                       type="number"
+                       name="{{ parameter }}[max]"
+                       value="{{ activeMax }}"
+                       required="required"
+                       min="{{ min }}"
+                       max="{{ max }}"
                 />
             </label>
         </div>
