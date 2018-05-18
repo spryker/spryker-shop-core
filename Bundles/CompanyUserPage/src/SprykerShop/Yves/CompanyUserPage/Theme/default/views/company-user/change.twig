@@ -1,0 +1,37 @@
+{% extends template('page-layout-company-user', 'CompanyUserPage') %}
+
+{% define data = {
+form: _view.form,
+
+title: 'company-user.change' | trans,
+activePage: 'change-company-user'
+} %}
+
+{% block companyUserContent %}
+    <div class="box">
+        {% include molecule('form') with {
+            data: {
+                title: 'company-user.change' | trans,
+                form: data.form,
+                options: {
+                    action: url('company-user/change')
+                },
+                layout: {
+                    address1: 'col col--sm-12 col--lg-10',
+                    address2: 'col col--sm-12 col--lg-2',
+                    zip_code: 'col col--sm-12 col--lg-4',
+                    city: 'col col--sm-12 col--lg-4',
+                    iso2code: 'col col--sm-12 col--lg-4'
+                },
+                submit: {
+                    enable: true
+                },
+                cancel: {
+                    enable: true,
+                    url: url('company/address'),
+                    text: 'general.back.button' | trans
+                }
+            }
+        } only %}
+    </div>
+{% endblock %}
