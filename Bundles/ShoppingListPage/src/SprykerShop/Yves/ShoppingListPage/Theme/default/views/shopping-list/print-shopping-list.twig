@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+{% define data = {
+    shoppingList: _view.shoppingListOverview.shoppingList,
+    shoppingListItems: _view.shoppingListItems,
+    labels: {
+        barcode: 'customer.account.print_shopping_list.table.barcode' | trans,
+        productSku: 'customer.account.print_shopping_list.table.product_sku' | trans,
+        productName: 'customer.account.print_shopping_list.table.product_name' | trans,
+        defaultPrice: 'customer.account.print_shopping_list.table.default_price' | trans,
+    }
+} %}
+<head>
+    <meta charset="utf-8" />
+    <title>{{ data.shoppingList.name }}</title>
+</head>
+<body>
+
+<h1>{{ data.shoppingList.idShoppingList }}</h1>
+<h2 class="shopping-list-name">{{ data.shoppingList.name }}</h2>
+
+<table class="shopping-list-items">
+    <thead>
+    <tr>
+        <th>{{ data.labels.barcode }}</th>
+        <th>{{ data.labels.productSku }}</th>
+        <th>{{ data.labels.productName }}</th>
+        <th>{{ data.labels.defaultPrice }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in data.shoppingListItems %}
+    <tr>
+        <td></td>
+        <td>{{ item.sku }}</td>
+        <td>{{ item.name }}</td>
+        <td>
+            {% if item.prices.DEFAULT is defined %}
+                {{ item.prices.DEFAULT | money }}
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -200,37 +200,35 @@ class ShoppingListController extends AbstractShoppingListController
      * @param int $idShoppingList
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Spryker\Yves\Kernel\View\View
      */
-    public function printShoppingListAction(int $idShoppingList, Request $request): RedirectResponse
+    public function printShoppingListAction(int $idShoppingList, Request $request): View
     {
-        exit($idShoppingList);
-        $addAvailableProductsToCartForm = $this
-            ->createAddAvailableProductsToCartForm()
-            ->handleRequest($request);
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setIdShoppingList($idShoppingList)
+            ->setRequesterId($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
 
-        if ($addAvailableProductsToCartForm->isSubmitted() && $addAvailableProductsToCartForm->isValid()) {
-            $shoppingListItemCollection = $addAvailableProductsToCartForm
-                ->get(AddAvailableProductsToCartForm::SHOPPING_LIST_ITEM_COLLECTION)
-                ->getData();
+        $shoppingListOverviewRequest = (new ShoppingListOverviewRequestTransfer())
+            ->setShoppingList($shoppingListTransfer);
 
-            $result = $this->getFactory()
-                ->createAddToCartHandler()
-                ->addAllAvailableToCart($shoppingListItemCollection);
+        $shoppingListOverviewResponseTransfer = $this->getFactory()
+            ->getShoppingListClient()
+            ->getShoppingListOverviewWithoutProductDetails($shoppingListOverviewRequest);
 
-            if ($result->getRequests()->count()) {
-                $this->addErrorMessage('customer.account.shopping_list.item.added_all_available_to_cart.failed');
-                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
-                    'idShoppingList' => $idShoppingList,
-                ]);
-            }
-
-            $this->addSuccessMessage('customer.account.shopping_list.item.added_all_available_to_cart');
+        if (!$shoppingListOverviewResponseTransfer->getShoppingList()->getIdShoppingList()) {
+            throw new NotFoundHttpException();
         }
 
-        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
-            'idShoppingList' => $idShoppingList,
-        ]);
+        $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);
+
+        $data = [
+            'shoppingListItems' => $shoppingListItems,
+            'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
+        ];
+
+        return $this->view($data, [], '@ShoppingListPage/views/shopping-list/print-shopping-list.twig');
     }
 
     /**
