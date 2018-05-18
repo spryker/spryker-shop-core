@@ -1,0 +1,16 @@
+{% extends template('widget') %}
+
+{% define data = {
+currencies: _widget.currencies,
+currentCurrency: _widget.currentCurrency
+} %}
+
+{% block template %}
+    {% if data.isOnBehalf %}
+        {{parent()}}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {{ data.companyUserContextText }}
+{% endblock %}

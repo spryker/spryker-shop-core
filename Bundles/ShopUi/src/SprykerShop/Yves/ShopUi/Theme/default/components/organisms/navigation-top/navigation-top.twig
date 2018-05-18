@@ -23,6 +23,12 @@
         <li class="menu__item">{{ widgetGlobal('CurrencyWidgetPlugin') }}</li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item">{{ widgetGlobal('LanguageSwitcherWidgetPlugin', app.request) }}</li>
+        <li class="menu__item">
+            {% if widgetGlobalExists('DisplayOnBehalfBusinessWidget') %}
+                {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
+                {{ widgetGlobal('DisplayOnBehalfBusinessWidget') }}
+            {% endif %}
+        </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item">
             {% if widgetGlobalExists('MiniCartWidgetPlugin') %}
