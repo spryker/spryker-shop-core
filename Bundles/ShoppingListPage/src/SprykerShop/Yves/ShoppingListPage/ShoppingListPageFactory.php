@@ -92,7 +92,7 @@ class ShoppingListPageFactory extends AbstractFactory
      */
     public function createAddToCartFormHandler(): AddToCartFormHandlerInterface
     {
-        return new AddToCartFormHandler();
+        return new AddToCartFormHandler($this->getShoppingListClient(), $this->getCustomerClient());
     }
 
     /**

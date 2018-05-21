@@ -17,10 +17,6 @@
     shoppingList: _view.shoppingListOverview.shoppingList,
     shoppingListCollection: _view.shoppingListOverview.shoppingLists,
     shoppingListItems: _view.shoppingListItems,
-    pagination: {
-        currentPage: _view.currentPage,
-        totalPages: _view.totalPages
-    },
     labels: {
         addAllToCartLabel: 'customer.account.shopping_list.add_all_available_to_cart' | trans,
         productLabel: 'customer.account.shopping_list.product' | trans,
@@ -70,9 +66,6 @@
                 <h4>{{ data.shoppingList.name }}</h4>
             </div>
             <div class="col">
-                {% if data.shoppingListItems|length %}
-                <a href="{{ path('shopping-list/add-all-available-to-cart', { idShoppingList: data.shoppingList.idShoppingList }) }}" class="button button--success">{{ data.labels.addAllToCartLabel }}</a>
-                {% endif %}
                 {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
                     <a class="button button--success" href="{{ url('shopping-list/update', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.editLabel }}</a>
                     <a class="button button--alert" href="{{ url('shopping-list/delete', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.deleteLabel }}</a>
@@ -87,6 +80,11 @@
                     <div class="col">
                         <button type="submit" class="button button--success" {{qa('submit-button')}}>
                             {{ data.labels.addSelectedItemsToCartLabel }}
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="button button--success" name="add-all-available" value="1" {{qa('submit-button')}}>
+                            {{ data.labels.addAllToCartLabel }}
                         </button>
                     </div>
                 </div>
@@ -161,18 +159,6 @@
                 </tbody>
             </table>
             </form>
-
-            {% include molecule('pagination') with {
-                data: {
-                    parameters: {
-                        idShoppingList: data.shoppingList.idShoppingList
-                    },
-                    currentPage: data.pagination.currentPage,
-                    paginationPath: 'shopping-list/details',
-                    maxPage: data.pagination.totalPages,
-                    showAlwaysFirstAndLast: true
-                }
-            } only %}
         {% else %}
             {{ data.labels.shoppingListEmptyLabel }}
         {% endif %}

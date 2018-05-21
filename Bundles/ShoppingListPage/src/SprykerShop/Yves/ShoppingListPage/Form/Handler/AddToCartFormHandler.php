@@ -7,12 +7,38 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Form\Handler;
 
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class AddToCartFormHandler implements AddToCartFormHandlerInterface
 {
+    /**
+     * @var \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface
+     */
+    protected $shoppingListClient;
+
+    /**
+     * @var \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface
+     */
+    protected $customerClient;
+
+    /**
+     * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface $shoppingListClient
+     * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface $customerClient
+     */
+    public function __construct(
+        ShoppingListPageToShoppingListClientInterface $shoppingListClient,
+        ShoppingListPageToCustomerClientInterface $customerClient
+    ) {
+        $this->shoppingListClient = $shoppingListClient;
+        $this->customerClient = $customerClient;
+    }
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -22,6 +48,10 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
     {
         if ($request->get(static::PARAM_ID_ADD_ITEM)) {
             return $this->getShoppingListItemTransferFromRequest($request);
+        }
+
+        if ($request->get(static::PARAM_ADD_ALL_AVAILABLE)) {
+            return $this->getAllAvailableRequestItems($request);
         }
 
         return $this->getShoppingListItemCollectionTransferFromRequest($request);
@@ -42,6 +72,24 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
         $shoppingListCollectionTransfer->addItem($shoppingListItemTransfer);
 
         return $shoppingListCollectionTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function getAllAvailableRequestItems(Request $request): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setIdShoppingList($request->request->getInt(static::PARAM_ID_SHOPPING_LIST))
+            ->setIdCompanyUser($this->customerClient->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+
+        $shoppingListCollectionTransfer = (new ShoppingListCollectionTransfer())
+            ->addShoppingList($shoppingListTransfer);
+
+        return $this->shoppingListClient
+            ->getShoppingListItemCollection($shoppingListCollectionTransfer);
     }
 
     /**

@@ -18,7 +18,6 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
     public const ROUTE_REMOVE_ITEM = 'shopping-list/remove-item';
     public const ROUTE_ADD_TO_CART = 'shopping-list/add-to-cart';
-    public const ROUTE_ADD_ALL_AVAILABLE_TO_CART = 'shopping-list/add-all-available-to-cart';
     public const ROUTE_ADD_SHOPPING_LIST_TO_CART = 'shopping-list/add-shopping-list-to-cart';
     public const ROUTE_SHOPPING_LIST_SHARE = 'shopping-list/share';
 
@@ -38,7 +37,6 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
             ->addShoppingListDetailsRoute($allowedLocalesPattern)
             ->addShoppingListRemoveItemRoute($allowedLocalesPattern)
             ->addShoppingListAddListsToCartRoute($allowedLocalesPattern)
-            ->addShoppingListAddAvailableToCartRoute($allowedLocalesPattern)
             ->addShoppingListShareRoute($allowedLocalesPattern);
     }
 
@@ -141,21 +139,6 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{shoppingList}/add-to-cart', static::ROUTE_ADD_TO_CART, 'ShoppingListPage', 'ShoppingList', 'addToCart')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list');
-
-        return $this;
-    }
-
-    /**
-     * @param string $allowedLocalesPattern
-     *
-     * @return $this
-     */
-    protected function addShoppingListAddAvailableToCartRoute($allowedLocalesPattern): self
-    {
-        $this->createGetController('/{shoppingList}/add-all-available-to-cart/{idShoppingList}', static::ROUTE_ADD_ALL_AVAILABLE_TO_CART, 'ShoppingListPage', 'ShoppingList', 'addAvailableProductsToCart')
-            ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
-            ->value('shoppingList', 'shopping-list')
-            ->assert('idShoppingList', '\d+');
 
         return $this;
     }

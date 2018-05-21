@@ -25,8 +25,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ShoppingListController extends AbstractShoppingListController
 {
-    protected const PARAM_ITEMS_PER_PAGE = 'ipp';
-    protected const PARAM_PAGE = 'page';
     protected const PARAM_SKU = 'sku';
     protected const PARAM_QUANTITY = 'quantity';
     protected const PARAM_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
@@ -42,25 +40,19 @@ class ShoppingListController extends AbstractShoppingListController
 
     /**
      * @param int $idShoppingList
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(int $idShoppingList, Request $request): View
+    public function indexAction(int $idShoppingList): View
     {
-        $pageNumber = $this->getPageNumber($request);
-        $itemsPerPage = $this->getItemsPerPage($request);
-
         $shoppingListTransfer = (new ShoppingListTransfer())
             ->setIdShoppingList($idShoppingList)
             ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
 
         $shoppingListOverviewRequest = (new ShoppingListOverviewRequestTransfer())
-            ->setShoppingList($shoppingListTransfer)
-            ->setPage($pageNumber)
-            ->setItemsPerPage($itemsPerPage);
+            ->setShoppingList($shoppingListTransfer);
 
         $shoppingListOverviewResponseTransfer = $this->getFactory()
             ->getShoppingListClient()
@@ -74,9 +66,7 @@ class ShoppingListController extends AbstractShoppingListController
 
         $data = [
             'shoppingListItems' => $shoppingListItems,
-            'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
-            'currentPage' => $shoppingListOverviewResponseTransfer->getPagination()->getPage(),
-            'totalPages' => $shoppingListOverviewResponseTransfer->getPagination()->getLastPage(),
+            'shoppingListOverview' => $shoppingListOverviewResponseTransfer
         ];
 
         return $this->view($data, [], '@ShoppingListPage/views/shopping-list/shopping-list.twig');
@@ -122,7 +112,7 @@ class ShoppingListController extends AbstractShoppingListController
     public function addToCartAction(Request $request): RedirectResponse
     {
         $shoppingListItemTransferCollection = $this->getFactory()->createAddToCartFormHandler()->handleAddToCartRequest($request);
-        if (count($shoppingListItemTransferCollection->getItems()) === 0) {
+        if (!$shoppingListItemTransferCollection->getItems()->count()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_SELECT_ITEM);
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $request->get(static::PARAM_ID_SHOPPING_LIST),
@@ -147,72 +137,6 @@ class ShoppingListController extends AbstractShoppingListController
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART);
         return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
-    }
-
-    /**
-     * @param int $idShoppingList
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function addAvailableProductsToCartAction(int $idShoppingList): RedirectResponse
-    {
-        $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setIdShoppingList($idShoppingList)
-            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
-
-        $shoppingListCollectionTransfer = (new ShoppingListCollectionTransfer())
-            ->addShoppingList($shoppingListTransfer);
-
-        $shoppingListOverviewResponseTransfer = $this->getFactory()
-            ->getShoppingListClient()
-            ->getShoppingListItemCollection($shoppingListCollectionTransfer);
-
-        if (!$shoppingListOverviewResponseTransfer->getItems()->count()) {
-            throw new NotFoundHttpException();
-        }
-
-        $result = $this->getFactory()
-            ->createAddToCartHandler()
-            ->addAllAvailableToCart((array)$shoppingListOverviewResponseTransfer->getItems());
-
-        if ($result->getRequests()->count()) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_ALL_AVAILABLE_TO_CART_FAILED);
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
-                'idShoppingList' => $idShoppingList,
-            ]);
-        }
-
-        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_ALL_AVAILABLE_TO_CART);
-        return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return int
-     */
-    protected function getPageNumber(Request $request): int
-    {
-        $pageNumber = $request->query->getInt(static::PARAM_PAGE, 1);
-        $pageNumber = $pageNumber <= 0 ? 1 : $pageNumber;
-
-        return $pageNumber;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return int
-     */
-    protected function getItemsPerPage(Request $request): int
-    {
-        $itemsPerPage = $request->query->getInt(static::PARAM_ITEMS_PER_PAGE, $this->getFactory()->getBundleConfig()->getShoppingListDefaultItemsPerPage());
-        $itemsPerPage = ($itemsPerPage <= 0) ? 1 : $itemsPerPage;
-        $itemsPerPage = ($itemsPerPage > 100) ? 10 : $itemsPerPage;
-
-        return $itemsPerPage;
     }
 
     /**
