@@ -17,7 +17,6 @@
         shareLabel: 'customer.account.shopping_list.overview.share' | trans,
         nameLabel: 'customer.account.shopping_list.overview.name' | trans,
         itemCountLabel: 'customer.account.shopping_list.overview.item_count' | trans,
-        sum: 'customer.account.shopping_list.overview.sum' | trans,
         createdDateLabel: 'customer.account.shopping_list.overview.created_date' | trans,
         ownerLabel: 'customer.account.shopping_list.overview.owner' | trans,
         actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
@@ -38,7 +37,6 @@
                 <th>{{ data.labels.ownerLabel }}</th>
                 <th>{{ data.labels.createdDateLabel }}</th>
                 <th>{{ data.labels.itemCountLabel }}</th>
-                <th>{{ data.labels.sum }}</th>
                 <th>{{ data.labels.actionsLabel }}</th>
             </tr>
         </thead>
@@ -56,7 +54,6 @@
                 <td class="text-center">{{ shoppingList.owner }}</td>
                 <td class="text-center">{{ shoppingList.createdAt | formatDate }}</td>
                 <td class="text-center">{{ shoppingList.numberOfItems }}</td>
-                <td class="text-center">{{ shoppingList.sum }}</td>
                 <td>
                     <a href="{{ url('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.viewLabel }}</a>
                     {% if can('WriteShoppingListPermissionPlugin', shoppingList.idShoppingList) %}
