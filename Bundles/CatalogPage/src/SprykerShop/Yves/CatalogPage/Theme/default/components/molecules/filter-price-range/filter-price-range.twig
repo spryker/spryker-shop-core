@@ -5,10 +5,11 @@
 } %}
 
 {% define data = {
-    filter: required
+    filter: required,
+    min: data.filter.min
 } %}
 
-{% set min = (data.filter.min | default(0)) | moneyRaw | floor %}
+{% set min = (data.min | default(0)) | moneyRaw | floor %}
 {% set activeMin = (data.filter.activeMin | default(0)) | moneyRaw | floor %}
 {% set max = (data.filter.max | default(0)) | moneyRaw | ceil %}
 {% set activeMax = (data.filter.activeMax | default(0)) | moneyRaw | ceil %}

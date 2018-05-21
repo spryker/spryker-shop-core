@@ -14,8 +14,6 @@
 {% block component %}
     {% if defaultValue != curentValue %}
         {% include molecule('active-filter', 'CatalogPage') with {
-            class: class,
-            attributes: attributes,
             data: {
                 filter: data.filter,
                 value: curentValue
