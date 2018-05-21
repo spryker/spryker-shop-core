@@ -9,5 +9,10 @@ namespace SprykerShop\Yves\ShopLayout\Dependency\Plugin\DisplayOnBehalfBusinessW
 
 interface DisplayOnBehalfBusinessWidgetPluginInterface
 {
+    const NAME = 'DisplayOnBehalfBusinessWidget';
 
+    /**
+     * @return void
+     */
+    public function initialize(): void;
 }

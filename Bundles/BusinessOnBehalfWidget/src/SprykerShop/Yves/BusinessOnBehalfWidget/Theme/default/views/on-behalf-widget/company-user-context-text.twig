@@ -1,16 +1,19 @@
 {% extends template('widget') %}
 
 {% define data = {
-currencies: _widget.currencies,
-currentCurrency: _widget.currentCurrency
+    isOnBehalf: _widget.isOnBehalf,
+    companyName: _widget.companyName,
+    companyBusinessUnitName: _widget.companyBusinessUnitName
 } %}
 
 {% block template %}
-    {% if data.isOnBehalf %}
+    {% if data.isOnBehalf and data.companyName is not empty and data.companyBusinessUnitName is not empty %}
         {{parent()}}
+    {% else %}
+        {{ 'business_on_behalf_widget.no_selected_company' | trans }}
     {% endif %}
 {% endblock %}
 
 {% block body %}
-    {{ data.companyUserContextText }}
+    {{ data.companyName }} / {{ data.companyBusinessUnitName }}
 {% endblock %}
