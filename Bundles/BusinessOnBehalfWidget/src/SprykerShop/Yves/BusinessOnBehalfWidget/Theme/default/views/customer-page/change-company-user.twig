@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+} %}
+
+{% block template %}
+    {{parent()}}
+{% endblock %}
+
+{# TODO: Add missing link when controller is created #}
+
+{% block body %}
+    <a href="" data-id="change-company-user">{{ "business_on_behalf_widget.change_company_user" | trans }}</a>
+{% endblock %}

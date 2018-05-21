@@ -40,7 +40,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
      */
     public static function getTemplate()
     {
-        return '@BusinessOnBehalfWidget/views/on-behalf-widget/company-user-context-text.twig';
+        return '@BusinessOnBehalfWidget/views/shop-layout/company-user-context-text.twig';
     }
 
     /**
