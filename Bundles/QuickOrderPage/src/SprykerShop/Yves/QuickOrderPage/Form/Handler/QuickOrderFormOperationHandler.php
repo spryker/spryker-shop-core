@@ -9,9 +9,11 @@ namespace SprykerShop\Yves\QuickOrderPage\Form\Handler;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
-use Spryker\Client\Cart\Zed\CartStubInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToMessengerClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerInterface
 {
@@ -21,20 +23,36 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     protected $cartClient;
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToMessengerClientInterface
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface
      */
-    protected $messengerClient;
+    protected $zedRequestClient;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    protected $request;
+
+    /**
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface
+     */
+    protected $quoteClient;
 
     /**
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface $cartClient
-     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToMessengerClientInterface $messengerClient
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface $quoteClient
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface $zedRequestClient
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(
         QuickOrderPageToCartClientInterface $cartClient,
-        QuickOrderPageToMessengerClientInterface $messengerClient
+        QuickOrderPageToQuoteClientInterface $quoteClient,
+        QuickOrderPageToZedRequestClientInterface $zedRequestClient,
+        Request $request
     ) {
         $this->cartClient = $cartClient;
-        $this->messengerClient = $messengerClient;
+        $this->zedRequestClient = $zedRequestClient;
+        $this->request = $request;
+        $this->quoteClient = $quoteClient;
     }
 
     /**
@@ -63,7 +81,7 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
         $itemTransfers = $this->getItemTransfers($quickOrder);
 
         if ($itemTransfers) {
-            $this->cartClient->clearQuote();
+            $this->clearQuote();
 
             return $this->addItemsToCart($itemTransfers);
         }
@@ -78,37 +96,10 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
      */
     protected function addItemsToCart(array $itemTransfers): bool
     {
-        $quoteTransfer = $this->cartClient->addItems($itemTransfers);
-        $zedStub = $this->cartClient->getZedStub();
-        $this->setFlashMessages($zedStub);
+        $this->cartClient->addItems($itemTransfers, $this->request->request->all());
+        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
 
-        if (count($zedStub->getErrorMessages()) > 0) {
-            return false;
-        }
-
-        $this->cartClient->storeQuote($quoteTransfer);
-
-        return true;
-    }
-
-    /**
-     * @param \Spryker\Client\Cart\Zed\CartStubInterface $zedStub
-     *
-     * @return void
-     */
-    protected function setFlashMessages(CartStubInterface $zedStub): void
-    {
-        foreach ($zedStub->getErrorMessages() as $errorMessage) {
-            $this->messengerClient->addErrorMessage($errorMessage->getValue());
-        }
-
-        foreach ($zedStub->getInfoMessages() as $infoMessage) {
-            $this->messengerClient->addInfoMessage($infoMessage->getValue());
-        }
-
-        foreach ($zedStub->getSuccessMessages() as $successMessage) {
-            $this->messengerClient->addSuccessMessage($successMessage->getValue());
-        }
+        return !(count($this->zedRequestClient->getLastResponseErrorMessages()) > 0);
     }
 
     /**
@@ -138,5 +129,13 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
         }
 
         return array_values($itemTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearQuote(): void
+    {
+        $this->quoteClient->setQuote(new QuoteTransfer());
     }
 }

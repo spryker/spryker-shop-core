@@ -23,10 +23,6 @@ class CartPageToZedRequestClientBridge implements CartPageToZedRequestClientInte
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest()
@@ -35,11 +31,6 @@ class CartPageToZedRequestClientBridge implements CartPageToZedRequestClientInte
     }
 
     /**
-     * Specification:
-     * - Returns an array of MessageTransfers containing error messages for the last response.
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages()
