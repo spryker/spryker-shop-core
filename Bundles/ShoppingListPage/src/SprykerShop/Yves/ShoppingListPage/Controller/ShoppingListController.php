@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
