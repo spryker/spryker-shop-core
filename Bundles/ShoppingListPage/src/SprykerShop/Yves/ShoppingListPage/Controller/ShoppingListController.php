@@ -65,7 +65,7 @@ class ShoppingListController extends AbstractShoppingListController
 
         $data = [
             'shoppingListItems' => $shoppingListItems,
-            'shoppingListOverview' => $shoppingListOverviewResponseTransfer
+            'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
         ];
 
         return $this->view($data, [], '@ShoppingListPage/views/shopping-list/shopping-list.twig');
