@@ -64,6 +64,22 @@
             }
         }
 
+        &--gutters {
+            padding: .5rem 0 0 .5rem;
+
+            & > .col {
+                padding: 0 .5rem .5rem 0;
+            }
+        }
+
+        &--gutters-wide {
+            padding: 1rem 0 0 1rem;
+
+            & > .col {
+                padding: 0 1rem 1rem 0;
+            }
+        }
+
         &.container {
             max-width: $setting-grid-max-width;
         }
@@ -93,26 +109,34 @@
 
         &--top {
             align-self: flex-start;
+            margin-bottom: auto;
         }
 
         &--bottom {
             align-self: flex-end;
+            margin-top: auto;
         }
 
         &--left {
             justify-self: flex-start;
+            margin-right: auto;
         }
 
         &--right {
             justify-self: flex-end;
+            margin-left: auto;
         }
 
         &--center {
             justify-self: center;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         &--middle {
             align-self: center;
+            margin-top: auto;
+            margin-bottom: auto;
         }
     }
 }
