@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\FileManager\Controller;
 
-use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,21 +29,21 @@ class DownloadController extends AbstractController
      */
     public function indexAction(Request $request, string $fileName)
     {
-        $fileManagerReadTransfer = $this->getFactory()->getFileManagerService()->read($fileName);
+        $fileManagerDataTransfer = $this->getFactory()->getFileManagerService()->read($fileName);
 
-        return $this->createResponse($fileManagerReadTransfer);
+        return $this->createResponse($fileManagerDataTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileManagerReadResponseTransfer $fileManagerReadResponseTransfer
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function createResponse(FileManagerReadResponseTransfer $fileManagerReadResponseTransfer)
+    protected function createResponse(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        $response = new Response($fileManagerReadResponseTransfer->getContent());
-        $fileName = $fileManagerReadResponseTransfer->getFile()->getFileName();
-        $contentType = $fileManagerReadResponseTransfer->getFileInfo()->getType();
+        $response = new Response($fileManagerDataTransfer->getContent());
+        $fileName = $fileManagerDataTransfer->getFile()->getFileName();
+        $contentType = $fileManagerDataTransfer->getFileInfo()->getType();
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
 
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
