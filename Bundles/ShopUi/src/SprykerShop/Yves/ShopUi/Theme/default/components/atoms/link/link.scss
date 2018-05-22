@@ -1,49 +1,49 @@
-@mixin component-link($name: '.link') {
+@mixin shop-ui-link($name: '.link') {
     #{$name} {
         display: inline-block;
         padding: 0;
         margin: 0;
         background-color: transparent;
-        color: $color-main;
+        color: $setting-color-main;
         cursor: pointer;
 
         &:hover {
             text-decoration: underline;
         }
 
-        @each $action, $color-action in $color-actions {
-            @include component-link-action($action, $color-action);
+        @each $action, $setting-color-action in $setting-color-actions {
+            @include shop-ui-link-action($action, $setting-color-action);
         }
 
         &--small {
-            @include font-size(small);
+            @include helper-font-size(small);
         }
 
         &--alt {
-            @include transition(color);
+            @include helper-effect-transition(color);
 
             &:hover {
                 text-decoration: none;
-                color: dark($color-alt);
+                color: helper-color-dark($setting-color-alt);
             }
         }
 
         &[disabled],
         &--disabled {
-            color: $color-dark;
+            color: $setting-color-dark;
             cursor: not-allowed;
 
             &:hover {
-                color: $color-dark;
+                color: $setting-color-dark;
                 text-decoration: none;
             }
         }
     }
 }
 
-@mixin component-link-action($action, $color-action) {
+@mixin shop-ui-link-action($action, $setting-color-action) {
     &--#{$action} {
-        color: $color-action;
+        color: $setting-color-action;
     }
 
     @content;

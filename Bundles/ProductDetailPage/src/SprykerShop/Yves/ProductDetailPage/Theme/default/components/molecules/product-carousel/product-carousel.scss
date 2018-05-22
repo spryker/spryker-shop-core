@@ -1,0 +1,7 @@
+@mixin product-detail-page-product-carousel($name: '.product-carousel') {
+    #{$name} {
+        position: relative;
+
+        @content;
+    }
+}

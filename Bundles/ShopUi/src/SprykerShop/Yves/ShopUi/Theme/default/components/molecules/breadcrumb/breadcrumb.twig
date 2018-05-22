@@ -26,7 +26,7 @@
                     url: step.url | default(null),
                     label: step.label | default(null),
                     itemProp: step.itemProp | default(null),
-                    withChevron: step.withChevron | default(true)
+                    withChevron: step.withChevron is defined ? step.withChevron : true
                 }
             } only %}
         {% endfor %}

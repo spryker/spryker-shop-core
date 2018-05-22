@@ -1,5 +1,6 @@
-@mixin component-checkbox($name: '.checkbox') {
+@mixin shop-ui-checkbox($name: '.checkbox') {
     #{$name} {
+        position: relative;
         display: inline-block;
 
         &__container {
@@ -8,33 +9,33 @@
 
         &__box {
             display: inline-block;
-            width: spacing(2.5);
-            height: spacing(2.5);
-            border: 1px solid $color-input-border;
-            background-color: $color-white;
-            margin-right: spacing(.5);
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 1px solid $setting-color-input-border;
+            background-color: $setting-color-white;
+            margin-right: .25rem;
             text-align: center;
             vertical-align: top;
         }
 
         &__input {
-            @include is-invisible;
+            @include helper-visibility-invisible;
             position: absolute;
         }
 
         &__check {
-            @include is-invisible;
-            @include transition;
+            @include helper-visibility-invisible;
+            @include helper-effect-transition;
             position: absolute;
-            top: spacing(.5);
-            left: spacing(.5);
-            width: spacing(1.5);
-            height: spacing(1.5);
-            background-color: $color-main;
+            top: .25rem;
+            left: .25rem;
+            width: .75rem;
+            height: .75rem;
+            background-color: $setting-color-main;
         }
 
         &__input:checked + &__check {
-            @include is-visible;
+            @include helper-visibility-visible;
         }
 
         &--expand {
@@ -42,7 +43,13 @@
         }
 
         &--error &__box {
-            border-color: map-get($color-actions, alert);
+            border-color: map-get($setting-color-actions, alert);
+        }
+
+        &[disabled] &__box,
+        &--disabled &__box {
+            background-color: $setting-color-lighter;
+            cursor: not-allowed;
         }
 
         @content;

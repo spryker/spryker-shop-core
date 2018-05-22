@@ -1,19 +1,20 @@
-@mixin component-thumbnail($name: '.thumbnail') {
+@mixin shop-ui-thumbnail($name: '.thumbnail') {
     #{$name} {
+        position: relative;
         display: block;
-        height: spacing(20);
-        margin: spacing();
+        height: 10rem;
+        margin: .5rem;
 
         &--small {
-            height: spacing(10);
+            height: 5rem;
         }
 
         &--big {
-            height: spacing(40);
+            height: 20rem;
         }
 
         &--bigger {
-            height: spacing(60);
+            height: 30rem;
         }
 
         &__image {

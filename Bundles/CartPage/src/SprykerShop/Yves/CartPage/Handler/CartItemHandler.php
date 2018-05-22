@@ -8,19 +8,16 @@
 namespace SprykerShop\Yves\CartPage\Handler;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Shared\CartVariant\CartVariantConstants;
-use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
 
-class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
+class CartItemHandler implements CartItemHandlerInterface
 {
-    /**
-     * @var \SprykerShop\Yves\CartPage\Handler\CartOperationInterface
-     */
-    protected $cartOperationHandler;
-
     /**
      * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface
      */
@@ -32,23 +29,23 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
     protected $productClient;
 
     /**
-     * @param \SprykerShop\Yves\CartPage\Handler\CartOperationInterface $cartOperationHandler
+     * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface
+     */
+    protected $zedRequestClient;
+
+    /**
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface $productClient
-     * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
+     * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface $zedRequestClient
      */
     public function __construct(
-        CartOperationInterface $cartOperationHandler,
         CartPageToCartClientInterface $cartClient,
         CartPageToProductStorageClientInterface $productClient,
-        FlashMessengerInterface $flashMessenger
+        CartPageToZedRequestClientInterface $zedRequestClient
     ) {
-
-        parent::__construct($flashMessenger);
-
-        $this->cartOperationHandler = $cartOperationHandler;
         $this->cartClient = $cartClient;
         $this->productClient = $productClient;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -81,11 +78,16 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
         array $optionValueIds
     ) {
         $newItemSku = $productViewTransfer->getSku();
-        $this->cartOperationHandler->add($newItemSku, $quantity, $optionValueIds);
-        $this->setFlashMessagesFromLastZedRequest($this->cartClient);
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($newItemSku);
+        $itemTransfer->setQuantity($quantity);
+        $this->addProductOptions($optionValueIds, $itemTransfer);
 
-        if (count($this->cartClient->getZedStub()->getErrorMessages()) === 0) {
-            $this->cartOperationHandler->remove($currentItemSku, $groupKey);
+        $this->cartClient->addItem($itemTransfer);
+        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+
+        if (count($this->zedRequestClient->getLastResponseErrorMessages()) === 0) {
+            $this->cartClient->removeItem($currentItemSku, $groupKey);
         }
     }
 
@@ -121,6 +123,7 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
             $item->getIdProductAbstract(),
             $localeName
         );
+
         return $this->productClient->mapProductStorageData(
             $productData,
             $localeName,
@@ -131,7 +134,7 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param array $itemAttributesBySku
-     * @param array|null $selectedAttributes
+     * @param array $selectedAttributes
      * @param string $localeName
      *
      * @return array
@@ -142,7 +145,6 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
         array $selectedAttributes,
         $localeName
     ) {
-
         if (count($selectedAttributes) === 0) {
             return $itemAttributesBySku;
         }
@@ -172,6 +174,7 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
             $itemAttributesBySku[$sku][$key][$attribute][CartVariantConstants::SELECTED] = true;
             $itemAttributesBySku[$sku][$key][$attribute][CartVariantConstants::AVAILABLE] = true;
         }
+
         return $itemAttributesBySku;
     }
 
@@ -213,5 +216,25 @@ class CartItemHandler extends BaseHandler implements CartItemHandlerInterface
         }
 
         return $itemAttributesBySku;
+    }
+
+    /**
+     * @param array $optionValueUsageIds
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addProductOptions(array $optionValueUsageIds, ItemTransfer $itemTransfer)
+    {
+        foreach ($optionValueUsageIds as $idOptionValueUsage) {
+            if (!$idOptionValueUsage) {
+                continue;
+            }
+
+            $productOptionTransfer = new ProductOptionTransfer();
+            $productOptionTransfer->setIdProductOptionValue($idOptionValueUsage);
+
+            $itemTransfer->addProductOption($productOptionTransfer);
+        }
     }
 }

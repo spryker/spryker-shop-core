@@ -1,6 +1,6 @@
-@mixin component-pagination($name: '.pagination') {
+@mixin shop-ui-pagination($name: '.pagination') {
     #{$name} {
-        @include font-size(small);
+        @include helper-font-size(small);
         text-align: center;
 
         &__item {
@@ -9,15 +9,15 @@
 
         &__step {
             display: inline-block;
-            padding: spacing(.25) spacing();
+            padding: .25rem .5rem;
 
             &--current {
-                background-color: $color-main;
-                color: $color-white;
+                background-color: $setting-color-main;
+                color: $setting-color-white;
             }
 
             &--disabled {
-                color: $color-dark;
+                color: $setting-color-dark;
             }
         }
     }

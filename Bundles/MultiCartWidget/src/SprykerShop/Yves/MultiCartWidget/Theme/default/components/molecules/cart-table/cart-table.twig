@@ -1,0 +1,48 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-table',
+    tag: 'div'
+} %}
+
+{% define data = {
+    carts: required,
+    widgets: required,
+    actions: {
+        view: true,
+        update: false,
+        set_default: true,
+        delete: true
+    }
+} %}
+
+{% set showActions = data.actions.view or data.actions.update or data.actions.delete or data.actions.set_default %}
+
+{% block body %}
+    <table class="table table--expand">
+        <thead>
+            <tr>
+                <th>{{ 'multi_cart_widget.cart.cart_name' | trans }}</th>
+                <th>{{ 'multi_cart_widget.cart.items' | trans }}</th>
+                <th>{{ 'multi_cart_widget.cart.sub_total' | trans }}</th>
+                {% if showActions %}
+                    <th>{{ 'multi_cart_widget.cart.actions' | trans }}</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for cart in data.carts %}
+            {% if widgetExists('SharedCartDetailsWidgetPlugin') %}
+                {{ widget('SharedCartDetailsWidgetPlugin', cart, data.actions, data.widgets) }}
+            {% else %}
+                {% include molecule('cart-table-detail', 'MultiCartWidget') with {
+                    data: {
+                        cart: cart,
+                        actions: data.actions
+                    }
+                } only %}
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,15 +1,24 @@
-@mixin component-header($name: '.header') {
+@mixin shop-ui-header($name: '.header') {
     #{$name} {
-        background-color: light($color-main);
-        margin-bottom: spacing(2);
-        z-index: $zi-header;
+        position: relative;
+        background-color: helper-color-light($setting-color-main);
+        margin-bottom: 1rem;
+        z-index: $setting-zi-header;
 
         &__row {
-            padding: spacing();
+            padding: .5rem;
+        }
+
+        &__navigation-top {
+            z-index: $setting-zi-header + 3;
+        }
+
+        &__search-form {
+            z-index: $setting-zi-header + 2;
         }
 
         &__navigation-main {
-            z-index: $zi-header + 1;
+            z-index: $setting-zi-header + 1;
         }
 
         @content;

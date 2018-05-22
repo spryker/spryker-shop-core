@@ -1,21 +1,21 @@
-@mixin component-price($name: '.price') {
+@mixin shop-ui-price($name: '.price') {
     #{$name} {
         display: block;
 
         &__amount {
-            @include font-size(big);
-            
+            @include helper-font-size(big);
+
             &--original {
-                @include font-size(small);
+                @include helper-font-size(small);
                 display: block;
-                color: $color-dark;
+                color: $setting-color-dark;
                 text-decoration: line-through;
             }
         }
 
         &__tag {
-            margin-right: spacing(.5);
-            color: $color-alt;
+            margin-right: .25rem;
+            color: $setting-color-alt;
         }
 
         @content;

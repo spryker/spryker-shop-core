@@ -1,26 +1,26 @@
-@mixin component-form-field($name: '.form-field') {
+@mixin shop-ui-form-field($name: '.form-field') {
     #{$name} {
-        margin: spacing(.5) spacing();
+        margin: .25rem .5rem;
 
         &__label {
-            @include font-size(small);
+            @include helper-font-size(small);
 
             &--required {
                 &::after {
                     content: '*';
-                    margin-left: spacing(.25);
-                    color: $color-main;
+                    margin-left: .2rem;
+                    color: $setting-color-main;
                 }
             }
         }
 
         &__error-list {
-            @include font-size(small);
-            color: map-get($color-actions, alert);
+            @include helper-font-size(small);
+            color: map-get($setting-color-actions, alert);
         }
 
         &--spacing {
-            padding: spacing() 0;
+            padding: .5rem 0;
         }
 
         @content;

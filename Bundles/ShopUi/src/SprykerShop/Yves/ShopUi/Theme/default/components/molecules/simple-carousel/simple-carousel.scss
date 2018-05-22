@@ -1,20 +1,22 @@
-$component-simple-carousel-icon-size: $component-icon-size-big;
+$shop-ui-simple-carousel-icon-size: $shop-ui-icon-size-big;
 
-@mixin component-simple-carousel($name: '.simple-carousel') {
+@mixin shop-ui-simple-carousel($name: '.simple-carousel') {
     #{$name} {
         &__container {
-            padding-left: $component-simple-carousel-icon-size;
-            padding-right: $component-simple-carousel-icon-size;
+            position: relative;
+            padding-left: $shop-ui-simple-carousel-icon-size;
+            padding-right: $shop-ui-simple-carousel-icon-size;
         }
 
         &__view {
+            position: relative;
             max-width: 100%;
             overflow: hidden;
             z-index: 1;
         }
 
         &__slider {
-            @include transition(transform, 500ms);
+            @include helper-effect-transition(transform, 500ms);
             flex-wrap: nowrap;
         }
 
@@ -25,22 +27,22 @@ $component-simple-carousel-icon-size: $component-icon-size-big;
 
         &__dot {
             display: inline-block;
-            padding: spacing(.5);
+            padding: .25rem;
 
             &::before {
-                @include transition(background-color, 150ms);
+                @include helper-effect-transition(background-color, 150ms);
                 content: '';
                 display: block;
-                width: spacing();
-                height: spacing();
-                background-color: $color-light;
+                width: .5rem;
+                height: .5rem;
+                background-color: $setting-color-light;
                 border-radius: 100%;
             }
 
             &:hover,
             &--current {
                 &::before {
-                    background-color: $color-main;
+                    background-color: $setting-color-main;
                 }
             }
         }
@@ -64,12 +66,12 @@ $component-simple-carousel-icon-size: $component-icon-size-big;
         }
 
         &__arrow {
-            @include transition(color);
-            color: $color-light;
+            @include helper-effect-transition(color);
+            color: $setting-color-light;
             pointer-events: all;
 
             &:hover {
-                color: $color-main;
+                color: $setting-color-main;
             }
         }
 
@@ -83,18 +85,18 @@ $component-simple-carousel-icon-size: $component-icon-size-big;
         }
 
         &--inset &__arrow {
-            padding: spacing();
-            background-color: rgba($color-lightest, .75);
+            padding: .5rem;
+            background-color: rgba($setting-color-lightest, .75);
         }
 
-        @include breakpoint(lg) {
+        @include helper-breakpoint(lg) {
             &__navigation {
-                @include is-invisible;
-                @include transition;
+                @include helper-visibility-invisible;
+                @include helper-effect-transition;
             }
 
             &:hover &__navigation {
-                @include is-visible;
+                @include helper-visibility-visible;
                 pointer-events: none;
             }
         }

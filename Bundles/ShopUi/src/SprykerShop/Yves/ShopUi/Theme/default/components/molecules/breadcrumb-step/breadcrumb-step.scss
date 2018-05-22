@@ -1,19 +1,19 @@
-@mixin component-breadcrumb-step($name: '.breadcrumb-step') {
+@mixin shop-ui-breadcrumb-step($name: '.breadcrumb-step') {
     #{$name} {
         display: inline-block;
 
         &__separator {
-            margin-left: spacing(.5);
-            margin-right: spacing(.5);
-            color: $color-light;
+            margin-left: .25rem;
+            margin-right: .25rem;
+            color: $setting-color-light;
         }
 
         &--active {
-            @include font-weight(bold);
+            @include helper-font-weight(bold);
         }
 
         &--disabled:not(&--active) {
-            color: $color-dark;
+            color: $setting-color-dark;
         }
 
         @content

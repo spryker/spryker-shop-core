@@ -1,42 +1,42 @@
-$component-icon-size: spacing(2);
-$component-icon-size-small: spacing(1.5);
-$component-icon-size-smaller: spacing();
-$component-icon-size-big: spacing(3);
-$component-icon-size-bigger: spacing(4);
-$component-icon-size-biggest: spacing(6);
+$shop-ui-icon-size: 1rem;
+$shop-ui-icon-size-small: .75rem;
+$shop-ui-icon-size-smaller: .5rem;
+$shop-ui-icon-size-big: 1.5rem;
+$shop-ui-icon-size-bigger: 2rem;
+$shop-ui-icon-size-biggest: 3rem;
 
-@mixin component-icon($name: '.icon') {
+@mixin shop-ui-icon($name: '.icon') {
     #{$name} {
         fill: currentColor;
-        width: $component-icon-size;
-        height: $component-icon-size;
+        width: $shop-ui-icon-size;
+        height: $shop-ui-icon-size;
         display: inline-block;
         vertical-align: middle;
         user-select: none;
 
         &--small {
-            width: $component-icon-size-small;
-            height: $component-icon-size-small;
+            width: $shop-ui-icon-size-small;
+            height: $shop-ui-icon-size-small;
         }
 
         &--smaller {
-            width: $component-icon-size-smaller;
-            height: $component-icon-size-smaller;
+            width: $shop-ui-icon-size-smaller;
+            height: $shop-ui-icon-size-smaller;
         }
 
         &--big {
-            width: $component-icon-size-big;
-            height: $component-icon-size-big;
+            width: $shop-ui-icon-size-big;
+            height: $shop-ui-icon-size-big;
         }
 
         &--bigger {
-            width: $component-icon-size-bigger;
-            height: $component-icon-size-bigger;
+            width: $shop-ui-icon-size-bigger;
+            height: $shop-ui-icon-size-bigger;
         }
 
         &--biggest {
-            width: $component-icon-size-biggest;
-            height: $component-icon-size-biggest;
+            width: $shop-ui-icon-size-biggest;
+            height: $shop-ui-icon-size-biggest;
         }
 
         @content;

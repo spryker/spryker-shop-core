@@ -1,0 +1,28 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.cartNoteForm,
+    formAction: url('cart-note/item')
+} %}
+
+{% set canWrite = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', _view.cart.idQuote)) %}
+
+{% block body %}
+    {% if canWrite %}
+    <hr>
+    {% include molecule('form') with {
+        data: {
+            options: {
+                action: data.formAction
+            },
+            title: 'cart_note.item_form.enter_note' | trans,
+            form: data.form,
+            submit: {
+                enable: true,
+                text: 'cart_note.form.save' | trans
+            }
+        }
+    } only %}
+    <hr>
+    {% endif %}
+{% endblock %}
