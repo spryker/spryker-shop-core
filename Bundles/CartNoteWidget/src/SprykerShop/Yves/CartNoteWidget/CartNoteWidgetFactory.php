@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\CartNoteWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToCartNoteClientInterface;
+use SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CartNoteWidget\Form\QuoteCartNoteForm;
 use SprykerShop\Yves\CartNoteWidget\Form\QuoteItemCartNoteForm;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -35,7 +37,7 @@ class CartNoteWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToCartNoteClientInterface
      */
-    public function getCartNoteClient()
+    public function getCartNoteClient(): CartNoteWidgetToCartNoteClientInterface
     {
         return $this->getProvidedDependency(CartNoteWidgetDependencyProvider::CLIENT_CART_NOTE);
     }
@@ -51,7 +53,7 @@ class CartNoteWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToGlossaryStorageClientInterface
      */
-    public function getGlossaryClient()
+    public function getGlossaryClient(): CartNoteWidgetToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CartNoteWidgetDependencyProvider::CLIENT_GLOSSARY);
     }

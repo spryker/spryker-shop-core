@@ -44,7 +44,7 @@ class ShoppingListPageFactory extends AbstractFactory
      * @param \Generated\Shared\Transfer\ShoppingListTransfer|null $data
      * @param array $options
      *
-     * @return \Symfony\Component\Form\FormInterface|\SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function getShoppingListForm(?ShoppingListTransfer $data = null, array $options = []): FormInterface
     {
@@ -63,7 +63,7 @@ class ShoppingListPageFactory extends AbstractFactory
      * @param array $data
      * @param array $options
      *
-     * @return \Symfony\Component\Form\FormInterface|\SprykerShop\Yves\ShoppingListPage\Form\AddAvailableProductsToCartForm
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function getAddAvailableProductsToCartForm(array $data, array $options = []): FormInterface
     {

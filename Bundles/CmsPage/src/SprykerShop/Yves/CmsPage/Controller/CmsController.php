@@ -42,6 +42,7 @@ class CmsController extends AbstractController
             throw new NotFoundHttpException('The Cms Page is not active in given dates.');
         }
 
+        /** @var \Twig_ExistsLoaderInterface $loader */
         $loader = $this->getApplication()['twig']->getLoader();
         if (!$loader->exists($localeCmsPageDataTransfer->getTemplatePath())) {
             throw new NotFoundHttpException('The Cms Page template is not found.');

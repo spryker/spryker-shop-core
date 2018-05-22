@@ -47,11 +47,11 @@ class HealthChecker
     }
 
     /**
-     * @param \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface $healthIndicator
+     * @param \SprykerShop\Yves\HeartbeatPage\Model\HealthIndicator\AbstractHealthIndicator $healthIndicator
      *
      * @return void
      */
-    private function check(HealthIndicatorInterface $healthIndicator)
+    protected function check(HealthIndicatorInterface $healthIndicator)
     {
         $healthIndicator->doHealthCheck();
         $healthIndicator->writeHealthReport($this->healthReport);

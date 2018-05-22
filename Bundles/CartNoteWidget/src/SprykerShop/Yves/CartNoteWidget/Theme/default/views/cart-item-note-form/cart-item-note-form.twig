@@ -1,21 +1,25 @@
 {% extends template('widget') %}
 
 {% define data = {
-    form: _widget.cartNoteForm,
-    formAction: url('cart-note/item')
+    idQuote: _view.cart.idQuote,
+    form: _widget.cartNoteForm
 } %}
 
+{% set canWrite = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.idQuote)) %}
+
 {% block body %}
-    {% include molecule('form') with {
-        data: {
-            form: data.form,
-            options: {
-                action: data.formAction
-            },
-            submit: {
-                enable: true,
-                text: 'cart_note.form.save' | trans
+    {% if canWrite %}
+        {% include molecule('form') with {
+            data: {
+                form: data.form,
+                options: {
+                    action: url('cart-note/item')
+                },
+                submit: {
+                    enable: true,
+                    text: 'cart_note.form.save' | trans
+                }
             }
-        }
-    } only %}
+        } only %}
+    {% endif %}
 {% endblock %}

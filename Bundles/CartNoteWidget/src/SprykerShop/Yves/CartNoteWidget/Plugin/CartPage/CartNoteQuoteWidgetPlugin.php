@@ -26,6 +26,7 @@ class CartNoteQuoteWidgetPlugin extends AbstractWidgetPlugin implements CartNote
         $cartNoteForm = $this->getFactory()->getCartNoteQuoteForm();
         $cartNoteForm->setData($quoteTransfer);
         $this->addParameter('cartNoteForm', $cartNoteForm->createView());
+        $this->addParameter('cart', $quoteTransfer);
     }
 
     /**

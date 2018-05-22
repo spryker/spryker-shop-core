@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MultiCartPage\Controller;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -148,11 +147,11 @@ class MultiCartController extends AbstractController
     {
         $multiCartClient = $this->getFactory()->getMultiCartClient();
 
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setIdQuote($idQuote);
-
-        $this->getFactory()
+        $quoteTransfer = $this->getFactory()
             ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
+        $multiCartClient
             ->deleteQuote($quoteTransfer);
 
         $customerQuoteTransferList = $multiCartClient->getQuoteCollection()->getQuotes();
