@@ -31,7 +31,7 @@
     <tbody>
     {% for item in data.shoppingListItems %}
     <tr>
-        <td></td>
+        <td>{{ widget('BarcodeWidgetPlugin', item.sku) }}</td>
         <td>{{ item.sku }}</td>
         <td>{{ item.name }}</td>
         <td>

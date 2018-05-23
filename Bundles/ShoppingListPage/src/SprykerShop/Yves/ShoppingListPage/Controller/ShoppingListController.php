@@ -228,7 +228,11 @@ class ShoppingListController extends AbstractShoppingListController
             'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
         ];
 
-        return $this->view($data, [], '@ShoppingListPage/views/shopping-list/print-shopping-list.twig');
+        return $this->view(
+            $data,
+            $this->getFactory()->getBarcodeWidgetPlugins(),
+            '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
+        );
     }
 
     /**

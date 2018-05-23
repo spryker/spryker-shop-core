@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    productSku: _widget.productSku
+} %}
+
+{% block body %}
+    ==={{ data.productSku }}!!!!
+{% endblock %}

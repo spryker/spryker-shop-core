@@ -178,4 +178,12 @@ class ShoppingListPageFactory extends AbstractFactory
     {
         return new ShareShoppingListRequiredIdConstraint();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getBarcodeWidgetPlugins()
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_WIDGETS);
+    }
 }
