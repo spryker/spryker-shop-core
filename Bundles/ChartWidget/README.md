@@ -1,6 +1,6 @@
 # ChartWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Widget for ChartBundle
 
 ## Installation
 
