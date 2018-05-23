@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MultiCartWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class MultiCartWidgetToMultiCartClientBridge implements MultiCartWidgetToMultiCartClientInterface
@@ -27,7 +28,7 @@ class MultiCartWidgetToMultiCartClientBridge implements MultiCartWidgetToMultiCa
     /**
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollection()
+    public function getQuoteCollection(): QuoteCollectionTransfer
     {
         return $this->multiCartClient->getQuoteCollection();
     }
@@ -35,7 +36,7 @@ class MultiCartWidgetToMultiCartClientBridge implements MultiCartWidgetToMultiCa
     /**
      * @return bool
      */
-    public function isMultiCartAllowed()
+    public function isMultiCartAllowed(): bool
     {
         return $this->multiCartClient->isMultiCartAllowed();
     }
