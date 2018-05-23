@@ -7,9 +7,9 @@
   },
   "require-dev": {
     "spryker-shop/cms-content-widget-chart-connector": "dev-master",
-    "spryker/twig": "^1.20.0",
+    "spryker/chart": "dev-beta/core-2413-chart",
     "spryker/kernel": "^3.16.0",
-    "spryker/chart": "dev-beta/core-2413-chart"
+    "spryker/twig": "^1.20.0"
   },
   "suggest": {
     "spryker/twig": "If you want to use widget",
