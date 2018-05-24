@@ -21,10 +21,10 @@
             class: config.name ~ '__item',
             data: {
                 filter: filter,
-                filterMin: filter.min | default(0),
-                filterMax: filter.max | default(0),
-                filterActiveMin: filter.activeMin | default(0),
-                filterActiveMax: filter.activeMax | default(0)
+                min: filter.min | default(0),
+                max: filter.max | default(0),
+                activeMin: filter.activeMin | default(0),
+                activeMax: filter.activeMax | default(0)
             }
         }, 
         with_context = false, 

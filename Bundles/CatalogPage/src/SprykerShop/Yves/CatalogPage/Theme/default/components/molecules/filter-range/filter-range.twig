@@ -5,17 +5,12 @@
 } %}
 
 {% define data = {
-    filterParameter: required,
-    filterMin: required,
-    filterActiveMin: required,
-    filterMax: required,
-    filterActiveMax: required
+    parameter: required,
+    min: required,
+    activeMin: required,
+    max: required,
+    activeMax: required
 } %}
-
-{% set min = min | default(data.filterMin) %}
-{% set activeMin = activeMin | default(data.filterActiveMin) %}
-{% set max = max | default(data.filterMax) %}
-{% set activeMax = activeMax | default(data.filterActiveMax) %}
 
 {% block body %}
     <div class="grid">
@@ -24,11 +19,11 @@
                 {{ 'catalog.filter.rangeFrom'|trans }}
                 <input class="input"
                        type="number"
-                       name="{{ data.filterParameter }}[min]"
-                       value="{{ activeMin }}"
+                       name="{{ data.parameter }}[min]"
+                       value="{{ data.activeMin }}"
                        required="required"
-                       min="{{ min }}"
-                       max="{{ max }}"
+                       min="{{ data.min }}"
+                       max="{{ data.max }}"
                 />
             </label>
         </div>
@@ -38,11 +33,11 @@
                 {{ 'catalog.filter.rangeTo'|trans }}
                 <input class="input"
                        type="number"
-                       name="{{ data.filterParameter }}[max]"
-                       value="{{ activeMax }}"
+                       name="{{ data.parameter }}[max]"
+                       value="{{ data.activeMax }}"
                        required="required"
-                       min="{{ min }}"
-                       max="{{ max }}"
+                       min="{{ data.min }}"
+                       max="{{ data.max }}"
                 />
             </label>
         </div>
