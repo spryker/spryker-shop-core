@@ -18,5 +18,5 @@ interface BarcodeWidgetPluginInterface extends WidgetPluginInterface
      *
      * @return void
      */
-    public function initialize($productSku): void;
+    public function initialize(string $productSku): void;
 }

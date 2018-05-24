@@ -21,7 +21,7 @@ class BarcodeWidgetPlugin extends AbstractWidgetPlugin implements BarcodeWidgetP
      *
      * @return void
      */
-    public function initialize($productSku): void
+    public function initialize(string $productSku): void
     {
         $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($productSku);
 

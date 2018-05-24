@@ -140,7 +140,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addShoppingListWidgetPlugins(Container $container)
+    protected function addShoppingListWidgetPlugins(Container $container): Container
     {
         $container[self::PLUGIN_SHOPPING_LIST_WIDGETS] = function () {
             return $this->getShoppingListWidgetPlugins();

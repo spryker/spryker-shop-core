@@ -13,14 +13,14 @@ use SprykerShop\Yves\BarcodeWidget\Dependency\Facade\BarcodeWidgetToProductBarco
 
 class BarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_PRODUCT_BARCODE = 'CLIENT_PRODUCT_BARCODE';
+    public const CLIENT_PRODUCT_BARCODE = 'CLIENT_PRODUCT_BARCODE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addProductBarcodeClient($container);
 
@@ -32,7 +32,7 @@ class BarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductBarcodeClient(Container $container)
+    protected function addProductBarcodeClient(Container $container): Container
     {
         $container[self::CLIENT_PRODUCT_BARCODE] = function (Container $container) {
             return new BarcodeWidgetToProductBarcodeClientBridge($container->getLocator()->productBarcode()->client());
