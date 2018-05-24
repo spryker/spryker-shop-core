@@ -5,11 +5,13 @@
 } %}
 
 {% define data = {
-    filter: required,
-    min: data.filter.min
+    filterMin: required,
+    filterActiveMin: required,
+    filterMax: required,
+    filterActiveMax: required
 } %}
 
-{% set min = (data.min | default(0)) | moneyRaw | floor %}
-{% set activeMin = (data.filter.activeMin | default(0)) | moneyRaw | floor %}
-{% set max = (data.filter.max | default(0)) | moneyRaw | ceil %}
-{% set activeMax = (data.filter.activeMax | default(0)) | moneyRaw | ceil %}
+{% set min = (data.filterMin | default(0)) | moneyRaw | floor %}
+{% set activeMin = (data.filterActiveMin | default(0)) | moneyRaw | floor %}
+{% set max = (data.filterMax | default(0)) | moneyRaw | ceil %}
+{% set activeMax = (data.filterActiveMax | default(0)) | moneyRaw | ceil %}

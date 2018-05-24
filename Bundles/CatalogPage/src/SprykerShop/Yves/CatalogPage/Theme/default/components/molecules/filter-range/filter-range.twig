@@ -5,14 +5,17 @@
 } %}
 
 {% define data = {
-    filter: required
+    filterParameter: required,
+    filterMin: required,
+    filterActiveMin: required,
+    filterMax: required,
+    filterActiveMax: required
 } %}
 
-{% set parameter = parameter | default(data.filter.config.parameterName) %}
-{% set min = min | default(data.filter.min) %}
-{% set activeMin = activeMin | default(data.filter.activeMin) %}
-{% set max = max | default(data.filter.max) %}
-{% set activeMax = activeMax | default(data.filter.activeMax) %}
+{% set min = min | default(data.filterMin) %}
+{% set activeMin = activeMin | default(data.filterActiveMin) %}
+{% set max = max | default(data.filterMax) %}
+{% set activeMax = activeMax | default(data.filterActiveMax) %}
 
 {% block body %}
     <div class="grid">
@@ -21,7 +24,7 @@
                 {{ 'catalog.filter.rangeFrom'|trans }}
                 <input class="input"
                        type="number"
-                       name="{{ parameter }}[min]"
+                       name="{{ data.filterParameter }}[min]"
                        value="{{ activeMin }}"
                        required="required"
                        min="{{ min }}"
@@ -35,7 +38,7 @@
                 {{ 'catalog.filter.rangeTo'|trans }}
                 <input class="input"
                        type="number"
-                       name="{{ parameter }}[max]"
+                       name="{{ data.filterParameter }}[max]"
                        value="{{ activeMax }}"
                        required="required"
                        min="{{ min }}"

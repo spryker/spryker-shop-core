@@ -5,11 +5,14 @@
 } %}
 
 {% define data = {
-    filter: required
+    filterMin: required,
+    filterActiveMin: required,
+    filterMax: required,
+    filterActiveMax: required
 } %}
 
-{% set defaultValue = data.filter.min | money  ~ ' - ' ~ data.filter.max | money %}
-{% set curentValue = data.filter.activeMin | money  ~ ' - ' ~ data.filter.activeMax | money %}
+{% set defaultValue = data.filterMin | money  ~ ' - ' ~ data.filterMax | money %}
+{% set curentValue = data.filterActiveMin | money  ~ ' - ' ~ data.filterActiveMax | money %}
 
 {% block component %}
     {% if defaultValue != curentValue %}

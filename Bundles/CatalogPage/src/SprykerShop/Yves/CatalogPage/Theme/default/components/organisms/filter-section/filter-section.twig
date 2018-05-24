@@ -24,8 +24,13 @@
             ] ignore missing with {
                 data: {
                     filterPath: data.filterPath,
+                    categories: data.categories,
                     filter: filter,
-                    categories: data.categories
+                    filterParameter: filter.config.parameterName | default(''),
+                    filterMin: filter.min | default(0),
+                    filterMax: filter.max | default(0),
+                    filterActiveMin: filter.activeMin | default(0),
+                    filterActiveMax: filter.activeMax | default(0)
                 }
             } only %}
 
