@@ -32,7 +32,7 @@
     </td>
     <td>
         {% if cart.totals is not empty and cart.items is not empty %}
-            {{ cart.totals.subTotal | money }}
+            {{ cart.totals.subTotal | money(true, data.cart.currency.code) }}
         {% else %}
             N/A
         {% endif %}

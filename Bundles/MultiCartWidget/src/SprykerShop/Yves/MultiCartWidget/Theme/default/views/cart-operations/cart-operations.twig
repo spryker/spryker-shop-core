@@ -2,7 +2,8 @@
 
 {% define data = {
     cart: _widget.cart,
-    isMultiCartAllowed: _widget.isMultiCartAllowed
+    isMultiCartAllowed: _widget.isMultiCartAllowed,
+    isDeleteCartAllowed: _widget.isDeleteCartAllowed
 } %}
 
 {% block body %}
@@ -34,11 +35,13 @@
                         {{ "multi_cart_widget.cart.action.clear" | trans }}
                     </a>
                 </li>
+                {% if data.isDeleteCartAllowed is not empty %}
                 <li class="menu__item">
                     <a href="{{ path('multi-cart/delete', {idQuote: data.cart.idQuote}) }}" class="button delete" onclick="return confirm('{{ 'multi_cart_widget.cart.remove.confirm' | trans }}')">
                         {{ "multi_cart_widget.cart.action.delete" | trans }}
                     </a>
                 </li>
+                {% endif %}
             </ul>
         {% endif %}
     {% endif %}

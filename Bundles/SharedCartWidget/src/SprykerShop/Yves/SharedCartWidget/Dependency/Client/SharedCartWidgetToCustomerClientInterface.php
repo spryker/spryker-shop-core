@@ -10,11 +10,6 @@ namespace SprykerShop\Yves\SharedCartWidget\Dependency\Client;
 interface SharedCartWidgetToCustomerClientInterface
 {
     /**
-     * Specification:
-     * - Returns customer information from session.
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer();

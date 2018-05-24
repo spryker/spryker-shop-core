@@ -26,7 +26,8 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
         $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
         $this
             ->addParameter('cart', $quoteTransfer)
-            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
+            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
+            ->addParameter('isDeleteCartAllowed', $this->isDeleteCartAllowed());
     }
 
     /**
@@ -61,5 +62,14 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
         return $this->getFactory()
             ->getMultiCartClient()
             ->isMultiCartAllowed();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDeleteCartAllowed(): bool
+    {
+        return count($this->getFactory()
+                    ->getMultiCartClient()->getQuoteCollection()->getQuotes()) > 1;
     }
 }

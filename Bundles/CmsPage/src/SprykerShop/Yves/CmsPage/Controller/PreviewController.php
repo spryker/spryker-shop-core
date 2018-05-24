@@ -64,6 +64,7 @@ class PreviewController extends AbstractController
      */
     protected function assertTemplate($template)
     {
+        /** @var \Twig_ExistsLoaderInterface $loader */
         $loader = $this->getApplication()['twig']->getLoader();
         if (!$loader->exists($template)) {
             throw new NotFoundHttpException('The Cms Page template is not found');

@@ -15,13 +15,13 @@ use Symfony\Component\HttpFoundation\Request;
 abstract class AbstractBaseStep extends SprykerBaseStep
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function preCondition(AbstractTransfer $dataTransfer)
+    public function preCondition(AbstractTransfer $quoteTransfer)
     {
-        return !$this->isCartEmpty($dataTransfer);
+        return !$this->isCartEmpty($quoteTransfer);
     }
 
     /**
