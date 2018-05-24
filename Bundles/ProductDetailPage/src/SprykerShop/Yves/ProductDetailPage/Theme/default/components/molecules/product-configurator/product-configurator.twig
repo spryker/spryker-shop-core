@@ -57,7 +57,7 @@
             <hr />
         {% endif %}
 
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if can('SeeAddToCartPermissionPlugin') %}
             <div class="grid grid--justify grid--bottom">
                 {% if widgetExists('ProductMeasurementUnitWidgetPlugin') %}
                     {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, options) }}
@@ -95,7 +95,7 @@
         {% endif %}
     </form>
 
-    {% if is_granted('IS_AUTHENTICATED_FULLY') and widgetExists('ShoppingListWidgetPlugin') %}
+    {% if can('SeeWishlistPermissionPlugin') and widgetExists('ShoppingListWidgetPlugin') %}
         <hr/>
         {{ widget('ShoppingListWidgetPlugin', sku, disabled) }}
     {% endif %}
