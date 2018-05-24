@@ -38,25 +38,7 @@
 } %}
 
 {% block customerNavigation %}
-    {% embed molecule('customer-navigation', 'CustomerPage') with {
-        class: 'box',
-        data: {
-            activePage: data.activePage
-        },
-        embed: {
-            activeShoppingListId: data.shoppingList.idShoppingList,
-            shoppingListCollection: data.shoppingListCollection
-        }
-    } only %}
-        {% block shoppingListNavigation %}
-            {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
-                data: {
-                    activeShoppingListId: embed.activeShoppingListId,
-                    shoppingListCollection: embed.shoppingListCollection
-                }
-            } only %}
-        {% endblock %}
-    {% endembed %}
+    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.shoppingList.idShoppingList) }}
 {% endblock %}
 
 {% block customerContent %}

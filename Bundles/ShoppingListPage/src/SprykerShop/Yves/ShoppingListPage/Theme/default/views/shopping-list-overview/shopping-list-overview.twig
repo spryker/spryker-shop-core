@@ -12,26 +12,6 @@
     }
 } %}
 
-{% block customerNavigation %}
-    {% embed molecule('customer-navigation', 'CustomerPage') with {
-        class: 'box',
-        data: {
-            activePage: data.activePage
-        },
-        embed: {
-            shoppingListCollection: data.shoppingListCollection
-        }
-    } only %}
-        {% block shoppingListNavigation %}
-            {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
-                data: {
-                    shoppingListCollection: embed.shoppingListCollection
-                }
-            } only %}
-        {% endblock %}
-    {% endembed %}
-{% endblock %}
-
 {% block customerContent %}
     <div class="box">
         <h4>{{ data.labels.overviewTitle }}</h4>

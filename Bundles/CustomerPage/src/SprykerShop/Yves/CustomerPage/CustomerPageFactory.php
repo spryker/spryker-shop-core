@@ -220,4 +220,12 @@ class CustomerPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_UTIL_VALIDATE);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getCustomerMenuItemWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS);
+    }
 }

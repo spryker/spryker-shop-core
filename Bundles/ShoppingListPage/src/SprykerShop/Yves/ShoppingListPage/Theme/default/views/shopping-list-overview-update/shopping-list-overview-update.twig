@@ -21,25 +21,7 @@
 {% endblock %}
 
 {% block customerNavigation %}
-    {% embed molecule('customer-navigation', 'CustomerPage') with {
-        class: 'box',
-        data: {
-            activePage: data.activePage
-        },
-        embed: {
-            shoppingListCollection: data.shoppingListCollection,
-            activeShoppingListId: data.idShoppingList
-        }
-    } only %}
-        {% block shoppingListNavigation %}
-            {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
-                data: {
-                    shoppingListCollection: embed.shoppingListCollection,
-                    activeShoppingListId: embed.activeShoppingListId
-                }
-            } only %}
-        {% endblock %}
-    {% endembed %}
+    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.idShoppingList) }}
 {% endblock %}
 
 {% block customerContent %}

@@ -1,13 +1,16 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
+{% define data = {
+    title: 'customer.account.wishlist' | trans,
+    activePage: 'wishlist'
+} %}
+
 {% block title %}
     <h3>{{ 'customer.account.wishlist' | trans }}</h3>
 {% endblock %}
 
 {% block customerNavigation %}
-    {% include "@CustomerPage/partials/navigation.twig" with {'active': 'wishlist'} %}
-
-    {% include "@WishlistPage/_partials/wishlist-navigation.twig" with {'wishlistCollection': _view.wishlistCollection} %}
+    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'wishlist') }}
 {% endblock %}
 
 {% block customerContent %}

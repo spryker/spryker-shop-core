@@ -6,7 +6,8 @@
 } %}
 
 {% define data = {
-    activePage: required
+    activePage: required,
+    activeEntityId: null
 } %}
 
 {%- macro isActive(page, activePage) -%}
@@ -32,13 +33,11 @@
         <li class="menu__item {{macros.isActive('newsletter', data.activePage)}}">
             <a href="{{ path('customer/newsletter') }}" data-id="sidebar-newsletter">{{ 'customer.account.newsletter' | trans }}</a>
         </li>
-        <li class="menu__item {{macros.isActive('wishlist', data.activePage)}}">
-            <a href="{{ path('wishlist/overview') }}" data-id="sidebar-wishlist">{{ 'wishlist.wishlist' | trans }}</a>
-            {% block wishlistNavigation %}{% endblock %}
-        </li>
-        <li class="menu__item menu__item--has-children-list {{macros.isActive('shoppingList', data.activePage)}}">
-            <a href="{{ path('shopping-list') }}" data-id="sidebar-shopping-list">{{ 'shopping_list.shopping_list' | trans }}</a>
-            {% block shoppingListNavigation %}{% endblock %}
-        </li>
+        {% if widgetExists('WishlistMenuItemWidgetPlugin') %}
+            {{ widget('WishlistMenuItemWidgetPlugin', data.activePage, data.activeEntityId) }}
+        {% endif %}
+        {% if widgetExists('ShoppingListMenuItemWidgetPlugin') %}
+            {{ widget('ShoppingListMenuItemWidgetPlugin', data.activePage, data.activeEntityId) }}
+        {% endif %}
     </ul>
 {% endblock %}
