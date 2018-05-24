@@ -9,13 +9,18 @@ namespace SprykerShop\Yves\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToMessengerClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientBridge;
 
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CART = 'CLIENT_CART';
-    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -24,8 +29,11 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = $this->addApplication($container);
         $container = $this->addCartClient($container);
-        $container = $this->addMessengerClient($container);
+        $container = $this->addQuoteClient($container);
+        $container = $this->addQuickOrderPageWidgetPlugins($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -35,7 +43,23 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCartClient($container): Container
+    protected function addApplication(Container $container): Container
+    {
+        $container[static::PLUGIN_APPLICATION] = function () {
+            $pimplePlugin = new Pimple();
+
+            return $pimplePlugin->getApplication();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCartClient(Container $container): Container
     {
         $container[static::CLIENT_CART] = function (Container $container) {
             return new QuickOrderPageToCartClientBridge($container->getLocator()->cart()->client());
@@ -49,12 +73,51 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addMessengerClient($container): Container
+    protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
-            return new QuickOrderPageToMessengerClientBridge($container->getLocator()->messenger()->client());
+        $container[static::CLIENT_QUOTE] = function (Container $container) {
+            return new QuickOrderPageToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuickOrderPageWidgetPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUICK_ORDER_PAGE_WIDGETS] = function () {
+            return $this->getQuickOrderPageWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addZedRequestClient($container): Container
+    {
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new QuickOrderPageToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * Returns a list of widget plugin class names that implement
+     * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     *
+     * @return string[]
+     */
+    protected function getQuickOrderPageWidgetPlugins(): array
+    {
+        return [];
     }
 }

@@ -27,14 +27,9 @@ class CurrencySwitchController extends AbstractController
     public function indexAction(Request $request)
     {
         $currencyIsoCode = $request->get(static::URL_PARAM_CURRENCY_ISO_CODE);
-
         $this->getFactory()
-            ->createCurrencyPersistence()
+            ->getCurrencyClient()
             ->setCurrentCurrencyIsoCode($currencyIsoCode);
-
-        $this->getFactory()
-            ->createCurrencyPostChangePluginExecutor()
-            ->execute($currencyIsoCode);
 
         return $this->redirectResponseExternal(
             urldecode($request->get(static::URL_PARAM_REFERRER_URL))
