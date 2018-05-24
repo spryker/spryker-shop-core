@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CartNoteWidget\Plugin\CartPage;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\CartNoteWidget\CartNoteQuoteItemWidgetPluginInterface;
 
@@ -18,14 +19,16 @@ class CartNoteQuoteItemWidgetPlugin extends AbstractWidgetPlugin implements Cart
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function initialize(ItemTransfer $itemTransfer): void
+    public function initialize(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
     {
         $cartNoteForm = $this->getFactory()->getCartNoteQuoteItemForm();
         $cartNoteForm->setData($itemTransfer);
         $this->addParameter('cartNoteForm', $cartNoteForm->createView());
+        $this->addParameter('cart', $quoteTransfer);
     }
 
     /**

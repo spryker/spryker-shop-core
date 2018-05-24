@@ -32,9 +32,9 @@ class ItemController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $note = $form->get(QuoteItemCartNoteForm::FIELD_CART_NOTE)->getData();
-            $sku = $form->get(QuoteItemCartNoteForm::FIELD_SKU)->getData();
-            $groupKey = $form->get(QuoteItemCartNoteForm::FIELD_GROUP_KEY)->getData();
+            $note = (string)$form->get(QuoteItemCartNoteForm::FIELD_CART_NOTE)->getData();
+            $sku = (string)$form->get(QuoteItemCartNoteForm::FIELD_SKU)->getData();
+            $groupKey = (string)$form->get(QuoteItemCartNoteForm::FIELD_GROUP_KEY)->getData();
 
             $quoteResponseTransfer = $this->getFactory()
                 ->getCartNoteClient()

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MultiCartWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MultiCartWidgetToMultiCartClientInterface
@@ -14,12 +15,12 @@ interface MultiCartWidgetToMultiCartClientInterface
     /**
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollection();
+    public function getQuoteCollection(): QuoteCollectionTransfer;
 
     /**
      * @return bool
      */
-    public function isMultiCartAllowed();
+    public function isMultiCartAllowed(): bool;
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer

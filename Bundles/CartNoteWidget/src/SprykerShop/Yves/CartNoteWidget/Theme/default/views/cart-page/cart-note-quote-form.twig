@@ -5,7 +5,10 @@
     formAction: url('cart-note/quote')
 } %}
 
+{% set canWrite = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', _view.cart.idQuote)) %}
+
 {% block body %}
+    {% if canWrite %}
     {% include molecule('form') with {
         data: {
             options: {
@@ -20,4 +23,5 @@
         }
     } only %}
     <hr>
+    {% endif %}
 {% endblock %}

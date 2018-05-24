@@ -1,26 +1,26 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'add-to-cart-seletor',
-    tag: 'span'
+    name: 'add-to-cart-selector',
+    tag: 'div'
 } %}
 
 {% define data = {
     carts: required,
-    isButtonDisabled: false
+    disabled: false
 } %}
 
-{% set options = [{ label: data.cart.name, value: data.cart.idQuote}] %}
 {% set attributes = {
     name: 'id_quote',
 } %}
+{% set options = [] %}
 {% for cart in data.carts %}
     {% set options = options | merge([{
         label: cart.name,
         value: cart.idQuote
     }]) %}
 {% endfor %}
-{% if data.isButtonDisabled %}
+{% if data.disabled %}
     {% set attributes = attributes | merge({
         disabled: true
     }) %}

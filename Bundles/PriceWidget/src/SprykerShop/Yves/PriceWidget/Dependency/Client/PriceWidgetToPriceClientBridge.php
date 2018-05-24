@@ -37,4 +37,14 @@ class PriceWidgetToPriceClientBridge implements PriceWidgetToPriceClientInterfac
     {
         return $this->priceClient->getCurrentPriceMode();
     }
+
+    /**
+     * @param string $priceMode
+     *
+     * @return void
+     */
+    public function switchPriceMode(string $priceMode): void
+    {
+        $this->priceClient->switchPriceMode($priceMode);
+    }
 }
