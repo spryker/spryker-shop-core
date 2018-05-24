@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 use League\Csv\Reader;
 use League\Csv\Writer;
 use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
+use SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig;
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToSessionClientInterface;
 
 class ImportErrorsHandler implements ImportErrorsHandlerInterface
@@ -44,7 +45,7 @@ class ImportErrorsHandler implements ImportErrorsHandlerInterface
         }
 
         return $this->sessionClient->set(
-            CompanyUserInvitationPageConstants::INVITATION_IMPORT_ERRORS_FILE,
+            CompanyUserInvitationPageConfig::INVITATION_IMPORT_ERRORS_FILE,
             $importErrorsFile
         );
     }
@@ -54,7 +55,7 @@ class ImportErrorsHandler implements ImportErrorsHandlerInterface
      */
     public function retrieveCompanyUserInvitationImportErrors(): array
     {
-        $importErrorsFile = $this->sessionClient->get(CompanyUserInvitationPageConstants::INVITATION_IMPORT_ERRORS_FILE, null);
+        $importErrorsFile = $this->sessionClient->get(CompanyUserInvitationPageConfig::INVITATION_IMPORT_ERRORS_FILE, null);
         if ($importErrorsFile) {
             return Reader::createFromPath($importErrorsFile, 'r')->fetchAll();
         }
@@ -69,7 +70,7 @@ class ImportErrorsHandler implements ImportErrorsHandlerInterface
     {
         return tempnam(
             CompanyUserInvitationPageConstants::IMPORT_ERRORS_FILE_PATH,
-            CompanyUserInvitationPageConstants::IMPORT_ERRORS_FILE_PREFIX
+            CompanyUserInvitationPageConfig::IMPORT_ERRORS_FILE_PREFIX
         );
     }
 }

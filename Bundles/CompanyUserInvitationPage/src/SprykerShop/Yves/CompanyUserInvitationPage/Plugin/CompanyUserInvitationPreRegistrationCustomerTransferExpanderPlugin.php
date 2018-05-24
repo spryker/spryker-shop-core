@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
+use SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig;
 use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface;
 
 /**
@@ -25,7 +25,7 @@ class CompanyUserInvitationPreRegistrationCustomerTransferExpanderPlugin extends
     public function expand(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         $customerTransfer->setCompanyUserInvitationHash(
-            $this->getFactory()->getSessionClient()->get(CompanyUserInvitationPageConstants::INVITATION_SESSION_ID)
+            $this->getFactory()->getSessionClient()->get(CompanyUserInvitationPageConfig::INVITATION_SESSION_ID)
         );
 
         return $customerTransfer;

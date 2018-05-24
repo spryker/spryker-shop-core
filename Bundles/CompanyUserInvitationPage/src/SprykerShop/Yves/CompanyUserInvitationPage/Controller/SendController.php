@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Controller;
 
 use Generated\Shared\Transfer\CompanyUserInvitationSendRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
-use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
 use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider\CompanyUserInvitationPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SendController extends AbstractController
 {
+    protected const PARAM_ID_COMPANY_USER_INVITATION = 'idCompanyUserInvitation';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -26,7 +27,7 @@ class SendController extends AbstractController
      */
     public function sendCompanyUserInvitationAction(Request $request): RedirectResponse
     {
-        $invitationId = (int)$request->get(CompanyUserInvitationPageConstants::ID_COMPANY_USER_INVITATION);
+        $invitationId = (int)$request->get(static::PARAM_ID_COMPANY_USER_INVITATION);
         $companyUserInvitationSendRequestTransfer = (new CompanyUserInvitationSendRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitation(

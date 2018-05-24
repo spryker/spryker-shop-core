@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Validator;
 
 use Exception;
-use SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig;
+use SprykerShop\Yves\CompanyUserInvitationPage\Model\Mapper\InvitationMapper;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader\InvitationReaderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -35,13 +35,13 @@ class ImportFileValidator implements ImportFileValidatorInterface
     public function isValidImportFile(UploadedFile $uploadedFile): bool
     {
         try {
-            $headers = $this->invitationReader->getHeaders($uploadedFile->getPathName());
+            $headers = $this->invitationReader->getHeaders($uploadedFile->getPathname());
 
             return !array_diff([
-                CompanyUserInvitationPageConfig::COLUMN_FIRST_NAME,
-                CompanyUserInvitationPageConfig::COLUMN_LAST_NAME,
-                CompanyUserInvitationPageConfig::COLUMN_EMAIL,
-                CompanyUserInvitationPageConfig::COLUMN_BUSINESS_UNIT,
+                InvitationMapper::COLUMN_FIRST_NAME,
+                InvitationMapper::COLUMN_LAST_NAME,
+                InvitationMapper::COLUMN_EMAIL,
+                InvitationMapper::COLUMN_BUSINESS_UNIT,
             ], $headers);
         } catch (Exception $e) {
             return false;

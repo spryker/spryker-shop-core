@@ -13,10 +13,9 @@ class CompanyUserInvitationPageConfig extends AbstractBundleConfig
 {
     public const INVITATION_FILE_DELIMITER = ',';
 
-    public const COLUMN_FIRST_NAME = 'first_name';
-    public const COLUMN_LAST_NAME = 'last_name';
-    public const COLUMN_EMAIL = 'email';
-    public const COLUMN_BUSINESS_UNIT = 'business_unit';
+    public const INVITATION_SESSION_ID = 'COMPANY_USER_INVITATION';
+    public const INVITATION_IMPORT_ERRORS_FILE = 'INVITATION_IMPORT_ERRORS_FILE';
+    public const IMPORT_ERRORS_FILE_PREFIX = '_IMPORT_ERRORS_FILE_';
 
     /**
      * @return string

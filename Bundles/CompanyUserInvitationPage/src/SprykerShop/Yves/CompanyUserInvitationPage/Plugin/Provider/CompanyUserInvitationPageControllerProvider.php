@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider;
 
 use Silex\Application;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
 use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
@@ -22,7 +24,8 @@ class CompanyUserInvitationPageControllerProvider extends AbstractYvesController
     public const ROUTE_INVITATION_RESEND = 'company/user-invitation/resend';
     public const ROUTE_INVITATION_RESEND_CONFIRM = 'company/user-invitation/resend/confirm';
 
-    public const ROUTE_INVITATION_ACCEPT = CompanyUserInvitationPageConstants::ROUTE_INVITATION_ACCEPT;
+    /** @see \Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants::ROUTE_INVITATION_ACCEPT */
+    public const ROUTE_INVITATION_ACCEPT = 'invitation/accept';
 
     public const ROUTE_INVITATION_DELETE = 'company/user-invitation/delete';
     public const ROUTE_INVITATION_DELETE_CONFIRM = 'company/user-invitation/delete/confirm';

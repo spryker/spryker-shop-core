@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ResendController extends AbstractController
 {
+    protected const PARAM_ID_COMPANY_USER_INVITATION = 'idCompanyUserInvitation';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -27,7 +29,7 @@ class ResendController extends AbstractController
     public function indexAction(Request $request)
     {
         return $this->view([
-            'id' => (int)$request->get(CompanyUserInvitationPageConstants::ID_COMPANY_USER_INVITATION),
+            'id' => (int)$request->get(static::PARAM_ID_COMPANY_USER_INVITATION),
         ], [], '@CompanyUserInvitationPage/views/invitation-resend/invitation-resend.twig');
     }
 
@@ -38,7 +40,7 @@ class ResendController extends AbstractController
      */
     public function confirmAction(Request $request): RedirectResponse
     {
-        $invitationId = (int)$request->get(CompanyUserInvitationPageConstants::ID_COMPANY_USER_INVITATION);
+        $invitationId = (int)$request->get(static::PARAM_ID_COMPANY_USER_INVITATION);
         $companyUserInvitationSendRequestTransfer = (new CompanyUserInvitationSendRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitation(

@@ -10,11 +10,14 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Mapper;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Iterator;
-use SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig;
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCustomerClientInterface;
 
 class InvitationMapper implements InvitationMapperInterface
 {
+    const COLUMN_EMAIL = 'email';
+    const COLUMN_BUSINESS_UNIT = 'business_unit';
+    const COLUMN_LAST_NAME = 'last_name';
+    const COLUMN_FIRST_NAME = 'first_name';
     /**
      * @var \SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCustomerClientInterface
      */
@@ -55,9 +58,9 @@ class InvitationMapper implements InvitationMapperInterface
     protected function getCompanyUserInvitationTransfer(array $record): CompanyUserInvitationTransfer
     {
         return (new CompanyUserInvitationTransfer())
-            ->setFirstName($record[CompanyUserInvitationPageConfig::COLUMN_FIRST_NAME])
-            ->setLastName($record[CompanyUserInvitationPageConfig::COLUMN_LAST_NAME])
-            ->setEmail($record[CompanyUserInvitationPageConfig::COLUMN_EMAIL])
-            ->setCompanyBusinessUnitName($record[CompanyUserInvitationPageConfig::COLUMN_BUSINESS_UNIT]);
+            ->setFirstName($record[static::COLUMN_FIRST_NAME])
+            ->setLastName($record[static::COLUMN_LAST_NAME])
+            ->setEmail($record[static::COLUMN_EMAIL])
+            ->setCompanyBusinessUnitName($record[static::COLUMN_BUSINESS_UNIT]);
     }
 }

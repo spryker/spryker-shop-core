@@ -9,8 +9,7 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Controller;
 
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
-use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig;
 use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider\CompanyUserInvitationPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
+    protected const PARAM_ID_COMPANY_USER_INVITATION = 'idCompanyUserInvitation';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -28,7 +29,7 @@ class DeleteController extends AbstractController
     public function indexAction(Request $request)
     {
         return $this->view([
-            'id' => (int)$request->get(CompanyUserInvitationPageConstants::ID_COMPANY_USER_INVITATION),
+            'id' => (int)$request->get(static::PARAM_ID_COMPANY_USER_INVITATION),
         ], [], '@CompanyUserInvitationPage/views/invitation-delete/invitation-delete.twig');
     }
 
@@ -39,14 +40,14 @@ class DeleteController extends AbstractController
      */
     public function confirmAction(Request $request): RedirectResponse
     {
-        $invitationId = (int)$request->get(CompanyUserInvitationPageConstants::ID_COMPANY_USER_INVITATION);
+        $invitationId = (int)$request->get(static::PARAM_ID_COMPANY_USER_INVITATION);
         $companyUserInvitationTransfer = (new CompanyUserInvitationTransfer())
             ->setIdCompanyUserInvitation($invitationId);
 
         $companyUserInvitationUpdateStatusRequestTransfer = (new CompanyUserInvitationUpdateStatusRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitation($companyUserInvitationTransfer)
-            ->setStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_DELETED);
+            ->setStatusKey(CompanyUserInvitationConfig::INVITATION_STATUS_DELETED);
 
         $companyUserInvitationUpdateStatusResponseTransfer = $this->getFactory()
             ->getCompanyUserInvitationClient()

@@ -12,7 +12,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface PreRegistrationCustomerTransferExpanderPluginInterface
 {
     /**
-     * This plugin allows to expand the CustomerTransfer before registration.
+     * Specification:
+     * - This plugin allows to expand the CustomerTransfer before registration.
      *
      * @api
      *

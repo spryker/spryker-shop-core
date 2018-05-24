@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig;
 use SprykerShop\Yves\CompanyUserInvitationPage\Form\CompanyUserInvitationForm;
 use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider\CompanyUserInvitationPageControllerProvider;
 use Symfony\Component\Form\FormInterface;
@@ -27,11 +27,11 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class ImportController extends AbstractController
 {
-    public const DEFAULT_COMPANY_USER_INVITATION_LIST_PAGE = 1;
-    public const DEFAULT_COMPANY_USER_INVITATION_LIST_LIMIT = 10;
-    public const DEFAULT_COMPANY_USER_INVITATION_LIST_PARAM_PAGE = 'page';
-    public const DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_FIELD = 'email';
-    public const DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_DIRECTION = 'ASC';
+    protected const DEFAULT_COMPANY_USER_INVITATION_LIST_PAGE = 1;
+    protected const DEFAULT_COMPANY_USER_INVITATION_LIST_LIMIT = 10;
+    protected const DEFAULT_COMPANY_USER_INVITATION_LIST_PARAM_PAGE = 'page';
+    protected const DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_FIELD = 'email';
+    protected const DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_DIRECTION = 'ASC';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -139,9 +139,9 @@ class ImportController extends AbstractController
      */
     protected function getImportFilePath(FormInterface $companyUserInvitationForm): string
     {
-        return $companyUserInvitationForm
-            ->getData()[CompanyUserInvitationForm::FIELD_INVITATIONS_LIST]
-            ->getPathname();
+        /** @var \SplFileInfo $uploadedFile */
+        $uploadedFile = $companyUserInvitationForm->getData()[CompanyUserInvitationForm::FIELD_INVITATIONS_LIST];
+        return $uploadedFile->getPathname();
     }
 
     /**
@@ -158,7 +158,7 @@ class ImportController extends AbstractController
         $companyUserInvitationCriteriaFilterTransfer = (new CompanyUserInvitationCriteriaFilterTransfer())
             ->setFkCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setFkCompany($this->companyUserTransfer->getFkCompany())
-            ->setCompanyUserInvitationStatusKeyNotIn([CompanyUserInvitationConstants::INVITATION_STATUS_DELETED])
+            ->setCompanyUserInvitationStatusKeyNotIn([CompanyUserInvitationConfig::INVITATION_STATUS_DELETED])
             ->setFilter($filterTransfer);
 
         $page = $request->query->getInt(
