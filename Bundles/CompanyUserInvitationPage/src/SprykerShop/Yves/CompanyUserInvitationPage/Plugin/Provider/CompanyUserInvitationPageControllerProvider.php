@@ -8,9 +8,6 @@
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider;
 
 use Silex\Application;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
-use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 class CompanyUserInvitationPageControllerProvider extends AbstractYvesControllerProvider

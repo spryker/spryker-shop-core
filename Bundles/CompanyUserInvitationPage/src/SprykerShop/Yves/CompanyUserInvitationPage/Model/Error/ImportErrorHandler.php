@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Errors;
+namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Error;
 
 use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 use League\Csv\Reader;
@@ -14,7 +14,7 @@ use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConsta
 use SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig;
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToSessionClientInterface;
 
-class ImportErrorsHandler implements ImportErrorsHandlerInterface
+class ImportErrorHandler implements ImportErrorHandlerInterface
 {
     /**
      * @var \SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToSessionClientInterface

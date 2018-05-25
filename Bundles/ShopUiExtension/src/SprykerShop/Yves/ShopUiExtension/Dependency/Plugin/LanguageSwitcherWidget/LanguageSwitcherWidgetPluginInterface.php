@@ -5,21 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShopLayoutExtension\Dependency\Plugin\LanguageSwitcherWidget;
+namespace SprykerShop\Yves\ShopUiExtension\Dependency\Plugin\LanguageSwitcherWidget;
 
-use Symfony\Component\HttpFoundation\Request;
-
-/**
- * @deprecated
- */
 interface LanguageSwitcherWidgetPluginInterface
 {
     const NAME = 'LanguageSwitcherWidgetPlugin';
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $pathInfo
+     * @param string $queryString
+     * @param string $requestUri
      *
      * @return void
      */
-    public function initialize(Request $request): void;
+    public function initialize(string $pathInfo, $queryString, string $requestUri): void;
 }

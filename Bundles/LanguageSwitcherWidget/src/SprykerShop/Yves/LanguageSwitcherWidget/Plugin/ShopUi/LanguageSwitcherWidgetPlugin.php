@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\LanguageSwitcherWidget\Plugin\ShopLayout;
+namespace SprykerShop\Yves\LanguageSwitcherWidget\Plugin\ShopUi;
 
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShopLayoutExtension\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
-use Symfony\Component\HttpFoundation\Request;
+use SprykerShop\Yves\ShopUiExtension\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\LanguageSwitcherWidget\LanguageSwitcherWidgetFactory getFactory()
@@ -18,22 +17,23 @@ use Symfony\Component\HttpFoundation\Request;
 class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements LanguageSwitcherWidgetPluginInterface
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $pathInfo
+     * @param string $queryString
+     * @param string $requestUri
      *
      * @return void
      */
-    public function initialize(Request $request): void
-    {
+    public function initialize(string $pathInfo, $queryString, string $requestUri): void {
         $currentUrlStorage = $this->getFactory()
             ->getUrlStorageClient()
-            ->findUrlStorageTransferByUrl($request->getPathInfo());
+            ->findUrlStorageTransferByUrl($pathInfo);
         $localeUrls = [];
 
         if ($currentUrlStorage !== null && $currentUrlStorage->getLocaleUrls()->count() !== 0) {
             $localeUrls = (array)$currentUrlStorage->getLocaleUrls();
         }
 
-        $this->addParameter('languages', $this->getLanguages($localeUrls, $request))
+        $this->addParameter('languages', $this->getLanguages($localeUrls, $queryString, $requestUri))
             ->addParameter('currentLanguage', $this->getCurrentLanguage());
     }
 
@@ -55,38 +55,45 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
 
     /**
      * @param array $localeUrls
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $queryString
+     * @param string $requestUri
      *
      * @return string[]
      */
-    protected function getLanguages(array $localeUrls, Request $request): array
-    {
+    protected function getLanguages(
+        array $localeUrls,
+        $queryString,
+        string $requestUri
+    ): array {
         $locales = $this->getFactory()
             ->getStore()
             ->getLocales();
 
         if (!empty($localeUrls)) {
-            return $this->attachLocaleUrlsFromStorageToLanguages($locales, $localeUrls, $request);
+            return $this->attachLocaleUrlsFromStorageToLanguages($locales, $localeUrls, $queryString);
         }
 
-        return $this->attachLocaleUrlsToLanguages($locales, $request);
+        return $this->attachLocaleUrlsToLanguages($locales, $requestUri);
     }
 
     /**
      * @param array $locales
      * @param array $localeUrls
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $queryString
      *
      * @return array
      */
-    protected function attachLocaleUrlsFromStorageToLanguages(array $locales, array $localeUrls, Request $request): array
-    {
+    protected function attachLocaleUrlsFromStorageToLanguages(
+        array $locales,
+        array $localeUrls,
+        $queryString
+    ): array {
         $languages = [];
         foreach ($locales as $locale) {
             $language = $this->getLanguageFromLocale($locale);
             foreach ($localeUrls as $localeUrl) {
                 if ($localeUrl[UrlStorageTransfer::LOCALE_NAME] === $locale) {
-                    $languages[$language] = $localeUrl[UrlStorageTransfer::URL] . '?' . $request->getQueryString();
+                    $languages[$language] = $localeUrl[UrlStorageTransfer::URL] . '?' . $queryString;
                     break;
                 }
             }
@@ -97,13 +104,13 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
 
     /**
      * @param array $locales
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $requestUri
      *
      * @return array
      */
-    protected function attachLocaleUrlsToLanguages(array $locales, Request $request): array
+    protected function attachLocaleUrlsToLanguages(array $locales, string $requestUri): array
     {
-        $currentUrl = $request->getRequestUri();
+        $currentUrl = $requestUri;
         $languages = [];
         foreach ($locales as $locale) {
             $language = $this->getLanguageFromLocale($locale);

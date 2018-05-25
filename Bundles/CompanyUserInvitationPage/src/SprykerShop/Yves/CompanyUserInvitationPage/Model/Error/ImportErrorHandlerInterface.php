@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Errors;
+namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Error;
 
 use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 
-interface ImportErrorsHandlerInterface
+interface ImportErrorHandlerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer $companyUserInvitationImportReportTransfer

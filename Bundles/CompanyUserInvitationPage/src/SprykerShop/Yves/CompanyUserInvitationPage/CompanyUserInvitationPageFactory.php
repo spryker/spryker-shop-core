@@ -12,8 +12,8 @@ use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvi
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCustomerClientInterface;
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToSessionClientInterface;
 use SprykerShop\Yves\CompanyUserInvitationPage\Form\FormFactory;
-use SprykerShop\Yves\CompanyUserInvitationPage\Model\Errors\ImportErrorsHandler;
-use SprykerShop\Yves\CompanyUserInvitationPage\Model\Errors\ImportErrorsHandlerInterface;
+use SprykerShop\Yves\CompanyUserInvitationPage\Model\Error\ImportErrorHandler;
+use SprykerShop\Yves\CompanyUserInvitationPage\Model\Error\ImportErrorHandlerInterface;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Mapper\InvitationMapper;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Mapper\InvitationMapperInterface;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader\CsvInvitationReader;
@@ -51,11 +51,11 @@ class CompanyUserInvitationPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyUserInvitationPage\Model\Errors\ImportErrorsHandlerInterface
+     * @return \SprykerShop\Yves\CompanyUserInvitationPage\Model\Error\ImportErrorHandlerInterface
      */
-    public function createImportErrorsHandler(): ImportErrorsHandlerInterface
+    public function createImportErrorsHandler(): ImportErrorHandlerInterface
     {
-        return new ImportErrorsHandler(
+        return new ImportErrorHandler(
             $this->getSessionClient()
         );
     }
