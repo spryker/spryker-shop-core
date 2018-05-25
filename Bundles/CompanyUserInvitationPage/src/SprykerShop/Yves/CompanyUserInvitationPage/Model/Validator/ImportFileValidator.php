@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Validator;
 
-use Exception;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Mapper\InvitationMapper;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader\InvitationReaderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Throwable;
 
 class ImportFileValidator implements ImportFileValidatorInterface
 {
@@ -43,7 +43,7 @@ class ImportFileValidator implements ImportFileValidatorInterface
                 InvitationMapper::COLUMN_EMAIL,
                 InvitationMapper::COLUMN_BUSINESS_UNIT,
             ], $headers);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return false;
         }
     }
