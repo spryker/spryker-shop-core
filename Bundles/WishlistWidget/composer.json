@@ -8,8 +8,8 @@
     "spryker/wishlist": "^4.0.0 || ^5.0.0 || ^6.0.0"
   },
   "require-dev": {
-    "spryker-shop/product-detail-page": "*",
-    "spryker-shop/customer-page": "*"
+    "spryker-shop/customer-page": "*",
+    "spryker-shop/product-detail-page": "*"
   },
   "suggest": {
     "spryker-shop/product-detail-page": "TODO: add suggestion description",
