@@ -12,14 +12,14 @@ use Spryker\Yves\Kernel\Container;
 
 class CmsContentWidgetChartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_CMS_CHART_CONTENT_WIDGETS = 'PLUGIN_CMS_CHART_CONTENT_WIDGETS';
+    public const PLUGIN_CMS_CHART_CONTENT_WIDGETS = 'PLUGIN_CMS_CHART_CONTENT_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
         $container = $this->addCmsChartContentWidgetPlugins($container);
@@ -44,7 +44,7 @@ class CmsContentWidgetChartConnectorDependencyProvider extends AbstractBundleDep
     /**
      * @return string[]
      */
-    protected function getCmsChartContentWidgetPlugins()
+    protected function getCmsChartContentWidgetPlugins(): array
     {
         return [];
     }

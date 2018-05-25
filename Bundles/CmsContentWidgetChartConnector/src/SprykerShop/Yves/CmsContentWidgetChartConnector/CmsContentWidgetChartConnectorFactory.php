@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CmsContentWidgetChartConnector;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
+use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
 
 class CmsContentWidgetChartConnectorFactory extends AbstractFactory
@@ -16,7 +17,7 @@ class CmsContentWidgetChartConnectorFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerRegistry
      */
-    public function createWidgetContainerRegistry()
+    public function createWidgetContainerRegistry(): WidgetContainerRegistry
     {
         return new WidgetContainerRegistry();
     }
@@ -24,7 +25,7 @@ class CmsContentWidgetChartConnectorFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
      */
-    public function createCmsChartContentWidgetCollection()
+    public function createCmsChartContentWidgetCollection(): WidgetContainerInterface
     {
         return new WidgetCollection($this->getCmsChartContentWidgetPlugins());
     }

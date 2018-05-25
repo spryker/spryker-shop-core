@@ -34,7 +34,7 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     /**
      * @return callable
      */
-    public function getContentWidgetFunction()
+    public function getContentWidgetFunction(): callable
     {
         return [$this, 'contentWidgetFunction'];
     }
@@ -68,7 +68,7 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      *
      * @return string
      */
-    protected function resolveTemplatePath($templateIdentifier = null)
+    protected function resolveTemplatePath($templateIdentifier = null): string
     {
         if (!$templateIdentifier) {
             $templateIdentifier = CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
@@ -84,7 +84,7 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      *
      * @return array
      */
-    protected function getContent(array $context, $chartPluginName, $dataIdentifier = null)
+    protected function getContent(array $context, $chartPluginName, $dataIdentifier = null): array
     {
         return [
             'chartPluginName' => $chartPluginName,

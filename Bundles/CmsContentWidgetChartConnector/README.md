@@ -1,6 +1,6 @@
 # CmsContentWidgetChartConnector Module
 
-{{ADD DESCRIPTION HERE}}
+Cms content widget chart connector.
 
 ## Installation
 

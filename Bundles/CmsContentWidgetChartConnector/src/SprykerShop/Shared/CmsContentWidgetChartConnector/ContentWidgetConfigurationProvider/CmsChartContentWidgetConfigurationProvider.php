@@ -11,12 +11,12 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 
 class CmsChartContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
-    const FUNCTION_NAME = 'chart';
+    public const FUNCTION_NAME = 'chart';
 
     /**
      * @return string
      */
-    public function getFunctionName()
+    public function getFunctionName(): string
     {
         return static::FUNCTION_NAME;
     }
@@ -24,7 +24,7 @@ class CmsChartContentWidgetConfigurationProvider implements CmsContentWidgetConf
     /**
      * @return array
      */
-    public function getAvailableTemplates()
+    public function getAvailableTemplates(): array
     {
         return [
             CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@CmsContentWidgetChartConnector/_chart/cms-chart-content-widget.twig',
@@ -34,7 +34,7 @@ class CmsChartContentWidgetConfigurationProvider implements CmsContentWidgetConf
     /**
      * @return string
      */
-    public function getUsageInformation()
+    public function getUsageInformation(): string
     {
         return "{{ chart('plugin-name', 'data-identifier') }}, to use different template {{ chart('plugin-name', 'data-identifier', 'default') }}";
     }
