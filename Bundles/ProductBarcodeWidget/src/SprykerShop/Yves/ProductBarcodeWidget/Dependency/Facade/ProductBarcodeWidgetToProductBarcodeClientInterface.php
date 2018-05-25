@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\BarcodeWidget\Dependency\Facade;
+namespace SprykerShop\Yves\ProductBarcodeWidget\Dependency\Facade;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface BarcodeWidgetToProductBarcodeClientInterface
+interface ProductBarcodeWidgetToProductBarcodeClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

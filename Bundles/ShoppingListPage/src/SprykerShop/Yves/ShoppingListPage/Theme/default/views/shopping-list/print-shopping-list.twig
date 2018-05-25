@@ -3,6 +3,7 @@
 {% define data = {
     shoppingList: _view.shoppingListOverview.shoppingList,
     shoppingListItems: _view.shoppingListItems,
+    barcodeGeneratorPlugin: _view.barcodeGeneratorPlugin | default(null),
     labels: {
         barcode: 'customer.account.print_shopping_list.table.barcode' | trans,
         productSku: 'customer.account.print_shopping_list.table.product_sku' | trans,
@@ -32,6 +33,7 @@
     {% for item in data.shoppingListItems %}
     <tr>
         <td>{{ widget('BarcodeWidgetPlugin', item.sku) }}</td>
+        {#<td>{{ widget('BarcodeWidgetPlugin', item, data.barcodeGeneratorPlugin) }}</td>#}
         <td>{{ item.sku }}</td>
         <td>{{ item.name }}</td>
         <td>

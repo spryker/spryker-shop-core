@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\BarcodeWidget;
+namespace SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductBarcodeWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface BarcodeWidgetPluginInterface extends WidgetPluginInterface
+interface ProductBarcodeWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'BarcodeWidgetPlugin';
 

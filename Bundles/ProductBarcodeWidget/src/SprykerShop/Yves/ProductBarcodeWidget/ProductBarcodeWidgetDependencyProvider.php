@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\BarcodeWidget;
+namespace SprykerShop\Yves\ProductBarcodeWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\BarcodeWidget\Dependency\Facade\BarcodeWidgetToProductBarcodeClientBridge;
+use SprykerShop\Yves\ProductBarcodeWidget\Dependency\Facade\ProductBarcodeWidgetToProductBarcodeClientBridge;
 
-class BarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
+class ProductBarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRODUCT_BARCODE = 'CLIENT_PRODUCT_BARCODE';
 
@@ -35,7 +35,7 @@ class BarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
     protected function addProductBarcodeClient(Container $container): Container
     {
         $container[self::CLIENT_PRODUCT_BARCODE] = function (Container $container) {
-            return new BarcodeWidgetToProductBarcodeClientBridge($container->getLocator()->productBarcode()->client());
+            return new ProductBarcodeWidgetToProductBarcodeClientBridge($container->getLocator()->productBarcode()->client());
         };
 
         return $container;
