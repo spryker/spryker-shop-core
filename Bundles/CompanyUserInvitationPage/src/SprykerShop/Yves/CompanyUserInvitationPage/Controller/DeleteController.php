@@ -29,7 +29,7 @@ class DeleteController extends AbstractController
     public function indexAction(Request $request)
     {
         return $this->view([
-            'id' => (int)$request->get(static::PARAM_ID_COMPANY_USER_INVITATION),
+            'idCompanyUserInvitation' => (int)$request->get(static::PARAM_ID_COMPANY_USER_INVITATION),
         ], [], '@CompanyUserInvitationPage/views/invitation-delete/invitation-delete.twig');
     }
 
