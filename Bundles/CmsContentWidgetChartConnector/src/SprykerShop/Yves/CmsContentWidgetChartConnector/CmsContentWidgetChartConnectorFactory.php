@@ -33,7 +33,7 @@ class CmsContentWidgetChartConnectorFactory extends AbstractFactory
     /**
      * @return string[]
      */
-    protected function getCmsChartContentWidgetPlugins(): array
+    public function getCmsChartContentWidgetPlugins(): array
     {
         return $this->getProvidedDependency(CmsContentWidgetChartConnectorDependencyProvider::PLUGIN_CMS_CHART_CONTENT_WIDGETS);
     }
