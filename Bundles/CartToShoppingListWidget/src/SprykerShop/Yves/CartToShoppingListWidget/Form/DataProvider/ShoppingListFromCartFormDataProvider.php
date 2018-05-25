@@ -16,6 +16,8 @@ class ShoppingListFromCartFormDataProvider
 {
     use PermissionAwareTrait;
 
+    protected const GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ADD_NEW = 'cart.add-to-shopping-list.form.add_new';
+
     /**
      * @var \SprykerShop\Yves\CartToShoppingListWidget\Dependency\Client\CartToShoppingListWidgetToShoppingListClientInterface
      */
@@ -60,7 +62,7 @@ class ShoppingListFromCartFormDataProvider
         $shoppingListCollection = [];
         $shoppingListTransferCollection = $this->shoppingListClient->getCustomerShoppingListCollection()->getShoppingLists();
 
-        $shoppingListCollection[null] = 'cart.add-to-shopping-list.form.add_new';
+        $shoppingListCollection[null] = self::GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ADD_NEW;
         foreach ($shoppingListTransferCollection as $shoppingListTransfer) {
             if ($this->can('WriteShoppingListPermissionPlugin', $shoppingListTransfer->getIdShoppingList())) {
                 $shoppingListCollection[$shoppingListTransfer->getName()] = $shoppingListTransfer->getName();
