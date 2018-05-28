@@ -18,17 +18,35 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClien
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreBridge;
+use SprykerShop\Yves\CompanyUserPage\Dependency\CompanyPageToBusinessOnBehalfClientBridge;
 
 class CompanyUserPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const CLIENT_BUSINESS_ON_BEHALF = 'CLIENT_BUSINESS_ON_BEHALF';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container): Container
+    public function provideDependencies(Container $container)
     {
         $container = parent::provideDependencies($container);
+        $container = $this->addBusinessOnBehalfClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addBusinessOnBehalfClient(Container $container): Container
+    {
+        $container[static::CLIENT_BUSINESS_ON_BEHALF] = function (Container $container) {
+            return new CompanyPageToBusinessOnBehalfClientBridge($container->getLocator()->businessOnBehalf()->client());
+        };
 
         return $container;
     }

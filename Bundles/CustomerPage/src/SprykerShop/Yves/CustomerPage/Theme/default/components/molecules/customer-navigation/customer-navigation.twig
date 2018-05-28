@@ -41,7 +41,7 @@
             {% block shoppingListNavigation %}{% endblock %}
         </li>
         <li class="menu__item {{macros.isActive('companyUser', data.activePage)}}">
-            <a href="{{ path('company-user/change') }}" data-id="sidebar-change-company-user">{{ 'company-user.change_company_user' | trans }}</a>
+            <a href="{{ path('company/user/select') }}" data-id="sidebar-change-company-user">{{ 'company-user.change_company_user' | trans }}</a>
             {% block createCompanyUser %}{% endblock %}
         </li>
     </ul>

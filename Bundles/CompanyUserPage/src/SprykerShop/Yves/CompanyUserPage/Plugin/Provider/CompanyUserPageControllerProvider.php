@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class CompanyUserPageControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_COMPANY_USER_CHANGE = 'company-user/change';
+    public const ROUTE_COMPANY_USER_SELECT = 'company/user/select';
 
     /**
      * @param \Silex\Application $app
@@ -31,8 +31,8 @@ class CompanyUserPageControllerProvider extends AbstractYvesControllerProvider
     {
         $allowedLocalesPattern = $this->getAllowedLocalesPattern();
 
-        $this->createController('/{company-user}/change', static::ROUTE_COMPANY_USER_CHANGE, 'CompanyUserPage', 'CompanyUser', 'change')
-            ->assert('company-user', $allowedLocalesPattern . 'company-user|company-user')
-            ->value('company-user', 'company-user');
+        $this->createController('/{company}/user/select', static::ROUTE_COMPANY_USER_SELECT, 'CompanyUserPage', 'BusinessOnBehalf', 'selectCompanyUser')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
     }
 }

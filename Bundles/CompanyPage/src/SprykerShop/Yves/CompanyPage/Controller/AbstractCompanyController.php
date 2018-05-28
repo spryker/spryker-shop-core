@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use SprykerShop\Yves\CompanyUserPage\Plugin\Provider\CompanyUserPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -35,6 +36,11 @@ abstract class AbstractCompanyController extends AbstractController
         parent::initialize();
 
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if (true || $customerTransfer->getIsOnBehalf()) {
+            //TODO: do not redirect, talk to Denis
+            return $this->redirectResponseInternal(CompanyUserPageControllerProvider::ROUTE_COMPANY_USER_SELECT);
+        }
 
         if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
             throw new NotFoundHttpException("Regular customers are not allowed to operate on company pages");

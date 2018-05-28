@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyUserPage\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,11 +27,8 @@ class CompanyUserAccountFrom extends AbstractType
 
     protected function addCompanyUserAccountChoice(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_COMPANY_USER_ACCOUNT_CHOICE, 'choice', [
-            'multiple' => false,
-            'expanded' => true,
-            'mapped' => false,
-            'choices' => array_flip($options[static::OPTION_COMPANY_USER_ACCOUNT_CHOICES])
+        $builder->add(static::FIELD_COMPANY_USER_ACCOUNT_CHOICE, ChoiceType::class, [
+            'choices' => $options[static::OPTION_COMPANY_USER_ACCOUNT_CHOICES],
         ]);
     }
 

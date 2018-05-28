@@ -17,14 +17,14 @@ activePage: 'change-user-company'
 {% block content %}
     <div class="grid">
         <div class="col col--sm-12 col--md-3">
-            {% block companyUserNavigation %}
-                {% include molecule('company-user-navigation', 'CompanyUserPage') with {
-                    class: 'box',
-                        data: {
-                            activePage: data.activePage
-                        }
-                    } only %}
-            {% endblock %}
+            {#{% block companyUserNavigation %}#}
+                {#{% include molecule('company-user-navigation', 'CompanyUserPage') with {#}
+                    {#class: 'box',#}
+                        {#data: {#}
+                            {#activePage: data.activePage#}
+                        {#}#}
+                    {#} only %}#}
+            {#{% endblock %}#}
         </div>
 
         <div class="col col--sm-12 col--md-9">

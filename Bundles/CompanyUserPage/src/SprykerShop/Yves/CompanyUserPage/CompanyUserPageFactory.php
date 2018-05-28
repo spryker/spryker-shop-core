@@ -8,16 +8,35 @@
 namespace SprykerShop\Yves\CompanyUserPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
-use SprykerShop\Yves\CompanyPage\Form\FormFactory;
+use SprykerShop\Yves\CompanyUserPage\Dependency\CompanyPageToBusinessOnBehalfClientInterface;
+use SprykerShop\Yves\CompanyUserPage\Form\DataProvider\CompanyUserAccountDataProvider;
+use SprykerShop\Yves\CompanyUserPage\Form\FormFactory;
 
 class CompanyUserPageFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\CompanyUserPage\Form\FormFactory
+     */
+    public function createCompanyUserPageFormFactory()
+    {
+        return new FormFactory();
+    }
 
+    /**
+     * @return CompanyUserAccountDataProvider
+     */
+    public function createCompanyUserAccountDataProvider(): CompanyUserAccountDataProvider
+    {
+        return new CompanyUserAccountDataProvider(
+            $this->getBusinessOnBehalfClient()
+        );
+    }
+
+    /**
+     * @return CompanyPageToBusinessOnBehalfClientInterface
+     */
+    protected function getBusinessOnBehalfClient(): CompanyPageToBusinessOnBehalfClientInterface
+    {
+        return $this->getProvidedDependency(CompanyUserPageDependencyProvider::CLIENT_BUSINESS_ON_BEHALF);
+    }
 }
