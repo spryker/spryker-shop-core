@@ -20,6 +20,9 @@ use SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader\CsvInvitationReader;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader\InvitationReaderInterface;
 use SprykerShop\Yves\CompanyUserInvitationPage\Model\Validator\ImportFileValidator;
 
+/**
+ * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig getConfig()
+ */
 class CompanyUserInvitationPageFactory extends AbstractFactory
 {
     /**

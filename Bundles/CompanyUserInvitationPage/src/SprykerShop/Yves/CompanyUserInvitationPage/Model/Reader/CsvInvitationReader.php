@@ -19,7 +19,7 @@ class CsvInvitationReader implements InvitationReaderInterface
     protected $config;
 
     /**
-     * @param \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig|\Spryker\Yves\Kernel\AbstractBundleConfig $config
+     * @param \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig
      */
     public function __construct(CompanyUserInvitationPageConfig $config)
     {
