@@ -8,12 +8,12 @@
 namespace SprykerShop\Yves\ProductBarcodeWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductBarcodeWidget\Dependency\Facade\ProductBarcodeWidgetToProductBarcodeClientInterface;
+use SprykerShop\Yves\ProductBarcodeWidget\Dependency\Client\ProductBarcodeWidgetToProductBarcodeClientInterface;
 
 class ProductBarcodeWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\ProductBarcodeWidget\Dependency\Facade\ProductBarcodeWidgetToProductBarcodeClientInterface
+     * @return \SprykerShop\Yves\ProductBarcodeWidget\Dependency\Client\ProductBarcodeWidgetToProductBarcodeClientInterface
      */
     public function getProductBarcodeClient(): ProductBarcodeWidgetToProductBarcodeClientInterface
     {

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductBarcodeWidget\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductBarcodeWidget\ProductBarcodeWidgetPluginInterface;
 
@@ -17,19 +18,22 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductBarcodeWidget\Pro
 class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements ProductBarcodeWidgetPluginInterface
 {
      /**
-     * @param string $productSku
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string|null $barcodeGeneratorPlugin
      *
      * @return void
      */
-    public function initialize(string $productSku): void
-    {
-        $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($productSku);
+    public function initialize(
+        ProductViewTransfer $productViewTransfer,
+        ?string $barcodeGeneratorPlugin = null
+    ): void {
+        $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productViewTransfer->toArray(), true);
 
         $barcodeResponseTransfer = $this->getFactory()
             ->getProductBarcodeClient()
-            ->generateBarcode($productConcreteTransfer);
+            ->generateBarcode($productConcreteTransfer, $barcodeGeneratorPlugin);
 
-        $this->addParameter('productSku', $productSku);
+        $this->addParameter('productViewTransfer', $productViewTransfer);
         $this->addParameter('barcodeResponseTransfer', $barcodeResponseTransfer);
     }
 

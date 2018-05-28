@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ProductBarcodeWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductBarcodeWidget\Dependency\Facade\ProductBarcodeWidgetToProductBarcodeClientBridge;
+use SprykerShop\Yves\ProductBarcodeWidget\Dependency\Client\ProductBarcodeWidgetToProductBarcodeClientBridge;
 
 class ProductBarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {

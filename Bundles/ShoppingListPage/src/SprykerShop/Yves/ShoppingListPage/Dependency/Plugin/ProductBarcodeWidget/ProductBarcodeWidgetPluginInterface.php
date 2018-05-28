@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductBarcodeWidget;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductBarcodeWidgetPluginInterface extends WidgetPluginInterface
@@ -14,9 +15,10 @@ interface ProductBarcodeWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'BarcodeWidgetPlugin';
 
     /**
-     * @param string $productSku
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $barcodeGeneratorPlugin
      *
      * @return void
      */
-    public function initialize(string $productSku): void;
+    public function initialize(ProductViewTransfer $productViewTransfer, string $barcodeGeneratorPlugin = null): void;
 }
