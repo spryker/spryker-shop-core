@@ -18,11 +18,11 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductBarcodeWidget\Pro
 class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements ProductBarcodeWidgetPluginInterface
 {
      /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string|null $barcodeGeneratorPlugin
-     *
-     * @return void
-     */
+      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+      * @param string|null $barcodeGeneratorPlugin
+      *
+      * @return void
+      */
     public function initialize(
         ProductViewTransfer $productViewTransfer,
         ?string $barcodeGeneratorPlugin = null
@@ -33,7 +33,6 @@ class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements Product
             ->getProductBarcodeClient()
             ->generateBarcode($productConcreteTransfer, $barcodeGeneratorPlugin);
 
-        $this->addParameter('productViewTransfer', $productViewTransfer);
         $this->addParameter('barcodeResponseTransfer', $barcodeResponseTransfer);
     }
 

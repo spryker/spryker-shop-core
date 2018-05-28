@@ -34,7 +34,7 @@ class ProductBarcodeWidgetDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductBarcodeClient(Container $container): Container
     {
-        $container[self::CLIENT_PRODUCT_BARCODE] = function (Container $container) {
+        $container[static::CLIENT_PRODUCT_BARCODE] = function (Container $container) {
             return new ProductBarcodeWidgetToProductBarcodeClientBridge($container->getLocator()->productBarcode()->client());
         };
 

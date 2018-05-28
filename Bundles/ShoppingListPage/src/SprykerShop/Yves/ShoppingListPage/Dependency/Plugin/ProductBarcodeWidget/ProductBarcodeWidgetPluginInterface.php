@@ -16,9 +16,9 @@ interface ProductBarcodeWidgetPluginInterface extends WidgetPluginInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $barcodeGeneratorPlugin
+     * @param string|null $barcodeGeneratorPlugin
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, string $barcodeGeneratorPlugin = null): void;
+    public function initialize(ProductViewTransfer $productViewTransfer, ?string $barcodeGeneratorPlugin = null): void;
 }
