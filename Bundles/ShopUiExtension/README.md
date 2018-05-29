@@ -1,13 +1,13 @@
 # ShopUiExtension Module
-[![Build Status](https://travis-ci.org/spryker/shop-ui-extension.svg)](https://travis-ci.org/spryker/shop-ui-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/shop-ui-extension/badge.svg)](https://coveralls.io/github/spryker/shop-ui-extension)
+[![Build Status](https://travis-ci.org/spryker-shop/shop-ui-extension.svg)](https://travis-ci.org/spryker-shop/shop-ui-extension)
+[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/shop-ui-extension/badge.svg)](https://coveralls.io/github/spryker-shop/shop-ui-extension)
 
 ShopUiExtension module offers plugin interfaces to decouple interface provider modules from satellite modules
 
 ## Installation
 
 ```
-composer require spryker/shop-ui-extension
+composer require spryker-shop/shop-ui-extension
 ```
 
 ## Documentation
