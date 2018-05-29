@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CmsContentWidgetChartConnector\Plugin;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Twig_Environment;
 
 /**
