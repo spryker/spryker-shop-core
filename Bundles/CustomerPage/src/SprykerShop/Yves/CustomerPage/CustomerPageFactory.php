@@ -228,7 +228,8 @@ class CustomerPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS);
     }
-  
+
+    /**
      * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
      */
     public function getPreRegistrationCustomerTransferExpanderPlugins(): array
