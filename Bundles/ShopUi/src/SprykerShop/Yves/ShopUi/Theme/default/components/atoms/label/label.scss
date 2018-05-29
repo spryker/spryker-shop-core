@@ -3,7 +3,7 @@
         &--required {
             &::after {
                 content: '*';
-                margin-left: .2rem;
+                margin-left: 0.2rem;
                 color: $setting-color-main;
             }
         }

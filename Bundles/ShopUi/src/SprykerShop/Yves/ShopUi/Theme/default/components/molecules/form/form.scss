@@ -1,4 +1,4 @@
-$shop-ui-form-field-margin: .5rem;
+$shop-ui-form-field-margin: 0.5rem;
 
 @mixin shop-ui-form($name: '.form') {
     #{$name} {

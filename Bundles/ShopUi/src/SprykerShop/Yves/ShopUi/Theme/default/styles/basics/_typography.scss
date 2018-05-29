@@ -44,7 +44,7 @@
     hr {
         @include helper-ui-clearfix;
         border-bottom: 1px solid $setting-color-lighter;
-        margin: .5rem 0;
+        margin: 0.5rem 0;
     }
 
     small {
@@ -58,6 +58,6 @@
     p,
     blockquote,
     iframe {
-        margin: .5rem 0;
+        margin: 0.5rem 0;
     }
 }

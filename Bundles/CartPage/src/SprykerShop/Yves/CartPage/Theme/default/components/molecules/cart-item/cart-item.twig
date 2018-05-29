@@ -14,7 +14,7 @@
 {% set canWrite = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
 
 {% block body %}
-    <div class="grid grid--stretch grid--gutters-wide">
+    <div class="grid grid--stretch grid--justify grid--gutters">
         <div class="col col--sm-12 col--lg-2">
             {% include molecule('cart-image', 'CartPage') with {
                 data: {
@@ -40,7 +40,7 @@
             } only %}
         </div>
 
-        <div class="col col--sm-12 col--lg-5">
+        <div class="col col--sm-12 col--lg-4">
             {% include molecule('cart-quantity-input', 'CartPage') with {
                 data: {
                     cartItem: data.cartItem,

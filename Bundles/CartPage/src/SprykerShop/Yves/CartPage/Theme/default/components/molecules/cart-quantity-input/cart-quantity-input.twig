@@ -23,9 +23,7 @@
                 }
             } only %}
 
-            {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
-                {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
-            {% endif %}
+            {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
 
             <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey" />
         </form>

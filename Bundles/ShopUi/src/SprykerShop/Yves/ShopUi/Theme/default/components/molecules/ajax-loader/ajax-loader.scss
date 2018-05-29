@@ -6,7 +6,7 @@
         left: 0;
         bottom: 0;
         right: 0;
-        background-color: rgba($setting-color-lighter, .5);
+        background-color: rgba($setting-color-lighter, 0.5);
         z-index: $setting-zi-element-floating;
 
         &__spinner {
