@@ -7,12 +7,15 @@
 
 namespace SprykerShop\Yves\CompanyUserPage\Form\DataProvider;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerShop\Yves\CompanyUserPage\Dependency\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyUserPage\Form\CompanyUserAccountFrom;
 
 class CompanyUserAccountDataProvider
 {
+    protected const FORMAT_COMPANY_USER_DISPLAY = '%s / %s';
+
     /**
      * @var CompanyPageToBusinessOnBehalfClientInterface
      */
@@ -52,6 +55,26 @@ class CompanyUserAccountDataProvider
     {
         //TODO: get customer
         $customerTransfer = (new CustomerTransfer())->setIdCustomer(6);
-        return array_flip($this->businessOnBehalfClient->findActiveCompanyUsersByCustomerId($customerTransfer));
+        $companyCollection = $this->businessOnBehalfClient->findActiveCompanyUsersByCustomerId($customerTransfer);
+
+        return $this->mapCompanyUserCollectionToChoiceArray($companyCollection);
+//        return array_flip();
+    }
+
+    protected function mapCompanyUserCollectionToChoiceArray(CompanyUserCollectionTransfer $companyCollection): array
+    {
+        $companies = [];
+        foreach ($companyCollection->getCompanyUsers() as $companyUser)
+        {
+            $companies[
+                sprintf(
+                    static::FORMAT_COMPANY_USER_DISPLAY,
+                    $companyUser->getCompany()->getName(),
+                    $companyUser->getCompanyBusinessUnit()->getName()
+                )
+            ] = $companyUser->getIdCompanyUser();
+        }
+
+        return $companies;
     }
 }
