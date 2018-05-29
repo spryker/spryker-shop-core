@@ -6,6 +6,8 @@
     "php": ">=7.1"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*",
     "spryker/symfony": "*"
   },
   "suggest": {
@@ -14,6 +16,11 @@
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
