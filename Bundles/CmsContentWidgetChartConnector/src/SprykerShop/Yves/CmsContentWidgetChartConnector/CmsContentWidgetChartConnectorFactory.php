@@ -11,13 +11,14 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
+use Spryker\Yves\Kernel\Widget\WidgetContainerRegistryInterface;
 
 class CmsContentWidgetChartConnectorFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerRegistry
+     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerRegistryInterface
      */
-    public function createWidgetContainerRegistry(): WidgetContainerRegistry
+    public function createWidgetContainerRegistry(): WidgetContainerRegistryInterface
     {
         return new WidgetContainerRegistry();
     }

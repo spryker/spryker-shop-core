@@ -34,7 +34,7 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     /**
      * @return callable
      */
-    public function getContentWidgetFunction(): callable
+    public function getContentWidgetFunction()
     {
         return [$this, 'contentWidgetFunction'];
     }
@@ -51,7 +51,9 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     public function contentWidgetFunction(Twig_Environment $twig, array $context, $chartPluginName, $dataIdentifier = null, $templateIdentifier = null): string
     {
         $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
-        $widgetContainerRegistry->add($this->createCmsChartContentWidgetCollection());
+        $widgetContainerRegistry->add(
+            $this->getFactory()->createCmsChartContentWidgetCollection()
+        );
 
         $result = $twig->render(
             $this->resolveTemplatePath($templateIdentifier),
@@ -90,13 +92,5 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
             'chartPluginName' => $chartPluginName,
             'dataIdentifier' => $dataIdentifier,
         ];
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
-     */
-    protected function createCmsChartContentWidgetCollection(): WidgetContainerInterface
-    {
-        return $this->getFactory()->createCmsChartContentWidgetCollection();
     }
 }
