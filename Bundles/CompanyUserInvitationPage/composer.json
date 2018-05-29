@@ -5,12 +5,11 @@
   "require": {
     "league/csv": "^8.1.0",
     "php": ">=7.1",
+    "spryker-shop/customer-page-extension": "^1.0.0",
     "spryker-shop/shop-application": "^0.3.0 || ^0.4.0",
     "spryker/application": "^3.8.0",
-    "spryker/company-user-invitation": "^0.1.0",
-    "spryker/csv": "^2.0.1",
+    "spryker/company-user-invitation": "^1.0.0",
     "spryker/customer": "^7.7.1",
-    "spryker/customer-page-extension": "^1.0.0",
     "spryker/kernel": "^3.19.0",
     "spryker/session": "^3.2.4",
     "spryker/symfony": "^3.1.4"
