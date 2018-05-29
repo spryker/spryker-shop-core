@@ -27,6 +27,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
+    const PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER = 'PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER';
     const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
     const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'PLUGIN_GUEST_AUTHENTICATION_HANDLER';
     const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER';
@@ -58,6 +59,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerOrderListWidgetPlugins($container);
         $container = $this->addCustomerOrderViewWidgetPlugins($container);
         $container = $this->addUtilValidateService($container);
+        $container = $this->addPreRegistrationCustomerTransferExpanderPlugins($container);
 
         return $container;
     }
@@ -261,9 +263,23 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
      */
-    protected function getCustomerOverviewWidgetPlugins(): array
+    protected function addPreRegistrationCustomerTransferExpanderPlugins(Container $container): Container
+    {
+        $container[self::PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER] = function () {
+            return $this->getPreRegistrationCustomerTransferExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
+     */
+    protected function getPreRegistrationCustomerTransferExpanderPlugins(): array
     {
         return [];
     }
@@ -280,6 +296,14 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return string[]
      */
     protected function getCustomerOrderViewWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCustomerOverviewWidgetPlugins(): array
     {
         return [];
     }

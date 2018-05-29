@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ShopLayoutExtension\Dependency\Plugin\LanguageSwitche
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated
+ */
 interface LanguageSwitcherWidgetPluginInterface
 {
     const NAME = 'LanguageSwitcherWidgetPlugin';
