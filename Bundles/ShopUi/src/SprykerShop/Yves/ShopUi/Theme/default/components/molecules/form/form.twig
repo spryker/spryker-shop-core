@@ -68,11 +68,13 @@
                     {% set fieldLayoutClass = attribute(data.layout, fieldName) %}
                 {% endif %}
 
-                {{ form_row(field, {
-                    attr: {
-                        class: config.name ~ '__field ' ~ fieldLayoutClass
-                    }
-                }) }}
+                {% block field %}
+                    {{ form_row(field, {
+                        rowAttr: {
+                            class: config.name ~ '__field ' ~ fieldLayoutClass
+                        }
+                    }) }}
+                {% endblock %}
             {% endfor %}
         {% endblock %}
 

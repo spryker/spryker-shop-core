@@ -3,14 +3,25 @@
 {# widgets #}
 
 {%- block form_widget_simple -%}
-    {%- set type = type | default('text') -%}
     {%- set label = (label | default('')) | trans -%}
-    <input class="input input--expand {% if errors is not empty %}input--error{% endif %}" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} placeholder="{{label}}"/>
+
+    {%- set attr = attr | merge({
+        class: ('input input--expand' ~ (errors is not empty ? ' input--error' : ' ') ~ (attr.class | default(''))) | trim,
+        type: type | default('text'),
+        placeholder: placeholder | default(label)
+    }) -%}
+
+    <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} />
 {%- endblock -%}
 
 {%- block textarea_widget -%}
     {%- set label = (label | default('')) | trans -%}
-    <textarea class="textarea textarea--expand" {{ block('widget_attributes') }} placeholder="{{label}}">{% if value is not empty %}{{ value }}{% endif %}</textarea>
+
+    {%- set attr = attr | merge({
+        class: ('textarea textarea--expand' ~ (errors is not empty ? ' textarea--error' : ' ') ~ (attr.class | default(''))) | trim
+    }) -%}
+
+    <textarea {{ block('widget_attributes') }} placeholder="{{label}}">{% if value is not empty %}{{ value }}{% endif %}</textarea>
 {%- endblock textarea_widget -%}
 
 {%- block choice_widget_collapsed -%}
@@ -110,7 +121,7 @@
 {# rows #}
 
 {%- block form_row -%}
-    {%- set rowClass = attr.class | default('') -%}
+    {%- set rowClass = rowAttr.class | default('') -%}
 
     <div class="{{rowClass}}">
         {{- form_label(form) -}}
@@ -122,13 +133,13 @@
 {%- block form_rows -%}
     {% for child in form %}
         {{- form_row(child, {
-            attr: attr | default({})
+            rowAttr: rowAttr | default({})
         }) -}}
     {% endfor %}
-{%- endblock form_rows -%}
+{%- endblock -%}
 
 {%- block checkbox_row -%}
-    {%- set rowClass = attr.class | default('') -%}
+    {%- set rowClass = rowAttr.class | default('') -%}
 
     <div class="{{rowClass}}">
         {{- form_widget(form) -}}
