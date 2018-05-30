@@ -32,7 +32,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -45,7 +45,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return '@BusinessOnBehalfWidget/views/shop-layout/company-user-context-text.twig';
     }
@@ -108,6 +108,6 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
             $customer
         );
 
-        return count($companyUserCollection->getCompanyUsers()) >= BusinessOnBehalfConstants::MIN_COMPANY_USER_ACCOUNT_AMOUNT;
+        return count($companyUserCollection->getCompanyUsers()) >= BusinessOnBehalfConstants::COMPANY_USER_ACCOUNT_MIN_AMOUNT;
     }
 }

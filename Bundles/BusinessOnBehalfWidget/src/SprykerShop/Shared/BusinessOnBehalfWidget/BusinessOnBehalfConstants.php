@@ -9,5 +9,5 @@ namespace SprykerShop\Shared\BusinessOnBehalfWidget;
 
 interface BusinessOnBehalfConstants
 {
-    public const MIN_COMPANY_USER_ACCOUNT_AMOUNT = 2;
+    public const COMPANY_USER_ACCOUNT_MIN_AMOUNT = 2;
 }

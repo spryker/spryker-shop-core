@@ -63,6 +63,6 @@ class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implemen
             $customer
         );
 
-        return count($companyUserCollection->getCompanyUsers()) >= BusinessOnBehalfConstants::MIN_COMPANY_USER_ACCOUNT_AMOUNT;
+        return count($companyUserCollection->getCompanyUsers()) >= BusinessOnBehalfConstants::COMPANY_USER_ACCOUNT_MIN_AMOUNT;
     }
 }
