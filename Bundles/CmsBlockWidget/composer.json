@@ -4,18 +4,20 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cms-block-storage": "^0.1.0",
+    "spryker/cms-block-storage": "^0.1.0 || ^1.0.0",
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
     "spryker-shop/catalog-page": "*",
     "spryker-shop/product-detail-page": "*",
+    "spryker-shop/shop-application": "*",
     "spryker/silex": "*",
     "spryker/twig": "*"
   },
   "suggest": {
     "spryker-shop/catalog-page": "TODO: add suggestion description",
     "spryker-shop/product-detail-page": "TODO: add suggestion description",
+    "spryker-shop/shop-application": "^0.2.0 ShopApplicationServiceProvider plugin is required by TwigCmsBlock plugin",
     "spryker/silex": "TODO: add suggestion description",
     "spryker/twig": "TODO: add suggestion description"
   },
