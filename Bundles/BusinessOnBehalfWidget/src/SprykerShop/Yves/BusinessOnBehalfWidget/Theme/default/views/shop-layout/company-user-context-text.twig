@@ -8,7 +8,7 @@
 } %}
 
 {% block template %}
-    {% if isVisible %}
+    {% if data.isVisible %}
         {% if data.isOnBehalf and data.companyName is not empty and data.companyBusinessUnitName is not empty %}
             {{parent()}}
         {% else %}
