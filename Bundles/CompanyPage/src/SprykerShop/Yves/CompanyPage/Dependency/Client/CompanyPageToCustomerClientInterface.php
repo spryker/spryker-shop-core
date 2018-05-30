@@ -20,4 +20,11 @@ interface CompanyPageToCustomerClientInterface
      * @return bool
      */
     public function isLoggedIn(): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomer(CustomerTransfer $customerTransfer);
 }

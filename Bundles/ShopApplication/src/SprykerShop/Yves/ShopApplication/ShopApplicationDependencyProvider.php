@@ -19,6 +19,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_GLOBAL_WIDGETS = 'PLUGIN_GLOBAL_WIDGETS';
     const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
     const STORE = 'STORE';
+    public const PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER = 'PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -31,6 +32,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGlobalWidgetPlugins($container);
         $container = $this->addStore($container);
         $container = $this->addUtilTextService($container);
+        $container = $this->addFilterControllerEventSubscriberPlugins($container);
 
         return $container;
     }
@@ -97,6 +99,28 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return string[]
      */
     protected function getGlobalWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addFilterControllerEventSubscriberPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER] = function () {
+            return $this->getFilterControllerEventSubscriberPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopApplication\Dependency\Plugin\FilterControllerEventSubscriberPluginInterface[]
+     */
+    protected function getFilterControllerEventSubscriberPlugins()
     {
         return [];
     }

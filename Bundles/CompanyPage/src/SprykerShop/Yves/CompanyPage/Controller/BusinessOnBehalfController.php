@@ -7,29 +7,72 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\View\View;
+use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
 class BusinessOnBehalfController extends AbstractController
 {
+    protected const GLOSSARY_COMPANY_NOT_ACTIVE = 'company.error.not_active';
+    protected const GLOSSARY_COMPANY_USER_INVALID = 'company.error.not_active';
+
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function selectCompanyUserAction(): View
+    public function selectCompanyUserAction(Request $request): View
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $companyUserAccountFormDataProvider = $this->getFactory()->createCompanyPageFormFactory()->createCompanyUserAccountDataProvider();
-        $companyUserAccountForm = $this->getFactory()->createCompanyPageFormFactory()->getCompanyUserAccountForm(
-            $companyUserAccountFormDataProvider->getData($customerTransfer),
-            $companyUserAccountFormDataProvider->getOptions($customerTransfer)
-        );
+        $activeCompanyUsers = $this->getFactory()->getBusinessOnBehalfClient()->findActiveCompanyUsersByCustomerId($customerTransfer);
+        $companyUserAccountForm = $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->getCompanyUserAccountForm(
+                $companyUserAccountFormDataProvider->getData($customerTransfer),
+                $companyUserAccountFormDataProvider->getOptions($activeCompanyUsers)
+            )->handleRequest($request);
+
+        if ($companyUserAccountForm->isSubmitted() && $companyUserAccountForm->isValid()) {
+            $this->saveCompanyUser($customerTransfer, $activeCompanyUsers, $companyUserAccountForm->getData());
+        }
 
         $data = [
             'form' => $companyUserAccountForm->createView(),
         ];
         return $this->view($data, [], '@CompanyPage/views/user-select/user-select.twig');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
+     * @param array $formData
+     *
+     * @return bool
+     */
+    protected function saveCompanyUser(CustomerTransfer $customerTransfer, CompanyUserCollectionTransfer $companyUserCollectionTransfer, array $formData): bool
+    {
+        foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUser) {
+            if ($companyUser->getIdCompanyUser() === $formData[CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE]) {
+                if ($companyUser->getCompany()->getIsActive()) {
+                    $customerTransfer->setCompanyUserTransfer($companyUser);
+                    $this->getFactory()->getCustomerClient()->setCustomer($customerTransfer);
+
+                    return true;
+                }
+                $this->addErrorMessage(static::GLOSSARY_COMPANY_NOT_ACTIVE);
+
+                return false;
+            }
+        }
+        $this->addErrorMessage(static::GLOSSARY_COMPANY_USER_INVALID);
+
+        return false;
     }
 }

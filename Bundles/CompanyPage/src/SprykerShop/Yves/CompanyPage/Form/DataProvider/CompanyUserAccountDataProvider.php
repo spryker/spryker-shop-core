@@ -43,27 +43,15 @@ class CompanyUserAccountDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyCollection
      *
      * @return array
      */
-    public function getOptions(CustomerTransfer $customerTransfer): array
+    public function getOptions(CompanyUserCollectionTransfer $companyCollection): array
     {
         return [
-            CompanyUserAccountForm::OPTION_COMPANY_USER_ACCOUNT_CHOICES => $this->getCompanyUserAccountChoicesByCustomer($customerTransfer),
+            CompanyUserAccountForm::OPTION_COMPANY_USER_ACCOUNT_CHOICES => $this->mapCompanyUserCollectionToChoiceArray($companyCollection),
         ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return array
-     */
-    protected function getCompanyUserAccountChoicesByCustomer(CustomerTransfer $customerTransfer): array
-    {
-        $companyCollection = $this->businessOnBehalfClient->findActiveCompanyUsersByCustomerId($customerTransfer);
-
-        return $this->mapCompanyUserCollectionToChoiceArray($companyCollection);
     }
 
     /**
