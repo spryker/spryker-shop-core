@@ -18,7 +18,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
      */
     public function initialize(): void
     {
-        $this->addParameter('isOnBehalf', $this->getIsOnBehalf());
+        $this->addParameter('isOnBehalf', $this->isOnBehalf());
         $this->addParameter('companyName', $this->getCompanyName());
         $this->addParameter('companyBusinessUnitName', $this->getCompanyBusinessUnitName());
         $this->addParameter('isVisible', $this->isVisible());
@@ -39,7 +39,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
 
     /**
      * Specification:
-     * - Returns the the template file path to render the widget.
+     * - Returns the template file path to render the widget.
      *
      * @api
      *
@@ -53,7 +53,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
     /**
      * @return bool
      */
-    protected function getIsOnBehalf(): bool
+    protected function isOnBehalf(): bool
     {
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
@@ -75,7 +75,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
             return '';
         }
 
-        return $customer->getCompanyUser()->getCompany()->getName();
+        return $customer->getCompanyUser()->requireCompany()->getCompany()->getName();
     }
 
     /**
@@ -89,7 +89,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
             return '';
         }
 
-        return $customer->getCompanyUser()->getCompanyBusinessUnit()->getName();
+        return $customer->getCompanyUser()->requireCompanyBusinessUnit()->getCompanyBusinessUnit()->getName();
     }
 
     /**
