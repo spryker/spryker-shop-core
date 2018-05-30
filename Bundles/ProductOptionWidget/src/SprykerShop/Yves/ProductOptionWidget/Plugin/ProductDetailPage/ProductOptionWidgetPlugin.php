@@ -67,6 +67,6 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
         return $this
             ->getFactory()
             ->getProductOptionStorageClient()
-            ->getProductOptions($productViewTransfer->getIdProductAbstract(), $this->getLocale());
+            ->getProductOptionsForCurrentStore($productViewTransfer->getIdProductAbstract());
     }
 }
