@@ -13,15 +13,6 @@ use SprykerShop\Yves\CustomerPage\Dependency\Plugin\BusinessOnBehalfWidget\MenuI
 class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implements MenuItemBusinessOnBehalfWidgetPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-    }
-
-    /**
      * Specification:
      * - Returns the name of the widget as it's used in templates.
      *

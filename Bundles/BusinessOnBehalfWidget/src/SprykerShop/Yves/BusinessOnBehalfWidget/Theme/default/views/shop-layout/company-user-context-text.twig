@@ -6,16 +6,14 @@
     companyBusinessUnitName: _widget.companyBusinessUnitName
 } %}
 
-{# TODO: Add missing links when controller is created #}
-
 {% block template %}
     {% if data.isOnBehalf and data.companyName is not empty and data.companyBusinessUnitName is not empty %}
         {{parent()}}
     {% else %}
-        <a href="">{{ 'business_on_behalf_widget.no_selected_company' | trans }}</a>
+        <a href="{{ path('company/user/select') }}">{{ 'business_on_behalf_widget.no_selected_company' | trans }}</a>
     {% endif %}
 {% endblock %}
 
 {% block body %}
-    <a href="">{{ data.companyName }} / {{ data.companyBusinessUnitName }}</a>
+    <a href="{{ path('company/user/select') }}">{{ data.companyName }} / {{ data.companyBusinessUnitName }}</a>
 {% endblock %}
