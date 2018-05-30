@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin\BusinessOnBehalfWidget;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface MenuItemBusinessOnBehalfWidgetPluginInterface extends WidgetPluginInterface

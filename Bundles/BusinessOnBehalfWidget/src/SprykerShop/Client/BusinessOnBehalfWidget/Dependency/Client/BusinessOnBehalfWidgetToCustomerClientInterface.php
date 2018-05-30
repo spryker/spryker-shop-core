@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Client\BusinessOnBehalfWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 interface BusinessOnBehalfWidgetToCustomerClientInterface
 {
     /**
