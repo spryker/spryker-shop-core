@@ -102,6 +102,8 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
         if (!$customer) {
             return false;
         }
+
+        //TODO: use real method to retrieve company users when merged to epic branch
         $companyUserCollection = $this->getFactory()->getCompanyUserClient()->findCompanyUserCollectionByCustomerId(
             $customer
         );

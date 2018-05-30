@@ -26,6 +26,8 @@ class BusinessOnBehalfWidgetToCompanyUserClientBridge implements BusinessOnBehal
     }
 
     /**
+     * TODO: regenerate bridge with real method to retrieve company users after merge.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
