@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Yves\ShopLayout\Dependency\Plugin\DisplayOnBehalfBusinessWidget;
 
-interface DisplayOnBehalfBusinessWidgetPluginInterface
+use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
+
+interface DisplayOnBehalfBusinessWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'DisplayOnBehalfBusinessWidget';
 
