@@ -6,19 +6,17 @@
 } %}
 
 {% define data = {
-    cartItem: required
+    name: '',
+    image: null
 } %}
 
-{% set productImage = data.cartItem.images | first %}
-{% set productName = data.cartItem.name %}
-
 {% block body %}
-    {% if productImage is not empty %}
+    {% if data.image is not empty %}
         {% include atom('thumbnail') with {
             modifiers: ['small'],
             attributes: {
-                alt: productName,
-                src: productImage.externalUrlLarge
+                alt: data.name,
+                src: data.image.externalUrlLarge
             }
         } only %}
     {% else %}

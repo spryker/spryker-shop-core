@@ -11,14 +11,15 @@
     attributes: required
 } %}
 
-{% set canWrite = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
+{% set canEditCart = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
 
 {% block body %}
-    <div class="grid grid--stretch grid--justify grid--gutters">
+    <div class="grid grid--stretch grid--justify">
         <div class="col col--sm-12 col--lg-2">
             {% include molecule('cart-image', 'CartPage') with {
                 data: {
-                    cartItem: data.cartItem
+                    name: data.cartItem.name | default(''),
+                    image: data.cartItem.images is empty ? null : (data.cartItem.images | first)
                 }
             } only %}
         </div>
@@ -31,10 +32,21 @@
                 {{ data.cartItem.sku }}
             </small>
 
+            {% if data.attributes is not empty %}
+                {% include molecule('cart-item-variant-selector', 'CartPage') with {
+                    data: {
+                        cartItem: data.cartItem,
+                        cartItemAttributes: data.attributes
+                    }
+                } only %}
+            {% endif %}
+
             {{ widget('ProductBundleItemsWidgetPlugin', data.cartItem, data.cart) }}
 
             {% include molecule('cart-item-summary', 'CartPage') with {
                 data: {
+                    unitPrice: data.cartItem.unitPrice | money,
+                    subtotalPrice: data.cartItem.sumSubtotalAggregation | money,
                     cartItem: data.cartItem
                 }
             } only %}
@@ -48,19 +60,10 @@
                 }
             } only %}
 
-            {% if canWrite %}
+            {% if canEditCart %}
                 <a class="float-right" href="{{ path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': data.cartItem.groupKey }) }}">
                     &times; {{ 'remove' | trans }}
                 </a>
-            {% endif %}
-
-            {% if data.attributes | length > 1 %}
-                {% include molecule('cart-item-attribute-list', 'CartPage') with {
-                    data: {
-                        cartItem: data.cartItem,
-                        cartItemAttributes: data.attributes
-                    }
-                } only %}
             {% endif %}
 
             {{ widget('CartNoteQuoteItemWidgetPlugin', data.cartItem, data.cart) }}

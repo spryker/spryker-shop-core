@@ -21,10 +21,6 @@
             border-color: $setting-color-transparent;
         }
 
-        &--paddingless {
-            padding: 0;
-        }
-
         &--stretch {
             height: calc(100% - 1rem);
         }

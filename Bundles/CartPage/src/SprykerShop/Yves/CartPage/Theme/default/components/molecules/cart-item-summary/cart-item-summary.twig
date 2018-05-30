@@ -6,6 +6,8 @@
 } %}
 
 {% define data = {
+    unitPrice: required,
+    subtotalPrice: required,
     cartItem: required
 } %}
 
@@ -14,7 +16,7 @@
 {% block body %}
     <li class="list__item list__item--spacing">
         {{ 'cart.item.item_price' | trans }}
-        <span class="float-right">{{ data.cartItem.unitPrice | money }}</span>
+        <span class="float-right">{{ data.unitPrice }}</span>
     </li>
 
     {% if data.cartItem.productOptions | length > 0 %}
@@ -25,6 +27,6 @@
 
     <li class="list__item list__item--spacing">
         <strong>{{ 'cart.item.item_total' | trans }}</strong>
-        <strong class="float-right">{{ data.cartItem.sumSubtotalAggregation | money }}</strong>
+        <strong class="float-right">{{ data.subtotalPrice }}</strong>
     </li>
 {% endblock %}

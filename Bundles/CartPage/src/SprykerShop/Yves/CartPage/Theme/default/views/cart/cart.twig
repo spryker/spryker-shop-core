@@ -43,7 +43,7 @@
             <div class="col col--sm-12 col--xl-8">
                 {% for cartItem in data.cartItems %}
                     {% include molecule('cart-item', 'CartPage') with {
-                        class: 'box box--paddingless',
+                        class: 'box',
                         data: {
                             cart: data.cart,
                             cartItem: cartItem,
