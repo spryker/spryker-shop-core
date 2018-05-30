@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Client\BusinessOnBehalfWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 class BusinessOnBehalfWidgetToCustomerClientBridge implements BusinessOnBehalfWidgetToCustomerClientInterface
 {
     /**
@@ -25,9 +23,9 @@ class BusinessOnBehalfWidgetToCustomerClientBridge implements BusinessOnBehalfWi
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getCustomer(): ?CustomerTransfer
+    public function getCustomer()
     {
         return $this->customerClient->getCustomer();
     }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface BusinessOnBehalfWidgetToCustomerClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getCustomer(): ?CustomerTransfer;
+    public function getCustomer();
 }
