@@ -13,7 +13,7 @@ use SprykerShop\Client\BusinessOnBehalfWidget\Dependency\Client\BusinessOnBehalf
 
 class BusinessOnBehalfWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CUSTOMER = 'CLIENT CUSTOMER';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
