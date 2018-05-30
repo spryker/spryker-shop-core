@@ -32,4 +32,14 @@ class ProductOptionWidgetToProductOptionStorageClientBridge implements ProductOp
     {
         return $this->productOptionStorageClient->getProductOptions($idAbstractProduct, $localeName);
     }
+
+    /**
+     * @param int $idAbstractProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
+     */
+    public function getProductOptionsForCurrentStore($idAbstractProduct)
+    {
+        return $this->productOptionStorageClient->getProductOptionsForCurrentStore($idAbstractProduct);
+    }
 }
