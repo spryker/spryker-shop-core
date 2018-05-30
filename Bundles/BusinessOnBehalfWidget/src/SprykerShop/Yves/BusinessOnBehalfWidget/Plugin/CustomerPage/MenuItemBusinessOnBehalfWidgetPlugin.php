@@ -8,10 +8,19 @@
 namespace SprykerShop\Yves\BusinessOnBehalfWidget\Plugin\CustomerPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Shared\BusinessOnBehalfWidget\BusinessOnBehalfConstants;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\BusinessOnBehalfWidget\MenuItemBusinessOnBehalfWidgetPluginInterface;
 
 class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implements MenuItemBusinessOnBehalfWidgetPluginInterface
 {
+    /**
+     * @return void
+     */
+    public function initialize(): void
+    {
+        $this->addParameter('isVisible', $this->isVisible());
+    }
+
     /**
      * Specification:
      * - Returns the name of the widget as it's used in templates.
@@ -36,5 +45,20 @@ class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implemen
     public static function getTemplate()
     {
         return '@BusinessOnBehalfWidget/views/customer-page/change-company-user.twig';
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isVisible(): bool
+    {
+        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if (!$customer) {
+            return false;
+        }
+        $companyUserCollection = $this->getFactory()->getCompanyUserClient()->findCompanyUserCollectionByCustomerId();
+
+        return count($companyUserCollection->getCompanyUsers()) >= BusinessOnBehalfConstants::MIN_COMPANY_USER_ACCOUNT_AMOUNT;
     }
 }

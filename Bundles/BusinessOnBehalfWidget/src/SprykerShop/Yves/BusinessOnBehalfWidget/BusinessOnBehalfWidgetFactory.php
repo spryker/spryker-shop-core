@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\BusinessOnBehalfWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Client\BusinessOnBehalfWidget\Dependency\Client\BusinessOnBehalfWidgetToCompanyUserClientInterface;
 use SprykerShop\Client\BusinessOnBehalfWidget\Dependency\Client\BusinessOnBehalfWidgetToCustomerClientInterface;
 
 class BusinessOnBehalfWidgetFactory extends AbstractFactory
@@ -18,5 +19,13 @@ class BusinessOnBehalfWidgetFactory extends AbstractFactory
     public function getCustomerClient(): BusinessOnBehalfWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(BusinessOnBehalfWidgetDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Client\BusinessOnBehalfWidget\Dependency\Client\BusinessOnBehalfWidgetToCompanyUserClientInterface
+     */
+    public function getCompanyUserClient(): BusinessOnBehalfWidgetToCompanyUserClientInterface
+    {
+        return $this->getProvidedDependency(BusinessOnBehalfWidgetDependencyProvider::CLIENT_COMPANY_USER);
     }
 }

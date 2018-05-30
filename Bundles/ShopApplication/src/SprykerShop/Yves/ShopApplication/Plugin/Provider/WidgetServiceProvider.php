@@ -120,7 +120,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
         try {
             $widgetContainer = $this->getWidgetContainer();
 
-            if (!$widgetContainer->hasWidget($name)) {
+            if (!$widgetContainer->hasWidget($name) || !$widgetContainer->) {
                 return '';
             }
 

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\BusinessOnBehalfWidget\Plugin\ShopLayout;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Shared\BusinessOnBehalfWidget\BusinessOnBehalfConstants;
 use SprykerShop\Yves\ShopLayout\Dependency\Plugin\DisplayOnBehalfBusinessWidget\DisplayOnBehalfBusinessWidgetPluginInterface;
 
 class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implements DisplayOnBehalfBusinessWidgetPluginInterface
@@ -20,6 +21,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
         $this->addParameter('isOnBehalf', $this->getIsOnBehalf());
         $this->addParameter('companyName', $this->getCompanyName());
         $this->addParameter('companyBusinessUnitName', $this->getCompanyBusinessUnitName());
+        $this->addParameter('isVisible', $this->isVisible());
     }
 
     /**
@@ -88,5 +90,20 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
         }
 
         return $customer->getCompanyUser()->getCompanyBusinessUnit()->getName();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isVisible(): bool
+    {
+        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if (!$customer) {
+            return false;
+        }
+        $companyUserCollection = $this->getFactory()->getCompanyUserClient()->findCompanyUserCollectionByCustomerId();
+
+        return count($companyUserCollection->getCompanyUsers()) >= BusinessOnBehalfConstants::MIN_COMPANY_USER_ACCOUNT_AMOUNT;
     }
 }
