@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductBarcodeWidget\Plugin\ShoppingList;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductBarcodeWidget\ProductBarcodeWidgetPluginInterface;
@@ -27,11 +26,11 @@ class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements Product
         ProductViewTransfer $productViewTransfer,
         ?string $barcodeGeneratorPlugin = null
     ): void {
-        $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productViewTransfer->toArray(), true);
+        $sku = $productViewTransfer->requireSku()->getSku();
 
         $barcodeResponseTransfer = $this->getFactory()
             ->getProductBarcodeClient()
-            ->generateBarcode($productConcreteTransfer, $barcodeGeneratorPlugin);
+            ->generateBarcodeBySku($sku, $barcodeGeneratorPlugin);
 
         $this->addParameter('barcodeResponseTransfer', $barcodeResponseTransfer);
     }

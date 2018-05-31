@@ -8,18 +8,17 @@
 namespace SprykerShop\Yves\ProductBarcodeWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductBarcodeWidgetToProductBarcodeClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param string $sku
      * @param string|null $barcodeGeneratorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function generateBarcode(
-        ProductConcreteTransfer $productConcreteTransfer,
+    public function generateBarcodeBySku(
+        string $sku,
         ?string $barcodeGeneratorPlugin = null
     ): BarcodeResponseTransfer;
 }

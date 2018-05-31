@@ -220,7 +220,7 @@ class ShoppingListController extends AbstractShoppingListController
 
         return $this->view(
             $data,
-            $this->getFactory()->getProductBarcodeWidgetPlugins(),
+            $this->getFactory()->getPrintShoppingListWidgetPlugins(),
             '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
         );
     }

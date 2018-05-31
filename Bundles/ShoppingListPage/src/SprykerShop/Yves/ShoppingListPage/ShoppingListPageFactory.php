@@ -182,7 +182,7 @@ class ShoppingListPageFactory extends AbstractFactory
     /**
      * @return array
      */
-    public function getProductBarcodeWidgetPlugins(): array
+    public function getPrintShoppingListWidgetPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_WIDGETS);
     }

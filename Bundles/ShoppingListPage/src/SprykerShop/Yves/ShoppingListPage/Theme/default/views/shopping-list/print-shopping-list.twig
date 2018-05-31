@@ -23,7 +23,9 @@
 <table class="shopping-list-items">
     <thead>
     <tr>
-        <th>{{ data.labels.barcode }}</th>
+        {% if widgetExists('ProductBarcodeWidgetPlugin') %}
+            <th>{{ data.labels.barcode }}</th>
+        {% endif %}
         <th>{{ data.labels.productSku }}</th>
         <th>{{ data.labels.productName }}</th>
         <th>{{ data.labels.defaultPrice }}</th>
@@ -32,7 +34,9 @@
     <tbody>
     {% for item in data.shoppingListItems %}
     <tr>
-        <td>{{ widget('BarcodeWidgetPlugin', item, data.barcodeGeneratorPlugin) }}</td>
+        {% if widgetExists('ProductBarcodeWidgetPlugin') %}
+            <td>{{ widget('BarcodeWidgetPlugin', item, data.barcodeGeneratorPlugin) }}</td>
+        {% endif %}
         <td>{{ item.sku }}</td>
         <td>{{ item.name }}</td>
         <td>

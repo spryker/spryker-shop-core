@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductBarcodeWidgetPluginInterface extends WidgetPluginInterface
 {
-    public const NAME = 'BarcodeWidgetPlugin';
+    public const NAME = 'ProductBarcodeWidgetPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
