@@ -1,0 +1,17 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible
+} %}
+
+{% block template %}
+    {% if data.isVisible %}
+        {{parent()}}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if data.isVisible %}
+        <a href="{{ path('company/user/select') }}" data-id="change-company-user">{{ "business_on_behalf_widget.change_company_user" | trans }}</a>
+    {% endif %}
+{% endblock %}
