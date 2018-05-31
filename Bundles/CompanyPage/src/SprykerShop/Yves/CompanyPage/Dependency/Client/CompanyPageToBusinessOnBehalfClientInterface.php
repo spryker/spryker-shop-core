@@ -7,24 +7,15 @@
 
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface CompanyPageToCustomerClientInterface
+interface CompanyPageToBusinessOnBehalfClientInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    public function getCustomer(): ?CustomerTransfer;
-
-    /**
-     * @return bool
-     */
-    public function isLoggedIn(): bool;
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function setCustomer(CustomerTransfer $customerTransfer);
+    public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer;
 }

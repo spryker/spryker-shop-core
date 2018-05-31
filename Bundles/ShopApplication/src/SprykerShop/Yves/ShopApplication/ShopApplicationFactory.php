@@ -75,6 +75,14 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ShopApplication\Dependency\Plugin\FilterControllerEventHandlerPluginInterface[]
+     */
+    public function getFilterControllerEventSubscriberPlugins(): array
+    {
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER);
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShopApplication\Twig\RoutingHelperInterface
      */
     protected function createRoutingHelper()
