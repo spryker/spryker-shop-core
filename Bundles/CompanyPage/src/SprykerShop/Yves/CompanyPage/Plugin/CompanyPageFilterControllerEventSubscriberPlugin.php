@@ -32,11 +32,12 @@ class CompanyPageFilterControllerEventSubscriberPlugin extends AbstractPlugin im
     public function subscribe(FilterControllerEvent $event): void
     {
         list($controllerInstance, $actionName) = $event->getController();
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         if ($controllerInstance instanceof AbstractCompanyController
-            && $this->getFactory()->getCustomerClient()->getCustomer()
-            && $this->getFactory()->getCustomerClient()->getCustomer()->getIsOnBehalf()
-            && !$this->getFactory()->getCustomerClient()->getCustomer()->getCompanyUserTransfer()
+            && $customerTransfer
+            && $customerTransfer->getIsOnBehalf()
+            && !$customerTransfer->getCompanyUserTransfer()
             && $event->getRequest()->getRequestUri() !== static::COMPANY_REDIRECT_URL
         ) {
             $event->setController(function () {

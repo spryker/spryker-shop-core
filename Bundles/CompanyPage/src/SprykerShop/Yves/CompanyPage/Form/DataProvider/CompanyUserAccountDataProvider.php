@@ -37,15 +37,16 @@ class CompanyUserAccountDataProvider
     public function getData(CustomerTransfer $customerTransfer): array
     {
         return [
-            CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE =>
-                $customerTransfer->getCompanyUserTransfer() ? $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() : null,
+            CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE => $customerTransfer->getCompanyUserTransfer()
+                ? $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
+                : null,
         ];
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyCollection
      *
-     * @return array
+     * @return int[]
      */
     public function getOptions(CompanyUserCollectionTransfer $companyCollection): array
     {
@@ -57,17 +58,19 @@ class CompanyUserAccountDataProvider
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyCollection
      *
-     * @return array
+     * @return int[]
      */
     protected function mapCompanyUserCollectionToChoiceArray(CompanyUserCollectionTransfer $companyCollection): array
     {
         $companies = [];
         foreach ($companyCollection->getCompanyUsers() as $companyUser) {
-            $companies[sprintf(
+            $key = sprintf(
                 static::FORMAT_COMPANY_USER_DISPLAY,
                 $companyUser->getCompany()->getName(),
                 $companyUser->getCompanyBusinessUnit()->getName()
-            )] = $companyUser->getIdCompanyUser();
+            );
+
+            $companies[$key] = $companyUser->getIdCompanyUser();
         }
 
         return $companies;

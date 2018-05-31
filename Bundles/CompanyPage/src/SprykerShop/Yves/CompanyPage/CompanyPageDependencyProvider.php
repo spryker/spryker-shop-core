@@ -65,7 +65,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addBusinessOnBehalfClient(Container $container): Container
     {
         $container[static::CLIENT_BUSINESS_ON_BEHALF] = function (Container $container) {
-            return new CompanyPageToBusinessOnBehalfClientBridge($container->getLocator()->businessOnBehalf()->client());
+            return new CompanyPageToBusinessOnBehalfClientBridge(
+                $container->getLocator()->businessOnBehalf()->client()
+            );
         };
 
         return $container;

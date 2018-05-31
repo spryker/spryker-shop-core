@@ -19,8 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BusinessOnBehalfController extends AbstractController
 {
-    protected const GLOSSARY_COMPANY_NOT_ACTIVE = 'company.error.not_active';
-    protected const GLOSSARY_COMPANY_USER_INVALID = 'company.error.not_active';
+    protected const ERROR_COMPANY_NOT_ACTIVE = 'company_user.business_on_behalf.error.company_not_active';
+    protected const ERROR_COMPANY_USER_INVALID = 'company_user.business_on_behalf.error.company_user_invalid';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,12 +32,14 @@ class BusinessOnBehalfController extends AbstractController
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $companyUserAccountFormDataProvider = $this->getFactory()->createCompanyPageFormFactory()->createCompanyUserAccountDataProvider();
         $activeCompanyUsers = $this->getFactory()->getBusinessOnBehalfClient()->findActiveCompanyUsersByCustomerId($customerTransfer);
+
         $companyUserAccountForm = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->getCompanyUserAccountForm(
                 $companyUserAccountFormDataProvider->getData($customerTransfer),
                 $companyUserAccountFormDataProvider->getOptions($activeCompanyUsers)
-            )->handleRequest($request);
+            )
+            ->handleRequest($request);
 
         if ($companyUserAccountForm->isSubmitted() && $companyUserAccountForm->isValid()) {
             $this->saveCompanyUser($customerTransfer, $activeCompanyUsers, $companyUserAccountForm->getData());
@@ -46,6 +48,7 @@ class BusinessOnBehalfController extends AbstractController
         $data = [
             'form' => $companyUserAccountForm->createView(),
         ];
+
         return $this->view($data, [], '@CompanyPage/views/user-select/user-select.twig');
     }
 
@@ -58,20 +61,22 @@ class BusinessOnBehalfController extends AbstractController
      */
     protected function saveCompanyUser(CustomerTransfer $customerTransfer, CompanyUserCollectionTransfer $companyUserCollectionTransfer, array $formData): bool
     {
+        $idCompanyUserSelected = $formData[CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE];
+
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUser) {
-            if ($companyUser->getIdCompanyUser() === $formData[CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE]) {
+            if ($companyUser->getIdCompanyUser() === $idCompanyUserSelected) {
                 if ($companyUser->getCompany()->getIsActive()) {
                     $customerTransfer->setCompanyUserTransfer($companyUser);
                     $this->getFactory()->getCustomerClient()->setCustomer($customerTransfer);
 
                     return true;
                 }
-                $this->addErrorMessage(static::GLOSSARY_COMPANY_NOT_ACTIVE);
+                $this->addErrorMessage(static::ERROR_COMPANY_NOT_ACTIVE);
 
                 return false;
             }
         }
-        $this->addErrorMessage(static::GLOSSARY_COMPANY_USER_INVALID);
+        $this->addErrorMessage(static::ERROR_COMPANY_USER_INVALID);
 
         return false;
     }
