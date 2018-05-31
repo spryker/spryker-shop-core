@@ -118,7 +118,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplication\Dependency\Plugin\FilterControllerEventSubscriberPluginInterface[]
+     * @return \SprykerShop\Yves\ShopApplication\Dependency\Plugin\FilterControllerEventHandlerPluginInterface[]
      */
     protected function getFilterControllerEventSubscriberPlugins()
     {

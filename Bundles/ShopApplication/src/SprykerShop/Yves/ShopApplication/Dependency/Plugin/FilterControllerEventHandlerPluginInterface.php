@@ -4,7 +4,7 @@ namespace SprykerShop\Yves\ShopApplication\Dependency\Plugin;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
-interface FilterControllerEventSubscriberPluginInterface
+interface FilterControllerEventHandlerPluginInterface
 {
     /**
      * Specification:
@@ -17,5 +17,5 @@ interface FilterControllerEventSubscriberPluginInterface
      *
      * @return void
      */
-    public function subscribe(FilterControllerEvent $event): void;
+    public function handle(FilterControllerEvent $event): void;
 }

@@ -9,14 +9,14 @@ namespace SprykerShop\Yves\CompanyPage\Plugin;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CompanyPage\Controller\AbstractCompanyController;
-use SprykerShop\Yves\ShopApplication\Dependency\Plugin\FilterControllerEventSubscriberPluginInterface;
+use SprykerShop\Yves\ShopApplication\Dependency\Plugin\FilterControllerEventHandlerPluginInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
-class CompanyPageFilterControllerEventSubscriberPlugin extends AbstractPlugin implements FilterControllerEventSubscriberPluginInterface
+class CompanyPageFilterControllerEventHandlerPlugin extends AbstractPlugin implements FilterControllerEventHandlerPluginInterface
 {
     protected const COMPANY_REDIRECT_URL = '/company/user/select';
 
@@ -29,7 +29,7 @@ class CompanyPageFilterControllerEventSubscriberPlugin extends AbstractPlugin im
      *
      * @return void
      */
-    public function subscribe(FilterControllerEvent $event): void
+    public function handle(FilterControllerEvent $event): void
     {
         list($controllerInstance, $actionName) = $event->getController();
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();

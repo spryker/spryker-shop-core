@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountForm;
@@ -57,26 +58,38 @@ class BusinessOnBehalfController extends AbstractController
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
      * @param array $formData
      *
-     * @return bool
+     * @return void
      */
-    protected function saveCompanyUser(CustomerTransfer $customerTransfer, CompanyUserCollectionTransfer $companyUserCollectionTransfer, array $formData): bool
+    protected function saveCompanyUser(CustomerTransfer $customerTransfer, CompanyUserCollectionTransfer $companyUserCollectionTransfer, array $formData): void
     {
         $idCompanyUserSelected = $formData[CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE];
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUser) {
-            if ($companyUser->getIdCompanyUser() === $idCompanyUserSelected) {
-                if ($companyUser->getCompany()->getIsActive()) {
-                    $customerTransfer->setCompanyUserTransfer($companyUser);
-                    $this->getFactory()->getCustomerClient()->setCustomer($customerTransfer);
-
-                    return true;
-                }
-                $this->addErrorMessage(static::ERROR_COMPANY_NOT_ACTIVE);
-
-                return false;
+            if ($this->updateCustomerInSession($companyUser, $idCompanyUserSelected)) {
+                return;
             }
         }
         $this->addErrorMessage(static::ERROR_COMPANY_USER_INVALID);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUser
+     * @param int $idCompanyUserSelected
+     *
+     * @return bool
+     */
+    protected function updateCustomerInSession(CompanyUserTransfer $companyUser, int $idCompanyUserSelected): bool
+    {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        if ($companyUser->getIdCompanyUser() === $idCompanyUserSelected) {
+            if ($companyUser->getCompany()->getIsActive()) {
+                $customerTransfer->setCompanyUserTransfer($companyUser);
+                $this->getFactory()->getCustomerClient()->setCustomer($customerTransfer);
+
+                return true;
+            }
+            $this->addErrorMessage(static::ERROR_COMPANY_NOT_ACTIVE);
+        }
 
         return false;
     }

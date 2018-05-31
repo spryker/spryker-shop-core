@@ -75,7 +75,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplication\Dependency\Plugin\FilterControllerEventSubscriberPluginInterface[]
+     * @return \SprykerShop\Yves\ShopApplication\Dependency\Plugin\FilterControllerEventHandlerPluginInterface[]
      */
     public function getFilterControllerEventSubscriberPlugins(): array
     {
