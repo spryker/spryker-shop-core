@@ -20,29 +20,31 @@
     <h6>{{ 'cart.your-order' | trans }}</h6>
 
     <ul class="list list--spacing">
-        <li class="list__item">
-            {{ 'cart.price.subtotal' | trans }}
-            <span class="float-right">{{ data.cart.totals.subtotal | money }}</span>
-        </li>
-
         {% if widgetExists('DiscountSummaryWidgetPlugin') %}
-            <li class="list__item">
+            <li class="list__item list__item--spacing">
                 {{ widget('DiscountSummaryWidgetPlugin', data.cart) }}
             </li>
         {% endif %}
 
         {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
-            <li class="list__item">
+            <li class="list__item list__item--spacing">
+                <strong>{{ 'cart.shipping' | trans }}</strong>
+                <br />
                 {{ data.cart.shipment.method.name }}
                 <span class="float-right">{{ data.cart.shipment.method.storeCurrencyPrice | money }}</span>
             </li>
         {% endif %}
 
-        <li class="list__item">
+        <li class="list__item list__item--spacing">
+            {{ 'cart.price.subtotal' | trans }}
+            <span class="float-right">{{ data.cart.totals.subtotal | money }}</span>
+        </li>
+
+        <li class="list__item list__item--spacing">
             {{ 'cart.total.tax_total' | trans }}
             <span class="float-right">{{ data.cart.totals.taxTotal.amount | money }}</span>
         </li>
-        <li class="list__item">
+        <li class="list__item list__item--spacing">
             {{ 'cart.price.grand.total' | trans }}
             <strong class="float-right">{{ data.cart.totals.grandTotal | money }}</strong>
         </li>

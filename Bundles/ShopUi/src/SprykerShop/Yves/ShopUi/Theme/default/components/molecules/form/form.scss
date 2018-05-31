@@ -2,6 +2,11 @@ $shop-ui-form-field-margin: 0.5rem;
 
 @mixin shop-ui-form($name: '.form') {
     #{$name} {
+        & & {
+            padding-left: $shop-ui-form-field-margin;
+            padding-right: $shop-ui-form-field-margin;
+        }
+
         &__fields {
             margin-left: - $shop-ui-form-field-margin;
             margin-right: - $shop-ui-form-field-margin;
@@ -12,13 +17,12 @@ $shop-ui-form-field-margin: 0.5rem;
         }
 
         &__actions {
-            margin-left: - $shop-ui-form-field-margin;
-            margin-right: - $shop-ui-form-field-margin;
             text-align: right;
         }
 
         &__action {
-            margin: $shop-ui-form-field-margin;
+            margin-top: $shop-ui-form-field-margin;
+            margin-left: $shop-ui-form-field-margin;
         }
 
         &--inline &__container {
@@ -38,9 +42,9 @@ $shop-ui-form-field-margin: 0.5rem;
             flex-basis: auto;
         }
 
-        &--inline &__field:not(:last-child),
-        &--inline &__action:not(:last-child) {
-            margin-right: 0;
+        &--inline &__field {
+            padding-bottom: 0;
+            padding-right: 0;
         }
 
         @content;

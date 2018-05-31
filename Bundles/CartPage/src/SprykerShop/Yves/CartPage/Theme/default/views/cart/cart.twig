@@ -15,18 +15,26 @@
 {% endblock %}
 
 {% block title %}
-    {{ parent() }}
-
     {% if widgetExists('CartOperationsWidgetPlugin') %}
-        {{ widget('CartOperationsWidgetPlugin', data.cart) }}
-    {% endif %}
+        {% set cartOperation = widget('CartOperationsWidgetPlugin', data.cart) | trim %}
 
-    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty %}
-        {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
+        {% if cartOperation is not empty %}
+            {{ cartOperation | raw }}
+        {% else %}
+            {{ parent() }}
+        {% endif %}
+    {% else %}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
 
 {% block content %}
+    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty %}
+        <div class="box">
+            {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
+        </div>
+    {% endif %}
+
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {

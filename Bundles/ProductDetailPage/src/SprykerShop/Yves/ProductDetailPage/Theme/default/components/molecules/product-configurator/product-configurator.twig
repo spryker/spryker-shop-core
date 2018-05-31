@@ -57,10 +57,10 @@
             <hr />
         {% endif %}
 
-        <div class="grid grid--justify grid--bottom">
-            {% if widgetExists('ProductMeasurementUnitWidgetPlugin') %}
-                {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, options) }}
-            {% else %}
+        {% if widgetExists('ProductMeasurementUnitWidgetPlugin') %}
+            {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, options) }}
+        {% else %}
+            <div class="grid grid--bottom grid--justify">
                 <div class="col col--sm-5">
                     <label>
                         {{'cart.item_quantity' | trans}}
@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="col col--sm-6">
-                    <button type="submit" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}">
+                    <button type="submit" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}>
                         {% include atom('icon') with {
                             data: {
                                 name: 'cart-plus'
@@ -86,10 +86,10 @@
                         {{ 'page.detail.add-to-cart' | trans }}
                     </button>
                 </div>
-            {% endif %}
-        </div>
-        {{ widget('MultiCartWidgetPlugin', data.product, disabled) }}
+            </div>
+        {% endif %}
 
+        {{ widget('MultiCartWidgetPlugin', data.product, disabled) }}
         {{ widget('AvailabilityWidgetPlugin', data.product) }}
     </form>
 

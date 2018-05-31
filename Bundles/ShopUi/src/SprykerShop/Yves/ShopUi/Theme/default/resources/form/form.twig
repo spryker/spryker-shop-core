@@ -8,7 +8,7 @@
     {%- set attr = attr | merge({
         class: ('input input--expand' ~ (errors is not empty ? ' input--error' : ' ') ~ (attr.class | default(''))) | trim,
         type: type | default('text'),
-        placeholder: placeholder | default(label)
+        placeholder: attr.placeholder | default(label)
     }) -%}
 
     <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} />
@@ -18,10 +18,11 @@
     {%- set label = (label | default('')) | trans -%}
 
     {%- set attr = attr | merge({
-        class: ('textarea textarea--expand' ~ (errors is not empty ? ' textarea--error' : ' ') ~ (attr.class | default(''))) | trim
+        class: ('textarea textarea--expand' ~ (errors is not empty ? ' textarea--error' : ' ') ~ (attr.class | default(''))) | trim,
+        placeholder: attr.placeholder | default(label)
     }) -%}
 
-    <textarea {{ block('widget_attributes') }} placeholder="{{label}}">{% if value is not empty %}{{ value }}{% endif %}</textarea>
+    <textarea {{ block('widget_attributes') }}>{% if value is not empty %}{{ value }}{% endif %}</textarea>
 {%- endblock textarea_widget -%}
 
 {%- block choice_widget_collapsed -%}
