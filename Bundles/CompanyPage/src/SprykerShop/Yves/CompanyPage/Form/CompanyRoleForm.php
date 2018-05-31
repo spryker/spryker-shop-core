@@ -46,7 +46,7 @@ class CompanyRoleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\CompanyPage\Form\CompanyRoleForm
+     * @return $this
      */
     protected function addIdCompanyRoleField(FormBuilderInterface $builder): self
     {
@@ -60,7 +60,7 @@ class CompanyRoleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\CompanyPage\Form\CompanyRoleForm
+     * @return $this
      */
     protected function addNameField(FormBuilderInterface $builder): self
     {
@@ -78,7 +78,7 @@ class CompanyRoleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\CompanyPage\Form\CompanyRoleForm
+     * @return $this
      */
     protected function addFkCompanyField(FormBuilderInterface $builder): self
     {
@@ -95,7 +95,7 @@ class CompanyRoleForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\CompanyPage\Form\CompanyRoleForm
+     * @return $this
      */
     protected function addIsDefaultField(FormBuilderInterface $builder): self
     {
