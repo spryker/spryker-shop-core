@@ -10,16 +10,17 @@
     idBaseUnit: _widget.idBaseUnit | default(null),
     salesUnits: _widget.salesUnits | default([]),
     jsonScheme: _widget.jsonScheme | default(''),
-    salesUnitCount : _widget.salesUnits|length
+    salesUnitCount : _widget.salesUnits|length,
+    isAddToCartDisabled : _widget.isAddToCartDisabled | default(false)
 } %}
-{% set disabled = data.product.idProductConcrete is empty or data.product.price is empty %}
+{% set disabled = data.isAddToCartDisabled %}
 
 {% block body %}
     <div class="col col--sm-5">
         <label>
             {{ 'cart.item_quantity' | trans }}
             {% if data.salesUnitCount >= 1 %}
-                <input id="sales-unit-quantity" class="input" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
+                <input id="sales-unit-quantity" class="input" step="any" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
                 <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
             {% else %}
                 {% include atom('select') with {
