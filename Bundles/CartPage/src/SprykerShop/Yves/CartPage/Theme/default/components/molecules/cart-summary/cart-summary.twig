@@ -18,6 +18,7 @@
 {% block body %}
     <h6 class="text-secondary float-right">{{ app['cart.quantity'] }} {{ 'item' | trans }}</h6>
     <h6>{{ 'cart.your-order' | trans }}</h6>
+    <hr />
 
     <ul class="list list--spacing">
         {% if widgetExists('DiscountSummaryWidgetPlugin') %}
@@ -32,6 +33,7 @@
                 <br />
                 {{ data.cart.shipment.method.name }}
                 <span class="float-right">{{ data.cart.shipment.method.storeCurrencyPrice | money }}</span>
+                <hr />
             </li>
         {% endif %}
 
@@ -52,7 +54,7 @@
 
     {% if canProceedToCheckout %}
         <hr />
-        <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('data.cart-go-to-checkout')}}>
+        <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}>
             {{ 'cart.checkout' | trans }}
         </a>
     {% endif %}

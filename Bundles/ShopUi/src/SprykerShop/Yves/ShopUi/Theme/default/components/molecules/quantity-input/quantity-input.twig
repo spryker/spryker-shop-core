@@ -29,6 +29,7 @@
                     value="{{data.value}}"
                     name="quantity"
                     min="{{data.minQuantity}}"
+                    {{qa('quantity-input')}}
                     {% if maxQuantity is not empty %}max="{{maxQuantity}}"{% endif %} />
             {% endblock %}
         </span>
@@ -41,7 +42,8 @@
                         class: config.name ~ '__sync',
                         data: {
                             name: 'sync'
-                        }
+                        },
+                        qa: 'quantity-input-submit'
                     } only %}
                 </button>
             </span>
