@@ -7,8 +7,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/symfony": "*"
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

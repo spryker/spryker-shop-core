@@ -7,8 +7,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/symfony": "*"
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/symfony": "3.0.0 for using LanguageSwitcherPluginInterface"
@@ -16,11 +16,6 @@
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
