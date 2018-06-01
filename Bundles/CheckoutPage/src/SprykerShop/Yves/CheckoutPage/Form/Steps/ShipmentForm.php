@@ -55,7 +55,7 @@ class ShipmentForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm
+     * @return $this
      */
     protected function addShipmentMethods(FormBuilderInterface $builder, array $options)
     {
