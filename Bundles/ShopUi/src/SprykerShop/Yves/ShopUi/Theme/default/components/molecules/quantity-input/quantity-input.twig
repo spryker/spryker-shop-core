@@ -36,14 +36,13 @@
 
         {% if data.hasUpdateButton %}
             <span class="col">
-                <button type="submit" class="button button--expand">
+                <button type="submit" class="button button--expand" {{qa('quantity-input-submit')}}>
                     {% include atom('icon') with {
                         modifiers: ['small'],
                         class: config.name ~ '__sync',
                         data: {
                             name: 'sync'
-                        },
-                        qa: 'quantity-input-submit'
+                        }
                     } only %}
                 </button>
             </span>
