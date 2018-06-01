@@ -11,9 +11,9 @@
     salesUnits: _widget.salesUnits | default([]),
     jsonScheme: _widget.jsonScheme | default(''),
     salesUnitCount : _widget.salesUnits|length,
-    addToCartDisabled : _widget.addToCartDisabled | default(false)
+    isAddToCartDisabled : _widget.isAddToCartDisabled | default(false)
 } %}
-{% set disabled = data.addToCartDisabled %}
+{% set disabled = data.isAddToCartDisabled %}
 
 {% block body %}
     <div class="col col--sm-5">

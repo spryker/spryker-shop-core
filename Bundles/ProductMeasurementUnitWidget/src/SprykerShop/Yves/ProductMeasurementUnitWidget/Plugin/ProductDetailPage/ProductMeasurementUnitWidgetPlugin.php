@@ -20,12 +20,12 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param bool $addToCartDisabled
+     * @param bool $isAddToCartDisabled
      * @param array $quantityOptions
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, bool $addToCartDisabled, array $quantityOptions = []): void
+    public function initialize(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = []): void
     {
         $salesUnits = null;
         $idBaseUnit = null;
@@ -65,7 +65,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
             ->addParameter('baseUnit', $baseUnit)
             ->addParameter('idBaseUnit', $idBaseUnit)
             ->addParameter('salesUnits', $salesUnits)
-            ->addParameter('addToCartDisabled', $addToCartDisabled)
+            ->addParameter('isAddToCartDisabled', $isAddToCartDisabled)
             ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
             ->addParameter(
                 'jsonScheme',
