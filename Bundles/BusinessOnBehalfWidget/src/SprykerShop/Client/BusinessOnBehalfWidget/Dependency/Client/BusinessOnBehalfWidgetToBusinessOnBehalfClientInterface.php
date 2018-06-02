@@ -10,12 +10,12 @@ namespace SprykerShop\Client\BusinessOnBehalfWidget\Dependency\Client;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface BusinessOnBehalfWidgetToCompanyUserClientInterface
+interface BusinessOnBehalfWidgetToBusinessOnBehalfClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findCompanyUserCollectionByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer;
+    public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer;
 }

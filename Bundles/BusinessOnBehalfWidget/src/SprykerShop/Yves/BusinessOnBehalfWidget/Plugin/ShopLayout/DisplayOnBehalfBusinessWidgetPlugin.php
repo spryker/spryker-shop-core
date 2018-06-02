@@ -71,11 +71,12 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
     {
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if (!$customer || !$customer->getCompanyUser()) {
+        if (!$customer || !$customer->getCompanyUserTransfer()) {
             return '';
         }
 
-        return $customer->getCompanyUser()->requireCompany()->getCompany()->getName();
+
+        return $customer->getCompanyUserTransfer()->requireCompany()->getCompany()->getName();
     }
 
     /**
@@ -85,11 +86,11 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
     {
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if (!$customer || !$customer->getCompanyUser()) {
+        if (!$customer || !$customer->getCompanyUserTransfer()) {
             return '';
         }
 
-        return $customer->getCompanyUser()->requireCompanyBusinessUnit()->getCompanyBusinessUnit()->getName();
+        return $customer->getCompanyUserTransfer()->requireCompanyBusinessUnit()->getCompanyBusinessUnit()->getName();
     }
 
     /**
@@ -102,9 +103,8 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
         if (!$customer) {
             return false;
         }
-
-        //TODO: use real method to retrieve company users when merged to epic branch
-        $companyUserCollection = $this->getFactory()->getCompanyUserClient()->findCompanyUserCollectionByCustomerId(
+        
+        $companyUserCollection = $this->getFactory()->getBusinessOnBehalfClient()->findActiveCompanyUsersByCustomerId(
             $customer
         );
 
