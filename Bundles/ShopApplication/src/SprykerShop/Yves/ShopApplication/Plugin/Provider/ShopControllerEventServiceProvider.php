@@ -60,7 +60,7 @@ class ShopControllerEventServiceProvider extends AbstractPlugin implements Servi
     public function onKernelController(FilterControllerEvent $event, SprykerApplication $application)
     {
         foreach ($this->getFactory()->getFilterControllerEventSubscriberPlugins() as $filterControllerEventListenerPlugin) {
-            $filterControllerEventListenerPlugin->subscribe($event);
+            $filterControllerEventListenerPlugin->handle($event);
         }
     }
 

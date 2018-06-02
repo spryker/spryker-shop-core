@@ -18,6 +18,9 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
  */
 class CompanyPageFilterControllerEventHandlerPlugin extends AbstractPlugin implements FilterControllerEventHandlerPluginInterface
 {
+    /**
+     * @const string
+     */
     protected const COMPANY_REDIRECT_URL = '/company/user/select';
 
     /**
