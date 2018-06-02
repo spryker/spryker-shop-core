@@ -43,7 +43,9 @@ class BusinessOnBehalfController extends AbstractController
             ->handleRequest($request);
 
         if ($companyUserAccountForm->isSubmitted() && $companyUserAccountForm->isValid()) {
-            $this->saveCompanyUser($customerTransfer, $activeCompanyUsers, $companyUserAccountForm->getData());
+            $isDefault = (bool)$request->request->get(CompanyUserAccountForm::FORM_NAME)[CompanyUserAccountForm::FIELD_IS_DEFAULT];
+            $this->saveCompanyUser($customerTransfer, $activeCompanyUsers, $companyUserAccountForm->getData(), $isDefault);
+
         }
 
         $data = [
@@ -57,15 +59,24 @@ class BusinessOnBehalfController extends AbstractController
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
      * @param array $formData
+     * @param bool $isDefault
      *
      * @return void
      */
-    protected function saveCompanyUser(CustomerTransfer $customerTransfer, CompanyUserCollectionTransfer $companyUserCollectionTransfer, array $formData): void
+    protected function saveCompanyUser(
+        CustomerTransfer $customerTransfer,
+        CompanyUserCollectionTransfer $companyUserCollectionTransfer,
+        array $formData,
+        bool $isDefault = false
+    ): void
     {
         $idCompanyUserSelected = $formData[CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE];
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUser) {
             if ($this->updateCustomerInSession($companyUser, $idCompanyUserSelected)) {
+                if ($isDefault) {
+                    $this->getFactory()->getBusinessOnBehalfClient()->setDefaultCompanyUser($companyUser);
+                }
                 return;
             }
         }
