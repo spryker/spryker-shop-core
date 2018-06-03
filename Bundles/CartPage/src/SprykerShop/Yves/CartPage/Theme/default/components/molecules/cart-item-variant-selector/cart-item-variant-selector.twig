@@ -11,7 +11,13 @@
 } %}
 
 {% block component %}
-    {% if data.cartItemAttributes is not empty %}{{parent()}}{% endif %}
+    {% set isItemVariantReplaceAvailable = data.cartItemAttributes is not empty %}
+
+    {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
+        {% set isItemVariantReplaceAvailable = not widgetBlock('QuantitySalesUnitWidgetPlugin', 'hasSalesUnit', data.cartItem) and isItemVariantReplaceAvailable %}
+    {% endif %}
+
+    {% if isItemVariantReplaceAvailable %}{{parent()}}{% endif %}
 {% endblock %}
 
 {% block body %}

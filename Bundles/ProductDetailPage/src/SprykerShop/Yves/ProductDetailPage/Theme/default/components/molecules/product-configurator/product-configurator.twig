@@ -58,7 +58,7 @@
         {% endif %}
 
         {% if widgetExists('ProductMeasurementUnitWidgetPlugin') %}
-            {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, options) }}
+            {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, disabled, options) }}
         {% else %}
             <div class="grid grid--bottom grid--justify">
                 <div class="col col--sm-5">

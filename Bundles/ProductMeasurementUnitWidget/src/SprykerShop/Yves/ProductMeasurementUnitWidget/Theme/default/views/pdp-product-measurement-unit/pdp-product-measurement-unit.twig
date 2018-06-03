@@ -10,9 +10,10 @@
     idBaseUnit: _widget.idBaseUnit | default(null),
     salesUnits: _widget.salesUnits | default([]),
     jsonScheme: _widget.jsonScheme | default(''),
-    salesUnitCount : _widget.salesUnits|length
+    salesUnitCount : _widget.salesUnits|length,
+    isAddToCartDisabled : _widget.isAddToCartDisabled | default(false)
 } %}
-{% set disabled = data.product.idProductConcrete is empty or data.product.price is empty %}
+{% set disabled = data.isAddToCartDisabled %}
 
 {% block body %}
     <div class="grid grid--bottom grid--justify">
@@ -34,6 +35,7 @@
                     } only %}
                 {% endif %}
             </label>
+
             {% if data.salesUnitCount >= 1 %}
                 <label>
                     {{ 'product.measurement.sales_unit' | trans }}
@@ -56,6 +58,7 @@
                 </label>
             {% endif %}
         </div>
+
         <div class="col col--sm-6">
             <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}>
             {% include atom('icon') with {
@@ -78,12 +81,15 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            {% include molecule('measurement-quantity-selector', 'ProductMeasurementUnitWidget') with {
-                data: {
-                    json: data.jsonScheme
-                }
-            } only %}
-            <br/>
+
+            <div class="col col--sm-12">
+                {% include molecule('measurement-quantity-selector', 'ProductMeasurementUnitWidget') with {
+                    data: {
+                        json: data.jsonScheme
+                    }
+                } only %}
+            </div>
+
             <div class="col col--sm-12 is-hidden measurement-unit-choice">
                 <div class="measurement-unit-notifications">
                     <div id="quantity-between-units" class="is-hidden">
