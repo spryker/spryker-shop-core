@@ -39,31 +39,14 @@
                         {{parent()}}
 
                         <hr />
-                        {% embed molecule('variant-configurator', 'ProductDetailPage') with {
+                        {% include molecule('variant-configurator', 'DiscountPromotionWidget') with {
                             data: {
+                                idProductAbstract: embed.idProductAbstract,
                                 superAttributes: embed.superAttributes,
                                 selectedAttributes: embed.selectedAttributes,
-                                availableAttributes: embed.availableAttributes,
-                            },
-                            embed: {
-                                idProductAbstract: embed.idProductAbstract
+                                availableAttributes: embed.availableAttributes
                             }
                         } only %}
-                            {% block variant %}
-                                <li class="list__item list__item--spacing">
-                                    {% include molecule('variant', 'ProductDetailPage') with {
-                                        data: {
-                                            name: name,
-                                            formName: 'attributes[' ~ embed.idProductAbstract ~ '][' ~ name ~ ']',
-                                            values: values,
-                                            selectedValue: selectedValue,
-                                            label: ('product.attribute.' ~ name) | trans,
-                                            isAvailable: isAvailable
-                                        }
-                                    } only %}
-                                </li>
-                            {% endblock %}
-                        {% endembed %}
                         <hr />
                     {% endblock %}
 
