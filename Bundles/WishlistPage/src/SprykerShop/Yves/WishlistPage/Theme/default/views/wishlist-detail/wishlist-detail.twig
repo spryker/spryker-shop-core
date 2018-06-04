@@ -1,62 +1,52 @@
-{% extends template('page-layout-customer', 'CustomerPage') %}
+{% extends template('page-layout-wishlist', 'WishlistPage') %}
 
 {% define data = {
     wishlists: _view.wishlistOverview.meta.wishlistCollection.wishlists,
     wishlistName: _view.wishlistName,
     wishlistItems: _view.wishlistItems,
     addAllProductsToCart: _view.addAllAvailableProductsToCartForm,
+
     pagination: {
         currentPage: _view.currentPage,
         maxPage: _view.totalPages,
+        paginationPath: 'wishlist/details',
+        showAlwaysFirstAndLast: true,
         parameters: {
             wishlistName: _view.wishlistName
-        },
-        paginationPath: 'wishlist/details',
-        showAlwaysFirstAndLast: true
+        }
     }
 } %}
 
-
-{% block customerNavigation %}
-
-    {% include molecule('customer-navigation', 'CustomerPage') with {
-        class: 'box',
-        data: {
-            activePage: 'wishlist'
-        }
-    } only %}
-
-{% endblock %}
-
 {% block customerContent %}
-
     <div class="box">
-        <div class="grid grid--middle space-bottom-big">
-            <div class="col col--expand">
-                <h4>{{ data.wishlistName }}</h4>
+        {% if data.wishlistItems is not empty %}
+            {{ form_start(data.addAllProductsToCart, {
+                action: path('wishlist/move-all-available-to-cart', { wishlistName: data.wishlistName }),
+                attr: { class: 'float-right' }
+            }) }}
+                <button type="submit" class="button">
+                    {% include atom('icon') with {
+                        data: {
+                            name: 'cart-plus'
+                        }
+                    } only %}
+                    {{ 'customer.account.wishlist.add_all_available_to_cart' | trans }}
+                </button>
+
+                {% for wishlistItemMetaField in data.addAllProductsToCart.wishlistItemMetaCollection %}
+                    {{ form_widget(wishlistItemMetaField) }}
+                {% endfor %}
+            {{ form_end(data.addAllProductsToCart) }}
+        {% endif %}
+
+        <h4>{{ data.wishlistName }}</h4>
+
+        <hr />
+        {% if data.wishlistItems is empty %}
+            <div class="text-center space-y-big">
+                <h6>{{ 'customer.account.wishlist.empty' | trans }}</h6>
             </div>
-
-            {% if data.wishlistItems|length %}
-                <div class="col">
-                    {{ form_start(data.addAllProductsToCart, {action: path('wishlist/move-all-available-to-cart', { wishlistName: data.wishlistName })}) }}
-                        <button type="submit" class="button">
-                            {% include atom('icon') with {
-                                data: {
-                                    name: 'cart-plus'
-                                }
-                            } only %}
-                            {{ 'customer.account.wishlist.add_all_available_to_cart' | trans }}
-                        </button>
-                        {% for wishlistItemMetaField in data.addAllProductsToCart.wishlistItemMetaCollection %}
-                            {{ form_widget(wishlistItemMetaField) }}
-                        {% endfor %}
-                    {{ form_end(data.addAllProductsToCart) }}
-                </div>
-            {% endif %}
-        </div>
-
-        {% if data.wishlistItems|length %}
-
+        {% else %}
             {% include molecule('wishlist-detail-table', 'WishlistPage') with {
                 data: {
                     wishlistItems: data.wishlistItems,
@@ -64,17 +54,10 @@
                 }
             } only %}
 
+            <hr />
             {% include molecule('pagination') with {
-                class: 'space-y-big',
                 data: data.pagination
             } only %}
-
-        {% else %}
-            <div class="text-center space-y-big">
-                <h6>{{ 'customer.account.wishlist.empty' | trans }}</h6>
-            </div>
         {% endif %}
-
     </div>
-
 {% endblock %}

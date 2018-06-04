@@ -9,28 +9,24 @@
     <div class="box">
         <h4>{{ 'customer.account.wishlist.overview.title' | trans }}</h4>
 
+        <hr />
         {% include molecule('add-wishlist', 'WishlistPage') with {
             data: {
                 wishlistForm: data.wishlistForm
             }
         }  only %}
 
-        <hr>
-
-        {% if data.wishlists is not empty %}
-
-            {% include molecule('wishlist-overview-table', 'WishlistPage') with {
-                data: {
-                    wishlists: data.wishlists
-
-                }
-            } only %}
-
-        {% else %}
+        <hr />
+        {% if data.wishlists is empty %}
             <div class="text-center space-y-big">
                 <h6>{{ 'customer.account.wishlist.overview.empty' | trans }}</h6>
             </div>
+        {% else %}
+            {% include molecule('wishlist-overview-table', 'WishlistPage') with {
+                data: {
+                    wishlists: data.wishlists
+                }
+            } only %}
         {% endif %}
-
     </div>
 {% endblock %}
