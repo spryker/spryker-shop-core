@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\CustomerPage;
+namespace SprykerShop\Yves\ShopUiExtension\Dependency\Plugin\CustomerPage;
 
 interface CustomerNavigationWidgetPluginInterface
 {

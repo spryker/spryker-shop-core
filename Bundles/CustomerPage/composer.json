@@ -18,7 +18,7 @@
   },
   "require-dev": {
     "spryker-shop/home-page": "*",
-    "spryker-shop/shop-ui": "*",
+    "spryker-shop/shop-ui-extension": "*",
     "spryker/config": "*",
     "spryker/messenger": "*",
     "spryker/silex": "*",
@@ -27,7 +27,7 @@
   "suggest": {
     "spryker/config": "TODO: add suggestion description",
     "spryker-shop/home-page": "TODO: add suggestion description",
-    "spryker-shop/shop-ui": "Add to use shop ui components.",
+    "spryker-shop/shop-ui-extension": "Add to use shop ui components.",
     "spryker/messenger": "TODO: add suggestion description",
     "spryker/silex": "TODO: add suggestion description",
     "spryker/twig": "TODO: add suggestion description"
