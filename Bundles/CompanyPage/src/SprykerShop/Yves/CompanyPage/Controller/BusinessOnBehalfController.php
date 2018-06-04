@@ -43,7 +43,13 @@ class BusinessOnBehalfController extends AbstractController
             ->handleRequest($request);
 
         if ($companyUserAccountForm->isSubmitted() && $companyUserAccountForm->isValid()) {
-            $isDefault = (bool)$request->request->get(CompanyUserAccountForm::FORM_NAME)[CompanyUserAccountForm::FIELD_IS_DEFAULT];
+            $isDefault = false;
+            if ($request->request->has(CompanyUserAccountForm::FORM_NAME)
+                && isset($request->request->get(CompanyUserAccountForm::FORM_NAME)[CompanyUserAccountForm::FIELD_IS_DEFAULT])
+                && $request->request->get(CompanyUserAccountForm::FORM_NAME)[CompanyUserAccountForm::FIELD_IS_DEFAULT]
+            ) {
+                $isDefault = true;
+            }
             $this->saveCompanyUser($activeCompanyUsers, $companyUserAccountForm->getData(), $isDefault);
         }
 
@@ -65,7 +71,8 @@ class BusinessOnBehalfController extends AbstractController
         CompanyUserCollectionTransfer $companyUserCollectionTransfer,
         array $formData,
         bool $isDefault = false
-    ): void {
+    ): void
+    {
         $idCompanyUserSelected = $formData[CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE];
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUser) {

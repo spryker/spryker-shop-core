@@ -58,9 +58,9 @@ class CompanyUserAccountForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return self
+     * @return $this
      */
-    protected function addCompanyUserAccountChoice(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyUserAccountChoice(FormBuilderInterface $builder, array $options): CompanyUserAccountForm
     {
         $builder->add(static::FIELD_COMPANY_USER_ACCOUNT_CHOICE, ChoiceType::class, [
             'choices' => $options[static::OPTION_COMPANY_USER_ACCOUNT_CHOICES],
@@ -73,9 +73,9 @@ class CompanyUserAccountForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return self
+     * @return $this
      */
-    protected function addIsDefaultCheckbox(FormBuilderInterface $builder, array $options): self
+    protected function addIsDefaultCheckbox(FormBuilderInterface $builder, array $options): CompanyUserAccountForm
     {
         $builder->add(static::FIELD_IS_DEFAULT, CheckboxType::class, [
             'label' => 'company-user.remember-choice',
