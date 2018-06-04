@@ -5,6 +5,8 @@
     shoppingListItems: _view.shoppingListItems,
     barcodeGeneratorPlugin: _view.barcodeGeneratorPlugin | default(null),
     labels: {
+        shoppingListId: 'customer.account.print_shopping_list.title.shopping_list_id' | trans,
+        shoppingListName: 'customer.account.print_shopping_list.title.shopping_list_name' | trans,
         barcode: 'customer.account.print_shopping_list.table.barcode' | trans,
         productSku: 'customer.account.print_shopping_list.table.product_sku' | trans,
         productName: 'customer.account.print_shopping_list.table.product_name' | trans,
@@ -14,11 +16,30 @@
 <head>
     <meta charset="utf-8" />
     <title>{{ data.shoppingList.name }}</title>
+    <style type="text/css">
+
+        table.shopping-list-items td, table.shopping-list-items th {
+            border: 1px solid black;
+        }
+        table.shopping-list-title td, table.shopping-list-title th {
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
 
-<h1>{{ data.shoppingList.idShoppingList }}</h1>
-<h2 class="shopping-list-name">{{ data.shoppingList.name }}</h2>
+<table class="shopping-list-title">
+    <tr>
+        <td>{{ data.labels.shoppingListId }}</td>
+        <td>{{ data.shoppingList.idShoppingList }}</td>
+    </tr>
+    <tr>
+        <td>{{ data.labels.shoppingListName }}</td>
+        <td>{{ data.shoppingList.name }}</td>
+    </tr>
+</table>
+
+<br/><br/>
 
 <table class="shopping-list-items">
     <thead>
@@ -35,7 +56,7 @@
     {% for item in data.shoppingListItems %}
     <tr>
         {% if widgetExists('ProductBarcodeWidgetPlugin') %}
-            <td>{{ widget('BarcodeWidgetPlugin', item, data.barcodeGeneratorPlugin) }}</td>
+            <td>{{ widget('ProductBarcodeWidgetPlugin', item, data.barcodeGeneratorPlugin) }}</td>
         {% endif %}
         <td>{{ item.sku }}</td>
         <td>{{ item.name }}</td>
