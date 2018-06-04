@@ -78,7 +78,7 @@ class CustomerStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      * Update QuoteTransfer with customer step handler plugin.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
@@ -92,7 +92,7 @@ class CustomerStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      * If the CustomerTransfer is guest and the customer is logged in, then we override the guest customer with the
      * logged in customer, e.g. return false and execute() will do the rest.
      *
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */

@@ -49,7 +49,6 @@ class QuoteItemCartNoteForm extends AbstractType
     {
         $builder->add(static::FIELD_CART_NOTE, TextareaType::class, [
             'label' => false,
-            'empty_data' => 'cart_note.item_form.placeholder',
             'required' => false,
         ]);
 

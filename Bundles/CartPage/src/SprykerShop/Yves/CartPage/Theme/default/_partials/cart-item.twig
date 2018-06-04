@@ -14,7 +14,7 @@
 
                 {% include '@CartPage/_partials/cart-product-variants.twig' %}
 
-                {{ widget('CartNoteQuoteItemWidgetPlugin', cartItem) }}
+                {{ widget('CartNoteQuoteItemWidgetPlugin', cartItem, _view.cart) }}
             </ul>
         </div>
 

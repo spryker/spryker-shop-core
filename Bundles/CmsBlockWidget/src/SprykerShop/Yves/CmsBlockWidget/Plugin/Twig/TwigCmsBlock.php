@@ -31,6 +31,11 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     protected $localeName;
 
     /**
+     * @var string
+     */
+    protected $storeName;
+
+    /**
      * @param \Silex\Application $application
      *
      * @return \Twig_SimpleFunction[]
@@ -38,6 +43,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     public function getFunctions(Application $application)
     {
         $this->localeName = $application['locale'];
+        $this->storeName = $application['store'];
 
         return [
             new Twig_SimpleFunction('spyCmsBlock', [
@@ -93,7 +99,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
         $availableBlockNames = $this->filterPosition($positionName, $availableBlockNames);
         $availableBlockNames = $this->filterAvailableBlockNames($blockName, $availableBlockNames);
 
-        return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByNames($availableBlockNames, $this->localeName);
+        return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByNames($availableBlockNames, $this->localeName, $this->storeName);
     }
 
     /**

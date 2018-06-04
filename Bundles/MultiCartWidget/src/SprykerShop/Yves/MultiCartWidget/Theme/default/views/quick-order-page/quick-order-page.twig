@@ -1,0 +1,33 @@
+{% extends template('widget') %}
+
+{% define data = {
+    carts: _widget.carts,
+    isMultiCartAllowed: _widget.isMultiCartAllowed
+} %}
+
+{% set attributes = {
+    name: 'id_quote',
+} %}
+{% set options = [] %}
+{% for cart in data.carts %}
+    {% set options = options | merge([{
+        label: cart.name,
+        value: cart.idQuote
+    }]) %}
+{% endfor %}
+{% set options = options | merge([{
+    label: 'multi_cart_widget.cart.add' | trans,
+    value: 0
+}]) %}
+
+{% block body %}
+    {% if data.isMultiCartAllowed is not empty %}
+        {% include atom('select') with {
+            modifiers: ['expand'],
+            attributes: attributes,
+            data: {
+                options: options
+            }
+        } only %}
+    {% endif %}
+{% endblock %}

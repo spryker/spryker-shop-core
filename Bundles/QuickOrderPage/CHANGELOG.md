@@ -1,3 +1,3 @@
 # QuickOrderPage Changelog
 
-[Release Changelog](https://github.com/spryker/quick-order-page/releases)
+[Release Changelog](https://github.com/spryker-shop/quick-order-page/releases)
