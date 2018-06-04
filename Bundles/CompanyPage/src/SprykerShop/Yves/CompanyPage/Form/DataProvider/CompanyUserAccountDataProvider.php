@@ -48,10 +48,11 @@ class CompanyUserAccountDataProvider
      *
      * @return int[]
      */
-    public function getOptions(CompanyUserCollectionTransfer $companyCollection): array
+    public function getOptions(CompanyUserCollectionTransfer $companyCollection, CustomerTransfer $customerTransfer): array
     {
         return [
             CompanyUserAccountForm::OPTION_COMPANY_USER_ACCOUNT_CHOICES => $this->mapCompanyUserCollectionToChoiceArray($companyCollection),
+            CompanyUserAccountForm::OPTION_COMPANY_USER_ACCOUNT_DEFAULT_SELECTED => $this->isDefaultCompanyUserSelected($customerTransfer),
         ];
     }
 
@@ -74,5 +75,16 @@ class CompanyUserAccountDataProvider
         }
 
         return $companies;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isDefaultCompanyUserSelected(CustomerTransfer $customerTransfer): bool
+    {
+        return $customerTransfer->getCompanyUserTransfer()
+            && $customerTransfer->getCompanyUserTransfer()->getIsDefault();
     }
 }

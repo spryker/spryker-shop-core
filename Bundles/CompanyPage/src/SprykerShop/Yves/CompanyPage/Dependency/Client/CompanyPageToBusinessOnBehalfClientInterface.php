@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyPageToBusinessOnBehalfClientInterface
@@ -18,4 +19,11 @@ interface CompanyPageToBusinessOnBehalfClientInterface
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }
