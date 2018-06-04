@@ -47,6 +47,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_USER_CREATE = 'company/user/create';
     public const ROUTE_COMPANY_USER_UPDATE = 'company/user/update';
     public const ROUTE_COMPANY_USER_DELETE = 'company/user/delete';
+    public const ROUTE_COMPANY_USER_SELECT = 'company/user/select';
 
     /**
      * @param \Silex\Application $app
@@ -192,6 +193,9 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('company', $allowedLocalesPattern . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/user/delete', static::ROUTE_COMPANY_USER_DELETE, 'CompanyPage', 'User', 'delete')
+            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/user/select', static::ROUTE_COMPANY_USER_SELECT, 'CompanyPage', 'BusinessOnBehalf', 'selectCompanyUser')
             ->assert('company', $allowedLocalesPattern . 'company|company')
             ->value('company', 'company');
     }

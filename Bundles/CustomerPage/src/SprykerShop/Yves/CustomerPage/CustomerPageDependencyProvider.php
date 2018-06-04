@@ -34,6 +34,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     const FLASH_MESSENGER = 'FLASH_MESSENGER';
     const STORE = 'STORE';
     const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
+    const PLUGIN_CUSTOMER_NAVIGATION_WIDGETS = 'PLUGIN_CUSTOMER_NAVIGATION_WIDGETS';
     const PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS';
     const PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS';
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
@@ -56,6 +57,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFlashMessenger($container);
         $container = $this->addStore($container);
         $container = $this->addCustomerOverviewWidgetPlugins($container);
+        $container = $this->addCustomerNavigationWidgetPlugins($container);
         $container = $this->addCustomerOrderListWidgetPlugins($container);
         $container = $this->addCustomerOrderViewWidgetPlugins($container);
         $container = $this->addUtilValidateService($container);
@@ -211,10 +213,24 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCustomerOverviewWidgetPlugins(Container $container)
+    protected function addCustomerOverviewWidgetPlugins(Container $container): Container
     {
         $container[static::PLUGIN_CUSTOMER_OVERVIEW_WIDGETS] = function () {
             return $this->getCustomerOverviewWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerNavigationWidgetPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_CUSTOMER_NAVIGATION_WIDGETS] = function () {
+            return $this->getCustomerNavigationWidgetPlugins();
         };
 
         return $container;
@@ -280,6 +296,14 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
      */
     protected function getPreRegistrationCustomerTransferExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCustomerNavigationWidgetPlugins(): array
     {
         return [];
     }

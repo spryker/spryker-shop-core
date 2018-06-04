@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface;
@@ -89,5 +90,13 @@ class CompanyPageFactory extends AbstractFactory
     public function getPermissionClient(): CompanyPageToPermissionClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_PERMISSION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface
+     */
+    public function getBusinessOnBehalfClient(): CompanyPageToBusinessOnBehalfClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_BUSINESS_ON_BEHALF);
     }
 }

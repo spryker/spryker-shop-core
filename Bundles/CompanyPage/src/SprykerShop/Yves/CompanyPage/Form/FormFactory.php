@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CompanyPage\Form;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CompanyPage\CompanyPageDependencyProvider;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
@@ -19,6 +20,7 @@ use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitFormDataPr
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRoleDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRolePermissionDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUnitAddressFormDataProvider;
+use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserAccountDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserFormDataProvider;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -166,6 +168,35 @@ class FormFactory extends AbstractFactory
     public function createCompanyRoleDataProvider(): CompanyRoleDataProvider
     {
         return new CompanyRoleDataProvider($this->getCompanyRoleClient());
+    }
+
+    /**
+     * @param array $data
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyUserAccountForm(array $data = [], array $formOptions = []): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyUserAccountForm::class, $data, $formOptions);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserAccountDataProvider
+     */
+    public function createCompanyUserAccountDataProvider(): CompanyUserAccountDataProvider
+    {
+        return new CompanyUserAccountDataProvider(
+            $this->getBusinessOnBehalfClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface
+     */
+    protected function getBusinessOnBehalfClient(): CompanyPageToBusinessOnBehalfClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_BUSINESS_ON_BEHALF);
     }
 
     /**
