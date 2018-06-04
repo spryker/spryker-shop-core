@@ -19,6 +19,7 @@ class CompanyUserAccountForm extends AbstractType
     public const FIELD_IS_DEFAULT = 'is_default';
 
     public const OPTION_COMPANY_USER_ACCOUNT_CHOICES = 'companyUserAccountChoices';
+    public const OPTION_COMPANY_USER_ACCOUNT_DEFAULT_SELECTED = 'companyUserAccountDefaultSelected';
 
     public const FORM_NAME = 'company_user_account_form';
 
@@ -38,6 +39,7 @@ class CompanyUserAccountForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([static::OPTION_COMPANY_USER_ACCOUNT_CHOICES]);
+        $resolver->setRequired([static::OPTION_COMPANY_USER_ACCOUNT_DEFAULT_SELECTED]);
     }
 
     /**
@@ -77,7 +79,7 @@ class CompanyUserAccountForm extends AbstractType
     {
         $builder->add(static::FIELD_IS_DEFAULT, CheckboxType::class, [
             'label' => 'company-user.remember-choice',
-            'mapped' => false
+            'data' => $options[static::OPTION_COMPANY_USER_ACCOUNT_DEFAULT_SELECTED],
         ]);
 
         return $this;
