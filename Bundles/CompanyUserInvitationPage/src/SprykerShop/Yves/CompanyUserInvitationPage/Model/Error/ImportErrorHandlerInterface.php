@@ -22,7 +22,7 @@ interface ImportErrorHandlerInterface
     );
 
     /**
-     * @return array
+     * @return \Iterator
      */
     public function retrieveCompanyUserInvitationImportErrors(): Iterator;
 }

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Error;
 
+use EmptyIterator;
 use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 use Iterator;
 use League\Csv\Reader;
@@ -52,7 +53,7 @@ class ImportErrorHandler implements ImportErrorHandlerInterface
     }
 
     /**
-     * @return array|\Iterator
+     * @return \Iterator
      */
     public function retrieveCompanyUserInvitationImportErrors(): Iterator
     {
@@ -61,7 +62,7 @@ class ImportErrorHandler implements ImportErrorHandlerInterface
             return Reader::createFromPath($importErrorsFile, 'r')->getRecords();
         }
 
-        return [];
+        return new EmptyIterator();
     }
 
     /**
