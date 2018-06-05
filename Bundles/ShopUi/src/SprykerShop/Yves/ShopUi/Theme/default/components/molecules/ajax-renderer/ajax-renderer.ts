@@ -7,7 +7,7 @@ export default class AjaxRenderer extends Component {
 
     readyCallback() {
         this.provider = <AjaxProvider>document.querySelector(this.providerSelector);
-        this.target = !!this.targetSelector ? <HTMLElement>document.querySelector(this.targetSelector) : this;
+        this.target = !!this.targetSelector ? <HTMLElement>document.querySelector(this.targetSelector) : null;
         this.mapEvents();
     }
 
@@ -22,9 +22,16 @@ export default class AjaxRenderer extends Component {
     render(): void {
         const response = this.provider.xhr.response;
 
-        if (!!response || this.renderIfResponseIsEmpty) {
-            this.target.innerHTML = response;
+        if (!response && !this.renderIfResponseIsEmpty) {
+            return;
         }
+
+        if (!!this.target) {
+            this.target.innerHTML = response;
+            return;
+        }
+
+        this.innerHTML = response;
     }
 
     get providerSelector(): string {
