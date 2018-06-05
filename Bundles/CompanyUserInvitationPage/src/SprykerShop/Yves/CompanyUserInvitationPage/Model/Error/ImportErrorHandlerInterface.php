@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Error;
 
+use Iterator;
 use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 
 interface ImportErrorHandlerInterface
@@ -23,5 +24,5 @@ interface ImportErrorHandlerInterface
     /**
      * @return array
      */
-    public function retrieveCompanyUserInvitationImportErrors(): array;
+    public function retrieveCompanyUserInvitationImportErrors(): Iterator;
 }
