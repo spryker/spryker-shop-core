@@ -44,6 +44,6 @@ class CartNoteOrderItemNoteWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getTemplate()
     {
-        return '@CartNoteWidget/views/customer-page/cart-note-item-note.twig';
+        return '@CartNoteWidget/views/customer-cart-item-note-display/customer-cart-item-note-display.twig';
     }
 }

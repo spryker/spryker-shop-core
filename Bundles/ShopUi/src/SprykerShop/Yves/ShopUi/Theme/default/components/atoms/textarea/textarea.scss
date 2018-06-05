@@ -2,7 +2,7 @@
     #{$name} {
         @include helper-effect-transition(border-color);
         display: inline-block;
-        padding: spacing(.5) spacing();
+        padding: 0.25rem 0.5rem;
         border: 1px solid $setting-color-input-border;
 
         &:focus {

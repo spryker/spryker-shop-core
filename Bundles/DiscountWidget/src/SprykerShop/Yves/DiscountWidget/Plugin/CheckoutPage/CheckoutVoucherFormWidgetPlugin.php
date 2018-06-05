@@ -41,7 +41,7 @@ class CheckoutVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements Ch
      */
     public static function getTemplate(): string
     {
-        return '@DiscountWidget/_checkout-page/voucher-form.twig';
+        return '@DiscountWidget/views/checkout-summary-dicount-voucher-form/checkout-summary-dicount-voucher-form.twig';
     }
 
     /**

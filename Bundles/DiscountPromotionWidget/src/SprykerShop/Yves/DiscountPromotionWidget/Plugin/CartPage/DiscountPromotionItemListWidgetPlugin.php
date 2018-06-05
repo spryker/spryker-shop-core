@@ -46,7 +46,7 @@ class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin impleme
      */
     public static function getTemplate(): string
     {
-        return '@DiscountPromotionWidget/_cart-page/item-list.twig';
+        return '@DiscountPromotionWidget/views/cart-discount-promotion-products-list/cart-discount-promotion-products-list.twig';
     }
 
     /**

@@ -1,0 +1,12 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ajax-renderer',
+    tag: 'ajax-renderer'
+} %}
+
+{% define attributes = {
+    'provider-selector': required,
+    'target-selector': null,
+    'render-if-response-is-empty': false
+} %}

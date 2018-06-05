@@ -4,12 +4,12 @@
         @include helper-visibility-invisible;
         @include helper-effect-transition(max-height opacity visibility, 500ms);
         max-height: 0;
-        background-color: rgba(helper-color-light($setting-color-main), .97);
+        background-color: rgba(helper-color-light($setting-color-main), 0.97);
         cursor: pointer;
         overflow-y: hidden;
 
         &__message {
-            padding: 1rem .5rem;
+            padding: 1rem 0.5rem;
             color: helper-color-dark($setting-color-main);
         }
 
@@ -28,7 +28,7 @@
 
 @mixin shop-ui-flash-message-action($action, $setting-color-action) {
     &--#{$action} {
-        background-color: rgba(helper-color-light($setting-color-action), .97);
+        background-color: rgba(helper-color-light($setting-color-action), 0.97);
     }
 
     &--#{$action} &__message {
