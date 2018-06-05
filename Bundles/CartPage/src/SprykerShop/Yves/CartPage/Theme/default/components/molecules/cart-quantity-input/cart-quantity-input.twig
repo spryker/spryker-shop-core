@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-quantity-input',
+    tag: 'div'
+} %}
+
+{% define data = {
+    cartItem: required,
+    cart: required
+} %}
+
+{% set canWrite = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
+
+{% block body %}
+    {% if canWrite %}
+        <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.cartItem.sku }) }}">
+            {% include molecule('quantity-input') with {
+                data: {
+                    maxQuantity: data.cartItem.maxQuantity,
+                    value: data.cartItem.quantity,
+                    hasUpdateButton: true
+                }
+            } only %}
+
+            {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
+
+            <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey" />
+        </form>
+    {% else %}
+        {{ 'cart.item_quantity' | trans }}
+        <strong>{{ cartItem.quantity }}</strong>
+    {% endif %}
+{% endblock %}
