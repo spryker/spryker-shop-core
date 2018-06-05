@@ -82,8 +82,8 @@
                         <a href="{{ url('shopping-list/update', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.editLabel }}</a>
                         <a href="{{ url('shopping-list/delete', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.deleteLabel }}</a>
                         <a href="{{ url('shopping-list/share', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.shareLabel }}</a>
-                        <a href="{{ url('shopping-list/print', { idShoppingList: shoppingList.idShoppingList }) }}" target="_blank">{{ data.labels.printLabel }}</a>
                     {% endif %}
+                    <a href="{{ url('shopping-list/print', { idShoppingList: shoppingList.idShoppingList }) }}" target="_blank">{{ data.labels.printLabel }}</a>
                 </td>
             </tr>
         {% endfor %}
