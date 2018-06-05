@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Error;
 
-use Iterator;
 use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
+use Iterator;
 
 interface ImportErrorHandlerInterface
 {
