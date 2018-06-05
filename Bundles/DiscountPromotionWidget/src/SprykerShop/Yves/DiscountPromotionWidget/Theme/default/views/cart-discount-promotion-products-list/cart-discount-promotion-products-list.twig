@@ -57,7 +57,8 @@
                             <div class="col col--sm-5">
                                 {% include molecule('quantity-selector') with {
                                     data: {
-                                        maxQuantity: embed.promotionDiscount.maxQuantity
+                                        maxQuantity: embed.promotionDiscount.maxQuantity,
+                                        hasUpdateButton: false
                                     }
                                 } only %}
                             </div>
