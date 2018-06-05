@@ -6,7 +6,9 @@
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/symfony": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
