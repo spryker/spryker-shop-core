@@ -5,7 +5,7 @@
 } %}
 
 {% block template %}
-    {% if data.optionGroups is not empty %}{{parent()}}{% endif %}
+    {% if data.optionGroups is not empty %}<hr />{{parent()}}{% endif %}
 {% endblock %}
 
 {% block body %}

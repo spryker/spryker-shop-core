@@ -23,8 +23,6 @@
                 }
             } only %}
 
-            {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
-
             <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey" />
         </form>
     {% else %}

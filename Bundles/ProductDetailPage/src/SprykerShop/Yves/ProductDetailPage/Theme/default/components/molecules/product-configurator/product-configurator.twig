@@ -52,10 +52,7 @@
     <hr />
 
     <form method="POST" action="/cart/add/{{sku}}">
-        {% if widgetExists('ProductOptionWidgetPlugin') %}
-            {{ widget('ProductOptionWidgetPlugin', data.product) }}
-            <hr />
-        {% endif %}
+        {{ widget('ProductOptionWidgetPlugin', data.product) }}
 
         {% if widgetExists('ProductMeasurementUnitWidgetPlugin') %}
             {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, disabled, options) }}

@@ -53,12 +53,16 @@
         </div>
 
         <div class="col col--sm-12 col--lg-4">
-            {% include molecule('cart-quantity-input', 'CartPage') with {
-                data: {
-                    cartItem: data.cartItem,
-                    cart: data.cart
-                }
-            } only %}
+            {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
+                {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
+            {% else %}
+                {% include molecule('cart-quantity-input', 'CartPage') with {
+                    data: {
+                        cartItem: data.cartItem,
+                        cart: data.cart
+                    }
+                } only %}
+            {% endif %}
 
             {% if canEditCart %}
                 <a class="float-right" href="{{ path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': data.cartItem.groupKey }) }}">
