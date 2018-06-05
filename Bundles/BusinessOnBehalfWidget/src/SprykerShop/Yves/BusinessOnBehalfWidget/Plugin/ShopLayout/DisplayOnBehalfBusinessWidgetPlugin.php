@@ -71,12 +71,14 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
     {
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if (!$customer || !$customer->getCompanyUserTransfer()) {
+        if (!$customer
+            || !$customer->getCompanyUserTransfer()
+            || !$customer->getCompanyUserTransfer()->getCompany()
+        ) {
             return '';
         }
 
-
-        return $customer->getCompanyUserTransfer()->requireCompany()->getCompany()->getName();
+        return $customer->getCompanyUserTransfer()->getCompany()->getName();
     }
 
     /**
@@ -86,11 +88,14 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
     {
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if (!$customer || !$customer->getCompanyUserTransfer()) {
+        if (!$customer
+            || !$customer->getCompanyUserTransfer()
+            || !$customer->getCompanyUserTransfer()->getCompanyBusinessUnit()
+        ) {
             return '';
         }
 
-        return $customer->getCompanyUserTransfer()->requireCompanyBusinessUnit()->getCompanyBusinessUnit()->getName();
+        return $customer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getName();
     }
 
     /**

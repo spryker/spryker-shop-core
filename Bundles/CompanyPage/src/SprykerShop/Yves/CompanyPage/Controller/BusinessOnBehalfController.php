@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CompanyPage\Controller;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -71,8 +70,7 @@ class BusinessOnBehalfController extends AbstractController
         CompanyUserCollectionTransfer $companyUserCollectionTransfer,
         array $formData,
         bool $isDefault = false
-    ): void
-    {
+    ): void {
         $idCompanyUserSelected = $formData[CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE];
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUser) {
@@ -98,11 +96,11 @@ class BusinessOnBehalfController extends AbstractController
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         if ($companyUser->getIdCompanyUser() === $idCompanyUserSelected) {
             if ($companyUser->getCompany()->getIsActive()) {
-                if ($isDefault) {
-                    $companyUser = $this->getFactory()->getBusinessOnBehalfClient()->setDefaultCompanyUser($companyUser);
-                }
+                $companyUser->setIsDefault($isDefault);
+                $companyUser = $this->getFactory()->getBusinessOnBehalfClient()->setDefaultCompanyUser($companyUser);
 
                 $customerTransfer->setCompanyUserTransfer($companyUser);
+
                 $this->getFactory()->getCustomerClient()->setCustomer($customerTransfer);
 
                 return true;

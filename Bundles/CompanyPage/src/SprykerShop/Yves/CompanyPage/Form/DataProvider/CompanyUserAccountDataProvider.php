@@ -45,6 +45,7 @@ class CompanyUserAccountDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyCollection
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return int[]
      */
