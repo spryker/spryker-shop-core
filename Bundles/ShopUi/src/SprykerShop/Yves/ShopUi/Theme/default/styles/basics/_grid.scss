@@ -55,6 +55,10 @@
             }
         }
 
+        &--nowrap {
+            flex-wrap: nowrap;
+        }
+
         &--stretch {
             align-items: stretch;
 

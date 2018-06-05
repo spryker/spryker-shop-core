@@ -48,6 +48,12 @@
             }
         }
 
+        &__link {
+            &--active {
+                @include helper-font-weight(bold);
+            }
+        }
+
         &__separator {
             &:not(&--horizontal-line) {
                 display: inline-block;

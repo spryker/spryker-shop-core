@@ -94,9 +94,12 @@
     </form>
 
     {% if widgetExists('ShoppingListWidgetPlugin') %}
-        <hr/>
+        <hr />
         {{ widget('ShoppingListWidgetPlugin', sku, disabled) }}
     {% endif %}
 
-    {# {{ widget('WishlistWidgetPlugin', data.product) }} #}
+    {% if widgetExists('WishlistWidgetPlugin') %}
+        <hr />
+        {{ widget('WishlistWidgetPlugin', data.product) }}
+    {% endif %}
 {% endblock %}
