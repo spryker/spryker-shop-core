@@ -10,7 +10,8 @@
     maxQuantity: null,
     minQuantity: 1,
     value: 1,
-    hasUpdateButton: false
+    readOnly: false,
+    hasUpdateButton: true
 } %}
 
 {% block body %}
@@ -30,11 +31,12 @@
                     name="quantity"
                     min="{{data.minQuantity}}"
                     {{qa('quantity-input')}}
-                    {% if maxQuantity is not empty %}max="{{maxQuantity}}"{% endif %} />
+                    {% if maxQuantity is not empty %}max="{{maxQuantity}}"{% endif %}
+                    {% if data.readOnly %}disabled{% endif %} />
             {% endblock %}
         </span>
 
-        {% if data.hasUpdateButton %}
+        {% if data.hasUpdateButton and not data.readOnly %}
             <span class="col">
                 <button type="submit" class="button button--expand" {{qa('quantity-input-submit')}}>
                     {% include atom('icon') with {

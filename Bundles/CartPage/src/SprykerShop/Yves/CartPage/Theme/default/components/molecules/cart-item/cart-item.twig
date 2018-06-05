@@ -53,15 +53,19 @@
         </div>
 
         <div class="col col--sm-12 col--lg-4">
-            {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
-                {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
+            {% if canEditCart %}
+                {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
+                    {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
+                {% else %}
+                    {% include molecule('cart-quantity-input', 'CartPage') with {
+                        data: {
+                            cartItem: data.cartItem
+                        }
+                    } only %}
+                {% endif %}
             {% else %}
-                {% include molecule('cart-quantity-input', 'CartPage') with {
-                    data: {
-                        cartItem: data.cartItem,
-                        cart: data.cart
-                    }
-                } only %}
+                {{ 'cart.item_quantity' | trans }}
+                <strong>{{ cartItem.quantity }}</strong>
             {% endif %}
 
             {% if canEditCart %}

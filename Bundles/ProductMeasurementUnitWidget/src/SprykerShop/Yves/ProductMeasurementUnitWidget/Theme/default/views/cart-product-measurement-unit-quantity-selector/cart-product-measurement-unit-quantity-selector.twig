@@ -5,27 +5,27 @@
     isBaseUnit: _widget.isBaseUnit ?? true
 } %}
 
-{% set cartItem = data.cartItem %}
-{% set salesUnitName = cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-
 {%- block hasSalesUnit -%}
     {{- _widget.itemTransfer.quantitySalesUnit.idProductMeasurementSalesUnit | default(false) -}}
 {%- endblock -%}
 
 {% block body %}
-    {% if not cartItem.maxQuantity or cartItem.maxQuantity < 0 %}
-        <input class="input input--expand" type="number" value="{{ cartItem.quantity }}" name="quantity" {{qa('cart-change-quantity-input')}} {% if not data.isBaseUnit%}disabled{% endif %} >
-    {% else %}
-        <select class="select select--expand" name="quantity"  {% if not data.isBaseUnit%}disabled{% endif %} >
-            {% for i in range(1, cartItem.maxQuantity) %}
-                <option {{ (i == cartItem.quantity) ? 'selected' : '' }} value="{{ i }}">{{ i }}</option>
-            {% endfor %}
-        </select>
-    {% endif %}
+    {% set hasQuantitySalesUnit = data.cartItem.quantitySalesUnit is not empty %}
 
-    {% if cartItem.quantitySalesUnit is not empty %}
+    {% include molecule('cart-quantity-input', 'CartPage') with {
+        data: {
+            cartItem: data.cartItem,
+            readOnly: hasQuantitySalesUnit
+        }
+    } only %}
+
+    {% if hasQuantitySalesUnit %}
+        {% set value = data.cartItem.quantitySalesUnit.value %}
+        {% set precision = data.cartItem.quantitySalesUnit.precision %}
+        {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+
         <small class="text-secondary">
-            (= {{ cartItem.quantitySalesUnit.value / cartItem.quantitySalesUnit.precision }} {{ salesUnitName | trans }})
+            [= {{ value / precision }} {{ salesUnitName | trans }}]
         </small>
     {% endif %}
 {% endblock %}
