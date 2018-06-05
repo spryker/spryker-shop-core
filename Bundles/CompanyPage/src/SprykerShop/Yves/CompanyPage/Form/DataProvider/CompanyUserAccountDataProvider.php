@@ -75,7 +75,7 @@ class CompanyUserAccountDataProvider
             $companies[$key] = $companyUser->getIdCompanyUser();
         }
 
-        return $companies;
+        return ['No company' => ''] + $companies;
     }
 
     /**

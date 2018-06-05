@@ -83,18 +83,27 @@ class BusinessOnBehalfController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUser
-     * @param int $idCompanyUserSelected
+     * @param string $idCompanyUserSelected
      * @param bool $isDefault
      *
      * @return bool
      */
     protected function updateCustomerInSession(
         CompanyUserTransfer $companyUser,
-        int $idCompanyUserSelected,
+        string $idCompanyUserSelected,
         bool $isDefault = false
     ): bool {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        if ($companyUser->getIdCompanyUser() === $idCompanyUserSelected) {
+        $customerTransfer = $this->getFactory()->getBusinessOnBehalfClient()->unsetDefaultCompanyUser($customerTransfer);
+
+        if (empty($idCompanyUserSelected)) {
+            $customerTransfer->setCompanyUserTransfer(null);
+            $this->getFactory()->getCustomerClient()->setCustomer($customerTransfer);
+
+            return true;
+        }
+
+        if ($companyUser->getIdCompanyUser() == $idCompanyUserSelected) {
             if ($companyUser->getCompany()->getIsActive()) {
                 $companyUser->setIsDefault($isDefault);
                 $companyUser = $this->getFactory()->getBusinessOnBehalfClient()->setDefaultCompanyUser($companyUser);
