@@ -13,27 +13,31 @@
     salesUnitCount : _widget.salesUnits|length,
     isAddToCartDisabled : _widget.isAddToCartDisabled | default(false)
 } %}
+
+{% set hasProductMeasurementUnit = data.salesUnitCount >= 1 %}
 {% set disabled = data.isAddToCartDisabled %}
 
 {% block body %}
-    <ul class="text-small">
-        {% for salesUnit in data.salesUnits %}
-            {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
-                <li>
-                    1 {{ data.baseUnit.name | trans }}
-                    = {{ (1 / salesUnit.conversion)|round(4) }} {{ salesUnit.productMeasurementUnit.name | trans }}
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-
-    <hr />
+    {% if hasProductMeasurementUnit %}
+        <ul class="text-small">
+            {% for salesUnit in data.salesUnits %}
+                {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
+                    <li>
+                        1 {{ data.baseUnit.name | trans }}
+                        = {{ (1 / salesUnit.conversion)|round(4) }} {{ salesUnit.productMeasurementUnit.name | trans }}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <hr />
+    {% endif %}
 
     <div class="grid grid--bottom grid--justify">
-        <div class="col col--sm-7">
+        <div class="col {% if hasProductMeasurementUnit %}col--sm-7{% else %}col--sm-5{% endif %}">
             <label>
                 {{ 'cart.item_quantity' | trans }}
-                {% if data.salesUnitCount >= 1 %}
+
+                {% if hasProductMeasurementUnit %}
                     <input id="sales-unit-quantity" class="input input--expand" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
                     <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
                 {% else %}
@@ -50,8 +54,8 @@
             </label>
         </div>
 
-        <div class="col col--sm-4">
-            {% if data.salesUnitCount >= 1 %}
+        <div class="col {% if hasProductMeasurementUnit %}col--sm-4{% else %}col--sm-6{% endif %}">
+            {% if hasProductMeasurementUnit %}
                 <label>
                     {{ 'product.measurement.sales_unit' | trans }}
                     {% embed atom('select') with {
@@ -71,11 +75,20 @@
                         {% endblock %}
                     {% endembed %}
                 </label>
+            {% else %}
+                <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}>
+                    {% include atom('icon') with {
+                        data: {
+                            name: 'cart-plus'
+                        }
+                    } only %}
+                    {{ 'page.detail.add-to-cart' | trans }}
+                </button>
             {% endif %}
         </div>
     </div>
 
-    {% if data.salesUnitCount >= 1 %}
+    {% if hasProductMeasurementUnit %}
         {% include molecule('measurement-quantity-selector', 'ProductMeasurementUnitWidget') with {
             data: {
                 json: data.jsonScheme
@@ -104,16 +117,17 @@
         </div>
     {% endif %}
 
-    <hr />
-
-    <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}>
-        {% include atom('icon') with {
-            data: {
-                name: 'cart-plus'
-            }
-        } only %}
-        {{ 'page.detail.add-to-cart' | trans }}
-    </button>
+    {% if hasProductMeasurementUnit %}
+        <hr />
+        <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}>
+            {% include atom('icon') with {
+                data: {
+                    name: 'cart-plus'
+                }
+            } only %}
+            {{ 'page.detail.add-to-cart' | trans }}
+        </button>
+    {% endif %}
 
     {% set translations = [] %}
     {% for key, salesUnit in data.salesUnits %}
