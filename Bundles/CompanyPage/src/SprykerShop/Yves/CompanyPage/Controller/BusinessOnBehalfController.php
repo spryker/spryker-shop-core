@@ -117,7 +117,6 @@ class BusinessOnBehalfController extends AbstractController
 
                 return true;
         }
-        $this->addErrorMessage(static::ERROR_COMPANY_USER_INVALID);
 
         return false;
     }
