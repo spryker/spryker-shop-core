@@ -24,16 +24,8 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      */
     public function initialize(Request $request): void
     {
-        $currentUrlStorage = $this->getFactory()
-            ->getUrlStorageClient()
-            ->findUrlStorageTransferByUrl($request->getPathInfo());
-        $localeUrls = [];
-
-        if ($currentUrlStorage !== null && $currentUrlStorage->getLocaleUrls()->count() !== 0) {
-            $localeUrls = (array)$currentUrlStorage->getLocaleUrls();
-        }
-
-        $this->addParameter('languages', $this->getLanguages($localeUrls, $request))
+        $this
+            ->addParameter('languages', $this->getLanguages($request))
             ->addParameter('currentLanguage', $this->getCurrentLanguage());
     }
 
@@ -54,13 +46,21 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
     }
 
     /**
-     * @param array $localeUrls
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string[]
      */
-    protected function getLanguages(array $localeUrls, Request $request): array
+    protected function getLanguages(Request $request): array
     {
+        $currentUrlStorage = $this->getFactory()
+            ->getUrlStorageClient()
+            ->findUrlStorageTransferByUrl($request->getPathInfo());
+
+        $localeUrls = [];
+        if ($currentUrlStorage !== null && $currentUrlStorage->getLocaleUrls()->count() !== 0) {
+            $localeUrls = (array)$currentUrlStorage->getLocaleUrls();
+        }
+
         $locales = $this->getFactory()
             ->getStore()
             ->getLocales();

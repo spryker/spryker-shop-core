@@ -23,18 +23,44 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app): void
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addQuickOrderRoute()
+            ->addQuickOrderAddRowsRoute()
+            ->addQuickOrderDeleteRowRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addQuickOrderRoute(): self
+    {
         $this->createController('/{quickOrder}', self::ROUTE_QUICK_ORDER, 'QuickOrderPage', 'QuickOrder')
-            ->assert('quickOrder', $allowedLocalesPattern . 'quick-order|quick-order')
+            ->assert('quickOrder', $this->getAllowedLocalesPattern() . 'quick-order|quick-order')
             ->value('quickOrder', 'quick-order');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addQuickOrderAddRowsRoute(): self
+    {
         $this->createController('/{quickOrder}/add-rows', self::ROUTE_QUICK_ORDER_ADD_ROWS, 'QuickOrderPage', 'QuickOrder', 'addRows')
-            ->assert('quickOrder', $allowedLocalesPattern . 'quick-order|quick-order')
+            ->assert('quickOrder', $this->getAllowedLocalesPattern() . 'quick-order|quick-order')
             ->value('quickOrder', 'quick-order');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addQuickOrderDeleteRowRoute(): self
+    {
         $this->createController('/{quickOrder}/delete-row', self::ROUTE_QUICK_ORDER_DELETE_ROW, 'QuickOrderPage', 'QuickOrder', 'deleteRow')
-            ->assert('quickOrder', $allowedLocalesPattern . 'quick-order|quick-order')
+            ->assert('quickOrder', $this->getAllowedLocalesPattern() . 'quick-order|quick-order')
             ->value('quickOrder', 'quick-order');
+
+        return $this;
     }
 }
