@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Client\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
@@ -17,6 +18,8 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClien
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaver;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface;
 
 class CompanyPageFactory extends AbstractFactory
 {
@@ -93,10 +96,30 @@ class CompanyPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface
-     */
+ * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface
+ */
     public function getBusinessOnBehalfClient(): CompanyPageToBusinessOnBehalfClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_BUSINESS_ON_BEHALF);
+    }
+
+    /**
+     * @return \SprykerShop\Client\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface
+     */
+    public function getMessenger(): CompanyPageToMessengerClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_MESSENGER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface
+     */
+    public function createCompanyUserSaver(): CompanyUserSaverInterface
+    {
+        return new CompanyUserSaver(
+            $this->getMessenger(),
+            $this->getCustomerClient(),
+            $this->getBusinessOnBehalfClient()
+        );
     }
 }

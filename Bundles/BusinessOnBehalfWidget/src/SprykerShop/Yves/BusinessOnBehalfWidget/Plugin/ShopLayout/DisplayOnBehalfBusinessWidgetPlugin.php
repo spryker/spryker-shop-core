@@ -109,6 +109,6 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
             return false;
         }
 
-        return $customer->isOnBehalf();
+        return $customer->getIsOnBehalf();
     }
 }

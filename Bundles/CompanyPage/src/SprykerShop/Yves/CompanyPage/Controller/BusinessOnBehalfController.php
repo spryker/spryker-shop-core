@@ -49,7 +49,7 @@ class BusinessOnBehalfController extends AbstractController
             ) {
                 $isDefault = true;
             }
-            $this->saveCompanyUser($activeCompanyUsers, $companyUserAccountForm->getData(), $isDefault);
+            $this->getFactory()->createCompanyUserSaver()->saveCompanyUser($activeCompanyUsers, $companyUserAccountForm->getData(), $isDefault);
         }
 
         $data = [
@@ -57,67 +57,5 @@ class BusinessOnBehalfController extends AbstractController
         ];
 
         return $this->view($data, [], '@CompanyPage/views/user-select/user-select.twig');
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
-     * @param array $formData
-     * @param bool $isDefault
-     *
-     * @return void
-     */
-    protected function saveCompanyUser(
-        CompanyUserCollectionTransfer $companyUserCollectionTransfer,
-        array $formData,
-        bool $isDefault = false
-    ): void {
-        $idCompanyUserSelected = $formData[CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE];
-
-        foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUser) {
-            if ($this->updateCustomerInSession($companyUser, $idCompanyUserSelected, $isDefault)) {
-                return;
-            }
-        }
-        $this->addErrorMessage(static::ERROR_COMPANY_USER_INVALID);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUser
-     * @param string $idCompanyUserSelected
-     * @param bool $isDefault
-     *
-     * @return bool
-     */
-    protected function updateCustomerInSession(
-        CompanyUserTransfer $companyUser,
-        string $idCompanyUserSelected,
-        bool $isDefault = false
-    ): bool {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if (empty($idCompanyUserSelected)) {
-            $customerTransfer->setCompanyUserTransfer(null);
-            $this->getFactory()->getBusinessOnBehalfClient()->unsetDefaultCompanyUser($customerTransfer);
-            $this->getFactory()->getCustomerClient()->setCustomer($customerTransfer);
-
-            return true;
-        }
-
-        if (!$companyUser->getCompany()->getIsActive()) {
-            $this->addErrorMessage(static::ERROR_COMPANY_NOT_ACTIVE);
-
-            return false;
-        }
-
-        if ($companyUser->getIdCompanyUser() == $idCompanyUserSelected) {
-                $companyUser->setIsDefault($isDefault);
-                $companyUser = $this->getFactory()->getBusinessOnBehalfClient()->setDefaultCompanyUser($companyUser);
-                $customerTransfer->setCompanyUserTransfer($companyUser);
-                $this->getFactory()->getCustomerClient()->setCustomer($customerTransfer);
-
-                return true;
-        }
-
-        return false;
     }
 }

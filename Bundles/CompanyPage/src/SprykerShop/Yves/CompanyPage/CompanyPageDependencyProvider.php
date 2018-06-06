@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CompanyPage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Client\CompanyPage\Dependency\Client\CompanyPageToMessengerClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientBridge;
@@ -30,6 +31,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_COMPANY_ROLE = 'CLIENT_COMPANY_ROLE';
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
     public const CLIENT_BUSINESS_ON_BEHALF = 'CLIENT_BUSINESS_ON_BEHALF';
+    public const CLIENT_MESSENGER= 'CLIENT_MESSENGER';
 
     public const STORE = 'STORE';
 
@@ -54,6 +56,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPermissionClient($container);
         $container = $this->addStore($container);
         $container = $this->addBusinessOnBehalfClient($container);
+        $container = $this->addMessengerClient($container);
 
         return $container;
     }
@@ -195,6 +198,20 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_PERMISSION] = function (Container $container) {
             return new CompanyPageToPermissionClientBridge($container->getLocator()->permission()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMessengerClient(Container $container): Container
+    {
+        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+            return new CompanyPageToMessengerClientBridge($container->getLocator()->messenger()->client());
         };
 
         return $container;

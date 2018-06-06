@@ -58,6 +58,6 @@ class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implemen
             return false;
         }
 
-        return $customer->isOnBehalf();
+        return $customer->getIsOnBehalf();
     }
 }
