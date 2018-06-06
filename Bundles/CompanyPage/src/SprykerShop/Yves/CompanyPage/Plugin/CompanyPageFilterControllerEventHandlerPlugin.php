@@ -34,7 +34,12 @@ class CompanyPageFilterControllerEventHandlerPlugin extends AbstractPlugin imple
      */
     public function handle(FilterControllerEvent $event): void
     {
-        list($controllerInstance, $actionName) = $event->getController();
+        $eventController = $event->getController();
+        if (!is_array($eventController)) {
+            return;
+        }
+
+        list($controllerInstance, $actionName) = $eventController;
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         if ($controllerInstance instanceof AbstractCompanyController
