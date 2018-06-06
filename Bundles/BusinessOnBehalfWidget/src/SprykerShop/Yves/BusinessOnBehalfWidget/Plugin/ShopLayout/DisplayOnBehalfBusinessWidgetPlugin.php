@@ -108,11 +108,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
         if (!$customer) {
             return false;
         }
-        
-        $companyUserCollection = $this->getFactory()->getBusinessOnBehalfClient()->findActiveCompanyUsersByCustomerId(
-            $customer
-        );
 
-        return count($companyUserCollection->getCompanyUsers()) >= BusinessOnBehalfConstants::COMPANY_USER_ACCOUNT_MIN_AMOUNT;
+        return $customer->isOnBehalf();
     }
 }

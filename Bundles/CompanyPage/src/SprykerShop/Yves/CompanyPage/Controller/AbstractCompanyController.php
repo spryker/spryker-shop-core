@@ -35,12 +35,12 @@ abstract class AbstractCompanyController extends AbstractController
         parent::initialize();
 
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if (!$customerTransfer
-            || (!$customerTransfer->getCompanyUserTransfer() && !$customerTransfer->getIsOnBehalf())
-        ) {
-            throw new NotFoundHttpException("Regular customers are not allowed to operate on company pages");
+        if ($customerTransfer && $customerTransfer->getCompanyUserTransfer() && $customerTransfer->getIsOnBehalf()) {
+            return;
         }
+
+        throw new NotFoundHttpException("Regular customers are not allowed to operate on company pages");
+
     }
 
     /**

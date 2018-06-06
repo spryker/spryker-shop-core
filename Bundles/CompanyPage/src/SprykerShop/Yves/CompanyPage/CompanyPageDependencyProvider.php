@@ -29,8 +29,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const CLIENT_COMPANY_ROLE = 'CLIENT_COMPANY_ROLE';
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
-    public const STORE = 'STORE';
     public const CLIENT_BUSINESS_ON_BEHALF = 'CLIENT_BUSINESS_ON_BEHALF';
+
+    public const STORE = 'STORE';
 
     public const PLUGIN_COMPANY_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_OVERVIEW_WIDGETS';
 
