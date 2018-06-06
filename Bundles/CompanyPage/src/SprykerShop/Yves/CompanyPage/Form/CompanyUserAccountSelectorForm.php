@@ -78,7 +78,7 @@ class CompanyUserAccountSelectorForm extends AbstractType
     protected function addIsDefaultCheckbox(FormBuilderInterface $builder, array $options): CompanyUserAccountSelectorForm
     {
         $builder->add(static::FIELD_IS_DEFAULT, CheckboxType::class, [
-            'label' => 'company-user.remember-choice',
+            'label' => 'company_user.remember_choice',
             'data' => $options[static::OPTION_COMPANY_USER_ACCOUNT_DEFAULT_SELECTED],
         ]);
 
