@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class FileManagerFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Service\FileManager\FileManagerService
+     * @return \SprykerShop\Yves\FileManager\Dependency\Service\FileManagerToFileManagerServiceInterface
      */
     public function getFileManagerService()
     {

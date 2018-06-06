@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\FileManager;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\FileManager\Dependency\Service\FileManagerToFileManagerServiceBridge;
 
 class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -35,7 +36,9 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
     protected function addFileManagerService(Container $container)
     {
         $container[static::FILE_MANAGER_SERVICE] = function (Container $container) {
-            return $container->getLocator()->fileManager()->service(); // todo bridge
+            return new FileManagerToFileManagerServiceBridge(
+                $container->getLocator()->fileManager()->service()
+            );
         };
 
         return $container;
