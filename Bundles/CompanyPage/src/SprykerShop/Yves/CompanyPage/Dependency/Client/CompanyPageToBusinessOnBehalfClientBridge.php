@@ -45,4 +45,14 @@ class CompanyPageToBusinessOnBehalfClientBridge implements CompanyPageToBusiness
     {
         return $this->businessOnBehalfClient->setDefaultCompanyUser($companyUserTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function unsetDefaultCompanyUser(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->businessOnBehalfClient->unsetDefaultCompanyUser($customerTransfer);
+    }
 }

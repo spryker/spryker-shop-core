@@ -83,30 +83,41 @@ class BusinessOnBehalfController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUser
-     * @param int $idCompanyUserSelected
+     * @param string $idCompanyUserSelected
      * @param bool $isDefault
      *
      * @return bool
      */
     protected function updateCustomerInSession(
         CompanyUserTransfer $companyUser,
-        int $idCompanyUserSelected,
+        string $idCompanyUserSelected,
         bool $isDefault = false
     ): bool {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        if ($companyUser->getIdCompanyUser() === $idCompanyUserSelected) {
-            if ($companyUser->getCompany()->getIsActive()) {
+
+        if (empty($idCompanyUserSelected)) {
+            $customerTransfer->setCompanyUserTransfer(null);
+            $this->getFactory()->getBusinessOnBehalfClient()->unsetDefaultCompanyUser($customerTransfer);
+            $this->getFactory()->getCustomerClient()->setCustomer($customerTransfer);
+
+            return true;
+        }
+
+        if (!$companyUser->getCompany()->getIsActive()) {
+            $this->addErrorMessage(static::ERROR_COMPANY_NOT_ACTIVE);
+
+            return false;
+        }
+
+        if ($companyUser->getIdCompanyUser() == $idCompanyUserSelected) {
                 $companyUser->setIsDefault($isDefault);
                 $companyUser = $this->getFactory()->getBusinessOnBehalfClient()->setDefaultCompanyUser($companyUser);
-
                 $customerTransfer->setCompanyUserTransfer($companyUser);
-
                 $this->getFactory()->getCustomerClient()->setCustomer($customerTransfer);
 
                 return true;
-            }
-            $this->addErrorMessage(static::ERROR_COMPANY_NOT_ACTIVE);
         }
+        $this->addErrorMessage(static::ERROR_COMPANY_USER_INVALID);
 
         return false;
     }
