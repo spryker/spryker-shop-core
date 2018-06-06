@@ -46,6 +46,6 @@ class DiscountSummaryWidgetPlugin extends AbstractWidgetPlugin implements Discou
      */
     public static function getTemplate(): string
     {
-        return '@DiscountWidget/_cart-page/discount-summary.twig';
+        return '@DiscountWidget/views/cart-discount-summary/cart-discount-summary.twig';
     }
 }

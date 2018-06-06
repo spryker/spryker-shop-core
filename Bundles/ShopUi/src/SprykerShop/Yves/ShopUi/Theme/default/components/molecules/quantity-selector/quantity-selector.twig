@@ -1,0 +1,36 @@
+{% extends molecule('quantity-input') %}
+
+{% define config = {
+    name: 'quantity-selector'
+} %}
+
+{% define data = {
+    maxQuantity: required,
+    step: 1
+} %}
+
+{% block input %}
+    {% set maxQuantity = data.maxQuantity < 0 or data.maxQuantity < data.minQuantity ? data.minQuantity : data.maxQuantity %}
+    {% set stepsCount = ((maxQuantity - data.minQuantity) / data.step) | floor %}
+    {% set options = [] %}
+
+    {% for stepIndex in 0..stepsCount %}
+        {% set value = data.minQuantity + (stepIndex * data.step) %}
+        {% set options = options | merge([{
+            label: value,
+            value: value,
+            selected: value == data.value
+        }]) %}
+    {% endfor %}
+
+    {% include atom('select') with {
+        modifiers: ['expand'],
+        data: {
+            options: options
+        },
+        attributes: {
+            name: 'quantity',
+            disabled: data.readOnly
+        }
+    } only %}
+{% endblock %}
