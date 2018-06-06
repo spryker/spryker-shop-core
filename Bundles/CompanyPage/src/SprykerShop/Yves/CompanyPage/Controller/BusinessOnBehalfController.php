@@ -7,10 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
-use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Yves\Kernel\View\View;
-use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountForm;
+use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountSelectorForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -42,13 +40,7 @@ class BusinessOnBehalfController extends AbstractController
             ->handleRequest($request);
 
         if ($companyUserAccountForm->isSubmitted() && $companyUserAccountForm->isValid()) {
-            $isDefault = false;
-            if ($request->request->has(CompanyUserAccountForm::FORM_NAME)
-                && isset($request->request->get(CompanyUserAccountForm::FORM_NAME)[CompanyUserAccountForm::FIELD_IS_DEFAULT])
-                && $request->request->get(CompanyUserAccountForm::FORM_NAME)[CompanyUserAccountForm::FIELD_IS_DEFAULT]
-            ) {
-                $isDefault = true;
-            }
+            $isDefault = $this->isDefaultFieldSelected($request);
             $this->getFactory()->createCompanyUserSaver()->saveCompanyUser($activeCompanyUsers, $companyUserAccountForm->getData(), $isDefault);
         }
 
@@ -57,5 +49,23 @@ class BusinessOnBehalfController extends AbstractController
         ];
 
         return $this->view($data, [], '@CompanyPage/views/user-select/user-select.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isDefaultFieldSelected(Request $request): bool
+    {
+        $isDefault = false;
+        if ($request->request->has(CompanyUserAccountSelectorForm::FORM_NAME)
+            && isset($request->request->get(CompanyUserAccountSelectorForm::FORM_NAME)[CompanyUserAccountSelectorForm::FIELD_IS_DEFAULT])
+            && $request->request->get(CompanyUserAccountSelectorForm::FORM_NAME)[CompanyUserAccountSelectorForm::FIELD_IS_DEFAULT]
+        ) {
+            $isDefault = true;
+        }
+
+        return $isDefault;
     }
 }

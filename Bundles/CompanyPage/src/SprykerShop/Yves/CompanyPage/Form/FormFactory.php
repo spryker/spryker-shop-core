@@ -21,6 +21,7 @@ use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRoleDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRolePermissionDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUnitAddressFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserAccountDataProvider;
+use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserAccountSelectorFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserFormDataProvider;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -178,15 +179,15 @@ class FormFactory extends AbstractFactory
      */
     public function getCompanyUserAccountForm(array $data = [], array $formOptions = []): FormInterface
     {
-        return $this->getFormFactory()->create(CompanyUserAccountForm::class, $data, $formOptions);
+        return $this->getFormFactory()->create(CompanyUserAccountSelectorForm::class, $data, $formOptions);
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserAccountDataProvider
+     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserAccountSelectorFormDataProvider
      */
-    public function createCompanyUserAccountDataProvider(): CompanyUserAccountDataProvider
+    public function createCompanyUserAccountDataProvider(): CompanyUserAccountSelectorFormDataProvider
     {
-        return new CompanyUserAccountDataProvider(
+        return new CompanyUserAccountSelectorFormDataProvider(
             $this->getBusinessOnBehalfClient()
         );
     }

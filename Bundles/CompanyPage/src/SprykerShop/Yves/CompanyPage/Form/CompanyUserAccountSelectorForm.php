@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CompanyUserAccountForm extends AbstractType
+class CompanyUserAccountSelectorForm extends AbstractType
 {
     public const FIELD_COMPANY_USER_ACCOUNT_CHOICE = 'companyUserAccount';
     public const FIELD_IS_DEFAULT = 'is_default';
@@ -60,7 +60,7 @@ class CompanyUserAccountForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyUserAccountChoice(FormBuilderInterface $builder, array $options): CompanyUserAccountForm
+    protected function addCompanyUserAccountChoice(FormBuilderInterface $builder, array $options): CompanyUserAccountSelectorForm
     {
         $builder->add(static::FIELD_COMPANY_USER_ACCOUNT_CHOICE, ChoiceType::class, [
             'choices' => $options[static::OPTION_COMPANY_USER_ACCOUNT_CHOICES],
@@ -75,7 +75,7 @@ class CompanyUserAccountForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIsDefaultCheckbox(FormBuilderInterface $builder, array $options): CompanyUserAccountForm
+    protected function addIsDefaultCheckbox(FormBuilderInterface $builder, array $options): CompanyUserAccountSelectorForm
     {
         $builder->add(static::FIELD_IS_DEFAULT, CheckboxType::class, [
             'label' => 'company-user.remember-choice',

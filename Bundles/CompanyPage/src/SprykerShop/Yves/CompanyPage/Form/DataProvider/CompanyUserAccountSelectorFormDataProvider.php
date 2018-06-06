@@ -10,9 +10,9 @@ namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
-use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountForm;
+use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountSelectorForm;
 
-class CompanyUserAccountDataProvider
+class CompanyUserAccountSelectorFormDataProvider
 {
     protected const FORMAT_COMPANY_USER_DISPLAY = '%s / %s';
     protected const GLOSSARY_KEY_NO_COMPANY = 'company_user.no_company';
@@ -38,7 +38,7 @@ class CompanyUserAccountDataProvider
     public function getData(CustomerTransfer $customerTransfer): array
     {
         return [
-            CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE => $customerTransfer->getCompanyUserTransfer()
+            CompanyUserAccountSelectorForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE => $customerTransfer->getCompanyUserTransfer()
                 ? $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
                 : null,
         ];
@@ -53,8 +53,8 @@ class CompanyUserAccountDataProvider
     public function getOptions(CompanyUserCollectionTransfer $companyCollection, CustomerTransfer $customerTransfer): array
     {
         return [
-            CompanyUserAccountForm::OPTION_COMPANY_USER_ACCOUNT_CHOICES => $this->mapCompanyUserCollectionToChoiceArray($companyCollection),
-            CompanyUserAccountForm::OPTION_COMPANY_USER_ACCOUNT_DEFAULT_SELECTED => $this->isDefaultCompanyUserSelected($customerTransfer),
+            CompanyUserAccountSelectorForm::OPTION_COMPANY_USER_ACCOUNT_CHOICES => $this->mapCompanyUserCollectionToChoiceArray($companyCollection),
+            CompanyUserAccountSelectorForm::OPTION_COMPANY_USER_ACCOUNT_DEFAULT_SELECTED => $this->isDefaultCompanyUserSelected($customerTransfer),
         ];
     }
 

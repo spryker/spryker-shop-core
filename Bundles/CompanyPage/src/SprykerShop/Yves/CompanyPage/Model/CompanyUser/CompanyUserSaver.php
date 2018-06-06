@@ -7,7 +7,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Client\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
-use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountForm;
+use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountSelectorForm;
 
 class CompanyUserSaver implements CompanyUserSaverInterface
 {
@@ -56,7 +56,7 @@ class CompanyUserSaver implements CompanyUserSaverInterface
         array $formData,
         bool $isDefault = false
     ): void {
-        $idCompanyUserSelected = $formData[CompanyUserAccountForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE];
+        $idCompanyUserSelected = $formData[CompanyUserAccountSelectorForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE];
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUser) {
             if ($this->updateCustomerInSession($companyUser, $idCompanyUserSelected, $isDefault)) {
