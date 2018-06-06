@@ -50,6 +50,6 @@ class CartNoteQuoteWidgetPlugin extends AbstractWidgetPlugin implements CartNote
      */
     public static function getTemplate()
     {
-        return '@CartNoteWidget/views/cart-page/cart-note-quote-form.twig';
+        return '@CartNoteWidget/views/cart-note-form/cart-note-form.twig';
     }
 }

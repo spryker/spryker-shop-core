@@ -42,7 +42,7 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate(): string
     {
-        return '@ProductBundleWidget/_cart-page/bundle-items.twig';
+        return '@ProductBundleWidget/views/cart-bundle-items-list/cart-bundle-items-list.twig';
     }
 
     /**

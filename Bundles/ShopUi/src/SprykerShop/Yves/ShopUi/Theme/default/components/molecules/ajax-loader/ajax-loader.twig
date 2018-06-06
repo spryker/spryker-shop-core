@@ -6,18 +6,19 @@
 } %}
 
 {% define data = {
-    label: null
+    label: null,
+    showSpinnerOnLoad: false
 } %}
 
 {% define attributes = {
     'provider-selector': 'ajax-provider'
 } %}
 
-{% set spinnerModifiers = 'big' in modifiers ? ['big'] : [] %}
-
-{% block class %}{{parent()}} is-invisible grid grid--center grid--middle{% endblock %}
+{% block class %}{{parent()}} {% if not data.showSpinnerOnLoad %}is-invisible{% endif %} grid grid--center grid--middle{% endblock %}
 
 {% block body %}
+    {% set spinnerModifiers = 'big' in modifiers ? ['big'] : [] %}
+
     <span class="grid grid--middle">
         {% include atom('icon') with {
             class: config.name ~ '__spinner',

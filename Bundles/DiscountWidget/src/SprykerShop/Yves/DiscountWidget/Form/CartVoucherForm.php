@@ -47,7 +47,7 @@ class CartVoucherForm extends AbstractType
     {
         $builder->add(self::FIELD_VOUCHER_CODE, TextType::class, [
             'label' => 'page.checkout.finalize.enter-voucher',
-            'required' => true,
+            'required' => false,
         ]);
 
         return $this;
