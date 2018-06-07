@@ -1,13 +1,13 @@
 # CustomerReorderWidget Module
-[![Build Status](https://travis-ci.org/spryker/customer-reorder-widget.svg)](https://travis-ci.org/spryker/customer-reorder-widget)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/customer-reorder-widget/badge.svg)](https://coveralls.io/github/spryker/customer-reorder-widget)
+[![Build Status](https://travis-ci.org/spryker-shop/customer-reorder-widget.svg)](https://travis-ci.org/spryker-shop/customer-reorder-widget)
+[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/customer-reorder-widget/badge.svg)](https://coveralls.io/github/spryker-shop/customer-reorder-widget)
 
 {{ADD DESCRIPTION HERE}}
 
 ## Installation
 
 ```
-composer require spryker/customer-reorder-widget
+composer require spryker-shop/customer-reorder-widget
 ```
 
 ## Documentation

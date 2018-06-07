@@ -1,0 +1,19 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    idCompanyUserInvitation: _view.idCompanyUserInvitation,
+    title: 'company.user.invitation.title.plural' | trans,
+    activePage: 'companyUserInvitation'
+} %}
+
+{% block companyContent %}
+    <div class="box">
+        <h5>{{ "company.user.invitation.resend.title" | trans }}</h5>
+        <hr />
+        {{ "company.user.invitation.resend.confirmation.question" | trans }}<br/><br/>
+        <div class="row">
+            <a href="javascript:history.go(-1)" class="button button--info float-left">{{ "general.back.button" | trans }}</a>
+            <a href="{{url('company/user-invitation/resend/confirm', {'idCompanyUserInvitation': data.idCompanyUserInvitation})}}" class="button button--alert float-right">{{ "company.user.invitation.resend.button" | trans }}</a>
+        </div>
+    </div>
+{% endblock %}

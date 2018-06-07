@@ -1,0 +1,23 @@
+@mixin helper-spacing($sides, $name: '') {
+    $className: '.spacing';
+
+    @if $name != '' {
+        $className: #{'.spacing-' + $name};
+    }
+
+    #{$className} {
+        @each $spacing-name, $spacing-value in $setting-spacing {
+            @if $spacing-name == 'default' {
+                @each $side in $sides {
+                    #{$side}: $spacing-value;
+                }
+            } @else {
+                &--#{$spacing-name} {
+                    @each $side in $sides {
+                        #{$side}: $spacing-value;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,13 +1,13 @@
-# Permission Module
-[![Build Status](https://travis-ci.org/spryker/Permission.svg)](https://travis-ci.org/spryker/Permission)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/Permission/badge.svg)](https://coveralls.io/github/spryker/Permission)
+# ShopPermission Module
+[![Build Status](https://travis-ci.org/spryker-shop/shop-permission.svg)](https://travis-ci.org/spryker-shop/shop-permission)
+[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/shop-permission/badge.svg)](https://coveralls.io/github/spryker-shop/shop-permission)
 
 Shop permission module provides an easy access to the permission Client from Yves templates with method `can`.
 
 ## Installation
 
 ```
-composer require spryker/permission
+composer require spryker-shop/shop-permission
 ```
 
 ## Documentation

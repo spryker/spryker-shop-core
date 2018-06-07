@@ -36,6 +36,6 @@ class WishlistWidgetPlugin extends AbstractWidgetPlugin implements WishlistWidge
      */
     public static function getTemplate(): string
     {
-        return '@WishlistWidget/_product-detail-page/wishlist.twig';
+        return '@WishlistWidget/views/pdp-wishlist-selector/pdp-wishlist-selector.twig';
     }
 }

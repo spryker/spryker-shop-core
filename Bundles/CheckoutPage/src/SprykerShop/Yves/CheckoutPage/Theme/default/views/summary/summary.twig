@@ -92,30 +92,37 @@
 
             {{ widget('CartNoteQuoteNoteWidgetPlugin', data.transfer) }}
 
-            {% include molecule('summary-overview', 'CheckoutPage') with {
-                class: 'box',
-                data: data.overview
-            } only %}
-
             <div class="box">
                 {{ widget('CheckoutVoucherFormWidgetPlugin', data.transfer) }}
             </div>
+
+            {% embed molecule('form') with {
+                class: 'box',
+                data: {
+                    form: data.forms.summary,
+                    submit: {
+                        enable: can('SeeOrderPlaceSubmitButtonPermissionPlugin'),
+                        text: 'checkout.step.place.order' | trans
+                    },
+                    cancel: {
+                        enable: true,
+                        url: data.backUrl,
+                        text: 'general.back.button' | trans
+                    }
+                },
+                embed: {
+                    overview: data.overview
+                }
+            } only %}
+                {% block body %}
+                    {% include molecule('summary-overview', 'CheckoutPage') with {
+                        data: embed.overview
+                    } only %}
+
+                    <hr />
+                    {{parent()}}
+                {% endblock %}
+            {% endembed %}
         </div>
     </div>
-
-    {% include molecule('form') with {
-        class: 'box',
-        data: {
-            form: data.forms.summary,
-            submit: {
-                enable: can('SeeOrderPlaceSubmitButtonPermissionPlugin'),
-                text: 'checkout.step.place.order' | trans
-            },
-            cancel: {
-                enable: true,
-                url: data.backUrl,
-                text: 'general.back.button' | trans
-            }
-        }
-    } only %}
 {% endblock %}

@@ -3,6 +3,8 @@
 {% define data = {
     cart: _view.cart,
     cartItems: _view.cartItems,
+    isQuoteValid: _view.isQuoteValid,
+    attributes: _view.attributes,
     request: app.request,
 
     title: 'cart.cart' | trans
@@ -14,16 +16,25 @@
 
 {% block title %}
     {% if widgetExists('CartOperationsWidgetPlugin') %}
-        {{ widget('CartOperationsWidgetPlugin', data.cart) }}
+        {% set cartOperation = widget('CartOperationsWidgetPlugin', data.cart) | trim %}
+
+        {% if cartOperation is not empty %}
+            {{ cartOperation | raw }}
+        {% else %}
+            {{ parent() }}
+        {% endif %}
     {% else %}
         {{ parent() }}
-    {% endif %}
-    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty %}
-        {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
     {% endif %}
 {% endblock %}
 
 {% block content %}
+    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty %}
+        <div class="box">
+            {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
+        </div>
+    {% endif %}
+
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
@@ -37,33 +48,46 @@
         </div>
     {% else %}
         <div class="grid">
-            <div class="col col--sm-12 col--lg-8">
-                <div class="box">
-                    {% for cartItem in data.cartItems %}
-                        {% include '@CartPage/_partials/cart-item.twig' %}
-                    {% endfor %}
-                    <hr/>
-                    {{ widget('DiscountPromotionItemListWidgetPlugin', data.cart, data.request) }}
-                </div>
+            <div class="col col--sm-12 col--xl-8">
+                {% for cartItem in data.cartItems %}
+                    {% include molecule('cart-item', 'CartPage') with {
+                        class: 'box',
+                        data: {
+                            cart: data.cart,
+                            cartItem: cartItem,
+                            attributes: data.attributes[cartItem.sku] | default([])
+                        }
+                    } only %}
+                {% endfor %}
+
+                {{ widget('DiscountPromotionItemListWidgetPlugin', data.cart, data.request) }}
             </div>
 
-            <div class="col col--sm-12 col--lg-4">
+            <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
+                    {% if widgetExists('CartNoteQuoteWidgetPlugin') %}
+                        {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
+                        <hr />
+                    {% endif %}
+
                     {% if not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
                         {{ widget('DiscountVoucherFormWidgetPlugin') }}
+                        <hr />
                     {% endif %}
-                    <hr/>
-                    {% include '@CartPage/_partials/cart-summary.twig' %}
+
+                    {% include molecule('cart-summary', 'CartPage') with {
+                        data: {
+                            cart: data.cart,
+                            isQuoteValid: data.isQuoteValid
+                        }
+                    } only %}
                 </div>
             </div>
         </div>
     {% endif %}
 
     {{ widget('UpSellingProductsWidgetPlugin', data.cart) }}
-
     {{ widget('MultiCartListWidgetPlugin', data.cart) }}
-
 {% endblock %}
 
 {% block footer %}{% endblock %}

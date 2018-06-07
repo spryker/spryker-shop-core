@@ -5,16 +5,18 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.16.0",
-    "spryker/product-measurement-unit-storage": "^0.1.0",
-    "spryker/product-quantity-storage": "^0.1.0"
+    "spryker/product-measurement-unit-storage": "^0.1.0 || ^0.2.0 || ^1.0.0",
+    "spryker/product-quantity-storage": "^0.1.0 || ^1.0.0"
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
-    "spryker-shop/product-detail-page": "*"
+    "spryker-shop/product-detail-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "If you want to use QuantitySalesUnitWidgetPlugin: ^0.5.0",
-    "spryker-shop/product-detail-page": "if you want to use ProductMeasurementUnitWidgetPlugin: ^0.4.0"
+    "spryker-shop/cart-page": "If you want to use QuantitySalesUnitWidgetPlugin: ^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0 ",
+    "spryker-shop/product-detail-page": "if you want to use ProductMeasurementUnitWidgetPlugin: ^0.6.0"
   },
   "autoload": {
     "psr-4": {

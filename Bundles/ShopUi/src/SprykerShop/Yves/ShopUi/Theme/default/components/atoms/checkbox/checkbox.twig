@@ -6,12 +6,13 @@
     renderAttributes: false
 } %}
 
-{% define attributes = {
-    type: 'checkbox'
-} %}
-
 {% define data = {
     label: ''
+} %}
+
+{% define attributes = {
+    type: 'checkbox',
+    required: false
 } %}
 
 {% set disabled = attributes['disabled'] | default(false) %}
@@ -25,8 +26,8 @@
         <span class="{{config.name}}__box"></span>
         <input class="{{config.name}}__input {% block inputClass %}{% endblock %}" {{block('attributes')}}/>
         <span class="{{config.name}}__check"></span>
-        {%- block labelContainer -%}    
-            <span class="{{config.name}}__label {% block labelClass %}{% endblock %}">
+        {%- block labelContainer -%}
+            <span class="{{config.name}}__label label {% if attributes.required %}label--required{% endif %}">
                 {%- block label -%}{{data.label}}{%- endblock -%}
             </span>
         {%- endblock -%}

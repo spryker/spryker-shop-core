@@ -1,4 +1,4 @@
-namespace: Permission
+namespace: ShopPermission
 actor: Tester
 paths:
     tests: tests
