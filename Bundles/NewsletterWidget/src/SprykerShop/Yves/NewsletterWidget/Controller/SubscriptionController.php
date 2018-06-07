@@ -28,6 +28,18 @@ class SubscriptionController extends AbstractController
      */
     public function subscribeAction(Request $request)
     {
+        $viewData = $this->executeSubscribeAction($request);
+
+        return $this->view($viewData, [], '@NewsletterWidget/views/subscription-form/subscription-form.twig');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    protected function executeSubscribeAction(Request $request): array
+    {
         $success = false;
         $error = false;
 
@@ -66,13 +78,11 @@ class SubscriptionController extends AbstractController
             }
         }
 
-        $data = [
+        return [
             'newsletterSubscriptionForm' => $subscriptionForm->createView(),
             'error' => $error,
             'success' => $success,
         ];
-
-        return $this->view($data, [], '@NewsletterWidget/views/subscription-form/subscription-form.twig');
     }
 
     /**

@@ -33,6 +33,22 @@ class NewsletterController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $response = $this->executeIndexAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@NewsletterPage/views/newsletter/newsletter.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(Request $request)
+    {
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
             ->getCustomer();
@@ -53,12 +69,10 @@ class NewsletterController extends AbstractController
             return $this->redirectResponseInternal(NewsletterPageControllerProvider::ROUTE_CUSTOMER_NEWSLETTER);
         }
 
-        $data = [
+        return [
             'customer' => $customerTransfer,
             'form' => $newsletterSubscriptionForm->createView(),
         ];
-
-        return $this->view($data, [], '@NewsletterPage/views/newsletter/newsletter.twig');
     }
 
     /**

@@ -30,6 +30,18 @@ class UserController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/user/user.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
+    {
         $criteriaFilterTransfer = $this->createCompanyUserCriteriaFilterTransfer($request);
 
         $companyUserCollectionTransfer = $this->getFactory()
@@ -40,8 +52,7 @@ class UserController extends AbstractCompanyController
             'pagination' => $companyUserCollectionTransfer->getPagination(),
             'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/user/user.twig');
+        return $data;
     }
 
     /**
@@ -50,6 +61,22 @@ class UserController extends AbstractCompanyController
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
+    {
+        $response = $this->executeCreateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/user-create/user-create.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeCreateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -76,11 +103,9 @@ class UserController extends AbstractCompanyController
             $this->processResponseMessages($companyUserResponseTransfer);
         }
 
-        $data = [
+        return [
             'companyUserForm' => $companyUserForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/user-create/user-create.twig');
     }
 
     /**
@@ -89,6 +114,22 @@ class UserController extends AbstractCompanyController
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
+    {
+        $response = $this->executeUpdateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/user-update/user-update.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeUpdateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -121,11 +162,9 @@ class UserController extends AbstractCompanyController
             $this->processResponseMessages($companyUserResponseTransfer);
         }
 
-        $data = [
+        return [
             'companyUserForm' => $companyUserForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/user-update/user-update.twig');
     }
 
     /**

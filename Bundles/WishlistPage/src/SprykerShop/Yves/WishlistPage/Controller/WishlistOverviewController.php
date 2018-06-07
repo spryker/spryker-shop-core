@@ -27,6 +27,22 @@ class WishlistOverviewController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $response = $this->executeIndexAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@WishlistPage/views/wishlist-overview/wishlist-overview.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(Request $request)
+    {
         $wishlistForm = $this->getFactory()
             ->getWishlistForm()
             ->handleRequest($request);
@@ -49,10 +65,10 @@ class WishlistOverviewController extends AbstractController
             ->getWishlistClient()
             ->getCustomerWishlistCollection();
 
-        return $this->view([
+        return [
             'wishlistCollection' => $wishlistCollection,
             'wishlistForm' => $wishlistForm->createView(),
-        ], [], '@WishlistPage/views/wishlist-overview/wishlist-overview.twig');
+        ];
     }
 
     /**
@@ -62,6 +78,23 @@ class WishlistOverviewController extends AbstractController
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction($wishlistName, Request $request)
+    {
+        $response = $this->executeUpdateAction($wishlistName, $request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@WishlistPage/views/wishlist-overview-update/wishlist-overview-update.twig');
+    }
+
+    /**
+     * @param string $wishlistName
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeUpdateAction($wishlistName, Request $request)
     {
         $wishlistFormDataProvider = $this->getFactory()->createWishlistFormDataProvider();
         $wishlistForm = $this->getFactory()
@@ -85,10 +118,10 @@ class WishlistOverviewController extends AbstractController
             ->getWishlistClient()
             ->getCustomerWishlistCollection();
 
-        return $this->view([
+        return [
             'wishlistCollection' => $wishlistCollection,
             'wishlistForm' => $wishlistForm->createView(),
-        ], [], '@WishlistPage/views/wishlist-overview-update/wishlist-overview-update.twig');
+        ];
     }
 
     /**
