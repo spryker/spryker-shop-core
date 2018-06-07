@@ -5,18 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\MultiCart;
+namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\PriceWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface MiniCartWidgetPluginInterface extends WidgetPluginInterface
+interface PriceModeSwitcherWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'MiniCartWidgetPlugin';
+    public const NAME = 'PriceModeSwitcherWidgetPlugin';
 
     /**
-     * @param int $cartQuantity
-     *
      * @return void
      */
-    public function initialize($cartQuantity): void;
+    public function initialize(): void;
 }

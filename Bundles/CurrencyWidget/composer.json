@@ -10,12 +10,12 @@
   },
   "require-dev": {
     "spryker-shop/shop-application": "*",
-    "spryker-shop/shop-layout": "*",
+    "spryker-shop/shop-ui": "*",
     "spryker/silex": "*"
   },
   "suggest": {
     "spryker-shop/shop-application": "TODO: add suggestion description",
-    "spryker-shop/shop-layout": "TODO: add suggestion description",
+    "spryker-shop/shop-ui": "TODO: add suggestion description",
     "spryker/silex": "TODO: add suggestion description"
   },
   "autoload": {

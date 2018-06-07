@@ -4,6 +4,8 @@
 
 ShopLayoutExtension module offers plugin interfaces to decouple interface provider modules from satellite modules
 
+**This module is not continued at this point.**
+
 ## Installation
 
 ```

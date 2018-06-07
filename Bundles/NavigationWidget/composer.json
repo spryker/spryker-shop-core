@@ -8,10 +8,10 @@
     "spryker/navigation-storage": "^0.1.0 || ^1.0.0"
   },
   "require-dev": {
-    "spryker-shop/shop-layout": "*"
+    "spryker-shop/shop-ui": "*"
   },
   "suggest": {
-    "spryker-shop/shop-layout": "TODO: add suggestion description"
+    "spryker-shop/shop-ui": "TODO: add suggestion description"
   },
   "autoload": {
     "psr-4": {

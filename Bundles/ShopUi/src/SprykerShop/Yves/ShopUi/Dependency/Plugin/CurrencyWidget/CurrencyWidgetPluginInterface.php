@@ -5,18 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\MultiCart;
+namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\CurrencyWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface MiniCartWidgetPluginInterface extends WidgetPluginInterface
+interface CurrencyWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'MiniCartWidgetPlugin';
+    const NAME = 'CurrencyWidgetPlugin';
 
     /**
-     * @param int $cartQuantity
-     *
      * @return void
      */
-    public function initialize($cartQuantity): void;
+    public function initialize(): void;
 }
