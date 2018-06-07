@@ -8,7 +8,6 @@ interface FilterControllerEventHandlerPluginInterface
 {
     /**
      * Specification:
-     *
      * - Subscribes for symfony FilterControllerEvent
      *
      * @api
