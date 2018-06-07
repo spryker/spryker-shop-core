@@ -44,7 +44,7 @@ class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public static function getTemplate(): string
     {
-        return '@ProductReviewWidget/_catalog-page/rating-filter.twig';
+        return '@ProductReviewWidget/views/catalog-rating-display/catalog-rating-display.twig';
     }
 
     /**

@@ -1,0 +1,16 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _view.form,
+    showSuccessMessage: _view.showSuccess,
+    showForm: not _view.hideForm
+} %}
+
+{% block body %}
+    {% include molecule('new-review-form', 'ProductReviewWidget') with {
+        data: {
+            form: data.form,
+            showSuccessMessage: data.showSuccessMessage
+        }
+    } only %}
+{% endblock %}

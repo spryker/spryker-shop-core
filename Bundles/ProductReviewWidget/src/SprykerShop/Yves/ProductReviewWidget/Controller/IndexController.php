@@ -39,13 +39,15 @@ class IndexController extends AbstractController
             ->getProductReviewClient()
             ->findProductReviewsInSearch($productReviewSearchRequestTransfer);
 
-        return $this->view([
+        $data = [
             'hasCustomer' => $hasCustomer,
             'productReviews' => $productReviews['productReviews'],
             'pagination' => $productReviews['pagination'],
             'summary' => $this->getFactory()->createProductReviewSummaryCalculator()->execute($productReviews['ratingAggregation']),
             'maximumRating' => $this->getFactory()->getProductReviewClient()->getMaximumRating(),
-        ]);
+        ];
+
+        return $this->view($data, [], '@ProductReviewWidget/views/review-overview/review-overview.twig');
     }
 
     /**

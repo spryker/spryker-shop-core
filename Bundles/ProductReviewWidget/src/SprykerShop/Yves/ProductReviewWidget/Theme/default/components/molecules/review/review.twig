@@ -1,0 +1,41 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'review',
+    tag: 'article'
+} %}
+
+{% define data = {
+    summary: required,
+    ratingValue: required,
+    ratingMaxValue: required,
+    nickname: required,
+    createdAt: required,
+    description: required
+} %}
+
+{% block body %}
+    <h5>{{ data.summary | e('html') }}</h5>
+
+    {% include molecule('rating-selector', 'ProductReviewWidget') with {
+        data: {
+            value: data.ratingValue,
+            maxValue: data.ratingMaxValue,
+            useHalfSteps: true
+        },
+        attributes: {
+            readonly: true
+        }
+    } only %}
+
+    <ul class="list list--spacing text-secondary">
+        <li class="list__item">
+            <small>{{ 'page.product.by' | trans }}</small> {{ data.nickname | e('html')}}
+        </li>
+        <li class="list__item">
+            <small>{{ 'product_review.on' | trans }}</small> {{ data.createdAt }}
+        </li>
+    </ul>
+
+    {{ data.description | e('html')}}
+{% endblock %}

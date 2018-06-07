@@ -1,0 +1,56 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'new-review-form',
+    tag: 'div'
+} %}
+
+{% define data = {
+    form: required,
+    showSuccessMessage: false
+} %}
+
+{% block body %}
+    {% if data.showSuccessMessage %}
+        <div class="box">
+            {{ 'product_review.submit.success' | trans }}
+        </div>
+    {% endif %}
+
+    {% embed molecule('form') with {
+        class: 'box',
+        data: {
+            title: 'product_review.submit.add_a_review' | trans,
+            form: data.form,
+            layout: {
+                'nickname': 'col col--sm-12 col--lg-4',
+                'summary': 'col col--sm-12 col--lg-8'
+            },
+            submit: {
+                enable: true
+            }
+        }
+    } only %}
+        {% block field %}
+            {% if fieldName == 'rating' %}
+                <div class="form__field col col--sm-12">
+                    {% do field.setRendered %}
+
+                    <label>
+                        {{form_label(field)}}
+                        {% include molecule('rating-selector', 'ProductReviewWidget') with {
+                            modifiers: ['expand'],
+                            data: {
+                                maxValue: (field.vars.choices | length) - 1,
+                                inputName: field.vars.name
+                            }
+                        } only %}
+                        {{form_errors(field)}}
+                    </label>
+                </div>
+            {% else %}
+                {{parent()}}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -42,11 +42,13 @@ class SubmitController extends AbstractController
             $productReviewForm = $this->getFactory()->createProductReviewForm($idProductAbstract);
         }
 
-        return $this->view([
+        $data = [
             'hideForm' => $isFormEmpty || $isReviewPosted,
             'form' => $productReviewForm->createView(),
             'showSuccess' => $isReviewPosted,
-        ]);
+        ];
+
+        return $this->view($data, [], '@ProductReviewWidget/views/review-create/review-create.twig');
     }
 
     /**

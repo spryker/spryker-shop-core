@@ -1,0 +1,47 @@
+{% extends template('widget') %}
+
+{% define data = {
+    idProductAbstract: _widget.idProductAbstract
+} %}
+
+{% block rating %}
+    <hr />
+    {% include molecule('rating-selector', 'ProductReviewWidget') with {
+        modifiers: ['expand'],
+        data: {
+            value: _widget.productReviewStorageTransfer.averageRating | default(0),
+            maxValue: _widget.maximumRating
+        },
+        attributes: {
+            readonly: true
+        }
+    } only %}
+{% endblock %}
+
+{% block body %}
+    <div class="box">
+        {% include molecule('toggler-clicker') with {
+            attributes: {
+                'trigger-selector': '.js-review__new-review-trigger',
+                'target-selector': '.js-review__new-review-form-target',
+                'class-to-toggle': 'is-hidden'
+            }
+        } only %}
+
+        {% if true %}
+            <button class="button float-right js-review__new-review-trigger">
+                {{ 'product_review.submit.add_a_review' | trans }}
+            </button>
+        {% else %}
+            <a class="button float-right" href="{{ path('login') }}">
+                {{ 'product_review.submit.add_a_review' | trans }}
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="is-hidden js-review__new-review-form-target">
+        {{ render(path('product-review/submit', {'idProductAbstract': data.idProductAbstract})) }}
+    </div>
+
+    {{ render(path('product-review/index', {'idProductAbstract': data.idProductAbstract})) }}
+{% endblock %}
