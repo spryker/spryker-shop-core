@@ -21,7 +21,7 @@ class CompanyUserAccountSelectorForm extends AbstractType
     public const OPTION_COMPANY_USER_ACCOUNT_CHOICES = 'companyUserAccountChoices';
     public const OPTION_COMPANY_USER_ACCOUNT_DEFAULT_SELECTED = 'companyUserAccountDefaultSelected';
 
-    public const FORM_NAME = 'company_user_account_form';
+    public const FORM_NAME = 'company_user_account_selector_form';
 
     /**
      * @return string

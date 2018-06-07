@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CompanyPage\Model\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerShop\Client\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
@@ -64,7 +65,7 @@ class CompanyUserSaver implements CompanyUserSaverInterface
         $idCompanyUserSelected = $formData[CompanyUserAccountSelectorForm::FIELD_COMPANY_USER_ACCOUNT_CHOICE];
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUser) {
-            if ($this->updateCustomerInSession($companyUser, $idCompanyUserSelected, $isDefault)) {
+            if ($this->saveSelectedCompanyUser($companyUser, $idCompanyUserSelected, $isDefault)) {
                 return;
             }
         }
@@ -78,42 +79,50 @@ class CompanyUserSaver implements CompanyUserSaverInterface
      *
      * @return bool
      */
-    protected function updateCustomerInSession(
+    protected function saveSelectedCompanyUser(
         CompanyUserTransfer $companyUser,
         string $idCompanyUserSelected,
         bool $isDefault = false
     ): bool {
-        $customerTransfer = $this->customerClient->getCustomer();
-
-        if (empty($idCompanyUserSelected)) {
-            $customerTransfer->setCompanyUserTransfer(null);
-            $this->businessOnBehalfClient->unsetDefaultCompanyUser($customerTransfer);
-            $this->customerClient->setCustomer($customerTransfer);
-
-            return true;
-        }
-
-        if (!$isDefault) {
-            $this->businessOnBehalfClient->unsetDefaultCompanyUser($customerTransfer);
-
-            return true;
-        }
-
         if (!$companyUser->getCompany()->getIsActive()) {
             $this->messengerClient->addErrorMessage(static::ERROR_COMPANY_NOT_ACTIVE);
 
             return false;
         }
 
+        $customerTransfer = $this->customerClient->getCustomer();
+
+        if (empty($idCompanyUserSelected)) {
+            $this->businessOnBehalfClient->unsetDefaultCompanyUser($customerTransfer);
+            $this->updateCustomerInSession($customerTransfer, null);
+
+            return true;
+        }
+
+        if (!$isDefault) {
+            $this->businessOnBehalfClient->unsetDefaultCompanyUser($customerTransfer);
+            $this->updateCustomerInSession($customerTransfer, $companyUser);
+
+            return true;
+        }
+
         if ($companyUser->getIdCompanyUser() == $idCompanyUserSelected) {
-            $companyUser->setIsDefault($isDefault);
             $companyUser = $this->businessOnBehalfClient->setDefaultCompanyUser($companyUser);
-            $customerTransfer->setCompanyUserTransfer($companyUser);
-            $this->customerClient->setCustomer($customerTransfer);
+            $this->updateCustomerInSession($customerTransfer, $companyUser);
 
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
+     */
+    protected function updateCustomerInSession(CustomerTransfer $customerTransfer, ?CompanyUserTransfer $companyUserTransfer): void
+    {
+        $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
+        $this->customerClient->setCustomer($customerTransfer);
     }
 }
