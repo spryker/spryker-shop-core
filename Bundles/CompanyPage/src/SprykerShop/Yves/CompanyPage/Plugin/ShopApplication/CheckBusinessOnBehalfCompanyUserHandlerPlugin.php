@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CompanyPage\Plugin;
+namespace SprykerShop\Yves\CompanyPage\Plugin\ShopApplication;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CompanyPage\Controller\AbstractCompanyController;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
-class CompanyPageFilterControllerEventHandlerPlugin extends AbstractPlugin implements FilterControllerEventHandlerPluginInterface
+class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin implements FilterControllerEventHandlerPluginInterface
 {
     /**
      * @const string
