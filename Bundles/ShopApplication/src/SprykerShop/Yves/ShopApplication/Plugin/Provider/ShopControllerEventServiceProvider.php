@@ -63,5 +63,4 @@ class ShopControllerEventServiceProvider extends AbstractPlugin implements Servi
             $filterControllerEventListenerPlugin->handle($event);
         }
     }
-
 }

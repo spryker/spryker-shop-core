@@ -20,7 +20,6 @@ use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitFormDataPr
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRoleDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRolePermissionDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUnitAddressFormDataProvider;
-use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserAccountDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserAccountSelectorFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserFormDataProvider;
 use Symfony\Component\Form\FormFactoryInterface;

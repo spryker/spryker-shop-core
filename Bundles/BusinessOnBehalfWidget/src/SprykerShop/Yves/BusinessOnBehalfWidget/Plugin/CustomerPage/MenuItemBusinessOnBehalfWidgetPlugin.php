@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\BusinessOnBehalfWidget\Plugin\CustomerPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Shared\BusinessOnBehalfWidget\BusinessOnBehalfConstants;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\BusinessOnBehalfWidget\MenuItemBusinessOnBehalfWidgetPluginInterface;
 
 class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implements MenuItemBusinessOnBehalfWidgetPluginInterface

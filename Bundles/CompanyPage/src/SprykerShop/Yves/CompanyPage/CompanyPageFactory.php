@@ -96,8 +96,8 @@ class CompanyPageFactory extends AbstractFactory
     }
 
     /**
- * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface
- */
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface
+     */
     public function getBusinessOnBehalfClient(): CompanyPageToBusinessOnBehalfClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_BUSINESS_ON_BEHALF);
