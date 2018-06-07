@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\BusinessOnBehalfWidget\Plugin\ShopLayout;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShopLayout\Dependency\Plugin\DisplayOnBehalfBusinessWidget\DisplayOnBehalfBusinessWidgetPluginInterface;
 
+/**
+ * @method \SprykerShop\Yves\BusinessOnBehalfWidget\BusinessOnBehalfWidgetFactory getFactory()
+ */
 class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implements DisplayOnBehalfBusinessWidgetPluginInterface
 {
     /**

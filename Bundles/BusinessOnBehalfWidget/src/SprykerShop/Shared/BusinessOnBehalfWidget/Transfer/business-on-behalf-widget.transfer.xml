@@ -5,7 +5,7 @@
 
         <transfer name="Customer">
             <property name="isOnBehalf" type="bool" />
-            <property name="companyUser" type="CompanyUser" />
+            <property name="companyUserTransfer" type="CompanyUser" />
         </transfer>
 
         <transfer name="CompanyUser">
