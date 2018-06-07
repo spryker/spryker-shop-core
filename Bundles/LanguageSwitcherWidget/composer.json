@@ -13,7 +13,7 @@
     "spryker/symfony": "*"
   },
   "suggest": {
-    "spryker-shop/shop-ui": "TODO: add suggestion description",
+    "spryker-shop/shop-ui": "Widget plugins are available for this module.",
     "spryker/symfony": "3.0.0 for using LanguageSwitcherPlugin"
   },
   "autoload": {

@@ -72,8 +72,7 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
         $numberOfQuotes = count($this->getFactory()
             ->getMultiCartClient()
             ->getQuoteCollection()
-            ->getQuotes()
-        );
+            ->getQuotes());
 
         return $numberOfQuotes > 1;
     }

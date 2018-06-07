@@ -14,9 +14,9 @@
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker-shop/shop-application": "TODO: add suggestion description",
-    "spryker-shop/shop-ui": "TODO: add suggestion description",
-    "spryker/silex": "TODO: add suggestion description"
+    "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
+    "spryker-shop/shop-ui": "Widget plugins are available for this module.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

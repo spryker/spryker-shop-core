@@ -111,6 +111,8 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
      * @param string $widgetName
      * @param array $arguments
      *
+     * @throws \SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException
+     *
      * @return string
      */
     public function widget(Twig_Environment $twig, $widgetName, ...$arguments)

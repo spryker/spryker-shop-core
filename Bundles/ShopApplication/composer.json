@@ -17,10 +17,10 @@
     "spryker/twig": "*"
   },
   "suggest": {
-    "spryker/config": "TODO: add suggestion description",
-    "spryker/log": "TODO: add suggestion description",
-    "spryker/symfony": "TODO: add suggestion description",
-    "spryker/twig": "TODO: add suggestion description"
+    "spryker/config": "Use this module when using plugins that need Config dependencies.",
+    "spryker/log": "Use this module when using plugins that need Log dependencies.",
+    "spryker/symfony": "Use this module when using plugins that need Symfony dependencies.",
+    "spryker/twig": "Use this module when using plugins that need Twig dependencies."
   },
   "autoload": {
     "psr-4": {

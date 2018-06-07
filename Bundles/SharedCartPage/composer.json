@@ -18,7 +18,7 @@
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker/silex": "TODO: add suggestion description",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker/permission": "If you want to use permissions plugins"
   },
   "autoload": {

@@ -12,7 +12,7 @@
     "spryker-shop/shop-ui": "*"
   },
   "suggest": {
-    "spryker-shop/shop-ui": "TODO: add suggestion description"
+    "spryker-shop/shop-ui": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {

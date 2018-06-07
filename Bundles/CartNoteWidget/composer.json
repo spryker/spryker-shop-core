@@ -20,11 +20,11 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "TODO: add suggestion description",
-    "spryker-shop/checkout-page": "TODO: add suggestion description",
-    "spryker-shop/customer-page": "TODO: add suggestion description",
-    "spryker-shop/shop-application": "TODO: add suggestion description",
-    "spryker/silex": "TODO: add suggestion description"
+    "spryker-shop/cart-page": "Widget plugins are available for this module.",
+    "spryker-shop/checkout-page": "Widget plugins are available for this module.",
+    "spryker-shop/customer-page": "Widget plugins are available for this module.",
+    "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

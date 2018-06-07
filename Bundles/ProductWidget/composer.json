@@ -12,9 +12,9 @@
     "spryker/cms-content-widget-product-connector": "*"
   },
   "suggest": {
-    "spryker-shop/catalog-page": "TODO: add suggestion description",
-    "spryker/cms-content-widget-product-connector": "TODO: add suggestion description",
-    "spryker-shop/product-relation-widget": "TODO: add suggestion description"
+    "spryker-shop/catalog-page": "Widget plugins are available for this module.",
+    "spryker/cms-content-widget-product-connector": "Use this module when using plugins that need CmsContentWidgetProductConnector dependencies.",
+    "spryker-shop/product-relation-widget": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {

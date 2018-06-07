@@ -11,8 +11,8 @@
     "spryker/cms-content-widget-product-set-connector": "*"
   },
   "suggest": {
-    "spryker/cms-content-widget-product-set-connector": "TODO: add suggestion description",
-    "spryker-shop/product-set-detail-page": "TODO: add suggestion description"
+    "spryker/cms-content-widget-product-set-connector": "Use this module when using plugins that need CmsContentWidgetProductSetConnector dependencies.",
+    "spryker-shop/product-set-detail-page": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {

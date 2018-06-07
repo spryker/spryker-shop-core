@@ -18,9 +18,9 @@
     "spryker/twig": "*"
   },
   "suggest": {
-    "spryker-shop/shop-router": "TODO: add suggestion description",
-    "spryker/silex": "TODO: add suggestion description",
-    "spryker/twig": "TODO: add suggestion description"
+    "spryker-shop/shop-router": "Resource creator plugin are available for this module.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+    "spryker/twig": "Use this module when using plugins that need Twig dependencies."
   },
   "autoload": {
     "psr-4": {

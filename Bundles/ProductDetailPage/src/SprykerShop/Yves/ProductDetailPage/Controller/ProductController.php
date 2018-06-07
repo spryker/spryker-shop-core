@@ -43,7 +43,7 @@ class ProductController extends AbstractController
 
     /**
      * @param array $productData
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
