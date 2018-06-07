@@ -88,6 +88,12 @@ class CompanyUserSaver implements CompanyUserSaverInterface
             return true;
         }
 
+        if (!$isDefault) {
+            $this->businessOnBehalfClient->unsetDefaultCompanyUser($customerTransfer);
+
+            return true;
+        }
+
         if (!$companyUser->getCompany()->getIsActive()) {
             $this->messengerClient->addErrorMessage(static::ERROR_COMPANY_NOT_ACTIVE);
 
