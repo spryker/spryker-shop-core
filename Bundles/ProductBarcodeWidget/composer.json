@@ -4,22 +4,20 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shopping-list-page": "^0.1.0",
-    "spryker/product-barcode": "^1.0.0",
-    "spryker/kernel": "^3.16.0"
+    "spryker/kernel": "^3.16.0",
+    "spryker/product-barcode": "^1.0.0"
   },
   "require-dev": {
+    "spryker-shop/shopping-list-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker-shop/shopping-list-page": "*"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
