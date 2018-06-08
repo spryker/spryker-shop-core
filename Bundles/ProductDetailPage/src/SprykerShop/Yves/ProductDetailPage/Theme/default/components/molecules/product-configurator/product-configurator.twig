@@ -35,9 +35,9 @@
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
     <hr />
-
     {{ widget('PriceWidgetPlugin', data.product) }}
     {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
+    {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
 
     {% embed molecule('variant-configurator', 'ProductDetailPage') with {
         data: {
@@ -49,10 +49,7 @@
         {% block body %}<hr />{{parent()}}{% endblock %}
     {% endembed %}
 
-    {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
-
     <hr />
-
     <form method="POST" action="/cart/add/{{sku}}">
         {{ widget('ProductOptionWidgetPlugin', data.product) }}
 
