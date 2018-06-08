@@ -20,7 +20,7 @@
 
 {% block body %}
     <div class="box">
-        {% include molecule('toggler-clicker') with {
+        {% include molecule('toggler-click') with {
             attributes: {
                 'trigger-selector': '.js-review__new-review-trigger',
                 'target-selector': '.js-review__new-review-form-target',
@@ -28,7 +28,16 @@
             }
         } only %}
 
-        {% if true %}
+        {% include molecule('toggler-hash') with {
+            attributes: {
+                'trigger-hash': '#review',
+                'target-selector': '.js-review__new-review-form-target',
+                'class-to-toggle': 'is-hidden',
+                'add-class-when-hash-in-url': false
+            }
+        } only %}
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <button class="button float-right js-review__new-review-trigger">
                 {{ 'product_review.submit.add_a_review' | trans }}
             </button>
@@ -39,9 +48,12 @@
         {% endif %}
     </div>
 
-    <div class="is-hidden js-review__new-review-form-target">
-        {{ render(path('product-review/submit', {'idProductAbstract': data.idProductAbstract})) }}
-    </div>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a id="review"></a>
+        <div class="is-hidden js-review__new-review-form-target">
+            {{ render(path('product-review/submit', {'idProductAbstract': data.idProductAbstract})) }}
+        </div>
+    {% endif %}
 
     {{ render(path('product-review/index', {'idProductAbstract': data.idProductAbstract})) }}
 {% endblock %}

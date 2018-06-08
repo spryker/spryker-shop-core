@@ -1,30 +1,20 @@
 {% extends template('widget') %}
 
 {% define data = {
-    showSuccessMessage: _view.showSuccess,
-    showForm: not _view.hideForm,
-    form: _view.form
+    value: _widget.filterValue,
+    maxValue: _widget.maximumRating,
+    parameterName: _widget.filter.config.parameterName
 } %}
 
 {% block body %}
-    cisone
-    <div class="row" data-component="catalog-rating-filter">
-        <div class="small-12 columns">
-            <ul class="no-bullet">
-                {% for i in (_widget.maximumRating-1)..1 %}
-                    <li>
-                        <label class="rating-selector {% if _widget.filterValue == i %}selected{% endif %}" data-rating-filter="{{ i }}">
-                            {% include '@ProductReviewWidget/_partials/read-only-rating.twig' with {
-                                'rating': i,
-                                'maximumRating': _widget.maximumRating,
-                                'suffix': 'catalog.filter.rating_up' | trans
-                            } only %}
-                        </label>
-                    </li>
-                {% endfor %}
-            </ul>
+    {% include molecule('rating-selector', 'ProductReviewWidget') with {
+        class: 'spacing-top spacing-right',
+        data: {
+            value: data.value,
+            maxValue: data.maxValue,
+            inputName: data.parameterName ~ '[min]'
+        }
+    } only %}
 
-            <input type="hidden" name="{{ _widget.filter.config.parameterName }}[min]" value="{{ _widget.filterValue }}" data-default-value="" class="js-rating-filter-input" />
-        </div>
-    </div>
+    {{'catalog.filter.rating_up' | trans}}
 {% endblock %}

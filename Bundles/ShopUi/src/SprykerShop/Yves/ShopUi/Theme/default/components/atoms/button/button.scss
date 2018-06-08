@@ -27,10 +27,6 @@
             }
         }
 
-        @each $action, $setting-color-action in $setting-color-actions {
-            @include shop-ui-button-action($action, $setting-color-action);
-        }
-
         &--expand {
             width: 100%;
         }
@@ -46,6 +42,12 @@
                 background-color: $setting-color-light;
             }
         }
+
+        @each $action, $setting-color-action in $setting-color-actions {
+            @include shop-ui-button-action($action, $setting-color-action);
+        }
+
+        @content;
     }
 }
 

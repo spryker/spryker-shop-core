@@ -11,6 +11,7 @@
     maxValue: 5,
     steps: 5,
     useHalfSteps: false,
+    inputId: '',
     inputName: 'rating'
 } %}
 
@@ -96,6 +97,11 @@
     </span>
 
     {% if not attributes.readonly %}
-        <input type="hidden" name="{{data.inputName}}" value="{{data.value}}" class="{{config.selector}}__input"/>
+        <input
+            type="hidden"
+            class="{{config.selector}}__input"
+            {% if data.inputId is not empty %}id="{{data.inputId}}"{% endif %}
+            name="{{data.inputName}}"
+            value="{{data.value}}" />
     {% endif %}
 {% endblock %}

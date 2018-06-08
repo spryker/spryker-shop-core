@@ -6,22 +6,18 @@
 } %}
 
 {% define data = {
-    form: required,
-    showSuccessMessage: false
+    form: required
 } %}
 
 {% block body %}
-    {% if data.showSuccessMessage %}
-        <div class="box">
-            {{ 'product_review.submit.success' | trans }}
-        </div>
-    {% endif %}
-
     {% embed molecule('form') with {
         class: 'box',
         data: {
             title: 'product_review.submit.add_a_review' | trans,
             form: data.form,
+            options: {
+                action: '#review'
+            },
             layout: {
                 'nickname': 'col col--sm-12 col--lg-4',
                 'summary': 'col col--sm-12 col--lg-8'
@@ -42,7 +38,8 @@
                             modifiers: ['expand'],
                             data: {
                                 maxValue: (field.vars.choices | length) - 1,
-                                inputName: field.vars.name
+                                inputId: 'productReviewForm_rating',
+                                inputName: 'productReviewForm[rating]'
                             }
                         } only %}
                         {{form_errors(field)}}

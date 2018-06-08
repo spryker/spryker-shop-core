@@ -1,0 +1,5 @@
+{% extends molecule('active-filter', 'CatalogPage') %}
+
+{% define data = {
+    value: data.filter.activeMin ~ ' ' ~ 'catalog.filter.active_rating_up' | trans
+} %}

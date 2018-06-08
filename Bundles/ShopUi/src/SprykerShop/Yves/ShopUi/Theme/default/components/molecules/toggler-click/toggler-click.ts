@@ -1,6 +1,6 @@
 import Component from '../../../models/component';
 
-export default class TogglerClicker extends Component {
+export default class TogglerClick extends Component {
     readonly triggers: HTMLElement[]
     readonly targets: HTMLElement[]
 
