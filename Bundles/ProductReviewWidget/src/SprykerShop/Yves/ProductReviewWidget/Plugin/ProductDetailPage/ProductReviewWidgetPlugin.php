@@ -41,7 +41,7 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public static function getTemplate(): string
     {
-        return '@ProductReviewWidget/_product-detail-page/product-review.twig';
+        return '@ProductReviewWidget/views/pdp-review/pdp-review.twig';
     }
 
     /**

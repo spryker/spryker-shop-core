@@ -50,7 +50,7 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      */
     public static function getTemplate(): string
     {
-        return '@LanguageSwitcherWidget/_partials/language_switcher.twig';
+        return '@LanguageSwitcherWidget/views/switcher/switcher.twig';
     }
 
     /**

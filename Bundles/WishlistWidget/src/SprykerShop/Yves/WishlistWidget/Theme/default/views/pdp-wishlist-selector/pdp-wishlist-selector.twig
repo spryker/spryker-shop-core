@@ -1,0 +1,15 @@
+{% extends template('widget') %}
+
+{% define data = {
+    sku: _widget.product.sku,
+    idProductConcrete: _widget.product.idProductConcrete | default
+} %}
+
+{% block body %}
+    {% include molecule('wishlist-selector', 'WishlistWidget') with {
+        data: {
+            sku: data.sku,
+            idProductConcrete: data.idProductConcrete
+        }
+    } only %}
+{% endblock %}

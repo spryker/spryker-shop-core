@@ -25,12 +25,13 @@ class CmsBlockWidgetToCmsBlockStorageClientBridge implements CmsBlockWidgetToCms
     /**
      * @param string[] $blockNames
      * @param string $localeName
+     * @param string $storeName
      *
      * @return array
      */
-    public function findBlocksByNames($blockNames, $localeName)
+    public function findBlocksByNames($blockNames, $localeName, $storeName)
     {
-        return $this->cmsBlockStorageClient->findBlocksByNames($blockNames, $localeName);
+        return $this->cmsBlockStorageClient->findBlocksByNames($blockNames, $localeName, $storeName);
     }
 
     /**

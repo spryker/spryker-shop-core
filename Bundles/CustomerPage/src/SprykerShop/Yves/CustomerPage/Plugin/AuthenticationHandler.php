@@ -16,12 +16,25 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class AuthenticationHandler extends AbstractPlugin
 {
     /**
+     * @var \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
+     */
+    protected $preRegistrationCustomerTransferExpanderPlugins;
+
+    public function __construct()
+    {
+        $this->preRegistrationCustomerTransferExpanderPlugins = $this->getFactory()
+            ->getPreRegistrationCustomerTransferExpanderPlugins();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function registerCustomer(CustomerTransfer $customerTransfer)
     {
+        $this->executePreRegistrationCustomerTransferExpanderPlugins($customerTransfer);
+
         $customerResponseTransfer = $this
             ->getFactory()
             ->getCustomerClient()
@@ -57,5 +70,17 @@ class AuthenticationHandler extends AbstractPlugin
         $application = $this->getFactory()->getApplication();
 
         return $application['security.token_storage'];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function executePreRegistrationCustomerTransferExpanderPlugins(CustomerTransfer $customerTransfer): void
+    {
+        foreach ($this->preRegistrationCustomerTransferExpanderPlugins as $preRegistrationCustomerTransferExpanderPlugin) {
+            $preRegistrationCustomerTransferExpanderPlugin->expand($customerTransfer);
+        }
     }
 }

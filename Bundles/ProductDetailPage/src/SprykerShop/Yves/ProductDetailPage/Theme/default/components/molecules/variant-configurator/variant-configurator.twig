@@ -32,9 +32,9 @@
             {% set isAvailable = selectedValue is empty %}
         {% endif %}
 
-        <ul class="list list--spacing">
+        <ul class="list">
             {% block variant %}
-                <li class="list__item">
+                <li class="list__item list__item--spacing">
                     {% include molecule('variant', 'ProductDetailPage') with {
                         data: {
                             name: name,
