@@ -98,14 +98,13 @@ class CompanyUserSaver implements CompanyUserSaverInterface
             return true;
         }
 
-        if (!$isDefault) {
-            $this->businessOnBehalfClient->unsetDefaultCompanyUser($customerTransfer);
-            $this->updateCustomerInSession($customerTransfer, $companyUser);
-
-            return true;
-        }
-
         if ($companyUser->getIdCompanyUser() == $idCompanyUserSelected) {
+            if (!$isDefault) {
+                $this->businessOnBehalfClient->unsetDefaultCompanyUser($customerTransfer);
+                $this->updateCustomerInSession($customerTransfer, $companyUser);
+
+                return true;
+            }
             $companyUserResponse = $this->businessOnBehalfClient->setDefaultCompanyUser($companyUser);
             $this->updateCustomerInSession($customerTransfer, $companyUserResponse->getCompanyUser());
 
