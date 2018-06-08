@@ -38,6 +38,7 @@
 
     {{ widget('PriceWidgetPlugin', data.product) }}
     {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
+
     {% embed molecule('variant-configurator', 'ProductDetailPage') with {
         data: {
             superAttributes: data.product.attributeMap.superAttributes,
@@ -47,7 +48,8 @@
     } only %}
         {% block body %}<hr />{{parent()}}{% endblock %}
     {% endembed %}
-    {# {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }} #}
+
+    {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
 
     <hr />
 

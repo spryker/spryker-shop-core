@@ -46,7 +46,7 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public static function getTemplate(): string
     {
-        return '@ProductGroupWidget/_product-group/_main.twig';
+        return '@ProductGroupWidget/views/product-group/product-group.twig';
     }
 
     /**
