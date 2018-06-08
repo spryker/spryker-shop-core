@@ -27,14 +27,14 @@ $shop-ui-simple-carousel-icon-size: $shop-ui-icon-size-big;
 
         &__dot {
             display: inline-block;
-            padding: .25rem;
+            padding: 0.25rem;
 
             &::before {
                 @include helper-effect-transition(background-color, 150ms);
                 content: '';
                 display: block;
-                width: .5rem;
-                height: .5rem;
+                width: 0.5rem;
+                height: 0.5rem;
                 background-color: $setting-color-light;
                 border-radius: 100%;
             }
@@ -85,8 +85,8 @@ $shop-ui-simple-carousel-icon-size: $shop-ui-icon-size-big;
         }
 
         &--inset &__arrow {
-            padding: .5rem;
-            background-color: rgba($setting-color-lightest, .75);
+            padding: 0.5rem;
+            background-color: rgba($setting-color-lightest, 0.75);
         }
 
         @include helper-breakpoint(lg) {

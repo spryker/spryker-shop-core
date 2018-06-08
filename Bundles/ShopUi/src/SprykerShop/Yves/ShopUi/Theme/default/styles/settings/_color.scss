@@ -17,8 +17,8 @@ $setting-color-bg: $setting-color-white !default;
 $setting-color-text: $setting-color-darkest !default;
 $setting-color-input-border: $setting-color-light !default;
 $setting-color-input-border-focus: $setting-color-dark !default;
-$setting-color-shadow: rgba($setting-color-black, .1) !default;
-$setting-color-overlay: rgba($setting-color-black, .3) !default;
+$setting-color-shadow: rgba($setting-color-black, 0.1) !default;
+$setting-color-overlay: rgba($setting-color-black, 0.3) !default;
 
 $setting-color-actions: (
     success: #4FC2A0,

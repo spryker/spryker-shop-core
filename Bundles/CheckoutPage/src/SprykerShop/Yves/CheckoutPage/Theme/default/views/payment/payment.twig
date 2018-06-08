@@ -5,17 +5,18 @@
     forms: {
         payment: _view.paymentForm
     },
-    
+
     title: 'checkout.step.payment.title' | trans
 } %}
 
 {% block content %}
     {% embed molecule('form') with {
+        class: 'box',
         data: {
             form: data.forms.payment,
             options: {
-                attr: { 
-                    id: 'payment-form' 
+                attr: {
+                    id: 'payment-form'
                 }
             },
             submit: {
@@ -29,39 +30,47 @@
             }
         }
     } only %}
-        {% block fields %}
+        {% block fieldset %}
             {% for name, choices in data.form.paymentSelection.vars.choices %}
-                <div class="box">
-                    <h5>{{ ('checkout.payment.provider.' ~ name) | trans }}</h5>
+                <h5>{{ ('checkout.payment.provider.' ~ name) | trans }}</h5>
 
+                <ul class="list list--spacing">
                     {% for key, choice in choices %}
-                        {% embed molecule('form') with {
-                            data: {
-                                form: data.form[data.form.paymentSelection[key].vars.value],
-                                enableStart: false,
-                                enableEnd: false
-                            },
-                            embed: {
-                                index: loop.index,
-                                toggler: data.form.paymentSelection[key]
-                            }
-                        } only %}
-                            {% block fields %}
-                                {{ form_row(embed.toggler, {
-                                    component: molecule('toggler-radio'),
-                                    attributes: {
-                                        target: 'js-payment-method-' ~ embed.index,
-                                        'class-to-toggle': 'is-hidden'
+                        <li class="list__item list__item--spacing clear">
+                            {% embed molecule('form') with {
+                                data: {
+                                    form: data.form[data.form.paymentSelection[key].vars.value],
+                                    enableStart: false,
+                                    enableEnd: false,
+                                    layout: {
+                                        'card_expires_month': 'col col--sm-4',
+                                        'card_expires_year': 'col col--sm-8'
                                     }
-                                }) }}
-                                
-                                <div class="col col--sm-12 col--lg-6 is-hidden js-payment-method-{{embed.index}}">
-                                    {{parent()}}
-                                </div>
-                            {% endblock %}
-                        {% endembed %}
+                                },
+                                embed: {
+                                    index: loop.index,
+                                    toggler: data.form.paymentSelection[key]
+                                }
+                            } only %}
+                                {% block fieldset %}
+                                    {{ form_row(embed.toggler, {
+                                        component: molecule('toggler-radio'),
+                                        attributes: {
+                                            target: 'js-payment-method-' ~ embed.index,
+                                            'class-to-toggle': 'is-hidden'
+                                        }
+                                    }) }}
+
+                                    <div class="col col--sm-12 is-hidden js-payment-method-{{embed.index}}">
+                                        <div class="col col--sm-12 col--md-6">
+                                            {{parent()}}
+                                        </div>
+                                    </div>
+                                {% endblock %}
+                            {% endembed %}
+                        </li>
                     {% endfor %}
-                </div>
+                </ul>
             {% endfor %}
         {% endblock %}
     {% endembed %}

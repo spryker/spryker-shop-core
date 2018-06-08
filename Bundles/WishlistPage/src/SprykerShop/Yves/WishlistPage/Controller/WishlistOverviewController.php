@@ -52,7 +52,7 @@ class WishlistOverviewController extends AbstractController
         return $this->view([
             'wishlistCollection' => $wishlistCollection,
             'wishlistForm' => $wishlistForm->createView(),
-        ]);
+        ], [], '@WishlistPage/views/wishlist-overview/wishlist-overview.twig');
     }
 
     /**
@@ -88,7 +88,7 @@ class WishlistOverviewController extends AbstractController
         return $this->view([
             'wishlistCollection' => $wishlistCollection,
             'wishlistForm' => $wishlistForm->createView(),
-        ]);
+        ], [], '@WishlistPage/views/wishlist-overview-update/wishlist-overview-update.twig');
     }
 
     /**

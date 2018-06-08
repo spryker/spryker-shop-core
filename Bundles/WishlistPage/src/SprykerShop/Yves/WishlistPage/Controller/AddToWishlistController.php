@@ -27,8 +27,10 @@ class AddToWishlistController extends AbstractController
             ->getWishlistClient()
             ->getCustomerWishlistCollection();
 
-        return $this->view([
+        $data = [
             'wishlistCollection' => $wishlistCollection,
-        ]);
+        ];
+
+        return $this->view($data, [], '@WishlistPage/views/wishlist-selection/wishlist-selection.twig');
     }
 }

@@ -10,8 +10,8 @@
 } %}
 
 {% block title %}
-    <ul class="list list--spacing">
-        <li class="list__item">
+    <ul class="list">
+        <li class="list__item list__item--spacing">
             {% include molecule('toggler-radio') with {
                 data: {
                     label: 'checkout.customer.proceed_as_user' | trans

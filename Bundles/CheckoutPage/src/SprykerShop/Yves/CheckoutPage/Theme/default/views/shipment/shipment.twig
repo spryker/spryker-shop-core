@@ -5,17 +5,18 @@
     forms: {
         shipment: _view.shipmentForm
     },
-    
+
     title: 'checkout.step.shipment.title' | trans
 } %}
 
 {% block content %}
     {% embed molecule('form') with {
+        class: 'box',
         data: {
             form: data.forms.shipment,
             options: {
-                attr: { 
-                    id: 'payment-form' 
+                attr: {
+                    id: 'payment-form'
                 }
             },
             submit: {
@@ -31,15 +32,19 @@
     } only %}
         {% block fields %}
             {% for name, choices in data.form.idShipmentMethod.vars.choices %}
-                <div class="box">
+                <div class="form__field col col--sm-12">
                     <h5>{{name}}</h5>
-
-                    {% for key, choice in choices %}
-                        {{ form_row(data.form.idShipmentMethod[key], {
-                            label: data.form.idShipmentMethod[key].vars.label
-                        }) }}
-                    {% endfor %}
+                    <ul class="list list--spacing">
+                        {% for key, choice in choices %}
+                            <li class="list__item list__item--spacing">
+                                {{ form_row(data.form.idShipmentMethod[key], {
+                                    label: data.form.idShipmentMethod[key].vars.label
+                                }) }}
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
+                {% if not loop.last %}<div class="form__field col col--sm-12"><hr /></div>{% endif %}
             {% endfor %}
         {% endblock %}
     {% endembed %}
