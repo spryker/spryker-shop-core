@@ -1,7 +1,7 @@
 @mixin catalog-page-sort($name: '.sort') {
     #{$name} {
         &__col:not(:last-child) {
-            padding-right: .5rem;
+            padding-right: 0.5rem;
         }
 
         @content;

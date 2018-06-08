@@ -13,7 +13,6 @@
         flex-flow: row wrap;
         align-items: flex-start;
         justify-content: flex-start;
-        max-width: 100%;
 
         &--top {
             align-items: flex-start;
@@ -56,12 +55,24 @@
             }
         }
 
+        &--nowrap {
+            flex-wrap: nowrap;
+        }
+
         &--stretch {
             align-items: stretch;
 
             & .col {
                 margin-top: 0;
                 margin-bottom: 0;
+            }
+        }
+
+        &--spacing {
+            padding: 0.5rem 0 0 0.5rem;
+
+            & > .col {
+                padding: 0 0.5rem 0.5rem 0;
             }
         }
 
@@ -94,26 +105,38 @@
 
         &--top {
             align-self: flex-start;
+            margin-bottom: auto;
         }
 
         &--bottom {
             align-self: flex-end;
+            margin-top: auto;
         }
 
         &--left {
             justify-self: flex-start;
+            margin-right: auto;
         }
 
         &--right {
             justify-self: flex-end;
+            margin-left: auto;
         }
 
         &--center {
             justify-self: center;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         &--middle {
             align-self: center;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        &--spacing {
+            padding: 0.5rem;
         }
     }
 }

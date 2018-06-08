@@ -30,7 +30,7 @@
         </div>
 
         <div class="col col--sm-12 col--lg-6">
-            {% embed molecule('form') with {
+            {% include molecule('form') with {
                 class: 'box',
                 data: {
                     title: 'customer.login.title' | trans,
@@ -44,16 +44,15 @@
                         text: 'forms.submit.login' | trans
                     },
                     cancel: {
-                        enable: true
+                        enable: true,
+                        url: url('password/forgotten'),
+                        text: 'forms.forgot-password' | trans,
+                        icon: null,
+                        class: 'link',
+                        qa: 'customer-forgot-password-link'
                     }
                 }
             } only %}
-                {% block cancel %}
-                    <a href="{{ url('password/forgotten') }}" {{qa('customer-forgot-password-link')}}>
-                        {{ 'forms.forgot-password' | trans }}
-                    </a>
-                {% endblock %}
-            {% endembed %}
         </div>
     </div>
 {% endblock %}

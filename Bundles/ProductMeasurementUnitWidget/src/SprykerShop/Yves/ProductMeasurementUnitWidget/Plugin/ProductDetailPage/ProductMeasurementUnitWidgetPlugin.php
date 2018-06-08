@@ -114,7 +114,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      */
     public static function getTemplate()
     {
-        return '@ProductMeasurementUnitWidget/views/product-measurement-unit/product-measurement-unit.twig';
+        return '@ProductMeasurementUnitWidget/views/pdp-product-measurement-unit/pdp-product-measurement-unit.twig';
     }
 
     /**
