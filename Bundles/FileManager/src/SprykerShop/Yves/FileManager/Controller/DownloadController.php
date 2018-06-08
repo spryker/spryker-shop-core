@@ -8,45 +8,84 @@
 namespace SprykerShop\Yves\FileManager\Controller;
 
 use Generated\Shared\Transfer\FileManagerDataTransfer;
+use Generated\Shared\Transfer\ReadFileTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\FileManager\FileManagerFactory getFactory()
  */
 class DownloadController extends AbstractController
 {
-    const CONTENT_DISPOSITION = 'Content-Disposition';
+    const PARAM_ID_FILE = 'id-file';
     const CONTENT_TYPE = 'Content-Type';
+    const CONTENT_DISPOSITION = 'Content-Disposition';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $fileName
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function indexAction(Request $request, string $fileName)
+    public function indexAction(Request $request)
     {
-        $fileManagerDataTransfer = $this->getFactory()->getFileManagerService()->read($fileName);
+        $readFileTransfer = $this->createReadFileTransfer($request);
 
-        return $this->createResponse($fileManagerDataTransfer);
+        $fileManagerDataTransfer = $this->getFactory()
+            ->getFileManagerClient()
+            ->readFile($readFileTransfer);
+
+        if ($fileManagerDataTransfer->getFileInfo() === null) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->createDownloadResponse($fileManagerDataTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\ReadFileTransfer
+     */
+    protected function createReadFileTransfer(Request $request)
+    {
+        $transfer = new ReadFileTransfer();
+
+        $transfer
+            ->setIdFile(
+                $request->query->getInt(self::PARAM_ID_FILE)
+            );
+
+        return $transfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    protected function createResponse(FileManagerDataTransfer $fileManagerDataTransfer)
+    protected function createDownloadResponse(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        $response = new Response($fileManagerDataTransfer->getContent());
-        $fileName = $fileManagerDataTransfer->getFile()->getFileName();
-        $contentType = $fileManagerDataTransfer->getFileInfo()->getType();
-        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
+        $storageFileName = $fileManagerDataTransfer->getFileInfo()
+            ->getStorageFileName();
 
+        $fileStream = $this->getFactory()
+            ->getFileManagerService()
+            ->readStream($storageFileName);
+
+        $response = new StreamedResponse(function () use ($fileStream) {
+            echo stream_get_contents($fileStream);
+        });
+
+        $storageFileName = basename($storageFileName);
+        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $storageFileName);
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
+
+        $contentType = $fileManagerDataTransfer->getFileInfo()->getType();
         $response->headers->set(static::CONTENT_TYPE, $contentType);
 
         return $response;

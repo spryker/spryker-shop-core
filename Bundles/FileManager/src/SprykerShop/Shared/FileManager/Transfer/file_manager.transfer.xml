@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="GetFileVersionsRequest">
+        <property name="idFile" type="int"/>
+    </transfer>
+
+    <transfer name="ReadFile">
+        <property name="idFileInfo" type="int"/>
+        <property name="idFile" type="int"/>
+    </transfer>
+
+    <transfer name="FileCollection">
+        <property name="files" type="File[]"/>
+        <property name="offset" type="int"/>
+        <property name="totalFiles" type="int"/>
+    </transfer>
+
+    <transfer name="FileInfoCollection">
+        <property name="versions" type="FileInfo[]"/>
+    </transfer>
+
+    <transfer name="File">
+        <property name="directory" type="string" />
+    </transfer>
+
+</transfers>

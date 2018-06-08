@@ -18,4 +18,12 @@ class FileManagerFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(FileManagerDependencyProvider::FILE_MANAGER_SERVICE);
     }
+
+    /**
+     * @return \SprykerShop\Yves\FileManager\Dependency\Client\FileManagerToFileManagerClientInterface
+     */
+    public function getFileManagerClient()
+    {
+        return $this->getProvidedDependency(FileManagerDependencyProvider::FILE_MANAGER_CLIENT);
+    }
 }

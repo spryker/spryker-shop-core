@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\FileManager\Dependency\Service;
 
-use Spryker\Service\FileManager\FileManagerServiceInterface;
-
 class FileManagerToFileManagerServiceBridge implements FileManagerToFileManagerServiceInterface
 {
     /**
@@ -19,7 +17,7 @@ class FileManagerToFileManagerServiceBridge implements FileManagerToFileManagerS
     /**
      * @param \Spryker\Service\FileManager\FileManagerServiceInterface $fileManagerService
      */
-    public function __construct(FileManagerServiceInterface $fileManagerService)
+    public function __construct($fileManagerService)
     {
         $this->fileManagerService = $fileManagerService;
     }

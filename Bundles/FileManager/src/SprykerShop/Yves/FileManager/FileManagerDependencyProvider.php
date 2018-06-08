@@ -9,11 +9,13 @@ namespace SprykerShop\Yves\FileManager;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\FileManager\Dependency\Client\FileManagerToFileManagerClientBridge;
 use SprykerShop\Yves\FileManager\Dependency\Service\FileManagerToFileManagerServiceBridge;
 
 class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FILE_MANAGER_SERVICE = 'FILE_MANAGER_SERVICE';
+    const FILE_MANAGER_CLIENT = 'FILE_MANAGER_CLIENT';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -24,6 +26,7 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideDependencies($container);
         $container = $this->addFileManagerService($container);
+        $container = $this->addFileManagerClient($container);
 
         return $container;
     }
@@ -38,6 +41,22 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FILE_MANAGER_SERVICE] = function (Container $container) {
             return new FileManagerToFileManagerServiceBridge(
                 $container->getLocator()->fileManager()->service()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addFileManagerClient(Container $container)
+    {
+        $container[static::FILE_MANAGER_CLIENT] = function (Container $container) {
+            return new FileManagerToFileManagerClientBridge(
+                $container->getLocator()->fileManager()->client()
             );
         };
 
