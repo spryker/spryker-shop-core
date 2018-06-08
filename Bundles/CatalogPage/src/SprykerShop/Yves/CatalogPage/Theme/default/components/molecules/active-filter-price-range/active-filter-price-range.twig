@@ -13,14 +13,14 @@
 } %}
 
 {% set defaultValue = data.min | money  ~ ' - ' ~ data.max | money %}
-{% set curentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}
+{% set currentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}
 
 {% block component %}
-    {% if defaultValue != curentValue %}
+    {% if app.request.query.has(data.filter.config.parameterName) %}
         {% include molecule('active-filter', 'CatalogPage') with {
             data: {
                 filter: data.filter,
-                value: curentValue
+                value: currentValue
             }
         } only %}
     {% endif %}

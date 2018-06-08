@@ -1,5 +1,11 @@
 {% extends molecule('active-filter', 'CatalogPage') %}
 
 {% define data = {
-    value: data.filter.activeMin ~ ' ' ~ 'catalog.filter.active_rating_up' | trans
+    value: data.filter.min ~ ' ' ~ 'catalog.filter.active_rating_up' | trans
 } %}
+
+{% block component %}
+    {% if app.request.query.has(data.filter.config.parameterName) %}
+        {{parent()}}
+    {% endif %}
+{% endblock %}

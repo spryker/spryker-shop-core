@@ -16,7 +16,8 @@
 } %}
 
 {% define attributes = {
-    readonly: false
+    'readonly': false,
+    'disable-if-empty-value': false
 } %}
 
 {% set singleStepValue = (data.maxValue - data.minValue) / (data.steps - 1) %}
@@ -97,11 +98,14 @@
     </span>
 
     {% if not attributes.readonly %}
-        <input
-            type="hidden"
-            class="{{config.selector}}__input"
-            {% if data.inputId is not empty %}id="{{data.inputId}}"{% endif %}
-            name="{{data.inputName}}"
-            value="{{data.value}}" />
+        {% block input %}
+            <input
+                type="hidden"
+                class="{{config.selector}}__input"
+                {% if data.inputId is not empty %}id="{{data.inputId}}"{% endif %}
+                name="{{data.inputName}}"
+                value="{{data.value}}"
+                {% if attributes['disable-if-empty-value'] and data.value is empty %}disabled{% endif %} />
+        {% endblock %}
     {% endif %}
 {% endblock %}
