@@ -1,0 +1,45 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'filter-range'
+} %}
+
+{% define data = {
+    parameter: required,
+    min: required,
+    activeMin: required,
+    max: required,
+    activeMax: required
+} %}
+
+{% block body %}
+    <div class="grid">
+        <div class="col col--sm-6">
+            <label>
+                {{ 'catalog.filter.rangeFrom'|trans }}
+                <input class="input"
+                       type="number"
+                       name="{{ data.parameter }}[min]"
+                       value="{{ data.activeMin }}"
+                       required="required"
+                       min="{{ data.min }}"
+                       max="{{ data.max }}"
+                />
+            </label>
+        </div>
+
+        <div class="col col--sm-6">
+            <label>
+                {{ 'catalog.filter.rangeTo'|trans }}
+                <input class="input"
+                       type="number"
+                       name="{{ data.parameter }}[max]"
+                       value="{{ data.activeMax }}"
+                       required="required"
+                       min="{{ data.min }}"
+                       max="{{ data.max }}"
+                />
+            </label>
+        </div>
+    </div>
+{% endblock %}

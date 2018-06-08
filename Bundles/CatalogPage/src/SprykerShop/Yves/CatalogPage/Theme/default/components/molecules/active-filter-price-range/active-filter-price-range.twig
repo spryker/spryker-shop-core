@@ -1,0 +1,27 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'active-filter-price-range'
+} %}
+
+{% define data = {
+    filter: required,
+    min: required,
+    activeMin: required,
+    max: required,
+    activeMax: required
+} %}
+
+{% set defaultValue = data.min | money  ~ ' - ' ~ data.max | money %}
+{% set curentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}
+
+{% block component %}
+    {% if defaultValue != curentValue %}
+        {% include molecule('active-filter', 'CatalogPage') with {
+            data: {
+                filter: data.filter,
+                value: curentValue
+            }
+        } only %}
+    {% endif %}
+{% endblock %}
