@@ -26,7 +26,7 @@ abstract class AbstractCompanyController extends AbstractController
     public const DEFAULT_PAGE = 1;
 
     /**
-     * @deprecated Behaviour is implemented and enhanced by CompanyUserRestrictionHandlerPlugin
+     * @deprecated Behaviour is implemented by CompanyUserRestrictionHandlerPlugin
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
@@ -34,13 +34,13 @@ abstract class AbstractCompanyController extends AbstractController
      */
     public function initialize()
     {
-       parent::initialize();
+        parent::initialize();
 
-       $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-       if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
-           throw new NotFoundHttpException("Regular customers are not allowed to operate on company pages");
-       }
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+            throw new NotFoundHttpException("Regular customers are not allowed to operate on company pages");
+        }
     }
 
     /**
@@ -48,18 +48,18 @@ abstract class AbstractCompanyController extends AbstractController
      */
     protected function isCompanyActive(): bool
     {
-       $companyUser = $this->getCompanyUser();
-       
-       if ($companyUser === null) {
-           return false;
-       }
+        $companyUser = $this->getCompanyUser();
 
-       $companyTransfer = (new CompanyTransfer())->setIdCompany($companyUser->getFkCompany());
-       $companyTransfer = $this->getFactory()
-           ->getCompanyClient()
-           ->getCompanyById($companyTransfer);
+        if ($companyUser === null) {
+            return false;
+        }
 
-       return ($companyTransfer->getIsActive() === true && $companyTransfer->getStatus() === static::COMPANY_APPROVED_STATUS);
+        $companyTransfer = (new CompanyTransfer())->setIdCompany($companyUser->getFkCompany());
+        $companyTransfer = $this->getFactory()
+            ->getCompanyClient()
+            ->getCompanyById($companyTransfer);
+
+        return ($companyTransfer->getIsActive() === true && $companyTransfer->getStatus() === static::COMPANY_APPROVED_STATUS);
     }
 
     /**
