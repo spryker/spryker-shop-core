@@ -6,8 +6,8 @@ export default class CustomerReorder extends Component {
 
     constructor() {
         super();
-        this.selections = <HTMLInputElement[]>Array.from(this.querySelectorAll(`.${this.componentSelector}__selection`));
-        this.trigger = <HTMLElement>this.querySelector(`.${this.componentSelector}__trigger`);
+        this.selections = <HTMLInputElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__selection`));
+        this.trigger = <HTMLElement>this.querySelector(`.${this.jsName}__trigger`);
     }
 
     readyCallback() {

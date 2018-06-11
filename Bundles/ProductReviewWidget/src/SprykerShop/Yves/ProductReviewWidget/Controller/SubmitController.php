@@ -30,7 +30,7 @@ class SubmitController extends AbstractController
     {
         $viewData = $this->executeIndexAction($request);
 
-        return $this->view($viewData);
+        return $this->view($viewData, [], '@ProductReviewWidget/views/review-create/review-create.twig');
     }
 
     /**

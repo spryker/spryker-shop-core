@@ -17,6 +17,7 @@
             z-index: 2;
             appearance: none;
             -webkit-appearance: none;
+            -moz-appearance: none;
 
             &::-ms-expand {
                 display: none;

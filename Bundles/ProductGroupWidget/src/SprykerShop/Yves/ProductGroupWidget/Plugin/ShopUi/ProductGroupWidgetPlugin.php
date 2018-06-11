@@ -23,7 +23,9 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public function initialize($idProductAbstract, $template): void
     {
-        $this->addParameter('productGroupItems', $this->getProductGroups($idProductAbstract))
+        $this
+            ->addParameter('productGroupItems', $this->getProductGroups($idProductAbstract))
+            ->addParameter('idProductAbstract', $idProductAbstract)
             ->addParameter('template', $template);
     }
 
@@ -44,7 +46,7 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public static function getTemplate(): string
     {
-        return '@ProductGroupWidget/_product-group/_main.twig';
+        return '@ProductGroupWidget/views/product-group/product-group.twig';
     }
 
     /**

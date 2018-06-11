@@ -9,35 +9,35 @@ export default class SimpleCarousel extends Component {
     dots: HTMLElement[]
     viewsCount: number
     viewCurrentIndex: number = 0
-    
+
     readonly dotSelector: string
     readonly dotCurrentModifier: string
 
     constructor() {
         super();
 
-        this.dotSelector = `${this.componentSelector}__dot`;
-        this.dotCurrentModifier = `${this.componentName}__dot--current`;
+        this.dotSelector = `${this.jsName}__dot`;
+        this.dotCurrentModifier = `${this.name}__dot--current`;
     }
 
     readyCallback(): void {
-        this.slidesCount = this.getElementsByClassName(`${this.componentSelector}__slide`).length;
+        this.slidesCount = this.getElementsByClassName(`${this.jsName}__slide`).length;
 
         if (this.slidesCount <= 1) {
             return;
         }
 
-        this.triggerPrev = this.querySelector(`.${this.componentSelector}__prev`);
-        this.triggerNext = this.querySelector(`.${this.componentSelector}__next`);
-        this.slider = this.querySelector(`.${this.componentSelector}__slider`);
+        this.triggerPrev = this.querySelector(`.${this.jsName}__prev`);
+        this.triggerNext = this.querySelector(`.${this.jsName}__next`);
+        this.slider = this.querySelector(`.${this.jsName}__slider`);
         this.slideWidth = 100 / this.slidesToShow;
         this.dots = <HTMLElement[]>Array.from(this.getElementsByClassName(this.dotSelector));
         this.viewsCount = this.getViewsCount();
-        
+
         this.mapEvents();
     }
 
-    getViewsCount(): number { 
+    getViewsCount(): number {
         return Math.ceil((this.slidesCount - this.slidesToShow) / this.slidesToScroll) + 1;
     }
 
@@ -54,7 +54,7 @@ export default class SimpleCarousel extends Component {
         this.updateCurrentDot();
     }
 
-    onNextClick(event: Event): void { 
+    onNextClick(event: Event): void {
         event.preventDefault();
         this.loadNextViewIndex();
         this.slide();
@@ -68,7 +68,7 @@ export default class SimpleCarousel extends Component {
         this.updateCurrentDot();
     }
 
-    loadPrevViewIndex(): void { 
+    loadPrevViewIndex(): void {
         this.viewCurrentIndex = this.viewCurrentIndex - 1;
 
         if (this.viewCurrentIndex < 0) {
@@ -84,7 +84,7 @@ export default class SimpleCarousel extends Component {
         }
     }
 
-    loadViewIndexFromDot(dot: HTMLElement): void { 
+    loadViewIndexFromDot(dot: HTMLElement): void {
         this.viewCurrentIndex = this.dots.indexOf(dot);
 
         if (this.viewCurrentIndex === -1) {
@@ -95,7 +95,7 @@ export default class SimpleCarousel extends Component {
     slide(): void {
         let slidesToSlide = this.slidesToScroll * this.viewCurrentIndex;
 
-        if (this.slidesToScroll + slidesToSlide > this.slidesCount) { 
+        if (this.slidesToScroll + slidesToSlide > this.slidesCount) {
             slidesToSlide = slidesToSlide - (this.slidesCount - slidesToSlide);
         }
 
@@ -104,7 +104,7 @@ export default class SimpleCarousel extends Component {
     }
 
     updateCurrentDot(): void {
-        if (this.dots.length === 0) { 
+        if (this.dots.length === 0) {
             return;
         }
 
@@ -112,26 +112,18 @@ export default class SimpleCarousel extends Component {
             .querySelector(`.${this.dotSelector}.${this.dotCurrentModifier}`)
             .classList
             .remove(this.dotCurrentModifier);
-        
+
         this
             .dots[this.viewCurrentIndex]
             .classList
             .add(this.dotCurrentModifier);
     }
 
-    set slidesToShow(value: number) {
-        this.setAttributeSafe('slides-to-show', `${value}`);
-    }
-
     get slidesToShow(): number {
-        return parseInt(this.getAttributeSafe('slides-to-show' || '0'));
-    }
-
-    set slidesToScroll(value: number) {
-        this.setAttributeSafe('slides-to-scroll', `${value}`);
+        return parseInt(this.getAttribute('slides-to-show') || '0');
     }
 
     get slidesToScroll(): number {
-        return parseInt(this.getAttributeSafe('slides-to-scroll' || '0'));
+        return parseInt(this.getAttribute('slides-to-scroll') || '0');
     }
 }

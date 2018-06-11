@@ -11,7 +11,7 @@
 } %}
 
 {% set options = [] %}
-{% set brand = data.product.attributes.brand | default(null) %}
+{% set brand = data.product.attributes.brand | default %}
 {% set sku = data.product.sku %}
 {% set availabilityWidget = '' %}
 {% set disabled = data.product.idProductConcrete is empty or data.product.price is empty %}
@@ -35,9 +35,10 @@
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
     <hr />
-
     {{ widget('PriceWidgetPlugin', data.product) }}
-    {# {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }} #}
+    {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
+    {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
+
     {% embed molecule('variant-configurator', 'ProductDetailPage') with {
         data: {
             superAttributes: data.product.attributeMap.superAttributes,
@@ -47,10 +48,8 @@
     } only %}
         {% block body %}<hr />{{parent()}}{% endblock %}
     {% endembed %}
-    {# {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }} #}
 
     <hr />
-
     <form method="POST" action="/cart/add/{{sku}}">
         {{ widget('ProductOptionWidgetPlugin', data.product) }}
 

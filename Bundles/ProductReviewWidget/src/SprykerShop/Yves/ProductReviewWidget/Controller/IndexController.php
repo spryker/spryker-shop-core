@@ -28,7 +28,7 @@ class IndexController extends AbstractController
     {
         $viewData = $this->executeIndexAction($request);
 
-        return $this->view($viewData);
+        return $this->view($viewData, [], '@ProductReviewWidget/views/review-overview/review-overview.twig');
     }
 
     /**

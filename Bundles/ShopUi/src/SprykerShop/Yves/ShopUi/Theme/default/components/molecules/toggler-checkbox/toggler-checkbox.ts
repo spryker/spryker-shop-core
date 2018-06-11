@@ -4,9 +4,9 @@ export default class TogglerCheckbox extends Component {
     readonly trigger: HTMLInputElement
     readonly targets: HTMLElement[]
 
-    constructor() { 
+    constructor() {
         super();
-        this.trigger = <HTMLInputElement>this.querySelector(`.${this.componentSelector}__trigger`);
+        this.trigger = <HTMLInputElement>this.querySelector(`.${this.jsName}__trigger`);
         this.targets = <HTMLElement[]>Array.from(document.getElementsByClassName(this.target));
     }
 
@@ -20,22 +20,22 @@ export default class TogglerCheckbox extends Component {
         this.trigger.addEventListener('change', (event: Event) => this.onTriggerClick(event));
     }
 
-    onTriggerClick(event: Event): void { 
+    onTriggerClick(event: Event): void {
         event.preventDefault();
         this.toggle();
         this.fireToggleEvent();
     }
 
-    toggle(addClass: boolean = this.addClass): void { 
+    toggle(addClass: boolean = this.addClass): void {
         this.targets.forEach((element: HTMLElement) => element.classList.toggle(this.classToToggle, addClass));
     }
 
-    fireToggleEvent() { 
+    fireToggleEvent() {
         const event = new CustomEvent('toggle');
         this.dispatchEvent(event);
     }
 
-    get addClass(): boolean { 
+    get addClass(): boolean {
         return this.addClassWhenChecked ? this.trigger.checked : !this.trigger.checked;
     }
 
