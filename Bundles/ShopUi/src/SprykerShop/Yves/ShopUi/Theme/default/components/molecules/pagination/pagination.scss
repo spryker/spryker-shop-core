@@ -20,5 +20,7 @@
                 color: $setting-color-dark;
             }
         }
+
+        @content;
     }
 }
