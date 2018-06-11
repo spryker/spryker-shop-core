@@ -6,10 +6,8 @@
 
 {%- define config = {
     name: required,
-    jsName: '',
-    tag: 'div',
-    renderClass: true,
-    renderAttributes: true
+    jsName: 'js-' ~ config.name,
+    tag: 'div'
 } -%}
 
 {%- define data = {} -%}
@@ -20,20 +18,31 @@
 {%- define modifiers = [] -%}
 {%- define attributes = {} -%}
 
-{% block component %}
-    {%- set config = config | merge({
-        jsName: config.jsName is empty ? ('js-' ~ config.name) : config.jsName
-    }) -%}
+{% macro renderClass(name, modifiers, extra) %}
+    {{-name | trim-}}
+    {%- for modifier in modifiers -%}{%- if modifier | trim is not empty %} {{name}}--{{modifier | trim}}{% endif -%}{% endfor -%}
+    {%- if extra %} {{extra-}}{% endif -%}
+{%- endmacro -%}
 
+{% macro renderAttributes(attributes) %}
+    {%- for name, value in attributes -%}
+        {%- if value is sameas(true) -%}
+            {{-' ' ~ name-}}
+        {%- elseif value is not sameas(false) -%}
+            {{-' ' ~ name-}}='{{-value-}}'
+        {%- endif -%}
+    {%- endfor -%}
+{%- endmacro -%}
+
+{% import _self as component %}
+
+{% block component %}
     <{{-config.tag}} class="
         {%- if config.name == config.tag and '-' in config.tag -%}custom-element {% endif -%}
-        {%- if config.renderClass -%}
-            {%- block class -%}
-                {{config.name | trim-}}
-                {%- for modifier in modifiers -%}{%- if modifier | trim is not empty %} {{config.name}}--{{modifier | trim}}{% endif -%}{% endfor -%}
-                {%- if class %} {{class-}}{% endif -%}
-            {%- endblock -%}
-        {%- endif -%}"
+
+        {%- block class -%}
+            {{- component.renderClass(config.name, modifiers, class) -}}
+        {%- endblock -%}"
 
         {{qa(
             'component',
@@ -43,19 +52,9 @@
             qa
         )}}
 
-        {% if config.renderAttributes -%}
-            {%- block attributes -%}
-                {%- for name, value in attributes -%}
-                    {%- if value is sameas(true) -%}
-                        {{-' ' ~ name-}}
-                    {%- elseif value is not sameas(false) -%}
-                        {{-' ' ~ name-}}='{{-value-}}'
-                    {%- endif -%}
-                {%- endfor -%}
-            {%- endblock -%}
-        {%- endif -%}
-
-        {%- block extraAttributes -%}{%- endblock -%}>
+        {%- block attributes -%}
+            {{- component.renderAttributes(attributes) -}}
+        {%- endblock -%}>
             {%- block body -%}{%- endblock -%}
     </{{-config.tag-}}>
 {% endblock -%}
