@@ -5,7 +5,9 @@
   "require": {
     "php": ">=7.1",
     "spryker-shop/customer-page": "^0.4.1",
-    "spryker-shop/shop-ui": "^0.6.1"
+    "spryker-shop/shop-ui": "^0.6.1",
+    "spryker/business-on-behalf": "^1.0.0",
+    "spryker/customer": "^7.9.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
