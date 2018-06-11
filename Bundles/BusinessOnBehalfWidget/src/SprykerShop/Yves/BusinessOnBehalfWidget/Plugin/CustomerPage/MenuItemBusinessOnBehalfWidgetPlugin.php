@@ -56,7 +56,7 @@ class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implemen
     {
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if (!$customer) {
+        if (!$customer || !$customer->getIsOnBehalf()) {
             return false;
         }
 
