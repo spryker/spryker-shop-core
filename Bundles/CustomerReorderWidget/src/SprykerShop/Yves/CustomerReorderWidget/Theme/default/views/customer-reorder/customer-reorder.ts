@@ -10,22 +10,22 @@ export default class CustomerReorder extends Component {
         this.trigger = <HTMLElement>this.querySelector(`.${this.jsName}__trigger`);
     }
 
-    readyCallback() {
+    protected readyCallback(): void {
         this.mapEvents();
     }
 
-    mapEvents() {
+    protected mapEvents(): void {
         this.selections.forEach((selection: HTMLInputElement) =>
             selection.addEventListener('change', (event: Event) => this.onSelectionChange(event))
         );
     }
 
-    onSelectionChange(event: Event) {
+    protected onSelectionChange(event: Event): void {
         const enable = this.selections.some((selection: HTMLInputElement) => selection.checked);
         this.enableTrigger(enable);
     }
 
-    enableTrigger(enable: boolean) {
+    enableTrigger(enable: boolean): void {
         if (enable) {
             this.trigger.removeAttribute('disabled');
             return;

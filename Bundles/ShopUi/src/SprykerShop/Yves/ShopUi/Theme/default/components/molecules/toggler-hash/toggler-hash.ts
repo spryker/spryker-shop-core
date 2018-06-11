@@ -8,20 +8,20 @@ export default class TogglerHash extends Component {
         this.targets = <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
     }
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         this.checkHash();
         this.mapEvents();
     }
 
-    mapEvents(): void {
+    protected mapEvents(): void {
         window.addEventListener('hashchange', (event: Event) => this.onHashChange(event));
     }
 
-    onHashChange(event: Event): void {
+    protected onHashChange(event: Event): void {
         this.checkHash();
     }
 
-    checkHash() {
+    checkHash(): void {
         if (this.triggerHash === this.hash) {
             this.toggle(this.addClassWhenHashInUrl);
             return;

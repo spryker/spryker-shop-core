@@ -23,5 +23,5 @@ export default abstract class Component extends HTMLElement {
         });
     }
 
-    abstract readyCallback(): void
+    protected abstract readyCallback(): void
 }

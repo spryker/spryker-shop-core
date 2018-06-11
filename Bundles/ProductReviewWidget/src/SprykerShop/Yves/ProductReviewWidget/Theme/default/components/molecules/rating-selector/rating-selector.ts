@@ -4,7 +4,7 @@ export default class RatingSelector extends Component {
     input: HTMLInputElement
     steps: HTMLElement[]
 
-    readyCallback() {
+    protected readyCallback(): void {
         this.input = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
         this.steps = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__step`));
 
@@ -14,11 +14,11 @@ export default class RatingSelector extends Component {
         }
     }
 
-    mapEvents() {
+    protected mapEvents(): void {
         this.steps.forEach((step: HTMLElement) => step.addEventListener('click', (event: Event) => this.onStepClick(event)));
     }
 
-    onStepClick(event: Event) {
+    protected onStepClick(event: Event): void {
         event.preventDefault();
 
         const step = <HTMLElement>event.currentTarget;

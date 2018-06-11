@@ -10,17 +10,17 @@ export default class TogglerCheckbox extends Component {
         this.targets = <HTMLElement[]>Array.from(document.getElementsByClassName(this.target));
     }
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         this.toggle();
         this.fireToggleEvent();
         this.mapEvents();
     }
 
-    mapEvents(): void {
+    protected mapEvents(): void {
         this.trigger.addEventListener('change', (event: Event) => this.onTriggerClick(event));
     }
 
-    onTriggerClick(event: Event): void {
+    protected onTriggerClick(event: Event): void {
         event.preventDefault();
         this.toggle();
         this.fireToggleEvent();
@@ -30,7 +30,7 @@ export default class TogglerCheckbox extends Component {
         this.targets.forEach((element: HTMLElement) => element.classList.toggle(this.classToToggle, addClass));
     }
 
-    fireToggleEvent() {
+    fireToggleEvent(): void {
         const event = new CustomEvent('toggle');
         this.dispatchEvent(event);
     }

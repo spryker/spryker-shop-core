@@ -10,15 +10,15 @@ export default class TogglerClick extends Component {
         this.targets = <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
     }
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         this.mapEvents();
     }
 
-    mapEvents(): void {
+    protected mapEvents(): void {
         this.triggers.forEach((trigger: HTMLElement) => trigger.addEventListener('click', (event: Event) => this.onTriggerClick(event)));
     }
 
-    onTriggerClick(event: Event): void {
+    protected onTriggerClick(event: Event): void {
         event.preventDefault();
         this.toggle();
     }

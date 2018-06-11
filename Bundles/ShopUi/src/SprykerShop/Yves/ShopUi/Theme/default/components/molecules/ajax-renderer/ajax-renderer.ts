@@ -5,13 +5,13 @@ export default class AjaxRenderer extends Component {
     protected provider: AjaxProvider
     protected target: HTMLElement
 
-    readyCallback() {
+    protected readyCallback(): void {
         this.provider = <AjaxProvider>document.querySelector(this.providerSelector);
         this.target = !!this.targetSelector ? <HTMLElement>document.querySelector(this.targetSelector) : null;
         this.mapEvents();
     }
 
-    protected mapEvents() {
+    protected mapEvents(): void {
         this.provider.addEventListener('fetched', (event: Event) => this.onFetched(event));
     }
 

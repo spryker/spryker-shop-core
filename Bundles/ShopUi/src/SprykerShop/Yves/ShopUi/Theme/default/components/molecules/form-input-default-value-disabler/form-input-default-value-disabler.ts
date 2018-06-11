@@ -4,18 +4,18 @@ export default class FormInputDefaultValueDisabler extends Component {
     forms: HTMLFormElement[]
     inputs: HTMLInputElement[]
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         this.forms = <HTMLFormElement[]>Array.from(document.querySelectorAll(this.formSelector));
         this.mapEvents();
     }
 
-    mapEvents(): void {
+    protected mapEvents(): void {
         this.forms.forEach((form: HTMLElement) => {
             form.addEventListener('submit', (event: Event) => this.onFormSubmit(event));
         });
     }
 
-    onFormSubmit(event: Event): void {
+    protected onFormSubmit(event: Event): void {
         event.preventDefault();
         const form = <HTMLFormElement>event.currentTarget;
         this.disableInputsWithDefaultValues(form);

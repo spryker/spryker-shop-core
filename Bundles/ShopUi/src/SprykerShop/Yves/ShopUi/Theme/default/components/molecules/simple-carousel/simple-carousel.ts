@@ -20,7 +20,7 @@ export default class SimpleCarousel extends Component {
         this.dotCurrentModifier = `${this.name}__dot--current`;
     }
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         this.slidesCount = this.getElementsByClassName(`${this.jsName}__slide`).length;
 
         if (this.slidesCount <= 1) {
@@ -41,27 +41,27 @@ export default class SimpleCarousel extends Component {
         return Math.ceil((this.slidesCount - this.slidesToShow) / this.slidesToScroll) + 1;
     }
 
-    mapEvents(): void {
+    protected mapEvents(): void {
         this.triggerPrev.addEventListener('click', (event: Event) => this.onPrevClick(event));
         this.triggerNext.addEventListener('click', (event: Event) => this.onNextClick(event));
-        this.dots.forEach((dot: HTMLElement) => dot.addEventListener('click', (event: Event) => this.ondotClick(event)));
+        this.dots.forEach((dot: HTMLElement) => dot.addEventListener('click', (event: Event) => this.onDotClick(event)));
     }
 
-    onPrevClick(event: Event): void {
+    protected onPrevClick(event: Event): void {
         event.preventDefault();
         this.loadPrevViewIndex();
         this.slide();
         this.updateCurrentDot();
     }
 
-    onNextClick(event: Event): void {
+    protected onNextClick(event: Event): void {
         event.preventDefault();
         this.loadNextViewIndex();
         this.slide();
         this.updateCurrentDot();
     }
 
-    ondotClick(event: Event): void {
+    protected onDotClick(event: Event): void {
         event.preventDefault();
         this.loadViewIndexFromDot(<HTMLElement>event.srcElement)
         this.slide();
