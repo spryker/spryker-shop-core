@@ -6,7 +6,8 @@
 
 {% block body %}
     {% include molecule('product-card') with {
-        class: 'col',
+        class: 'col col--sm-12',
+        modifiers: ['stretch'],
         data: {
             name: data.product.name,
             abstractId: data.product.idProductAbstract,
