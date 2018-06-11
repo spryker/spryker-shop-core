@@ -123,8 +123,6 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getFilterControllerEventSubscriberPlugins()
     {
-        return [
-            new CompanyUserRestrictionHandlerPlugin(),
-        ];
+        return [];
     }
 }

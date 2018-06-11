@@ -106,7 +106,7 @@ class CompanyPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Client\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface
      */
-    public function getMessenger(): CompanyPageToMessengerClientInterface
+    public function getMessengerClient(): CompanyPageToMessengerClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_MESSENGER);
     }
@@ -117,7 +117,7 @@ class CompanyPageFactory extends AbstractFactory
     public function createCompanyUserSaver(): CompanyUserSaverInterface
     {
         return new CompanyUserSaver(
-            $this->getMessenger(),
+            $this->getMessengerClient(),
             $this->getCustomerClient(),
             $this->getBusinessOnBehalfClient()
         );

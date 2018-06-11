@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -23,6 +24,24 @@ abstract class AbstractCompanyController extends AbstractController
     public const COMPANY_APPROVED_STATUS = 'approved';
     public const PARAM_PAGE = 'page';
     public const DEFAULT_PAGE = 1;
+
+    /**
+     * @deprecated Behaviour is implemented and enhanced by CompanyUserRestrictionHandlerPlugin
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+       parent::initialize();
+
+       $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+       if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+           throw new NotFoundHttpException("Regular customers are not allowed to operate on company pages");
+       }
+    }
 
     /**
      * @return bool
