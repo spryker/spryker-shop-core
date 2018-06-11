@@ -10,17 +10,17 @@ export default class QuickOrderForm extends Component {
     removeRowAjaxProvider: AjaxProvider
 
     async readyCallback() {
-        this.form = <HTMLFormElement>this.querySelector(`.${this.componentSelector}__form`);
-        this.fieldList = <HTMLElement>this.querySelector(`.${this.componentSelector}__list`);
-        this.addRowTrigger = <HTMLElement>this.querySelector(`.${this.componentSelector}__add-row-trigger`);
-        this.addRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.componentSelector}__add-row-provider`);
-        this.removeRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.componentSelector}__remove-row-provider`);
+        this.form = <HTMLFormElement>this.querySelector(`.${this.jsName}__form`);
+        this.fieldList = <HTMLElement>this.querySelector(`.${this.jsName}__list`);
+        this.addRowTrigger = <HTMLElement>this.querySelector(`.${this.jsName}__add-row-trigger`);
+        this.addRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__add-row-provider`);
+        this.removeRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__remove-row-provider`);
         this.registerRemoveRowTriggers();
         this.mapEvents();
     }
 
     registerRemoveRowTriggers() {
-        this.removeRowTriggers = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.componentSelector}__remove-row-trigger`));
+        this.removeRowTriggers = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__remove-row-trigger`));
     }
 
     mapEvents() {

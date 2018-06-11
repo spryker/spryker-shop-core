@@ -11,7 +11,7 @@
 } %}
 
 {% set options = [] %}
-{% set brand = data.product.attributes.brand | default(null) %}
+{% set brand = data.product.attributes.brand | default %}
 {% set sku = data.product.sku %}
 {% set availabilityWidget = '' %}
 {% set disabled = data.product.idProductConcrete is empty or data.product.price is empty %}

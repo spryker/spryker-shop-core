@@ -46,7 +46,7 @@
                             {{config.name}}__step
                             {{config.name}}__step--half
                             {{isActive ? config.name ~ '__step--active' : ''}}
-                            {% if not attributes.readonly %}{{config.selector}}__step{% endif %}">
+                            {% if not attributes.readonly %}{{config.jsName}}__step{% endif %}">
 
                         {% include atom('icon') with {
                             class: config.name ~ '__star ' ~ config.name ~ '__star--half-right',
@@ -67,7 +67,7 @@
                             {{config.name}}__step
                             {{config.name}}__step--half
                             {{isActive ? config.name ~ '__step--active' : ''}}
-                            {% if not attributes.readonly %}{{config.selector}}__step{% endif %}">
+                            {% if not attributes.readonly %}{{config.jsName}}__step{% endif %}">
 
                         {% include atom('icon') with {
                             class: config.name ~ '__star ' ~ config.name ~ '__star--half-left',
@@ -83,7 +83,7 @@
                             {{config.name}}__step
                             {{config.name}}__step--full
                             {{isActive ? config.name ~ '__step--active' : ''}}
-                            {% if not attributes.readonly %}{{config.selector}}__step{% endif %}">
+                            {% if not attributes.readonly %}{{config.jsName}}__step{% endif %}">
 
                         {% include atom('icon') with {
                             class: config.name ~ '__star',
@@ -101,7 +101,7 @@
         {% block input %}
             <input
                 type="hidden"
-                class="{{config.selector}}__input"
+                class="{{config.jsName}}__input"
                 {% if data.inputId is not empty %}id="{{data.inputId}}"{% endif %}
                 name="{{data.inputName}}"
                 value="{{data.value}}"

@@ -27,7 +27,7 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     initJson() {
-        let jsonSchemaContainer = document.getElementsByClassName(this.componentName + '__json')[0];
+        let jsonSchemaContainer = document.getElementsByClassName(this.name + '__json')[0];
         if (jsonSchemaContainer.hasAttribute('json')) {
             let jsonString = jsonSchemaContainer.getAttribute('json');
             let jsonData = JSON.parse(jsonString);

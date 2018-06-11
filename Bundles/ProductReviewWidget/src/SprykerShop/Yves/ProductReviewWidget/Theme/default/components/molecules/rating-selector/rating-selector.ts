@@ -5,8 +5,8 @@ export default class RatingSelector extends Component {
     steps: HTMLElement[]
 
     readyCallback() {
-        this.input = <HTMLInputElement>this.querySelector(`.${this.componentSelector}__input`);
-        this.steps = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.componentSelector}__step`));
+        this.input = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
+        this.steps = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__step`));
 
         if (!this.readOnly) {
             this.checkInput(this.value);
@@ -48,11 +48,11 @@ export default class RatingSelector extends Component {
             const stepValue = parseFloat(step.getAttribute('data-step-value'));
 
             if (value >= stepValue) {
-                step.classList.add(`${this.componentName}__step--active`);
+                step.classList.add(`${this.name}__step--active`);
                 return;
             }
 
-            step.classList.remove(`${this.componentName}__step--active`);
+            step.classList.remove(`${this.name}__step--active`);
         });
     }
 

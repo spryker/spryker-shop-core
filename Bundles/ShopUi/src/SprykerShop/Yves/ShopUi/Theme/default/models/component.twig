@@ -6,8 +6,8 @@
 
 {%- define config = {
     name: required,
+    jsName: '',
     tag: 'div',
-    selector: '',
     renderClass: true,
     renderAttributes: true
 } -%}
@@ -22,14 +22,14 @@
 
 {% block component %}
     {%- set config = config | merge({
-        selector: config.selector is empty ? ('js-' ~ config.name) : config.selector
+        jsName: config.jsName is empty ? ('js-' ~ config.name) : config.jsName
     }) -%}
 
     <{{-config.tag}} class="
         {%- if config.name == config.tag and '-' in config.tag -%}custom-element {% endif -%}
         {%- if config.renderClass -%}
             {%- block class -%}
-                {{config.name | trim-}} 
+                {{config.name | trim-}}
                 {%- for modifier in modifiers -%}{%- if modifier | trim is not empty %} {{config.name}}--{{modifier | trim}}{% endif -%}{% endfor -%}
                 {%- if class %} {{class-}}{% endif -%}
             {%- endblock -%}
@@ -37,9 +37,9 @@
 
         {{qa(
             'component',
-            config.name, 
+            config.name,
             attributes.name | default,
-            attributes.id | default, 
+            attributes.id | default,
             qa
         )}}
 
@@ -54,7 +54,7 @@
                 {%- endfor -%}
             {%- endblock -%}
         {%- endif -%}
-        
+
         {%- block extraAttributes -%}{%- endblock -%}>
             {%- block body -%}{%- endblock -%}
     </{{-config.tag-}}>
