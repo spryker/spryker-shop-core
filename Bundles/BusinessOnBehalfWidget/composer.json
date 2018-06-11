@@ -3,15 +3,16 @@
   "description": "BusinessOnBehalfWidget module",
   "license": "proprietary",
   "require": {
-    "spryker/business-on-behalf": "1.0.0",
+    "php": ">=7.1",
+    "spryker/business-on-behalf": "^1.0.0",
     "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
     "spryker-shop/customer-page": "*",
-    "spryker-shop/shop-layout": "*"
+    "spryker-shop/shop-layout": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "To add item to customer page menu.",
