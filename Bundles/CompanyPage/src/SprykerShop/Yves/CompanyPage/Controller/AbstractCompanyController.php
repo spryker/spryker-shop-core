@@ -48,18 +48,18 @@ abstract class AbstractCompanyController extends AbstractController
      */
     protected function isCompanyActive(): bool
     {
-        $companyUser = $this->getCompanyUser();
+       $companyUser = $this->getCompanyUser();
+       
+       if ($companyUser === null) {
+           return false;
+       }
 
-        if ($companyUser === null) {
-            return false;
-        }
+       $companyTransfer = (new CompanyTransfer())->setIdCompany($companyUser->getFkCompany());
+       $companyTransfer = $this->getFactory()
+           ->getCompanyClient()
+           ->getCompanyById($companyTransfer);
 
-        $companyTransfer = (new CompanyTransfer())->setIdCompany($companyUser->getFkCompany());
-        $companyTransfer = $this->getFactory()
-            ->getCompanyClient()
-            ->getCompanyById($companyTransfer);
-
-        return ($companyTransfer->getIsActive() === true && $companyTransfer->getStatus() === static::COMPANY_APPROVED_STATUS);
+       return ($companyTransfer->getIsActive() === true && $companyTransfer->getStatus() === static::COMPANY_APPROVED_STATUS);
     }
 
     /**
