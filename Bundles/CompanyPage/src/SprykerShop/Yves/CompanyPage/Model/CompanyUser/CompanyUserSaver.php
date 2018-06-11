@@ -117,6 +117,8 @@ class CompanyUserSaver implements CompanyUserSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
+     *
+     * @return void
      */
     protected function updateCustomerInSession(CustomerTransfer $customerTransfer, ?CompanyUserTransfer $companyUserTransfer): void
     {

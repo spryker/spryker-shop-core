@@ -3,10 +3,19 @@
   "description": "BusinessOnBehalfWidget module",
   "license": "proprietary",
   "require": {
+    "spryker/business-on-behalf": "1.0.0",
+    "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker-shop/customer-page": "*",
+    "spryker-shop/shop-layout": "*"
+  },
+  "suggest": {
+    "spryker-shop/customer-page": "To add item to customer page menu.",
+    "spryker-shop/shop-layout": "In order to display top navigation menu item."
   },
   "autoload": {
     "psr-4": {
