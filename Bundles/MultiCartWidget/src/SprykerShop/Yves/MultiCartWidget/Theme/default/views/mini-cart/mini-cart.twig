@@ -13,7 +13,12 @@
     {% if data.isMultiCartAllowed is not empty %}
         <ul class="menu">
             <li class="menu__item menu__item--has-children-dropdown">
-                <a href="{{ url('cart') }}">{{cartAmount}} {{ cartAmount == 1 ? 'multi_cart_widget.cart.cart' | trans : 'multi_cart_widget.cart.carts' | trans }}</a>
+                {% include molecule('cart-items-counter') with {
+                    data: {
+                        label: (cartAmount == 1 ? 'multi_cart_widget.cart.cart' : 'multi_cart_widget.cart.carts') | trans,
+                        quantity: cartAmount
+                    }
+                } only %}
 
                 <ul class="menu">
                     {% if data.activeCart is not empty %}
@@ -46,6 +51,10 @@
             </li>
         </ul>
     {% else %}
-        <a href="{{ url('cart') }}">{{ data.cartQuantity }}{{ 'global.cart' | trans }}</a>
+        {% include molecule('cart-items-counter') with {
+            data: {
+                quantity: data.cartQuantity
+            }
+        } only %}
     {% endif %}
 {% endblock %}
