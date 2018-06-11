@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CompanyPage\Plugin\ShopApplication;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CompanyPage\Controller\AbstractCompanyController;
-use SprykerShop\Yves\ShopApplication\Dependency\Plugin\FilterControllerEventHandlerPluginInterface;
+use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 

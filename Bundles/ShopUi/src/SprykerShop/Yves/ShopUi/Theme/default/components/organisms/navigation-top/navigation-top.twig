@@ -31,8 +31,8 @@
             ) }}
         </li>
         <li class="menu__item">
-            {% if widgetGlobalExists('DisplayOnBehalfBusinessWidget') %}
-                {{ widgetGlobal('DisplayOnBehalfBusinessWidget') }}
+            {% if widgetGlobalExists('DisplayOnBehalfBusinessWidgetPlugin') %}
+                {{ widgetGlobal('DisplayOnBehalfBusinessWidgetPlugin') }}
             {% endif %}
         </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}

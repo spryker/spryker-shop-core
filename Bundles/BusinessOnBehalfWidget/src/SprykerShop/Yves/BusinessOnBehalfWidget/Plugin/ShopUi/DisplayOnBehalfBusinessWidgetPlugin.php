@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\BusinessOnBehalfWidget\Plugin\ShopLayout;
+namespace SprykerShop\Yves\BusinessOnBehalfWidget\Plugin\ShopUi;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShopLayout\Dependency\Plugin\DisplayOnBehalfBusinessWidget\DisplayOnBehalfBusinessWidgetPluginInterface;
+use SprykerShop\Yves\ShopUi\Dependency\Plugin\BusinessOnBehalfWidget\DisplayOnBehalfBusinessWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\BusinessOnBehalfWidget\BusinessOnBehalfWidgetFactory getFactory()

@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShopLayout\Dependency\Plugin\DisplayOnBehalfBusinessWidget;
+namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\BusinessOnBehalfWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface DisplayOnBehalfBusinessWidgetPluginInterface extends WidgetPluginInterface
 {
-    public const NAME = 'DisplayOnBehalfBusinessWidget';
+    public const NAME = 'DisplayOnBehalfBusinessWidgetPlugin';
 
     /**
      * @return void

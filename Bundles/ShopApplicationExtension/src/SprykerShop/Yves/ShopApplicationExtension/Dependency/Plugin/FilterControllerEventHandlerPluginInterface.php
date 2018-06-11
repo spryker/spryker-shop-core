@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShopApplication\Dependency\Plugin;
+namespace SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 

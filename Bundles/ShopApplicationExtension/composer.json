@@ -1,0 +1,30 @@
+{
+  "name": "spryker-shop/shop-application-extension",
+  "description": "ShopApplicationExtension module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/kernel": "^3.16.0"
+  },
+  "require-dev": {
+    "spryker/silex": "*"
+  },
+  "suggest": {
+    "spryker/silex": ""
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

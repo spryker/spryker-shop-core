@@ -11,6 +11,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
+use SprykerShop\Yves\CompanyPage\Plugin\ShopApplication\CompanyUserRestrictionHandlerPlugin;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceBridge;
 
 class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
@@ -118,10 +119,12 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplication\Dependency\Plugin\FilterControllerEventHandlerPluginInterface[]
+     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface[]
      */
     protected function getFilterControllerEventSubscriberPlugins()
     {
-        return [];
+        return [
+            new CompanyUserRestrictionHandlerPlugin(),
+        ];
     }
 }
