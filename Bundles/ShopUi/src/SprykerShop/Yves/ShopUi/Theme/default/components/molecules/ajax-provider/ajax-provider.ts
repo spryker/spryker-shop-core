@@ -7,18 +7,18 @@ export default class AjaxProvider extends Component {
     protected isFetchingRequest: boolean = false
     readonly xhr: XMLHttpRequest
 
-    constructor() { 
+    constructor() {
         super();
         this.xhr = new XMLHttpRequest();
     }
 
     readyCallback() {
-        if (this.fetchOnLoad) { 
+        if (this.fetchOnLoad) {
             this.fetch();
         }
     }
 
-    async fetch<T = string>(data?: any): Promise<T> { 
+    async fetch<T = string>(data?: any): Promise<T> {
         this.logger.debug(this.method, this.url, 'fetching...');
         this.isFetchingRequest = true;
         this.fireEvent(EVENT_FETCHING);
@@ -38,7 +38,7 @@ export default class AjaxProvider extends Component {
         this.isFetchingRequest = false;
         this.fireEvent(EVENT_FETCHED);
 
-        if (this.xhr.status === 200) { 
+        if (this.xhr.status === 200) {
             return resolve(this.xhr.response);
         }
 
@@ -62,12 +62,12 @@ export default class AjaxProvider extends Component {
         reject(new Error(message));
     }
 
-    protected fireEvent(name: string): void { 
+    protected fireEvent(name: string): void {
         const event = new CustomEvent(name);
         this.dispatchEvent(event);
     }
 
-    get url(): string { 
+    get url(): string {
         return this.getAttribute('url');
     }
 
@@ -83,7 +83,7 @@ export default class AjaxProvider extends Component {
         return this.hasAttribute('fetch-on-load');
     }
 
-    get isFetching(): boolean { 
+    get isFetching(): boolean {
         return this.isFetchingRequest;
     }
 
