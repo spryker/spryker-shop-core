@@ -29,17 +29,27 @@ class BusinessUnitController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/business-unit/business-unit.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
+    {
         $businessUnitCollectionTransfer = $this->createBusinessUnitCriteriaFilterTransfer($request);
         $businessUnitCollectionTransfer = $this->getFactory()
             ->getCompanyBusinessUnitClient()
             ->getCompanyBusinessUnitCollection($businessUnitCollectionTransfer);
 
-        $data = [
+        return [
             'pagination' => $businessUnitCollectionTransfer->getPagination(),
             'businessUnitCollection' => $businessUnitCollectionTransfer->getCompanyBusinessUnits(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/business-unit/business-unit.twig');
     }
 
     /**
@@ -49,9 +59,9 @@ class BusinessUnitController extends AbstractCompanyController
      */
     public function detailsAction(Request $request)
     {
-        $data = $this->getCompanyBusinessUnitDetailsResponseData($request);
+        $viewData = $this->getCompanyBusinessUnitDetailsResponseData($request);
 
-        return $this->view($data, [], '@CompanyPage/views/business-unit-detail/business-unit-detail.twig');
+        return $this->view($viewData, [], '@CompanyPage/views/business-unit-detail/business-unit-detail.twig');
     }
 
     /**
@@ -60,6 +70,22 @@ class BusinessUnitController extends AbstractCompanyController
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
+    {
+        $response = $this->executeCreateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/business-unit-create/business-unit-create.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeCreateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -80,11 +106,9 @@ class BusinessUnitController extends AbstractCompanyController
             }
         }
 
-        $data = [
+        return [
             'form' => $companyBusinessUnitForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/business-unit-create/business-unit-create.twig');
     }
 
     /**
@@ -93,6 +117,22 @@ class BusinessUnitController extends AbstractCompanyController
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
+    {
+        $response = $this->executeUpdateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/business-unit-update/business-unit-update.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeUpdateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -119,11 +159,9 @@ class BusinessUnitController extends AbstractCompanyController
             }
         }
 
-        $data = [
+        return [
             'form' => $companyBusinessUnitForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/business-unit-update/business-unit-update.twig');
     }
 
     /**

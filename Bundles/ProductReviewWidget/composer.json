@@ -20,10 +20,10 @@
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker-shop/catalog-page": "TODO: add suggestion description",
-    "spryker-shop/product-detail-page": "TODO: add suggestion description",
-    "spryker-shop/product-widget": "TODO: add suggestion description",
-    "spryker/silex": "TODO: add suggestion description"
+    "spryker-shop/catalog-page": "Widget plugins are available for this module.",
+    "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
+    "spryker-shop/product-widget": "Widget plugins are available for this module.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

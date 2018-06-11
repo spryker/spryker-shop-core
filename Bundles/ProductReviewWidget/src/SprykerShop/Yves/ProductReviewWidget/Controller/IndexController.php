@@ -26,6 +26,18 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view($viewData, [], '@ProductReviewWidget/views/review-overview/review-overview.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
+    {
         $parentRequest = $this->getParentRequest();
         $idProductAbstract = $request->attributes->get('idProductAbstract');
 
@@ -39,15 +51,13 @@ class IndexController extends AbstractController
             ->getProductReviewClient()
             ->findProductReviewsInSearch($productReviewSearchRequestTransfer);
 
-        $data = [
+        return [
             'hasCustomer' => $hasCustomer,
             'productReviews' => $productReviews['productReviews'],
             'pagination' => $productReviews['pagination'],
             'summary' => $this->getFactory()->createProductReviewSummaryCalculator()->execute($productReviews['ratingAggregation']),
             'maximumRating' => $this->getFactory()->getProductReviewClient()->getMaximumRating(),
         ];
-
-        return $this->view($data, [], '@ProductReviewWidget/views/review-overview/review-overview.twig');
     }
 
     /**

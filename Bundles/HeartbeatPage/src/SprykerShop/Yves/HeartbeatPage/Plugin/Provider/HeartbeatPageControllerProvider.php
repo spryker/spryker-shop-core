@@ -21,9 +21,17 @@ class HeartbeatPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addHeartbeatRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addHeartbeatRoute(): self
+    {
         $this->createController('/{heartbeat}', self::ROUTE_HEARTBEAT, 'HeartbeatPage', 'Heartbeat', 'index')
-            ->assert('heartbeat', $allowedLocalesPattern . 'heartbeat|heartbeat');
+            ->assert('heartbeat', $this->getAllowedLocalesPattern() . 'heartbeat|heartbeat');
+
+        return $this;
     }
 }

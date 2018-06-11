@@ -37,11 +37,24 @@ class ShoppingListController extends AbstractShoppingListController
      * @param int $idShoppingList
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(int $idShoppingList, Request $request): View
+    {
+        $viewData = $this->executeIndexAction($idShoppingList, $request);
+
+        return $this->view($viewData, [], '@ShoppingListPage/views/shopping-list/shopping-list.twig');
+    }
+
+    /**
+     * @param int $idShoppingList
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return array
+     */
+    protected function executeIndexAction(int $idShoppingList, Request $request): array
     {
         $pageNumber = $this->getPageNumber($request);
         $itemsPerPage = $this->getItemsPerPage($request);
@@ -67,15 +80,13 @@ class ShoppingListController extends AbstractShoppingListController
 
         $addAvailableProductsToCartForm = $this->createAddAvailableProductsToCartForm($shoppingListOverviewResponseTransfer);
 
-        $data = [
+        return [
             'shoppingListItems' => $shoppingListItems,
             'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
             'currentPage' => $shoppingListOverviewResponseTransfer->getPagination()->getPage(),
             'totalPages' => $shoppingListOverviewResponseTransfer->getPagination()->getPagesTotal(),
             'addAvailableProductsToCartForm' => $addAvailableProductsToCartForm->createView(),
         ];
-
-        return $this->view($data, [], '@ShoppingListPage/views/shopping-list/shopping-list.twig');
     }
 
     /**

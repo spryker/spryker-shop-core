@@ -13,8 +13,8 @@
     "spryker/twig": "*"
   },
   "suggest": {
-    "spryker/silex": "TODO: add suggestion description",
-    "spryker/twig": "TODO: add suggestion description"
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+    "spryker/twig": "Use this module when using plugins that need Twig dependencies."
   },
   "autoload": {
     "psr-4": {

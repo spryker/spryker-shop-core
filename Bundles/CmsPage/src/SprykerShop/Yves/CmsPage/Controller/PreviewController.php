@@ -40,19 +40,9 @@ class PreviewController extends AbstractController
             ->getCmsTwigRendererPlugin()
             ->render($metaData['placeholders'], ['cmsContent' => $metaData]);
 
-        $data = [
-            'placeholders' => $metaData['placeholders'],
-            'pageTitle' => $metaData['meta_title'],
-            'pageDescription' => $metaData['meta_description'],
-            'pageKeywords' => $metaData['meta_keywords'],
-            'availablePreviewLanguages' => $this->getAvailablePreviewLanguages(
-                $this->getCurrentPreviewPageUri($idCmsPage),
-                $this->getFactory()->getStore()->getLocales(),
-                $this->getLocale()
-            ),
-        ];
+        $viewData = $this->executeIndexAction($idCmsPage, $metaData);
 
-        return $this->view($data, [], $metaData['template']);
+        return $this->view($viewData, [], $metaData['template']);
     }
 
     /**
@@ -101,6 +91,27 @@ class PreviewController extends AbstractController
         }
 
         return true;
+    }
+
+    /**
+     * @param int $idCmsPage
+     * @param array $metaData
+     *
+     * @return array
+     */
+    protected function executeIndexAction(int $idCmsPage, array $metaData): array
+    {
+        return [
+            'placeholders' => $metaData['placeholders'],
+            'pageTitle' => $metaData['meta_title'],
+            'pageDescription' => $metaData['meta_description'],
+            'pageKeywords' => $metaData['meta_keywords'],
+            'availablePreviewLanguages' => $this->getAvailablePreviewLanguages(
+                $this->getCurrentPreviewPageUri($idCmsPage),
+                $this->getFactory()->getStore()->getLocales(),
+                $this->getLocale()
+            ),
+        ];
     }
 
     /**

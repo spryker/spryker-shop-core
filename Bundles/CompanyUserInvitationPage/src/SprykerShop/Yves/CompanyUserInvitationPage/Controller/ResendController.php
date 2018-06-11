@@ -27,9 +27,21 @@ class ResendController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        return $this->view([
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view($viewData, [], '@CompanyUserInvitationPage/views/invitation-resend/invitation-resend.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
+    {
+        return [
             'idCompanyUserInvitation' => (int)$request->get(static::PARAM_ID_COMPANY_USER_INVITATION),
-        ], [], '@CompanyUserInvitationPage/views/invitation-resend/invitation-resend.twig');
+        ];
     }
 
     /**

@@ -12,8 +12,8 @@
     "spryker/symfony": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "TODO: add suggestion description",
-    "spryker/symfony": "TODO: add suggestion description"
+    "spryker-shop/cart-page": "Widget plugins are available for this module.",
+    "spryker/symfony": "Use this module when using plugins that need Symfony dependencies."
   },
   "autoload": {
     "psr-4": {

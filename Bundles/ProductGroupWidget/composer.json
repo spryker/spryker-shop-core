@@ -9,10 +9,10 @@
     "spryker/product-storage": "^0.1.0 || ^0.2.0 || ^1.0.0"
   },
   "require-dev": {
-    "spryker-shop/shop-layout": "*"
+    "spryker-shop/shop-ui": "*"
   },
   "suggest": {
-    "spryker-shop/shop-layout": "TODO: add suggestion description"
+    "spryker-shop/shop-ui": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {

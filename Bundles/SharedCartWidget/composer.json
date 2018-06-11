@@ -15,9 +15,9 @@
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker-shop/multi-cart-widget": "TODO: add suggestion description",
-    "spryker/shared-cart": "TODO: add suggestion description",
-    "spryker/silex": "TODO: add suggestion description",
+    "spryker-shop/multi-cart-widget": "Widget plugins are available for this module.",
+    "spryker/shared-cart": "Use this module when using plugins that need Cart dependencies.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker/permission": "If you want to use permissions plugins"
   },
   "autoload": {

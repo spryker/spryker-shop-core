@@ -14,7 +14,7 @@
     "spryker-shop/shop-router": "*"
   },
   "suggest": {
-    "spryker-shop/shop-router": "TODO: add suggestion description"
+    "spryker-shop/shop-router": "Resource creator plugin are available for this module."
   },
   "autoload": {
     "psr-4": {

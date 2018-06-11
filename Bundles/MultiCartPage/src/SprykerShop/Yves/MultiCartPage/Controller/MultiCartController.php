@@ -26,6 +26,22 @@ class MultiCartController extends AbstractController
      */
     public function createAction(Request $request)
     {
+        $response = $this->executeCreateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@MultiCartPage/views/multi-cart/cart-create.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeCreateAction(Request $request)
+    {
         $quoteForm = $this->getFactory()
             ->getQuoteForm()
             ->handleRequest($request);
@@ -42,11 +58,9 @@ class MultiCartController extends AbstractController
             }
         }
 
-        $data = [
+        return [
             'quoteForm' => $quoteForm->createView(),
         ];
-
-        return $this->view($data, [], '@MultiCartPage/views/multi-cart/cart-create.twig');
     }
 
     /**
@@ -56,6 +70,23 @@ class MultiCartController extends AbstractController
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(int $idQuote, Request $request)
+    {
+        $response = $this->executeUpdateAction($idQuote, $request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@MultiCartPage/views/multi-cart/cart-update.twig');
+    }
+
+    /**
+     * @param int $idQuote
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeUpdateAction(int $idQuote, Request $request)
     {
         $quoteForm = $this->getFactory()
             ->getQuoteForm($idQuote)
@@ -73,18 +104,16 @@ class MultiCartController extends AbstractController
             }
         }
 
-        $data = [
+        return [
             'cart' => $quoteTransfer,
             'quoteForm' => $quoteForm->createView(),
         ];
-
-        return $this->view($data, [], '@MultiCartPage/views/multi-cart/cart-update.twig');
     }
 
     /**
      * @param int $idQuote
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function setDefaultAction(int $idQuote)
     {
@@ -102,7 +131,7 @@ class MultiCartController extends AbstractController
     /**
      * @param int $idQuote
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function duplicateAction(int $idQuote)
     {
@@ -141,7 +170,7 @@ class MultiCartController extends AbstractController
     /**
      * @param int $idQuote
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(int $idQuote)
     {

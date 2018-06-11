@@ -24,11 +24,11 @@
     "spryker/twig": "*"
   },
   "suggest": {
-    "spryker/config": "TODO: add suggestion description",
-    "spryker-shop/home-page": "TODO: add suggestion description",
-    "spryker/messenger": "TODO: add suggestion description",
-    "spryker/silex": "TODO: add suggestion description",
-    "spryker/twig": "TODO: add suggestion description"
+    "spryker/config": "Use this module when using plugins that need Config dependencies.",
+    "spryker-shop/home-page": "Widget plugins are available for this module.",
+    "spryker/messenger": "Use this module when using plugins that need Messenger dependencies.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+    "spryker/twig": "Use this module when using plugins that need Twig dependencies."
   },
   "autoload": {
     "psr-4": {

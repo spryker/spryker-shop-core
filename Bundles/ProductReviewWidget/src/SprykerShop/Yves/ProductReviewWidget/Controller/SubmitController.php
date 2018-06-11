@@ -24,9 +24,21 @@ class SubmitController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(Request $request)
+    {
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view($viewData, [], '@ProductReviewWidget/views/review-create/review-create.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
     {
         $parentRequest = $this->getParentRequest();
         $idProductAbstract = $request->attributes->get('idProductAbstract');
@@ -42,13 +54,11 @@ class SubmitController extends AbstractController
             $productReviewForm = $this->getFactory()->createProductReviewForm($idProductAbstract);
         }
 
-        $data = [
+        return [
             'hideForm' => $isFormEmpty || $isReviewPosted,
             'form' => $productReviewForm->createView(),
             'showSuccess' => $isReviewPosted,
         ];
-
-        return $this->view($data, [], '@ProductReviewWidget/views/review-create/review-create.twig');
     }
 
     /**

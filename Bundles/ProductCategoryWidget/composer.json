@@ -11,7 +11,7 @@
     "spryker-shop/product-detail-page": "*"
   },
   "suggest": {
-    "spryker-shop/product-detail-page": "TODO: add suggestion description"
+    "spryker-shop/product-detail-page": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {

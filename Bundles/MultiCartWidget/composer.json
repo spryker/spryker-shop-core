@@ -16,11 +16,11 @@
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "TODO: add suggestion description",
-    "spryker-shop/product-detail-page": "TODO: add suggestion description",
-    "spryker-shop/shop-ui": "TODO: add suggestion description",
+    "spryker-shop/cart-page": "Widget plugins are available for this module.",
+    "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
+    "spryker-shop/shop-ui": "Widget plugins are available for this module.",
     "spryker-shop/quick-order-page": "If you want to use quick order page widget",
-    "spryker/silex": "TODO: add suggestion description",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker/permission": "If you want to use permissions plugins"
   },
   "autoload": {

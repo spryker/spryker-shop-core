@@ -23,9 +23,25 @@ class CartController extends AbstractController
     /**
      * @param array|null $selectedAttributes
      *
-     * @return array
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(?array $selectedAttributes = null)
+    {
+        $viewData = $this->executeIndexAction($selectedAttributes);
+        
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getCartPageWidgetPlugins(),
+            '@CartPage/views/cart/cart.twig'
+        );
+    }
+
+    /**
+     * @param array|null $selectedAttributes
+     *
+     * @return array
+     */
+    protected function executeIndexAction(?array $selectedAttributes): array
     {
         $validateQuoteResponseTransfer = $this->getFactory()
             ->getCartClient()
@@ -45,18 +61,12 @@ class CartController extends AbstractController
             ->createCartItemsAttributeProvider()
             ->getItemsAttributes($quoteTransfer, $this->getLocale(), $selectedAttributes);
 
-        $data = [
+        return [
             'cart' => $quoteTransfer,
             'cartItems' => $cartItems,
             'attributes' => $itemAttributesBySku,
             'isQuoteValid' => $validateQuoteResponseTransfer->getIsSuccessful(),
         ];
-
-        return $this->view(
-            $data,
-            $this->getFactory()->getCartPageWidgetPlugins(),
-            '@CartPage/views/cart/cart.twig'
-        );
     }
 
     /**
@@ -70,12 +80,16 @@ class CartController extends AbstractController
     public function addAction($sku, $quantity, array $optionValueIds, Request $request)
     {
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($sku);
-        $itemTransfer->setQuantity($quantity);
+        $itemTransfer
+            ->setSku($sku)
+            ->setQuantity($quantity);
+
         $this->addProductOptions($optionValueIds, $itemTransfer);
 
-        $this->getFactory()->getCartClient()
+        $this->getFactory()
+            ->getCartClient()
             ->addItem($itemTransfer, $request->request->all());
+
         $this->getFactory()
             ->getZedRequestClient()
             ->addFlashMessagesFromLastZedRequest();
@@ -91,8 +105,10 @@ class CartController extends AbstractController
      */
     public function removeAction($sku, $groupKey = null)
     {
-        $this->getFactory()->getCartClient()
+        $this->getFactory()
+            ->getCartClient()
             ->removeItem($sku, $groupKey);
+
         $this->getFactory()
             ->getZedRequestClient()
             ->addFlashMessagesFromLastZedRequest();
@@ -109,8 +125,10 @@ class CartController extends AbstractController
      */
     public function changeAction($sku, $quantity, $groupKey = null)
     {
-        $this->getFactory()->getCartClient()
+        $this->getFactory()
+            ->getCartClient()
             ->changeItemQuantity($sku, $groupKey, $quantity);
+
         $this->getFactory()
             ->getZedRequestClient()
             ->addFlashMessagesFromLastZedRequest();
@@ -128,8 +146,10 @@ class CartController extends AbstractController
         $items = (array)$request->request->get(self::PARAM_ITEMS);
         $itemTransfers = $this->mapItems($items);
 
-        $this->getFactory()->getCartClient()
+        $this->getFactory()
+            ->getCartClient()
             ->addItems($itemTransfers, $request->request->all());
+
         $this->getFactory()
             ->getZedRequestClient()
             ->addFlashMessagesFromLastZedRequest();
@@ -153,7 +173,8 @@ class CartController extends AbstractController
             ->getCartClient()
             ->getQuote();
 
-        $isItemReplacedInCart = $this->getFactory()->createCartItemsAttributeProvider()
+        $isItemReplacedInCart = $this->getFactory()
+            ->createCartItemsAttributeProvider()
             ->tryToReplaceItem(
                 $sku,
                 $quantity,
@@ -169,10 +190,12 @@ class CartController extends AbstractController
         }
 
         $this->addInfoMessage('cart.item_attributes_needed');
+
         return $this->redirectResponseInternal(
             CartControllerProvider::ROUTE_CART,
             $this->getFactory()
-                ->createCartItemsAttributeProvider()->formatUpdateActionResponse($sku, $selectedAttributes)
+                ->createCartItemsAttributeProvider()
+                ->formatUpdateActionResponse($sku, $selectedAttributes)
         );
     }
 
