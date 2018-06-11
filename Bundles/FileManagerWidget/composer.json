@@ -1,0 +1,33 @@
+{
+  "name": "spryker-shop/file-manager-widget",
+  "description": "FileManagerWidget module",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.16.0",
+    "spryker/file-manager-storage": "^0.1.0",
+    "spryker/file-manager": "^0.1.0"
+  },
+  "require-dev": {
+    "spryker/file-manager-storage": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    fileId: _widget.fileId
+} %}
+
+{% block body %}
+    <a href="{{ path('files/download', {'id-file': data.fileId}) }}">{{'file-manager.download' | trans }}</a>
+{% endblock %}
