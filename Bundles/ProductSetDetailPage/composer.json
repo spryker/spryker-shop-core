@@ -5,16 +5,15 @@
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-application": "^0.2.0 || ^0.3.0 || ^0.4.0",
+    "spryker-shop/shop-router-extension": "^1.8.0",
     "spryker/kernel": "^3.16.0",
     "spryker/product-set-storage": "^0.1.0 || ^0.2.0 || ^1.0.0",
     "spryker/product-storage": "^0.1.0 || ^0.2.0 || ^1.0.0"
   },
   "require-dev": {
-    "spryker-shop/shop-router": "*",
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker-shop/shop-router": "Resource creator plugin are available for this module.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
