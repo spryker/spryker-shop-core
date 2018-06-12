@@ -56,7 +56,7 @@
 
         {% block options %}
             {%- if attributes.placeholder is not none -%}
-                <option value=""{% if attributes.required and attributes.value is empty %} selected="selected"{% endif %}>
+                <option value=""{% if attributes.required and embed.value is empty %} selected="selected"{% endif %}>
                     {{ attributes.placeholder != '' ? (embed.translation_domain is same as(false) ? attributes.placeholder : attributes.placeholder|trans({}, embed.translation_domain)) }}
                 </option>
             {%- endif -%}
