@@ -4,8 +4,8 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.16.0",
-    "spryker/file-manager-storage": "dev-beta/core-2414-upload-files",
-    "spryker/file-manager": "dev-beta/core-2414-upload-files"
+    "spryker/file-manager-storage": "dev-beta/core-2414-upload-files-with-dev-dependencies",
+    "spryker/file-manager": "dev-beta/core-2414-upload-files-with-dev-dependencies"
   },
   "require-dev": {
     "spryker/file-manager-storage": "*"
