@@ -15,6 +15,7 @@
     "spryker/customer": "^7.4.0",
     "spryker/messenger": "^3.1.0",
     "spryker/kernel": "^3.16.0",
+    "spryker/messenger": "^3.1.0",
     "spryker/permission": "^1.0.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/shop-application-extension": "^0.1.0",

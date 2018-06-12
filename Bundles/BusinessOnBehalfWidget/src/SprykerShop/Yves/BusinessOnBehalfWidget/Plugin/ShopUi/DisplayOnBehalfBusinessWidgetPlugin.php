@@ -59,11 +59,11 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
     {
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if (!$customer) {
+        if (!$customer || !$customer->getIsOnBehalf()) {
             return false;
         }
 
-        return (bool)$customer->getIsOnBehalf();
+        return $customer->getIsOnBehalf();
     }
 
     /**
@@ -107,7 +107,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
     {
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if (!$customer) {
+        if (!$customer || !$customer->getIsOnBehalf()) {
             return false;
         }
 
