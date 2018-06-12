@@ -208,6 +208,35 @@ class ShoppingListController extends AbstractShoppingListController
     }
 
     /**
+     * @param int $idShoppingList
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function printShoppingListAction(int $idShoppingList): View
+    {
+        $shoppingListOverviewResponseTransfer = $this->getShoppingListOverviewResponseTransfer($idShoppingList);
+
+        if (!$shoppingListOverviewResponseTransfer->getShoppingList()->getIdShoppingList()) {
+            throw new NotFoundHttpException();
+        }
+
+        $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);
+
+        $data = [
+            'shoppingListItems' => $shoppingListItems,
+            'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
+        ];
+
+        return $this->view(
+            $data,
+            $this->getFactory()->getPrintShoppingListWidgetPlugins(),
+            '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
+        );
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return int
@@ -335,5 +364,26 @@ class ShoppingListController extends AbstractShoppingListController
         }
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @param int $idShoppingList
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
+     */
+    protected function getShoppingListOverviewResponseTransfer(int $idShoppingList): ShoppingListOverviewResponseTransfer
+    {
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setIdShoppingList($idShoppingList)
+            ->setRequesterId($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+
+        $shoppingListOverviewRequest = (new ShoppingListOverviewRequestTransfer())
+            ->setShoppingList($shoppingListTransfer);
+
+        $shoppingListOverviewResponseTransfer = $this->getFactory()
+            ->getShoppingListClient()
+            ->getShoppingListOverviewWithoutProductDetails($shoppingListOverviewRequest);
+
+        return $shoppingListOverviewResponseTransfer;
     }
 }
