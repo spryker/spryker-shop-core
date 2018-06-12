@@ -22,6 +22,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_ADD_ALL_AVAILABLE_TO_CART = 'shopping-list/add-all-available-to-cart';
     public const ROUTE_ADD_SHOPPING_LIST_TO_CART = 'shopping-list/add-shopping-list-to-cart';
     public const ROUTE_SHOPPING_LIST_SHARE = 'shopping-list/share';
+    public const ROUTE_SHOPPING_LIST_PRINT = 'shopping-list/print';
 
     /**
      * @param \Silex\Application $app
@@ -74,6 +75,11 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('idShoppingList', '\d+');
 
         $this->createController('/{shoppingList}/share/{idShoppingList}', static::ROUTE_SHOPPING_LIST_SHARE, 'ShoppingListPage', 'ShoppingListOverview', 'shareShoppingList')
+            ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
+            ->value('shoppingList', 'shopping-list')
+            ->assert('idShoppingList', '\d+');
+
+        $this->createController('/{shoppingList}/print/{idShoppingList}', static::ROUTE_SHOPPING_LIST_PRINT, 'ShoppingListPage', 'ShoppingList', 'printShoppingList')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idShoppingList', '\d+');
