@@ -138,6 +138,7 @@ class ShoppingListController extends AbstractShoppingListController
         }
 
         $this->addSuccessMessage('customer.account.shopping_list.item.added_to_cart');
+
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
             'idShoppingList' => $shoppingListItemTransfer->getFkShoppingList(),
         ]);
@@ -166,6 +167,7 @@ class ShoppingListController extends AbstractShoppingListController
         }
 
         $this->addSuccessMessage('customer.account.shopping_list.item.added_to_cart');
+
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
             'idShoppingList' => $request->get(static::PARAM_ID_SHOPPING_LIST),
         ]);
@@ -210,11 +212,27 @@ class ShoppingListController extends AbstractShoppingListController
     /**
      * @param int $idShoppingList
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return \Spryker\Yves\Kernel\View\View
      */
     public function printShoppingListAction(int $idShoppingList): View
+    {
+        $viewData = $this->executePrintShoppingListAction($idShoppingList);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getPrintShoppingListWidgetPlugins(),
+            '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
+        );
+    }
+
+    /**
+     * @param int $idShoppingList
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return array
+     */
+    protected function executePrintShoppingListAction(int $idShoppingList): array
     {
         $shoppingListOverviewResponseTransfer = $this->getShoppingListOverviewResponseTransfer($idShoppingList);
 
@@ -224,16 +242,10 @@ class ShoppingListController extends AbstractShoppingListController
 
         $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);
 
-        $data = [
+        return [
             'shoppingListItems' => $shoppingListItems,
             'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
         ];
-
-        return $this->view(
-            $data,
-            $this->getFactory()->getPrintShoppingListWidgetPlugins(),
-            '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
-        );
     }
 
     /**
