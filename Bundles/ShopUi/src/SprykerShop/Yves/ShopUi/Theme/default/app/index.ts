@@ -13,8 +13,19 @@ function fireErrorEvent(err: Error): void {
     document.dispatchEvent(errorEvent);
 }
 
-async function mount(): Promise<void[]> {
+export async function mount(): Promise<void[]> {
     return Promise.all(candidates().map((candidate: Candidate) => candidate.mount()));
+}
+
+async function onDOMContentLoaded(): Promise<void> {
+    try {
+        await mount();
+        fireReadyEvent();
+        log('application ready');
+    } catch (err) {
+        fireErrorEvent(err);
+        error('application failed\n', err);
+    }
 }
 
 export async function bootstrap(appConfig: Config = defaultConfig): Promise<void> {
@@ -23,14 +34,5 @@ export async function bootstrap(appConfig: Config = defaultConfig): Promise<void
 
     log('mode:', config().isProduction ? 'PRODUCTION,' : 'DEVELOPMENT,', 'log-level:', LogLevel[config().log.level]);
 
-    setTimeout(async () => {
-        try {
-            await mount();
-            fireReadyEvent();
-            log('application ready');
-        } catch (err) {
-            fireErrorEvent(err);
-            error('application failed\n', err);
-        }
-    });
+    document.addEventListener('DOMContentLoaded', () => onDOMContentLoaded());
 }
