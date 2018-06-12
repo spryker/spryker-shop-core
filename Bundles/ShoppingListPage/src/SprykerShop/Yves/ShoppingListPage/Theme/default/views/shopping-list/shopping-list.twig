@@ -11,6 +11,7 @@
     },
     labels: {
         addAllToCartLabel: 'customer.account.shopping_list.add_all_available_to_cart' | trans,
+        printShoppingList: 'customer.account.shopping_list.print_shopping_list' | trans,
         productLabel: 'customer.account.shopping_list.product' | trans,
         priceLabel: 'customer.account.shopping_list.price' | trans,
         variantLabel: 'customer.account.shopping_list.overview.variant' | trans,
@@ -64,6 +65,12 @@
                     }
                 }
             } only %}
+
+            <div class="form-field grid grid--middle grid--right">
+                <a class="button button--success" href="{{ path('shopping-list/print', {idShoppingList: data.shoppingList.idShoppingList}) }}" target="_blank">
+                    {{data.labels.printShoppingList}}
+                </a>
+            </div>
         {% endif %}
 
         {% if data.shoppingListItems|length %}
