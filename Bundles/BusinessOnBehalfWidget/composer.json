@@ -10,13 +10,13 @@
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",
-    "spryker-shop/shop-layout": "*",
+    "spryker-shop/shop-ui": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "To add menu item to customer page menu: ^0.4.1.",
-    "spryker-shop/shop-layout": "In order to display top navigation menu item: ^0.6.1."
+    "spryker-shop/shop-ui": "In order to display top navigation menu item: ^0.6.1."
   },
   "autoload": {
     "psr-4": {
