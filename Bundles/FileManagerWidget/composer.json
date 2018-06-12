@@ -7,9 +7,6 @@
     "spryker/file-manager-storage": "dev-beta/core-2414-upload-files-with-dev-dependencies",
     "spryker/file-manager": "dev-beta/core-2414-upload-files-with-dev-dependencies"
   },
-  "require-dev": {
-    "spryker/file-manager-storage": "*"
-  },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"

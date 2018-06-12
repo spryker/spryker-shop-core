@@ -7,44 +7,79 @@
 
 namespace SprykerShop\Yves\FileManagerWidget\Plugin;
 
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShopLayout\Dependency\Plugin\FileManagerWidget\FileManagerWidgetPluginInterface;
+use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
+use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
+use Spryker\Yves\Kernel\AbstractPlugin;
+use Twig_Environment;
 
-class FileManagerWidgetPlugin extends AbstractWidgetPlugin implements FileManagerWidgetPluginInterface
+/**
+ * @method \SprykerShop\Yves\FileManagerWidget\FileManagerWidgetFactory getFactory()
+ */
+class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
     /**
-     * @param int $fileId
-     *
-     * @return void
+     * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
-    public function initialize($fileId): void
+    protected $widgetConfiguration;
+
+    /**
+     * @param \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface $widgetConfiguration
+     */
+    public function __construct(CmsContentWidgetConfigurationProviderInterface $widgetConfiguration)
     {
-        $this->addParameter('fileId', $fileId);
+        $this->widgetConfiguration = $widgetConfiguration;
     }
 
     /**
-     * Specification:
-     * - Returns the name of the widget as it's used in templates.
-     *
-     * @api
-     *
-     * @return string
+     * @return callable
      */
-    public static function getName()
+    public function getContentWidgetFunction()
     {
-        return static::NAME;
+        return [$this, 'contentWidgetFunction'];
     }
 
     /**
-     * Specification:
-     * - Returns the the template file path to render the widget.
-     *
-     * @api
+     * @param \Twig_Environment $twig
+     * @param array $context
+     * @param string $fileId
+     * @param null|string $templateIdentifier
      *
      * @return string
      */
-    public static function getTemplate()
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, $fileId, $templateIdentifier = null)
     {
-        return '@FileManagerWidget/views/file_manager_widget/file-manager-widget.twig';
+        return $twig->render(
+            $this->resolveTemplatePath($templateIdentifier),
+            $this->getContent($context, $fileId)
+        );
+    }
+
+    /**
+     * @param null|string $templateIdentifier
+     *
+     * @return string
+     */
+    protected function resolveTemplatePath($templateIdentifier = null)
+    {
+        if (!$templateIdentifier) {
+            $templateIdentifier = CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
+        }
+
+        return $this->widgetConfiguration->getAvailableTemplates()[$templateIdentifier];
+    }
+
+    /**
+     * @param array $context
+     * @param string $fileId
+     *
+     * @return array
+     */
+    protected function getContent(array $context, $fileId)
+    {
+        $fileTransfer = $this->getFactory()
+            ->getFileManagerStorageClient()
+            ->findFileById($fileId, $this->getLocale());
+
+        return ['file' => $fileTransfer];
     }
 }
