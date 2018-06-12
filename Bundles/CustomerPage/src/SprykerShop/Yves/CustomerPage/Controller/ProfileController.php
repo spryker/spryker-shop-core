@@ -37,7 +37,7 @@ class ProfileController extends AbstractCustomerController
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeIndexAction(Request $request): array
+    protected function executeIndexAction(Request $request)
     {
         $profileForm = $this
             ->getFactory()
