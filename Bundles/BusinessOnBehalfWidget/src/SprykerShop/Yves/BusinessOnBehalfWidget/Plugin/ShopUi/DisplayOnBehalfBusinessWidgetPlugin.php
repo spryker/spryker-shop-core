@@ -63,7 +63,7 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
             return false;
         }
 
-        return $customer->getIsOnBehalf();
+        return true;
     }
 
     /**
@@ -111,6 +111,6 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
             return false;
         }
 
-        return $customer->getIsOnBehalf();
+        return true;
     }
 }
