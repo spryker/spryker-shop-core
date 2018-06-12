@@ -29,6 +29,7 @@ class FileManagerWidgetDependencyProvider extends AbstractBundleDependencyProvid
         $container = parent::provideDependencies($container);
         $container = $this->addFileManagerService($container);
         $container = $this->addFileManagerClient($container);
+        $container = $this->addFileManagerStorageClient($container);
 
         return $container;
     }
