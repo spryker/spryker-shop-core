@@ -1,0 +1,30 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    form: _view.form,
+    title: 'company_user.change_company_user' | trans,
+    activePage: 'change-company-user'
+} %}
+
+{% block customerContent %}
+    <div class="box">
+        {% include molecule('form') with {
+            data: {
+                title: 'company_user.change_company_user' | trans,
+                form: data.form,
+                options: {
+                    action: url('company/user/select')
+                },
+                layout: {
+                    companyUserAccount: 'col col--sm-12 col--lg-2'
+                },
+                submit: {
+                    enable: true
+                },
+                cancel: {
+                    enable: false
+                }
+            }
+        } only %}
+    </div>
+{% endblock %}

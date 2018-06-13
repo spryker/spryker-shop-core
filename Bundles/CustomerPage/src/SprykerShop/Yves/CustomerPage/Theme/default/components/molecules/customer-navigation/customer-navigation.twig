@@ -54,5 +54,10 @@
                data-id="sidebar-shopping-list">{{ 'shopping_list.shopping_list' | trans }}</a>
             {% block shoppingListNavigation %}{% endblock %}
         </li>
+        {% if widgetGlobalExists('MenuItemBusinessOnBehalfWidgetPlugin') %}
+            <li class="menu__item menu__item--has-children-list {{macros.isActive('menuItemBusinessOnBehalfWidget', data.activePage)}}">
+                {{ widgetGlobal('MenuItemBusinessOnBehalfWidgetPlugin') }}
+            </li>
+        {% endif %}
     </ul>
 {% endblock %}

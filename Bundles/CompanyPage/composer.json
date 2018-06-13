@@ -5,7 +5,9 @@
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-application": "^0.2.0 || ^0.3.0 || ^0.4.0",
+    "spryker-shop/shop-application-extension": "^0.1.0",
     "spryker/application": "^3.8.0",
+    "spryker/business-on-behalf": "^1.0.0",
     "spryker/company": "^1.0.0",
     "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
     "spryker/company-role": "^1.0.0",
@@ -13,6 +15,7 @@
     "spryker/company-user": "^1.0.0",
     "spryker/customer": "^7.4.0",
     "spryker/kernel": "^3.16.0",
+    "spryker/messenger": "^3.1.0",
     "spryker/permission": "^1.0.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/symfony": "^3.1.0"
