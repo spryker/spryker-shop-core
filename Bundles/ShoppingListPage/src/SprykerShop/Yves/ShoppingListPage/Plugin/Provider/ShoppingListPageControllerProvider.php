@@ -165,7 +165,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return $this
      */
-    protected function addShoppingListPrintRoute($allowedLocalesPattern)
+    protected function addShoppingListPrintRoute($allowedLocalesPattern): self
     {
         $this->createController('/{shoppingList}/print/{idShoppingList}', static::ROUTE_SHOPPING_LIST_PRINT, 'ShoppingListPage', 'ShoppingList', 'printShoppingList')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
