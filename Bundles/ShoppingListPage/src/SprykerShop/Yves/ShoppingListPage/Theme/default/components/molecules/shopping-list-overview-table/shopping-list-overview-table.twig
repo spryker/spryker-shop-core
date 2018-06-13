@@ -15,6 +15,7 @@
         deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
         addShoppingListToCartLabel: 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans,
         shareLabel: 'customer.account.shopping_list.overview.share' | trans,
+        printLabel: 'customer.account.shopping_list.overview.print' | trans,
         nameLabel: 'customer.account.shopping_list.overview.name' | trans,
         itemCountLabel: 'customer.account.shopping_list.overview.item_count' | trans,
         createdDateLabel: 'customer.account.shopping_list.overview.created_date' | trans,
@@ -61,6 +62,7 @@
                         <a href="{{ url('shopping-list/delete', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.deleteLabel }}</a>
                         <a href="{{ url('shopping-list/share', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.shareLabel }}</a>
                     {% endif %}
+                    <a href="{{ url('shopping-list/print', { idShoppingList: shoppingList.idShoppingList }) }}" target="_blank">{{ data.labels.printLabel }}</a>
                 </td>
             </tr>
         {% endfor %}

@@ -6,7 +6,7 @@
     "php": ">=7.1",
     "spryker-shop/shop-application": "^0.3.0 || ^0.4.0",
     "spryker/application": "^3.8.0",
-    "spryker/company-business-unit": "^1.0.0",
+    "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
     "spryker/company-user": "^1.0.0",
     "spryker/customer": "^7.4.0",
     "spryker/kernel": "^3.16.0",

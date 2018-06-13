@@ -179,4 +179,12 @@ class ShoppingListPageFactory extends AbstractFactory
     {
         return new ShareShoppingListRequiredIdConstraint();
     }
+
+    /**
+     * @return array
+     */
+    public function getPrintShoppingListWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_WIDGETS);
+    }
 }

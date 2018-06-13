@@ -20,6 +20,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_ADD_TO_CART = 'shopping-list/add-to-cart';
     public const ROUTE_ADD_SHOPPING_LIST_TO_CART = 'shopping-list/add-shopping-list-to-cart';
     public const ROUTE_SHOPPING_LIST_SHARE = 'shopping-list/share';
+    public const ROUTE_SHOPPING_LIST_PRINT = 'shopping-list/print';
 
     /**
      * @param \Silex\Application $app
@@ -37,7 +38,8 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
             ->addShoppingListDetailsRoute($allowedLocalesPattern)
             ->addShoppingListRemoveItemRoute($allowedLocalesPattern)
             ->addShoppingListAddListsToCartRoute($allowedLocalesPattern)
-            ->addShoppingListShareRoute($allowedLocalesPattern);
+            ->addShoppingListShareRoute($allowedLocalesPattern)
+            ->addShoppingListPrintRoute($allowedLocalesPattern);
     }
 
     /**
@@ -151,6 +153,21 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     protected function addShoppingListShareRoute($allowedLocalesPattern): self
     {
         $this->createController('/{shoppingList}/share/{idShoppingList}', static::ROUTE_SHOPPING_LIST_SHARE, 'ShoppingListPage', 'ShoppingListOverview', 'shareShoppingList')
+            ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
+            ->value('shoppingList', 'shopping-list')
+            ->assert('idShoppingList', '\d+');
+
+        return $this;
+    }
+
+    /**
+     * @param string $allowedLocalesPattern
+     *
+     * @return $this
+     */
+    protected function addShoppingListPrintRoute($allowedLocalesPattern)
+    {
+        $this->createController('/{shoppingList}/print/{idShoppingList}', static::ROUTE_SHOPPING_LIST_PRINT, 'ShoppingListPage', 'ShoppingList', 'printShoppingList')
             ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idShoppingList', '\d+');
