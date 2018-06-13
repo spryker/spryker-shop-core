@@ -19,7 +19,7 @@ class CartToShoppingListController extends AbstractController
 {
     protected const GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS = 'shopping_list.cart.items_add.success';
     protected const GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_FAILED = 'shopping_list.cart.items_add.failed';
-    
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

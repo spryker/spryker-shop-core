@@ -323,7 +323,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-  
+
     /**
      * @return string[]
      */
