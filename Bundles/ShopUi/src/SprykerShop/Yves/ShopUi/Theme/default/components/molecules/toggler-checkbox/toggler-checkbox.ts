@@ -7,7 +7,7 @@ export default class TogglerCheckbox extends Component {
     constructor() {
         super();
         this.trigger = <HTMLInputElement>this.querySelector(`.${this.jsName}__trigger`);
-        this.targets = <HTMLElement[]>Array.from(document.getElementsByClassName(this.target));
+        this.targets = <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
     }
 
     protected readyCallback(): void {
@@ -39,8 +39,8 @@ export default class TogglerCheckbox extends Component {
         return this.addClassWhenChecked ? this.trigger.checked : !this.trigger.checked;
     }
 
-    get target(): string {
-        return this.trigger.getAttribute('target');
+    get targetSelector(): string {
+        return this.trigger.getAttribute('target-selector');
     }
 
     get classToToggle(): string {

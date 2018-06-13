@@ -20,7 +20,7 @@
                     id: 'register',
                     checked: not data.isGuest,
                     name: 'checkoutProceedAs',
-                    target: 'js-login__register',
+                    'target-selector': '.js-login__register',
                     'class-to-toggle': 'is-hidden'
                 }
             } only %}
@@ -34,7 +34,7 @@
                     id: 'guest',
                     checked: data.isGuest,
                     name: 'checkoutProceedAs',
-                    target: 'js-login__guest',
+                    'target-selector': '.js-login__guest',
                     'class-to-toggle': 'is-hidden'
                 }
             } only %}

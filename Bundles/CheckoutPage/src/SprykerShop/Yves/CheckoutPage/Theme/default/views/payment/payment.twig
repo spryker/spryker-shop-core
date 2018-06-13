@@ -56,7 +56,7 @@
                                     {{ form_row(embed.toggler, {
                                         component: molecule('toggler-radio'),
                                         attributes: {
-                                            target: 'js-payment-method-' ~ embed.index,
+                                            'target-selector': '.js-payment-method-' ~ embed.index,
                                             'class-to-toggle': 'is-hidden'
                                         }
                                     }) }}
