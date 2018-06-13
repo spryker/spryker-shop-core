@@ -34,9 +34,9 @@
 
             {% if hasShippingAddresses %}
                 <div class="form__field col col--sm-12">
-                    <ul class="list list--spacing">
+                    <ul class="list spacing-y">
                         {% for address in existingShippingAddresses %}
-                            <li class="list__item list__item--spacing">
+                            <li class="list__item spacing-y">
                                 {{
                                     form_row(address, {
                                         component: molecule('toggler-radio'),
@@ -122,9 +122,9 @@
 
                     {% if hasBillingAddresses %}
                         <div class="form__field col col--sm-12">
-                            <ul class="list list--spacing">
+                            <ul class="list spacing-y">
                                 {% for address in existingBillingAddresses %}
-                                    <li class="list__item list__item--spacing">
+                                    <li class="list__item spacing-y">
                                         {{
                                             form_row(address, {
                                                 component: molecule('toggler-radio'),

@@ -34,9 +34,9 @@
             {% for name, choices in data.form.idShipmentMethod.vars.choices %}
                 <div class="form__field col col--sm-12">
                     <h5>{{name}}</h5>
-                    <ul class="list list--spacing">
+                    <ul class="list spacing-y">
                         {% for key, choice in choices %}
-                            <li class="list__item list__item--spacing">
+                            <li class="list__item spacing-y">
                                 {{ form_row(data.form.idShipmentMethod[key], {
                                     label: data.form.idShipmentMethod[key].vars.label
                                 }) }}

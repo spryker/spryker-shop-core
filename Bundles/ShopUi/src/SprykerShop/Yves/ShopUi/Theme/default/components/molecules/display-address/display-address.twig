@@ -28,7 +28,7 @@
     {% endif %}
 
     {% if data.address.isDefaultBilling or data.address.isDefaultShipping %}
-        <li class="list__item list__item--spacing">
+        <li class="list__item spacing-y">
             {% if data.address.isDefaultBilling %}
                 <span class="badge badge--success spacing-right">{{'customer.order.billing_address' | trans}}</span>
             {% endif %}
