@@ -29,7 +29,7 @@ class PreviewController extends AbstractController
         if (!$this->hasPermission()) {
             $this->addErrorMessage('cms.preview.access_denied');
 
-            return $this->view();
+            return $this->view([], [], '@CmsPage/views/preview-denied/preview-denied.twig');
         }
 
         $idCmsPage = (int)$request->attributes->get(PreviewControllerProvider::PARAM_PAGE);
