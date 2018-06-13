@@ -21,7 +21,7 @@ class DetailController extends AbstractController
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
      *
-     * @return array
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers)
     {
