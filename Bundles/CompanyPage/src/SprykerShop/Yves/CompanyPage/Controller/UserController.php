@@ -48,11 +48,10 @@ class UserController extends AbstractCompanyController
             ->getCompanyUserClient()
             ->getCompanyUserCollection($criteriaFilterTransfer);
 
-        $data = [
+        return [
             'pagination' => $companyUserCollectionTransfer->getPagination(),
             'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
         ];
-        return $data;
     }
 
     /**

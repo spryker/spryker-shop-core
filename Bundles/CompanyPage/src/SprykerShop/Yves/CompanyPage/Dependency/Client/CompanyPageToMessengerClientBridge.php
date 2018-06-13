@@ -5,7 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Client\CompanyPage\Dependency\Client;
+namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
+
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 
 class CompanyPageToMessengerClientBridge implements CompanyPageToMessengerClientInterface
 {

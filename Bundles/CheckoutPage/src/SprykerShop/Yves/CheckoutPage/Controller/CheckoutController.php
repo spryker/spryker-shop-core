@@ -119,7 +119,7 @@ class CheckoutController extends AbstractController
             $request,
             $this->getFactory()
                 ->createCheckoutFormFactory()
-                ->createPaymentFormCollection()
+                ->getPaymentFormCollection()
         );
 
         if (!is_array($response)) {

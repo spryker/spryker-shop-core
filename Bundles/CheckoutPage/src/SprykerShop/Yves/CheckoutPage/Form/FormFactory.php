@@ -83,7 +83,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
-    public function createPaymentFormCollection()
+    public function getPaymentFormCollection()
     {
         $createPaymentSubForms = $this->getPaymentMethodSubForms();
         $subFormDataProvider = $this->createSubFormDataProvider($createPaymentSubForms);
