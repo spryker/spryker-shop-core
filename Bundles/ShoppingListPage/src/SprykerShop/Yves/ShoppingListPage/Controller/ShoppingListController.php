@@ -226,7 +226,7 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $shoppingListTransfer = (new ShoppingListTransfer())
             ->setIdShoppingList($idShoppingList)
-            ->setRequesterId($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
 
         $shoppingListOverviewRequest = (new ShoppingListOverviewRequestTransfer())
             ->setShoppingList($shoppingListTransfer);
