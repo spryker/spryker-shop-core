@@ -54,56 +54,42 @@
 {% endblock %}
 
 {% block content %}
-    {% block cmsTop %}
-        {% if data.categoryId %}
-            <div class="box">
-                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'top', data.categoryId) }}
-            </div>
-        {% endif %}
-    {% endblock %}
-
     <form method="GET" class="grid js-form-input-default-value-disabler__catalog-form">
-        {% include molecule('form-input-default-value-disabler') with {
-            attributes: {
-                'form-selector': '.js-form-input-default-value-disabler__catalog-form',
-                'input-selector': '.js-form-input-default-value-disabler__catalog-input'
-            }
-        } only %}
-
         {% block form %}
+            {% include molecule('form-input-default-value-disabler') with {
+                attributes: {
+                    'form-selector': '.js-form-input-default-value-disabler__catalog-form',
+                    'input-selector': '.js-form-input-default-value-disabler__catalog-input'
+                }
+            } only %}
+
             <div class="col col--sm-12 col--lg-4 col--xl-3">
-                {% include molecule('view-mode-switch', 'CatalogPage') with {
-                    class: 'box'
-                } only %}
+                {% block filterBar %}
+                    {% include molecule('view-mode-switch', 'CatalogPage') with {
+                        class: 'box'
+                    } only %}
 
-                {% include molecule('toggler-checkbox') with {
-                    modifiers: ['expand'],
-                    class: 'box is-hidden-lg-xl',
-                    data: {
-                        label: 'Show/Hide filters'
-                    },
-                    attributes: {
-                        target: 'js-catalog__filters-toggle',
-                        'class-to-toggle': 'is-hidden-sm-md',
-                        checked: true
-                    }
-                } only %}
+                    {% include molecule('toggler-checkbox') with {
+                        modifiers: ['expand'],
+                        class: 'box is-hidden-lg-xl',
+                        data: {
+                            label: 'Show/Hide filters'
+                        },
+                        attributes: {
+                            target: 'js-catalog__filters-toggle',
+                            'class-to-toggle': 'is-hidden-sm-md',
+                            checked: true
+                        }
+                    } only %}
 
-                {% include organism('filter-section', 'CatalogPage') with {
-                    class: 'box js-catalog__filters-toggle',
-                    data: {
-                        facets: data.facets,
-                        filterPath: data.filterPath,
-                        categories: data.categories
-                    }
-                } only %}
-
-                {% block cmsMiddle %}
-                    {% if data.categoryId %}
-                        <div class="box">
-                            {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'middle', data.categoryId) }}
-                        </div>
-                    {% endif %}
+                    {% include organism('filter-section', 'CatalogPage') with {
+                        class: 'box js-catalog__filters-toggle',
+                        data: {
+                            facets: data.facets,
+                            filterPath: data.filterPath,
+                            categories: data.categories
+                        }
+                    } only %}
                 {% endblock %}
             </div>
 
@@ -136,12 +122,4 @@
             </div>
         {% endblock %}
     </form>
-
-    {% block cmsBottom %}
-        {% if data.categoryId %}
-            <div class="box">
-                {{ widgetBlock('CatalogCmsBlockWidgetPlugin', 'bottom', data.categoryId) }}
-            </div>
-        {% endif %}
-    {% endblock %}
 {% endblock %}
