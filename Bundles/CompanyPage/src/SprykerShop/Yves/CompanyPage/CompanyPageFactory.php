@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Client\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
@@ -104,7 +104,7 @@ class CompanyPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Client\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface
      */
     public function getMessengerClient(): CompanyPageToMessengerClientInterface
     {

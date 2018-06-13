@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CompanyPage\Model\CompanyUser;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerShop\Client\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountSelectorForm;
@@ -21,7 +21,7 @@ class CompanyUserSaver implements CompanyUserSaverInterface
     protected const ERROR_COMPANY_USER_INVALID = 'company_user.business_on_behalf.error.company_user_invalid';
 
     /**
-     * @var \SprykerShop\Client\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface
      */
     protected $messengerClient;
 
@@ -36,7 +36,7 @@ class CompanyUserSaver implements CompanyUserSaverInterface
     protected $businessOnBehalfClient;
 
     /**
-     * @param \SprykerShop\Client\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface $messengerClient
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface $messengerClient
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface $businessOnBehalfClient
      */

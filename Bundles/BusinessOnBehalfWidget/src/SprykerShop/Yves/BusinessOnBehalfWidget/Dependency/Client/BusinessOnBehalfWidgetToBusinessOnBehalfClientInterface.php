@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Client\BusinessOnBehalfWidget\Dependency\Client;
+namespace SprykerShop\Yves\BusinessOnBehalfWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;

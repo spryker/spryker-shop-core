@@ -44,11 +44,10 @@ class CompanyRoleController extends AbstractCompanyController
             ->getCompanyRoleClient()
             ->getCompanyRoleCollection($collectionTransfer);
 
-        $data = [
+        return [
             'companyRoleCollection' => $collectionTransfer->getRoles(),
             'pagination' => $collectionTransfer->getPagination(),
         ];
-        return $data;
     }
 
     /**

@@ -27,6 +27,18 @@ class BusinessOnBehalfController extends AbstractController
      */
     public function selectCompanyUserAction(Request $request): View
     {
+        $viewData = $this->executeSelectCompanyUserAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/user-select/user-select.twig');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    protected function executeSelectCompanyUserAction(Request $request): array
+    {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $companyUserAccountFormDataProvider = $this->getFactory()->createCompanyPageFormFactory()->createCompanyUserAccountDataProvider();
         $activeCompanyUsers = $this->getFactory()->getBusinessOnBehalfClient()->findActiveCompanyUsersByCustomerId($customerTransfer);
@@ -44,11 +56,9 @@ class BusinessOnBehalfController extends AbstractController
             $this->getFactory()->createCompanyUserSaver()->saveCompanyUser($activeCompanyUsers, $companyUserAccountForm->getData(), $isDefault);
         }
 
-        $data = [
+        return [
             'form' => $companyUserAccountForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/user-select/user-select.twig');
     }
 
     /**
