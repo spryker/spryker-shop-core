@@ -28,7 +28,7 @@ class CartController extends AbstractController
     public function indexAction(?array $selectedAttributes = null)
     {
         $viewData = $this->executeIndexAction($selectedAttributes);
-        
+
         return $this->view(
             $viewData,
             $this->getFactory()->getCartPageWidgetPlugins(),

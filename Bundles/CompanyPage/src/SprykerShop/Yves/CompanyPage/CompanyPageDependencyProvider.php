@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CompanyPage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientBridge;
@@ -18,6 +17,7 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClien
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientBridge;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreBridge;
 

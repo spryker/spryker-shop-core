@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
-
 class CompanyPageToMessengerClientBridge implements CompanyPageToMessengerClientInterface
 {
     /**

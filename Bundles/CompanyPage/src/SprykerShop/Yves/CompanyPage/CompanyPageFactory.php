@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CompanyPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
@@ -16,6 +15,7 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClien
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaver;
