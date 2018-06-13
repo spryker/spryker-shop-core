@@ -194,7 +194,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/user/select', static::ROUTE_COMPANY_USER_SELECT, 'CompanyPage', 'BusinessOnBehalf', 'selectCompanyUser')
-            ->assert('company', $allowedLocalesPattern . 'company|company')
+            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
 
         return $this;
