@@ -25,7 +25,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
-    public function createPaymentMethodSubForms()
+    public function getPaymentMethodSubForms()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PAYMENT_SUB_FORMS);
     }
@@ -57,7 +57,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return string[]
      */
-    protected function getShipmentFormTypes()
+    public function getShipmentFormTypes()
     {
         return [
             $this->getShipmentForm(),
@@ -67,7 +67,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return string
      */
-    protected function getShipmentForm()
+    public function getShipmentForm()
     {
         return ShipmentForm::class;
     }
@@ -75,7 +75,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
-    protected function getShipmentFormDataProviderPlugin()
+    public function getShipmentFormDataProviderPlugin()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_FORM_DATA_PROVIDER);
     }
@@ -85,7 +85,7 @@ class FormFactory extends AbstractFactory
      */
     public function createPaymentFormCollection()
     {
-        $createPaymentSubForms = $this->createPaymentMethodSubForms();
+        $createPaymentSubForms = $this->getPaymentMethodSubForms();
         $subFormDataProvider = $this->createSubFormDataProvider($createPaymentSubForms);
 
         return $this->createSubFormCollection(PaymentForm::class, $subFormDataProvider);
@@ -96,7 +96,7 @@ class FormFactory extends AbstractFactory
      *
      * @return \SprykerShop\Yves\CheckoutPage\Form\DataProvider\SubFormDataProviders
      */
-    protected function createSubFormDataProvider(SubFormPluginCollection $subForms)
+    public function createSubFormDataProvider(SubFormPluginCollection $subForms)
     {
         return new SubFormDataProviders($subForms);
     }
@@ -106,13 +106,13 @@ class FormFactory extends AbstractFactory
      */
     public function createSummaryFormCollection()
     {
-        return $this->createFormCollection($this->createSummaryFormTypes());
+        return $this->createFormCollection($this->getSummaryFormTypes());
     }
 
     /**
      * @return string[]
      */
-    protected function getCustomerFormTypes()
+    public function getCustomerFormTypes()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CUSTOMER_STEP_SUB_FORMS);
     }
@@ -120,7 +120,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormTypeInterface[]
      */
-    protected function getAddressFormTypes()
+    public function getAddressFormTypes()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::ADDRESS_STEP_SUB_FORMS);
     }
@@ -128,7 +128,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return string[]
      */
-    protected function createSummaryFormTypes()
+    public function getSummaryFormTypes()
     {
         return [
             $this->getSummaryForm(),
@@ -138,7 +138,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return string
      */
-    protected function getSummaryForm()
+    public function getSummaryForm()
     {
         return SummaryForm::class;
     }
@@ -149,7 +149,7 @@ class FormFactory extends AbstractFactory
      *
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
-    protected function createFormCollection(array $formTypes, ?StepEngineFormDataProviderInterface $dataProvider = null)
+    public function createFormCollection(array $formTypes, ?StepEngineFormDataProviderInterface $dataProvider = null)
     {
         return new FormCollectionHandler($formTypes, $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY), $dataProvider);
     }
@@ -160,7 +160,7 @@ class FormFactory extends AbstractFactory
      *
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
-    protected function createSubFormCollection($formType, StepEngineFormDataProviderInterface $dataProvider)
+    public function createSubFormCollection($formType, StepEngineFormDataProviderInterface $dataProvider)
     {
         return new FormCollectionHandler([$formType], $this->getFormFactory(), $dataProvider);
     }
@@ -168,7 +168,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormFactoryInterface
      */
-    protected function getFormFactory()
+    public function getFormFactory()
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
@@ -176,7 +176,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Kernel\Application
      */
-    protected function getApplication()
+    public function getApplication()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_APPLICATION);
     }
@@ -192,7 +192,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
      */
-    protected function getCustomerClient(): CheckoutPageToCustomerClientInterface
+    public function getCustomerClient(): CheckoutPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER);
     }
@@ -200,7 +200,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface
      */
-    protected function getUtilValidateService(): CheckoutPageToUtilValidateServiceInterface
+    public function getUtilValidateService(): CheckoutPageToUtilValidateServiceInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_UTIL_VALIDATE);
     }
@@ -208,7 +208,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null
      */
-    protected function getAddressFormDataProvider()
+    public function getAddressFormDataProvider()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::ADDRESS_STEP_FORM_DATA_PROVIDER);
     }

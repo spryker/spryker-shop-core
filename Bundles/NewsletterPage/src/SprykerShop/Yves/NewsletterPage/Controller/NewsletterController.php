@@ -57,7 +57,7 @@ class NewsletterController extends AbstractController
 
         $dataProvider = $this->getFactory()->createNewsletterSubscriptionFormDataProvider();
         $newsletterSubscriptionForm = $this->getFactory()
-            ->createNewsletterSubscriptionForm(
+            ->getNewsletterSubscriptionFor(
                 $dataProvider->getData($newsletterSubscriptionRequestTransfer),
                 $dataProvider->getOptions()
             )
@@ -103,7 +103,7 @@ class NewsletterController extends AbstractController
      *
      * @return void
      */
-    public function processForm(FormInterface $newsletterSubscriptionForm, NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequestTransfer)
+    protected function processForm(FormInterface $newsletterSubscriptionForm, NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequestTransfer)
     {
         $subscribe = (bool)$newsletterSubscriptionForm->get(NewsletterSubscriptionForm::FIELD_SUBSCRIBE)->getData();
 

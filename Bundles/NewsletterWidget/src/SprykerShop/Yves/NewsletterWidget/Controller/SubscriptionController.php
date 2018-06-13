@@ -86,26 +86,6 @@ class SubscriptionController extends AbstractController
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer
-     */
-    public function subscribeForEditorialNewsletter(CustomerTransfer $customerTransfer)
-    {
-        $request = $this->createNewsletterSubscriptionRequest($customerTransfer);
-
-        $subscriptionResponse = $this->getFactory()
-            ->getNewsletterClient()
-            ->subscribeWithDoubleOptIn($request);
-
-        return $subscriptionResponse->getSubscriptionResults()[0];
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param string|null $subscriberKey
      *

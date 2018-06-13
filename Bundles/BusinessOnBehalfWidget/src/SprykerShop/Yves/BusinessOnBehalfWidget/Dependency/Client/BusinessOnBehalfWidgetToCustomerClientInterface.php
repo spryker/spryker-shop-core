@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Client\BusinessOnBehalfWidget\Dependency\Client;
+namespace SprykerShop\Yves\BusinessOnBehalfWidget\Dependency\Client;
 
 interface BusinessOnBehalfWidgetToCustomerClientInterface
 {

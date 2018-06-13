@@ -17,7 +17,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormFactory
      */
-    protected function getFormFactory()
+    public function getFormFactory()
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
@@ -91,7 +91,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Customer\CustomerClientInterface
      */
-    protected function getCustomerClient()
+    public function getCustomerClient()
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_CUSTOMER);
     }
@@ -99,7 +99,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    protected function getStore()
+    public function getStore()
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::STORE);
     }
