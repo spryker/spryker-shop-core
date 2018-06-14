@@ -32,7 +32,7 @@ class MultiCartController extends AbstractController
             return $response;
         }
 
-        return $this->view($response, [], '@MultiCartPage/views/multi-cart/cart-create.twig');
+        return $this->view($response, [], '@MultiCartPage/views/cart-create/cart-create.twig');
     }
 
     /**
@@ -77,7 +77,7 @@ class MultiCartController extends AbstractController
             return $response;
         }
 
-        return $this->view($response, [], '@MultiCartPage/views/multi-cart/cart-update.twig');
+        return $this->view($response, [], '@MultiCartPage/views/cart-update/cart-update.twig');
     }
 
     /**

@@ -41,7 +41,7 @@ class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements Product
      */
     public static function getTemplate(): string
     {
-        return '@ProductBarcodeWidget/views/barcode.twig';
+        return '@ProductBarcodeWidget/views/barcode/barcode.twig';
     }
 
     /**

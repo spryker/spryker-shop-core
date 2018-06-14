@@ -1,14 +1,9 @@
-{% extends model('component') %}
-
-{% define config = {
-    name: 'subscription-form',
-    tag: 'section'
-} %}
+{% extends template('widget') %}
 
 {% define data = {
     form: _view.newsletterSubscriptionForm,
     text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.',
-    
+
     events: {
         success: _view.success,
         error: _view.error
@@ -21,21 +16,16 @@
             <p>{{data.text}}</p>
         </div>
 
-        {% embed molecule('form') with {
+        {% include molecule('form') with {
             class: 'col col--sm-12 col--lg-4',
+            modifiers: ['inline'],
             data: {
-                form: data.form
+                form: data.form,
+                submit: {
+                    enable: true
+                }
             }
         } only %}
-            {% block fields %}
-                <div class="col col--sm-12 col--lg-8">
-                    {{ form_widget(_view.newsletterSubscriptionForm.subscribe) }}
-                </div>
-                <div class="col col--sm-12 col--lg-4">
-                    <button type="submit" class="button button--expand">Subscribe</button>
-                </div>
-            {% endblock %}
-        {% endembed %}
     </div>
 
     {% if data.events.success is not empty %}
