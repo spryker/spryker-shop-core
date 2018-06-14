@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin\ShoppingListWidget;
 
-interface ShoppingListMenuItemWidgetPluginInterface
+use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
+
+interface ShoppingListMenuItemWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ShoppingListMenuItemWidgetPlugin';
 
