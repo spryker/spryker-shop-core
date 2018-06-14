@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ShoppingListPage\Form;
 
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +18,6 @@ class ShoppingListForm extends AbstractType
 {
     public const FIELD_NAME = 'name';
     public const FIELD_ID = 'idShoppingList';
-    public const SHOW_NAME_LABEL = 'showNameLabel';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -28,7 +26,6 @@ class ShoppingListForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefined(static::SHOW_NAME_LABEL);
         $resolver->setDefaults([
             'data_class' => ShoppingListTransfer::class,
         ]);
@@ -43,7 +40,6 @@ class ShoppingListForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addNameField($builder, $options);
-        $this->addIdField($builder);
     }
 
     /**
@@ -55,21 +51,11 @@ class ShoppingListForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
-            'label' => $options[static::SHOW_NAME_LABEL]? 'customer.account.shopping_list.overview.name': false,
+            'label' => 'customer.account.shopping_list.overview.name',
             'required' => true,
             'constraints' => [
                 new NotBlank(),
             ],
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
-    protected function addIdField(FormBuilderInterface $builder): void
-    {
-        $builder->add(static::FIELD_ID, HiddenType::class);
     }
 }

@@ -45,7 +45,7 @@ class ShoppingListFormDataProvider
         $shoppingListTransfer = new ShoppingListTransfer();
         $shoppingListTransfer
             ->setIdShoppingList($idShoppingList)
-            ->setRequesterId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         return $this->shoppingListClient->getShoppingList($shoppingListTransfer);
     }

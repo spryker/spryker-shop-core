@@ -6,7 +6,8 @@
 } %}
 
 {% define data = {
-    activePage: required
+    activePage: required,
+    activeEntityId: null
 } %}
 
 {%- macro isActive(page, activePage) -%}
@@ -42,18 +43,12 @@
                class="{{macros.isActive('profile', data.activePage)}}"
                data-id="sidebar-newsletter">{{ 'customer.account.newsletter' | trans }}</a>
         </li>
-        <li class="menu__item">
-            <a href="{{ path('wishlist/overview') }}"
-               class="{{macros.isActive('wishlist', data.activePage)}}"
-               data-id="sidebar-wishlist">{{ 'wishlist.wishlist' | trans }}</a>
-            {% block wishlistNavigation %}{% endblock %}
-        </li>
-        <li class="menu__item menu__item--has-children-list">
-            <a href="{{ path('shopping-list') }}"
-               class="{{macros.isActive('shoppingList', data.activePage)}}"
-               data-id="sidebar-shopping-list">{{ 'shopping_list.shopping_list' | trans }}</a>
-            {% block shoppingListNavigation %}{% endblock %}
-        </li>
+        {% if widgetExists('WishlistMenuItemWidgetPlugin') %}
+            {{ widget('WishlistMenuItemWidgetPlugin', data.activePage, data.activeEntityId) }}
+        {% endif %}
+        {% if widgetExists('ShoppingListMenuItemWidgetPlugin') %}
+            {{ widget('ShoppingListMenuItemWidgetPlugin', data.activePage, data.activeEntityId) }}
+        {% endif %}
         {% if widgetGlobalExists('MenuItemBusinessOnBehalfWidgetPlugin') %}
             <li class="menu__item menu__item--has-children-list {{macros.isActive('menuItemBusinessOnBehalfWidget', data.activePage)}}">
                 {{ widgetGlobal('MenuItemBusinessOnBehalfWidgetPlugin') }}

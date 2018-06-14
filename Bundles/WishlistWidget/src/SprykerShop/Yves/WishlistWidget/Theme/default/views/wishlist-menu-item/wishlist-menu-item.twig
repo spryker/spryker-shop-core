@@ -1,0 +1,19 @@
+{% extends template('widget') %}
+
+{% define data = {
+    wishlistCollection: _widget.wishlistCollection,
+    isActivePage: _widget.isActivePage,
+    activeWishlistId: _widget.activeWishlistId,
+} %}
+
+{% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
+{% set itemClass = itemClass ~ (data.wishlistCollection | length ? ' menu__item--has-children-list' : '') %}
+
+{% block body %}
+    <li class="menu__item {{ itemClass }}">
+        <a href="{{ path('wishlist/overview') }}" data-id="sidebar-wishlist">{{ 'wishlist.wishlist' | trans }}</a>
+        {% if data.wishlistCollection | length > 0 %}
+
+        {% endif %}
+    </li>
+{% endblock %}
