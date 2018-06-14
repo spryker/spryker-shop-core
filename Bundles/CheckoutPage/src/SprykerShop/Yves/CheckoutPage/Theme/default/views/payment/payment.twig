@@ -54,6 +54,7 @@
                             } only %}
                                 {% block fieldset %}
                                     {{ form_row(embed.toggler, {
+                                        required: false,
                                         component: molecule('toggler-radio'),
                                         attributes: {
                                             'target-selector': '.js-payment-method-' ~ embed.index,

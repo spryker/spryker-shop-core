@@ -38,7 +38,8 @@
                         {% for key, choice in choices %}
                             <li class="list__item spacing-y">
                                 {{ form_row(data.form.idShipmentMethod[key], {
-                                    label: data.form.idShipmentMethod[key].vars.label
+                                    label: data.form.idShipmentMethod[key].vars.label,
+                                    required: false
                                 }) }}
                             </li>
                         {% endfor %}
