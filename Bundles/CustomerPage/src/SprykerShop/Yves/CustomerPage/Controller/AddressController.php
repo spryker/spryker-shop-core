@@ -125,6 +125,7 @@ class AddressController extends AbstractCustomerController
 
         $data = [
             'form' => $addressForm->createView(),
+            'idCustomerAddress' => $idCustomerAddress,
         ];
 
         return $this->view($data, [], '@CustomerPage/views/address-update/address-update.twig');
