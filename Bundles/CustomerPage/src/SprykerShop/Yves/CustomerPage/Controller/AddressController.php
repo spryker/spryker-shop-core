@@ -104,10 +104,9 @@ class AddressController extends AbstractCustomerController
             ->createCustomerFormFactory()
             ->getAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
+        $idCustomerAddress = $request->query->getInt('id');
 
         if ($addressForm->isSubmitted() === false) {
-            $idCustomerAddress = $request->query->getInt('id');
-
             $addressForm->setData($dataProvider->getData($idCustomerAddress));
         } elseif ($addressForm->isSubmitted() && $addressForm->isValid()) {
             $customerTransfer = $this->processAddressUpdate($addressForm->getData());
