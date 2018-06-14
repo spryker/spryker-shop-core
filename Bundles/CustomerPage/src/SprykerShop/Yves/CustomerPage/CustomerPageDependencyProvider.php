@@ -37,6 +37,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS';
     const PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS';
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    public const PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS = 'PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -58,6 +59,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerOverviewWidgetPlugins($container);
         $container = $this->addCustomerOrderListWidgetPlugins($container);
         $container = $this->addCustomerOrderViewWidgetPlugins($container);
+        $container = $this->addCustomerMenuItemWidgetPlugins($container);
         $container = $this->addUtilValidateService($container);
         $container = $this->addPreRegistrationCustomerTransferExpanderPlugins($container);
 
@@ -253,6 +255,20 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addCustomerMenuItemWidgetPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS] = function () {
+            return $this->getCustomerMenuItemWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     protected function addUtilValidateService(Container $container): Container
     {
         $container[self::SERVICE_UTIL_VALIDATE] = function (Container $container) {
@@ -296,6 +312,14 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return string[]
      */
     protected function getCustomerOrderViewWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCustomerMenuItemWidgetPlugins(): array
     {
         return [];
     }

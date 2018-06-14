@@ -42,8 +42,7 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
             $shoppingListCollection->setShoppingLists($shoppingLists);
         }
 
-        $this
-            ->addParameter('sku', $sku)
+        $this->addParameter('sku', $sku)
             ->addParameter('isDisabled', $isDisabled)
             ->addParameter('shoppingListCollection', $shoppingListCollection);
     }

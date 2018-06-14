@@ -45,7 +45,7 @@ class CartToShoppingListWidgetFactory extends AbstractFactory
      */
     public function createCartFromShoppingListFormDataProvider(): ShoppingListFromCartFormDataProvider
     {
-        return new ShoppingListFromCartFormDataProvider();
+        return new ShoppingListFromCartFormDataProvider($this->getShoppingListClient());
     }
 
     /**
