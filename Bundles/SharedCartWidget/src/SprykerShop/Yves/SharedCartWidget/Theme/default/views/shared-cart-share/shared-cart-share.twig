@@ -8,11 +8,11 @@
 {% block body %}
     {% if data.isQuoteOwner and data.cart.shareDetails is not empty %}
         <div class="box">
-        {% include molecule('shared-cart-customers-table', 'SharedCartWidget') with {
-            data: {
-                cart: data.cart
-            }
-        } only %}
+            {% include molecule('shared-cart-customers-table', 'SharedCartWidget') with {
+                data: {
+                    cart: data.cart
+                }
+            } only %}
         </div>
     {% endif %}
 {% endblock %}
