@@ -1,7 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
-    cartQuantity: _widget.cartQuantity,
+    cartQuantity: _widget.cartQuantity | default,
     activeCart: _widget.activeCart,
     carts: _widget.cartList,
     isMultiCartAllowed: _widget.isMultiCartAllowed
@@ -16,7 +16,7 @@
                 {% include molecule('cart-items-counter') with {
                     data: {
                         label: (cartAmount == 1 ? 'multi_cart_widget.cart.cart' : 'multi_cart_widget.cart.carts') | trans,
-                        quantity: cartAmount
+                        quantity: data.cartQuantity
                     }
                 } only %}
 
