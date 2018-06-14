@@ -16,7 +16,7 @@ class ItemsFieldConstraintValidator extends ConstraintValidator
 {
     /**
      * @param mixed $orderItemTransfers The value that should be validated
-     * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\QtyFieldConstraint $constraint The constraint for the validation
+     * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
      *
@@ -24,10 +24,10 @@ class ItemsFieldConstraintValidator extends ConstraintValidator
      */
     public function validate($orderItemTransfers, Constraint $constraint): void
     {
-        if (!$constraint instanceof QtyFieldConstraint) {
+        if (!$constraint instanceof ItemsFieldConstraint) {
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
-                QtyFieldConstraint::class,
+                ItemsFieldConstraint::class,
                 get_class($constraint)
             ));
         }
