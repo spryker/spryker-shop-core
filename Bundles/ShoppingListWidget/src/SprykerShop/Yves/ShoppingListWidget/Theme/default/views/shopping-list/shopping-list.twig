@@ -28,7 +28,7 @@
 {% endif %}
 
 {% block body %}
-    <form class="grid grid--justify grid--bottom" method="POST" action="/shopping-list/add-item">
+    <form class="grid grid--justify grid--bottom" method="POST" action="{{ path('shopping-list/add-item') }}">
         <div class="col--sm-5">
             <label>{{ 'shopping_list.item_quantity' | trans }}</label>
                 {% include atom('select') with {

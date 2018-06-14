@@ -8,10 +8,31 @@
 namespace SprykerShop\Yves\CartToShoppingListWidget\Form\DataProvider;
 
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
-use SprykerShop\Yves\CartToShoppingListWidget\Plugin\Provider\CartToShoppingListWidgetControllerProvider;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
+use SprykerShop\Yves\CartToShoppingListWidget\Dependency\Client\CartToShoppingListWidgetToShoppingListClientInterface;
+use SprykerShop\Yves\CartToShoppingListWidget\Form\ShoppingListFromCartForm;
 
 class ShoppingListFromCartFormDataProvider
 {
+    use PermissionAwareTrait;
+
+    protected const GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ADD_NEW = 'cart.add-to-shopping-list.form.add_new';
+
+    /**
+     * @var \SprykerShop\Yves\CartToShoppingListWidget\Dependency\Client\CartToShoppingListWidgetToShoppingListClientInterface
+     */
+    protected $shoppingListClient;
+
+    /**
+     * ShoppingListFromCartFormDataProvider constructor.
+     *
+     * @param \SprykerShop\Yves\CartToShoppingListWidget\Dependency\Client\CartToShoppingListWidgetToShoppingListClientInterface $shoppingListClient
+     */
+    public function __construct(CartToShoppingListWidgetToShoppingListClientInterface $shoppingListClient)
+    {
+        $this->shoppingListClient = $shoppingListClient;
+    }
+
     /**
      * @param int|null $idQuote
      *
@@ -29,7 +50,25 @@ class ShoppingListFromCartFormDataProvider
     {
         return [
             'data_class' => ShoppingListFromCartRequestTransfer::class,
-            'action' => CartToShoppingListWidgetControllerProvider::ROUTE_CART_TO_SHOPPING_LIST,
+            ShoppingListFromCartForm::OPTION_SHOPPING_LISTS => $this->getShoppingListCollection(),
         ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getShoppingListCollection(): array
+    {
+        $shoppingListCollection = [];
+        $shoppingListTransferCollection = $this->shoppingListClient->getCustomerShoppingListCollection()->getShoppingLists();
+
+        $shoppingListCollection[self::GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ADD_NEW] = '';
+        foreach ($shoppingListTransferCollection as $shoppingListTransfer) {
+            if ($this->can('WriteShoppingListPermissionPlugin', $shoppingListTransfer->getIdShoppingList())) {
+                $shoppingListCollection[$shoppingListTransfer->getName()] = $shoppingListTransfer->getName();
+            }
+        }
+
+        return $shoppingListCollection;
     }
 }

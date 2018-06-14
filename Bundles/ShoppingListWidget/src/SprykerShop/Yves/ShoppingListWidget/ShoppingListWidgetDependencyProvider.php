@@ -37,7 +37,7 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addShoppingListClient(Container $container): Container
     {
-        $container[self::CLIENT_SHOPPING_LIST] = function (Container $container) {
+        $container[static::CLIENT_SHOPPING_LIST] = function (Container $container) {
             return new ShoppingListWidgetToShoppingListClientBridge($container->getLocator()->shoppingList()->client());
         };
 
@@ -51,7 +51,7 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new ShoppingListWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 

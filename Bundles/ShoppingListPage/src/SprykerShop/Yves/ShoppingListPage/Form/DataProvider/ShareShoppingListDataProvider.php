@@ -62,7 +62,7 @@ class ShareShoppingListDataProvider
     public function getData(int $idShoppingList): ShoppingListShareRequestTransfer
     {
         $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
-            ->setRequesterId($this->customerClient->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser())
+            ->setShoppingListOwnerId($this->customerClient->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser())
             ->setIdShoppingList($idShoppingList)
             ->setIdShoppingListPermissionGroup($this->shoppingListClient->getShoppingListPermissionGroup()->getIdShoppingListPermissionGroup());
 

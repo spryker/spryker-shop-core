@@ -6,7 +6,7 @@
 } %}
 
 {% define data = {
-    activeShoppingListId: '',
+    activeShoppingListId: 0,
     shoppingListCollection: required
 } %}
 
@@ -17,9 +17,9 @@
 {%- import _self as macros -%}
 
 {% block body %}
-    {% if data.shoppingListCollection.shoppingLists|length %}
+    {% if data.shoppingListCollection|length %}
         <ul class="nested vertical menu">
-            {% for shoppingList in data.shoppingListCollection.shoppingLists %}
+            {% for shoppingList in data.shoppingListCollection %}
                 <li class="menu__item {{macros.isActive(shoppingList.idShoppingList, data.activeShoppingListId)}}"><a href="{{ path('shopping-list/details', { idShoppingList: (shoppingList.idShoppingList ) })  }}">{{ shoppingList.name }}</a></li>
             {% endfor %}
         </ul>

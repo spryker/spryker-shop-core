@@ -15,5 +15,5 @@ interface ShoppingListPageToProductStorageClientInterface
      *
      * @return array
      */
-    public function getProductConcreteStorageData($idProductConcrete, $localeName): array;
+    public function getProductConcreteStorageData($idProductConcrete, $localeName);
 }

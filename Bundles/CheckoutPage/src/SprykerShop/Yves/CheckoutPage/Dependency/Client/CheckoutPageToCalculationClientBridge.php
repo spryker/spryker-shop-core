@@ -35,7 +35,7 @@ class CheckoutPageToCalculationClientBridge implements CheckoutPageToCalculation
     }
 
     /**
-     * @return \Spryker\Client\Calculation\Zed\CalculationStub
+     * @return \Spryker\Client\Calculation\Zed\CalculationStubInterface
      */
     public function getZedStub()
     {

@@ -1,14 +1,22 @@
 {% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+            },{
+                label: 'customer.account.shopping_list' | trans,
+            }]
+        }
+    } only %}
+{% endblock %}
+
 {% define data = {
+    title: _view.shoppingListOverview.shoppingList.name,
     shoppingList: _view.shoppingListOverview.shoppingList,
     shoppingListCollection: _view.shoppingListOverview.shoppingLists,
-    addAvailableProductsToCartForm: _view.addAvailableProductsToCartForm,
     shoppingListItems: _view.shoppingListItems,
-    pagination: {
-        currentPage: _view.currentPage,
-        totalPages: _view.totalPages
-    },
     labels: {
         addAllToCartLabel: 'customer.account.shopping_list.add_all_available_to_cart' | trans,
         printShoppingList: 'customer.account.shopping_list.print_shopping_list' | trans,
@@ -22,87 +30,80 @@
         quantityLabel: 'customer.account.shopping_list.quantity' | trans,
         addItemToCartLabel: 'customer.account.shopping_list.add-to-cart' | trans,
         removeItemFromShoppingListLabel: 'customer.account.shopping_list.remove' | trans,
+        actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
+        editLabel: 'customer.account.shopping_list.overview.edit' | trans,
+        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
+        shareLabel: 'customer.account.shopping_list.overview.share' | trans,
         addSelectedItemsToCartLabel: 'customer.account.shopping_list.add_selected_items_to_cart' | trans
     }
 } %}
 
 {% block customerNavigation %}
-    {% embed molecule('customer-navigation', 'CustomerPage') with {
-        class: 'box',
-        data: {
-            activePage: data.activePage
-        },
-        embed: {
-            activeShoppingListId: data.shoppingList.idShoppingList,
-            shoppingListCollection: data.shoppingListCollection
-        }
-    } only %}
-        {% block shoppingListNavigation %}
-            {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
-                data: {
-                    activeShoppingListId: embed.activeShoppingListId,
-                    shoppingListCollection: embed.shoppingListCollection
-                }
-            } only %}
-        {% endblock %}
-    {% endembed %}
+    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.shoppingList.idShoppingList) }}
 {% endblock %}
 
 {% block customerContent %}
     <div class="box">
-        <h4>{{ data.shoppingList.name }}</h4>
-
-        {% if data.shoppingListItems|length %}
-            {% include molecule('form') with {
-                data: {
-                    form: data.addAvailableProductsToCartForm,
-                    options: {
-                        action: path('shopping-list/add-all-available-to-cart', { idShoppingList: data.shoppingList.idShoppingList })
-                    },
-                    submit: {
-                        enable: true,
-                        text: data.labels.addAllToCartLabel,
-                    }
-                }
-            } only %}
-
-            <div class="form-field grid grid--middle grid--right">
-                <a class="button button--success" href="{{ path('shopping-list/print', {idShoppingList: data.shoppingList.idShoppingList}) }}" target="_blank">
-                    {{data.labels.printShoppingList}}
-                </a>
+        <div class="grid grid--justify">
+            <div class="col">
+                <h4>{{ data.shoppingList.name }}</h4>
             </div>
-        {% endif %}
-
+            <div class="col">
+                {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+                    <a class="button button--success" href="{{ url('shopping-list/update', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.editLabel }}</a>
+                    <a class="button button--alert" href="{{ url('shopping-list/delete', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.deleteLabel }}</a>
+                    <a class="button button--success" href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.shareLabel }}</a>
+                {% endif %}
+                <a class="button button--success" href="{{ path('shopping-list/print', {idShoppingList: data.shoppingList.idShoppingList}) }}" target="_blank">{{data.labels.printShoppingList}}</a>
+            </div>
+        </div>
+        <hr>
         {% if data.shoppingListItems|length %}
-            <form method="POST" action="{{ path('shopping-list/multi-add-to-cart') }}">
-            <button type="submit" class="button button--success col col--sm-12 col--md-5 col--lg-3" {{qa('submit-button')}}>
-                {{ data.labels.addSelectedItemsToCartLabel }}
-            </button>
+            <form method="POST" action="{{ path('shopping-list/add-to-cart') }}">
+                <div class="grid grid--justify">
+                    <div class="col">
+                        <button type="submit" class="button button--success" {{qa('submit-button')}}>
+                            {{ data.labels.addSelectedItemsToCartLabel }}
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="button button--success" name="add-all-available" value="1" {{qa('submit-button')}}>
+                            {{ data.labels.addAllToCartLabel }}
+                        </button>
+                    </div>
+                </div>
             <input type="hidden" value="{{ data.shoppingList.idShoppingList }}" name="idShoppingList"/>
             <table class="table table--expand">
                 <thead>
                 <tr>
                     <th></th>
-                    <th class="text-center">{{ data.labels.productLabel }}</th>
+                    <th class="text-center" colspan="2">{{ data.labels.productLabel }}</th>
                     <th class="text-center">{{ data.labels.priceLabel  }}</th>
                     <th class="text-center">{{ data.labels.quantityLabel }}</th>
-                    <th class="text-center">{{ data.labels.variantLabel  }}</th>
                     <th class="text-center">{{ data.labels.availabilityLabel  }}</th>
-                    <th></th>
+                    <th class="text-center">{{ data.labels.actionsLabel }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for item in data.shoppingListItems %}
+                    {% set isItemAvalable = item.available is defined and item.available and item.price is defined and item.price is not null %}
                     <tr>
                         <td>
-                            <input type="checkbox" name="idShoppingListItem[]" value="{{ item.idShoppingListItem }}"/>
+                            <input type="checkbox" {{ isItemAvalable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.idShoppingListItem }}]" value="{{ item.idShoppingListItem }}"/>
+                        </td>
+                        <td class="text-center">
+                            {% if item.images is defined and item.images is not empty %}
+                                <img width="75" src="{{ item.images[0].externalUrlSmall }}" />
+                            {% endif %}
                         </td>
                         <td class="text-center">
                             <a href="{{ item.url }}">{{ item.name }}</a>
                             <div><small>{{ item.sku }}</small></div>
-                            {% if item.images is defined and item.images is not empty %}
-                                <img width="75" src="{{ item.images[0].externalUrlSmall }}" />
-                            {% endif %}
+                            {% for attribute in item.superAttributesDefinition %}
+                                {% if item.attributes[attribute] is defined %}
+                                    {{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }} <br/>
+                                {% endif %}
+                            {% endfor %}
                         </td>
                         <td nowrap="nowrap" class="text-center">
                             {% if item.price is defined and item.price is not null %}
@@ -115,13 +116,8 @@
                                 N/A
                             {% endif %}
                         </td>
-                        <td class="text-center">{{ item.quantity }}</td>
                         <td class="text-center">
-                            {% for attribute in item.superAttributesDefinition %}
-                                {% if item.attributes[attribute] is defined %}
-                                    {{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }} <br/>
-                                {% endif %}
-                            {% endfor %}
+                            <input class="input" {{ isItemAvalable ? '' : 'disabled' }} type="number" name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]" value="{{ item.quantity }}"/>
                         </td>
                         <td class="text-center">
                             {% if item.available %}
@@ -131,10 +127,10 @@
                             {% endif %}
                         </td>
                         <td>
-                            {% if item.available is defined and item.available and item.price is defined and item.price is not null %}
-                                <a class="button button--success" href="{{ path('shopping-list/add-to-cart', {sku: item.sku, quantity: item.quantity, idShoppingListItem: item.idShoppingListItem, idShoppingList: data.shoppingList.idShoppingList}) }}">
+                            {% if isItemAvalable %}
+                                <button type="submit" name="add-item" class="button button--success" value="{{ item.idShoppingListItem }}" {{qa('submit-button')}}>
                                     {{data.labels.addItemToCartLabel}}
-                                </a>
+                                </button>
                             {% endif %}
                             {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
                                 <a class="button button--alert" href="{{ path('shopping-list/remove-item', {idShoppingListItem: item.idShoppingListItem, idShoppingList: data.shoppingList.idShoppingList}) }}">
@@ -147,18 +143,6 @@
                 </tbody>
             </table>
             </form>
-
-            {% include molecule('pagination') with {
-                data: {
-                    parameters: {
-                        idShoppingList: data.shoppingList.idShoppingList
-                    },
-                    currentPage: data.pagination.currentPage,
-                    paginationPath: 'shopping-list/details',
-                    maxPage: data.pagination.totalPages,
-                    showAlwaysFirstAndLast: true
-                }
-            } only %}
         {% else %}
             {{ data.labels.shoppingListEmptyLabel }}
         {% endif %}

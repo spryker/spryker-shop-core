@@ -92,7 +92,7 @@
 
     {% if widgetExists('ShoppingListWidgetPlugin') %}
         <hr />
-        {{ widget('ShoppingListWidgetPlugin', sku, isDisabled) }}
+        {{ widget('ShoppingListWidgetPlugin', sku, data.product.idProductConcrete) }}
     {% endif %}
 
     {% if widgetExists('WishlistWidgetPlugin') %}
