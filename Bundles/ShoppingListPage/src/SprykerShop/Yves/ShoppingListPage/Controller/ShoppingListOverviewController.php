@@ -37,6 +37,18 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      */
     public function indexAction(Request $request)
     {
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view($viewData, [], '@ShoppingListPage/views/shopping-list-overview/shopping-list-overview.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
+    {
         $shoppingListForm = $this->getFactory()
             ->getShoppingListForm()
             ->handleRequest($request);
@@ -55,13 +67,11 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             $this->handleResponseErrors($shoppingListResponseTransfer);
         }
 
-        $data = [
+        return [
             'shoppingListCollection' => $this->getCustomerShoppingListCollection(),
             'shoppingListForm' => $shoppingListForm->createView(),
             'shoppingListResponse' => $shoppingListResponseTransfer,
         ];
-
-        return $this->view($data, [], '@ShoppingListPage/views/shopping-list-overview/shopping-list-overview.twig');
     }
 
     /**
@@ -71,6 +81,23 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(int $idShoppingList, Request $request)
+    {
+        $response = $this->executeUpdateAction($idShoppingList, $request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@ShoppingListPage/views/shopping-list-overview-update/shopping-list-overview-update.twig');
+    }
+
+    /**
+     * @param int $idShoppingList
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeUpdateAction(int $idShoppingList, Request $request)
     {
         $shoppingListFormDataProvider = $this->getFactory()->createShoppingListFormDataProvider();
         $shoppingListForm = $this->getFactory()
@@ -100,15 +127,13 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $shoppingListCollection = $this->getCustomerShoppingListCollection();
         $shoppingListTransfer = $this->getShoppingListById($idShoppingList, $shoppingListCollection);
 
-        $data = [
+        return [
             'shoppingList' => $shoppingListTransfer,
             'shoppingListCollection' => $shoppingListCollection,
             'shoppingListForm' => $shoppingListForm->createView(),
             'idShoppingList' => $shoppingListForm->getData()->getIdShoppingList(),
             'shoppingListResponse' => $shoppingListResponseTransfer,
         ];
-
-        return $this->view($data, [], '@ShoppingListPage/views/shopping-list-overview-update/shopping-list-overview-update.twig');
     }
 
     /**
@@ -148,6 +173,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $shoppingListItems = $this->getFactory()
             ->getShoppingListClient()
             ->getShoppingListItemCollection($this->getShoppingListCollectionTransfer($request));
+
         if (count($shoppingListItems->getItems()) === 0) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_NOT_FOUND);
 
@@ -177,6 +203,23 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      */
     public function shareShoppingListAction(int $idShoppingList, Request $request)
     {
+        $response = $this->executeShareShoppingListAction($idShoppingList, $request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@ShoppingListPage/views/share-shopping-list/share-shopping-list.twig');
+    }
+
+    /**
+     * @param int $idShoppingList
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeShareShoppingListAction(int $idShoppingList, Request $request)
+    {
         $shareShoppingListForm = $this->getFactory()
             ->getShareShoppingListForm($idShoppingList)
             ->handleRequest($request);
@@ -200,14 +243,12 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $shippingListTransferCollection = $this->getCustomerShoppingListCollection();
         $shoppingListTransfer = $this->getShoppingListById($idShoppingList, $shippingListTransferCollection);
 
-        $data = [
+        return [
             'idShoppingList' => $idShoppingList,
             'shoppingList' => $shoppingListTransfer,
             'shareShoppingListForm' => $shareShoppingListForm->createView(),
             'shoppingListCollection' => $shippingListTransferCollection,
         ];
-
-        return $this->view($data, [], '@ShoppingListPage/views/share-shopping-list/share-shopping-list.twig');
     }
 
     /**

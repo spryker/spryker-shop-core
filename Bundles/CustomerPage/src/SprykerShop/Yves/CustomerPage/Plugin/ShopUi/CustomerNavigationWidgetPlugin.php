@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Plugin\ShopUi;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShopUiExtension\Dependency\Plugin\CustomerPage\CustomerNavigationWidgetPluginInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Plugin\CustomerPage\CustomerNavigationWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
