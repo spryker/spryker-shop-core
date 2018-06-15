@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+	"spryker-shop/shop-ui": "^1.0.0",
     "spryker-shop/currency-widget": "^1.0.0",
     "spryker/kernel": "^3.16.0",
     "spryker/money": "^2.4.0"

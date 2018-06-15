@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+	"spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0",
     "spryker/price": "^5.3.0",
     "spryker/quote": "^1.1.0 || ^2.0.0",
@@ -12,13 +13,11 @@
   "require-dev": {
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/shop-application": "*",
-    "spryker-shop/shop-ui": "*",
     "spryker/silex": "*"
   },
   "suggest": {
     "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
     "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
-    "spryker-shop/shop-ui": "Widget plugins are available for this module.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

@@ -14,8 +14,8 @@
     "spryker/twig": "^3.0.0"
   },
   "suggest": {
-    "spryker/twig": "^3.0.0 If you want to use the permission plugin for Twig",
-    "spryker/silex": "^2.0.0 If you want to use the permission plugin for Twig"
+    "spryker/twig": ">3.0.0 If you want to use the permission plugin for Twig",
+    "spryker/silex": ">2.0.0 If you want to use the permission plugin for Twig"
   },
   "autoload": {
     "psr-4": {

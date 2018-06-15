@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+	"spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.19.0",
     "spryker/multi-cart": "^1.0.0"
   },
@@ -11,14 +12,12 @@
     "spryker-shop/cart-page": "*",
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/quick-order-page": "*",
-    "spryker-shop/shop-ui": "*",
     "spryker/permission": "*",
     "spryker/silex": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "Widget plugins are available for this module.",
     "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
-    "spryker-shop/shop-ui": "Widget plugins are available for this module.",
     "spryker-shop/quick-order-page": "If you want to use quick order page widget",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker/permission": "If you want to use permissions plugins"

@@ -4,15 +4,14 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+	"spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0",
     "spryker/url-storage": "^1.0.0"
   },
   "require-dev": {
-    "spryker-shop/shop-ui": "*",
     "spryker/symfony": "*"
   },
   "suggest": {
-    "spryker-shop/shop-ui": "Widget plugins are available for this module.",
     "spryker/symfony": "3.0.0 for using LanguageSwitcherPlugin"
   },
   "autoload": {
