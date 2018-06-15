@@ -22,7 +22,7 @@
 
 {% block body %}
     <form method="POST" action="{{ path('cart/update', {'sku': data.cartItem.sku }) }}">
-        <ul class="list list--spacing">
+        <ul class="list spacing-y">
             {% for attributeName, attributeOptions in data.cartItemAttributes %}
                 {% set options = [] %}
 
@@ -35,7 +35,7 @@
                     }]) %}
                 {% endfor %}
 
-                <li class="list__item list__item--spacing">
+                <li class="list__item spacing-y">
                     <label>
                         {{ ('product.attribute.' ~ attributeName) | trans }}
                         {% include atom('select') with {

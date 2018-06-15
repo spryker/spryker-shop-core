@@ -8,20 +8,21 @@
 {% block body %}
     <div class="grid grid--bottom">
         {% for item in data.items %}
-            <div class="col col--sm-7">
+            <div class="col col--sm-7 spacing spacing--inner">
                 {{ form_row(item.sku, {
                     required: loop.first
                 }) }}
             </div>
-            <div class="col col--sm-4">
+            <div class="col col--sm-4 spacing spacing--inner">
                 {{ form_row(item.qty, {
                     required: loop.first
                 }) }}
             </div>
-            <div class="col col--sm-1 col--middle">
+            <div class="col col--sm-1 spacing spacing--inner">
                 {% if not loop.first %}
-                    <a href="#remove" class="{% block removeActionClass %}{% endblock %}" data-row-index="{{loop.index0}}">
+                    <a href="#remove" class="button button--expand button--warning {% block removeActionClass %}{% endblock %}" data-row-index="{{loop.index0}}">
                         {% include atom('icon') with {
+                            modifiers: ['small'],
                             data: {
                                 name: 'times'
                             }

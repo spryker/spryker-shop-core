@@ -45,7 +45,7 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     /**
      * @return \Symfony\Component\Form\FormFactory
      */
-    protected function getFormFactory()
+    public function getFormFactory()
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
@@ -59,20 +59,12 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     {
         $dataProvider = $this->createProductReviewFormDataProvider();
         $form = $this->getFormFactory()->create(
-            $this->createProductReviewFormType(),
+            ProductReviewForm::class,
             $dataProvider->getData($idProductAbstract),
             $dataProvider->getOptions()
         );
 
         return $form;
-    }
-
-    /**
-     * @return string
-     */
-    protected function createProductReviewFormType()
-    {
-        return ProductReviewForm::class;
     }
 
     /**
@@ -86,7 +78,7 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     /**
      * @return \SprykerShop\Yves\ProductReviewWidget\Form\DataProvider\ProductReviewFormDataProvider
      */
-    protected function createProductReviewFormDataProvider()
+    public function createProductReviewFormDataProvider()
     {
         return new ProductReviewFormDataProvider();
     }

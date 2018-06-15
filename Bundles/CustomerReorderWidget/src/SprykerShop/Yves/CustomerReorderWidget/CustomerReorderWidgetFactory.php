@@ -68,7 +68,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface
      */
-    protected function createItemsFetcher(): ItemFetcherInterface
+    public function createItemsFetcher(): ItemFetcherInterface
     {
         return new ItemFetcher(
             $this->getProductBundleClient()
@@ -78,7 +78,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface
      */
-    protected function getAvailabilityStorageClient(): CustomerReorderWidgetToAvailabilityStorageClientInterface
+    public function getAvailabilityStorageClient(): CustomerReorderWidgetToAvailabilityStorageClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
     }
@@ -86,7 +86,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface
      */
-    protected function getCustomerClient(): CustomerReorderWidgetToCustomerClientInterface
+    public function getCustomerClient(): CustomerReorderWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_CUSTOMER);
     }
@@ -94,7 +94,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface
      */
-    protected function getCartClient(): CustomerReorderWidgetToCartClientInterface
+    public function getCartClient(): CustomerReorderWidgetToCartClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_CART);
     }
@@ -102,7 +102,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface
      */
-    protected function getSalesClient(): CustomerReorderWidgetToSalesClientInterface
+    public function getSalesClient(): CustomerReorderWidgetToSalesClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_SALES);
     }
@@ -110,7 +110,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface
      */
-    protected function getProductBundleClient(): CustomerReorderWidgetToProductBundleClientInterface
+    public function getProductBundleClient(): CustomerReorderWidgetToProductBundleClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_PRODUCT_BUNDLE);
     }

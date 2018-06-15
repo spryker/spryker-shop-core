@@ -1,0 +1,7 @@
+@mixin quick-order-page-quick-order-form($name: '.quick-order-form') {
+    #{$name} {
+        position: relative;
+
+        @content;
+    }
+}

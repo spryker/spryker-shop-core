@@ -23,6 +23,22 @@ class ProfileController extends AbstractCustomerController
      */
     public function indexAction(Request $request)
     {
+        $response = $this->executeIndexAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CustomerPage/views/profile/profile.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(Request $request)
+    {
         $profileForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
@@ -54,12 +70,10 @@ class ProfileController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_PROFILE);
         }
 
-        $data = [
+        return [
             'profileForm' => $profileForm->createView(),
             'passwordForm' => $passwordForm->createView(),
         ];
-
-        return $this->view($data, [], '@CustomerPage/views/profile/profile.twig');
     }
 
     /**

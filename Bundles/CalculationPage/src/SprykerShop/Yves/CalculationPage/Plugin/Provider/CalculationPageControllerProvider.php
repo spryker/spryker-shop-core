@@ -12,6 +12,8 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class CalculationPageControllerProvider extends AbstractYvesControllerProvider
 {
+    public const ROUTE_CALCULATION_DEBUG = 'calculation-debug';
+
     /**
      * @param \Silex\Application $app
      *
@@ -19,12 +21,17 @@ class CalculationPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $this->createController(
-            '/calculation/debug',
-            'calculation-debug',
-            'CalculationPage',
-            'Debug',
-            'cart'
-        )->method('GET');
+        $this->addCalculationDebugRoute();
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCalculationDebugRoute(): self
+    {
+        $this->createController('/calculation/debug', self::ROUTE_CALCULATION_DEBUG, 'CalculationPage', 'Debug', 'cart')
+            ->method('GET');
+
+        return $this;
     }
 }

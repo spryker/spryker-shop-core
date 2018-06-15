@@ -22,35 +22,29 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
-
-        $this->addShareController($allowedLocalesPattern)
-            ->addUnshareController($allowedLocalesPattern);
+        $this->addShareController()
+            ->addUnshareController();
     }
 
     /**
-     * @param string $allowedLocalesPattern
-     *
      * @return $this
      */
-    protected function addShareController(string $allowedLocalesPattern): self
+    protected function addShareController(): self
     {
         $this->createController('/{sharedCart}/share/{idQuote}', static::ROUTE_SHARED_CART_SHARE, 'SharedCartPage', 'Share', 'index')
-            ->assert('sharedCart', $allowedLocalesPattern . 'shared-cart|shared-cart')
+            ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
             ->value('sharedCart', 'shared-cart');
 
         return $this;
     }
 
     /**
-     * @param string $allowedLocalesPattern
-     *
      * @return $this
      */
-    protected function addUnshareController(string $allowedLocalesPattern): self
+    protected function addUnshareController(): self
     {
         $this->createController('/{sharedCart}/unshare/{idQuote}/{idCompanyUser}/{idPermissionGroup}', static::ROUTE_SHARED_CART_UNSHARE, 'SharedCartPage', 'Unshare', 'index')
-            ->assert('sharedCart', $allowedLocalesPattern . 'shared-cart|shared-cart')
+            ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
             ->value('sharedCart', 'shared-cart');
 
         return $this;

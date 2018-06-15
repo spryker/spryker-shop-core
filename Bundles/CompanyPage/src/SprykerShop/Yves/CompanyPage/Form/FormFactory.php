@@ -30,7 +30,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormFactoryInterface
      */
-    protected function getFormFactory(): FormFactoryInterface
+    public function getFormFactory(): FormFactoryInterface
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
@@ -142,7 +142,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
      */
-    protected function getCompanyBusinessUnitClient(): CompanyPageToCompanyBusinessUnitClientInterface
+    public function getCompanyBusinessUnitClient(): CompanyPageToCompanyBusinessUnitClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
     }
@@ -194,7 +194,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface
      */
-    protected function getBusinessOnBehalfClient(): CompanyPageToBusinessOnBehalfClientInterface
+    public function getBusinessOnBehalfClient(): CompanyPageToBusinessOnBehalfClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_BUSINESS_ON_BEHALF);
     }
@@ -202,7 +202,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface
      */
-    protected function getCompanyUnitAddressClient(): CompanyPageToCompanyUnitAddressClientInterface
+    public function getCompanyUnitAddressClient(): CompanyPageToCompanyUnitAddressClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_UNIT_ADDRESS);
     }
@@ -210,7 +210,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface
      */
-    protected function getStore(): CompanyPageToKernelStoreInterface
+    public function getStore(): CompanyPageToKernelStoreInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::STORE);
     }
@@ -218,7 +218,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface
      */
-    protected function getCompanyRoleClient(): CompanyPageToCompanyRoleClientInterface
+    public function getCompanyRoleClient(): CompanyPageToCompanyRoleClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_ROLE);
     }
@@ -226,7 +226,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface
      */
-    protected function getCompanyUserClient(): CompanyPageToCompanyUserClientInterface
+    public function getCompanyUserClient(): CompanyPageToCompanyUserClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_USER);
     }

@@ -29,51 +29,131 @@ class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addCheckoutIndexRoute()
+            ->addCustomerStepRoute()
+            ->addAddressStepRoute()
+            ->addShipmentStepRoute()
+            ->addPaymentStepRoute()
+            ->addCheckoutSummaryStepRoute()
+            ->addPlaceOrderStepRoute()
+            ->addCheckoutErrorRoute()
+            ->addCheckoutSuccessRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addCheckoutIndexRoute(): self
+    {
         $this->createController('/{checkout}', self::CHECKOUT_INDEX, 'CheckoutPage', 'Checkout', 'index')
-            ->assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+            ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
             ->value('checkout', 'checkout')
             ->method('GET|POST');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCustomerStepRoute(): self
+    {
         $this->createController('/{checkout}/customer', self::CHECKOUT_CUSTOMER, 'CheckoutPage', 'Checkout', 'customer')
-            ->assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+            ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
             ->value('checkout', 'checkout')
             ->method('GET|POST');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addAddressStepRoute(): self
+    {
         $this->createController('/{checkout}/address', self::CHECKOUT_ADDRESS, 'CheckoutPage', 'Checkout', 'address')
-            ->assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+            ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
             ->value('checkout', 'checkout')
             ->method('GET|POST');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addShipmentStepRoute(): self
+    {
         $this->createController('/{checkout}/shipment', self::CHECKOUT_SHIPMENT, 'CheckoutPage', 'Checkout', 'shipment')
-            ->assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+            ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
             ->value('checkout', 'checkout')
             ->method('GET|POST');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addPaymentStepRoute(): self
+    {
         $this->createController('/{checkout}/payment', self::CHECKOUT_PAYMENT, 'CheckoutPage', 'Checkout', 'payment')
-            ->assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+            ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
             ->value('checkout', 'checkout')
             ->method('GET|POST');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCheckoutSummaryStepRoute(): self
+    {
         $this->createController('/{checkout}/summary', self::CHECKOUT_SUMMARY, 'CheckoutPage', 'Checkout', 'summary')
-            ->assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+            ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
             ->value('checkout', 'checkout')
             ->method('GET|POST');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addPlaceOrderStepRoute(): self
+    {
         $this->createController('/{checkout}/place-order', self::CHECKOUT_PLACE_ORDER, 'CheckoutPage', 'Checkout', 'placeOrder')
-            ->assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+            ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
             ->value('checkout', 'checkout')
             ->method('GET|POST');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCheckoutErrorRoute(): self
+    {
         $this->createController('/{checkout}/error', self::CHECKOUT_ERROR, 'CheckoutPage', 'Checkout', 'error')
-            ->assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+            ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
             ->value('checkout', 'checkout')
             ->method('GET|POST');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCheckoutSuccessRoute(): self
+    {
         $this->createController('/{checkout}/success', self::CHECKOUT_SUCCESS, 'CheckoutPage', 'Checkout', 'success')
-            ->assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+            ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
             ->value('checkout', 'checkout')
             ->method('GET|POST');
+
+        return $this;
     }
 }

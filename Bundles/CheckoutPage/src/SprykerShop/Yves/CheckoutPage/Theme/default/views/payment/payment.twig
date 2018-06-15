@@ -34,9 +34,9 @@
             {% for name, choices in data.form.paymentSelection.vars.choices %}
                 <h5>{{ ('checkout.payment.provider.' ~ name) | trans }}</h5>
 
-                <ul class="list list--spacing">
+                <ul class="list spacing-y">
                     {% for key, choice in choices %}
-                        <li class="list__item list__item--spacing clear">
+                        <li class="list__item spacing-y clear">
                             {% embed molecule('form') with {
                                 data: {
                                     form: data.form[data.form.paymentSelection[key].vars.value],
@@ -54,9 +54,10 @@
                             } only %}
                                 {% block fieldset %}
                                     {{ form_row(embed.toggler, {
+                                        required: false,
                                         component: molecule('toggler-radio'),
                                         attributes: {
-                                            target: 'js-payment-method-' ~ embed.index,
+                                            'target-selector': '.js-payment-method-' ~ embed.index,
                                             'class-to-toggle': 'is-hidden'
                                         }
                                     }) }}

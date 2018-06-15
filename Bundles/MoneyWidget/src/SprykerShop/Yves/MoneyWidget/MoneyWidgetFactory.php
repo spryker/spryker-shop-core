@@ -46,7 +46,7 @@ class MoneyWidgetFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Money\Formatter\MoneyFormatterCollectionInterface
      */
-    protected function createFormatterCollection()
+    public function createFormatterCollection()
     {
         $moneyFormatterCollection = new MoneyFormatterCollection();
         $moneyFormatterCollection->addFormatter(
@@ -76,7 +76,7 @@ class MoneyWidgetFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Money\Dependency\Parser\MoneyToParserInterface
      */
-    protected function getMoneyParser()
+    public function getMoneyParser()
     {
         return $this->getProvidedDependency(MoneyWidgetDependencyProvider::MONEY_PARSER);
     }
@@ -84,7 +84,7 @@ class MoneyWidgetFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    protected function getStore()
+    public function getStore()
     {
         return $this->getProvidedDependency(MoneyWidgetDependencyProvider::STORE);
     }
@@ -92,7 +92,7 @@ class MoneyWidgetFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface
      */
-    protected function createMoneyToTransferMapper()
+    public function createMoneyToTransferMapper()
     {
         return new MoneyToTransferMapper(
             $this->getCurrencyPlugin()
@@ -102,7 +102,7 @@ class MoneyWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CurrencyWidget\Plugin\CurrencyPluginInterface
      */
-    protected function getCurrencyPlugin()
+    public function getCurrencyPlugin()
     {
         return $this->getProvidedDependency(MoneyWidgetDependencyProvider::CURRENCY_PLUGIN);
     }
@@ -110,7 +110,7 @@ class MoneyWidgetFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface
      */
-    protected function createTransferToMoneyMapper()
+    public function createTransferToMoneyMapper()
     {
         return new TransferToMoneyMapper();
     }
@@ -118,7 +118,7 @@ class MoneyWidgetFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Money\Formatter\MoneyFormatterInterface
      */
-    protected function createIntlFormatterCurrency()
+    public function createIntlFormatterCurrency()
     {
         return new IntlMoneyFormatterWithCurrency(
             $this->createTransferToMoneyMapper()
@@ -128,7 +128,7 @@ class MoneyWidgetFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Money\Formatter\MoneyFormatterInterface
      */
-    protected function createIntlFormatterDecimal()
+    public function createIntlFormatterDecimal()
     {
         return new IntlMoneyFormatterWithoutCurrency(
             $this->createTransferToMoneyMapper()

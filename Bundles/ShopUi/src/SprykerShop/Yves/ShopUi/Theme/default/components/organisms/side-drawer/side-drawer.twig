@@ -28,7 +28,7 @@
         {% endblock %}
 
         <div class="{{config.name}}__navigation">
-            {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', view('navigation-main-mobile', 'ShopLayout')) }}
+            {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', 'navigation-main-mobile') }}
             <hr />
             {% include organism('navigation-top') with {
                 class: 'text-left',

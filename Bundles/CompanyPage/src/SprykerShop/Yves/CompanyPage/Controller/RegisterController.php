@@ -28,6 +28,22 @@ class RegisterController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $response = $this->executeIndexAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/register/register.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(Request $request)
+    {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         if ($customerTransfer && $customerTransfer->getCompanyUserTransfer()) {
@@ -54,11 +70,9 @@ class RegisterController extends AbstractController
             }
         }
 
-        $data = [
+        return [
             'registerForm' => $registerForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/register/register.twig');
     }
 
     /**
