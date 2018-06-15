@@ -24,13 +24,23 @@ class DeleteController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(Request $request)
     {
-        return $this->view([
+        return $this->view($this->executeIndexAction($request), [], '@CompanyUserInvitationPage/views/invitation-delete/invitation-delete.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
+    {
+        return [
             'idCompanyUserInvitation' => (int)$request->get(static::PARAM_ID_COMPANY_USER_INVITATION),
-        ], [], '@CompanyUserInvitationPage/views/invitation-delete/invitation-delete.twig');
+        ];
     }
 
     /**

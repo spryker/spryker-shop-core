@@ -13,6 +13,7 @@
     'name': required
 } %}
 
-{%- block extraAttributes -%}
+{%- block attributes -%}
+    {{parent()}}
     group-name="{{attribute(attributes, 'name')}}"
 {%- endblock -%}

@@ -22,11 +22,19 @@ class PreviewControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addCmsPreviewRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addCmsPreviewRoute(): self
+    {
         $this->createController(sprintf('/{cms}/preview/{%s}', static::PARAM_PAGE), self::ROUTE_PREVIEW, 'CmsPage', 'Preview', 'index')
-            ->assert('cms', $allowedLocalesPattern . 'cms|cms')
+            ->assert('cms', $this->getAllowedLocalesPattern() . 'cms|cms')
             ->value('cms', 'cms')
             ->assert(static::PARAM_PAGE, '[0-9]+');
+
+        return $this;
     }
 }

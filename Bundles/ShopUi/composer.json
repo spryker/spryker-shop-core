@@ -4,7 +4,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-ui-extension": "^1.0.0",
     "spryker/kernel": "^3.16.0",
     "spryker/twig": "^3.3.1"
   },
@@ -12,7 +11,7 @@
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker/silex": "TODO: add suggestion description"
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

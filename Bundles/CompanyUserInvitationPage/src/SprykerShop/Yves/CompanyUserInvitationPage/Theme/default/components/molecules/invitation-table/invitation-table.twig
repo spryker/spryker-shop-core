@@ -34,7 +34,7 @@
                       {% if invitation.companyUserInvitationStatusKey == 'new'  %}
                           <li class="menu__item">
                               <a href="{{ path('company/user-invitation/send', {'idCompanyUserInvitation': invitation.idCompanyUserInvitation}) }}"
-                                 class="{{config.selector}}__invitation-sender">
+                                 class="{{config.jsName}}__invitation-sender">
                                 {{ 'company.user.invitation.send.button' | trans }}
                               </a>
                           </li>
@@ -57,7 +57,7 @@
         {% endfor %}
         {% include molecule('action-single-click-enforcer') with {
             attributes: {
-                'target-selector': '.' ~ config.selector ~ '__invitation-sender'
+                'target-selector': '.' ~ config.jsName ~ '__invitation-sender'
             }
         } only %}
         </tbody>

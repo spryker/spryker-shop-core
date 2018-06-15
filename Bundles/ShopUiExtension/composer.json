@@ -5,16 +5,6 @@
   "require": {
     "php": ">=7.1"
   },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/symfony": "*",
-    "spryker/testify": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
@@ -24,5 +14,6 @@
   },
   "config": {
     "sort-packages": true
-  }
+  },
+  "abandoned": true
 }

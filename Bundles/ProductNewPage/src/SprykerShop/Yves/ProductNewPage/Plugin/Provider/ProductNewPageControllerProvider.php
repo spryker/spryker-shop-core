@@ -21,15 +21,23 @@ class ProductNewPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addNewProductsRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addNewProductsRoute(): self
+    {
         $this->createController('/{newProducts}{categoryPath}', self::ROUTE_NEW_PRODUCTS, 'ProductNewPage', 'NewProducts', 'index')
-            ->assert('newProducts', $allowedLocalesPattern . 'new|new')
+            ->assert('newProducts', $this->getAllowedLocalesPattern() . 'new|new')
             ->value('newProducts', 'new')
             ->assert('categoryPath', '\/.+')
             ->value('categoryPath', null)
-            ->convert('categoryPath', function ($categoryPath) use ($allowedLocalesPattern) {
-                return preg_replace('#^\/' . $allowedLocalesPattern . '#', '/', $categoryPath);
+            ->convert('categoryPath', function ($categoryPath) {
+                return preg_replace('#^\/' . $this->getAllowedLocalesPattern() . '#', '/', $categoryPath);
             });
+
+        return $this;
     }
 }

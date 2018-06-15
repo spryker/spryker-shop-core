@@ -26,6 +26,8 @@ abstract class AbstractCompanyController extends AbstractController
     public const DEFAULT_PAGE = 1;
 
     /**
+     * @deprecated Behaviour is implemented by CompanyUserRestrictionHandlerPlugin
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return void
@@ -36,7 +38,7 @@ abstract class AbstractCompanyController extends AbstractController
 
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer() && !$customerTransfer->getIsOnBehalf()) {
             throw new NotFoundHttpException("Regular customers are not allowed to operate on company pages");
         }
     }
@@ -114,9 +116,8 @@ abstract class AbstractCompanyController extends AbstractController
     protected function processResponseMessages(AbstractTransfer $responseTransfer): void
     {
         if ($responseTransfer->offsetExists('messages')) {
-            /** @var null|\Generated\Shared\Transfer\ResponseMessageTransfer[] $responseMessages */
+            /** @var \Generated\Shared\Transfer\ResponseMessageTransfer[] $responseMessages */
             $responseMessages = $responseTransfer->offsetGet('messages');
-            /** @var \Generated\Shared\Transfer\ResponseMessageTransfer $responseMessage */
             foreach ($responseMessages as $responseMessage) {
                 $this->addErrorMessage($responseMessage->getText());
             }

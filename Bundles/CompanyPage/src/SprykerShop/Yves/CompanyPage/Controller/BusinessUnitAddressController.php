@@ -22,6 +22,22 @@ class BusinessUnitAddressController extends AbstractCompanyController
      */
     public function createAction(Request $request)
     {
+        $response = $this->executeCreateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/business-unit-address-create/business-unit-address-create.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeCreateAction(Request $request)
+    {
         $dataProvider = $this
             ->getFactory()
             ->createCompanyPageFormFactory()
@@ -58,11 +74,9 @@ class BusinessUnitAddressController extends AbstractCompanyController
             }
         }
 
-        $data = [
+        return [
             'form' => $addressForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/business-unit-address-create/business-unit-address-create.twig');
     }
 
     /**

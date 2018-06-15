@@ -46,7 +46,7 @@ class CatalogPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface
      */
-    protected function getSearchClient(): CatalogPageToSearchClientInterface
+    public function getSearchClient(): CatalogPageToSearchClientInterface
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_SEARCH);
     }

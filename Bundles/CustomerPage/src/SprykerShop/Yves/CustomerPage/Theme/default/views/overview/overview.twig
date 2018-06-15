@@ -3,8 +3,8 @@
 {% define data = {
     orders: _view.orderList,
     customer: _view.customer,
-    billingAddress: _view.addresses.billing | default(null),
-    shippingAddress: _view.addresses.shipping | default(null),
+    billingAddress: _view.addresses.billing | default,
+    shippingAddress: _view.addresses.shipping | default,
     billingAddressId: _view.addresses.billing.idCustomerAddress | default(''),
     shippingAddressId: _view.addresses.shipping.idCustomerAddress | default(''),
 

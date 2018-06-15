@@ -3,20 +3,7 @@
   "description": "ShopLayout module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker-shop/shop-layout-extension": "^1.0.0",
-    "spryker/kernel": "^3.16.0"
-  },
-  "require-dev": {
-    "spryker/silex": "*"
-  },
-  "suggest": {
-    "spryker/silex": "TODO: add suggestion description"
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
-    }
+    "php": ">=7.1"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -27,5 +14,6 @@
   },
   "config": {
     "sort-packages": true
-  }
+  },
+  "abandoned": true
 }

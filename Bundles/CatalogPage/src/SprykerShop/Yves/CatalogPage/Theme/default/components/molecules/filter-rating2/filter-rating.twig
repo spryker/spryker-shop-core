@@ -1,9 +1,0 @@
-{% extends model('component') %}
-
-{% set name = name | default('filter-rating') %}
-
-{% set filter = data.filter %}
-
-{% block body %}
-    {{ widget('ProductRatingFilterWidgetPlugin', filter, app.request) }}
-{% endblock %}

@@ -2,8 +2,7 @@
 
 {% define config = {
     name: 'checkbox',
-    tag: 'span',
-    renderAttributes: false
+    tag: 'span'
 } %}
 
 {% define data = {
@@ -17,14 +16,14 @@
 
 {% set disabled = attributes['disabled'] | default(false) %}
 
-{% block extraAttributes %}
+{% block attributes %}
     {%- if disabled %}disabled{% endif -%}
 {% endblock %}
 
 {% block body %}
     <label class="{{config.name}}__container" {{qa('label')}}>
         <span class="{{config.name}}__box"></span>
-        <input class="{{config.name}}__input {% block inputClass %}{% endblock %}" {{block('attributes')}}/>
+        <input class="{{config.name}}__input {% block inputClass %}{% endblock %}" {{component.renderAttributes(attributes)}}/>
         <span class="{{config.name}}__check"></span>
         {%- block labelContainer -%}
             <span class="{{config.name}}__label label {% if attributes.required %}label--required{% endif %}">

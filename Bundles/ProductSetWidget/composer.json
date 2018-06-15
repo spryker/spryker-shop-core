@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
@@ -11,8 +12,8 @@
     "spryker/cms-content-widget-product-set-connector": "*"
   },
   "suggest": {
-    "spryker/cms-content-widget-product-set-connector": "TODO: add suggestion description",
-    "spryker-shop/product-set-detail-page": "TODO: add suggestion description"
+    "spryker/cms-content-widget-product-set-connector": "Use this module when using plugins that need CmsContentWidgetProductSetConnector dependencies.",
+    "spryker-shop/product-set-detail-page": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {

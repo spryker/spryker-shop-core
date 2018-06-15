@@ -74,7 +74,7 @@ class WishlistPageFactory extends AbstractFactory
      *
      * @return \SprykerShop\Yves\WishlistPage\Form\WishlistFormType
      */
-    protected function createWishlistFormType()
+    public function createWishlistFormType()
     {
         return new WishlistFormType();
     }
@@ -84,7 +84,7 @@ class WishlistPageFactory extends AbstractFactory
      *
      * @return \SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType
      */
-    protected function createAddAllAvailableProductsToCartFormType()
+    public function createAddAllAvailableProductsToCartFormType()
     {
         return new AddAllAvailableProductsToCartFormType();
     }
@@ -92,7 +92,7 @@ class WishlistPageFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormFactory
      */
-    protected function getFormFactory()
+    public function getFormFactory()
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }

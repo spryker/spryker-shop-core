@@ -12,7 +12,7 @@ use Silex\Application;
 use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController;
-use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
+use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductSetDetailPage\ProductSetDetailPageFactory getFactory()

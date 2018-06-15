@@ -1,6 +1,6 @@
 # AvailabilityWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module provides widget plugins that can determine a product's availability status.
 
 ## Installation
 

@@ -43,7 +43,7 @@ class NewsletterSubscriptionSummaryWidgetPlugin extends AbstractWidgetPlugin imp
      */
     public static function getTemplate(): string
     {
-        return '@NewsletterWidget/_customer-page/newsletter-subscription-summary.twig';
+        return '@NewsletterWidget/views/newsletter-subscription-summary/newsletter-subscription-summary.twig';
     }
 
     /**

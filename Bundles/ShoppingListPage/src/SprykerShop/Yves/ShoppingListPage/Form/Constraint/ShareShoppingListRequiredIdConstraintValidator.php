@@ -13,6 +13,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ShareShoppingListRequiredIdConstraintValidator extends ConstraintValidator
 {
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_ERROR_ONE_ID_REQUIRED = 'customer.account.shopping_list.share.error.one_id_required';
+
     /**
      * @param mixed|\Generated\Shared\Transfer\ShoppingListShareRequestTransfer $value
      * @param \Symfony\Component\Validator\Constraint $constraint
@@ -32,7 +34,7 @@ class ShareShoppingListRequiredIdConstraintValidator extends ConstraintValidator
         }
 
         if (!($value->getIdCompanyBusinessUnit() xor $value->getIdCompanyUser())) {
-            $this->context->buildViolation('customer.account.shopping_list.share.error.one_id_required')
+            $this->context->buildViolation(self::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_ERROR_ONE_ID_REQUIRED)
                 ->addViolation();
         }
     }
