@@ -17,7 +17,6 @@ class LanguageSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
 {
     const STORE = 'STORE';
     const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -28,7 +27,6 @@ class LanguageSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
     {
         $this->addStore($container);
         $this->addUrlStorageClient($container);
-        $this->addSynchronizationService($container);
 
         return $container;
     }
@@ -56,20 +54,6 @@ class LanguageSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
     {
         $container[static::CLIENT_URL_STORAGE] = function (Container $container) {
             return new LanguageSwitcherWidgetToUrlStorageClientBridge($container->getLocator()->urlStorage()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addSynchronizationService(Container $container)
-    {
-        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
-            return new LanguageSwitcherWidgetToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         };
 
         return $container;
