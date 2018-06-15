@@ -16,7 +16,7 @@
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker-shop/customer-page": "TODO: add suggestion description",
+    "spryker-shop/customer-page": "Widget plugins are available for this module.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker/product-detail-page": "To use ShoppingListWidget plugin, ShoppingListWidgetPluginInterface from product-detail-page v0.2.2 is needed"
   },
