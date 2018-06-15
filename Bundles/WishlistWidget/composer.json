@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0",
     "spryker/wishlist": "^4.0.0 || ^5.0.0 || ^6.0.0"
   },
@@ -12,7 +13,7 @@
     "spryker-shop/product-detail-page": "*"
   },
   "suggest": {
-    "spryker-shop/product-detail-page": "TODO: add suggestion description",
+    "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
     "spryker-shop/customer-page": "To have customer account pages"
   },
   "autoload": {

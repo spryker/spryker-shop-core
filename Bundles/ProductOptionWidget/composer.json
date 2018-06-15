@@ -4,16 +4,17 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0",
-    "spryker/product-option-storage": "^0.1.0 || ^1.0.0"
+    "spryker/product-option-storage": "^1.0.0"
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
     "spryker-shop/product-detail-page": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "TODO: add suggestion description",
-    "spryker-shop/product-detail-page": "TODO: add suggestion description"
+    "spryker-shop/cart-page": "Widget plugins are available for this module.",
+    "spryker-shop/product-detail-page": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {

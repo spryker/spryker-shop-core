@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\BusinessOnBehalfWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Client\BusinessOnBehalfWidget\Dependency\Client\BusinessOnBehalfWidgetToBusinessOnBehalfClientBridge;
-use SprykerShop\Client\BusinessOnBehalfWidget\Dependency\Client\BusinessOnBehalfWidgetToCustomerClientBridge;
+use SprykerShop\Yves\BusinessOnBehalfWidget\Dependency\Client\BusinessOnBehalfWidgetToBusinessOnBehalfClientBridge;
+use SprykerShop\Yves\BusinessOnBehalfWidget\Dependency\Client\BusinessOnBehalfWidgetToCustomerClientBridge;
 
 class BusinessOnBehalfWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {

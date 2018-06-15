@@ -32,8 +32,27 @@ class CatalogController extends AbstractController
      */
     public function indexAction(array $categoryNode, Request $request)
     {
-        $searchString = $request->query->get('q', '');
         $idCategoryNode = $categoryNode['node_id'];
+
+        $viewData = $this->executeIndexAction($categoryNode, $idCategoryNode, $request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getCatalogPageWidgetPlugins(),
+            $this->getCategoryNodeTemplate($idCategoryNode)
+        );
+    }
+
+    /**
+     * @param array $categoryNode
+     * @param int $idCategoryNode
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(array $categoryNode, int $idCategoryNode, Request $request): array
+    {
+        $searchString = $request->query->get('q', '');
         $idCategory = $categoryNode['id_category'];
 
         $parameters = $request->query->all();
@@ -61,14 +80,7 @@ class CatalogController extends AbstractController
                 ->getCatalogViewMode($request),
         ];
 
-        $searchResults = array_merge($searchResults, $metaAttributes);
-        $template = $this->getCategoryNodeTemplate($idCategoryNode);
-
-        return $this->view(
-            $searchResults,
-            $this->getFactory()->getCatalogPageWidgetPlugins(),
-            $template
-        );
+        return array_merge($searchResults, $metaAttributes);
     }
 
     /**
@@ -77,6 +89,22 @@ class CatalogController extends AbstractController
      * @return \Spryker\Yves\Kernel\View\View
      */
     public function fulltextSearchAction(Request $request)
+    {
+        $viewData = $this->executeFulltextSearchAction($request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getCatalogPageWidgetPlugins(),
+            '@CatalogPage/views/search/search.twig'
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeFulltextSearchAction(Request $request): array
     {
         $searchString = $request->query->get('q');
 
@@ -91,11 +119,7 @@ class CatalogController extends AbstractController
             ->getCatalogClient()
             ->getCatalogViewMode($request);
 
-        return $this->view(
-            $searchResults,
-            $this->getFactory()->getCatalogPageWidgetPlugins(),
-            '@CatalogPage/views/search/search.twig'
-        );
+        return $searchResults;
     }
 
     /**

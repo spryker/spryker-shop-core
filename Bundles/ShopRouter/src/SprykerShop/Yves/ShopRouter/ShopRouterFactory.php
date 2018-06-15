@@ -20,7 +20,7 @@ use Symfony\Component\Routing\RouteCollection;
 class ShopRouterFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface[]
+     * @return \SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface[]
      */
     public function getResourceCreatorPlugins()
     {

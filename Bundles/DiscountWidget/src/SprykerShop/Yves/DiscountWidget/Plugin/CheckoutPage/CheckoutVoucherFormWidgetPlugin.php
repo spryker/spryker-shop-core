@@ -49,6 +49,6 @@ class CheckoutVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements Ch
      */
     protected function getVoucherForm()
     {
-        return $this->getFactory()->createCheckoutVoucherForm()->createView();
+        return $this->getFactory()->getCheckoutVoucherForm()->createView();
     }
 }

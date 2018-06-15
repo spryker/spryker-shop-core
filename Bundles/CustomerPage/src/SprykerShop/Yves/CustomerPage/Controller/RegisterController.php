@@ -25,6 +25,22 @@ class RegisterController extends AbstractCustomerController
      */
     public function indexAction(Request $request)
     {
+        $response = $this->executeIndexAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CustomerPage/views/register/register.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(Request $request)
+    {
         if ($this->isLoggedInCustomer()) {
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW);
         }
@@ -52,12 +68,10 @@ class RegisterController extends AbstractCustomerController
             ->createCustomerFormFactory()
             ->getLoginForm();
 
-        $data = [
+        return [
             'loginForm' => $loginForm->createView(),
             'registerForm' => $registerForm->createView(),
         ];
-
-        return $this->view($data, [], '@CustomerPage/views/register/register.twig');
     }
 
     /**

@@ -1,6 +1,6 @@
 # ShopLayout Module
 
-{{ADD DESCRIPTION HERE}}
+**This module is not continued at this point.**
 
 ## Installation
 

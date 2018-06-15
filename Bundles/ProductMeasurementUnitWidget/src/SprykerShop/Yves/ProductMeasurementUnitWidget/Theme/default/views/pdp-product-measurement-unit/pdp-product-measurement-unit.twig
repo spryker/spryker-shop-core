@@ -1,13 +1,13 @@
 {% extends template('widget') %}
 
 {% define data = {
-    idProductConcrete: _widget.product.idProductConcrete | default(null),
+    idProductConcrete: _widget.product.idProductConcrete | default,
     product: _widget.product,
     quantityOptions: _widget.quantityOptions,
     minQuantityInBaseUnits: _widget.minQuantityInBaseUnits,
     minQuantityInSalesUnits: _widget.minQuantityInSalesUnits,
-    baseUnit: _widget.baseUnit | default(null),
-    idBaseUnit: _widget.idBaseUnit | default(null),
+    baseUnit: _widget.baseUnit | default,
+    idBaseUnit: _widget.idBaseUnit | default,
     salesUnits: _widget.salesUnits | default([]),
     jsonScheme: _widget.jsonScheme | default(''),
     salesUnitCount : _widget.salesUnits|length,

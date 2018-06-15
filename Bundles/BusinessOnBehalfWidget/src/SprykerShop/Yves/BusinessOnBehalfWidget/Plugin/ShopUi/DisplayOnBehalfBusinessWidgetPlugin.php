@@ -20,10 +20,10 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
      */
     public function initialize(): void
     {
-        $this->addParameter('isOnBehalf', $this->isOnBehalf());
-        $this->addParameter('companyName', $this->getCompanyName());
-        $this->addParameter('companyBusinessUnitName', $this->getCompanyBusinessUnitName());
-        $this->addParameter('isVisible', $this->isVisible());
+        $this->addParameter('isOnBehalf', $this->isOnBehalf())
+            ->addParameter('companyName', $this->getCompanyName())
+            ->addParameter('companyBusinessUnitName', $this->getCompanyBusinessUnitName())
+            ->addParameter('isVisible', $this->isVisible());
     }
 
     /**

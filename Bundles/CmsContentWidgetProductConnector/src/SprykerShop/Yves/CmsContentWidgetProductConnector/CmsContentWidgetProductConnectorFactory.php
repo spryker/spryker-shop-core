@@ -33,7 +33,7 @@ class CmsContentWidgetProductConnectorFactory extends SprykerCmsContentWidgetPro
     /**
      * @return string[]
      */
-    protected function getCmsProductContentWidgetPlugins(): array
+    public function getCmsProductContentWidgetPlugins(): array
     {
         return $this->getProvidedDependency(CmsContentWidgetProductConnectorDependencyProvider::PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS);
     }

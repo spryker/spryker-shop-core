@@ -26,6 +26,23 @@ class ShareController extends AbstractController
      */
     public function indexAction(int $idQuote, Request $request)
     {
+        $response = $this->executeIndexAction($idQuote, $request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@SharedCartPage/views/cart-share/cart-share.twig');
+    }
+
+    /**
+     * @param int $idQuote
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(int $idQuote, Request $request)
+    {
         $sharedCartForm = $this->getFactory()
             ->getShareCartForm($idQuote)
             ->handleRequest($request);
@@ -36,15 +53,14 @@ class ShareController extends AbstractController
                 ->addShareCart($shareCartRequestTransfer);
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::KEY_GLOSSARY_SHARED_CART_PAGE_SHARE_SUCCESS);
+
                 return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
             }
         }
 
-        $data = [
+        return [
             'idQuote' => $idQuote,
             'sharedCartForm' => $sharedCartForm->createView(),
         ];
-
-        return $this->view($data, [], '@SharedCartPage/views/cart-share/cart-share.twig');
     }
 }

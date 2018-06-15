@@ -6,9 +6,8 @@
 } %}
 
 {% define data = {
-    cartQuantity: app['cart.quantity'],
+    cartQuantity: app['cart.quantity'] | default,
     showUserMenu: not (hideUserMenu | default(false)),
-    isUserAuthenticated: is_granted('IS_AUTHENTICATED_FULLY'),
     isInline: true,
     withSeparators: true
 } %}
@@ -40,7 +39,11 @@
             {% if widgetGlobalExists('MiniCartWidgetPlugin') %}
                 {{ widgetGlobal('MiniCartWidgetPlugin', cartQuantity) }}
             {% else %}
-                <a href="{{ url('cart') }}">{{cartQuantity}}{{ 'global.cart' | trans }}</a>
+                {% include molecule('cart-items-counter') with {
+                    data: {
+                        quantity: data.cartQuantity
+                    }
+                } only %}
             {% endif %}
         </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
@@ -48,7 +51,7 @@
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
 
         {% if data.showUserMenu %}
-            {% if data.isUserAuthenticated %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li class="menu__item"><a href="{{ url('customer/overview') }}">{{ 'customer.profile'|trans }}</a></li>
                 <li class="menu__item"><a href="{{ url('wishlist/overview') }}">{{ 'wishlist.wishlist'|trans }}</a></li>
                 <li class="menu__item"><a href="{{ url('logout') }}">{{ 'customer.logout'|trans }}</a></li>

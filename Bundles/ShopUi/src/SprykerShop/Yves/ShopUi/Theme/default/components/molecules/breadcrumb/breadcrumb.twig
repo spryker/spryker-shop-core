@@ -23,9 +23,9 @@
         {% for step in data.steps %}
             {% include molecule('breadcrumb-step') with {
                 data: {
-                    url: step.url | default(null),
-                    label: step.label | default(null),
-                    itemProp: step.itemProp | default(null),
+                    url: step.url | default,
+                    label: step.label | default,
+                    itemProp: step.itemProp | default,
                     withChevron: step.withChevron is defined ? step.withChevron : true
                 }
             } only %}

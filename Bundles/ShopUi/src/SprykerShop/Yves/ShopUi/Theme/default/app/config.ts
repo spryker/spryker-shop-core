@@ -1,11 +1,8 @@
 declare const __NAME__: string;
 declare const __PRODUCTION__: boolean;
+import { LogLevel } from './logger';
 
-export enum LogLevel {
-    ERRORS_ONLY = 0,
-    DEFAULT,
-    VERBOSE
-}
+let config: Config;
 
 export interface Config {
     readonly name: string
@@ -24,7 +21,7 @@ export interface Config {
     extra?: any
 }
 
-export default <Config>{
+export const defaultConfig = <Config>{
     name: __NAME__,
     isProduction: __PRODUCTION__,
 
@@ -37,4 +34,12 @@ export default <Config>{
         prefix: __NAME__,
         level: __PRODUCTION__ ? LogLevel.ERRORS_ONLY : LogLevel.VERBOSE
     }
+}
+
+export function set(newConfig: Config): void {
+    config = newConfig;
+}
+
+export function get(): Config {
+    return config;
 }

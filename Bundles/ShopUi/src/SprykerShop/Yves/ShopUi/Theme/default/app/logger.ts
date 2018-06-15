@@ -1,48 +1,46 @@
-import { LogLevel, Config } from './config';
-
 const VOID_FUNCTION = function () { };
+let prefix;
 
-export default class Logger {
-    protected readonly config: Config
+export enum LogLevel {
+    ERRORS_ONLY = 0,
+    DEFAULT,
+    VERBOSE
+}
 
-    constructor(config: Config) {
-        this.config = config;
+export function config(logLevel: LogLevel, logPrefix: string = 'yves') {
+    prefix = logPrefix;
 
-        if (this.config.log.level < LogLevel.VERBOSE) {
-            this.debug = VOID_FUNCTION;
-        }
-
-        if (this.config.log.level < LogLevel.DEFAULT) {
-            this.log = VOID_FUNCTION;
-            this.info = VOID_FUNCTION;
-            this.warn = VOID_FUNCTION;
-        }
-
-        this.log('mode:', this.config.isProduction ? 'PRODUCTION,' : 'DEVELOPMENT,', 'log-level:', LogLevel[this.config.log.level]);
+    if (logLevel < LogLevel.VERBOSE) {
+        debug = VOID_FUNCTION;
     }
 
-    protected prefix(type: string): string {
-        return `[${this.config.log.prefix}@${type}]`;
+    if (logLevel < LogLevel.DEFAULT) {
+        log = VOID_FUNCTION;
+        info = VOID_FUNCTION;
+        warn = VOID_FUNCTION;
     }
+}
 
-    debug(...args): void {
-        console.debug(this.prefix('debug'), ...args);
-    }
+function getPrefix(type: string): string {
+    return `[${prefix}@${type}]`;
+}
 
-    log(...args): void {
-        console.log(this.prefix('log'), ...args);
-    }
+export let debug = (...args): void => {
+    console.debug(getPrefix('debug'), ...args);
+}
 
-    info(...args): void {
-        console.info(this.prefix('info'), ...args);
-    }
+export let log = (...args): void => {
+    console.log(getPrefix('log'), ...args);
+}
 
-    warn(...args): void {
-        console.warn(this.prefix('warn'), ...args);
-    }
+export let info = (...args): void => {
+    console.info(getPrefix('info'), ...args);
+}
 
-    error(...args): void {
-        console.error(this.prefix('error'), ...args);
-    }
+export let warn = (...args): void => {
+    console.warn(getPrefix('warn'), ...args);
+}
 
+export const error = (...args): void => {
+    console.error(getPrefix('error'), ...args);
 }

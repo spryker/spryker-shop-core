@@ -68,14 +68,6 @@
             }
         }
 
-        &--spacing {
-            padding: 0.5rem 0 0 0.5rem;
-
-            & > .col {
-                padding: 0 0.5rem 0.5rem 0;
-            }
-        }
-
         &.container {
             max-width: $setting-grid-max-width;
         }
@@ -133,10 +125,6 @@
             align-self: center;
             margin-top: auto;
             margin-bottom: auto;
-        }
-
-        &--spacing {
-            padding: 0.5rem;
         }
     }
 }

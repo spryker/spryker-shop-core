@@ -132,7 +132,7 @@ class CustomerPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
-    protected function getFlashMessenger()
+    public function getFlashMessenger()
     {
         return $this->getApplication()['flash_messenger'];
     }

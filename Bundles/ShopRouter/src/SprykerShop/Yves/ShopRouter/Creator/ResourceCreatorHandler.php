@@ -13,12 +13,12 @@ use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
-use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
+use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 class ResourceCreatorHandler implements ResourceCreatorHandlerInterface
 {
     /**
-     * @var \SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface[]
+     * @var \SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface[]
      */
     protected $resourceCreatorPlugins;
 
@@ -28,7 +28,7 @@ class ResourceCreatorHandler implements ResourceCreatorHandlerInterface
     protected $application;
 
     /**
-     * @param \SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface[] $resourceCreatorPlugins
+     * @param \SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface[] $resourceCreatorPlugins
      * @param \Silex\Application $application
      */
     public function __construct(array $resourceCreatorPlugins, Application $application)
@@ -55,7 +55,7 @@ class ResourceCreatorHandler implements ResourceCreatorHandlerInterface
     }
 
     /**
-     * @param \SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface $resourceCreator
+     * @param \SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface $resourceCreator
      * @param array $data
      *
      * @return array

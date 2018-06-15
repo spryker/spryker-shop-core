@@ -20,15 +20,15 @@
     <h6>{{ 'cart.your-order' | trans }}</h6>
     <hr />
 
-    <ul class="list list--spacing">
+    <ul class="list spacing-y">
         {% if widgetExists('DiscountSummaryWidgetPlugin') %}
-            <li class="list__item list__item--spacing">
+            <li class="list__item spacing-y">
                 {{ widget('DiscountSummaryWidgetPlugin', data.cart) }}
             </li>
         {% endif %}
 
         {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
-            <li class="list__item list__item--spacing">
+            <li class="list__item spacing-y">
                 <strong>{{ 'cart.shipping' | trans }}</strong>
                 <br />
                 {{ data.cart.shipment.method.name }}
@@ -37,16 +37,16 @@
             </li>
         {% endif %}
 
-        <li class="list__item list__item--spacing">
+        <li class="list__item spacing-y">
             {{ 'cart.price.subtotal' | trans }}
             <span class="float-right">{{ data.cart.totals.subtotal | money }}</span>
         </li>
 
-        <li class="list__item list__item--spacing">
+        <li class="list__item spacing-y">
             {{ 'cart.total.tax_total' | trans }}
             <span class="float-right">{{ data.cart.totals.taxTotal.amount | money }}</span>
         </li>
-        <li class="list__item list__item--spacing">
+        <li class="list__item spacing-y">
             {{ 'cart.price.grand.total' | trans }}
             <strong class="float-right">{{ data.cart.totals.grandTotal | money }}</strong>
         </li>

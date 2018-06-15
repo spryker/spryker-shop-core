@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CalculationPage\Controller;
 
 use Spryker\Shared\Config\Environment;
 use Spryker\Yves\Kernel\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -19,13 +18,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DebugController extends AbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array
      */
-    public function cartAction(Request $request)
+    public function cartAction()
     {
         if (!Environment::isDevelopment()) {
             throw new NotFoundHttpException();

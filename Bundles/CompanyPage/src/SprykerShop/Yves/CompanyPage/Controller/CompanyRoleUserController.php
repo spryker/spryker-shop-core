@@ -29,12 +29,22 @@ class CompanyRoleUserController extends AbstractCompanyController
      */
     public function manageAction(Request $request)
     {
-        $data = [
+        $viewData = $this->executeManageAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/role-user/role-user.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeManageAction(Request $request): array
+    {
+        return [
             'idCompanyRole' => $request->query->getInt('id'),
             'companyUserCollection' => $this->getCompanyUserList($request),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/role-user/role-user.twig');
     }
 
     /**

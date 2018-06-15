@@ -32,20 +32,31 @@ class ProductController extends AbstractController
      */
     public function detailAction(array $productData, Request $request)
     {
+        $viewData = $this->executeDetailAction($productData, $request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getProductDetailPageWidgetPlugins(),
+            '@ProductDetailPage/views/pdp/pdp.twig'
+        );
+    }
+
+    /**
+     * @param array $productData
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeDetailAction(array $productData, Request $request): array
+    {
         $productViewTransfer = $this->getFactory()
             ->getProductStorageClient()
             ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request));
 
-        $data = [
+        return [
             'product' => $productViewTransfer,
             'productUrl' => $this->getProductUrl($productViewTransfer),
         ];
-
-        return $this->view(
-            $data,
-            $this->getFactory()->getProductDetailPageWidgetPlugins(),
-            '@ProductDetailPage/views/pdp/pdp.twig'
-        );
     }
 
     /**

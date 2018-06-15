@@ -1,9 +1,9 @@
 @mixin util-spacing() {
-    @include helper-spacing(margin);
-    @include helper-spacing(margin-top, 'top');
-    @include helper-spacing(margin-bottom, 'bottom');
-    @include helper-spacing(margin-left, 'left');
-    @include helper-spacing(margin-right, 'right');
-    @include helper-spacing(margin-left margin-right, 'x');
-    @include helper-spacing(margin-top margin-bottom, 'y');
+    @include helper-spacing('.spacing');
+    @include helper-spacing('.spacing-top', top);
+    @include helper-spacing('.spacing-bottom', bottom);
+    @include helper-spacing('.spacing-left', left);
+    @include helper-spacing('.spacing-right', right);
+    @include helper-spacing('.spacing-x', left right);
+    @include helper-spacing('.spacing-y', top bottom);
 }

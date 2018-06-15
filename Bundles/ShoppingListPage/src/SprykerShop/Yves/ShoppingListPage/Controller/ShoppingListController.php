@@ -40,11 +40,23 @@ class ShoppingListController extends AbstractShoppingListController
     /**
      * @param int $idShoppingList
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(int $idShoppingList): View
+    {
+        $viewData = $this->executeIndexAction($idShoppingList);
+
+        return $this->view($viewData, [], '@ShoppingListPage/views/shopping-list/shopping-list.twig');
+    }
+
+    /**
+     * @param int $idShoppingList
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return array
+     */
+    protected function executeIndexAction(int $idShoppingList): array
     {
         $shoppingListTransfer = (new ShoppingListTransfer())
             ->setIdShoppingList($idShoppingList)
@@ -63,12 +75,10 @@ class ShoppingListController extends AbstractShoppingListController
 
         $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);
 
-        $data = [
+        return [
             'shoppingListItems' => $shoppingListItems,
             'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
         ];
-
-        return $this->view($data, [], '@ShoppingListPage/views/shopping-list/shopping-list.twig');
     }
 
     /**
@@ -135,7 +145,24 @@ class ShoppingListController extends AbstractShoppingListController
         }
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART);
+
         return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
+    }
+
+    /**
+     * @param int $idShoppingList
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function printShoppingListAction(int $idShoppingList): View
+    {
+        $viewData = $this->executePrintShoppingListAction($idShoppingList);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getPrintShoppingListWidgetPlugins(),
+            '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
+        );
     }
 
     /**
@@ -143,9 +170,9 @@ class ShoppingListController extends AbstractShoppingListController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return array
      */
-    public function printShoppingListAction(int $idShoppingList): View
+    protected function executePrintShoppingListAction(int $idShoppingList): array
     {
         $shoppingListOverviewResponseTransfer = $this->getShoppingListOverviewResponseTransfer($idShoppingList);
 
@@ -155,16 +182,10 @@ class ShoppingListController extends AbstractShoppingListController
 
         $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);
 
-        $data = [
+        return [
             'shoppingListItems' => $shoppingListItems,
             'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
         ];
-
-        return $this->view(
-            $data,
-            $this->getFactory()->getPrintShoppingListWidgetPlugins(),
-            '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
-        );
     }
 
     /**
