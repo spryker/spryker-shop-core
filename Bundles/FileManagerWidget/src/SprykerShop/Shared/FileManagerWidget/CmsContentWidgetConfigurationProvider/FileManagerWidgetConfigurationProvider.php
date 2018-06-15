@@ -16,7 +16,7 @@ class FileManagerWidgetConfigurationProvider implements CmsContentWidgetConfigur
     /**
      * @return string
      */
-    public function getFunctionName()
+    public function getFunctionName(): string
     {
         return static::FUNCTION_NAME;
     }
@@ -24,7 +24,7 @@ class FileManagerWidgetConfigurationProvider implements CmsContentWidgetConfigur
     /**
      * @return array
      */
-    public function getAvailableTemplates()
+    public function getAvailableTemplates(): array
     {
         return [
             CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@FileManagerWidget/views/file_manager_widget/file-manager-widget.twig',
@@ -34,7 +34,7 @@ class FileManagerWidgetConfigurationProvider implements CmsContentWidgetConfigur
     /**
      * @return string
      */
-    public function getUsageInformation()
+    public function getUsageInformation(): string
     {
         return "{{ cms_file('fileId') }}";
     }

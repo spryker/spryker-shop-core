@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\FileManagerWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\FileManagerStorageTransfer;
+
 interface FileManagerWidgetToFileManagerStorageInterface
 {
     /**
@@ -15,5 +17,5 @@ interface FileManagerWidgetToFileManagerStorageInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerStorageTransfer|null
      */
-    public function findFileById($fileId, $localeName);
+    public function findFileById(int $fileId, string $localeName): ?FileManagerStorageTransfer;
 }

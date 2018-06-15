@@ -31,7 +31,7 @@ class DownloadController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): StreamedResponse
     {
         $readFileTransfer = $this->createReadFileTransfer($request);
 
@@ -51,7 +51,7 @@ class DownloadController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ReadFileTransfer
      */
-    protected function createReadFileTransfer(Request $request)
+    protected function createReadFileTransfer(Request $request): ReadFileTransfer
     {
         $transfer = new ReadFileTransfer();
 
@@ -68,7 +68,7 @@ class DownloadController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    protected function createDownloadResponse(FileManagerDataTransfer $fileManagerDataTransfer)
+    protected function createDownloadResponse(FileManagerDataTransfer $fileManagerDataTransfer): StreamedResponse
     {
         $storageFileName = $fileManagerDataTransfer->getFileInfo()
             ->getStorageFileName();

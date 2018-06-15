@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\FileManagerWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\ReadFileTransfer;
 
 interface FileManagerWidgetToFileManagerClientInterface
@@ -16,5 +17,5 @@ interface FileManagerWidgetToFileManagerClientInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function readFile(ReadFileTransfer $readFileTransfer);
+    public function readFile(ReadFileTransfer $readFileTransfer): FileManagerDataTransfer;
 }

@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\FileManagerWidget\Dependency\Service;
 
+use Generated\Shared\Transfer\FileManagerDataTransfer;
+
 class FileManagerWidgetToFileManagerServiceBridge implements FileManagerWidgetToFileManagerServiceInterface
 {
     /**
@@ -27,7 +29,7 @@ class FileManagerWidgetToFileManagerServiceBridge implements FileManagerWidgetTo
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function read(string $fileName)
+    public function read(string $fileName): FileManagerDataTransfer
     {
         return $this->fileManagerService->read($fileName);
     }

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\FileManagerWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\ReadFileTransfer;
 
 class FileManagerWidgetToFileManagerClientBridge implements FileManagerWidgetToFileManagerClientInterface
@@ -17,8 +18,6 @@ class FileManagerWidgetToFileManagerClientBridge implements FileManagerWidgetToF
     protected $fileManagerClient;
 
     /**
-     * FileManagerToFileManagerClientBridge constructor.
-     *
      * @param \Spryker\Client\FileManager\FileManagerClientInterface $fileManagerClient
      */
     public function __construct($fileManagerClient)
@@ -31,7 +30,7 @@ class FileManagerWidgetToFileManagerClientBridge implements FileManagerWidgetToF
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function readFile(ReadFileTransfer $readFileTransfer)
+    public function readFile(ReadFileTransfer $readFileTransfer): FileManagerDataTransfer
     {
         return $this->fileManagerClient->readFile($readFileTransfer);
     }
