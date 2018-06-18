@@ -152,10 +152,6 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
         $this->setCheckoutErrorMessages($checkoutResponseTransfer);
         $this->checkoutResponseTransfer = $checkoutResponseTransfer;
 
-        if (!empty($this->zedRequestClient->getLastResponseErrorMessages())) {
-            $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
-        }
-
         return $quoteTransfer;
     }
 
@@ -201,6 +197,8 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
                 $this->checkoutClient->addCheckoutErrorMessage(
                     $checkoutErrorTransfer->getDetailedMessage()
                 );
+
+                $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
             }
 
             if ($checkoutErrorTransfer->getMessage()) {
@@ -208,6 +206,8 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
                     $this->createMessageTransfer()
                         ->setValue($checkoutErrorTransfer->getMessage())
                 );
+
+                $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
             }
         }
     }
