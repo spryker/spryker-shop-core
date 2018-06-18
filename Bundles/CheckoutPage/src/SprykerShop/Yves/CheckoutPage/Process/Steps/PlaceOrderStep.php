@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithPostConditionErrorRouteInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
@@ -45,20 +44,13 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected $postConditionErrorRoute;
 
     /**
-     * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
-     */
-    protected $flashMessenger;
-
-    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
-     * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param array $errorCodeToRouteMatching
      */
     public function __construct(
         CheckoutPageToCheckoutClientInterface $checkoutClient,
-        FlashMessengerInterface $flashMessenger,
         $stepRoute,
         $escapeRoute,
         $errorCodeToRouteMatching = []
@@ -67,11 +59,10 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
 
         $this->checkoutClient = $checkoutClient;
         $this->errorCodeToRouteMatching = $errorCodeToRouteMatching;
-        $this->flashMessenger = $flashMessenger;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -90,7 +81,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -131,7 +122,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
@@ -191,7 +182,9 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected function setCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         foreach ($checkoutResponseTransfer->getErrors() as $checkoutErrorTransfer) {
-            $this->flashMessenger->addErrorMessage($checkoutErrorTransfer->getMessage());
+            $this->checkoutClient->addCheckoutErrorMessage(
+                $checkoutErrorTransfer->getDetailedMessage()
+            );
         }
     }
 }

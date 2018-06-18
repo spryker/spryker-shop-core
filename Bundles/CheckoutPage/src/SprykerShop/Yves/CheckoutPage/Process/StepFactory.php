@@ -194,7 +194,6 @@ class StepFactory extends AbstractFactory
     {
         return new PlaceOrderStep(
             $this->getCheckoutClient(),
-            $this->getFlashMessenger(),
             CheckoutPageControllerProvider::CHECKOUT_PLACE_ORDER,
             HomePageControllerProvider::ROUTE_HOME,
             [

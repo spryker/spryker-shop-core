@@ -23,6 +23,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientBri
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceBridge;
 use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentFormDataProviderPlugin;
@@ -67,6 +68,8 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     const ADDRESS_STEP_SUB_FORMS = 'ADDRESS_STEP_SUB_FORMS';
     const ADDRESS_STEP_FORM_DATA_PROVIDER = 'ADDRESS_STEP_FORM_DATA_PROVIDER';
 
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -105,6 +108,8 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerStepSubForms($container);
         $container = $this->addAddressStepSubForms($container);
         $container = $this->addAddressStepFormDataProvider($container);
+
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -544,6 +549,22 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::PLUGIN_PAYMENT_PAGE_WIDGETS] = function () {
             return $this->getPaymentPageWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container): Container
+    {
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new CheckoutPageToZedRequestClientBridge(
+                $container->getLocator()->zedRequest()->client()
+            );
         };
 
         return $container;
