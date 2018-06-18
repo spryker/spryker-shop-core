@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
@@ -196,9 +197,26 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected function setCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         foreach ($checkoutResponseTransfer->getErrors() as $checkoutErrorTransfer) {
-            $this->checkoutClient->addCheckoutErrorMessage(
-                $checkoutErrorTransfer->getDetailedMessage()
-            );
+            if ($checkoutErrorTransfer->getDetailedMessage()) {
+                $this->checkoutClient->addCheckoutErrorMessage(
+                    $checkoutErrorTransfer->getDetailedMessage()
+                );
+            }
+
+            if ($checkoutErrorTransfer->getMessage()) {
+                $this->checkoutClient->addCheckoutErrorMessage(
+                    $this->createMessageTransfer()
+                        ->setValue($checkoutErrorTransfer->getMessage())
+                );
+            }
         }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessageTransfer(): MessageTransfer
+    {
+        return new MessageTransfer();
     }
 }
