@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithPostConditionErrorRouteInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -44,13 +45,20 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected $postConditionErrorRoute;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface
+     */
+    protected $zedRequestClient;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface $zedRequestClient
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param array $errorCodeToRouteMatching
      */
     public function __construct(
         CheckoutPageToCheckoutClientInterface $checkoutClient,
+        CheckoutPageToZedRequestClientInterface $zedRequestClient,
         $stepRoute,
         $escapeRoute,
         $errorCodeToRouteMatching = []
@@ -58,6 +66,8 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->checkoutClient = $checkoutClient;
+        $this->zedRequestClient = $zedRequestClient;
+
         $this->errorCodeToRouteMatching = $errorCodeToRouteMatching;
     }
 
@@ -140,6 +150,10 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
 
         $this->setCheckoutErrorMessages($checkoutResponseTransfer);
         $this->checkoutResponseTransfer = $checkoutResponseTransfer;
+
+        if (!empty($this->zedRequestClient->getLastResponseErrorMessages())) {
+            $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+        }
 
         return $quoteTransfer;
     }

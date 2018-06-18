@@ -20,6 +20,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\CustomerStep;
@@ -194,6 +195,7 @@ class StepFactory extends AbstractFactory
     {
         return new PlaceOrderStep(
             $this->getCheckoutClient(),
+            $this->getZedRequestClient(),
             CheckoutPageControllerProvider::CHECKOUT_PLACE_ORDER,
             HomePageControllerProvider::ROUTE_HOME,
             [
@@ -287,5 +289,13 @@ class StepFactory extends AbstractFactory
     protected function getCustomerClient(): CheckoutPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface
+     */
+    protected function getZedRequestClient(): CheckoutPageToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }

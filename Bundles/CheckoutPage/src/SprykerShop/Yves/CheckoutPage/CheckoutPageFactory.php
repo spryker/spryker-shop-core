@@ -13,7 +13,6 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
@@ -210,13 +209,5 @@ class CheckoutPageFactory extends AbstractFactory
     public function createPaymentMethodSubForms()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PAYMENT_SUB_FORMS);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface
-     */
-    protected function getZedRequestClient(): CheckoutPageToZedRequestClientInterface
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }
