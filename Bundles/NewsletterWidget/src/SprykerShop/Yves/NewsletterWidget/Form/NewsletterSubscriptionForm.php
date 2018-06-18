@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Email;
 
 class NewsletterSubscriptionForm extends AbstractType
 {
@@ -66,6 +67,7 @@ class NewsletterSubscriptionForm extends AbstractType
             'required' => false,
             'constraints' => [
                 new NotBlank(),
+                new Email(),
             ],
         ]);
 
