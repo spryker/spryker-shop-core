@@ -25,7 +25,6 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public function initialize(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
     {
-
         $this->addParameter('bundleItems', $this->getBundleItems($itemTransfer, $quoteTransfer));
     }
 

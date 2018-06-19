@@ -108,23 +108,23 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
     /**
      * @param \Twig_Environment $twig
-     * @param string $name
+     * @param string $widgetName
      * @param array $arguments
      *
      * @throws \SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException
      *
      * @return string
      */
-    public function widget(Twig_Environment $twig, $name, ...$arguments)
+    public function widget(Twig_Environment $twig, $widgetName, ...$arguments)
     {
         try {
             $widgetContainer = $this->getWidgetContainer();
 
-            if (!$widgetContainer->hasWidget($name)) {
+            if (!$widgetContainer->hasWidget($widgetName)) {
                 return '';
             }
 
-            $widgetClass = $widgetContainer->getWidgetClassName($name);
+            $widgetClass = $widgetContainer->getWidgetClassName($widgetName);
             $widgetFactory = $this->getFactory()->createWidgetFactory();
             $widget = $widgetFactory->build($widgetClass, $arguments);
 
@@ -140,19 +140,13 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
             return $result;
         } catch (Throwable $e) {
-            throw new WidgetRenderException(sprintf(
-                'Something went wrong in widget "%s": %s in %s:%d',
-                $name,
-                $e->getMessage(),
-                $e->getFile(),
-                $e->getLine()
-            ), $e->getCode(), $e);
+            throw $this->createWidgetRenderException($widgetName, $e);
         }
     }
 
     /**
      * @param \Twig_Environment $twig
-     * @param string $name
+     * @param string $widgetName
      * @param string $block
      * @param array $arguments
      *
@@ -160,16 +154,16 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
      *
      * @return string
      */
-    public function widgetBlock(Twig_Environment $twig, $name, $block, ...$arguments)
+    public function widgetBlock(Twig_Environment $twig, $widgetName, $block, ...$arguments)
     {
         try {
             $widgetContainer = $this->getWidgetContainer();
 
-            if (!$widgetContainer->hasWidget($name)) {
+            if (!$widgetContainer->hasWidget($widgetName)) {
                 return '';
             }
 
-            $widgetClass = $widgetContainer->getWidgetClassName($name);
+            $widgetClass = $widgetContainer->getWidgetClassName($widgetName);
             $widgetFactory = $this->getFactory()->createWidgetFactory();
             $widget = $widgetFactory->build($widgetClass, $arguments);
 
@@ -185,33 +179,29 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
             return $result;
         } catch (Throwable $e) {
-            throw new WidgetRenderException(sprintf(
-                'Something went wrong in widget "%s": %s',
-                $name,
-                $e->getMessage()
-            ), $e->getCode(), $e);
+            throw $this->createWidgetRenderException($widgetName, $e);
         }
     }
 
     /**
      * @param \Twig_Environment $twig
-     * @param string $name
+     * @param string $widgetName
      * @param array $arguments
      *
      * @throws \SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException
      *
      * @return string
      */
-    public function widgetGlobal(Twig_Environment $twig, $name, ...$arguments)
+    public function widgetGlobal(Twig_Environment $twig, $widgetName, ...$arguments)
     {
         try {
             $widgetCollection = $this->getFactory()->createWidgetCollection();
 
-            if (!$widgetCollection->hasWidget($name)) {
+            if (!$widgetCollection->hasWidget($widgetName)) {
                 return '';
             }
 
-            $widgetClass = $widgetCollection->getWidgetClassName($name);
+            $widgetClass = $widgetCollection->getWidgetClassName($widgetName);
             $widgetFactory = $this->getFactory()->createWidgetFactory();
             $widget = $widgetFactory->build($widgetClass, $arguments);
 
@@ -227,11 +217,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
             return $result;
         } catch (Throwable $e) {
-            throw new WidgetRenderException(sprintf(
-                'Something went wrong in widget "%s": %s',
-                $name,
-                $e->getMessage()
-            ), $e->getCode(), $e);
+            throw $this->createWidgetRenderException($widgetName, $e);
         }
     }
 
@@ -306,5 +292,23 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
         $event->setResponse($response);
         $widgetContainerRegistry->removeLastAdded();
+    }
+
+    /**
+     * @param string $widgetName
+     * @param \Throwable $e
+     *
+     * @return \SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException
+     */
+    protected function createWidgetRenderException(string $widgetName, Throwable $e): WidgetRenderException
+    {
+        return new WidgetRenderException(sprintf(
+            '%s - Something went wrong in widget "%s": %s in %s:%d',
+            get_class($e),
+            $widgetName,
+            $e->getMessage(),
+            $e->getFile(),
+            $e->getLine()
+        ), $e->getCode(), $e);
     }
 }

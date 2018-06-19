@@ -2,14 +2,11 @@
 
 {% define data = {
     wishlists: required,
-    title: 'customer.account.wishlist' | trans
+    title: 'customer.account.wishlist' | trans,
+    activePage: 'wishlist',
+    activeWishlistId: null
 } %}
 
 {% block customerNavigation %}
-    {% include molecule('customer-navigation', 'CustomerPage') with {
-        class: 'box',
-        data: {
-            activePage: 'wishlist'
-        }
-    } only %}
+    {{ widgetGlobal('CustomerNavigationWidgetPlugin', data.activePage, data.activeWishlistId) }}
 {% endblock %}

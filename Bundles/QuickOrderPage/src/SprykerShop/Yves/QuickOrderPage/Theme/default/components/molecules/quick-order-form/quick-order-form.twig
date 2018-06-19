@@ -11,7 +11,7 @@
 
 {% block body %}
     {% include molecule('ajax-provider') with {
-        class: config.selector ~ '__provider ' ~ config.selector ~ '__add-row-provider',
+        class: config.jsName ~ '__provider ' ~ config.jsName ~ '__add-row-provider',
         attributes: {
             method: 'post',
             url: url('quick-order/add-rows')
@@ -19,7 +19,7 @@
     } only %}
 
     {% include molecule('ajax-provider') with {
-        class: config.selector ~ '__provider ' ~ config.selector ~ '__remove-row-provider',
+        class: config.jsName ~ '__provider ' ~ config.jsName ~ '__remove-row-provider',
         attributes: {
             method: 'post',
             url: url('quick-order/delete-row')
@@ -29,7 +29,7 @@
     {% include molecule('ajax-loader') with {
         modifiers: ['big'],
         attributes: {
-            'provider-selector': '.' ~ config.selector ~ '__provider'
+            'provider-selector': '.' ~ config.jsName ~ '__provider'
         }
     } only %}
 
@@ -38,12 +38,12 @@
             form: data.form,
             options: {
                 attr: {
-                    class: config.selector ~ '__form'
+                    class: config.jsName ~ '__form'
                 }
             }
         },
         embed: {
-            selector: config.selector
+            selector: config.jsName
         }
     } only %}
         {% block fields %}

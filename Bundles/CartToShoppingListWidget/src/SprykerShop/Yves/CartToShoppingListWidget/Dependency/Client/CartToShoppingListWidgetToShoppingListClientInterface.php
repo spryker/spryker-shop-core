@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CartToShoppingListWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
@@ -18,4 +19,9 @@ interface CartToShoppingListWidgetToShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer;
 }

@@ -28,7 +28,7 @@ class ShoppingListPageToProductStorageClientBridge implements ShoppingListPageTo
      *
      * @return array
      */
-    public function getProductConcreteStorageData($idProductConcrete, $localeName): array
+    public function getProductConcreteStorageData($idProductConcrete, $localeName)
     {
         return $this->productStorageClient->getProductConcreteStorageData($idProductConcrete, $localeName);
     }

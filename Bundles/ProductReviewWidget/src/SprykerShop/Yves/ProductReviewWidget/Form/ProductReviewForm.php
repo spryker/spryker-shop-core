@@ -50,9 +50,9 @@ class ProductReviewForm extends AbstractType
     {
         $this
             ->addRatingField($builder)
+            ->addNicknameField($builder)
             ->addSummaryField($builder)
             ->addDescriptionField($builder)
-            ->addNicknameField($builder)
             ->addProductField($builder);
 
         return $this;

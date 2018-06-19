@@ -9,35 +9,35 @@ export default class QuickOrderForm extends Component {
     addRowAjaxProvider: AjaxProvider
     removeRowAjaxProvider: AjaxProvider
 
-    async readyCallback() {
-        this.form = <HTMLFormElement>this.querySelector(`.${this.componentSelector}__form`);
-        this.fieldList = <HTMLElement>this.querySelector(`.${this.componentSelector}__list`);
-        this.addRowTrigger = <HTMLElement>this.querySelector(`.${this.componentSelector}__add-row-trigger`);
-        this.addRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.componentSelector}__add-row-provider`);
-        this.removeRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.componentSelector}__remove-row-provider`);
+    protected readyCallback(): void {
+        this.form = <HTMLFormElement>this.querySelector(`.${this.jsName}__form`);
+        this.fieldList = <HTMLElement>this.querySelector(`.${this.jsName}__list`);
+        this.addRowTrigger = <HTMLElement>this.querySelector(`.${this.jsName}__add-row-trigger`);
+        this.addRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__add-row-provider`);
+        this.removeRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__remove-row-provider`);
         this.registerRemoveRowTriggers();
         this.mapEvents();
     }
 
-    registerRemoveRowTriggers() {
-        this.removeRowTriggers = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.componentSelector}__remove-row-trigger`));
+    protected registerRemoveRowTriggers(): void {
+        this.removeRowTriggers = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__remove-row-trigger`));
     }
 
-    mapEvents() {
+    protected mapEvents(): void {
         this.addRowTrigger.addEventListener('click', (event: Event) => this.onAddRowClick(event));
         this.mapRemoveRowTriggersEvents();
     }
 
-    mapRemoveRowTriggersEvents() {
+    protected mapRemoveRowTriggersEvents(): void {
         this.removeRowTriggers.forEach((trigger: HTMLElement) => trigger.addEventListener('click', (event: Event) => this.onRemoveRowClick(event)));
     }
 
-    onAddRowClick(event: Event) {
+    protected onAddRowClick(event: Event): void {
         event.preventDefault();
         this.addRow();
     }
 
-    onRemoveRowClick(event: Event) {
+    protected onRemoveRowClick(event: Event): void {
         event.preventDefault();
 
         const row = <HTMLElement>event.currentTarget;

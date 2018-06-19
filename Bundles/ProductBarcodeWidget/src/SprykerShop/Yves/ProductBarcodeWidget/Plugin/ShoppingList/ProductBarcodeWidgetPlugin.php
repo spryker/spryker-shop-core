@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductBarcodeWidget\Plugin\ShoppingList;
 
+use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductBarcodeWidget\ProductBarcodeWidgetPluginInterface;
@@ -22,17 +23,9 @@ class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements Product
       *
       * @return void
       */
-    public function initialize(
-        ProductViewTransfer $productViewTransfer,
-        ?string $barcodeGeneratorPlugin = null
-    ): void {
-        $sku = $productViewTransfer->requireSku()->getSku();
-
-        $barcodeResponseTransfer = $this->getFactory()
-            ->getProductBarcodeClient()
-            ->generateBarcodeBySku($sku, $barcodeGeneratorPlugin);
-
-        $this->addParameter('barcodeResponseTransfer', $barcodeResponseTransfer);
+    public function initialize(ProductViewTransfer $productViewTransfer, ?string $barcodeGeneratorPlugin = null): void
+    {
+        $this->addParameter('barcodeResponseTransfer', $this->getBarcodeResponseTransfer($productViewTransfer, $barcodeGeneratorPlugin));
     }
 
     /**
@@ -48,6 +41,21 @@ class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements Product
      */
     public static function getTemplate(): string
     {
-        return '@ProductBarcodeWidget/views/barcode.twig';
+        return '@ProductBarcodeWidget/views/barcode/barcode.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param null|string $barcodeGeneratorPlugin
+     *
+     * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
+     */
+    protected function getBarcodeResponseTransfer(ProductViewTransfer $productViewTransfer, ?string $barcodeGeneratorPlugin): BarcodeResponseTransfer
+    {
+        $sku = $productViewTransfer->requireSku()->getSku();
+
+        return $this->getFactory()
+            ->getProductBarcodeClient()
+            ->generateBarcodeBySku($sku, $barcodeGeneratorPlugin);
     }
 }

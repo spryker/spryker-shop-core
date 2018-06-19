@@ -43,7 +43,7 @@ class CartPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Kernel\Application
      */
-    protected function getApplication()
+    public function getApplication()
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_APPLICATION);
     }
@@ -51,7 +51,7 @@ class CartPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
-    protected function getFlashMessenger()
+    public function getFlashMessenger()
     {
         return $this->getApplication()['flash_messenger'];
     }
@@ -59,7 +59,7 @@ class CartPageFactory extends AbstractFactory
     /**
      * @return string
      */
-    protected function getLocale()
+    public function getLocale()
     {
         return $this->getApplication()['locale'];
     }
@@ -67,7 +67,7 @@ class CartPageFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function getRequest()
+    public function getRequest()
     {
         return $this->getApplication()['request'];
     }
@@ -102,7 +102,7 @@ class CartPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface
      */
-    protected function getProductStorageClient(): CartPageToProductStorageClientInterface
+    public function getProductStorageClient(): CartPageToProductStorageClientInterface
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
@@ -110,7 +110,7 @@ class CartPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface
      */
-    protected function getAvailabilityStorageClient(): CartPageToAvailabilityStorageClientInterface
+    public function getAvailabilityStorageClient(): CartPageToAvailabilityStorageClientInterface
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
     }
@@ -118,7 +118,7 @@ class CartPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface
      */
-    protected function getAvailabilityClient(): CartPageToAvailabilityClientInterface
+    public function getAvailabilityClient(): CartPageToAvailabilityClientInterface
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_AVAILABILITY);
     }
@@ -142,7 +142,7 @@ class CartPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
      */
-    protected function getCartItemTransformerPlugins()
+    public function getCartItemTransformerPlugins()
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_CART_ITEM_TRANSFORMERS);
     }

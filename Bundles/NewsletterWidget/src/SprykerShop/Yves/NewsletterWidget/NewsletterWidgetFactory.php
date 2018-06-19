@@ -19,16 +19,7 @@ class NewsletterWidgetFactory extends AbstractFactory
      */
     public function getNewsletterSubscriptionForm()
     {
-        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY)
-            ->create($this->createNewsletterSubscriptionFormType());
-    }
-
-    /**
-     * @return string
-     */
-    protected function createNewsletterSubscriptionFormType()
-    {
-        return NewsletterSubscriptionForm::class;
+        return $this->getFormFactory()->create(NewsletterSubscriptionForm::class);
     }
 
     /**
@@ -37,5 +28,13 @@ class NewsletterWidgetFactory extends AbstractFactory
     public function getNewsletterClient(): NewsletterWidgetToNewsletterClientInterface
     {
         return $this->getProvidedDependency(NewsletterWidgetDependencyProvider::CLIENT_NEWSLETTER);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormFactory
+     */
+    public function getFormFactory()
+    {
+        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
 }

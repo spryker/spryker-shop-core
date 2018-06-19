@@ -35,6 +35,6 @@ class CatalogCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements Catalo
      */
     public static function getTemplate(): string
     {
-        return '@CmsBlockWidget/_catalog-page/catalog-cms-block.twig';
+        return '@CmsBlockWidget/views/catalog-with-cms-block/catalog-with-cms-block.twig';
     }
 }

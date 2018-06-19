@@ -11,7 +11,7 @@
   },
   "suggest": {
     "spryker/silex": "",
-    "spryker/symfony": "3.0.0 for using LanguageSwitcherPluginInterface"
+    "spryker/symfony": ">=3.0.0 for using LanguageSwitcherPluginInterface"
   },
   "autoload": {
     "psr-4": {
