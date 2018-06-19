@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\RedirectPage\Plugin;
 
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
+use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\RedirectPage\RedirectPageFactory getFactory()

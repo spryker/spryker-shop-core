@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty %}
+    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty and data.cart.items is not empty %}
         <div class="box">
             {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
         </div>

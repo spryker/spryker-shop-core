@@ -27,7 +27,7 @@ class CmsProductContentWidgetConfigurationProvider implements CmsContentWidgetCo
     public function getAvailableTemplates()
     {
         return [
-            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@CmsContentWidgetProductConnector/_product/cms-product-content-widget.twig',
+            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@CmsContentWidgetProductConnector/views/cms-product/cms-product.twig',
         ];
     }
 

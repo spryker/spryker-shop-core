@@ -23,14 +23,22 @@ class AddToWishlistController extends AbstractController
             return $this->view();
         }
 
+        $viewData = $this->executeIndexAction();
+
+        return $this->view($viewData, [], '@WishlistPage/views/wishlist-selection/wishlist-selection.twig');
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeIndexAction(): array
+    {
         $wishlistCollection = $this->getFactory()
             ->getWishlistClient()
             ->getCustomerWishlistCollection();
 
-        $data = [
+        return [
             'wishlistCollection' => $wishlistCollection,
         ];
-
-        return $this->view($data, [], '@WishlistPage/views/wishlist-selection/wishlist-selection.twig');
     }
 }

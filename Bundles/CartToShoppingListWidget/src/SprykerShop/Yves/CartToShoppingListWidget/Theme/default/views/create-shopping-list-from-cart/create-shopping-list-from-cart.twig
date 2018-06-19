@@ -8,19 +8,49 @@
 
 {% define data = {
     form: viewForm,
+    formOptions: {
+        action: url('shopping-list/create-from-cart'),
+        attr: {
+            novalidate: 'novalidate'
+        }
+    },
     labels: {
+        formLabel: 'cart.add-to-shopping-list.form' | trans,
         submitLabel: 'cart.add-to-shopping-list' | trans
     }
 } %}
 
 {% block body %}
-    {% include molecule('form') with {
-        data: {
-            form: data.form,
-            submit: {
-                enable: true,
-                text: data.labels.submitLabel
-            }
-        }
-    } only %}
+
+    <hr>
+
+    {{ form_start(data.form, data.formOptions) }}
+
+        <div class="grid grid--bottom">
+            <h5>{{data.labels.formLabel}}</h5>
+            <div class="col col--sm-12">
+                {% include molecule('toggle-select-form', 'CartToShoppingListWidget') with {
+                    data: {
+                        attribute: attribute(data.form.children, 'shoppingListName'),
+                        selectAttributes: {
+                            'target': 'js-add-new-shopping-list',
+                            'class-to-toggle': 'is-hidden'
+                        }
+                    }
+                } only %}
+            </div>
+            <div class="col col--sm-12 js-add-new-shopping-list">
+                {{ form_row(attribute(data.form.children, 'newShoppingListName')) }}
+            </div>
+        </div>
+
+        <div class="form-field grid grid--middle grid--right">
+            <button type="submit" class="button button--success col col--sm-12 col--md-5 col--lg-3" data-qa="submit-button">
+                {{ data.labels.submitLabel | trans }}
+            </button>
+        </div>
+
+        {{ form_errors(data.form) }}
+    {{ form_end(data.form) }}
+
 {% endblock %}

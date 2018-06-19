@@ -41,7 +41,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection
      */
-    public function createPaymentMethodHandler()
+    public function getPaymentMethodHandler()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PAYMENT_METHOD_HANDLER);
     }
@@ -49,7 +49,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\DataContainer\DataContainer
      */
-    protected function createDataContainer()
+    public function createDataContainer()
     {
         return new DataContainer($this->getQuoteClient());
     }
@@ -57,7 +57,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface
      */
-    protected function getQuoteClient(): CheckoutPageToQuoteClientInterface
+    public function getQuoteClient(): CheckoutPageToQuoteClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_QUOTE);
     }
@@ -98,7 +98,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\EntryStep
      */
-    protected function createEntryStep()
+    public function createEntryStep()
     {
         return new EntryStep(
             CheckoutPageControllerProvider::CHECKOUT_INDEX,
@@ -109,7 +109,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\CustomerStep
      */
-    protected function createCustomerStep()
+    public function createCustomerStep()
     {
         return new CustomerStep(
             $this->getCustomerClient(),
@@ -123,7 +123,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep
      */
-    protected function createAddressStep()
+    public function createAddressStep()
     {
         return new AddressStep(
             $this->getCustomerClient(),
@@ -136,7 +136,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep
      */
-    protected function createShipmentStep()
+    public function createShipmentStep()
     {
         return new ShipmentStep(
             $this->getCalculationClient(),
@@ -165,10 +165,10 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\PaymentStep
      */
-    protected function createPaymentStep()
+    public function createPaymentStep()
     {
         return new PaymentStep(
-            $this->createPaymentMethodHandler(),
+            $this->getPaymentMethodHandler(),
             CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
             HomePageControllerProvider::ROUTE_HOME,
             $this->getFlashMessenger(),
@@ -179,7 +179,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep
      */
-    protected function createSummaryStep()
+    public function createSummaryStep()
     {
         return new SummaryStep(
             $this->getProductBundleClient(),
@@ -191,7 +191,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\PlaceOrderStep
      */
-    protected function createPlaceOrderStep()
+    public function createPlaceOrderStep()
     {
         return new PlaceOrderStep(
             $this->getCheckoutClient(),
@@ -208,7 +208,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep
      */
-    protected function createSuccessStep()
+    public function createSuccessStep()
     {
         return new SuccessStep(
             $this->getCustomerClient(),
@@ -222,7 +222,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface
      */
-    protected function getCustomerStepHandler()
+    public function getCustomerStepHandler()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_CUSTOMER_STEP_HANDLER);
     }
@@ -230,7 +230,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
-    protected function getFlashMessenger()
+    public function getFlashMessenger()
     {
         return $this->getApplication()['flash_messenger'];
     }
@@ -238,7 +238,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
-    protected function getUrlGenerator()
+    public function getUrlGenerator()
     {
         return $this->getApplication()['url_generator'];
     }
@@ -246,7 +246,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Kernel\Application
      */
-    protected function getApplication()
+    public function getApplication()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_APPLICATION);
     }
@@ -286,7 +286,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
      */
-    protected function getCustomerClient(): CheckoutPageToCustomerClientInterface
+    public function getCustomerClient(): CheckoutPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER);
     }

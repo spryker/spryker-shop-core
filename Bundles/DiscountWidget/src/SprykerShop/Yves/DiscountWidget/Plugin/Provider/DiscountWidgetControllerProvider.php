@@ -26,23 +26,58 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addAddVoucherRoute()
+            ->addRemoveVoucherRoute()
+            ->addClearVoucherRoute()
+            ->addCheckoutVoucherRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addAddVoucherRoute(): self
+    {
         $this->createController('/{discount}/voucher/add', self::ROUTE_DISCOUNT_VOUCHER_ADD, 'DiscountWidget', 'Voucher', 'add')
-            ->assert('discount', $allowedLocalesPattern . 'discount|discount')
+            ->assert('discount', $this->getAllowedLocalesPattern() . 'discount|discount')
             ->value('discount', 'discount');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addRemoveVoucherRoute(): self
+    {
         $this->createController('/{discount}/voucher/remove', self::ROUTE_DISCOUNT_VOUCHER_REMOVE, 'DiscountWidget', 'Voucher', 'remove')
-            ->assert('discount', $allowedLocalesPattern . 'discount|discount')
+            ->assert('discount', $this->getAllowedLocalesPattern() . 'discount|discount')
             ->value('discount', 'discount');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addClearVoucherRoute(): self
+    {
         $this->createController('/{discount}/voucher/clear', self::ROUTE_DISCOUNT_VOUCHER_CLEAR, 'DiscountWidget', 'Voucher', 'clear')
-            ->assert('discount', $allowedLocalesPattern . 'discount|discount')
+            ->assert('discount', $this->getAllowedLocalesPattern() . 'discount|discount')
             ->value('discount', 'discount');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCheckoutVoucherRoute(): self
+    {
         $this->createController('/{checkout}/add-voucher', self::CHECKOUT_VOUCHER_ADD, 'DiscountWidget', 'Checkout', 'addVoucher')
-            ->assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+            ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
             ->value('checkout', 'checkout')
             ->method('GET|POST');
+
+        return $this;
     }
 }

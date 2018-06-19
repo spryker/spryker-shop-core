@@ -119,7 +119,7 @@ class CheckoutController extends AbstractController
             $request,
             $this->getFactory()
                 ->createCheckoutFormFactory()
-                ->createPaymentFormCollection()
+                ->getPaymentFormCollection()
         );
 
         if (!is_array($response)) {
@@ -165,7 +165,13 @@ class CheckoutController extends AbstractController
      */
     public function placeOrderAction(Request $request)
     {
-        if (!$this->can('PlaceOrderWithAmountUpToPermissionPlugin', $this->getFactory()->getQuoteClient()->getQuote()->getTotals()->getGrandTotal())) {
+        $grandTotal = $this->getFactory()
+            ->getQuoteClient()
+            ->getQuote()
+            ->getTotals()
+            ->getGrandTotal();
+
+        if (!$this->can('PlaceOrderWithAmountUpToPermissionPlugin', $grandTotal)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
             return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
         }

@@ -88,7 +88,7 @@ class CompanyRolePermissionConfigurationType extends AbstractType
      * @param string $fieldName
      * @param string $fieldType
      *
-     * @return \SprykerShop\Yves\CompanyPage\Form\CompanyRolePermissionConfigurationType
+     * @return void
      */
     protected function addFieldBySignature(FormBuilderInterface $builder, $fieldName, $fieldType)
     {

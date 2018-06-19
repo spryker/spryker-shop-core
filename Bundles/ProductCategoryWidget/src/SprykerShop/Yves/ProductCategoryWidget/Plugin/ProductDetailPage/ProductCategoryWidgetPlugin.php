@@ -39,12 +39,21 @@ class ProductCategoryWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
+        $this->addParameter('product', $productViewTransfer)
+            ->addParameter('categories', $this->getCategories($productViewTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductCategoryStorageTransfer[]
+     */
+    protected function getCategories(ProductViewTransfer $productViewTransfer)
+    {
         $productAbstractCategoryStorageTransfer = $this->getFactory()
             ->getProductCategoryStorageClient()
             ->findProductAbstractCategory($productViewTransfer->getIdProductAbstract(), $this->getLocale());
 
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addParameter('categories', $productAbstractCategoryStorageTransfer->getCategories());
+        return $productAbstractCategoryStorageTransfer->getCategories();
     }
 }

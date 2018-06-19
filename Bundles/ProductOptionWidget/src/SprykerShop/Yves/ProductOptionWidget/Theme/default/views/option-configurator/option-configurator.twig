@@ -11,7 +11,7 @@
 {% block body %}
     <ul class="list">
         {% for optionGroup in data.optionGroups %}
-            <li class="list__item list__item--spacing">
+            <li class="list__item spacing-y">
                 <strong>{{optionGroup.name | trans}}</strong>
                 {% embed atom('select') with {
                     modifiers: ['expand'],

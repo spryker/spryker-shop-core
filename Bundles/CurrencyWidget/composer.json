@@ -4,19 +4,18 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shop-ui": "^1.0.0",
     "spryker/currency": "^3.4.0",
     "spryker/kernel": "^3.16.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
     "spryker-shop/shop-application": "*",
-    "spryker-shop/shop-layout": "*",
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker-shop/shop-application": "TODO: add suggestion description",
-    "spryker-shop/shop-layout": "TODO: add suggestion description",
-    "spryker/silex": "TODO: add suggestion description"
+    "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

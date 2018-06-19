@@ -29,27 +29,14 @@ class CustomerController extends AbstractCustomerController
      */
     public function indexAction()
     {
-        $loggedInCustomerTransfer = $this->getLoggedInCustomerTransfer();
-        $customerTransfer = $this
-            ->getFactory()
-            ->getCustomerClient()
-            ->getCustomerByEmail($loggedInCustomerTransfer);
+        $response = $this->executeIndexAction();
 
-        if (!$customerTransfer->getIdCustomer()) {
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGOUT);
+        if (!is_array($response)) {
+            return $response;
         }
 
-        $orderListTransfer = $this->createOrderListTransfer($customerTransfer);
-        $orderList = $this->getFactory()->getSalesClient()->getPaginatedOrder($orderListTransfer);
-
-        $data = [
-            'customer' => $customerTransfer,
-            'orderList' => $orderList->getOrders(),
-            'addresses' => $this->getDefaultAddresses($customerTransfer),
-        ];
-
         return $this->view(
-            $data,
+            $response,
             $this->getFactory()->getCustomerOverviewWidgetPlugins(),
             '@CustomerPage/views/overview/overview.twig'
         );
@@ -110,5 +97,30 @@ class CustomerController extends AbstractCustomerController
         }
 
         return $addresses;
+    }
+
+    /**
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction()
+    {
+        $loggedInCustomerTransfer = $this->getLoggedInCustomerTransfer();
+        $customerTransfer = $this
+            ->getFactory()
+            ->getCustomerClient()
+            ->getCustomerByEmail($loggedInCustomerTransfer);
+
+        if (!$customerTransfer->getIdCustomer()) {
+            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGOUT);
+        }
+
+        $orderListTransfer = $this->createOrderListTransfer($customerTransfer);
+        $orderList = $this->getFactory()->getSalesClient()->getPaginatedOrder($orderListTransfer);
+
+        return [
+            'customer' => $customerTransfer,
+            'orderList' => $orderList->getOrders(),
+            'addresses' => $this->getDefaultAddresses($customerTransfer),
+        ];
     }
 }

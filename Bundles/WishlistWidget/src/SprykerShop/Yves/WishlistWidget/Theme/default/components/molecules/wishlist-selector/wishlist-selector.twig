@@ -16,7 +16,7 @@
 {% block body %}
     {% if isUserLoggedIn %}
         {% include molecule('ajax-provider') with {
-            class: config.selector ~ '__provider',
+            class: config.jsName ~ '__provider',
             attributes: {
                 'url': path('wishlist/add-to-wishlist'),
                 'fetch-on-load': true
@@ -29,7 +29,7 @@
                 showSpinnerOnLoad: true
             },
             attributes: {
-                'provider-selector': '.' ~ config.selector ~ '__provider'
+                'provider-selector': '.' ~ config.jsName ~ '__provider'
             }
         } only %}
     {% endif %}
@@ -40,7 +40,7 @@
                 {% if isUserLoggedIn %}
                     {% include molecule('ajax-renderer') with {
                         attributes: {
-                            'provider-selector': '.' ~ config.selector ~ '__provider'
+                            'provider-selector': '.' ~ config.jsName ~ '__provider'
                         }
                     } only %}
                 {% endif %}

@@ -4,11 +4,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-layout-extension": "^1.0.0",
-    "spryker-shop/shop-ui-extension": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0",
-    "spryker/synchronization": "^0.2.0",
-    "spryker/url-storage": "^0.2.0 || ^1.0.0"
+    "spryker/url-storage": "^1.0.0"
   },
   "require-dev": {
     "spryker/symfony": "*"

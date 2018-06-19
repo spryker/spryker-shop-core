@@ -48,7 +48,7 @@
         }
     } only %}
 
-    {# {{ widgetBlock('ProductReviewWidgetPlugin', 'reviews', product.idProductAbstract) }} #}
+    {{ widget('ProductReviewWidgetPlugin', data.product.idProductAbstract) }}
     {{ widget('SimilarProductsWidgetPlugin', data.product) }}
     {{ widget('ProductCmsBlockWidgetPlugin', data.product) }}
 {% endblock %}

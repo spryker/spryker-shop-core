@@ -12,9 +12,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class CartToShoppingListWidgetConfig extends AbstractBundleConfig
 {
     /**
-     * @use \SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST
+     * @use \SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS
      */
-    public const SHOPPING_LIST_REDIRECT_URL = 'shopping-list';
+    public const SHOPPING_LIST_REDIRECT_URL = 'shopping-list/details';
 
     /**
      * @use \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART

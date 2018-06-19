@@ -23,7 +23,7 @@
             storeCurrency: _view.quoteTransfer.shipment.method.storeCurrencyPrice,
             grandTotal: _view.quoteTransfer.totals.grandtotal,
             tax: _view.quoteTransfer.totals.taxtotal.amount,
-            discountTotal: _view.quoteTransfer.totals.discounttotal | default(null)
+            discountTotal: _view.quoteTransfer.totals.discounttotal | default
         }
     },
 
@@ -36,9 +36,6 @@
             <div class="box">
                 <span class="float-right">{{ 'checkout.step.summary.with_method' | trans }} <strong>{{data.paymentMethod}}</strong></span>
                 <h6>{{ 'checkout.step.summary.payment' | trans }}</h6>
-                {# {% if _view.quoteTransfer.payment.summaryPartialPath is defined and _view.quoteTransfer.payment.summaryPartialPath %}
-                    {% include '@' ~ _view.quoteTransfer.payment.summaryPartialPath ~ '.twig' with {'_view.quoteTransfer': _view.quoteTransfer} %}
-                {% endif %} #}
                 <hr/>
 
                 {% include molecule('display-address') with {

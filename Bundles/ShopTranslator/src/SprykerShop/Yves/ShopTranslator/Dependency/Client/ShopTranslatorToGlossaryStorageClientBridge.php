@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ShopTranslator\Dependency\Client;
 class ShopTranslatorToGlossaryStorageClientBridge implements ShopTranslatorToGlossaryStorageClientInterface
 {
     /**
-     * @var \Spryker\Client\Glossary\GlossaryClientInterface
+     * @var \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface
      */
     protected $glossaryStorageClient;
 

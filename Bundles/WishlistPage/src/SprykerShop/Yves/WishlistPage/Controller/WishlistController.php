@@ -38,11 +38,24 @@ class WishlistController extends AbstractController
      * @param string $wishlistName
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction($wishlistName, Request $request)
+    {
+        $viewData = $this->executeIndexAction($wishlistName, $request);
+
+        return $this->view($viewData, [], '@WishlistPage/views/wishlist-detail/wishlist-detail.twig');
+    }
+
+    /**
+     * @param string $wishlistName
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return array
+     */
+    protected function executeIndexAction($wishlistName, Request $request): array
     {
         $pageNumber = $this->getPageNumber($request);
         $itemsPerPage = $this->getItemsPerPage($request);
@@ -72,14 +85,14 @@ class WishlistController extends AbstractController
 
         $addAllAvailableProductsToCartForm = $this->createAddAllAvailableProductsToCartForm($wishlistOverviewResponse);
 
-        return $this->view([
+        return [
             'wishlistItems' => $wishlistItems,
             'wishlistOverview' => $wishlistOverviewResponse,
             'currentPage' => $wishlistOverviewResponse->getPagination()->getPage(),
             'totalPages' => $wishlistOverviewResponse->getPagination()->getPagesTotal(),
             'wishlistName' => $wishlistName,
             'addAllAvailableProductsToCartForm' => $addAllAvailableProductsToCartForm->createView(),
-        ], [], '@WishlistPage/views/wishlist-detail/wishlist-detail.twig');
+        ];
     }
 
     /**

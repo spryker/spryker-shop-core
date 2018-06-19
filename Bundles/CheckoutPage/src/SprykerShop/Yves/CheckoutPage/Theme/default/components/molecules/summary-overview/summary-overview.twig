@@ -9,7 +9,7 @@
     shipmentMethod: required,
     voucherDiscounts: [],
     cartRuleDiscounts: [],
-    
+
     prices: {
         subTotal: required,
         storeCurrency: required,
@@ -35,28 +35,32 @@
 
     {% if data.prices.discountTotal %}
         {% if data.voucherDiscounts is not empty %}
-            <li><strong>{{ 'cart.vouchers' | trans }}</strong></li>
             <li>
+                <strong>{{ 'cart.vouchers' | trans }}</strong>
                 {% for voucherDiscount in data.voucherDiscounts %}
-                    <span class="float-right">{{ voucherDiscount.amount | money }}</span>
-                    {{ voucherDiscount.displayName }}
+                    <div class="grid grid--justify">
+                        <span class="col col--sm-10">{{ voucherDiscount.displayName }}</span>
+                        <span class="col col--expand text-right">{{ voucherDiscount.amount | money }}</span>
+                    </div>
                 {% endfor %}
             </li>
         {% endif %}
 
         {% if data.cartRuleDiscounts|length %}
-            <li><strong>{{ 'cart.discounts' | trans }}</strong></li>
             <li>
+                <strong>{{ 'cart.discounts' | trans }}</strong>
                 {% for ruleDiscount in data.cartRuleDiscounts %}
-                    <span class="float-right">- {{ ruleDiscount.amount | money }}</span>
-                    {{ ruleDiscount.displayName }}
+                    <div class="grid grid--justify">
+                        <span class="col col--sm-10">{{ ruleDiscount.displayName }}</span>
+                        <span class="col col--expand text-right">- {{ ruleDiscount.amount | money }}</span>
+                    </div>
                 {% endfor %}
             </li>
         {% endif %}
-        
+
         {{block('separator')}}
     {% endif %}
-    
+
     <li>
         <span class="float-right">{{ data.prices.storeCurrency | money }}</span>
         {{ 'checkout.step.summary.shipping' | trans }} (<strong>{{ data.shipmentMethod }}</strong>)

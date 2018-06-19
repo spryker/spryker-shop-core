@@ -14,7 +14,7 @@
 {% block class %}{{parent()}} list{% endblock %}
 
 {% block body %}
-    <li class="list__item list__item--spacing">
+    <li class="list__item spacing-y">
         {{ 'cart.item.item_price' | trans }}
         <span class="float-right">{{ data.unitPrice }}</span>
     </li>
@@ -25,7 +25,7 @@
         </li>
     {% endif %}
 
-    <li class="list__item list__item--spacing">
+    <li class="list__item spacing-y">
         <strong>{{ 'cart.item.item_total' | trans }}</strong>
         <strong class="float-right">{{ data.subtotalPrice }}</strong>
     </li>
