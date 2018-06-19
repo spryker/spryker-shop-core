@@ -230,10 +230,9 @@ class ShoppingListController extends AbstractShoppingListController
                 $productConcreteStorageData,
                 $this->getLocale()
             );
-
-            $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
-            $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
         }
+        $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
+        $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
 
         return $productViewTransfer;
     }
