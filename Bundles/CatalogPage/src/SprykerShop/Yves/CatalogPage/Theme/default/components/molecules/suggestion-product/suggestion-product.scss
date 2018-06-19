@@ -1,0 +1,18 @@
+@mixin suggestion-product($name: '.suggestion-product') {
+    #{$name} {
+
+        &__link.is-active {
+            text-decoration: underline;
+        }
+
+        &__info {
+            padding: 0.5rem;
+        }
+
+        &__thumbnail {
+            margin: 0;
+        }
+
+        @content;
+    }
+}

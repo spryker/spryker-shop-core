@@ -1,0 +1,41 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'suggestion-product'
+} %}
+
+{% define data = {
+    product: required
+} %}
+
+{% set image = data.product.images | first %}
+
+
+{% block body %}
+    <a class="grid js-suggestions-navigable {{ config.name }}__link" href="{{ data.product.url }}">
+        <span class="col col--sm-3">
+            {% if image %}
+                {% include atom('thumbnail') with {
+                    modifiers: ['smaller', 'has-border'],
+                    attributes: {
+                        alt: data.product.abstract_name,
+                        src: image.external_url_small,
+                        title: data.product.abstract_name,
+                    },
+                    class: config.name ~ '__thumbnail'
+                } only %}
+            {% endif %}
+        </span>
+
+        <span class="col col--sm-9 {{ config.name }}__info">
+            {{ data.product.abstract_name }}
+
+            {% include molecule('price') with {
+                data: {
+                    amount: data.product.price | money,
+                    originalAmount: data.product.prices.ORIGINAL is not defined or data.product.prices.ORIGINAL is empty ? null : data.product.prices.ORIGINAL | money
+                }
+            } only %}
+        </span>
+    </a>
+{% endblock %}

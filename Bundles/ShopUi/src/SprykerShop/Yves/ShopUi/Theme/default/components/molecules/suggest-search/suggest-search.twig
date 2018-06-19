@@ -1,0 +1,37 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'suggest-search',
+    tag: 'suggest-search'
+} %}
+
+{% define data = {
+    suggestionUrl: required,
+    inputSelector: required
+} %}
+
+{% define attributes = {
+
+} %}
+
+{% block body %}
+    <div class="box is-hidden {{ config.name }}__container {{ config.selector }}__container"></div>
+
+    {% include molecule('ajax-provider') with {
+        class: config.selector ~ '__provider',
+        attributes: {
+            method: 'post',
+            baseSuggestUrl: data.suggestionUrl,
+            url: data.suggestionUrl,
+            inputSelector: data.inputSelector
+        }
+    } only %}
+
+    {% include molecule('ajax-loader') with {
+        modifiers: ['big'],
+        attributes: {
+            'provider-selector': '.' ~ config.selector ~ '__provider'
+        }
+    } only %}
+
+{% endblock %}

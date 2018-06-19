@@ -43,9 +43,9 @@
         {% endif %}
 
         {% if data.showSearchForm %}
-            {% include molecule('search-form') with {
-                class: config.name ~ '__row' ~ config.name ~ '__search-form is-hidden-lg-xl'
-            } only %}
+            {#{% include molecule('search-form') with {#}
+                {#class: config.name ~ '__row' ~ config.name ~ '__search-form is-hidden-lg-xl'#}
+            {#} only %}#}
         {% endif %}
     </div>
 {% endblock %}

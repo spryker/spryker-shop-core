@@ -1,0 +1,15 @@
+$suggestion-results-spacing: 0.5rem;
+
+@mixin suggestion-results($name: '.suggestion-results') {
+    #{$name} {
+        &__title {
+            margin-bottom: $suggestion-results-spacing;
+        }
+
+        &__list {
+            margin: $suggestion-results-spacing 0;
+        }
+
+        @content;
+    }
+}

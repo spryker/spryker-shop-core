@@ -11,19 +11,27 @@
 } %}
 
 {% block body %}
-    <form class="grid" action="{{data.searchUrl}}">
-        <div class="col col--sm-10">
-            <input name="q" type="text" class="input input--expand" placeholder="{{ 'global.search' | trans }}" value="{{data.searchValue}}" autocomplete="off">
+    <form action="{{data.searchUrl}}">
+        <div class="grid">
+            <div class="col col--sm-10">
+                <input name="q" type="text" class="input suggest-search__input js-suggest-search-input input--expand" placeholder="{{ 'global.search' | trans }}" value="{{data.searchValue}}" autocomplete="off">
+            </div>
+            <div class="col col--sm-2">
+                <button type="submit" class="{{config.name}}__submit button button--expand">
+                    {% include atom('icon') with {
+                        data: {
+                            name: 'search'
+                        }
+                    } only %}
+                </button>
+            </div>
         </div>
-        <div class="col col--sm-2">
-            <button type="submit" class="{{config.name}}__submit button button--expand">
-                {% include atom('icon') with {
-                    data: {
-                        name: 'search'
-                    }
-                } only %}
-            </button>
-        </div>
+
+        {% include molecule('suggest-search') with {
+            data: {
+                suggestionUrl: data.suggestionUrl,
+                inputSelector: '.js-suggest-search-input'
+            }
+        } only %}
     </form>
 {% endblock %}
-

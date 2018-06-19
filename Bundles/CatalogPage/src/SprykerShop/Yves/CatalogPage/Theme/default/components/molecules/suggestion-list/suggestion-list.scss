@@ -1,0 +1,13 @@
+@mixin suggestion-list($name: '.suggestion-list') {
+    #{$name} {
+
+        &__link {
+
+            &.is-active {
+                text-decoration: underline;
+            }
+        }
+
+        @content;
+    }
+}
