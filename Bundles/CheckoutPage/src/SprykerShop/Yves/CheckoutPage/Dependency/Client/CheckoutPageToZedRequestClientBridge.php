@@ -29,12 +29,4 @@ class CheckoutPageToZedRequestClientBridge implements CheckoutPageToZedRequestCl
     {
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
-     */
-    public function getLastResponseErrorMessages()
-    {
-        return $this->zedRequestClient->getLastResponseErrorMessages();
-    }
 }

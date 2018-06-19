@@ -13,9 +13,4 @@ interface CheckoutPageToZedRequestClientInterface
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest();
-
-    /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
-     */
-    public function getLastResponseErrorMessages();
 }
