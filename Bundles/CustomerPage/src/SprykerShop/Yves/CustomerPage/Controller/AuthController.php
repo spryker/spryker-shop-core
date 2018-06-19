@@ -24,6 +24,16 @@ class AuthController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW);
         }
 
+        $iewData = $this->executeLoginAction();
+
+        return $this->view($iewData, [], '@CustomerPage/views/login/login.twig');
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeLoginAction(): array
+    {
         $loginForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
@@ -33,11 +43,9 @@ class AuthController extends AbstractCustomerController
             ->createCustomerFormFactory()
             ->getRegisterForm();
 
-        $data = [
+        return [
             'loginForm' => $loginForm->createView(),
             'registerForm' => $registerForm->createView(),
         ];
-
-        return $this->view($data, [], '@CustomerPage/views/login/login.twig');
     }
 }

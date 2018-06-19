@@ -1,0 +1,35 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'review-distribution-display',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    summary: required
+} %}
+
+{% block body %}
+    {% for rating, ratingReview in data.summary.ratingAggregation %}
+        <li class="grid grid--middle">
+            <div class="col text-right spacing-right spacing-right--big">
+                {% include molecule('rating-selector', 'ProductReviewWidget') with {
+                    data: {
+                        value: (data.summary.ratingAggregation | length) - loop.index0
+                    },
+                    attributes: {
+                        readonly: true
+                    }
+                } only %}
+            </div>
+
+            <progress class="col col--sm-4 spacing-right--big" max="{{ data.summary.totalReview }}" value="{{ ratingReview }}"></progress>
+
+            {{ rating }}
+            {% transchoice rating %}
+                product_review.summary.star|product_review.summary.stars
+            {% endtranschoice %}
+            (<strong>{{ ratingReview }}</strong>)
+        </li>
+    {% endfor %}
+{% endblock %}

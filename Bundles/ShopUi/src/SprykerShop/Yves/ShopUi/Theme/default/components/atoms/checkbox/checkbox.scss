@@ -13,7 +13,7 @@
             height: 1.25rem;
             border: 1px solid $setting-color-input-border;
             background-color: $setting-color-white;
-            margin-right: .25rem;
+            margin-right: 0.25rem;
             text-align: center;
             vertical-align: top;
         }
@@ -27,10 +27,10 @@
             @include helper-visibility-invisible;
             @include helper-effect-transition;
             position: absolute;
-            top: .25rem;
-            left: .25rem;
-            width: .75rem;
-            height: .75rem;
+            top: 0.25rem;
+            left: 0.25rem;
+            width: 0.75rem;
+            height: 0.75rem;
             background-color: $setting-color-main;
         }
 

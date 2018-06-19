@@ -21,6 +21,10 @@
             height: 30rem;
         }
 
+        &--min-size {
+            min-width: 2.5rem;
+        }
+
         &__image {
             position: absolute;
             left: 0;

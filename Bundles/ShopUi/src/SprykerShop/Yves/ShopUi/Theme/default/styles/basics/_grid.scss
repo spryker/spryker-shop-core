@@ -13,7 +13,6 @@
         flex-flow: row wrap;
         align-items: flex-start;
         justify-content: flex-start;
-        max-width: 100%;
 
         &--top {
             align-items: flex-start;
@@ -56,6 +55,10 @@
             }
         }
 
+        &--nowrap {
+            flex-wrap: nowrap;
+        }
+
         &--stretch {
             align-items: stretch;
 
@@ -94,26 +97,34 @@
 
         &--top {
             align-self: flex-start;
+            margin-bottom: auto;
         }
 
         &--bottom {
             align-self: flex-end;
+            margin-top: auto;
         }
 
         &--left {
             justify-self: flex-start;
+            margin-right: auto;
         }
 
         &--right {
             justify-self: flex-end;
+            margin-left: auto;
         }
 
         &--center {
             justify-self: center;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         &--middle {
             align-self: center;
+            margin-top: auto;
+            margin-bottom: auto;
         }
     }
 }

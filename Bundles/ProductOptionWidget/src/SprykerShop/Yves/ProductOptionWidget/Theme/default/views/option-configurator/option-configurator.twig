@@ -9,9 +9,9 @@
 {% endblock %}
 
 {% block body %}
-    <ul class="list list--spacing">
+    <ul class="list">
         {% for optionGroup in data.optionGroups %}
-            <li class="list__item">
+            <li class="list__item spacing-y">
                 <strong>{{optionGroup.name | trans}}</strong>
                 {% embed atom('select') with {
                     modifiers: ['expand'],
@@ -32,4 +32,5 @@
             </li>
         {% endfor %}
     </ul>
+    <hr />
 {% endblock %}

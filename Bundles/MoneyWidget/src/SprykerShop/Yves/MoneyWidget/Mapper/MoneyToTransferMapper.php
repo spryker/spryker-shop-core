@@ -14,7 +14,7 @@ use SprykerShop\Yves\CurrencyWidget\Plugin\CurrencyPluginInterface;
 class MoneyToTransferMapper extends SharedMoneyToTransferMapper
 {
     /**
-     * @var \SprykerShop\Yves\CurrencyWidget\Plugin\CurrencyPlugin
+     * @var \SprykerShop\Yves\CurrencyWidget\Plugin\CurrencyPluginInterface
      */
     protected $currencyPlugin;
 

@@ -1,0 +1,14 @@
+{% extends molecule('filter-range', 'CatalogPage') %}
+
+{% define config = {
+    name: 'filter-price-range'
+} %}
+
+{% set data = data | merge({
+    min: (data.min | default(0)) | moneyRaw | floor,
+    activeMin: (data.activeMin | default(0)) | moneyRaw | floor,
+    max: (data.max | default(0)) | moneyRaw | ceil,
+    activeMax: (data.activeMax | default(0)) | moneyRaw | ceil
+}) %}
+
+

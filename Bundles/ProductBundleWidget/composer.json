@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0",
     "spryker/product-bundle": "^4.1.0"
   },
@@ -12,7 +13,7 @@
     "spryker-shop/multi-cart-widget": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "TODO: add suggestion description",
+    "spryker-shop/cart-page": "Widget plugins are available for this module.",
     "spryker-shop/multi-cart-widget": "Add to use bundle product widgets"
   },
   "autoload": {

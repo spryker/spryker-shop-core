@@ -110,6 +110,6 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      */
     public static function getTemplate()
     {
-        return '@SharedCartWidget/views/multi-cart-widget/shared-cart-details.twig';
+        return '@SharedCartWidget/views/shared-cart-details/shared-cart-details.twig';
     }
 }

@@ -20,11 +20,12 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param bool $isAddToCartDisabled
      * @param array $quantityOptions
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, array $quantityOptions = []): void
+    public function initialize(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = []): void
     {
         $salesUnits = null;
         $idBaseUnit = null;
@@ -64,6 +65,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
             ->addParameter('baseUnit', $baseUnit)
             ->addParameter('idBaseUnit', $idBaseUnit)
             ->addParameter('salesUnits', $salesUnits)
+            ->addParameter('isAddToCartDisabled', $isAddToCartDisabled)
             ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
             ->addParameter(
                 'jsonScheme',
@@ -112,7 +114,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      */
     public static function getTemplate()
     {
-        return '@ProductMeasurementUnitWidget/views/product-measurement-unit/product-measurement-unit.twig';
+        return '@ProductMeasurementUnitWidget/views/pdp-product-measurement-unit/pdp-product-measurement-unit.twig';
     }
 
     /**

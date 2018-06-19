@@ -56,7 +56,7 @@ class DiscountWidgetFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
-    protected function getFlashMessenger()
+    public function getFlashMessenger()
     {
         return $this->getApplication()['flash_messenger'];
     }
@@ -64,7 +64,7 @@ class DiscountWidgetFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Kernel\Application
      */
-    protected function getApplication()
+    public function getApplication()
     {
         return $this->getProvidedDependency(DiscountWidgetDependencyProvider::PLUGIN_APPLICATION);
     }
@@ -72,24 +72,16 @@ class DiscountWidgetFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCheckoutVoucherForm()
+    public function getCheckoutVoucherForm()
     {
-        return $this->getFormFactory()->create($this->createCheckoutVoucherFormType());
+        return $this->getFormFactory()->create(CheckoutVoucherForm::class);
     }
 
     /**
      * @return \Symfony\Component\Form\FormFactory
      */
-    protected function getFormFactory()
+    public function getFormFactory()
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
-    }
-
-    /**
-     * @return string
-     */
-    protected function createCheckoutVoucherFormType()
-    {
-        return CheckoutVoucherForm::class;
     }
 }

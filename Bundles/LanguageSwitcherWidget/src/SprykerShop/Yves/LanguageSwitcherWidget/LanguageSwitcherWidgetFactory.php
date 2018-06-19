@@ -26,12 +26,4 @@ class LanguageSwitcherWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(LanguageSwitcherWidgetDependencyProvider::CLIENT_URL_STORAGE);
     }
-
-    /**
-     * @return \SprykerShop\Yves\LanguageSwitcherWidget\Dependency\Service\LanguageSwitcherWidgetToSynchronizationServiceInterface
-     */
-    public function getSynchronizationService()
-    {
-        return $this->getProvidedDependency(LanguageSwitcherWidgetDependencyProvider::SERVICE_SYNCHRONIZATION);
-    }
 }
