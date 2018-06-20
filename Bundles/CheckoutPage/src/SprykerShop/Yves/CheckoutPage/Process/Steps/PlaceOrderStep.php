@@ -83,9 +83,12 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
             return false;
         }
 
-        if (!$quoteTransfer->getCheckoutConfirmed()) {
-            $this->escapeRoute = CheckoutPageControllerProvider::CHECKOUT_SUMMARY;
-            return false;
+        if ($quoteTransfer instanceof QuoteTransfer) {
+            if (!$quoteTransfer->getCheckoutConfirmed()) {
+                $this->escapeRoute = CheckoutPageControllerProvider::CHECKOUT_SUMMARY;
+
+                return false;
+            }
         }
 
         return true;
@@ -98,8 +101,10 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        if (!$quoteTransfer->getCheckoutConfirmed()) {
-            return false;
+        if ($quoteTransfer instanceof QuoteTransfer) {
+            if (!$quoteTransfer->getCheckoutConfirmed()) {
+                return false;
+            }
         }
 
         if ($this->checkoutResponseTransfer && !$this->checkoutResponseTransfer->getIsSuccess()) {
@@ -108,7 +113,9 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
             return false;
         }
 
-        return ($quoteTransfer->getOrderReference() !== null);
+        return ($quoteTransfer instanceof QuoteTransfer)
+            ? ($quoteTransfer->getOrderReference() !== null)
+            : false;
     }
 
     /**
@@ -145,8 +152,10 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
             $this->externalRedirectUrl = $checkoutResponseTransfer->getRedirectUrl();
         }
 
-        if ($checkoutResponseTransfer->getSaveOrder() !== null) {
-            $quoteTransfer->setOrderReference($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
+        if ($quoteTransfer instanceof QuoteTransfer) {
+            if ($checkoutResponseTransfer->getSaveOrder() !== null) {
+                $quoteTransfer->setOrderReference($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
+            }
         }
 
         $this->setCheckoutErrorMessages($checkoutResponseTransfer);
