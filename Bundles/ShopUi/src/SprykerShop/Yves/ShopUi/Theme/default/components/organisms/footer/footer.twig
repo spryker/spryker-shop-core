@@ -14,14 +14,14 @@
         <div class="col col--sm-12 col--md-6">
             <div class="box">
                 <h5>{{ 'global.payment_providers' | trans }}</h5>
-                {{ widgetGlobal('NavigationWidgetPlugin', 'PAYMENT_PROVIDERS', view('navigation-providers-payment', 'ShopLayout')) }}
+                {{ widgetGlobal('NavigationWidgetPlugin', 'PAYMENT_PROVIDERS', 'navigation-providers-payment') }}
             </div>
         </div>
 
         <div class="col col--sm-12 col--md-6">
             <div class="box">
                 <h5>{{ 'global.shipment_providers' | trans }}</h5>
-                {{ widgetGlobal('NavigationWidgetPlugin', 'SHIPMENT_PROVIDERS', view('navigation-providers-shipment', 'ShopLayout')) }}
+                {{ widgetGlobal('NavigationWidgetPlugin', 'SHIPMENT_PROVIDERS', 'navigation-providers-shipment') }}
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
     <div class="box">
         <div class="grid">
             <div class="col col--sm-12 col--md-6 col--lg-6">
-                {{ widgetGlobal('NavigationWidgetPlugin', 'FOOTER_NAVIGATION', view('navigation-footer', 'ShopLayout')) }}
+                {{ widgetGlobal('NavigationWidgetPlugin', 'FOOTER_NAVIGATION', 'navigation-footer') }}
             </div>
 
             <ul class="col col--sm-12 col--md-6 col--lg-3">
@@ -40,13 +40,13 @@
             
             <div class="col col--lg-3 is-hidden-sm-md">
                 <h5>{{ 'global.social' | trans }}</h5>
-                {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', view('navigation-social', 'ShopLayout')) }}
+                {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', 'navigation-social') }}
             </div>
         </div>
     </div>
 
     <div class="box is-hidden-lg-xl">
         <h5>{{ 'global.social' | trans }}</h5>
-        {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', view('navigation-social', 'ShopLayout')) }}
+        {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', 'navigation-social') }}
     </div>
 {% endblock %}

@@ -21,10 +21,18 @@ class HomePageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addHomeRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addHomeRoute(): self
+    {
         $this->createController('/{root}', self::ROUTE_HOME, 'HomePage', 'Index')
-            ->assert('root', $allowedLocalesPattern)
+            ->assert('root', $this->getAllowedLocalesPattern())
             ->value('root', '');
+
+        return $this;
     }
 }

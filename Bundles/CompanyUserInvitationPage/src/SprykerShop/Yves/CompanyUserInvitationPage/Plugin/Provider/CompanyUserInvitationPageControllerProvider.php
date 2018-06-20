@@ -34,42 +34,122 @@ class CompanyUserInvitationPageControllerProvider extends AbstractYvesController
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addUserInvitationRoute()
+            ->addUserInvitationErrorsRoute()
+            ->addUserInvitationSendRoute()
+            ->addUserInvitationSendAllRoute()
+            ->addUserInvitationResendRoute()
+            ->addUserInvitationResendConfirmRoute()
+            ->addUserInvitationDeleteRoute()
+            ->addUserInvitationDeleteConfirmRoute()
+            ->addUserInvitationAcceptRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addUserInvitationRoute(): self
+    {
         $this->createController('/{companyUserInvitation}', static::ROUTE_OVERVIEW, 'CompanyUserInvitationPage', 'Import')
-            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company/user-invitation|company/user-invitation')
+            ->assert('companyUserInvitation', $this->getAllowedLocalesPattern() . 'company/user-invitation|company/user-invitation')
             ->value('companyUserInvitation', 'company/user-invitation');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addUserInvitationErrorsRoute(): self
+    {
         $this->createController('/{companyUserInvitation}/get-import-errors', static::ROUTE_GET_IMPORT_ERRORS, 'CompanyUserInvitationPage', 'Import', 'getErrors')
-            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company/user-invitation|company/user-invitation')
+            ->assert('companyUserInvitation', $this->getAllowedLocalesPattern() . 'company/user-invitation|company/user-invitation')
             ->value('companyUserInvitation', 'company/user-invitation');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addUserInvitationSendRoute(): self
+    {
         $this->createController('/{companyUserInvitation}/send', static::ROUTE_INVITATION_SEND, 'CompanyUserInvitationPage', 'Send', 'sendCompanyUserInvitation')
-            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company/user-invitation|company/user-invitation')
+            ->assert('companyUserInvitation', $this->getAllowedLocalesPattern() . 'company/user-invitation|company/user-invitation')
             ->value('companyUserInvitation', 'company/user-invitation');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addUserInvitationSendAllRoute(): self
+    {
         $this->createController('/{companyUserInvitation}/send-all', static::ROUTE_INVITATION_SEND_ALL, 'CompanyUserInvitationPage', 'Send', 'sendCompanyUserInvitations')
-            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company/user-invitation|company/user-invitation')
+            ->assert('companyUserInvitation', $this->getAllowedLocalesPattern() . 'company/user-invitation|company/user-invitation')
             ->value('companyUserInvitation', 'company/user-invitation');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addUserInvitationResendRoute(): self
+    {
         $this->createController('/{companyUserInvitation}/resend', static::ROUTE_INVITATION_RESEND, 'CompanyUserInvitationPage', 'Resend')
-            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company/user-invitation|company/user-invitation')
+            ->assert('companyUserInvitation', $this->getAllowedLocalesPattern() . 'company/user-invitation|company/user-invitation')
             ->value('companyUserInvitation', 'company/user-invitation');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addUserInvitationResendConfirmRoute(): self
+    {
         $this->createController('/{companyUserInvitation}/resend/confirm', static::ROUTE_INVITATION_RESEND_CONFIRM, 'CompanyUserInvitationPage', 'Resend', 'confirm')
-            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company/user-invitation|company/user-invitation')
+            ->assert('companyUserInvitation', $this->getAllowedLocalesPattern() . 'company/user-invitation|company/user-invitation')
             ->value('companyUserInvitation', 'company/user-invitation');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addUserInvitationDeleteRoute(): self
+    {
         $this->createController('/{companyUserInvitation}/delete', static::ROUTE_INVITATION_DELETE, 'CompanyUserInvitationPage', 'Delete')
-            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company/user-invitation|company/user-invitation')
+            ->assert('companyUserInvitation', $this->getAllowedLocalesPattern() . 'company/user-invitation|company/user-invitation')
             ->value('companyUserInvitation', 'company/user-invitation');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addUserInvitationDeleteConfirmRoute(): self
+    {
         $this->createController('/{companyUserInvitation}/delete/confirm', static::ROUTE_INVITATION_DELETE_CONFIRM, 'CompanyUserInvitationPage', 'Delete', 'confirm')
-            ->assert('companyUserInvitation', $allowedLocalesPattern . 'company/user-invitation|company/user-invitation')
+            ->assert('companyUserInvitation', $this->getAllowedLocalesPattern() . 'company/user-invitation|company/user-invitation')
             ->value('companyUserInvitation', 'company/user-invitation');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addUserInvitationAcceptRoute(): self
+    {
         $this->createController('/{invitation}/accept', static::ROUTE_INVITATION_ACCEPT, 'CompanyUserInvitationPage', 'Accept')
-            ->assert('invitation', $allowedLocalesPattern . 'invitation|invitation')
+            ->assert('invitation', $this->getAllowedLocalesPattern() . 'invitation|invitation')
             ->value('invitation', 'invitation');
+
+        return $this;
     }
 }

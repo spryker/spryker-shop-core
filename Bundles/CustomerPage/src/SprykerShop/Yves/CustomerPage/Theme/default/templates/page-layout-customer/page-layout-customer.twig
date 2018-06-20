@@ -18,12 +18,7 @@
     <div class="grid">
         <div class="col col--sm-12 col--md-3">
             {% block customerNavigation %}
-                {% include molecule('customer-navigation', 'CustomerPage') with {
-                    class: 'box',
-                    data: {
-                        activePage: data.activePage
-                    }
-                } only %}
+                {{ widgetGlobal('CustomerNavigationWidgetPlugin', data.activePage) }}
             {% endblock %}
         </div>
 

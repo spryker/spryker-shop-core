@@ -23,7 +23,7 @@ class CompanyUnitAddressFormDataProvider
     protected $companyUnitAddressClient;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface
      */
     protected $store;
 

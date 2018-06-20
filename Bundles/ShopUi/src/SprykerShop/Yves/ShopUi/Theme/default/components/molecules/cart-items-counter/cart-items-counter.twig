@@ -1,0 +1,29 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-items-counter',
+    tag: 'a'
+} %}
+
+{% define data = {
+    label: 'global.cart' | trans,
+    quantity: null
+} %}
+
+{% block attributes %}
+    href="{{ url('cart') }}"
+{% endblock %}
+
+{% block body %}
+    {% if data.label is not empty %}{{data.label}}{% endif %}
+
+    {% include atom('icon') with {
+        data: {
+            name: 'shopping-cart'
+        }
+    } only %}
+
+    {% if data.quantity is not empty and data.quantity > 0 %}
+        <span class="{{config.name}}__quantity">{{data.quantity}}</span>
+    {% endif %}
+{% endblock %}

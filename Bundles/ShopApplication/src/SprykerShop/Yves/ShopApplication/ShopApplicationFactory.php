@@ -45,7 +45,7 @@ class ShopApplicationFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
-    protected function getApplication()
+    public function getApplication()
     {
         return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGIN_APPLICATION);
     }
@@ -75,9 +75,17 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface[]
+     */
+    public function getFilterControllerEventSubscriberPlugins(): array
+    {
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER);
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShopApplication\Twig\RoutingHelperInterface
      */
-    protected function createRoutingHelper()
+    public function createRoutingHelper()
     {
         return new RoutingHelper($this->getApplication(), $this->getStore(), $this->getUtilTextService());
     }
@@ -85,7 +93,7 @@ class ShopApplicationFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    protected function getStore()
+    public function getStore()
     {
         return $this->getProvidedDependency(ShopApplicationDependencyProvider::STORE);
     }
@@ -93,7 +101,7 @@ class ShopApplicationFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface
      */
-    protected function getUtilTextService(): ShopApplicationToUtilTextServiceInterface
+    public function getUtilTextService(): ShopApplicationToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(ShopApplicationDependencyProvider::SERVICE_UTIL_TEXT);
     }

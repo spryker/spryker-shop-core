@@ -39,4 +39,14 @@ class CompanyPageToCustomerClientBridge implements CompanyPageToCustomerClientIn
     {
         return $this->customerClient->isLoggedIn();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $this->customerClient->setCustomer($customerTransfer);
+    }
 }

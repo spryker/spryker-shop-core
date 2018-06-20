@@ -8,14 +8,18 @@
 namespace SprykerShop\Yves\CompanyPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaver;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface;
 
 class CompanyPageFactory extends AbstractFactory
 {
@@ -89,5 +93,33 @@ class CompanyPageFactory extends AbstractFactory
     public function getPermissionClient(): CompanyPageToPermissionClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_PERMISSION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface
+     */
+    public function getBusinessOnBehalfClient(): CompanyPageToBusinessOnBehalfClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_BUSINESS_ON_BEHALF);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface
+     */
+    public function getMessengerClient(): CompanyPageToMessengerClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_MESSENGER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface
+     */
+    public function createCompanyUserSaver(): CompanyUserSaverInterface
+    {
+        return new CompanyUserSaver(
+            $this->getMessengerClient(),
+            $this->getCustomerClient(),
+            $this->getBusinessOnBehalfClient()
+        );
     }
 }

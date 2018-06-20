@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductOptionWidget\Plugin\ProductDetailPage;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductOptionWidget\ProductOptionWidgetPluginInterface;
@@ -45,13 +46,13 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StorageProductOptionGroupTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]
      */
     protected function getProductOptionGroups(ProductViewTransfer $productViewTransfer)
     {
         $productAbstractOptionStorageTransfer = $this->getStorageProductOptionGroupCollectionTransfer($productViewTransfer);
         if (!$productAbstractOptionStorageTransfer) {
-            return [];
+            return new ArrayObject();
         }
 
         return $this->getStorageProductOptionGroupCollectionTransfer($productViewTransfer)->getProductOptionGroups();

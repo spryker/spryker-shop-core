@@ -22,35 +22,29 @@ class CartNoteWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app): void
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
-
-        $this->addQuoteController($allowedLocalesPattern)
-            ->addItemController($allowedLocalesPattern);
+        $this->addQuoteController()
+            ->addItemController();
     }
 
     /**
-     * @param string $allowedLocalesPattern
-     *
      * @return $this
      */
-    protected function addQuoteController(string $allowedLocalesPattern): self
+    protected function addQuoteController(): self
     {
         $this->createPostController('/{cartNote}/quote', static::ROUTE_CART_NOTE_QUOTE, 'CartNoteWidget', 'Quote', 'index')
-            ->assert('cartNote', $allowedLocalesPattern . 'cart-note|cart-note')
+            ->assert('cartNote', $this->getAllowedLocalesPattern() . 'cart-note|cart-note')
             ->value('cartNote', 'cart-note');
 
         return $this;
     }
 
     /**
-     * @param string $allowedLocalesPattern
-     *
      * @return $this
      */
-    protected function addItemController(string $allowedLocalesPattern): self
+    protected function addItemController(): self
     {
         $this->createPostController('/{cartNote}/item', static::ROUTE_CART_NOTE_ITEM, 'CartNoteWidget', 'Item', 'index')
-            ->assert('cartNote', $allowedLocalesPattern . 'cart-note|cart-note')
+            ->assert('cartNote', $this->getAllowedLocalesPattern() . 'cart-note|cart-note')
             ->value('cartNote', 'cart-note');
 
         return $this;

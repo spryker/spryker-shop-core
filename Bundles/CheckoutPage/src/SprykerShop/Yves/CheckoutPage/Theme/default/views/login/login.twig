@@ -11,7 +11,7 @@
 
 {% block title %}
     <ul class="list">
-        <li class="list__item list__item--spacing">
+        <li class="list__item spacing-y">
             {% include molecule('toggler-radio') with {
                 data: {
                     label: 'checkout.customer.proceed_as_user' | trans
@@ -20,7 +20,7 @@
                     id: 'register',
                     checked: not data.isGuest,
                     name: 'checkoutProceedAs',
-                    target: 'js-login__register',
+                    'target-selector': '.js-login__register',
                     'class-to-toggle': 'is-hidden'
                 }
             } only %}
@@ -34,7 +34,7 @@
                     id: 'guest',
                     checked: data.isGuest,
                     name: 'checkoutProceedAs',
-                    target: 'js-login__guest',
+                    'target-selector': '.js-login__guest',
                     'class-to-toggle': 'is-hidden'
                 }
             } only %}

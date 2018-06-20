@@ -23,12 +23,12 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
         $this
             ->addParameter('cartCollection', $this->getInactiveQuoteList())
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
             ->addParameter('cart', $quoteTransfer)
-            ->addParameter('widgetList', $this->getFactory()->getViewExtendWidgetPlugins());
+            ->addParameter('widgetList', $this->getFactory()->getViewExtendWidgetPlugins())
+            ->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 
     /**

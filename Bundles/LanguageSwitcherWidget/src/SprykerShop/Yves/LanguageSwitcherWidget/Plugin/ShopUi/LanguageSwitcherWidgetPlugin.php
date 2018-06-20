@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\LanguageSwitcherWidget\Plugin\ShopUi;
 
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShopUiExtension\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
+use SprykerShop\Yves\ShopUi\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\LanguageSwitcherWidget\LanguageSwitcherWidgetFactory getFactory()
@@ -25,16 +25,8 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      */
     public function initialize(string $pathInfo, $queryString, string $requestUri): void
     {
-        $currentUrlStorage = $this->getFactory()
-            ->getUrlStorageClient()
-            ->findUrlStorageTransferByUrl($pathInfo);
-        $localeUrls = [];
-
-        if ($currentUrlStorage !== null && $currentUrlStorage->getLocaleUrls()->count() !== 0) {
-            $localeUrls = (array)$currentUrlStorage->getLocaleUrls();
-        }
-
-        $this->addParameter('languages', $this->getLanguages($localeUrls, $queryString, $requestUri))
+        $this
+            ->addParameter('languages', $this->getLanguages($pathInfo, $queryString, $requestUri))
             ->addParameter('currentLanguage', $this->getCurrentLanguage());
     }
 
@@ -51,21 +43,27 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      */
     public static function getTemplate(): string
     {
-        return '@LanguageSwitcherWidget/_partials/language_switcher.twig';
+        return '@LanguageSwitcherWidget/views/switcher/switcher.twig';
     }
 
     /**
-     * @param array $localeUrls
+     * @param string $pathInfo
      * @param string $queryString
      * @param string $requestUri
      *
      * @return string[]
      */
-    protected function getLanguages(
-        array $localeUrls,
-        $queryString,
-        string $requestUri
-    ): array {
+    protected function getLanguages(string $pathInfo, $queryString, string $requestUri): array
+    {
+        $currentUrlStorage = $this->getFactory()
+            ->getUrlStorageClient()
+            ->findUrlStorageTransferByUrl($pathInfo);
+
+        $localeUrls = [];
+        if ($currentUrlStorage !== null && $currentUrlStorage->getLocaleUrls()->count() !== 0) {
+            $localeUrls = (array)$currentUrlStorage->getLocaleUrls();
+        }
+
         $locales = $this->getFactory()
             ->getStore()
             ->getLocales();
