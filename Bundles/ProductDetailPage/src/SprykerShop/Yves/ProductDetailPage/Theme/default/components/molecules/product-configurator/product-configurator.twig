@@ -28,6 +28,11 @@
     {% set isDisabled = not isAvailable or isDisabled %}
 {% endif %}
 
+{% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+    {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', sku) %}
+    {% set isDisabled = isDiscontinued or isDisabled %}
+{% endif %}
+
 {% block body %}
     {% if brand is not empty %}
         <h5><small>{{'page.product.by' | trans}}</small> {{brand}}</h5>
@@ -99,4 +104,6 @@
         <hr />
         {{ widget('WishlistWidgetPlugin', data.product) }}
     {% endif %}
+
+    {{ widget('ProductDiscontinuedWidgetPlugin', sku) }}
 {% endblock %}
