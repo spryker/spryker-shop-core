@@ -49,7 +49,7 @@ class CatalogPageTwigExtension extends TwigExtension
 
     /**
      * @param array $context
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $searchResultTransfer
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer $searchResultTransfer
      * @param string $filterValue
      *
      * @return string
@@ -63,7 +63,7 @@ class CatalogPageTwigExtension extends TwigExtension
 
     /**
      * @param array $context
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $facetFilters
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facetFilters
      *
      * @return string
      */
