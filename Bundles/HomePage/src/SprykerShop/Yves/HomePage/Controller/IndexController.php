@@ -19,18 +19,26 @@ class IndexController extends AbstractController
     const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
     /**
-     * @return array
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction()
     {
-        $data = [
-            'featuredProductLimit' => static::FEATURED_PRODUCT_LIMIT,
-        ];
+        $viewData = $this->executeIndexAction();
 
         return $this->view(
-            $data,
+            $viewData,
             $this->getFactory()->getHomePageWidgetPlugins(),
             '@HomePage/views/home/home.twig'
         );
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeIndexAction(): array
+    {
+        return [
+            'featuredProductLimit' => static::FEATURED_PRODUCT_LIMIT,
+        ];
     }
 }

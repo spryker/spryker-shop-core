@@ -27,17 +27,27 @@ class CompanyRoleController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/role/role.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
+    {
         $collectionTransfer = $this->createCriteriaFilterTransfer($request);
         $collectionTransfer = $this->getFactory()
             ->getCompanyRoleClient()
             ->getCompanyRoleCollection($collectionTransfer);
 
-        $data = [
+        return [
             'companyRoleCollection' => $collectionTransfer->getRoles(),
             'pagination' => $collectionTransfer->getPagination(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/role/role.twig');
     }
 
     /**
@@ -46,6 +56,18 @@ class CompanyRoleController extends AbstractCompanyController
      * @return array|\Spryker\Yves\Kernel\View\View
      */
     public function detailsAction(Request $request)
+    {
+        $viewData = $this->executeDetailsAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/role-detail/role-detail.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeDetailsAction(Request $request): array
     {
         $idCompanyRole = $request->query->getInt('id');
         $companyRoleTransfer = new CompanyRoleTransfer();
@@ -60,13 +82,11 @@ class CompanyRoleController extends AbstractCompanyController
 
         $companyUserCollection = $this->prepareCompanyUsers($companyRoleTransfer->getCompanyUserCollection());
 
-        $data = [
+        return [
             'companyRole' => $companyRoleTransfer,
             'permissions' => $companyRolePermissions->getPermissions(),
             'companyUserCollection' => $companyUserCollection->getCompanyUsers(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/role-detail/role-detail.twig');
     }
 
     /**
@@ -89,9 +109,25 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
+    {
+        $response = $this->executeCreateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/role-create/role-create.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeCreateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -117,11 +153,9 @@ class CompanyRoleController extends AbstractCompanyController
             $this->processResponseMessages($companyRoleResponseTransfer);
         }
 
-        $data = [
+        return [
             'companyRoleForm' => $companyRoleForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/role-create/role-create.twig');
     }
 
     /**
@@ -130,6 +164,22 @@ class CompanyRoleController extends AbstractCompanyController
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
+    {
+        $response = $this->executeUpdateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/role-update/role-update.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeUpdateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -153,11 +203,9 @@ class CompanyRoleController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
         }
 
-        $data = [
+        return [
             'companyRoleForm' => $companyRoleForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/role-update/role-update.twig');
     }
 
     /**

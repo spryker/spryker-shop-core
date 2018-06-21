@@ -42,6 +42,6 @@ class SharedCartAddSeparateProductWidgetPlugin extends AbstractWidgetPlugin impl
      */
     public static function getTemplate()
     {
-        return '@SharedCartWidget/views/multi-cart-widget/shared-cart-separate-product.twig';
+        return '@SharedCartWidget/views/shared-cart-separate-product/shared-cart-separate-product.twig';
     }
 }

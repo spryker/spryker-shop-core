@@ -14,8 +14,6 @@ use Twig_Environment;
 use Twig_SimpleFunction;
 
 /**
- * Class CustomerTwigServiceProvider
- *
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface

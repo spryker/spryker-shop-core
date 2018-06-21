@@ -1,0 +1,18 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cart: _widget.cart,
+    isQuoteOwner: _widget.isQuoteOwner
+} %}
+
+{% block body %}
+    {% if data.isQuoteOwner and data.cart.shareDetails is not empty %}
+        <div class="box">
+            {% include molecule('shared-cart-customers-table', 'SharedCartWidget') with {
+                data: {
+                    cart: data.cart
+                }
+            } only %}
+        </div>
+    {% endif %}
+{% endblock %}

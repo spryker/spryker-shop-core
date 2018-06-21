@@ -29,6 +29,22 @@ class OrderController extends AbstractCustomerController
      */
     public function indexAction(Request $request)
     {
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getCustomerOrderListWidgetPlugins(),
+            '@CustomerPage/views/order/order.twig'
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
+    {
         $orderListTransfer = $this->createOrderListTransfer($request);
 
         $orderListTransfer = $this->getFactory()
@@ -37,16 +53,10 @@ class OrderController extends AbstractCustomerController
 
         $orderList = $orderListTransfer->getOrders();
 
-        $data = [
+        return [
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderList,
         ];
-
-        return $this->view(
-            $data,
-            $this->getFactory()->getCustomerOrderListWidgetPlugins(),
-            '@CustomerPage/views/order/order.twig'
-        );
     }
 
     /**

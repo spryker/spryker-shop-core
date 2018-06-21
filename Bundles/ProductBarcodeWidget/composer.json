@@ -1,0 +1,34 @@
+{
+  "name": "spryker-shop/product-barcode-widget",
+  "description": "ProductBarcodeWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/kernel": "^3.16.0",
+    "spryker/product-barcode": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker-shop/shopping-list-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker-shop/shopping-list-page": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

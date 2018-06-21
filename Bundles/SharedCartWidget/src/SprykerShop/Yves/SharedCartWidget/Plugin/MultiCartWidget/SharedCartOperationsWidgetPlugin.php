@@ -124,6 +124,6 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public static function getTemplate()
     {
-        return '@SharedCartWidget/views/multi-cart-widget/shared-cart-operations.twig';
+        return '@SharedCartWidget/views/shared-cart-operations/shared-cart-operations.twig';
     }
 }

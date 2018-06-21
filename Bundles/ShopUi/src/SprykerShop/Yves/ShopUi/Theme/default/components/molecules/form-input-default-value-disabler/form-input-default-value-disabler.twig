@@ -1,0 +1,12 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'form-input-default-value-disabler',
+    tag: 'form-input-default-value-disabler'
+} %}
+
+{% define attributes = {
+    'form-selector': required,
+    'input-selector': required,
+    'default-value-attribute': 'data-default-value'
+} %}

@@ -66,7 +66,7 @@ class AttributeVariantsProvider
      * @param array $optionValueIds
      * @param string $localeName
      *
-     * @return true
+     * @return bool
      */
     public function tryToReplaceItem($sku, $quantity, $selectedAttributes, ArrayObject $items, $groupKey, $optionValueIds, $localeName)
     {

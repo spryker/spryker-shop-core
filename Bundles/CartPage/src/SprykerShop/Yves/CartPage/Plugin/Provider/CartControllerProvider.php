@@ -29,39 +29,91 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
-        $controller = $this->createController('/{cart}', self::ROUTE_CART, 'CartPage', 'Cart');
-        $controller->assert('cart', $allowedLocalesPattern . 'cart|cart');
-        $controller->value('cart', 'cart')
+        $this->addCartRoute()
+            ->addCartAddItemsRoute()
+            ->addCartAddRoute()
+            ->addCartRemoveRoute()
+            ->addCartChangeQuantityRoute()
+            ->addCartUpdateRoute();
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCartRoute(): self
+    {
+        $this->createController('/{cart}', self::ROUTE_CART, 'CartPage', 'Cart')
+            ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
+            ->value('cart', 'cart')
             ->convert('selectedAttributes', [$this, 'getSelectedAttributesFromRequest']);
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCartAddItemsRoute(): self
+    {
         $this->createPostController('/{cart}/add-items', self::ROUTE_CART_ADD_ITEMS, 'CartPage', 'Cart', 'addItems')
-            ->assert('cart', $allowedLocalesPattern . 'cart|cart')
+            ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCartAddRoute(): self
+    {
         $this->createController('/{cart}/add/{sku}', self::ROUTE_CART_ADD, 'CartPage', 'Cart', 'add')
-            ->assert('cart', $allowedLocalesPattern . 'cart|cart')
+            ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
             ->assert('sku', self::SKU_PATTERN)
             ->convert('quantity', [$this, 'getQuantityFromRequest'])
             ->convert('optionValueIds', [$this, 'getProductOptionsFromRequest']);
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCartRemoveRoute(): self
+    {
         $this->createController('/{cart}/remove/{sku}/{groupKey}', self::ROUTE_CART_REMOVE, 'CartPage', 'Cart', 'remove')
-            ->assert('cart', $allowedLocalesPattern . 'cart|cart')
+            ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
             ->assert('sku', self::SKU_PATTERN)
             ->value('groupKey', '');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCartChangeQuantityRoute(): self
+    {
         $this->createController('/{cart}/change/{sku}', self::ROUTE_CART_CHANGE_QUANTITY, 'CartPage', 'Cart', 'change')
-            ->assert('cart', $allowedLocalesPattern . 'cart|cart')
+            ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
             ->assert('sku', self::SKU_PATTERN)
             ->convert('quantity', [$this, 'getQuantityFromRequest'])
             ->convert('groupKey', [$this, 'getGroupKeyFromRequest'])
             ->method('POST');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCartUpdateRoute(): self
+    {
         $this->createController('/{cart}/update/{sku}', self::ROUTE_CART_UPDATE, 'CartPage', 'Cart', 'update')
-            ->assert('cart', $allowedLocalesPattern . 'cart|cart')
+            ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
             ->assert('sku', self::SKU_PATTERN)
             ->convert('quantity', [$this, 'getQuantityFromRequest'])
@@ -70,6 +122,8 @@ class CartControllerProvider extends AbstractYvesControllerProvider
             ->convert('preselectedAttributes', [$this, 'getPreSelectedAttributesFromRequest'])
             ->convert('optionValueIds', [$this, 'getProductOptionsFromRequest'])
             ->method('POST');
+
+        return $this;
     }
 
     /**

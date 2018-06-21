@@ -36,6 +36,6 @@ class ProductCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public static function getTemplate(): string
     {
-        return '@CmsBlockWidget/views/product-cms-block/product-cms-block.twig';
+        return '@CmsBlockWidget/views/product-with-cms-block/product-with-cms-block.twig';
     }
 }

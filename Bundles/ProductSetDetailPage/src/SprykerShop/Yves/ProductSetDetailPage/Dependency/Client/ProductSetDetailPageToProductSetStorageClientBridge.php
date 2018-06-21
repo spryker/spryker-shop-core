@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductSetDetailPage\Dependency\Client;
 class ProductSetDetailPageToProductSetStorageClientBridge implements ProductSetDetailPageToProductSetStorageClientInterface
 {
     /**
-     * @var \Spryker\Client\ProductSet\ProductSetClientInterface
+     * @var \Spryker\Client\ProductSetStorage\ProductSetStorageClientInterface
      */
     protected $productSetStorageClient;
 

@@ -23,18 +23,44 @@ class CatalogPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addFulltextSearchRoute()
+            ->addSuggestionRoute()
+            ->addChangeViewRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addFulltextSearchRoute(): self
+    {
         $this->createController('/{search}', self::ROUTE_SEARCH, 'CatalogPage', 'Catalog', 'fulltextSearch')
-            ->assert('search', $allowedLocalesPattern . 'search|search')
+            ->assert('search', $this->getAllowedLocalesPattern() . 'search|search')
             ->value('search', 'search');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addSuggestionRoute(): self
+    {
         $this->createController('/{search}/suggestion', self::ROUTE_SUGGESTION, 'CatalogPage', 'Suggestion', 'index')
-            ->assert('search', $allowedLocalesPattern . 'search|search')
+            ->assert('search', $this->getAllowedLocalesPattern() . 'search|search')
             ->value('search', 'search');
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addChangeViewRoute(): self
+    {
         $this->createController('/{catalog}/change-view-mode', static::ROUTER_CHANGE_VIEW_MODE, 'CatalogPage', 'Catalog', 'changeViewMode')
-            ->assert('catalog', $allowedLocalesPattern . 'catalog|catalog')
+            ->assert('catalog', $this->getAllowedLocalesPattern() . 'catalog|catalog')
             ->value('catalog', 'catalog');
+
+        return $this;
     }
 }

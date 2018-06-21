@@ -23,22 +23,33 @@ class CustomerReorderControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app): void
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addReorderRoute()
+            ->addReorderItemsRoute();
+    }
 
-        $this->createController(
-            '/{customer}/order/{idOrder}/reorder',
-            static::ROUTE_CART_ORDER_REPEAT,
-            'CustomerReorderWidget',
-            'Order',
-            'reorder'
-        )
-            ->assert('customer', $allowedLocalesPattern . 'customer|customer')
+    /**
+     * @return $this
+     */
+    protected function addReorderRoute(): self
+    {
+        $this->createController('/{customer}/order/{idOrder}/reorder', static::ROUTE_CART_ORDER_REPEAT, 'CustomerReorderWidget', 'Order', 'reorder')
+            ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
             ->value('customer', 'customer')
             ->assert('idOrder', static::PATTERN_ID);
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addReorderItemsRoute(): self
+    {
         $this->createController('/{customer}/order/reorder-items', static::ROUTE_CART_ORDER_ITEMS_REPEAT, 'CustomerReorderWidget', 'Order', 'reorderItems')
-            ->assert('customer', $allowedLocalesPattern . 'customer|customer')
+            ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
             ->value('customer', 'customer')
             ->method('POST');
+
+        return $this;
     }
 }

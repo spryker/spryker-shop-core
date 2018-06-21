@@ -30,6 +30,7 @@ class ProductBundleCartItemsWidgetPlugin extends AbstractWidgetPlugin implements
         if (!$itemDisplayLimit) {
             $itemDisplayLimit = count($items);
         }
+
         $this->addParameter('items', $items)
             ->addParameter('itemDisplayLimit', $itemDisplayLimit);
     }

@@ -21,10 +21,18 @@ class NewsletterPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addNewsletterRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addNewsletterRoute(): self
+    {
         $this->createController('/{customer}/newsletter', self::ROUTE_CUSTOMER_NEWSLETTER, 'NewsletterPage', 'Newsletter', 'index')
-            ->assert('customer', $allowedLocalesPattern . 'customer|customer')
+            ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
             ->value('customer', 'customer');
+
+        return $this;
     }
 }

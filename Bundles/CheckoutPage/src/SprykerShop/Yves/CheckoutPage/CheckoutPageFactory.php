@@ -97,7 +97,7 @@ class CheckoutPageFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
-    protected function getUrlGenerator()
+    public function getUrlGenerator()
     {
         return $this->getApplication()['url_generator'];
     }
@@ -105,7 +105,7 @@ class CheckoutPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Kernel\Application
      */
-    protected function getApplication()
+    public function getApplication()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_APPLICATION);
     }
@@ -113,7 +113,7 @@ class CheckoutPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
      */
-    protected function getCalculationClient(): CheckoutPageToCalculationClientInterface
+    public function getCalculationClient(): CheckoutPageToCalculationClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CALCULATION);
     }
@@ -121,7 +121,7 @@ class CheckoutPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
-    protected function getFlashMessenger()
+    public function getFlashMessenger()
     {
         return $this->getApplication()['flash_messenger'];
     }
@@ -182,7 +182,7 @@ class CheckoutPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
-    protected function getMoneyPlugin()
+    public function getMoneyPlugin()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_MONEY);
     }
@@ -190,7 +190,7 @@ class CheckoutPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    protected function getStore()
+    public function getStore()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
     }
@@ -198,7 +198,7 @@ class CheckoutPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface
      */
-    protected function getPriceClient(): CheckoutPageToPriceClientInterface
+    public function getPriceClient(): CheckoutPageToPriceClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_PRICE);
     }
@@ -206,7 +206,7 @@ class CheckoutPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
-    public function createPaymentMethodSubForms()
+    public function getPaymentMethodSubForms()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PAYMENT_SUB_FORMS);
     }

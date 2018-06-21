@@ -6,6 +6,7 @@
         max-width: 100%;
         background-color: $setting-color-white;
         border: 1px solid $setting-color-input-border;
+        border-radius: 0;
 
         &__select {
             display: block;
@@ -14,12 +15,19 @@
             background-color: $setting-color-transparent;
             border: 0.25rem solid $setting-color-transparent;
             border-right-width: 1.5rem;
+            border-radius: 0;
             z-index: 2;
             appearance: none;
             -webkit-appearance: none;
+            -moz-appearance: none;
 
             &::-ms-expand {
                 display: none;
+            }
+
+            &[disabled] {
+                background-color: $setting-color-lightest;
+                cursor: not-allowed;
             }
         }
 

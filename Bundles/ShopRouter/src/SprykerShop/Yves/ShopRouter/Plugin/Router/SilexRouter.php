@@ -17,7 +17,7 @@ use Symfony\Component\Routing\RouterInterface;
 class SilexRouter extends AbstractPlugin implements RouterInterface
 {
     /**
-     * @var \Spryker\Shared\Application\Business\Routing\SilexRouter
+     * @var \Symfony\Component\Routing\RouterInterface
      */
     protected $sharedSilexRouter;
 
