@@ -27,7 +27,7 @@ class CmsChartContentWidgetConfigurationProvider implements CmsContentWidgetConf
     public function getAvailableTemplates(): array
     {
         return [
-            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@CmsContentWidgetChartConnector/_chart/cms-chart-content-widget.twig',
+            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@CmsContentWidgetChartConnector/views/cms-chart-content/cms-chart-content.twig',
         ];
     }
 

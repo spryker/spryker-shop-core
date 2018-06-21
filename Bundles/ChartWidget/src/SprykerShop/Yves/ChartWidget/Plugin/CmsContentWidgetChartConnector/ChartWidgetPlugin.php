@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ChartWidget\Plugin\CmsContentWidget;
+namespace SprykerShop\Yves\ChartWidget\Plugin\CmsContentWidgetChartConnector;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CmsContentWidgetChartConnector\Dependency\Plugin\ChartWidget\ChartWidgetPluginInterface;
@@ -18,8 +18,9 @@ class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPlugi
      *
      * @return void
      */
-    public function initialize($chartPluginName, $dataIdentifier = null): void
+    public function initialize(string $chartPluginName, ?string $dataIdentifier = null): void
     {
+
         $this
             ->addParameter('chartPluginName', $chartPluginName)
             ->addParameter('dataIdentifier', $dataIdentifier);
@@ -38,6 +39,6 @@ class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPlugi
      */
     public static function getTemplate(): string
     {
-        return '@ChartWidget/_cms-content-widget/chart.twig';
+        return '@ChartWidget/views/chart/chart.twig';
     }
 }

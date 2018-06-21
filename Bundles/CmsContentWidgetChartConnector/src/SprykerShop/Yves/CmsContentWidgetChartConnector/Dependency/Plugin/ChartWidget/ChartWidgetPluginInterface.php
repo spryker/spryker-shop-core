@@ -19,5 +19,5 @@ interface ChartWidgetPluginInterface extends WidgetPluginInterface
      *
      * @return void
      */
-    public function initialize($chartPluginName, $dataIdentifier = null): void;
+    public function initialize(string $chartPluginName, ?string $dataIdentifier = null): void;
 }
