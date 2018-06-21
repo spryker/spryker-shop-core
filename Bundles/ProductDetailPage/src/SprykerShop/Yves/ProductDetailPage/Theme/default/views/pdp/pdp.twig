@@ -40,6 +40,8 @@
         </div>
     </div>
 
+    {{ widget('ProductReplacementForWidgetPlugin', data.product.sku) }}
+
     {% include molecule('product-detail', 'ProductDetailPage') with {
         class: 'box',
         data: {
