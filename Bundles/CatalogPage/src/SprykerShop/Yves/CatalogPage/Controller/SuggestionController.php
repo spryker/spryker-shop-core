@@ -37,7 +37,7 @@ class SuggestionController extends AbstractController
 
         return $this->jsonResponse([
             'completion' => ($searchResults['completion'] ? $searchResults['completion'][0] : null),
-            'suggestion' => $this->renderView('@CatalogPage/components/organisms/suggestion-results/suggestion-results.twig', $searchResults)->getContent(),
+            'suggestion' => $this->renderView('@CatalogPage/views/suggestion-results/suggestion-results.twig', $searchResults)->getContent(),
         ]);
     }
 }

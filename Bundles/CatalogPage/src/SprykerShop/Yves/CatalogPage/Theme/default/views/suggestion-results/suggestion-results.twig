@@ -27,7 +27,7 @@
                 {% if data.completionList is defined and data.completionList is not empty %}
                     {% include molecule('suggestion-links-list', 'CatalogPage') with {
                         data: {
-                            name: ('global.search.suggestions' | trans),
+                            name: 'global.search.suggestions' | trans,
                             items: data.completionList,
                             length: config.suggestionsLength,
                             isTitleHiddenOnTablet: false,
@@ -39,8 +39,8 @@
                 <div class="is-hidden-sm-md">
                     {% include molecule('suggestion-links-list', 'CatalogPage') with {
                         data: {
-                            name: ('global.search.suggestion.in_categories' | trans),
-                            items: data.suggestionByType.category | default(),
+                            name: 'global.search.suggestion.in_categories' | trans,
+                            items: data.suggestionByType.category | default([]),
                             length: config.categoriesLength
                         }
                     } only %}
@@ -49,7 +49,7 @@
                 <div class="is-hidden-sm-md">
                     {% include molecule('suggestion-links-list', 'CatalogPage') with {
                         data: {
-                            name: ('global.search.suggestion.in_cms' | trans),
+                            name: 'global.search.suggestion.in_cms' | trans,
                             items: data.suggestionByType.cms_page | default(),
                             length: config.pagesLength
                         }

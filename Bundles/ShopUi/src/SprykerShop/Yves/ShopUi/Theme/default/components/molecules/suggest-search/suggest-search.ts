@@ -59,7 +59,7 @@ export default class SuggestSearch extends Component {
 
     async onInputKeyUp(event: Event): Promise<void> {
         const suggestQuery = this.getSearchValue();
-        if (suggestQuery != this.currentSearchValue || suggestQuery.length >= this.lettersTrashold) {
+        if (suggestQuery != this.currentSearchValue && suggestQuery.length >= this.lettersTrashold) {
             await this.getSuggestions();
         }
         if (suggestQuery.length < this.lettersTrashold) {
