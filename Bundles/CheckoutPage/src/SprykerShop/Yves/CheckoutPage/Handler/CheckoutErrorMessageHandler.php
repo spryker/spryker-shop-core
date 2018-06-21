@@ -40,9 +40,8 @@ class CheckoutErrorMessageHandler implements CheckoutErrorMessageHandlerInterfac
 
                 if (!\in_array($this->getProductItemSku($checkoutErrorTransfer), $processedBundleItemsSkus, true)) {
                     $uniqueCheckoutErrorMessages[] = $checkoutErrorTransfer;
+                    $checkoutErrorMessagesHashes[] = $checkoutErrorMessageHash;
                 }
-
-                $checkoutErrorMessagesHashes[] = $checkoutErrorMessageHash;
             }
         }
 
