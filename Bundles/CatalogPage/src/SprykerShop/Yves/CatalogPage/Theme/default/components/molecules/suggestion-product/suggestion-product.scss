@@ -1,12 +1,12 @@
 @mixin suggestion-product($name: '.suggestion-product') {
     #{$name} {
 
-        &__link.is-active {
-            text-decoration: underline;
-        }
+        &__link {
+            color: $setting-color-black;
 
-        &__info {
-            padding: 0.5rem;
+            &.is-active {
+                color: $setting-color-main;
+            }
         }
 
         &__thumbnail {

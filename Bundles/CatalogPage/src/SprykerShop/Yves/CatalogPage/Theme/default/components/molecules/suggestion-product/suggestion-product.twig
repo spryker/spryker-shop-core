@@ -5,35 +5,37 @@
 } %}
 
 {% define data = {
-    product: required
+    product: required,
+    image: data.product.images | first,
+    alt: data.product.abstract_name,
+    title: data.product.abstract_name,
+    price: data.product.price | money,
+    originalPrice: data.product.prices.ORIGINAL is not defined or data.product.prices.ORIGINAL is empty ? null : data.product.prices.ORIGINAL | money
 } %}
 
-{% set image = data.product.images | first %}
-
-
 {% block body %}
-    <a class="grid js-suggestions-navigable {{ config.name }}__link" href="{{ data.product.url }}">
+    <a class="grid js-suggestions-navigable js-suggestions-navigable-product {{ config.name }}__link" href="{{ data.product.url }}">
         <span class="col col--sm-3">
-            {% if image %}
+            {% if data.image %}
                 {% include atom('thumbnail') with {
                     modifiers: ['smaller', 'has-border'],
                     attributes: {
-                        alt: data.product.abstract_name,
-                        src: image.external_url_small,
-                        title: data.product.abstract_name,
+                        alt: data.alt,
+                        src: data.image.external_url_small,
+                        title: data.title
                     },
                     class: config.name ~ '__thumbnail'
                 } only %}
             {% endif %}
         </span>
 
-        <span class="col col--sm-9 {{ config.name }}__info">
+        <span class="col col--sm-9 spacing--inner">
             {{ data.product.abstract_name }}
 
             {% include molecule('price') with {
                 data: {
-                    amount: data.product.price | money,
-                    originalAmount: data.product.prices.ORIGINAL is not defined or data.product.prices.ORIGINAL is empty ? null : data.product.prices.ORIGINAL | money
+                    amount: data.price,
+                    originalAmount: data.originalPrice
                 }
             } only %}
         </span>

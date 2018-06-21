@@ -1,8 +1,7 @@
-@mixin suggestion-list($name: '.suggestion-list') {
+@mixin suggestion-links-list($name: '.suggestion-links-list') {
     #{$name} {
 
         &__link {
-
             &.is-active {
                 text-decoration: underline;
             }

@@ -2,14 +2,16 @@ import Component from '../../../models/component';
 import AjaxProvider from '../../../components/molecules/ajax-provider/ajax-provider';
 import { throttle, debounce } from 'throttle-debounce';
 
-interface keyCodesMap {
+interface keyCodes {
     [keyCode: number]: string;
 }
 
 export default class SuggestSearch extends Component {
     readonly lettersTrashold: number
-    readonly delay: number
-    readonly keyboardCodes: keyCodesMap
+    readonly debounceDelay: number
+    readonly throttleDelay: number
+    readonly keyboardCodes: keyCodes
+
     searchInput: HTMLInputElement
     hintInput: HTMLInputElement
     suggestionsContainer: HTMLElement
@@ -25,7 +27,8 @@ export default class SuggestSearch extends Component {
         super();
 
         this.lettersTrashold = 2;
-        this.delay = 500;
+        this.debounceDelay = 500;
+        this.throttleDelay = 200;
         this.keyboardCodes = {
             9: 'tab',
             13: 'enter',
@@ -38,26 +41,30 @@ export default class SuggestSearch extends Component {
     }
 
     readyCallback(): void {
-        this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.componentSelector}__provider`);
+        this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}-provider`);
         this.searchInputSelector = <string> this.ajaxProvider.getAttribute('inputSelector');
-        this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.componentSelector}__container`);
+        this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}-container`);
         this.searchInput = <HTMLInputElement> document.querySelector(this.searchInputSelector);
         this.createHintInput();
         this.mapEvents();
     }
 
     mapEvents(): void {
-        this.searchInput.addEventListener('keyup', debounce(this.delay, (event: Event) => this.onInputKeyUp(event)));
-        this.searchInput.addEventListener('keydown', throttle(this.delay, (event: Event) => this.onInputKeyDown(<KeyboardEvent> event)));
+        this.searchInput.addEventListener('keyup', debounce(this.debounceDelay, (event: Event) => this.onInputKeyUp(event)));
+        this.searchInput.addEventListener('keydown', throttle(this.throttleDelay, (event: Event) => this.onInputKeyDown(<KeyboardEvent> event)));
         this.searchInput.addEventListener('blur', (event: Event) => this.onInputFocusOut(event));
         this.searchInput.addEventListener('focus', (event: Event) => this.onInputFocusIn(event));
         this.searchInput.addEventListener('click', (event: Event) => this.onInputClick(event));
     }
 
-    onInputKeyUp(event: Event): void {
+    async onInputKeyUp(event: Event): Promise<void> {
         const suggestQuery = this.getSearchValue();
-        if (suggestQuery != this.currentSearchValue) {
-            this.getSuggestions(<HTMLInputElement> event.target);
+        if (suggestQuery != this.currentSearchValue || suggestQuery.length >= this.lettersTrashold) {
+            await this.getSuggestions();
+        }
+        if (suggestQuery.length < this.lettersTrashold) {
+            this.updateHintInput('');
+            this.hideSugestions();
         }
 
     }
@@ -75,9 +82,12 @@ export default class SuggestSearch extends Component {
         }
     }
 
-    onInputClick(event: KeyboardEvent): void {
+    onInputClick(event: Event): void {
         this.activeItemIndex = 0;
-        this.updateNavigation();
+        if (this.isNavigationExist()) {
+            this.updateNavigation();
+            this.showSugestions();
+        }
     }
 
     onTab(event: KeyboardEvent): boolean {
@@ -87,12 +97,12 @@ export default class SuggestSearch extends Component {
     }
 
     onArrowUp(event: KeyboardEvent) {
-        this.activeItemIndex--;
+        this.activeItemIndex = this.activeItemIndex > 0 ? this.activeItemIndex - 1 : 0;
         this.updateNavigation();
     }
 
     onArrowDown(event: KeyboardEvent) {
-        this.activeItemIndex++;
+        this.activeItemIndex = this.activeItemIndex < this.navigation.length ? this.activeItemIndex + 1 : 0;
         this.updateNavigation();
     }
 
@@ -101,18 +111,14 @@ export default class SuggestSearch extends Component {
         this.updateNavigation();
     }
 
-    onArrowRight(event: KeyboardEvent) {
-        this.activeItemIndex = 1;
+    onArrowRight(event: KeyboardEvent): void {
+        this.activeItemIndex = this.getFirstProductNavigationIndex() + 1;
         this.updateNavigation();
     }
 
-    onEnter(event: KeyboardEvent) {
+    onEnter(event: KeyboardEvent): void {
         this.getActiveNavigationItem().click();
         event.preventDefault();
-    }
-
-    getActiveNavigationItem() {
-        return this.navigation[this.activeItemIndex - 1];
     }
 
     onInputFocusIn(event: Event): void {
@@ -123,53 +129,69 @@ export default class SuggestSearch extends Component {
         this.hideSugestions();
     }
 
-    updateNavigation() {
-        if (this.navigation && this.navigation.length) {
+    getActiveNavigationItem(): HTMLElement {
+        return this.navigation[this.activeItemIndex - 1];
+    }
+
+    getFirstProductNavigationIndex(): number {
+        return this.navigation.findIndex((element: HTMLElement): boolean => {
+            return element.classList.contains('js-suggestions-navigable-product');
+        });
+    }
+
+    getNavigation(): HTMLElement[] {
+        return <HTMLElement[]> Array.from(this.getElementsByClassName('js-suggestions-navigable'))
+    }
+
+    updateNavigation(): void {
+        if (this.isNavigationExist()) {
             this.navigation.forEach(element => {
                 element.classList.remove('is-active');
             });
+            if (this.activeItemIndex > this.navigation.length) {
+                this.activeItemIndex = 0;
+                this.searchInput.focus();
+                return;
+            }
             if (this.activeItemIndex > 0) {
                 this.navigation[this.activeItemIndex - 1].classList.add('is-active');
             }
         }
     }
 
+    isNavigationExist(): boolean {
+        return (this.navigation && !!this.navigation.length);
+    }
+
     getSearchValue(): string {
         return this.searchInput.value.trim();
     }
 
-    async getSuggestions(target: HTMLInputElement): Promise<void> {
+    async getSuggestions(): Promise<void> {
         const suggestQuery = this.getSearchValue();
         this.currentSearchValue = suggestQuery;
 
-        if (suggestQuery.length >= this.lettersTrashold) {
-            const urlParams = [['q', suggestQuery]];
+        const urlParams = [['q', suggestQuery]];
 
-            this.addUrlParams(urlParams);
+        this.addUrlParams(urlParams);
 
-            const response = await this.ajaxProvider.fetch(suggestQuery);
+        const response = await this.ajaxProvider.fetch(suggestQuery);
 
-            this.suggestionsContainer.innerHTML = JSON.parse(response).suggestion;
-            this.hint = JSON.parse(response).completion;
+        this.suggestionsContainer.innerHTML = JSON.parse(response).suggestion;
+        this.hint = JSON.parse(response).completion;
 
-            if (this.hint && this.hint.length > this.lettersTrashold) {
-                this.showSugestions();
-                this.updateHintInput();
-            }
-
-            if (this.hint == null) {
-                this.updateHintInput('');
-            }
-
-            this.navigation = <HTMLElement[]> Array.from(this.getElementsByClassName('js-suggestions-navigable'));
-
-            this.updateNavigation();
-
-            return;
+        if (this.hint && this.hint.length > this.lettersTrashold) {
+            this.showSugestions();
+            this.updateHintInput();
         }
 
-        this.hideSugestions();
-        this.updateHintInput('');
+        if (this.hint == null) {
+            this.updateHintInput('');
+        }
+
+        this.navigation = this.getNavigation();
+
+        this.updateNavigation();
     }
 
     addUrlParams(params: Array<Array<string>>): void {
@@ -192,12 +214,12 @@ export default class SuggestSearch extends Component {
 
     createHintInput(): void {
         this.hintInput = document.createElement('input');
-        this.hintInput.classList.add(`${this.componentName}__hint`, 'input', 'input--expand');
+        this.hintInput.classList.add(`${this.name}__hint`, 'input', 'input--expand');
         this.searchInput.parentNode.appendChild(this.hintInput);
-        this.searchInput.classList.add(`${this.componentName}__input--transparent`);
+        this.searchInput.classList.add(`${this.name}__input--transparent`);
     }
 
-    updateHintInput(value?): void {
+    updateHintInput(value?: string): void {
         const hintValue = value ? value : this.hint;
         this.setHintValue(hintValue);
     }

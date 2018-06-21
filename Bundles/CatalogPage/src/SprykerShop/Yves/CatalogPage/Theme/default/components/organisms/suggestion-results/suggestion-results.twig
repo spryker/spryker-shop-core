@@ -1,18 +1,17 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'suggestion-results'
+    name: 'suggestion-results',
+    suggestionsLength: 6,
+    categoriesLength: 6,
+    pagesLength: 3,
+    productsLength: 6
 } %}
 
 {% define data = {
-    completionList: completion,
+    completionList: completion | default(),
     suggestionByType: suggestionByType
 } %}
-
-{% set suggestionsLength = 6 %}
-{% set categoriesLength = 3 %}
-{% set pagesLength = 3 %}
-{% set productsLength = 6 %}
 
 {% set leftVisible = (data.completionList is defined and data.completionList is not empty)
     or (data.suggestionByType.category is defined and data.suggestionByType.category is not empty)
@@ -26,32 +25,33 @@
         {% if leftVisible %}
             <div class="col col--sm-12 col--lg-6">
                 {% if data.completionList is defined and data.completionList is not empty %}
-                    <h6 class="is-hidden-sm-md {{ config.name }}__title">{{ 'global.search.suggestions' | trans }}</h6>
-                    <ul class="list suggestion-list">
-                        {% for item in data.completionList | slice(0, suggestionsLength) %}
-                            <li class="list__item"><a class="suggestion-list__link js-suggestions-navigable" href="{{ path('search', {'q': item}) }}">{{ item }}</a></li>
-                        {% endfor %}
-                    </ul>
+                    {% include molecule('suggestion-links-list', 'CatalogPage') with {
+                        data: {
+                            name: ('global.search.suggestions' | trans),
+                            items: data.completionList,
+                            length: config.suggestionsLength,
+                            isTitleHiddenOnTablet: false,
+                            isSuggestion: true
+                        }
+                    } only %}
                 {% endif %}
 
-                <div class="is-hidden-sm-md {{ config.name }}__list">
-                    {% include molecule('suggestion-list', 'CatalogPage') with {
+                <div class="is-hidden-sm-md">
+                    {% include molecule('suggestion-links-list', 'CatalogPage') with {
                         data: {
                             name: ('global.search.suggestion.in_categories' | trans),
                             items: data.suggestionByType.category | default(),
-                            length: categoriesLength,
-                            titleClass: config.name ~ '__title'
+                            length: config.categoriesLength
                         }
                     } only %}
                 </div>
 
-                <div class="is-hidden-sm-md {{ config.name }}__list">
-                    {% include molecule('suggestion-list', 'CatalogPage') with {
+                <div class="is-hidden-sm-md">
+                    {% include molecule('suggestion-links-list', 'CatalogPage') with {
                         data: {
                             name: ('global.search.suggestion.in_cms' | trans),
                             items: data.suggestionByType.cms_page | default(),
-                            length: pagesLength,
-                            titleClass: config.name ~ '__title'
+                            length: config.pagesLength
                         }
                     } only %}
                 </div>
@@ -61,7 +61,7 @@
         {% if rightVisible %}
             <div class="col is-hidden-sm-md col--sm-12 col--lg-6">
                 <h6 class="{{ config.name }}__title">{{ 'global.search.suggestion.in_products' | trans }}</h6>
-                {% for product in data.suggestionByType.product_abstract | slice(0, productsLength)  %}
+                {% for product in data.suggestionByType.product_abstract | slice(0, config.productsLength)  %}
                     {% include molecule('suggestion-product', 'CatalogPage') with {
                         data: {
                             product: product
