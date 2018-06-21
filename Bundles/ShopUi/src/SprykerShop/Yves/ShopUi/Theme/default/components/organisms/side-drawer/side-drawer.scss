@@ -1,6 +1,6 @@
-@mixin shop-ui-side-drawer($name: '.side-drawer') {
-    $drawer-width: 15rem;
+$shop-ui-side-drawer-width: 15rem;
 
+@mixin shop-ui-side-drawer($name: '.side-drawer') {
     #{$name} {
         position: relative;
         z-index: $setting-zi-side-drawer;
@@ -23,14 +23,14 @@
             position: fixed;
             top: 0;
             bottom: 0;
-            right: - $drawer-width;
-            width: $drawer-width;
+            right: - $shop-ui-side-drawer-width;
+            width: $shop-ui-side-drawer-width;
             background-color: $setting-color-bg;
             overflow-y: auto;
         }
 
         &__close {
-            padding: .5rem 1rem;
+            padding: 0.5rem 1rem;
             background-color: $setting-color-lighter;
             text-align: right;
         }

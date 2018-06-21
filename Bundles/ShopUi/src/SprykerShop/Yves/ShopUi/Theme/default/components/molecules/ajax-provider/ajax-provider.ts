@@ -1,3 +1,4 @@
+import { debug, error } from '../../../app/logger';
 import Component from '../../../models/component';
 
 const EVENT_FETCHING = 'fetching';
@@ -7,19 +8,19 @@ export default class AjaxProvider extends Component {
     protected isFetchingRequest: boolean = false
     readonly xhr: XMLHttpRequest
 
-    constructor() { 
+    constructor() {
         super();
         this.xhr = new XMLHttpRequest();
     }
 
-    readyCallback() {
-        if (this.fetchOnLoad) { 
+    protected readyCallback(): void {
+        if (this.fetchOnLoad) {
             this.fetch();
         }
     }
 
-    async fetch<T = string>(data?: any): Promise<T> { 
-        this.logger.debug(this.method, this.url, 'fetching...');
+    async fetch<T = string>(data?: any): Promise<T> {
+        debug(this.method, this.url, 'fetching...');
         this.isFetchingRequest = true;
         this.fireEvent(EVENT_FETCHING);
 
@@ -34,11 +35,11 @@ export default class AjaxProvider extends Component {
     }
 
     protected onRequestLoad(resolve: Function, reject: Function, loadEvent: Event): void {
-        this.logger.debug(this.method, this.xhr.status, this.url);
+        debug(this.method, this.xhr.status, this.url);
         this.isFetchingRequest = false;
         this.fireEvent(EVENT_FETCHED);
 
-        if (this.xhr.status === 200) { 
+        if (this.xhr.status === 200) {
             return resolve(this.xhr.response);
         }
 
@@ -48,7 +49,7 @@ export default class AjaxProvider extends Component {
 
     protected onRequestError(reject: Function, errorEvent: Event): void {
         const message = `${this.method} ${this.url} request error`;
-        this.logger.error(message);
+        error(message);
         this.isFetchingRequest = false;
         this.fireEvent(EVENT_FETCHED);
         reject(new Error(message));
@@ -56,18 +57,18 @@ export default class AjaxProvider extends Component {
 
     protected onRequestAbort(reject: Function, abortEvent: Event): void {
         const message = `${this.method} ${this.url} request aborted`;
-        this.logger.error(message);
+        error(message);
         this.isFetchingRequest = false;
         this.fireEvent(EVENT_FETCHED);
         reject(new Error(message));
     }
 
-    protected fireEvent(name: string): void { 
+    protected fireEvent(name: string): void {
         const event = new CustomEvent(name);
         this.dispatchEvent(event);
     }
 
-    get url(): string { 
+    get url(): string {
         return this.getAttribute('url');
     }
 
@@ -83,7 +84,7 @@ export default class AjaxProvider extends Component {
         return this.hasAttribute('fetch-on-load');
     }
 
-    get isFetching(): boolean { 
+    get isFetching(): boolean {
         return this.isFetchingRequest;
     }
 

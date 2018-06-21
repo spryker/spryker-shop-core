@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Form\Constraint;
 
+use InvalidArgumentException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -18,10 +19,20 @@ class TextOrderCorrectConstraintValidator extends ConstraintValidator
      * @param mixed $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderCorrectConstraint $constraint The constraint for the validation
      *
+     * @throws \InvalidArgumentException
+     *
      * @return void
      */
     public function validate($value, Constraint $constraint): void
     {
+        if (!$constraint instanceof TextOrderCorrectConstraint) {
+            throw new InvalidArgumentException(sprintf(
+                'Expected constraint instance of %s, got %s instead.',
+                TextOrderCorrectConstraint::class,
+                get_class($constraint)
+            ));
+        }
+
         if ($value === null) {
             return;
         }

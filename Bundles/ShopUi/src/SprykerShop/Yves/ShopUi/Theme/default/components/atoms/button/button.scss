@@ -16,7 +16,7 @@
         }
 
         &--hollow {
-            padding: .25rem .5rem;
+            padding: 0.25rem 0.5rem;
             background-color: $setting-color-white;
             border: 1px solid $setting-color-main;
             color: $setting-color-main;
@@ -25,10 +25,6 @@
             &:focus {
                 background-color: helper-color-light($setting-color-main);
             }
-        }
-
-        @each $action, $setting-color-action in $setting-color-actions {
-            @include shop-ui-button-action($action, $setting-color-action);
         }
 
         &--expand {
@@ -46,6 +42,12 @@
                 background-color: $setting-color-light;
             }
         }
+
+        @each $action, $setting-color-action in $setting-color-actions {
+            @include shop-ui-button-action($action, $setting-color-action);
+        }
+
+        @content;
     }
 }
 

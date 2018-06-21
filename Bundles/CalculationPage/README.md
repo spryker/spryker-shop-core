@@ -1,6 +1,6 @@
 # CalculationPage Module
 
-{{ADD DESCRIPTION HERE}}
+This module provides information about quote calculation data.
 
 ## Installation
 

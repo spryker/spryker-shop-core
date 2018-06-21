@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% block top %}
+    {{ spyCmsBlock({category: _widget.idCategory, position: 'top'}) }}
+{% endblock %}
+
+{% block middle %}
+    {{ spyCmsBlock({category: _widget.idCategory, position: 'middle'}) }}
+{% endblock %}
+
+{% block bottom %}
+    {{ spyCmsBlock({category: _widget.idCategory, position: 'bottom'}) }}
+{% endblock %}

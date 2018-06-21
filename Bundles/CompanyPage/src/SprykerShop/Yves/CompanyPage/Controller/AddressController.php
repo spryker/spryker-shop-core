@@ -26,17 +26,27 @@ class AddressController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/address/address.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
+    {
         $companyUnitAddressCollectionTransfer = $this->createCriteriaFilterTransfer($request);
         $companyUnitAddressCollectionTransfer = $this->getFactory()
             ->getCompanyUnitAddressClient()
             ->getCompanyUnitAddressCollection($companyUnitAddressCollectionTransfer);
 
-        $data = [
+        return [
             'pagination' => $companyUnitAddressCollectionTransfer->getPagination(),
             'addresses' => $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/address/address.twig');
     }
 
     /**
@@ -45,6 +55,22 @@ class AddressController extends AbstractCompanyController
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
+    {
+        $response = $this->executeCreateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/address-create/address-create.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeCreateAction(Request $request)
     {
         $dataProvider = $this
             ->getFactory()
@@ -69,11 +95,9 @@ class AddressController extends AbstractCompanyController
             }
         }
 
-        $data = [
+        return [
             'form' => $addressForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/address-create/address-create.twig');
     }
 
     /**
@@ -82,6 +106,22 @@ class AddressController extends AbstractCompanyController
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
+    {
+        $response = $this->executeUpdateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/address-update/address-update.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeUpdateAction(Request $request)
     {
         $dataProvider = $this
             ->getFactory()
@@ -103,11 +143,9 @@ class AddressController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ADDRESS);
         }
 
-        $data = [
+        return [
             'form' => $addressForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/address-update/address-update.twig');
     }
 
     /**

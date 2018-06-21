@@ -40,6 +40,22 @@ class ImportController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $response = $this->executeIndexAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyUserInvitationPage/views/invitation/invitation.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(Request $request)
+    {
         $companyUserInvitationForm = $this->getFactory()
             ->createCompanyUserInvitationPageFormFactory()
             ->getCompanyUserInvitationForm()
@@ -69,12 +85,12 @@ class ImportController extends AbstractController
             ->getCompanyUserInvitationClient()
             ->getCompanyUserInvitationCollection($companyUserInvitationGetCollectionRequest);
 
-        return $this->view([
+        return [
             'form' => $companyUserInvitationForm->createView(),
             'importedWithErrors' => isset($importedWithErrors) ?? false,
             'invitations' => $companyUserInvitationCollection->getCompanyUserInvitations(),
             'pagination' => $companyUserInvitationCollection->getPagination(),
-        ], [], '@CompanyUserInvitationPage/views/invitation/invitation.twig');
+        ];
     }
 
     /**

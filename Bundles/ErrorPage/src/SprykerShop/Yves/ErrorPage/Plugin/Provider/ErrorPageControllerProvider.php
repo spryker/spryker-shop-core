@@ -22,6 +22,16 @@ class ErrorPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
+        $this->addError404Route();
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addError404Route(): self
+    {
         $this->createController(self::ROUTE_ERROR_404_PATH, self::ROUTE_ERROR_404, 'ErrorPage', 'Error404');
+
+        return $this;
     }
 }

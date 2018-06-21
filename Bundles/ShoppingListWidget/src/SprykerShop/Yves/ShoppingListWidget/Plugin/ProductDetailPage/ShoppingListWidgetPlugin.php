@@ -21,28 +21,15 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
 
     /**
      * @param string $sku
+     * @param bool $isDisabled
      *
      * @return void
      */
-    public function initialize(string $sku): void
+    public function initialize(string $sku, bool $isDisabled): void
     {
-        $shoppingListCollection = new ShoppingListCollectionTransfer();
-
-        if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
-            $shoppingListCollection = $this->getFactory()->getShoppingListClient()->getCustomerShoppingListCollection();
-            $shoppingLists = $shoppingListCollection->getShoppingLists();
-
-            foreach ($shoppingLists as $offset => $shoppingList) {
-                if (!$this->can('WriteShoppingListPermissionPlugin', $shoppingList->getIdShoppingList())) {
-                    $shoppingLists->offsetUnset($offset);
-                }
-            }
-
-            $shoppingListCollection->setShoppingLists($shoppingLists);
-        }
-
         $this->addParameter('sku', $sku)
-            ->addParameter('shoppingListCollection', $shoppingListCollection);
+            ->addParameter('isDisabled', $isDisabled)
+            ->addParameter('shoppingListCollection', $this->getShoppingListCollection());
     }
 
     /**
@@ -59,5 +46,30 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
     public static function getTemplate(): string
     {
         return '@ShoppingListWidget/views/shopping-list/shopping-list.twig';
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    protected function getShoppingListCollection(): ShoppingListCollectionTransfer
+    {
+        $shoppingListCollection = new ShoppingListCollectionTransfer();
+
+        if (!$this->getFactory()->getCustomerClient()->isLoggedIn()) {
+            return $shoppingListCollection;
+        }
+
+        $shoppingListCollection = $this->getFactory()->getShoppingListClient()->getCustomerShoppingListCollection();
+        $shoppingLists = $shoppingListCollection->getShoppingLists();
+
+        foreach ($shoppingLists as $offset => $shoppingList) {
+            if (!$this->can('WriteShoppingListPermissionPlugin', $shoppingList->getIdShoppingList())) {
+                $shoppingLists->offsetUnset($offset);
+            }
+        }
+
+        $shoppingListCollection->setShoppingLists($shoppingLists);
+
+        return $shoppingListCollection;
     }
 }

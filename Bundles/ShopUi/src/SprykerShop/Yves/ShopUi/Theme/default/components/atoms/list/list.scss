@@ -4,7 +4,7 @@
             display: block;
 
             & > #{$name} {
-                margin-left: .5rem;
+                margin-left: 0.5rem;
             }
         }
 
@@ -14,7 +14,7 @@
 
         &--inline > &__item {
             display: inline-block;
-            margin: 0 .5rem;
+            margin: 0 0.5rem;
 
             &:first-child {
                 margin-left: 0;
@@ -25,17 +25,22 @@
             }
         }
 
-        &--spacing &__item {
-            &:not(:first-child) {
-                margin-top: .5rem;
-            }
-        }
-
         &--bullet &__item {
             &:before {
                 content: '•';
-                margin-right: .25rem;
+                margin-right: 0.25rem;
             }
+        }
+
+        &--plus &__item {
+            &:before {
+                content: '+';
+                margin-right: 0.25rem;
+            }
+        }
+
+        &--alert {
+            color: map-get($setting-color-actions, alert);
         }
 
         @content;

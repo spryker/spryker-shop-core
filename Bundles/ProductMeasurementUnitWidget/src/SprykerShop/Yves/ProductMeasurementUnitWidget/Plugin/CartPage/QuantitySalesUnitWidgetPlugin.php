@@ -45,7 +45,7 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
             if ($productConcreteMeasurementUnitStorageTransfer !== null) {
                 $baseUnitTransfer = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit();
 
-                if ($baseUnitTransfer->getIdProductMeasurementBaseUnit() === $quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit()) {
+                if ($baseUnitTransfer->getIdProductMeasurementUnit() === $quantitySalesUnitTransfer->getProductMeasurementUnit()->getIdProductMeasurementUnit()) {
                     return true;
                 }
             }
@@ -77,6 +77,6 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
      */
     public static function getTemplate()
     {
-        return '@ProductMeasurementUnitWidget/views/_cart-page/product-measurement-unit-quantity.twig';
+        return '@ProductMeasurementUnitWidget/views/cart-product-measurement-unit-quantity-selector/cart-product-measurement-unit-quantity-selector.twig';
     }
 }

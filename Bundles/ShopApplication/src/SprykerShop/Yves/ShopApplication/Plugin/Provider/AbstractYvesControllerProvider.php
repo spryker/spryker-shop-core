@@ -16,14 +16,23 @@ use Spryker\Yves\Application\Plugin\Provider\YvesControllerProvider as SprykerYv
 abstract class AbstractYvesControllerProvider extends SprykerYvesControllerProvider
 {
     /**
+     * @var string
+     */
+    protected $allowedLocalesPattern;
+
+    /**
      * @return string
      */
     public function getAllowedLocalesPattern()
     {
+        if ($this->allowedLocalesPattern !== null) {
+            return $this->allowedLocalesPattern;
+        }
+
         $systemLocales = Store::getInstance()->getLocales();
         $implodedLocales = implode('|', array_keys($systemLocales));
-        $allowedLocalesPattern = '(' . $implodedLocales . ')\/';
+        $this->allowedLocalesPattern = '(' . $implodedLocales . ')\/';
 
-        return $allowedLocalesPattern;
+        return $this->allowedLocalesPattern;
     }
 }
