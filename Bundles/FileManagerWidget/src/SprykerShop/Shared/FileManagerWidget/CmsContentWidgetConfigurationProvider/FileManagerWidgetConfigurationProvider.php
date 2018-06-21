@@ -27,7 +27,7 @@ class FileManagerWidgetConfigurationProvider implements CmsContentWidgetConfigur
     public function getAvailableTemplates(): array
     {
         return [
-            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@FileManagerWidget/views/file_manager_widget/file-manager-widget.twig',
+            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@FileManagerWidget/views/file-manager-link/file-manager-link.twig',
         ];
     }
 

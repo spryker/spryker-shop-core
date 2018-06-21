@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\FileManagerWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\FileManagerWidget\Dependency\Client\FileManagerWidgetToFileManagerClientInterface;
-use SprykerShop\Yves\FileManagerWidget\Dependency\Client\FileManagerWidgetToFileManagerStorageInterface;
+use SprykerShop\Yves\FileManagerWidget\Dependency\Client\FileManagerWidgetToFileManagerStorageClientInterface;
 use SprykerShop\Yves\FileManagerWidget\Dependency\Service\FileManagerWidgetToFileManagerServiceInterface;
 
 class FileManagerWidgetFactory extends AbstractFactory
@@ -31,9 +31,9 @@ class FileManagerWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\FileManagerWidget\Dependency\Client\FileManagerWidgetToFileManagerStorageInterface
+     * @return \SprykerShop\Yves\FileManagerWidget\Dependency\Client\FileManagerWidgetToFileManagerStorageClientInterface
      */
-    public function getFileManagerStorageClient(): FileManagerWidgetToFileManagerStorageInterface
+    public function getFileManagerStorageClient(): FileManagerWidgetToFileManagerStorageClientInterface
     {
         return $this->getProvidedDependency(FileManagerWidgetDependencyProvider::FILE_MANAGER_STORAGE_CLIENT);
     }

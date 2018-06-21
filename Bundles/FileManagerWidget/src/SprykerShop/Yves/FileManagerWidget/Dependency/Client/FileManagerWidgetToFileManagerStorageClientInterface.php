@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\FileManagerWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\FileStorageDataTransfer;
 
-interface FileManagerWidgetToFileManagerStorageInterface
+interface FileManagerWidgetToFileManagerStorageClientInterface
 {
     /**
      * @param int $fileId

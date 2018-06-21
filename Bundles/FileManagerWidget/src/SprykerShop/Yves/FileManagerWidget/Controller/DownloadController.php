@@ -20,9 +20,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class DownloadController extends AbstractController
 {
-    const PARAM_ID_FILE = 'id-file';
-    const CONTENT_TYPE = 'Content-Type';
-    const CONTENT_DISPOSITION = 'Content-Disposition';
+    protected const PARAM_ID_FILE = 'id-file';
+    protected const CONTENT_TYPE = 'Content-Type';
+    protected const CONTENT_DISPOSITION = 'Content-Disposition';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
