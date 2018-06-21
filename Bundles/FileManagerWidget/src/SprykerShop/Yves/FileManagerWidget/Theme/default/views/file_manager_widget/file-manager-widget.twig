@@ -1,7 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
-    fileId: _widget.fileId
+    fileId: _widget.file is defined ? _widget.file.fkFile : file.fkFile
 } %}
 
 {% block body %}
