@@ -15,6 +15,7 @@ use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithPostConditionErrorRouteInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface;
+use SprykerShop\Yves\CheckoutPage\Handler\CheckoutErrorMessageHandlerInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -51,8 +52,14 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected $zedRequestClient;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Handler\CheckoutErrorMessageHandlerInterface
+     */
+    protected $checkoutErrorMessageHandler;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface $zedRequestClient
+     * @param \SprykerShop\Yves\CheckoutPage\Handler\CheckoutErrorMessageHandlerInterface $checkoutErrorMessageHandler
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param array $errorCodeToRouteMatching
@@ -60,6 +67,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     public function __construct(
         CheckoutPageToCheckoutClientInterface $checkoutClient,
         CheckoutPageToZedRequestClientInterface $zedRequestClient,
+        CheckoutErrorMessageHandlerInterface $checkoutErrorMessageHandler,
         $stepRoute,
         $escapeRoute,
         $errorCodeToRouteMatching = []
@@ -68,6 +76,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
 
         $this->checkoutClient = $checkoutClient;
         $this->zedRequestClient = $zedRequestClient;
+        $this->checkoutErrorMessageHandler = $checkoutErrorMessageHandler;
 
         $this->errorCodeToRouteMatching = $errorCodeToRouteMatching;
     }
@@ -201,7 +210,10 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
      */
     protected function setCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        foreach ($checkoutResponseTransfer->getErrors() as $checkoutErrorTransfer) {
+        $checkoutErrorMessages = $this->checkoutErrorMessageHandler
+            ->getUniqueCheckoutErrorMessages($checkoutResponseTransfer);
+
+        foreach ($checkoutErrorMessages as $checkoutErrorTransfer) {
             if ($checkoutErrorTransfer->getDetailedMessage()) {
                 $this->checkoutClient->addCheckoutErrorMessage(
                     $checkoutErrorTransfer->getDetailedMessage()
