@@ -108,7 +108,6 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerStepSubForms($container);
         $container = $this->addAddressStepSubForms($container);
         $container = $this->addAddressStepFormDataProvider($container);
-
         $container = $this->addZedRequestClient($container);
 
         return $container;
