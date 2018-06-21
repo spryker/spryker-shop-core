@@ -92,12 +92,9 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
             return false;
         }
 
-        if ($quoteTransfer instanceof QuoteTransfer) {
-            if (!$quoteTransfer->getCheckoutConfirmed()) {
-                $this->escapeRoute = CheckoutPageControllerProvider::CHECKOUT_SUMMARY;
-
-                return false;
-            }
+        if (!$quoteTransfer->getCheckoutConfirmed()) {
+            $this->escapeRoute = CheckoutPageControllerProvider::CHECKOUT_SUMMARY;
+            return false;
         }
 
         return true;
@@ -110,10 +107,8 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        if ($quoteTransfer instanceof QuoteTransfer) {
-            if (!$quoteTransfer->getCheckoutConfirmed()) {
-                return false;
-            }
+        if (!$quoteTransfer->getCheckoutConfirmed()) {
+            return false;
         }
 
         if ($this->checkoutResponseTransfer && !$this->checkoutResponseTransfer->getIsSuccess()) {
@@ -122,9 +117,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
             return false;
         }
 
-        return ($quoteTransfer instanceof QuoteTransfer)
-            ? ($quoteTransfer->getOrderReference() !== null)
-            : false;
+        return $quoteTransfer->getOrderReference() !== null;
     }
 
     /**
@@ -138,7 +131,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -151,7 +144,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
@@ -161,10 +154,8 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
             $this->externalRedirectUrl = $checkoutResponseTransfer->getRedirectUrl();
         }
 
-        if ($quoteTransfer instanceof QuoteTransfer) {
-            if ($checkoutResponseTransfer->getSaveOrder() !== null) {
-                $quoteTransfer->setOrderReference($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
-            }
+        if ($checkoutResponseTransfer->getSaveOrder() !== null) {
+            $quoteTransfer->setOrderReference($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
         }
 
         $this->setCheckoutErrorMessages($checkoutResponseTransfer);
