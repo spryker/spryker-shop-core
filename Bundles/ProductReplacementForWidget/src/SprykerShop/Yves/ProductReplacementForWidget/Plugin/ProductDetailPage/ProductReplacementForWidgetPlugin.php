@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductReplacementForWidget\Plugin\ProductDetailPage;
 
+use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReplacementForWidgetPlugin\ProductReplacementForWidgetPluginInterface;
@@ -23,7 +24,8 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public function initialize(string $sku): void
     {
-        $this->addParameter('products', $this->findReplacementForProducts($sku));
+        $this->addParameter('products', $this->findReplacementForProducts($sku))
+            ->addWidgets($this->getFactory()->getProductDetailPageProductReplacementsForWidgetPlugins());
     }
 
     /**
@@ -79,15 +81,16 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     protected function getProductView(int $idProduct): ?ProductViewTransfer
     {
-        $productStorageData = $this->getFactory()
+        $productConcreteStorageData = $this->getFactory()
             ->getProductStorageClient()
             ->getProductConcreteStorageData($idProduct, $this->getLocale());
-        if (empty($productStorageData)) {
+        if (empty($productConcreteStorageData)) {
             return null;
         }
+        $productConcreteStorageData['attribute_map'] = new AttributeMapStorageTransfer();
 
         return $this->getFactory()
             ->getProductStorageClient()
-            ->mapProductStorageData($productStorageData, $this->getLocale());
+            ->mapProductStorageData($productConcreteStorageData, $this->getLocale());
     }
 }

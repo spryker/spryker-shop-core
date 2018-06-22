@@ -16,6 +16,7 @@ class ProductReplacementForWidgetDependencyProvider extends AbstractBundleDepend
 {
     public const CLIENT_PRODUCT_ALTERNATIVE_STORAGE = 'CLIENT_PRODUCT_ALTERNATIVE_STORAGE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_REPLACEMENTS_FOR_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_REPLACEMENTS_FOR_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -27,6 +28,7 @@ class ProductReplacementForWidgetDependencyProvider extends AbstractBundleDepend
         $container = parent::provideDependencies($container);
         $container = $this->addProductAlternativeStorageClient($container);
         $container = $this->addProductStorageClient($container);
+        $container = $this->addProductDetailPageProductReplacementsForWidgetPlugins($container);
 
         return $container;
     }
@@ -61,5 +63,29 @@ class ProductReplacementForWidgetDependencyProvider extends AbstractBundleDepend
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductDetailPageProductReplacementsForWidgetPlugins(Container $container)
+    {
+        $container[static::PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_REPLACEMENTS_FOR_WIDGETS] = function () {
+            return $this->getProductDetailPageProductReplacementsForWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     *
+     * @return string[]
+     */
+    protected function getProductDetailPageProductReplacementsForWidgetPlugins(): array
+    {
+        return [];
     }
 }

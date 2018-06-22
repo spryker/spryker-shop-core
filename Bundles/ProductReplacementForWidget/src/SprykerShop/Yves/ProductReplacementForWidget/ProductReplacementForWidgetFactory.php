@@ -28,4 +28,12 @@ class ProductReplacementForWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductReplacementForWidgetDependencyProvider::CLIENT_PRODUCT_ALTERNATIVE_STORAGE);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getProductDetailPageProductReplacementsForWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductReplacementForWidgetDependencyProvider::PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_REPLACEMENTS_FOR_WIDGETS);
+    }
 }
