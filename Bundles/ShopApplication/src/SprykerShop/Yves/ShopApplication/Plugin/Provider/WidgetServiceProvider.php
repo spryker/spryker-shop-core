@@ -306,7 +306,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
             return $view->getData();
         }
 
-        return null;
+        return [];
     }
 
     /**
