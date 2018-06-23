@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerShop\Yves\ProductPackagingUnitWidget;
+
+use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientBridge;
+use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge;
+use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductQuantityStorageClientBridge;
+
+class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDependencyProvider
+{
+    public const CLIENT_PRODUCT_PACKAGING_UNIT_STORAGE = 'CLIENT_PRODUCT_PACKAGING_UNIT_STORAGE';
+    public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
+    public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    public function provideDependencies(Container $container): Container
+    {
+        $container = $this->addProductPackagingUnitStorageClient($container);
+        $container = $this->addProductMeasurementUnitStorageClient($container);
+        $container = $this->addProductQuantityStorageClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductMeasurementUnitStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE] = function (Container $container) {
+            return new ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientBridge(
+                $container->getLocator()->productMeasurementUnitStorage()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductPackagingUnitStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRODUCT_PACKAGING_UNIT_STORAGE] = function (Container $container) {
+            return new ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge(
+                $container->getLocator()->productPackagingUnitStorage()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductQuantityStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRODUCT_QUANTITY_STORAGE] = function (Container $container) {
+            return new ProductPackagingUnitWidgetToProductQuantityStorageClientBridge(
+                $container->getLocator()->productQuantityStorage()->client()
+            );
+        };
+
+        return $container;
+    }
+}

@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Model;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface;
 
+/**
+ * @deprecated ProductMeasurementUnitStorageModule
+ */
 class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitReaderInterface
 {
     /**
