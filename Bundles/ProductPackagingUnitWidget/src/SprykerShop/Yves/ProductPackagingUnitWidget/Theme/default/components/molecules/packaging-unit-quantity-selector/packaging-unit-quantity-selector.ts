@@ -40,8 +40,6 @@ export default class PackagingUnitQuantitySelector extends Component {
             let jsonString = jsonSchemaContainer.getAttribute('json');
             let jsonData = JSON.parse(jsonString);
 
-            console.log(jsonData);
-
             if (jsonData.hasOwnProperty('baseUnit')) {
                 this.baseUnit = jsonData.baseUnit;
             }
@@ -119,15 +117,12 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.hideNotifications();
         }
 
-        // if(this.isAmountBlockEnabled) {
-        //     this.amountInputChange();
-        // }
-
         if (error) {
             this.addToCartButton.setAttribute("disabled", "disabled");
             this.askCustomerForCorrectInput(qtyInSalesUnits);
             return;
         }
+
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.addToCartButton.removeAttribute("disabled");
         this.hideNotifications();
@@ -283,11 +278,8 @@ export default class PackagingUnitQuantitySelector extends Component {
     private measurementUnitInputChange(event: Event) {
         let salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
         let salesUnit = this.getSalesUnitById(salesUnitId);
-        console.log(salesUnit);
         let qtyInSalesUnits = +this.qtyInSalesUnitInput.value;
-        console.log(qtyInSalesUnits);
         let qtyInBaseUnits = this.multiply(qtyInSalesUnits, this.currentSalesUnit.conversion);
-        console.log(this.currentSalesUnit);
         qtyInSalesUnits = qtyInBaseUnits / salesUnit.conversion;
         this.currentSalesUnit = salesUnit;
         this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString();
@@ -341,8 +333,6 @@ export default class PackagingUnitQuantitySelector extends Component {
             error = true;
             document.getElementById('packaging-amount-max').classList.remove('is-hidden');
         }
-
-        // this.qtyInputChange();
 
         if(error) {
             document.querySelector('.packaging-unit-choice').classList.remove('is-hidden');
