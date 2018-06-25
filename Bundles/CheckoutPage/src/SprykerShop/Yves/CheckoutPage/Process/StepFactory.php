@@ -20,9 +20,6 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface;
-use SprykerShop\Yves\CheckoutPage\Handler\CheckoutErrorMessageHandler;
-use SprykerShop\Yves\CheckoutPage\Handler\CheckoutErrorMessageHandlerInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\CustomerStep;
@@ -191,22 +188,13 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Handler\CheckoutErrorMessageHandlerInterface
-     */
-    public function createCheckoutErrorMessageHandler(): CheckoutErrorMessageHandlerInterface
-    {
-        return new CheckoutErrorMessageHandler();
-    }
-
-    /**
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\PlaceOrderStep
      */
     public function createPlaceOrderStep()
     {
         return new PlaceOrderStep(
             $this->getCheckoutClient(),
-            $this->getZedRequestClient(),
-            $this->createCheckoutErrorMessageHandler(),
+            $this->getFlashMessenger(),
             CheckoutPageControllerProvider::CHECKOUT_PLACE_ORDER,
             HomePageControllerProvider::ROUTE_HOME,
             [
@@ -300,13 +288,5 @@ class StepFactory extends AbstractFactory
     public function getCustomerClient(): CheckoutPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface
-     */
-    protected function getZedRequestClient(): CheckoutPageToZedRequestClientInterface
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }

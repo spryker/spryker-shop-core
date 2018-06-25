@@ -7,8 +7,9 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Dependency\Client;
 
-use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
 
 interface CheckoutPageToCheckoutClientInterface
 {
@@ -20,9 +21,9 @@ interface CheckoutPageToCheckoutClientInterface
     public function placeOrder(QuoteTransfer $quoteTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return TranslatedCheckoutErrorMessagesTransfer
      */
-    public function addCheckoutErrorMessage(MessageTransfer $messageTransfer): void;
+    public function translateCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer;
 }

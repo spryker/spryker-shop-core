@@ -8,14 +8,12 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithPostConditionErrorRouteInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface;
-use SprykerShop\Yves\CheckoutPage\Handler\CheckoutErrorMessageHandlerInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -47,27 +45,20 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected $postConditionErrorRoute;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface
+     * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
-    protected $zedRequestClient;
-
-    /**
-     * @var \SprykerShop\Yves\CheckoutPage\Handler\CheckoutErrorMessageHandlerInterface
-     */
-    protected $checkoutErrorMessageHandler;
+    protected $flashMessenger;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToZedRequestClientInterface $zedRequestClient
-     * @param \SprykerShop\Yves\CheckoutPage\Handler\CheckoutErrorMessageHandlerInterface $checkoutErrorMessageHandler
+     * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param array $errorCodeToRouteMatching
      */
     public function __construct(
         CheckoutPageToCheckoutClientInterface $checkoutClient,
-        CheckoutPageToZedRequestClientInterface $zedRequestClient,
-        CheckoutErrorMessageHandlerInterface $checkoutErrorMessageHandler,
+        FlashMessengerInterface $flashMessenger,
         $stepRoute,
         $escapeRoute,
         $errorCodeToRouteMatching = []
@@ -75,14 +66,12 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->checkoutClient = $checkoutClient;
-        $this->zedRequestClient = $zedRequestClient;
-        $this->checkoutErrorMessageHandler = $checkoutErrorMessageHandler;
-
         $this->errorCodeToRouteMatching = $errorCodeToRouteMatching;
+        $this->flashMessenger = $flashMessenger;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -101,7 +90,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -117,7 +106,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
             return false;
         }
 
-        return $quoteTransfer->getOrderReference() !== null;
+        return ($quoteTransfer->getOrderReference() !== null);
     }
 
     /**
@@ -131,7 +120,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -142,9 +131,9 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
@@ -201,34 +190,11 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
      */
     protected function setCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $checkoutErrorMessages = $this->checkoutErrorMessageHandler
-            ->getUniqueCheckoutErrorMessages($checkoutResponseTransfer);
+        $translatedCheckoutErrorMessagesTransfer = $this->checkoutClient
+            ->translateCheckoutErrorMessages($checkoutResponseTransfer);
 
-        foreach ($checkoutErrorMessages as $checkoutErrorTransfer) {
-            if ($checkoutErrorTransfer->getDetailedMessage()) {
-                $this->checkoutClient->addCheckoutErrorMessage(
-                    $checkoutErrorTransfer->getDetailedMessage()
-                );
-
-                $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
-            }
-
-            if ($checkoutErrorTransfer->getMessage()) {
-                $this->checkoutClient->addCheckoutErrorMessage(
-                    $this->createMessageTransfer()
-                        ->setValue($checkoutErrorTransfer->getMessage())
-                );
-
-                $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
-            }
+        foreach ($translatedCheckoutErrorMessagesTransfer->getErrorMessages() as $translatedCheckoutErrorMessage) {
+            $this->flashMessenger->addErrorMessage($translatedCheckoutErrorMessage);
         }
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
-    protected function createMessageTransfer(): MessageTransfer
-    {
-        return new MessageTransfer();
     }
 }
