@@ -15,7 +15,7 @@
     "spryker/twig": "If you want to use ChartWidgetPlugin: ^3.2.0",
     "spryker-shop/cms-content-widget-chart-connector": "If you want to use ChartWidgetPlugin: ^1.0.0",
     "spryker/kernel": "If you want to use ChartWidgetPlugin: ^3.16.0",
-    "spryker/chart": "If you want to use ChartWidgetPlugin: ^1.0.0"
+    "spryker/chart": "If you want to use ChartWidgetPlugin: ^0.1.0"
   },
   "autoload": {
     "psr-4": {
