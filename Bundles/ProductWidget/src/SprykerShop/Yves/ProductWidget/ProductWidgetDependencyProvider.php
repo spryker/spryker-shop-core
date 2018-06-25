@@ -18,6 +18,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS = 'PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS';
     const PLUGIN_HOME_PAGE_SUB_WIDGETS = 'PLUGIN_HOME_PAGE_SUB_WIDGETS';
     public const PLUGIN_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGETS = 'PLUGIN_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGETS';
+    public const PLUGIN_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGETS = 'PLUGIN_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -32,6 +33,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCmsContentWidgetProductGroupSubWidgetPlugins($container);
         $container = $this->addHomePageSubWidgetPlugins($container);
         $container = $this->addProductReplacementForWidgetPlugins($container);
+        $container = $this->addProductAlternativeWidgetPlugins($container);
 
         return $container;
     }
@@ -121,6 +123,20 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductAlternativeWidgetPlugins(Container $container): Container
+    {
+        $container[self::PLUGIN_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGETS] = function () {
+            return $this->getProductAlternativeWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
      * @return string[]
@@ -176,6 +192,16 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @return string[]
      */
     protected function getProductReplacementForWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     *
+     * @return string[]
+     */
+    protected function getProductAlternativeWidgetPlugins(): array
     {
         return [];
     }
