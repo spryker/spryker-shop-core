@@ -30,21 +30,27 @@
 
                     <tr>
                         {% block row %}
-                            <td>
-                                {{ concreteItem.sku }}
-                            </td>
-                            <td>
-                                {{ concreteItem.name }}
-                            </td>
-                            <td>
-                                {{ concreteItem.unitPrice | money(true, data.currencyIsoCode) }}
-                            </td>
-                            <td>
-                                {{ concreteItem.quantity }}
-                            </td>
-                            <td>
-                                {{ concreteItem.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
-                            </td>
+                            {% if widgetExists('OrderDetailProductPackagingUnitWidgetPlugin') %}
+                                fff
+                                {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item) }}
+                            {% else %}
+                                aaa
+                                <td>
+                                    {{ concreteItem.sku }}
+                                </td>
+                                <td>
+                                    {{ concreteItem.name }}
+                                </td>
+                                <td>
+                                    {{ concreteItem.unitPrice | money(true, data.currencyIsoCode) }}
+                                </td>
+                                <td>
+                                    {{ concreteItem.quantity }}
+                                </td>
+                                <td>
+                                    {{ concreteItem.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+                                </td>
+                            {% endif %}
                         {% endblock %}
                     </tr>
 

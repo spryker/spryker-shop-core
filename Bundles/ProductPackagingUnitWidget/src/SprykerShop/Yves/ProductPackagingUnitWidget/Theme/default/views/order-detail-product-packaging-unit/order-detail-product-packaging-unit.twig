@@ -1,0 +1,23 @@
+{% extends template('widget') %}
+
+{% define data = {
+    concreteItem: item.bundleProduct
+} %}
+
+{% block body %}
+    <td>
+        {{ data.concreteItem.sku }}
+    </td>
+    <td>
+        {{ data.concreteItem.name }}
+    </td>
+    <td>
+        {{ data.concreteItem.unitPrice | money(true, data.currencyIsoCode) }}
+    </td>
+    <td>
+        {{ data.concreteItem.quantity }}
+    </td>
+    <td>
+        {{ data.concreteItem.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+    </td>
+{% endblock body %}

@@ -1,0 +1,24 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cartItem: _widget.itemTransfer,
+    isBaseUnit: _widget.isBaseUnit ?? true
+} %}
+
+{% block body %}
+    {% if data.cartItem.quantitySalesUnit is not empty %}
+        {% set value = data.cartItem.quantitySalesUnit.value %}
+        {% set precision = data.cartItem.quantitySalesUnit.precision %}
+        {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+        {% set quantity = data.cartItem.quantity %}
+
+        Quantity: {{ quantity }} {{ value / precision }} {{ salesUnitName | trans }}
+    {% endif %}
+
+    {% if data.cartItem.quantityPackagingUnit is defined and data.cartItem.quantityPackagingUnit is not empty %}
+        {#{% set amount = data.cartItem.quantityPackagingUnit.productPackagingUnitAmount.amount %}#}
+        {#{% set leadSalesUnitName = data.cartItem.quantityPackagingUnit.name | defautl('') %}#}
+
+        {#Amount: {{ amount }} {{ value / precision }} {{ salesUnitName | trans }}#}
+    {% endif %}
+{% endblock body %}
