@@ -66,7 +66,6 @@ export default class SuggestSearch extends Component {
             this.updateHintInput('');
             this.hideSugestions();
         }
-
     }
 
     onInputKeyDown(event: KeyboardEvent): void {

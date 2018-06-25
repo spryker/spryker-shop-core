@@ -6,11 +6,11 @@
 
 {% define data = {
     product: required,
-    image: data.product.images | first | default(),
+    image: data.product.images | first | default,
     alt: data.product.abstract_name | default(''),
     title: data.product.abstract_name | default(''),
-    price: data.product.price | default(),
-    originalPrice: data.product.prices.ORIGINAL | default()
+    price: data.product.price | default,
+    originalPrice: data.product.prices.ORIGINAL | default
 } %}
 
 {% block body %}

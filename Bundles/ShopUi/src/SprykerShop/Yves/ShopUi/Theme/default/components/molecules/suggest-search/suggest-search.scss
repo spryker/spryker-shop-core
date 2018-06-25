@@ -19,6 +19,12 @@
             }
         }
 
+        &__item {
+            &--active {
+                text-decoration: underline;
+            }
+        }
+
         &__hint {
             position: absolute;
             top: 0;
