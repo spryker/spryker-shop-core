@@ -18,13 +18,15 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $currencyIsoCode
      *
      * @return void
      */
-    public function initialize(ItemTransfer $itemTransfer): void
+    public function initialize(ItemTransfer $itemTransfer, string $currencyIsoCode): void
     {
-        echo 'in';
-        die;
+        $this
+            ->addParameter('item', $itemTransfer)
+            ->addParameter('currencyIsoCode', $currencyIsoCode);
     }
 
     /**

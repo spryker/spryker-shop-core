@@ -16,8 +16,9 @@ interface OrderDetailProductPackagingUnitWidgetPluginInterface extends WidgetPlu
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $currencyIsoCode
      *
      * @return void
      */
-    public function initialize(ItemTransfer $itemTransfer): void;
+    public function initialize(ItemTransfer $itemTransfer, string $currencyIsoCode): void;
 }

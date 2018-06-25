@@ -1,7 +1,8 @@
 {% extends template('widget') %}
 
 {% define data = {
-    concreteItem: item.bundleProduct
+    concreteItem: _widget.item.bundleProduct | default(_widget.item),
+    currencyIsoCode: _widget.currencyIsoCode
 } %}
 
 {% block body %}

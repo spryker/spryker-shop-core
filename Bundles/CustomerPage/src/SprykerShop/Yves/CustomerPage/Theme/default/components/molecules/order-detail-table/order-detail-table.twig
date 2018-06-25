@@ -31,10 +31,8 @@
                     <tr>
                         {% block row %}
                             {% if widgetExists('OrderDetailProductPackagingUnitWidgetPlugin') %}
-                                fff
-                                {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item) }}
+                                {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item, data.currencyIsoCode) }}
                             {% else %}
-                                aaa
                                 <td>
                                     {{ concreteItem.sku }}
                                 </td>
