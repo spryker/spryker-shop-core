@@ -11,7 +11,7 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 
 class FileManagerWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
-    const FUNCTION_NAME = 'cms_file';
+    public const FUNCTION_NAME = 'cms_file';
 
     /**
      * @return string

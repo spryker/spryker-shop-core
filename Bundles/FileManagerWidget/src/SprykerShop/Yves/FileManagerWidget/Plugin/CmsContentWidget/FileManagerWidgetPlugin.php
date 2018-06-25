@@ -76,10 +76,16 @@ class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidget
      */
     protected function getContent(array $context, string $fileId): array
     {
-        $fileTransfer = $this->getFactory()
-            ->getFileManagerStorageClient()
-            ->findFileById($fileId, $this->getLocale());
+        $fileTransfer = $this->getFileManagerStorageClient()->findFileById($fileId, $this->getLocale());
 
         return ['file' => $fileTransfer];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\FileManagerWidget\Dependency\Client\FileManagerWidgetToFileManagerStorageClientInterface
+     */
+    protected function getFileManagerStorageClient()
+    {
+        return $this->getFactory()->getFileManagerStorageClient();
     }
 }

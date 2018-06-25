@@ -15,9 +15,10 @@ use SprykerShop\Yves\FileManagerWidget\Dependency\Service\FileManagerWidgetToFil
 
 class FileManagerWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FILE_MANAGER_SERVICE = 'FILE_MANAGER_SERVICE';
-    public const FILE_MANAGER_CLIENT = 'FILE_MANAGER_CLIENT';
-    public const FILE_MANAGER_STORAGE_CLIENT = 'FILE_MANAGER_STORAGE_CLIENT';
+    public const CLIENT_FILE_MANAGER = 'CLIENT_FILE_MANAGER';
+    public const CLIENT_FILE_MANAGER_STORAGE = 'CLIENT_FILE_MANAGER_STORAGE';
+
+    public const SERVICE_FILE_MANAGER = 'SERVICE_FILE_MANAGER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -41,7 +42,7 @@ class FileManagerWidgetDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addFileManagerService(Container $container)
     {
-        $container[static::FILE_MANAGER_SERVICE] = function (Container $container) {
+        $container[static::SERVICE_FILE_MANAGER] = function (Container $container) {
             return new FileManagerWidgetToFileManagerServiceBridge(
                 $container->getLocator()->fileManager()->service()
             );
@@ -57,7 +58,7 @@ class FileManagerWidgetDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addFileManagerClient(Container $container)
     {
-        $container[static::FILE_MANAGER_CLIENT] = function (Container $container) {
+        $container[static::CLIENT_FILE_MANAGER] = function (Container $container) {
             return new FileManagerWidgetToFileManagerClientBridge(
                 $container->getLocator()->fileManager()->client()
             );
@@ -73,7 +74,7 @@ class FileManagerWidgetDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addFileManagerStorageClient(Container $container)
     {
-        $container[static::FILE_MANAGER_STORAGE_CLIENT] = function (Container $container) {
+        $container[static::CLIENT_FILE_MANAGER_STORAGE] = function (Container $container) {
             return new FileManagerWidgetToFileManagerStorageClientBridge(
                 $container->getLocator()->fileManagerStorage()->client()
             );

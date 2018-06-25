@@ -19,7 +19,7 @@ class FileManagerWidgetFactory extends AbstractFactory
      */
     public function getFileManagerService(): FileManagerWidgetToFileManagerServiceInterface
     {
-        return $this->getProvidedDependency(FileManagerWidgetDependencyProvider::FILE_MANAGER_SERVICE);
+        return $this->getProvidedDependency(FileManagerWidgetDependencyProvider::SERVICE_FILE_MANAGER);
     }
 
     /**
@@ -27,7 +27,7 @@ class FileManagerWidgetFactory extends AbstractFactory
      */
     public function getFileManagerClient(): FileManagerWidgetToFileManagerClientInterface
     {
-        return $this->getProvidedDependency(FileManagerWidgetDependencyProvider::FILE_MANAGER_CLIENT);
+        return $this->getProvidedDependency(FileManagerWidgetDependencyProvider::CLIENT_FILE_MANAGER);
     }
 
     /**
@@ -35,6 +35,6 @@ class FileManagerWidgetFactory extends AbstractFactory
      */
     public function getFileManagerStorageClient(): FileManagerWidgetToFileManagerStorageClientInterface
     {
-        return $this->getProvidedDependency(FileManagerWidgetDependencyProvider::FILE_MANAGER_STORAGE_CLIENT);
+        return $this->getProvidedDependency(FileManagerWidgetDependencyProvider::CLIENT_FILE_MANAGER_STORAGE);
     }
 }
