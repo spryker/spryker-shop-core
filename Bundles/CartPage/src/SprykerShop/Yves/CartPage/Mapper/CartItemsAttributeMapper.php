@@ -58,6 +58,9 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
 
         foreach ($items as $item) {
             $productData = $this->getAttributesMapByProductAbstract($item, $localeName);
+            if ($productData === null) {
+                continue;
+            }
             $attributes[$item->getSku()] = $this->getAttributesWithAvailability(
                 $item,
                 $productData['attribute_map'],
@@ -111,12 +114,11 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $item
      * @param string $localeName
      *
-     * @return array
+     * @return array|null
      */
     protected function getAttributesMapByProductAbstract(ItemTransfer $item, $localeName)
     {
-        return $this->productStorageClient
-            ->getProductAbstractStorageData($item->getIdProductAbstract(), $localeName);
+        return $this->productStorageClient->findProductAbstractStorageData($item->getIdProductAbstract(), $localeName);
     }
 
     /**
