@@ -18,21 +18,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin implements CheckoutAuthenticationHandlerPluginInterface
 {
     /**
-     * @var \Spryker\Client\Quote\QuoteClientInterface
-     */
-    protected $quoteClient;
-
-    /**
-     * RegistrationCheckoutAuthenticationHandlerPlugin constructor.
-     *
-     * @param \Spryker\Client\Quote\QuoteClientInterface $quoteClient
-     */
-    public function __construct(QuoteClientInterface $quoteClient)
-    {
-        $this->quoteClient = $quoteClient;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -42,7 +27,7 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
         $customerResponseTransfer = $this->getFactory()
             ->getAuthenticationHandler()
             ->registerCustomer($quoteTransfer->getCustomer());
-        $quoteTransfer = $this->getQouteClient()->getQuote();
+        $quoteTransfer = $this->getQuoteClient()->getQuote();
 
 
         $this->processErrorMessages($customerResponseTransfer);
@@ -84,7 +69,7 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
         return ($quoteTransfer->getCustomer() !== null);
     }
 
-    public function getQouteClient()
+    public function getQuoteClient()
     {
         return $this->getFactory()->getQuoteClient();
     }

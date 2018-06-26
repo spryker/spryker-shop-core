@@ -190,7 +190,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[self::CLIENT_QUOTE] = function (Container $container) {
+        $container[static::CLIENT_QUOTE] = function (Container $container) {
             return new CustomerPageToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 
