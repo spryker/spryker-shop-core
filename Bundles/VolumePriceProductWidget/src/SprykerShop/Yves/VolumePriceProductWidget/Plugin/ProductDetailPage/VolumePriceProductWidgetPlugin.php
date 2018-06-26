@@ -69,6 +69,6 @@ class VolumePriceProductWidgetPlugin extends AbstractWidgetPlugin implements Vol
     {
         return $this->getFactory()
             ->createVolumePriceProductResolver()
-            ->resolveVolumePriceProductForProductConcrete($productViewTransfer);
+            ->resolveVolumePriceProduct($productViewTransfer);
     }
 }

@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/volume-price-product-widget.svg)](https://travis-ci.org/spryker-shop/volume-price-product-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/volume-price-product-widget/badge.svg)](https://coveralls.io/github/spryker-shop/volume-price-product-widget)
 
-{{ADD DESCRIPTION HERE}}
+VolumePriceProductWidget provides widget to show information about volume price for product.
 
 ## Installation
 

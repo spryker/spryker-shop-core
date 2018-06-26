@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\VolumePriceProductWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\VolumePriceProductWidget\Business\VolumePriceProduct\VolumePriceProductResolver;
+use SprykerShop\Yves\VolumePriceProductWidget\Business\VolumePriceProduct\VolumePriceProductResolverInterface;
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToCurrencyClientInterface;
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToPriceClientInterface;
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToPriceProductStorageClientInterface;
@@ -16,9 +17,9 @@ use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProdu
 class VolumePriceProductWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\VolumePriceProductWidget\Business\VolumePriceProduct\VolumePriceProductResolver
+     * @return \SprykerShop\Yves\VolumePriceProductWidget\Business\VolumePriceProduct\VolumePriceProductResolverInterface
      */
-    public function createVolumePriceProductResolver()
+    public function createVolumePriceProductResolver(): VolumePriceProductResolverInterface
     {
         return new VolumePriceProductResolver(
             $this->getProductStorageClient(),
