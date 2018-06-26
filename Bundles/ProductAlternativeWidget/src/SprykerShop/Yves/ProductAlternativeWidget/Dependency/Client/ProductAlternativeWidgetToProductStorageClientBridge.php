@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ProductAlternativeWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
-
 class ProductAlternativeWidgetToProductStorageClientBridge implements ProductAlternativeWidgetToProductStorageClientInterface
 {
     /**
@@ -30,7 +28,7 @@ class ProductAlternativeWidgetToProductStorageClientBridge implements ProductAlt
      *
      * @return array
      */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName): array
+    public function getProductAbstractStorageData($idProductAbstract, $localeName)
     {
         return $this->productStorageClient->getProductAbstractStorageData($idProductAbstract, $localeName);
     }
@@ -41,7 +39,7 @@ class ProductAlternativeWidgetToProductStorageClientBridge implements ProductAlt
      *
      * @return array
      */
-    public function getProductConcreteStorageData($idProductConcrete, $localeName): array
+    public function getProductConcreteStorageData($idProductConcrete, $localeName)
     {
         return $this->productStorageClient->getProductConcreteStorageData($idProductConcrete, $localeName);
     }
@@ -53,7 +51,7 @@ class ProductAlternativeWidgetToProductStorageClientBridge implements ProductAlt
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []): ProductViewTransfer
+    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
     {
         return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
     }

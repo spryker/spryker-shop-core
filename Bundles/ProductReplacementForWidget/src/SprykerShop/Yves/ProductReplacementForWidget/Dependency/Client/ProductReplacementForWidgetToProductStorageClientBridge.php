@@ -31,7 +31,7 @@ class ProductReplacementForWidgetToProductStorageClientBridge implements Product
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []): ProductViewTransfer
+    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
     {
         return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
     }
@@ -42,7 +42,7 @@ class ProductReplacementForWidgetToProductStorageClientBridge implements Product
      *
      * @return array
      */
-    public function getProductConcreteStorageData($idProductConcrete, $localeName): array
+    public function getProductConcreteStorageData($idProductConcrete, $localeName)
     {
         return $this->productStorageClient->getProductConcreteStorageData($idProductConcrete, $localeName);
     }

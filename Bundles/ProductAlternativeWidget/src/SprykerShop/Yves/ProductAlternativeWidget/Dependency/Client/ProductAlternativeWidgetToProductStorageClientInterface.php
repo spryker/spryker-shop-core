@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ProductAlternativeWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
-
 interface ProductAlternativeWidgetToProductStorageClientInterface
 {
     /**
@@ -17,7 +15,7 @@ interface ProductAlternativeWidgetToProductStorageClientInterface
      *
      * @return array
      */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName): array;
+    public function getProductAbstractStorageData($idProductAbstract, $localeName);
 
     /**
      * @param int $idProductConcrete
@@ -25,7 +23,7 @@ interface ProductAlternativeWidgetToProductStorageClientInterface
      *
      * @return array
      */
-    public function getProductConcreteStorageData($idProductConcrete, $localeName): array;
+    public function getProductConcreteStorageData($idProductConcrete, $localeName);
 
     /**
      * @param array $data
@@ -34,5 +32,5 @@ interface ProductAlternativeWidgetToProductStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []): ProductViewTransfer;
+    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
 }
