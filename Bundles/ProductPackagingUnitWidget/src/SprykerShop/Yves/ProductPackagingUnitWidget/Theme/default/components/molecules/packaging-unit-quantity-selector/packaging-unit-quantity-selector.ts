@@ -16,8 +16,31 @@ export default class PackagingUnitQuantitySelector extends Component {
     leadSalesUnits: any;
     productPackagingUnitStorage: any;
     amountInSalesUnitInput: any;
+    amountInBaseUnitInput: any;
     isAmountBlockEnabled: boolean;
     currentLeadSalesUnit: any;
+
+    quantityBetweenElement: HTMLDivElement;
+    quantityMinElement: HTMLDivElement;
+    quantityMaxElement: HTMLDivElement;
+
+    muChoiceNotificationElement: HTMLDivElement;
+    muBetweenNotificationElement: HTMLDivElement;
+    muMinNotificationElement: HTMLDivElement;
+    muMaxNotificationElement: HTMLDivElement;
+    muTranslationsElement: HTMLScriptElement;
+    muChoiceListElement: HTMLUListElement;
+    muCurrentChoiceElement: HTMLSpanElement;
+
+    puChoiceElement: HTMLDivElement;
+    puMinNotificationElement: HTMLDivElement;
+    puMaxNotificationElement: HTMLDivElement;
+    puIntervalNotificationElement: HTMLDivElement;
+    puChoiceListElement: HTMLUListElement;
+    puCurrentChoiceElement: HTMLSpanElement;
+
+    muError: boolean;
+    puError: boolean;
 
     protected readyCallback(event?: Event): void {
         this.qtyInSalesUnitInput = <HTMLInputElement>document.querySelector('#sales-unit-quantity');
@@ -26,6 +49,26 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.addToCartButton = <HTMLButtonElement>document.getElementById('add-to-cart-button');
         this.leadSalesUnitSelect = <HTMLSelectElement>document.querySelector('.select-lead-measurement-unit');
         this.amountInSalesUnitInput = <HTMLInputElement>document.querySelector('#default-amount');
+        this.amountInBaseUnitInput = <HTMLInputElement>document.querySelector('#base-unit-amount');
+        this.quantityBetweenElement = <HTMLDivElement>document.getElementById('quantity-between-units');
+        this.quantityMinElement = <HTMLDivElement>document.getElementById('minimum-quantity');
+        this.quantityMaxElement = <HTMLDivElement>document.getElementById('maximum-quantity');
+        this.muChoiceNotificationElement = <HTMLDivElement>document.querySelector('.measurement-unit-choice');
+        this.muBetweenNotificationElement = <HTMLDivElement>document.getElementById('quantity-between-units');
+        this.muMinNotificationElement = <HTMLDivElement>document.getElementById('minimum-quantity');
+        this.muMaxNotificationElement = <HTMLDivElement>document.getElementById('maximum-quantity');
+        this.muTranslationsElement = <HTMLScriptElement>document.getElementById('measurement-unit-translation');
+        this.muChoiceListElement = <HTMLUListElement>document.querySelector('#measurement-unit-choices .list');
+        this.muCurrentChoiceElement = <HTMLSpanElement>document.querySelector('.measurement-unit-choice #current-choice');
+        this.puChoiceElement = <HTMLDivElement>document.querySelector('.packaging-unit-choice');
+        this.puChoiceElement = <HTMLDivElement>document.querySelector('.packaging-unit-choice');
+        this.puMinNotificationElement = <HTMLDivElement>document.getElementById('packaging-amount-min');
+        this.puMaxNotificationElement = <HTMLDivElement>document.getElementById('packaging-amount-max');
+        this.puIntervalNotificationElement = <HTMLDivElement>document.getElementById('packaging-amount-interval');
+        this.puChoiceListElement = <HTMLUListElement>document.querySelector('#packaging-unit-choices .list');
+        this.puCurrentChoiceElement = <HTMLSpanElement>document.querySelector('.packaging-unit-choice #amount-current-choice');
+        this.puError = false;
+        this.muError = false;
 
         this.initJson();
         this.initTranslations();
@@ -67,7 +110,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private initTranslations() {
-        this.translations = JSON.parse(document.getElementById('measurement-unit-translation').innerHTML)
+        this.translations = JSON.parse(this.muTranslationsElement.innerHTML)
     }
 
     private initCurrentSalesUnit() {
@@ -75,16 +118,6 @@ export default class PackagingUnitQuantitySelector extends Component {
             if (this.salesUnits.hasOwnProperty(key)) {
                 if (this.salesUnits[key].is_default) {
                     this.currentSalesUnit = this.salesUnits[key];
-                }
-            }
-        }
-    }
-
-    private initCurrentLeadSalesUnit() {
-        for (let key in this.leadSalesUnits) {
-            if (this.leadSalesUnits.hasOwnProperty(key)) {
-                if (this.leadSalesUnits[key].is_default) {
-                    this.currentLeadSalesUnit = this.leadSalesUnits[key];
                 }
             }
         }
@@ -104,58 +137,64 @@ export default class PackagingUnitQuantitySelector extends Component {
         if (typeof qtyInSalesUnits === 'undefined') {
             qtyInSalesUnits = +this.qtyInSalesUnitInput.value;
         }
-        let error = false;
+
+        this.muError = false;
         let qtyInBaseUnits = this.multiply(qtyInSalesUnits, +this.currentSalesUnit.conversion);
+
         if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0) {
-            error = true;
+            this.muError = true;
             this.hideNotifications();
-            document.getElementById('quantity-between-units').classList.remove('is-hidden');
+            this.quantityBetweenElement.classList.remove('is-hidden');
         } else if (qtyInBaseUnits < this.getMinQuantity()) {
-            error = true;
+            this.muError = true;
             this.hideNotifications();
-            document.getElementById('minimum-quantity').classList.remove('is-hidden');
+            this.quantityMinElement.classList.remove('is-hidden');
         } else if (this.getMaxQuantity() > 0 && qtyInBaseUnits > this.getMaxQuantity()) {
-            error = true;
+            this.muError = true;
             this.hideNotifications();
-            document.getElementById('maximum-quantity').classList.remove('is-hidden');
+            this.quantityMaxElement.classList.remove('is-hidden');
         }
 
-        if (error) {
+
+        if (this.muError || this.puError) {
             this.addToCartButton.setAttribute("disabled", "disabled");
             this.askCustomerForCorrectInput(qtyInSalesUnits);
             return;
         }
+
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.addToCartButton.removeAttribute("disabled");
         this.hideNotifications();
+
         return;
     }
 
     private hideNotifications() {
-        document.querySelector('.measurement-unit-choice').classList.add('is-hidden');
-        document.getElementById('quantity-between-units').classList.add('is-hidden');
-        document.getElementById('minimum-quantity').classList.add('is-hidden');
-        document.getElementById('maximum-quantity').classList.add('is-hidden');
+        this.muChoiceNotificationElement.classList.add('is-hidden');
+        this.muBetweenNotificationElement.classList.add('is-hidden');
+        this.muMinNotificationElement.classList.add('is-hidden');
+        this.muMaxNotificationElement.classList.add('is-hidden');
     }
 
     private askCustomerForCorrectInput(qtyInSalesUnits: number) {
-        let choicesList = document.querySelector('#measurement-unit-choices .list');
-        let currentChoice = document.querySelector('.measurement-unit-choice #current-choice');
+
         let minChoice = this.getMinChoice(qtyInSalesUnits);
         let maxChoice = this.getMaxChoice(qtyInSalesUnits, minChoice);
-        choicesList.innerHTML = '';
-        currentChoice.innerHTML = '';
-        currentChoice.textContent = `${this.round(qtyInSalesUnits, 4)} ${this.getUnitName(this.currentSalesUnit.product_measurement_unit.code)}`;
+
+        this.muChoiceListElement.innerHTML = '';
+        this.muCurrentChoiceElement.innerHTML = '';
+        this.muCurrentChoiceElement.textContent = `${this.round(qtyInSalesUnits, 4)} ${this.getUnitName(this.currentSalesUnit.product_measurement_unit.code)}`;
 
         let choiceElements = [];
         choiceElements.push(this.createChoiceElement(minChoice));
+
         if (maxChoice != minChoice) {
             choiceElements.push(this.createChoiceElement(maxChoice));
         }
 
-        choiceElements.forEach((element) => (element !== null) ? choicesList.appendChild(element) : null);
+        choiceElements.forEach((element) => (element !== null) ? this.muChoiceListElement.appendChild(element) : null);
 
-        document.querySelector('.measurement-unit-choice').classList.remove('is-hidden');
+        this.muChoiceNotificationElement.classList.remove('is-hidden');
     }
 
     private createChoiceElement(qtyInBaseUnits: number) {
@@ -173,6 +212,7 @@ export default class PackagingUnitQuantitySelector extends Component {
                 let element = event.srcElement as HTMLSelectElement;
                 let qtyInBaseUnits = parseFloat(element.dataset.baseUnitQty);
                 let qtyInSalesUnits = parseFloat(element.dataset.salesUnitQty);
+                this.muError = false;
                 this.selectQty(qtyInBaseUnits, qtyInSalesUnits);
             }.bind(this);
 
@@ -187,8 +227,11 @@ export default class PackagingUnitQuantitySelector extends Component {
     private selectQty(qtyInBaseUnits: number, qtyInSalesUnits: number) {
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString().toString();
-        this.addToCartButton.removeAttribute("disabled");
-        document.querySelector('.measurement-unit-choice').classList.add('is-hidden');
+        console.log(this.puError);
+        if(!this.puError) {
+            this.addToCartButton.removeAttribute("disabled");
+        }
+        this.muChoiceNotificationElement.classList.add('is-hidden');
     }
 
     private getMinChoice(qtyInSalesUnits: number) {
@@ -311,31 +354,104 @@ export default class PackagingUnitQuantitySelector extends Component {
             amountInSalesUnitInput = +this.amountInSalesUnitInput.value;
         }
 
-        let error = false;
+        this.puError = false;
         let amountInBaseUnits = this.multiply(amountInSalesUnitInput, +this.currentLeadSalesUnit.conversion);
-        this.hidePackagingUnitRestrictionNotifications();
 
         if((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
-            error = true;
-            document.getElementById('packaging-amount-interval').classList.remove('is-hidden');
+            this.puError = true;
+            this.puIntervalNotificationElement.classList.remove('is-hidden');
         } else if (amountInBaseUnits < this.getMinAmount()) {
-            error = true;
-            document.getElementById('packaging-amount-min').classList.remove('is-hidden');
+            this.puError = true;
+            this.puMinNotificationElement.classList.remove('is-hidden');
         } else if (this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount()) {
-            error = true;
-            document.getElementById('packaging-amount-max').classList.remove('is-hidden');
+            this.puError = true;
+            this.puMaxNotificationElement.classList.remove('is-hidden');
         }
 
-        if(error) {
-            document.querySelector('.packaging-unit-choice').classList.remove('is-hidden');
+        if(this.puError || this.muError) {
+            this.askCustomerForCorrectAmountInput(amountInSalesUnitInput);
+            this.puChoiceElement.classList.remove('is-hidden');
             this.addToCartButton.setAttribute("disabled", "disabled");
             return;
         }
 
+        this.amountInBaseUnitInput.value = amountInBaseUnits.toString();
         this.addToCartButton.removeAttribute("disabled");
+        this.hidePackagingUnitRestrictionNotifications();
 
         return;
     }
+
+    private askCustomerForCorrectAmountInput(amountInSalesUnits) {
+
+        let minChoice = this.getMinAmountChoice(amountInSalesUnits);
+        let maxChoice = this.getMaxAmountChoice(amountInSalesUnits, minChoice);
+
+        this.puChoiceListElement.innerHTML = '';
+        this.puCurrentChoiceElement.innerHTML = '';
+        this.puCurrentChoiceElement.textContent = `${this.round(amountInSalesUnits, 4)} ${this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code)}`;
+
+        let choiceElements = [];
+
+        if(minChoice) {
+            choiceElements.push(this.createAmountChoiceElement(minChoice));
+        }
+
+        if (maxChoice != minChoice) {
+            choiceElements.push(this.createAmountChoiceElement(maxChoice));
+        }
+
+        choiceElements.forEach((element) => (element !== null) ? this.puChoiceListElement.appendChild(element) : null);
+
+        this.puChoiceElement.classList.remove('is-hidden');
+    }
+
+    private initCurrentLeadSalesUnit() {
+        for (let key in this.leadSalesUnits) {
+            if (this.leadSalesUnits.hasOwnProperty(key)) {
+                if (this.leadSalesUnits[key].is_default) {
+                    this.currentLeadSalesUnit = this.leadSalesUnits[key];
+                }
+            }
+        }
+    }
+
+    private createAmountChoiceElement(amountInBaseUnits: number) {
+        if (amountInBaseUnits > 0) {
+            let choiceElem = document.createElement('span');
+            let amountInSalesUnits = amountInBaseUnits / this.currentLeadSalesUnit.conversion;
+            let measurementSalesUnitName = this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code);
+            let measurementBaseUnitName = this.getUnitName(this.baseUnit.code);
+
+            choiceElem.classList.add('link');
+            choiceElem.setAttribute('data-base-unit-amount', amountInBaseUnits.toString());
+            choiceElem.setAttribute('data-sales-unit-amount', amountInSalesUnits.toString());
+            choiceElem.textContent = `(${this.round(amountInSalesUnits, 4).toString().toString()} ${measurementSalesUnitName}) = (${amountInBaseUnits} ${measurementBaseUnitName})`;
+            choiceElem.onclick = function (event: Event) {
+                let element = event.srcElement as HTMLSelectElement;
+                let amountInBaseUnits = parseFloat(element.dataset.baseUnitAmount);
+                let amountInSalesUnits = parseFloat(element.dataset.salesUnitAmount);
+                this.puError = false;
+                this.selectAmount(amountInBaseUnits, amountInSalesUnits);
+            }.bind(this);
+
+            choiceElem.style.display = 'block';
+
+            return choiceElem;
+        }
+
+        return null;
+    }
+
+    private selectAmount(amountInBaseUnits: number, amountInSalesUnits: number) {
+        this.amountInSalesUnitInput.value = amountInSalesUnits.toString();
+        this.amountInBaseUnitInput.value = this.round(amountInBaseUnits, 4).toString().toString();
+        if(!this.muError) {
+            this.addToCartButton.removeAttribute("disabled");
+        }
+        this.puChoiceElement.classList.add('is-hidden');
+    }
+
 
     private leadSalesUnitSelectChange(event: Event) {
         let salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
@@ -349,10 +465,10 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private hidePackagingUnitRestrictionNotifications() {
-        document.querySelector('.packaging-unit-choice').classList.add('is-hidden');
-        document.getElementById('packaging-amount-min').classList.add('is-hidden');
-        document.getElementById('packaging-amount-max').classList.add('is-hidden');
-        document.getElementById('packaging-amount-interval').classList.add('is-hidden');
+        this.puChoiceElement.classList.add('is-hidden');
+        this.puMinNotificationElement.classList.add('is-hidden');
+        this.puMaxNotificationElement.classList.add('is-hidden');
+        this.puIntervalNotificationElement.classList.add('is-hidden');
     }
 
     private getLeadSalesUnitById(salesUnitId: number) {
@@ -396,5 +512,47 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         return 1;
+    }
+
+    private getMinAmountChoice(amountInSalesUnits: number) {
+        let amountInBaseUnits = this.floor(this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion));
+
+        if (amountInBaseUnits < this.getMinAmount()) {
+            return this.getMinAmount();
+        }
+
+        if((this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount())) {
+            return 0;
+        }
+
+        if ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
+            return this.getMinAmountChoice((amountInBaseUnits - 1) / this.currentLeadSalesUnit.conversion);
+        }
+
+        return amountInBaseUnits;
+    }
+
+    private getMaxAmountChoice(amountInSalesUnits: number, minChoice: number) {
+        let amountInBaseUnits = this.ceil(this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion));
+
+        if (this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount()) {
+            amountInBaseUnits = this.getMaxAmount();
+
+            if ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
+                amountInBaseUnits = amountInBaseUnits - ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval());
+            }
+
+            return amountInBaseUnits;
+        }
+
+        if(amountInBaseUnits <= minChoice) {
+            return 0;
+        }
+
+        if ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
+            return minChoice + this.getAmountInterval();
+        }
+
+        return amountInBaseUnits;
     }
 }
