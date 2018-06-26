@@ -42,7 +42,8 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
         $customerResponseTransfer = $this->getFactory()
             ->getAuthenticationHandler()
             ->registerCustomer($quoteTransfer->getCustomer());
-        $quoteTransfer = $this->quoteClient->getQuote();
+        $quoteTransfer = $this->getQouteClient()->getQuote();
+
 
         $this->processErrorMessages($customerResponseTransfer);
 
@@ -81,5 +82,10 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
     public function canHandle(QuoteTransfer $quoteTransfer)
     {
         return ($quoteTransfer->getCustomer() !== null);
+    }
+
+    public function getQouteClient()
+    {
+        return $this->getFactory()->getQuoteClient();
     }
 }
