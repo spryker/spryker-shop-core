@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Dependency\Client;
 
-use Spryker\Client\Quote\QuoteClientInterface;
-
 class CustomerPageToQuoteClientBridge implements CustomerPageToQuoteClientInteface
 {
     /**
