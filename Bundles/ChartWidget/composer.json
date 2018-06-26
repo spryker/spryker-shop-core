@@ -8,13 +8,13 @@
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
-    "spryker-shop/cms-content-widget-chart-connector": "^1.0.0",
+    "spryker-shop/cms-content-widget-chart-connector": "*",
     "spryker/silex": "*",
-    "spryker/twig": "^3.3.1"
+    "spryker/twig": "*"
   },
   "suggest": {
-    "spryker/twig": "If you want to use widget.: ^1.20.0",
-    "spryker-shop/cms-content-widget-chart-connector": "If you want to use widget: ^1.0.0",
+    "spryker/twig": "If you want to use ChartWidgetPlugin: ^3.2.0",
+    "spryker-shop/cms-content-widget-chart-connector": "If you want to use ChartWidgetPlugin: ^1.0.0",
     "spryker/silex": "*"
   },
   "autoload": {
