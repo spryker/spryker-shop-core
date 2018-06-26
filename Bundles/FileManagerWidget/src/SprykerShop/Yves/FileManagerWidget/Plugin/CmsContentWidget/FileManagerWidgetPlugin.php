@@ -41,16 +41,16 @@ class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidget
     /**
      * @param \Twig_Environment $twig
      * @param array $context
-     * @param string $fileId
+     * @param string $idFile
      * @param null|string $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, string $fileId, ?string $templateIdentifier = null): string
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, string $idFile, ?string $templateIdentifier = null): string
     {
         return $twig->render(
             $this->resolveTemplatePath($templateIdentifier),
-            $this->getContent($context, $fileId)
+            $this->getContent($context, $idFile)
         );
     }
 
@@ -70,13 +70,13 @@ class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidget
 
     /**
      * @param array $context
-     * @param string $fileId
+     * @param string $idFile
      *
      * @return array
      */
-    protected function getContent(array $context, string $fileId): array
+    protected function getContent(array $context, string $idFile): array
     {
-        $fileTransfer = $this->getFileManagerStorageClient()->findFileById($fileId, $this->getLocale());
+        $fileTransfer = $this->getFileManagerStorageClient()->findFileById((int)$idFile, $this->getLocale());
 
         return ['file' => $fileTransfer];
     }

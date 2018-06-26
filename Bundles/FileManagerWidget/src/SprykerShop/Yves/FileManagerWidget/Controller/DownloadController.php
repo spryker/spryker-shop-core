@@ -7,8 +7,7 @@
 
 namespace SprykerShop\Yves\FileManagerWidget\Controller;
 
-use Generated\Shared\Transfer\FileManagerDataTransfer;
-use Generated\Shared\Transfer\ReadFileTransfer;
+use Generated\Shared\Transfer\FileStorageDataTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -33,45 +32,28 @@ class DownloadController extends AbstractController
      */
     public function indexAction(Request $request): StreamedResponse
     {
-        $readFileTransfer = $this->createReadFileTransfer($request);
+        $fileStorageDataTransfer = $this->getFactory()
+            ->getFileManagerStorageClient()
+            ->findFileById(
+                $request->query->getInt(self::PARAM_ID_FILE),
+                $this->getLocale()
+            );
 
-        $fileManagerDataTransfer = $this->getFactory()
-            ->getFileManagerClient()
-            ->readFile($readFileTransfer);
-
-        if ($fileManagerDataTransfer->getFileInfo() === null) {
+        if ($fileStorageDataTransfer === null) {
             throw new NotFoundHttpException();
         }
 
-        return $this->createDownloadResponse($fileManagerDataTransfer);
+        return $this->createDownloadResponse($fileStorageDataTransfer);
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\ReadFileTransfer
-     */
-    protected function createReadFileTransfer(Request $request): ReadFileTransfer
-    {
-        $transfer = new ReadFileTransfer();
-
-        $transfer
-            ->setIdFile(
-                $request->query->getInt(self::PARAM_ID_FILE)
-            );
-
-        return $transfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
+     * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageDataTransfer
      *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    protected function createDownloadResponse(FileManagerDataTransfer $fileManagerDataTransfer): StreamedResponse
+    protected function createDownloadResponse(FileStorageDataTransfer $fileStorageDataTransfer): StreamedResponse
     {
-        $storageFileName = $fileManagerDataTransfer->getFileInfo()
-            ->getStorageFileName();
+        $storageFileName = $fileStorageDataTransfer->getStorageFileName();
 
         $fileStream = $this->getFactory()
             ->getFileManagerService()
@@ -85,7 +67,7 @@ class DownloadController extends AbstractController
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $storageFileName);
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
 
-        $contentType = $fileManagerDataTransfer->getFileInfo()->getType();
+        $contentType = $fileStorageDataTransfer->getType();
         $response->headers->set(static::CONTENT_TYPE, $contentType);
 
         return $response;

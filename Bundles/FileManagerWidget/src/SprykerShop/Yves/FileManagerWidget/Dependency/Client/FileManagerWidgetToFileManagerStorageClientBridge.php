@@ -25,13 +25,13 @@ class FileManagerWidgetToFileManagerStorageClientBridge implements FileManagerWi
     }
 
     /**
-     * @param int $fileId
+     * @param int $idFile
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\FileStorageDataTransfer
+     * @return null|\Generated\Shared\Transfer\FileStorageDataTransfer
      */
-    public function findFileById(int $fileId, string $localeName): FileStorageDataTransfer
+    public function findFileById(int $idFile, string $localeName): ?FileStorageDataTransfer
     {
-        return $this->fileManagerStorageClient->findFileById($fileId, $localeName);
+        return $this->fileManagerStorageClient->findFileById($idFile, $localeName);
     }
 }
