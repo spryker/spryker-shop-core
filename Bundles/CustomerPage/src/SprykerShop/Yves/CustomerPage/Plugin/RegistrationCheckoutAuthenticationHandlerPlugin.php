@@ -70,7 +70,7 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
     /**
      * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface
      */
-    public function getQuoteClient()
+    protected function getQuoteClient()
     {
         return $this->getFactory()->getQuoteClient();
     }

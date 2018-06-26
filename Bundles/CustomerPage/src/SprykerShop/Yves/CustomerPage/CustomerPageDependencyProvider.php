@@ -148,7 +148,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRegistrationCheckoutAuthenticationHandlerPlugin(Container $container): Container
     {
-        $container[self::PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER] = function (Container $container) {
+        $container[self::PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER] = function () {
             return new RegistrationCheckoutAuthenticationHandlerPlugin();
         };
 
