@@ -15,8 +15,6 @@ class CustomerPageToQuoteClientBridge implements CustomerPageToQuoteClientIntefa
     protected $quoteClient;
 
     /**
-     * CustomerPageToQuoteClientBridge constructor.
-     *
      * @param \Spryker\Client\Quote\QuoteClientInterface $quoteClient
      */
     public function __construct($quoteClient)
