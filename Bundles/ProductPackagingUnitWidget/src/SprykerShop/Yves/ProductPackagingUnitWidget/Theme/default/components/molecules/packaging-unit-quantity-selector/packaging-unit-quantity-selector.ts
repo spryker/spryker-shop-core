@@ -91,7 +91,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private mapEvents() {
-        this.qtyInSalesUnitInput.addEventListener('change', (event: Event) => this.qtyInputChange());
+        this.qtyInSalesUnitInput.addEventListener('input', (event: Event) => this.qtyInputChange());
         this.measurementUnitInput.addEventListener('change', (event: Event) => this.measurementUnitInputChange(event));
 
         if(this.isAmountBlockEnabled) {
@@ -109,12 +109,15 @@ export default class PackagingUnitQuantitySelector extends Component {
         if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0) {
             error = true;
             this.hideNotifications();
+            document.getElementById('quantity-between-units').classList.remove('is-hidden');
         } else if (qtyInBaseUnits < this.getMinQuantity()) {
             error = true;
             this.hideNotifications();
+            document.getElementById('minimum-quantity').classList.remove('is-hidden');
         } else if (this.getMaxQuantity() > 0 && qtyInBaseUnits > this.getMaxQuantity()) {
             error = true;
             this.hideNotifications();
+            document.getElementById('maximum-quantity').classList.remove('is-hidden');
         }
 
         if (error) {
@@ -122,7 +125,6 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.askCustomerForCorrectInput(qtyInSalesUnits);
             return;
         }
-
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.addToCartButton.removeAttribute("disabled");
         this.hideNotifications();
@@ -290,16 +292,6 @@ export default class PackagingUnitQuantitySelector extends Component {
         for (let key in this.salesUnits) {
             if (this.salesUnits.hasOwnProperty(key)) {
                 if (salesUnitId == this.salesUnits[key].id_product_measurement_sales_unit) {
-                    return this.salesUnits[key];
-                }
-            }
-        }
-    }
-
-    private getBaseSalesUnit() {
-        for (let key in this.salesUnits) {
-            if (this.salesUnits.hasOwnProperty(key)) {
-                if (this.baseUnit.id_product_measurement_unit == this.salesUnits[key].product_measurement_unit.id_product_measurement_unit) {
                     return this.salesUnits[key];
                 }
             }
