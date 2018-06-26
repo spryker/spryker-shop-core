@@ -1,7 +1,8 @@
 <?php
+
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CustomerPage\Dependency\Client;
@@ -20,7 +21,7 @@ class CustomerPageToQuoteClientBridge implements CustomerPageToQuoteClientIntefa
      *
      * @param \Spryker\Client\Quote\QuoteClientInterface $quoteClient
      */
-    public function __construct(QuoteClientInterface $quoteClient)
+    public function __construct($quoteClient)
     {
         $this->quoteClient = $quoteClient;
     }

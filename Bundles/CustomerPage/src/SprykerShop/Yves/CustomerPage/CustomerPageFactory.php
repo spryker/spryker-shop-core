@@ -190,6 +190,9 @@ class CustomerPageFactory extends AbstractFactory
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_CUSTOMER);
     }
 
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface
+     */
     public function getQuoteClient(): CustomerPageToQuoteClientInteface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_QUOTE);

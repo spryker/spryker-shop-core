@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CustomerPage\Plugin;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Quote\QuoteClientInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
@@ -27,12 +26,11 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
         $customerResponseTransfer = $this->getFactory()
             ->getAuthenticationHandler()
             ->registerCustomer($quoteTransfer->getCustomer());
-        $quoteTransfer = $this->getQuoteClient()->getQuote();
-
 
         $this->processErrorMessages($customerResponseTransfer);
 
         if ($customerResponseTransfer->getIsSuccess() === true) {
+            $quoteTransfer = $this->getQuoteClient()->getQuote();
             $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
         }
 
@@ -69,6 +67,9 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
         return ($quoteTransfer->getCustomer() !== null);
     }
 
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface
+     */
     public function getQuoteClient()
     {
         return $this->getFactory()->getQuoteClient();
