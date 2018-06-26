@@ -3,19 +3,19 @@
   "description": "ChartWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/chart": "^1.0.0",
+    "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
     "spryker-shop/cms-content-widget-chart-connector": "^1.0.0",
-    "spryker/chart": "^1.0.0",
-    "spryker/kernel": "^3.16.0",
+    "spryker/silex": "*",
     "spryker/twig": "^3.3.1"
   },
   "suggest": {
     "spryker/twig": "If you want to use widget.: ^1.20.0",
     "spryker-shop/cms-content-widget-chart-connector": "If you want to use widget: ^1.0.0",
-    "spryker/kernel": "If you want to use widget.: ^3.16.0",
-    "spryker/chart": "If you want to use widget.: ^1.0.0"
+    "spryker/silex": "*"
   },
   "autoload": {
     "psr-4": {
