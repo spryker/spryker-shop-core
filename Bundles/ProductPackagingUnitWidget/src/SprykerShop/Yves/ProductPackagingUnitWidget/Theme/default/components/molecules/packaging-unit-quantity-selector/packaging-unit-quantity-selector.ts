@@ -227,8 +227,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     private selectQty(qtyInBaseUnits: number, qtyInSalesUnits: number) {
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString().toString();
-        console.log(this.puError);
-        if(!this.puError) {
+        if (!this.puError) {
             this.addToCartButton.removeAttribute("disabled");
         }
         this.muChoiceNotificationElement.classList.add('is-hidden');
@@ -357,7 +356,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.puError = false;
         let amountInBaseUnits = this.multiply(amountInSalesUnitInput, +this.currentLeadSalesUnit.conversion);
 
-        if((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
+        if ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
             this.puError = true;
             this.puIntervalNotificationElement.classList.remove('is-hidden');
         } else if (amountInBaseUnits < this.getMinAmount()) {
@@ -368,7 +367,7 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.puMaxNotificationElement.classList.remove('is-hidden');
         }
 
-        if(this.puError || this.muError) {
+        if (this.puError || this.muError) {
             this.askCustomerForCorrectAmountInput(amountInSalesUnitInput);
             this.puChoiceElement.classList.remove('is-hidden');
             this.addToCartButton.setAttribute("disabled", "disabled");
@@ -393,7 +392,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
         let choiceElements = [];
 
-        if(minChoice) {
+        if (minChoice) {
             choiceElements.push(this.createAmountChoiceElement(minChoice));
         }
 
@@ -446,7 +445,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     private selectAmount(amountInBaseUnits: number, amountInSalesUnits: number) {
         this.amountInSalesUnitInput.value = amountInSalesUnits.toString();
         this.amountInBaseUnitInput.value = this.round(amountInBaseUnits, 4).toString().toString();
-        if(!this.muError) {
+        if (!this.muError) {
             this.addToCartButton.removeAttribute("disabled");
         }
         this.puChoiceElement.classList.add('is-hidden');
@@ -521,11 +520,11 @@ export default class PackagingUnitQuantitySelector extends Component {
             return this.getMinAmount();
         }
 
-        if((this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount())) {
+        if(this.isAmountGreaterThanMaxAmount(amountInBaseUnits)) {
             return 0;
         }
 
-        if ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
+        if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
             return this.getMinAmountChoice((amountInBaseUnits - 1) / this.currentLeadSalesUnit.conversion);
         }
 
@@ -535,24 +534,32 @@ export default class PackagingUnitQuantitySelector extends Component {
     private getMaxAmountChoice(amountInSalesUnits: number, minChoice: number) {
         let amountInBaseUnits = this.ceil(this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion));
 
-        if (this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount()) {
+        if (this.isAmountGreaterThanMaxAmount(amountInBaseUnits)) {
             amountInBaseUnits = this.getMaxAmount();
 
-            if ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
+            if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
                 amountInBaseUnits = amountInBaseUnits - ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval());
             }
 
             return amountInBaseUnits;
         }
 
-        if(amountInBaseUnits <= minChoice) {
+        if (amountInBaseUnits <= minChoice) {
             return 0;
         }
 
-        if ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
+        if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
             return minChoice + this.getAmountInterval();
         }
 
         return amountInBaseUnits;
+    }
+
+    private isAmountGreaterThanMaxAmount(amountInBaseUnits: number) {
+        return this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount();
+    }
+
+    private isAmountMultipleToInterval(amountInBaseUnits: number) {
+        return (amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0;
     }
 }
