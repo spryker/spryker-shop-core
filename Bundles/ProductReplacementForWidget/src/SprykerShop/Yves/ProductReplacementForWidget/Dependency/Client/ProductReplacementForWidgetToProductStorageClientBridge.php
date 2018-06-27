@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ProductReplacementForWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
-
 class ProductReplacementForWidgetToProductStorageClientBridge implements ProductReplacementForWidgetToProductStorageClientInterface
 {
     /**
