@@ -49,7 +49,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.addToCartButton = <HTMLButtonElement>document.getElementById('add-to-cart-button');
         this.leadSalesUnitSelect = <HTMLSelectElement>document.querySelector('.select-lead-measurement-unit');
         this.amountInSalesUnitInput = <HTMLInputElement>document.querySelector('#default-amount');
-        this.amountInBaseUnitInput = <HTMLInputElement>document.querySelector('#base-unit-amount');
+        this.amountInBaseUnitInput = <HTMLInputElement>document.querySelector('#amount-packaging-unit');
         this.quantityBetweenElement = <HTMLDivElement>document.getElementById('quantity-between-units');
         this.quantityMinElement = <HTMLDivElement>document.getElementById('minimum-quantity');
         this.quantityMaxElement = <HTMLDivElement>document.getElementById('maximum-quantity');

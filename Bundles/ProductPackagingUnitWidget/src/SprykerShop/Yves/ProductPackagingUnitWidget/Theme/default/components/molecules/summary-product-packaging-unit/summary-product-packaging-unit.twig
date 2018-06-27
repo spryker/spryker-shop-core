@@ -8,8 +8,10 @@
 {% define data = {
     name: data.name,
     quantity: data.quantity,
+    amount: data.amount,
     price: data.price,
-    quantitySalesUnit: data.quantitySalesUnit
+    quantitySalesUnit: data.quantitySalesUnit,
+    amountSalesUnit: data.amountSalesUnit
 } %}
 
 {% block body %}
@@ -20,6 +22,11 @@
     {% endif %}
 
     <strong class="float-right">{{data.price}}</strong>
-    {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(= {{ salesUnitSummary }}){% endif %}
+    {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
+    <br/>
+    {% if data.amountSalesUnit is defined and data.amountSalesUnit is not empty %}
+        {% set amountSalesUnitName = data.amountSalesUnit.productMeasurementUnit.name | default('') %}
+        <span class="text-secondary">&times;</span> {{ data.amount }} {{ 'items' | trans }} (= {{ data.amount / data.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.quantity * data.amount }} {{ 'items' | trans }}
+    {% endif %}
 {% endblock body %}
 
