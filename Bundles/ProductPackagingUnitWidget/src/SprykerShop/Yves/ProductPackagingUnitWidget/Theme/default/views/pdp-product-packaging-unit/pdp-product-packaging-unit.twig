@@ -117,6 +117,7 @@
                     {{ 'Amount' | trans }}
                     <input id="default-amount" class="input input--expand" type="number" value="{{ data.productPackagingUnit.defaultAmount }}" {% if not data.packagingUnitIsVariable %}disabled{% endif %} name="amount-product-packaging-unit"/>
                     <input id="packaging-unit-amount" class="input input--expand" type="hidden" value="{{ data.productPackagingUnit.defaultAmount }}" name="amount-product-packaging-unit"/>
+                    <input id="base-unit-amount" type="hidden" value="" name="base-unit-amount"/>
                 </label>
             </div>
             <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
@@ -143,8 +144,7 @@
         </div>
     {% endif %}
 
-    <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
-
+    <div class="col">
         {% if data.salesUnitCount %}
 
             {% include molecule('packaging-unit-quantity-selector', 'ProductPackagingUnitWidget') with {
@@ -157,6 +157,11 @@
                 <hr />
 
                 <div class="packaging-unit-notifications">
+
+                    <div id="amount-between-units" class="is-hidden">
+                        <span>{{ "packaging_units.recommendation.between-units-info" | trans }} (<span id="amount-current-choice"></span>)</span>
+                    </div>
+
                     <div id="packaging-amount-min" class="is-hidden">
                         <span>{{ "packaging-unit.recommendation.amount-min-violation" | trans }}</span>
                     </div>
@@ -177,22 +182,22 @@
 
         {% if data.salesUnitCount %}
             <hr />
-            <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ data.isAddToCartDisabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}>
-                    {% include atom('icon') with {
-                        data: {
-                            name: 'cart-plus'
-                        }
-                    } only %}
-                    {{ 'page.detail.add-to-cart' | trans }}
-            </button>
-        {% endif %}
+                <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ data.isAddToCartDisabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}>
+                        {% include atom('icon') with {
+                            data: {
+                                name: 'cart-plus'
+                            }
+                        } only %}
+                        {{ 'page.detail.add-to-cart' | trans }}
+                </button>
+            {% endif %}
 
-        {% set translations = [] %}
-        {% for key, salesUnit in data.salesUnits %}
-            {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
-        {% endfor %}
+            {% set translations = [] %}
+            {% for key, salesUnit in data.salesUnits %}
+                {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
+            {% endfor %}
 
-        <script type="application/json" id="measurement-unit-translation">{{ translations|json_encode|raw }}</script>
+            <script type="application/json" id="measurement-unit-translation">{{ translations|json_encode|raw }}</script>
 
     </div>
 {% endblock body %}
