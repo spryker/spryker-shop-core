@@ -13,6 +13,8 @@ use SprykerShop\Yves\VolumePriceProductWidget\Business\VolumePriceProduct\Volume
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToCurrencyClientInterface;
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToPriceClientInterface;
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToPriceProductStorageClientInterface;
+use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Service\VolumePriceProductWidgetToUtilEncodingServiceBridge;
+use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Service\VolumePriceProductWidgetToUtilEncodingServiceInterface;
 
 class VolumePriceProductWidgetFactory extends AbstractFactory
 {
@@ -24,7 +26,8 @@ class VolumePriceProductWidgetFactory extends AbstractFactory
         return new VolumePriceProductResolver(
             $this->getProductStorageClient(),
             $this->getPriceClient(),
-            $this->getCurrencyClient()
+            $this->getCurrencyClient(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -50,5 +53,13 @@ class VolumePriceProductWidgetFactory extends AbstractFactory
     public function getCurrencyClient(): VolumePriceProductWidgetToCurrencyClientInterface
     {
         return $this->getProvidedDependency(VolumePriceProductWidgetDependencyProvider::CLIENT_CURRENCY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\VolumePriceProductWidget\Dependency\Service\VolumePriceProductWidgetToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): VolumePriceProductWidgetToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(VolumePriceProductWidgetDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

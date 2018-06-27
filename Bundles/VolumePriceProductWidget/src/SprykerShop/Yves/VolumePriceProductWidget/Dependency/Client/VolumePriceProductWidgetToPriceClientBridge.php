@@ -25,7 +25,7 @@ class VolumePriceProductWidgetToPriceClientBridge implements VolumePriceProductW
     /**
      * @return string
      */
-    public function getCurrentPriceMode(): string
+    public function getCurrentPriceMode()
     {
         return $this->priceClient->getCurrentPriceMode();
     }

@@ -12,23 +12,32 @@ use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer;
 use Generated\Shared\Transfer\VolumeProductPriceTransfer;
-use Spryker\Shared\Price\PriceConfig;
-use Spryker\Shared\VolumePriceProduct\VolumePriceProductConfig;
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToCurrencyClientInterface;
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToPriceClientInterface;
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToPriceProductStorageClientInterface;
+use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Service\VolumePriceProductWidgetToUtilEncodingServiceInterface;
 
-/**
- * @use Price
- * @use VolumePriceProduct
- */
 class VolumePriceProductResolver implements VolumePriceProductResolverInterface
 {
-    protected const VOLUME_PRICE_TYPE = VolumePriceProductConfig::VOLUME_PRICE_TYPE;
-    protected const VOLUME_PRICE_QUANTITY = VolumePriceProductConfig::VOLUME_PRICE_QUANTITY;
+    /**
+     * @see \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     */
+    protected const PRICE_MODE_NET = 'NET_MODE';
+
+    /**
+     * @see \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     */
+    protected const PRICE_MODE_GROSS = 'GROSS_MODE';
+
+    /**
+     * @see \Spryker\Shared\VolumePriceProduct\VolumePriceProductConfig::VOLUME_PRICE_TYPE
+     */
+    protected const VOLUME_PRICE_TYPE = 'volume_prices';
+
+    protected const VOLUME_PRICE_QUANTITY = 'quantity';
     protected const VOLUME_PRICE_MODE_MAPPING = [
-        PriceConfig::PRICE_MODE_NET => VolumePriceProductConfig::VOLUME_PRICE_NET,
-        PriceConfig::PRICE_MODE_GROSS => VolumePriceProductConfig::VOLUME_PRICE_GROSS,
+        self::PRICE_MODE_NET => 'net_price',
+        self::PRICE_MODE_GROSS => 'gross_price',
     ];
 
     /**
@@ -47,83 +56,114 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
     protected $currencyClient;
 
     /**
+     * @var \SprykerShop\Yves\VolumePriceProductWidget\Dependency\Service\VolumePriceProductWidgetToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToPriceProductStorageClientInterface $priceProductStorageClient
      * @param \SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToPriceClientInterface $priceClient
      * @param \SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToCurrencyClientInterface $currencyClient
+     * @param \SprykerShop\Yves\VolumePriceProductWidget\Dependency\Service\VolumePriceProductWidgetToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         VolumePriceProductWidgetToPriceProductStorageClientInterface $priceProductStorageClient,
         VolumePriceProductWidgetToPriceClientInterface $priceClient,
-        VolumePriceProductWidgetToCurrencyClientInterface $currencyClient
+        VolumePriceProductWidgetToCurrencyClientInterface $currencyClient,
+        VolumePriceProductWidgetToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->priceProductStorageClient = $priceProductStorageClient;
         $this->priceClient = $priceClient;
         $this->currencyClient = $currencyClient;
+        $this->utilEncodingService = $utilEncodingService;
     }
+
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer
      */
-    public function resolveVolumePriceProduct(ProductViewTransfer $productViewTransfer): VolumeProductPriceCollectionTransfer
+    public function resolveVolumeProductPrices(ProductViewTransfer $productViewTransfer): VolumeProductPriceCollectionTransfer
     {
+        $volumeProductPrices =  new VolumeProductPriceCollectionTransfer();
+
         if ($productViewTransfer->getIdProductConcrete() != null) {
-            $pricesByProductConcreteId = $this->priceProductStorageClient->findPriceConcreteStorageTransfer(
+            $priceProductStorageTransfer = $this->priceProductStorageClient->findPriceConcreteStorageTransfer(
                 $productViewTransfer->getIdProductConcrete()
             );
 
-            if (!empty($pricesByProductConcreteId)) {
-                return $this->filterPricesByType($pricesByProductConcreteId);
+            if ($priceProductStorageTransfer) {
+                return $this->getVolumeProductPricesFromStorageData($priceProductStorageTransfer, $volumeProductPrices);
             }
         }
 
         if ($productViewTransfer->getIdProductAbstract() != null) {
-            $pricesByProductAbstractId = $this->priceProductStorageClient->findPriceAbstractStorageTransfer(
+            $priceProductStorageTransfer = $this->priceProductStorageClient->findPriceAbstractStorageTransfer(
                 $productViewTransfer->getIdProductAbstract()
             );
 
-            if (!empty($pricesByProductAbstractId)) {
-                return $this->filterPricesByType($pricesByProductAbstractId);
+            if ($priceProductStorageTransfer) {
+                return $this->getVolumeProductPricesFromStorageData($priceProductStorageTransfer, $volumeProductPrices);
             }
         }
 
-        return $this->createVolumeProductPriceCollectionTransfer();
+        return $volumeProductPrices;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
+     * @param \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer $volumeProductPriceCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer
      */
-    protected function filterPricesByType(PriceProductStorageTransfer $priceProductStorageTransfer): VolumeProductPriceCollectionTransfer
-    {
-        $result = $this->createVolumeProductPriceCollectionTransfer();
+    protected function getVolumeProductPricesFromStorageData(
+        PriceProductStorageTransfer $priceProductStorageTransfer,
+        VolumeProductPriceCollectionTransfer $volumeProductPriceCollectionTransfer
+    ): VolumeProductPriceCollectionTransfer {
         if (empty($priceProductStorageTransfer->getPrices())) {
-            return $result;
+            return $volumeProductPriceCollectionTransfer;
         }
 
         foreach ($priceProductStorageTransfer->getPrices() as $currency => $price) {
-            if ($currency != $this->currencyClient->getCurrent()->getCode()) {
+            if (!$this->hasVolumeProductPrice($price, $currency)) {
                 continue;
             }
-            if (!$price[MoneyValueTransfer::PRICE_DATA]) {
-                continue;
-            }
-            $priceData = json_decode($price[MoneyValueTransfer::PRICE_DATA], true);
-            if (!$priceData[static::VOLUME_PRICE_TYPE]) {
-                continue;
-            }
-            $volumePriceData = $priceData[static::VOLUME_PRICE_TYPE];
 
-            foreach ($volumePriceData as $volumePriceDatum) {
-                $result->addVolumePrices(
-                    $this->createVolumeProductPriceFromStorageData($volumePriceDatum)
+            $volumePriceData = $this->utilEncodingService->decodeJson(
+                $price[MoneyValueTransfer::PRICE_DATA], true
+            )[static::VOLUME_PRICE_TYPE];
+
+            foreach ($volumePriceData as $volumeProductStorageData) {
+                $volumeProductPriceCollectionTransfer->addVolumePrice(
+                    $this->createVolumeProductPriceFromStorageData($volumeProductStorageData)
                 );
             }
         }
 
-        return $result;
+        return $volumeProductPriceCollectionTransfer;
+    }
+
+    /**
+     * @param array $price
+     * @param string $currency
+     *
+     * @return bool
+     */
+    protected function hasVolumeProductPrice(array $price, string $currency): bool
+    {
+        if ($currency != $this->currencyClient->getCurrent()->getCode()) {
+            return false;
+        }
+        if (!isset($price[MoneyValueTransfer::PRICE_DATA]) || !$price[MoneyValueTransfer::PRICE_DATA]) {
+            return false;
+        }
+        $priceData = $this->utilEncodingService->decodeJson($price[MoneyValueTransfer::PRICE_DATA], true);
+        if (!isset($priceData[static::VOLUME_PRICE_TYPE]) || !$priceData[static::VOLUME_PRICE_TYPE]) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -142,13 +182,5 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
         );
 
         return $volumePrice;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer
-     */
-    protected function createVolumeProductPriceCollectionTransfer(): VolumeProductPriceCollectionTransfer
-    {
-        return new VolumeProductPriceCollectionTransfer();
     }
 }

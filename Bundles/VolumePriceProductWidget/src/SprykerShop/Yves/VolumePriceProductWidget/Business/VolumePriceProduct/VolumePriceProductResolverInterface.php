@@ -17,5 +17,5 @@ interface VolumePriceProductResolverInterface
      *
      * @return \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer
      */
-    public function resolveVolumePriceProduct(ProductViewTransfer $productViewTransfer): VolumeProductPriceCollectionTransfer;
+    public function resolveVolumeProductPrices(ProductViewTransfer $productViewTransfer): VolumeProductPriceCollectionTransfer;
 }

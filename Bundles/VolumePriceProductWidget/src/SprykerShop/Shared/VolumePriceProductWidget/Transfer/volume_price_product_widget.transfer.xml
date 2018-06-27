@@ -9,7 +9,7 @@
     </transfer>
 
     <transfer name="VolumeProductPriceCollection">
-        <property name="volumePrices" type="VolumeProductPrice[]" />
+        <property name="volumePrices" type="VolumeProductPrice[]" singular="volumePrice" />
     </transfer>
 
 </transfers>

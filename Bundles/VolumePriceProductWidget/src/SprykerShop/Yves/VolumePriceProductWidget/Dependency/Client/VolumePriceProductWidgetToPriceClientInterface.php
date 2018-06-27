@@ -12,5 +12,5 @@ interface VolumePriceProductWidgetToPriceClientInterface
     /**
      * @return string
      */
-    public function getCurrentPriceMode(): string;
+    public function getCurrentPriceMode();
 }

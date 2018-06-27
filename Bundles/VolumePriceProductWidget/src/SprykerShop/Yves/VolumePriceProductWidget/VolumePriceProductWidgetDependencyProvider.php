@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToCurrencyClientBridge;
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToPriceClientBridge;
 use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client\VolumePriceProductWidgetToPriceProductStorageClientBridge;
+use SprykerShop\Yves\VolumePriceProductWidget\Dependency\Service\VolumePriceProductWidgetToUtilEncodingServiceBridge;
 
 class VolumePriceProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -19,16 +20,24 @@ class VolumePriceProductWidgetDependencyProvider extends AbstractBundleDependenc
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
 
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container): Container
+    public function provideDependencies(Container $container)
     {
+        $container = parent::provideDependencies($container);
+
+        //clients
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceClient($container);
         $container = $this->addCurrencyClient($container);
+
+        //services
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -75,6 +84,22 @@ class VolumePriceProductWidgetDependencyProvider extends AbstractBundleDependenc
         $container[static::CLIENT_CURRENCY] = function (Container $container) {
             return new VolumePriceProductWidgetToCurrencyClientBridge(
                 $container->getLocator()->currency()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new VolumePriceProductWidgetToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
             );
         };
 

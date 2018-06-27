@@ -7,12 +7,10 @@
 
 namespace SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
-
 interface VolumePriceProductWidgetToCurrencyClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent(): CurrencyTransfer;
+    public function getCurrent();
 }

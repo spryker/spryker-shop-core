@@ -18,8 +18,6 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\VolumePriceProductWidge
  */
 class VolumePriceProductWidgetPlugin extends AbstractWidgetPlugin implements VolumePriceProductWidgetPluginInterface
 {
-    use PermissionAwareTrait;
-
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
@@ -69,6 +67,6 @@ class VolumePriceProductWidgetPlugin extends AbstractWidgetPlugin implements Vol
     {
         return $this->getFactory()
             ->createVolumePriceProductResolver()
-            ->resolveVolumePriceProduct($productViewTransfer);
+            ->resolveVolumeProductPrices($productViewTransfer);
     }
 }
