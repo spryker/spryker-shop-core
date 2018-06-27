@@ -36,7 +36,7 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -49,7 +49,7 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return '@ProductReplacementForWidget/views/product-replacement-for-list/product-replacement-for-list.twig';
     }
@@ -68,7 +68,7 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
             return $productViewTransferList;
         }
         foreach ($productReplacementForStorage->getProductConcreteIds() as $idProduct) {
-            $productViewTransferList[] = $this->getProductView($idProduct);
+            $productViewTransferList[] = $this->getProductViewTransfer($idProduct);
         }
 
         return array_filter($productViewTransferList);
@@ -79,7 +79,7 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    protected function getProductView(int $idProduct): ?ProductViewTransfer
+    protected function getProductViewTransfer(int $idProduct): ?ProductViewTransfer
     {
         $productConcreteStorageData = $this->getFactory()
             ->getProductStorageClient()

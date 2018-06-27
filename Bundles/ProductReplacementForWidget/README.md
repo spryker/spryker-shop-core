@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/product-replacement-for-widget.svg)](https://travis-ci.org/spryker-shop/product-replacement-for-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/product-replacement-for-widget/badge.svg)](https://coveralls.io/github/spryker-shop/product-replacement-for-widget)
 
-{{ADD DESCRIPTION HERE}}
+Uses ProductAlternativeStorage module to show what product is a replacement for what other products.
 
 ## Installation
 

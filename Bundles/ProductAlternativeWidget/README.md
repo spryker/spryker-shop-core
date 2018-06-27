@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/product-alternative-widget.svg)](https://travis-ci.org/spryker-shop/product-alternative-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/product-alternative-widget/badge.svg)](https://coveralls.io/github/spryker-shop/product-alternative-widget)
 
-{{ADD DESCRIPTION HERE}}
+Uses ProductAlternativeStorage module to show alternatives for a product.
 
 ## Installation
 

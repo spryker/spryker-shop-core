@@ -37,7 +37,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -50,7 +50,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return '@ProductAlternativeWidget/views/product-alternative-list/product-alternative-list.twig';
     }
@@ -83,11 +83,11 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
     {
         $productViewTransferList = [];
         foreach ($productReplacementForStorage->getProductAbstractIds() as $idProduct) {
-            $productViewTransferList[] = $this->getAbstractProductView($idProduct);
+            $productViewTransferList[] = $this->getAbstractProductViewTransfer($idProduct);
         }
 
         foreach ($productReplacementForStorage->getProductConcreteIds() as $idProduct) {
-            $productViewTransferList[] = $this->getConcreteProductView($idProduct);
+            $productViewTransferList[] = $this->getConcreteProductViewTransfer($idProduct);
         }
 
         return array_filter($productViewTransferList);
@@ -98,7 +98,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    protected function getAbstractProductView(int $idProduct): ?ProductViewTransfer
+    protected function getAbstractProductViewTransfer(int $idProduct): ?ProductViewTransfer
     {
         $productAbstractStorageData = $this->getFactory()
             ->getProductStorageClient()
@@ -117,7 +117,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    protected function getConcreteProductView(int $idProduct): ?ProductViewTransfer
+    protected function getConcreteProductViewTransfer(int $idProduct): ?ProductViewTransfer
     {
         $productConcreteStorageData = $this->getFactory()
             ->getProductStorageClient()
