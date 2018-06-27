@@ -30,8 +30,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
     }
 
     /**
-     * Specification:
-     * - Returns the name of the widget as it's used in templates.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -43,8 +42,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
     }
 
     /**
-     * Specification:
-     * - Returns the the template file path to render the widget.
+     * {@inheritdoc}
      *
      * @api
      *
