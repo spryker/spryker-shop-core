@@ -17,8 +17,8 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_SUB_WIDGETS = 'PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_SUB_WIDGETS';
     const PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS = 'PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS';
     const PLUGIN_HOME_PAGE_SUB_WIDGETS = 'PLUGIN_HOME_PAGE_SUB_WIDGETS';
-    public const PLUGIN_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGETS = 'PLUGIN_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGETS';
-    public const PLUGIN_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGETS = 'PLUGIN_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGETS';
+    public const PLUGINS_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGET = 'PLUGINS_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGET';
+    public const PLUGINS_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGET = 'PLUGINS_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGET';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -115,7 +115,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductReplacementForWidgetPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGETS] = function () {
+        $container[self::PLUGINS_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGET] = function () {
             return $this->getProductReplacementForWidgetPlugins();
         };
 
@@ -129,7 +129,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductAlternativeWidgetPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGETS] = function () {
+        $container[self::PLUGINS_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGET] = function () {
             return $this->getProductAlternativeWidgetPlugins();
         };
 

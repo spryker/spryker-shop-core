@@ -56,7 +56,7 @@ class ProductWidgetFactory extends AbstractFactory
      */
     public function getProductReplacementForWidgetPlugins(): array
     {
-        return $this->getProvidedDependency(ProductWidgetDependencyProvider::PLUGIN_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGETS);
+        return $this->getProvidedDependency(ProductWidgetDependencyProvider::PLUGINS_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGET);
     }
 
     /**
@@ -64,6 +64,6 @@ class ProductWidgetFactory extends AbstractFactory
      */
     public function getProductAlternativeWidgetPlugins(): array
     {
-        return $this->getProvidedDependency(ProductWidgetDependencyProvider::PLUGIN_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGETS);
+        return $this->getProvidedDependency(ProductWidgetDependencyProvider::PLUGINS_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGET);
     }
 }
