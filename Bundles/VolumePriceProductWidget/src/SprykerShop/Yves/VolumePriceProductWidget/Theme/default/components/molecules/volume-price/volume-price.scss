@@ -1,0 +1,21 @@
+@mixin shop-ui-volume-price($name: '.volume-price') {
+    #{$name} {
+        @include helper-font-size(big);
+
+        &__amount {
+            &--original {
+                @include helper-font-size(small);
+                display: block;
+                color: $setting-color-dark;
+                text-decoration: line-through;
+            }
+        }
+
+        &__tag {
+            margin-right: 0.25rem;
+            color: $setting-color-alt;
+        }
+
+        @content;
+    }
+}

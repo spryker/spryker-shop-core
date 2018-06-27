@@ -6,25 +6,22 @@
 
 {% block body %}
     {% if data.volumeProductPrices.volumePrices is defined and data.volumeProductPrices.volumePrices is not empty %}
-        <table>
-            <tr>
-                <th>
-                    {{ 'page.detail.volume_price.quantity'|trans }}
-                </th>
-                <th>
-                    {{ 'page.detail.volume_price.price'|trans }}
-                </th>
-            </tr>
-        {% for volumePrice in data.volumeProductPrices.volumePrices %}
-            <tr>
-                <td>
-                    {{ volumePrice.quantity }}
-                </td>
-                <td>
-                    {{ volumePrice.price|money }}
-                </td>
-            </tr>
-        {% endfor %}
-        </table>
+
+        {% include molecule('volume-price-table', 'VolumePriceProductWidget') with {
+            data: {
+                volumePrices: data.volumeProductPrices.volumePrices
+            }
+        } only %}
+
+        {% include molecule('volume-price', 'VolumePriceProductWidget') with {
+            config: {
+                name: 'volume-price'
+            },
+            data: {
+                pricesJson: {},
+                amount: 50,
+                originalAmount: 100
+            }
+        } only %}
     {% endif %}
 {% endblock %}

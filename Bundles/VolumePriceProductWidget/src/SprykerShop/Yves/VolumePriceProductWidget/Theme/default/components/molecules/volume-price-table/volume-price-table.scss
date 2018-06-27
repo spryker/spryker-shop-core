@@ -1,0 +1,29 @@
+@mixin shop-ui-volume-price-table($name: '.volume-price-table') {
+    #{$name} {
+        margin-bottom: 0.5rem;
+        @include helper-font-size(big);
+
+        &__table,
+        &__title,
+        &__cell {
+            border: 1px solid $setting-color-darker;
+        }
+
+        &__table {
+            @include helper-font-size(small);
+            text-align: center;
+        }
+
+        &__title {
+            padding: 0.5rem 0.75rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        &__cell {
+            padding: 0.5rem 0.75rem;
+        }
+
+        @content;
+    }
+}

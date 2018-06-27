@@ -1,0 +1,24 @@
+{% extends molecule('price') %}
+
+{% define data = {
+    pricesJson: required
+} %}
+
+{% block body %}
+    {% if data.originalAmount is not empty -%}
+        <span class="{{config.name}}__amount {{config.name}}__amount--original">{{data.originalAmount}}</span>
+    {%- endif -%}
+
+    <span class="{{ config.name }}__amount">
+
+        {% include atom('icon') with {
+            class: config.name ~ '__tag',
+            data: {
+                name: 'tag'
+            }
+        } only %}
+        <span class="js-{{ config.name }}">
+            {{ data.amount }}
+        </span>
+    </span>
+{% endblock %}
