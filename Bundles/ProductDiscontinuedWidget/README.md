@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/product-discontinued-widget.svg)](https://travis-ci.org/spryker-shop/product-discontinued-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/product-discontinued-widget/badge.svg)](https://coveralls.io/github/spryker-shop/product-discontinued-widget)
 
-{{ADD DESCRIPTION HERE}}
+Uses the ProductDiscontinuedStorage module to show discontinued product data on Yves side.
 
 ## Installation
 
