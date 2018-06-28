@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Mapper\ProductMeasurementSalesUnitMapperInterface;
 
+/**
+ * @deprecated ProductMeasurementUnitStorageModule
+ */
 class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitReaderInterface
 {
     /**
