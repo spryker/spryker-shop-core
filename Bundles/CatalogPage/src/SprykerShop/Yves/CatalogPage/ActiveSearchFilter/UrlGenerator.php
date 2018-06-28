@@ -32,7 +32,7 @@ class UrlGenerator implements UrlGeneratorInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $searchResultTransfer
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer $searchResultTransfer
      * @param string $filterValue
      *
      * @return string
@@ -48,7 +48,7 @@ class UrlGenerator implements UrlGeneratorInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $facetFilters
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facetFilters
      *
      * @return string
      */
@@ -70,7 +70,7 @@ class UrlGenerator implements UrlGeneratorInterface
 
     /**
      * @param array $params
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $searchResultTransfer
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer $searchResultTransfer
      * @param string|null $filterValue
      *
      * @throws \InvalidArgumentException
