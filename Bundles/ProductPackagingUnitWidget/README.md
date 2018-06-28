@@ -2,8 +2,6 @@
 [![Build Status](https://travis-ci.org/spryker-shop/product-packaging-unit-widget.svg)](https://travis-ci.org/spryker-shop/product-packaging-unit-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/product-packaging-unit-widget/badge.svg)](https://coveralls.io/github/spryker-shop/product-packaging-unit-widget)
 
-{{ADD DESCRIPTION HERE}}
-
 ## Installation
 
 ```
