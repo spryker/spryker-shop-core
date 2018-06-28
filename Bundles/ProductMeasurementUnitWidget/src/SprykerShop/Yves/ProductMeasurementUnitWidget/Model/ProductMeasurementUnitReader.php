@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasu
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Mapper\ProductMeasurementUnitMapperInterface;
 
 /**
- * @deprecated ProductMeasurementUnitStorageModule
+ * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
  */
 class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterface
 {
@@ -40,6 +40,8 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
 
     /**
      * @param int $idProductMeasurementUnit
+     *
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementUnit() instead.
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
      */

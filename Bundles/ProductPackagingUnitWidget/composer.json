@@ -4,9 +4,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/product-measurement-unit-widget": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0",
-    "spryker-shop/product-measurement-unit-widget": "^1.0.0",
     "spryker/product-packaging-unit-storage": "^1.0.0"
   },
   "require-dev": {

@@ -141,7 +141,9 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
             $jsonData['productQuantityStorage'] = $productQuantityStorageTransfer->toArray();
         }
 
-        return \json_encode($jsonData, true);
+        return $this->getFactory()
+            ->getUtilEncodingService()
+            ->encodeJson($jsonData);
     }
 
     /**
@@ -152,13 +154,15 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
      */
     protected function getMinQuantityInSalesUnits(int $minQuantityInBaseUnits, ?array $salesUnits = null): float
     {
-        if ($salesUnits !== null) {
-            foreach ($salesUnits as $salesUnit) {
-                if ($salesUnit->getIsDefault() && $salesUnit->getConversion()) {
-                    $qtyInSalesUnits = $minQuantityInBaseUnits / $salesUnit->getConversion();
+        if ($salesUnits === null) {
+            return $minQuantityInBaseUnits;
+        }
 
-                    return round($qtyInSalesUnits, 4);
-                }
+        foreach ($salesUnits as $salesUnit) {
+            if ($salesUnit->getIsDefault() && $salesUnit->getConversion()) {
+                $qtyInSalesUnits = $minQuantityInBaseUnits / $salesUnit->getConversion();
+
+                return round($qtyInSalesUnits, 4);
             }
         }
 
