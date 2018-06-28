@@ -37,7 +37,7 @@
                 {{ 'cart.item_quantity' | trans }}
 
                 {% if data.salesUnitCount %}
-                    <input id="sales-unit-quantity" class="input input--expand" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
+                    <input id="sales-unit-quantity" class="input input--expand" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-quantity"/>
                     <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
                 {% else %}
                     {% include atom('select') with {
@@ -52,6 +52,7 @@
                 {% endif %}
             </label>
         </div>
+
         <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
             {% if data.salesUnitCount %}
                 <label>
@@ -66,6 +67,7 @@
                         }
                     } only %}
                         {% block selectClass %}select-measurement-unit{% endblock %}
+
                         {% block options %}
                             {% for salesUnit in embed.salesUnits %}
                                 <option value="{{ salesUnit.idProductMeasurementSalesUnit }}" {{ (salesUnit.isDefault) ? 'selected' : '' }}>{{ salesUnit.productMeasurementUnit.name | trans }}</option>
@@ -86,13 +88,36 @@
         </div>
     </div>
 
+    <div class="col col--sm-12">
+        <br/>
+        <div class="text-small is-hidden measurement-unit-choice">
+            <div class="measurement-unit-notifications">
+                <div id="quantity-between-units" class="is-hidden">
+                    <span>{{ "measurement_units.recommendation.between-units-info" | trans }} (<span id="current-choice"></span>)</span>
+                </div>
+                <div id="minimum-quantity" class="is-hidden">
+                    <span>{{ "measurement_units.recommendation.min-violation" | trans }}</span>
+                </div>
+                <div id="maximum-quantity" class="is-hidden">
+                    <span>{{  "measurement_units.recommendation.max-violation" | trans }}</span>
+                </div>
+            </div>
+
+            <div id="measurement-unit-choices">
+                <span>{{ "measurement_units.recommendation.suggestion" | trans}}:</span>
+                <ul class="list"></ul>
+            </div>
+        </div>
+    </div>
+
     {% if data.isAmountBlockEnabled %}
         <div class="grid grid--bottom grid--justify">
             <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
                 <label>
                     {{ 'Amount' | trans }}
-                    <input id="default-amount" class="input input--expand" type="number" value="{{ data.productPackagingUnit.defaultAmount }}" {% if not data.packagingUnitIsVariable %}disabled{% endif %} name="default-amount"/>
-                    <input id="packaging-unit-amount" class="input input--expand" type="hidden" value="{{ data.productPackagingUnit.defaultAmount }}" name="packaging-unit-amount"/>
+                    <input id="default-amount" class="input input--expand" type="number" value="{{ data.productPackagingUnit.defaultAmount }}" {% if not data.packagingUnitIsVariable %}disabled{% endif %} name="amount-product-packaging-unit"/>
+                    <input id="packaging-unit-amount" class="input input--expand" type="hidden" value="{{ data.productPackagingUnit.defaultAmount }}" name="amount-product-packaging-unit"/>
+                    <input id="base-unit-amount" type="hidden" value="" name="base-unit-amount"/>
                 </label>
             </div>
             <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
@@ -119,35 +144,8 @@
         </div>
     {% endif %}
 
-    <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
-
+    <div class="col">
         {% if data.salesUnitCount %}
-            {% include molecule('measurement-quantity-selector', 'ProductMeasurementUnitWidget') with {
-                data: {
-                    json: data.jsonScheme
-                }
-            } only %}
-
-            <div class="text-small is-hidden measurement-unit-choice">
-                <hr />
-
-                <div class="measurement-unit-notifications">
-                    <div id="quantity-between-units" class="is-hidden">
-                        <span>{{ "measurement_units.recommendation.between-units-info" | trans }} (<span id="current-choice"></span>)</span>
-                    </div>
-                    <div id="minimum-quantity" class="is-hidden">
-                        <span>{{ "measurement_units.recommendation.min-violation" | trans }}</span>
-                    </div>
-                    <div id="maximum-quantity" class="is-hidden">
-                        <span>{{  "measurement_units.recommendation.max-violation" | trans }}</span>
-                    </div>
-                </div>
-
-                <div id="measurement-unit-choices">
-                    <span>{{ "measurement_units.recommendation.suggestion" | trans}}:</span>
-                    <ul class="list"></ul>
-                </div>
-            </div>
 
             {% include molecule('packaging-unit-quantity-selector', 'ProductPackagingUnitWidget') with {
                 data: {
@@ -159,6 +157,11 @@
                 <hr />
 
                 <div class="packaging-unit-notifications">
+
+                    <div id="amount-between-units" class="is-hidden">
+                        <span>{{ "packaging_units.recommendation.between-units-info" | trans }} (<span id="amount-current-choice"></span>)</span>
+                    </div>
+
                     <div id="packaging-amount-min" class="is-hidden">
                         <span>{{ "packaging-unit.recommendation.amount-min-violation" | trans }}</span>
                     </div>
@@ -179,22 +182,22 @@
 
         {% if data.salesUnitCount %}
             <hr />
-            <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ data.isAddToCartDisabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}>
-                    {% include atom('icon') with {
-                        data: {
-                            name: 'cart-plus'
-                        }
-                    } only %}
-                    {{ 'page.detail.add-to-cart' | trans }}
-            </button>
-        {% endif %}
+                <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ data.isAddToCartDisabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}>
+                        {% include atom('icon') with {
+                            data: {
+                                name: 'cart-plus'
+                            }
+                        } only %}
+                        {{ 'page.detail.add-to-cart' | trans }}
+                </button>
+            {% endif %}
 
-        {% set translations = [] %}
-        {% for key, salesUnit in data.salesUnits %}
-            {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
-        {% endfor %}
+            {% set translations = [] %}
+            {% for key, salesUnit in data.salesUnits %}
+                {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
+            {% endfor %}
 
-        <script type="application/json" id="measurement-unit-translation">{{ translations|json_encode|raw }}</script>
+            <script type="application/json" id="measurement-unit-translation">{{ translations|json_encode|raw }}</script>
 
     </div>
 {% endblock body %}
