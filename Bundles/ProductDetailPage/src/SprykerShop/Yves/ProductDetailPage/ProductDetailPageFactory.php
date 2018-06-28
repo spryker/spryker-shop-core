@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProd
 class ProductDetailPageFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[]
+     * @return string[]
      */
     public function getProductDetailPageWidgetPlugins()
     {
