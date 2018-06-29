@@ -36,7 +36,7 @@ class FileManagerWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $this->createFilesController('/download', self::ROUTE_FILES_DOWNLOAD, 'Download');
+        $this->createFilesController('/download', static::ROUTE_FILES_DOWNLOAD, 'Download');
     }
 
     /**
