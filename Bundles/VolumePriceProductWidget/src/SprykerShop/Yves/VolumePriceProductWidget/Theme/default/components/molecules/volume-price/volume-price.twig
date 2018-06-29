@@ -1,7 +1,13 @@
 {% extends molecule('price') %}
 
+{% define config = {
+    name: 'volume-price',
+    tag: 'volume-price'
+} %}
+
 {% define data = {
-    pricesJson: required
+    amount: required,
+    originalAmount: null
 } %}
 
 {% block body %}
@@ -17,7 +23,7 @@
                 name: 'tag'
             }
         } only %}
-        <span class="js-{{ config.name }}">
+        <span class="{{ config.jsName }}__price {{ config.name }}__price">
             {{ data.amount }}
         </span>
     </span>
