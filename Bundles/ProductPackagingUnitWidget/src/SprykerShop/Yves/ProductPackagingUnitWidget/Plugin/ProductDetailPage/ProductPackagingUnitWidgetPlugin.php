@@ -44,7 +44,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
                 $productViewTransfer->getIdProductConcrete()
             );
 
-            $productPackagingUnitLead = $this->getFactory()->getProductPackagingUnitStorageClient()->findProductAbstractPackagingById(
+            $productAbstractPackaging = $this->getFactory()->getProductPackagingUnitStorageClient()->findProductAbstractPackagingById(
                 $productViewTransfer->getIdProductAbstract()
             );
 
@@ -52,14 +52,14 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
                 $productViewTransfer->getIdProductConcrete()
             );
 
-            if ($productPackagingUnitLead) {
+            if ($productAbstractPackaging) {
                 $leadProductSalesUnits = $this->getFactory()->getProductMeasurementUnitStorageClient()->findProductMeasurementSalesUnitByIdProductConcrete(
-                    $productPackagingUnitLead->getLeadProduct()
+                    $productAbstractPackaging->getLeadProduct()
                 );
 
                 $isAmountBlockEnabled = $this->isAmountBlockEnabled(
                     $productViewTransfer->getIdProductConcrete(),
-                    $productPackagingUnitLead->getLeadProduct(),
+                    $productAbstractPackaging->getLeadProduct(),
                     $productConcretePackagingStorageTransfer->getHasLeadProduct()
                 );
             }
@@ -69,13 +69,13 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
                 ->findProductQuantityStorage($productViewTransfer->getIdProductConcrete());
         }
 
-        $minQuantityInBaseUnits = $this->getMinQuantityInBaseUnits($productQuantityStorageTransfer);
-        $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($minQuantityInBaseUnits, $salesUnits);
+        $minQuantityInBaseUnit = $this->getMinQuantityInBaseUnit($productQuantityStorageTransfer);
+        $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($minQuantityInBaseUnit, $salesUnits);
 
         $this
             ->addParameter('product', $productViewTransfer)
             ->addParameter('quantityOptions', $quantityOptions)
-            ->addParameter('minQuantityInBaseUnits', $minQuantityInBaseUnits)
+            ->addParameter('minQuantityInBaseUnit', $minQuantityInBaseUnit)
             ->addParameter('minQuantityInSalesUnits', $minQuantityInSalesUnits)
             ->addParameter('baseUnit', $baseUnit)
             ->addParameter('salesUnits', $salesUnits)
@@ -121,16 +121,12 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
             $jsonData['baseUnit'] = $baseUnit->toArray();
         }
 
-        if ($salesUnits !== null) {
-            foreach ($salesUnits as $salesUnit) {
-                $jsonData['salesUnits'][] = $salesUnit->toArray();
-            }
+        foreach ((array)$salesUnits as $salesUnit) {
+            $jsonData['salesUnits'][] = $salesUnit->toArray();
         }
 
-        if ($leadSalesUnits) {
-            foreach ($leadSalesUnits as $leadSalesUnit) {
-                $jsonData['leadSalesUnits'][] = $leadSalesUnit->toArray();
-            }
+        foreach ((array)$leadSalesUnits as $leadSalesUnit) {
+            $jsonData['leadSalesUnits'][] = $leadSalesUnit->toArray();
         }
 
         if ($productConcretePackagingStorageTransfer !== null) {
@@ -174,7 +170,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
      *
      * @return int
      */
-    protected function getMinQuantityInBaseUnits(
+    protected function getMinQuantityInBaseUnit(
         ?ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
     ): int {
         $quantityMin = 1;
