@@ -92,12 +92,12 @@
         {{ widget('AvailabilityWidgetPlugin', data.product) }}
     </form>
 
-    {% if can('SeeWishlistPermissionPlugin') and widgetExists('ShoppingListWidgetPlugin') %}
+    {% if can('SeeShoppingListPermissionPlugin') and widgetExists('ShoppingListWidgetPlugin') %}
         <hr />
         {{ widget('ShoppingListWidgetPlugin', sku, isDisabled) }}
     {% endif %}
 
-    {% if widgetExists('WishlistWidgetPlugin') %}
+    {% if can('SeeWishlistPermissionPlugin') and widgetExists('WishlistWidgetPlugin') %}
         <hr />
         {{ widget('WishlistWidgetPlugin', data.product) }}
     {% endif %}
