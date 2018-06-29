@@ -1,3 +1,3 @@
 # FileManagerWidget Changelog
 
-[Release Changelog](https://github.com/spryker-shop/FileManagerWidget/releases)
+[Release Changelog](https://github.com/spryker-shop/file-manager-widget/releases)
