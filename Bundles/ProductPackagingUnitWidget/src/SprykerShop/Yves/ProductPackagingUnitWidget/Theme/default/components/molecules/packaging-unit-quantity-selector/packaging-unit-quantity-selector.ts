@@ -83,7 +83,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         if (jsonSchemaContainer.hasAttribute('json')) {
             let jsonString = jsonSchemaContainer.getAttribute('json');
             let jsonData = JSON.parse(jsonString);
-            console.log(jsonData);
+
             if (jsonData.hasOwnProperty('baseUnit')) {
                 this.baseUnit = jsonData.baseUnit;
             }
@@ -160,8 +160,6 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.hideNotifications();
             this.quantityMaxElement.classList.remove('is-hidden');
         }
-
-        console.log(this.isAddToCartDisabled);
 
         if (this.muError || this.puError || this.isAddToCartDisabled) {
             this.addToCartButton.setAttribute("disabled", "disabled");
