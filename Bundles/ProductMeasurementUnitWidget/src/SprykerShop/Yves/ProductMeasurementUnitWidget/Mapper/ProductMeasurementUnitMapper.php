@@ -11,13 +11,15 @@ use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 
 /**
- * @deprecated ProductMeasurementUnitStorageModule
+ * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
  */
 class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer $measurementUnitStorageTransfer
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $measurementUnitTransfer
+     *
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementUnit() instead.
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */

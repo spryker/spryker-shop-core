@@ -13,7 +13,7 @@
     packagingUnitIsVariable: _widget.productPackagingUnit.isVariable | default(false),
     isAmountBlockEnabled: _widget.isAmountBlockEnabled | default(false),
     jsonScheme: _widget.jsonScheme | default(''),
-    minQuantityInBaseUnits: _widget.minQuantityInBaseUnits,
+    minQuantityInBaseUnit: _widget.minQuantityInBaseUnit,
     minQuantityInSalesUnits: _widget.minQuantityInSalesUnits,
 } %}
 
@@ -38,7 +38,7 @@
 
                 {% if data.salesUnitCount %}
                     <input id="sales-unit-quantity" class="input input--expand" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-quantity"/>
-                    <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
+                    <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnit }}" name="quantity"/>
                 {% else %}
                     {% include atom('select') with {
                         modifiers: ['expand'],

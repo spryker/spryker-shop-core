@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductPackagingUnitWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'ProductPackagingUnitWidgetPlugin';
+    public const NAME = 'ProductPackagingUnitWidgetPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer

@@ -12,12 +12,15 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientBridge;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductQuantityStorageClientBridge;
+use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Service\ProductPackagingUnitWidgetToUtilEncodingServiceBridge;
 
 class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRODUCT_PACKAGING_UNIT_STORAGE = 'CLIENT_PRODUCT_PACKAGING_UNIT_STORAGE';
     public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
+
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -75,6 +78,22 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
         $container[static::CLIENT_PRODUCT_QUANTITY_STORAGE] = function (Container $container) {
             return new ProductPackagingUnitWidgetToProductQuantityStorageClientBridge(
                 $container->getLocator()->productQuantityStorage()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addEncodeService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new ProductPackagingUnitWidgetToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
             );
         };
 
