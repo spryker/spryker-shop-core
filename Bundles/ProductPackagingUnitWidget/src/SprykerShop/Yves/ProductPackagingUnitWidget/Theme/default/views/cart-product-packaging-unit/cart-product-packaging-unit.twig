@@ -12,9 +12,9 @@
         {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
         {% set quantity = data.cartItem.quantity %}
 
-        <li>
+        <li class="list__item">
             <strong>{{ 'Quantity:' | trans }}&nbsp;</strong>{{ quantity }}
-            <span>{{ value / precision }} {{ salesUnitName | trans }}</span>
+            <span class="float-right">{{ value / precision }} {{ salesUnitName | trans }}</span>
         </li>
     {% endif %}
     <br/>
@@ -23,9 +23,9 @@
         {% set conversion = data.cartItem.amountSalesUnit.conversion %}
         {% set leadSalesUnitName = data.cartItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
 
-        <li>
+        <li class="list__item">
             <strong>{{ 'Amount:' | trans }}</strong>&nbsp;{{ amount }}
-            <span>{{ amount / conversion }} {{ leadSalesUnitName | trans }}</span>
+            <span class="float-right">{{ amount / conversion }} {{ leadSalesUnitName | trans }}</span>
         </li>
     {% endif %}
 {% endblock body %}
