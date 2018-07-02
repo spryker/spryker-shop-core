@@ -67,7 +67,7 @@ class ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientBridge impl
      */
     public function findProductMeasurementSalesUnitByIdProductConcrete(int $idProductConcrete): ?array
     {
-        return $this->productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProductConcrete($idProductConcrete);
+        return $this->productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProduct($idProductConcrete);
     }
 
     /**
@@ -77,6 +77,6 @@ class ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientBridge impl
      */
     public function findProductMeasurementBaseUnitByIdProductConcrete(int $idProductConcrete): ?ProductMeasurementUnitTransfer
     {
-        return $this->productMeasurementUnitStorageClient->findProductMeasurementBaseUnitByIdProductConcrete($idProductConcrete);
+        return $this->productMeasurementUnitStorageClient->findProductMeasurementBaseUnitByIdProduct($idProductConcrete);
     }
 }

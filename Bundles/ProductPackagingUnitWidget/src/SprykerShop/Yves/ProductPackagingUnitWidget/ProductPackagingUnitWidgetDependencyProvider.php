@@ -19,7 +19,6 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
     public const CLIENT_PRODUCT_PACKAGING_UNIT_STORAGE = 'CLIENT_PRODUCT_PACKAGING_UNIT_STORAGE';
     public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
-
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
@@ -32,6 +31,7 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
         $container = $this->addProductPackagingUnitStorageClient($container);
         $container = $this->addProductMeasurementUnitStorageClient($container);
         $container = $this->addProductQuantityStorageClient($container);
+        $container = $this->addEncodeService($container);
 
         return $container;
     }
