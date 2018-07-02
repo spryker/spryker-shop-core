@@ -86,6 +86,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
             ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
             ->addParameter('jsonScheme', $this->prepareJsonData(
                 $isAmountBlockEnabled,
+                $isAddToCartDisabled,
                 $baseUnit,
                 $salesUnits,
                 $leadProductSalesUnits,
@@ -97,6 +98,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
 
     /**
      * @param bool $isAmountBlockEnabled
+     * @param bool $isAddToCartDisabled
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null $baseUnit
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $leadSalesUnits
@@ -107,6 +109,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
      */
     protected function prepareJsonData(
         bool $isAmountBlockEnabled,
+        bool $isAddToCartDisabled,
         ?ProductMeasurementUnitTransfer $baseUnit,
         ?array $salesUnits,
         ?array $leadSalesUnits,
@@ -115,6 +118,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
     ) {
         $jsonData = [];
 
+        $jsonData['isAddToCartDisabled'] = $isAddToCartDisabled;
         $jsonData['isAmountBlockEnabled'] = $isAmountBlockEnabled;
 
         if ($baseUnit !== null) {

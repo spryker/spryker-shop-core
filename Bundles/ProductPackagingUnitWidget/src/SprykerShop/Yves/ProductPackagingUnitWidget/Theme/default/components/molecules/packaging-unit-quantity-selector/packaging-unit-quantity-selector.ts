@@ -18,6 +18,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     amountInSalesUnitInput: any;
     amountInBaseUnitInput: any;
     isAmountBlockEnabled: boolean;
+    isAddToCartDisabled: boolean;
     currentLeadSalesUnit: any;
 
     quantityBetweenElement: HTMLDivElement;
@@ -82,7 +83,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         if (jsonSchemaContainer.hasAttribute('json')) {
             let jsonString = jsonSchemaContainer.getAttribute('json');
             let jsonData = JSON.parse(jsonString);
-
+            console.log(jsonData);
             if (jsonData.hasOwnProperty('baseUnit')) {
                 this.baseUnit = jsonData.baseUnit;
             }
@@ -99,6 +100,10 @@ export default class PackagingUnitQuantitySelector extends Component {
                 this.isAmountBlockEnabled = jsonData.isAmountBlockEnabled;
             }
 
+            if (jsonData.hasOwnProperty('isAddToCartDisabled')) {
+                this.isAddToCartDisabled = jsonData.isAddToCartDisabled;
+            }
+
             if (jsonData.hasOwnProperty('productPackagingUnitStorage')) {
                 this.productPackagingUnitStorage = jsonData.productPackagingUnitStorage;
             }
@@ -107,6 +112,7 @@ export default class PackagingUnitQuantitySelector extends Component {
                 this.productQuantityStorage = jsonData.productQuantityStorage;
             }
         }
+
     }
 
     private initTranslations() {
@@ -155,8 +161,9 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.quantityMaxElement.classList.remove('is-hidden');
         }
 
+        console.log(this.isAddToCartDisabled);
 
-        if (this.muError || this.puError) {
+        if (this.muError || this.puError || this.isAddToCartDisabled) {
             this.addToCartButton.setAttribute("disabled", "disabled");
             this.askCustomerForCorrectInput(qtyInSalesUnits);
             return;
@@ -227,7 +234,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     private selectQty(qtyInBaseUnits: number, qtyInSalesUnits: number) {
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString().toString();
-        if (!this.puError) {
+        if (!this.puError && !this.isAddToCartDisabled) {
             this.addToCartButton.removeAttribute("disabled");
         }
         this.muChoiceNotificationElement.classList.add('is-hidden');
@@ -367,7 +374,7 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.puMaxNotificationElement.classList.remove('is-hidden');
         }
 
-        if (this.puError || this.muError) {
+        if (this.puError || this.muError || this.isAddToCartDisabled) {
             this.askCustomerForCorrectAmountInput(amountInSalesUnitInput);
             this.puChoiceElement.classList.remove('is-hidden');
             this.addToCartButton.setAttribute("disabled", "disabled");
@@ -445,7 +452,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     private selectAmount(amountInBaseUnits: number, amountInSalesUnits: number) {
         this.amountInSalesUnitInput.value = amountInSalesUnits.toString();
         this.amountInBaseUnitInput.value = this.round(amountInBaseUnits, 4).toString().toString();
-        if (!this.muError) {
+        if (!this.muError && !this.isAddToCartDisabled) {
             this.addToCartButton.removeAttribute("disabled");
         }
         this.puChoiceElement.classList.add('is-hidden');
