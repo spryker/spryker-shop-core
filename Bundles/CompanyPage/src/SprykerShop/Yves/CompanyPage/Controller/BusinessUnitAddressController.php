@@ -62,7 +62,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
         }
 
         if ($addressForm->isValid()) {
-            $idCompanyBusinessUnit = $request->query->getInt('id');
+            $idCompanyBusinessUnit = (int)$addressForm->getData()['fk_company_business_unit'];
             $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData());
             $this->saveCompanyBusinessUnitAddress(
                 $companyUnitAddressTransfer,
