@@ -1,0 +1,17 @@
+{% extends template('widget') %}
+
+{% define data = {
+    discontinuedProduct: _widget.discontinuedProduct
+} %}
+
+{%- block isDiscontinued -%}
+    {{- _widget.discontinuedProduct is not empty -}}
+{%- endblock -%}
+
+{% block body %}
+    {% if data.discontinuedProduct is not empty %}
+        <hr/>
+        {{ 'product_discontinued_widget.note' | trans }}<br/>
+        {{ data.discontinuedProduct.note }}
+    {% endif %}
+{% endblock %}
