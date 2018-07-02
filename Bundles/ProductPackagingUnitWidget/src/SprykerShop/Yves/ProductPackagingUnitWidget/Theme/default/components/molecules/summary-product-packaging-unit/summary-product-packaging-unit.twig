@@ -26,7 +26,7 @@
     <br/>
     {% if data.amountSalesUnit is defined and data.amountSalesUnit is not empty %}
         {% set amountSalesUnitName = data.amountSalesUnit.productMeasurementUnit.name | default('') %}
-        <span class="text-secondary">&times;</span> {{ data.amount }} {{ 'items' | trans }} (= {{ data.amount / data.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.quantity * data.amount }} {{ 'items' | trans }}
+        <span class="text-secondary">&times;</span> {{ data.amount }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.amount / data.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.quantity * data.amount }} {{ 'packaging_units.cart.item' | trans }}
     {% endif %}
 {% endblock body %}
 

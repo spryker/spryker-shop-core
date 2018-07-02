@@ -16,8 +16,6 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "If you want to use QuantitySalesUnitWidgetPlugin: ^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0 ",
-    "spryker-shop/product-detail-page": "if you want to use ProductPackagingUnitWidgetPlugin: ^1.0.0"
   },
   "autoload": {
     "psr-4": {
