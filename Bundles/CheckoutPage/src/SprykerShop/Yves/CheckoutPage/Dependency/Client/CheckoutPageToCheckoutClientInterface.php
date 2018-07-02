@@ -23,7 +23,7 @@ interface CheckoutPageToCheckoutClientInterface
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return TranslatedCheckoutErrorMessagesTransfer
+     * @return \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
      */
     public function translateCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer;
 }
