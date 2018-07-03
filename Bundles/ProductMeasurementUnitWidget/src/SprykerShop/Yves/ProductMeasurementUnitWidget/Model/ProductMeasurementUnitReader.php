@@ -39,9 +39,9 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
     }
 
     /**
-     * @param int $idProductMeasurementUnit
-     *
      * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementUnit() instead.
+     *
+     * @param int $idProductMeasurementUnit
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
      */
