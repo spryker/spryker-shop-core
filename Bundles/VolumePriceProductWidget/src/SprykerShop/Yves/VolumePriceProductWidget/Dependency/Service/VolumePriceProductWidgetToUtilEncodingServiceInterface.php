@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\VolumePriceProductWidget\Dependency\Service;
 
-
 interface VolumePriceProductWidgetToUtilEncodingServiceInterface
 {
     /**

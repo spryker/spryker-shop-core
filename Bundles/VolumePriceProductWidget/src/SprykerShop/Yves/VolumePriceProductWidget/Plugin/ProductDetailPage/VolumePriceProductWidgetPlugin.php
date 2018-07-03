@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\VolumePriceProductWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer;
-use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\VolumePriceProductWidget\VolumePriceProductWidgetPluginInterface;
 

@@ -78,7 +78,6 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
         $this->utilEncodingService = $utilEncodingService;
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
@@ -86,41 +85,71 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
      */
     public function resolveVolumeProductPrices(ProductViewTransfer $productViewTransfer): VolumeProductPriceCollectionTransfer
     {
-        $volumeProductPrices =  new VolumeProductPriceCollectionTransfer();
+        $volumeProductPrices = $this->findVolumePriceByIdProductConcrete($productViewTransfer);
 
+        if ($volumeProductPrices != null) {
+            return $volumeProductPrices;
+        }
+
+        $volumeProductPrices = $this->findVolumePriceByIdProductAbstract($productViewTransfer);
+
+        if ($volumeProductPrices != null) {
+            return $volumeProductPrices;
+        }
+
+        return new VolumeProductPriceCollectionTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer|null
+     */
+    protected function findVolumePriceByIdProductConcrete(ProductViewTransfer $productViewTransfer): ?VolumeProductPriceCollectionTransfer
+    {
         if ($productViewTransfer->getIdProductConcrete() != null) {
             $priceProductStorageTransfer = $this->priceProductStorageClient->findPriceConcreteStorageTransfer(
                 $productViewTransfer->getIdProductConcrete()
             );
 
             if ($priceProductStorageTransfer) {
-                return $this->getVolumeProductPricesFromStorageData($priceProductStorageTransfer, $volumeProductPrices);
+                return $this->getVolumeProductPricesFromStorageData($priceProductStorageTransfer);
             }
         }
 
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer|null
+     */
+    protected function findVolumePriceByIdProductAbstract(ProductViewTransfer $productViewTransfer): ?VolumeProductPriceCollectionTransfer
+    {
         if ($productViewTransfer->getIdProductAbstract() != null) {
             $priceProductStorageTransfer = $this->priceProductStorageClient->findPriceAbstractStorageTransfer(
                 $productViewTransfer->getIdProductAbstract()
             );
 
             if ($priceProductStorageTransfer) {
-                return $this->getVolumeProductPricesFromStorageData($priceProductStorageTransfer, $volumeProductPrices);
+                return $this->getVolumeProductPricesFromStorageData($priceProductStorageTransfer);
             }
         }
 
-        return $volumeProductPrices;
+        return null;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
-     * @param \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer $volumeProductPriceCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer
      */
     protected function getVolumeProductPricesFromStorageData(
-        PriceProductStorageTransfer $priceProductStorageTransfer,
-        VolumeProductPriceCollectionTransfer $volumeProductPriceCollectionTransfer
+        PriceProductStorageTransfer $priceProductStorageTransfer
     ): VolumeProductPriceCollectionTransfer {
+        $volumeProductPriceCollectionTransfer = new VolumeProductPriceCollectionTransfer();
+
         if (empty($priceProductStorageTransfer->getPrices())) {
             return $volumeProductPriceCollectionTransfer;
         }
@@ -130,15 +159,7 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
                 continue;
             }
 
-            $volumePriceData = $this->utilEncodingService->decodeJson(
-                $price[MoneyValueTransfer::PRICE_DATA], true
-            )[static::VOLUME_PRICE_TYPE];
-
-            foreach ($volumePriceData as $volumeProductStorageData) {
-                $volumeProductPriceCollectionTransfer->addVolumePrice(
-                    $this->createVolumeProductPriceFromStorageData($volumeProductStorageData)
-                );
-            }
+            $this->fillVolumeProductPriceCollectionFromStorageData($volumeProductPriceCollectionTransfer, $price);
         }
 
         return $volumeProductPriceCollectionTransfer;
@@ -167,18 +188,40 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
     }
 
     /**
-     * @param array $volumeProductStorageData
+     * @param \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer $volumeProductPriceCollectionTransfer
+     * @param array $price
+     *
+     * @return void
+     */
+    protected function fillVolumeProductPriceCollectionFromStorageData(
+        VolumeProductPriceCollectionTransfer $volumeProductPriceCollectionTransfer,
+        array $price
+    ): void {
+        $volumePriceData = $this->utilEncodingService->decodeJson(
+            $price[MoneyValueTransfer::PRICE_DATA],
+            true
+        )[static::VOLUME_PRICE_TYPE];
+
+        foreach ($volumePriceData as $volumeProductStorageData) {
+            $volumeProductPriceCollectionTransfer->addVolumePrice(
+                $this->formatVolumeProductPriceTransfer($volumeProductStorageData)
+            );
+        }
+    }
+
+    /**
+     * @param array $priceData
      *
      * @return \Generated\Shared\Transfer\VolumeProductPriceTransfer
      */
-    protected function createVolumeProductPriceFromStorageData(array $volumeProductStorageData): VolumeProductPriceTransfer
+    protected function formatVolumeProductPriceTransfer(array $priceData): VolumeProductPriceTransfer
     {
         $volumePrice = new VolumeProductPriceTransfer();
         $volumePrice->setQuantity(
-            $volumeProductStorageData[static::VOLUME_PRICE_QUANTITY]
+            $priceData[static::VOLUME_PRICE_QUANTITY]
         );
         $volumePrice->setPrice(
-            $volumeProductStorageData[static::VOLUME_PRICE_MODE_MAPPING[$this->priceClient->getCurrentPriceMode()]]
+            $priceData[static::VOLUME_PRICE_MODE_MAPPING[$this->priceClient->getCurrentPriceMode()]]
         );
 
         return $volumePrice;
