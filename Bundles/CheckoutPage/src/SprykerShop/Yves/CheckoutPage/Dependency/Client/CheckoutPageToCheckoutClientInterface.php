@@ -21,6 +21,11 @@ interface CheckoutPageToCheckoutClientInterface
     public function placeOrder(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification:
+     * - Translates checkout error messages.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
