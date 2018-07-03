@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Service;
 
-use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
-
 class ProductPackagingUnitWidgetToUtilEncodingServiceBridge implements ProductPackagingUnitWidgetToUtilEncodingServiceInterface
 {
     /**
@@ -19,7 +17,7 @@ class ProductPackagingUnitWidgetToUtilEncodingServiceBridge implements ProductPa
     /**
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(UtilEncodingServiceInterface $utilEncodingService)
+    public function __construct($utilEncodingService)
     {
         $this->utilEncodingService = $utilEncodingService;
     }
