@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CompanyPage\Controller;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitAddressForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -62,7 +63,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
         }
 
         if ($addressForm->isValid()) {
-            $idCompanyBusinessUnit = (int)$addressForm->getData()['fk_company_business_unit'];
+            $idCompanyBusinessUnit = (int)$addressForm->getData()[CompanyBusinessUnitAddressForm::FIELD_FK_COMPANY_BUSINESS_UNIT];
             $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData());
             $this->saveCompanyBusinessUnitAddress(
                 $companyUnitAddressTransfer,
