@@ -34,8 +34,7 @@ class VolumePriceProductWidgetPlugin extends AbstractWidgetPlugin implements Vol
     }
 
     /**
-     * Specification:
-     * - Returns the name of the widget as it's used in templates.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -47,8 +46,7 @@ class VolumePriceProductWidgetPlugin extends AbstractWidgetPlugin implements Vol
     }
 
     /**
-     * Specification:
-     * - Returns the the template file path to render the widget.
+     * {@inheritdoc}
      *
      * @api
      *
