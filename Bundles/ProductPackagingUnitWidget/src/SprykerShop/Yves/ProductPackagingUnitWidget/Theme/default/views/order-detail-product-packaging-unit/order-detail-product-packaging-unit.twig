@@ -7,13 +7,13 @@
 
 {% block body %}
     {% if data.concreteItem.amount is not null and data.concreteItem.quantity is not null %}
-        {% set salesUnitName = data.concreteItem.itemQuantityMeasurementUnit.quantityMeasurementUnitName | default('') %}
+        {% set salesUnitName = data.concreteItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
         {% set salesUnitSummary = '' %}
         {% if salesUnitName %}
-            {% set salesUnitSummary = data.concreteItem.quantity / data.concreteItem.itemQuantityMeasurementUnit.quantityMeasurementUnitConversion ~ ' ' ~ salesUnitName | trans %}
+            {% set salesUnitSummary = data.concreteItem.quantity / data.concreteItem.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
         {% endif %}
 
-        {% set amountSalesUnitName = data.concreteItem.itemAmountMeasurementUnit.amountMeasurementUnitName | default('') %}
+        {% set amountSalesUnitName = data.concreteItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
     {% endif %}
     <td>
         {{ data.concreteItem.sku }}
@@ -21,7 +21,7 @@
     <td>
         {{ data.concreteItem.name }}<br/>
         {% if data.concreteItem.amount is not null and data.concreteItem.quantity is not null %}
-            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.concreteItem.amount / data.concreteItem.itemAmountMeasurementUnit.amountMeasurementUnitConversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.quantity * data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
+            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.concreteItem.amount / data.concreteItem.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.quantity * data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
         {% endif %}
     </td>
     <td>
