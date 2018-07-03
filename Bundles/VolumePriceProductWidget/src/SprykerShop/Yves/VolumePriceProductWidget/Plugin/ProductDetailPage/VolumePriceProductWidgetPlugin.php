@@ -26,6 +26,7 @@ class VolumePriceProductWidgetPlugin extends AbstractWidgetPlugin implements Vol
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
         $this
+            ->addParameter('product', $productViewTransfer)
             ->addParameter(
                 'volumeProductPrices',
                 $this->findVolumeProductPrice($productViewTransfer)
