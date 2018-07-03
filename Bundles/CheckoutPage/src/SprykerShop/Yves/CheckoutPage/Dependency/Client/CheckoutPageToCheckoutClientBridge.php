@@ -37,10 +37,6 @@ class CheckoutPageToCheckoutClientBridge implements CheckoutPageToCheckoutClient
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
