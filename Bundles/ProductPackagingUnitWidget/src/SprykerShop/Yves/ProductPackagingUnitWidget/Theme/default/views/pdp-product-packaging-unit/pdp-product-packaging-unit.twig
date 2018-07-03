@@ -19,6 +19,19 @@
 
 {% block body %}
 
+    <div class="product-packaging-new-price is-hidden" id="product-packaging-new-price-block">
+        <span>{{ "measurement_units.new-price" | trans}}:</span>
+        <div id="product-packaging-new-price-value-block"></div>
+        <hr />
+    </div>
+    <input id="item-base-price"
+           type="hidden"
+           value="{{ data.product.price }}"
+    />
+    <input id="item-money-symbol"
+           type="hidden"
+           value="{{  '' | moneySymbol }}"
+    />
     <ul class="text-small">
         {% for salesUnit in data.salesUnits %}
             {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
@@ -115,8 +128,19 @@
             <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
                 <label>
                     {{ 'Amount' | trans }}
-                    <input id="default-amount" class="input input--expand" type="number" value="{{ data.productPackagingUnit.defaultAmount }}" {% if not data.packagingUnitIsVariable %}disabled{% endif %} name="amount-product-packaging-unit"/>
-                    <input id="packaging-unit-amount" class="input input--expand" type="hidden" value="{{ data.productPackagingUnit.defaultAmount }}" name="amount-product-packaging-unit"/>
+                    <input id="default-amount"
+                           class="input input--expand"
+                           type="number"
+                           value="{{ data.productPackagingUnit.defaultAmount }}"
+                           {% if not data.packagingUnitIsVariable %}disabled{% endif %}
+                           name="amount-product-packaging-unit"
+                    />
+                    <input id="packaging-unit-amount"
+                           class="input input--expand"
+                           type="hidden"
+                           value="{{ data.productPackagingUnit.defaultAmount }}"
+                           name="amount-product-packaging-unit"
+                    />
                     <input id="base-unit-amount" type="hidden" value="" name="base-unit-amount"/>
                 </label>
             </div>

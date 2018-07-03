@@ -30,6 +30,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
             $app->extend('twig', function (\Twig_Environment $twig) {
                 $twig->addFilter($this->getMoneyFilter());
                 $twig->addFilter($this->getMoneyRawFilter());
+                $twig->addFilter($this->getMoneySymbol());
 
                 return $twig;
             })
@@ -80,6 +81,22 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
             }
 
             return $moneyFactory->createIntegerToDecimalConverter()->convert((int)$money->getAmount());
+        });
+
+        return $filter;
+    }
+
+    /**
+     * @return \Twig_SimpleFilter
+     */
+    protected function getMoneySymbol()
+    {
+        $moneyFactory = $this->getFactory();
+
+        $filter = new Twig_SimpleFilter('moneySymbol', function ($isoCode = null) use ($moneyFactory) {
+            $money = $this->getMoneyTransfer(100, $isoCode);
+
+            return $money->getCurrency()->getSymbol();
         });
 
         return $filter;

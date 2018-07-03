@@ -20,6 +20,30 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductPackagingUnitWid
 class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements ProductPackagingUnitWidgetPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public static function getName()
+    {
+        return static::NAME;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public static function getTemplate()
+    {
+        return '@ProductPackagingUnitWidget/views/pdp-product-packaging-unit/pdp-product-packaging-unit.twig';
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isAddToCartDisabled
      * @param array $quantityOptions
@@ -195,29 +219,5 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
     protected function isAmountBlockEnabled(int $idProduct, int $idLeadProduct, bool $hasLeadProduct): bool
     {
         return ($idProduct !== $idLeadProduct) && $hasLeadProduct;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public static function getName()
-    {
-        return static::NAME;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public static function getTemplate()
-    {
-        return '@ProductPackagingUnitWidget/views/pdp-product-packaging-unit/pdp-product-packaging-unit.twig';
     }
 }
