@@ -35,6 +35,9 @@
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
     <hr />
+    {% if widgetExists('VolumePriceProductWidgetPlugin') %}
+        {{ widget('VolumePriceProductWidgetPlugin', data.product) }}
+    {% endif %}
     {{ widget('PriceWidgetPlugin', data.product) }}
     {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
     {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
