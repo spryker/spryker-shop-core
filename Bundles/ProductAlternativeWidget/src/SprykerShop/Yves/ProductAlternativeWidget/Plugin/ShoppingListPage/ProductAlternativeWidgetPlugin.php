@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductAlternativeWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ProductAlternativeWidget\Plugin\ShoppingListPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeWidgetFactory getFactory()
@@ -18,13 +19,16 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer): void
+    public function initialize(ProductViewTransfer $productViewTransfer, ShoppingListTransfer $shoppingListTransfer): void
     {
-        $this->addParameter('products', $this->findAlternativesProducts($productViewTransfer))
-            ->addWidgets($this->getFactory()->getProductDetailPageProductAlternativeWidgetPlugins());
+        $this
+            ->addParameter('item', $productViewTransfer)
+            ->addParameter('shoppingList', $shoppingListTransfer)
+            ->addParameter('products', $this->findAlternativesProducts($productViewTransfer));
     }
 
     /**
@@ -48,7 +52,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate(): string
     {
-        return '@ProductAlternativeWidget/views/product-alternative-list/product-alternative-list.twig';
+        return '@ProductAlternativeWidget/views/shopping-list-product-alternative/shopping-list-product-alternative.twig';
     }
 
     /**
@@ -63,6 +67,6 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
         }
 
         return $this->getFactory()->createProductAlternativeMapper()
-            ->findAlternativeProducts($productViewTransfer, $this->getLocale());
+            ->findConcreteAlternativeProducts($productViewTransfer, $this->getLocale());
     }
 }

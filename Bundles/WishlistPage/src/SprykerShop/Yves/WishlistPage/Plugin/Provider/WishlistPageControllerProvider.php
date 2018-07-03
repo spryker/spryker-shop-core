@@ -108,7 +108,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addAddItemRoute(): self
     {
-        $this->createPostController('/{wishlist}/add-item', static::ROUTE_ADD_ITEM, 'WishlistPage', 'Wishlist', 'addItem')
+        $this->createController('/{wishlist}/add-item', static::ROUTE_ADD_ITEM, 'WishlistPage', 'Wishlist', 'addItem')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
             ->value('wishlist', 'wishlist');
 

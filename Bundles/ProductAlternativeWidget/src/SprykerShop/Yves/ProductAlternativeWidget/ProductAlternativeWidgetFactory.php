@@ -10,9 +10,21 @@ namespace SprykerShop\Yves\ProductAlternativeWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductAlternativeWidget\Dependency\Client\ProductAlternativeWidgetToProductAlternativeStorageClientInterface;
 use SprykerShop\Yves\ProductAlternativeWidget\Dependency\Client\ProductAlternativeWidgetToProductStorageClientInterface;
+use SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeMapper\ProductAlternativeMapper;
+use SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeMapper\ProductAlternativeMapperInterface;
 
 class ProductAlternativeWidgetFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeMapper\ProductAlternativeMapperInterface
+     */
+    public function createProductAlternativeMapper(): ProductAlternativeMapperInterface
+    {
+        return new ProductAlternativeMapper(
+            $this->getProductAlternativeStorageClient(),
+            $this->getProductStorageClient()
+        );
+   }
     /**
      * @return \SprykerShop\Yves\ProductAlternativeWidget\Dependency\Client\ProductAlternativeWidgetToProductStorageClientInterface
      */

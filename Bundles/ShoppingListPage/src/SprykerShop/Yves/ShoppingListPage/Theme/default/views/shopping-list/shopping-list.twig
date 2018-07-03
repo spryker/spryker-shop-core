@@ -87,13 +87,24 @@
                 <tbody>
                 {% for item in data.shoppingListItems %}
                     {% set isItemAvalable = item.available is defined and item.available and item.price is defined and item.price is not null %}
+                    {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+                        {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %}
+                        {% set isItemAvalable = not isDiscontinued and isItemAvalable %}
+                    {% endif %}
                     <tr>
                         <td>
                             <input type="checkbox" {{ isItemAvalable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.idShoppingListItem }}]" value="{{ item.idShoppingListItem }}"/>
                         </td>
                         <td class="text-center">
                             {% if item.images is defined and item.images is not empty %}
-                                <img width="75" src="{{ item.images[0].externalUrlSmall }}" />
+                                {% include atom('thumbnail') with {
+                                    modifiers: ['small', 'min-size'],
+                                    attributes: {
+                                        alt: item.name,
+                                        src: item.images.0.externalUrlSmall,
+                                        title: item.name
+                                    }
+                                } only %}
                             {% endif %}
                         </td>
                         <td class="text-center">
@@ -106,12 +117,13 @@
                             {% endfor %}
                         </td>
                         <td nowrap="nowrap" class="text-center">
-                            {% if item.price is defined and item.price is not null %}
-                                {% if item.prices.ORIGINAL is defined %}
-                                    <span class="price__amount">{{ item.price | money }}</span> <span class="price__amount price__amount--original">{{ item.prices.ORIGINAL | money }}</span>
-                                {% else %}
-                                    {{ item.price | money }}
-                                {% endif %}
+                            {% if item.price is not null %}
+                                {% include molecule('price') with {
+                                    data: {
+                                        amount: item.price | money,
+                                        originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : (item.prices.ORIGINAL | money)
+                                    }
+                                } only %}
                             {% else %}
                                 N/A
                             {% endif %}
@@ -120,10 +132,14 @@
                             <input class="input" {{ isItemAvalable ? '' : 'disabled' }} type="number" name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]" value="{{ item.quantity }}"/>
                         </td>
                         <td class="text-center">
-                            {% if item.available %}
+                            {% if isItemAvalable %}
                                 {{ data.labels.itemAvailableLabel }}
                             {% else %}
-                                {{ data.labels.itemNotAvailableLabel }}
+                                {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+                                    {{ widget('ProductDiscontinuedWidgetPlugin', item.sku) }}
+                                {% else %}
+                                    {{ data.labels.itemNotAvailableLabel }}
+                                {% endif %}
                             {% endif %}
                         </td>
                         <td>
@@ -139,6 +155,9 @@
                             {% endif %}
                         </td>
                     </tr>
+                    {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) and widgetExists('ProductAlternativeWidgetPlugin') %}
+                        {{ widget('ProductAlternativeWidgetPlugin', item, data.shoppingList) }}
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>

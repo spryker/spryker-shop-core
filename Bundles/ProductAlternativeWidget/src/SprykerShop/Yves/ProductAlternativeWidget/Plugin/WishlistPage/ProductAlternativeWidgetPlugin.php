@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductAlternativeWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ProductAlternativeWidget\Plugin\WishlistPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeWidgetFactory getFactory()
@@ -18,13 +18,15 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $wishlistName
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer): void
-    {
-        $this->addParameter('products', $this->findAlternativesProducts($productViewTransfer))
-            ->addWidgets($this->getFactory()->getProductDetailPageProductAlternativeWidgetPlugins());
+    public function initialize(ProductViewTransfer $productViewTransfer, string $wishlistName): void{
+        $this
+            ->addParameter('item', $productViewTransfer)
+            ->addParameter('wishlistName', $wishlistName)
+            ->addParameter('products', $this->findAlternativesProducts($productViewTransfer));
     }
 
     /**
@@ -48,7 +50,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate(): string
     {
-        return '@ProductAlternativeWidget/views/product-alternative-list/product-alternative-list.twig';
+        return '@ProductAlternativeWidget/views/wishlist-product-alternative/wishlist-product-alternative.twig';
     }
 
     /**
@@ -63,6 +65,6 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
         }
 
         return $this->getFactory()->createProductAlternativeMapper()
-            ->findAlternativeProducts($productViewTransfer, $this->getLocale());
+            ->findConcreteAlternativeProducts($productViewTransfer, $this->getLocale());
     }
 }

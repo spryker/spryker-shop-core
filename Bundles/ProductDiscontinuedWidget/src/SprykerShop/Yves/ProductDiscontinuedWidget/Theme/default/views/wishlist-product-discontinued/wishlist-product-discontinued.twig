@@ -9,9 +9,9 @@
 {%- endblock -%}
 
 {% block body %}
-    {% if data.discontinuedProduct.note is defined and data.discontinuedProduct.note is not empty %}
-        <hr/>
-        {{ 'product_discontinued_widget.note' | trans }}<br/>
-        {{ data.discontinuedProduct.note }}
+    {% if data.discontinuedProduct is not empty %}
+        {{ 'product_alternative_widget.product_status._discontinued' | trans }}
+    {% else %}
+        {{ 'customer.account.wishlist.not_available' | trans }}
     {% endif %}
 {% endblock %}
