@@ -16,10 +16,10 @@ use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterface
 {
     /**
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementUnit() instead.
+     *
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer $measurementUnitStorageTransfer
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $measurementUnitTransfer
-     *
-     * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementUnit() instead.
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */
