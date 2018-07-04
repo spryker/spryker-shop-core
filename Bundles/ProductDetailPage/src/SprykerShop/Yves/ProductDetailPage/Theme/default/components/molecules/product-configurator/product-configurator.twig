@@ -37,8 +37,10 @@
     <hr />
     {% if widgetExists('VolumePriceProductWidgetPlugin') %}
         {{ widget('VolumePriceProductWidgetPlugin', data.product) }}
+    {% else %}
+        {{ widget('PriceWidgetPlugin', data.product) }}
     {% endif %}
-    {{ widget('PriceWidgetPlugin', data.product) }}
+
     {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
     {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
 
