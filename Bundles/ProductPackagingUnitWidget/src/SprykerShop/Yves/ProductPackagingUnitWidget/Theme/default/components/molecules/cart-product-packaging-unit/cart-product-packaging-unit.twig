@@ -5,27 +5,25 @@
     tag: 'div'
 } %}
 
-{% define data = {
-    cartItem: data.cartItem
-} %}
-
 {% block body %}
     {% if data.cartItem.quantitySalesUnit is not empty and data.cartItem.amountSalesUnit is not empty %}
-        {% set value = data.cartItem.quantitySalesUnit.value %}
-        {% set precision = data.cartItem.quantitySalesUnit.precision %}
+        {% set quantitySalesUnitValue = data.cartItem.quantitySalesUnit.value %}
+        {% set quantityConversion = data.cartItem.quantitySalesUnit.conversion %}
         {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
         {% set quantity = data.cartItem.quantity %}
-        {% set amount = data.cartItem.amount %}
-        {% set conversion = data.cartItem.amountSalesUnit.conversion %}
+
+        {% set amountSalesUnitValue = data.cartItem.amountSalesUnit.value %}
+        {% set amountConversion = data.cartItem.amountSalesUnit.conversion %}
         {% set leadSalesUnitName = data.cartItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
+        {% set amount = data.cartItem.amount %}
 
         <li class="list__item">
             <strong>{{ 'packaging_units.cart.quantity' | trans }}&nbsp;</strong>{{ quantity }}
-            <span class="float-right">{{ value / precision }} {{ salesUnitName | trans }}</span>
+            <span class="float-right">{{ quantity / quantityConversion }} {{ salesUnitName | trans }}</span>
         </li>
         <li class="list__item">
             <strong>{{ 'packaging_units.cart.amount' | trans }}</strong>&nbsp;{{ amount }}
-            <span class="float-right">{{ amount / conversion }} {{ leadSalesUnitName | trans }}</span>
+            <span class="float-right">{{ amount / amountConversion }} {{ leadSalesUnitName | trans }}</span>
         </li>
     {% endif %}
 {% endblock body %}
