@@ -1,11 +1,11 @@
 import Component from 'ShopUi/models/component';
 
 export default class VolumePrice extends Component {
-    productPriceElement: HTMLElement
-    volumePricesData: Object[]
-    quantityElement: HTMLFormElement
-    highLightedClass: string
-    currentQuantityuValue: Number
+    productPriceElement: HTMLElement;
+    volumePricesData: Object[];
+    quantityElement: HTMLFormElement;
+    highLightedClass: string;
+    currentQuantityValue: Number;
 
     protected readyCallback(): void {
         this.productPriceElement = <HTMLElement>this.querySelector(`.${this.jsName}__price`);
@@ -21,7 +21,7 @@ export default class VolumePrice extends Component {
     }
 
     private quantityChangeHandler(event): void {
-        this.currentQuantityuValue = <Number> Number(event.target.value);
+        this.currentQuantityValue = <Number> Number(event.target.value);
         this.checkQuantityValue();
     }
 
@@ -33,7 +33,7 @@ export default class VolumePrice extends Component {
         const volumePrice: String = priceData.price;
         const volumePriceCount: Number = priceData.count;
 
-        if(this.currentQuantityuValue >= volumePriceCount) {
+        if(this.currentQuantityValue >= volumePriceCount) {
             this.changePrice(volumePrice);
             return false;
         }
@@ -44,11 +44,11 @@ export default class VolumePrice extends Component {
     private changePrice(price): void {
         if(this.productPriceElement.innerText !== price) {
             this.productPriceElement.innerHTML = price;
-            this.hiighlight();
+            this.highlight();
         }
     }
 
-    private hiighlight(): void {
+    private highlight(): void {
         const classList = this.productPriceElement.classList;
 
         classList.remove(this.highLightedClass);
