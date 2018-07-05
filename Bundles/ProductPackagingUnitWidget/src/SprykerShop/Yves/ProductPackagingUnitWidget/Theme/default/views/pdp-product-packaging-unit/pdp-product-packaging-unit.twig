@@ -30,7 +30,7 @@
     />
     <input id="item-money-symbol"
            type="hidden"
-           value="{{  '' | moneySymbol }}"
+           value="{{  moneySymbol() }}"
     />
     <ul class="text-small">
         {% for salesUnit in data.salesUnits %}
