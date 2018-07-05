@@ -108,12 +108,12 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
     protected function findVolumePriceByIdProductConcrete(ProductViewTransfer $productViewTransfer): ?VolumeProductPriceCollectionTransfer
     {
         if ($productViewTransfer->getIdProductConcrete() != null) {
-            $priceProductStorageTransfer = $this->priceProductStorageClient->findPriceConcreteStorageTransfer(
+            $priceProductTransfers = $this->priceProductStorageClient->getPriceProductConcreteTransfers(
                 $productViewTransfer->getIdProductConcrete()
             );
 
-            if ($priceProductStorageTransfer) {
-                return $this->getVolumeProductPricesFromStorageData($priceProductStorageTransfer);
+            if (!empty($priceProductTransfers)) {
+                return $this->getVolumeProductPricesFromStorageData($priceProductTransfers);
             }
         }
 
@@ -128,12 +128,12 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
     protected function findVolumePriceByIdProductAbstract(ProductViewTransfer $productViewTransfer): ?VolumeProductPriceCollectionTransfer
     {
         if ($productViewTransfer->getIdProductAbstract() != null) {
-            $priceProductStorageTransfer = $this->priceProductStorageClient->findPriceAbstractStorageTransfer(
+            $priceProductTransfers = $this->priceProductStorageClient->getPriceProductAbstractTransfers(
                 $productViewTransfer->getIdProductAbstract()
             );
 
-            if ($priceProductStorageTransfer) {
-                return $this->getVolumeProductPricesFromStorageData($priceProductStorageTransfer);
+            if (!empty($priceProductTransfers)) {
+                return $this->getVolumeProductPricesFromStorageData($priceProductTransfers);
             }
         }
 
@@ -141,26 +141,26 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer
      */
     protected function getVolumeProductPricesFromStorageData(
-        PriceProductStorageTransfer $priceProductStorageTransfer
+        array $priceProductTransfers
     ): VolumeProductPriceCollectionTransfer {
         $volumeProductPriceCollectionTransfer = new VolumeProductPriceCollectionTransfer();
 
-        if (empty($priceProductStorageTransfer->getPrices())) {
-            return $volumeProductPriceCollectionTransfer;
-        }
-
-        foreach ($priceProductStorageTransfer->getPrices() as $currency => $price) {
-            if (!$this->hasVolumeProductPrice($price, $currency)) {
-                continue;
-            }
-
-            $this->fillVolumeProductPriceCollectionFromStorageData($volumeProductPriceCollectionTransfer, $price);
-        }
+//        if (empty($priceProductStorageTransfer->getPrices())) {
+//            return $volumeProductPriceCollectionTransfer;
+//        }
+//
+//        foreach ($priceProductStorageTransfer->getPrices() as $currency => $price) {
+//            if (!$this->hasVolumeProductPrice($price, $currency)) {
+//                continue;
+//            }
+//
+//            $this->fillVolumeProductPriceCollectionFromStorageData($volumeProductPriceCollectionTransfer, $price);
+//        }
 
         return $volumeProductPriceCollectionTransfer;
     }

@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\VolumePriceProductWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\PriceProductStorageTransfer;
-
 class VolumePriceProductWidgetToPriceProductStorageClientBridge implements VolumePriceProductWidgetToPriceProductStorageClientInterface
 {
     /**
@@ -27,20 +25,20 @@ class VolumePriceProductWidgetToPriceProductStorageClientBridge implements Volum
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|null
      */
-    public function findPriceAbstractStorageTransfer(int $idProductAbstract): ?PriceProductStorageTransfer
+    public function getPriceProductAbstractTransfers(int $idProductAbstract): array
     {
-        return $this->priceProductStorageClient->findPriceAbstractStorageTransfer($idProductAbstract);
+        return $this->priceProductStorageClient->getPriceProductAbstractTransfers($idProductAbstract);
     }
 
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|null
      */
-    public function findPriceConcreteStorageTransfer(int $idProductConcrete): ?PriceProductStorageTransfer
+    public function getPriceProductConcreteTransfers(int $idProductConcrete): array
     {
-        return $this->priceProductStorageClient->findPriceConcreteStorageTransfer($idProductConcrete);
+        return $this->priceProductStorageClient->getPriceProductConcreteTransfers($idProductConcrete);
     }
 }
