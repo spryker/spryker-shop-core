@@ -7,8 +7,7 @@
 
 namespace SprykerShop\Yves\VolumePriceProductWidget\Business\VolumePriceProduct;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductStorageTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer;
 use Generated\Shared\Transfer\VolumeProductPriceTransfer;
@@ -150,36 +149,36 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
     ): VolumeProductPriceCollectionTransfer {
         $volumeProductPriceCollectionTransfer = new VolumeProductPriceCollectionTransfer();
 
-//        if (empty($priceProductStorageTransfer->getPrices())) {
-//            return $volumeProductPriceCollectionTransfer;
-//        }
-//
-//        foreach ($priceProductStorageTransfer->getPrices() as $currency => $price) {
-//            if (!$this->hasVolumeProductPrice($price, $currency)) {
-//                continue;
-//            }
-//
-//            $this->fillVolumeProductPriceCollectionFromStorageData($volumeProductPriceCollectionTransfer, $price);
-//        }
+        if (empty($priceProductTransfers)) {
+            return $volumeProductPriceCollectionTransfer;
+        }
+
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            if (!$this->hasVolumeProductPrice($priceProductTransfer)) {
+                continue;
+            }
+
+            $this->fillVolumeProductPriceCollectionFromStorageData($volumeProductPriceCollectionTransfer, $priceProductTransfer);
+        }
 
         return $volumeProductPriceCollectionTransfer;
     }
 
     /**
-     * @param array $price
-     * @param string $currency
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return bool
      */
-    protected function hasVolumeProductPrice(array $price, string $currency): bool
+    protected function hasVolumeProductPrice(PriceProductTransfer $priceProductTransfer): bool
     {
-        if ($currency != $this->currencyClient->getCurrent()->getCode()) {
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+        if ($moneyValueTransfer->getCurrency()->getCode() != $this->currencyClient->getCurrent()->getCode()) {
             return false;
         }
-        if (!isset($price[MoneyValueTransfer::PRICE_DATA]) || !$price[MoneyValueTransfer::PRICE_DATA]) {
+        if (!$moneyValueTransfer->getPriceData()) {
             return false;
         }
-        $priceData = $this->utilEncodingService->decodeJson($price[MoneyValueTransfer::PRICE_DATA], true);
+        $priceData = $this->utilEncodingService->decodeJson($moneyValueTransfer->getPriceData(), true);
         if (!isset($priceData[static::VOLUME_PRICE_TYPE]) || !$priceData[static::VOLUME_PRICE_TYPE]) {
             return false;
         }
@@ -189,16 +188,16 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
 
     /**
      * @param \Generated\Shared\Transfer\VolumeProductPriceCollectionTransfer $volumeProductPriceCollectionTransfer
-     * @param array $price
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return void
      */
     protected function fillVolumeProductPriceCollectionFromStorageData(
         VolumeProductPriceCollectionTransfer $volumeProductPriceCollectionTransfer,
-        array $price
+        PriceProductTransfer $priceProductTransfer
     ): void {
         $volumePriceData = $this->utilEncodingService->decodeJson(
-            $price[MoneyValueTransfer::PRICE_DATA],
+            $priceProductTransfer->getMoneyValue()->getPriceData(),
             true
         )[static::VOLUME_PRICE_TYPE];
 
