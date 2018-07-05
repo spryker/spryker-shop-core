@@ -190,11 +190,8 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
      */
     protected function setCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $translatedCheckoutErrorMessagesTransfer = $this->checkoutClient
-            ->translateCheckoutErrorMessages($checkoutResponseTransfer);
-
-        foreach ($translatedCheckoutErrorMessagesTransfer->getErrorMessages() as $translatedCheckoutErrorMessage) {
-            $this->flashMessenger->addErrorMessage($translatedCheckoutErrorMessage);
+        foreach ($checkoutResponseTransfer->getErrors() as $checkoutErrorTransfer) {
+            $this->flashMessenger->addErrorMessage($checkoutErrorTransfer->getMessage());
         }
     }
 }
