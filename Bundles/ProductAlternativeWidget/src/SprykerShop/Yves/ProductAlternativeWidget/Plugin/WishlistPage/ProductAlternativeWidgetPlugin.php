@@ -22,7 +22,8 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, string $wishlistName): void{
+    public function initialize(ProductViewTransfer $productViewTransfer, string $wishlistName): void
+    {
         $this
             ->addParameter('item', $productViewTransfer)
             ->addParameter('wishlistName', $wishlistName)

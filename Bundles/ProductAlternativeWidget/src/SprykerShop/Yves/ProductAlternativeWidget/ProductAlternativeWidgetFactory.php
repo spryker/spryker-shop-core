@@ -24,7 +24,8 @@ class ProductAlternativeWidgetFactory extends AbstractFactory
             $this->getProductAlternativeStorageClient(),
             $this->getProductStorageClient()
         );
-   }
+    }
+
     /**
      * @return \SprykerShop\Yves\ProductAlternativeWidget\Dependency\Client\ProductAlternativeWidgetToProductStorageClientInterface
      */
