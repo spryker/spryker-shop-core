@@ -2,28 +2,30 @@
 
 {% define config = {
     name: 'cart-product-packaging-unit',
-    tag: 'div'
+    tag: 'ul'
+} %}
+
+{% define data = {
+    amount: required,
+    quantity: required,
+    quantitySalesUnit: required,
+    quantityConversion: required,
+    quantityProductMeasurementUnit: required,
+    amountSalesUnit: required,
+    amountConversion: required,
+    amountProductMeasurementUnit: required
 } %}
 
 {% block body %}
-    {% if data.cartItem.quantitySalesUnit is not empty and data.cartItem.amountSalesUnit is not empty %}
-        {% set quantitySalesUnitValue = data.cartItem.quantitySalesUnit.value %}
-        {% set quantityConversion = data.cartItem.quantitySalesUnit.conversion %}
-        {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-        {% set quantity = data.cartItem.quantity %}
+    {% set salesUnitName = data.quantityProductMeasurementUnit.name | default('') %}
+    {% set leadSalesUnitName = data.amountProductMeasurementUnit.name | default('') %}
 
-        {% set amountSalesUnitValue = data.cartItem.amountSalesUnit.value %}
-        {% set amountConversion = data.cartItem.amountSalesUnit.conversion %}
-        {% set leadSalesUnitName = data.cartItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
-        {% set amount = data.cartItem.amount %}
-
-        <li class="list__item">
-            <strong>{{ 'packaging_units.cart.quantity' | trans }}&nbsp;</strong>{{ quantity }}
-            <span class="float-right">{{ quantity / quantityConversion }} {{ salesUnitName | trans }}</span>
-        </li>
-        <li class="list__item">
-            <strong>{{ 'packaging_units.cart.amount' | trans }}</strong>&nbsp;{{ amount }}
-            <span class="float-right">{{ amount / amountConversion }} {{ leadSalesUnitName | trans }}</span>
-        </li>
-    {% endif %}
+    <li class="list__item">
+        <strong>{{ 'packaging_units.cart.quantity' | trans }}&nbsp;</strong>{{ data.quantity }}
+        <span class="float-right">{{ data.quantity / data.quantityConversion }} {{ salesUnitName | trans }}</span>
+    </li>
+    <li class="list__item">
+        <strong>{{ 'packaging_units.cart.amount' | trans }}</strong>&nbsp;{{ data.amount }}
+        <span class="float-right">{{ data.amount / data.amountConversion }} {{ leadSalesUnitName | trans }}</span>
+    </li>
 {% endblock body %}

@@ -6,12 +6,12 @@
 } %}
 
 {% define data = {
-    name: data.name,
-    quantity: data.quantity,
-    amount: data.amount,
-    price: data.price,
-    quantitySalesUnit: data.quantitySalesUnit,
-    amountSalesUnit: data.amountSalesUnit
+    name: required,
+    quantity: required,
+    amount: required,
+    price: required,
+    quantitySalesUnit: required,
+    amountSalesUnit: required
 } %}
 
 {% block body %}
@@ -29,4 +29,3 @@
         <span class="text-secondary">&times;</span> {{ data.amount }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.amount / data.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.quantity * data.amount }} {{ 'packaging_units.cart.item' | trans }}
     {% endif %}
 {% endblock body %}
-
