@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    chartPluginName: _widget.chartPluginName,
+    dataIdentifier: _widget.dataIdentifier
+} %}
+{% block body %}
+    {{ chart(data.chartPluginName, data.dataIdentifier) }}
+{% endblock %}
