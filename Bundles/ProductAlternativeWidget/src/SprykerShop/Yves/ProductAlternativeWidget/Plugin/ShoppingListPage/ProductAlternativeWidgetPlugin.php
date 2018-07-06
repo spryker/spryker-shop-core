@@ -67,6 +67,6 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
         }
 
         return $this->getFactory()->createProductAlternativeMapper()
-            ->findConcreteAlternativeProducts($productViewTransfer, $this->getLocale());
+            ->getConcreteAlternativeProducts($productViewTransfer, $this->getLocale());
     }
 }

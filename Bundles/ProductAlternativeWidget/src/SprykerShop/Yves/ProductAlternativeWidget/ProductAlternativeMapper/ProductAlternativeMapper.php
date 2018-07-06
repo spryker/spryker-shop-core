@@ -45,7 +45,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findConcreteAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array
+    public function getConcreteAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array
     {
         $productReplacementForStorage = $this->alternativeStorageClient
             ->findProductAlternativeStorage($productViewTransfer->getSku());
@@ -60,7 +60,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
             $localeName
         );
         foreach ($productConcreteIds as $idProduct) {
-            $productViewTransferList[] = $this->getConcreteProductViewTransfer($idProduct, $localeName);
+            $productViewTransferList[] = $this->findConcreteProductViewTransfer($idProduct, $localeName);
         }
 
         return array_filter($productViewTransferList);
@@ -72,7 +72,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array
+    public function getAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array
     {
         $productReplacementForStorage = $this->alternativeStorageClient
             ->findProductAlternativeStorage($productViewTransfer->getSku());
@@ -82,11 +82,11 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 
         $productViewTransferList = [];
         foreach ($productReplacementForStorage->getProductAbstractIds() as $idProduct) {
-            $productViewTransferList[] = $this->getAbstractProductViewTransfer($idProduct, $localeName);
+            $productViewTransferList[] = $this->findAbstractProductViewTransfer($idProduct, $localeName);
         }
 
         foreach ($productReplacementForStorage->getProductConcreteIds() as $idProduct) {
-            $productViewTransferList[] = $this->getConcreteProductViewTransfer($idProduct, $localeName);
+            $productViewTransferList[] = $this->findConcreteProductViewTransfer($idProduct, $localeName);
         }
 
         return array_filter($productViewTransferList);
@@ -98,7 +98,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    protected function getConcreteProductViewTransfer(int $idProduct, string $localeName): ?ProductViewTransfer
+    protected function findConcreteProductViewTransfer(int $idProduct, string $localeName): ?ProductViewTransfer
     {
         $productConcreteStorageData = $this->productStorageClient
             ->getProductConcreteStorageData($idProduct, $localeName);
@@ -123,7 +123,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    protected function getAbstractProductViewTransfer(int $idProduct, string $localeName): ?ProductViewTransfer
+    protected function findAbstractProductViewTransfer(int $idProduct, string $localeName): ?ProductViewTransfer
     {
         $productAbstractStorageData = $this->productStorageClient
             ->getProductAbstractStorageData($idProduct, $localeName);
