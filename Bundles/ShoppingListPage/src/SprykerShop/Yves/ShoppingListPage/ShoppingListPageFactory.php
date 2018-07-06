@@ -181,7 +181,7 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getPrintShoppingListWidgetPlugins(): array
     {
@@ -189,7 +189,7 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getShoppingListViewWidgetPlugins(): array
     {

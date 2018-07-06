@@ -10,7 +10,9 @@
 
 {% block body %}
     {% if data.discontinuedProduct is not empty %}
-        {{ 'product_alternative_widget.product_status._discontinued' | trans }}
+        <span class="text-alert">
+            {{ 'product_alternative_widget.product_status._discontinued' | trans }}
+        </span>
     {% else %}
         {{ 'customer.account.shopping_list.not_available' | trans }}
     {% endif %}
