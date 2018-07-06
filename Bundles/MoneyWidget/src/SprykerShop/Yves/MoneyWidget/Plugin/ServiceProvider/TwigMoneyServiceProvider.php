@@ -13,6 +13,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig_SimpleFilter;
+use Twig_SimpleFunction;
 
 /**
  * @method \Spryker\Yves\Money\MoneyFactory getFactory()
@@ -30,6 +31,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
             $app->extend('twig', function (\Twig_Environment $twig) {
                 $twig->addFilter($this->getMoneyFilter());
                 $twig->addFilter($this->getMoneyRawFilter());
+                $twig->addFunction($this->getMoneySymbol());
 
                 return $twig;
             })
@@ -80,6 +82,22 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
             }
 
             return $moneyFactory->createIntegerToDecimalConverter()->convert((int)$money->getAmount());
+        });
+
+        return $filter;
+    }
+
+    /**
+     * @return \Twig_SimpleFunction
+     */
+    protected function getMoneySymbol()
+    {
+        $moneyFactory = $this->getFactory();
+
+        $filter = new Twig_SimpleFunction('moneySymbol', function ($isoCode = null) use ($moneyFactory) {
+            $money = $this->getMoneyTransfer(100, $isoCode);
+
+            return $money->getCurrency()->getSymbol();
         });
 
         return $filter;

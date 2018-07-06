@@ -20,6 +20,30 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductPackagingUnitWid
 class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements ProductPackagingUnitWidgetPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public static function getName()
+    {
+        return static::NAME;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public static function getTemplate()
+    {
+        return '@ProductPackagingUnitWidget/views/pdp-product-packaging-unit/pdp-product-packaging-unit.twig';
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isAddToCartDisabled
      * @param array $quantityOptions
@@ -44,7 +68,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
                 $productViewTransfer->getIdProductConcrete()
             );
 
-            $productPackagingUnitLead = $this->getFactory()->getProductPackagingUnitStorageClient()->findProductAbstractPackagingById(
+            $productAbstractPackaging = $this->getFactory()->getProductPackagingUnitStorageClient()->findProductAbstractPackagingById(
                 $productViewTransfer->getIdProductAbstract()
             );
 
@@ -52,14 +76,14 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
                 $productViewTransfer->getIdProductConcrete()
             );
 
-            if ($productPackagingUnitLead) {
+            if ($productAbstractPackaging) {
                 $leadProductSalesUnits = $this->getFactory()->getProductMeasurementUnitStorageClient()->findProductMeasurementSalesUnitByIdProductConcrete(
-                    $productPackagingUnitLead->getLeadProduct()
+                    $productAbstractPackaging->getLeadProduct()
                 );
 
                 $isAmountBlockEnabled = $this->isAmountBlockEnabled(
                     $productViewTransfer->getIdProductConcrete(),
-                    $productPackagingUnitLead->getLeadProduct(),
+                    $productAbstractPackaging->getLeadProduct(),
                     $productConcretePackagingStorageTransfer->getHasLeadProduct()
                 );
             }
@@ -69,13 +93,13 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
                 ->findProductQuantityStorage($productViewTransfer->getIdProductConcrete());
         }
 
-        $minQuantityInBaseUnits = $this->getMinQuantityInBaseUnits($productQuantityStorageTransfer);
-        $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($minQuantityInBaseUnits, $salesUnits);
+        $minQuantityInBaseUnit = $this->getMinQuantityInBaseUnit($productQuantityStorageTransfer);
+        $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($minQuantityInBaseUnit, $salesUnits);
 
         $this
             ->addParameter('product', $productViewTransfer)
             ->addParameter('quantityOptions', $quantityOptions)
-            ->addParameter('minQuantityInBaseUnits', $minQuantityInBaseUnits)
+            ->addParameter('minQuantityInBaseUnit', $minQuantityInBaseUnit)
             ->addParameter('minQuantityInSalesUnits', $minQuantityInSalesUnits)
             ->addParameter('baseUnit', $baseUnit)
             ->addParameter('salesUnits', $salesUnits)
@@ -86,6 +110,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
             ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
             ->addParameter('jsonScheme', $this->prepareJsonData(
                 $isAmountBlockEnabled,
+                $isAddToCartDisabled,
                 $baseUnit,
                 $salesUnits,
                 $leadProductSalesUnits,
@@ -97,6 +122,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
 
     /**
      * @param bool $isAmountBlockEnabled
+     * @param bool $isAddToCartDisabled
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null $baseUnit
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $leadSalesUnits
@@ -107,6 +133,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
      */
     protected function prepareJsonData(
         bool $isAmountBlockEnabled,
+        bool $isAddToCartDisabled,
         ?ProductMeasurementUnitTransfer $baseUnit,
         ?array $salesUnits,
         ?array $leadSalesUnits,
@@ -115,22 +142,19 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
     ) {
         $jsonData = [];
 
+        $jsonData['isAddToCartDisabled'] = $isAddToCartDisabled;
         $jsonData['isAmountBlockEnabled'] = $isAmountBlockEnabled;
 
         if ($baseUnit !== null) {
             $jsonData['baseUnit'] = $baseUnit->toArray();
         }
 
-        if ($salesUnits !== null) {
-            foreach ($salesUnits as $salesUnit) {
-                $jsonData['salesUnits'][] = $salesUnit->toArray();
-            }
+        foreach ((array)$salesUnits as $salesUnit) {
+            $jsonData['salesUnits'][] = $salesUnit->toArray();
         }
 
-        if ($leadSalesUnits) {
-            foreach ($leadSalesUnits as $leadSalesUnit) {
-                $jsonData['leadSalesUnits'][] = $leadSalesUnit->toArray();
-            }
+        foreach ((array)$leadSalesUnits as $leadSalesUnit) {
+            $jsonData['leadSalesUnits'][] = $leadSalesUnit->toArray();
         }
 
         if ($productConcretePackagingStorageTransfer !== null) {
@@ -141,7 +165,9 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
             $jsonData['productQuantityStorage'] = $productQuantityStorageTransfer->toArray();
         }
 
-        return \json_encode($jsonData, true);
+        return $this->getFactory()
+            ->getUtilEncodingService()
+            ->encodeJson($jsonData);
     }
 
     /**
@@ -152,13 +178,15 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
      */
     protected function getMinQuantityInSalesUnits(int $minQuantityInBaseUnits, ?array $salesUnits = null): float
     {
-        if ($salesUnits !== null) {
-            foreach ($salesUnits as $salesUnit) {
-                if ($salesUnit->getIsDefault() && $salesUnit->getConversion()) {
-                    $qtyInSalesUnits = $minQuantityInBaseUnits / $salesUnit->getConversion();
+        if ($salesUnits === null) {
+            return $minQuantityInBaseUnits;
+        }
 
-                    return round($qtyInSalesUnits, 4);
-                }
+        foreach ($salesUnits as $salesUnit) {
+            if ($salesUnit->getIsDefault() && $salesUnit->getConversion()) {
+                $qtyInSalesUnits = $minQuantityInBaseUnits / $salesUnit->getConversion();
+
+                return round($qtyInSalesUnits, 4);
             }
         }
 
@@ -170,7 +198,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
      *
      * @return int
      */
-    protected function getMinQuantityInBaseUnits(
+    protected function getMinQuantityInBaseUnit(
         ?ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
     ): int {
         $quantityMin = 1;
@@ -191,29 +219,5 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
     protected function isAmountBlockEnabled(int $idProduct, int $idLeadProduct, bool $hasLeadProduct): bool
     {
         return ($idProduct !== $idLeadProduct) && $hasLeadProduct;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public static function getName()
-    {
-        return static::NAME;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public static function getTemplate()
-    {
-        return '@ProductPackagingUnitWidget/views/pdp-product-packaging-unit/pdp-product-packaging-unit.twig';
     }
 }
