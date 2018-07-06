@@ -92,9 +92,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
      */
     protected function getMoneySymbol()
     {
-        $moneyFactory = $this->getFactory();
-
-        $filter = new Twig_SimpleFunction('moneySymbol', function ($isoCode = null) use ($moneyFactory) {
+        $filter = new Twig_SimpleFunction('moneySymbol', function ($isoCode = null) {
             $money = $this->getMoneyTransfer(100, $isoCode);
 
             return $money->getCurrency()->getSymbol();
