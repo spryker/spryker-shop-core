@@ -17,7 +17,7 @@
 {% block body %}
     {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
     {% set salesUnitSummary = '' %}
-    {% if if salesUnitName is not empty %}
+    {% if salesUnitName is not empty %}
         {% set salesUnitSummary = data.quantitySalesUnit.value / data.quantitySalesUnit.precision ~ ' ' ~ salesUnitName | trans %}
     {% endif %}
 
