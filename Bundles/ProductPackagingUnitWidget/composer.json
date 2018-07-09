@@ -12,11 +12,17 @@
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
+    "spryker-shop/checkout-page": "*",
+    "spryker-shop/customer-page": "*",
     "spryker-shop/product-detail-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/cart-page": "If you want to use QuantitySalesUnitWidgetPlugin: ^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0 ",
+    "spryker-shop/product-detail-page": "if you want to use ProductMeasurementUnitWidgetPlugin: ^0.6.0",
+    "spryker-shop/customer-page": "To have customer account pages",
+    "spryker-shop/checkout-page": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {
