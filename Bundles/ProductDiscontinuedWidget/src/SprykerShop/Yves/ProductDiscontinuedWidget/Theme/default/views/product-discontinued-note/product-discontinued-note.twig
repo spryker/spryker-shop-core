@@ -9,7 +9,7 @@
 {%- endblock -%}
 
 {% block body %}
-    {% if data.discontinuedProduct is not empty %}
+    {% if data.discontinuedProduct.note is defined and data.discontinuedProduct.note is not empty %}
         <hr/>
         {{ 'product_discontinued_widget.note' | trans }}<br/>
         {{ data.discontinuedProduct.note }}

@@ -23,6 +23,11 @@
             </thead>
             <tbody>
             {% for item in data.wishlistItems %}
+                {% set isItemAvalable = item.available is defined and item.available and item.price is defined and item.price is not null %}
+                {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+                    {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %}
+                    {% set isItemAvalable = not isDiscontinued and isItemAvalable %}
+                {% endif %}
                 <tr>
                     <td>
                         {% set imageUrl = item.images[0].externalUrlSmall %}
@@ -53,7 +58,7 @@
                             {% include molecule('price') with {
                                 data: {
                                     amount: item.price | money,
-                                    originalAmount: item.prices.DEFAULT is empty ? null : (item.prices.DEFAULT | money)
+                                    originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : (item.prices.ORIGINAL | money)
                                 }
                             } only %}
                         {% else %}
@@ -61,15 +66,19 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if item.available %}
+                        {% if isItemAvalable %}
                             {{ 'customer.account.wishlist.available' | trans }}
                         {% else %}
-                            {{ 'customer.account.wishlist.not_available' | trans }}
+                            {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+                                {{ widget('ProductDiscontinuedWidgetPlugin', item.sku) }}
+                            {% else %}
+                                {{ 'customer.account.wishlist.not_available' | trans }}
+                            {% endif %}
                         {% endif %}
                     </td>
                     <td>
                         <ul class="menu menu--inline float-right">
-                            {% if item.available and item.price is not null %}
+                            {% if isItemAvalable %}
                                 <li class="menu__item">
                                     <form id="addToCart_{{ loop.index }}"
                                           class="col"
@@ -102,6 +111,9 @@
                         </ul>
                     </td>
                 </tr>
+                {% if widgetExists('ProductAlternativeWidgetPlugin') %}
+                    {{ widget('ProductAlternativeWidgetPlugin', item, data.wishlistName) }}
+                {% endif %}
             {% endfor %}
             </tbody>
         </table>

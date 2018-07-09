@@ -15,6 +15,7 @@
 {% set sku = data.product.sku %}
 {% set availabilityWidget = '' %}
 {% set isDisabled = data.product.idProductConcrete is empty or data.product.price is empty %}
+{% set isDiscontinued = false %}
 
 {% for index in 1..data.maxQuantity %}
     {% set options = options | merge([{
@@ -95,15 +96,18 @@
         {{ widget('AvailabilityWidgetPlugin', data.product) }}
     </form>
 
-    {% if widgetExists('ShoppingListWidgetPlugin') %}
+    {% if widgetExists('ShoppingListWidgetPlugin') and not isDiscontinued %}
         <hr />
         {{ widget('ShoppingListWidgetPlugin', sku, isDisabled) }}
     {% endif %}
 
-    {% if widgetExists('WishlistWidgetPlugin') %}
+    {% if widgetExists('WishlistWidgetPlugin') and not isDiscontinued %}
         <hr />
         {{ widget('WishlistWidgetPlugin', data.product) }}
     {% endif %}
 
-    {{ widget('ProductDiscontinuedWidgetPlugin', sku) }}
+    {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+        {{ widget('ProductDiscontinuedWidgetPlugin', sku) }}
+    {% endif %}
+
 {% endblock %}
