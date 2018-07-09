@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Model\Error;
 
+use EmptyIterator;
 use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
+use Iterator;
 use League\Csv\Reader;
 use League\Csv\Writer;
 use SprykerShop\Shared\CompanyUserInvitationPage\CompanyUserInvitationPageConstants;
@@ -51,16 +53,16 @@ class ImportErrorHandler implements ImportErrorHandlerInterface
     }
 
     /**
-     * @return array
+     * @return \Iterator
      */
-    public function retrieveCompanyUserInvitationImportErrors(): array
+    public function retrieveCompanyUserInvitationImportErrors(): Iterator
     {
         $importErrorsFile = $this->sessionClient->get(CompanyUserInvitationPageConfig::INVITATION_IMPORT_ERRORS_FILE, null);
         if ($importErrorsFile) {
-            return Reader::createFromPath($importErrorsFile, 'r')->fetchAll();
+            return Reader::createFromPath($importErrorsFile, 'r')->getRecords();
         }
 
-        return [];
+        return new EmptyIterator();
     }
 
     /**
