@@ -84,7 +84,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
                 $isAmountBlockEnabled = $this->isAmountBlockEnabled(
                     $productViewTransfer->getIdProductConcrete(),
                     $productAbstractPackaging->getLeadProduct(),
-                    $productConcretePackagingStorageTransfer->getHasLeadProduct()
+                    (bool)$productConcretePackagingStorageTransfer->getHasLeadProduct()
                 );
             }
 
