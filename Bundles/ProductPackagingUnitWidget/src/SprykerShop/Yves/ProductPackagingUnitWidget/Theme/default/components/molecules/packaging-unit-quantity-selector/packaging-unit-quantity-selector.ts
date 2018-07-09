@@ -62,7 +62,6 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.productPackagingNewPriceValueBlock = <HTMLInputElement>document.querySelector('#product-packaging-new-price-value-block');
         this.itemBasePriceInput = <HTMLInputElement>document.querySelector('#item-base-price');
         this.itemMoneySymbolInput = <HTMLInputElement>document.querySelector('#item-money-symbol');
-        this.amountInBaseUnitInput = <HTMLInputElement>document.querySelector('#base-unit-amount');
         this.quantityBetweenElement = <HTMLDivElement>document.getElementById('quantity-between-units');
         this.quantityMinElement = <HTMLDivElement>document.getElementById('minimum-quantity');
         this.quantityMaxElement = <HTMLDivElement>document.getElementById('maximum-quantity');
@@ -396,8 +395,8 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.addToCartButton.removeAttribute("disabled");
         this.hidePackagingUnitRestrictionNotifications();
 
-        if (this.packagingUnitAmountInput.value != amountInBaseUnits) {
-            let newPrice = (amountInBaseUnits / this.packagingUnitAmountInput.value) * this.itemBasePriceInput.value;
+        if (this.amountInBaseUnitInput.value != amountInBaseUnits) {
+            let newPrice = (amountInBaseUnits / this.amountInBaseUnitInput.value) * this.itemBasePriceInput.value;
             newPrice = newPrice / 100;
             this.productPackagingNewPriceValueBlock.innerHTML = this.itemMoneySymbolInput.value + newPrice.toFixed(2);
 
