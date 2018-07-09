@@ -1,0 +1,31 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-product-packaging-unit',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    amount: required,
+    quantity: required,
+    quantitySalesUnit: required,
+    quantityConversion: required,
+    quantityProductMeasurementUnit: required,
+    amountSalesUnit: required,
+    amountConversion: required,
+    amountProductMeasurementUnit: required
+} %}
+
+{% block body %}
+    {% set salesUnitName = data.quantityProductMeasurementUnit.name | default('') %}
+    {% set leadSalesUnitName = data.amountProductMeasurementUnit.name | default('') %}
+
+    <li>
+        <strong>{{ 'packaging_units.cart.quantity' | trans }}&nbsp;</strong>{{ data.quantity }}
+        <span class="float-right">{{ data.quantity / data.quantityConversion }} {{ salesUnitName | trans }}</span>
+    </li>
+    <li>
+        <strong>{{ 'packaging_units.cart.amount' | trans }}</strong>&nbsp;{{ data.amount }}
+        <span class="float-right">{{ data.amount / data.amountConversion }} {{ leadSalesUnitName | trans }}</span>
+    </li>
+{% endblock body %}

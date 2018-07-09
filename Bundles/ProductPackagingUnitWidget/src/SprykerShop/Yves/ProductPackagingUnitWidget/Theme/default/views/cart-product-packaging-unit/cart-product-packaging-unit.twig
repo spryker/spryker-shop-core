@@ -1,0 +1,22 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cartItem: _widget.itemTransfer
+} %}
+
+{% block body %}
+    {% if data.cartItem.quantitySalesUnit is not empty and data.cartItem.amountSalesUnit is not empty %}
+        {% include molecule('cart-product-packaging-unit', 'ProductPackagingUnitWidget') with {
+            data: {
+                amount: data.cartItem.amount,
+                quantity: data.cartItem.quantity,
+                quantitySalesUnit: data.cartItem.quantitySalesUnit,
+                quantityConversion: data.cartItem.quantitySalesUnit.conversion,
+                quantityProductMeasurementUnit: data.cartItem.quantitySalesUnit.productMeasurementUnit,
+                amountSalesUnit: data.cartItem.amountSalesUnit,
+                amountConversion: data.cartItem.amountSalesUnit.conversion,
+                amountProductMeasurementUnit: data.cartItem.amountSalesUnit.productMeasurementUnit
+            }
+        } only %}
+    {% endif %}
+{% endblock body %}

@@ -50,22 +50,28 @@
                     cartItem: data.cartItem
                 }
             } only %}
+
+            {% if widgetExists('CartProductPackagingUnitWidgetPlugin') %}
+                {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }}
+            {% endif %}
         </div>
 
         <div class="col col--sm-12 col--lg-4">
-            {% if canEditCart %}
-                {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
-                    {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
+            {% if data.cartItem.amountSalesUnit is empty %}
+                {% if canEditCart %}
+                    {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
+                        {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
+                    {% else %}
+                        {% include molecule('cart-quantity-input', 'CartPage') with {
+                            data: {
+                                cartItem: data.cartItem
+                            }
+                        } only %}
+                    {% endif %}
                 {% else %}
-                    {% include molecule('cart-quantity-input', 'CartPage') with {
-                        data: {
-                            cartItem: data.cartItem
-                        }
-                    } only %}
+                    {{ 'cart.item_quantity' | trans }}
+                    <strong>{{ cartItem.quantity }}</strong>
                 {% endif %}
-            {% else %}
-                {{ 'cart.item_quantity' | trans }}
-                <strong>{{ cartItem.quantity }}</strong>
             {% endif %}
 
             {% if canEditCart %}

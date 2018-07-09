@@ -56,6 +56,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.addToCartButton = <HTMLButtonElement>document.getElementById('add-to-cart-button');
         this.leadSalesUnitSelect = <HTMLSelectElement>document.querySelector('.select-lead-measurement-unit');
         this.amountInSalesUnitInput = <HTMLInputElement>document.querySelector('#default-amount');
+        this.amountInBaseUnitInput = <HTMLInputElement>document.querySelector('#amount-packaging-unit');
         this.packagingUnitAmountInput = <HTMLInputElement>document.querySelector('#packaging-unit-amount');
         this.productPackagingNewPriceBlock = <HTMLInputElement>document.querySelector('#product-packaging-new-price-block');
         this.productPackagingNewPriceValueBlock = <HTMLInputElement>document.querySelector('#product-packaging-new-price-value-block');
@@ -87,7 +88,6 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.initCurrentSalesUnit();
         this.initCurrentLeadSalesUnit();
         this.mapEvents();
-
         this.amountInputChange();
     }
 
@@ -125,7 +125,6 @@ export default class PackagingUnitQuantitySelector extends Component {
                 this.productQuantityStorage = jsonData.productQuantityStorage;
             }
         }
-
     }
 
     private initTranslations() {

@@ -1,0 +1,31 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'summary-product-packaging-unit',
+    tag: 'div'
+} %}
+
+{% define data = {
+    name: required,
+    quantity: required,
+    amount: required,
+    price: required,
+    quantitySalesUnit: required,
+    amountSalesUnit: required
+} %}
+
+{% block body %}
+    {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+    {% set salesUnitSummary = '' %}
+    {% if salesUnitName is not empty %}
+        {% set salesUnitSummary = data.quantitySalesUnit.value / data.quantitySalesUnit.precision ~ ' ' ~ salesUnitName | trans %}
+    {% endif %}
+
+    <strong class="float-right">{{data.price}}</strong>
+    {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
+    <br/>
+    {% if data.amountSalesUnit is defined and data.amountSalesUnit is not empty %}
+        {% set amountSalesUnitName = data.amountSalesUnit.productMeasurementUnit.name | default('') %}
+        <span class="text-secondary">&times;</span> {{ data.amount }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.amount / data.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.quantity * data.amount }} {{ 'packaging_units.cart.item' | trans }}
+    {% endif %}
+{% endblock body %}

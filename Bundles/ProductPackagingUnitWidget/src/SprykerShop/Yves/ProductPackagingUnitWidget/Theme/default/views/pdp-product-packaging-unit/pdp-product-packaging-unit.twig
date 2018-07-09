@@ -135,13 +135,12 @@
                            {% if not data.packagingUnitIsVariable %}disabled{% endif %}
                            name="amount-product-packaging-unit"
                     />
-                    <input id="packaging-unit-amount"
+                    <input id="amount-packaging-unit"
                            class="input input--expand"
                            type="hidden"
                            value="{{ data.productPackagingUnit.defaultAmount }}"
-                           name="amount-product-packaging-unit"
+                           name="amount-packaging-unit[{{ data.product.sku }}]"
                     />
-                    <input id="base-unit-amount" type="hidden" value="" name="base-unit-amount"/>
                 </label>
             </div>
             <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
