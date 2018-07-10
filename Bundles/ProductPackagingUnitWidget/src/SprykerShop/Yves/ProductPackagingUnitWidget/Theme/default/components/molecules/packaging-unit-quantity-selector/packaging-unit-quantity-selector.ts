@@ -75,7 +75,6 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.muChoiceListElement = <HTMLUListElement>document.querySelector('#measurement-unit-choices .list');
         this.muCurrentChoiceElement = <HTMLSpanElement>document.querySelector('.measurement-unit-choice #current-choice');
         this.puChoiceElement = <HTMLDivElement>document.querySelector('.packaging-unit-choice');
-        this.puChoiceElement = <HTMLDivElement>document.querySelector('.packaging-unit-choice');
         this.puMinNotificationElement = <HTMLDivElement>document.getElementById('packaging-amount-min');
         this.puMaxNotificationElement = <HTMLDivElement>document.getElementById('packaging-amount-max');
         this.puIntervalNotificationElement = <HTMLDivElement>document.getElementById('packaging-amount-interval');
@@ -196,23 +195,25 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private askCustomerForCorrectInput(qtyInSalesUnits: number) {
 
-        let minChoice = this.getMinChoice(qtyInSalesUnits);
-        let maxChoice = this.getMaxChoice(qtyInSalesUnits, minChoice);
+        if(this.muError) {
+            let minChoice = this.getMinChoice(qtyInSalesUnits);
+            let maxChoice = this.getMaxChoice(qtyInSalesUnits, minChoice);
 
-        this.muChoiceListElement.innerHTML = '';
-        this.muCurrentChoiceElement.innerHTML = '';
-        this.muCurrentChoiceElement.textContent = `${this.round(qtyInSalesUnits, 4)} ${this.getUnitName(this.currentSalesUnit.product_measurement_unit.code)}`;
+            this.muChoiceListElement.innerHTML = '';
+            this.muCurrentChoiceElement.innerHTML = '';
+            this.muCurrentChoiceElement.textContent = `${this.round(qtyInSalesUnits, 4)} ${this.getUnitName(this.currentSalesUnit.product_measurement_unit.code)}`;
 
-        let choiceElements = [];
-        choiceElements.push(this.createChoiceElement(minChoice));
+            let choiceElements = [];
+            choiceElements.push(this.createChoiceElement(minChoice));
 
-        if (maxChoice != minChoice) {
-            choiceElements.push(this.createChoiceElement(maxChoice));
+            if (maxChoice != minChoice) {
+                choiceElements.push(this.createChoiceElement(maxChoice));
+            }
+
+            choiceElements.forEach((element) => (element !== null) ? this.muChoiceListElement.appendChild(element) : null);
+
+            this.muChoiceNotificationElement.classList.remove('is-hidden');
         }
-
-        choiceElements.forEach((element) => (element !== null) ? this.muChoiceListElement.appendChild(element) : null);
-
-        this.muChoiceNotificationElement.classList.remove('is-hidden');
     }
 
     private createChoiceElement(qtyInBaseUnits: number) {
@@ -387,7 +388,6 @@ export default class PackagingUnitQuantitySelector extends Component {
 
         if (this.puError || this.muError || this.isAddToCartDisabled) {
             this.askCustomerForCorrectAmountInput(amountInSalesUnitInput);
-            this.puChoiceElement.classList.remove('is-hidden');
             this.addToCartButton.setAttribute("disabled", "disabled");
 
             return;
@@ -396,6 +396,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.amountInBaseUnitInput.value = amountInBaseUnits.toString();
         this.addToCartButton.removeAttribute("disabled");
         this.hidePackagingUnitRestrictionNotifications();
+
         if (this.amountDefaultInBaseUnitInput.value != amountInBaseUnits) {
             let newPrice = (amountInBaseUnits / this.amountDefaultInBaseUnitInput.value) * this.itemBasePriceInput.value;
             newPrice = newPrice / 100;
@@ -409,26 +410,28 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private askCustomerForCorrectAmountInput(amountInSalesUnits) {
 
-        let minChoice = this.getMinAmountChoice(amountInSalesUnits);
-        let maxChoice = this.getMaxAmountChoice(amountInSalesUnits, minChoice);
+        if(this.puError) {
+            let minChoice = this.getMinAmountChoice(amountInSalesUnits);
+            let maxChoice = this.getMaxAmountChoice(amountInSalesUnits, minChoice);
 
-        this.puChoiceListElement.innerHTML = '';
-        this.puCurrentChoiceElement.innerHTML = '';
-        this.puCurrentChoiceElement.textContent = `${this.round(amountInSalesUnits, 4)} ${this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code)}`;
+            this.puChoiceListElement.innerHTML = '';
+            this.puCurrentChoiceElement.innerHTML = '';
+            this.puCurrentChoiceElement.textContent = `${this.round(amountInSalesUnits, 4)} ${this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code)}`;
 
-        let choiceElements = [];
+            let choiceElements = [];
 
-        if (minChoice) {
-            choiceElements.push(this.createAmountChoiceElement(minChoice));
+            if (minChoice) {
+                choiceElements.push(this.createAmountChoiceElement(minChoice));
+            }
+
+            if (maxChoice != minChoice) {
+                choiceElements.push(this.createAmountChoiceElement(maxChoice));
+            }
+
+            choiceElements.forEach((element) => (element !== null) ? this.puChoiceListElement.appendChild(element) : null);
+
+            this.puChoiceElement.classList.remove('is-hidden');
         }
-
-        if (maxChoice != minChoice) {
-            choiceElements.push(this.createAmountChoiceElement(maxChoice));
-        }
-
-        choiceElements.forEach((element) => (element !== null) ? this.puChoiceListElement.appendChild(element) : null);
-
-        this.puChoiceElement.classList.remove('is-hidden');
     }
 
     private initCurrentLeadSalesUnit() {
