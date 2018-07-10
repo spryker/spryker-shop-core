@@ -24,6 +24,8 @@ use SprykerShop\Yves\ProductMeasurementUnitWidget\Model\ProductMeasurementUnitRe
 class ProductMeasurementUnitWidgetFactory extends AbstractFactory
 {
     /**
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
+     *
      * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Model\ProductMeasurementBaseUnitReaderInterface
      */
     public function createProductMeasurementBaseUnitReader(): ProductMeasurementBaseUnitReaderInterface
@@ -35,6 +37,8 @@ class ProductMeasurementUnitWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
+     *
      * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Model\ProductMeasurementUnitReaderInterface
      */
     public function createProductMeasurementUnitReader(): ProductMeasurementUnitReaderInterface
@@ -46,6 +50,8 @@ class ProductMeasurementUnitWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
+     *
      * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Model\ProductMeasurementSalesUnitReaderInterface
      */
     public function createProductMeasurementSalesUnitReader(): ProductMeasurementSalesUnitReaderInterface
@@ -74,6 +80,8 @@ class ProductMeasurementUnitWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
+     *
      * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Mapper\ProductMeasurementUnitMapperInterface
      */
     public function createProductMeasurementUnitMapper(): ProductMeasurementUnitMapperInterface
@@ -82,6 +90,8 @@ class ProductMeasurementUnitWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
+     *
      * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Mapper\ProductMeasurementSalesUnitMapperInterface
      */
     public function createProductMeasurementSalesUnitMapper(): ProductMeasurementSalesUnitMapperInterface

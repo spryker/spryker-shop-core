@@ -9,9 +9,18 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Model;
 
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 
+/**
+ * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
+ *
+ * @see ProductMeasurementUnitStorageClientInterface
+ */
 interface ProductMeasurementBaseUnitReaderInterface
 {
     /**
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementBaseUnitByIdProduct() instead.
+     *
+     * @see ProductMeasurementUnitStorageClientInterface::findProductMeasurementBaseUnitByIdProduct()
+     *
      * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
