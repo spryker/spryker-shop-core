@@ -24,6 +24,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     isAmountBlockEnabled: boolean;
     isAddToCartDisabled: boolean;
     currentLeadSalesUnit: any;
+    defaultAmount: any;
 
     productPackagingNewPriceBlock: any;
     productPackagingNewPriceValueBlock: any;
@@ -87,6 +88,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.initTranslations();
         this.initCurrentSalesUnit();
         this.initCurrentLeadSalesUnit();
+        this.initFormDefaultValues();
         this.mapEvents();
         this.amountInputChange();
     }
@@ -125,6 +127,15 @@ export default class PackagingUnitQuantitySelector extends Component {
                 this.productQuantityStorage = jsonData.productQuantityStorage;
             }
         }
+    }
+
+    private initFormDefaultValues() {
+        this.qtyInSalesUnitInput.value = this.getMinQuantity();
+        this.amountInSalesUnitInput.value = this.getDefaultAmount();
+        this.amountDefaultInBaseUnitInput.value = this.getDefaultAmount();
+        this.amountInBaseUnitInput.value = this.getDefaultAmount();
+        this.measurementUnitInput.value = this.currentSalesUnit.id_product_measurement_sales_unit;
+        this.leadSalesUnitSelect.value = this.currentLeadSalesUnit.id_product_measurement_sales_unit;
     }
 
     private initTranslations() {
@@ -541,6 +552,15 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         return 1;
+    }
+
+    private getDefaultAmount() {
+        if (typeof this.productPackagingUnitStorage !== 'undefined'
+            && this.productPackagingUnitStorage.hasOwnProperty('default_amount')
+            && this.productPackagingUnitStorage.default_amount !== null
+        ) {
+            return this.productPackagingUnitStorage.default_amount;
+        }
     }
 
     private getMinAmountChoice(amountInSalesUnits: number) {
