@@ -10,12 +10,22 @@ namespace SprykerShop\Yves\CartPage\Dependency\Client;
 interface CartPageToProductStorageClientInterface
 {
     /**
+     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+     *
      * @param int $idProductAbstract
      * @param string $localeName
      *
      * @return array
      */
     public function getProductAbstractStorageData($idProductAbstract, $localeName);
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
 
     /**
      * @param array $data

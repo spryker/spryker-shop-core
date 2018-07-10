@@ -54,6 +54,9 @@ class CatalogController extends AbstractController
     {
         $searchString = $request->query->get('q', '');
         $idCategory = $categoryNode['id_category'];
+        $isEmptyCategoryFilterValueVisible = $this->getFactory()
+            ->getConfig()
+            ->isEmptyCategoryFilterValueVisible();
 
         $parameters = $request->query->all();
         $parameters[PageIndexMap::CATEGORY] = $idCategoryNode;
@@ -71,6 +74,7 @@ class CatalogController extends AbstractController
         $metaAttributes = [
             'idCategory' => $idCategory,
             'category' => $categoryNode,
+            'isEmptyCategoryFilterValueVisible' => $isEmptyCategoryFilterValueVisible,
             'pageTitle' => ($metaTitle ?: $categoryNode['name']),
             'pageDescription' => $metaDescription,
             'pageKeywords' => $metaKeywords,
@@ -113,8 +117,13 @@ class CatalogController extends AbstractController
             ->getCatalogClient()
             ->catalogSearch($searchString, $request->query->all());
 
+        $isEmptyCategoryFilterValueVisible = $this->getFactory()
+            ->getConfig()
+            ->isEmptyCategoryFilterValueVisible();
+
         $searchResults['searchString'] = $searchString;
         $searchResults['idCategory'] = null;
+        $searchResults['isEmptyCategoryFilterValueVisible'] = $isEmptyCategoryFilterValueVisible;
         $searchResults['viewMode'] = $this->getFactory()
             ->getCatalogClient()
             ->getCatalogViewMode($request);

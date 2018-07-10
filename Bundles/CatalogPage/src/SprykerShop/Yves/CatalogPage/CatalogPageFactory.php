@@ -17,6 +17,9 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryF
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
 use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
 
+/**
+ * @method \SprykerShop\Yves\CatalogPage\CatalogPageConfig getConfig()
+ */
 class CatalogPageFactory extends AbstractFactory
 {
     /**
