@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 
 /**
  * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
- *
- * @see ProductMeasurementUnitStorageClientInterface
  */
 interface ProductMeasurementBaseUnitReaderInterface
 {

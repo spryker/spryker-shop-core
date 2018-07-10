@@ -13,8 +13,6 @@ use SprykerShop\Yves\ProductMeasurementUnitWidget\Mapper\ProductMeasurementUnitM
 
 /**
  * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
- *
- * @see ProductMeasurementUnitStorageClientInterface
  */
 class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterface
 {

@@ -9,8 +9,6 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Model;
 
 /**
  * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
- *
- * @see ProductMeasurementUnitStorageClientInterface
  */
 interface ProductMeasurementSalesUnitReaderInterface
 {

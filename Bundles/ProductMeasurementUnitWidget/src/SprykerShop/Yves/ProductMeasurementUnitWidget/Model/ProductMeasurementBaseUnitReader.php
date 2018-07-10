@@ -12,8 +12,6 @@ use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasu
 
 /**
  * @deprecated Use ProductMeasurementUnitStorageClientInterface instead.
- *
- * @see ProductMeasurementUnitStorageClientInterface
  */
 class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitReaderInterface
 {
