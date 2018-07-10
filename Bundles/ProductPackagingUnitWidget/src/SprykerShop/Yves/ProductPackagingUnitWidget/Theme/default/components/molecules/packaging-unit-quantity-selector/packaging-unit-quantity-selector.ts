@@ -16,6 +16,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     leadSalesUnits: any;
     productPackagingUnitStorage: any;
     amountInSalesUnitInput: any;
+    amountDefaultInBaseUnitInput: any;
     packagingUnitAmountInput: any;
     itemBasePriceInput: any;
     itemMoneySymbolInput: any;
@@ -55,7 +56,8 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.measurementUnitInput = <HTMLSelectElement>document.querySelector('.select-measurement-unit');
         this.addToCartButton = <HTMLButtonElement>document.getElementById('add-to-cart-button');
         this.leadSalesUnitSelect = <HTMLSelectElement>document.querySelector('.select-lead-measurement-unit');
-        this.amountInSalesUnitInput = <HTMLInputElement>document.querySelector('#default-amount');
+        this.amountInSalesUnitInput = <HTMLInputElement>document.querySelector('#user-amount');
+        this.amountDefaultInBaseUnitInput = <HTMLInputElement>document.querySelector('#default-amount');
         this.amountInBaseUnitInput = <HTMLInputElement>document.querySelector('#amount-packaging-unit');
         this.packagingUnitAmountInput = <HTMLInputElement>document.querySelector('#packaging-unit-amount');
         this.productPackagingNewPriceBlock = <HTMLInputElement>document.querySelector('#product-packaging-new-price-block');
@@ -394,9 +396,8 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.amountInBaseUnitInput.value = amountInBaseUnits.toString();
         this.addToCartButton.removeAttribute("disabled");
         this.hidePackagingUnitRestrictionNotifications();
-
-        if (this.amountInBaseUnitInput.value != amountInBaseUnits) {
-            let newPrice = (amountInBaseUnits / this.amountInBaseUnitInput.value) * this.itemBasePriceInput.value;
+        if (this.amountDefaultInBaseUnitInput.value != amountInBaseUnits) {
+            let newPrice = (amountInBaseUnits / this.amountDefaultInBaseUnitInput.value) * this.itemBasePriceInput.value;
             newPrice = newPrice / 100;
             this.productPackagingNewPriceValueBlock.innerHTML = this.itemMoneySymbolInput.value + newPrice.toFixed(2);
 

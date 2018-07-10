@@ -32,17 +32,6 @@
            type="hidden"
            value="{{  moneySymbol() }}"
     />
-    <ul class="text-small">
-        {% for salesUnit in data.salesUnits %}
-            {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
-                <li>
-                    1 {{ data.baseUnit.name | trans }}
-                    = {{ (1 / salesUnit.conversion)|round(4) }} {{ salesUnit.productMeasurementUnit.name | trans }}
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-    <hr />
 
     <div class="grid grid--bottom grid--justify">
         <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
@@ -128,12 +117,17 @@
             <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
                 <label>
                     {{ 'Amount' | trans }}
-                    <input id="default-amount"
+                    <input id="user-amount"
                            class="input input--expand"
                            type="number"
                            value="{{ data.productPackagingUnit.defaultAmount }}"
                            {% if not data.packagingUnitIsVariable %}disabled{% endif %}
                            name="amount-product-packaging-unit"
+                    />
+                    <input id="default-amount"
+                           class="input input--expand"
+                           type="hidden"
+                           value="{{ data.productPackagingUnit.defaultAmount }}"
                     />
                     <input id="amount-packaging-unit"
                            class="input input--expand"
