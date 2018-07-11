@@ -48,6 +48,7 @@ class CsvInvitationReader implements InvitationReaderInterface
     {
         return Reader::createFromPath($importFilePath, 'r')
             ->setDelimiter($this->config->getInvitationFileDelimiter())
-            ->fetchAssoc();
+            ->setHeaderOffset(0)
+            ->getRecords();
     }
 }
