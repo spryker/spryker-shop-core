@@ -88,16 +88,17 @@ class CompanyBusinessUnitFormDataProvider
         $companyUserTransfer->requireFkCompany();
 
         return [
-            CompanyBusinessUnitForm::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT => $this->getCompanyBusinessUnits($companyUserTransfer),
+            CompanyBusinessUnitForm::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT => $this->getCompanyBusinessUnits($companyUserTransfer, $idCompanyBusinessUnit),
         ];
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param int|null $idCompanyBusinessUnit
      *
      * @return array
      */
-    protected function getCompanyBusinessUnits(CompanyUserTransfer $companyUserTransfer): array
+    protected function getCompanyBusinessUnits(CompanyUserTransfer $companyUserTransfer, $idCompanyBusinessUnit = null): array
     {
         $idCompany = $companyUserTransfer->getFkCompany();
         $criteriaFilterTransfer = $this->createCompanyBusinessUnitCriteriaFilterTransfer($idCompany);
@@ -108,7 +109,7 @@ class CompanyBusinessUnitFormDataProvider
 
         $businessUnits = [];
         foreach ($companyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnit) {
-            if ($companyUserTransfer->getFkCompanyBusinessUnit() == $companyBusinessUnit->getIdCompanyBusinessUnit()) {
+            if ($idCompanyBusinessUnit == $companyBusinessUnit->getIdCompanyBusinessUnit()) {
                 continue;
             }
             $businessUnits[$companyBusinessUnit->getIdCompanyBusinessUnit()] = $companyBusinessUnit->getName();

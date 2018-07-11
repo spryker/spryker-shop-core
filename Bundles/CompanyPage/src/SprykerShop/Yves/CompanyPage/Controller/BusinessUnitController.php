@@ -92,10 +92,11 @@ class BusinessUnitController extends AbstractCompanyController
             ->createBusinessUnitFormDataProvider();
 
         $companyUserTransfer = $this->getCompanyUser();
+        $idCompanyBusinessUnit = $request->query->getInt('id');
 
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getBusinessUnitForm($dataProvider->getOptions($companyUserTransfer))
+            ->getBusinessUnitForm($dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit))
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
@@ -141,18 +142,18 @@ class BusinessUnitController extends AbstractCompanyController
             ->createBusinessUnitFormDataProvider();
 
         $companyUserTransfer = $this->getCompanyUser();
+        $idCompanyBusinessUnit = $request->query->getInt('id');
 
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getBusinessUnitForm($dataProvider->getOptions($companyUserTransfer))
+            ->getBusinessUnitForm($dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit))
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
-            $companyBusinessUnitId = $request->query->getInt('id');
             $companyBusinessUnitForm->setData(
                 $dataProvider->getData(
                     $this->getCompanyUser(),
-                    $companyBusinessUnitId
+                    $idCompanyBusinessUnit
                 )
             );
         } elseif ($companyBusinessUnitForm->isValid()) {
