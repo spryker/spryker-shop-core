@@ -93,4 +93,12 @@ class CatalogPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE);
     }
+
+    /**
+     * @return \SprykerShop\Yves\CatalogPage\CatalogPageConfig
+     */
+    public function getModuleConfig(): CatalogPageConfig
+    {
+        return $this->getConfig();
+    }
 }

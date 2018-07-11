@@ -55,7 +55,7 @@ class CatalogController extends AbstractController
         $searchString = $request->query->get('q', '');
         $idCategory = $categoryNode['id_category'];
         $isEmptyCategoryFilterValueVisible = $this->getFactory()
-            ->getConfig()
+            ->getModuleConfig()
             ->isEmptyCategoryFilterValueVisible();
 
         $parameters = $request->query->all();
