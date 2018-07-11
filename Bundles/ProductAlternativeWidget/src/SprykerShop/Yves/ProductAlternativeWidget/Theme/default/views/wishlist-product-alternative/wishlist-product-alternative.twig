@@ -19,7 +19,7 @@
                         <tr class="js-product-alternative-{{- wishlistItemSku -}}__show-all-target">
                             <td class="text-center" colspan="5">
                                 <div class="text-center">
-                                    <span class="js-product-alternative-{{- idShoppingListItem -}}__show-all-trigger">{{ 'product_alternative_widget.show_all' | trans }}</span>
+                                    <span class="js-product-alternative-{{- wishlistItemSku -}}__show-all-trigger">{{ 'product_alternative_widget.show_all' | trans }}</span>
                                 </div>
                             </td>
                         </tr>
@@ -68,7 +68,7 @@
                         </td>
                         <td>
                             <a class="button button--success" href="{{ url('wishlist/add-item', {sku: item.sku, 'product-id': item.idProductConcrete, 'wishlist-name': data.wishlistName}) }}">
-                                {{ 'product_alternative_widget.add_to_shopping_list' | trans}}
+                                {{ 'product_alternative_widget.add_to_wishlist' | trans}}
                             </a>
                         </td>
                     </tr>
