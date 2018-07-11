@@ -91,9 +91,11 @@ class BusinessUnitController extends AbstractCompanyController
             ->createCompanyPageFormFactory()
             ->createBusinessUnitFormDataProvider();
 
+        $companyUserTransfer = $this->getCompanyUser();
+
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getBusinessUnitForm()
+            ->getBusinessUnitForm($dataProvider->getOptions($companyUserTransfer))
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
@@ -138,9 +140,11 @@ class BusinessUnitController extends AbstractCompanyController
             ->createCompanyPageFormFactory()
             ->createBusinessUnitFormDataProvider();
 
+        $companyUserTransfer = $this->getCompanyUser();
+
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getBusinessUnitForm()
+            ->getBusinessUnitForm($dataProvider->getOptions($companyUserTransfer))
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {

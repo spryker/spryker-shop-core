@@ -8,11 +8,13 @@
 namespace SprykerShop\Yves\CompanyPage\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -24,6 +26,7 @@ class CompanyBusinessUnitForm extends AbstractType
     public const FIELD_EXTERNAL_URL = 'external_url';
     public const FIELD_FK_COMPANY = 'fk_company';
     public const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+    public const FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT = 'fk_parent_company_business_unit';
 
     /**
      * @return string
@@ -31,6 +34,16 @@ class CompanyBusinessUnitForm extends AbstractType
     public function getName(): string
     {
         return 'companyBusinessUnitForm';
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setRequired(static::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT);
     }
 
     /**
@@ -45,6 +58,7 @@ class CompanyBusinessUnitForm extends AbstractType
             ->addIdCompanyBusinessUnitField($builder)
             ->addFkCompanyField($builder)
             ->addNameField($builder)
+            ->addFkCompanyBusinessUnitField($builder, $options)
             ->addEmailField($builder)
             ->addPhoneField($builder)
             ->addExternalUrlField($builder);
@@ -142,6 +156,24 @@ class CompanyBusinessUnitForm extends AbstractType
     {
         $builder->add(static::FIELD_EXTERNAL_URL, UrlType::class, [
             'label' => 'company.account.business_unit.external_url',
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addFkCompanyBusinessUnitField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT, ChoiceType::class, [
+            'placeholder' => 'Parent BU name',
+            'label' => 'company.account.choose_parent_company_business_unit',
+            'choices' => array_flip($options[static::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT]),
             'required' => false,
         ]);
 

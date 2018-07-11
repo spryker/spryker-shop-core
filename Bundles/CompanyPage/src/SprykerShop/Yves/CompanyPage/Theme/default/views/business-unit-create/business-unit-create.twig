@@ -7,11 +7,20 @@
     activePage: 'business-unit'
 } %}
 
+{% block companyNavigation %}
+    {% include molecule('business-unit-navigation', 'CompanyPage') with {
+        class: 'box',
+        data: {
+            activePage: data.activePage
+        }
+    } only %}
+{% endblock %}
+
 {% block companyContent %}
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'company.account.business_unit.edit_information' | trans,
+                title: 'company.account.business_unit.create' | trans,
                 form: data.form,
                 layout: {
                     email: 'col col--sm-12 col--lg-6',
