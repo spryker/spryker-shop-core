@@ -55,9 +55,12 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 
         $productViewTransferList = [];
         $productConcreteIds = $productReplacementForStorage->getProductConcreteIds();
-        $productConcreteIds += $this->findConcreteProductIdsByAbstractProductIds(
-            $productReplacementForStorage->getProductAbstractIds(),
-            $localeName
+        $productConcreteIds = array_merge(
+            $productConcreteIds,
+            $this->findConcreteProductIdsByAbstractProductIds(
+                $productReplacementForStorage->getProductAbstractIds(),
+                $localeName
+            )
         );
         foreach ($productConcreteIds as $idProduct) {
             $productViewTransferList[] = $this->findConcreteProductViewTransfer($idProduct, $localeName);
@@ -131,14 +134,8 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
             return null;
         }
 
-        $productViewTransfer = $this->productStorageClient
+        return $this->productStorageClient
             ->mapProductStorageData($productAbstractStorageData, $localeName);
-
-        if ($productViewTransfer->getAvailable()) {
-            return $productViewTransfer;
-        }
-
-        return null;
     }
 
     /**
