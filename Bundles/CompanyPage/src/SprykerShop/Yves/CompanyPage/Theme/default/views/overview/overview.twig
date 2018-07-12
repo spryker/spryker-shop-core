@@ -1,13 +1,19 @@
 {% extends template('page-layout-company', 'CompanyPage') %}
 
 {% define data = {
-    title: 'company.account.overview' | trans
+    title: 'company.account.overview' | trans,
+    company: _view.company
 } %}
 
 {% block companyContent %}
     <div class="box">
         <h5>{{ 'company.account.overview' | trans }}</h5>
         <hr />
-        <p>{{ 'Company Information' | trans }}</p>
+        <table>
+            <tr>
+                <td>{{ 'company.account.name' | trans }}:</td>
+                <td>{{ data.company.name }}</td>
+            </tr>
+        </table>
     </div>
 {% endblock %}
