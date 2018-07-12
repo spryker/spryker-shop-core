@@ -53,6 +53,11 @@
         {% if data.showUserMenu %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li class="menu__item"><a href="{{ url('customer/overview') }}">{{ 'customer.profile'|trans }}</a></li>
+                <li class="menu__item">
+                    {% if widgetGlobalExists('CompanyWidgetPlugin') %}
+                        {{ widgetGlobal('CompanyWidgetPlugin') }}
+                    {% endif %}
+                </li>
                 <li class="menu__item"><a href="{{ url('wishlist/overview') }}">{{ 'wishlist.wishlist'|trans }}</a></li>
                 <li class="menu__item"><a href="{{ url('logout') }}">{{ 'customer.logout'|trans }}</a></li>
             {% else %}
