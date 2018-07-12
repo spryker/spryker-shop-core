@@ -1,0 +1,28 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'business-unit-chart-item',
+    tag: 'div'
+} %}
+
+{#{% define data = {#}
+    {#node: required,#}
+    {#level: 1#}
+{#} %}#}
+
+{% block body %}
+    <div class="chart-item__name">
+        {#<a href="{{ url('company/business-unit/update', {'id': data.node.idCompanyBusinessUnit}) }}">#}
+            {#{{ data.node.businessUnit.name }}#}
+        {#</a>#}
+    </div>
+    {#{% for item in data.node.children %}#}
+        {#{% include molecule('business-unit-chart-item', 'CompanyPage') with {#}
+            {#data: {#}
+                {#businessUnit: item,#}
+                {#level: data.level + 1#}
+            {#},#}
+            {#class: 'chart-item__indent-' ~ data.level,#}
+        {#} only %}#}
+    {#{% endfor %}#}
+{% endblock %}

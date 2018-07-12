@@ -2,15 +2,6 @@
 
 {% define data = {
     businessUnits: _view.businessUnitCollection,
-
-    pagination: {
-        parameters: {},
-        currentPage: _view.pagination.page,
-        paginationPath: 'company/business-unit',
-        maxPage: _view.pagination.lastPage,
-        showAlwaysFirstAndLast: true
-    },
-
     title: 'company.account.business_unit' | trans,
     activePage: 'business-unit'
 } %}
@@ -24,14 +15,10 @@
         {% if data.businessUnits is empty %}
             <p>{{ 'company.account.business_unit.no_units' | trans }}</p>
         {% else %}
-            {% include molecule('business-unit-table', 'CompanyPage') with {
+            {% include molecule('business-unit-chart-item', 'CompanyPage') with {
                 data: {
                     businessUnits: data.businessUnits
                 }
-            } only %}
-            <hr/>
-            {% include molecule('pagination') with {
-                data: data.pagination
             } only %}
         {% endif %}
     </div>

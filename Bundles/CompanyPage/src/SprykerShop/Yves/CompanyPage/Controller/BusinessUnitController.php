@@ -41,14 +41,8 @@ class BusinessUnitController extends AbstractCompanyController
      */
     protected function executeIndexAction(Request $request): array
     {
-        $businessUnitCollectionTransfer = $this->createBusinessUnitCriteriaFilterTransfer($request);
-        $businessUnitCollectionTransfer = $this->getFactory()
-            ->getCompanyBusinessUnitClient()
-            ->getCompanyBusinessUnitCollection($businessUnitCollectionTransfer);
-
         return [
-            'pagination' => $businessUnitCollectionTransfer->getPagination(),
-            'businessUnitCollection' => $businessUnitCollectionTransfer->getCompanyBusinessUnits(),
+            'businessUnitCollection' => $this->getFactory()->createCompanyBusinessUnitTreeBuilder()->getCompanyBusinessUnitTree(),
         ];
     }
 
