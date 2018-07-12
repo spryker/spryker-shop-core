@@ -25,7 +25,7 @@ class VolumePriceProductWidgetToPriceProductStorageClientBridge implements Volum
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getPriceProductAbstractTransfers(int $idProductAbstract): array
     {
@@ -35,7 +35,7 @@ class VolumePriceProductWidgetToPriceProductStorageClientBridge implements Volum
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getPriceProductConcreteTransfers(int $idProductConcrete): array
     {

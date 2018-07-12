@@ -29,7 +29,7 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
-     * @see \Spryker\Shared\VolumePriceProduct\VolumePriceProductConfig::VOLUME_PRICE_TYPE
+     * @see \Spryker\Shared\PriceProductVolume\VolumePriceProductConfig::VOLUME_PRICE_TYPE
      */
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 
@@ -199,12 +199,14 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
         $volumePriceData = $this->utilEncodingService->decodeJson(
             $priceProductTransfer->getMoneyValue()->getPriceData(),
             true
-        )[static::VOLUME_PRICE_TYPE];
+        )[static::VOLUME_PRICE_TYPE] ?: [];
 
         foreach ($volumePriceData as $volumeProductStorageData) {
-            $volumeProductPriceCollectionTransfer->addVolumePrice(
-                $this->formatVolumeProductPriceTransfer($volumeProductStorageData)
-            );
+            if ($this->isVolumePriceDataValid($volumeProductStorageData)) {
+                $volumeProductPriceCollectionTransfer->addVolumePrice(
+                    $this->formatVolumeProductPriceTransfer($volumeProductStorageData)
+                );
+            }
         }
     }
 
@@ -224,5 +226,25 @@ class VolumePriceProductResolver implements VolumePriceProductResolverInterface
         );
 
         return $volumePrice;
+    }
+
+    /**
+     * @param array $priceData
+     *
+     * @return bool
+     */
+    protected function isVolumePriceDataValid(array $priceData): bool
+    {
+        if (!isset($priceData[static::VOLUME_PRICE_QUANTITY])
+            || !is_numeric($priceData[static::VOLUME_PRICE_QUANTITY])) {
+            return false;
+        }
+
+        if (!isset($priceData[static::VOLUME_PRICE_MODE_MAPPING[$this->priceClient->getCurrentPriceMode()]])
+            || !is_numeric($priceData[static::VOLUME_PRICE_MODE_MAPPING[$this->priceClient->getCurrentPriceMode()]])) {
+            return false;
+        }
+
+        return true;
     }
 }
