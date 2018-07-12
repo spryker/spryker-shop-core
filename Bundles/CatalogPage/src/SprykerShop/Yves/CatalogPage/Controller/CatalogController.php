@@ -118,7 +118,7 @@ class CatalogController extends AbstractController
             ->catalogSearch($searchString, $request->query->all());
 
         $isEmptyCategoryFilterValueVisible = $this->getFactory()
-            ->getConfig()
+            ->getModuleConfig()
             ->isEmptyCategoryFilterValueVisible();
 
         $searchResults['searchString'] = $searchString;
