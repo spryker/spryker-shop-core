@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface VolumePriceProductWidgetPluginInterface extends WidgetPluginInterface
 {
-    public const NAME = 'VolumePriceProductWidgetPlugin';
+    public const NAME = 'PriceProductVolumeWidgetPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
