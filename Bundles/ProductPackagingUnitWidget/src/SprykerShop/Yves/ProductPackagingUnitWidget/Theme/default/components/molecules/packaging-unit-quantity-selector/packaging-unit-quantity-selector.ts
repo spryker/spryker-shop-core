@@ -59,7 +59,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.leadSalesUnitSelect = <HTMLSelectElement>document.querySelector('.select-lead-measurement-unit');
         this.amountInSalesUnitInput = <HTMLInputElement>document.querySelector('#user-amount');
         this.amountDefaultInBaseUnitInput = <HTMLInputElement>document.querySelector('#default-amount');
-        this.amountInBaseUnitInput = <HTMLInputElement>document.querySelector('#amount-packaging-unit');
+        this.amountInBaseUnitInput = <HTMLInputElement>document.querySelector('#amount');
         this.packagingUnitAmountInput = <HTMLInputElement>document.querySelector('#packaging-unit-amount');
         this.productPackagingNewPriceBlock = <HTMLInputElement>document.querySelector('#product-packaging-new-price-block');
         this.productPackagingNewPriceValueBlock = <HTMLInputElement>document.querySelector('#product-packaging-new-price-value-block');
