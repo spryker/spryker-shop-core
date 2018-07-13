@@ -90,7 +90,9 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.initCurrentLeadSalesUnit();
         this.initFormDefaultValues();
         this.mapEvents();
-        this.amountInputChange();
+        if(this.amountInBaseUnitInput) {
+            this.amountInputChange();
+        }
     }
 
     private initJson() {
@@ -130,12 +132,15 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private initFormDefaultValues() {
-        this.qtyInSalesUnitInput.value = this.getMinQuantity();
-        this.amountInSalesUnitInput.value = this.getDefaultAmount();
-        this.amountDefaultInBaseUnitInput.value = this.getDefaultAmount();
-        this.amountInBaseUnitInput.value = this.getDefaultAmount();
-        this.measurementUnitInput.value = this.currentSalesUnit.id_product_measurement_sales_unit;
-        this.leadSalesUnitSelect.value = this.currentLeadSalesUnit.id_product_measurement_sales_unit;
+        if(this.amountInBaseUnitInput) {
+            this.qtyInSalesUnitInput.value = this.getMinQuantity();
+            this.amountInSalesUnitInput.value = this.getDefaultAmount();
+            this.amountDefaultInBaseUnitInput.value = this.getDefaultAmount();
+            this.amountInBaseUnitInput.value = this.getDefaultAmount();
+            this.leadSalesUnitSelect.value = this.currentLeadSalesUnit.id_product_measurement_sales_unit;
+            this.measurementUnitInput.value = this.currentSalesUnit.id_product_measurement_sales_unit;
+
+        }
     }
 
     private initTranslations() {
@@ -191,6 +196,11 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
+
+        if(this.amountInBaseUnitInput) {
+            this.amountInputChange();
+        }
+
         this.addToCartButton.removeAttribute("disabled");
         this.hideNotifications();
 
@@ -404,7 +414,10 @@ export default class PackagingUnitQuantitySelector extends Component {
             return;
         }
 
-        this.amountInBaseUnitInput.value = amountInBaseUnits.toString();
+        let quantity = +this.qtyInBaseUnitInput.value;
+        let totalAmount = amountInBaseUnits * quantity;
+
+        this.amountInBaseUnitInput.value = totalAmount.toString();
         this.addToCartButton.removeAttribute("disabled");
         this.hidePackagingUnitRestrictionNotifications();
 
