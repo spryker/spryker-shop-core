@@ -222,10 +222,12 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
      */
     protected function translateCheckoutErrorMessage(CheckoutErrorTransfer $checkoutErrorTransfer): string
     {
+        $checkoutErrorMessage = $checkoutErrorTransfer->getMessage();
+
         return $this->glossaryStorageClient->translate(
-            $checkoutErrorTransfer->getMessage(),
+            $checkoutErrorMessage,
             $this->currentLocale,
             $checkoutErrorTransfer->getParameters()
-        );
+        ) ?: $checkoutErrorMessage;
     }
 }
