@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeMapper;
 
 use Generated\Shared\Transfer\AttributeMapStorageTransfer;
+use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Shared\Product\ProductConfig;
 use SprykerShop\Yves\ProductAlternativeWidget\Dependency\Client\ProductAlternativeWidgetToProductAlternativeStorageClientInterface;
@@ -77,22 +78,93 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      */
     public function getAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array
     {
-        $productReplacementForStorage = $this->alternativeStorageClient
-            ->findProductAlternativeStorage($productViewTransfer->getSku());
-        if (!$productReplacementForStorage) {
+        if ($productViewTransfer->getIdProductConcrete()) {
+            return $this->getAlternativeProductsByConcreteProductSku($productViewTransfer->getSku(), $localeName);
+        }
+
+        return $this->getAlternativeProductsByAbstractProductSku($productViewTransfer, $localeName);
+    }
+
+    /**
+     * @param string $concreteSku
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function getAlternativeProductsByConcreteProductSku(string $concreteSku, string $localeName): array
+    {
+        $productAlternativeStorage = $this->alternativeStorageClient->findProductAlternativeStorage($concreteSku);
+        if (!$productAlternativeStorage) {
             return [];
         }
 
+        return $this->mapProductAlternativeStorageToProductView($productAlternativeStorage, $localeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function getAlternativeProductsByAbstractProductSku(ProductViewTransfer $productViewTransfer, string $localeName): array
+    {
+        $productAlternativeStorage = $this->findProductAlternativeStorageForAbstractProduct($productViewTransfer);
+        if (!$productAlternativeStorage) {
+            return [];
+        }
+
+        return $this->mapProductAlternativeStorageToProductView($productAlternativeStorage, $localeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAlternativeStorageTransfer $productAlternativeStorage
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function mapProductAlternativeStorageToProductView(
+        ProductAlternativeStorageTransfer $productAlternativeStorage,
+        string $localeName
+    ): array {
         $productViewTransferList = [];
-        foreach ($productReplacementForStorage->getProductAbstractIds() as $idProduct) {
+        foreach ($productAlternativeStorage->getProductAbstractIds() as $idProduct) {
             $productViewTransferList[] = $this->findAbstractProductViewTransfer($idProduct, $localeName);
         }
 
-        foreach ($productReplacementForStorage->getProductConcreteIds() as $idProduct) {
+        foreach ($productAlternativeStorage->getProductConcreteIds() as $idProduct) {
             $productViewTransferList[] = $this->findConcreteProductViewTransfer($idProduct, $localeName);
         }
 
         return array_filter($productViewTransferList);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer|null
+     */
+    protected function findProductAlternativeStorageForAbstractProduct(ProductViewTransfer $productViewTransfer): ?ProductAlternativeStorageTransfer
+    {
+        $attributeMap = $productViewTransfer->getAttributeMap();
+        if (!$attributeMap) {
+            return null;
+        }
+        $productAlternativeStorageTransfer = new ProductAlternativeStorageTransfer();
+        $productAbstractIds = [];
+        $productConcreteIds = [];
+        foreach (array_keys($attributeMap->getProductConcreteIds()) as $concreteSku) {
+            $concreteProductAlternativeStorageTransfer = $this->alternativeStorageClient->findProductAlternativeStorage($concreteSku);
+            if (!$concreteProductAlternativeStorageTransfer) {
+                return null;
+            }
+            $productAbstractIds = array_merge($productAbstractIds, $concreteProductAlternativeStorageTransfer->getProductAbstractIds());
+            $productConcreteIds = array_merge($productConcreteIds, $concreteProductAlternativeStorageTransfer->getProductConcreteIds());
+        }
+
+        return $productAlternativeStorageTransfer
+            ->setProductAbstractIds(array_unique($productAbstractIds))
+            ->setProductConcreteIds(array_unique($productConcreteIds));
     }
 
     /**
@@ -150,7 +222,10 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
         foreach ($abstractProductIds as $idProductAbstract) {
             $productAbstractStorageData = $this->productStorageClient
                 ->getProductAbstractStorageData($idProductAbstract, $localeName);
-            $productConcreteIds += $productAbstractStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::PRODUCT_CONCRETE_IDS] ?? [];
+            $productConcreteIds = array_merge(
+                $productConcreteIds,
+                $productAbstractStorageData[ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::PRODUCT_CONCRETE_IDS] ?? []
+            );
         }
 
         return array_values($productConcreteIds);
