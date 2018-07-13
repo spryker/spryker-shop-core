@@ -57,7 +57,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected $currentLocale;
 
     /**
-     * @var \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface
      */
     protected $glossaryStorageClient;
 
