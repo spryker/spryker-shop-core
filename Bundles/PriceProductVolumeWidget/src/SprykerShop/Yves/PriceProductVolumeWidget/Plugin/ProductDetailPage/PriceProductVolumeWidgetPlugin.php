@@ -10,12 +10,12 @@ namespace SprykerShop\Yves\PriceProductVolumeWidget\Plugin\ProductDetailPage;
 use Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\VolumePriceProductWidget\VolumePriceProductWidgetPluginInterface;
+use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\VolumePriceProductWidget\PriceProductVolumeWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\PriceProductVolumeWidget\PriceProductVolumeWidgetFactory getFactory()
  */
-class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements VolumePriceProductWidgetPluginInterface
+class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements PriceProductVolumeWidgetPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -28,7 +28,7 @@ class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements Vol
             ->addParameter('product', $productViewTransfer)
             ->addParameter(
                 'volumeProductPrices',
-                $this->findVolumeProductPrice($productViewTransfer)
+                $this->findPriceProductVolume($productViewTransfer)
             );
     }
 
@@ -61,7 +61,7 @@ class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements Vol
      *
      * @return \Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer
      */
-    protected function findVolumeProductPrice(ProductViewTransfer $productViewTransfer): PriceProductVolumeCollectionTransfer
+    protected function findPriceProductVolume(ProductViewTransfer $productViewTransfer): PriceProductVolumeCollectionTransfer
     {
         return $this->getFactory()
             ->createPriceProductVolumeResolver()

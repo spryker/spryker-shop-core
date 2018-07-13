@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\VolumePriceProduc
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface VolumePriceProductWidgetPluginInterface extends WidgetPluginInterface
+interface PriceProductVolumeWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'PriceProductVolumeWidgetPlugin';
 
