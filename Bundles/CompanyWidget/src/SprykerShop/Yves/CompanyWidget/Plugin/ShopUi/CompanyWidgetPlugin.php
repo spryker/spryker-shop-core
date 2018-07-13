@@ -58,7 +58,8 @@ class CompanyWidgetPlugin extends AbstractWidgetPlugin implements CompanyWidgetP
 
         if ($customer
             && $customer->getCompanyUserTransfer()
-            && $customer->getCompanyUserTransfer()->getCompany()
+            && $customer->getCompanyUserTransfer()->getCompanyBusinessUnit()
+            && $customer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getCompany()
         ) {
             return $customer->getCompanyUserTransfer()->getCompany()->getName();
         }
