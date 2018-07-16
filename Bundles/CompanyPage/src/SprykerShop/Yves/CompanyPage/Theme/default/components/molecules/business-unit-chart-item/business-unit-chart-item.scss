@@ -1,4 +1,4 @@
-$business-unit-chart-link-bg: #f5f5f5;
+$business-unit-chart-link-bg: $setting-color-gray;
 $business-unit-chart-link-color: $setting-color-darkest;
 
 @mixin business-unit-chart-item($name: '.business-unit-chart-item') {
