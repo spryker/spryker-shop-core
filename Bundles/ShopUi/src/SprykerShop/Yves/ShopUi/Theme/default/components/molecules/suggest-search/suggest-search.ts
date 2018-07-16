@@ -40,16 +40,16 @@ export default class SuggestSearch extends Component {
         this.activeItemIndex = 0;
     }
 
-    readyCallback(): void {
-        this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}-provider`);
+    protected readyCallback(): void {
+        this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}--provider`);
         this.searchInputSelector = <string> this.ajaxProvider.getAttribute('inputSelector');
-        this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}-container`);
+        this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}--container`);
         this.searchInput = <HTMLInputElement> document.querySelector(this.searchInputSelector);
         this.createHintInput();
         this.mapEvents();
     }
 
-    mapEvents(): void {
+    protected mapEvents(): void {
         this.searchInput.addEventListener('keyup', debounce(this.debounceDelay, (event: Event) => this.onInputKeyUp(event)));
         this.searchInput.addEventListener('keydown', throttle(this.throttleDelay, (event: Event) => this.onInputKeyDown(<KeyboardEvent> event)));
         this.searchInput.addEventListener('blur', (event: Event) => this.onInputFocusOut(event));
@@ -57,7 +57,7 @@ export default class SuggestSearch extends Component {
         this.searchInput.addEventListener('click', (event: Event) => this.onInputClick(event));
     }
 
-    async onInputKeyUp(event: Event): Promise<void> {
+    protected async onInputKeyUp(event: Event): Promise<void> {
         const suggestQuery = this.getSearchValue();
         if (suggestQuery != this.currentSearchValue && suggestQuery.length >= this.lettersTrashold) {
             await this.getSuggestions();
@@ -68,7 +68,7 @@ export default class SuggestSearch extends Component {
         }
     }
 
-    onInputKeyDown(event: KeyboardEvent): void {
+    protected onInputKeyDown(event: KeyboardEvent): void {
         var keyCode = event.keyCode;
 
         switch (this.keyboardCodes[keyCode]) {
@@ -81,7 +81,7 @@ export default class SuggestSearch extends Component {
         }
     }
 
-    onInputClick(event: Event): void {
+    protected onInputClick(event: Event): void {
         this.activeItemIndex = 0;
         if (this.isNavigationExist()) {
             this.updateNavigation();
@@ -89,60 +89,60 @@ export default class SuggestSearch extends Component {
         }
     }
 
-    onTab(event: KeyboardEvent): boolean {
+    protected onTab(event: KeyboardEvent): boolean {
         this.searchInput.value = this.hint;
         event.preventDefault();
         return false;
     }
 
-    onArrowUp(event: KeyboardEvent) {
+    protected onArrowUp(event: KeyboardEvent) {
         this.activeItemIndex = this.activeItemIndex > 0 ? this.activeItemIndex - 1 : 0;
         this.updateNavigation();
     }
 
-    onArrowDown(event: KeyboardEvent) {
+    protected onArrowDown(event: KeyboardEvent) {
         this.activeItemIndex = this.activeItemIndex < this.navigation.length ? this.activeItemIndex + 1 : 0;
         this.updateNavigation();
     }
 
-    onArrowLeft(event: KeyboardEvent) {
+    protected onArrowLeft(event: KeyboardEvent) {
         this.activeItemIndex = 1;
         this.updateNavigation();
     }
 
-    onArrowRight(event: KeyboardEvent): void {
+    protected onArrowRight(event: KeyboardEvent): void {
         this.activeItemIndex = this.getFirstProductNavigationIndex() + 1;
         this.updateNavigation();
     }
 
-    onEnter(event: KeyboardEvent): void {
+    protected onEnter(event: KeyboardEvent): void {
         this.getActiveNavigationItem().click();
         event.preventDefault();
     }
 
-    onInputFocusIn(event: Event): void {
+    protected onInputFocusIn(event: Event): void {
         this.activeItemIndex = 0;
     }
 
-    onInputFocusOut(event: Event): void {
+    protected onInputFocusOut(event: Event): void {
         this.hideSugestions();
     }
 
-    getActiveNavigationItem(): HTMLElement {
+    protected getActiveNavigationItem(): HTMLElement {
         return this.navigation[this.activeItemIndex - 1];
     }
 
-    getFirstProductNavigationIndex(): number {
+    protected getFirstProductNavigationIndex(): number {
         return this.navigation.findIndex((element: HTMLElement): boolean => {
-            return element.classList.contains('js-suggestions-navigable-product');
+            return element.classList.contains(`${this.jsName}__product--navigable`);
         });
     }
 
-    getNavigation(): HTMLElement[] {
-        return <HTMLElement[]> Array.from(this.getElementsByClassName('js-suggestions-navigable'))
+    protected getNavigation(): HTMLElement[] {
+        return <HTMLElement[]> Array.from(this.getElementsByClassName(`${this.jsName}--navigable`))
     }
 
-    updateNavigation(): void {
+    protected updateNavigation(): void {
         if (this.isNavigationExist()) {
             this.navigation.forEach(element => {
                 element.classList.remove('is-active');
@@ -158,15 +158,15 @@ export default class SuggestSearch extends Component {
         }
     }
 
-    isNavigationExist(): boolean {
+    protected isNavigationExist(): boolean {
         return (this.navigation && !!this.navigation.length);
     }
 
-    getSearchValue(): string {
+    protected getSearchValue(): string {
         return this.searchInput.value.trim();
     }
 
-    async getSuggestions(): Promise<void> {
+    protected async getSuggestions(): Promise<void> {
         const suggestQuery = this.getSearchValue();
         this.currentSearchValue = suggestQuery;
 
@@ -193,7 +193,7 @@ export default class SuggestSearch extends Component {
         this.updateNavigation();
     }
 
-    addUrlParams(params: Array<Array<string>>): void {
+    protected addUrlParams(params: Array<Array<string>>): void {
         const baseSuggestUrl = this.ajaxProvider.getAttribute('baseSuggestUrl');
         let paramsString = '?';
         params.forEach( (element, index) => {
@@ -211,7 +211,7 @@ export default class SuggestSearch extends Component {
         this.suggestionsContainer.classList.add('is-hidden');
     }
 
-    createHintInput(): void {
+    protected createHintInput(): void {
         this.hintInput = document.createElement('input');
         this.hintInput.classList.add(`${this.name}__hint`, 'input', 'input--expand');
         this.searchInput.parentNode.appendChild(this.hintInput);
@@ -223,7 +223,7 @@ export default class SuggestSearch extends Component {
         this.setHintValue(hintValue);
     }
 
-    setHintValue(value: string): void {
+    protected setHintValue(value: string): void {
         this.hintInput.value =  value;
     }
 }

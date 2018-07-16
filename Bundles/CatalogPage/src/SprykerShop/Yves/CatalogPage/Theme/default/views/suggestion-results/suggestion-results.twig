@@ -2,18 +2,18 @@
 
 {% define config = {
     name: 'suggestion-results',
+} %}
+
+{% define data = {
+    completionList: completion | default(),
+    suggestionByType: suggestionByType,
     suggestionsLength: 6,
     categoriesLength: 6,
     pagesLength: 3,
     productsLength: 6
 } %}
 
-{% define data = {
-    completionList: completion | default(),
-    suggestionByType: suggestionByType
-} %}
-
-{% set leftVisible = (data.completionList is defined and data.completionList is not empty)
+{% set leftVisible = (data.completionList is not empty)
     or (data.suggestionByType.category is defined and data.suggestionByType.category is not empty)
     or (data.suggestionByType.cms_page is defined and data.suggestionByType.cms_page is not empty) %}
 
@@ -29,7 +29,7 @@
                         data: {
                             name: 'global.search.suggestions' | trans,
                             items: data.completionList,
-                            length: config.suggestionsLength,
+                            length: data.suggestionsLength,
                             isTitleHiddenOnTablet: false,
                             isSuggestion: true
                         }
@@ -41,7 +41,7 @@
                         data: {
                             name: 'global.search.suggestion.in_categories' | trans,
                             items: data.suggestionByType.category | default([]),
-                            length: config.categoriesLength
+                            length: data.categoriesLength
                         }
                     } only %}
                 </div>
@@ -51,7 +51,7 @@
                         data: {
                             name: 'global.search.suggestion.in_cms' | trans,
                             items: data.suggestionByType.cms_page | default(),
-                            length: config.pagesLength
+                            length: data.pagesLength
                         }
                     } only %}
                 </div>
@@ -61,7 +61,7 @@
         {% if rightVisible %}
             <div class="col is-hidden-sm-md col--sm-12 col--lg-6">
                 <h6 class="{{ config.name }}__title">{{ 'global.search.suggestion.in_products' | trans }}</h6>
-                {% for product in data.suggestionByType.product_abstract | slice(0, config.productsLength)  %}
+                {% for product in data.suggestionByType.product_abstract | slice(0, data.productsLength)  %}
                     {% include molecule('suggestion-product', 'CatalogPage') with {
                         data: {
                             product: product

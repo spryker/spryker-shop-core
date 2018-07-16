@@ -15,10 +15,10 @@
 } %}
 
 {% block body %}
-    <div class="box is-hidden {{ config.name }}__container {{ config.jsName }}-container"></div>
+    <div class="box is-hidden {{ config.name }}__container {{ config.jsName }}--container"></div>
 
     {% include molecule('ajax-provider') with {
-        class: config.jsName ~ '-provider',
+        class: config.jsName ~ '--provider',
         attributes: {
             method: 'post',
             baseSuggestUrl: data.suggestionUrl,
@@ -30,7 +30,7 @@
     {% include molecule('ajax-loader') with {
         modifiers: ['big'],
         attributes: {
-            'provider-selector': '.' ~ config.jsName ~ '-provider'
+            'provider-selector': '.' ~ config.jsName ~ '--provider'
         }
     } only %}
 {% endblock %}

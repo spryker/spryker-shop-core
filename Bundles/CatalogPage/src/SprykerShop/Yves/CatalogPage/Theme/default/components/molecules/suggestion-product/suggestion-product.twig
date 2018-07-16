@@ -5,24 +5,21 @@
 } %}
 
 {% define data = {
-    product: required,
-    image: data.product.images | first | default,
-    alt: data.product.abstract_name | default(''),
-    title: data.product.abstract_name | default(''),
-    price: data.product.price | default,
-    originalPrice: data.product.prices.ORIGINAL | default
+    product: required
 } %}
 
+{% set image = data.product.images | first | default()  %}
+
 {% block body %}
-    <a class="grid js-suggestions-navigable js-suggestions-navigable-product {{ config.name }}__link" href="{{ data.product.url }}">
+    <a class="grid js-suggest-search--navigable js-suggest-search__product--navigable {{ config.name }}__link" href="{{ data.product.url }}">
         <span class="col col--sm-3">
-            {% if data.image %}
+            {% if image %}
                 {% include atom('thumbnail') with {
                     modifiers: ['smaller', 'has-border'],
                     attributes: {
-                        alt: data.alt,
-                        src: data.image.external_url_small,
-                        title: data.title
+                        alt: data.product.abstract_name,
+                        src: image.external_url_small,
+                        title: data.product.abstract_name
                     },
                     class: config.name ~ '__thumbnail'
                 } only %}
@@ -34,8 +31,8 @@
 
             {% include molecule('price') with {
                 data: {
-                    amount: data.price | money,
-                    originalAmount: data.originalPrice | money
+                    amount: data.product.price | money,
+                    originalAmount: data.product.prices.ORIGINAL is not defined or data.product.prices.ORIGINAL is empty ? null : data.product.prices.ORIGINAL | money
                 }
             } only %}
         </span>
