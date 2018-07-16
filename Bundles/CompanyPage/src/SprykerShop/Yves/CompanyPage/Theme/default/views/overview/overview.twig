@@ -8,12 +8,13 @@
 {% block companyContent %}
     <div class="box">
         <h5>{{ 'company.account.overview' | trans }}</h5>
+
         <hr />
-        <table>
-            <tr>
-                <td>{{ 'company.account.name' | trans }}:</td>
-                <td>{{ data.company.name }}</td>
-            </tr>
-        </table>
+
+        {% include molecule('overview-info', 'CompanyPage') with {
+            data: {
+                companyName: data.company.name
+            }
+        } only %}
     </div>
 {% endblock %}
