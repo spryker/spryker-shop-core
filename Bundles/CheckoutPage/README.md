@@ -1,6 +1,6 @@
 # CheckoutPage Module
 
-{{ADD DESCRIPTION HERE}}
+CheckoutPage module provides a website page shown to a customer during the step-by-step checkout process.
 
 ## Installation
 
