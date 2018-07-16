@@ -24,7 +24,7 @@ class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implemen
     public function initialize(ItemTransfer $itemTransfer): void
     {
         $this
-            ->addParameter('itemTransfer', $itemTransfer);
+            ->addParameter('item', $itemTransfer);
     }
 
     /**

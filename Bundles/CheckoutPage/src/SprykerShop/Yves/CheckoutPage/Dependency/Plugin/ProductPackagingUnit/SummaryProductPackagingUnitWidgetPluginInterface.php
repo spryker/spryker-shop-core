@@ -14,9 +14,9 @@ interface SummaryProductPackagingUnitWidgetPluginInterface extends WidgetPluginI
     const NAME = 'SummaryProductPackagingUnitWidgetPlugin';
 
     /**
-     * @param array $data
+     * @param array $item
      *
      * @return void
      */
-    public function initialize(array $data): void;
+    public function initialize(array $item): void;
 }

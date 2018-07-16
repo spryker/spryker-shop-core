@@ -13,14 +13,14 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\ProductPackagingUnit\Summary
 class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements SummaryProductPackagingUnitWidgetPluginInterface
 {
     /**
-     * @param array $data
+     * @param array $item
      *
      * @return void
      */
-    public function initialize(array $data): void
+    public function initialize(array $item): void
     {
         $this
-            ->addParameter('data', $data);
+            ->addParameter('item', $item);
     }
 
     /**

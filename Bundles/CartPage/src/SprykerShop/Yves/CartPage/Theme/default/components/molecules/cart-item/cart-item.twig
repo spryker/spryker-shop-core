@@ -51,9 +51,7 @@
                 }
             } only %}
 
-            {% if widgetExists('CartProductPackagingUnitWidgetPlugin') %}
-                {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }}
-            {% endif %}
+            {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }}
         </div>
 
         <div class="col col--sm-12 col--lg-4">
