@@ -15,9 +15,9 @@ use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 interface ProductMeasurementUnitReaderInterface
 {
     /**
-     * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementUnit() instead.
-     *
      * @see ProductMeasurementUnitStorageClientInterface::findProductMeasurementUnit()
+     *
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementUnit() instead.
      *
      * @param int $idProductMeasurementUnit
      *

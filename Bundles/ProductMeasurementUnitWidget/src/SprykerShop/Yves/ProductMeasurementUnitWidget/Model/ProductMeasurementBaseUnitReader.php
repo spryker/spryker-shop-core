@@ -43,9 +43,9 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
     }
 
     /**
-     * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementBaseUnitByIdProduct() instead.
-     *
      * @see ProductMeasurementUnitStorageClientInterface::findProductMeasurementBaseUnitByIdProduct()
+     *
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementBaseUnitByIdProduct() instead.
      *
      * @param int $idProductConcrete
      *

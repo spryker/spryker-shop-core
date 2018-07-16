@@ -16,9 +16,9 @@ use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 interface ProductMeasurementUnitMapperInterface
 {
     /**
-     * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementUnit() instead.
-     *
      * @see ProductMeasurementUnitStorageClientInterface::findProductMeasurementUnit()
+     *
+     * @deprecated Use ProductMeasurementUnitStorageClientInterface::findProductMeasurementUnit() instead.
      *
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer $measurementUnitStorageTransfer
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $measurementUnitTransfer
