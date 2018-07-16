@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\PriceProductVolumeWidget\Business\PriceProductVolume;
+namespace SprykerShop\Yves\PriceProductVolumeWidget\PriceProductResolver\PriceProductVolume;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer;
@@ -84,13 +84,13 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
      */
     public function resolveVolumeProductPrices(ProductViewTransfer $productViewTransfer): PriceProductVolumeCollectionTransfer
     {
-        $volumeProductPrices = $this->findVolumePriceByIdProductConcrete($productViewTransfer);
+        $volumeProductPrices = $this->findVolumePriceByIdProductConcrete($productViewTransfer->getIdProductConcrete());
 
         if ($volumeProductPrices != null) {
             return $volumeProductPrices;
         }
 
-        $volumeProductPrices = $this->findVolumePriceByIdProductAbstract($productViewTransfer);
+        $volumeProductPrices = $this->findVolumePriceByIdProductAbstract($productViewTransfer->getIdProductAbstract());
 
         if ($volumeProductPrices != null) {
             return $volumeProductPrices;
@@ -100,19 +100,19 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param int|null $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer|null
      */
-    protected function findVolumePriceByIdProductConcrete(ProductViewTransfer $productViewTransfer): ?PriceProductVolumeCollectionTransfer
+    protected function findVolumePriceByIdProductConcrete(?int $idProductConcrete): ?PriceProductVolumeCollectionTransfer
     {
-        if ($productViewTransfer->getIdProductConcrete() != null) {
+        if ($idProductConcrete != null) {
             $priceProductTransfers = $this->priceProductStorageClient->getPriceProductConcreteTransfers(
-                $productViewTransfer->getIdProductConcrete()
+                $idProductConcrete
             );
 
             if (!empty($priceProductTransfers)) {
-                return $this->getVolumeProductPricesFromStorageData($priceProductTransfers);
+                return $this->getVolumeProductPricesFromStorage($priceProductTransfers);
             }
         }
 
@@ -120,19 +120,19 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param int|null $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer|null
      */
-    protected function findVolumePriceByIdProductAbstract(ProductViewTransfer $productViewTransfer): ?PriceProductVolumeCollectionTransfer
+    protected function findVolumePriceByIdProductAbstract(?int $idProductAbstract): ?PriceProductVolumeCollectionTransfer
     {
-        if ($productViewTransfer->getIdProductAbstract() != null) {
+        if ($idProductAbstract != null) {
             $priceProductTransfers = $this->priceProductStorageClient->getPriceProductAbstractTransfers(
-                $productViewTransfer->getIdProductAbstract()
+                $idProductAbstract
             );
 
             if (!empty($priceProductTransfers)) {
-                return $this->getVolumeProductPricesFromStorageData($priceProductTransfers);
+                return $this->getVolumeProductPricesFromStorage($priceProductTransfers);
             }
         }
 
@@ -144,7 +144,7 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer
      */
-    protected function getVolumeProductPricesFromStorageData(
+    protected function getVolumeProductPricesFromStorage(
         array $priceProductTransfers
     ): PriceProductVolumeCollectionTransfer {
         $priceProductVolumeCollection = new PriceProductVolumeCollectionTransfer();
@@ -158,7 +158,8 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
                 continue;
             }
 
-            $this->fillVolumeProductPriceCollectionFromStorageData($priceProductVolumeCollection, $priceProductTransfer);
+            $this->fillVolumeProductPriceCollectionFromStorage($priceProductVolumeCollection, $priceProductTransfer);
+            break;
         }
 
         return $priceProductVolumeCollection;
@@ -175,10 +176,14 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
         if ($moneyValueTransfer->getCurrency()->getCode() != $this->currencyClient->getCurrent()->getCode()) {
             return false;
         }
+
         if (!$moneyValueTransfer->getPriceData()) {
             return false;
         }
-        $priceData = $this->utilEncodingService->decodeJson($moneyValueTransfer->getPriceData(), true);
+
+        $priceData = $this->getJsonDataAsAssocArray(
+            $priceProductTransfer->getMoneyValue()->getPriceData()
+        );
         if (!isset($priceData[static::VOLUME_PRICE_TYPE]) || !$priceData[static::VOLUME_PRICE_TYPE]) {
             return false;
         }
@@ -192,13 +197,12 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
      *
      * @return void
      */
-    protected function fillVolumeProductPriceCollectionFromStorageData(
+    protected function fillVolumeProductPriceCollectionFromStorage(
         PriceProductVolumeCollectionTransfer $priceProductVolumeCollection,
         PriceProductTransfer $priceProductTransfer
     ): void {
-        $volumePriceData = $this->utilEncodingService->decodeJson(
-            $priceProductTransfer->getMoneyValue()->getPriceData(),
-            true
+        $volumePriceData = $this->getJsonDataAsAssocArray(
+            $priceProductTransfer->getMoneyValue()->getPriceData()
         )[static::VOLUME_PRICE_TYPE] ?: [];
 
         foreach ($volumePriceData as $volumeProductStorageData) {
@@ -246,5 +250,18 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param string $data
+     *
+     * @return array
+     */
+    protected function getJsonDataAsAssocArray(string $data): array
+    {
+        return $this->utilEncodingService->decodeJson(
+            $data,
+            true
+        );
     }
 }

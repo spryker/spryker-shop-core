@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\PriceProductVolumeWidget\Business\PriceProductVolume;
+namespace SprykerShop\Yves\PriceProductVolumeWidget\PriceProductResolver\PriceProductVolume;
 
 use Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
