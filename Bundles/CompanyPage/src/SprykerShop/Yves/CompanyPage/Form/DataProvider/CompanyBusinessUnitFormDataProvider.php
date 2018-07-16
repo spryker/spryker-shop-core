@@ -9,8 +9,10 @@ namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 
 class CompanyBusinessUnitFormDataProvider
@@ -21,12 +23,20 @@ class CompanyBusinessUnitFormDataProvider
     protected $businessUnitClient;
 
     /**
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface
+     */
+    protected $companyUnitAddressClient;
+
+    /**
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
      */
     public function __construct(
-        CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient
+        CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient,
+        CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
     ) {
         $this->businessUnitClient = $businessUnitClient;
+        $this->companyUnitAddressClient = $companyUnitAddressClient;
     }
 
     /**
@@ -89,6 +99,7 @@ class CompanyBusinessUnitFormDataProvider
 
         return [
             CompanyBusinessUnitForm::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT => $this->getCompanyBusinessUnits($companyUserTransfer, $idCompanyBusinessUnit),
+            CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES => $this->getCompanyUnitAddresses($companyUserTransfer)
         ];
     }
 
@@ -126,5 +137,35 @@ class CompanyBusinessUnitFormDataProvider
     protected function createCompanyBusinessUnitCriteriaFilterTransfer(int $idCompany): CompanyBusinessUnitCriteriaFilterTransfer
     {
         return (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompany($idCompany);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return array
+     */
+    protected function getCompanyUnitAddresses(CompanyUserTransfer $companyUserTransfer): array
+    {
+        $idCompany = $companyUserTransfer->getFkCompany();
+        $criteriaFilterTransfer = $this->createCompanyUnitAddressCriteriaFilterTransfer($idCompany);
+
+        $companyUnitAddressCollection = $this->companyUnitAddressClient->getCompanyUnitAddressCollection($criteriaFilterTransfer);
+
+        $companyUnitAddresses = [];
+        foreach ($companyUnitAddressCollection->getCompanyUnitAddresses() as $companyUnitAddress) {
+            $companyUnitAddresses[$companyUnitAddress->getIdCompanyUnitAddress()] = $companyUnitAddress->getAddress1();
+        }
+
+        return $companyUnitAddresses;
+    }
+
+    /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
+     */
+    protected function createCompanyUnitAddressCriteriaFilterTransfer(int $idCompany): CompanyUnitAddressCriteriaFilterTransfer
+    {
+        return (new CompanyUnitAddressCriteriaFilterTransfer())->setIdCompany($idCompany);
     }
 }
