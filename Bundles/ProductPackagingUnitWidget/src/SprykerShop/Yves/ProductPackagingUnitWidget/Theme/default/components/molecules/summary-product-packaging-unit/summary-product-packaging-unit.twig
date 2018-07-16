@@ -18,7 +18,7 @@
     {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
     {% set salesUnitSummary = '' %}
     {% if salesUnitName is not empty %}
-        {% set salesUnitSummary = data.quantitySalesUnit.value / data.quantitySalesUnit.precision ~ ' ' ~ salesUnitName | trans %}
+        {% set salesUnitSummary = data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
     {% endif %}
 
     <strong class="float-right">{{data.price}}</strong>
