@@ -7,12 +7,10 @@
 
 namespace SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
-
 interface CompanyBusinessUnitTreeBuilderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     * @return array
      */
-    public function getCompanyBusinessUnitTree(): CompanyBusinessUnitCollectionTransfer;
+    public function getCompanyBusinessUnitTree(): array;
 }

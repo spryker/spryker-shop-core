@@ -1,7 +1,7 @@
 {% extends template('page-layout-company', 'CompanyPage') %}
 
 {% define data = {
-    businessUnits: _view.businessUnitCollection,
+    businessUnitsTree: _view.businessUnitsTree,
     title: 'company.account.business_unit' | trans,
     activePage: 'business-unit'
 } %}
@@ -12,14 +12,16 @@
     </div>
 
     <div class="box">
-        {% if data.businessUnits is empty %}
+        {% if data.businessUnitsTree is empty %}
             <p>{{ 'company.account.business_unit.no_units' | trans }}</p>
         {% else %}
-            {% include molecule('business-unit-chart-item', 'CompanyPage') with {
-                data: {
-                    businessUnits: data.businessUnits
-                }
-            } only %}
+            {% for node in data.businessUnitsTree %}
+                {% include molecule('business-unit-chart-item', 'CompanyPage') with {
+                    data: {
+                        node: node
+                    }
+                } only %}
+            {% endfor %}
         {% endif %}
     </div>
 {% endblock %}

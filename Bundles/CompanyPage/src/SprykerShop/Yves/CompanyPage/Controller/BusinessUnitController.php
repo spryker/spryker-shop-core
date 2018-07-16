@@ -23,26 +23,22 @@ class BusinessUnitController extends AbstractCompanyController
     public const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        $viewData = $this->executeIndexAction($request);
+        $viewData = $this->executeIndexAction();
 
         return $this->view($viewData, [], '@CompanyPage/views/business-unit/business-unit.twig');
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array
      */
-    protected function executeIndexAction(Request $request): array
+    protected function executeIndexAction(): array
     {
         return [
-            'businessUnitCollection' => $this->getFactory()->createCompanyBusinessUnitTreeBuilder()->getCompanyBusinessUnitTree(),
+            'businessUnitsTree' => $this->getFactory()->createCompanyBusinessUnitTreeBuilder()->getCompanyBusinessUnitTree(),
         ];
     }
 

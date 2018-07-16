@@ -6,6 +6,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
@@ -13,6 +14,11 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientIn
 
 class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderInterface
 {
+    protected const FK_PARENT_COMPANY_BUSINESS_UNIT_KEY = 'fk_parent_company_business_unit';
+    protected const ID_COMPANY_BUSINESS_UNIT_KEY = 'id_company_business_unit';
+    protected const LEVEL_KEY = 'level';
+    protected const CHILDREN_KEY = 'children';
+
     /**
      * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface
      */
@@ -36,14 +42,16 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     * @return array
      */
-    public function getCompanyBusinessUnitTree(): CompanyBusinessUnitCollectionTransfer
+    public function getCompanyBusinessUnitTree(): array
     {
         $idCompany = $this->customerClient->getCustomer()->getCompanyUserTransfer()->getFkCompany();
         $companyBusinessUnits = $this->getCompanyBusinessUnites($idCompany);
 
-        return $companyBusinessUnits;
+        $companyBusinessUnitTree = $this->buildTree($companyBusinessUnits->getCompanyBusinessUnits());
+
+        return $companyBusinessUnitTree;
     }
 
     /**
@@ -57,5 +65,30 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
         $criteriaFilterTransfer->setIdCompany($idCompany);
 
         return $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection($criteriaFilterTransfer);
+    }
+
+    /**
+     * @param \ArrayObject $companyBusinessUnits
+     * @param int|null $idParentCompanyBusinessUnit
+     *
+     * @return array
+     */
+    protected function buildTree(ArrayObject $companyBusinessUnits, $idParentCompanyBusinessUnit = null, $indent = 0): array
+    {
+        $tree = [];
+        foreach ($companyBusinessUnits as $companyBusinessUnit) {
+            $companyBusinessUnitArray = $companyBusinessUnit->toArray();
+            if ($companyBusinessUnitArray[static::FK_PARENT_COMPANY_BUSINESS_UNIT_KEY] == $idParentCompanyBusinessUnit) {
+                $companyBusinessUnitArray[static::CHILDREN_KEY] = [];
+                $companyBusinessUnitArray[static::LEVEL_KEY] = $indent;
+                $children = $this->buildTree($companyBusinessUnits, $companyBusinessUnitArray[static::ID_COMPANY_BUSINESS_UNIT_KEY], $indent + 1);
+                if ($children) {
+                    $companyBusinessUnitArray[static::CHILDREN_KEY] = $children;
+                }
+                $tree[$companyBusinessUnitArray[static::ID_COMPANY_BUSINESS_UNIT_KEY]] = $companyBusinessUnitArray;
+            }
+        }
+
+        return $tree;
     }
 }
