@@ -171,7 +171,7 @@ class CompanyBusinessUnitForm extends AbstractType
     protected function addFkCompanyBusinessUnitField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT, ChoiceType::class, [
-            'placeholder' => 'Parent BU name',
+            'placeholder' => 'company.account.form.fk_company_parent_bu.placeholder',
             'label' => 'company.account.choose_parent_company_business_unit',
             'choices' => array_flip($options[static::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT]),
             'required' => false,
