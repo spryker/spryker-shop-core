@@ -21,6 +21,7 @@ class BusinessUnitController extends AbstractCompanyController
 {
     public const BUSINESS_UNIT_LIST_SORT_FIELD = 'id_company_business_unit';
     public const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+    protected const REQUEST_PARAM_ID = 'id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -92,7 +93,7 @@ class BusinessUnitController extends AbstractCompanyController
             ->createBusinessUnitFormDataProvider();
 
         $companyUserTransfer = $this->getCompanyUser();
-        $idCompanyBusinessUnit = $request->query->getInt('id');
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
 
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -142,7 +143,7 @@ class BusinessUnitController extends AbstractCompanyController
             ->createBusinessUnitFormDataProvider();
 
         $companyUserTransfer = $this->getCompanyUser();
-        $idCompanyBusinessUnit = $request->query->getInt('id');
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
 
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -176,7 +177,7 @@ class BusinessUnitController extends AbstractCompanyController
      */
     public function deleteAction(Request $request)
     {
-        $companyBusinessUnitId = $request->query->getInt('id');
+        $companyBusinessUnitId = $request->query->getInt(static::REQUEST_PARAM_ID);
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($companyBusinessUnitId);
 
@@ -215,7 +216,7 @@ class BusinessUnitController extends AbstractCompanyController
      */
     protected function getCompanyBusinessUnitDetailsResponseData(Request $request): array
     {
-        $idCompanyBusinessUnit = $request->query->getInt('id');
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
 
