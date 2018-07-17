@@ -86,7 +86,7 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
     {
         $volumeProductPrices = $this->findVolumePriceByIdProductConcrete($productViewTransfer->getIdProductConcrete());
 
-        if ($volumeProductPrices != null) {
+        if ($volumeProductPrices != null && $volumeProductPrices->getVolumePrices()->count() > 0) {
             return $volumeProductPrices;
         }
 

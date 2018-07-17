@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\PriceProductVolumeWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\PriceProductVolumeWidget\Business\PriceProductVolume\PriceProductVolumeResolver;
-use SprykerShop\Yves\PriceProductVolumeWidget\Business\PriceProductVolume\PriceProductVolumeResolverInterface;
+use SprykerShop\Yves\PriceProductVolumeWidget\PriceProductResolver\PriceProductVolume\PriceProductVolumeResolver;
+use SprykerShop\Yves\PriceProductVolumeWidget\PriceProductResolver\PriceProductVolume\PriceProductVolumeResolverInterface;
 use SprykerShop\Yves\PriceProductVolumeWidget\Dependency\Client\PriceProductVolumeWidgetToCurrencyClientInterface;
 use SprykerShop\Yves\PriceProductVolumeWidget\Dependency\Client\PriceProductVolumeWidgetToPriceClientInterface;
 use SprykerShop\Yves\PriceProductVolumeWidget\Dependency\Client\PriceProductVolumeWidgetToPriceProductStorageClientInterface;
@@ -18,7 +18,7 @@ use SprykerShop\Yves\PriceProductVolumeWidget\Dependency\Service\PriceProductVol
 class PriceProductVolumeWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\PriceProductVolumeWidget\Business\PriceProductVolume\PriceProductVolumeResolverInterface
+     * @return \SprykerShop\Yves\PriceProductVolumeWidget\PriceProductResolver\PriceProductVolume\PriceProductVolumeResolverInterface
      */
     public function createPriceProductVolumeResolver(): PriceProductVolumeResolverInterface
     {
