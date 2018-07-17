@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CompanyPage\Form;
 
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -31,7 +30,7 @@ class CompanyBusinessUnitForm extends AbstractType
     public const FIELD_FK_COMPANY = 'fk_company';
     public const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
     public const FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT = 'fk_parent_company_business_unit';
-    public const FIELD_COMPANY_UNIT_ADDRESSES = 'company_unit_addresses';
+    public const FIELD_COMPANY_UNIT_ADDRESSES = 'address_collection';
 
     /**
      * @return string
@@ -65,10 +64,10 @@ class CompanyBusinessUnitForm extends AbstractType
             ->addFkCompanyField($builder)
             ->addNameField($builder)
             ->addFkCompanyBusinessUnitField($builder, $options)
-            ->addCompanyUnitAddressField($builder, $options)
             ->addEmailField($builder)
             ->addPhoneField($builder)
-            ->addExternalUrlField($builder);
+            ->addExternalUrlField($builder)
+            ->addCompanyUnitAddressField($builder, $options);
     }
 
     /**
@@ -196,7 +195,7 @@ class CompanyBusinessUnitForm extends AbstractType
     protected function addCompanyUnitAddressField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_COMPANY_UNIT_ADDRESSES, ChoiceType::class, [
-            'choices' => array_flip($options[static::FIELD_COMPANY_UNIT_ADDRESSES]),
+            'choices' => [],
             'required' => false,
             'expanded' => true,
             'multiple' => true,

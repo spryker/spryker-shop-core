@@ -2,7 +2,7 @@
 
 {% define data = {
     form: _view.form,
-
+    addresses: _view.addresses| default([]),
     title: 'company.account.business_unit' | trans,
     activePage: 'business-unit'
 } %}
@@ -18,7 +18,7 @@
 
 {% block companyContent %}
     <div class="box">
-        {% include molecule('form') with {
+        {% embed molecule('form') with {
             data: {
                 title: 'company.account.business_unit.create' | trans,
                 form: data.form,
@@ -34,7 +34,24 @@
                     url: url('company/business-unit'),
                     text: 'general.back.button' | trans
                 }
+            },
+            embed: {
+                addresses: data.addresses
             }
         } only %}
+            {% block field %}
+                {% if field.vars.name == 'address_collection' %}
+                    {% include molecule('business-unit-from-address-field', 'CompanyPage') with {
+                        data: {
+                            field: field,
+                            addresses: embed.addresses
+                        }
+                    } only %}
+                    {% do field.setRendered %}
+                {% else %}
+                    {{parent()}}
+                {% endif %}
+            {% endblock %}
+        {% endembed %}
     </div>
 {% endblock %}

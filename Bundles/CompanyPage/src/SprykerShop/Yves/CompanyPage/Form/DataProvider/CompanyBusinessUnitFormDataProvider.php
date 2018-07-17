@@ -99,7 +99,7 @@ class CompanyBusinessUnitFormDataProvider
 
         return [
             CompanyBusinessUnitForm::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT => $this->getCompanyBusinessUnits($companyUserTransfer, $idCompanyBusinessUnit),
-            CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES => $this->getCompanyUnitAddresses($companyUserTransfer)
+            CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES => $this->getCompanyUnitAddresses($companyUserTransfer),
         ];
     }
 
@@ -153,7 +153,7 @@ class CompanyBusinessUnitFormDataProvider
 
         $companyUnitAddresses = [];
         foreach ($companyUnitAddressCollection->getCompanyUnitAddresses() as $companyUnitAddress) {
-            $companyUnitAddresses[$companyUnitAddress->getIdCompanyUnitAddress()] = $companyUnitAddress->getAddress1();
+            $companyUnitAddresses[$companyUnitAddress->getIdCompanyUnitAddress()] = $companyUnitAddress;
         }
 
         return $companyUnitAddresses;

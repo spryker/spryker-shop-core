@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -83,10 +84,11 @@ class BusinessUnitController extends AbstractCompanyController
 
         $companyUserTransfer = $this->getCompanyUser();
         $idCompanyBusinessUnit = $request->query->getInt('id');
+        $dataProviderOptions = $dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit);
 
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getBusinessUnitForm($dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit))
+            ->getBusinessUnitForm($dataProviderOptions)
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
@@ -101,6 +103,7 @@ class BusinessUnitController extends AbstractCompanyController
 
         return [
             'form' => $companyBusinessUnitForm->createView(),
+            'addresses' => $dataProviderOptions[CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES],
         ];
     }
 
@@ -134,9 +137,10 @@ class BusinessUnitController extends AbstractCompanyController
         $companyUserTransfer = $this->getCompanyUser();
         $idCompanyBusinessUnit = $request->query->getInt('id');
 
+        $dataProviderOptions = $dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit);
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getBusinessUnitForm($dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit))
+            ->getBusinessUnitForm($dataProviderOptions)
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
@@ -156,6 +160,7 @@ class BusinessUnitController extends AbstractCompanyController
 
         return [
             'form' => $companyBusinessUnitForm->createView(),
+            'addresses' => $dataProviderOptions[CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES],
         ];
     }
 

@@ -1,0 +1,19 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    companyUnitAddress: _view.companyUnitAddress,
+    title: 'company.account.address.delete_confimation_page' | trans,
+    activePage: 'address'
+} %}
+
+{% block companyContent %}
+    <div class="box">
+        You are trying to delete address ..., it belongs to follow business units
+    </div>
+    <a href="{{ url('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress }) }}">
+        {{ "company.account.address.delete.confirm" | trans }}
+    </a>
+    <a href="{{ url('company/business-unit') }}">
+        {{ "company.account.address.delete.cancel" | trans }}
+    </a>
+{% endblock %}

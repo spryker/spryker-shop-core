@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'business-unit-from-address-field',
+    id: 'company_business_unit_form_address_collection',
+    tag: 'div'
+} %}
+
+{% define data = {
+    field: required,
+    addresses: required
+} %}
+
+{% block body %}
+    {% for address in data.addresses %}
+        {% set fullAddressFirst = address.address1 ~ ' ' ~ address.address2 %}
+
+        <span class="checkbox checkbox--expand" data-qa="component checkbox company_business_unit_form[address_collection][] company_business_unit_form_address_collection_{{ loop.index0 }}">
+            <label class="checkbox__container" data-qa="label">
+                <span class="checkbox__box"></span>
+                <input class="checkbox__input " type="checkbox" id="company_business_unit_form_address_collection_{{ loop.index0 }}" name="company_business_unit_form[address_collection][]" value="{{ address.idCompanyUnitAddress }}">
+                <span class="checkbox__check"></span>
+                <span class="checkbox__label label">{{ fullAddressFirst }}</span><br/>
+                <span class="checkbox__label label">{{ address.city }}</span>
+            </label>
+            <a href="{{ url('company/address/update', {'id': address.idCompanyUnitAddress }) }}">
+                {{ "company.account.address.edit" | trans }}
+            </a>
+            <a href="{{ url('company/address/delete-confirmation', {'id': address.idCompanyUnitAddress }) }}">
+                {{ "company.account.address.delete" | trans }}
+            </a>
+        </span>
+    {% endfor %}
+{% endblock %}

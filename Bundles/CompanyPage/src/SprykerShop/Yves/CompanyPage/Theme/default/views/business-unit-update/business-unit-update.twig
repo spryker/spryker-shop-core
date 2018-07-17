@@ -2,7 +2,7 @@
 
 {% define data = {
     form: _view.form,
-
+    addresses: _view.addresses,
     title: 'company.account.business_unit' | trans,
     activePage: 'business-unit'
 } %}
@@ -26,7 +26,7 @@
                 <a class="button button--alert" href="{{ url('company/business-unit/delete', {'id': data.form.vars.value.id_company_business_unit }) }}">{{ 'company.account.business_unit.delete' | trans }}</a>
             </div>
         </div>
-        {% include molecule('form') with {
+        {% embed molecule('form') with {
             data: {
                 form: data.form,
                 layout: {
@@ -40,8 +40,28 @@
                     enable: true,
                     url: url('company/business-unit'),
                     text: 'general.back.button' | trans
+                },
+                embed: {
+                    addresses: data.addresses
                 }
             }
         } only %}
+            {% block field %}
+                {% if field.vars.name == 'address_collection' %}
+                    <div class="text-right">
+                        <a class="button" href="{{url('company/address/create')}}">{{ 'company.account.add_new_address' | trans }}</a>
+                    </div>
+                    {% include molecule('business-unit-from-address-field', 'CompanyPage') with {
+                        data: {
+                            field: field,
+                            addresses: data.embed.addresses
+                        }
+                    } only %}
+                    {% do field.setRendered %}
+                {% else %}
+                    {{parent()}}
+                {% endif %}
+            {% endblock %}
+        {% endembed %}
     </div>
 {% endblock %}

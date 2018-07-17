@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CompanyPage\Controller;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -162,6 +163,34 @@ class AddressController extends AbstractCompanyController
         $this->getFactory()->getCompanyUnitAddressClient()->deleteCompanyUnitAddress($companyUnitAddressTransfer);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ADDRESS);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmDeleteAction(Request $request)
+    {
+        $idCompanyUnitAddress = $request->query->getInt('id');
+        $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
+        $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
+
+        $companyUnitAddressTransfer = $this->getFactory()->getCompanyUnitAddressClient()->getCompanyUnitAddressById($companyUnitAddressTransfer);
+
+        return $this->view([
+            'companyUnitAddress' => $companyUnitAddressTransfer,
+        ], [], '@CompanyPage/views/address-delete-confirmation-page/address-delete-confirmation-page.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function cancelConfirmDeleteAction(Request $request): RedirectResponse
+    {
+        $idCompanyBusinessUnit = $request->query->getInt('id');
     }
 
     /**
