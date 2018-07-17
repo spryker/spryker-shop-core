@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\WishlistPage\Controller;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -202,9 +203,12 @@ class WishlistController extends AbstractController
 
             if ($result->getRequests()->count()) {
                 $this->addErrorMessage('customer.account.wishlist.item.moved_all_available_to_cart.failed');
-                return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
-                    'wishlistName' => $wishlistName,
-                ]);
+
+                if ($this->checkIfNotAllWishlistItemsWereAddedToCart($result, $wishlistItemMetaTransferCollection)) {
+                    return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+                        'wishlistName' => $wishlistName,
+                    ]);
+                }
             }
 
             $this->addSuccessMessage('customer.account.wishlist.item.moved_all_available_to_cart');
@@ -213,6 +217,19 @@ class WishlistController extends AbstractController
         return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
             'wishlistName' => $wishlistName,
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $result
+     * @param \Generated\Shared\Transfer\WishlistItemMetaTransfer[] $wishlistItemMetaTransferCollection
+     *
+     * @return bool
+     */
+    protected function checkIfNotAllWishlistItemsWereAddedToCart(
+        WishlistMoveToCartRequestCollectionTransfer $result,
+        array $wishlistItemMetaTransferCollection
+    ): bool {
+        return $result->getRequests()->count() >= count($wishlistItemMetaTransferCollection);
     }
 
     /**
