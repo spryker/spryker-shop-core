@@ -1,6 +1,6 @@
 # CheckoutPage Module
 
-CheckoutPage module provides a website page shown to a customer during the step-by-step checkout process.
+This module contains the checkout page and its components.
 
 ## Installation
 
