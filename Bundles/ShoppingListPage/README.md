@@ -1,6 +1,6 @@
 # ShoppingListPage Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the shopping list page and it's components.
 
 ## Installation
 
