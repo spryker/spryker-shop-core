@@ -17,6 +17,8 @@ use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 
 class CompanyBusinessUnitFormDataProvider
 {
+    protected const COMPANY_UNIT_ADDRESS_KEY = '%s %s %s %s';
+
     /**
      * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
      */
@@ -54,10 +56,37 @@ class CompanyBusinessUnitFormDataProvider
         if ($idCompanyBusinessUnit !== null) {
             $companyBusinessUnitTransfer = $this->loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
 
+            $addressCollection = $this->companyUnitAddressClient->getCompanyUnitAddressCollection(
+                $this->prepareCompanyUnitAddressCriteriaFilterTransfer(
+                    $companyBusinessUnitTransfer->getFkCompany(),
+                    $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+                )
+            );
+
+            $companyBusinessUnitTransfer->setAddressCollection($addressCollection);
+
             return $companyBusinessUnitTransfer->modifiedToArray();
         }
 
         return [];
+    }
+
+    /**
+     * @param int|null $idCompany
+     * @param int|null $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
+     */
+    protected function prepareCompanyUnitAddressCriteriaFilterTransfer(?int $idCompany = null, ?int $idCompanyBusinessUnit = null): CompanyUnitAddressCriteriaFilterTransfer
+    {
+        $companyUnitAddressCriteriaFilter = new CompanyUnitAddressCriteriaFilterTransfer();
+        $companyUnitAddressCriteriaFilter->setIdCompany($idCompany);
+
+        if ($idCompanyBusinessUnit) {
+            $companyUnitAddressCriteriaFilter->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
+        }
+
+        return $companyUnitAddressCriteriaFilter;
     }
 
     /**
@@ -153,7 +182,14 @@ class CompanyBusinessUnitFormDataProvider
 
         $companyUnitAddresses = [];
         foreach ($companyUnitAddressCollection->getCompanyUnitAddresses() as $companyUnitAddress) {
-            $companyUnitAddresses[$companyUnitAddress->getIdCompanyUnitAddress()] = $companyUnitAddress;
+            $companyAddressValue = sprintf(
+                static::COMPANY_UNIT_ADDRESS_KEY,
+                $companyUnitAddress->getAddress1(),
+                $companyUnitAddress->getAddress2(),
+                $companyUnitAddress->getCity(),
+                $companyUnitAddress->getIso2Code()
+            );
+            $companyUnitAddresses[$companyUnitAddress->getIdCompanyUnitAddress()] = $companyAddressValue;
         }
 
         return $companyUnitAddresses;

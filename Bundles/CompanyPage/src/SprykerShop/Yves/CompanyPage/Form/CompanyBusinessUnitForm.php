@@ -195,7 +195,7 @@ class CompanyBusinessUnitForm extends AbstractType
     protected function addCompanyUnitAddressField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_COMPANY_UNIT_ADDRESSES, ChoiceType::class, [
-            'choices' => [],
+            'choices' => array_flip($options[static::FIELD_COMPANY_UNIT_ADDRESSES]),
             'required' => false,
             'expanded' => true,
             'multiple' => true,
@@ -213,32 +213,35 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addCompanyUnitAddressTransformer(FormBuilderInterface $builder)
     {
-        $builder->get(static::FIELD_COMPANY_UNIT_ADDRESSES)->addModelTransformer(
-            new CallbackTransformer(
-                function ($addresses) {
-                    if (empty($addresses)) {
-                        return $addresses;
+        $builder->get(static::FIELD_COMPANY_UNIT_ADDRESSES)
+            ->addModelTransformer(
+                new CallbackTransformer(
+                    function ($addresses) {
+                        if (empty($addresses)) {
+                            return $addresses;
+                        }
+
+                        $result = [];
+                        if (isset($addresses['company_unit_addresses'])) {
+                            foreach ($addresses['company_unit_addresses'] as $address) {
+                                $result[] = $address['id_company_unit_address'];
+                            }
+                        }
+
+                        return $result;
+                    },
+                    function ($data) {
+
+                        $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
+
+                        foreach ($data as $id) {
+                            $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())->setIdCompanyUnitAddress($id);
+                            $companyUnitAddressCollectionTransfer->addCompanyUnitAddress($companyUnitAddressTransfer);
+                        }
+
+                        return $companyUnitAddressCollectionTransfer;
                     }
-
-                    $result = [];
-                    foreach ($addresses as $address) {
-                        $result[] = $address->getIdCompanyUnitAddress();
-                    }
-
-                    return $result;
-                },
-                function ($data) {
-
-                    $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
-
-                    foreach ($data as $id) {
-                        $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())->setIdCompanyUnitAddress($id);
-                        $companyUnitAddressCollectionTransfer->addCompanyUnitAddress($companyUnitAddressTransfer);
-                    }
-
-                    return $companyUnitAddressCollectionTransfer;
-                }
-            )
-        );
+                )
+            );
     }
 }

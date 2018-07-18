@@ -7,6 +7,19 @@
     activePage: 'business-unit'
 } %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                    label: 'customer.account' | trans,
+                },
+                {
+                    label: 'company.account.business_unit' | trans,
+                }
+            ]}
+    } only %}
+{% endblock %}
+
 {% block companyNavigation %}
     {% include molecule('business-unit-navigation', 'CompanyPage') with {
         class: 'box',
@@ -44,7 +57,8 @@
                     {% include molecule('business-unit-from-address-field', 'CompanyPage') with {
                         data: {
                             field: field,
-                            addresses: embed.addresses
+                            addresses: embed.addresses,
+                            idBusinessUnit: null
                         }
                     } only %}
                     {% do field.setRendered %}

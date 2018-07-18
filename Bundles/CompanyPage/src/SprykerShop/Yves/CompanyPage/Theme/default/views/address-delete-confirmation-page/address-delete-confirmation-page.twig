@@ -2,18 +2,37 @@
 
 {% define data = {
     companyUnitAddress: _view.companyUnitAddress,
+    companyBusinessUnits: _view.companyUnitAddress.companyBusinessUnitCollection.companyBusinessUnits,
+    idCompanyBusinessUnit: _view.idCompanyBusinessUnit,
     title: 'company.account.address.delete_confimation_page' | trans,
     activePage: 'address'
 } %}
 
 {% block companyContent %}
     <div class="box">
-        You are trying to delete address ..., it belongs to follow business units
+        You are trying to delete address
+        <p>{{ data.companyUnitAddress.address1 }}</p>
+        {% if data.companyBusinessUnits is not empty %}
+            <p>It belongs to follow business units:</p>
+            <ul>
+                {% for companyBusinessUnit in data.companyBusinessUnits %}
+                    <li>{{ companyBusinessUnit.name }}</li>
+                {% endfor %}
+            </ul>
+            <p>It will be deleted from all of them.</p>
+        {% endif %}
+        <a href="{{ url('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress, 'idBusinessUnit': data.idCompanyBusinessUnit }) }}">
+            {{ "company.account.address.delete.confirm" | trans }}
+        </a>
+
+        {% if data.idCompanyBusinessUnit %}
+            <a href="{{ url('company/business-unit/update', {'id': data.idCompanyBusinessUnit }) }}">
+                {{ "company.account.address.delete.cancel" | trans }}
+            </a>
+        {% else %}
+            <a href="{{ url('company/business-unit', {'id': data.idCompanyBusinessUnit }) }}">
+                {{ "company.account.address.delete.cancel" | trans }}
+            </a>
+        {% endif %}
     </div>
-    <a href="{{ url('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress }) }}">
-        {{ "company.account.address.delete.confirm" | trans }}
-    </a>
-    <a href="{{ url('company/business-unit') }}">
-        {{ "company.account.address.delete.cancel" | trans }}
-    </a>
 {% endblock %}

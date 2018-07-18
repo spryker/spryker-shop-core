@@ -15,4 +15,11 @@ interface CompanyPageToMessengerClientInterface
      * @return void
      */
     public function addErrorMessage($message): void;
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    public function addSuccessMessage($message): void;
 }
