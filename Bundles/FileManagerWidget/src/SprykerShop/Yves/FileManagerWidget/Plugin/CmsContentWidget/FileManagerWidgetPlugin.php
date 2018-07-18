@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\FileManagerWidget\Plugin\CmsContentWidget;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\FileManagerWidget\Dependency\Client\FileManagerWidgetToFileManagerStorageClientInterface;
 use Twig_Environment;
 
 /**
@@ -17,6 +18,8 @@ use Twig_Environment;
  */
 class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
+    protected const MESSAGE_FILE_IS_MISSING = 'File with id %s does not exist';
+
     /**
      * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
@@ -41,16 +44,16 @@ class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidget
     /**
      * @param \Twig_Environment $twig
      * @param array $context
-     * @param string $idFile
+     * @param string|int|array $idFiles
      * @param null|string $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, string $idFile, ?string $templateIdentifier = null): string
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, $idFiles, ?string $templateIdentifier = null): string
     {
         return $twig->render(
             $this->resolveTemplatePath($templateIdentifier),
-            $this->getContent($context, $idFile)
+            $this->getContent($context, $idFiles)
         );
     }
 
@@ -70,22 +73,40 @@ class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidget
 
     /**
      * @param array $context
-     * @param string $idFile
+     * @param string|int|array $idFiles
      *
      * @return array
      */
-    protected function getContent(array $context, string $idFile): array
+    protected function getContent(array $context, $idFiles): array
     {
-        $fileTransfer = $this->getFileManagerStorageClient()->findFileById((int)$idFile, $this->getLocale());
+        $files = [];
 
-        return ['file' => $fileTransfer];
+        if (!is_array($idFiles)) {
+            $idFiles = [$idFiles];
+        }
+
+        foreach ($idFiles as $idFile) {
+            $files[] = $this->getFileManagerStorageClient()->findFileById((int)$idFile, $this->getLocale()) ?: $this->createMissingFileMessage($idFile);
+        }
+
+        return ['files' => $files];
     }
 
     /**
      * @return \SprykerShop\Yves\FileManagerWidget\Dependency\Client\FileManagerWidgetToFileManagerStorageClientInterface
      */
-    protected function getFileManagerStorageClient()
+    protected function getFileManagerStorageClient(): FileManagerWidgetToFileManagerStorageClientInterface
     {
         return $this->getFactory()->getFileManagerStorageClient();
+    }
+
+    /**
+     * @param int|string $idFile
+     *
+     * @return string
+     */
+    protected function createMissingFileMessage($idFile): string
+    {
+        return sprintf(static::MESSAGE_FILE_IS_MISSING, $idFile);
     }
 }

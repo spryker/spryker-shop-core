@@ -1,10 +1,19 @@
 {% extends template('widget') %}
 
 {% define data = {
-    fileId: _widget.file is defined ? _widget.file.fkFile : file.fkFile,
-    fileName: _widget.file is defined ? _widget.file.fileName : file.fileName
+    files: _widget.files is defined ? _widget.files : files
 } %}
 
 {% block body %}
-    <a href="{{ path('files/download', {'id-file': data.fileId}) }}">{{ data.fileName }}</a>
+    <ul>
+        {% for file in data.files %}
+            <li>
+                {% if file.fkFile is defined %}
+                    <a href="{{ path('files/download', {'id-file': file.fkFile}) }}">{{ file.fileName }}</a>
+                {% else %}
+                    <span>{{ file }}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
