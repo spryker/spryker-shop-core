@@ -1,6 +1,12 @@
 # CustomerPage Module
 
-{{ADD DESCRIPTION HERE}}
+CustomerPage module provides pages for customer:
+* Login
+* Register
+* Profile
+* Addresses
+* Orders
+* Change password
 
 ## Installation
 

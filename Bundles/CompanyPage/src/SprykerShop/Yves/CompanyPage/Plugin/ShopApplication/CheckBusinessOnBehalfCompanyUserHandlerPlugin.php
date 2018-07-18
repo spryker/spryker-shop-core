@@ -18,13 +18,12 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
  */
 class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin implements FilterControllerEventHandlerPluginInterface
 {
-    /**
-     * @const string
-     */
-    protected const COMPANY_REDIRECT_URL = '/company/user/select';
+    protected const COMPANY_REDIRECT_ROUTE = 'company/user/select';
 
     /**
      * {@inheritdoc}
+     * - Verifies if customer is logged-in and has isOnBehalf flag without a selected company for current session.
+     * - Redirects verified customer to the pre-configured route if the requested page is a company management pages.
      *
      * @api
      *
@@ -34,23 +33,48 @@ class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin imple
      */
     public function handle(FilterControllerEvent $event): void
     {
-        $eventController = $event->getController();
-        if (!is_array($eventController)) {
+        if ($this->isCompanySelectUri($event->getRequest()->getRequestUri())
+            || !$this->isCompanyControllerRequested($event)
+        ) {
             return;
         }
 
-        list($controllerInstance, $actionName) = $eventController;
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if ($controllerInstance instanceof AbstractCompanyController
-            && $customerTransfer
+        if ($customerTransfer
             && $customerTransfer->getIsOnBehalf()
             && !$customerTransfer->getCompanyUserTransfer()
-            && $event->getRequest()->getRequestUri() !== static::COMPANY_REDIRECT_URL
         ) {
-            $event->setController(function () {
-                return new RedirectResponse(static::COMPANY_REDIRECT_URL);
+            $url = $this->getFactory()->getApplication()->path(static::COMPANY_REDIRECT_ROUTE);
+            $event->setController(function () use ($url) {
+                return new RedirectResponse($url);
             });
         }
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function isCompanySelectUri(string $url): bool
+    {
+        return strpos($url, static::COMPANY_REDIRECT_ROUTE) !== false;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     *
+     * @return bool
+     */
+    protected function isCompanyControllerRequested(FilterControllerEvent $event): bool
+    {
+        $eventController = $event->getController();
+        if (!is_array($eventController)) {
+            return false;
+        }
+
+        [$controllerInstance] = $eventController;
+
+        return $controllerInstance instanceof AbstractCompanyController;
     }
 }

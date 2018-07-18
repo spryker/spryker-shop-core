@@ -2,7 +2,13 @@
 [![Build Status](https://travis-ci.org/spryker-shop/company-page.svg)](https://travis-ci.org/spryker-shop/company-page)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/company-page/badge.svg)](https://coveralls.io/github/spryker-shop/company-page)
 
-{{ADD DESCRIPTION HERE}}
+This module contains pages to manage Company account:
+* Business Units
+* Addresses
+* Roles
+* Company users
+* Company Roles and Permissions
+* Choose company business unit for session for customers with more than one business unit
 
 ## Installation
 

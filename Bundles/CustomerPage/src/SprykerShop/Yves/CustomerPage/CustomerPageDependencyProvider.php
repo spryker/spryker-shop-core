@@ -37,7 +37,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS';
     const PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS';
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+
     public const PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS = 'PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS';
+    public const PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -62,6 +64,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerMenuItemWidgetPlugins($container);
         $container = $this->addUtilValidateService($container);
         $container = $this->addPreRegistrationCustomerTransferExpanderPlugins($container);
+        $container = $this->addAfterLoginCustomerRedirectPlugins($container);
 
         return $container;
     }
@@ -296,6 +299,28 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
      */
     protected function getPreRegistrationCustomerTransferExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAfterLoginCustomerRedirectPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT] = function () {
+            return $this->getAfterLoginCustomerRedirectPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStrategyPluginInterface[]
+     */
+    protected function getAfterLoginCustomerRedirectPlugins(): array
     {
         return [];
     }
