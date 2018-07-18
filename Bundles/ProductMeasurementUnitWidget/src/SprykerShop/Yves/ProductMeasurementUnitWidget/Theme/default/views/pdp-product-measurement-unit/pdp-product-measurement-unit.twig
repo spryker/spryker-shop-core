@@ -38,10 +38,10 @@
                 {{ 'cart.item_quantity' | trans }}
 
                 {% if hasProductMeasurementUnit %}
-                    <input id="sales-unit-quantity" class="input input--expand" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
+                    <input id="sales-unit-quantity" class="input input--expand js-volume-price-quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
                     <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
                 {% else %}
-                    {% include atom('select') with {
+                    {% embed atom('select') with {
                         modifiers: ['expand'],
                         data: {
                             options: data.quantityOptions
@@ -50,6 +50,8 @@
                             name: 'quantity'
                         }
                     } only %}
+                        {% block selectClass %}js-volume-price__quantity{% endblock %}
+                    {% endembed %}
                 {% endif %}
             </label>
         </div>
