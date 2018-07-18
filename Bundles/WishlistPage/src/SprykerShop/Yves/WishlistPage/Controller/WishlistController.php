@@ -204,7 +204,7 @@ class WishlistController extends AbstractController
             if ($result->getRequests()->count()) {
                 $this->addErrorMessage('customer.account.wishlist.item.moved_all_available_to_cart.failed');
 
-                if ($this->checkIfNotAllWishlistItemsWereAddedToCart($result, $wishlistItemMetaTransferCollection)) {
+                if ($this->checkIfNoWishlistItemsWereAddedToCart($result, $wishlistItemMetaTransferCollection)) {
                     return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
                         'wishlistName' => $wishlistName,
                     ]);
@@ -225,7 +225,7 @@ class WishlistController extends AbstractController
      *
      * @return bool
      */
-    protected function checkIfNotAllWishlistItemsWereAddedToCart(
+    protected function checkIfNoWishlistItemsWereAddedToCart(
         WishlistMoveToCartRequestCollectionTransfer $result,
         array $wishlistItemMetaTransferCollection
     ): bool {
