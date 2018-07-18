@@ -117,14 +117,21 @@
                             {% block actions %}
                                 {% set isDisabled = not embed.product.idProductConcrete or not embed.product.available %}
 
-                                <a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand" {% if isDisabled %}disabled{% endif %}>
-                                    {% include atom('icon') with {
-                                        data: {
-                                            name: 'cart-plus'
-                                        }
-                                    } only %}
-                                    {{ 'page.detail.add-to-cart' | trans }}
-                                </a>
+                                <form class="grid grid--justify grid--bottom" method="POST" action="{{ path('cart/add', {sku: embed.product.sku}) }}">
+                                    <button type="submit"
+                                            class="button button--success button--expand"
+                                            onclick="this.form.submit(); this.disabled='disabled'; return false;"
+                                            {{ isDisabled ? 'disabled' : '' }}
+                                            {{ qa('add-to-cart-button') }}>
+                                        {% include atom('icon') with {
+                                            data: {
+                                                name: 'cart-plus'
+                                            }
+                                        } only %}
+                                        {{ 'page.detail.add-to-cart' | trans }}
+                                    </button>
+                                </form>
+
                             {% endblock %}
                         {% endembed %}
                     </div>
