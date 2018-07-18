@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\PriceProductVolumeWidget\PriceProductResolver\PricePr
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\PriceProductVolumeTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use SprykerShop\Yves\PriceProductVolumeWidget\Dependency\Client\PriceProductVolumeWidgetToCurrencyClientInterface;
 use SprykerShop\Yves\PriceProductVolumeWidget\Dependency\Client\PriceProductVolumeWidgetToPriceClientInterface;
 use SprykerShop\Yves\PriceProductVolumeWidget\Dependency\Client\PriceProductVolumeWidgetToPriceProductStorageClientInterface;
