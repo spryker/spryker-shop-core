@@ -1,6 +1,6 @@
 # FileManagerWidget Module
 
-Adds download file links to project pages. Has helpers to add links to cms blocks.
+Adds download file links to project pages. Has helpers to add links to CMS blocks.
 
 ## Installation
 
