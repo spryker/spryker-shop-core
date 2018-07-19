@@ -5,14 +5,9 @@
     tag: 'suggest-search'
 } %}
 
-{% define data = {
-    suggestionUrl: required,
-    inputSelector: required
-} %}
-
 {% define attributes = {
-    "base-suggest-url": data.suggestionUrl,
-    "input-selector": data.inputSelector,
+    "base-suggest-url": required,
+    "input-selector": required,
     "debounce-delay": 500,
     "throttle-delay": 200,
     "letters-trashold": 2

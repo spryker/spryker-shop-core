@@ -6,16 +6,18 @@
 
 {% define data = {
     searchUrl: path('search'),
-    suggestionUrl: path('search/suggestion'),
-    searchValue: app.request.get('q'),
-    searchInputClass: searchInputClass | default('')
+    searchValue: app.request.get('q')
+} %}
+
+{% define attribute = {
+    'data-search-id': required
 } %}
 
 {% block body %}
     <form action="{{data.searchUrl}}">
         <div class="grid">
             <div class="col col--sm-10">
-                <input name="q" type="text" class="input suggest-search__input input--expand {{ data.searchInputClass }}" placeholder="{{ 'global.search' | trans }}" value="{{data.searchValue}}" autocomplete="off">
+                <input name="q" type="text" class="input input--expand {{ config.jsName }}__input" placeholder="{{ 'global.search' | trans }}" value="{{data.searchValue}}" autocomplete="off">
             </div>
             <div class="col col--sm-2">
                 <button type="submit" class="{{config.name}}__submit button button--expand">
@@ -29,9 +31,9 @@
         </div>
 
         {% include molecule('suggest-search') with {
-            data: {
-                suggestionUrl: data.suggestionUrl,
-                inputSelector: '.' ~ data.searchInputClass
+            attributes: {
+                suggestionUrl: path('search/suggestion'),
+                inputSelector: '[data-search-id="' ~ attributes['data-search-id'] ~ '"] .' ~ config.jsName ~ '__input'
             }
         } only %}
     </form>
