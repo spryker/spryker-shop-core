@@ -7,11 +7,11 @@ interface keyCodes {
 }
 
 export default class SuggestSearch extends Component {
-    readonly lettersTrashold: number
-    readonly debounceDelay: number
-    readonly throttleDelay: number
     readonly keyboardCodes: keyCodes
 
+    lettersTrashold: number
+    debounceDelay: number
+    throttleDelay: number
     searchInput: HTMLInputElement
     hintInput: HTMLInputElement
     suggestionsContainer: HTMLElement
@@ -21,14 +21,12 @@ export default class SuggestSearch extends Component {
     hint: string
     navigation: HTMLElement[]
     activeItemIndex: number
+    navigationActiveClass: string
 
 
     constructor() {
         super();
 
-        this.lettersTrashold = 2;
-        this.debounceDelay = 500;
-        this.throttleDelay = 200;
         this.keyboardCodes = {
             9: 'tab',
             13: 'enter',
@@ -41,10 +39,14 @@ export default class SuggestSearch extends Component {
     }
 
     protected readyCallback(): void {
-        this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}--provider`);
-        this.searchInputSelector = <string> this.ajaxProvider.getAttribute('inputSelector');
-        this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}--container`);
+        this.debounceDelay = Number(this.getAttribute('debounce-delay'));
+        this.throttleDelay = Number(this.getAttribute('throttle-delay'));
+        this.lettersTrashold = Number(this.getAttribute('letters-trashold'));
+        this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}__ajax-provider`);
+        this.searchInputSelector = <string> this.getAttribute('input-selector');
+        this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}__container`);
         this.searchInput = <HTMLInputElement> document.querySelector(this.searchInputSelector);
+        this.navigationActiveClass = `${this.name}__item--active`;
         this.createHintInput();
         this.mapEvents();
     }
@@ -52,18 +54,24 @@ export default class SuggestSearch extends Component {
     protected mapEvents(): void {
         this.searchInput.addEventListener('keyup', debounce(this.debounceDelay, (event: Event) => this.onInputKeyUp(event)));
         this.searchInput.addEventListener('keydown', throttle(this.throttleDelay, (event: Event) => this.onInputKeyDown(<KeyboardEvent> event)));
-        this.searchInput.addEventListener('blur', (event: Event) => this.onInputFocusOut(event));
+        this.searchInput.addEventListener('blur', debounce(this.debounceDelay,(event: Event) => this.onInputFocusOut(event)));
         this.searchInput.addEventListener('focus', (event: Event) => this.onInputFocusIn(event));
         this.searchInput.addEventListener('click', (event: Event) => this.onInputClick(event));
     }
 
     protected async onInputKeyUp(event: Event): Promise<void> {
         const suggestQuery = this.getSearchValue();
+
         if (suggestQuery != this.currentSearchValue && suggestQuery.length >= this.lettersTrashold) {
+            this.saveCurrentSearchValue(suggestQuery);
+
             await this.getSuggestions();
         }
+
+        this.saveCurrentSearchValue(suggestQuery);
+
         if (suggestQuery.length < this.lettersTrashold) {
-            this.updateHintInput('');
+            this.setHintValue('');
             this.hideSugestions();
         }
     }
@@ -134,18 +142,18 @@ export default class SuggestSearch extends Component {
 
     protected getFirstProductNavigationIndex(): number {
         return this.navigation.findIndex((element: HTMLElement): boolean => {
-            return element.classList.contains(`${this.jsName}__product--navigable`);
+            return element.classList.contains(`${this.jsName}__product-item--navigable`);
         });
     }
 
     protected getNavigation(): HTMLElement[] {
-        return <HTMLElement[]> Array.from(this.getElementsByClassName(`${this.jsName}--navigable`))
+        return <HTMLElement[]> Array.from(this.getElementsByClassName(`${this.jsName}__item--navigable`))
     }
 
     protected updateNavigation(): void {
         if (this.isNavigationExist()) {
             this.navigation.forEach(element => {
-                element.classList.remove('is-active');
+                element.classList.remove(this.navigationActiveClass);
             });
             if (this.activeItemIndex > this.navigation.length) {
                 this.activeItemIndex = 0;
@@ -153,7 +161,7 @@ export default class SuggestSearch extends Component {
                 return;
             }
             if (this.activeItemIndex > 0) {
-                this.navigation[this.activeItemIndex - 1].classList.add('is-active');
+                this.navigation[this.activeItemIndex - 1].classList.add(this.navigationActiveClass);
             }
         }
     }
@@ -168,7 +176,6 @@ export default class SuggestSearch extends Component {
 
     protected async getSuggestions(): Promise<void> {
         const suggestQuery = this.getSearchValue();
-        this.currentSearchValue = suggestQuery;
 
         const urlParams = [['q', suggestQuery]];
 
@@ -179,13 +186,13 @@ export default class SuggestSearch extends Component {
         this.suggestionsContainer.innerHTML = JSON.parse(response).suggestion;
         this.hint = JSON.parse(response).completion;
 
-        if (this.hint && this.hint.length > this.lettersTrashold) {
+        if (this.hint) {
             this.showSugestions();
             this.updateHintInput();
         }
 
         if (this.hint == null) {
-            this.updateHintInput('');
+            this.setHintValue('');
         }
 
         this.navigation = this.getNavigation();
@@ -194,7 +201,7 @@ export default class SuggestSearch extends Component {
     }
 
     protected addUrlParams(params: Array<Array<string>>): void {
-        const baseSuggestUrl = this.ajaxProvider.getAttribute('baseSuggestUrl');
+        const baseSuggestUrl = this.getAttribute('base-suggest-url');
         let paramsString = '?';
         params.forEach( (element, index) => {
             paramsString += index == 0 ? '' : '&';
@@ -219,11 +226,19 @@ export default class SuggestSearch extends Component {
     }
 
     updateHintInput(value?: string): void {
+        console.log(value);
+
         const hintValue = value ? value : this.hint;
         this.setHintValue(hintValue);
     }
 
     protected setHintValue(value: string): void {
+        console.log(value);
+
         this.hintInput.value =  value;
+    }
+
+    protected saveCurrentSearchValue(suggestQuery: string): void {
+        this.currentSearchValue = suggestQuery;
     }
 }

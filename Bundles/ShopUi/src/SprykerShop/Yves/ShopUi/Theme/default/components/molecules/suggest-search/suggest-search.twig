@@ -11,26 +11,28 @@
 } %}
 
 {% define attributes = {
-
+    "base-suggest-url": data.suggestionUrl,
+    "input-selector": data.inputSelector,
+    "debounce-delay": 500,
+    "throttle-delay": 200,
+    "letters-trashold": 2
 } %}
 
 {% block body %}
-    <div class="box is-hidden {{ config.name }}__container {{ config.jsName }}--container"></div>
+    <div class="box is-hidden {{ config.name }}__container {{ config.jsName }}__container"></div>
 
     {% include molecule('ajax-provider') with {
-        class: config.jsName ~ '--provider',
+        class: config.jsName ~ '__ajax-provider',
         attributes: {
             method: 'post',
-            baseSuggestUrl: data.suggestionUrl,
-            url: data.suggestionUrl,
-            inputSelector: data.inputSelector
+            url: data.suggestionUrl
         }
     } only %}
 
     {% include molecule('ajax-loader') with {
         modifiers: ['big'],
         attributes: {
-            'provider-selector': '.' ~ config.jsName ~ '--provider'
+            'provider-selector': '.' ~ config.jsName ~ '__ajax-provider'
         }
     } only %}
 {% endblock %}

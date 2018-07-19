@@ -1,6 +1,5 @@
 @mixin shop-ui-suggest-search($name: '.suggest-search') {
     #{$name} {
-
         &__container {
             position: absolute;
             margin: 0;

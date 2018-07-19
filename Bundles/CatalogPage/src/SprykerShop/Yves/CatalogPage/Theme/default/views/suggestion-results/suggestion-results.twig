@@ -5,42 +5,42 @@
 } %}
 
 {% define data = {
-    completionList: completion | default(),
-    suggestionByType: suggestionByType,
+    completionList: completion | default([]),
+    suggestionByType: suggestionByType | default,
+    category: suggestionByType.category | default([]),
+    cms_page: suggestionByType.cms_page | default([]),
+    product_abstract: suggestionByType.product_abstract | default([]),
     suggestionsLength: 6,
     categoriesLength: 6,
     pagesLength: 3,
     productsLength: 6
 } %}
 
-{% set leftVisible = (data.completionList is not empty)
-    or (data.suggestionByType.category is defined and data.suggestionByType.category is not empty)
-    or (data.suggestionByType.cms_page is defined and data.suggestionByType.cms_page is not empty) %}
+{% set leftVisible = data.completionList is not empty
+    or data.category is not empty
+    or data.cms_page is not empty %}
 
-{% set rightVisible = data.suggestionByType.product_abstract is defined
-    and data.suggestionByType.product_abstract is not empty %}
+{% set rightVisible = data.product_abstract is not empty %}
 
 {% block body %}
     <div class="grid">
         {% if leftVisible %}
             <div class="col col--sm-12 col--lg-6">
-                {% if data.completionList is defined and data.completionList is not empty %}
-                    {% include molecule('suggestion-links-list', 'CatalogPage') with {
-                        data: {
-                            name: 'global.search.suggestions' | trans,
-                            items: data.completionList,
-                            length: data.suggestionsLength,
-                            isTitleHiddenOnTablet: false,
-                            isSuggestion: true
-                        }
-                    } only %}
-                {% endif %}
+                {% include molecule('suggestion-links-list', 'CatalogPage') with {
+                    data: {
+                        name: 'global.search.suggestions' | trans,
+                        items: data.completionList,
+                        length: data.suggestionsLength,
+                        isTitleHiddenOnTablet: false,
+                        isSuggestion: true
+                    }
+                } only %}
 
                 <div class="is-hidden-sm-md">
                     {% include molecule('suggestion-links-list', 'CatalogPage') with {
                         data: {
                             name: 'global.search.suggestion.in_categories' | trans,
-                            items: data.suggestionByType.category | default([]),
+                            items: data.category,
                             length: data.categoriesLength
                         }
                     } only %}
@@ -50,7 +50,7 @@
                     {% include molecule('suggestion-links-list', 'CatalogPage') with {
                         data: {
                             name: 'global.search.suggestion.in_cms' | trans,
-                            items: data.suggestionByType.cms_page | default(),
+                            items: data.cms_page,
                             length: data.pagesLength
                         }
                     } only %}
@@ -61,7 +61,7 @@
         {% if rightVisible %}
             <div class="col is-hidden-sm-md col--sm-12 col--lg-6">
                 <h6 class="{{ config.name }}__title">{{ 'global.search.suggestion.in_products' | trans }}</h6>
-                {% for product in data.suggestionByType.product_abstract | slice(0, data.productsLength)  %}
+                {% for product in data.product_abstract | slice(0, data.productsLength)  %}
                     {% include molecule('suggestion-product', 'CatalogPage') with {
                         data: {
                             product: product

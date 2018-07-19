@@ -27,7 +27,7 @@
                 {% if data.showSearchForm %}
                     {% include molecule('search-form') with {
                         class: config.name ~ '__search-form is-hidden-sm-md',
-                        searchInputClass: 'js-suggest-search-input'
+                        searchInputClass: 'js-suggest-search__input'
                     } only %}
                 {% endif %}
 
@@ -46,7 +46,7 @@
         {% if data.showSearchForm %}
             {% include molecule('search-form') with {
                 class: config.name ~ '__row' ~ config.name ~ '__search-form is-hidden-lg-xl',
-                searchInputClass: 'js-suggest-search-input-tablet'
+                searchInputClass: 'js-suggest-search__input-tablet'
             } only %}
         {% endif %}
     </div>

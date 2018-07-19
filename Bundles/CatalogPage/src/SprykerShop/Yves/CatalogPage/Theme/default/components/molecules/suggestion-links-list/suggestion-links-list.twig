@@ -23,7 +23,7 @@
                 {% set value = data.isSuggestion ? item : item.name %}
 
                 <li class="list__item">
-                    <a class="js-suggest-search--navigable {{ config.name }}__link" href="{{ href }}">{{ value }}</a>
+                    <a class="js-suggest-search__item--navigable" href="{{ href }}">{{ value }}</a>
                 </li>
             {% endfor %}
         </ul>
