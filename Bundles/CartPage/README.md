@@ -1,6 +1,6 @@
 # CartPage Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the cart page and its components.
 
 ## Installation
 
