@@ -46,7 +46,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isAddToCartDisabled
-     * @param array $quantityOptions
+     * @param array $quantityOptions Contains the selectable quantity options; each option is structured as ['label' => 1, 'value' => 1]
      *
      * @return void
      */
