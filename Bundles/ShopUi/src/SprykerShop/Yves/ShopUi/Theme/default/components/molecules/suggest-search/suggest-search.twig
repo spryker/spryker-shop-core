@@ -6,6 +6,7 @@
 } %}
 
 {% define attributes = {
+    "suggestion-url":required,
     "base-suggest-url": required,
     "input-selector": required,
     "debounce-delay": 500,
@@ -20,7 +21,7 @@
         class: config.jsName ~ '__ajax-provider',
         attributes: {
             method: 'post',
-            url: data.suggestionUrl
+            url: attributes['suggestion-url']
         }
     } only %}
 
