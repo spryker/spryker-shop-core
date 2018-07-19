@@ -226,15 +226,11 @@ export default class SuggestSearch extends Component {
     }
 
     updateHintInput(value?: string): void {
-        console.log(value);
-
         const hintValue = value ? value : this.hint;
         this.setHintValue(hintValue);
     }
 
     protected setHintValue(value: string): void {
-        console.log(value);
-
         this.hintInput.value =  value;
     }
 

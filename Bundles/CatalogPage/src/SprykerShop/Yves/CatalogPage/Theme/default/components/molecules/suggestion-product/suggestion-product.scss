@@ -1,6 +1,5 @@
 @mixin suggestion-product($name: '.suggestion-product') {
     #{$name} {
-
         &__link {
             color: $setting-color-black;
         }
