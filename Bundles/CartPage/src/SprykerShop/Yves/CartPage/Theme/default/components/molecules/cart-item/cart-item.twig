@@ -11,7 +11,10 @@
     attributes: required
 } %}
 
-{% set canEditCart = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
+{% set isGuestUser = (not is_granted('IS_AUTHENTICATED_FULLY')) %}
+{% set canEditSharedCart = isGuestUser or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
+{% set canChangeCartItem = isGuestUser or canEditSharedCart or can('ChangeCartItemPermissionPlugin') %}
+{% set canRemoveCartItem = isGuestUser or canEditSharedCart or can('RemoveCartItemPermissionPlugin') %}
 
 {% block body %}
     <div class="grid grid--stretch grid--justify">
@@ -53,7 +56,7 @@
         </div>
 
         <div class="col col--sm-12 col--lg-4">
-            {% if canEditCart %}
+            {% if canChangeCartItem %}
                 {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
                     {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
                 {% else %}
@@ -65,10 +68,10 @@
                 {% endif %}
             {% else %}
                 {{ 'cart.item_quantity' | trans }}
-                <strong>{{ cartItem.quantity }}</strong>
+                <strong>{{ data.cartItem.quantity }}</strong>
             {% endif %}
 
-            {% if canEditCart %}
+            {% if canRemoveCartItem %}
                 <a class="float-right" href="{{ path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': data.cartItem.groupKey }) }}">
                     &times; {{ 'remove' | trans }}
                 </a>
