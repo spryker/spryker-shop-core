@@ -54,7 +54,6 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
     {
         $baseUnit = null;
         $salesUnits = null;
-        $productPackagingUnit = null;
         $isAmountBlockEnabled = false;
         $productQuantityStorageTransfer = null;
         $leadProductSalesUnits = null;
