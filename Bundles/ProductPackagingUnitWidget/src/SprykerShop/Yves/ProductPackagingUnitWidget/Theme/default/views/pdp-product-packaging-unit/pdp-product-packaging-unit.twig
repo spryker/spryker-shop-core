@@ -91,8 +91,7 @@
     </div>
 
     <div class="col col--sm-12">
-        <br/>
-        <div class="text-small is-hidden measurement-unit-choice">
+        <div class="text-small spacing-y is-hidden measurement-unit-choice">
             <div class="measurement-unit-notifications">
                 <div id="quantity-between-units" class="is-hidden">
                     <span>{{ "measurement_units.recommendation.between-units-info" | trans }} (<span id="current-choice"></span>)</span>
@@ -161,7 +160,7 @@
         </div>
     {% endif %}
 
-    <div class="col">
+    <div class="col col--sm-12 spacing-y">
         {% if data.salesUnitCount %}
 
             {% include molecule('packaging-unit-quantity-selector', 'ProductPackagingUnitWidget') with {
@@ -199,15 +198,15 @@
 
         {% if data.salesUnitCount %}
             <hr />
-                <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ data.isAddToCartDisabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}>
-                        {% include atom('icon') with {
-                            data: {
-                                name: 'cart-plus'
-                            }
-                        } only %}
-                        {{ 'page.detail.add-to-cart' | trans }}
-                </button>
-            {% endif %}
+            <button type="submit" id="add-to-cart-button" class="button button--success button--expand" {{ data.isAddToCartDisabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{ qa('add-to-cart-button') }}>
+                {% include atom('icon') with {
+                    data: {
+                        name: 'cart-plus'
+                    }
+                } only %}
+                {{ 'page.detail.add-to-cart' | trans }}
+            </button>
+        {% endif %}
 
             {% set translations = [] %}
             {% for key, salesUnit in data.salesUnits %}
