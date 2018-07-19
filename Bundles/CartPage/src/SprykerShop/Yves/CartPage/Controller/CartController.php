@@ -324,5 +324,4 @@ class CartController extends AbstractController
 
         return false;
     }
-
 }
