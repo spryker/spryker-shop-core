@@ -1,6 +1,6 @@
 # ShopUi Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the UI components for shop.
 
 ## Installation
 
