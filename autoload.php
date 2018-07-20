@@ -18,7 +18,7 @@ $autoloader = function ($className) {
     $className = ltrim($className, '\\');
     $classNameParts = explode('\\', $className);
 
-    if (count($classNameParts) < 3) {
+    if (count($classNameParts) < 3 || !in_array($classNameParts[0], $namespaces)) {
         return false;
     }
 
