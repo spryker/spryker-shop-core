@@ -18,7 +18,7 @@ class ProductDiscontinuedWidgetDependencyProvider extends AbstractBundleDependen
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return array|\Spryker\Yves\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     public function provideDependencies(Container $container): Container
     {

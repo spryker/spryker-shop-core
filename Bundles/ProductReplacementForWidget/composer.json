@@ -10,10 +10,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker-shop/product-detail-page": "*",
-    "spryker/testify": "*"
+    "spryker/product": "*",
+    "spryker/testify": "*",
+    "spryker-shop/product-detail-page": "*"
   },
   "suggest": {
+    "spryker/product": "*",
     "spryker-shop/product-detail-page": "Widget plugins are available for this module."
   },
   "autoload": {
