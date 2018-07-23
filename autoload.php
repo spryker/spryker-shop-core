@@ -12,7 +12,7 @@ $autoloader = function ($className) {
     ];
 
     $testingNamespaces = [
-        'SprykerTest',
+        'SprykerShopTest',
     ];
 
     $className = ltrim($className, '\\');
@@ -54,7 +54,7 @@ $autoloader = function ($className) {
     }
 
     // Helper in new structure
-    if ($classNameParts[0] === 'SprykerTest') {
+    if ($classNameParts[0] === 'SprykerShopTest') {
         $bundle = $classNameParts[2];
         $rest = array_slice($classNameParts, 3);
         $className = implode(DIRECTORY_SEPARATOR, $rest) . '.php';
@@ -63,7 +63,7 @@ $autoloader = function ($className) {
             'Bundles',
             $bundle,
             'tests',
-            'SprykerTest',
+            'SprykerShopTest',
             $classNameParts[1],
             $classNameParts[2],
             $className,
@@ -73,7 +73,7 @@ $autoloader = function ($className) {
             'Bundles',
             $bundle,
             'tests',
-            'SprykerTest',
+            'SprykerShopTest',
             $classNameParts[1],
             $classNameParts[2],
             '_support',
