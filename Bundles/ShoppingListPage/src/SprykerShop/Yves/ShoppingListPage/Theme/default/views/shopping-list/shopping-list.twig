@@ -86,14 +86,14 @@
                 </thead>
                 <tbody>
                 {% for item in data.shoppingListItems %}
-                    {% set isItemAvalable = item.available is defined and item.available and item.price is defined and item.price is not null %}
+                    {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
                     {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
                         {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %}
-                        {% set isItemAvalable = not isDiscontinued and isItemAvalable %}
+                        {% set isItemAvailable = not isDiscontinued and isItemAvailable %}
                     {% endif %}
                     <tr>
                         <td>
-                            <input type="checkbox" {{ isItemAvalable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.idShoppingListItem }}]" value="{{ item.idShoppingListItem }}"/>
+                            <input type="checkbox" {{ isItemAvailable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.idShoppingListItem }}]" value="{{ item.idShoppingListItem }}"/>
                         </td>
                         <td class="text-center">
                             {% if item.images is defined and item.images is not empty %}
@@ -129,10 +129,10 @@
                             {% endif %}
                         </td>
                         <td class="text-center">
-                            <input class="input" {{ isItemAvalable ? '' : 'disabled' }} type="number" name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]" value="{{ item.quantity }}"/>
+                            <input class="input" {{ isItemAvailable ? '' : 'disabled' }} type="number" name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]" value="{{ item.quantity }}"/>
                         </td>
                         <td class="text-center">
-                            {% if isItemAvalable %}
+                            {% if isItemAvailable %}
                                 {{ data.labels.itemAvailableLabel }}
                             {% else %}
                                 {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
@@ -143,7 +143,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            {% if isItemAvalable %}
+                            {% if isItemAvailable %}
                                 <button type="submit" name="add-item" class="button button--success" value="{{ item.idShoppingListItem }}" {{qa('submit-button')}}>
                                     {{data.labels.addItemToCartLabel}}
                                 </button>

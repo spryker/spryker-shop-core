@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductAlternativeWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 class ProductAlternativeWidgetToProductAlternativeStorageClientBridge implements ProductAlternativeWidgetToProductAlternativeStorageClientInterface
@@ -26,16 +25,6 @@ class ProductAlternativeWidgetToProductAlternativeStorageClientBridge implements
     }
 
     /**
-     * @param string $concreteSku
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer|null
-     */
-    public function findProductAlternativeStorage(string $concreteSku): ?ProductAlternativeStorageTransfer
-    {
-        return $this->productAlternativeStorageClient->findProductAlternativeStorage($concreteSku);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return bool
@@ -43,5 +32,27 @@ class ProductAlternativeWidgetToProductAlternativeStorageClientBridge implements
     public function isAlternativeProductApplicable(ProductViewTransfer $productViewTransfer): bool
     {
         return $this->productAlternativeStorageClient->isAlternativeProductApplicable($productViewTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getConcreteAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array
+    {
+        return $this->productAlternativeStorageClient->getConcreteAlternativeProducts($productViewTransfer, $localeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array
+    {
+        return $this->productAlternativeStorageClient->getAlternativeProducts($productViewTransfer, $localeName);
     }
 }

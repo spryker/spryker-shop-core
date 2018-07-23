@@ -7,22 +7,30 @@
 
 namespace SprykerShop\Yves\ProductAlternativeWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface ProductAlternativeWidgetToProductAlternativeStorageClientInterface
 {
-    /**
-     * @param string $concreteSku
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer|null
-     */
-    public function findProductAlternativeStorage(string $concreteSku): ?ProductAlternativeStorageTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return bool
      */
     public function isAlternativeProductApplicable(ProductViewTransfer $productViewTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getConcreteAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array;
 }
