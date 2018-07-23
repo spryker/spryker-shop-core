@@ -103,7 +103,6 @@ class BusinessUnitController extends AbstractCompanyController
 
         return [
             'form' => $companyBusinessUnitForm->createView(),
-            'addresses' => $dataProviderOptions[CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES],
         ];
     }
 

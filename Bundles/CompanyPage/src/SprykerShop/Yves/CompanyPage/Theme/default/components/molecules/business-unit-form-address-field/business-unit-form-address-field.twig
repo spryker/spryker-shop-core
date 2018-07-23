@@ -7,30 +7,29 @@
 } %}
 
 {% define data = {
-    field: required,
+    children: required,
 } %}
 
 {% block body %}
-
-    {% for key, item in data.field.children %}
+    {% for key, item in data.children %}
         {% if item.vars.checked %}
             {{ form_widget(item) }}
-            <a href="{{ url('company/address/update', {'id': item.vars.value }) }}">
+            <a href="{{ url('company/address/update', {'id': item.vars.value, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit}) }}">
                 {{ "company.account.address.edit" | trans }}
             </a>
-            <a href="{{ url('company/address/delete-confirmation', {'id': item.vars.value, 'idBusinessUnit': data.idBusinessUnit }) }}">
+            <a href="{{ url('company/address/delete-confirmation', {'id': item.vars.value, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
                 {{ "company.account.address.delete" | trans }}
             </a>
         {% endif %}
     {% endfor %}
 
-    {% for key, item in data.field.children %}
+    {% for key, item in data.children %}
         {% if not item.vars.checked %}
             {{ form_widget(item) }}
-            <a href="{{ url('company/address/update', {'id': item.vars.value }) }}">
+            <a href="{{ url('company/address/update', {'id': item.vars.value, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit}) }}">
                 {{ "company.account.address.edit" | trans }}
             </a>
-            <a href="{{ url('company/address/delete-confirmation', {'id': item.vars.value, 'idBusinessUnit': data.idBusinessUnit }) }}">
+            <a href="{{ url('company/address/delete-confirmation', {'id': item.vars.value, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
                 {{ "company.account.address.delete" | trans }}
             </a>
         {% endif %}
