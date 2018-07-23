@@ -1,12 +1,6 @@
 # CustomerPage Module
 
-CustomerPage module provides pages for customer:
-* Login
-* Register
-* Profile
-* Addresses
-* Orders
-* Change password
+This module contains the customer page and its components.
 
 ## Installation
 
