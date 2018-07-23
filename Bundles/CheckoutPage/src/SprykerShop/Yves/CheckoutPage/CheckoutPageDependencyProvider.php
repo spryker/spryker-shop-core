@@ -19,6 +19,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientBrid
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientBridge;
@@ -67,6 +68,8 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     const ADDRESS_STEP_SUB_FORMS = 'ADDRESS_STEP_SUB_FORMS';
     const ADDRESS_STEP_FORM_DATA_PROVIDER = 'ADDRESS_STEP_FORM_DATA_PROVIDER';
 
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -105,6 +108,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerStepSubForms($container);
         $container = $this->addAddressStepSubForms($container);
         $container = $this->addAddressStepFormDataProvider($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -595,5 +599,21 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getStore()
     {
         return Store::getInstance();
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+            return new CheckoutPageToGlossaryStorageClientBridge(
+                $container->getLocator()->glossaryStorage()->client()
+            );
+        };
+
+        return $container;
     }
 }
