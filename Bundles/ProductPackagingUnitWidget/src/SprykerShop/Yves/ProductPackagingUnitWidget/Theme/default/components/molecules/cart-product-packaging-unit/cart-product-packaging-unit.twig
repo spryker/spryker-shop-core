@@ -8,6 +8,7 @@
 {% define data = {
     amount: required,
     quantity: required,
+    amountValue: required,
     quantitySalesUnit: required,
     quantityConversion: required,
     quantityProductMeasurementUnit: required,
@@ -25,7 +26,7 @@
         <span class="float-right">{{ data.quantity / data.quantityConversion }} {{ salesUnitName | trans }}</span>
     </li>
     <li>
-        <strong>{{ 'packaging_units.cart.amount' | trans }}</strong>&nbsp;{{ data.amount }}
-        <span class="float-right">{{ data.amount / data.amountConversion }} {{ leadSalesUnitName | trans }}</span>
+        <strong>{{ 'packaging_units.cart.amount' | trans }}</strong>&nbsp;{{ data.amount / data.quantity }}
+        <span class="float-right">{{ data.amountValue }} {{ leadSalesUnitName | trans }}</span>
     </li>
 {% endblock body %}
