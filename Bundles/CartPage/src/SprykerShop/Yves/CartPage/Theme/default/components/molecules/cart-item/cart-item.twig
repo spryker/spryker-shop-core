@@ -51,10 +51,11 @@
                 }
             } only %}
 
-            {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }}
         </div>
 
         <div class="col col--sm-12 col--lg-4">
+            {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }}
+
             {% if data.cartItem.amountSalesUnit is empty %}
                 {% if canEditCart %}
                     {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
