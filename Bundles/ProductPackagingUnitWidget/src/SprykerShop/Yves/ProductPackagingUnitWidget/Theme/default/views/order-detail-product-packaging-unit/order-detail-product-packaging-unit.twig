@@ -20,7 +20,7 @@
     </td>
     <td>
         {{ data.concreteItem.name }}<br/>
-        {% if data.concreteItem.quantitySalesUnit is not empty and data.concreteItem.amountSalesUnit is not empty %}
+        {% if data.concreteItem.amount and data.concreteItem.quantity %}
             <span class="text-secondary">&times;</span> {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.concreteItem.amount / data.concreteItem.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.quantity * data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
         {% endif %}
     </td>
