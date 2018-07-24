@@ -54,11 +54,10 @@
         } only %}
             {% block field %}
                 {% if field.vars.name == 'address_collection' %}
-                    {% include molecule('business-unit-from-address-field', 'CompanyPage') with {
+                    {% include molecule('business-unit-form-address-field', 'CompanyPage') with {
                         data: {
-                            field: field,
-                            addresses: embed.addresses,
-                            idBusinessUnit: null
+                            children: field.children,
+                            idCompanyBusinessUnit: null
                         }
                     } only %}
                     {% do field.setRendered %}
