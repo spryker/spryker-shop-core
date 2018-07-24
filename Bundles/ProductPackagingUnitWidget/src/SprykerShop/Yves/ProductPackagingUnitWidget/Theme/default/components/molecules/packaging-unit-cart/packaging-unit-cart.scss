@@ -1,12 +1,12 @@
-@mixin cart-product-packaging-unit($name: '.cart-product-packaging-unit') {
+@mixin product-packaging-unit-packaging-unit-cart($name: '.packaging-unit-cart') {
     #{$name} {
         &__item {
             &:not(:last-child) {
                 margin-bottom: map-get($setting-spacing, 'small');
             }
         }
-
-        &__box {
+        
+        &__value {
             padding: 0.25rem 0.5rem;
             border: 1px solid $setting-color-input-border;
         }
