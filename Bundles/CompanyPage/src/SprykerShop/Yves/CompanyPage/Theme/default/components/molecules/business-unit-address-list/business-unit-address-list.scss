@@ -1,0 +1,8 @@
+@mixin business-unit-address-list($name: '.business-unit-address-list') {
+    #{$name} {
+        &__list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    }
+}

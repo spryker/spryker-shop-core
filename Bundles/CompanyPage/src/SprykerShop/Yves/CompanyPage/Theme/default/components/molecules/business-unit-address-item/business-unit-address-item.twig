@@ -1,0 +1,27 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'business-unit-address-item',
+    tag: 'div'
+} %}
+
+{% define data = {
+    address: required,
+    idBusinessUnit: ''
+} %}
+
+{% block body %}
+    <div class="grid">
+        <div class="col col--lg-9">
+            {{ form_widget(data.address) }}
+        </div>
+        <div class="col col--lg-3 text-right">
+            <a href="{{ url('company/address/update', {'id': data.address.vars.value }) }}">
+                {{ "company.account.address.edit" | trans }}
+            </a>
+            <a class="link link--alert" href="{{ url('company/address/delete-confirmation', {'id': data.address.vars.value, 'idBusinessUnit': data.idBusinessUnit }) }}">
+                {{ "company.account.address.delete" | trans }}
+            </a>
+        </div>
+    </div>
+{% endblock %}

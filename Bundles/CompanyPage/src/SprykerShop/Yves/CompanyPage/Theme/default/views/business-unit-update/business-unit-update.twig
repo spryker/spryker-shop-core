@@ -61,16 +61,16 @@
             {% block field %}
                 {% if field.vars.name == 'address_collection' %}
                     {% do field.setRendered %}
-                    <div class="text-right">
-                        <a class="button" href="{{url('company/address/create')}}">{{ 'company.account.add_new_address' | trans }}</a>
+                    <div class="form__field col col--sm-12">
+                        <hr />
+                        {% include molecule('business-unit-address-list', 'CompanyPage') with {
+                            data: {
+                                field: field,
+                                addresses: data.embed.addresses,
+                                idBusinessUnit: data.form.vars.value.id_company_business_unit
+                            }
+                        } only %}
                     </div>
-                    {% include molecule('business-unit-from-address-field', 'CompanyPage') with {
-                        data: {
-                            field: field,
-                            addresses: data.embed.addresses,
-                            idBusinessUnit: data.form.vars.value.id_company_business_unit
-                        }
-                    } only %}
                 {% else %}
                     {{parent()}}
                 {% endif %}
