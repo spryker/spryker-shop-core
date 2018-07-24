@@ -7,7 +7,13 @@
 
 namespace SprykerShop\Shared\CompanyUserInvitationPage;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CompanyUserInvitationPageConstants
 {
+    /**
+     * Deprecated: Move to Config instead.
+     */
     public const IMPORT_ERRORS_FILE_PATH = '/tmp';
 }
