@@ -1,6 +1,8 @@
 import Component from '../../../models/component';
 import AjaxProvider from '../../../components/molecules/ajax-provider/ajax-provider';
-import { throttle, debounce } from 'throttle-debounce';
+//import { throttle, debounce } from 'throttle-debounce';
+import debounce from 'lodash-es/debounce'
+import throttle from 'lodash-es/throttle'
 
 interface keyCodes {
     [keyCode: number]: string;
@@ -52,9 +54,9 @@ export default class SuggestSearch extends Component {
     }
 
     protected mapEvents(): void {
-        this.searchInput.addEventListener('keyup', debounce(this.debounceDelay, (event: Event) => this.onInputKeyUp(event)));
-        this.searchInput.addEventListener('keydown', throttle(this.throttleDelay, (event: Event) => this.onInputKeyDown(<KeyboardEvent> event)));
-        this.searchInput.addEventListener('blur', debounce(this.debounceDelay,(event: Event) => this.onInputFocusOut(event)));
+        this.searchInput.addEventListener('keyup', debounce((event: Event) => this.onInputKeyUp(event), this.debounceDelay));
+        this.searchInput.addEventListener('keydown', throttle((event: Event) => this.onInputKeyDown(<KeyboardEvent> event), this.throttleDelay));
+        this.searchInput.addEventListener('blur', debounce((event: Event) => this.onInputFocusOut(event), this.debounceDelay));
         this.searchInput.addEventListener('focus', (event: Event) => this.onInputFocusIn(event));
         this.searchInput.addEventListener('click', (event: Event) => this.onInputClick(event));
     }
