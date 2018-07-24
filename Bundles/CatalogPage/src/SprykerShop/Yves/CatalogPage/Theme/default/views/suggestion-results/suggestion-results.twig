@@ -5,7 +5,7 @@
 } %}
 
 {% define data = {
-    completionList: completion | default([]),
+    completion: completion | default([]),
     suggestionByType: suggestionByType | default,
     category: suggestionByType.category | default([]),
     cms_page: suggestionByType.cms_page | default([]),
@@ -16,7 +16,7 @@
     productsLength: 6
 } %}
 
-{% set leftVisible = data.completionList is not empty
+{% set leftVisible = data.completion is not empty
     or data.category is not empty
     or data.cms_page is not empty %}
 
@@ -29,7 +29,7 @@
                 {% include molecule('suggestion-links-list', 'CatalogPage') with {
                     data: {
                         name: 'global.search.suggestions' | trans,
-                        items: data.completionList,
+                        items: data.completion,
                         length: data.suggestionsLength,
                         isTitleHiddenOnTablet: false,
                         isSuggestion: true

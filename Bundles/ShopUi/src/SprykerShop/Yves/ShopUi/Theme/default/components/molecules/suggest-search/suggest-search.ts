@@ -11,15 +11,11 @@ interface keyCodes {
 export default class SuggestSearch extends Component {
     readonly keyboardCodes: keyCodes
 
-    lettersTrashold: number
-    debounceDelay: number
-    throttleDelay: number
     searchInput: HTMLInputElement
     hintInput: HTMLInputElement
     suggestionsContainer: HTMLElement
     ajaxProvider: AjaxProvider
     currentSearchValue: string
-    searchInputSelector: string
     hint: string
     navigation: HTMLElement[]
     activeItemIndex: number
@@ -41,11 +37,7 @@ export default class SuggestSearch extends Component {
     }
 
     protected readyCallback(): void {
-        this.debounceDelay = Number(this.getAttribute('debounce-delay'));
-        this.throttleDelay = Number(this.getAttribute('throttle-delay'));
-        this.lettersTrashold = Number(this.getAttribute('letters-trashold'));
         this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}__ajax-provider`);
-        this.searchInputSelector = <string> this.getAttribute('input-selector');
         this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}__container`);
         this.searchInput = <HTMLInputElement> document.querySelector(this.searchInputSelector);
         this.navigationActiveClass = `${this.name}__item--active`;
@@ -239,4 +231,21 @@ export default class SuggestSearch extends Component {
     protected saveCurrentSearchValue(suggestQuery: string): void {
         this.currentSearchValue = suggestQuery;
     }
+
+    get debounceDelay(): number {
+        return Number(this.getAttribute('debounce-delay'));
+    }
+
+    get throttleDelay(): number {
+        return Number(this.getAttribute('throttle-delay'));
+    }
+
+    get lettersTrashold(): number {
+        return Number(this.getAttribute('letters-trashold'));
+    }
+
+    get searchInputSelector(): string {
+        return <string> this.getAttribute('input-selector');
+    }
+
 }
