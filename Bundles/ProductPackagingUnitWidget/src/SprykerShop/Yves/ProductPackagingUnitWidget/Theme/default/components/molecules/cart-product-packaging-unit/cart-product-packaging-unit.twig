@@ -20,12 +20,18 @@
     {% set salesUnitName = data.quantityProductMeasurementUnit.name | default('') %}
     {% set leadSalesUnitName = data.amountProductMeasurementUnit.name | default('') %}
 
-    <li>
-        <strong>{{ 'packaging_units.cart.quantity' | trans }}&nbsp;</strong>{{ data.quantity }}
-        <span class="float-right">{{ data.quantity / data.quantityConversion }} {{ salesUnitName | trans }}</span>
+    <li class="{{ config.name }}__item">
+        <span>{{ 'packaging_units.cart.quantity' | trans }}&nbsp;</span>
+        <div class="{{ config.name }}__box">{{ data.quantity }}</div>
+        <small class="text-secondary">
+            [= {{ data.quantity / data.quantityConversion }} {{ salesUnitName | trans }}]
+        </small>
     </li>
-    <li>
-        <strong>{{ 'packaging_units.cart.amount' | trans }}</strong>&nbsp;{{ data.amount }}
-        <span class="float-right">{{ data.amount / data.amountConversion }} {{ leadSalesUnitName | trans }}</span>
+    <li class="{{ config.name }}__item">
+        <span>{{ 'packaging_units.cart.amount' | trans }}&nbsp;</span>
+        <div class="{{ config.name }}__box">{{ data.amount }}</div>
+        <small class="text-secondary">
+            [= {{ data.amount / data.amountConversion }} {{ leadSalesUnitName | trans }}]
+        </small>
     </li>
 {% endblock body %}
