@@ -20,7 +20,7 @@
     </td>
     <td>
         {{ data.concreteItem.name }}<br/>
-        {% if data.concreteItem.amount is not null and data.concreteItem.quantity is not null %}
+        {% if data.concreteItem.amount and data.concreteItem.quantity %}
             <span class="text-secondary">&times;</span> {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.concreteItem.amount / data.concreteItem.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.quantity * data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
         {% endif %}
     </td>
@@ -28,7 +28,7 @@
         {{ data.concreteItem.unitPrice | money(true, data.currencyIsoCode) }}
     </td>
     <td>
-        {{ data.concreteItem.quantity }} {% if salesUnitSummary is defined %}(={{ salesUnitSummary }}){% endif %}
+        {{ data.concreteItem.quantity }} {% if salesUnitSummary is defined and salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
     </td>
     <td>
         {{ data.concreteItem.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
