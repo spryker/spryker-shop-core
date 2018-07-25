@@ -2,7 +2,7 @@
 
 {% define data = {
     form: _view.form,
-
+    idCompanyBusinessUnit: _view.idCompanyBusinessUnit|default(''),
     title: 'company.account.address' | trans,
     activePage: 'address'
 } %}
@@ -14,7 +14,7 @@
                 title: 'company.account.edit_address_information' | trans,
                 form: data.form,
                 options: {
-                    action: url('company/address/create')
+                    action: url('company/address/create', { idCompanyBusinessUnit: data.idCompanyBusinessUnit })
                 },
                 layout: {
                     address1: 'col col--sm-12 col--lg-10',
