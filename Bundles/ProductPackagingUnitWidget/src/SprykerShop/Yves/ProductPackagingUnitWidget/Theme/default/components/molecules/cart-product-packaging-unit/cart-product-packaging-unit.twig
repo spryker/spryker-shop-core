@@ -19,13 +19,13 @@
 {% block body %}
     {% set salesUnitName = data.quantityProductMeasurementUnit.name | default('') %}
     {% set leadSalesUnitName = data.amountProductMeasurementUnit.name | default('') %}
-
+    {% set amountPerQuantity = data.amount / data.quantity %}
     <li>
         <strong>{{ 'packaging_units.cart.quantity' | trans }}&nbsp;</strong>{{ data.quantity }}
         <span class="float-right">{{ data.quantity / data.quantityConversion }} {{ salesUnitName | trans }}</span>
     </li>
     <li>
-        <strong>{{ 'packaging_units.cart.amount' | trans }}</strong>&nbsp;{{ data.amount }}
-        <span class="float-right">{{ data.amount / data.amountConversion }} {{ leadSalesUnitName | trans }}</span>
+        <strong>{{ 'packaging_units.cart.amount' | trans }}</strong>&nbsp;{{ data.amount / data.quantity }}
+        <span class="float-right">{{ amountPerQuantity / data.amountConversion }} {{ leadSalesUnitName | trans }}</span>
     </li>
 {% endblock body %}
