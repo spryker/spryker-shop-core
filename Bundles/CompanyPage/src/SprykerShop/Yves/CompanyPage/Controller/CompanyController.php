@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,12 +23,33 @@ class CompanyController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
-        $data = [];
+        $company = $this->getCompanyUser()->getCompanyBusinessUnit()->getCompany();
+        $companyUnitAddressCollection = $this->getCompanyUnitAddressCollection();
+
+        $data = [
+            'company' => $company,
+            'addressCollection' => $companyUnitAddressCollection->getCompanyUnitAddresses(),
+        ];
 
         return $this->view(
             $data,
             $this->getFactory()->getCompanyOverviewWidgetPlugins(),
             '@CompanyPage/views/overview/overview.twig'
         );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    protected function getCompanyUnitAddressCollection(): CompanyUnitAddressCollectionTransfer
+    {
+        $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
+            ->setIdCompanyBusinessUnit($this->getCompanyUser()->getCompanyBusinessUnit()->getIdCompanyBusinessUnit());
+
+        $companyUnitAddressCollectionTransfer = $this->getFactory()
+            ->getCompanyUnitAddressClient()
+            ->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer);
+
+        return $companyUnitAddressCollectionTransfer;
     }
 }

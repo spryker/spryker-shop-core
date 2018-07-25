@@ -96,7 +96,7 @@ class AddressController extends AbstractCompanyController
         }
 
         if ($addressForm->isValid()) {
-           $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData(), $idCompanyBusinessUnit);
+            $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData(), $idCompanyBusinessUnit);
 
             if ($idCompanyBusinessUnit) {
                 $this->getFactory()->getMessengerClient()->addSuccessMessage(
@@ -199,7 +199,6 @@ class AddressController extends AbstractCompanyController
         $this->getFactory()->getCompanyUnitAddressClient()->deleteCompanyUnitAddress($companyUnitAddressTransfer);
 
         if ($idCompanyBusinessUnit) {
-
             $this->getFactory()->getMessengerClient()->addSuccessMessage(
                 sprintf(
                     static::MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS,

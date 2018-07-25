@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'overview-info',
+    tag: 'div'
+} %}
+
+{% define data = {
+    companyName: required,
+    addressCollection: required
+} %}
+
+{% block body %}
+    <span class="{{ config.name }}__title">{{ 'company.account.name' | trans }}:</span>
+    <span class="{{ config.name }}__text"> {{ data.companyName }}</span><br/>
+    {% if data.addressCollection|length %}
+        <span class="{{ config.name }}__title">{{ 'company.account.address' | trans }}:</span>
+        {% set mainAddress = data.addressCollection|first %}
+        {{ mainAddress.city }} {{ mainAddress.zipCode }} {{ mainAddress.address1 }} {{ mainAddress.address2 }} {{ mainAddress.address3 }}
+    {% endif %}
+{% endblock %}
