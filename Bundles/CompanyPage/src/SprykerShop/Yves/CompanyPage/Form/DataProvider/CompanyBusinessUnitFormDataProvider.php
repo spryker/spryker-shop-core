@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
@@ -122,12 +123,12 @@ class CompanyBusinessUnitFormDataProvider
      *
      * @return array
      */
-    public function getOptions(CompanyUserTransfer $companyUserTransfer, $idCompanyBusinessUnit = null): array
+    public function getOptions(CompanyUserTransfer $companyUserTransfer, ?int $idCompanyBusinessUnit = null): array
     {
         $companyUserTransfer->requireFkCompany();
 
         return [
-            CompanyBusinessUnitForm::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT => $this->getCompanyBusinessUnits($companyUserTransfer, $idCompanyBusinessUnit),
+            CompanyBusinessUnitForm::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT => $this->getCompanyBusinessUnits($companyUserTransfer, $idCompanyBusinessUnit),
             CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES => $this->getCompanyUnitAddresses($companyUserTransfer),
         ];
     }
@@ -138,14 +139,10 @@ class CompanyBusinessUnitFormDataProvider
      *
      * @return array
      */
-    protected function getCompanyBusinessUnits(CompanyUserTransfer $companyUserTransfer, $idCompanyBusinessUnit = null): array
+    protected function getCompanyBusinessUnits(CompanyUserTransfer $companyUserTransfer, ?int $idCompanyBusinessUnit = null): array
     {
         $idCompany = $companyUserTransfer->getFkCompany();
-        $criteriaFilterTransfer = $this->createCompanyBusinessUnitCriteriaFilterTransfer($idCompany);
-
-        $companyBusinessUnitCollection = $this->businessUnitClient->getCompanyBusinessUnitCollection(
-            $criteriaFilterTransfer
-        );
+        $companyBusinessUnitCollection = $this->getCompanyBusinessUnitCollection($idCompany);
 
         $businessUnits = [];
         foreach ($companyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnit) {
@@ -156,6 +153,22 @@ class CompanyBusinessUnitFormDataProvider
         }
 
         return $businessUnits;
+    }
+
+    /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     */
+    public function getCompanyBusinessUnitCollection(int $idCompany): CompanyBusinessUnitCollectionTransfer
+    {
+        $criteriaFilterTransfer = $this->createCompanyBusinessUnitCriteriaFilterTransfer($idCompany);
+
+        $companyBusinessUnitCollection = $this->businessUnitClient->getCompanyBusinessUnitCollection(
+            $criteriaFilterTransfer
+        );
+
+        return $companyBusinessUnitCollection;
     }
 
     /**

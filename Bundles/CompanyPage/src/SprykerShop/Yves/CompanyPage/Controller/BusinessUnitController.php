@@ -22,6 +22,8 @@ class BusinessUnitController extends AbstractCompanyController
 {
     protected const BUSINESS_UNIT_LIST_SORT_FIELD = 'id_company_business_unit';
     protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+    protected const REQUEST_PARAM_ID = 'id';
+
     protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'Business unit "%s" was created successfully.';
     protected const MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS = 'Business unit "%s" was updated successfully.';
     protected const MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS = 'Business unit "%s" was deleted successfully.';
@@ -86,7 +88,7 @@ class BusinessUnitController extends AbstractCompanyController
             ->createBusinessUnitFormDataProvider();
 
         $companyUserTransfer = $this->getCompanyUser();
-        $idCompanyBusinessUnit = $request->query->getInt('id');
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
         $dataProviderOptions = $dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit);
 
         $companyBusinessUnitForm = $this->getFactory()
@@ -145,9 +147,9 @@ class BusinessUnitController extends AbstractCompanyController
             ->createBusinessUnitFormDataProvider();
 
         $companyUserTransfer = $this->getCompanyUser();
-        $idCompanyBusinessUnit = $request->query->getInt('id');
-
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
         $dataProviderOptions = $dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit);
+
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->getBusinessUnitForm($dataProviderOptions)
@@ -190,7 +192,7 @@ class BusinessUnitController extends AbstractCompanyController
      */
     public function deleteAction(Request $request)
     {
-        $companyBusinessUnitId = $request->query->getInt('id');
+        $companyBusinessUnitId = $request->query->getInt(static::REQUEST_PARAM_ID);
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($companyBusinessUnitId);
 
@@ -239,7 +241,7 @@ class BusinessUnitController extends AbstractCompanyController
      */
     protected function getCompanyBusinessUnitDetailsResponseData(Request $request): array
     {
-        $idCompanyBusinessUnit = $request->query->getInt('id');
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
 
