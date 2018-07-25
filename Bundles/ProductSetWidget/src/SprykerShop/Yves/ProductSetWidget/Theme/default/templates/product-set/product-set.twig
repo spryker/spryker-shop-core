@@ -1,9 +1,5 @@
 {% extends template('widget') %}
 
-{% define config = {
-    name: 'product-card'
-} %}
-
 {% define data = {
     products: required,
     description: '',
@@ -121,7 +117,7 @@
                             {% block actions %}
                                 {% set isDisabled = not embed.product.idProductConcrete or not embed.product.available %}
 
-                                <a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand {{ config.name }}__add-to-cart" {% if isDisabled %}disabled{% endif %}>
+                                <a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand product-set__add-to-cart" {% if isDisabled %}disabled{% endif %}>
                                     {% include atom('icon') with {
                                         data: {
                                             name: 'cart-plus'
@@ -138,7 +134,7 @@
         </form>
         {% include molecule('action-single-click-enforcer') with {
             attributes: {
-                'target-selector': '.' ~ config.name ~ '__add-to-cart'
+                'target-selector': '.product-set__add-to-cart'
             }
         } only %}
     {% endblock %}
