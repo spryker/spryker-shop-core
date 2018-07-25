@@ -1,9 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'business-unit-address-list',
-    id: 'company_business_unit_form_address_collection',
-    tag: 'div'
+    name: 'business-unit-address-list'
 } %}
 
 {% define data = {
@@ -20,10 +18,11 @@
         </div>
     </div>
     <ul class="{{ config.name }}__list spacing-y">
-        {% set assignedChecked = 0 %}
+        {% set isEmpty = true %}
+
         {% for key, item in data.field.children %}
             {% if item.vars.checked %}
-                {% set assignedChecked = 1 %}
+                {% set isEmpty = false %}
                 <li class="{{ config.name }}__item spacing-y">
                     {% include molecule('business-unit-address-item', 'CompanyPage') with {
                         data: {
@@ -34,7 +33,8 @@
                 </li>
             {% endif %}
         {% endfor %}
-        {% if assignedChecked == 0 %}
+
+        {% if isEmpty %}
             <li class="{{ config.name }}__item spacing-y--inner text-center">
                 {{ 'company.account.address.assigned.empty' | trans }}
             </li>
@@ -45,10 +45,11 @@
         {{ 'company.account.address.unassigned' | trans }}
     </p>
     <ul class="{{ config.name }}__list spacing-y">
-        {% set assignedChecked = 0 %}
+        {% set isEmpty = true %}
+
         {% for key, item in data.field.children %}
             {% if not item.vars.checked %}
-                {% set assignedChecked = 1 %}
+                {% set isEmpty = false %}
                 <li class="{{ config.name }}__item spacing-y">
                     {% include molecule('business-unit-address-item', 'CompanyPage') with {
                         data: {
@@ -59,7 +60,8 @@
                 </li>
             {% endif %}
         {% endfor %}
-        {% if assignedChecked == 0 %}
+
+        {% if isEmpty %}
             <li class="{{ config.name }}__item spacing-y--inner text-center">
                 {{ 'company.account.address.unassigned.empty' | trans }}
             </li>

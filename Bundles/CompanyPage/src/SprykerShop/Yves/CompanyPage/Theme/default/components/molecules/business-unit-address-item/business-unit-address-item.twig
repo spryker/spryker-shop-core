@@ -1,13 +1,12 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'business-unit-address-item',
-    tag: 'div'
+    name: 'business-unit-address-item'
 } %}
 
 {% define data = {
     address: required,
-    idBusinessUnit: ''
+    idBusinessUnit: required
 } %}
 
 {% block body %}
