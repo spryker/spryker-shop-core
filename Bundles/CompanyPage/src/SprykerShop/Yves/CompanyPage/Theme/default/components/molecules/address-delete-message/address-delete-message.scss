@@ -1,4 +1,4 @@
-@mixin address-delete-message($name: '.address-delete-message') {
+@mixin company-page-address-delete-message($name: '.address-delete-message') {
     #{$name} {
         &__title {
             &--warning {
