@@ -32,9 +32,9 @@
 
         {% include molecule('suggest-search') with {
             attributes: {
-                "suggestion-url": path('search/suggestion'),
-                "base-suggest-url": path('search/suggestion'),
-                "input-selector": '[data-search-id="' ~ attributes['data-search-id'] ~ '"] .' ~ config.jsName ~ '__input'
+                'suggestion-url': path('search/suggestion'),
+                'base-suggest-url': path('search/suggestion'),
+                'input-selector': '[data-search-id="' ~ attributes['data-search-id'] ~ '"] .' ~ config.jsName ~ '__input'
             }
         } only %}
     </form>

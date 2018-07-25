@@ -6,15 +6,16 @@
 
 {% define data = {
     product: required,
-    image: data.product.images | first | default,
-    alt: data.product.abstract_name | default(''),
-    title: data.product.abstract_name | default(''),
-    price: data.product.price | default,
-    originalPrice: data.product.prices.ORIGINAL | default
+    url: '',
+    image: null,
+    alt: '',
+    title: '',
+    price: null,
+    originalPrice: null
 } %}
 
 {% block body %}
-    <a class="grid js-suggest-search__item--navigable js-suggest-search__product-item--navigable {{ config.name }}__link" href="{{ data.product.url }}">
+    <a class="grid js-suggest-search__item--navigable js-suggest-search__product-item--navigable {{ config.name }}__link" href="{{ data.url }}">
         <span class="col col--sm-3">
             {% if data.image %}
                 {% include atom('thumbnail') with {
@@ -30,7 +31,7 @@
         </span>
 
         <span class="col col--sm-9 spacing spacing--inner">
-            {{ data.product.abstract_name }}
+            {{ data.title }}
 
             {% include molecule('price') with {
                 data: {

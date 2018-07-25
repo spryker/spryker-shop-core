@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'suggestion-results',
+    name: 'suggestion-results'
 } %}
 
 {% define data = {
@@ -64,7 +64,13 @@
                 {% for product in data.product_abstract | slice(0, data.productsLength)  %}
                     {% include molecule('suggestion-product', 'CatalogPage') with {
                         data: {
-                            product: product
+                            product: product,
+                            url: product.url,
+                            image: product.images is defined ? product.images | first : null,
+                            alt: product.abstract_name is defined ? product.abstract_name : null,
+                            title: product.abstract_name is defined ? product.abstract_name : null,
+                            price: product.price is defined ? product.price : null,
+                            originalPrice: product.prices.ORIGINAL is defined ? product.prices.ORIGINAL : null
                         }
                     } only %}
                 {% endfor %}
