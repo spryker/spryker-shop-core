@@ -1,44 +1,21 @@
 {% extends template('page-layout-company', 'CompanyPage') %}
 
 {% define data = {
+    title: 'company.account.address.delete_confimation_page' | trans,
+    activePage: 'address',
     companyUnitAddress: _view.companyUnitAddress,
     companyBusinessUnits: _view.companyUnitAddress.companyBusinessUnitCollection.companyBusinessUnits|default([]),
     idCompanyBusinessUnit: _view.idCompanyBusinessUnit,
-    title: 'company.account.address.delete_confimation_page' | trans,
-    activePage: 'address'
 } %}
 
 {% block companyContent %}
     <div class="box">
-
-        {{ 'company_page.address_delete_confirmation.title' | trans }}
-
-        <p>{{ data.companyUnitAddress.address1 }} {{ data.companyUnitAddress.address2 }}</p>
-        <p>{{ data.companyUnitAddress.zipCode }} {{ data.companyUnitAddress.city }}, {{ ('countries.iso.' ~ data.companyUnitAddress.iso2code) | trans }}</p>
-
-        {% if data.companyBusinessUnits|length %}
-            <p>{{ 'company_page.address_delete_confirmation.notification' | trans  }}</p>
-            <ul>
-                {% for companyBusinessUnit in data.companyBusinessUnits %}
-                    <li>{{ companyBusinessUnit.name }}</li>
-                {% endfor %}
-            </ul>
-            <p>{{ 'company_page.address_delete_confirmation.delete_notification' | trans }}</p>
-        {% endif %}
-
-        <a href="{{ url('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
-            {{ "company_page.address_delete_confirmation.confirm" | trans }}
-        </a>
-
-        {% if data.idCompanyBusinessUnit %}
-            <a href="{{ url('company/business-unit/update', {'id': data.idCompanyBusinessUnit }) }}">
-                {{ "company_page.address_delete_confirmation.cancel" | trans }}
-            </a>
-        {% else %}
-            <a href="{{ url('company/business-unit', {'id': data.idCompanyBusinessUnit }) }}">
-                {{ "company_page.address_delete_confirmation.cancel" | trans }}
-            </a>
-        {% endif %}
-
+        {% include molecule('address-delete-message', 'CompanyPage') with {
+            data: {
+                companyUnitAddress: data.companyUnitAddress,
+                companyBusinessUnits: data.companyBusinessUnits,
+                idCompanyBusinessUnit: data.idCompanyBusinessUnit
+            }
+        } only %}
     </div>
 {% endblock %}
