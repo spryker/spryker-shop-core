@@ -4,11 +4,24 @@
     form: _view.form,
     idCompanyBusinessUnit: _view.idCompanyBusinessUnit|default(''),
     title: 'company.account.address' | trans,
-    activePage: 'address'
+    activePage: 'business-unit'
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+            }, {
+                label: 'company.account.business_unit' | trans,
+            }]}
+    } only %}
+{% endblock %}
 
 {% block companyContent %}
     <div class="box">
+        {% set buIndexUrl = url('company/business-unit/update', { id: data.idCompanyBusinessUnit }) %}
+        {% set buListUrl = url('company/business-unit') %}
         {% include molecule('form') with {
             data: {
                 title: 'company.account.edit_address_information' | trans,
@@ -28,7 +41,7 @@
                 },
                 cancel: {
                     enable: true,
-                    url: url('company/address'),
+                    url: data.idCompanyBusinessUnit ? buIndexUrl : buListUrl,
                     text: 'general.back.button' | trans
                 }
             }

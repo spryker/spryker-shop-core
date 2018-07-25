@@ -4,8 +4,19 @@
     form: _view.form,
     idCompanyBusinessUnit: _view.idCompanyBusinessUnit|default(''),
     title: 'company.account.address' | trans,
-    activePage: 'address'
+    activePage: 'business-unit'
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+            }, {
+                label: 'company.account.business_unit' | trans,
+            }]}
+    } only %}
+{% endblock %}
 
 {% block companyContent %}
     <div class="box">
@@ -28,7 +39,7 @@
                 },
                 cancel: {
                     enable: true,
-                    url: url('company/address'),
+                    url: url('company/business-unit/update', {'id': data.idCompanyBusinessUnit}),
                     text: 'general.back.button' | trans
                 }
             }

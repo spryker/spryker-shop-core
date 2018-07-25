@@ -13,9 +13,11 @@
         <p class="{{ config.name }}__title col">
             {{ 'company.account.address.assigned' | trans }}
         </p>
-        <div class="col">
-            <a class="button" href="{{url('company/address/create')}}">{{ 'company.account.add_new_address' | trans }}</a>
-        </div>
+        {% if data.idCompanyBusinessUnit is not null %}
+            <div class="col">
+                <a class="button" href="{{url('company/address/create', { 'idCompanyBusinessUnit': data.idCompanyBusinessUnit })}}">{{ 'company.account.add_new_address' | trans }}</a>
+            </div>
+        {% endif %}
     </div>
     <ul class="{{ config.name }}__list spacing-y">
         {% set isEmpty = true %}
@@ -27,7 +29,7 @@
                     {% include molecule('business-unit-address-item', 'CompanyPage') with {
                         data: {
                             address: item,
-                            idBusinessUnit: data.idBusinessUnit
+                            idCompanyBusinessUnit: data.idCompanyBusinessUnit
                         }
                     } only %}
                 </li>
@@ -54,7 +56,7 @@
                     {% include molecule('business-unit-address-item', 'CompanyPage') with {
                         data: {
                             address: item,
-                            idBusinessUnit: data.idBusinessUnit
+                            idCompanyBusinessUnit: data.idCompanyBusinessUnit
                         }
                     } only %}
                 </li>

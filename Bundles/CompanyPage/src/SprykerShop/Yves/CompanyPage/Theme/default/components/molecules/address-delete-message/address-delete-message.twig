@@ -24,7 +24,9 @@
 
     <div class="spacing-y spacing-y--big">
         {{ "company.account.address.delete.message.description" | trans }}
-        <address class="{{ config.name }}__address">{{ data.companyUnitAddress.address1 }}</address>
+
+        <address class="{{ config.name }}__address">{{ data.companyUnitAddress.address1 }} {{ data.companyUnitAddress.address2 }}</address>
+        <address class="{{ config.name }}__address">{{ data.companyUnitAddress.zipCode }} {{ data.companyUnitAddress.city }}</address>
 
         {% if data.companyBusinessUnits|length %}
             {{ "company.account.address.delete.message.belongs" | trans }}:
@@ -53,7 +55,7 @@
         </a>
     {% endif %}
 
-    <a class="button" href="{{ url('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress, 'idBusinessUnit': data.idCompanyBusinessUnit }) }}">
+    <a class="button" href="{{ url('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
         {{ "company.account.address.delete.confirm" | trans }}
     </a>
 {% endblock %}

@@ -23,7 +23,7 @@ class AddressController extends AbstractCompanyController
     protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'idCompanyBusinessUnit';
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'Business unit address "%s" was created successfully.';
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'Business unit address "%s" was updated successfully.';
-    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS = 'Business unit address "%s" was deleted successfully.';
+    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS = 'Business unit address was deleted successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -96,22 +96,22 @@ class AddressController extends AbstractCompanyController
         }
 
         if ($addressForm->isValid()) {
-           $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData(), $idCompanyBusinessUnit);
+            $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData(), $idCompanyBusinessUnit);
 
-            if ($idCompanyBusinessUnit) {
-                $this->getFactory()->getMessengerClient()->addSuccessMessage(
-                    sprintf(
-                        static::MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS,
-                        $companyUnitAddressTransfer->getAddress1()
-                    )
-                );
+            $this->getFactory()->getMessengerClient()->addSuccessMessage(
+                sprintf(
+                    static::MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS,
+                    $companyUnitAddressTransfer->getAddress1()
+                )
+            );
 
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
-                    'id' => $idCompanyBusinessUnit,
-                ]);
+            if (empty($idCompanyBusinessUnit)) {
+                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
             }
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                'id' => $idCompanyBusinessUnit,
+            ]);
         }
 
         return [
@@ -162,20 +162,20 @@ class AddressController extends AbstractCompanyController
         } elseif ($addressForm->isValid()) {
             $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData(), null);
 
-            if ($idCompanyBusinessUnit) {
-                $this->getFactory()->getMessengerClient()->addSuccessMessage(
-                    sprintf(
-                        static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS,
-                        $companyUnitAddressTransfer->getAddress1()
-                    )
-                );
+            $this->getFactory()->getMessengerClient()->addSuccessMessage(
+                sprintf(
+                    static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS,
+                    $companyUnitAddressTransfer->getAddress1()
+                )
+            );
 
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
-                    'id' => $idCompanyBusinessUnit,
-                ]);
+            if (empty($idCompanyBusinessUnit)) {
+                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
             }
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                'id' => $idCompanyBusinessUnit,
+            ]);
         }
 
         return [
@@ -197,22 +197,17 @@ class AddressController extends AbstractCompanyController
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
         $this->getFactory()->getCompanyUnitAddressClient()->deleteCompanyUnitAddress($companyUnitAddressTransfer);
+        $this->getFactory()->getMessengerClient()->addSuccessMessage(
+            sprintf(static::MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS)
+        );
 
-        if ($idCompanyBusinessUnit) {
-
-            $this->getFactory()->getMessengerClient()->addSuccessMessage(
-                sprintf(
-                    static::MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS,
-                    $companyUnitAddressTransfer->getAddress1()
-                )
-            );
-
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
-                'id' => $idCompanyBusinessUnit,
-            ]);
+        if (empty($idCompanyBusinessUnit)) {
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
         }
 
-        return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+        return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+            'id' => $idCompanyBusinessUnit,
+        ]);
     }
 
     /**
@@ -267,7 +262,7 @@ class AddressController extends AbstractCompanyController
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    protected function createCompanyBusinessCollectionUnitTransfer(?int $idBusinessUnit = null): companyBusinessUnitCollectionTransfer
+    protected function createCompanyBusinessCollectionUnitTransfer(?int $idBusinessUnit = null): CompanyBusinessUnitCollectionTransfer
     {
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
