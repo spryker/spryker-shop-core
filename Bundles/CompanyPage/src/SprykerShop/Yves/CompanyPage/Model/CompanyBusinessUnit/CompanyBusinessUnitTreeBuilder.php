@@ -70,6 +70,7 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
     /**
      * @param \ArrayObject $companyBusinessUnits
      * @param int|null $idParentCompanyBusinessUnit
+     * @param int $indent
      *
      * @return array
      */
