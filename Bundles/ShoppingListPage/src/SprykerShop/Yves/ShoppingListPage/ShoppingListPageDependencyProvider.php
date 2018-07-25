@@ -24,6 +24,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS = 'PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS';
     public const PLUGIN_SHOPPING_LIST_WIDGETS = 'PLUGIN_SHOPPING_LIST_WIDGETS';
+    public const PLUGIN_SHOPPING_LIST_VIEW_WIDGETS = 'PLUGIN_SHOPPING_LIST_VIEW_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -39,6 +40,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addCompanyUserClient($container);
         $container = $this->addShoppingListItemExpanderPlugins($container);
         $container = $this->addShoppingListWidgetPlugins($container);
+        $container = $this->addShoppingListViewWidgetPlugins($container);
 
         return $container;
     }
@@ -150,12 +152,37 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShoppingListViewWidgetPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_SHOPPING_LIST_VIEW_WIDGETS] = function () {
+            return $this->getShoppingListViewWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * Returns a list of widget plugin class names that implement
      * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
      * @return string[]
      */
     protected function getShoppingListWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * Returns a list of widget plugin class names that implement
+     * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     *
+     * @return string[]
+     */
+    protected function getShoppingListViewWidgetPlugins(): array
     {
         return [];
     }

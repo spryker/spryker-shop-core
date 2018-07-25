@@ -46,7 +46,11 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $viewData = $this->executeIndexAction($idShoppingList);
 
-        return $this->view($viewData, [], '@ShoppingListPage/views/shopping-list/shopping-list.twig');
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getShoppingListViewWidgetPlugins(),
+            '@ShoppingListPage/views/shopping-list/shopping-list.twig'
+        );
     }
 
     /**
