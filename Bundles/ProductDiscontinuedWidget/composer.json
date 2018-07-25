@@ -15,9 +15,9 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
-    "spryker-shop/shopping-list-page": "Widget plugins are available for this module.",
-    "spryker-shop/wishlist-page": "Widget plugins are available for this module."
+    "spryker-shop/product-detail-page": "if you want to use ProductDiscontinuedWidgetPlugin: ^1.1.0",
+    "spryker-shop/shopping-list-page": "if you want to use ProductDiscontinuedWidgetPlugin: ^0.4.1",
+    "spryker-shop/wishlist-page": "if you want to use ProductDiscontinuedWidgetPlugin: ^1.1.0"
   },
   "autoload": {
     "psr-4": {
