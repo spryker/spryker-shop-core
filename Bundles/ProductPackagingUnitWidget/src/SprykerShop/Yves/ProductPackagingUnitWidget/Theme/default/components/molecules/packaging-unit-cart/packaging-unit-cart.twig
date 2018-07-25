@@ -19,6 +19,7 @@
 {% block body %}
     {% set salesUnitName = data.quantityProductMeasurementUnit.name | default('') %}
     {% set leadSalesUnitName = data.amountProductMeasurementUnit.name | default('') %}
+    {% set amountPerQuantity = data.amount / data.quantity %}
 
     <li class="{{ config.name }}__item">
         <div>{{ 'packaging_units.cart.quantity' | trans }}</div>
@@ -31,7 +32,7 @@
         <div>{{ 'packaging_units.cart.amount' | trans }}</div>
         <div class="{{ config.name }}__value">{{ data.amount }}</div>
         <small class="text-secondary">
-            [= {{ data.amount / data.amountConversion }} {{ leadSalesUnitName | trans }}]
+            [= {{ amountPerQuantity / data.amountConversion }} {{ leadSalesUnitName | trans }}]
         </small>
     </li>
 {% endblock body %}
