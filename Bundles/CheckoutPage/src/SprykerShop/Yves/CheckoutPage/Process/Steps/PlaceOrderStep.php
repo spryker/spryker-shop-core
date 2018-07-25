@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -14,6 +15,7 @@ use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithPostConditionErrorRouteInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -50,8 +52,20 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected $flashMessenger;
 
     /**
+     * @var string
+     */
+    protected $currentLocale;
+
+    /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface
+     */
+    protected $glossaryStorageClient;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
+     * @param string $currentLocale
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param array $errorCodeToRouteMatching
@@ -59,6 +73,8 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     public function __construct(
         CheckoutPageToCheckoutClientInterface $checkoutClient,
         FlashMessengerInterface $flashMessenger,
+        string $currentLocale,
+        CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient,
         $stepRoute,
         $escapeRoute,
         $errorCodeToRouteMatching = []
@@ -68,6 +84,8 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
         $this->checkoutClient = $checkoutClient;
         $this->errorCodeToRouteMatching = $errorCodeToRouteMatching;
         $this->flashMessenger = $flashMessenger;
+        $this->currentLocale = $currentLocale;
+        $this->glossaryStorageClient = $glossaryStorageClient;
     }
 
     /**
@@ -191,7 +209,25 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected function setCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         foreach ($checkoutResponseTransfer->getErrors() as $checkoutErrorTransfer) {
-            $this->flashMessenger->addErrorMessage($checkoutErrorTransfer->getMessage());
+            $this->flashMessenger->addErrorMessage(
+                $this->translateCheckoutErrorMessage($checkoutErrorTransfer)
+            );
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutErrorTransfer $checkoutErrorTransfer
+     *
+     * @return string
+     */
+    protected function translateCheckoutErrorMessage(CheckoutErrorTransfer $checkoutErrorTransfer): string
+    {
+        $checkoutErrorMessage = $checkoutErrorTransfer->getMessage();
+
+        return $this->glossaryStorageClient->translate(
+            $checkoutErrorMessage,
+            $this->currentLocale,
+            $checkoutErrorTransfer->getParameters()
+        ) ?: $checkoutErrorMessage;
     }
 }

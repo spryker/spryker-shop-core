@@ -1,6 +1,6 @@
 # ProductWidget Module
 
-This module contains the product widget.
+The module provides product rendering functionality integration to other modules.
 
 ## Installation
 
