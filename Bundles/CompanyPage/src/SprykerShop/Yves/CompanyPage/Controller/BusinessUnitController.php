@@ -20,8 +20,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BusinessUnitController extends AbstractCompanyController
 {
-    public const BUSINESS_UNIT_LIST_SORT_FIELD = 'id_company_business_unit';
-    public const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+    protected const BUSINESS_UNIT_LIST_SORT_FIELD = 'id_company_business_unit';
+    protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+    protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'Business unit "%s" was created successfully.';
+    protected const MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS = 'Business unit "%s" was updated successfully.';
+    protected const MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS = 'Business unit "%s" was deleted successfully.';
 
     /**
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -97,6 +100,12 @@ class BusinessUnitController extends AbstractCompanyController
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+                $this->getFactory()->getMessengerClient()->addSuccessMessage(
+                    sprintf(
+                        static::MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS,
+                        $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName()
+                    )
+                );
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
             }
         }
@@ -153,6 +162,14 @@ class BusinessUnitController extends AbstractCompanyController
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+
+                $this->getFactory()->getMessengerClient()->addSuccessMessage(
+                    sprintf(
+                        static::MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS,
+                        $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName()
+                    )
+                );
+
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
                     'id' => $idCompanyBusinessUnit,
                 ]);
@@ -179,7 +196,18 @@ class BusinessUnitController extends AbstractCompanyController
         $companyBusinessUnitResponseTransfer = $this->getFactory()
             ->getCompanyBusinessUnitClient()
             ->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
+
+        if($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+            $this->getFactory()->getMessengerClient()->addSuccessMessage(
+                sprintf(
+                    static::MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS,
+                    $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName()
+                )
+            );
+        }
+
         $this->processResponseMessages($companyBusinessUnitResponseTransfer);
+
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
     }

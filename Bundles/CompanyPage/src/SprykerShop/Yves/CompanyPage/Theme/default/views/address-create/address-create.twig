@@ -11,7 +11,7 @@
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'company.account.edit_address_information' | trans,
+                title: 'company.account.create_address_information' | trans,
                 form: data.form,
                 options: {
                     action: url('company/address/create', { idCompanyBusinessUnit: data.idCompanyBusinessUnit })
