@@ -20,12 +20,13 @@
     {% if salesUnitName is not empty %}
         {% set salesUnitSummary = data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
     {% endif %}
+    {% set amountPerQuantity = data.amount / data.quantity %}
 
     <strong class="float-right">{{data.price}}</strong>
     {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
     <br/>
     {% if data.amountSalesUnit is defined and data.amountSalesUnit is not empty %}
         {% set amountSalesUnitName = data.amountSalesUnit.productMeasurementUnit.name | default('') %}
-        <span class="text-secondary">&times;</span> {{ data.amount / data.quantity }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.amountSalesUnit.value }}{{ amountSalesUnitName | trans }}) = {{ data.amount }} {{ 'packaging_units.cart.item' | trans }}
+        <span class="text-secondary">&times;</span> {{ amountPerQuantity }} {{ 'packaging_units.cart.item' | trans }} (= {{ amountPerQuantity / data.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.amount }} {{ 'packaging_units.cart.item' | trans }}
     {% endif %}
 {% endblock body %}
