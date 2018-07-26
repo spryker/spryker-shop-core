@@ -1,0 +1,25 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'business-unit-chart-item',
+    tag: 'div'
+} %}
+
+{% define data = {
+    node: required,
+    level: 1
+} %}
+
+{% block body %}
+    <a class="{{ config.name }}__link" href="{{ url('company/business-unit/update', {'id': data.node.id_company_business_unit}) }}">
+        {{ data.node.name }}
+    </a>
+    {% for item in data.node.children %}
+        {% include molecule('business-unit-chart-item', 'CompanyPage') with {
+            data: {
+                node: item,
+                level: data.level + 1
+            }
+        } only %}
+    {% endfor %}
+{% endblock %}

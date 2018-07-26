@@ -18,6 +18,8 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientIn
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
+use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeBuilder;
+use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeBuilderInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaver;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface;
 
@@ -120,6 +122,17 @@ class CompanyPageFactory extends AbstractFactory
             $this->getMessengerClient(),
             $this->getCustomerClient(),
             $this->getBusinessOnBehalfClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeBuilderInterface
+     */
+    public function createCompanyBusinessUnitTreeBuilder(): CompanyBusinessUnitTreeBuilderInterface
+    {
+        return new CompanyBusinessUnitTreeBuilder(
+            $this->getCustomerClient(),
+            $this->getCompanyBusinessUnitClient()
         );
     }
 }

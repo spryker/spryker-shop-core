@@ -24,32 +24,22 @@ class BusinessUnitController extends AbstractCompanyController
     protected const REQUEST_PARAM_ID = 'id';
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        $viewData = $this->executeIndexAction($request);
+        $viewData = $this->executeIndexAction();
 
         return $this->view($viewData, [], '@CompanyPage/views/business-unit/business-unit.twig');
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array
      */
-    protected function executeIndexAction(Request $request): array
+    protected function executeIndexAction(): array
     {
-        $businessUnitCollectionTransfer = $this->createBusinessUnitCriteriaFilterTransfer($request);
-        $businessUnitCollectionTransfer = $this->getFactory()
-            ->getCompanyBusinessUnitClient()
-            ->getCompanyBusinessUnitCollection($businessUnitCollectionTransfer);
-
         return [
-            'pagination' => $businessUnitCollectionTransfer->getPagination(),
-            'businessUnitCollection' => $businessUnitCollectionTransfer->getCompanyBusinessUnits(),
+            'businessUnitsTree' => $this->getFactory()->createCompanyBusinessUnitTreeBuilder()->getCompanyBusinessUnitTree(),
         ];
     }
 
