@@ -24,9 +24,9 @@ class BusinessUnitController extends AbstractCompanyController
     protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
     protected const REQUEST_PARAM_ID = 'id';
 
-    protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'company_page.business_unit.create';
-    protected const MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS = 'company_page.business_unit.update';
-    protected const MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS = 'company_page.business_unit.delete';
+    protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'message.business_unit.create';
+    protected const MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS = 'message.business_unit.update';
+    protected const MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS = 'message.business_unit.delete';
 
     /**
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -98,7 +98,9 @@ class BusinessUnitController extends AbstractCompanyController
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
             $companyBusinessUnitForm->setData($dataProvider->getData($this->getCompanyUser()));
-        } elseif ($companyBusinessUnitForm->isValid()) {
+        }
+
+        if ($companyBusinessUnitForm->isValid()) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
@@ -160,7 +162,9 @@ class BusinessUnitController extends AbstractCompanyController
                     $idCompanyBusinessUnit
                 )
             );
-        } elseif ($companyBusinessUnitForm->isValid()) {
+        }
+
+        if ($companyBusinessUnitForm->isValid()) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
@@ -293,18 +297,5 @@ class BusinessUnitController extends AbstractCompanyController
         return $this->getFactory()
             ->getCompanyBusinessUnitClient()
             ->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
-    }
-
-    /**
-     * @param string $key
-     * @param array $params
-     *
-     * @return void
-     */
-    protected function addTranslatedSuccessMessage(string $key, array $params = array()): void
-    {
-        $message = $this->getFactory()->getGlossaryClient()->translate($key, $this->getLocale(), $params);
-
-        $this->addSuccessMessage($message);
     }
 }

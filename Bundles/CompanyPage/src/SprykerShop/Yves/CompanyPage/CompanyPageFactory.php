@@ -142,6 +142,6 @@ class CompanyPageFactory extends AbstractFactory
      */
     public function getGlossaryClient(): CompanyPageToGlossaryStorageClientInterface
     {
-        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_GLOSSARY);
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

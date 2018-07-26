@@ -33,7 +33,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
     public const CLIENT_BUSINESS_ON_BEHALF = 'CLIENT_BUSINESS_ON_BEHALF';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
-    public const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     public const STORE = 'STORE';
 
@@ -59,7 +59,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addBusinessOnBehalfClient($container);
         $container = $this->addMessengerClient($container);
-        $container = $this->addGlossaryClient($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -225,9 +225,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addGlossaryClient(Container $container): Container
+    protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_GLOSSARY] = function (Container $container) {
+        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
             return new CompanyPageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
         };
 

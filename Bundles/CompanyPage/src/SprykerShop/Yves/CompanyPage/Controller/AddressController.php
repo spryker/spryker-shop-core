@@ -23,9 +23,9 @@ class AddressController extends AbstractCompanyController
     protected const REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT = 'idCompanyBusinessUnit';
     protected const REQUEST_PARAM_ID = 'id';
 
-    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'company_page.address.create';
-    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'company_page.address.update';
-    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS = 'company_page.address.delete';
+    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'message.business_unit_address.create';
+    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'message.business_unit_address.update';
+    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS = 'message.business_unit_address.delete';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -158,7 +158,9 @@ class AddressController extends AbstractCompanyController
 
         if ($addressForm->isSubmitted() === false) {
             $addressForm->setData($dataProvider->getData($this->getCompanyUser(), $idCompanyUnitAddress));
-        } elseif ($addressForm->isValid()) {
+        }
+
+        if ($addressForm->isValid()) {
             $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData(), null);
 
             $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS, [
@@ -214,8 +216,9 @@ class AddressController extends AbstractCompanyController
     {
         $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
         $idCompanyBusinessUnit = $request->query->get(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
-        $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
+
+        $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())
+            ->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
         $companyUnitAddressTransfer = $this->getFactory()
             ->getCompanyUnitAddressClient()
@@ -260,8 +263,9 @@ class AddressController extends AbstractCompanyController
     protected function createCompanyBusinessCollectionUnitTransfer(?int $idBusinessUnit = null): CompanyBusinessUnitCollectionTransfer
     {
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
-        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-        $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idBusinessUnit);
+
+        $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
+            ->setIdCompanyBusinessUnit($idBusinessUnit);
 
         $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
 
@@ -286,18 +290,5 @@ class AddressController extends AbstractCompanyController
         $criteriaFilterTransfer->setPagination($paginationTransfer);
 
         return $criteriaFilterTransfer;
-    }
-
-    /**
-     * @param string $key
-     * @param array $params
-     *
-     * @return void
-     */
-    protected function addTranslatedSuccessMessage(string $key, array $params = array()): void
-    {
-        $message = $this->getFactory()->getGlossaryClient()->translate($key, $this->getLocale(), $params);
-
-        $this->addSuccessMessage($message);
     }
 }

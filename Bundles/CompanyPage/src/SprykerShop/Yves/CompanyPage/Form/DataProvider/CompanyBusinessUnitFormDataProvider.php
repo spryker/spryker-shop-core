@@ -81,7 +81,10 @@ class CompanyBusinessUnitFormDataProvider
     protected function prepareCompanyUnitAddressCriteriaFilterTransfer(?int $idCompany = null, ?int $idCompanyBusinessUnit = null): CompanyUnitAddressCriteriaFilterTransfer
     {
         $companyUnitAddressCriteriaFilter = new CompanyUnitAddressCriteriaFilterTransfer();
-        $companyUnitAddressCriteriaFilter->setIdCompany($idCompany);
+
+        if($idCompany) {
+            $companyUnitAddressCriteriaFilter->setIdCompany($idCompany);
+        }
 
         if ($idCompanyBusinessUnit) {
             $companyUnitAddressCriteriaFilter->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
