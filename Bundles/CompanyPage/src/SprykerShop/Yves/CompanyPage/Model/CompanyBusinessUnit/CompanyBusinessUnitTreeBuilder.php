@@ -74,7 +74,7 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
      *
      * @return array
      */
-    protected function buildTree(ArrayObject $companyBusinessUnits, $idParentCompanyBusinessUnit = null, int $indent = 0): array
+    protected function buildTree(ArrayObject $companyBusinessUnits, ?int $idParentCompanyBusinessUnit = null, int $indent = 0): array
     {
         $tree = [];
         foreach ($companyBusinessUnits as $companyBusinessUnit) {
