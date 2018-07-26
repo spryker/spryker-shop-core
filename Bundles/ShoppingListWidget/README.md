@@ -1,6 +1,6 @@
 # ShoppingListWidget Module
 
-{{ADD DESCRIPTION HERE}}
+The module provides functionality to extend product detail page with shopping list functionality.
 
 ## Installation
 

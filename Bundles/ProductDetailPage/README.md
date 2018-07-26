@@ -1,6 +1,6 @@
 # ProductDetailPage Module
 
-{{ADD DESCRIPTION HERE}}
+The module provides product detail page functionality.
 
 ## Installation
 
