@@ -82,7 +82,7 @@ class CompanyBusinessUnitFormDataProvider
     {
         $companyUnitAddressCriteriaFilter = new CompanyUnitAddressCriteriaFilterTransfer();
 
-        if($idCompany) {
+        if ($idCompany) {
             $companyUnitAddressCriteriaFilter->setIdCompany($idCompany);
         }
 

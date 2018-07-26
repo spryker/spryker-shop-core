@@ -105,7 +105,7 @@ class BusinessUnitController extends AbstractCompanyController
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
                 $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS, [
-                    '%unit%' =>  $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName()
+                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
                 ]);
 
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
@@ -169,7 +169,7 @@ class BusinessUnitController extends AbstractCompanyController
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
                 $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS, [
-                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName()
+                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
                 ]);
 
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
@@ -201,7 +201,7 @@ class BusinessUnitController extends AbstractCompanyController
 
         if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
             $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS, [
-                '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName()
+                '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
             ]);
         }
 

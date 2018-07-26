@@ -131,7 +131,7 @@ abstract class AbstractCompanyController extends AbstractController
      *
      * @return void
      */
-    protected function addTranslatedSuccessMessage(string $key, array $params = array()): void
+    protected function addTranslatedSuccessMessage(string $key, array $params = []): void
     {
         $message = $this->getFactory()->getGlossaryClient()->translate($key, $this->getLocale(), $params);
 

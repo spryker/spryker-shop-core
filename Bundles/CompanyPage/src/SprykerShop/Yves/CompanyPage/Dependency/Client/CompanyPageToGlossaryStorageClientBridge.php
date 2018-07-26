@@ -1,7 +1,8 @@
 <?php
+
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
@@ -11,14 +12,14 @@ class CompanyPageToGlossaryStorageClientBridge implements CompanyPageToGlossaryS
     /**
      * @var \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface
      */
-    protected $glossaryClient;
+    protected $glossaryStorageClient;
 
     /**
-     * @param \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface $glossaryClient
+     * @param \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface $glossaryStorageClient
      */
-    public function __construct($glossaryClient)
+    public function __construct($glossaryStorageClient)
     {
-        $this->glossaryClient = $glossaryClient;
+        $this->glossaryStorageClient = $glossaryStorageClient;
     }
 
     /**
@@ -30,6 +31,6 @@ class CompanyPageToGlossaryStorageClientBridge implements CompanyPageToGlossaryS
      */
     public function translate($id, $localeName, array $parameters = []): string
     {
-        return $this->glossaryClient->translate($id, $localeName, $parameters);
+        return $this->glossaryStorageClient->translate($id, $localeName, $parameters);
     }
 }

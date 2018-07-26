@@ -101,7 +101,7 @@ class AddressController extends AbstractCompanyController
             $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData(), $idCompanyBusinessUnit);
 
             $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS, [
-                '%address%' => $companyUnitAddressTransfer->getAddress1()
+                '%address%' => $companyUnitAddressTransfer->getAddress1(),
             ]);
 
             if (empty($idCompanyBusinessUnit)) {
@@ -164,7 +164,7 @@ class AddressController extends AbstractCompanyController
             $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData(), null);
 
             $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS, [
-                '%address%' => $companyUnitAddressTransfer->getAddress1()
+                '%address%' => $companyUnitAddressTransfer->getAddress1(),
             ]);
 
             if (empty($idCompanyBusinessUnit)) {
