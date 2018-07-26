@@ -20,10 +20,12 @@ use Symfony\Component\HttpFoundation\Request;
 class AddressController extends AbstractCompanyController
 {
     protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
-    protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'idCompanyBusinessUnit';
-    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'Business unit address "%s" was created successfully.';
-    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'Business unit address "%s" was updated successfully.';
-    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS = 'Business unit address was deleted successfully.';
+    protected const REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT = 'idCompanyBusinessUnit';
+    protected const REQUEST_PARAM_ID = 'id';
+
+    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'company_page.address.create';
+    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'company_page.address.update';
+    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS = 'company_page.address.delete';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -89,7 +91,7 @@ class AddressController extends AbstractCompanyController
             ->getCompanyUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
-        $idCompanyBusinessUnit = $request->query->getInt(static::PARAM_ID_COMPANY_BUSINESS_UNIT);
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
         if ($addressForm->isSubmitted() === false) {
             $addressForm->setData($dataProvider->getData($this->getCompanyUser()));
@@ -98,12 +100,9 @@ class AddressController extends AbstractCompanyController
         if ($addressForm->isValid()) {
             $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData(), $idCompanyBusinessUnit);
 
-            $this->getFactory()->getMessengerClient()->addSuccessMessage(
-                sprintf(
-                    static::MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS,
-                    $companyUnitAddressTransfer->getAddress1()
-                )
-            );
+            $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS, [
+                '%address%' => $companyUnitAddressTransfer->getAddress1()
+            ]);
 
             if (empty($idCompanyBusinessUnit)) {
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
@@ -154,20 +153,17 @@ class AddressController extends AbstractCompanyController
             ->getCompanyUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
-        $idCompanyUnitAddress = $request->query->getInt('id');
-        $idCompanyBusinessUnit = $request->query->getInt(static::PARAM_ID_COMPANY_BUSINESS_UNIT);
+        $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
         if ($addressForm->isSubmitted() === false) {
             $addressForm->setData($dataProvider->getData($this->getCompanyUser(), $idCompanyUnitAddress));
         } elseif ($addressForm->isValid()) {
             $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData(), null);
 
-            $this->getFactory()->getMessengerClient()->addSuccessMessage(
-                sprintf(
-                    static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS,
-                    $companyUnitAddressTransfer->getAddress1()
-                )
-            );
+            $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS, [
+                '%address%' => $companyUnitAddressTransfer->getAddress1()
+            ]);
 
             if (empty($idCompanyBusinessUnit)) {
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
@@ -191,15 +187,14 @@ class AddressController extends AbstractCompanyController
      */
     public function deleteAction(Request $request)
     {
-        $idCompanyUnitAddress = $request->query->getInt('id');
-        $idCompanyBusinessUnit = $request->query->get(static::PARAM_ID_COMPANY_BUSINESS_UNIT);
+        $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
+        $idCompanyBusinessUnit = $request->query->get(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
         $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
         $this->getFactory()->getCompanyUnitAddressClient()->deleteCompanyUnitAddress($companyUnitAddressTransfer);
-        $this->getFactory()->getMessengerClient()->addSuccessMessage(
-            sprintf(static::MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS)
-        );
+
+        $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS);
 
         if (empty($idCompanyBusinessUnit)) {
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
@@ -217,8 +212,8 @@ class AddressController extends AbstractCompanyController
      */
     public function confirmDeleteAction(Request $request)
     {
-        $idCompanyUnitAddress = $request->query->getInt('id');
-        $idCompanyBusinessUnit = $request->query->get(static::PARAM_ID_COMPANY_BUSINESS_UNIT);
+        $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
+        $idCompanyBusinessUnit = $request->query->get(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
         $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
@@ -291,5 +286,18 @@ class AddressController extends AbstractCompanyController
         $criteriaFilterTransfer->setPagination($paginationTransfer);
 
         return $criteriaFilterTransfer;
+    }
+
+    /**
+     * @param string $key
+     * @param array $params
+     *
+     * @return void
+     */
+    protected function addTranslatedSuccessMessage(string $key, array $params = array()): void
+    {
+        $message = $this->getFactory()->getGlossaryClient()->translate($key, $this->getLocale(), $params);
+
+        $this->addSuccessMessage($message);
     }
 }
