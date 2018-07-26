@@ -29,8 +29,8 @@ class CompanyBusinessUnitForm extends AbstractType
     public const FIELD_EXTERNAL_URL = 'external_url';
     public const FIELD_FK_COMPANY = 'fk_company';
     public const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
-    public const FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT = 'fk_parent_company_business_unit';
     public const FIELD_COMPANY_UNIT_ADDRESSES = 'address_collection';
+    public const FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT = 'fk_parent_company_business_unit';
 
     /**
      * @return string
@@ -47,8 +47,8 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired(static::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT);
         $resolver->setRequired(static::FIELD_COMPANY_UNIT_ADDRESSES);
+        $resolver->setRequired(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT);
     }
 
     /**
@@ -176,10 +176,10 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addFkCompanyBusinessUnitField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT, ChoiceType::class, [
-            'placeholder' => 'Parent BU name',
+        $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
+            'placeholder' => 'company.account.form.fk_parent_company_bu.placeholder',
             'label' => 'company.account.choose_parent_company_business_unit',
-            'choices' => array_flip($options[static::FIELD_FK_COMPANY_PARENT_BUSINESS_UNIT]),
+            'choices' => array_flip($options[static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT]),
             'required' => false,
         ]);
 
