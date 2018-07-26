@@ -26,7 +26,7 @@
         {{ "company.account.address.delete.message.description" | trans }}
 
         <address class="{{ config.name }}__address">{{ data.companyUnitAddress.address1 }} {{ data.companyUnitAddress.address2 }}</address>
-        <address class="{{ config.name }}__address">{{ data.companyUnitAddress.zipCode }} {{ data.companyUnitAddress.city }}</address>
+        <address class="{{ config.name }}__address">{{ data.companyUnitAddress.zipCode }} {{ data.companyUnitAddress.city }}, {{ ('countries.iso.' ~ data.companyUnitAddress.iso2code) | trans }}</address>
 
         {% if data.companyBusinessUnits|length %}
             {{ "company.account.address.delete.message.belongs" | trans }}:

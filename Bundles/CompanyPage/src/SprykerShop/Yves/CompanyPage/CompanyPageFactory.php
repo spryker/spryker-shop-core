@@ -140,7 +140,7 @@ class CompanyPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface
      */
-    public function getGlossaryClient(): CompanyPageToGlossaryStorageClientInterface
+    public function getGlossaryStorageClient(): CompanyPageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
