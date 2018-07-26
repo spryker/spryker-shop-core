@@ -15,10 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BusinessUnitAddressController extends AbstractCompanyController
 {
-    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'Business unit address "%s" was created successfully.';
-    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'Business unit address "%s" was updated successfully.';
-    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS = 'Business unit address "%s" was deleted successfully.';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -75,13 +71,6 @@ class BusinessUnitAddressController extends AbstractCompanyController
             );
 
             if ($companyUnitAddressTransfer) {
-                $this->getFactory()->getMessengerClient()->addSuccessMessage(
-                    sprintf(
-                        static::MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS,
-                        $companyUnitAddressTransfer->getAddress1()
-                    )
-                );
-
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
             }
         }
