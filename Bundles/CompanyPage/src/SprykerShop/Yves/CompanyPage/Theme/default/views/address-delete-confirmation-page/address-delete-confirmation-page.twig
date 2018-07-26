@@ -17,7 +17,7 @@
         <p>{{ data.companyUnitAddress.zipCode }} {{ data.companyUnitAddress.city }}, {{ ('countries.iso.' ~ data.companyUnitAddress.iso2code) | trans }}</p>
 
         {% if data.companyBusinessUnits|length %}
-            <p>{{ 'company_page.address_delete_confirmation.notification' | trans  }}</p>
+            <p>{{ 'company_page.address_delete_confirmation.notification' | trans  }}:</p>
             <ul>
                 {% for companyBusinessUnit in data.companyBusinessUnits %}
                     <li>{{ companyBusinessUnit.name }}</li>
