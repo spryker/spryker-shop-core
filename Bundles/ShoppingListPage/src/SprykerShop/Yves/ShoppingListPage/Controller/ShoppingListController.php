@@ -46,7 +46,11 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $viewData = $this->executeIndexAction($idShoppingList);
 
-        return $this->view($viewData, [], '@ShoppingListPage/views/shopping-list/shopping-list.twig');
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getShoppingListViewWidgetPlugins(),
+            '@ShoppingListPage/views/shopping-list/shopping-list.twig'
+        );
     }
 
     /**
@@ -225,14 +229,14 @@ class ShoppingListController extends AbstractShoppingListController
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         foreach ($this->getFactory()->getShoppingListItemExpanderPlugins() as $productViewExpanderPlugin) {
+            $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
+            $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+
             $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer(
                 $productViewTransfer,
                 $productConcreteStorageData,
                 $this->getLocale()
             );
-
-            $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
-            $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
         }
 
         return $productViewTransfer;

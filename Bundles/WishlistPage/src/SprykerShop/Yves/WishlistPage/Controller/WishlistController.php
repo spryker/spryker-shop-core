@@ -44,7 +44,11 @@ class WishlistController extends AbstractController
     {
         $viewData = $this->executeIndexAction($wishlistName, $request);
 
-        return $this->view($viewData, [], '@WishlistPage/views/wishlist-detail/wishlist-detail.twig');
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getWishlistViewWidgetPlugins(),
+            '@WishlistPage/views/wishlist-detail/wishlist-detail.twig'
+        );
     }
 
     /**

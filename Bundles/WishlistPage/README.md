@@ -1,6 +1,6 @@
 # WishlistPage Module
 
-This module contains the wishlist page and it's components.
+The module provides wishlist management functionality.
 
 ## Installation
 

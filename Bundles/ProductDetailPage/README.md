@@ -1,6 +1,6 @@
 # ProductDetailPage Module
 
-This module contains the product detail page and it's components.
+The module provides product detail page functionality.
 
 ## Installation
 
