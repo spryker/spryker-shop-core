@@ -46,8 +46,15 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
      */
     public function getCompanyBusinessUnitTree(): array
     {
-        $idCompany = $this->customerClient->getCustomer()->getCompanyUserTransfer()->getFkCompany();
-        $companyBusinessUnits = $this->getCompanyBusinessUnites($idCompany);
+        $customerTransfer = $this->customerClient->getCustomer();
+
+        if ($customerTransfer === null || $customerTransfer->getCompanyUserTransfer() === null) {
+            return [];
+        }
+
+        $idCompany = $customerTransfer->getCompanyUserTransfer()->getFkCompany();
+
+        $companyBusinessUnits = $this->getCompanyBusinessUnits($idCompany);
 
         $companyBusinessUnitTree = $this->buildTree($companyBusinessUnits->getCompanyBusinessUnits());
 
@@ -59,7 +66,7 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    protected function getCompanyBusinessUnites(int $idCompany): CompanyBusinessUnitCollectionTransfer
+    protected function getCompanyBusinessUnits(int $idCompany): CompanyBusinessUnitCollectionTransfer
     {
         $criteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
         $criteriaFilterTransfer->setIdCompany($idCompany);
