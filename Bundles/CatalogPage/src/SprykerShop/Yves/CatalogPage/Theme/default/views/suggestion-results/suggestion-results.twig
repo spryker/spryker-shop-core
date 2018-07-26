@@ -61,12 +61,12 @@
                     {% include molecule('suggestion-product', 'CatalogPage') with {
                         data: {
                             product: product,
-                            url: product.url,
-                            image: product.images is defined ? product.images | first : null,
-                            alt: product.abstract_name is defined ? product.abstract_name : null,
-                            title: product.abstract_name is defined ? product.abstract_name : null,
-                            price: product.price is defined ? product.price : null,
-                            originalPrice: product.prices.ORIGINAL is defined ? product.prices.ORIGINAL : null
+                            url: product.url | default,
+                            image: product.images | first | default,
+                            alt: product.abstract_name | default,
+                            title: product.abstract_name | default,
+                            price: product.price,
+                            originalPrice: product.prices.ORIGINAL | default
                         }
                     } only %}
                 {% endfor %}

@@ -1,6 +1,5 @@
 import Component from '../../../models/component';
 import AjaxProvider from '../../../components/molecules/ajax-provider/ajax-provider';
-//import { throttle, debounce } from 'throttle-debounce';
 import debounce from 'lodash-es/debounce'
 import throttle from 'lodash-es/throttle'
 
