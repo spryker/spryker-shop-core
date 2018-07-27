@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form;
 
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,8 +31,10 @@ class CompanyUserForm extends AbstractType
     public const FIELD_FK_COMPANY = 'fk_company';
     public const FIELD_FK_CUSTOMER = 'fk_customer';
     public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
+    public const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
 
     public const OPTION_BUSINESS_UNIT_CHOICES = 'business_unit_choices';
+    public const OPTION_COMPANY_ROLE_CHOICES = 'company_role_choices';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -40,6 +44,7 @@ class CompanyUserForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_BUSINESS_UNIT_CHOICES);
+        $resolver->setRequired(static::OPTION_COMPANY_ROLE_CHOICES);
     }
 
     /**
@@ -64,6 +69,7 @@ class CompanyUserForm extends AbstractType
             ->addFkCompanyField($builder)
             ->addFkCustomerField($builder)
             ->addFkCompanyBusinessUnitField($builder, $options)
+            ->addCompanyRoleCollectionField($builder, $options)
             ->addSalutationField($builder)
             ->addFirstNameField($builder)
             ->addLastNameField($builder)
@@ -257,6 +263,55 @@ class CompanyUserForm extends AbstractType
             },
             function ($isGuestSubmittedValue) {
                 return (bool)$isGuestSubmittedValue;
+            }
+        ));
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addCompanyRoleCollectionField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_COMPANY_ROLE_COLLECTION, ChoiceType::class, [
+            'choices' => array_flip($options[static::OPTION_COMPANY_ROLE_CHOICES]),
+            'required' => true,
+            'label' => 'company.account.company_role',
+            'multiple' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        $this->addRoleCollectionTransformer($builder);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addRoleCollectionTransformer(FormBuilderInterface $builder): void
+    {
+        $builder->get(static::FIELD_COMPANY_ROLE_COLLECTION)->addModelTransformer(new CallbackTransformer(
+            function ($roleCollection) {
+                return $roleCollection;
+            },
+            function ($roleCollectionSubmitted) {
+                $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
+
+                foreach ($roleCollectionSubmitted as $role) {
+                    $companyRoleTransfer = new CompanyRoleTransfer();
+                    $companyRoleTransfer->setIdCompanyRole($role);
+
+                    $companyRoleCollectionTransfer->addRole($companyRoleTransfer);
+                }
+
+                return $companyRoleCollectionTransfer;
             }
         ));
     }

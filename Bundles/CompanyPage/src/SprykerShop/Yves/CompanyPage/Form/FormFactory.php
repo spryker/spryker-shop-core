@@ -98,7 +98,8 @@ class FormFactory extends AbstractFactory
     {
         return new CompanyUserFormDataProvider(
             $this->getCompanyUserClient(),
-            $this->getCompanyBusinessUnitClient()
+            $this->getCompanyBusinessUnitClient(),
+            $this->getCompanyRoleClient()
         );
     }
 
