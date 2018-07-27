@@ -34,7 +34,7 @@ class UserController extends AbstractCompanyController
         $companyUserOverviewWidgetPlugins = $this->getFactory()
             ->getCompanyUserOverviewWidgetPlugins();
 
-        return $this->view($viewData, $companyUserOverviewWidgetPlugins,'@CompanyPage/views/user/user.twig');
+        return $this->view($viewData, $companyUserOverviewWidgetPlugins, '@CompanyPage/views/user/user.twig');
     }
 
     /**
