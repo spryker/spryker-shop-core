@@ -20,7 +20,7 @@ class AgentWidgetToAgentClientBridge implements AgentWidgetToAgentClientInterfac
     /**
      * @param \Spryker\Client\Agent\AgentClientInterface $agentClient
      */
-    public function __construct(AgentClientInterface $agentClient)
+    public function __construct($agentClient)
     {
         $this->agentClient = $agentClient;
     }
