@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/company-page.svg)](https://travis-ci.org/spryker-shop/company-page)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/company-page/badge.svg)](https://coveralls.io/github/spryker-shop/company-page)
 
-{{ADD DESCRIPTION HERE}}
+Provides a page with the information about user company.
 
 ## Installation
 
