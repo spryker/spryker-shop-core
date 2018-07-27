@@ -21,6 +21,7 @@
             <tr class="active">
                 <th>{{ 'company.account.company_user.name' | trans }}</th>
                 <th>{{ 'company.account.company_user.business_unit' | trans }}</th>
+                <th>{{ 'company.account.company_role' | trans }}</th>
                 {% if showActions %}
                     <th>{{ 'company.account.table.actions' | trans }}</th>
                 {% endif %}
@@ -33,6 +34,11 @@
                     {% if user.customer.firstName != null and user.customer.lastName != null %}
                         <td>{{ user.customer.firstName ~ ' ' ~ user.customer.lastName }}</td>
                         <td>{{ companyBusinessUnitName }}</td>
+                        <td>
+                            {% for companyUserRole in user.companyRoleCollection %}
+                                <p>{{ companyUserRole }}</p>
+                            {% endfor %}
+                        </td>
                         {% if showActions %}
                             <td>
                                 <ul class="menu menu--inline">
