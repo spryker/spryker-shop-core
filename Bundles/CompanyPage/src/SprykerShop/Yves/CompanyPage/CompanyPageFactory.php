@@ -122,4 +122,12 @@ class CompanyPageFactory extends AbstractFactory
             $this->getBusinessOnBehalfClient()
         );
     }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Plugin\CompanyUserInvitationWidget\CompanyUserInvitationWidgetPluginInterface[]
+     */
+    public function getCompanyUserOverviewWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_COMPANY_USER_OVERVIEW_WIDGETS);
+    }
 }

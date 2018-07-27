@@ -36,6 +36,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
 
     public const PLUGIN_COMPANY_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_OVERVIEW_WIDGETS';
+    public const PLUGIN_COMPANY_USER_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_USER_OVERVIEW_WIDGET';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -57,6 +58,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addBusinessOnBehalfClient($container);
         $container = $this->addMessengerClient($container);
+        $container = $this->addCompanyUserOverviewWidgetPlugins($container);
 
         return $container;
     }
@@ -194,6 +196,20 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addCompanyUserOverviewWidgetPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_COMPANY_USER_OVERVIEW_WIDGETS] = function () {
+            return $this->getCompanyOverviewWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     protected function addPermissionClient(Container $container): Container
     {
         $container[static::CLIENT_PERMISSION] = function (Container $container) {
@@ -221,6 +237,14 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return array
      */
     protected function getCompanyOverviewWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Plugin\CompanyUserInvitationWidget\CompanyUserInvitationWidgetPluginInterface[]
+     */
+    protected function getCompanyUserOverviewWidgetPlugins(): array
     {
         return [];
     }
