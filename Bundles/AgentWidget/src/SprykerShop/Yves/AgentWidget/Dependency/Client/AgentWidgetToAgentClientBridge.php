@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\AgentWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Client\Agent\AgentClientInterface;
 
 class AgentWidgetToAgentClientBridge implements AgentWidgetToAgentClientInterface
 {
