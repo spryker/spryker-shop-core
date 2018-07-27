@@ -31,7 +31,7 @@
                 {% set companyBusinessUnitName = user.companyBusinessUnit.name | default('') %}
                 <tr>
                     {% if user.customer.firstName != null and user.customer.lastName != null %}
-                        <td>{{ user.customer.firstName ~ user.customer.lastName }}</td>
+                        <td>{{ user.customer.firstName ~ ' ' ~ user.customer.lastName }}</td>
                         <td>{{ companyBusinessUnitName }}</td>
                         {% if showActions %}
                             <td>
