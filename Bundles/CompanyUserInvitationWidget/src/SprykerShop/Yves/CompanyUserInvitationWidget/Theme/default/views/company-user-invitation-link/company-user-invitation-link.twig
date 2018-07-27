@@ -1,0 +1,3 @@
+{% if can('ManageCompanyUserInvitationPermissionPlugin') %}
+    <a class="button button-success" href="{{ path('company/user-invitation') }}">{{ 'company.user.invitation.title.plural' | trans }}</a>
+{%  endif %}
