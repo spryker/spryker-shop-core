@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\AgentPage\Dependency\Client;
 
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Client\Agent\AgentClientInterface;
 
 class AgentPageToAgentClientBridge implements AgentPageToAgentClientInterface
 {
@@ -19,7 +20,7 @@ class AgentPageToAgentClientBridge implements AgentPageToAgentClientInterface
     /**
      * @param \Spryker\Client\Agent\AgentClientInterface $agentClient
      */
-    public function __construct($agentClient)
+    public function __construct(AgentClientInterface $agentClient)
     {
         $this->agentClient = $agentClient;
     }
