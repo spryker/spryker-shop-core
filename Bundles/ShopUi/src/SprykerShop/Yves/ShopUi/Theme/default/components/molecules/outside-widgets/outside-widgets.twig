@@ -1,0 +1,12 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'outside-widgets',
+    tag: 'outside-widgets'
+} %}
+
+{% block body %}
+    {% if widgetGlobalExists('AgentWidgetPlugin') %}
+        {{ widgetGlobal('AgentWidgetPlugin') }}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'agent-control-bar',
+    tag: 'agent-control-bar'
+} %}
+
+{% define data = {
+    agent: required
+} %}
+
+{% block body %}
+    <div class="container">
+        <div class="box">
+            <div class="col col--md-10 col--xs-12">
+                <span>Agent {{ data.agent.username }}</span>
+            </div>
+            <div class="col col--md-2 col--xs-12">
+                <a href="/agent/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

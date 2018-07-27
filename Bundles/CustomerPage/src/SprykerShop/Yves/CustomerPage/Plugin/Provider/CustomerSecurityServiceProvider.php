@@ -104,10 +104,8 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function setAuthenticationSuccessHandler(Application &$app)
     {
-        $app['security.authentication.success_handler._proto'] = $app->protect(function () use ($app) {
-            return $app->share(function () {
-                return $this->getFactory()->createCustomerAuthenticationSuccessHandler();
-            });
+        $app['security.authentication.success_handler.' . static::FIREWALL_SECURED] = $app->share(function () {
+            return $this->getFactory()->createCustomerAuthenticationSuccessHandler();
         });
     }
 
@@ -118,10 +116,8 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function setAuthenticationFailureHandler(Application &$app)
     {
-        $app['security.authentication.failure_handler._proto'] = $app->protect(function () use ($app) {
-            return $app->share(function () {
-                return $this->getFactory()->createCustomerAuthenticationFailureHandler();
-            });
+        $app['security.authentication.failure_handler.' . static::FIREWALL_SECURED] = $app->share(function () {
+            return $this->getFactory()->createCustomerAuthenticationFailureHandler();
         });
     }
 
