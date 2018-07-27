@@ -20,7 +20,7 @@ use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 
 class CompanyBusinessUnitFormDataProvider
 {
-    protected const COMPANY_UNIT_ADDRESS_KEY = '%s %s %s %s, %s';
+    protected const COMPANY_UNIT_ADDRESS_KEY = '%s %s <br/> %s %s, %s';
 
     /**
      * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
@@ -205,7 +205,7 @@ class CompanyBusinessUnitFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return array
+     * @return string[]
      */
     protected function getCompanyUnitAddresses(CompanyUserTransfer $companyUserTransfer): array
     {
