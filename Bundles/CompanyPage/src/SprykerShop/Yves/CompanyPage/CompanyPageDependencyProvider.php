@@ -36,7 +36,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
 
     public const PLUGIN_COMPANY_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_OVERVIEW_WIDGETS';
-    public const PLUGIN_COMPANY_USER_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_USER_OVERVIEW_WIDGET';
+    public const PLUGIN_COMPANY_USER_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_USER_OVERVIEW_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
