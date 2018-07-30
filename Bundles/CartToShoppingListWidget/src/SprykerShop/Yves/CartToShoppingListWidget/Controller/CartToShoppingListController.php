@@ -40,13 +40,11 @@ class CartToShoppingListController extends AbstractController
 
             $shoppingListTransfer = $this->getFactory()->getShoppingListClient()->createShoppingListFromQuote($shoppingListFromCartRequest);
 
-            if ($shoppingListTransfer) {
-                $this->addSuccessMessage(static::GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS);
+            $this->addSuccessMessage(static::GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS);
 
-                return $this->redirectResponseInternal(CartToShoppingListWidgetConfig::SHOPPING_LIST_REDIRECT_URL, [
-                    'idShoppingList' => $shoppingListTransfer->getIdShoppingList(),
-                ]);
-            }
+            return $this->redirectResponseInternal(CartToShoppingListWidgetConfig::SHOPPING_LIST_REDIRECT_URL, [
+                'idShoppingList' => $shoppingListTransfer->getIdShoppingList(),
+            ]);
         }
 
         $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_FAILED);
