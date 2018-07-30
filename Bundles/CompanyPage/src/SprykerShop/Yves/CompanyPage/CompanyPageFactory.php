@@ -124,7 +124,7 @@ class CompanyPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Plugin\CompanyUserInvitationWidget\CompanyUserInvitationWidgetPluginInterface[]
+     * @return string[]
      */
     public function getCompanyUserOverviewWidgetPlugins(): array
     {

@@ -199,7 +199,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCompanyUserOverviewWidgetPlugins(Container $container): Container
     {
         $container[static::PLUGIN_COMPANY_USER_OVERVIEW_WIDGETS] = function () {
-            return $this->getCompanyOverviewWidgetPlugins();
+            return $this->getCompanyUserOverviewWidgetPlugins();
         };
 
         return $container;
@@ -242,7 +242,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Plugin\CompanyUserInvitationWidget\CompanyUserInvitationWidgetPluginInterface[]
+     * @return string[]
      */
     protected function getCompanyUserOverviewWidgetPlugins(): array
     {
