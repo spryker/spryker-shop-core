@@ -1,3 +1,7 @@
-{% if can('ManageCompanyUserInvitationPermissionPlugin') %}
-    <a class="button button-success" href="{{ path('company/user-invitation') }}">{{ 'company.user.invitation.invite_users' | trans }}</a>
-{%  endif %}
+{% extends template('widget') %}
+
+{% block body %}
+    {% if can('ManageCompanyUserInvitationPermissionPlugin') %}
+        <a class="button button-success" href="{{ path('company/user-invitation') }}">{{ 'company.user.invitation.invite_users' | trans }}</a>
+    {%  endif %}
+{% endblock %}
