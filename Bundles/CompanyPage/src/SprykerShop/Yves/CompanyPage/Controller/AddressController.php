@@ -190,7 +190,7 @@ class AddressController extends AbstractCompanyController
     public function deleteAction(Request $request)
     {
         $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
-        $idCompanyBusinessUnit = $request->query->get(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
         $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
 

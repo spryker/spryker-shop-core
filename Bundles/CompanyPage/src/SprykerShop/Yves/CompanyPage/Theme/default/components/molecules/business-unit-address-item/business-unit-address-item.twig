@@ -12,7 +12,7 @@
 {% block body %}
     <div class="grid">
         <div class="col col--lg-9">
-            {% filter replace({'&lt;br/&gt;': '<br/>'}) | raw %}
+            {% filter replace({'&lt;br /&gt;': '<br />'}) | raw %}
                 {{ form_widget(data.address, {
                     'attr': {
                         'label': data.address.vars.label

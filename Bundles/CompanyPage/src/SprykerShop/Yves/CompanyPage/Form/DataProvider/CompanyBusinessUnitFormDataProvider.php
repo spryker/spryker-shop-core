@@ -20,7 +20,7 @@ use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 
 class CompanyBusinessUnitFormDataProvider
 {
-    protected const COMPANY_UNIT_ADDRESS_KEY = '%s %s <br/> %s %s, %s';
+    protected const COMPANY_UNIT_ADDRESS_KEY = "%s %s \n %s %s, %s";
 
     /**
      * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
@@ -225,7 +225,7 @@ class CompanyBusinessUnitFormDataProvider
                 $companyUnitAddress->getCity(),
                 $countryName
             );
-            $companyUnitAddresses[$companyUnitAddress->getIdCompanyUnitAddress()] = $companyAddressValue;
+            $companyUnitAddresses[$companyUnitAddress->getIdCompanyUnitAddress()] = nl2br($companyAddressValue);
         }
 
         return $companyUnitAddresses;
