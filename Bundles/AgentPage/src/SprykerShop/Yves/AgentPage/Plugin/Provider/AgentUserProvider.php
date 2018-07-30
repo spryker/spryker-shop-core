@@ -72,7 +72,7 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
 
         return $this->getFactory()
             ->getAgentClient()
-            ->getAgentByUsername($userTransfer);
+            ->findAgentByUsername($userTransfer);
     }
 
     /**

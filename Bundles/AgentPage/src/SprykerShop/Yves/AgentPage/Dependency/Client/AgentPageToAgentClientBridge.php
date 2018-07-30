@@ -29,9 +29,9 @@ class AgentPageToAgentClientBridge implements AgentPageToAgentClientInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getAgentByUsername(UserTransfer $userTransfer): UserTransfer
+    public function findAgentByUsername(UserTransfer $userTransfer): UserTransfer
     {
-        return $this->agentClient->getAgentByUsername($userTransfer);
+        return $this->agentClient->findAgentByUsername($userTransfer);
     }
 
     /**

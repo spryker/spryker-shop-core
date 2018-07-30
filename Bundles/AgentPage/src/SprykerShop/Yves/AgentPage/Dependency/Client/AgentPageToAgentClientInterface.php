@@ -16,7 +16,7 @@ interface AgentPageToAgentClientInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getAgentByUsername(UserTransfer $userTransfer): UserTransfer;
+    public function findAgentByUsername(UserTransfer $userTransfer): UserTransfer;
 
     /**
      * @return bool
