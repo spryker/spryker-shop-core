@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\BusinessOnBehalfWidget\Dependency\Client;
 interface BusinessOnBehalfWidgetToCustomerClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer();
 }
