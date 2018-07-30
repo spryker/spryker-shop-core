@@ -11,7 +11,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/company-page": "^1.1.0 Use this module if you want to have company page with all company-related information, such as company users, their roles, company business units, company invitations."
+    "spryker-shop/company-page": "if you want to use CompanyUserInvitationWidgetPlugin: ^1.1.0"
   },
   "autoload": {
     "psr-4": {
