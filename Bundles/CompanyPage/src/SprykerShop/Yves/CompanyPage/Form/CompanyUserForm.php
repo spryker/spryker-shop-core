@@ -299,7 +299,15 @@ class CompanyUserForm extends AbstractType
     {
         $builder->get(static::FIELD_COMPANY_ROLE_COLLECTION)->addModelTransformer(new CallbackTransformer(
             function ($roleCollection) {
-                return $roleCollection;
+                $roles = [];
+
+                if ($roleCollection['roles']) {
+                    foreach ($roleCollection['roles'] as $role) {
+                        $roles[$role['name']] = $role['id_company_role'];
+                    }
+                }
+
+                return $roles;
             },
             function ($roleCollectionSubmitted) {
                 $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
