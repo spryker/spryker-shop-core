@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/company-page.svg)](https://travis-ci.org/spryker-shop/company-page)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/company-page/badge.svg)](https://coveralls.io/github/spryker-shop/company-page)
 
-This module contains pages to manage Company account:
+This module contains actions and view templates to manage Company account:
 * Business Units
 * Addresses
 * Roles

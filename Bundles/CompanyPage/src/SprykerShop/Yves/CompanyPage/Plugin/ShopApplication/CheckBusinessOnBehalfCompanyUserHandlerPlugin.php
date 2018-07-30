@@ -33,7 +33,8 @@ class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin imple
      */
     public function handle(FilterControllerEvent $event): void
     {
-        if ($this->isCompanySelectUri($event->getRequest()->getRequestUri())
+        $companySelectUrl = $this->getFactory()->getApplication()->path(static::COMPANY_REDIRECT_ROUTE);
+        if ($companySelectUrl === $event->getRequest()->getRequestUri()
             || !$this->isCompanyControllerRequested($event)
         ) {
             return;
@@ -44,21 +45,10 @@ class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin imple
             && $customerTransfer->getIsOnBehalf()
             && !$customerTransfer->getCompanyUserTransfer()
         ) {
-            $url = $this->getFactory()->getApplication()->path(static::COMPANY_REDIRECT_ROUTE);
-            $event->setController(function () use ($url) {
-                return new RedirectResponse($url);
+            $event->setController(function () use ($companySelectUrl) {
+                return new RedirectResponse($companySelectUrl);
             });
         }
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return bool
-     */
-    protected function isCompanySelectUri(string $url): bool
-    {
-        return strpos($url, static::COMPANY_REDIRECT_ROUTE) !== false;
     }
 
     /**
