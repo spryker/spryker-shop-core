@@ -10,11 +10,11 @@ namespace SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Service;
 interface ProductPackagingUnitWidgetToUtilEncodingServiceInterface
 {
     /**
-     * @param mixed $value
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *
      * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null): ?string;
+    public function encodeJson(array $value, $options = null, $depth = null): ?string;
 }

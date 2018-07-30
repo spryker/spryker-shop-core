@@ -19,11 +19,11 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "If you want to use QuantitySalesUnitWidgetPlugin: ^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0 ",
+    "spryker-shop/cart-page": "Widget plugins are available for this module.",
     "spryker-shop/checkout-page": "Widget plugins are available for this module.",
-    "spryker-shop/customer-page": "To have customer account pages",
+    "spryker-shop/customer-page": "To have customer account pages.",
     "spryker-shop/money-widget": "For using moneySymbol twig function: ^1.0.1",
-    "spryker-shop/product-detail-page": "if you want to use ProductMeasurementUnitWidgetPlugin: ^0.6.0"
+    "spryker-shop/product-detail-page": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {
