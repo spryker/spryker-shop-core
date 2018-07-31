@@ -7,8 +7,8 @@
     "spryker/kernel": "^3.22.0"
   },
   "require-dev": {
-    "spryker/company-page": "*",
     "spryker/code-sniffer": "*",
+    "spryker/company-page": "*",
     "spryker/testify": "*"
   },
   "suggest": {
