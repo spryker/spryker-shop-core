@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,9 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BusinessUnitController extends AbstractCompanyController
 {
-    public const BUSINESS_UNIT_LIST_SORT_FIELD = 'id_company_business_unit';
-    public const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+    protected const BUSINESS_UNIT_LIST_SORT_FIELD = 'id_company_business_unit';
+    protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
     protected const REQUEST_PARAM_ID = 'id';
+
+    protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'message.business_unit.create';
+    protected const MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS = 'message.business_unit.update';
+    protected const MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS = 'message.business_unit.delete';
 
     /**
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -84,19 +89,28 @@ class BusinessUnitController extends AbstractCompanyController
 
         $companyUserTransfer = $this->getCompanyUser();
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
+        $dataProviderOptions = $dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit);
 
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getBusinessUnitForm($dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit))
+            ->getBusinessUnitForm($dataProviderOptions)
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
             $companyBusinessUnitForm->setData($dataProvider->getData($this->getCompanyUser()));
-        } elseif ($companyBusinessUnitForm->isValid()) {
+        }
+
+        if ($companyBusinessUnitForm->isValid()) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+                $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS, [
+                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+                ]);
+
+                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                    'id' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getIdCompanyBusinessUnit(),
+                ]);
             }
         }
 
@@ -135,9 +149,10 @@ class BusinessUnitController extends AbstractCompanyController
         $companyUserTransfer = $this->getCompanyUser();
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
 
+        $dataProviderOptions = $dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit);
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getBusinessUnitForm($dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit))
+            ->getBusinessUnitForm($dataProviderOptions)
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
@@ -147,16 +162,25 @@ class BusinessUnitController extends AbstractCompanyController
                     $idCompanyBusinessUnit
                 )
             );
-        } elseif ($companyBusinessUnitForm->isValid()) {
+        }
+
+        if ($companyBusinessUnitForm->isValid()) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+                $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS, [
+                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+                ]);
+
+                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                    'id' => $idCompanyBusinessUnit,
+                ]);
             }
         }
 
         return [
             'form' => $companyBusinessUnitForm->createView(),
+            'addresses' => $dataProviderOptions[CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES],
         ];
     }
 
@@ -174,6 +198,13 @@ class BusinessUnitController extends AbstractCompanyController
         $companyBusinessUnitResponseTransfer = $this->getFactory()
             ->getCompanyBusinessUnitClient()
             ->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
+
+        if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+            $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS, [
+                '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+            ]);
+        }
+
         $this->processResponseMessages($companyBusinessUnitResponseTransfer);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);

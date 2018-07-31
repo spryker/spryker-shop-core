@@ -31,4 +31,14 @@ class CompanyPageToMessengerClientBridge implements CompanyPageToMessengerClient
     {
         $this->messengerClient->addErrorMessage($message);
     }
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    public function addSuccessMessage($message): void
+    {
+        $this->messengerClient->addSuccessMessage($message);
+    }
 }

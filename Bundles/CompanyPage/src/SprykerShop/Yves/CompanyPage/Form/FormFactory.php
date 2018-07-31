@@ -15,6 +15,7 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessU
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRoleDataProvider;
@@ -138,7 +139,12 @@ class FormFactory extends AbstractFactory
      */
     public function createBusinessUnitFormDataProvider(): CompanyBusinessUnitFormDataProvider
     {
-        return new CompanyBusinessUnitFormDataProvider($this->getCompanyBusinessUnitClient());
+        return new CompanyBusinessUnitFormDataProvider(
+            $this->getCompanyBusinessUnitClient(),
+            $this->getCompanyUnitAddressClient(),
+            $this->getGlossaryStorageClient(),
+            $this->getStore()
+        );
     }
 
     /**
@@ -231,5 +237,13 @@ class FormFactory extends AbstractFactory
     public function getCompanyUserClient(): CompanyPageToCompanyUserClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_USER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): CompanyPageToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

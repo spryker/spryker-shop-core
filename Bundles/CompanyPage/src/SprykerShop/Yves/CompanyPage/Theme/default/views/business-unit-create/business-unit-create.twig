@@ -2,10 +2,23 @@
 
 {% define data = {
     form: _view.form,
-
+    addresses: _view.addresses| default([]),
     title: 'company.account.business_unit' | trans,
     activePage: 'business-unit'
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                    label: 'customer.account' | trans,
+                },
+                {
+                    label: 'company.account.business_unit' | trans,
+                }
+            ]}
+    } only %}
+{% endblock %}
 
 {% block companyNavigation %}
     {% include molecule('business-unit-navigation', 'CompanyPage') with {
@@ -18,7 +31,7 @@
 
 {% block companyContent %}
     <div class="box">
-        {% include molecule('form') with {
+        {% embed molecule('form') with {
             data: {
                 title: 'company.account.business_unit.create' | trans,
                 form: data.form,
@@ -34,7 +47,27 @@
                     url: url('company/business-unit'),
                     text: 'general.back.button' | trans
                 }
+            },
+            embed: {
+                addresses: data.addresses
             }
         } only %}
+            {% block field %}
+                {% if field.vars.name == 'address_collection' %}
+                    {% do field.setRendered %}
+                    <div class="form__field col col--sm-12">
+                        <hr />
+                        {% include molecule('business-unit-address-list', 'CompanyPage') with {
+                            data: {
+                                field: field,
+                                idCompanyBusinessUnit: null
+                            }
+                        } only %}
+                    </div>
+                {% else %}
+                    {{parent()}}
+                {% endif %}
+            {% endblock %}
+        {% endembed %}
     </div>
 {% endblock %}
