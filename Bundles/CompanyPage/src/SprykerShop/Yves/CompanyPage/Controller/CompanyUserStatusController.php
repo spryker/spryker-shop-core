@@ -18,7 +18,7 @@ class CompanyUserStatusController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function enableCompanyUserAction(Request $request): RedirectResponse
+    public function enableAction(Request $request): RedirectResponse
     {
         $idCompanyUser = $request->query->getInt('id-company-user');
         $companyUserTransfer = (new CompanyUserTransfer())
@@ -36,7 +36,7 @@ class CompanyUserStatusController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function disableCompanyUserAction(Request $request): RedirectResponse
+    public function disableAction(Request $request): RedirectResponse
     {
         $idCompanyUser = $request->query->getInt('id-company-user');
         $companyUserTransfer = (new CompanyUserTransfer())
