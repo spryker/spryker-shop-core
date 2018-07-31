@@ -28,7 +28,7 @@ class CompanyUserFormDataProvider
     protected $companyBusinessUnitClient;
 
     /**
-     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface
      */
     protected $companyRoleClient;
 
