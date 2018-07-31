@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\CompanyWidget\CompanyWidgetPluginInterface;
 
 /**
- * @method \SprykerShop\Yves\BusinessOnBehalfWidget\BusinessOnBehalfWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\CompanyWidget\CompanyWidgetFactory getFactory()
  */
 class CompanyWidgetPlugin extends AbstractWidgetPlugin implements CompanyWidgetPluginInterface
 {
@@ -56,10 +56,10 @@ class CompanyWidgetPlugin extends AbstractWidgetPlugin implements CompanyWidgetP
     {
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if ($customer
-            && $customer->getCompanyUserTransfer()
-            && $customer->getCompanyUserTransfer()->getCompanyBusinessUnit()
-            && $customer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getCompany()
+        if ($customer !== null
+            && $customer->getCompanyUserTransfer() !== null
+            && $customer->getCompanyUserTransfer()->getCompanyBusinessUnit() !== null
+            && $customer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getCompany() !== null
         ) {
             return $customer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getCompany()->getName();
         }
@@ -74,7 +74,7 @@ class CompanyWidgetPlugin extends AbstractWidgetPlugin implements CompanyWidgetP
     {
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if ($customer && $customer->getCompanyUserTransfer()) {
+        if ($customer !== null && $customer->getCompanyUserTransfer() !== null) {
             return true;
         }
 
