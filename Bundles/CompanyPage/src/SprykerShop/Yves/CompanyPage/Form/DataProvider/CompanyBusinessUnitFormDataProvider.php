@@ -14,11 +14,13 @@ use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface;
 use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 
 class CompanyBusinessUnitFormDataProvider
 {
-    protected const COMPANY_UNIT_ADDRESS_KEY = '%s %s %s %s';
+    protected const COMPANY_UNIT_ADDRESS_KEY = "%s %s \n %s %s, %s";
 
     /**
      * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
@@ -31,15 +33,31 @@ class CompanyBusinessUnitFormDataProvider
     protected $companyUnitAddressClient;
 
     /**
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface
+     */
+    protected $glossaryStorageClient;
+
+    /**
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface
+     */
+    protected $store;
+
+    /**
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface $glossaryStorageClient
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface $store
      */
     public function __construct(
         CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient,
-        CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
+        CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient,
+        CompanyPageToGlossaryStorageClientInterface $glossaryStorageClient,
+        CompanyPageToKernelStoreInterface $store
     ) {
         $this->businessUnitClient = $businessUnitClient;
         $this->companyUnitAddressClient = $companyUnitAddressClient;
+        $this->glossaryStorageClient = $glossaryStorageClient;
+        $this->store = $store;
     }
 
     /**
@@ -81,7 +99,10 @@ class CompanyBusinessUnitFormDataProvider
     protected function prepareCompanyUnitAddressCriteriaFilterTransfer(?int $idCompany = null, ?int $idCompanyBusinessUnit = null): CompanyUnitAddressCriteriaFilterTransfer
     {
         $companyUnitAddressCriteriaFilter = new CompanyUnitAddressCriteriaFilterTransfer();
-        $companyUnitAddressCriteriaFilter->setIdCompany($idCompany);
+
+        if ($idCompany) {
+            $companyUnitAddressCriteriaFilter->setIdCompany($idCompany);
+        }
 
         if ($idCompanyBusinessUnit) {
             $companyUnitAddressCriteriaFilter->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
@@ -128,8 +149,8 @@ class CompanyBusinessUnitFormDataProvider
         $companyUserTransfer->requireFkCompany();
 
         return [
-            CompanyBusinessUnitForm::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT => $this->getCompanyBusinessUnits($companyUserTransfer, $idCompanyBusinessUnit),
             CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES => $this->getCompanyUnitAddresses($companyUserTransfer),
+            CompanyBusinessUnitForm::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT => $this->getCompanyBusinessUnits($companyUserTransfer, $idCompanyBusinessUnit),
         ];
     }
 
@@ -184,7 +205,7 @@ class CompanyBusinessUnitFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return array
+     * @return string[]
      */
     protected function getCompanyUnitAddresses(CompanyUserTransfer $companyUserTransfer): array
     {
@@ -195,17 +216,32 @@ class CompanyBusinessUnitFormDataProvider
 
         $companyUnitAddresses = [];
         foreach ($companyUnitAddressCollection->getCompanyUnitAddresses() as $companyUnitAddress) {
+            $countryName = $this->getTranslatedCountryNameByIso2Code($companyUnitAddress->getIso2Code());
             $companyAddressValue = sprintf(
                 static::COMPANY_UNIT_ADDRESS_KEY,
                 $companyUnitAddress->getAddress1(),
                 $companyUnitAddress->getAddress2(),
+                $companyUnitAddress->getZipCode(),
                 $companyUnitAddress->getCity(),
-                $companyUnitAddress->getIso2Code()
+                $countryName
             );
-            $companyUnitAddresses[$companyUnitAddress->getIdCompanyUnitAddress()] = $companyAddressValue;
+            $companyUnitAddresses[$companyUnitAddress->getIdCompanyUnitAddress()] = nl2br($companyAddressValue);
         }
 
         return $companyUnitAddresses;
+    }
+
+    /**
+     * @param string $iso2Code
+     *
+     * @return string
+     */
+    protected function getTranslatedCountryNameByIso2Code(string $iso2Code): string
+    {
+        $translationKey = CompanyUnitAddressFormDataProvider::COUNTRY_GLOSSARY_PREFIX . $iso2Code;
+        $currentLocale = $this->store->getCurrentLocale();
+
+        return $this->glossaryStorageClient->translate($translationKey, $currentLocale);
     }
 
     /**

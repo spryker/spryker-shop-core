@@ -11,35 +11,15 @@
 } %}
 
 {% block body %}
-    <style>
-        .chart-item__indent-1 {
-            margin-left: 10px;
-        }
-        .chart-item__indent-2 {
-            margin-left: 20px;
-        }
-        .chart-item__indent-3 {
-            margin-left: 30px;
-        }
-        .chart-item__indent-4 {
-            margin-left: 40px;
-        }
-        .chart-item__indent-5 {
-            margin-left: 50px;
-        }
-    </style>
-    <div class="chart-item__name">
-        <a href="{{ url('company/business-unit/update', {'id': data.node.id_company_business_unit}) }}">
-            {{ data.node.name }}
-        </a>
-    </div>
+    <a class="{{ config.name }}__link" href="{{ url('company/business-unit/update', {'id': data.node.id_company_business_unit}) }}">
+        {{ data.node.name }}
+    </a>
     {% for item in data.node.children %}
         {% include molecule('business-unit-chart-item', 'CompanyPage') with {
             data: {
                 node: item,
                 level: data.level + 1
-            },
-            class: 'chart-item__indent-' ~ data.level,
+            }
         } only %}
     {% endfor %}
 {% endblock %}

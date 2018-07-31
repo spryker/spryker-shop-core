@@ -118,9 +118,25 @@ abstract class AbstractCompanyController extends AbstractController
         if ($responseTransfer->offsetExists('messages')) {
             /** @var \Generated\Shared\Transfer\ResponseMessageTransfer[] $responseMessages */
             $responseMessages = $responseTransfer->offsetGet('messages');
+
             foreach ($responseMessages as $responseMessage) {
                 $this->addErrorMessage($responseMessage->getText());
             }
         }
+    }
+
+    /**
+     * @param string $key
+     * @param array $params
+     *
+     * @return void
+     */
+    protected function addTranslatedSuccessMessage(string $key, array $params = []): void
+    {
+        $message = $this->getFactory()
+            ->getGlossaryStorageClient()
+            ->translate($key, $this->getLocale(), $params);
+
+        $this->addSuccessMessage($message);
     }
 }

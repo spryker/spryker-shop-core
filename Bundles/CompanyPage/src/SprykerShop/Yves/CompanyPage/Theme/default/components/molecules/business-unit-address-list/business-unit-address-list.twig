@@ -1,0 +1,72 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'business-unit-address-list'
+} %}
+
+{% define data = {
+    field: required
+} %}
+
+{% block body %}
+    <div class="grid grid--justify">
+        <p class="{{ config.name }}__title col">
+            {{ 'company.account.address.assigned' | trans }}
+        </p>
+        {% if data.idCompanyBusinessUnit is not null %}
+            <div class="col">
+                <a class="button" href="{{url('company/address/create', { 'idCompanyBusinessUnit': data.idCompanyBusinessUnit })}}">{{ 'company.account.add_new_address' | trans }}</a>
+            </div>
+        {% endif %}
+    </div>
+    <ul class="{{ config.name }}__list spacing-y">
+        {% set isEmpty = true %}
+
+        {% for key, item in data.field.children %}
+            {% if item.vars.checked %}
+                {% set isEmpty = false %}
+                <li class="{{ config.name }}__item spacing-y">
+                    {% include molecule('business-unit-address-item', 'CompanyPage') with {
+                        data: {
+                            address: item,
+                            idCompanyBusinessUnit: data.idCompanyBusinessUnit
+                        }
+                    } only %}
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if isEmpty %}
+            <li class="{{ config.name }}__item spacing-y--inner text-center">
+                {{ 'company.account.address.assigned.empty' | trans }}
+            </li>
+        {% endif %}
+    </ul>
+
+    <p class="{{ config.name }}__title">
+        {{ 'company.account.address.unassigned' | trans }}
+    </p>
+    <ul class="{{ config.name }}__list spacing-y">
+        {% set isEmpty = true %}
+
+        {% for key, item in data.field.children %}
+            {% if not item.vars.checked %}
+                {% set isEmpty = false %}
+                <li class="{{ config.name }}__item spacing-y">
+                    {% include molecule('business-unit-address-item', 'CompanyPage') with {
+                        data: {
+                            address: item,
+                            idCompanyBusinessUnit: data.idCompanyBusinessUnit
+                        }
+                    } only %}
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if isEmpty %}
+            <li class="{{ config.name }}__item spacing-y--inner text-center">
+                {{ 'company.account.address.unassigned.empty' | trans }}
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}

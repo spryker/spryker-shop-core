@@ -2,7 +2,6 @@
 
 {% define data = {
     form: _view.form,
-
     title: 'company.account.address' | trans,
     activePage: 'business-unit'
 } %}
@@ -28,7 +27,7 @@
                 },
                 cancel: {
                     enable: true,
-                    url: url('company/address'),
+                    url: url('company/business-unit'),
                     text: 'general.back.button' | trans
                 }
             }

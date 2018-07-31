@@ -29,8 +29,10 @@ class CompanyBusinessUnitForm extends AbstractType
     public const FIELD_EXTERNAL_URL = 'external_url';
     public const FIELD_FK_COMPANY = 'fk_company';
     public const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
-    public const FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT = 'fk_parent_company_business_unit';
     public const FIELD_COMPANY_UNIT_ADDRESSES = 'address_collection';
+    public const FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT = 'fk_parent_company_business_unit';
+    public const COMPANY_UNIT_ADDRESSES_KEY = 'company_unit_addresses';
+    public const ID_COMPANY_UNIT_ADDRESS_KEY = 'id_company_unit_address';
 
     /**
      * @return string
@@ -47,8 +49,8 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT);
         $resolver->setRequired(static::FIELD_COMPANY_UNIT_ADDRESSES);
+        $resolver->setRequired(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT);
     }
 
     /**
@@ -222,9 +224,9 @@ class CompanyBusinessUnitForm extends AbstractType
                         }
 
                         $result = [];
-                        if (isset($addresses['company_unit_addresses'])) {
-                            foreach ($addresses['company_unit_addresses'] as $address) {
-                                $result[] = $address['id_company_unit_address'];
+                        if (isset($addresses[static::COMPANY_UNIT_ADDRESSES_KEY])) {
+                            foreach ($addresses[static::COMPANY_UNIT_ADDRESSES_KEY] as $address) {
+                                $result[] = $address[static::ID_COMPANY_UNIT_ADDRESS_KEY];
                             }
                         }
 

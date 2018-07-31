@@ -46,8 +46,15 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
      */
     public function getCompanyBusinessUnitTree(): array
     {
-        $idCompany = $this->customerClient->getCustomer()->getCompanyUserTransfer()->getFkCompany();
-        $companyBusinessUnits = $this->getCompanyBusinessUnites($idCompany);
+        $customerTransfer = $this->customerClient->getCustomer();
+
+        if ($customerTransfer === null || $customerTransfer->getCompanyUserTransfer() === null) {
+            return [];
+        }
+
+        $idCompany = $customerTransfer->getCompanyUserTransfer()->getFkCompany();
+
+        $companyBusinessUnits = $this->getCompanyBusinessUnitCollection($idCompany);
 
         $companyBusinessUnitTree = $this->buildTree($companyBusinessUnits->getCompanyBusinessUnits());
 
@@ -59,7 +66,7 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    protected function getCompanyBusinessUnites(int $idCompany): CompanyBusinessUnitCollectionTransfer
+    protected function getCompanyBusinessUnitCollection(int $idCompany): CompanyBusinessUnitCollectionTransfer
     {
         $criteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
         $criteriaFilterTransfer->setIdCompany($idCompany);
@@ -70,10 +77,11 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
     /**
      * @param \ArrayObject $companyBusinessUnits
      * @param int|null $idParentCompanyBusinessUnit
+     * @param int $indent
      *
      * @return array
      */
-    protected function buildTree(ArrayObject $companyBusinessUnits, $idParentCompanyBusinessUnit = null, $indent = 0): array
+    protected function buildTree(ArrayObject $companyBusinessUnits, ?int $idParentCompanyBusinessUnit = null, int $indent = 0): array
     {
         $tree = [];
         foreach ($companyBusinessUnits as $companyBusinessUnit) {
@@ -81,7 +89,7 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
             if ($companyBusinessUnitArray[static::FK_PARENT_COMPANY_BUSINESS_UNIT_KEY] == $idParentCompanyBusinessUnit) {
                 $companyBusinessUnitArray[static::CHILDREN_KEY] = [];
                 $companyBusinessUnitArray[static::LEVEL_KEY] = $indent;
-                $children = $this->buildTree($companyBusinessUnits, $companyBusinessUnitArray[static::ID_COMPANY_BUSINESS_UNIT_KEY], $indent + 1);
+                $children = $this->buildTree($companyBusinessUnits, $companyBusinessUnitArray[static::ID_COMPANY_BUSINESS_UNIT_KEY], $indent++);
                 if ($children) {
                     $companyBusinessUnitArray[static::CHILDREN_KEY] = $children;
                 }

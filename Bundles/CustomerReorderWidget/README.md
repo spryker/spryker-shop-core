@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/customer-reorder-widget.svg)](https://travis-ci.org/spryker-shop/customer-reorder-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/customer-reorder-widget/badge.svg)](https://coveralls.io/github/spryker-shop/customer-reorder-widget)
 
-{{ADD DESCRIPTION HERE}}
+This module contains the customer reorder related widgets.
 
 ## Installation
 
