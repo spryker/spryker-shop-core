@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/company-page.svg)](https://travis-ci.org/spryker-shop/company-page)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/company-page/badge.svg)](https://coveralls.io/github/spryker-shop/company-page)
 
-This module provide company page logic
+Provides a page with the information about company and allows company users to manage company business units, company users, their roles, and invite new users to the company.
 
 ## Installation
 

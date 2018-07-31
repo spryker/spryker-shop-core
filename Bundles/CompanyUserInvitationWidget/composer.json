@@ -3,19 +3,20 @@
   "description": "CompanyUserInvitationWidget module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/kernel": "^3.22.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company-page": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker-shop/company-page": "if you want to use CompanyUserInvitationWidgetPlugin: ^1.1.0"
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
