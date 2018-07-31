@@ -231,48 +231,6 @@ class AddressController extends AbstractCompanyController
     }
 
     /**
-     * @param array $data
-     * @param int|null $idCompanyBusinessUnit
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
-    protected function saveAddress(array $data, ?int $idCompanyBusinessUnit = null)
-    {
-        $addressTransfer = new CompanyUnitAddressTransfer();
-        $addressTransfer->fromArray($data, true);
-
-        if ($idCompanyBusinessUnit) {
-            $companyBusinessUnitCollectionTransfer = $this->createCompanyBusinessCollectionUnitTransfer($idCompanyBusinessUnit);
-            $addressTransfer
-                ->setCompanyBusinessUnitCollection($companyBusinessUnitCollectionTransfer);
-        }
-
-        $addressTransfer = $this
-            ->getFactory()
-            ->getCompanyUnitAddressClient()
-            ->createCompanyUnitAddress($addressTransfer);
-
-        return $addressTransfer->getCompanyUnitAddressTransfer();
-    }
-
-    /**
-     * @param int|null $idBusinessUnit
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
-    protected function createCompanyBusinessCollectionUnitTransfer(?int $idBusinessUnit = null): CompanyBusinessUnitCollectionTransfer
-    {
-        $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
-
-        $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
-            ->setIdCompanyBusinessUnit($idBusinessUnit);
-
-        $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
-
-        return $companyBusinessUnitCollectionTransfer;
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer

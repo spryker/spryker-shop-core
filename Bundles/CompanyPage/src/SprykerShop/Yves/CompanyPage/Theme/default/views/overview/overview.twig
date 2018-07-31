@@ -3,7 +3,7 @@
 {% define data = {
     title: 'company.account.overview' | trans,
     company: _view.company,
-    addressCollection: _view.addressCollection
+    defaultBillingAddress: _view.defaultBillingAddress
 } %}
 
 {% block companyContent %}
@@ -15,7 +15,7 @@
         {% include molecule('overview-info', 'CompanyPage') with {
             data: {
                 companyName: data.company.name,
-                addressCollection: data.addressCollection
+                defaultBillingAddress: data.defaultBillingAddress
             }
         } only %}
     </div>

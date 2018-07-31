@@ -15,7 +15,7 @@
         </p>
         {% if data.idCompanyBusinessUnit is not null %}
             <div class="col">
-                <a class="button" href="{{url('company/address/create', { 'idCompanyBusinessUnit': data.idCompanyBusinessUnit })}}">{{ 'company.account.add_new_address' | trans }}</a>
+                <a class="button" href="{{url('company/business-unit/address/create', { 'id': data.idCompanyBusinessUnit })}}">{{ 'company.account.add_new_address' | trans }}</a>
             </div>
         {% endif %}
     </div>

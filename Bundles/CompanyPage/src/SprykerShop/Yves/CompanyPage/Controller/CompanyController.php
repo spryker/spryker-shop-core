@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CompanyPage\Controller;
 
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,11 +25,12 @@ class CompanyController extends AbstractCompanyController
     public function indexAction(Request $request)
     {
         $company = $this->getCompanyUser()->getCompanyBusinessUnit()->getCompany();
-        $companyUnitAddressCollection = $this->getCompanyUnitAddressCollection();
+        $companyUnitAddressTransfer = $this->createCompanyUnitAddressTransfer();
+        $defaultBillingAddress = $this->getFactory()->getCompanyUnitAddressClient()->getCompanyUnitAddressById($companyUnitAddressTransfer);
 
         $data = [
             'company' => $company,
-            'addressCollection' => $companyUnitAddressCollection->getCompanyUnitAddresses(),
+            'defaultBillingAddress' => $defaultBillingAddress
         ];
 
         return $this->view(
@@ -39,17 +41,13 @@ class CompanyController extends AbstractCompanyController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    protected function getCompanyUnitAddressCollection(): CompanyUnitAddressCollectionTransfer
+    protected function createCompanyUnitAddressTransfer(): CompanyUnitAddressTransfer
     {
-        $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
-            ->setIdCompanyBusinessUnit($this->getCompanyUser()->getCompanyBusinessUnit()->getIdCompanyBusinessUnit());
+        $idDefaultBillingAddress = $this->getCompanyUser()->getCompanyBusinessUnit()->getDefaultBillingAddress();
 
-        $companyUnitAddressCollectionTransfer = $this->getFactory()
-            ->getCompanyUnitAddressClient()
-            ->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer);
-
-        return $companyUnitAddressCollectionTransfer;
+        return (new CompanyUnitAddressTransfer())->
+            setIdCompanyUnitAddress($idDefaultBillingAddress);
     }
 }
