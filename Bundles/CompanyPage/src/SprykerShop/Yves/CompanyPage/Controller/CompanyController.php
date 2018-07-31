@@ -7,9 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
-use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,14 +23,22 @@ class CompanyController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
-        $company = $this->getCompanyUser()->getCompanyBusinessUnit()->getCompany();
-        $companyUnitAddressTransfer = $this->createCompanyUnitAddressTransfer();
-        $defaultBillingAddress = $this->getFactory()->getCompanyUnitAddressClient()->getCompanyUnitAddressById($companyUnitAddressTransfer);
+        $companyUserTransfer = $this->getCompanyUser();
 
-        $data = [
-            'company' => $company,
-            'defaultBillingAddress' => $defaultBillingAddress
-        ];
+        $data = [];
+
+        if ($companyUserTransfer && $companyUserTransfer->getCompanyBusinessUnit()) {
+            $company = $companyUserTransfer->getCompanyBusinessUnit()->getCompany();
+            $companyUnitAddressTransfer = $this->createCompanyUnitAddressTransfer($companyUserTransfer);
+            $defaultBillingAddress = $this->getFactory()
+                ->getCompanyUnitAddressClient()
+                ->getCompanyUnitAddressById($companyUnitAddressTransfer);
+
+            $data = [
+                'company' => $company,
+                'defaultBillingAddress' => $defaultBillingAddress,
+            ];
+        }
 
         return $this->view(
             $data,
@@ -41,13 +48,21 @@ class CompanyController extends AbstractCompanyController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    protected function createCompanyUnitAddressTransfer(): CompanyUnitAddressTransfer
+    protected function createCompanyUnitAddressTransfer(CompanyUserTransfer $companyUserTransfer): CompanyUnitAddressTransfer
     {
-        $idDefaultBillingAddress = $this->getCompanyUser()->getCompanyBusinessUnit()->getDefaultBillingAddress();
+        $fkDefaultBillingAddress = $companyUserTransfer->getCompanyBusinessUnit()->getDefaultBillingAddress();
 
-        return (new CompanyUnitAddressTransfer())->
-            setIdCompanyUnitAddress($idDefaultBillingAddress);
+        $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
+
+        if ($fkDefaultBillingAddress === null) {
+            return $companyUnitAddressTransfer;
+        }
+
+        return $companyUnitAddressTransfer
+            ->setIdCompanyUnitAddress($fkDefaultBillingAddress);
     }
 }

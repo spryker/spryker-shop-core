@@ -6,16 +6,18 @@
 } %}
 
 {% define data = {
-    companyName: required,
+    company: required,
     defaultBillingAddress: required
 } %}
 
 {% block body %}
-    <span class="{{ config.name }}__title">{{ 'company.account.name' | trans }}:</span>
-    <span class="{{ config.name }}__text"> {{ data.companyName }}</span><br/>
+    {% if data.company %}
+        <span class="{{ config.name }}__title">{{ 'company.account.name' | trans }}:</span>
+        <span class="{{ config.name }}__text"> {{ data.company.name }}</span><br/>
+    {% endif %}
     {% if data.defaultBillingAddress %}
         <span class="{{ config.name }}__title">{{ 'company.account.address' | trans }}:</span>
         {% set mainAddress = data.defaultBillingAddress %}
-        {{ data.defaultBillingAddress.city }} {{ data.defaultBillingAddress.zipCode }} {{ data.defaultBillingAddress.address1 }} {{ data.defaultBillingAddress.address2 }} {{ data.defaultBillingAddress.address3 }}
+        {{ mainAddress.address1 }} {{ mainAddress.address2 }}, {{ mainAddress.zipCode }} {{ mainAddress.city }}, {{ ('countries.iso.' ~ mainAddress.iso2code) | trans }}
     {% endif %}
 {% endblock %}

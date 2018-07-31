@@ -47,15 +47,15 @@
 
     {% if data.idCompanyBusinessUnit %}
         <a class="button button--hollow {{ config.name }}__action" href="{{ url('company/business-unit/update', {'id': data.idCompanyBusinessUnit }) }}">
-            {{ "company.account.address.delete.cancel" | trans }}
+            {{ "label.button.cancel" | trans }}
         </a>
     {% else %}
-        <a class="button button--hollow {{ config.name }}__action" href="{{ url('company/business-unit', {'id': data.idCompanyBusinessUnit }) }}">
-            {{ "company.account.address.delete.cancel" | trans }}
+        <a class="button button--hollow {{ config.name }}__action" href="{{ url('company/business-unit') }}">
+            {{ "label.button.cancel" | trans }}
         </a>
     {% endif %}
 
     <a class="button" href="{{ url('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
-        {{ "company.account.address.delete.confirm" | trans }}
+        {{ "label.button.submit" | trans }}
     </a>
 {% endblock %}

@@ -148,7 +148,7 @@ abstract class AbstractCompanyController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    protected function createCompanyBusinessCollectionUnitTransfer(?int $idBusinessUnit = null): CompanyBusinessUnitCollectionTransfer
+    protected function createCompanyBusinessUnitCollectionTransfer(?int $idBusinessUnit = null): CompanyBusinessUnitCollectionTransfer
     {
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
 
@@ -172,7 +172,7 @@ abstract class AbstractCompanyController extends AbstractController
         $addressTransfer->fromArray($data, true);
 
         if ($idCompanyBusinessUnit) {
-            $companyBusinessUnitCollectionTransfer = $this->createCompanyBusinessCollectionUnitTransfer($idCompanyBusinessUnit);
+            $companyBusinessUnitCollectionTransfer = $this->createCompanyBusinessUnitCollectionTransfer($idCompanyBusinessUnit);
             $addressTransfer
                 ->setCompanyBusinessUnitCollection($companyBusinessUnitCollectionTransfer);
         }
@@ -184,5 +184,4 @@ abstract class AbstractCompanyController extends AbstractController
 
         return $addressTransfer->getCompanyUnitAddressTransfer();
     }
-
 }

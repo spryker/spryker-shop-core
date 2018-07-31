@@ -7,6 +7,17 @@
     idCompanyBusinessUnit: _view.idCompanyBusinessUnit
 } %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+            }, {
+                label: 'company.account.business_unit' | trans,
+            }]}
+    } only %}
+{% endblock %}
+
 {% block companyContent %}
     <div class="box">
         {% include molecule('form') with {

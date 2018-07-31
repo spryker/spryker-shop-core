@@ -20,15 +20,6 @@
     } only %}
 {% endblock %}
 
-{% block companyNavigation %}
-    {% include molecule('business-unit-navigation', 'CompanyPage') with {
-        class: 'box',
-        data: {
-            activePage: data.activePage
-        }
-    } only %}
-{% endblock %}
-
 {% block companyContent %}
     <div class="box">
         {% embed molecule('form') with {
