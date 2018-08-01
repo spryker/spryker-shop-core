@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CompanyUserStatusController extends AbstractController
 {
+    protected const ID_COMPANY_USER_PARAMETER = 'id';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -25,7 +27,7 @@ class CompanyUserStatusController extends AbstractController
      */
     public function enableAction(Request $request): RedirectResponse
     {
-        $idCompanyUser = $request->query->getInt('id-company-user');
+        $idCompanyUser = $request->query->getInt(static::ID_COMPANY_USER_PARAMETER);
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
 
@@ -43,7 +45,7 @@ class CompanyUserStatusController extends AbstractController
      */
     public function disableAction(Request $request): RedirectResponse
     {
-        $idCompanyUser = $request->query->getInt('id-company-user');
+        $idCompanyUser = $request->query->getInt(static::ID_COMPANY_USER_PARAMETER);
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
 
