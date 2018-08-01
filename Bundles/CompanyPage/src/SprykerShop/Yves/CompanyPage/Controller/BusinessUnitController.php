@@ -148,8 +148,8 @@ class BusinessUnitController extends AbstractCompanyController
 
         $companyUserTransfer = $this->getCompanyUser();
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
-
         $dataProviderOptions = $dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit);
+
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->getBusinessUnitForm($dataProviderOptions)

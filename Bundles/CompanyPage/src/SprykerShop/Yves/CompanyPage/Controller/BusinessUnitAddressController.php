@@ -7,14 +7,15 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 class BusinessUnitAddressController extends AbstractCompanyController
 {
+    public const REQUEST_COMPANY_BUSINESS_UNIT_ID = 'id';
+
+    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'message.business_unit_address.create';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -49,9 +50,9 @@ class BusinessUnitAddressController extends AbstractCompanyController
             ->getCompanyBusinessUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
-        if ($addressForm->isSubmitted() === false) {
-            $idCompanyBusinessUnit = $request->query->getInt('id');
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_COMPANY_BUSINESS_UNIT_ID);
 
+        if ($addressForm->isSubmitted() === false) {
             $addressForm->setData(
                 $dataProvider->getData(
                     $this->getCompanyUser(),
@@ -62,60 +63,22 @@ class BusinessUnitAddressController extends AbstractCompanyController
         }
 
         if ($addressForm->isValid()) {
-            $idCompanyBusinessUnit = $request->query->getInt('id');
-            $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData());
-
-            $this->saveCompanyBusinessUnitAddress(
-                $companyUnitAddressTransfer,
-                $idCompanyBusinessUnit
-            );
+            $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData(), $idCompanyBusinessUnit);
 
             if ($companyUnitAddressTransfer) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+                $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS, [
+                    '%address%' => $companyUnitAddressTransfer->getAddress1(),
+                ]);
+
+                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                    'id' => $idCompanyBusinessUnit,
+                ]);
             }
         }
 
         return [
             'form' => $addressForm->createView(),
+            'idCompanyBusinessUnit' => $idCompanyBusinessUnit,
         ];
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
-    protected function saveAddress(array $data)
-    {
-        $addressTransfer = new CompanyUnitAddressTransfer();
-        $addressTransfer->fromArray($data, true);
-        $addressTransfer = $this
-            ->getFactory()
-            ->getCompanyUnitAddressClient()
-            ->createCompanyUnitAddress($addressTransfer);
-
-        return $addressTransfer->getCompanyUnitAddressTransfer();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return void
-     */
-    protected function saveCompanyBusinessUnitAddress(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer,
-        int $idCompanyBusinessUnit
-    ): void {
-        $addressCollection = new CompanyUnitAddressCollectionTransfer();
-        $addressCollection->addCompanyUnitAddress($companyUnitAddressTransfer);
-
-        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-        $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
-            ->setAddressCollection($addressCollection);
-
-        $this->getFactory()
-            ->getCompanyUnitAddressClient()
-            ->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
     }
 }

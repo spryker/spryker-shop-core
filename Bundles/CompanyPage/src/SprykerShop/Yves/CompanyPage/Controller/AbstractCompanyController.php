@@ -7,7 +7,10 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -138,5 +141,47 @@ abstract class AbstractCompanyController extends AbstractController
             ->translate($key, $this->getLocale(), $params);
 
         $this->addSuccessMessage($message);
+    }
+
+    /**
+     * @param int|null $idBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     */
+    protected function createCompanyBusinessUnitCollectionTransfer(?int $idBusinessUnit = null): CompanyBusinessUnitCollectionTransfer
+    {
+        $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
+
+        $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
+            ->setIdCompanyBusinessUnit($idBusinessUnit);
+
+        $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
+
+        return $companyBusinessUnitCollectionTransfer;
+    }
+
+    /**
+     * @param array $data
+     * @param int|null $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     */
+    protected function saveAddress(array $data, ?int $idCompanyBusinessUnit = null)
+    {
+        $addressTransfer = new CompanyUnitAddressTransfer();
+        $addressTransfer->fromArray($data, true);
+
+        if ($idCompanyBusinessUnit) {
+            $companyBusinessUnitCollectionTransfer = $this->createCompanyBusinessUnitCollectionTransfer($idCompanyBusinessUnit);
+            $addressTransfer
+                ->setCompanyBusinessUnitCollection($companyBusinessUnitCollectionTransfer);
+        }
+
+        $addressTransfer = $this
+            ->getFactory()
+            ->getCompanyUnitAddressClient()
+            ->createCompanyUnitAddress($addressTransfer);
+
+        return $addressTransfer->getCompanyUnitAddressTransfer();
     }
 }

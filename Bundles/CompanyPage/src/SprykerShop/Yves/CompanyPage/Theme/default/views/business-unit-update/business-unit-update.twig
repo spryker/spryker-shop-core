@@ -11,19 +11,10 @@
     {% include molecule('breadcrumb') with {
         data: {
             steps: [{
-                label: 'customer.account' | trans,
+                label: 'company.account' | trans,
             },{
                 label: 'company.account.business_unit' | trans,
             }]
-        }
-    } only %}
-{% endblock %}
-
-{% block companyNavigation %}
-    {% include molecule('business-unit-navigation', 'CompanyPage') with {
-        class: 'box',
-        data: {
-            activePage: data.activePage
         }
     } only %}
 {% endblock %}
