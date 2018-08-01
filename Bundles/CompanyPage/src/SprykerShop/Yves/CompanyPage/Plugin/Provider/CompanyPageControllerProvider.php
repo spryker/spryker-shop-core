@@ -223,7 +223,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider
+     * @return $this
      */
     protected function addCompanyUserStatusRoutes(): self
     {
