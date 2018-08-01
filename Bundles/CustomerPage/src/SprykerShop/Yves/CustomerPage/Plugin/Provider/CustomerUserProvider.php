@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -33,8 +32,6 @@ class CustomerUserProvider extends AbstractPlugin implements UserProviderInterfa
 
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\UnsupportedUserException
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
