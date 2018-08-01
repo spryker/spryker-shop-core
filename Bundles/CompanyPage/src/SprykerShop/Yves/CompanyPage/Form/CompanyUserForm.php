@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form;
 
+use Closure;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Symfony\Component\Form\AbstractType;
@@ -273,10 +274,12 @@ class CompanyUserForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyRoleCollectionField(FormBuilderInterface $builder, array $options)
+    protected function addCompanyRoleCollectionField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_COMPANY_ROLE_COLLECTION, ChoiceType::class, [
-            'choices' => array_flip($options[static::OPTION_COMPANY_ROLE_CHOICES]),
+            'choices_as_values' => true,
+            'choices' => $options[static::OPTION_COMPANY_ROLE_CHOICES],
+            'expanded' => true,
             'required' => true,
             'label' => 'company.account.company_role',
             'multiple' => true,
@@ -299,14 +302,14 @@ class CompanyUserForm extends AbstractType
     /**
      * @return \Closure
      */
-    protected function inputDataCallbackRoleCollectionTransformer()
+    protected function inputDataCallbackRoleCollectionTransformer(): Closure
     {
-        return function ($roleCollection) {
+        return function ($roleCollection): array {
             $roles = [];
 
             if ($roleCollection['roles']) {
                 foreach ($roleCollection['roles'] as $role) {
-                    $roles[$role['name']] = $role['id_company_role'];
+                    $roles[] = $role['id_company_role'];
                 }
             }
 
@@ -317,14 +320,14 @@ class CompanyUserForm extends AbstractType
     /**
      * @return \Closure
      */
-    protected function outputDataCallbackRoleCollectionTransformer()
+    protected function outputDataCallbackRoleCollectionTransformer(): Closure
     {
-        return function ($roleCollectionSubmitted) {
+        return function ($roleCollectionSubmitted): CompanyRoleCollectionTransfer {
             $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
 
             foreach ($roleCollectionSubmitted as $role) {
-                $companyRoleTransfer = new CompanyRoleTransfer();
-                $companyRoleTransfer->setIdCompanyRole($role);
+                $companyRoleTransfer = (new CompanyRoleTransfer())
+                    ->setIdCompanyRole($role);
 
                 $companyRoleCollectionTransfer->addRole($companyRoleTransfer);
             }

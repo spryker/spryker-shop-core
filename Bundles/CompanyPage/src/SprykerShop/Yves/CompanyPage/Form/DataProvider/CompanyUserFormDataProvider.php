@@ -135,7 +135,7 @@ class CompanyUserFormDataProvider
     /**
      * @param int $idCompany
      *
-     * @return array
+     * @return string[]
      */
     protected function getAvailableCompanyRoles(int $idCompany): array
     {
@@ -146,7 +146,7 @@ class CompanyUserFormDataProvider
 
         $roles = [];
         foreach ($companyRoleCollection->getRoles() as $role) {
-            $roles[$role->getIdCompanyRole()] = $role->getName();
+            $roles[$role->getName()] = $role->getIdCompanyRole();
         }
 
         return $roles;
