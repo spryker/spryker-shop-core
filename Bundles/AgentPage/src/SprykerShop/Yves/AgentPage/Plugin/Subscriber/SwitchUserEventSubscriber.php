@@ -7,11 +7,17 @@
 
 namespace SprykerShop\Yves\AgentPage\Plugin\Subscriber;
 
+use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\AgentPage\Security\Agent;
+use SprykerShop\Yves\CustomerPage\Security\Customer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\SwitchUserEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
-class SwitchUserEventSubscriber implements EventSubscriberInterface
+/**
+ * @method \SprykerShop\Yves\AgentPage\AgentPageFactory getFactory()
+ */
+class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
      * @return array
@@ -31,9 +37,13 @@ class SwitchUserEventSubscriber implements EventSubscriberInterface
     public function switchUser(SwitchUserEvent $switchUserEvent)
     {
         $targetUser = $switchUserEvent->getTargetUser();
+        $customerClient = $this->getFactory()
+            ->getCustomerClient();
 
-        // TODO: if $targetUser is a CustomerTransfer (e.g. impersonation starts), set it to customer session as it would log in
-        // TODO: if $targetUser is a UserTransfer (e.g. impersonation ends), unset customer session as it would log out
-        // TBD in CC-37
+        if ($targetUser instanceof Customer) {
+            $customerClient->setCustomer($targetUser->getCustomerTransfer());
+        } elseif ($targetUser instanceof Agent) {
+            $customerClient->logout();
+        }
     }
 }

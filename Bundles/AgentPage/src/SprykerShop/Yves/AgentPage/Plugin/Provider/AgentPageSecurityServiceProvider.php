@@ -23,6 +23,7 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
     public const FIREWALL_AGENT = 'agent';
 
     public const ROLE_AGENT = 'ROLE_AGENT';
+    public const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
 
     /**
      * @param \Silex\Application $app
@@ -56,11 +57,11 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
     {
         $selectedLanguage = $this->findSelectedLanguage($app);
 
-        $app['security.firewalls'] = array_replace([
+        $app['security.firewalls'] = array_merge_recursive([
             static::FIREWALL_AGENT => [
                 'context' => static::FIREWALL_AGENT,
                 'anonymous' => false,
-                'pattern' => '\/agent\/(?!login$).+',
+                'pattern' => '\/agent(.+)?\/(?!login$).+',
                 'form' => [
                     'login_path' => '/agent/login',
                     'check_path' => '/agent/login_check',
@@ -80,7 +81,7 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
                 'context' => static::FIREWALL_AGENT,
                 'switch_user' => [
                     'parameter' => '_switch_user',
-                    'role' => 'ROLE_ALLOWED_TO_SWITCH',
+                    'role' => static::ROLE_ALLOWED_TO_SWITCH,
                 ],
             ],
         ], $app['security.firewalls']);

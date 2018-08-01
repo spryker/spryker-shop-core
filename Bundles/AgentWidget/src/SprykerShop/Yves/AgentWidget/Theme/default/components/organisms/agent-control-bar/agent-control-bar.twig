@@ -12,8 +12,29 @@
 {% block body %}
     <div class="container">
         <div class="box">
-            <div class="col col--md-10 col--xs-12">
+            <div class="col col--md-4 col--xs-12">
                 <span>Agent {{ data.agent.username }}</span>
+            </div>
+            <div class="col col--md-6 col--xs-12">
+                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                    <a href="?_switch_user=_exit">Logout as CUSTOMER</a>
+                {% else %}
+                    <form method="GET" action="/">
+                        {% include molecule('autosuggest-input') with {
+                            attributes: {
+                                suggestionUrl: path('agent-widget/customer-autocomplete'),
+                                renderTemplate: '${first_name} - ${last_name} : ${email}',
+                                valueKey: 'email',
+                                objectKey: 'customers',
+                                selectedValueKey: '_switch_user'
+                            }
+                        } only %}
+
+                        <button type="submit" class="button button-success">
+                            {{ 'agent.confirm_user_selection' | trans }}
+                        </button>
+                    </form>
+                {% endif %}
             </div>
             <div class="col col--md-2 col--xs-12">
                 <a href="/agent/logout">Logout</a>

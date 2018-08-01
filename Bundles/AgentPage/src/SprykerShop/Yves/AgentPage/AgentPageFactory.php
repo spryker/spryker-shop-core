@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientInterface;
+use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
@@ -71,7 +72,7 @@ class AgentPageFactory extends AbstractFactory
     {
         return new Agent(
             $userTransfer,
-            [AgentPageSecurityServiceProvider::ROLE_AGENT]
+            [AgentPageSecurityServiceProvider::ROLE_AGENT, AgentPageSecurityServiceProvider::ROLE_ALLOWED_TO_SWITCH]
         );
     }
 
@@ -99,6 +100,14 @@ class AgentPageFactory extends AbstractFactory
     public function getAgentClient(): AgentPageToAgentClientInterface
     {
         return $this->getProvidedDependency(AgentPageDependencyProvider::CLIENT_AGENT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface
+     */
+    public function getCustomerClient(): AgentPageToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(AgentPageDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**

@@ -45,6 +45,10 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
+        if (!$user instanceof Agent) {
+            return $user;
+        }
+
         $userTransfer = $this->getUserTransfer($user);
 
         return $this->getFactory()->createSecurityUser($userTransfer);

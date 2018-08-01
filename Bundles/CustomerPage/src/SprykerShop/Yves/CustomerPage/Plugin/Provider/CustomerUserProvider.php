@@ -41,7 +41,7 @@ class CustomerUserProvider extends AbstractPlugin implements UserProviderInterfa
     public function refreshUser(UserInterface $user)
     {
         if (!$user instanceof Customer) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+            return $user;
         }
 
         $customerTransfer = $this->getCustomerTransfer($user);

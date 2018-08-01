@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\AgentWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
+use Generated\Shared\Transfer\CustomerQueryTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface AgentWidgetToAgentClientInterface
@@ -20,4 +22,11 @@ interface AgentWidgetToAgentClientInterface
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
     public function getAgent(): ?UserTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
+     */
+    public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer;
 }
