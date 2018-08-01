@@ -285,42 +285,51 @@ class CompanyUserForm extends AbstractType
             ],
         ]);
 
-        $this->addRoleCollectionTransformer($builder);
+        $callbackTransformer = new CallbackTransformer(
+            $this->inputDataCallbackRoleCollectionTransformer(),
+            $this->outputDataCallbackRoleCollectionTransformer()
+        );
+
+        $builder->get(static::FIELD_COMPANY_ROLE_COLLECTION)
+            ->addModelTransformer($callbackTransformer);
 
         return $this;
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
+     * @return \Closure
      */
-    protected function addRoleCollectionTransformer(FormBuilderInterface $builder): void
+    protected function inputDataCallbackRoleCollectionTransformer()
     {
-        $builder->get(static::FIELD_COMPANY_ROLE_COLLECTION)->addModelTransformer(new CallbackTransformer(
-            function ($roleCollection) {
-                $roles = [];
+        return function ($roleCollection) {
+            $roles = [];
 
-                if ($roleCollection['roles']) {
-                    foreach ($roleCollection['roles'] as $role) {
-                        $roles[$role['name']] = $role['id_company_role'];
-                    }
+            if ($roleCollection['roles']) {
+                foreach ($roleCollection['roles'] as $role) {
+                    $roles[$role['name']] = $role['id_company_role'];
                 }
-
-                return $roles;
-            },
-            function ($roleCollectionSubmitted) {
-                $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
-
-                foreach ($roleCollectionSubmitted as $role) {
-                    $companyRoleTransfer = new CompanyRoleTransfer();
-                    $companyRoleTransfer->setIdCompanyRole($role);
-
-                    $companyRoleCollectionTransfer->addRole($companyRoleTransfer);
-                }
-
-                return $companyRoleCollectionTransfer;
             }
-        ));
+
+            return $roles;
+        };
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function outputDataCallbackRoleCollectionTransformer()
+    {
+        return function ($roleCollectionSubmitted) {
+            $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
+
+            foreach ($roleCollectionSubmitted as $role) {
+                $companyRoleTransfer = new CompanyRoleTransfer();
+                $companyRoleTransfer->setIdCompanyRole($role);
+
+                $companyRoleCollectionTransfer->addRole($companyRoleTransfer);
+            }
+
+            return $companyRoleCollectionTransfer;
+        };
     }
 }
