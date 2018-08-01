@@ -145,7 +145,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
             $jsonData['productQuantityStorage'] = $productQuantityStorageTransfer->toArray();
         }
 
-        return \json_encode($jsonData, true);
+        return \json_encode($jsonData);
     }
 
     /**
