@@ -78,7 +78,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container): AgentPageToMessengerClientInterface {
+        $container[static::CLIENT_MESSENGER] = function (Container $container): AgentPageToMessengerClientInterface {
             return new AgentPageToMessengerClientBridge(
                 $container->getLocator()->messenger()->client()
             );
