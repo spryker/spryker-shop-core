@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,6 +23,7 @@ class UserController extends AbstractCompanyController
     public const COMPANY_USER_LIST_SORT_FIELD = 'id_company_user';
 
     protected const SUCCESS_MESSAGE_DELETED = 'company.account.company_user.delete.successful';
+    protected const PARAM_REQUEST_ID_COMPANY_USER = 'id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -123,6 +125,20 @@ class UserController extends AbstractCompanyController
         }
 
         return $this->view($response, [], '@CompanyPage/views/user-update/user-update.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function confirmDeleteAction(Request $request): View
+    {
+        $idCompanyUser = $request->query->getInt(static::PARAM_REQUEST_ID_COMPANY_USER);
+
+        return $this->view([
+            static::PARAM_REQUEST_ID_COMPANY_USER => $idCompanyUser,
+        ], [], '@CompanyPage/views/user-delete/user-delete.twig');
     }
 
     /**
