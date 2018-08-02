@@ -247,7 +247,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCustomerOrderViewWidgetPlugins(Container $container): Container
     {
         $container[static::PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS] = function () {
-            return $this->getCustomerOrderListWidgetPlugins();
+            return $this->getCustomerOrderViewWidgetPlugins();
         };
 
         return $container;
