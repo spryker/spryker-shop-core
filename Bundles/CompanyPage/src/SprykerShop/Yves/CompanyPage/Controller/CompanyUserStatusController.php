@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class CompanyUserStatusController extends AbstractController
 {
     protected const ID_COMPANY_USER_PARAMETER = 'id';
+    protected const ERROR_MESSAGE_STATUS_CHANGE_COMPANY_USER = 'company.account.company_user.change_status.error';
+    protected const SUCCESS_MESSAGE_STATUS_CHANGE_COMPANY_USER = 'company.account.company_user.change_status.success';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,9 +33,17 @@ class CompanyUserStatusController extends AbstractController
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
 
-        $this->getFactory()
+        $companyUserResponseTransfer = $this->getFactory()
             ->getCompanyUserClient()
             ->enableCompanyUser($companyUserTransfer);
+
+        if ($companyUserResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_STATUS_CHANGE_COMPANY_USER);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_CHANGE_COMPANY_USER);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
     }
@@ -49,9 +59,17 @@ class CompanyUserStatusController extends AbstractController
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
 
-        $this->getFactory()
+        $companyUserResponseTransfer = $this->getFactory()
             ->getCompanyUserClient()
             ->disableCompanyUser($companyUserTransfer);
+
+        if ($companyUserResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_STATUS_CHANGE_COMPANY_USER);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_CHANGE_COMPANY_USER);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
     }
