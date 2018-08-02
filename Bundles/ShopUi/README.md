@@ -1,6 +1,6 @@
 # ShopUi Module
 
-{{ADD DESCRIPTION HERE}}
+ShopUi module provides common UI components for SprykerShop modules.
 
 ## Installation
 
