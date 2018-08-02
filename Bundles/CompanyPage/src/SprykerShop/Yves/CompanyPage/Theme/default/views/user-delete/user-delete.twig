@@ -1,0 +1,18 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    idCompanyUser: _view.idCompanyUser,
+    title: 'company.account.company_user' | trans,
+    activePage: 'users'
+} %}
+
+{% block companyContent %}
+    <div class="box">
+        <h5>{{ "company.account.company_user.delete.confirmation.title" | trans }}</h5>
+        <hr />
+        {{ "company.account.company_user.delete.confirmation.question" | trans }}
+        <a href="{{ url('company/user/delete', { 'id' : data.idCompanyUser }) }}" class="button button--alert float-right">
+            {{ "company.account.company_user.delete.confirm" | trans }}
+        </a>
+    </div>
+{% endblock %}

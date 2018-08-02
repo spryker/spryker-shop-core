@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,8 +21,8 @@ class UserController extends AbstractCompanyController
 {
     public const COMPANY_USER_LIST_SORT_FIELD = 'id_company_user';
 
-    protected const SUCCESS_MESSAGE_DELETED = 'company.account.company_user.delete.successful';
-    protected const PARAM_REQUEST_ID_COMPANY_USER = 'id';
+    protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
+    protected const ERROR_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -130,20 +129,6 @@ class UserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View
-     */
-    public function confirmDeleteAction(Request $request): View
-    {
-        $idCompanyUser = $request->query->getInt(static::PARAM_REQUEST_ID_COMPANY_USER);
-
-        return $this->view([
-            static::PARAM_REQUEST_ID_COMPANY_USER => $idCompanyUser,
-        ], [], '@CompanyPage/views/user-delete/user-delete.twig');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeUpdateAction(Request $request)
@@ -194,9 +179,18 @@ class UserController extends AbstractCompanyController
         $idCompanyUser = $request->query->getInt('id');
         $companyUserTransfer = new CompanyUserTransfer();
         $companyUserTransfer->setIdCompanyUser($idCompanyUser);
-        $this->getFactory()->getCompanyUserClient()->deleteCompanyUser($companyUserTransfer);
 
-        $this->addSuccessMessage(static::SUCCESS_MESSAGE_DELETED);
+        $companyUserResponseTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->deleteCompanyUser($companyUserTransfer);
+
+        if ($companyUserResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_DELETE);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_DELETE);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
     }
