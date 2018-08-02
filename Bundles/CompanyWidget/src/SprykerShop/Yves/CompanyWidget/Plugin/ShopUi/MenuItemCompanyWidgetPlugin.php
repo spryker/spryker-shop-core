@@ -8,12 +8,12 @@
 namespace SprykerShop\Yves\CompanyWidget\Plugin\ShopUi;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShopUi\Dependency\Plugin\CompanyWidget\CompanyWidgetPluginInterface;
+use SprykerShop\Yves\ShopUi\Dependency\Plugin\CompanyWidget\MenuItemCompanyWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\CompanyWidget\CompanyWidgetFactory getFactory()
  */
-class CompanyWidgetPlugin extends AbstractWidgetPlugin implements CompanyWidgetPluginInterface
+class MenuItemCompanyWidgetPlugin extends AbstractWidgetPlugin implements MenuItemCompanyWidgetPluginInterface
 {
     /**
      * @return void
@@ -46,7 +46,7 @@ class CompanyWidgetPlugin extends AbstractWidgetPlugin implements CompanyWidgetP
      */
     public static function getTemplate(): string
     {
-        return '@CompanyWidget/views/shop-ui/company-widget.twig';
+        return '@CompanyWidget/views/shop-ui/menu-item-company-widget.twig';
     }
 
     /**

@@ -9,9 +9,9 @@ namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\CompanyWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface CompanyWidgetPluginInterface extends WidgetPluginInterface
+interface MenuItemCompanyWidgetPluginInterface extends WidgetPluginInterface
 {
-    public const NAME = 'CompanyWidgetPlugin';
+    public const NAME = 'MenuItemCompanyWidgetPlugin';
 
     /**
      * @return void

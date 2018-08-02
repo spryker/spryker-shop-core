@@ -53,8 +53,8 @@
         {% if data.showUserMenu %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li class="menu__item"><a href="{{ url('customer/overview') }}">{{ 'customer.profile'|trans }}</a></li>
-                {% if widgetGlobalExists('CompanyWidgetPlugin') %}
-                    <li class="menu__item">{% spaceless %}{{ widgetGlobal('CompanyWidgetPlugin') }}{% endspaceless %}</li>
+                {% if widgetGlobalExists('MenuItemCompanyWidgetPlugin') %}
+                    <li class="menu__item">{% spaceless %}{{ widgetGlobal('MenuItemCompanyWidgetPlugin') }}{% endspaceless %}</li>
                 {% endif %}
                 <li class="menu__item"><a href="{{ url('wishlist/overview') }}">{{ 'wishlist.wishlist'|trans }}</a></li>
                 <li class="menu__item"><a href="{{ url('logout') }}">{{ 'customer.logout'|trans }}</a></li>
