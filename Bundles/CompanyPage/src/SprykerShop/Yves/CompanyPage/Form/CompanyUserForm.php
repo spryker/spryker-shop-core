@@ -37,6 +37,9 @@ class CompanyUserForm extends AbstractType
     public const OPTION_BUSINESS_UNIT_CHOICES = 'business_unit_choices';
     public const OPTION_COMPANY_ROLE_CHOICES = 'company_role_choices';
 
+    protected const KEY_ROLES = 'roles';
+    protected const KEY_ID_COMPANY_ROLE = 'id_company_role';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -304,12 +307,14 @@ class CompanyUserForm extends AbstractType
      */
     protected function inputDataCallbackRoleCollectionTransformer(): Closure
     {
-        return function ($roleCollection): array {
+        return function (?array $roleCollection = null): array {
             $roles = [];
 
-            if ($roleCollection['roles']) {
-                foreach ($roleCollection['roles'] as $role) {
-                    $roles[] = $role['id_company_role'];
+            if (is_array($roleCollection)
+                && array_key_exists(static::KEY_ROLES, $roleCollection)
+                && $roleCollection[static::KEY_ROLES]) {
+                foreach ($roleCollection[static::KEY_ROLES] as $role) {
+                    $roles[] = $role[static::KEY_ID_COMPANY_ROLE];
                 }
             }
 
@@ -322,7 +327,7 @@ class CompanyUserForm extends AbstractType
      */
     protected function outputDataCallbackRoleCollectionTransformer(): Closure
     {
-        return function ($roleCollectionSubmitted): CompanyRoleCollectionTransfer {
+        return function (?array $roleCollectionSubmitted = null): CompanyRoleCollectionTransfer {
             $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
 
             foreach ($roleCollectionSubmitted as $role) {
