@@ -30,7 +30,7 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
     protected function addLoginRoute(): self
     {
         $this->createController('/{agent}/login', static::ROUTE_LOGIN, 'AgentPage', 'Auth', 'login')
-            ->assert('login', $this->getAllowedLocalesPattern() . 'login|login')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent');
 
         return $this;

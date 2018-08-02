@@ -14,11 +14,14 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientBridge;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientBridge;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface;
+use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientBridge;
+use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
 
 class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_AGENT = 'CLIENT_AGENT';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
     public const APPLICATION = 'APPLICATION';
 
     /**
@@ -30,6 +33,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addAgentClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addMessengerClient($container);
         $container = $this->addApplication($container);
 
         return $container;
@@ -61,6 +65,22 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CLIENT_CUSTOMER] = function (Container $container): AgentPageToCustomerClientInterface {
             return new AgentPageToCustomerClientBridge(
                 $container->getLocator()->customer()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMessengerClient(Container $container): Container
+    {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container): AgentPageToMessengerClientInterface {
+            return new AgentPageToMessengerClientBridge(
+                $container->getLocator()->messenger()->client()
             );
         };
 

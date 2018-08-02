@@ -28,9 +28,9 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $userTransfer = $this->getUserByUsername($username);
+        $userTransfer = $this->findUserByUsername($username);
 
-        if ($userTransfer->getIdUser() === null) {
+        if ($userTransfer === null) {
             throw new UsernameNotFoundException();
         }
 
@@ -67,9 +67,9 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
     /**
      * @param string $username
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    protected function getUserByUsername(string $username): UserTransfer
+    protected function findUserByUsername(string $username): ?UserTransfer
     {
         $userTransfer = new UserTransfer();
         $userTransfer->setUsername($username);
@@ -82,16 +82,16 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    protected function getUserTransfer(UserInterface $user): UserTransfer
+    protected function getUserTransfer(UserInterface $user): ?UserTransfer
     {
         if ($this->getFactory()->getAgentClient()->isLoggedIn() === false) {
-            return $this->getUserByUsername($user->getUsername());
+            return $this->findUserByUsername($user->getUsername());
         }
 
         return $this->getFactory()
             ->getAgentClient()
-            ->getAgent();
+            ->findLoggedInAgent();
     }
 }

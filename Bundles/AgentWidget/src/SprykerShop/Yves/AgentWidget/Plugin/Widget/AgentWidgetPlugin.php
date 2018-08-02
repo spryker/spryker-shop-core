@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\AgentWidget\Plugin\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ShopUi\Dependency\Plugin\AgentWidget\AgentWidgetPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\AgentWidget\AgentWidgetFactory getFactory()
@@ -21,7 +22,7 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
     {
         $this
             ->addParameter('isLoggedIn', $this->getFactory()->getAgentClient()->isLoggedIn())
-            ->addParameter('agent', $this->getFactory()->getAgentClient()->getAgent());
+            ->addParameter('agent', $this->getFactory()->getAgentClient()->findLoggedInAgent());
     }
 
     /**

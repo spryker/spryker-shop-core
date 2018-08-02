@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
-use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface;
+use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
@@ -87,11 +87,11 @@ class AgentPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
+     * @return \SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface
      */
-    public function getFlashMessenger(): FlashMessengerInterface
+    public function getMessengerClient(): AgentPageToMessengerClientInterface
     {
-        return $this->getApplication()['flash_messenger'];
+        return $this->getProvidedDependency(AgentPageDependencyProvider::CLIENT_MESSENGER);
     }
 
     /**

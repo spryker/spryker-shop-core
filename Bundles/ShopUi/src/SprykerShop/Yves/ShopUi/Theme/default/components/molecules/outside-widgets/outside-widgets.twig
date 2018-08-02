@@ -6,7 +6,5 @@
 } %}
 
 {% block body %}
-    {% if widgetGlobalExists('AgentWidgetPlugin') %}
-        {{ widgetGlobal('AgentWidgetPlugin') }}
-    {% endif %}
+    {{ widgetGlobal('AgentWidgetPlugin') }}
 {% endblock %}

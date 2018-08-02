@@ -11,6 +11,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
+use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerSecurityServiceProvider;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 
@@ -19,7 +20,6 @@ use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationL
  */
 class AgentPageSecurityServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    public const FIREWALL_SECURED = 'secured';
     public const FIREWALL_AGENT = 'agent';
 
     public const ROLE_AGENT = 'ROLE_AGENT';
@@ -77,7 +77,7 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
                     return $this->getFactory()->createAgentUserProvider();
                 }),
             ],
-            self::FIREWALL_SECURED => [
+            CustomerSecurityServiceProvider::FIREWALL_SECURED => [
                 'context' => static::FIREWALL_AGENT,
                 'switch_user' => [
                     'parameter' => '_switch_user',

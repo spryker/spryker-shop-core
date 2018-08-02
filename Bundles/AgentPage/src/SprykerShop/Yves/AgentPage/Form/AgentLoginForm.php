@@ -52,7 +52,7 @@ class AgentLoginForm extends AbstractType
     protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_EMAIL, EmailType::class, [
-            'label' => 'customer.login.email',
+            'label' => 'agent.login.email',
             'constraints' => [
                 new NotBlank(),
                 new Email(),
@@ -71,7 +71,7 @@ class AgentLoginForm extends AbstractType
     protected function addPasswordField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_PASSWORD, PasswordType::class, [
-            'label' => 'customer.login.password',
+            'label' => 'agent.login.password',
             'constraints' => new NotBlank(),
             'mapped' => false,
             'attr' => ['autocomplete' => 'off'],
