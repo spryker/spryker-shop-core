@@ -9,12 +9,16 @@ namespace SprykerShop\Shared\CompanyPage\Plugin;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
+/**
+ * Needed for company account page to decide does company user have permission to enable / disable company users.
+ */
 class CompanyUserStatusChangePermissionPlugin implements PermissionPluginInterface
 {
     public const KEY = 'CompanyUserStatusChangePermissionPlugin';
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Returns plugin name as key which is passed to company account page to manage enable / disable company users permission.
      *
      * @api
      *
