@@ -34,7 +34,7 @@
                     {% if user.customer.firstName != null and user.customer.lastName != null %}
                         <td>{{ user.customer.firstName ~ ' ' ~ user.customer.lastName }}</td>
                         <td>{{ companyBusinessUnitName }}</td>
-                        {% if user.companyRoleCollection is not null %}
+                        {% if user.companyRoleCollection is not empty %}
                             <td>
                                 {% for companyUserRole in user.companyRoleCollection.roles %}
                                     <p>{{ companyUserRole.name }}</p>
