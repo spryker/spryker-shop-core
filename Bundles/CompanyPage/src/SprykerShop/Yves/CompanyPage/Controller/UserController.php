@@ -50,15 +50,27 @@ class UserController extends AbstractCompanyController
             ->getCompanyUserClient()
             ->getCompanyUserCollection($criteriaFilterTransfer);
 
-        $currentCompanyUser = $this->getFactory()
-            ->createCompanyUserFinder()
-            ->findCurrentCompanyUser();
-
         return [
             'pagination' => $companyUserCollectionTransfer->getPagination(),
             'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
-            'currentCompanyUser' => $currentCompanyUser,
+            'currentCompanyUser' => $this->getCurrentCompanyUserTransfer(),
         ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    protected function getCurrentCompanyUserTransfer(): ?CompanyUserTransfer
+    {
+        $currentCustomerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if (!$currentCustomerTransfer) {
+            return null;
+        }
+
+        return $currentCustomerTransfer->getCompanyUserTransfer();
     }
 
     /**
