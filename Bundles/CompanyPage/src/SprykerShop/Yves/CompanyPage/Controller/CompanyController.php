@@ -21,7 +21,9 @@ class CompanyController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
-        $data = [];
+        $data = [
+            'company' => $this->getCompanyUser()->getCompanyBusinessUnit()->getCompany(),
+        ];
 
         return $this->view(
             $data,

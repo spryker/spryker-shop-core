@@ -1,0 +1,15 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'overview-info',
+    tag: 'div'
+} %}
+
+{% define data = {
+    companyName: required
+} %}
+
+{% block body %}
+    <span class="{{ config.name }}__title">{{ 'company.account.name' | trans }}:</span>
+    <span class="{{ config.name }}__text"> {{ data.companyName }}</span>
+{% endblock %}

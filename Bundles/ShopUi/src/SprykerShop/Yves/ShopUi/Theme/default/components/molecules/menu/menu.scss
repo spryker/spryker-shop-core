@@ -46,6 +46,10 @@
                     margin-right: 0.5rem;
                 }
             }
+
+            &:empty {
+                display: none;
+            }
         }
 
         &__link {

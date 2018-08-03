@@ -3,6 +3,12 @@
     th {
         cursor: help;
     }
+
+    table.measurement-unit-table td {
+        background: lightgrey;
+        padding: 5px;
+        text-align: center;
+    }
 </style>
 
 <div class="row">
@@ -181,4 +187,103 @@
         </table>
     </div>
 
+    <div class="small-12 columns">
+        <h3>Measurement unit and packaging unit information</h3>
+    </div>
+
+    <div class="small-12 columns">
+        <table style="width: 100%; font-size:10px;" class="hover measurement-unit-table">
+            <tr>
+                <!-- quantity -->
+                <th>SKU</th>
+                <th>group key</th>
+                <th>quantity</th>
+                <th>quantity sales unit<br/>(conversion / precision)</th>
+                <th>quantity base unit</th>
+
+                <!-- amount -->
+                <th>amount<br/> (quantity * amount)</th>
+                <th>amount sales unit<br/>(conversion / precision)</th>
+                <th>amount base unit</th>
+                <th>lead product</th>
+
+                <!-- packaging unit definition -->
+                <th>has lead product</th>
+                <th>packaging ID</th>
+                <th>packaging name</th>
+                <th>amount ID</th>
+                <th>amount is variable</th>
+                <th>amount default</th>
+                <th>amount restrictions (min/max/interval)</th>
+
+            </tr>
+            {% for item in quote.items %}
+            <tr>
+                <!-- quantity -->
+                <td><strong>{{ item.sku }}</strong></td>
+                <td>{{ item.groupKey }}</td>
+                <td>{{ item.quantity }}</td>
+                {% if item.quantitySalesUnit %}
+                    <td>
+                        {{ item.quantitySalesUnit.value }} {{ item.quantitySalesUnit.productMeasurementUnit.code }} <br/>
+                        ({{ item.quantitySalesUnit.conversion }} / {{ item.quantitySalesUnit.precision }})
+                    </td>
+                    <td>{{ item.quantitySalesUnit.productMeasurementBaseUnit.productMeasurementUnit.code }}</td>
+                {% else %}
+                    <td></td>
+                    <td></td>
+                {% endif %}
+
+                <!-- amount -->
+                <td>{{ item.amount }}</td>
+                {% if item.amountSalesUnit %}
+                    <td>
+                        {{ item.amountSalesUnit.value }} {{ item.amountSalesUnit.productMeasurementUnit.code }} <br/>
+                        ({{ item.amountSalesUnit.conversion }} / {{ item.amountSalesUnit.precision }})
+                    </td>
+                    <td>
+                        {{ item.amountSalesUnit.productMeasurementBaseUnit.productMeasurementUnit.code }}
+                    </td>
+                {% else %}
+                    <td></td>
+                    <td></td>
+                {% endif %}
+
+                {% if item.amountLeadProduct %}
+                    <td>{{ item.amountLeadProduct.product.sku }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+
+                <!-- packaging unit definition -->
+                {% if item.productPackagingUnit %}
+                    <td>{{ item.productPackagingUnit.hasLeadProduct }}</td>
+                    <td>{{ item.productPackagingUnit.idProductPackagingUnit }}</td>
+                    <td>{% if item.productPackagingUnit.productPackagingUnitType %}{{ item.productPackagingUnit.productPackagingUnitType.name }}{% endif %}</td>
+
+                    {% if item.productPackagingUnit.productPackagingUnitAmount %}
+                        <td>{{ item.productPackagingUnit.productPackagingUnitAmount.idProductPackagingUnitAmount }}</td>
+                        <td>{{ item.productPackagingUnit.productPackagingUnitAmount.isVariable }}</td>
+                        <td>{{ item.productPackagingUnit.productPackagingUnitAmount.defaultAmount }}</td>
+                        <td>{{ item.productPackagingUnit.productPackagingUnitAmount.amountMin }} / {{ item.productPackagingUnit.productPackagingUnitAmount.amountMax }} / {{ item.productPackagingUnit.productPackagingUnitAmount.amountInterval }}</td>
+                    {% else %}
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    {% endif %}
+                {% else %}
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>
