@@ -53,7 +53,7 @@
                                     {% endif %}
                                     {% if data.actions.delete %}
                                         <li class="menu__item">
-                                            <a href="{{ url('company/user-delete', {'id': user.idCompanyUser }) }}">
+                                            <a href="{{ url('company/user/confirm-delete', {'id': user.idCompanyUser }) }}">
                                                 {{ "company.account.company_user.delete" | trans }}
                                             </a>
                                         </li>

@@ -2,7 +2,7 @@
 
 {% define data = {
     idCompanyUser: _view.idCompanyUser,
-    companyUserName: _view.firstName ~ ' ' ~ _view.lastName,
+    companyUserName: _view.customer.firstName ~ ' ' ~ _view.customer.lastName,
     title: 'company.account.company_user' | trans,
     activePage: 'users'
 } %}

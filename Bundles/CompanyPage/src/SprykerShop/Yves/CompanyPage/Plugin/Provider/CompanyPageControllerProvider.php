@@ -47,7 +47,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_USER_CREATE = 'company/user/create';
     public const ROUTE_COMPANY_USER_UPDATE = 'company/user/update';
     public const ROUTE_COMPANY_USER_DELETE = 'company/user/delete';
-    public const ROUTE_COMPANY_USER_DELETE_CONFIRM = 'company/user-delete';
+    public const ROUTE_COMPANY_USER_CONFIRM_DELETE = 'company/user/confirm-delete';
     public const ROUTE_COMPANY_USER_SELECT = 'company/user/select';
 
     /**
@@ -194,7 +194,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{company}/user/delete', static::ROUTE_COMPANY_USER_DELETE, 'CompanyPage', 'User', 'delete')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
-        $this->createController('/{company}/user-delete', static::ROUTE_COMPANY_USER_DELETE_CONFIRM, 'CompanyPage', 'UserDelete', 'index')
+        $this->createController('/{company}/user/confirm-delete', static::ROUTE_COMPANY_USER_CONFIRM_DELETE, 'CompanyPage', 'User', 'confirmDelete')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/user/select', static::ROUTE_COMPANY_USER_SELECT, 'CompanyPage', 'BusinessOnBehalf', 'selectCompanyUser')

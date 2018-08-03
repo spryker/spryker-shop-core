@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,6 +24,10 @@ class UserController extends AbstractCompanyController
 
     protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
     protected const ERROR_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.error';
+
+    protected const PARAM_REQUEST_ID_COMPANY_USER = 'id';
+    protected const PARAM_RESPONSE_ID_COMPANY_USER = 'idCompanyUser';
+    protected const PARAM_RESPONSE_CUSTOMER = 'customer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -193,6 +198,44 @@ class UserController extends AbstractCompanyController
         $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_DELETE);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function confirmDeleteAction(Request $request): View
+    {
+        $viewData = $this->executeConfirmDeleteAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/user-delete/user-delete.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeConfirmDeleteAction(Request $request): array
+    {
+        $idCompanyUser = $request->query->getInt(static::PARAM_REQUEST_ID_COMPANY_USER);
+
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($idCompanyUser);
+
+        $companyUserTransfer->requireIdCompanyUser();
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->getCompanyUserById($companyUserTransfer);
+
+        $companyUserTransfer->requireCustomer();
+        $customerTransfer = $companyUserTransfer->getCustomer();
+
+        return [
+            static::PARAM_RESPONSE_ID_COMPANY_USER => $idCompanyUser,
+            static::PARAM_RESPONSE_CUSTOMER => $customerTransfer,
+        ];
     }
 
     /**
