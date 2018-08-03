@@ -37,7 +37,7 @@ class CompanyUserStatusController extends AbstractController
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
 
-        $currentCompanyUserTransfer = $this->getCurrentCompanyUserTransfer();
+        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
         if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
             $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_ENABLE_COMPANY_USER);
 
@@ -70,7 +70,7 @@ class CompanyUserStatusController extends AbstractController
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
 
-        $currentCompanyUserTransfer = $this->getCurrentCompanyUserTransfer();
+        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
         if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
             $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_DISABLE_COMPANY_USER);
 
@@ -95,7 +95,7 @@ class CompanyUserStatusController extends AbstractController
     /**
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    protected function getCurrentCompanyUserTransfer(): ?CompanyUserTransfer
+    protected function findCurrentCompanyUserTransfer(): ?CompanyUserTransfer
     {
         $currentCustomerTransfer = $this->getFactory()
             ->getCustomerClient()

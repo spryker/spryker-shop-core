@@ -54,24 +54,8 @@ class UserController extends AbstractCompanyController
         return [
             'pagination' => $companyUserCollectionTransfer->getPagination(),
             'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
-            'currentCompanyUser' => $this->getCurrentCompanyUserTransfer(),
+            'currentCompanyUser' => $this->findCurrentCompanyUserTransfer(),
         ];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    protected function getCurrentCompanyUserTransfer(): ?CompanyUserTransfer
-    {
-        $currentCustomerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        if (!$currentCustomerTransfer) {
-            return null;
-        }
-
-        return $currentCustomerTransfer->getCompanyUserTransfer();
     }
 
     /**
@@ -197,7 +181,7 @@ class UserController extends AbstractCompanyController
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
 
-        $currentCompanyUserTransfer = $this->getCurrentCompanyUserTransfer();
+        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
         if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
             $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_DELETE);
 
@@ -217,6 +201,22 @@ class UserController extends AbstractCompanyController
         $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_DELETE);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    protected function findCurrentCompanyUserTransfer(): ?CompanyUserTransfer
+    {
+        $currentCustomerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if (!$currentCustomerTransfer) {
+            return null;
+        }
+
+        return $currentCustomerTransfer->getCompanyUserTransfer();
     }
 
     /**

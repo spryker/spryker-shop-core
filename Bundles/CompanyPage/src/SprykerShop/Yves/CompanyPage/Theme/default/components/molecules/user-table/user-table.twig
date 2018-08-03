@@ -6,7 +6,7 @@
 } %}
 
 {% define data = {
-    currentCompanyUserId: _view.currentCompanyUser ? _view.currentCompanyUser.idCompanyUser : null,
+    currentCompanyUserId: _view.currentCompanyUser.idCompanyUser | default(),
     users: required,
     actions: {
         update: false,
