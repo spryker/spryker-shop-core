@@ -10,7 +10,7 @@ namespace SprykerShop\Shared\CompanyPage\Plugin;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
 /**
- * Needed for company account page to decide does company user have permission to enable / disable company users.
+ * For Client PermissionDependencyProvider::getPermissionPlugins() registration
  */
 class CompanyUserStatusChangePermissionPlugin implements PermissionPluginInterface
 {
