@@ -117,8 +117,11 @@ export default class SuggestSearch extends Component {
     }
 
     protected onEnter(event: KeyboardEvent): void {
-        this.getActiveNavigationItem().click();
-        event.preventDefault();
+        const activeItem = this.getActiveNavigationItem();
+        if (activeItem) {
+            this.getActiveNavigationItem().click();
+            event.preventDefault();
+        }
     }
 
     protected onInputFocusIn(event: Event): void {
@@ -130,7 +133,9 @@ export default class SuggestSearch extends Component {
     }
 
     protected getActiveNavigationItem(): HTMLElement {
-        return this.navigation[this.activeItemIndex - 1];
+        if (this.navigation) {
+            return this.navigation[this.activeItemIndex - 1];
+        }
     }
 
     protected getFirstProductNavigationIndex(): number {
