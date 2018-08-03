@@ -65,7 +65,9 @@
     <form method="POST" action="/cart/add/{{sku}}">
         {{ widget('ProductOptionWidgetPlugin', data.product) }}
 
-        {% if widgetExists('ProductMeasurementUnitWidgetPlugin') %}
+        {% if widgetExists('ProductPackagingUnitWidgetPlugin') %}
+            {{ widget('ProductPackagingUnitWidgetPlugin', data.product, isDisabled, options) }}
+        {% elseif widgetExists('ProductMeasurementUnitWidgetPlugin') %}
             {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, isDisabled, options) }}
         {% else %}
             <div class="grid grid--bottom grid--justify">

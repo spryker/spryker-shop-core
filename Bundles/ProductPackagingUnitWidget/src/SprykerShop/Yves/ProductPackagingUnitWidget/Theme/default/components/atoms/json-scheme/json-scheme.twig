@@ -1,0 +1,15 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: data.name ~ '__json',
+    tag: 'div'
+} %}
+
+{% define data = {
+    name: required,
+    json: required
+} %}
+
+{% define attributes = {
+    json: data.json
+} %}
