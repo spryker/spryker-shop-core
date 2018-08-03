@@ -24,9 +24,9 @@ interface AgentPageToAgentClientInterface
     public function isLoggedIn(): bool;
 
     /**
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function findLoggedInAgent(): ?UserTransfer;
+    public function getAgent(): UserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer

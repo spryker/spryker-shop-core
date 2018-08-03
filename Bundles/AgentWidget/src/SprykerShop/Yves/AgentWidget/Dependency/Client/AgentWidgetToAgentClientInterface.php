@@ -21,7 +21,7 @@ interface AgentWidgetToAgentClientInterface
     /**
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function findLoggedInAgent(): ?UserTransfer;
+    public function getAgent(): ?UserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer

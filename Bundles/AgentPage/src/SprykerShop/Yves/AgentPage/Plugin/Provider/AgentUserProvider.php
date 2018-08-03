@@ -92,6 +92,6 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
 
         return $this->getFactory()
             ->getAgentClient()
-            ->findLoggedInAgent();
+            ->getAgent();
     }
 }

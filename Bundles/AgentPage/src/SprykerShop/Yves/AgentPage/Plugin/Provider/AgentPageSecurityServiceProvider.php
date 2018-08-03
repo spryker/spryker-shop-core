@@ -10,18 +10,18 @@ namespace SprykerShop\Yves\AgentPage\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Shared\AgentPage\AgentPageConfig;
+use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerSecurityServiceProvider;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 
 /**
  * @method \SprykerShop\Yves\AgentPage\AgentPageFactory getFactory()
+ * @method \SprykerShop\Yves\AgentPage\AgentPageConfig getConfig()
  */
 class AgentPageSecurityServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    public const FIREWALL_AGENT = 'agent';
-
     public const ROLE_AGENT = 'ROLE_AGENT';
     public const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
 
@@ -58,10 +58,10 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
         $selectedLanguage = $this->findSelectedLanguage($app);
 
         $app['security.firewalls'] = array_merge_recursive([
-            static::FIREWALL_AGENT => [
-                'context' => static::FIREWALL_AGENT,
+            AgentPageConfig::SECURITY_FIREWALL_NAME => [
+                'context' => AgentPageConfig::SECURITY_FIREWALL_NAME,
                 'anonymous' => false,
-                'pattern' => '\/agent(.+)?\/(?!login$).+',
+                'pattern' => $this->getConfig()->getAgentFirewallRegex(),
                 'form' => [
                     'login_path' => '/agent/login',
                     'check_path' => '/agent/login_check',
@@ -77,8 +77,8 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
                     return $this->getFactory()->createAgentUserProvider();
                 }),
             ],
-            CustomerSecurityServiceProvider::FIREWALL_SECURED => [
-                'context' => static::FIREWALL_AGENT,
+            CustomerPageConfig::SECURITY_FIREWALL_NAME => [
+                'context' => AgentPageConfig::SECURITY_FIREWALL_NAME,
                 'switch_user' => [
                     'parameter' => '_switch_user',
                     'role' => static::ROLE_ALLOWED_TO_SWITCH,
@@ -96,7 +96,7 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
     {
         $app['security.access_rules'] = array_merge([
             [
-                '\/agent\/(?!login$).+',
+                $this->getConfig()->getAgentFirewallRegex(),
                 static::ROLE_AGENT,
             ],
         ], $app['security.access_rules']);
@@ -109,7 +109,7 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
      */
     protected function setAuthenticationSuccessHandler(Application $app): void
     {
-        $app['security.authentication.success_handler.' . static::FIREWALL_AGENT] = $app->share(function () {
+        $app['security.authentication.success_handler.' . AgentPageConfig::SECURITY_FIREWALL_NAME] = $app->share(function () {
             return $this->getFactory()->createAgentAuthenticationSuccessHandler();
         });
     }
@@ -121,7 +121,7 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
      */
     protected function setAuthenticationFailureHandler(Application $app): void
     {
-        $app['security.authentication.failure_handler.' . static::FIREWALL_AGENT] = $app->share(function () {
+        $app['security.authentication.failure_handler.' . AgentPageConfig::SECURITY_FIREWALL_NAME] = $app->share(function () {
             return $this->getFactory()->createAgentAuthenticationFailureHandler();
         });
     }

@@ -20,9 +20,11 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
      */
     public function initialize(): void
     {
+        $isLoggedIn = $this->getFactory()->getAgentClient()->isLoggedIn();
+
         $this
-            ->addParameter('isLoggedIn', $this->getFactory()->getAgentClient()->isLoggedIn())
-            ->addParameter('agent', $this->getFactory()->getAgentClient()->findLoggedInAgent());
+            ->addParameter('isLoggedIn', $isLoggedIn)
+            ->addParameter('agent', $isLoggedIn ? $this->getFactory()->getAgentClient()->getAgent() : null);
     }
 
     /**

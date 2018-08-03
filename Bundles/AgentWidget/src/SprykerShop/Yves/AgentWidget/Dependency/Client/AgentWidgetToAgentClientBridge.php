@@ -35,11 +35,11 @@ class AgentWidgetToAgentClientBridge implements AgentWidgetToAgentClientInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function findLoggedInAgent(): ?UserTransfer
+    public function getAgent(): UserTransfer
     {
-        return $this->agentClient->findLoggedInAgent();
+        return $this->agentClient->getAgent();
     }
 
     /**

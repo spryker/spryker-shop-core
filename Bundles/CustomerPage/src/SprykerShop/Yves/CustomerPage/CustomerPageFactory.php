@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
@@ -82,7 +83,7 @@ class CustomerPageFactory extends AbstractFactory
         return new UsernamePasswordToken(
             $user,
             $user->getPassword(),
-            CustomerSecurityServiceProvider::FIREWALL_SECURED,
+            CustomerPageConfig::SECURITY_FIREWALL_NAME,
             [CustomerSecurityServiceProvider::ROLE_USER]
         );
     }
