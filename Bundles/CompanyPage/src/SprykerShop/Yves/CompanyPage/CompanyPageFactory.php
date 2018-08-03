@@ -19,6 +19,8 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientIn
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserFinder;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserFinderInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaver;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface;
 
@@ -138,5 +140,16 @@ class CompanyPageFactory extends AbstractFactory
     public function getCompanyUserOverviewWidgetPlugins(): array
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_COMPANY_USER_OVERVIEW_WIDGETS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserFinderInterface
+     */
+    public function createCompanyUserFinder(): CompanyUserFinderInterface
+    {
+        return new CompanyUserFinder(
+            $this->getCustomerClient(),
+            $this->getCompanyUserClient()
+        );
     }
 }
