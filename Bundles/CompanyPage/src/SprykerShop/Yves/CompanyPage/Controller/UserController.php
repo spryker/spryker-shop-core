@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -52,40 +50,15 @@ class UserController extends AbstractCompanyController
             ->getCompanyUserClient()
             ->getCompanyUserCollection($criteriaFilterTransfer);
 
-        $companyUserCollectionTransfer = $this->excludeCurrentCompanyUserFromCollection($companyUserCollectionTransfer);
-
-        return [
-            'pagination' => $companyUserCollectionTransfer->getPagination(),
-            'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
-     */
-    protected function excludeCurrentCompanyUserFromCollection(
-        CompanyUserCollectionTransfer $companyUserCollectionTransfer
-    ): CompanyUserCollectionTransfer {
         $currentCompanyUser = $this->getFactory()
             ->createCompanyUserFinder()
             ->findCurrentCompanyUser();
 
-        if (!$currentCompanyUser) {
-            return $companyUserCollectionTransfer;
-        }
-
-        $currentCompanyUserId = $currentCompanyUser->getIdCompanyUser();
-        $filteredCompanyUserCollection = new ArrayObject();
-
-        foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUser) {
-            if ($companyUser->getIdCompanyUser() !== $currentCompanyUserId) {
-                $filteredCompanyUserCollection[] = $companyUser;
-            }
-        }
-
-        return $companyUserCollectionTransfer->setCompanyUsers($filteredCompanyUserCollection);
+        return [
+            'pagination' => $companyUserCollectionTransfer->getPagination(),
+            'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
+            'currentCompanyUser' => $currentCompanyUser,
+        ];
     }
 
     /**
