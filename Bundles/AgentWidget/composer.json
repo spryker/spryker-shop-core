@@ -6,8 +6,7 @@
     "spryker/kernel": "^3.23.0",
     "spryker/agent": "^1.0.0",
     "spryker-shop/shop-ui": "^1.2.0",
-    "symfony/http-foundation": "^2.3.0 || ^3.0.0",
-    "symfony/validator": "^2.6.13 || ^3.0.0"
+    "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
