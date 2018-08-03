@@ -55,6 +55,7 @@ class UserController extends AbstractCompanyController
         return [
             'pagination' => $companyUserCollectionTransfer->getPagination(),
             'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
+            'currentCompanyUser' => $this->findCurrentCompanyUserTransfer(),
         ];
     }
 
@@ -178,8 +179,15 @@ class UserController extends AbstractCompanyController
     public function deleteAction(Request $request)
     {
         $idCompanyUser = $request->query->getInt('id');
-        $companyUserTransfer = new CompanyUserTransfer();
-        $companyUserTransfer->setIdCompanyUser($idCompanyUser);
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($idCompanyUser);
+
+        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
+        if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_DELETE);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
 
         $companyUserResponseTransfer = $this->getFactory()
             ->getCompanyUserClient()
@@ -232,6 +240,22 @@ class UserController extends AbstractCompanyController
             'idCompanyUser' => $idCompanyUser,
             'customer' => $customerTransfer,
         ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    protected function findCurrentCompanyUserTransfer(): ?CompanyUserTransfer
+    {
+        $currentCustomerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if (!$currentCustomerTransfer) {
+            return null;
+        }
+
+        return $currentCustomerTransfer->getCompanyUserTransfer();
     }
 
     /**
