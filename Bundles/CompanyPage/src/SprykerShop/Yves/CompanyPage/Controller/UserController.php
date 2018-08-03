@@ -25,10 +25,6 @@ class UserController extends AbstractCompanyController
     protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
     protected const ERROR_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.error';
 
-    protected const PARAM_REQUEST_ID_COMPANY_USER = 'id';
-    protected const PARAM_RESPONSE_ID_COMPANY_USER = 'idCompanyUser';
-    protected const PARAM_RESPONSE_CUSTOMER = 'customer';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -219,7 +215,7 @@ class UserController extends AbstractCompanyController
      */
     protected function executeConfirmDeleteAction(Request $request): array
     {
-        $idCompanyUser = $request->query->getInt(static::PARAM_REQUEST_ID_COMPANY_USER);
+        $idCompanyUser = $request->query->getInt('id');
 
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
@@ -233,8 +229,8 @@ class UserController extends AbstractCompanyController
         $customerTransfer = $companyUserTransfer->getCustomer();
 
         return [
-            static::PARAM_RESPONSE_ID_COMPANY_USER => $idCompanyUser,
-            static::PARAM_RESPONSE_CUSTOMER => $customerTransfer,
+            'idCompanyUser' => $idCompanyUser,
+            'customer' => $customerTransfer,
         ];
     }
 
