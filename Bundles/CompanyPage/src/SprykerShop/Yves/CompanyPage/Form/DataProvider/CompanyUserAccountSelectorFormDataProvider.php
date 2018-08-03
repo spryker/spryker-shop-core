@@ -48,7 +48,7 @@ class CompanyUserAccountSelectorFormDataProvider
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyCollection
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return int[]
+     * @return array
      */
     public function getOptions(CompanyUserCollectionTransfer $companyCollection, CustomerTransfer $customerTransfer): array
     {
