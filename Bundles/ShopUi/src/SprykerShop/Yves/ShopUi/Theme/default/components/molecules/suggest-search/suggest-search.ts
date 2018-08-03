@@ -133,7 +133,7 @@ export default class SuggestSearch extends Component {
     }
 
     protected getActiveNavigationItem(): HTMLElement {
-        if (this.navigation) {
+        if (this.isNavigationExist()) {
             return this.navigation[this.activeItemIndex - 1];
         }
     }
