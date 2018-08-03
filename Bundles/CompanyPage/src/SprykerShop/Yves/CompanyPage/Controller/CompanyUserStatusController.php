@@ -37,6 +37,13 @@ class CompanyUserStatusController extends AbstractController
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
 
+        $currentCompanyUserTransfer = $this->getCurrentCompanyUserTransfer();
+        if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_ENABLE_COMPANY_USER);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
         $companyUserResponseTransfer = $this->getFactory()
             ->getCompanyUserClient()
             ->enableCompanyUser($companyUserTransfer);
@@ -63,6 +70,13 @@ class CompanyUserStatusController extends AbstractController
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
 
+        $currentCompanyUserTransfer = $this->getCurrentCompanyUserTransfer();
+        if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_DISABLE_COMPANY_USER);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
         $companyUserResponseTransfer = $this->getFactory()
             ->getCompanyUserClient()
             ->disableCompanyUser($companyUserTransfer);
@@ -76,5 +90,21 @@ class CompanyUserStatusController extends AbstractController
         $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_DISABLE_COMPANY_USER);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    protected function getCurrentCompanyUserTransfer(): ?CompanyUserTransfer
+    {
+        $currentCustomerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if (!$currentCustomerTransfer) {
+            return null;
+        }
+
+        return $currentCustomerTransfer->getCompanyUserTransfer();
     }
 }

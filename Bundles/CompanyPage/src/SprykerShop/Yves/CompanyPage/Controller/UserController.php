@@ -21,7 +21,8 @@ class UserController extends AbstractCompanyController
 {
     public const COMPANY_USER_LIST_SORT_FIELD = 'id_company_user';
 
-    protected const SUCCESS_MESSAGE_DELETED = 'company.account.company_user.delete.successful';
+    protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
+    protected const ERROR_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -193,11 +194,27 @@ class UserController extends AbstractCompanyController
     public function deleteAction(Request $request)
     {
         $idCompanyUser = $request->query->getInt('id');
-        $companyUserTransfer = new CompanyUserTransfer();
-        $companyUserTransfer->setIdCompanyUser($idCompanyUser);
-        $this->getFactory()->getCompanyUserClient()->deleteCompanyUser($companyUserTransfer);
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($idCompanyUser);
 
-        $this->addSuccessMessage(static::SUCCESS_MESSAGE_DELETED);
+        $currentCompanyUserTransfer = $this->getCurrentCompanyUserTransfer();
+        if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_DELETE);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $companyUserResponseTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->deleteCompanyUser($companyUserTransfer);
+
+        if ($companyUserResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_DELETE);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_DELETE);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
     }
