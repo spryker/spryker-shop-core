@@ -34,13 +34,13 @@
                     {% if user.customer.firstName != null and user.customer.lastName != null %}
                         <td>{{ user.customer.firstName ~ ' ' ~ user.customer.lastName }}</td>
                         <td>{{ companyBusinessUnitName }}</td>
-                        {% if user.companyRoleCollection is not empty %}
-                            <td>
+                        <td>
+                            {% if user.companyRoleCollection is not empty %}
                                 {% for companyUserRole in user.companyRoleCollection.roles %}
                                     <p>{{ companyUserRole.name }}</p>
                                 {% endfor %}
-                            </td>
-                        {% endif %}
+                            {% endif %}
+                        </td>
                         {% if showActions %}
                             <td>
                                 <ul class="menu menu--inline">
