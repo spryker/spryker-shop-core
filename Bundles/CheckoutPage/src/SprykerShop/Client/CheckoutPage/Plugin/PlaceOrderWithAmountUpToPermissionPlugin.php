@@ -12,7 +12,7 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPlu
 /**
  * For Client PermissionDependencyProvider::getPermissionPlugins() registration
  *
- * @deprecated Use \Spryker\Client\CheckoutPermissionConnector\Plugin\PlaceOrderWithAmountUpToPermissionPlugin instead
+ * @deprecated Use \Spryker\Client\CheckoutPermissionConnector\Plugin\PermissionExtension\PlaceOrderWithAmountUpToPermissionPlugin instead
  */
 class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPluginInterface
 {
