@@ -1,0 +1,20 @@
+@mixin shop-ui-autocomplete-form($name: '.autocomplete-form') {
+    #{$name} {
+        position: relative;
+
+        &__suggestion {
+            margin: 0;
+        }
+
+        &__item{
+            cursor: pointer;
+            padding: 0.5rem;
+
+            &:hover {
+                background-color: $setting-color-dark;
+            }
+        }
+
+        @content;
+    }
+}
