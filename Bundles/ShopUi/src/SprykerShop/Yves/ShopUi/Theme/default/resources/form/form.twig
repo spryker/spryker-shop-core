@@ -92,10 +92,10 @@
 {%- endblock -%}
 
 {% block choice_widget_expanded -%}
-    {% if '-inline' in label_attr.class|default('') %}
-        <ul class="inline-list">
+    {% if '--inline' in label_attr.class|default('') %}
+        <ul class="list list--inline">
             {% for child in form %}
-                <li>{{ form_widget(child, {
+                <li class="list__item">{{ form_widget(child, {
                         parent_label_class: label_attr.class|default(''),
                     }) }}</li>
             {% endfor %}
