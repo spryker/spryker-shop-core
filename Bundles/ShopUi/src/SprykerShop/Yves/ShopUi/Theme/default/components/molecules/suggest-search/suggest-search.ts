@@ -224,7 +224,12 @@ export default class SuggestSearch extends Component {
     }
 
     updateHintInput(value?: string): void {
-        const hintValue = value ? value : this.hint;
+        let hintValue = value ? value : this.hint;
+        const inputValue = this.searchInput.value;
+        if (!hintValue.toLowerCase().startsWith(inputValue.toLowerCase())) {
+            hintValue = '';
+        }
+        hintValue = hintValue.replace(hintValue.slice(0, inputValue.length), inputValue);
         this.setHintValue(hintValue);
     }
 
