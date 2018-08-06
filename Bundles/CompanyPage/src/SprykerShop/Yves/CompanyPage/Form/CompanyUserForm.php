@@ -307,12 +307,10 @@ class CompanyUserForm extends AbstractType
      */
     protected function inputDataCallbackRoleCollectionTransformer(): Closure
     {
-        return function (?array $roleCollection = null): array {
+        return function (?array $roleCollection = []): array {
             $roles = [];
 
-            if (is_array($roleCollection)
-                && array_key_exists(static::KEY_ROLES, $roleCollection)
-                && $roleCollection[static::KEY_ROLES]) {
+            if (!empty($roleCollection[static::KEY_ROLES])) {
                 foreach ($roleCollection[static::KEY_ROLES] as $role) {
                     $roles[] = $role[static::KEY_ID_COMPANY_ROLE];
                 }
@@ -327,7 +325,7 @@ class CompanyUserForm extends AbstractType
      */
     protected function outputDataCallbackRoleCollectionTransformer(): Closure
     {
-        return function (?array $roleCollectionSubmitted = null): CompanyRoleCollectionTransfer {
+        return function (?array $roleCollectionSubmitted = []): CompanyRoleCollectionTransfer {
             $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
 
             foreach ($roleCollectionSubmitted as $role) {
