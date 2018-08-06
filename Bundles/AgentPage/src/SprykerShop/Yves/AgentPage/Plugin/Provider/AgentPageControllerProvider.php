@@ -13,6 +13,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 class AgentPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_LOGIN = 'agent/login';
+    public const ROUTE_LOGOUT = 'agent/logout';
 
     /**
      * @param \Silex\Application $app
@@ -21,7 +22,9 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $this->addLoginRoute();
+        $this
+            ->addLoginRoute()
+            ->addLogoutRoute();
     }
 
     /**
@@ -30,6 +33,18 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
     protected function addLoginRoute(): self
     {
         $this->createController('/{agent}/login', static::ROUTE_LOGIN, 'AgentPage', 'Auth', 'login')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
+            ->value('agent', 'agent');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addLogoutRoute(): self
+    {
+        $this->createController('/{agent}/logout', static::ROUTE_LOGOUT, 'AgentPage', 'Auth', 'logout')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent');
 
