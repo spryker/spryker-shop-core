@@ -28,13 +28,18 @@ class CompanyRolePermissionController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function manageAction(Request $request)
     {
-        $viewData = $this->executeManageAction($request);
+        $idCompanyRole = $request->query->getInt('id');
 
-        return $this->view($viewData, [], '@CompanyPage/views/role-permission-manage/role-permission-manage.twig');
+        $this->executeManageAction($request);
+
+        return $this->redirectResponseInternal(
+            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
+            ['id' => $idCompanyRole]
+        );
     }
 
     /**
@@ -206,6 +211,10 @@ class CompanyRolePermissionController extends AbstractCompanyController
 
         $permissions = [];
         foreach ($allPermissions as $permission) {
+            if ($permission->getIsAwareConfiguration()) {
+                continue;
+            }
+
             $permissionAsArray = $permission->toArray(false, true);
             $permissionAsArray['idCompanyRole'] = null;
             foreach ($companyPermissions as $rolePermission) {
