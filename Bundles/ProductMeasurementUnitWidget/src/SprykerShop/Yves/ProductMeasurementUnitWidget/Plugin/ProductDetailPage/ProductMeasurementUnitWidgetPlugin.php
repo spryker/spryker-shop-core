@@ -34,11 +34,11 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
 
         if ($productViewTransfer->getIdProductConcrete()) {
             $baseUnit = $this->getFactory()
-                ->createProductMeasurementBaseUnitReader()
+                ->getProductMeasurementUnitStorageClient()
                 ->findProductMeasurementBaseUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());
 
             $salesUnits = $this->getFactory()
-                ->createProductMeasurementSalesUnitReader()
+                ->getProductMeasurementUnitStorageClient()
                 ->findProductMeasurementSalesUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());
 
             $productQuantityStorageTransfer = $this->getFactory()

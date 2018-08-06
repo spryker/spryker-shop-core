@@ -195,7 +195,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     /**
      * @param \RecursiveIteratorIterator $attributeMapIterator
      *
-     * @return \RecursiveIterator
+     * @return string
      */
     protected function getParentNode(RecursiveIteratorIterator $attributeMapIterator)
     {

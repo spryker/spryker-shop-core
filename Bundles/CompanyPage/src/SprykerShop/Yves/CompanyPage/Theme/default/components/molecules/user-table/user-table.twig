@@ -6,6 +6,7 @@
 } %}
 
 {% define data = {
+    currentCompanyUserId: _view.currentCompanyUser.idCompanyUser | default(),
     users: required,
     actions: {
         update: false,
@@ -21,7 +22,7 @@
             <tr class="active">
                 <th>{{ 'company.account.company_user.name' | trans }}</th>
                 <th>{{ 'company.account.company_user.business_unit' | trans }}</th>
-                <th>{{ 'company.account.company_role' | trans }}</th>
+                <th>{{ 'company.account.company_user.role' | trans }}</th>
                 {% if showActions %}
                     <th>{{ 'company.account.table.actions' | trans }}</th>
                 {% endif %}
@@ -35,9 +36,11 @@
                         <td>{{ user.customer.firstName ~ ' ' ~ user.customer.lastName }}</td>
                         <td>{{ companyBusinessUnitName }}</td>
                         <td>
-                            {% for companyUserRole in user.companyRoleCollection %}
-                                <p>{{ companyUserRole }}</p>
-                            {% endfor %}
+                            {% if user.companyRoleCollection is not empty %}
+                                {% for companyUserRole in user.companyRoleCollection.roles %}
+                                    <p>{{ companyUserRole.name }}</p>
+                                {% endfor %}
+                            {% endif %}
                         </td>
                         {% if showActions %}
                             <td>
@@ -49,12 +52,29 @@
                                             </a>
                                         </li>
                                     {% endif %}
-                                    {% if data.actions.delete %}
-                                        <li class="menu__item">
-                                            <a href="{{ url('company/user/delete', {'id': user.idCompanyUser }) }}">
-                                                {{ "company.account.company_user.delete" | trans }}
-                                            </a>
-                                        </li>
+                                    {% if data.currentCompanyUserId != user.idCompanyUser %}
+                                        {% if can('CompanyUserStatusChangePermissionPlugin') %}
+                                            {% if user.isActive %}
+                                                <li class="menu__item">
+                                                    <a href="{{ url('company/company-user-status/disable', {'id': user.idCompanyUser}) }}">
+                                                    {{ "company.account.company_user.disable" | trans }}
+                                                    </a>
+                                                </li>
+                                            {% else %}
+                                                <li class="menu__item">
+                                                    <a href="{{ url('company/company-user-status/enable', {'id': user.idCompanyUser}) }}">
+                                                        {{ "company.account.company_user.enable" | trans }}
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if data.actions.delete %}
+                                            <li class="menu__item">
+                                                <a href="{{ url('company/user/confirm-delete', {'id': user.idCompanyUser }) }}">
+                                                    {{ "company.account.company_user.delete" | trans }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
                                     {% endif %}
                                 </ul>
                             </td>

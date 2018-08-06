@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,7 +22,8 @@ class UserController extends AbstractCompanyController
 {
     public const COMPANY_USER_LIST_SORT_FIELD = 'id_company_user';
 
-    protected const SUCCESS_MESSAGE_DELETED = 'company.account.company_user.delete.successful';
+    protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
+    protected const ERROR_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -53,6 +55,7 @@ class UserController extends AbstractCompanyController
         return [
             'pagination' => $companyUserCollectionTransfer->getPagination(),
             'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
+            'currentCompanyUser' => $this->findCurrentCompanyUserTransfer(),
         ];
     }
 
@@ -176,13 +179,83 @@ class UserController extends AbstractCompanyController
     public function deleteAction(Request $request)
     {
         $idCompanyUser = $request->query->getInt('id');
-        $companyUserTransfer = new CompanyUserTransfer();
-        $companyUserTransfer->setIdCompanyUser($idCompanyUser);
-        $this->getFactory()->getCompanyUserClient()->deleteCompanyUser($companyUserTransfer);
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($idCompanyUser);
 
-        $this->addSuccessMessage(static::SUCCESS_MESSAGE_DELETED);
+        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
+        if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_DELETE);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $companyUserResponseTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->deleteCompanyUser($companyUserTransfer);
+
+        if ($companyUserResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_DELETE);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_DELETE);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function confirmDeleteAction(Request $request): View
+    {
+        $viewData = $this->executeConfirmDeleteAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/user-delete/user-delete.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeConfirmDeleteAction(Request $request): array
+    {
+        $idCompanyUser = $request->query->getInt('id');
+
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($idCompanyUser);
+
+        $companyUserTransfer->requireIdCompanyUser();
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->getCompanyUserById($companyUserTransfer);
+
+        $companyUserTransfer->requireCustomer();
+        $customerTransfer = $companyUserTransfer->getCustomer();
+
+        return [
+            'idCompanyUser' => $idCompanyUser,
+            'customer' => $customerTransfer,
+        ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    protected function findCurrentCompanyUserTransfer(): ?CompanyUserTransfer
+    {
+        $currentCustomerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if (!$currentCustomerTransfer) {
+            return null;
+        }
+
+        return $currentCustomerTransfer->getCompanyUserTransfer();
     }
 
     /**
