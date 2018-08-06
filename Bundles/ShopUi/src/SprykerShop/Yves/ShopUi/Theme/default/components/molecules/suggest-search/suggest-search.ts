@@ -181,11 +181,16 @@ export default class SuggestSearch extends Component {
 
         const response = await this.ajaxProvider.fetch(suggestQuery);
 
-        this.suggestionsContainer.innerHTML = JSON.parse(response).suggestion;
+        let suggestions = JSON.parse(response).suggestion;
+        this.suggestionsContainer.innerHTML = suggestions;
+
         this.hint = JSON.parse(response).completion;
 
-        if (this.hint) {
+        if (suggestions) {
             this.showSugestions();
+        }
+
+        if (this.hint) {
             this.updateHintInput();
         }
 
