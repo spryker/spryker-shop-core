@@ -27,13 +27,13 @@ class AbstractShoppingListController extends AbstractController
 
         $customerTransfer = $this->getCustomer();
 
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+        if ($customerTransfer === null || !$customerTransfer->getCompanyUserTransfer()) {
             throw new NotFoundHttpException("Only company users are allowed to access this page");
         }
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     protected function getCustomer(): ?CustomerTransfer
     {

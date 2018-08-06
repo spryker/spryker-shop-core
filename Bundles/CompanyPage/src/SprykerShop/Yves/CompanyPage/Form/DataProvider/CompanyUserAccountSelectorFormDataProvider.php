@@ -48,7 +48,7 @@ class CompanyUserAccountSelectorFormDataProvider
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyCollection
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return int[]
+     * @return array
      */
     public function getOptions(CompanyUserCollectionTransfer $companyCollection, CustomerTransfer $customerTransfer): array
     {
@@ -67,6 +67,10 @@ class CompanyUserAccountSelectorFormDataProvider
     {
         $companies = [];
         foreach ($companyCollection->getCompanyUsers() as $companyUser) {
+            if (!$companyUser->getIsActive()) {
+                continue;
+            }
+
             $key = sprintf(
                 static::FORMAT_COMPANY_USER_DISPLAY,
                 $companyUser->getCompany()->getName(),
