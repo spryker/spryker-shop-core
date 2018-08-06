@@ -135,7 +135,7 @@ class CompanyUserFormDataProvider
     /**
      * @param int $idCompany
      *
-     * @return string[]
+     * @return int[]
      */
     protected function getAvailableCompanyRoles(int $idCompany): array
     {
