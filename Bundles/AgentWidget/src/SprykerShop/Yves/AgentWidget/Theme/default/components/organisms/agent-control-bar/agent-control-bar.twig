@@ -1,0 +1,44 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'agent-control-bar',
+    tag: 'agent-control-bar'
+} %}
+
+{% define data = {
+    agent: required
+} %}
+
+{% block body %}
+    <div class="container">
+        <div class="box">
+            <div class="col col--md-4 col--xs-12">
+                <span>{{ 'agent.control_bar.username' | trans({'%username%': data.agent.username}) }}</span>
+            </div>
+            <div class="col col--md-6 col--xs-12">
+                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                    <a href="?_switch_user=_exit">{{ 'agent.control_bar.logout_as_customer' | trans }}</a>
+                {% else %}
+                    <form method="GET" action="/">
+                        {% include molecule('autosuggest-input') with {
+                            attributes: {
+                                suggestionUrl: path('agent-widget/customer-autocomplete'),
+                                renderTemplate: '${first_name} - ${last_name} : ${email}',
+                                valueKey: 'email',
+                                objectKey: 'customers',
+                                selectedValueKey: '_switch_user'
+                            }
+                        } only %}
+
+                        <button type="submit" class="button button-success">
+                            {{ 'agent.confirm_user_selection' | trans }}
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+            <div class="col col--md-2 col--xs-12">
+                <a href="{{ path('agent/logout') }}">{{ 'agent.control_bar.logout' | trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

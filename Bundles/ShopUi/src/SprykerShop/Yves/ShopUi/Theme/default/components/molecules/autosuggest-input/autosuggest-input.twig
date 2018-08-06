@@ -1,0 +1,36 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'autosuggest-input',
+    tag: 'autosuggest-input'
+} %}
+
+{% define attributes = {
+    suggestionUrl: required,
+    renderTemplate: required,
+    valueKey: required,
+    limit: 5,
+    minLetters: 3,
+    limitParamName: 'limit',
+    queryParamName: 'query',
+    objectKey: null,
+    selectedValueKey: 'selected-autocomplete'
+} %}
+
+{% block body %}
+    <div class="grid">
+        <div class="col col--md-6 col--sm-10">
+            <div class="holder">
+                <input type="text" class="input" name="query" autocomplete="off"/>
+                <button type="button" class="button button--warning clear-field">X</button>
+                <input type="hidden" name="{{ attributes.selectedValueKey }}"/>
+            </div>
+            <div class="dropdown hidden">
+
+            </div>
+            <div class="empty-results hidden">
+                No results found
+            </div>
+        </div>
+    </div>
+{% endblock %}
