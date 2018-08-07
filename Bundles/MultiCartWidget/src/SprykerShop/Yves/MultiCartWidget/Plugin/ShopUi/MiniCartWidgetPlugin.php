@@ -30,7 +30,6 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
             ->addParameter('activeCart', $this->getActiveCart())
             ->addParameter('cartList', $this->getInActiveQuoteList())
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
-            ->addParameter('accessType', 'owned')
             ->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 

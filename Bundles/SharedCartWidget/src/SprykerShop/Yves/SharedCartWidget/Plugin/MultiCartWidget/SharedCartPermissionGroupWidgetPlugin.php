@@ -17,6 +17,10 @@ use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCa
 class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implements SharedCartPermissionGroupWidgetPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -41,27 +45,25 @@ class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin impleme
     }
 
     /**
-     * Specification:
-     * - Returns the name of the widget as it's used in templates.
+     * {@inheritdoc}
      *
      * @api
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
 
     /**
-     * Specification:
-     * - Returns the the template file path to render the widget.
+     * {@inheritdoc}
      *
      * @api
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return '@SharedCartWidget/views/shared-cart-permission/shared-cart-permission.twig';
     }

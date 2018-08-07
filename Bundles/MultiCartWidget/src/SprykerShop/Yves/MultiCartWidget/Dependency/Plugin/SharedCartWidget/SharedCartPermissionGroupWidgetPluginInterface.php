@@ -14,6 +14,12 @@ interface SharedCartPermissionGroupWidgetPluginInterface
     public const NAME = 'SharedCartPermissionGroupWidgetPlugin';
 
     /**
+     * Specification:
+     * - Inject data to plugin.
+     * - Calculate permission type for giver cart.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
