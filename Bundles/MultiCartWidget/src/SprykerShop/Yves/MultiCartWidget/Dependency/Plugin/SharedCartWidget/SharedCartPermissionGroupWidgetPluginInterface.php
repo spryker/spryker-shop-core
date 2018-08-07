@@ -8,18 +8,13 @@
 namespace SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-interface SharedCartPermissionGroupWidgetPluginInterface
+interface SharedCartPermissionGroupWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'SharedCartPermissionGroupWidgetPlugin';
 
     /**
-     * Specification:
-     * - Inject data to plugin.
-     * - Calculate permission type for giver cart.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

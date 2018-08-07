@@ -17,10 +17,6 @@ use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCa
 class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implements SharedCartPermissionGroupWidgetPluginInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

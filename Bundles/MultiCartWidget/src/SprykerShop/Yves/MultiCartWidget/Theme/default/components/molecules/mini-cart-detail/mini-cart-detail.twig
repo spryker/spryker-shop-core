@@ -25,11 +25,7 @@
 
             {% if itemCount > 0 %}
                 <span class=" float-right">
-                    {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
-                        {{ widget('ProductBundleItemCounterWidgetPlugin', data.cart) }}
-                    {% else %}
-                       {{ data.cart.totals.subTotal | money(true, data.cart.currency.code) }}<br>
-                    {% endif %}
+                   {{ data.cart.totals.subTotal | money(true, data.cart.currency.code) }}<br>
                 </span>
             {% endif %}
 
@@ -42,8 +38,20 @@
         </div>
 
         <div>
-            {{ itemCount }}
-            {{ itemCount == 1 ? 'multi_cart_widget.cart.item' | trans : 'multi_cart_widget.cart.items' | trans }}
+            {% if itemCount > 0 %}
+                <span class=" float-right">
+                    {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
+                        {{ widget('ProductBundleItemCounterWidgetPlugin', data.cart) }}
+                    {% else %}
+                        {% set label = (itemCount == 1) ? 'multi_cart_widget.cart.item' : 'multi_cart_widget.cart.items' %}
+
+                        {% block body %}
+                            {{ itemCount }} {{ label | trans }}
+                        {% endblock %}
+                    {% endif %}
+                </span>
+            {% endif %}
+
             {% if widgetExists('SharedCartPermissionGroupWidgetPlugin') %}
                 {{ widget('SharedCartPermissionGroupWidgetPlugin', data.cart) }}
             {% endif %}
