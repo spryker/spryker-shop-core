@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -234,8 +235,9 @@ class CompanyRoleController extends AbstractCompanyController
             ->getCompanyRoleForm()
             ->handleRequest($request);
 
+        $idCompanyRole = $request->query->getInt('id');
+
         if ($companyRoleForm->isSubmitted() === false) {
-            $idCompanyRole = $request->query->getInt('id');
             $idCompany = $this->getCompanyUser()->getFkCompany();
             $companyRoleForm->setData($dataProvider->getData($idCompany, $idCompanyRole));
         }
@@ -248,8 +250,8 @@ class CompanyRoleController extends AbstractCompanyController
 
         return [
             'companyRoleForm' => $companyRoleForm->createView(),
-            'idCompanyRole' => $request->query->getInt('id'),
-            'permissions' => $this->getPermissionsList($request),
+            'idCompanyRole' => $idCompanyRole,
+            'permissions' => $this->getPermissionsList($idCompanyRole),
         ];
     }
 
@@ -323,13 +325,12 @@ class CompanyRoleController extends AbstractCompanyController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $idCompanyRole
      *
      * @return array
      */
-    protected function getPermissionsList(Request $request): array
+    protected function getPermissionsList(int $idCompanyRole): array
     {
-        $idCompanyRole = $request->query->getInt('id');
         $allPermissionTransfers = $this->getFactory()
             ->getPermissionClient()
             ->findAll()
@@ -364,23 +365,43 @@ class CompanyRoleController extends AbstractCompanyController
     ): array {
         $permissions = [];
 
-        foreach ($allPermissionTransfers as $permission) {
-            if ($permission->getIsAwareConfiguration()) {
+        foreach ($allPermissionTransfers as $permissionTransfer) {
+            if ($permissionTransfer->getIsAwareConfiguration()) {
                 continue;
             }
 
-            $permissionAsArray = $permission->toArray(false, true);
-            $permissionAsArray[CompanyRoleTransfer::ID_COMPANY_ROLE] = null;
-            foreach ($companyRolePermissionTransfers as $rolePermission) {
-                if ($rolePermission->getKey() === $permission->getKey()) {
-                    $permissionAsArray[CompanyRoleTransfer::ID_COMPANY_ROLE] = $idCompanyRole;
-                    break;
-                }
-            }
-
-            $permissions[] = $permissionAsArray;
+            $permissions[] = $this->transformCompanyRolePermissionTransferToArray(
+                $companyRolePermissionTransfers,
+                $permissionTransfer,
+                $idCompanyRole
+            );
         }
 
         return $permissions;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $companyRolePermissionTransfers
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     * @param int $idCompanyRole
+     *
+     * @return array
+     */
+    protected function transformCompanyRolePermissionTransferToArray(
+        ArrayObject $companyRolePermissionTransfers,
+        PermissionTransfer $permissionTransfer,
+        int $idCompanyRole
+    ): array {
+        $permissionAsArray = $permissionTransfer->toArray(false, true);
+        $permissionAsArray[CompanyRoleTransfer::ID_COMPANY_ROLE] = null;
+
+        foreach ($companyRolePermissionTransfers as $rolePermission) {
+            if ($rolePermission->getKey() === $permissionTransfer->getKey()) {
+                $permissionAsArray[CompanyRoleTransfer::ID_COMPANY_ROLE] = $idCompanyRole;
+                break;
+            }
+        }
+
+        return $permissionAsArray;
     }
 }
