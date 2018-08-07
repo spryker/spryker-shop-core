@@ -29,8 +29,8 @@ class SharedCartWidgetToSharedCartClientBridge implements SharedCartWidgetToShar
      *
      * @return string
      */
-    public function calculatePermission(QuoteTransfer $quoteTransfer): string
+    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): string
     {
-        return $this->sharedCartClient->calculatePermission($quoteTransfer);
+        return $this->sharedCartClient->getQuoteAccessLevel($quoteTransfer);
     }
 }

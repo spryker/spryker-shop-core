@@ -41,7 +41,7 @@ class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin impleme
     {
         return $this->getFactory()
             ->getSharedCartClient()
-            ->calculatePermission($quoteTransfer);
+            ->getQuoteAccessLevel($quoteTransfer);
     }
 
     /**
