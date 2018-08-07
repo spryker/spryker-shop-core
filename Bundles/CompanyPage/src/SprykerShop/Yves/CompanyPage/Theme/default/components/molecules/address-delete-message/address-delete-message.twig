@@ -12,7 +12,7 @@
 } %}
 
 {% block body %}
-    <h5 class="{{ config.name }}__title {{ config.name }}__title--warning">
+    <h5 class="{{ config.name }}__title {{ config.name }}__title--alert">
         {% include atom('icon') with {
             modifiers: ['big'],
             data: {
@@ -40,7 +40,7 @@
     </div>
 
     {% if data.companyBusinessUnits %}
-        <p class="{{ config.name }}__title {{ config.name }}__title--warning">
+        <p class="{{ config.name }}__title {{ config.name }}__title--alert">
             {{ "company.account.address.delete.message.all" | trans }}.
         </p>
     {% endif %}

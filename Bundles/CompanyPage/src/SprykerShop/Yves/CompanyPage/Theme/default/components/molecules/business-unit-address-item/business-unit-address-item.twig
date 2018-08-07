@@ -10,8 +10,8 @@
 } %}
 
 {% block body %}
-    <div class="grid">
-        <div class="col col--lg-9">
+    <div class="grid grid--middle">
+        <div class="col col--md-9 col--sm-12">
             {% filter replace({'&lt;br /&gt;': '<br />'}) | raw %}
                 {{ form_widget(data.address, {
                     'attr': {
@@ -21,11 +21,11 @@
                 }}
             {% endfilter %}
         </div>
-        <div class="col col--lg-3 text-right">
+        <div class="col col--md-3 col--sm-12 {{ config.name }}__actions">
             <a href="{{ url('company/address/update', {'id': data.address.vars.value, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
                 {{ "company.account.address.edit" | trans }}
             </a>
-            <a class="link link--alert" href="{{ url('company/address/delete-confirmation', {'id': data.address.vars.value, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
+            <a class="link link--alert spacing-left--inner" href="{{ url('company/address/delete-confirmation', {'id': data.address.vars.value, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
                 {{ "company.account.address.delete" | trans }}
             </a>
         </div>
