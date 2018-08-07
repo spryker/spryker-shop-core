@@ -9,6 +9,7 @@ export default class AutocompleteForm extends Component {
     suggestionsContainer: HTMLElement;
     emptyResultsElement: HTMLElement;
     clearFieldButton: HTMLElement;
+    ajaxUrl: string;
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}__ajax-provider`);
@@ -17,6 +18,7 @@ export default class AutocompleteForm extends Component {
         this.hiddenInputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input-hidden`);
         this.clearFieldButton = <HTMLInputElement>this.querySelector(`.${this.jsName}__clear`);
         this.emptyResultsElement = <HTMLElement>this.querySelector(`.${this.jsName}__empty-results`);
+        this.ajaxUrl = this.ajaxProvider.getAttribute('url');
         this.mapEvents();
     }
 
@@ -24,23 +26,27 @@ export default class AutocompleteForm extends Component {
 
         this.inputElement.addEventListener('input', debounce(() => {
             this.onInput();
-        }, this.debounceDelay))
+        }, this.debounceDelay));
 
         this.inputElement.addEventListener('blur', debounce(() => {
             this.hideSugestions()
-        }, this.debounceDelay))
+        }, this.debounceDelay));
 
-        this.inputElement.addEventListener('focus', debounce(() => {
-            if (this.inputValue.length >= this.minLetters ) {
-                this.showSugestions();
-            }
-        }))
+        this.inputElement.addEventListener('focus',  () => this.onFocus());
 
-        this.clearFieldButton.addEventListener('click', () => {
-            this.inputElement.value = ''
-            this.hiddenInputElement.value = ''
-            this.suggestionsContainer.innerHTML = ''
-        })
+        this.clearFieldButton.addEventListener('click', this.onClick);
+    }
+
+    protected onFocus() {
+        if (this.inputValue.length >= this.minLetters ) {
+            this.showSugestions();
+        }
+    }
+
+    protected onClick() {
+        this.inputElement.value = ''
+        this.hiddenInputElement.value = ''
+        this.suggestionsContainer.innerHTML = ''
     }
 
     protected onInput() {
@@ -68,12 +74,7 @@ export default class AutocompleteForm extends Component {
 
         const suggestQuery = this.inputValue;
 
-        const urlParams = [
-            [this.limitParamName,  this.limitItem],
-            [this.queryParamName, this.inputValue]
-        ];
-
-        this.addUrlParams(urlParams);
+        this.addUrlParams(suggestQuery);
 
         let data = await this.ajaxProvider.fetch(suggestQuery);
 
@@ -81,16 +82,9 @@ export default class AutocompleteForm extends Component {
 
     }
 
-    protected addUrlParams(params: Array<Array<string>>): void {
-        const baseSuggestUrl = this.suggestionUrl;
+    protected addUrlParams(suggestQuery): void {
 
-        let paramsString = '?';
-        params.forEach( (element, index) => {
-            paramsString += index == 0 ? '' : '&';
-            paramsString += `${element[0]}=${element[1]}`;
-        });
-
-        this.ajaxProvider.setAttribute('url', `${this.suggestionUrl}${paramsString}`);
+        this.ajaxProvider.setAttribute('url', `${this.ajaxUrl + suggestQuery}`);
     }
 
     protected render(data): void {
@@ -133,14 +127,6 @@ export default class AutocompleteForm extends Component {
         return this.getAttribute('suggestion-url')
     }
 
-    protected get limitItem() {
-        return this.getAttribute('limit-items')
-    }
-
-    protected get limitParamName() {
-        return this.getAttribute('limit-param-name')
-    }
-
     protected get renderTemplate() {
         return this.getAttribute('render-template')
     }
@@ -151,10 +137,6 @@ export default class AutocompleteForm extends Component {
 
     protected get objectKey() {
         return this.getAttribute('object-key')
-    }
-
-    protected get queryParamName() {
-        return this.getAttribute('query-param-name')
     }
 
     protected get inputValue(): string {

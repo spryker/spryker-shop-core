@@ -15,13 +15,13 @@
             <div class="col col--md-4 col--sm-12">
                 <span>{{ 'agent.control_bar.username' | trans({'%username%': data.agent.username}) }}</span>
             </div>
-            <div class="col col--md-6 col--sm-12">
+            <div class="col col--md-6 col--sm-12 spacing-y">
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <a href="?_switch_user=_exit">{{ 'agent.control_bar.logout_as_customer' | trans }}</a>
                 {% else %}
                     <form method="GET" action="/">
                         <div class="grid">
-                            <div class="col col--sm-10">
+                            <div class="col col--sm-9 col--lg-10">
                                 {% include molecule('autocomplete-form') with {
                                     attributes: {
                                         'suggestion-url': path('agent-widget/customer-autocomplete'),
@@ -33,8 +33,8 @@
                                 } only %}
                             </div>
 
-                            <div class="col col--sm-2">
-                                <button type="submit" class="button button-success">
+                            <div class="col col--sm-3 col--lg-2">
+                                <button type="submit" class="button button--success button--expand">
                                     {{ 'agent.confirm_user_selection' | trans }}
                                 </button>
                             </div>

@@ -6,25 +6,23 @@
 } %}
 
 {% define data = {
-    value: ''
+    value: '',
+    limitItems: 5,
 } %}
 
 {% define attributes = {
     'suggestion-url': required,
     'render-template': required,
     'value-key': required,
-    'limit-items': '5',
     'debounce-delay': 500,
     'min-letters': 3,
-    'limit-param-name': 'limit',
-    'query-param-name': 'query',
     'object-key': null,
     'selected-value-key': ''
 } %}
 
 {% block body %}
     <div class="grid">
-        <div class="col col--sm-11">
+        <div class="col col--sm-10 col--lg-11">
             <input name="query"
                    type="text"
                    class="input input--expand {{ config.jsName }}__input"
@@ -34,7 +32,7 @@
 
             <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
         </div>
-        <div class="col col--sm-1">
+        <div class="col col--sm-2 col--lg-1">
             <button type="button" class="button button--warning button--expand {{ config.jsName }}__clear">&times;</button>
         </div>
     </div>
@@ -51,7 +49,7 @@
         class: config.jsName ~ '__ajax-provider',
         attributes: {
             method: 'post',
-            url: attributes['suggestion-url'],
+            url: attributes['suggestion-url'] ~ '?limit=' ~ data.limitItems ~ '&query=',
             'response-type': 'json'
         }
     } only %}
