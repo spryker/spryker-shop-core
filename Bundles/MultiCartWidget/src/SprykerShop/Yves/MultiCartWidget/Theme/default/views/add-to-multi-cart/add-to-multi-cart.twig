@@ -8,8 +8,8 @@
 
 {% block body %}
     {% if data.isMultiCartAllowed %}
-    <div class="grid grid--right">
-        <div class="col col--sm-6 col--right">
+    <div class="grid grid--middle grid--justify">
+        <div class="col col--sm-12 col--md-5 col--right">
         {% if data.carts %}
             {% include molecule('add-to-cart-selector', 'MultiCartWidget') with {
                 data: {
@@ -19,7 +19,7 @@
             } only %}
         {% endif %}
         </div>
+        {{ widget('SharedCartAddSeparateProductWidgetPlugin') }}
     </div>
-    {{ widget('SharedCartAddSeparateProductWidgetPlugin') }}
     {% endif %}
 {% endblock %}

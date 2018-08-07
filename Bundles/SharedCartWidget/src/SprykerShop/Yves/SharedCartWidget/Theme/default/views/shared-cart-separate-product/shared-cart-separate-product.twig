@@ -1,18 +1,16 @@
 {% extends template('widget') %}
 
 {% block body %}
-    <div class="grid grid--right grid--bottom">
-        <div class="col col--sm-6">
-            {% include atom('checkbox') with {
-                attributes: {
-                    name: 'separate_product',
-                    value: 1,
-                    checked: true
-                },
-                data: {
-                    label: 'shared_cart_widget.add_product.separate' | trans
-                }
-            } only %}
-        </div>
+    <div class="col col--sm-12 col--md-6 spacing-y--small">
+        {% include atom('checkbox') with {
+            attributes: {
+                name: 'separate_product',
+                value: 1,
+                checked: true
+            },
+            data: {
+                label: 'shared_cart_widget.add_product.separate' | trans
+            }
+        } only %}
     </div>
 {% endblock %}
