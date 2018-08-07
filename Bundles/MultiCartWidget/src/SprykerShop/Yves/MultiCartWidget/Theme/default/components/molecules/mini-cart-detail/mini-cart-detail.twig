@@ -15,13 +15,16 @@
 {% block body %}
     <div class="text-small text-left">
         <div>
-            <input type="radio" name="isDefault" value="{{ data.cart.name }}"
-                {% if data.cart.isDefault %}
-                    checked
-                {% else %}
-                    onClick="location.href='{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}';"
-                {% endif %}
-            />
+            {% include molecule('toggler-radio') with {
+                attributes: {
+                    id: 'default-cart',
+                    checked: data.cart.isDefault,
+                    name: 'isDefault',
+                    'onClick': 'location.href=\'' ~ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) ~ '\';',
+                    'target-selector': 'selector',
+                    'class-to-toggle': 'none',
+                }
+            } only %}
 
             {% if itemCount > 0 %}
                 <span class=" float-right">
@@ -39,15 +42,13 @@
 
         <div>
             {% if itemCount > 0 %}
-                <span class=" float-right">
+                <span class="float-left">
                     {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
                         {{ widget('ProductBundleItemCounterWidgetPlugin', data.cart) }}
                     {% else %}
                         {% set label = (itemCount == 1) ? 'multi_cart_widget.cart.item' : 'multi_cart_widget.cart.items' %}
 
-                        {% block body %}
-                            {{ itemCount }} {{ label | trans }}
-                        {% endblock %}
+                        {{ itemCount }} {{ label | trans }}
                     {% endif %}
                 </span>
             {% endif %}

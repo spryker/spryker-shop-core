@@ -6,11 +6,11 @@
 } %}
 
 {% block body %}
-    {% if data.accessType == 'owner' %}
+    {% if data.accessType == 'OWNER_ACCESS' %}
         {{ 'shared_cart.share_list.permissions.OWNER_ACCESS' | trans }}
-    {%  elseif data.accessType == 'full' %}
+    {%  elseif data.accessType == 'FULL_ACCESS' %}
         {{ 'shared_cart.share_list.permissions.FULL_ACCESS' | trans }}
-    {% else %}
+    {% elseif data.accessType == 'READ_ONLY' %}
         {{ 'shared_cart.share_list.permissions.READ_ONLY' | trans }}
     {% endif %}
 {% endblock %}
