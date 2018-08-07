@@ -270,6 +270,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     protected function onKernelView(GetResponseForControllerResultEvent $event, SprykerApplication $application)
     {
+        /** @var \Spryker\Yves\Kernel\Widget\WidgetContainerInterface $result */
         $result = $event->getControllerResult();
 
         if (!$result instanceof ViewInterface) {
