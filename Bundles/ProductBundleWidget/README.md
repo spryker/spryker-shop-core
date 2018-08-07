@@ -1,6 +1,6 @@
 # ProductBundleWidget Module
 
-Widget to show corrected date on product bundles
+Provides YVES product bundle to display and manipulate product bundles.
 
 ## Installation
 

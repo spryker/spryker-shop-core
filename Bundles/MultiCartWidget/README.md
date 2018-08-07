@@ -1,6 +1,6 @@
 # MultiCartWidget Module
 
-Widget to show mini catrs in drop-down. At header.
+Provides YVES multi cart widget to display and manipulate multicart.
 
 ## Installation
 

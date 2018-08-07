@@ -1,6 +1,6 @@
 # SharedCartWidget Module
 
-Widget to update minicart with shared cart feature
+Prodides YVES shared cart widget to display and share carts
 
 ## Installation
 
