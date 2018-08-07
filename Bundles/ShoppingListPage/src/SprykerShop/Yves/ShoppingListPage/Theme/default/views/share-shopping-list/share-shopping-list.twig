@@ -4,9 +4,8 @@
     title: _view.shoppingList.name,
     shareShoppingListForm: _view.shareShoppingListForm,
     idShoppingList: _view.idShoppingList,
-    shoppingListCollection: _view.shoppingListCollection,
+    shoppingList: _view.shoppingList,
     labels: {
-        shareFormLabel: 'customer.account.shopping_list.share.from.share_with' | trans,
         shareFormSubmit: 'customer.account.shopping_list.share.from.share' | trans,
     }
 } %}
@@ -18,6 +17,8 @@
                 label: 'customer.account' | trans,
             },{
                 label: 'customer.account.shopping_list' | trans,
+            },{
+                label: 'customer.account.shopping_list.share.from.share' | trans,
             }]
         }
     } only %}
@@ -27,21 +28,70 @@
     {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.idShoppingList) }}
 {% endblock %}
 
+
+
 {% block customerContent %}
-    {% include molecule('form') with {
-        class: 'box',
-        data: {
-            title: data.labels.shareFormLabel,
-            form: data.shareShoppingListForm,
-            submit: {
-                text: data.labels.shareFormSubmit,
-                enable: true
-            },
-            cancel: {
-                enable: true,
-                url: url('shopping-list'),
-                text: 'general.back.button' | trans
-            }
-        }
-    } only %}
+    <div class="form box" data-qa="component form"><h5>Share Shopping List with:</h5>
+
+        {{ form_start(data.shareShoppingListForm) }}
+
+        <div class="form__container">
+            <div class="form__fields grid grid--bottom">
+                <div class="form__field col col--sm-12">
+                    <b>{{ form_label(data.shareShoppingListForm.companyBusinessUnits) }}</b>
+                    <br clear="all">
+                    {% for key, companyBusinessUnit in data.shoppingList.companyBusinessUnits %}
+
+                        {% if companyBusinessUnit.idShoppingListPermissionGroup is not null %}
+                            <label>{{ companyBusinessUnit.companyBusinessUnitName }}</label>
+                            {{ form_row(data.shareShoppingListForm.companyBusinessUnits[key]) }}
+                        {% endif %}
+                    {% endfor %}
+                    <br clear="all">
+                    <hr>
+                    {% for key, companyBusinessUnit in data.shoppingList.companyBusinessUnits %}
+
+                        {% if companyBusinessUnit.idShoppingListPermissionGroup is null %}
+                            <label>{{ companyBusinessUnit.companyBusinessUnitName }}</label>
+                            {{ form_row(data.shareShoppingListForm.companyBusinessUnits[key]) }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <br clear="all">
+                <br clear="all">
+
+                <div class="form__field col col--sm-12">
+                    <b>{{ form_label(data.shareShoppingListForm.companyUsers) }}</b>
+                    <br clear="all">
+                    {% for key, companyUser in data.shoppingList.companyUsers %}
+
+                        {% if companyUser.idShoppingListPermissionGroup is not null %}
+                            <label>{{ companyUser.customerFullName }}</label>
+                            {{ form_row(data.shareShoppingListForm.companyUsers[key]) }}
+                        {% endif %}
+                    {% endfor %}
+                    <br clear="all">
+                    <hr>
+                    {% for key, companyUser in data.shoppingList.companyUsers %}
+
+                        {% if companyUser.idShoppingListPermissionGroup is null %}
+                            <label>{{ companyUser.customerFullName }}</label>
+                            {{ form_row(data.shareShoppingListForm.companyUsers[key]) }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="form__actions">
+                <button type="submit" class="form__action button button--success" data-qa="submit-button">
+                    {{ data.labels.shareFormSubmit }}
+                </button>
+            </div>
+        </div>
+
+
+        {{ form_end(data.shareShoppingListForm) }}
+    </div>
+
 {% endblock %}

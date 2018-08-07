@@ -221,15 +221,13 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected function executeShareShoppingListAction(int $idShoppingList, Request $request)
     {
         $shareShoppingListForm = $this->getFactory()
-            ->getShareShoppingListForm($idShoppingList)
+            ->getShareShoppingListForm((new ShoppingListTransfer())->setIdShoppingList($idShoppingList))
             ->handleRequest($request);
 
         if ($shareShoppingListForm->isSubmitted() && $shareShoppingListForm->isValid()) {
-            /** @var \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer */
-            $shoppingListShareRequestTransfer = $shareShoppingListForm->getData();
             $shoppingListShareResponseTransfer = $this->getFactory()
                 ->getShoppingListClient()
-                ->shareShoppingList($shoppingListShareRequestTransfer);
+                ->shareShoppingList($shareShoppingListForm->getData());
 
             if ($shoppingListShareResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_SHARE_SHOPPING_LIST_SUCCESSFUL);
@@ -240,14 +238,10 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             $this->addErrorMessage($shoppingListShareResponseTransfer->getError());
         }
 
-        $shippingListTransferCollection = $this->getCustomerShoppingListCollection();
-        $shoppingListTransfer = $this->getShoppingListById($idShoppingList, $shippingListTransferCollection);
-
         return [
             'idShoppingList' => $idShoppingList,
-            'shoppingList' => $shoppingListTransfer,
+            'shoppingList' => $shareShoppingListForm->getData(),
             'shareShoppingListForm' => $shareShoppingListForm->createView(),
-            'shoppingListCollection' => $shippingListTransferCollection,
         ];
     }
 

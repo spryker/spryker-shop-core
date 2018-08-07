@@ -128,17 +128,17 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @param int $idShoppingList
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getShareShoppingListForm(int $idShoppingList): FormInterface
+    public function getShareShoppingListForm(ShoppingListTransfer $shoppingListTransfer): FormInterface
     {
         $shareShoppingListFormDataProvider = $this->createShareShoppingListFormDataProvider();
 
         return $this->getFormFactory()->create(
             ShareShoppingListForm::class,
-            $shareShoppingListFormDataProvider->getData($idShoppingList),
+            $shareShoppingListFormDataProvider->getData($shoppingListTransfer),
             $shareShoppingListFormDataProvider->getOptions()
         );
     }

@@ -8,10 +8,15 @@
 namespace SprykerShop\Yves\ShoppingListPage\Form\DataProvider;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
@@ -20,6 +25,9 @@ use SprykerShop\Yves\ShoppingListPage\Form\ShareShoppingListForm;
 
 class ShareShoppingListDataProvider
 {
+    const ORDER_BUSINESS_UNIT_SORT_FIELD = 'name';
+    const ORDER_BUSINESS_UNIT_SORT_DIRECTION = 'ASC';
+
     /**
      * @var \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface
      */
@@ -55,18 +63,21 @@ class ShareShoppingListDataProvider
     }
 
     /**
-     * @param int $idShoppingList
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListShareRequestTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function getData(int $idShoppingList): ShoppingListShareRequestTransfer
+    public function getData(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
-            ->setShoppingListOwnerId($this->customerClient->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser())
-            ->setIdShoppingList($idShoppingList)
-            ->setIdShoppingListPermissionGroup($this->shoppingListClient->getShoppingListPermissionGroup()->getIdShoppingListPermissionGroup());
+        $customerTransfer = $this->getCustomer();
+        $shoppingListTransfer->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
-        return $shoppingListShareRequestTransfer;
+        $shoppingListTransfer = $this->shoppingListClient->getShoppingList($shoppingListTransfer);
+
+        $this->addAvailableCompanyBusinessUnits($shoppingListTransfer, $customerTransfer);
+        $this->addAvailableCompanyUsers($shoppingListTransfer, $customerTransfer);
+
+        return $shoppingListTransfer;
     }
 
     /**
@@ -74,10 +85,8 @@ class ShareShoppingListDataProvider
      */
     public function getOptions(): array
     {
-        $customer = $this->getCustomer();
         return [
-            ShareShoppingListForm::OPTION_BUSINESS_UNITS => $this->getCompanyUserCompanyBusinessUnits($customer),
-            ShareShoppingListForm::OPTION_COMPANY_USERS => $this->getCompanyUserCompanyUsers($customer),
+            ShareShoppingListForm::OPTION_PERMISSION_GROUPS => $this->getShoppingListPermissionGroups(),
         ];
     }
 
@@ -90,64 +99,119 @@ class ShareShoppingListDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return array
+     * @return void
      */
-    protected function getCompanyUserCompanyBusinessUnits(CustomerTransfer $customerTransfer): array
+    protected function addAvailableCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer)
     {
-        $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
-            ->setIdCompany($customerTransfer->requireCompanyUserTransfer()->getCompanyUserTransfer()->getFkCompany());
+        $companyBusinessUnitIds = [];
+        $availableCompanyBusinessUnitCollection = $this->getCompanyBusinessUnitCollection($customerTransfer);
 
-        $companyBusinessUnits = $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer)->getCompanyBusinessUnits();
-        return $this->mapCompanyBusinessUnitsToOptions($companyBusinessUnits);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]|\ArrayObject $companyBusinessUnits
-     *
-     * @return array
-     */
-    protected function mapCompanyBusinessUnitsToOptions(ArrayObject $companyBusinessUnits): array
-    {
-        $companyBusinessUnitsOptions = [];
-        foreach ($companyBusinessUnits as $companyBusinessUnit) {
-            $companyBusinessUnitsOptions[$companyBusinessUnit->getIdCompanyBusinessUnit()] = $companyBusinessUnit->getName();
+        foreach ($shoppingListTransfer->getCompanyBusinessUnits() as $shoppingListCompanyBusinessUnitTransfer) {
+            $companyBusinessUnitIds[] = $shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit();
         }
 
-        return $companyBusinessUnitsOptions;
+        foreach ($availableCompanyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
+            if (!in_array($companyBusinessUnitTransfer->getIdCompanyBusinessUnit(), $companyBusinessUnitIds)) {
+                $shoppingListCompanyBusinessUnit = (new ShoppingListCompanyBusinessUnitTransfer)
+                    ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+                    ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+                    ->setCompanyBusinessUnitName($companyBusinessUnitTransfer->getName());
+
+                $shoppingListTransfer->addCompanyBusinessUnits($shoppingListCompanyBusinessUnit);
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function addAvailableCompanyUsers(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer)
+    {
+        $companyUserIds = [];
+        $availableCompanyUserCollection = $this->getCompanyUserCollection($customerTransfer);
+
+        foreach ($shoppingListTransfer->getCompanyUsers() as $shoppingListCompanyUserTransfer) {
+            $companyUserIds[] = $shoppingListCompanyUserTransfer->getIdCompanyUser();
+        }
+
+        foreach ($availableCompanyUserCollection->getCompanyUsers() as $companyUserTransfer) {
+            if (!in_array($companyUserTransfer->getIdCompanyUser(), $companyUserIds)) {
+                $customerFullName = $companyUserTransfer->getCustomer()->getFirstName() . ' ' .
+                    $companyUserTransfer->getCustomer()->getLastName();
+
+                $shoppingListCompanyUser = (new ShoppingListCompanyUserTransfer)
+                    ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+                    ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+                    ->setCustomerFullName($customerFullName);
+
+                $shoppingListTransfer->addCompanyUsers($shoppingListCompanyUser);
+            }
+        }
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    protected function getCompanyUserCompanyUsers(CustomerTransfer $customerTransfer): array
+    protected function getCompanyBusinessUnitCollection(CustomerTransfer $customerTransfer): CompanyBusinessUnitCollectionTransfer
+    {
+        $idCompany = $customerTransfer->requireCompanyUserTransfer()->getCompanyUserTransfer()->getFkCompany();
+        $filter = (new FilterTransfer)
+            ->setOrderBy(self::ORDER_BUSINESS_UNIT_SORT_FIELD)
+            ->setOrderDirection(self::ORDER_BUSINESS_UNIT_SORT_DIRECTION);
+
+        $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
+            ->setIdCompany($idCompany)
+            ->setFilter($filter);
+
+        return $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    protected function getCompanyUserCollection(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
     {
         $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
             ->setIdCompany($customerTransfer->requireCompanyUserTransfer()->getCompanyUserTransfer()->getFkCompany());
 
-        $companyUsers = $this->companyUserClient->getCompanyUserCollection($companyUserCriteriaFilterTransfer)->getCompanyUsers();
-        return $this->mapCompanyUsersToOptions($companyUsers, $customerTransfer);
+        return $this->companyUserClient->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer[]|\ArrayObject $companyUsers
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer[]
+     */
+    protected function getShoppingListPermissionGroups(): array
+    {
+        $shoppingListPermissionGroups = $this->shoppingListClient
+            ->getShoppingListPermissionGroupCollection()
+            ->getPermissionGroups();
+
+        return $this->mapPermissionGroupsToOptions($shoppingListPermissionGroups);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer[]|\ArrayObject $permissionGroups
      *
      * @return array
      */
-    protected function mapCompanyUsersToOptions(ArrayObject $companyUsers, CustomerTransfer $customerTransfer): array
+    protected function mapPermissionGroupsToOptions(ArrayObject $permissionGroups): array
     {
-        $companyUsersOptions = [];
-        foreach ($companyUsers as $companyUser) {
-            if ($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() !== $companyUser->getIdCompanyUser()) {
-                $companyUsersOptions[$companyUser->getIdCompanyUser()]
-                    = $companyUser->getCustomer()->getFirstName() . ' ' . $companyUser->getCustomer()->getLastName();
-            }
+        $permissionGroupOptions = [0 => 'NO_ACCESS'];
+        foreach ($permissionGroups as $permissionGroupTransfer) {
+            $permissionGroupOptions[$permissionGroupTransfer->getIdShoppingListPermissionGroup()]
+                = $permissionGroupTransfer->getName();
         }
 
-        return $companyUsersOptions;
+        return $permissionGroupOptions;
     }
 }

@@ -7,10 +7,9 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Form;
 
-use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,12 +18,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ShareShoppingListForm extends AbstractType
 {
-    public const OPTION_BUSINESS_UNITS = 'businessUnits';
-    public const OPTION_COMPANY_USERS = 'companyUsers';
+    public const OPTION_PERMISSION_GROUPS = 'permissionGroups';
 
-    public const FIELD_ID_BUSINESS_UNIT = 'idCompanyBusinessUnit';
-    public const FIELD_ID_COMPANY_USER = 'idCompanyUser';
-    public const FIELD_ID_SHOPPING_LIST_PERMISSION_GROUP = 'idShoppingListPermissionGroup';
+    public const FIELD_COMPANY_BUSINESS_UNITS = 'companyBusinessUnits';
+    public const FIELD_COMPANY_USERS = 'companyUsers';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -33,10 +30,9 @@ class ShareShoppingListForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefined(static::OPTION_BUSINESS_UNITS);
-        $resolver->setDefined(static::OPTION_COMPANY_USERS);
+        $resolver->setDefined(static::OPTION_PERMISSION_GROUPS);
         $resolver->setDefaults([
-            'data_class' => ShoppingListShareRequestTransfer::class,
+            'data_class' => ShoppingListTransfer::class,
             'constraints' => [
                 $this->getFactory()->createShareShoppingListRequiredIdConstraint(),
             ],
@@ -51,9 +47,8 @@ class ShareShoppingListForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addIdCompanyUserField($builder, $options);
-        $this->addIdBusinessUnitField($builder, $options);
-        $this->addIdShoppingListPermissionGroupField($builder);
+        $this->addCompanyBusinessUnits($builder, $options);
+        $this->addCompanyUsers($builder, $options);
     }
 
     /**
@@ -62,33 +57,13 @@ class ShareShoppingListForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCompanyUserField(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyBusinessUnits(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_ID_COMPANY_USER, ChoiceType::class, [
-            'choices' => array_flip($options[static::OPTION_COMPANY_USERS]),
-            'choices_as_values' => true,
-            'expanded' => false,
-            'placeholder' => 'customer.account.shopping_list.share.select_company_user',
-            'label' => 'customer.account.shopping_list.share.select_company_user',
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addIdBusinessUnitField(FormBuilderInterface $builder, array $options): self
-    {
-        $builder->add(static::FIELD_ID_BUSINESS_UNIT, ChoiceType::class, [
-            'choices' => array_flip($options[static::OPTION_BUSINESS_UNITS]),
-            'choices_as_values' => true,
-            'expanded' => false,
-            'placeholder' => 'customer.account.shopping_list.share.select_company_business_unit',
+        $builder->add(static::FIELD_COMPANY_BUSINESS_UNITS, CollectionType::class, [
+            'entry_type' => ShoppingListBusinessUnitShareEditForm::class,
+            'entry_options' => [
+                static::OPTION_PERMISSION_GROUPS => $options[static::OPTION_PERMISSION_GROUPS],
+            ],
             'label' => 'customer.account.shopping_list.share.select_company_business_unit',
             'required' => false,
         ]);
@@ -98,12 +73,20 @@ class ShareShoppingListForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addIdShoppingListPermissionGroupField(FormBuilderInterface $builder): self
+    protected function addCompanyUsers(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_ID_SHOPPING_LIST_PERMISSION_GROUP, HiddenType::class);
+        $builder->add(static::FIELD_COMPANY_USERS, CollectionType::class, [
+            'entry_type' => ShoppingListCompanyUserShareEditForm::class,
+            'entry_options' => [
+                static::OPTION_PERMISSION_GROUPS => $options[static::OPTION_PERMISSION_GROUPS],
+            ],
+            'label' => 'customer.account.shopping_list.share.select_company_user',
+            'required' => false,
+        ]);
 
         return $this;
     }
