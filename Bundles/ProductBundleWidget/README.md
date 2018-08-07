@@ -1,6 +1,6 @@
 # ProductBundleWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Widget to show corrected date on product bundles
 
 ## Installation
 

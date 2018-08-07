@@ -1,6 +1,6 @@
 # SharedCartWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Widget to update minicart with shared cart feature
 
 ## Installation
 

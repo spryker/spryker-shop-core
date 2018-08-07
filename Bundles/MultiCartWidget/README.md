@@ -1,6 +1,6 @@
 # MultiCartWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Widget to show mini catrs in drop-down. At header.
 
 ## Installation
 
