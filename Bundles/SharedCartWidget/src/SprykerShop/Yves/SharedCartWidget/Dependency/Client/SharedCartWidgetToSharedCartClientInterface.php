@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: khatsko
- * Date: 8/7/18
- * Time: 8:06 AM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\SharedCartWidget\Dependency\Client;
@@ -13,7 +12,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface SharedCartWidgetToSharedCartClientInterface
 {
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return string
      */
     public function calculatePermission(QuoteTransfer $quoteTransfer): string;

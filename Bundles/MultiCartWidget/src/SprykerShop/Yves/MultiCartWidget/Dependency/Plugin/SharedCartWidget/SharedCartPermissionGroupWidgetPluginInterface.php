@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: khatsko
- * Date: 8/7/18
- * Time: 7:52 AM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget;
-
 
 use Generated\Shared\Transfer\QuoteTransfer;
 

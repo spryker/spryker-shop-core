@@ -25,7 +25,8 @@ class SharedCartWidgetToSharedCartClientBridge implements SharedCartWidgetToShar
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return string
      */
     public function calculatePermission(QuoteTransfer $quoteTransfer): string
