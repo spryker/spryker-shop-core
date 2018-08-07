@@ -1,0 +1,16 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cart: _widget.cart,
+    accessType: _widget.accessType,
+} %}
+
+{% block body %}
+    {% if data.accessType == 'owner' %}
+        {{ 'shared_cart.share_list.permissions.OWNER_ACCESS' | trans }}
+    {%  elseif data.accessType == 'full' %}
+        {{ 'shared_cart.share_list.permissions.FULL_ACCESS' | trans }}
+    {% else %}
+        {{ 'shared_cart.share_list.permissions.READ_ONLY' | trans }}
+    {% endif %}
+{% endblock %}

@@ -21,6 +21,7 @@
                 } only %}
 
                 <ul class="menu">
+                    <form>
                     {% if data.activeCart is not empty %}
                         <li class="menu__item">
                             {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
@@ -45,8 +46,12 @@
                         {% endfor %}
                     {% endif %}
                     <li class="menu__item">
+                        <a class="button" href="{{ path('cart') }}" title="{{ 'multi_cart_widget.cart.view_all' | trans }}">
+                            {{ 'multi_cart_widget.cart.view_all' | trans }}
+                        </a>
                         <a class="button" href="{{url('multi-cart/create')}}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
                     </li>
+                    </form>
                 </ul>
             </li>
         </ul>
