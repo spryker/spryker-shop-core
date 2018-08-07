@@ -1,6 +1,6 @@
 # CheckoutPage Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the checkout page and its components.
 
 ## Installation
 

@@ -34,11 +34,11 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
 
         if ($productViewTransfer->getIdProductConcrete()) {
             $baseUnit = $this->getFactory()
-                ->createProductMeasurementBaseUnitReader()
+                ->getProductMeasurementUnitStorageClient()
                 ->findProductMeasurementBaseUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());
 
             $salesUnits = $this->getFactory()
-                ->createProductMeasurementSalesUnitReader()
+                ->getProductMeasurementUnitStorageClient()
                 ->findProductMeasurementSalesUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());
 
             $productQuantityStorageTransfer = $this->getFactory()
@@ -145,7 +145,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
             $jsonData['productQuantityStorage'] = $productQuantityStorageTransfer->toArray();
         }
 
-        return \json_encode($jsonData, true);
+        return json_encode($jsonData, JSON_HEX_TAG);
     }
 
     /**
