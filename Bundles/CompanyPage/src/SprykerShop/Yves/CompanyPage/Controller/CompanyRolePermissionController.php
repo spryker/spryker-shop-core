@@ -35,27 +35,12 @@ class CompanyRolePermissionController extends AbstractCompanyController
     {
         $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
 
-        $this->executeManageAction($request);
-
         return $this->redirectResponseInternal(
             CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
             [
                 static::PARAMETER_ID_COMPANY_ROLE => $idCompanyRole,
             ]
         );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function executeManageAction(Request $request): array
-    {
-        return [
-            'idCompanyRole' => $request->query->getInt('id'),
-            'permissions' => $this->getPermissionsList($request),
-        ];
     }
 
     /**
