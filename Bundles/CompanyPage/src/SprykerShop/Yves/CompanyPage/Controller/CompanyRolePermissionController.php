@@ -38,9 +38,11 @@ class CompanyRolePermissionController extends AbstractCompanyController
         $this->executeManageAction($request);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE, [
+            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
+            [
                 static::PARAMETER_ID_COMPANY_ROLE => $idCompanyRole,
-        ]);
+            ]
+        );
     }
 
     /**
