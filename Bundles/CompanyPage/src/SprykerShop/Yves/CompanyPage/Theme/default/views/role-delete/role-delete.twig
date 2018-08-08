@@ -17,8 +17,8 @@
         {% if data.assignedUsers|length is same as(0) %}
             {{ "company.account.company_role.delete.confirmation.deletion_warning" | trans }}
         {% else %}
-            {{ "company.account.company_role.delete.confirmation.role_has_assigned_users" | trans }}
-            <p>{{ "company.account.company_role.delete.confirmation.users_list" | trans }}:</p>
+            {{ "company.account.company_role.delete.confirmation.assigned_users_message" | trans }}
+            <p>{{ "company.account.company_role.delete.confirmation.assigned_users" | trans }}:</p>
             <ul>
                 {% for user in data.assignedUsers %}
                     <li>* {{ user.customer.firstName }} {{ user.customer.lastName }}</li>
