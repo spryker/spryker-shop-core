@@ -1,1 +1,40 @@
-{% extends view('role-create', 'CompanyPage') %}
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    form: _view.companyRoleForm,
+    permissions: _view.permissions,
+    idCompanyRole: _view.idCompanyRole,
+
+    title: 'company.account.company_role' | trans,
+    activePage: 'role'
+} %}
+
+{% block companyContent %}
+    <div class="box">
+        {% include molecule('form') with {
+            data: {
+                title: 'company.account.company_role.edit_information' | trans,
+                form: data.form,
+                submit: {
+                    enable: true
+                },
+                cancel: {
+                    enable: true,
+                    url: url('company/company-role'),
+                    text: 'general.back.button' | trans
+                }
+            }
+        } only %}
+
+        {% include molecule('permission-table', 'CompanyPage') with {
+            data: {
+                permissions: data.permissions,
+                idCompanyRole: data.idCompanyRole,
+                actions: {
+                    configure: true,
+                    switch: true
+                }
+            }
+        } only %}
+    </div>
+{% endblock %}
