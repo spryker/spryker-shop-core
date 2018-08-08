@@ -6,11 +6,19 @@
 } %}
 
 {% block body %}
+    <span class="cart-permission">
     {% if data.accessType == 'OWNER_ACCESS' %}
-        {{ 'shared_cart.share_list.permissions.OWNER_ACCESS' | trans }}
+        <span class="cart-permission__owner">
+            {{ 'shared_cart.share_list.permissions.OWNER_ACCESS' | trans }}
+        </span>
     {%  elseif data.accessType == 'FULL_ACCESS' %}
-        {{ 'shared_cart.share_list.permissions.FULL_ACCESS' | trans }}
+        <span class="cart-permission__full">
+            {{ 'shared_cart.share_list.permissions.FULL_ACCESS' | trans }}
+        </span>
     {% elseif data.accessType == 'READ_ONLY' %}
-        {{ 'shared_cart.share_list.permissions.READ_ONLY' | trans }}
+        <span class="cart-permission__read">
+            {{ 'shared_cart.share_list.permissions.READ_ONLY' | trans }}
+        </span>
     {% endif %}
+    </span>
 {% endblock %}

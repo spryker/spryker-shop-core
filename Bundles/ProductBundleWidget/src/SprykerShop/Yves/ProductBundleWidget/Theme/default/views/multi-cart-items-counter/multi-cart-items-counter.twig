@@ -8,5 +8,7 @@
 {% set label = (itemCount == 1) ? 'multi_cart_widget.cart.item' : 'multi_cart_widget.cart.items' %}
 
 {% block body %}
-    {{ itemCount }} {{ label | trans }}
+    <span class="cart-items-quantity">
+        {{ itemCount }} {{ label | trans }}
+    </span>
 {% endblock %}
