@@ -24,6 +24,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
     protected const MESSAGE_ERROR_PERMISSION_NOT_FOUND = 'Permission was not found';
     protected const MESSAGE_ERROR_PERMISSION_SAVE_FAILED = 'Permission configuration has not been updated';
     protected const MESSAGE_SUCCESSFUL_PERMISSION_SAVED = 'Permission configuration has been updated';
+    protected const PARAMETER_ID_COMPANY_ROLE = 'id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,14 +33,14 @@ class CompanyRolePermissionController extends AbstractCompanyController
      */
     public function manageAction(Request $request)
     {
-        $idCompanyRole = $request->query->getInt('id');
+        $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
 
         $this->executeManageAction($request);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
-            ['id' => $idCompanyRole]
-        );
+            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE, [
+                static::PARAMETER_ID_COMPANY_ROLE => $idCompanyRole,
+        ]);
     }
 
     /**

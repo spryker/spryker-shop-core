@@ -24,6 +24,7 @@ class CompanyRoleController extends AbstractCompanyController
     public const COMPANY_ROLE_SORT_FIELD = 'id_company_role';
 
     protected const SUCCESS_MESSAGE_COMPANY_ROLE_DELETE = 'company.account.company_role.delete.successful';
+    protected const PARAMETER_ID_COMPANY_ROLE = 'id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -135,7 +136,7 @@ class CompanyRoleController extends AbstractCompanyController
      */
     protected function executeConfirmDeleteAction(Request $request): array
     {
-        $idCompanyRole = $request->query->getInt('id');
+        $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
 
         $companyRoleTransfer = (new CompanyRoleTransfer())
             ->setIdCompanyRole($idCompanyRole);
@@ -235,7 +236,7 @@ class CompanyRoleController extends AbstractCompanyController
             ->getCompanyRoleForm()
             ->handleRequest($request);
 
-        $idCompanyRole = $request->query->getInt('id');
+        $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
 
         if ($companyRoleForm->isSubmitted() === false) {
             $idCompany = $this->getCompanyUser()->getFkCompany();
