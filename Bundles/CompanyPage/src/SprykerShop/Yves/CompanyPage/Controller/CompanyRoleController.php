@@ -333,7 +333,7 @@ class CompanyRoleController extends AbstractCompanyController
     {
         $allPermissionTransfers = $this->getFactory()
             ->getPermissionClient()
-            ->findAll()
+            ->getRegisteredPermissions()
             ->getPermissions();
 
         $companyRoleTransfer = new CompanyRoleTransfer();
