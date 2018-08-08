@@ -1,6 +1,6 @@
 # CustomerPage Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the customer page and its components.
 
 ## Installation
 
