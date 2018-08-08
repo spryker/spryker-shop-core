@@ -24,30 +24,23 @@ class CompanyRolePermissionController extends AbstractCompanyController
     protected const MESSAGE_ERROR_PERMISSION_NOT_FOUND = 'Permission was not found';
     protected const MESSAGE_ERROR_PERMISSION_SAVE_FAILED = 'Permission configuration has not been updated';
     protected const MESSAGE_SUCCESSFUL_PERMISSION_SAVED = 'Permission configuration has been updated';
+    protected const PARAMETER_ID_COMPANY_ROLE = 'id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function manageAction(Request $request)
     {
-        $viewData = $this->executeManageAction($request);
+        $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
 
-        return $this->view($viewData, [], '@CompanyPage/views/role-permission-manage/role-permission-manage.twig');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function executeManageAction(Request $request): array
-    {
-        return [
-            'idCompanyRole' => $request->query->getInt('id'),
-            'permissions' => $this->getPermissionsList($request),
-        ];
+        return $this->redirectResponseInternal(
+            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
+            [
+                static::PARAMETER_ID_COMPANY_ROLE => $idCompanyRole,
+            ]
+        );
     }
 
     /**
@@ -206,6 +199,10 @@ class CompanyRolePermissionController extends AbstractCompanyController
 
         $permissions = [];
         foreach ($allPermissions as $permission) {
+            if ($permission->getIsAwareConfiguration()) {
+                continue;
+            }
+
             $permissionAsArray = $permission->toArray(false, true);
             $permissionAsArray['idCompanyRole'] = null;
             foreach ($companyPermissions as $rolePermission) {

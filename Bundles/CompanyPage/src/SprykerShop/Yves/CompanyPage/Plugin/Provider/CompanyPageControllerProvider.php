@@ -32,6 +32,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_ROLE_CREATE = 'company/company-role/create';
     public const ROUTE_COMPANY_ROLE_UPDATE = 'company/company-role/update';
     public const ROUTE_COMPANY_ROLE_DELETE = 'company/company-role/delete';
+    public const ROUTE_COMPANY_ROLE_CONFIRM_DELETE = 'company/company-role/confirm-delete';
     public const ROUTE_COMPANY_ROLE_DETAILS = 'company/company-role/details';
 
     public const ROUTE_COMPANY_ROLE_USER_MANAGE = 'company/company-role/user/manage';
@@ -151,6 +152,9 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/company-role/delete', static::ROUTE_COMPANY_ROLE_DELETE, 'CompanyPage', 'CompanyRole', 'delete')
+            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/company-role/confirm-delete', static::ROUTE_COMPANY_ROLE_CONFIRM_DELETE, 'CompanyPage', 'CompanyRole', 'confirmDelete')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/company-role/details', static::ROUTE_COMPANY_ROLE_DETAILS, 'CompanyPage', 'CompanyRole', 'details')
