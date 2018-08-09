@@ -366,10 +366,14 @@ class CompanyRoleController extends AbstractCompanyController
     ): array {
         $permissions = [];
 
+        $permissionTransfersFromDataBase = $this->getFactory()->getPermissionClient()->findAll()->getPermissions();
+
         foreach ($allPermissionTransfers as $permissionTransfer) {
             if ($permissionTransfer->getIsAwareConfiguration()) {
                 continue;
             }
+
+            $this->setIdPermission($permissionTransfersFromDataBase, $permissionTransfer);
 
             $permissions[] = $this->transformCompanyRolePermissionTransferToArray(
                 $companyRolePermissionTransfers,
@@ -404,5 +408,24 @@ class CompanyRoleController extends AbstractCompanyController
         }
 
         return $permissionAsArray;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $permissionTransfersFromDatabase
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer
+     */
+    protected function setIdPermission(
+        ArrayObject $permissionTransfersFromDatabase,
+        PermissionTransfer $permissionTransfer
+    ): PermissionTransfer {
+        foreach ($permissionTransfersFromDatabase as $permissionTransferFromDatabase) {
+            if ($permissionTransfer->getKey() === $permissionTransferFromDatabase->getKey()) {
+                $permissionTransfer->setIdPermission($permissionTransferFromDatabase->getIdPermission());
+            }
+        }
+
+        return $permissionTransfer;
     }
 }
