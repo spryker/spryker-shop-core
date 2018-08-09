@@ -13,18 +13,18 @@
 {% block body %}
     <div class="container">
         <div class="box grid grid--middle">
-            <div class="col col--md-6 col--sm-12 spacing--inner">
+            <div class="col col--md-5 col--sm-12 spacing--inner">
                 {% if not is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <form method="GET" action="/">
                         <div class="grid">
                             <div class="col col--sm-9 col--lg-10">
-                                {% include molecule('autosuggest-input') with {
+                                {% include molecule('autocomplete-form') with {
                                     attributes: {
-                                        suggestionUrl: path('agent-widget/customer-autocomplete'),
-                                        renderTemplate: '${first_name} - ${last_name} : ${email}',
-                                        valueKey: 'email',
-                                        objectKey: 'customers',
-                                        selectedValueKey: '_switch_user'
+                                        'suggestion-url': path('agent-widget/customer-autocomplete'),
+                                        'render-template': '${first_name} - ${last_name} : ${email}',
+                                        'value-key': 'email',
+                                        'object-key': 'customers',
+                                        'selected-value-key': '_switch_user'
                                     }
                                 } only %}
                             </div>
@@ -38,7 +38,7 @@
                     </form>
                 {% endif %}
             </div>
-            <div class="col col--md-6 col--xs-12 text-right">
+            <div class="col col--md-7 col--sm-12 text-right">
                 <div class="spacing--inner">
                     {{ 'agent.control_bar.username' | trans({
                         '%username%': "#{data.agent.firstName} #{data.agent.lastName}"
