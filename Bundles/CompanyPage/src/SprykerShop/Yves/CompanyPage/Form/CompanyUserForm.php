@@ -292,8 +292,8 @@ class CompanyUserForm extends AbstractType
         ]);
 
         $callbackTransformer = new CallbackTransformer(
-            $this->inputDataCallbackRoleCollectionTransformer(),
-            $this->outputDataCallbackRoleCollectionTransformer()
+            $this->getInputDataCallbackRoleCollectionTransformer(),
+            $this->getOutputDataCallbackRoleCollectionTransformer()
         );
 
         $builder->get(static::FIELD_COMPANY_ROLE_COLLECTION)
@@ -305,7 +305,7 @@ class CompanyUserForm extends AbstractType
     /**
      * @return \Closure
      */
-    protected function inputDataCallbackRoleCollectionTransformer(): Closure
+    protected function getInputDataCallbackRoleCollectionTransformer(): Closure
     {
         return function (?array $roleCollection = []): array {
             $roles = [];
@@ -323,7 +323,7 @@ class CompanyUserForm extends AbstractType
     /**
      * @return \Closure
      */
-    protected function outputDataCallbackRoleCollectionTransformer(): Closure
+    protected function getOutputDataCallbackRoleCollectionTransformer(): Closure
     {
         return function (?array $roleCollectionSubmitted = []): CompanyRoleCollectionTransfer {
             $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
