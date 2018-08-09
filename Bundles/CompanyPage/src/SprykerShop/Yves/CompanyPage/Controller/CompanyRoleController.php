@@ -334,7 +334,7 @@ class CompanyRoleController extends AbstractCompanyController
     {
         $allPermissionTransfers = $this->getFactory()
             ->getPermissionClient()
-            ->getRegisteredPermissions()
+            ->findAll()
             ->getPermissions();
 
         $companyRoleTransfer = new CompanyRoleTransfer();
@@ -366,8 +366,15 @@ class CompanyRoleController extends AbstractCompanyController
     ): array {
         $permissions = [];
 
+        $registeredPermissionTransfers = $this->getFactory()
+            ->getPermissionClient()
+            ->getRegisteredPermissions()
+            ->getPermissions();
+
+        $awareConfigurationPermissionKeys = $this->getAwareConfigurationPermissionKeys($registeredPermissionTransfers);
+
         foreach ($allPermissionTransfers as $permissionTransfer) {
-            if ($permissionTransfer->getIsAwareConfiguration()) {
+            if (in_array($permissionTransfer->getKey(), $awareConfigurationPermissionKeys)) {
                 continue;
             }
 
@@ -404,5 +411,23 @@ class CompanyRoleController extends AbstractCompanyController
         }
 
         return $permissionAsArray;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $registeredPermissionTransfers
+     *
+     * @return string[]
+     */
+    protected function getAwareConfigurationPermissionKeys(ArrayObject $registeredPermissionTransfers): array
+    {
+        $awareConfigurationPermissionKeys = [];
+
+        foreach ($registeredPermissionTransfers as $permissionTransfer) {
+            if ($permissionTransfer->getIsAwareConfiguration()) {
+                $awareConfigurationPermissionKeys[] = $permissionTransfer->getKey();
+            }
+        }
+
+        return $awareConfigurationPermissionKeys;
     }
 }
