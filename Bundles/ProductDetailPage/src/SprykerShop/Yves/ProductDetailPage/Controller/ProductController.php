@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Shared\Storage\StorageConstants;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Client\Product\ProductClientInterface getClient()
@@ -45,10 +46,16 @@ class ProductController extends AbstractController
      * @param array $productData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     protected function executeDetailAction(array $productData, Request $request): array
     {
+        if (!empty($productData['id_product_abstract']) && $this->isProductAbstractRestricted($productData['id_product_abstract'])) {
+            throw new NotFoundHttpException();
+        }
+
         $productViewTransfer = $this->getFactory()
             ->getProductStorageClient()
             ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request));
@@ -57,6 +64,18 @@ class ProductController extends AbstractController
             'product' => $productViewTransfer,
             'productUrl' => $this->getProductUrl($productViewTransfer),
         ];
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    protected function isProductAbstractRestricted(int $idProductAbstract): bool
+    {
+        return $this->getFactory()
+            ->getProductStorageClient()
+            ->isProductAbstractRestricted($idProductAbstract);
     }
 
     /**
