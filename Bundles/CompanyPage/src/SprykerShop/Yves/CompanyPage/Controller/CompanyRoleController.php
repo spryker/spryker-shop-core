@@ -334,7 +334,7 @@ class CompanyRoleController extends AbstractCompanyController
     {
         $allPermissionTransfers = $this->getFactory()
             ->getPermissionClient()
-            ->getRegisteredPermissions()
+            ->findAll()
             ->getPermissions();
 
         $companyRoleTransfer = new CompanyRoleTransfer();
@@ -366,14 +366,17 @@ class CompanyRoleController extends AbstractCompanyController
     ): array {
         $permissions = [];
 
-        $permissionTransfersFromDataBase = $this->getFactory()->getPermissionClient()->findAll()->getPermissions();
+        $registeredPermissionTransfers = $this->getFactory()
+            ->getPermissionClient()
+            ->getRegisteredPermissions()
+            ->getPermissions();
+
+        $awareConfigurationPermissionKeys = $this->getAwareConfigurationPermissionKeys($registeredPermissionTransfers);
 
         foreach ($allPermissionTransfers as $permissionTransfer) {
-            if ($permissionTransfer->getIsAwareConfiguration()) {
+            if (in_array($permissionTransfer->getKey(), $awareConfigurationPermissionKeys)) {
                 continue;
             }
-
-            $this->setIdPermission($permissionTransfersFromDataBase, $permissionTransfer);
 
             $permissions[] = $this->transformCompanyRolePermissionTransferToArray(
                 $companyRolePermissionTransfers,
@@ -411,21 +414,39 @@ class CompanyRoleController extends AbstractCompanyController
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $permissionTransfersFromDatabase
+     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $registeredPermissionTransfers
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
      * @return \Generated\Shared\Transfer\PermissionTransfer
      */
     protected function setIdPermission(
-        ArrayObject $permissionTransfersFromDatabase,
+        ArrayObject $registeredPermissionTransfers,
         PermissionTransfer $permissionTransfer
     ): PermissionTransfer {
-        foreach ($permissionTransfersFromDatabase as $permissionTransferFromDatabase) {
+        foreach ($registeredPermissionTransfers as $permissionTransferFromDatabase) {
             if ($permissionTransfer->getKey() === $permissionTransferFromDatabase->getKey()) {
                 $permissionTransfer->setIdPermission($permissionTransferFromDatabase->getIdPermission());
             }
         }
 
         return $permissionTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $registeredPermissionTransfers
+     *
+     * @return string[]
+     */
+    protected function getAwareConfigurationPermissionKeys(ArrayObject $registeredPermissionTransfers): array
+    {
+        $awareConfigurationPermissionKeys = [];
+
+        foreach ($registeredPermissionTransfers as $permissionTransfer) {
+            if ($permissionTransfer->getIsAwareConfiguration()) {
+                $awareConfigurationPermissionKeys[] = $permissionTransfer->getKey();
+            }
+        }
+
+        return $awareConfigurationPermissionKeys;
     }
 }
