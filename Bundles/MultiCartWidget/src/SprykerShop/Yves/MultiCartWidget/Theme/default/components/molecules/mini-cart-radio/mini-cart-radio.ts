@@ -3,8 +3,7 @@ import Component from 'ShopUi/models/component';
 export default class MiniCartRadio extends Component {
     radio: HTMLElement;
 
-    protected readyCallback(): void
-    {
+    protected readyCallback(): void {
         this.radio = this.querySelector(`input`);
 
         this.mapEvents();

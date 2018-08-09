@@ -35,6 +35,10 @@
                     margin-left: - 0.5rem;
                     border: 1px solid $setting-color-light;
                     background-color: $setting-color-white;
+
+                    &--weight {
+                        width: 23rem;
+                    }
                 }
 
                 &:hover > #{$name} {

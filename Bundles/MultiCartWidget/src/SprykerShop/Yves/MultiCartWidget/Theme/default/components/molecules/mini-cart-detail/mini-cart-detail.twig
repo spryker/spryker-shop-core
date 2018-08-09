@@ -14,7 +14,7 @@
 
 {% block body %}
     <div class="grid grid--middle text-small text-left">
-        <div class="col col--sm-2">
+        <div class="col col--sm-1">
             {% include molecule('mini-cart-radio', 'MultiCartWidget') with {
                 data: {
                     idCart: data.cart.idQuote,
@@ -23,17 +23,14 @@
             } only %}
         </div>
 
-        <div class="col col--sm-7">
-            <div>
-                <a href="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
-                    <strong>{{ data.cart.name }}</strong>
-                </a>
+        <div class="col col--sm-8">
+            <a href="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
+                <strong>{{ data.cart.name }}</strong>
+            </a>
 
-                {% if data.cart.isDefault %}
-                    ({{ 'multi_cart_widget.cart.default' | trans }})
-                {% endif %}
-            </div>
-
+            {% if data.cart.isDefault %}
+                ({{ 'multi_cart_widget.cart.default' | trans }})
+            {% endif %}
             <div>
                 {% if itemCount > 0 %}
                     {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
