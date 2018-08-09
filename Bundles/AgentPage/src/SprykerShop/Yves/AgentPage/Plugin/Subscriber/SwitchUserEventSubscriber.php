@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\AgentPage\Plugin\Subscriber;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\AgentPage\Security\Agent;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
@@ -37,13 +38,62 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
     public function switchUser(SwitchUserEvent $switchUserEvent)
     {
         $targetUser = $switchUserEvent->getTargetUser();
-        $customerClient = $this->getFactory()
-            ->getCustomerClient();
 
         if ($targetUser instanceof Customer) {
-            $customerClient->setCustomer($targetUser->getCustomerTransfer());
+            $this->onImpersonationStart($targetUser);
         } elseif ($targetUser instanceof Agent) {
-            $customerClient->logout();
+            $this->onImpersonationEnd();
         }
+    }
+
+    /**
+     * @param \SprykerShop\Yves\CustomerPage\Security\Customer $customer
+     *
+     * @return void
+     */
+    protected function onImpersonationStart(Customer $customer): void
+    {
+        $this->loginCustomer($customer);
+    }
+
+    /**
+     * @return void
+     */
+    protected function onImpersonationEnd(): void
+    {
+        $this->logoutCustomer();
+        $this->clearAgentsQuote();
+    }
+
+    /**
+     * @param \SprykerShop\Yves\CustomerPage\Security\Customer $customer
+     *
+     * @return void
+     */
+    protected function loginCustomer(Customer $customer): void
+    {
+        $this->getFactory()
+            ->getCustomerClient()
+            ->setCustomer($customer->getCustomerTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    protected function logoutCustomer(): void
+    {
+        $this->getFactory()
+            ->getCustomerClient()
+            ->logout();
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearAgentsQuote(): void
+    {
+        $this->getFactory()
+            ->getQuoteClient()
+            ->setQuote(new QuoteTransfer());
     }
 }

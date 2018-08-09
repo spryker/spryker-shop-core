@@ -16,12 +16,15 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientBridge
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientBridge;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
+use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientBridge;
+use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
 
 class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_AGENT = 'CLIENT_AGENT';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const APPLICATION = 'APPLICATION';
 
     /**
@@ -34,6 +37,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAgentClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addMessengerClient($container);
+        $container = $this->addQuoteClient($container);
         $container = $this->addApplication($container);
 
         return $container;
@@ -81,6 +85,22 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CLIENT_MESSENGER] = function (Container $container): AgentPageToMessengerClientInterface {
             return new AgentPageToMessengerClientBridge(
                 $container->getLocator()->messenger()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient(Container $container): Container
+    {
+        $container[static::CLIENT_QUOTE] = function (Container $container): AgentPageToQuoteClientInterface {
+            return new AgentPageToQuoteClientBridge(
+                $container->getLocator()->quote()->client()
             );
         };
 
