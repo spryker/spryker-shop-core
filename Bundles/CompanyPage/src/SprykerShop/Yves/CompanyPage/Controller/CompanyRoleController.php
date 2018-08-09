@@ -415,25 +415,6 @@ class CompanyRoleController extends AbstractCompanyController
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $registeredPermissionTransfers
-     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
-     *
-     * @return \Generated\Shared\Transfer\PermissionTransfer
-     */
-    protected function setIdPermission(
-        ArrayObject $registeredPermissionTransfers,
-        PermissionTransfer $permissionTransfer
-    ): PermissionTransfer {
-        foreach ($registeredPermissionTransfers as $permissionTransferFromDatabase) {
-            if ($permissionTransfer->getKey() === $permissionTransferFromDatabase->getKey()) {
-                $permissionTransfer->setIdPermission($permissionTransferFromDatabase->getIdPermission());
-            }
-        }
-
-        return $permissionTransfer;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $registeredPermissionTransfers
      *
      * @return string[]
      */
