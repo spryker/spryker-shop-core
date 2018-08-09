@@ -24,17 +24,13 @@ export default class AutocompleteForm extends Component {
 
     protected mapEvents(): void {
 
-        this.inputElement.addEventListener('input', debounce(() => {
-            this.onInput();
-        }, this.debounceDelay));
+        this.inputElement.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
 
-        this.inputElement.addEventListener('blur', debounce(() => {
-            this.hideSugestions()
-        }, this.debounceDelay));
+        this.inputElement.addEventListener('blur', debounce(() => this.hideSugestions(), this.debounceDelay));
 
         this.inputElement.addEventListener('focus',  () => this.onFocus());
 
-        this.clearFieldButton.addEventListener('click', this.onClick);
+        this.clearFieldButton.addEventListener('click', () => this.onClick());
     }
 
     protected onFocus() {
@@ -43,7 +39,7 @@ export default class AutocompleteForm extends Component {
         }
     }
 
-    protected onClick() {
+    protected onClick(): void {
         this.inputElement.value = ''
         this.hiddenInputElement.value = ''
         this.suggestionsContainer.innerHTML = ''
@@ -76,7 +72,7 @@ export default class AutocompleteForm extends Component {
 
         this.addUrlParams(suggestQuery);
 
-        let data = await this.ajaxProvider.fetch(suggestQuery);
+        const data = await this.ajaxProvider.fetch(suggestQuery);
 
         this.render(data);
 
