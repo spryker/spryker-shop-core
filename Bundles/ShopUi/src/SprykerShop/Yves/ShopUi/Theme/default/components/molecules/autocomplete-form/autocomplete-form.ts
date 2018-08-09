@@ -94,7 +94,7 @@ export default class AutocompleteForm extends Component {
         let renderResults = '';
         dataList.forEach((item) => {
             const itemRender = this.renderTemplate.replace(/\${([^}]*)}/g, (r, k) => item[k]);
-            renderResults += `<li data-value="${item[this.valueKey]}" class="autocomplete-form__item">${itemRender}</li>`;
+            renderResults += `<li data-value="${item[this.valueKey]}" class="${this.jsName}__item">${itemRender}</li>`;
         })
 
         this.suggestionsContainer.innerHTML = `<ul class="list">${renderResults}</ul>`;
@@ -102,17 +102,17 @@ export default class AutocompleteForm extends Component {
     }
 
     protected onRenderResultsClick(): void {
-        const dropdownElements = this.suggestionsContainer.querySelectorAll('.autocomplete-form__item');
+        const dropdownElements = Array.from(this.suggestionsContainer.querySelectorAll(`.${this.jsName}__item`));
 
-        for (let i = 0; i < dropdownElements.length; ++i) {
-            let element = dropdownElements[i];
-            element.addEventListener('click', (evt: Event) => {
-                const dataValue = evt.srcElement.getAttribute('data-value');
+        dropdownElements.forEach((dropdownElement) => {
+            dropdownElement.addEventListener('click', this.handlerClick.bind(this))
+        })
+    }
 
-                this.hiddenInputElement.value = dataValue;
-                this.inputElement.value = evt.srcElement.textContent;
-            })
-        }
+    protected handlerClick(evt): void {
+        const dataValue = evt.srcElement.getAttribute('data-value');
+        this.hiddenInputElement.value = dataValue;
+        this.inputElement.value = evt.srcElement.textContent;
     }
 
     protected get minLetters(): number {

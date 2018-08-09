@@ -16,8 +16,11 @@
     'value-key': required,
     'debounce-delay': 500,
     'min-letters': 3,
+    'limit-param-name': 'limit',
+    'query-param-name': 'query',
     'object-key': null,
     'selected-value-key': ''
+    'class-item-name':
 } %}
 
 {% block body %}
@@ -48,8 +51,8 @@
     {% include molecule('ajax-provider') with {
         class: config.jsName ~ '__ajax-provider',
         attributes: {
-            method: 'post',
-            url: attributes['suggestion-url'] ~ '?limit=' ~ data.limitItems ~ '&query=',
+            method: 'GET',
+            url: attributes['suggestion-url'] ~ '?' ~ attributes['limit-param-name'] ~ '=' ~ data.limitItems ~ '&' ~ attributes['query-param-name'] ~ '=',
             'response-type': 'json'
         }
     } only %}
