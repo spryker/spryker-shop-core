@@ -24,7 +24,8 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
 
         $this
             ->addParameter('isLoggedIn', $isLoggedIn)
-            ->addParameter('agent', $isLoggedIn ? $this->getFactory()->getAgentClient()->getAgent() : null);
+            ->addParameter('agent', $isLoggedIn ? $this->getFactory()->getAgentClient()->getAgent() : null)
+            ->addParameter('customer', $this->getFactory()->getCustomerClient()->getCustomer());
     }
 
     /**
