@@ -1,11 +1,27 @@
 {% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
 
 {% define data = {
-    title: _view.shoppingList.name,
     form: _view.shoppingListForm,
-    shoppingListCollection: _view.shoppingListCollection,
-    idShoppingList: _view.idShoppingList,
-    shoppingListResponse: _view.shoppingListResponse
+    shoppingList: _view.shoppingList,
+    shoppingListItemProducts: _view.shoppingListItemProducts,
+    shoppingListResponse: _view.shoppingListResponse,
+    labels: {
+        addAllToCartLabel: 'customer.account.shopping_list.add_all_available_to_cart' | trans,
+        printShoppingList: 'customer.account.shopping_list.print_shopping_list' | trans,
+        productLabel: 'customer.account.shopping_list.product' | trans,
+        priceLabel: 'customer.account.shopping_list.price' | trans,
+        variantLabel: 'customer.account.shopping_list.overview.variant' | trans,
+        availabilityLabel: 'customer.account.shopping_list.availability' | trans,
+        productAvailableLabel: 'customer.account.shopping_list.available' | trans,
+        productNotAvailableLabel: 'customer.account.shopping_list.not_available' | trans,
+        shoppingListEmptyLabel: 'customer.account.shopping_list.empty' | trans,
+        quantityLabel: 'customer.account.shopping_list.quantity' | trans,
+        addItemToCartLabel: 'customer.account.shopping_list.add-to-cart' | trans,
+        removeItemFromShoppingListLabel: 'customer.account.shopping_list.remove' | trans,
+        actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
+        editLabel: 'customer.account.shopping_list.overview.edit' | trans,
+        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans
+    }
 } %}
 
 {% block breadcrumbs %}
@@ -21,25 +37,143 @@
 {% endblock %}
 
 {% block customerNavigation %}
-    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.idShoppingList) }}
+    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.shoppingList.idShoppingList) }}
 {% endblock %}
 
 {% block customerContent %}
     <div class="box">
-        {% include molecule('form') with {
+        {# todo remove molecule from here :) #}
+        {% embed molecule('form') with {
             data: {
-                title: 'customer.account.shopping_list.overview.edit' | trans,
                 form: data.form,
+                shoppingList: data.shoppingList,
+                shoppingListItemProducts: data.shoppingListItemProducts,
+                labels: data.labels,
                 submit: {
                     enable: true,
                     text: 'forms.submit-btn' | trans
                 },
                 cancel: {
                     enable: true,
-                    url: url('shopping-list'),
+                    url: path('shopping-list'),
                     text: 'general.back.button' | trans
                 }
             }
         } only %}
+            {% block fieldset %}
+                <div class="form__fields grid grid--bottom">
+                    {% block fields %}
+                        {% block field %}{% endblock%}
+
+                        {{ form_row(data.form.idShoppingList) }}
+
+                        {{ form_row(data.form.name, {
+                            rowAttr: {
+                                class: 'form__field col col--sm-12'
+                            }
+                        }) }}
+
+                        <div class="col col--sm-6">
+                            <strong>{{ 'customer.account.shopping_list.overview.owner' | trans }}:</strong>
+                            {{ data.shoppingList.owner }}
+                        </div>
+
+                        {# move to molecule #}
+                        <div class="col col--sm-6">
+                            <strong>{{ 'customer.account.shopping_list.access' | trans }}:</strong>
+                            {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+                                FULL_ACCESS
+                            {% else %}
+                                READ_ONLY
+                            {% endif %}
+                        </div>
+                        {# end move to molecule #}
+
+                        {% if data.shoppingList.items %}
+                        <table class="table table--expand">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" colspan="2">{{ data.labels.productLabel  }}</th>
+                                    <th class="text-center">{{ data.labels.priceLabel  }}</th>
+                                    <th class="text-center">{{ data.labels.quantityLabel }}</th>
+                                    <th class="text-center">{{ data.labels.availabilityLabel  }}</th>
+                                    <th class="text-center">{{ data.labels.actionsLabel }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for key, shoppingListItem in data.shoppingList.items %}
+                                {% set product = data.shoppingListItemProducts[shoppingListItem.idShoppingListItem] %}
+                                {% set isProductAvailable = product.available is defined and product.available and product.price is defined and product.price is not null %}
+                                {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+                                    {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', product.sku) %}
+                                    {% set isProductAvailable = not isDiscontinued and isProductAvailable %}
+                                {% endif %}
+                                <tr>
+                                    <td class="text-center">
+                                        {% if product.images is defined and product.images is not empty %}
+                                            {% include atom('thumbnail') with {
+                                                modifiers: ['small', 'min-size'],
+                                                attributes: {
+                                                    alt: product.name,
+                                                    src: product.images.0.externalUrlSmall,
+                                                    title: product.name
+                                                }
+                                            } only %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{ product.url }}">{{ product.name }}</a>
+                                        <div><small>{{ product.sku }}</small></div>
+                                        {% for attribute in product.superAttributesDefinition %}
+                                            {% if product.attributes[attribute] is defined %}
+                                                {{ ('product.attribute.'~attribute) | trans }}: {{ product.attributes[attribute] }} <br/>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td nowrap="nowrap" class="text-center">
+                                        {% if product.price is not null %}
+                                            {% include molecule('price') with {
+                                                data: {
+                                                    amount: product.price | money,
+                                                    originalAmount: product.prices.ORIGINAL is not defined or product.prices.ORIGINAL is empty ? null : (product.prices.ORIGINAL | money)
+                                                }
+                                            } only %}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ form_row(data.form.items[key].quantity, {disabled: not isProductAvailable, type: 'number'}) }}
+                                    </td>
+                                    <td class="text-center">
+                                        {% if isProductAvailable %}
+                                            {{ data.labels.productAvailableLabel }}
+                                        {% else %}
+                                            {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+                                                {{ widget('ProductDiscontinuedWidgetPlugin', product.sku) }}
+                                            {% else %}
+                                                {{ data.labels.productNotAvailableLabel }}
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a class="button button--alert" href="{{ path('shopping-list/remove-item', {idShoppingListItem: shoppingListItem.idShoppingListItem, idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                            {{data.labels.removeItemFromShoppingListLabel}}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                            {{ data.labels.shoppingListEmptyLabel }}
+                        {% endif %}
+
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+
+        <a class="button button--alert" href="{{ path('shopping-list/delete', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.deleteLabel }}</a>
     </div>
 {% endblock %}

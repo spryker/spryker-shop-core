@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
@@ -100,9 +102,10 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected function executeUpdateAction(int $idShoppingList, Request $request)
     {
         $shoppingListFormDataProvider = $this->getFactory()->createShoppingListFormDataProvider();
+        $data = $shoppingListFormDataProvider->getData($idShoppingList);
         $shoppingListForm = $this->getFactory()
             ->getShoppingListUpdateForm(
-                $shoppingListFormDataProvider->getData($idShoppingList)
+                $data
             )
             ->handleRequest($request);
 
@@ -124,15 +127,14 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             $this->handleResponseErrors($shoppingListResponseTransfer);
         }
 
-        $shoppingListCollection = $this->getCustomerShoppingListCollection();
-        $shoppingListTransfer = $this->getShoppingListById($idShoppingList, $shoppingListCollection);
+        $shoppingListTransfer = $shoppingListForm->getData();
+        $shoppingListItemProducts = $this->getShoppingListItemProducts($shoppingListTransfer);
 
         return [
             'shoppingList' => $shoppingListTransfer,
-            'shoppingListCollection' => $shoppingListCollection,
             'shoppingListForm' => $shoppingListForm->createView(),
-            'idShoppingList' => $shoppingListForm->getData()->getIdShoppingList(),
-            'shoppingListResponse' => $shoppingListResponseTransfer,
+            'shoppingListItemProducts' => $shoppingListItemProducts,
+            'shoppingListResponse' => $shoppingListResponseTransfer, // todo: check, remove if not needed
         ];
     }
 
@@ -249,6 +251,56 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             'shareShoppingListForm' => $shareShoppingListForm->createView(),
             'shoppingListCollection' => $shippingListTransferCollection,
         ];
+    }
+
+    /**
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function getShoppingListItemProducts(ShoppingListTransfer $shoppingListTransfer): array
+    {
+        $shoppingListItemProducts = [];
+        if ($shoppingListTransfer->getItems()) {
+            foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+                $shoppingListItemProducts[$shoppingListItemTransfer->getIdShoppingListItem()] = $this->createProductView($shoppingListItemTransfer);
+            }
+        }
+
+        return $shoppingListItemProducts;
+    }
+
+    /**
+     * TODO: move to AbstractShoppingListController
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function createProductView(ShoppingListItemTransfer $shoppingListItemTransfer): ProductViewTransfer
+    {
+        $productConcreteStorageData = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
+
+        $productViewTransfer = new ProductViewTransfer();
+        if (empty($productConcreteStorageData)) {
+            $productConcreteStorageData = [
+                ProductViewTransfer::SKU => $shoppingListItemTransfer->getSku(),
+            ];
+        }
+        $productViewTransfer->fromArray($productConcreteStorageData, true);
+
+        foreach ($this->getFactory()->getShoppingListItemExpanderPlugins() as $productViewExpanderPlugin) {
+            $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer(
+                $productViewTransfer,
+                $productConcreteStorageData,
+                $this->getLocale()
+            );
+        }
+
+        return $productViewTransfer;
     }
 
     /**

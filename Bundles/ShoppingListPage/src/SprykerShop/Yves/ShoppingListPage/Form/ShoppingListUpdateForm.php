@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\ShoppingListPage\Form;
 
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +21,7 @@ class ShoppingListUpdateForm extends AbstractType
 {
     public const FIELD_NAME = 'name';
     public const FIELD_ID = 'idShoppingList';
+    public const FIELD_ITEMS = 'items';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -42,6 +45,7 @@ class ShoppingListUpdateForm extends AbstractType
     {
         $this->addNameField($builder);
         $this->addIdField($builder);
+        $this->addItemsField($builder);
     }
 
     /**
@@ -68,5 +72,17 @@ class ShoppingListUpdateForm extends AbstractType
     protected function addIdField(FormBuilderInterface $builder): void
     {
         $builder->add(static::FIELD_ID, HiddenType::class);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addItemsField(FormBuilderInterface $builder): void
+    {
+        $builder->add(static::FIELD_ITEMS, CollectionType::class, [
+            'entry_type' => ShoppingListItemForm::class,
+        ]);
     }
 }
