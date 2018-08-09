@@ -59,7 +59,7 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
         $productGroup = $this->getFactory()->getProductGroupStorageClient()->findProductGroupItemsByIdProductAbstract($idProductAbstract);
         $productViewTransfers = [];
         foreach ($productGroup->getGroupProductAbstractIds() as $idProductAbstract) {
-            $productData = $this->getFactory()->getProductStorageClient()->getProductAbstractStorageData($idProductAbstract, $this->getLocale());
+            $productData = $this->getFactory()->getProductStorageClient()->findProductAbstractStorageData($idProductAbstract, $this->getLocale());
             if (!$productData) {
                 continue;
             }

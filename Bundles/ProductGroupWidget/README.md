@@ -1,6 +1,6 @@
 # ProductGroupWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Widget for Product Groups
 
 ## Installation
 
