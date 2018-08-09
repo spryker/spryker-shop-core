@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form;
 
+use Closure;
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,8 +32,13 @@ class CompanyUserForm extends AbstractType
     public const FIELD_FK_COMPANY = 'fk_company';
     public const FIELD_FK_CUSTOMER = 'fk_customer';
     public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
+    public const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
 
     public const OPTION_BUSINESS_UNIT_CHOICES = 'business_unit_choices';
+    public const OPTION_COMPANY_ROLE_CHOICES = 'company_role_choices';
+
+    protected const KEY_ROLES = 'roles';
+    protected const KEY_ID_COMPANY_ROLE = 'id_company_role';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -40,6 +48,7 @@ class CompanyUserForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_BUSINESS_UNIT_CHOICES);
+        $resolver->setRequired(static::OPTION_COMPANY_ROLE_CHOICES);
     }
 
     /**
@@ -64,6 +73,7 @@ class CompanyUserForm extends AbstractType
             ->addFkCompanyField($builder)
             ->addFkCustomerField($builder)
             ->addFkCompanyBusinessUnitField($builder, $options)
+            ->addCompanyRoleCollectionField($builder, $options)
             ->addSalutationField($builder)
             ->addFirstNameField($builder)
             ->addLastNameField($builder)
@@ -259,5 +269,73 @@ class CompanyUserForm extends AbstractType
                 return (bool)$isGuestSubmittedValue;
             }
         ));
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addCompanyRoleCollectionField(FormBuilderInterface $builder, array $options): self
+    {
+        $builder->add(static::FIELD_COMPANY_ROLE_COLLECTION, ChoiceType::class, [
+            'choices_as_values' => true,
+            'choices' => $options[static::OPTION_COMPANY_ROLE_CHOICES],
+            'expanded' => true,
+            'required' => true,
+            'label' => 'company.account.company_role',
+            'multiple' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        $callbackTransformer = new CallbackTransformer(
+            $this->getInputDataCallbackRoleCollectionTransformer(),
+            $this->getOutputDataCallbackRoleCollectionTransformer()
+        );
+
+        $builder->get(static::FIELD_COMPANY_ROLE_COLLECTION)
+            ->addModelTransformer($callbackTransformer);
+
+        return $this;
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getInputDataCallbackRoleCollectionTransformer(): Closure
+    {
+        return function (?array $roleCollection = []): array {
+            $roles = [];
+
+            if (!empty($roleCollection[static::KEY_ROLES])) {
+                foreach ($roleCollection[static::KEY_ROLES] as $role) {
+                    $roles[] = $role[static::KEY_ID_COMPANY_ROLE];
+                }
+            }
+
+            return $roles;
+        };
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getOutputDataCallbackRoleCollectionTransformer(): Closure
+    {
+        return function (?array $roleCollectionSubmitted = []): CompanyRoleCollectionTransfer {
+            $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
+
+            foreach ($roleCollectionSubmitted as $role) {
+                $companyRoleTransfer = (new CompanyRoleTransfer())
+                    ->setIdCompanyRole($role);
+
+                $companyRoleCollectionTransfer->addRole($companyRoleTransfer);
+            }
+
+            return $companyRoleCollectionTransfer;
+        };
     }
 }
