@@ -7,6 +7,7 @@
 
 {% define data = {
     cart: required,
+    total: data.cart.totals.grandTotal | default(0),
 } %}
 
 {% set itemCount = data.cart.items | length %}
@@ -52,7 +53,7 @@
 
         <div class="col col--sm-3 text-right">
             <span>
-               {{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}<br>
+               {{ data.total | money(true, data.cart.currency.code) }}<br>
             </span>
         </div>
 
