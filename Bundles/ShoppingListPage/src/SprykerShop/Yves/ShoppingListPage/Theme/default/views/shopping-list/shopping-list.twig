@@ -51,7 +51,6 @@
             <div class="col">
                 {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
                     <a class="button button--success" href="{{ url('shopping-list/update', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.editLabel }}</a>
-                    <a class="button button--alert" href="{{ url('shopping-list/delete', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.deleteLabel }}</a>
                     <a class="button button--success" href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.shareLabel }}</a>
                 {% endif %}
                 <a class="button button--success" href="{{ path('shopping-list/print', {idShoppingList: data.shoppingList.idShoppingList}) }}" target="_blank">{{data.labels.printShoppingList}}</a>
@@ -147,11 +146,6 @@
                                 <button type="submit" name="add-item" class="button button--success" value="{{ item.idShoppingListItem }}" {{qa('submit-button')}}>
                                     {{data.labels.addItemToCartLabel}}
                                 </button>
-                            {% endif %}
-                            {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
-                                <a class="button button--alert" href="{{ path('shopping-list/remove-item', {idShoppingListItem: item.idShoppingListItem, idShoppingList: data.shoppingList.idShoppingList}) }}">
-                                    {{data.labels.removeItemFromShoppingListLabel}}
-                                </a>
                             {% endif %}
                         </td>
                     </tr>
