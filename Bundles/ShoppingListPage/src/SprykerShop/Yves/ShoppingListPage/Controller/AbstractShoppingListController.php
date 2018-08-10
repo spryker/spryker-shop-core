@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -40,5 +42,38 @@ class AbstractShoppingListController extends AbstractController
         return $this->getFactory()
             ->getCustomerClient()
             ->getCustomer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function createProductView(ShoppingListItemTransfer $shoppingListItemTransfer): ProductViewTransfer
+    {
+        $productConcreteStorageData = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
+
+        $productViewTransfer = new ProductViewTransfer();
+        if (empty($productConcreteStorageData)) {
+            $productConcreteStorageData = [
+                ProductViewTransfer::SKU => $shoppingListItemTransfer->getSku(),
+            ];
+        }
+        $productViewTransfer->fromArray($productConcreteStorageData, true);
+
+        $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
+        $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+
+        foreach ($this->getFactory()->getShoppingListItemExpanderPlugins() as $productViewExpanderPlugin) {
+            $productViewExpanderPlugin->expandProductViewTransfer(
+                $productViewTransfer,
+                $productConcreteStorageData,
+                $this->getLocale()
+            );
+        }
+
+        return $productViewTransfer;
     }
 }

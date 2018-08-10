@@ -1,10 +1,10 @@
 {% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
 
 {% define data = {
+    title: _view.shoppingList.name,
     form: _view.shoppingListForm,
     shoppingList: _view.shoppingList,
     shoppingListItemProducts: _view.shoppingListItemProducts,
-    shoppingListResponse: _view.shoppingListResponse,
     labels: {
         addAllToCartLabel: 'customer.account.shopping_list.add_all_available_to_cart' | trans,
         printShoppingList: 'customer.account.shopping_list.print_shopping_list' | trans,
@@ -19,8 +19,8 @@
         addItemToCartLabel: 'customer.account.shopping_list.add-to-cart' | trans,
         removeItemFromShoppingListLabel: 'customer.account.shopping_list.remove' | trans,
         actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
-        editLabel: 'customer.account.shopping_list.overview.edit' | trans,
-        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans
+        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
+        removeAllItemsLabel: 'Remove all'
     }
 } %}
 
@@ -62,7 +62,8 @@
                             {{ data.shoppingList.owner }}
                         </div>
 
-                        {# move to molecule #}
+                        {# could be moved to molecule #}
+                        {# start molecule #}
                         <div class="col col--sm-6">
                             <strong>{{ 'customer.account.shopping_list.access' | trans }}:</strong>
                             {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
@@ -71,9 +72,9 @@
                                 READ_ONLY
                             {% endif %}
                         </div>
-                        {# end move to molecule #}
+                        {# end molecule #}
 
-                        {% if data.shoppingList.items %}
+                        {% if data.shoppingList.items | length %}
                         <table class="table table--expand">
                             <thead>
                                 <tr>
@@ -141,30 +142,45 @@
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <a class="button button--alert" href="{{ path('shopping-list/remove-item', {idShoppingListItem: shoppingListItem.idShoppingListItem, idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                        <a class="button button--alert" href="{{ path('shopping-list/remove-item', {
+                                            idShoppingList: data.shoppingList.idShoppingList, idShoppingListItem: shoppingListItem.idShoppingListItem
+                                        }) }}">
                                             {{data.labels.removeItemFromShoppingListLabel}}
                                         </a>
                                     </td>
                                 </tr>
                             {% endfor %}
                                 <tr>
-                                    <td class="text-right" colspan="6"></td>
+                                    <td colspan="5"></td>
+                                    <td>
+                                        <a class="" href="{{ path('shopping-list/clear', {idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                            {{ data.labels.removeAllItemsLabel }}
+                                        </a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                         {% else %}
-                            {{ data.labels.shoppingListEmptyLabel }}
+                            <div class="form__field col col--sm-12 text-center">
+                                <hr />
+                                {{ data.labels.shoppingListEmptyLabel }}
+                            </div>
                         {% endif %}
                 </div>
 
+
                 <div class="form__actions">
-                    <a class="button button--alert" href="{{ path('shopping-list/delete', {idShoppingList: data.shoppingList.idShoppingList}) }}">{{ data.labels.deleteLabel }}</a>
-                    <a href="{{ path('shopping-list') }}" class="form__action button button--secondary button--hollow'">
-                        {{ 'general.back.button' | trans }}
-                    </a>
-                    <button type="submit" class="form__action button button--success">
-                        {{ 'forms.submit-btn' | trans }}
-                    </button>
+                    <div class="col col--sm-6 text-left">
+                        <a class="button button--alert" href="{{ path('shopping-list/delete', {idShoppingList: data.shoppingList.idShoppingList}) }}">{{ data.labels.deleteLabel }}</a>
+                    </div>
+                    <div class="col col--sm-6">
+                        <a href="{{ path('shopping-list') }}" class="form__action button button--secondary button--hollow'">
+                            {{ 'general.back.button' | trans }}
+                        </a>
+                        <button type="submit" class="form__action button button--success">
+                            {{ 'forms.submit-btn' | trans }}
+                        </button>
+                    </div>
                 </div>
             </div>
 

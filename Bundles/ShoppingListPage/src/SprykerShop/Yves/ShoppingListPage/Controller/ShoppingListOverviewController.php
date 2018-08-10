@@ -7,9 +7,7 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
@@ -27,6 +25,8 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_UPDATED = 'customer.account.shopping_list.updated';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS = 'customer.account.shopping_list.delete.success';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_FAILED = 'customer.account.shopping_list.clear.failed';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS = 'customer.account.shopping_list.clear.success';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_NOT_FOUND = 'customer.account.shopping_list.items.added_to_cart.not_found';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_FAILED = 'customer.account.shopping_list.items.added_to_cart.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART = 'customer.account.shopping_list.items.added_to_cart';
@@ -37,6 +37,8 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
+    const ROUTE_PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+
     public function indexAction(Request $request)
     {
         $viewData = $this->executeIndexAction($request);
@@ -107,8 +109,6 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             ->getShoppingListUpdateForm($shoppingListTransfer)
             ->handleRequest($request);
 
-        $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
-
         if ($shoppingListForm->isSubmitted() && $shoppingListForm->isValid()) {
             foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
                 $shoppingListItemTransfer->setIdCompanyUser(
@@ -123,12 +123,13 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             if ($shoppingListResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_UPDATED);
 
-                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, ['idShoppingList' => $idShoppingList]);
+                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+                    static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
+                ]);
             }
 
             $this->handleResponseErrors($shoppingListResponseTransfer);
         }
-
 
         $shoppingListItemProducts = $this->getShoppingListItemProducts($shoppingListTransfer);
 
@@ -136,7 +137,6 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             'shoppingList' => $shoppingListTransfer,
             'shoppingListForm' => $shoppingListForm->createView(),
             'shoppingListItemProducts' => $shoppingListItemProducts,
-            'shoppingListResponse' => $shoppingListResponseTransfer, // todo: check, remove if not needed
         ];
     }
 
@@ -165,6 +165,37 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS);
 
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+    }
+
+    /**
+     * @param int $idShoppingList
+     *
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function clearAction(int $idShoppingList)
+    {
+        $shoppingListTransfer = new ShoppingListTransfer();
+        $shoppingListTransfer
+            ->setIdShoppingList($idShoppingList)
+            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+
+        $shoppingListResponseTransfer = $this->getFactory()
+            ->getShoppingListClient()
+            ->clearShoppingList($shoppingListTransfer);
+
+        if (!$shoppingListResponseTransfer->getIsSuccess()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_FAILED);
+
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
+                static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
+            ]);
+        }
+
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS);
+
+        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
+            static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
+        ]);
     }
 
     /**
@@ -256,7 +287,6 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
@@ -274,42 +304,11 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     }
 
     /**
-     * TODO: move to AbstractShoppingListController
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    protected function createProductView(ShoppingListItemTransfer $shoppingListItemTransfer): ProductViewTransfer
-    {
-        $productConcreteStorageData = $this->getFactory()
-            ->getProductStorageClient()
-            ->getProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
-
-        $productViewTransfer = new ProductViewTransfer();
-        if (empty($productConcreteStorageData)) {
-            $productConcreteStorageData = [
-                ProductViewTransfer::SKU => $shoppingListItemTransfer->getSku(),
-            ];
-        }
-        $productViewTransfer->fromArray($productConcreteStorageData, true);
-
-        foreach ($this->getFactory()->getShoppingListItemExpanderPlugins() as $productViewExpanderPlugin) {
-            $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer(
-                $productViewTransfer,
-                $productConcreteStorageData,
-                $this->getLocale()
-            );
-        }
-
-        return $productViewTransfer;
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormInterface $shoppingListForm
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
+
     protected function getShoppingListTransfer(FormInterface $shoppingListForm): ShoppingListTransfer
     {
         $customerTransfer = $this->getCustomer();
