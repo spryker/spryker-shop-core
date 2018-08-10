@@ -102,18 +102,20 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected function executeUpdateAction(int $idShoppingList, Request $request)
     {
         $shoppingListFormDataProvider = $this->getFactory()->createShoppingListFormDataProvider();
-        $data = $shoppingListFormDataProvider->getData($idShoppingList);
+        $shoppingListTransfer = $shoppingListFormDataProvider->getData($idShoppingList);
         $shoppingListForm = $this->getFactory()
-            ->getShoppingListUpdateForm(
-                $data
-            )
+            ->getShoppingListUpdateForm($shoppingListTransfer)
             ->handleRequest($request);
 
         $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
 
         if ($shoppingListForm->isSubmitted() && $shoppingListForm->isValid()) {
-            $shoppingListTransfer = $shoppingListForm->getData();
-            $shoppingListTransfer->setIdShoppingList($idShoppingList);
+            foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+                $shoppingListItemTransfer->setIdCompanyUser(
+                    $this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
+                );
+            }
+
             $shoppingListResponseTransfer = $this->getFactory()
                 ->getShoppingListClient()
                 ->updateShoppingList($shoppingListTransfer);
@@ -121,13 +123,13 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             if ($shoppingListResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_UPDATED);
 
-                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, ['idShoppingList' => $idShoppingList]);
             }
 
             $this->handleResponseErrors($shoppingListResponseTransfer);
         }
 
-        $shoppingListTransfer = $shoppingListForm->getData();
+
         $shoppingListItemProducts = $this->getShoppingListItemProducts($shoppingListTransfer);
 
         return [

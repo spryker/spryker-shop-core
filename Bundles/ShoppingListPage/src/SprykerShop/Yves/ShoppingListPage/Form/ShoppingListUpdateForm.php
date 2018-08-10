@@ -72,6 +72,15 @@ class ShoppingListUpdateForm extends AbstractType
     protected function addIdField(FormBuilderInterface $builder): void
     {
         $builder->add(static::FIELD_ID, HiddenType::class);
+        $builder->get(static::FIELD_ID)
+            ->addModelTransformer(new CallbackTransformer(
+                function ($id) {
+                    return $id;
+                },
+                function ($idString) {
+                    return (int)$idString;
+                }
+            ));
     }
 
     /**
@@ -82,6 +91,8 @@ class ShoppingListUpdateForm extends AbstractType
     protected function addItemsField(FormBuilderInterface $builder): void
     {
         $builder->add(static::FIELD_ITEMS, CollectionType::class, [
+            'required' => false,
+            'label' => null,
             'entry_type' => ShoppingListItemForm::class,
         ]);
     }

@@ -40,9 +40,9 @@ class ShoppingListItemForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addQuantityField($builder)
-            ->addSkuField($builder)
-            ->addIdShoppingListItemField($builder);
+            ->addQuantityField($builder);
+//            ->addSkuField($builder)
+//            ->addIdShoppingListItemField($builder);
     }
 
     /**
@@ -64,7 +64,7 @@ class ShoppingListItemForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_ID_SHOPPING_LIST_ITEM, HiddenType::class);
+        $builder->add(self::FIELD_QUANTITY, HiddenType::class);
 
         return $this;
     }

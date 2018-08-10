@@ -42,29 +42,13 @@
 
 {% block customerContent %}
     <div class="box">
-        {# todo remove molecule from here :) #}
-        {% embed molecule('form') with {
-            data: {
-                form: data.form,
-                shoppingList: data.shoppingList,
-                shoppingListItemProducts: data.shoppingListItemProducts,
-                labels: data.labels,
-                submit: {
-                    enable: true,
-                    text: 'forms.submit-btn' | trans
-                },
-                cancel: {
-                    enable: true,
-                    url: path('shopping-list'),
-                    text: 'general.back.button' | trans
-                }
-            }
-        } only %}
-            {% block fieldset %}
-                <div class="form__fields grid grid--bottom">
-                    {% block fields %}
-                        {% block field %}{% endblock%}
+        <div class="form" data-qa="component form">
+            {{ form_start(data.form) }}
 
+            <div class="form__container">
+                {{ form_errors(data.form) }}
+
+                <div class="form__fields grid grid--bottom">
                         {{ form_row(data.form.idShoppingList) }}
 
                         {{ form_row(data.form.name, {
@@ -163,17 +147,31 @@
                                     </td>
                                 </tr>
                             {% endfor %}
+                                <tr>
+                                    <td class="text-right" colspan="6"></td>
+                                </tr>
                             </tbody>
                         </table>
                         {% else %}
                             {{ data.labels.shoppingListEmptyLabel }}
                         {% endif %}
-
-                    {% endblock %}
                 </div>
-            {% endblock %}
-        {% endembed %}
 
-        <a class="button button--alert" href="{{ path('shopping-list/delete', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.deleteLabel }}</a>
+                <div class="form__actions">
+                    <a class="button button--alert" href="{{ path('shopping-list/delete', {idShoppingList: data.shoppingList.idShoppingList}) }}">{{ data.labels.deleteLabel }}</a>
+                    <a href="{{ path('shopping-list') }}" class="form__action button button--secondary button--hollow'">
+                        {{ 'general.back.button' | trans }}
+                    </a>
+                    <button type="submit" class="form__action button button--success">
+                        {{ 'forms.submit-btn' | trans }}
+                    </button>
+                </div>
+            </div>
+
+            {% do data.form.items.setRendered %}
+
+            {{ form_end(data.form) }}
+        </div>
+
     </div>
 {% endblock %}
