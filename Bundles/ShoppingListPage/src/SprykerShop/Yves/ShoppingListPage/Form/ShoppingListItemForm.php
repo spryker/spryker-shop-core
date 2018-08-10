@@ -15,9 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ShoppingListItemForm extends AbstractType
 {
-    protected const FIELD_SKU = 'sku';
     protected const FIELD_QUANTITY = 'quantity';
-    protected const FIELD_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -41,20 +39,6 @@ class ShoppingListItemForm extends AbstractType
     {
         $this
             ->addQuantityField($builder);
-//            ->addSkuField($builder)
-//            ->addIdShoppingListItemField($builder);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addSkuField(FormBuilderInterface $builder): self
-    {
-        $builder->add(self::FIELD_SKU, HiddenType::class);
-
-        return $this;
     }
 
     /**
@@ -64,19 +48,7 @@ class ShoppingListItemForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_QUANTITY, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdShoppingListItemField(FormBuilderInterface $builder): self
-    {
-        $builder->add(self::FIELD_QUANTITY, HiddenType::class);
+        $builder->add(static::FIELD_QUANTITY, HiddenType::class);
 
         return $this;
     }

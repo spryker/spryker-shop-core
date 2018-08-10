@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ShoppingListOverviewController extends AbstractShoppingListController
 {
     protected const PARAM_SHOPPING_LISTS = 'shoppingLists';
+    protected const ROUTE_PARAM_ID_SHOPPING_LIST = 'idShoppingList';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_UPDATED = 'customer.account.shopping_list.updated';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS = 'customer.account.shopping_list.delete.success';
@@ -37,8 +38,6 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    const ROUTE_PARAM_ID_SHOPPING_LIST = 'idShoppingList';
-
     public function indexAction(Request $request)
     {
         $viewData = $this->executeIndexAction($request);
@@ -110,12 +109,6 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             ->handleRequest($request);
 
         if ($shoppingListForm->isSubmitted() && $shoppingListForm->isValid()) {
-            foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-                $shoppingListItemTransfer->setIdCompanyUser(
-                    $this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
-                );
-            }
-
             $shoppingListResponseTransfer = $this->getFactory()
                 ->getShoppingListClient()
                 ->updateShoppingList($shoppingListTransfer);
@@ -123,7 +116,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             if ($shoppingListResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_UPDATED);
 
-                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
                     static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
                 ]);
             }
@@ -308,7 +301,6 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-
     protected function getShoppingListTransfer(FormInterface $shoppingListForm): ShoppingListTransfer
     {
         $customerTransfer = $this->getCustomer();
