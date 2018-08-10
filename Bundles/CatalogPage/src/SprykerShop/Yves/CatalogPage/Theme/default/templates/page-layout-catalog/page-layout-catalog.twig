@@ -8,6 +8,7 @@
     categoryId: null,
     filterPath: null,
     viewMode: null,
+    isEmptyCategoryFilterValueVisible: null,
 
     pagination: {
         currentPage: required,
@@ -87,7 +88,8 @@
                         data: {
                             facets: data.facets,
                             filterPath: data.filterPath,
-                            categories: data.categories
+                            categories: data.categories,
+                            isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible
                         }
                     } only %}
                 {% endblock %}

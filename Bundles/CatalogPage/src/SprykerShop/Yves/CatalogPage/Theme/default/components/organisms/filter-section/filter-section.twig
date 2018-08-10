@@ -8,7 +8,8 @@
 {% define data = {
     facets: [],
     filterPath: null,
-    categories: []
+    categories: [],
+    isEmptyCategoryFilterValueVisible: null
 } %}
 
 {% block body %}
@@ -30,7 +31,8 @@
                     min: filter.min | default(0),
                     max: filter.max | default(0),
                     activeMin: filter.activeMin | default(0),
-                    activeMax: filter.activeMax | default(0)
+                    activeMax: filter.activeMax | default(0),
+                    isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible
                 }
             } only %}
 
