@@ -59,7 +59,7 @@
         <div class="col col--sm-3 text-right">
             {% if itemCount > 0 %}
                 <span>
-                   {{ data.cart.totals.subTotal | money(true, data.cart.currency.code) }}<br>
+                   {{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}<br>
                 </span>
             {% endif %}
         </div>
