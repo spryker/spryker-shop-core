@@ -95,7 +95,7 @@ class ShoppingListCompanyUserShareEditForm extends AbstractType
     protected function addIdShoppingListPermissionGroupField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_ID_SHOPPING_LIST_PERMISSION_GROUP, ChoiceType::class, [
-            'choices' => array_flip($options[ShareShoppingListForm::OPTION_PERMISSION_GROUPS]),
+            'choices' => $options[ShareShoppingListForm::OPTION_PERMISSION_GROUPS],
             'label' => false,
             'placeholder' => false,
             'required' => false,

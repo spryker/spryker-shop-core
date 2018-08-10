@@ -227,7 +227,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         if ($shareShoppingListForm->isSubmitted() && $shareShoppingListForm->isValid()) {
             $shoppingListShareResponseTransfer = $this->getFactory()
                 ->getShoppingListClient()
-                ->shareShoppingList($shareShoppingListForm->getData());
+                ->updateShareShoppingList($shareShoppingListForm->getData());
 
             if ($shoppingListShareResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_SHARE_SHOPPING_LIST_SUCCESSFUL);

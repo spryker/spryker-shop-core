@@ -74,10 +74,10 @@ class ShareShoppingListDataProvider
 
         $shoppingListTransfer = $this->shoppingListClient->getShoppingList($shoppingListTransfer);
 
-        $this->addAvailableCompanyBusinessUnits($shoppingListTransfer, $customerTransfer);
-        $this->addAvailableCompanyUsers($shoppingListTransfer, $customerTransfer);
+        $this->mergeAvailableCompanyBusinessUnits($shoppingListTransfer, $customerTransfer);
+        $this->mergeAvailableCompanyUsers($shoppingListTransfer, $customerTransfer);
 
-        return $shoppingListTransfer;
+        return $this->sortCompanyUsersAndCompanyBusinessUnits($shoppingListTransfer);
     }
 
     /**
@@ -104,12 +104,19 @@ class ShareShoppingListDataProvider
      *
      * @return void
      */
-    protected function addAvailableCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer)
+    protected function mergeAvailableCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer)
     {
         $companyBusinessUnitIds = [];
         $availableCompanyBusinessUnitCollection = $this->getCompanyBusinessUnitCollection($customerTransfer);
 
         foreach ($shoppingListTransfer->getCompanyBusinessUnits() as $shoppingListCompanyBusinessUnitTransfer) {
+            foreach ($availableCompanyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
+                if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit() === $shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit()) {
+                    $shoppingListCompanyBusinessUnitTransfer->setCompanyBusinessUnitName($companyBusinessUnitTransfer->getName());
+                    break;
+                }
+            }
+
             $companyBusinessUnitIds[] = $shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit();
         }
 
@@ -131,19 +138,27 @@ class ShareShoppingListDataProvider
      *
      * @return void
      */
-    protected function addAvailableCompanyUsers(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer)
+    protected function mergeAvailableCompanyUsers(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer)
     {
         $companyUserIds = [];
         $availableCompanyUserCollection = $this->getCompanyUserCollection($customerTransfer);
 
         foreach ($shoppingListTransfer->getCompanyUsers() as $shoppingListCompanyUserTransfer) {
+            foreach ($availableCompanyUserCollection->getCompanyUsers() as $companyUserTransfer) {
+                if ($companyUserTransfer->getIdCompanyUser() === $shoppingListCompanyUserTransfer->getIdCompanyUser()) {
+                    $shoppingListCompanyUserTransfer->setCustomerFullName(
+                        $companyUserTransfer->getCustomer()->getFirstName() . ' ' . $companyUserTransfer->getCustomer()->getLastName()
+                    );
+                    break;
+                }
+            }
+
             $companyUserIds[] = $shoppingListCompanyUserTransfer->getIdCompanyUser();
         }
 
         foreach ($availableCompanyUserCollection->getCompanyUsers() as $companyUserTransfer) {
             if (!in_array($companyUserTransfer->getIdCompanyUser(), $companyUserIds)) {
-                $customerFullName = $companyUserTransfer->getCustomer()->getFirstName() . ' ' .
-                    $companyUserTransfer->getCustomer()->getLastName();
+                $customerFullName = $companyUserTransfer->getCustomer()->getFirstName() . ' ' . $companyUserTransfer->getCustomer()->getLastName();
 
                 $shoppingListCompanyUser = (new ShoppingListCompanyUserTransfer)
                     ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
@@ -153,6 +168,28 @@ class ShareShoppingListDataProvider
                 $shoppingListTransfer->addCompanyUsers($shoppingListCompanyUser);
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function sortCompanyUsersAndCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    {
+        $shoppingListTransfer->getCompanyBusinessUnits()->uasort(
+            function (ShoppingListCompanyBusinessUnitTransfer $firstBusinessUnitTransfer, ShoppingListCompanyBusinessUnitTransfer $secondBusinessUnitTransfer) {
+                return strcmp($firstBusinessUnitTransfer->getCompanyBusinessUnitName(), $secondBusinessUnitTransfer->getCompanyBusinessUnitName());
+            }
+        );
+
+        $shoppingListTransfer->getCompanyUsers()->uasort(
+            function (ShoppingListCompanyUserTransfer $firstUserTransfer, ShoppingListCompanyUserTransfer $secondUserTransfer) {
+                return strcmp($firstUserTransfer->getCustomerFullName(), $secondUserTransfer->getCustomerFullName());
+            }
+        );
+
+        return $shoppingListTransfer;
     }
 
     /**
@@ -206,10 +243,9 @@ class ShareShoppingListDataProvider
      */
     protected function mapPermissionGroupsToOptions(ArrayObject $permissionGroups): array
     {
-        $permissionGroupOptions = [0 => 'NO_ACCESS'];
+        $permissionGroupOptions = ['NO_ACCESS' => 0];
         foreach ($permissionGroups as $permissionGroupTransfer) {
-            $permissionGroupOptions[$permissionGroupTransfer->getIdShoppingListPermissionGroup()]
-                = $permissionGroupTransfer->getName();
+            $permissionGroupOptions[$permissionGroupTransfer->getName()] = $permissionGroupTransfer->getIdShoppingListPermissionGroup();
         }
 
         return $permissionGroupOptions;
