@@ -5,6 +5,10 @@
     shareShoppingListForm: _view.shareShoppingListForm,
     idShoppingList: _view.idShoppingList,
     shoppingList: _view.shoppingList,
+    companyUsers: _view.shoppingList.companyUsers,
+    sharedCompanyUsers: _view.shoppingList.sharedCompanyUsers,
+    companyBusinessUnits: _view.shoppingList.companyBusinessUnits,
+    sharedCompanyBusinessUnits: _view.shoppingList.sharedCompanyBusinessUnits,
     labels: {
         shareFormSubmit: 'customer.account.shopping_list.share.from.share' | trans,
     }
@@ -28,8 +32,6 @@
     {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.idShoppingList) }}
 {% endblock %}
 
-
-
 {% block customerContent %}
     <div class="form box" data-qa="component form"><h5>Share Shopping List with:</h5>
 
@@ -38,22 +40,22 @@
         <div class="form__container">
             <div class="form__fields grid grid--bottom">
                 <div class="form__field col col--sm-12">
-                    <b>{{ form_label(data.shareShoppingListForm.companyBusinessUnits) }}</b>
+                    <b>{{ form_label(data.shareShoppingListForm.sharedCompanyBusinessUnits) }}</b>
                     <br clear="all">
-                    {% for key, companyBusinessUnit in data.shoppingList.companyBusinessUnits %}
+                    {% for key, companyBusinessUnit in data.companyBusinessUnits %}
 
-                        {% if companyBusinessUnit.idShoppingListPermissionGroup is not null %}
-                            <label>{{ companyBusinessUnit.companyBusinessUnitName }}</label>
-                            {{ form_row(data.shareShoppingListForm.companyBusinessUnits[key]) }}
+                        {% if data.sharedCompanyBusinessUnits[key].idShoppingListPermissionGroup is not null %}
+                            <label>{{ companyBusinessUnit.name }}</label>
+                            {{ form_row(data.shareShoppingListForm.sharedCompanyBusinessUnits[key]) }}
                         {% endif %}
                     {% endfor %}
                     <br clear="all">
                     <hr>
-                    {% for key, companyBusinessUnit in data.shoppingList.companyBusinessUnits %}
+                    {% for key, companyBusinessUnit in data.companyBusinessUnits %}
 
-                        {% if companyBusinessUnit.idShoppingListPermissionGroup is null %}
-                            <label>{{ companyBusinessUnit.companyBusinessUnitName }}</label>
-                            {{ form_row(data.shareShoppingListForm.companyBusinessUnits[key]) }}
+                        {% if data.sharedCompanyBusinessUnits[key].idShoppingListPermissionGroup is null %}
+                            <label>{{ companyBusinessUnit.name }}</label>
+                            {{ form_row(data.shareShoppingListForm.sharedCompanyBusinessUnits[key]) }}
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -62,22 +64,22 @@
                 <br clear="all">
 
                 <div class="form__field col col--sm-12">
-                    <b>{{ form_label(data.shareShoppingListForm.companyUsers) }}</b>
+                    <b>{{ form_label(data.shareShoppingListForm.sharedCompanyUsers) }}</b>
                     <br clear="all">
-                    {% for key, companyUser in data.shoppingList.companyUsers %}
+                    {% for key, companyUser in data.companyUsers %}
 
-                        {% if companyUser.idShoppingListPermissionGroup is not null %}
-                            <label>{{ companyUser.customerFullName }}</label>
-                            {{ form_row(data.shareShoppingListForm.companyUsers[key]) }}
+                        {% if data.sharedCompanyUsers[key].idShoppingListPermissionGroup is not null %}
+                            <label>{{ companyUser.customer.firstName }} {{ companyUser.customer.lastName }}</label>
+                            {{ form_row(data.shareShoppingListForm.sharedCompanyUsers[key]) }}
                         {% endif %}
                     {% endfor %}
                     <br clear="all">
                     <hr>
-                    {% for key, companyUser in data.shoppingList.companyUsers %}
+                    {% for key, companyUser in data.companyUsers %}
 
-                        {% if companyUser.idShoppingListPermissionGroup is null %}
-                            <label>{{ companyUser.customerFullName }}</label>
-                            {{ form_row(data.shareShoppingListForm.companyUsers[key]) }}
+                        {% if data.sharedCompanyUsers[key].idShoppingListPermissionGroup is null %}
+                            <label>{{ companyUser.customer.firstName }} {{ companyUser.customer.lastName }}</label>
+                            {{ form_row(data.shareShoppingListForm.sharedCompanyUsers[key]) }}
                         {% endif %}
                     {% endfor %}
                 </div>

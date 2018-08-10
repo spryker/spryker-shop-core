@@ -20,8 +20,8 @@ class ShareShoppingListForm extends AbstractType
 {
     public const OPTION_PERMISSION_GROUPS = 'permissionGroups';
 
-    public const FIELD_COMPANY_BUSINESS_UNITS = 'companyBusinessUnits';
-    public const FIELD_COMPANY_USERS = 'companyUsers';
+    public const FIELD_COMPANY_BUSINESS_UNITS = 'sharedCompanyBusinessUnits';
+    public const FIELD_COMPANY_USERS = 'sharedCompanyUsers';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
