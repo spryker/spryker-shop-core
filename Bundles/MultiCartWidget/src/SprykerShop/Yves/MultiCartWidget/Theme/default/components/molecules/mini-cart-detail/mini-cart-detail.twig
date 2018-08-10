@@ -2,12 +2,11 @@
 
 {% define config = {
     name: 'mini-cart-detail',
-    tag: 'div'
+    tag: 'div',
 } %}
 
 {% define data = {
     cart: required,
-    itemDisplayLimit: 2
 } %}
 
 {% set itemCount = data.cart.items | length %}
@@ -35,19 +34,17 @@
             </div>
 
             <div>
-                {% if itemCount > 0 %}
-                    {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
-                        {{ widget('ProductBundleItemCounterWidgetPlugin', data.cart) }}
-                    {% else %}
-                        {% set label = (itemCount == 1)
-                            ? 'multi_cart_widget.cart.item'
-                            : 'multi_cart_widget.cart.items'
-                        %}
+                {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
+                    {{ widget('ProductBundleItemCounterWidgetPlugin', data.cart) }}
+                {% else %}
+                    {% set label = (itemCount == 1)
+                        ? 'multi_cart_widget.cart.item'
+                        : 'multi_cart_widget.cart.items'
+                    %}
 
-                        <span class="cart-items-quantity">
-                          {{ itemCount }} {{ label | trans }}
-                        </span>
-                    {% endif %}
+                    <span class="cart-items-quantity">
+                      {{ itemCount }} {{ label | trans }}
+                    </span>
                 {% endif %}
 
                 {% if widgetExists('SharedCartPermissionGroupWidgetPlugin') %}
@@ -57,11 +54,9 @@
         </div>
 
         <div class="col col--sm-3 text-right">
-            {% if itemCount > 0 %}
-                <span>
-                   {{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}<br>
-                </span>
-            {% endif %}
+            <span>
+               {{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}<br>
+            </span>
         </div>
 
     </div>
