@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    note: _widget.note,
+
+} %}
+
+{% block body %}
+    {% if data.note.message is defined %}
+        <span>{{ 'shopping_list.item_note' | trans }}</span><br>
+        <span>{{ data.note.message }}</span>
+    {% endif %}
+{% endblock %}
