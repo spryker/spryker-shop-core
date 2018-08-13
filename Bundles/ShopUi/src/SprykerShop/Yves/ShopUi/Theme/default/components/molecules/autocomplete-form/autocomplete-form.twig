@@ -7,59 +7,56 @@
 
 {% define data = {
     value: '',
-    limitItems: 5,
 } %}
 
 {% define attributes = {
     'suggestion-url': required,
-    'render-template': required,
-    'value-key': required,
     'debounce-delay': 500,
     'min-letters': 3,
-    'limit-param-name': 'limit',
-    'query-param-name': 'query',
-    'object-key': null,
     'selected-value-key': ''
 } %}
 
 {% block body %}
-    <div class="grid">
-        <div class="col col--sm-10 col--lg-11">
-            <input name="query"
-                   type="text"
-                   class="input input--expand {{ config.jsName }}__input"
-                   placeholder="{{ 'autocomplete.placeholder' | trans }}"
-                   value="{{ data.value }}"
-                   autocomplete="off">
-
-            <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
-        </div>
-        <div class="col col--sm-2 col--lg-1">
-            <button type="button" class="button button--warning button--expand {{ config.jsName }}__clear">&times;</button>
-        </div>
-    </div>
-
-    <div class="box is-hidden {{ config.name }}__suggestion {{ config.jsName }}__container">
-        {% block suggestion %}{% endblock %}
-
-        <div class="{{ config.jsName }}__empty-results is-hidden">
-            {{ 'autocomplete.no_results' | trans }}
-        </div>
-    </div>
 
     {% include molecule('ajax-provider') with {
-        class: config.jsName ~ '__ajax-provider',
+        class: config.jsName ~ '__provider',
         attributes: {
             method: 'GET',
-            url: attributes['suggestion-url'] ~ '?' ~ attributes['limit-param-name'] ~ '=' ~ data.limitItems ~ '&' ~ attributes['query-param-name'] ~ '=',
-            'response-type': 'json'
+            url: attributes['suggestion-url']
         }
     } only %}
 
     {% include molecule('ajax-loader') with {
         attributes: {
-            'provider-selector': '.' ~ config.jsName ~ '__ajax-provider'
+            'provider-selector': '.' ~ config.jsName ~ '__provider'
         }
     } only %}
+
+    {% block input %}
+        <div class="grid">
+            <div class="col col--sm-12">
+                <input name="query"
+                       type="text"
+                       class="input input--expand {{ config.jsName }}__input"
+                       placeholder="{{ 'autocomplete.placeholder' | trans }}"
+                       value="{{ data.value }}"
+                       autocomplete="off">
+
+                <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block suggestion %}
+        <div class="box is-hidden {{ config.name }}__suggestion {{ config.jsName }}__container">
+            {% include molecule('ajax-renderer') with {
+                attributes: {
+                    'provider-selector': '.' ~ config.jsName ~ '__provider',
+                    'render-if-response-is-empty': true,
+                    'target-selector': config.jsName ~ '__suggestions',
+                }
+            } only %}
+        </div>
+    {% endblock %}
 
 {% endblock %}

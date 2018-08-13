@@ -4,6 +4,10 @@
 
         &__suggestion {
             margin: 0;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
         }
 
         &__item {
