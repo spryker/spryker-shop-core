@@ -1,17 +1,18 @@
 {% extends template('page-layout-company', 'CompanyPage') %}
 
 {% define data = {
-form: _view.companyUserForm,
+    form: _view.companyUserForm,
 
-title: 'company.account.company_user' | trans,
-activePage: 'users'
+    title: 'company.account.company_user' | trans,
+    activePage: 'users'
 } %}
 
 {% block companyContent %}
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'company.account.company_user.edit_information' | trans,
+                title: ('company.account.company_user.edit_information' | trans) ~ ' '
+                ~ data.form.vars.value.first_name ~ ' ' ~ data.form.vars.value.last_name,
                 form: data.form,
                 options: {
                     action: url('company/user/update')
