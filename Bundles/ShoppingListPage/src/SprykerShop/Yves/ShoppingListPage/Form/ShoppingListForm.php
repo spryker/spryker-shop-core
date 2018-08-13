@@ -51,7 +51,10 @@ class ShoppingListForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
-            'label' => 'customer.account.shopping_list.overview.name',
+            'label' => false,
+            'attr' => [
+                'placeholder' => 'customer.account.print_shopping_list.title.shopping_list_name',
+            ],
             'required' => true,
             'constraints' => [
                 new NotBlank(),
