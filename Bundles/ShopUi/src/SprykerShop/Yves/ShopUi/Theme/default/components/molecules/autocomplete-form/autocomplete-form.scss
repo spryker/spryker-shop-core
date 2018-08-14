@@ -12,7 +12,7 @@
 
         &__item {
             cursor: pointer;
-            padding: 0.5rem;
+            padding: map-get($setting-spacing, 'default');
 
             &:hover {
                 background-color: $setting-color-dark;
