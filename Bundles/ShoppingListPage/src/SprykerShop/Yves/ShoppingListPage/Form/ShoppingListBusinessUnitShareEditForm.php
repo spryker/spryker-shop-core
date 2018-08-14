@@ -57,7 +57,7 @@ class ShoppingListBusinessUnitShareEditForm extends AbstractType
      */
     protected function addIdShoppingListCompanyBusinessUnitField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_ID_SHOPPING_LIST_COMPANY_BUSINESS_UNIT, HiddenType::class);
+        $builder->add(static::FIELD_ID_SHOPPING_LIST_COMPANY_BUSINESS_UNIT, HiddenType::class);
 
         return $this;
     }
@@ -69,7 +69,7 @@ class ShoppingListBusinessUnitShareEditForm extends AbstractType
      */
     protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
+        $builder->add(static::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
 
         return $this;
     }
@@ -81,7 +81,7 @@ class ShoppingListBusinessUnitShareEditForm extends AbstractType
      */
     protected function addIdShoppingListField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_ID_SHOPPING_LIST, HiddenType::class);
+        $builder->add(static::FIELD_ID_SHOPPING_LIST, HiddenType::class);
 
         return $this;
     }

@@ -28,7 +28,7 @@ class ShareShoppingListDataProvider
     const ORDER_BUSINESS_UNIT_SORT_FIELD = 'name';
     const ORDER_BUSINESS_UNIT_SORT_DIRECTION = 'ASC';
 
-    const PERMISSION_NO_ACCESS = 'NO_ACCESS';
+    protected const PERMISSION_NO_ACCESS = 'NO_ACCESS';
 
     /**
      * @var \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface
@@ -207,7 +207,7 @@ class ShareShoppingListDataProvider
      */
     protected function mapPermissionGroupsToOptions(ArrayObject $permissionGroups): array
     {
-        $permissionGroupOptions = [self::PERMISSION_NO_ACCESS => 0];
+        $permissionGroupOptions = [static::PERMISSION_NO_ACCESS => 0];
         foreach ($permissionGroups as $permissionGroupTransfer) {
             $permissionGroupOptions[$permissionGroupTransfer->getName()] = $permissionGroupTransfer->getIdShoppingListPermissionGroup();
         }
