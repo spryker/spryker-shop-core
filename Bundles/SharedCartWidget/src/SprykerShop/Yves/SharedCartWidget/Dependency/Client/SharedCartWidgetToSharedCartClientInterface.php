@@ -14,7 +14,7 @@ interface SharedCartWidgetToSharedCartClientInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string
+     * @return string|null
      */
-    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): string;
+    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): ?string;
 }

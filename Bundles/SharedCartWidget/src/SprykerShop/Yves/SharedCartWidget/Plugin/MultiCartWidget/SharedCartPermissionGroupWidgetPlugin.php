@@ -31,9 +31,9 @@ class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin impleme
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string
+     * @return string|null
      */
-    protected function getAccessType(QuoteTransfer $quoteTransfer): string
+    protected function getAccessType(QuoteTransfer $quoteTransfer): ?string
     {
         return $this->getFactory()
             ->getSharedCartClient()
