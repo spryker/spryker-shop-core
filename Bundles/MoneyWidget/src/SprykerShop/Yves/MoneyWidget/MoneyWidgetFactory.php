@@ -29,7 +29,7 @@ class MoneyWidgetFactory extends AbstractFactory
         return new MoneyBuilder(
             $this->createMoneyToTransferMapper(),
             $this->createDecimalToIntegerConverter(),
-            $this->getCurrencyPlugin()->getCurrent()->getCode()
+            (string)$this->getCurrencyPlugin()->getCurrent()->getCode()
         );
     }
 
