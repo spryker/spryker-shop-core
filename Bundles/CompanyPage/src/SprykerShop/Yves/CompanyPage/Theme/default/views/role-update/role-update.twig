@@ -9,11 +9,31 @@
     activePage: 'role'
 } %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview'),
+                },
+                {
+                    label: 'company.account.company_role.edit_information' | trans({
+                        '%role_name%' : data.form.vars.value.name,
+                    }),
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
 {% block companyContent %}
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'company.account.company_role.edit_information' | trans,
+                title: 'company.account.company_role.edit_information' | trans({
+                    '%role_name%' : data.form.vars.value.name,
+                }),
                 form: data.form,
                 submit: {
                     enable: true
