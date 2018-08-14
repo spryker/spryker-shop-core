@@ -10,17 +10,15 @@
     shoppingListForm: null,
     shoppingListResponse: null,
     labels: {
-        viewLabel: 'customer.account.shopping_list.overview.view' | trans,
-        editLabel: 'customer.account.shopping_list.overview.edit' | trans,
-        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
         addShoppingListToCartLabel: 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans,
-        shareLabel: 'customer.account.shopping_list.overview.share' | trans,
-        printLabel: 'customer.account.shopping_list.overview.print' | trans,
         nameLabel: 'customer.account.shopping_list.overview.name' | trans,
         itemCountLabel: 'customer.account.shopping_list.overview.item_count' | trans,
         createdDateLabel: 'customer.account.shopping_list.overview.created_date' | trans,
         ownerLabel: 'customer.account.shopping_list.overview.owner' | trans,
         actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
+        accessLabel: 'customer.account.shopping_list.access' | trans,
+        readOnlyLabel: 'customer.account.shopping_list.permissions.READ_ONLY' | trans,
+        fullAccessLabel: 'customer.account.shopping_list.permissions.FULL_ACCESS' | trans,
         submitLabel: 'forms.submit-btn' | trans
     }
 } %}
@@ -29,6 +27,11 @@
 <form method="POST" action="{{ path('shopping-list/add-shopping-list-to-cart') }}">
     <button type="submit" class="button button--success" {{qa('submit-button')}}>
         {{ data.labels.addShoppingListToCartLabel }}
+        {% include atom('icon') with {
+            data: {
+                name: 'shopping-cart'
+            }
+        } only %}
     </button>
     <table class="table table--expand">
         <thead>
@@ -37,12 +40,16 @@
                 <th class="text-left">{{ data.labels.nameLabel }}</th>
                 <th>{{ data.labels.ownerLabel }}</th>
                 <th>{{ data.labels.createdDateLabel }}</th>
+                <th>{{ data.labels.accessLabel }}</th>
                 <th>{{ data.labels.itemCountLabel }}</th>
                 <th>{{ data.labels.actionsLabel }}</th>
             </tr>
         </thead>
         <tbody>
         {% for shoppingList in data.shoppingLists %}
+
+            {% set hasWritePermission = can('WriteShoppingListPermissionPlugin', shoppingList.idShoppingList) %}
+
             <tr>
                 <td>
                     {% if data.enableTableForm %}
@@ -54,15 +61,21 @@
                 </td>
                 <td class="text-center">{{ shoppingList.owner }}</td>
                 <td class="text-center">{{ shoppingList.createdAt | formatDate }}</td>
+                <td class="text-center">
+                    {% if hasWritePermission %}
+                        <label>{{ data.labels.fullAccessLabel }}</label>
+                    {% else %}
+                        <label>{{ data.labels.readOnlyLabel }}</label>
+                    {% endif %}
+                </td>
                 <td class="text-center">{{ shoppingList.numberOfItems }}</td>
                 <td>
-                    <a href="{{ url('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.viewLabel }}</a>
-                    {% if can('WriteShoppingListPermissionPlugin', shoppingList.idShoppingList) %}
-                        <a href="{{ url('shopping-list/update', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.editLabel }}</a>
-                        <a href="{{ url('shopping-list/delete', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.deleteLabel }}</a>
-                        <a href="{{ url('shopping-list/share', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.shareLabel }}</a>
-                    {% endif %}
-                    <a href="{{ url('shopping-list/print', { idShoppingList: shoppingList.idShoppingList }) }}" target="_blank">{{ data.labels.printLabel }}</a>
+                    {% include molecule('shopping-list-action-navigation', 'ShoppingListPage') with {
+                        data: {
+                            hasWritePermission: hasWritePermission,
+                            idShoppingList: shoppingList.idShoppingList
+                        }
+                    } only %}
                 </td>
             </tr>
         {% endfor %}
