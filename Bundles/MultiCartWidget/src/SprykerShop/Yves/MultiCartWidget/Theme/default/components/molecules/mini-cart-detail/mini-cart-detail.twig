@@ -45,9 +45,7 @@
                     </span>
                 {% endif %}
 
-                {% if widgetExists('SharedCartPermissionGroupWidgetPlugin') %}
-                    {{ widget('SharedCartPermissionGroupWidgetPlugin', data.cart) }}
-                {% endif %}
+                {{ widget('SharedCartPermissionGroupWidgetPlugin', data.cart) }}
             </div>
         </div>
 
