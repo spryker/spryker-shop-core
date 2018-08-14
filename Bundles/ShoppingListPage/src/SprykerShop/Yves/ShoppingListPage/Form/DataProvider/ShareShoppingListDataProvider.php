@@ -25,8 +25,8 @@ use SprykerShop\Yves\ShoppingListPage\Form\ShareShoppingListForm;
 
 class ShareShoppingListDataProvider
 {
-    const ORDER_BUSINESS_UNIT_SORT_FIELD = 'name';
-    const ORDER_BUSINESS_UNIT_SORT_DIRECTION = 'ASC';
+    protected const ORDER_BUSINESS_UNIT_SORT_FIELD = 'name';
+    protected const ORDER_BUSINESS_UNIT_SORT_DIRECTION = 'ASC';
 
     protected const PERMISSION_NO_ACCESS = 'NO_ACCESS';
 
@@ -165,8 +165,8 @@ class ShareShoppingListDataProvider
     {
         $idCompany = $customerTransfer->requireCompanyUserTransfer()->getCompanyUserTransfer()->getFkCompany();
         $filter = (new FilterTransfer)
-            ->setOrderBy(self::ORDER_BUSINESS_UNIT_SORT_FIELD)
-            ->setOrderDirection(self::ORDER_BUSINESS_UNIT_SORT_DIRECTION);
+            ->setOrderBy(static::ORDER_BUSINESS_UNIT_SORT_FIELD)
+            ->setOrderDirection(static::ORDER_BUSINESS_UNIT_SORT_DIRECTION);
 
         $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
             ->setIdCompany($idCompany)
