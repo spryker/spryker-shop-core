@@ -44,10 +44,10 @@
             <div class="form__fields grid grid--bottom">
                 <div class="form__field col col--sm-12">
                     <div class="grid">
-                        <div class="col col--sm-12 col--lg-3 spacing-y spacing-y--big">
+                        <div class="col col--sm-12 col--lg-3 spacing-y">
                             <b>{{ form_label(data.shareShoppingListForm.sharedCompanyBusinessUnits) }}</b>
                         </div>
-                        <div class="col col--sm-12 col--lg-9 spacing-y spacing-y--small">
+                        <div class="col col--sm-12 col--lg-9">
                             {% include molecule('share-list', 'ShoppingListPage') with {
                                 data: {
                                     shareUnits: data.companyBusinessUnits,
@@ -59,16 +59,16 @@
                     </div>
                 </div>
 
-                <br clear="all">
-                <hr />
-                <br clear="all">
+                <div class="form__field col col--sm-12">
+                    <hr />
+                </div>
 
                 <div class="form__field col col--sm-12">
                     <div class="grid">
-                        <div class="col col--sm-12 col--lg-3 spacing-y spacing-y--big">
+                        <div class="col col--sm-12 col--lg-3 spacing-y">
                             <b>{{ form_label(data.shareShoppingListForm.sharedCompanyUsers) }}</b>
                         </div>
-                        <div class="col col--sm-12 col--lg-9 spacing-y spacing-y--small">
+                        <div class="col col--sm-12 col--lg-9">
                             {% include molecule('share-list', 'ShoppingListPage') with {
                                 data: {
                                     shareUnits: data.companyUsers,
@@ -81,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="form__actions">
+            <div class="form__actions spacing-x">
                 <button type="submit" class="form__action button button--success" data-qa="submit-button">
                     {{ data.labels.shareFormSubmit }}
                 </button>
