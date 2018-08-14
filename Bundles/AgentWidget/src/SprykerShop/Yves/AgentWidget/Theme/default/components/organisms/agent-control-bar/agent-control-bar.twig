@@ -21,9 +21,6 @@
                                 {% include molecule('autocomplete-form') with {
                                     attributes: {
                                         'suggestion-url': path('agent-widget/customer-autocomplete'),
-                                        'render-template': '${first_name} - ${last_name} : ${email}',
-                                        'value-key': 'email',
-                                        'object-key': 'customers',
                                         'selected-value-key': '_switch_user'
                                     }
                                 } only %}

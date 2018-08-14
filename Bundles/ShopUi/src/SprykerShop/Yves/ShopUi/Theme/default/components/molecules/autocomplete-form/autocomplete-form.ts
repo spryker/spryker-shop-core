@@ -7,7 +7,6 @@ export default class AutocompleteForm extends Component {
     inputElement: HTMLInputElement;
     hiddenInputElement: HTMLInputElement;
     suggestionsContainer: HTMLElement;
-    ajaxUrl: string;
     target: any;
 
     protected readyCallback(): void {
@@ -15,8 +14,6 @@ export default class AutocompleteForm extends Component {
         this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}__container`);
         this.inputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
         this.hiddenInputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input-hidden`);
-        this.ajaxUrl = this.ajaxProvider.getAttribute('url');
-        this.addEventListener('click', this.selectElement);
         this.mapEvents();
     }
 
@@ -42,6 +39,7 @@ export default class AutocompleteForm extends Component {
 
     protected showSugestions(): void {
         this.suggestionsContainer.classList.remove('is-hidden');
+        this.onClick();
     }
 
     protected hideSugestions(): void {
@@ -50,21 +48,24 @@ export default class AutocompleteForm extends Component {
 
     protected async getSuggestions(): Promise<void> {
         this.showSugestions()
+        let params = {};
+        params[this.queryParamName] = this.inputValue;
 
-        await this.ajaxProvider.fetch({
-            'q': this.inputValue
-        });
+        await this.ajaxProvider.fetch(params);
     }
 
-    selectElement(e): void {
-        this.target = e.target;
-        while (this.target != this) {
-            if (this.target.hasAttribute("data-value")) {
-                this.inputElement.value = this.target.textContent;
-                this.hiddenInputElement.value = this.target.getAttribute("data-value");
-            }
-            this.target = this.target.parentNode;
-        }
+
+    protected onClick(): void {
+        const self = this;
+        const items = Array.from(this.suggestionsContainer.querySelectorAll(`.${this.jsName}__item`));
+
+        items.forEach((item) => item.addEventListener('click', (e: Event) => self.handlerClick(e)));
+    }
+
+    protected handlerClick(e): void {
+        const dataValue = e.target.getAttribute(this.valueDataAttribute);
+        this.hiddenInputElement.value = dataValue;
+        this.inputElement.value = e.srcElement.textContent;
     }
 
     protected get minLetters(): number {
@@ -73,6 +74,14 @@ export default class AutocompleteForm extends Component {
 
     protected get inputValue(): string {
         return this.inputElement.value.trim()
+    }
+
+    protected get queryParamName(): string {
+        return this.getAttribute('query-param-name')
+    }
+
+    protected get valueDataAttribute(): string {
+        return this.getAttribute('value-data-attribute')
     }
 
     get debounceDelay(): number {
