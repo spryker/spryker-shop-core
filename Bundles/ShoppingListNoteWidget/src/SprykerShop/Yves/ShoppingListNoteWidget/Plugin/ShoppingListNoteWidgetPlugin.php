@@ -16,11 +16,6 @@ use SprykerShop\Yves\ShoppingListPage\Plugin\ShoppingListItemNoteWidgetPluginInt
 class ShoppingListNoteWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemNoteWidgetPluginInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    protected $productViewTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
@@ -28,7 +23,6 @@ class ShoppingListNoteWidgetPlugin extends AbstractWidgetPlugin implements Shopp
      */
     public function initialize(ProductViewTransfer $productViewTransfer, ShoppingListTransfer $shoppingListTransfer): void
     {
-        $this->productViewTransfer = $productViewTransfer;
         $this->addParameter('note', $this->getShoppingListItemNote($productViewTransfer, $shoppingListTransfer));
     }
 
