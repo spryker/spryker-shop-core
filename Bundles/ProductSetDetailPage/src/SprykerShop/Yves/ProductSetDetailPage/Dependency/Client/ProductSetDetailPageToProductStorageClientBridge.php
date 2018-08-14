@@ -12,17 +12,19 @@ class ProductSetDetailPageToProductStorageClientBridge implements ProductSetDeta
     /**
      * @var \Spryker\Client\ProductStorage\ProductStorageClientInterface
      */
-    protected $productClient;
+    protected $productStorageClient;
 
     /**
-     * @param \Spryker\Client\ProductStorage\ProductStorageClientInterface $productClient
+     * @param \Spryker\Client\ProductStorage\ProductStorageClientInterface $productStorageClient
      */
-    public function __construct($productClient)
+    public function __construct($productStorageClient)
     {
-        $this->productClient = $productClient;
+        $this->productStorageClient = $productStorageClient;
     }
 
     /**
+     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+     *
      * @param int $idProductAbstract
      * @param string $localeName
      *
@@ -30,7 +32,7 @@ class ProductSetDetailPageToProductStorageClientBridge implements ProductSetDeta
      */
     public function getProductAbstractStorageData($idProductAbstract, $localeName)
     {
-        return $this->productClient->getProductAbstractStorageData($idProductAbstract, $localeName);
+        return $this->productStorageClient->getProductAbstractStorageData($idProductAbstract, $localeName);
     }
 
     /**
@@ -42,6 +44,17 @@ class ProductSetDetailPageToProductStorageClientBridge implements ProductSetDeta
      */
     public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
     {
-        return $this->productClient->mapProductStorageData($data, $localeName, $selectedAttributes);
+        return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+    {
+        return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
     }
 }

@@ -66,13 +66,13 @@ class CompanyBusinessUnitFormDataProvider
      *
      * @return array
      */
-    public function getData(CompanyUserTransfer $companyUserTransfer, $idCompanyBusinessUnit = null): array
+    public function getData(CompanyUserTransfer $companyUserTransfer, ?int $idCompanyBusinessUnit = null): array
     {
         if ($idCompanyBusinessUnit === null) {
             return $this->getDefaultBusinessUnitData($companyUserTransfer);
         }
 
-        if ($idCompanyBusinessUnit !== null) {
+        if ($idCompanyBusinessUnit) {
             $companyBusinessUnitTransfer = $this->loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
 
             $addressCollection = $this->companyUnitAddressClient->getCompanyUnitAddressCollection(

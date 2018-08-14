@@ -30,10 +30,5 @@
             <a href="{{ path('company/business-unit') }}" data-id="sidebar-business-unit">{{ 'company.account.business_unit' | trans }}</a>
             {% block businessUnitSubmenu %}{% endblock %}
         </li>
-        {% if can('ManageCompanyUserInvitationPermissionPlugin') %}
-            <li class="menu__item {{macros.isActive('companyUserInvitation', data.activePage)}}">
-                <a href="{{ path('company/user-invitation') }}" data-id="sidebar-invitations">{{ 'company.user.invitation.title.plural' | trans }}</a>
-            </li>
-        {%  endif %}
     </ul>
 {% endblock %}

@@ -77,7 +77,11 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
     {
         $productViewTransfers = [];
         foreach ($productSetDataStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
-            $productAbstractData = $this->getFactory()->getProductStorageClient()->getProductAbstractStorageData($idProductAbstract, $this->getLocale());
+            $productAbstractData = $this->getFactory()->getProductStorageClient()->findProductAbstractStorageData($idProductAbstract, $this->getLocale());
+
+            if ($productAbstractData === null) {
+                continue;
+            }
 
             $productViewTransfers[] = $this->getFactory()->getProductStorageClient()->mapProductStorageData(
                 $productAbstractData,

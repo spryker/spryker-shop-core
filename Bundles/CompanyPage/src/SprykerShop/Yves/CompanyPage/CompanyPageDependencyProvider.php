@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CompanyPage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientBridge;
@@ -38,6 +39,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
 
     public const PLUGIN_COMPANY_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_OVERVIEW_WIDGETS';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -60,6 +62,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addBusinessOnBehalfClient($container);
         $container = $this->addMessengerClient($container);
         $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -240,5 +243,21 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCompanyOverviewWidgetPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addApplication(Container $container): Container
+    {
+        $container[static::PLUGIN_APPLICATION] = function () {
+            $pimplePlugin = new Pimple();
+
+            return $pimplePlugin->getApplication();
+        };
+
+        return $container;
     }
 }

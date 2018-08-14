@@ -25,7 +25,9 @@ class CompanyController extends AbstractCompanyController
     {
         $companyUserTransfer = $this->getCompanyUser();
         $defaultBillingAddress = null;
-        $data = [];
+        $data = [
+            'company' => $this->getCompanyUser()->getCompanyBusinessUnit()->getCompany(),
+        ];
 
         if ($companyUserTransfer && $companyUserTransfer->getCompanyBusinessUnit()) {
             $company = $companyUserTransfer->getCompanyBusinessUnit()->getCompany();

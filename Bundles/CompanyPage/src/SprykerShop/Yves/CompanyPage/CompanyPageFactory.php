@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
@@ -143,5 +144,13 @@ class CompanyPageFactory extends AbstractFactory
     public function getGlossaryStorageClient(): CompanyPageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_APPLICATION);
     }
 }

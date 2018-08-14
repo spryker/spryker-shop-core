@@ -82,7 +82,7 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
     {
         $productConcreteStorageData = $this->getFactory()
             ->getProductStorageClient()
-            ->getProductConcreteStorageData($idProduct, $this->getLocale());
+            ->findProductConcreteStorageData($idProduct, $this->getLocale());
         if (empty($productConcreteStorageData)) {
             return null;
         }
