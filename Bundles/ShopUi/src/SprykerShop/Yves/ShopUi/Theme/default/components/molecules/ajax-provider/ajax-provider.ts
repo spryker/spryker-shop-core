@@ -1,4 +1,4 @@
-import { debug, error } from '../../../app/logger';
+import {debug, error} from '../../../app/logger';
 import Component from '../../../models/component';
 
 const EVENT_FETCHING = 'fetching';
@@ -6,6 +6,9 @@ const EVENT_FETCHED = 'fetched';
 
 export default class AjaxProvider extends Component {
     protected isFetchingRequest: boolean = false
+    public readonly queryParams: Map<String, String> = new Map<String, String>()
+    public readonly headers: Map<String, String> = new Map<String, String>()
+
     readonly xhr: XMLHttpRequest
 
     constructor() {
@@ -69,7 +72,18 @@ export default class AjaxProvider extends Component {
     }
 
     get url(): string {
-        return this.getAttribute('url');
+        let url = this.getAttribute('url');
+
+        let queryStringParams = [];
+        this.queryParams.forEach(((value: String, key: String) => {
+            queryStringParams.push(`${key}=${value}`)
+        }));
+
+        if (queryStringParams.length > 0) {
+            url += '?' + queryStringParams.join('&');
+        }
+
+        return url;
     }
 
     get method(): string {
@@ -87,5 +101,4 @@ export default class AjaxProvider extends Component {
     get isFetching(): boolean {
         return this.isFetchingRequest;
     }
-
 }

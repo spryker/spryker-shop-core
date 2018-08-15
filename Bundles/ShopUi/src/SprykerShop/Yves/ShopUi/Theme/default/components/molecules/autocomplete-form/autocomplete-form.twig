@@ -16,7 +16,8 @@
     'query-param-name': 'query',
     'selected-value-key': '',
     'value-data-attribute': 'data-value',
-    'item-selector': ''
+    'item-selector': '',
+    'show-clean-button': true
 } %}
 
 {% block body %}
@@ -37,7 +38,7 @@
 
     {% block input %}
         <div class="grid">
-            <div class="col col--sm-12">
+            <div class="col col--sm-11">
                 <input name="query"
                        type="text"
                        class="input input--expand {{ config.jsName }}__input"
@@ -46,6 +47,9 @@
                        autocomplete="off">
 
                 <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
+            </div>
+            <div class="col col--sm-1">
+                <button type="button" class="button button--warning {{ config.jsName }}__clean_button">X</button>
             </div>
         </div>
     {% endblock %}
@@ -57,9 +61,6 @@
                     'provider-selector': '.' ~ config.jsName ~ '__provider',
                     'render-if-response-is-empty': true,
                     'target-selector': config.jsName ~ '__suggestions',
-
-                    'container-selector': '.customer-autocomplete__container',
-                    'item-selector': '.customer-autocomplete__container-item',
                 }
             } only %}
         </div>

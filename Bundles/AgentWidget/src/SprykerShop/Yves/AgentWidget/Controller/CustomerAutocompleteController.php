@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\AgentWidget\Controller;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
@@ -21,9 +20,9 @@ class CustomerAutocompleteController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array
      */
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request): array
     {
         $queryParams = $request->query->all();
 
@@ -34,7 +33,7 @@ class CustomerAutocompleteController extends AbstractController
         $isParamsValid = $constraintViolationList->count() === 0;
 
         if (!$isParamsValid) {
-            return $this->errorJsonResponse($constraintViolationList);
+            return $this->errorResponse($constraintViolationList);
         }
 
         $customerQueryTransfer = new CustomerQueryTransfer();
@@ -45,18 +44,16 @@ class CustomerAutocompleteController extends AbstractController
             ->findCustomersByQuery($customerQueryTransfer)
             ->toArray();
 
-        return $this->jsonResponse($customers);
+        return $customers;
     }
 
     /**
      * @param \Symfony\Component\Validator\ConstraintViolationListInterface $constraintViolationList
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array
      */
-    protected function errorJsonResponse(ConstraintViolationListInterface $constraintViolationList): Response
+    protected function errorResponse(ConstraintViolationListInterface $constraintViolationList): array
     {
-        return $this
-            ->jsonResponse(['errors' => (string)$constraintViolationList])
-            ->setStatusCode(422);
+        return ['errors' => (string)$constraintViolationList];
     }
 }

@@ -1,0 +1,22 @@
+{% set isError = errors is defined and errors | length > 0 %}
+{% set customersFound = customers is defined and customers | length > 0 %}
+
+{% block body %}
+    {% if isError %}
+        {{ errors }}
+    {% else %}
+
+        {% if customersFound %}
+            <ul class="customer-autocomplete__container">
+                {% for customer in customers %}
+                    <li class="customer-autocomplete__container-item" data-value="{{ customer.email }}">
+                        {{ customer.first_name }} {{ customer.last_name }}: {{ customer.email }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {{ 'agent.autocomplete.no_results' | trans }}
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

@@ -7,19 +7,22 @@ export default class AutocompleteForm extends Component {
     inputElement: HTMLInputElement;
     hiddenInputElement: HTMLInputElement;
     suggestionsContainer: HTMLElement;
+    cleanButton: HTMLButtonElement;
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}__provider`);
         this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}__container`);
         this.inputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
         this.hiddenInputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input-hidden`);
+        this.cleanButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__clean_button`);
         this.mapEvents();
     }
 
     protected mapEvents(): void {
         this.inputElement.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
         this.inputElement.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
-        this.inputElement.addEventListener('focus',  () => this.onFocus());
+        this.inputElement.addEventListener('focus', () => this.onFocus());
+        this.cleanButton.addEventListener('click', () => this.cleanFields());
     }
 
     protected onBlur(): void {
@@ -34,7 +37,7 @@ export default class AutocompleteForm extends Component {
     }
 
     protected onInput(): void {
-        if (this.inputValue.length >= this.minLetters ) {
+        if (this.inputValue.length >= this.minLetters) {
             this.loadSuggestions();
             return;
         }
@@ -51,10 +54,11 @@ export default class AutocompleteForm extends Component {
 
     async loadSuggestions(): Promise<void> {
         this.showSuggestions();
-        this.mapItemEvents();
-        let params = {};
-        params[this.queryParamName] = this.inputValue;
-        await this.ajaxProvider.fetch(params);
+        this.ajaxProvider.queryParams.set(this.queryParamName, this.inputValue)
+
+        this.ajaxProvider.fetch().then(_ => {
+            this.mapItemEvents();
+        });
     }
 
     protected mapItemEvents(): void {
@@ -67,7 +71,7 @@ export default class AutocompleteForm extends Component {
         const dataTarget = <HTMLElement>e.target;
         const textTarget = <HTMLElement>e.srcElement;
         const data = dataTarget.getAttribute(this.valueDataAttribute);
-        const text = textTarget.textContent;
+        const text = textTarget.textContent.trim();
 
         this.setInputs(data, text);
     }
@@ -75,6 +79,10 @@ export default class AutocompleteForm extends Component {
     setInputs(data: string, text: string): void {
         this.inputElement.value = text;
         this.hiddenInputElement.value = data;
+    }
+
+    cleanFields(): void {
+        this.setInputs('', '')
     }
 
     get minLetters(): number {
@@ -100,5 +108,4 @@ export default class AutocompleteForm extends Component {
     get debounceDelay(): number {
         return Number(this.getAttribute('debounce-delay'));
     }
-
 }
