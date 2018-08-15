@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +24,7 @@ class CompanyRoleController extends AbstractCompanyController
 
     protected const SUCCESS_MESSAGE_COMPANY_ROLE_DELETE = 'company.account.company_role.delete.successful';
     protected const PARAMETER_ID_COMPANY_ROLE = 'id';
+    protected const ERROR_MESSAGE_DEFAULT_COMPANY_ROLE_DELETE = 'company.account.company_role.delete.error.default_role';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -120,21 +120,25 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function confirmDeleteAction(Request $request): View
+    public function confirmDeleteAction(Request $request)
     {
-        $viewData = $this->executeConfirmDeleteAction($request);
+        $response = $this->executeConfirmDeleteAction($request);
 
-        return $this->view($viewData, [], '@CompanyPage/views/role-delete/role-delete.twig');
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/role-delete/role-delete.twig');
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeConfirmDeleteAction(Request $request): array
+    protected function executeConfirmDeleteAction(Request $request)
     {
         $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
 
@@ -144,6 +148,12 @@ class CompanyRoleController extends AbstractCompanyController
         $companyRoleTransfer = $this->getFactory()
             ->getCompanyRoleClient()
             ->getCompanyRoleById($companyRoleTransfer);
+
+        if ($companyRoleTransfer->getIsDefault()) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_DEFAULT_COMPANY_ROLE_DELETE);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+        }
 
         return [
             'idCompanyRole' => $idCompanyRole,
