@@ -16,14 +16,13 @@ use SprykerShop\Yves\ShoppingListPage\Plugin\ShoppingListItemNoteWidgetPluginInt
 class ShoppingListNoteWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemNoteWidgetPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, ShoppingListTransfer $shoppingListTransfer): void
+    public function initialize(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void
     {
-        $this->addParameter('note', $this->getShoppingListItemNote($productViewTransfer, $shoppingListTransfer));
+        $this->addParameter('note', $shoppingListItemNoteTransfer);
     }
 
     /**
@@ -48,22 +47,5 @@ class ShoppingListNoteWidgetPlugin extends AbstractWidgetPlugin implements Shopp
     public static function getName(): string
     {
         return static::NAME;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer
-     */
-    public function getShoppingListItemNote(ProductViewTransfer $productViewTransfer, ShoppingListTransfer $shoppingListTransfer): ShoppingListItemNoteTransfer
-    {
-        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-            if ($shoppingListItemTransfer->getSku() === $productViewTransfer->getSku()) {
-                return $shoppingListItemTransfer->getNote();
-            }
-        }
-
-        return new ShoppingListItemNoteTransfer();
     }
 }

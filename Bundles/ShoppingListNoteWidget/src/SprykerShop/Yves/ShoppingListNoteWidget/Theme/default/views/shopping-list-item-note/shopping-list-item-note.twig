@@ -5,8 +5,10 @@
 } %}
 
 {% block body %}
-    {% if data.note.message is defined %}
-        <span>{{ 'shopping_list.item_note' | trans }}</span><br>
-        <span>{{ data.note.message }}</span>
+    {% if data.note.message is not null %}
+        <div class="grid">
+            <div class="col">{{ 'shopping_list.item_note' | trans }}</div>
+            <div class="col">{{ data.note.message }}</div>
+        </div>
     {% endif %}
 {% endblock %}
