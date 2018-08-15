@@ -149,7 +149,7 @@ class CompanyUserForm extends AbstractType
     protected function addFkCompanyBusinessUnitField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_FK_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
-            'label' => 'company.account.company_user.business_unit',
+            'label' => 'company.account.company_user.form.select_business_unit',
             'required' => true,
             'choices' => array_flip($options[static::OPTION_BUSINESS_UNIT_CHOICES]),
             'constraints' => [
@@ -284,7 +284,7 @@ class CompanyUserForm extends AbstractType
             'choices' => $options[static::OPTION_COMPANY_ROLE_CHOICES],
             'expanded' => true,
             'required' => true,
-            'label' => 'company.account.company_role',
+            'label' => 'company.account.company_user.form.select_roles',
             'multiple' => true,
             'constraints' => [
                 new NotBlank(),
