@@ -169,18 +169,7 @@ class UserController extends AbstractCompanyController
                 )
             );
         } elseif ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
-            $companyUserTransfer = $this->prepareCompanyUser($companyUserForm->getData());
-
-            if (!$companyUserTransfer->getCompanyRoleCollection()->getRoles()->count()) {
-                $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_ASSIGN_EMPTY_ROLES);
-
-                return $this->redirectResponseInternal(
-                    CompanyPageControllerProvider::ROUTE_COMPANY_USER_UPDATE,
-                    ['id' => $companyUserTransfer->getIdCompanyUser()]
-                );
-            }
-
-            $companyUserResponseTransfer = $this->updateCompanyUser($companyUserTransfer);
+            $companyUserResponseTransfer = $this->updateCompanyUser($companyUserForm->getData());
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
@@ -320,21 +309,11 @@ class UserController extends AbstractCompanyController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param array $data
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function updateCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
-    {
-        return $this->getFactory()->getCompanyUserClient()->updateCompanyUser($companyUserTransfer);
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
-    protected function prepareCompanyUser(array $data): CompanyUserTransfer
+    protected function updateCompanyUser(array $data): CompanyUserResponseTransfer
     {
         $companyUserTransfer = new CompanyUserTransfer();
         $companyUserTransfer->fromArray($data, true);
@@ -344,6 +323,6 @@ class UserController extends AbstractCompanyController
 
         $companyUserTransfer->setCustomer($customerTransfer);
 
-        return $companyUserTransfer;
+        return $this->getFactory()->getCompanyUserClient()->updateCompanyUser($companyUserTransfer);
     }
 }

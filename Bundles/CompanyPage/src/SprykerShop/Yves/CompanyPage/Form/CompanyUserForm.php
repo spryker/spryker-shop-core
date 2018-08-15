@@ -18,7 +18,9 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CompanyUserForm extends AbstractType
 {
@@ -286,9 +288,7 @@ class CompanyUserForm extends AbstractType
             'required' => true,
             'label' => 'company.account.company_user.form.select_roles',
             'multiple' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
+            'constraints' => $this->createCompanyRoleCollectionConstraints(),
         ]);
 
         $callbackTransformer = new CallbackTransformer(
@@ -337,5 +337,23 @@ class CompanyUserForm extends AbstractType
 
             return $companyRoleCollectionTransfer;
         };
+    }
+
+    /**
+     * @return array
+     */
+    protected function createCompanyRoleCollectionConstraints(): array
+    {
+        $companyRoleCollectionConstraints = [];
+
+        $companyRoleCollectionConstraints[] = new Callback([
+            'callback' => function (CompanyRoleCollectionTransfer $companyRoleCollectionTransfer, ExecutionContextInterface $context) {
+                if (!$companyRoleCollectionTransfer->getRoles()->count()) {
+                    $context->addViolation('company.account.company_user.assign_roles.empty_roles.error');
+                }
+            },
+        ]);
+
+        return $companyRoleCollectionConstraints;
     }
 }
