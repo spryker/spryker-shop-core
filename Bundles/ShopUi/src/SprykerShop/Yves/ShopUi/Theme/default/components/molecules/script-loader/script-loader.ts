@@ -34,7 +34,7 @@ export default class ScriptLoader extends Component {
         const attributes = this.attributes;
 
         Array.prototype.forEach.call(attributes, (attribute) => {
-            if (this.isAttributeIgnored(attribute.name)) {
+            if (!this.isAttributeIgnored(attribute.name)) {
                 script.setAttribute(attribute.name, attribute.value);
             }
         });
@@ -43,6 +43,6 @@ export default class ScriptLoader extends Component {
     }
 
     protected isAttributeIgnored(attributeName: string): boolean {
-        return this.ignoredAttributes.indexOf(attributeName) == -1;
+        return this.ignoredAttributes.indexOf(attributeName) != -1;
     }
 }
