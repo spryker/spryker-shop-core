@@ -27,6 +27,10 @@ class ShoppingListNoteWidgetPlugin extends AbstractWidgetPlugin implements Shopp
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getTemplate(): string
@@ -35,6 +39,10 @@ class ShoppingListNoteWidgetPlugin extends AbstractWidgetPlugin implements Shopp
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getName(): string
