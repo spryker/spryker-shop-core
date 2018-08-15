@@ -34,7 +34,14 @@
         editLabel: 'customer.account.shopping_list.overview.edit' | trans,
         deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
         shareLabel: 'customer.account.shopping_list.overview.share' | trans,
-        addSelectedItemsToCartLabel: 'customer.account.shopping_list.add_selected_items_to_cart' | trans
+        addSelectedItemsToCartLabel: 'customer.account.shopping_list.add_selected_items_to_cart' | trans,
+        ownerLabel: 'customer.account.shopping_list.overview.owner' | trans,
+        fullAccessLabel: 'customer.account.shopping_list.permissions.FULL_ACCESS' | trans,
+        readOnlyLabel: 'customer.account.shopping_list.permissions.READ_ONLY' | trans,
+        accessLabel: 'customer.account.shopping_list.access' | trans,
+        sharedWithLabel: 'customer.account.shopping_list.overview.shared_with' | trans,
+        usersLabel: 'company.account.company_user' | trans,
+        businessUnitsLabel: 'company.account.business_unit' | trans,
     }
 } %}
 
@@ -57,6 +64,30 @@
             </div>
         </div>
         <hr>
+        <div class="grid grid--justify">
+            <div class="col col--sm-4">
+                <b>{{ data.labels.ownerLabel }}</b>: {{ data.shoppingList.owner }}
+            </div>
+            <div class="col col--sm-4">
+                <b>{{ data.labels.accessLabel }}</b>:
+                {{ can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) ? data.labels.fullAccessLabel : data.labels.readOnlyLabel }}
+            </div>
+            <div class="col col--sm-4">
+                <b>{{ data.labels.sharedWithLabel }}</b>:
+                {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+                    <a href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">
+                        {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ data.labels.usersLabel }},
+                        {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ data.labels.businessUnitsLabel }}
+                    </a>
+                {% else %}
+                    <span>
+                        {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ data.labels.usersLabel }},
+                        {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ data.labels.businessUnitsLabel }}
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+        <hr/>
         {% if data.shoppingListItems|length %}
             <form method="POST" action="{{ path('shopping-list/add-to-cart') }}">
                 <div class="grid grid--justify">
