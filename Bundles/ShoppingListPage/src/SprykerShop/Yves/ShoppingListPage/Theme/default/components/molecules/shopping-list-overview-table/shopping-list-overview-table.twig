@@ -9,30 +9,10 @@
     idShoppingList: null,
     shoppingListForm: null,
     shoppingListResponse: null,
-    labels: {
-        addShoppingListToCartLabel: 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans,
-        nameLabel: 'customer.account.shopping_list.overview.name' | trans,
-        itemCountLabel: 'customer.account.shopping_list.overview.item_count' | trans,
-        createdDateLabel: 'customer.account.shopping_list.overview.created_date' | trans,
-        ownerLabel: 'customer.account.shopping_list.overview.owner' | trans,
-        actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
-        accessLabel: 'customer.account.shopping_list.access' | trans,
-        readOnlyLabel: 'customer.account.shopping_list.permissions.READ_ONLY' | trans,
-        fullAccessLabel: 'customer.account.shopping_list.permissions.FULL_ACCESS' | trans,
-        submitLabel: 'forms.submit-btn' | trans
-    }
+    labels: required
 } %}
 
 {% block body %}
-<form method="POST" action="{{ path('shopping-list/add-shopping-list-to-cart') }}">
-    <button type="submit" class="button button--success" {{qa('submit-button')}}>
-        {{ data.labels.addShoppingListToCartLabel }}
-        {% include atom('icon') with {
-            data: {
-                name: 'shopping-cart'
-            }
-        } only %}
-    </button>
     <table class="table table--expand">
         <thead>
             <tr>
@@ -61,13 +41,15 @@
                 </td>
                 <td class="text-center">{{ shoppingList.owner }}</td>
                 <td class="text-center">{{ shoppingList.createdAt | formatDate }}</td>
-                <td class="text-center">
-                    {% if hasWritePermission %}
+                {% if hasWritePermission %}
+                    <td class="text-center">
                         <label>{{ data.labels.fullAccessLabel }}</label>
-                    {% else %}
+                    </td>
+                {% else %}
+                    <td class="text-center">
                         <label>{{ data.labels.readOnlyLabel }}</label>
-                    {% endif %}
-                </td>
+                    </td>
+                {% endif %}
                 <td class="text-center">{{ shoppingList.numberOfItems }}</td>
                 <td>
                     {% include molecule('shopping-list-action-navigation', 'ShoppingListPage') with {
@@ -81,5 +63,4 @@
         {% endfor %}
         </tbody>
     </table>
-</form>
 {% endblock %}

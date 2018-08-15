@@ -5,6 +5,7 @@
     shoppingListForm: _view.shoppingListForm,
     shoppingListResponse: _view.shoppingListResponse,
     labels: {
+        addShoppingListToCartLabel: 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans,
         addNewSubmitLabel: 'customer.account.shopping_list.overview.add_new' | trans,
         overviewTitle: 'customer.account.shopping_list.overview.title' | trans,
         emptyShoppingListsLabel: 'customer.account.shopping_list.overview.empty' | trans,
@@ -23,15 +24,41 @@
                 }
             }
         } only %}
+
+        <br />
         <hr/>
+        <br />
+
         {% if data.shoppingListCollection.shoppingLists | length %}
-            {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
-                data: {
-                    shoppingLists: data.shoppingListCollection.shoppingLists,
-                    enableTableForm: true,
-                    shoppingListResponse: data.shoppingListResponse
-                }
-            } only %}
+            <form method="POST" action="{{ path('shopping-list/add-shopping-list-to-cart') }}">
+                <button type="submit" class="button button--success" {{qa('submit-button')}}>
+                    {{ data.labels.addShoppingListToCartLabel }}
+                    {% include atom('icon') with {
+                        data: {
+                            name: 'shopping-cart'
+                        }
+                    } only %}
+                </button>
+
+                {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
+                    data: {
+                        shoppingLists: data.shoppingListCollection.shoppingLists,
+                        enableTableForm: true,
+                        shoppingListResponse: data.shoppingListResponse,
+                        labels: {
+                            addShoppingListToCartLabel: data.labels.addShoppingListToCartLabel,
+                            nameLabel: 'customer.account.shopping_list.overview.name' | trans,
+                            itemCountLabel: 'customer.account.shopping_list.overview.item_count' | trans,
+                            createdDateLabel: 'customer.account.shopping_list.overview.created_date' | trans,
+                            ownerLabel: 'customer.account.shopping_list.overview.owner' | trans,
+                            actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
+                            accessLabel: 'customer.account.shopping_list.access' | trans,
+                            readOnlyLabel: 'customer.account.shopping_list.permissions.READ_ONLY' | trans,
+                            fullAccessLabel: 'customer.account.shopping_list.permissions.FULL_ACCESS' | trans,
+                        }
+                    }
+                } only %}
+            </form>
         {% else %}
             {{ data.labels.emptyShoppingListsLabel }}
         {% endif %}
