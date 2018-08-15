@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ShoppingListItemNoteWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'ShoppingListItemNoteWidgetPlugin';
+    public const NAME = 'ShoppingListItemNoteWidgetPlugin';
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
