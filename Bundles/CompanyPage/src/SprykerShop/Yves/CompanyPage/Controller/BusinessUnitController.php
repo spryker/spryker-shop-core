@@ -107,21 +107,7 @@ class BusinessUnitController extends AbstractCompanyController
         if ($companyBusinessUnitForm->isValid()) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 
-//            if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-//                $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS, [
-//                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
-//                ]);
-//            }
-//
-//            if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-//                $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_CREATE_ERROR, [
-//                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
-//                ]);
-//            }
-
-            $isSuccessful = $companyBusinessUnitResponseTransfer->getIsSuccessful();
-            $companyBusinessUnitName = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName();
-            $this->handleBusinessUnitTranslatedMessage($isSuccessful, $companyBusinessUnitName);
+            $this->showTranslatedMessageByResponseStatus($companyBusinessUnitResponseTransfer);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
                 'id' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getIdCompanyBusinessUnit(),
@@ -131,27 +117,6 @@ class BusinessUnitController extends AbstractCompanyController
         return [
             'form' => $companyBusinessUnitForm->createView(),
         ];
-    }
-
-    /**
-     * @param bool $isSuccessful
-     * @param string $businessUnitName
-     *
-     * @return void
-     */
-    protected function handleBusinessUnitTranslatedMessage(bool $isSuccessful, string $businessUnitName): void
-    {
-        if ($isSuccessful) {
-            $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS, [
-                '%unit%' => $businessUnitName,
-            ]);
-        }
-
-        if (!$isSuccessful) {
-            $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_CREATE_ERROR, [
-                '%unit%' => $businessUnitName,
-            ]);
-        }
     }
 
     /**
@@ -202,17 +167,7 @@ class BusinessUnitController extends AbstractCompanyController
         if ($companyBusinessUnitForm->isValid()) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 
-            if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-                $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS, [
-                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
-                ]);
-            }
-
-            if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-                $this->addTranslatedErrorMessage(static::MESSAGE_BUSINESS_UNIT_UPDATE_ERROR, [
-                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
-                ]);
-            }
+            $this->showTranslatedMessageByResponseStatus($companyBusinessUnitResponseTransfer);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
                 'id' => $idCompanyBusinessUnit,
@@ -223,6 +178,28 @@ class BusinessUnitController extends AbstractCompanyController
             'form' => $companyBusinessUnitForm->createView(),
             'addresses' => $dataProviderOptions[CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES],
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
+     *
+     * @return void
+     */
+    protected function showTranslatedMessageByResponseStatus(
+        CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
+    ): void {
+
+        if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+            $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS, [
+                '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+            ]);
+        }
+
+        if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+            $this->addTranslatedErrorMessage(static::MESSAGE_BUSINESS_UNIT_UPDATE_ERROR, [
+                '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+            ]);
+        }
     }
 
     /**
