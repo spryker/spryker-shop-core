@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ShoppingListPage\Plugin;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
