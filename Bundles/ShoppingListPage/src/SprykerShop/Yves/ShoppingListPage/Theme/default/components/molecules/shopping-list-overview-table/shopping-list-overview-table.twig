@@ -41,15 +41,17 @@
                 </td>
                 <td class="text-center">{{ shoppingList.owner }}</td>
                 <td class="text-center">{{ shoppingList.createdAt | formatDate }}</td>
-                {% if hasWritePermission %}
-                    <td class="text-center">
-                        <label>{{ data.labels.fullAccessLabel }}</label>
-                    </td>
-                {% else %}
-                    <td class="text-center">
-                        <label>{{ data.labels.readOnlyLabel }}</label>
-                    </td>
-                {% endif %}
+                <td class="text-center">
+                    {% include molecule('access-labels', 'ShoppingListPage') with {
+                        data: {
+                            hasWritePermission: hasWritePermission,
+                            labels: {
+                                fullAccessLabel: data.labels.fullAccessLabel,
+                                readOnlyLabel: data.labels.readOnlyLabel
+                            }
+                        }
+                    } only %}
+                </td>
                 <td class="text-center">{{ shoppingList.numberOfItems }}</td>
                 <td>
                     {% include molecule('shopping-list-action-navigation', 'ShoppingListPage') with {

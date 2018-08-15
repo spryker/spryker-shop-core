@@ -1,0 +1,19 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'access-labels',
+    tag: 'div'
+} %}
+
+{% define data = {
+    hasWritePermission: required,
+    labels: required
+} %}
+
+{% block body %}
+    {% if data.hasWritePermission %}
+        <span class="{{ config.name }}__full">{{ data.labels.fullAccessLabel }}</span>
+    {% else %}
+        <span class="{{ config.name }}__read-only">{{ data.labels.readOnlyLabel }}</span>
+    {% endif %}
+{% endblock %}
