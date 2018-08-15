@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
@@ -66,11 +67,29 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    {
+        return $this->shoppingListClient->updateShareShoppingList($shoppingListTransfer);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
      */
     public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
     {
         return $this->shoppingListClient->getShoppingListPermissionGroup();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
+     */
+    public function getShoppingListPermissionGroupCollection(): ShoppingListPermissionGroupCollectionTransfer
+    {
+        return $this->shoppingListClient->getShoppingListPermissionGroups();
     }
 
     /**
