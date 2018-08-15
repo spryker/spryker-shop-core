@@ -76,12 +76,8 @@ class ShareShoppingListDataProvider
 
         $shoppingListTransfer = $this->shoppingListClient->getShoppingList($shoppingListTransfer);
 
-        $shoppingListTransfer
-            ->setCompanyUsers($this->getCompanyUserCollection($customerTransfer)->getCompanyUsers())
-            ->setCompanyBusinessUnits($this->getCompanyBusinessUnitCollection($customerTransfer)->getCompanyBusinessUnits());
-
-        $this->updateSharedCompanyUsers($shoppingListTransfer);
-        $this->updateSharedCompanyBusinessUnits($shoppingListTransfer);
+        $this->updateSharedCompanyUsers($shoppingListTransfer, $customerTransfer);
+        $this->updateSharedCompanyBusinessUnits($shoppingListTransfer, $customerTransfer);
 
         return $shoppingListTransfer;
     }
@@ -106,54 +102,74 @@ class ShareShoppingListDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
-    protected function updateSharedCompanyUsers(ShoppingListTransfer $shoppingListTransfer): void
+    protected function updateSharedCompanyUsers(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): void
     {
         $sharedCompanyUsers = [];
+        $companyUsers = $this->getCompanyUserCollection($customerTransfer)->getCompanyUsers();
 
         foreach ($shoppingListTransfer->getSharedCompanyUsers() as $shoppingListCompanyUserTransfer) {
             $sharedCompanyUsers[$shoppingListCompanyUserTransfer->getIdCompanyUser()] = $shoppingListCompanyUserTransfer;
         }
 
-        $shoppingListTransfer->setSharedCompanyUsers(new ArrayObject);
+        foreach ($companyUsers as $companyUserTransfer) {
+            if (array_key_exists($companyUserTransfer->getIdCompanyUser(), $sharedCompanyUsers)) {
+                $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()]->setCompanyUser($companyUserTransfer);
+                continue;
+            }
 
-        foreach ($shoppingListTransfer->getCompanyUsers() as $companyUserTransfer) {
-            $sharedCompanyUser = (new ShoppingListCompanyUserTransfer)
+            $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()] = (new ShoppingListCompanyUserTransfer)
+                ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-                ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
-
-            $shoppingListTransfer->addSharedCompanyUsers(
-                $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()] ?? $sharedCompanyUser
-            );
+                ->setCompanyUser($companyUserTransfer);
         }
+
+        $shoppingListTransfer->setSharedCompanyUsers(new ArrayObject($sharedCompanyUsers));
+
+        $shoppingListTransfer->getSharedCompanyUsers()->uasort(
+            function (ShoppingListCompanyUserTransfer $firstUserTransfer, ShoppingListCompanyUserTransfer $secondUserTransfer) {
+                return strcmp($firstUserTransfer->getCompanyUser()->getCustomer()->getFirstName(), $secondUserTransfer->getCompanyUser()->getCustomer()->getFirstName());
+            }
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
-    protected function updateSharedCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): void
+    protected function updateSharedCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): void
     {
         $sharedCompanyBusinessUnits = [];
+        $companyBusinessUnits = $this->getCompanyBusinessUnitCollection($customerTransfer)->getCompanyBusinessUnits();
 
         foreach ($shoppingListTransfer->getSharedCompanyBusinessUnits() as $shoppingListCompanyBusinessUnitTransfer) {
             $sharedCompanyBusinessUnits[$shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = $shoppingListCompanyBusinessUnitTransfer;
         }
 
-        $shoppingListTransfer->setSharedCompanyBusinessUnits(new ArrayObject);
+        foreach ($companyBusinessUnits as $companyBusinessUnitTransfer) {
+            if (array_key_exists($companyBusinessUnitTransfer->getIdCompanyBusinessUnit(), $sharedCompanyBusinessUnits)) {
+                $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()]->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+                continue;
+            }
 
-        foreach ($shoppingListTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
-            $sharedCompanyBusinessUnit = (new ShoppingListCompanyBusinessUnitTransfer)
+            $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = (new ShoppingListCompanyBusinessUnitTransfer)
+                ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-                ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
-
-            $shoppingListTransfer->addSharedCompanyBusinessUnits(
-                $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] ?? $sharedCompanyBusinessUnit
-            );
+                ->setCompanyBusinessUnit($companyBusinessUnitTransfer);
         }
+
+        $shoppingListTransfer->setSharedCompanyBusinessUnits(new ArrayObject($sharedCompanyBusinessUnits));
+
+        $shoppingListTransfer->getSharedCompanyBusinessUnits()->uasort(
+            function (ShoppingListCompanyBusinessUnitTransfer $firstBusinessUnitTransfer, ShoppingListCompanyBusinessUnitTransfer $secondBusinessUnitTransfer) {
+                return strcmp($firstBusinessUnitTransfer->getCompanyBusinessUnit()->getName(), $secondBusinessUnitTransfer->getCompanyBusinessUnit()->getName());
+            }
+        );
     }
 
     /**

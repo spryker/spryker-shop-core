@@ -5,9 +5,7 @@
     shareShoppingListForm: _view.shareShoppingListForm,
     idShoppingList: _view.idShoppingList,
     shoppingList: _view.shoppingList,
-    companyUsers: _view.shoppingList.companyUsers,
     sharedCompanyUsers: _view.shoppingList.sharedCompanyUsers,
-    companyBusinessUnits: _view.shoppingList.companyBusinessUnits,
     sharedCompanyBusinessUnits: _view.shoppingList.sharedCompanyBusinessUnits,
     labels: {
         shareFormSubmit: 'customer.account.shopping_list.share.from.share' | trans,
@@ -50,8 +48,7 @@
                         <div class="col col--sm-12 col--lg-9">
                             {% include molecule('share-list', 'ShoppingListPage') with {
                                 data: {
-                                    shareUnits: data.companyBusinessUnits,
-                                    sharedCompany: data.sharedCompanyBusinessUnits,
+                                    shareUnits: data.sharedCompanyBusinessUnits,
                                     shareForm: data.shareShoppingListForm.sharedCompanyBusinessUnits
                                 }
                             } only %}
@@ -71,8 +68,7 @@
                         <div class="col col--sm-12 col--lg-9">
                             {% include molecule('share-list', 'ShoppingListPage') with {
                                 data: {
-                                    shareUnits: data.companyUsers,
-                                    sharedCompany: data.sharedCompanyUsers,
+                                    shareUnits: data.sharedCompanyUsers,
                                     shareForm: data.shareShoppingListForm.sharedCompanyUsers
                                 }
                             } only %}
