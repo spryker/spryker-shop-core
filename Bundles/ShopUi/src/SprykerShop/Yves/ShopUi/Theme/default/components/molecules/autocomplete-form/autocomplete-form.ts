@@ -23,12 +23,12 @@ export default class AutocompleteForm extends Component {
     }
 
     protected onBlur(): void {
-        this.onHideSuggestions();
+        this.hideSuggestions();
     }
 
     protected onFocus(): void {
         if (this.inputValue.length >= this.minLetters) {
-            this.onShowSuggestions();
+            this.showSuggestions();
             return;
         }
     }
@@ -38,19 +38,19 @@ export default class AutocompleteForm extends Component {
             this.loadSuggestions();
             return;
         }
-        this.onHideSuggestions();
+        this.hideSuggestions();
     }
 
-    protected onShowSuggestions(): void {
+    protected showSuggestions(): void {
         this.suggestionsContainer.classList.remove('is-hidden');
     }
 
-    protected onHideSuggestions(): void {
+    protected hideSuggestions(): void {
         this.suggestionsContainer.classList.add('is-hidden');
     }
 
     async loadSuggestions(): Promise<void> {
-        this.onShowSuggestions();
+        this.showSuggestions();
         this.mapItemEvents();
         let params = {};
         params[this.queryParamName] = this.inputValue;
