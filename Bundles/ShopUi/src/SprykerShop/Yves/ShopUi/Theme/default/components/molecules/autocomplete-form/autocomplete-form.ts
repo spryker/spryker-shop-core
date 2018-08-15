@@ -18,13 +18,17 @@ export default class AutocompleteForm extends Component {
 
     protected mapEvents(): void {
         this.inputElement.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
-        this.inputElement.addEventListener('blur', debounce(() => this.onHideSugestions(), this.debounceDelay));
+        this.inputElement.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
         this.inputElement.addEventListener('focus',  () => this.onFocus());
+    }
+
+    protected onBlur(): void {
+        this.onHideSuggestions();
     }
 
     protected onFocus(): void {
         if (this.inputValue.length >= this.minLetters) {
-            this.onShowSugestions();
+            this.onShowSuggestions();
             return;
         }
     }
@@ -34,20 +38,20 @@ export default class AutocompleteForm extends Component {
             this.loadSuggestions();
             return;
         }
-        this.onHideSugestions();
+        this.onHideSuggestions();
     }
 
-    protected onShowSugestions(): void {
+    protected onShowSuggestions(): void {
         this.suggestionsContainer.classList.remove('is-hidden');
-        this.mapItemEvents();
     }
 
-    protected onHideSugestions(): void {
+    protected onHideSuggestions(): void {
         this.suggestionsContainer.classList.add('is-hidden');
     }
 
     async loadSuggestions(): Promise<void> {
-        this.onShowSugestions();
+        this.onShowSuggestions();
+        this.mapItemEvents();
         let params = {};
         params[this.queryParamName] = this.inputValue;
         await this.ajaxProvider.fetch(params);
@@ -73,23 +77,23 @@ export default class AutocompleteForm extends Component {
         this.hiddenInputElement.value = data;
     }
 
-    protected get minLetters(): number {
+    get minLetters(): number {
         return Number(this.getAttribute('min-letters'));
     }
 
-    protected get inputValue(): string {
+    get inputValue(): string {
         return this.inputElement.value.trim();
     }
 
-    protected get queryParamName(): string {
+    get queryParamName(): string {
         return this.getAttribute('query-param-name');
     }
 
-    protected get valueDataAttribute(): string {
+    get valueDataAttribute(): string {
         return this.getAttribute('value-data-attribute');
     }
 
-    protected get itemSelector(): string {
+    get itemSelector(): string {
         return this.getAttribute('item-selector');
     }
 
