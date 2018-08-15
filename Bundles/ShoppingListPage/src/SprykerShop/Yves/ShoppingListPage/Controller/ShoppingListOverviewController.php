@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Controller;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\Form\FormInterface;
@@ -158,6 +159,28 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS);
 
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+    }
+
+    /**
+     * @param int $idShoppingList
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function deleteConfirmAction(int $idShoppingList): View
+    {
+        $shoppingListTransfer = (new ShoppingListTransfer)
+            ->setIdShoppingList($idShoppingList)
+            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+
+        $shoppingListTransfer = $this->getFactory()
+            ->getShoppingListClient()
+            ->getShoppingList($shoppingListTransfer);
+
+        return $this->view(
+            ['shoppingList' => $shoppingListTransfer],
+            [],
+            '@ShoppingListPage/views/shopping-list-overview-delete/shopping-list-overview-delete.twig'
+        );
     }
 
     /**

@@ -1,0 +1,35 @@
+{% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
+
+{% define data = {
+    title: _view.shoppingList.name,
+    shoppingList: _view.shoppingList,
+    labels: {
+        warningLabel: 'customer.account.shopping_list.warning' | trans,
+    }
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+            },{
+                label: 'customer.account.shopping_list' | trans,
+            },{
+                label: 'customer.account.shopping_list.overview.edit' | trans,
+            },{
+                label: 'customer.account.shopping_list.overview.warning' | trans,
+            }]
+        }
+    } only %}
+{% endblock %}
+
+{% block customerNavigation %}
+    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.shoppingList.idShoppingList) }}
+{% endblock %}
+
+{% block customerContent %}
+    <div class="box">
+
+    </div>
+{% endblock %}

@@ -26,6 +26,6 @@
     <a href="{{ url('shopping-list/print', { idShoppingList: data.idShoppingList }) }}" target="_blank">{{ data.labels.printLabel }}</a>
 
     {% if data.hasWritePermission %}
-        <a href="{{ url('shopping-list/delete', { idShoppingList: data.idShoppingList }) }}">{{ data.labels.deleteLabel }}</a>
+        <a href="{{ url('shopping-list/delete/confirm', { idShoppingList: data.idShoppingList }) }}">{{ data.labels.deleteLabel }}</a>
     {% endif %}
 {% endblock %}
