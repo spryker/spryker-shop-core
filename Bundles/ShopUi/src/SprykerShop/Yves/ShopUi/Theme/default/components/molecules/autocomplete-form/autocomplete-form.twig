@@ -1,0 +1,68 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'autocomplete-form',
+    tag: 'autocomplete-form'
+} %}
+
+{% define data = {
+    value: ''
+} %}
+
+{% define attributes = {
+    'suggestion-url': required,
+    'debounce-delay': 500,
+    'min-letters': 3,
+    'query-param-name': 'query',
+    'selected-value-key': '',
+    'value-data-attribute': 'data-value',
+    'item-selector': ''
+} %}
+
+{% block body %}
+
+    {% include molecule('ajax-provider') with {
+        class: config.jsName ~ '__provider',
+        attributes: {
+            method: 'GET',
+            url: attributes['suggestion-url']
+        }
+    } only %}
+
+    {% include molecule('ajax-loader') with {
+        attributes: {
+            'provider-selector': '.' ~ config.jsName ~ '__provider'
+        }
+    } only %}
+
+    {% block input %}
+        <div class="grid">
+            <div class="col col--sm-12">
+                <input name="query"
+                       type="text"
+                       class="input input--expand {{ config.jsName }}__input"
+                       placeholder="{{ 'autocomplete.placeholder' | trans }}"
+                       value="{{ data.value }}"
+                       autocomplete="off">
+
+                <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block suggestion %}
+        <div class="box is-hidden {{ config.name }}__suggestion {{ config.jsName }}__container">
+            {% include molecule('ajax-renderer') with {
+                attributes: {
+                    'provider-selector': '.' ~ config.jsName ~ '__provider',
+                    'render-if-response-is-empty': true,
+                    'target-selector': config.jsName ~ '__suggestions',
+
+                    'container-selector': '.customer-autocomplete__container',
+                    'item-selector': '.customer-autocomplete__container-item',
+                }
+            } only %}
+        </div>
+    {% endblock %}
+
+{% endblock %}
