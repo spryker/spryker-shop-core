@@ -20,7 +20,9 @@
         {% if widgetExists('CompanyUserInvitationWidgetPlugin') %}
             {{ widget('CompanyUserInvitationWidgetPlugin') }}
         {% endif %}
-        <a class="button" href="{{url('company/user/create')}}">{{ 'company.account.company_user.add' | trans }}</a>
+        {% if can('AddCompanyUserPermissionPlugin') %}
+            <a class="button" href="{{url('company/user/create')}}">{{ 'company.account.company_user.add' | trans }}</a>
+        {%  endif %}
     </div>
 
     {% if data.users is not empty %}
