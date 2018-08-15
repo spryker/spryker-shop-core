@@ -11,15 +11,20 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Client\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
 class UserController extends AbstractCompanyController
 {
+    use PermissionAwareTrait;
+
     public const COMPANY_USER_LIST_SORT_FIELD = 'id_company_user';
 
     protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
@@ -79,10 +84,16 @@ class UserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeCreateAction(Request $request)
     {
+        if (!$this->can(AddCompanyUserPermissionPlugin::KEY)) {
+            throw new NotFoundHttpException();
+        }
+
         $dataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->createCompanyUserFormDataProvider();
