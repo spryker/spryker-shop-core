@@ -9,7 +9,8 @@
     cartQuantity: app['cart.quantity'] | default,
     showUserMenu: not (hideUserMenu | default(false)),
     isInline: true,
-    withSeparators: true
+    withSeparators: true,
+    shoppingListDisplayQuntity: 5,
 } %}
 
 {% set cartQuantity = data.cartQuantity > 0 ? data.cartQuantity ~ ' ' : '' %}
@@ -46,6 +47,13 @@
                 } only %}
             {% endif %}
         </li>
+        {% if widgetGlobalExists('ShoppingListWidgetPlugin') %}
+            {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
+            <li class="menu__item">
+                {{ widgetGlobal('ShoppingListWidgetPlugin', data.shoppingListDisplayQuntity) }}
+            </li>
+        {% endif %}
+
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item"><a href="{{ url('quick-order') }}">{{ 'quick-order.page-title'|trans }}</a></li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}

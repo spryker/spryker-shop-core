@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ShoppingListWidget;
 
+use Spryker\Client\ShoppingListSession\ShoppingListSessionClient;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface;
@@ -38,5 +39,13 @@ class ShoppingListWidgetFactory extends AbstractFactory
     public function getBundleConfig(): ShoppingListWidgetConfig
     {
         return $this->getConfig();
+    }
+
+    /**
+     * @return ShoppingListSessionClient
+     */
+    public function getShoppingListSessionClient(): ShoppingListSessionClient
+    {
+        return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::CLIENT_SHOPPING_LIST_SESSION);
     }
 }

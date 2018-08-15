@@ -1,0 +1,35 @@
+{% extends template('widget') %}
+
+{% define data = {
+    shoppingListCollection: _widget.shoppingListCollection,
+    quantity: _widget.quantity,
+} %}
+
+{% set itemClass = (data.shoppingListCollection | length ? ' menu__item--has-children-list' : '') %}
+
+{% block body %}
+    <ul class="menu">
+        <li class="menu__item {{ itemClass }}">
+            <a href="{{ path('shopping-list') }}" data-id="sidebar-shopping-list">{{ 'shopping_list.shopping_list' | trans }}</a>
+            {% if data.shoppingListCollection | length > 0 %}
+                <ul class="nested vertical menu" data-display-quantity="{{ data.quantity }}">
+                    {% for shoppingList in data.shoppingListCollection.shoppingLists %}
+                        {% set wrightAccess =  can('WriteShoppingListPermissionPlugin', shoppingList.idShoppingList) %}
+                        <li class="menu__item" style="width:20em;">
+                            <div class="grid row">
+                                <div class="col col--left text-left col--sm-7 small-padding pull-left">
+                                    <a href="{{ path('shopping-list/details', { idShoppingList: (shoppingList.idShoppingList ) })  }}">{{ shoppingList.name }}</a>
+                                </div>
+                                <div class="col col--left text-left col--sm-5  shopping-list-owner" data-customer-reference="{{ shoppingList.customerReference }}">{{ shoppingList.owner }}</div>
+                            </div>
+                            <div class="grid row">
+                                <div class="col col--left text-left col--sm-4 small-padding shopping-list-number-of-items label label-info">{{ shoppingList.numberOfItems }}</div>
+                                <div class="col col--sm-8 text-left small-padding shopping-list-access-level {% if wrightAccess %}full-access{% else %}read-only{% endif %}" >{% if wrightAccess %}Full access{% else %}Read only{% endif %}</div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    </ul>
+{% endblock %}
