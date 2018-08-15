@@ -33,65 +33,60 @@
 {% endblock %}
 
 {% block customerContent %}
-    <div class="form box" data-qa="component form"><h5>Share Shopping List with:</h5>
+    <div class="form box" data-qa="component form">
+        <h5>{{ 'customer.account.shopping_list.share.from.share_with' | trans }}</h5>
+
+        <br />
 
         {{ form_start(data.shareShoppingListForm) }}
 
         <div class="form__container">
             <div class="form__fields grid grid--bottom">
                 <div class="form__field col col--sm-12">
-                    <b>{{ form_label(data.shareShoppingListForm.sharedCompanyBusinessUnits) }}</b>
-                    <br clear="all">
-                    {% for key, companyBusinessUnit in data.companyBusinessUnits %}
-
-                        {% if data.sharedCompanyBusinessUnits[key].idShoppingListPermissionGroup is not null %}
-                            <label>{{ companyBusinessUnit.name }}</label>
-                            {{ form_row(data.shareShoppingListForm.sharedCompanyBusinessUnits[key]) }}
-                        {% endif %}
-                    {% endfor %}
-                    <br clear="all">
-                    <hr>
-                    {% for key, companyBusinessUnit in data.companyBusinessUnits %}
-
-                        {% if data.sharedCompanyBusinessUnits[key].idShoppingListPermissionGroup is null %}
-                            <label>{{ companyBusinessUnit.name }}</label>
-                            {{ form_row(data.shareShoppingListForm.sharedCompanyBusinessUnits[key]) }}
-                        {% endif %}
-                    {% endfor %}
+                    <div class="grid">
+                        <div class="col col--sm-12 col--lg-3 spacing-y">
+                            <b>{{ form_label(data.shareShoppingListForm.sharedCompanyBusinessUnits) }}</b>
+                        </div>
+                        <div class="col col--sm-12 col--lg-9">
+                            {% include molecule('share-list', 'ShoppingListPage') with {
+                                data: {
+                                    shareUnits: data.companyBusinessUnits,
+                                    sharedCompany: data.sharedCompanyBusinessUnits,
+                                    shareForm: data.shareShoppingListForm.sharedCompanyBusinessUnits
+                                }
+                            } only %}
+                        </div>
+                    </div>
                 </div>
 
-                <br clear="all">
-                <br clear="all">
+                <div class="form__field col col--sm-12">
+                    <hr />
+                </div>
 
                 <div class="form__field col col--sm-12">
-                    <b>{{ form_label(data.shareShoppingListForm.sharedCompanyUsers) }}</b>
-                    <br clear="all">
-                    {% for key, companyUser in data.companyUsers %}
-
-                        {% if data.sharedCompanyUsers[key].idShoppingListPermissionGroup is not null %}
-                            <label>{{ companyUser.customer.firstName }} {{ companyUser.customer.lastName }}</label>
-                            {{ form_row(data.shareShoppingListForm.sharedCompanyUsers[key]) }}
-                        {% endif %}
-                    {% endfor %}
-                    <br clear="all">
-                    <hr>
-                    {% for key, companyUser in data.companyUsers %}
-
-                        {% if data.sharedCompanyUsers[key].idShoppingListPermissionGroup is null %}
-                            <label>{{ companyUser.customer.firstName }} {{ companyUser.customer.lastName }}</label>
-                            {{ form_row(data.shareShoppingListForm.sharedCompanyUsers[key]) }}
-                        {% endif %}
-                    {% endfor %}
+                    <div class="grid">
+                        <div class="col col--sm-12 col--lg-3 spacing-y">
+                            <b>{{ form_label(data.shareShoppingListForm.sharedCompanyUsers) }}</b>
+                        </div>
+                        <div class="col col--sm-12 col--lg-9">
+                            {% include molecule('share-list', 'ShoppingListPage') with {
+                                data: {
+                                    shareUnits: data.companyUsers,
+                                    sharedCompany: data.sharedCompanyUsers,
+                                    shareForm: data.shareShoppingListForm.sharedCompanyUsers
+                                }
+                            } only %}
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="form__actions">
+            <div class="form__actions spacing-x">
                 <button type="submit" class="form__action button button--success" data-qa="submit-button">
                     {{ data.labels.shareFormSubmit }}
                 </button>
             </div>
         </div>
-
 
         {{ form_end(data.shareShoppingListForm) }}
     </div>

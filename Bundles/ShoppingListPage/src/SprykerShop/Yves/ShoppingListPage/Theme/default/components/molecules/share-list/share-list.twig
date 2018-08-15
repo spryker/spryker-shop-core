@@ -1,0 +1,45 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'share-list',
+    tag: 'div'
+} %}
+
+{% define data = {
+    shareUnits: required,
+    sharedCompany: required,
+    shareForm: required
+} %}
+
+{% block body %}
+    <div class="box">
+        <ul class="{{ config.name }}__list">
+            {% for key, unit in data.shareUnits %}
+                {% if data.sharedCompany[key].idShoppingListPermissionGroup is not null %}
+                    {% include molecule('share-list-item', 'ShoppingListPage') with {
+                        class: 'spacing-y spacing-y--inner',
+                        data: {
+                            name: unit.customer is defined ? (unit.customer.firstName ~ ' ' ~ unit.customer.lastName) : unit.name,
+                            shareForm: data.shareForm[key]
+                        }
+                    } only %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="box">
+        <ul class="{{ config.name }}__list">
+            {% for key, unit in data.shareUnits %}
+                {% if data.sharedCompany[key].idShoppingListPermissionGroup is null %}
+                    {% include molecule('share-list-item', 'ShoppingListPage') with {
+                        class: 'spacing-y spacing-y--inner',
+                        data: {
+                            name: unit.customer is defined ? (unit.customer.firstName ~ ' ' ~ unit.customer.lastName) : unit.name,
+                            shareForm: data.shareForm[key]
+                        }
+                    } only %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
