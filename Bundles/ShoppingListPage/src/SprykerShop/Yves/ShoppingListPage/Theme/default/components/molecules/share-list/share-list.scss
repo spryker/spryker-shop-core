@@ -1,7 +1,7 @@
 @mixin shopping-list-page-share-list($name: '.share-list') {
     #{$name} {
         &__list {
-            max-height: 14.6875rem;
+            max-height: 14.688rem;
             overflow: auto;
         }
     }
