@@ -29,8 +29,8 @@ class BusinessUnitController extends AbstractCompanyController
     protected const MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS = 'message.business_unit.delete';
 
     protected const MESSAGE_BUSINESS_UNIT_CREATE_ERROR = 'message.business_unit.create.error';
-    protected const MESSAGE_BUSINESS_UNIT_UPDATE_ERROR = 'message.business_unit.create.update';
-    protected const MESSAGE_BUSINESS_UNIT_DELETE_ERROR = 'message.business_unit.create.delete';
+    protected const MESSAGE_BUSINESS_UNIT_UPDATE_ERROR = 'message.business_unit.update.error';
+    protected const MESSAGE_BUSINESS_UNIT_DELETE_ERROR = 'message.business_unit.delete.error';
 
     /**
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -107,7 +107,17 @@ class BusinessUnitController extends AbstractCompanyController
         if ($companyBusinessUnitForm->isValid()) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 
-            $this->showTranslatedMessageByResponseStatus($companyBusinessUnitResponseTransfer);
+            if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+                $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS, [
+                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+                ]);
+            }
+
+            if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+                $this->addTranslatedErrorMessage(static::MESSAGE_BUSINESS_UNIT_CREATE_ERROR, [
+                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+                ]);
+            }
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
                 'id' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getIdCompanyBusinessUnit(),
@@ -167,7 +177,17 @@ class BusinessUnitController extends AbstractCompanyController
         if ($companyBusinessUnitForm->isValid()) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
 
-            $this->showTranslatedMessageByResponseStatus($companyBusinessUnitResponseTransfer);
+            if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+                $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS, [
+                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+                ]);
+            }
+
+            if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+                $this->addTranslatedErrorMessage(static::MESSAGE_BUSINESS_UNIT_UPDATE_ERROR, [
+                    '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+                ]);
+            }
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
                 'id' => $idCompanyBusinessUnit,
@@ -178,28 +198,6 @@ class BusinessUnitController extends AbstractCompanyController
             'form' => $companyBusinessUnitForm->createView(),
             'addresses' => $dataProviderOptions[CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES],
         ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
-     *
-     * @return void
-     */
-    protected function showTranslatedMessageByResponseStatus(
-        CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
-    ): void {
-
-        if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-            $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS, [
-                '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
-            ]);
-        }
-
-        if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-            $this->addTranslatedErrorMessage(static::MESSAGE_BUSINESS_UNIT_UPDATE_ERROR, [
-                '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
-            ]);
-        }
     }
 
     /**
@@ -219,6 +217,12 @@ class BusinessUnitController extends AbstractCompanyController
 
         if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
             $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS, [
+                '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+            ]);
+        }
+
+        if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+            $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_DELETE_ERROR, [
                 '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
             ]);
         }
