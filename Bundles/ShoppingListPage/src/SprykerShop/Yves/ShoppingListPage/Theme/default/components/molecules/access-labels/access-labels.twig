@@ -12,7 +12,7 @@
 
 {% block body %}
     {% if data.hasWritePermission %}
-        <span class="{{ config.name }}__full">{{ data.labels.fullAccessLabel }}</span>
+        <span class="{{ config.name }}__full-access">{{ data.labels.fullAccessLabel }}</span>
     {% else %}
         <span class="{{ config.name }}__read-only">{{ data.labels.readOnlyLabel }}</span>
     {% endif %}
