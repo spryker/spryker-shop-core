@@ -1,0 +1,16 @@
+@mixin shopping-list-page-shopping-list-info($name: '.shopping-list-info') {
+    #{$name} {
+        padding: 0.5rem;
+        background-color: $setting-color-lighter;
+
+        &__access-label {
+            &--full {
+                color: map-get($setting-color-actions, 'success');
+            }
+
+            &--read {
+                color: $setting-color-dark;
+            }
+        }
+    }
+}

@@ -64,33 +64,28 @@
             </div>
         </div>
         <hr>
-        <div class="grid grid--justify">
-            <div class="col col--sm-4">
-                <b>{{ data.labels.ownerLabel }}</b>: {{ data.shoppingList.owner }}
-            </div>
-            <div class="col col--sm-4">
-                <b>{{ data.labels.accessLabel }}</b>:
-                {{ can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) ? data.labels.fullAccessLabel : data.labels.readOnlyLabel }}
-            </div>
-            <div class="col col--sm-4">
-                <b>{{ data.labels.sharedWithLabel }}</b>:
-                {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
-                    <a href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">
-                        {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ data.labels.usersLabel }},
-                        {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ data.labels.businessUnitsLabel }}
-                    </a>
-                {% else %}
-                    <span>
-                        {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ data.labels.usersLabel }},
-                        {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ data.labels.businessUnitsLabel }}
-                    </span>
-                {% endif %}
-            </div>
-        </div>
+
+        {% include molecule('shopping-list-info', 'ShoppingListPage') with {
+            data: {
+                shoppingList: data.shoppingList,
+                labels: {
+                    ownerLabel: data.labels.ownerLabel,
+                    accessLabel: data.labels.accessLabel,
+                    fullAccessLabel: data.labels.fullAccessLabel,
+                    readOnlyLabel: data.labels.readOnlyLabel,
+                    sharedWithLabel: data.labels.sharedWithLabel,
+                    usersLabel: data.labels.usersLabel,
+                    businessUnitsLabel: data.labels.businessUnitsLabel,
+                    usersLabel: data.labels.usersLabel,
+                    businessUnitsLabel: data.labels.businessUnitsLabel
+                }
+            }
+        } only %}
+
         <hr/>
         {% if data.shoppingListItems|length %}
             <form method="POST" action="{{ path('shopping-list/add-to-cart') }}">
-                <div class="grid grid--justify">
+                <div class="grid grid--justify spacing-y spacing-y--inner">
                     <div class="col">
                         <button type="submit" class="button button--success" {{qa('submit-button')}}>
                             {{ data.labels.addSelectedItemsToCartLabel }}
@@ -102,90 +97,26 @@
                         </button>
                     </div>
                 </div>
-            <input type="hidden" value="{{ data.shoppingList.idShoppingList }}" name="idShoppingList"/>
-            <table class="table table--expand">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th class="text-center" colspan="2">{{ data.labels.productLabel }}</th>
-                    <th class="text-center">{{ data.labels.priceLabel  }}</th>
-                    <th class="text-center">{{ data.labels.quantityLabel }}</th>
-                    <th class="text-center">{{ data.labels.availabilityLabel  }}</th>
-                    <th class="text-center">{{ data.labels.actionsLabel }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in data.shoppingListItems %}
-                    {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
-                    {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                        {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %}
-                        {% set isItemAvailable = not isDiscontinued and isItemAvailable %}
-                    {% endif %}
-                    <tr>
-                        <td>
-                            <input type="checkbox" {{ isItemAvailable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.idShoppingListItem }}]" value="{{ item.idShoppingListItem }}"/>
-                        </td>
-                        <td class="text-center">
-                            {% if item.images is defined and item.images is not empty %}
-                                {% include atom('thumbnail') with {
-                                    modifiers: ['small', 'min-size'],
-                                    attributes: {
-                                        alt: item.name,
-                                        src: item.images.0.externalUrlSmall,
-                                        title: item.name
-                                    }
-                                } only %}
-                            {% endif %}
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ item.url }}">{{ item.name }}</a>
-                            <div><small>{{ item.sku }}</small></div>
-                            {% for attribute in item.superAttributesDefinition %}
-                                {% if item.attributes[attribute] is defined %}
-                                    {{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }} <br/>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td nowrap="nowrap" class="text-center">
-                            {% if item.price is not null %}
-                                {% include molecule('price') with {
-                                    data: {
-                                        amount: item.price | money,
-                                        originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : (item.prices.ORIGINAL | money)
-                                    }
-                                } only %}
-                            {% else %}
-                                N/A
-                            {% endif %}
-                        </td>
-                        <td class="text-center">
-                            <input class="input" {{ isItemAvailable ? '' : 'disabled' }} type="number" name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]" value="{{ item.quantity }}"/>
-                        </td>
-                        <td class="text-center">
-                            {% if isItemAvailable %}
-                                {{ data.labels.itemAvailableLabel }}
-                            {% else %}
-                                {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                                    {{ widget('ProductDiscontinuedWidgetPlugin', item.sku) }}
-                                {% else %}
-                                    {{ data.labels.itemNotAvailableLabel }}
-                                {% endif %}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if isItemAvailable %}
-                                <button type="submit" name="add-item" class="button button--success" value="{{ item.idShoppingListItem }}" {{qa('submit-button')}}>
-                                    {{data.labels.addItemToCartLabel}}
-                                </button>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) and widgetExists('ProductAlternativeWidgetPlugin') %}
-                        {{ widget('ProductAlternativeWidgetPlugin', item, data.shoppingList) }}
-                    {% endif %}
-                {% endfor %}
-                </tbody>
-            </table>
+
+                <input type="hidden" value="{{ data.shoppingList.idShoppingList }}" name="idShoppingList"/>
+
+                {% include molecule('shopping-list-table', 'ShoppingListPage') with {
+                    class: 'table table--expand',
+                    data: {
+                        shoppingList: data.shoppingList,
+                        shoppingListItems: data.shoppingListItems,
+                        labels: {
+                            productLabel: data.labels.productLabel,
+                            priceLabel: data.labels.priceLabel,
+                            quantityLabel: data.labels.quantityLabel,
+                            availabilityLabel: data.labels.availabilityLabel,
+                            actionsLabel: data.labels.actionsLabel,
+                            itemAvailableLabel: data.labels.itemAvailableLabel,
+                            itemNotAvailableLabel: data.labels.itemNotAvailableLabel,
+                            addItemToCartLabel: data.labels.addItemToCartLabel
+                        }
+                    }
+                } only %}
             </form>
         {% else %}
             {{ data.labels.shoppingListEmptyLabel }}
