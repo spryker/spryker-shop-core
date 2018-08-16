@@ -2,7 +2,9 @@
 
 {% define data = {
     title: _view.shoppingList.name,
-    shoppingList: _view.shoppingList
+    shoppingList: _view.shoppingList,
+    sharedCompanyUsers: _view.sharedCompanyUsers,
+    sharedCompanyBusinessUnits: _view.sharedCompanyBusinessUnits,
 } %}
 
 {% block breadcrumbs %}
@@ -32,30 +34,30 @@
         {{ 'customer.account.shopping_list.delete.you_are_trying_to_delete_shopping_list' | trans }}
         <a href="{{ url('shopping-list/details', {'idShoppingList': data.shoppingList.idShoppingList}) }}">{{ data.title }}</a>
         <br/>
-        {% if data.shoppingList.sharedCompanyUsers.count or data.shoppingList.sharedCompanyBusinessUnits.count %}
+        {% if data.sharedCompanyUsers.count or data.sharedCompanyBusinessUnits.count %}
             {{ 'customer.account.shopping_list.delete.it_belongs_to_follow' | trans }}
 
             <br/>
             <br/>
 
-            {% if data.shoppingList.sharedCompanyBusinessUnits.count %}
+            {% if data.sharedCompanyBusinessUnits.count %}
                 <b>{{ 'company.account.business_unit' | trans }}</b>:
                 <br/>
                 <ul>
-                    {% for sharedCompanyBusinessUnit in data.shoppingList.sharedCompanyBusinessUnits %}
-                        <li>{{ sharedCompanyBusinessUnit.companyBusinessUnit.name }}</li>
+                    {% for sharedCompanyBusinessUnit in data.sharedCompanyBusinessUnits %}
+                        <li>{{ sharedCompanyBusinessUnit.name }}</li>
                     {% endfor %}
                 </ul>
             {% endif %}
 
             <br/>
 
-            {% if data.shoppingList.sharedCompanyUsers.count %}
+            {% if data.sharedCompanyUsers.count %}
                 <b>{{ 'company.account.company_user' | trans }}</b>:
                 <br/>
                 <ul class="bullets">
-                    {% for sharedCompanyUser in data.shoppingList.sharedCompanyUsers %}
-                        <li>{{ sharedCompanyUser.companyUser.customer.firstName ~ ' ' ~  sharedCompanyUser.companyUser.customer.lastName }}</li>
+                    {% for sharedCompanyUser in data.sharedCompanyUsers %}
+                        <li>{{ sharedCompanyUser.customer.firstName ~ ' ' ~  sharedCompanyUser.customer.lastName }}</li>
                     {% endfor %}
                 </ul>
             {% endif %}
