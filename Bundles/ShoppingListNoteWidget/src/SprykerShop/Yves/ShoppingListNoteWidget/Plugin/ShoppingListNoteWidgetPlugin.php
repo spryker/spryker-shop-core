@@ -7,9 +7,7 @@
 
 namespace SprykerShop\Yves\ShoppingListNoteWidget\Plugin;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
-use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShoppingListPage\Plugin\ShoppingListItemNoteWidgetPluginInterface;
 
