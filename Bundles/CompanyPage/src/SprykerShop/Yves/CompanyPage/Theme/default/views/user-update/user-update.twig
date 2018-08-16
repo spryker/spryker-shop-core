@@ -7,6 +7,25 @@
     activePage: 'users'
 } %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview'),
+                },
+                {
+                    label: 'company.account.company_user.edit_information' | trans({
+                        '%first_name%' : data.form.vars.value.first_name,
+                        '%last_name%' : data.form.vars.value.last_name,
+                    }),
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
 {% block companyContent %}
     <div class="box">
         {% include molecule('form') with {
