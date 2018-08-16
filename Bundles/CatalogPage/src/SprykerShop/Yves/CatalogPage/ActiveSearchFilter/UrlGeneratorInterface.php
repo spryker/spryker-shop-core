@@ -14,7 +14,7 @@ interface UrlGeneratorInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $searchResultTransfer
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer $searchResultTransfer
      * @param string $filterValue
      *
      * @return string
@@ -23,7 +23,7 @@ interface UrlGeneratorInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $facetFilters
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facetFilters
      *
      * @return string
      */
