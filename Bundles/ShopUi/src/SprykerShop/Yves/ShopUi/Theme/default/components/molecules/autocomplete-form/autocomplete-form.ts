@@ -14,7 +14,7 @@ export default class AutocompleteForm extends Component {
         this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}__container`);
         this.inputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
         this.hiddenInputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input-hidden`);
-        this.cleanButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__clean_button`);
+        this.cleanButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__clean-button`);
         this.mapEvents();
     }
 
@@ -54,7 +54,7 @@ export default class AutocompleteForm extends Component {
 
     async loadSuggestions(): Promise<void> {
         this.showSuggestions();
-        this.ajaxProvider.queryParams.set(this.queryParamName, this.inputValue)
+        this.ajaxProvider.queryParams.set(this.queryParamName, this.inputValue);
 
         this.ajaxProvider.fetch().then(_ => {
             this.mapItemEvents();

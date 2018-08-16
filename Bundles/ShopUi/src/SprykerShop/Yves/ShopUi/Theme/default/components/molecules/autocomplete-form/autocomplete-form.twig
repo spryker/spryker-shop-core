@@ -48,9 +48,11 @@
 
                 <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
             </div>
-            <div class="col col--sm-1">
-                <button type="button" class="button button--warning {{ config.jsName }}__clean_button">X</button>
-            </div>
+            {% block cleanButton %}
+                <div class="col col--sm-1">
+                    <button type="button" class="button button--warning {{ config.jsName }}__clean-button button--expand">&times</button>
+                </div>
+            {% endblock %}
         </div>
     {% endblock %}
 

@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\AgentWidget\Controller;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
@@ -17,12 +18,14 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
  */
 class CustomerAutocompleteController extends AbstractController
 {
+    protected const VIEW_PATH = '@AgentWidget/views/customer-autocomplete/customer-autocomplete.twig';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request): array
+    public function indexAction(Request $request): Response
     {
         $queryParams = $request->query->all();
 
@@ -44,16 +47,16 @@ class CustomerAutocompleteController extends AbstractController
             ->findCustomersByQuery($customerQueryTransfer)
             ->toArray();
 
-        return $customers;
+        return $this->renderView(static::VIEW_PATH, $customers);
     }
 
     /**
      * @param \Symfony\Component\Validator\ConstraintViolationListInterface $constraintViolationList
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function errorResponse(ConstraintViolationListInterface $constraintViolationList): array
+    protected function errorResponse(ConstraintViolationListInterface $constraintViolationList): Response
     {
-        return ['errors' => (string)$constraintViolationList];
+        return $this->renderView(static::VIEW_PATH, ['errors' => (string)$constraintViolationList]);
     }
 }
