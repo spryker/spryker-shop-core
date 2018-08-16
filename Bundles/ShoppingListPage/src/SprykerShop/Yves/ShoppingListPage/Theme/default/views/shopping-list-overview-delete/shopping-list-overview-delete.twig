@@ -2,10 +2,7 @@
 
 {% define data = {
     title: _view.shoppingList.name,
-    shoppingList: _view.shoppingList,
-    labels: {
-        warningLabel: 'customer.account.shopping_list.warning' | trans,
-    }
+    shoppingList: _view.shoppingList
 } %}
 
 {% block breadcrumbs %}
@@ -30,6 +27,46 @@
 
 {% block customerContent %}
     <div class="box">
+        <h5>{{ 'customer.account.shopping_list.delete.warning' | trans }}</h5>
+        <hr />
+        {{ 'customer.account.shopping_list.delete.you_are_trying_to_delete_shopping_list' | trans }}
+        <a href="{{ url('shopping-list/details', {'idShoppingList': data.shoppingList.idShoppingList}) }}">{{ data.title }}</a>
+        <br/>
+        {% if data.shoppingList.sharedCompanyUsers.count or data.shoppingList.sharedCompanyBusinessUnits.count %}
+            {{ 'customer.account.shopping_list.delete.it_belongs_to_follow' | trans }}
 
+            <br/>
+            <br/>
+
+            {% if data.shoppingList.sharedCompanyBusinessUnits.count %}
+                <b>{{ 'company.account.business_unit' | trans }}</b>:
+                <br/>
+                <ul>
+                    {% for sharedCompanyBusinessUnit in data.shoppingList.sharedCompanyBusinessUnits %}
+                        <li>{{ sharedCompanyBusinessUnit.companyBusinessUnit.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <br/>
+
+            {% if data.shoppingList.sharedCompanyUsers.count %}
+                <b>{{ 'company.account.company_user' | trans }}</b>:
+                <br/>
+                <ul class="bullets">
+                    {% for sharedCompanyUser in data.shoppingList.sharedCompanyUsers %}
+                        <li>{{ sharedCompanyUser.companyUser.customer.firstName ~ ' ' ~  sharedCompanyUser.companyUser.customer.lastName }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <br/>
+            {{ 'customer.account.shopping_list.delete.it_wll_be_deleted_from_all_of_them' | trans }}
+        {% endif %}
+        <br/>
+        <div class="row">
+            <a href="javascript:history.go(-1)" class="button button--info float-left">{{ 'general.back.button' | trans }}</a>
+            <a href="{{ url('shopping-list/delete', {'idShoppingList': data.shoppingList.idShoppingList})}}" class="button button--alert float-right">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
+        </div>
     </div>
 {% endblock %}

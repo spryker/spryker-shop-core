@@ -7,6 +7,10 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -168,13 +172,18 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      */
     public function deleteConfirmAction(int $idShoppingList): View
     {
+        $customerTransfer = $this->getCustomer();
+
         $shoppingListTransfer = (new ShoppingListTransfer)
             ->setIdShoppingList($idShoppingList)
-            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         $shoppingListTransfer = $this->getFactory()
             ->getShoppingListClient()
             ->getShoppingList($shoppingListTransfer);
+
+        $this->updateSharedCompanyUsers($shoppingListTransfer, $customerTransfer);
+        $this->updateSharedCompanyBusinessUnits($shoppingListTransfer, $customerTransfer);
 
         return $this->view(
             ['shoppingList' => $shoppingListTransfer],
@@ -391,5 +400,69 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         }
 
         return new ShoppingListTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function updateSharedCompanyUsers(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): void
+    {
+        $sharedCompanyUsers = [];
+
+        foreach ($shoppingListTransfer->getSharedCompanyUsers() as $shoppingListCompanyUserTransfer) {
+            $sharedCompanyUsers[$shoppingListCompanyUserTransfer->getIdCompanyUser()] = $shoppingListCompanyUserTransfer;
+        }
+
+        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
+            ->setIdCompany($customerTransfer->getCompanyUserTransfer()->getFkCompany())
+            ->setCompanyUserIds(array_keys($sharedCompanyUsers));
+
+        $companyUsers = $this->getFactory()
+            ->getCompanyUserClient()
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer)
+            ->getCompanyUsers();
+
+        foreach ($companyUsers as $companyUserTransfer) {
+            if (array_key_exists($companyUserTransfer->getIdCompanyUser(), $sharedCompanyUsers)) {
+                $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()]->setCompanyUser($companyUserTransfer);
+            }
+        }
+
+        $shoppingListTransfer->setSharedCompanyUsers(new ArrayObject($sharedCompanyUsers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function updateSharedCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): void
+    {
+        $sharedCompanyBusinessUnits = [];
+
+        foreach ($shoppingListTransfer->getSharedCompanyBusinessUnits() as $shoppingListCompanyBusinessUnitTransfer) {
+            $sharedCompanyBusinessUnits[$shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = $shoppingListCompanyBusinessUnitTransfer;
+        }
+
+        $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
+            ->setIdCompany($customerTransfer->getCompanyUserTransfer()->getFkCompany())
+            ->setCompanyBusinessUnitIds(array_keys($sharedCompanyBusinessUnits));
+
+        $companyBusinessUnits = $this->getFactory()
+            ->getCompanyBusinessUnitClient()
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer)
+            ->getCompanyBusinessUnits();
+
+        foreach ($companyBusinessUnits as $companyBusinessUnitTransfer) {
+            if (array_key_exists($companyBusinessUnitTransfer->getIdCompanyBusinessUnit(), $sharedCompanyBusinessUnits)) {
+                $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()]->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+            }
+        }
+
+        $shoppingListTransfer->setSharedCompanyBusinessUnits(new ArrayObject($sharedCompanyBusinessUnits));
     }
 }

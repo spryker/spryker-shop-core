@@ -33,8 +33,8 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     {
         $this->addShoppingListRoute()
             ->addShoppingListUpdateRoute()
-            ->addShoppingListDeleteConfirmRoute()
             ->addShoppingListDeleteRoute()
+            ->addShoppingListDeleteConfirmRoute()
             ->addShoppingListAddToCartRoute()
             ->addShoppingListDetailsRoute()
             ->addShoppingListRemoveItemRoute()
@@ -75,6 +75,19 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     protected function addShoppingListDeleteRoute(): self
     {
         $this->createGetController('/{shoppingList}/delete/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DELETE, 'ShoppingListPage', 'ShoppingListOverview', 'delete')
+            ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
+            ->value('shoppingList', 'shopping-list')
+            ->assert('idShoppingList', '\d+');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addShoppingListDeleteConfirmRoute(): self
+    {
+        $this->createController('/{shoppingList}/delete/{idShoppingList}/confirm', static::ROUTE_SHOPPING_LIST_DELETE_CONFIRM, 'ShoppingListPage', 'ShoppingListOverview', 'deleteConfirm')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idShoppingList', '\d+');
@@ -165,19 +178,6 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     protected function addShoppingListPrintRoute(): self
     {
         $this->createController('/{shoppingList}/print/{idShoppingList}', static::ROUTE_SHOPPING_LIST_PRINT, 'ShoppingListPage', 'ShoppingList', 'printShoppingList')
-            ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
-            ->value('shoppingList', 'shopping-list')
-            ->assert('idShoppingList', '\d+');
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    protected function addShoppingListDeleteConfirmRoute(): self
-    {
-        $this->createController('/{shoppingList}/delete/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DELETE_CONFIRM, 'ShoppingListPage', 'ShoppingListOverview', 'deleteConfirm')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idShoppingList', '\d+');
