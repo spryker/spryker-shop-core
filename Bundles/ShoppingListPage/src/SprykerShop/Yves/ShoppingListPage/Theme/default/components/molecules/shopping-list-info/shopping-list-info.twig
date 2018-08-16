@@ -17,9 +17,9 @@
         <div class="col col--sm-12 col--md-6 col--lg-4">
             <b>{{ data.labels.accessLabel }}</b>:
             {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
-                <span class="{{ config.name }}__access-label {{ config.name }}__access-label--full">{{ data.labels.fullAccessLabel | trans }}l</span>
+                <span class="{{ config.name }}__access-label {{ config.name }}__access-label--full">{{ data.labels.fullAccessLabel }}</span>
             {% else %}
-                <span class="{{ config.name }}__access-label {{ config.name }}__access-label--read">{{ data.labels.readOnlyLabel | trans }}l</span>
+                <span class="{{ config.name }}__access-label {{ config.name }}__access-label--read">{{ data.labels.readOnlyLabel }}</span>
             {% endif %}
         </div>
         <div class="col col--sm-12 col--md-6 col--lg-4">
