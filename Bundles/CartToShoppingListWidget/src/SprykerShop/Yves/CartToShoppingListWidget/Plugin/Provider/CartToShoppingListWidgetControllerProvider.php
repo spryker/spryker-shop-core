@@ -21,7 +21,7 @@ class CartToShoppingListWidgetControllerProvider extends AbstractYvesControllerP
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addCreateShoppingListFromCartRoute();
+        //$this->addCreateShoppingListFromCartRoute();
     }
 
     /**
