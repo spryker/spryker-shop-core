@@ -223,9 +223,10 @@ class ShareShoppingListDataProvider
      */
     protected function mapPermissionGroupsToOptions(ArrayObject $permissionGroups): array
     {
-        $permissionGroupOptions = [static::PERMISSION_NO_ACCESS => 0];
+        $permissionGroupOptions = ['customer.account.shopping_list.permissions.' . static::PERMISSION_NO_ACCESS => 0];
         foreach ($permissionGroups as $permissionGroupTransfer) {
-            $permissionGroupOptions[$permissionGroupTransfer->getName()] = $permissionGroupTransfer->getIdShoppingListPermissionGroup();
+            $permissionGroupOptions['customer.account.shopping_list.permissions.' . $permissionGroupTransfer->getName()]
+                = $permissionGroupTransfer->getIdShoppingListPermissionGroup();
         }
 
         return $permissionGroupOptions;
