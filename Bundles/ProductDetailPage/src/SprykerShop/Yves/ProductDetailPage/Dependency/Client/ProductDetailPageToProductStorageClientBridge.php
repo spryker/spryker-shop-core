@@ -33,4 +33,14 @@ class ProductDetailPageToProductStorageClientBridge implements ProductDetailPage
     {
         return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
     }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductAbstractRestricted(int $idProductAbstract): bool
+    {
+        return $this->productStorageClient->isProductAbstractRestricted($idProductAbstract);
+    }
 }

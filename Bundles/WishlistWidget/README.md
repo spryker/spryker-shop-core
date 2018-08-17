@@ -1,6 +1,6 @@
 # WishlistWidget Module
 
-{{ADD DESCRIPTION HERE}}
+The module provides wishlist rendering functionality integration to other modules.
 
 ## Installation
 

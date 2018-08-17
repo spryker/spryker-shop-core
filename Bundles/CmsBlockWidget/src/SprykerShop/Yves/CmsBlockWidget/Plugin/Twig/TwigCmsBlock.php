@@ -88,7 +88,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     /**
      * @param array $blockOptions
      *
-     * @return \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer[]
+     * @return array
      */
     protected function getBlockDataByOptions(array &$blockOptions)
     {
@@ -182,7 +182,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
      */
     protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData)
     {
-        return !($cmsBlockData === null);
+        return $cmsBlockData->getCmsBlockTemplate() !== null;
     }
 
     /**

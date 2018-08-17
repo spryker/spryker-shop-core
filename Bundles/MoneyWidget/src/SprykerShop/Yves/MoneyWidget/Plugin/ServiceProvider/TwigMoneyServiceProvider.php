@@ -94,6 +94,9 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     {
         $filter = new Twig_SimpleFunction('moneySymbol', function ($isoCode = null) {
             $money = $this->getMoneyTransfer(100, $isoCode);
+            if ($money->getCurrency() === null || $money->getCurrency()->getSymbol() === null) {
+                return '';
+            }
 
             return $money->getCurrency()->getSymbol();
         });

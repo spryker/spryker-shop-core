@@ -1,6 +1,6 @@
 # CartPage Module
 
-Provides Yves widget for cart page.
+This module contains the cart page and it's components.
 
 ## Installation
 
