@@ -195,4 +195,12 @@ class ShoppingListPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_VIEW_WIDGETS);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getShoppingListEditWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_EDIT_WIDGETS);
+    }
 }
