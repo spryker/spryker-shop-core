@@ -82,7 +82,7 @@ class UrlGenerator extends SymfonyUrlGenerator
      * @param string $url
      * @param \Symfony\Component\Routing\CompiledRoute $compiledRoute
      * @param \Symfony\Component\Routing\Route $route
-     * @param int $referenceType
+     * @param int|string $referenceType
      *
      * @return string
      */
