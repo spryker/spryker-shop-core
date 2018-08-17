@@ -25,6 +25,8 @@ use SprykerShop\Yves\ShoppingListPage\Form\ShareShoppingListForm;
 
 class ShareShoppingListDataProvider
 {
+    protected const GLOSSARY_KEY_PERMISSIONS = 'customer.account.shopping_list.permissions';
+
     protected const ORDER_BUSINESS_UNIT_SORT_FIELD = 'name';
     protected const ORDER_BUSINESS_UNIT_SORT_DIRECTION = 'ASC';
 
@@ -223,9 +225,10 @@ class ShareShoppingListDataProvider
      */
     protected function mapPermissionGroupsToOptions(ArrayObject $permissionGroups): array
     {
-        $permissionGroupOptions = [static::PERMISSION_NO_ACCESS => 0];
+        $permissionGroupOptions = [static::GLOSSARY_KEY_PERMISSIONS . '.' . static::PERMISSION_NO_ACCESS => 0];
         foreach ($permissionGroups as $permissionGroupTransfer) {
-            $permissionGroupOptions[$permissionGroupTransfer->getName()] = $permissionGroupTransfer->getIdShoppingListPermissionGroup();
+            $permissionGroupOptions[static::GLOSSARY_KEY_PERMISSIONS . '.' . $permissionGroupTransfer->getName()]
+                = $permissionGroupTransfer->getIdShoppingListPermissionGroup();
         }
 
         return $permissionGroupOptions;
