@@ -1,16 +1,6 @@
 @mixin shopping-list-page-shopping-list-table($name: '.shopping-list-table') {
     #{$name} {
         &__row {
-            &:not(:last-child) {
-                border-bottom: 1px solid $setting-color-light;
-            }
-
-            &--alternative {
-                > td {
-                    padding-bottom: 0;
-                }
-            }
-
             &--disable {
                 opacity: 0.4;
             }
@@ -21,7 +11,13 @@
                 &:nth-child(even) {
                     background-color: transparent;
                 }
+
+                &:not(:first-child) {
+                    border-top: 1px solid $setting-color-light;
+                }
             }
         }
+
+        @content;
     }
 }

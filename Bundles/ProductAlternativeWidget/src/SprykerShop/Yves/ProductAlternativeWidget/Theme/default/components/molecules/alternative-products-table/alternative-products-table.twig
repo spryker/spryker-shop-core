@@ -8,14 +8,15 @@
 {% define data = {
     item: required,
     shoppingList: required,
-    products: required
+    products: required,
+    maxShownItems: 3
 } %}
 
 {% set idShoppingListItem = data.item.idShoppingListItem %}
 
 {% block body %}
     {% for item in data.products %}
-        <tr class="{{ config.name }}__row {{ loop.index > 3 ? 'js-product-alternative-' ~ idShoppingListItem ~ '__show-all-target is-hidden' : '' }}">
+        <tr class="{{ loop.index > data.maxShownItems ? 'js-product-alternative-' ~ idShoppingListItem ~ '__show-all-target is-hidden' : '' }}">
             <td class="text-center">
                 {% if item.images is defined and item.images is not empty %}
                     {% include atom('thumbnail') with {
@@ -33,12 +34,12 @@
                 <small class="text-secondary">{{ item.sku }}</small><br />
                 {% for attribute in item.superAttributesDefinition %}
                     {% if item.attributes[attribute] is defined %}
-                        <strong>{{ ('product.attribute.'~attribute) | trans }}</strong>: {{ item.attributes[attribute] }} <br/>
+                        <strong>{{ ('product.attribute.' ~ attribute) | trans }}</strong>: {{ item.attributes[attribute] }} <br/>
                     {% endif %}
                 {% endfor %}
                 <span class="text-alert">{{ 'product_alternative_widget.alternative_for' | trans({name: data.item.name}) }}</span>
             </td>
-            <td class="text-center">
+            <td nowrap="nowrap" class="text-center">
                 {% if item.price is not null %}
                     {% include molecule('price') with {
                         data: {
@@ -59,7 +60,7 @@
                 </a>
             </td>
         </tr>
-        {% if loop.index > 3 and loop.last %}
+        {% if loop.index > data.maxShownItems and loop.last %}
             <tr class="js-product-alternative-{{- idShoppingListItem -}}__show-all-target">
                 <td colspan="5">
                     <div class="text-center spacing-y">

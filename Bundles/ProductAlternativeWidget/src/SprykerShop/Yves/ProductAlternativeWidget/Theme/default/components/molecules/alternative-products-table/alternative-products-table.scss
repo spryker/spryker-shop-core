@@ -1,9 +1,0 @@
-@mixin product-alternative-widget-alternative-products-table($name: '.alternative-products-table') {
-    #{$name} {
-        &__row {
-            &:not(:last-child) {
-                border-bottom: 1px solid $setting-color-light;
-            }
-        }
-    }
-}

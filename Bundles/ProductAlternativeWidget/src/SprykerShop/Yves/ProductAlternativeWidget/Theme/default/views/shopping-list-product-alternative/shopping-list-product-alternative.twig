@@ -8,13 +8,18 @@
 
 {% block body %}
     {% if data.products is not empty %}
-        {% include molecule('alternative-products-table', 'ProductAlternativeWidget') with {
-            class: 'table table--expand',
-            data: {
-                item: data.item,
-                shoppingList: data.shoppingList,
-                products: data.products
-            }
-        } only %}
+        <tr>
+            <td colspan="2"></td>
+            <td colspan="5">
+                {% include molecule('alternative-products-table', 'ProductAlternativeWidget') with {
+                    class: 'table table--expand',
+                    data: {
+                        item: data.item,
+                        shoppingList: data.shoppingList,
+                        products: data.products
+                    }
+                } only %}
+            </td>
+        </tr>
     {% endif %}
 {% endblock %}

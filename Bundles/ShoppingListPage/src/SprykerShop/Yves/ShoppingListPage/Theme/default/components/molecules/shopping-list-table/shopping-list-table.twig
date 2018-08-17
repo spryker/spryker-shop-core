@@ -50,20 +50,20 @@
                 <small class="text-secondary">{{ item.sku }}</small><br/>
                 {% for attribute in item.superAttributesDefinition %}
                     {% if item.attributes[attribute] is defined %}
-                        <strong>{{ ('product.attribute.'~attribute) | trans }}</strong>: {{ item.attributes[attribute] }} <br/>
+                        <strong>{{ ('product.attribute.' ~ attribute) | trans }}</strong>: {{ item.attributes[attribute] }} <br/>
                     {% endif %}
                 {% endfor %}
             </td>
             <td nowrap="nowrap" class="text-center">
-                {% if item.price is not null %}
+                {% if item.price is null %}
+                    N/A
+                {% else %}
                     {% include molecule('price') with {
                         data: {
                             amount: item.price | money,
                             originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : (item.prices.ORIGINAL | money)
                         }
                     } only %}
-                {% else %}
-                    N/A
                 {% endif %}
             </td>
             <td class="text-center">
@@ -89,12 +89,7 @@
             </td>
         </tr>
         {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) and widgetExists('ProductAlternativeWidgetPlugin') %}
-        <tr class="{{ config.name }}__row {{ config.name }}__row--alternative">
-            <td colspan="2">&nbsp;</td>
-            <td colspan="5">
-                {{ widget('ProductAlternativeWidgetPlugin', item, data.shoppingList) }}
-            </td>
-        </tr>
+            {{ widget('ProductAlternativeWidgetPlugin', item, data.shoppingList) }}
         {% endif %}
     {% endfor %}
     </tbody>

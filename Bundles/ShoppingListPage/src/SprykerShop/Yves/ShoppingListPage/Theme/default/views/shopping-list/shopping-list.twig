@@ -100,23 +100,25 @@
 
                 <input type="hidden" value="{{ data.shoppingList.idShoppingList }}" name="idShoppingList"/>
 
-                {% include molecule('shopping-list-table', 'ShoppingListPage') with {
-                    class: 'table table--expand',
-                    data: {
-                        shoppingList: data.shoppingList,
-                        shoppingListItems: data.shoppingListItems,
-                        labels: {
-                            productLabel: data.labels.productLabel,
-                            priceLabel: data.labels.priceLabel,
-                            quantityLabel: data.labels.quantityLabel,
-                            availabilityLabel: data.labels.availabilityLabel,
-                            actionsLabel: data.labels.actionsLabel,
-                            itemAvailableLabel: data.labels.itemAvailableLabel,
-                            itemNotAvailableLabel: data.labels.itemNotAvailableLabel,
-                            addItemToCartLabel: data.labels.addItemToCartLabel
+                <div class="is-scrollable-x">
+                    {% include molecule('shopping-list-table', 'ShoppingListPage') with {
+                        class: 'table table--expand',
+                        data: {
+                            shoppingList: data.shoppingList,
+                            shoppingListItems: data.shoppingListItems,
+                            labels: {
+                                productLabel: data.labels.productLabel,
+                                priceLabel: data.labels.priceLabel,
+                                quantityLabel: data.labels.quantityLabel,
+                                availabilityLabel: data.labels.availabilityLabel,
+                                actionsLabel: data.labels.actionsLabel,
+                                itemAvailableLabel: data.labels.itemAvailableLabel,
+                                itemNotAvailableLabel: data.labels.itemNotAvailableLabel,
+                                addItemToCartLabel: data.labels.addItemToCartLabel
+                            }
                         }
-                    }
-                } only %}
+                    } only %}
+                </div>
             </form>
         {% else %}
             {{ data.labels.shoppingListEmptyLabel }}
