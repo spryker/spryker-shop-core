@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: ruslan.ivanov
- * Date: 8/17/18
- * Time: 3:24 PM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
@@ -27,7 +26,8 @@ class ShoppingListPageToMultiCartClientBridge implements ShoppingListPageToMulti
 
     /**
      * @param int $idQuote
-     * @return null|QuoteTransfer
+     *
+     * @return null|\Generated\Shared\Transfer\QuoteTransfer
      */
     public function findQuoteById(int $idQuote): ?QuoteTransfer
     {
