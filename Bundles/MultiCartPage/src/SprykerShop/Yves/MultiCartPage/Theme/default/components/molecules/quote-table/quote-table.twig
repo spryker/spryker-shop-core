@@ -1,0 +1,69 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-table',
+    tag: 'div'
+} %}
+
+{% define data = {
+    quotes: required,
+    actions: {
+        update: false,
+        delete: false,
+        duplicate: false,
+    }
+} %}
+
+{% set showActions = data.actions.update or data.actions.delete or data.actions.duplicate %}
+
+{% block body %}
+    <table class="table table--expand">
+        <thead>
+            <tr class="active">
+                <th>Name</th>
+                <th>Number of products</th>
+                <th>Total</th>
+                {% if showActions %}
+                    <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for quote in data.quotes %}
+                {% set totals = quote.items | length %}
+                <tr>
+                    <td>{{ quote.name }}</td>
+                    <td>{{ totals }}</td>
+                    <td>{{ quote.totals.subtotal | default(0) | money }}</td>
+                    {% if showActions %}
+                        <td>
+                            <ul class="menu menu--inline">
+                                {% if data.actions.update %}
+                                    <li class="menu__item">
+                                        <a href="#!">
+                                            Edit name
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if data.actions.duplicate %}
+                                    <li class="menu__item">
+                                        <a href="#!">
+                                            Duplicate
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if data.actions.delete %}
+                                    <li class="menu__item">
+                                        <a href="#!">
+                                            Delete
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

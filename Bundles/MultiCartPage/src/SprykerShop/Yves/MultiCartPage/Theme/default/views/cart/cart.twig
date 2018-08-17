@@ -1,0 +1,45 @@
+{% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
+
+{% define data = {
+    quotes: _view.quoteCollection,
+
+    title: 'Shopping carts',
+    activePage: 'shoppingList'
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.shopping_cart' | trans,
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% block customerContent %}
+    <div class="box text-right">
+        <a class="button" href="#!">Create</a>
+    </div>
+
+    {% if data.quotes is not empty %}
+        <div class="box">
+            {% include molecule('quote-table', 'MultiCartPage') with {
+                data: {
+                    quotes: data.quotes,
+                    actions: {
+                        update: true,
+                        delete: true,
+                        duplicate: true,
+                    }
+                }
+            } only %}
+        </div>
+    {% endif %}
+{% endblock %}
