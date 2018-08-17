@@ -24,8 +24,6 @@ class ShoppingListFromCartFormDataProvider
     protected $shoppingListClient;
 
     /**
-     * ShoppingListFromCartFormDataProvider constructor.
-     *
      * @param \SprykerShop\Yves\CartToShoppingListWidget\Dependency\Client\CartToShoppingListWidgetToShoppingListClientInterface $shoppingListClient
      */
     public function __construct(CartToShoppingListWidgetToShoppingListClientInterface $shoppingListClient)
