@@ -1,0 +1,18 @@
+{% extends template('widget') %}
+
+{% define data = {
+    expenses: _widget.expenses | default,
+} %}
+
+{% block body %}
+    {% if data.expenses is not empty %}
+        <strong>{{ 'checkout.minimum-order-value' | trans }}</strong>
+        <ul>
+            {% for expense in data.expenses %}
+                {% include molecule('minimum-order-value-expense', 'MinimumOrderValueWidget') with {
+                    data: {'expense': expense}
+                } only %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

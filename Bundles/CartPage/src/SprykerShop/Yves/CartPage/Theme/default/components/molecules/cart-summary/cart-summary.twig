@@ -37,6 +37,13 @@
             </li>
         {% endif %}
 
+        {% if widgetExists('MinimumOrderValueWidgetPlugin') %}
+            <li class="list__item spacing-y">
+                {{ widget('MinimumOrderValueWidgetPlugin', data.cart.expenses) }}
+            </li>
+            <hr />
+        {% endif %}
+
         <li class="list__item spacing-y">
             {{ 'cart.price.subtotal' | trans }}
             <span class="float-right">{{ data.cart.totals.subtotal | money }}</span>

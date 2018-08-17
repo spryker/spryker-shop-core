@@ -1,0 +1,17 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'minimum-order-value-expense',
+    tag: 'li'
+} %}
+
+{% define data = {
+    expense: required
+} %}
+
+{% block body %}
+    <li class="grid grid--justify">
+        <span class="col col--sm-8">{{ 'minimum-order-value.expense.name' | trans }}</span>
+        <span class="col col--expand text-right"> {{ data.expense.sumPrice | money }}</span>
+    </li>
+{% endblock %}
