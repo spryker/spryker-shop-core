@@ -187,7 +187,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $customerTransfer = $this->getCustomer();
 
         $shoppingListTransfer = (new ShoppingListTransfer)
-            ->setIdShoppingList((int)$request->get('idShoppingList'))
+            ->setIdShoppingList((int)$request->get(static::ROUTE_PARAM_ID_SHOPPING_LIST))
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         $shoppingListTransfer = $this->getFactory()
