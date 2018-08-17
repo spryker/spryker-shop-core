@@ -31,19 +31,19 @@
         </p>
         <br />
         {% if data.sharedCompanyBusinessUnits.count %}
-            <b>{{ 'company.account.business_unit' | trans }}</b>:
-            <ul>
+            <b>{{ 'company.account.business_unit' | trans }}:</b>
+            <ul class="list">
                 {% for sharedCompanyBusinessUnit in data.sharedCompanyBusinessUnits %}
-                    <li>{{ sharedCompanyBusinessUnit.name }}</li>
+                    <li class="list__item">{{ sharedCompanyBusinessUnit.name }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
         <br/>
         {% if data.sharedCompanyUsers.count %}
-            <b>{{ 'company.account.company_user' | trans }}</b>:
-            <ul class="bullets">
+            <b>{{ 'company.account.company_user' | trans }}:</b>
+            <ul class="list">
                 {% for sharedCompanyUser in data.sharedCompanyUsers %}
-                    <li>{{ sharedCompanyUser.customer.firstName ~ ' ' ~  sharedCompanyUser.customer.lastName }}</li>
+                    <li class="list__item">{{ sharedCompanyUser.customer.firstName ~ ' ' ~  sharedCompanyUser.customer.lastName }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
