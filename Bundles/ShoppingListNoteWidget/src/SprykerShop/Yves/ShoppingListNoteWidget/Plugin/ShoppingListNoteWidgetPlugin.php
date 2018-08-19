@@ -8,19 +8,20 @@
 namespace SprykerShop\Yves\ShoppingListNoteWidget\Plugin;
 
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShoppingListPage\Plugin\ShoppingListItemNoteWidgetPluginInterface;
 
 class ShoppingListNoteWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemNoteWidgetPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return void
      */
-    public function initialize(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void
+    public function initialize(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
-        $this->addParameter('note', $shoppingListItemNoteTransfer);
+        $this->addParameter('shoppingListItem', $shoppingListItemTransfer);
     }
 
     /**
