@@ -22,7 +22,13 @@ export default class AutocompleteForm extends Component {
         this.inputElement.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
         this.inputElement.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
         this.inputElement.addEventListener('focus', () => this.onFocus());
-        this.cleanButton.addEventListener('click', () => this.cleanFields());
+        if (this.showCleanButton) {
+            this.cleanButton.addEventListener('click', () => this.onCleanButtonClick());
+        }
+    }
+
+    protected onCleanButtonClick(): void {
+        this.cleanFields();
     }
 
     protected onBlur(): void {
@@ -56,7 +62,7 @@ export default class AutocompleteForm extends Component {
         this.showSuggestions();
         this.ajaxProvider.queryParams.set(this.queryParamName, this.inputValue);
 
-        this.ajaxProvider.fetch().then(_ => {
+        await this.ajaxProvider.fetch().then(_ => {
             this.mapItemEvents();
         });
     }
@@ -82,7 +88,7 @@ export default class AutocompleteForm extends Component {
     }
 
     cleanFields(): void {
-        this.setInputs('', '')
+        this.setInputs('', '');
     }
 
     get minLetters(): number {
@@ -107,5 +113,8 @@ export default class AutocompleteForm extends Component {
 
     get debounceDelay(): number {
         return Number(this.getAttribute('debounce-delay'));
+    }
+    get showCleanButton(): boolean {
+        return this.hasAttribute('show-clean-button');
     }
 }

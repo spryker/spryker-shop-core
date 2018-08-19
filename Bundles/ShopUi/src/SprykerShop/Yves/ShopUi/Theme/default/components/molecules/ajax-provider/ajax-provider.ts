@@ -6,8 +6,8 @@ const EVENT_FETCHED = 'fetched';
 
 export default class AjaxProvider extends Component {
     protected isFetchingRequest: boolean = false
-    public readonly queryParams: Map<String, String> = new Map<String, String>()
-    public readonly headers: Map<String, String> = new Map<String, String>()
+    readonly queryParams: Map<String, String> = new Map<String, String>()
+    readonly headers: Map<String, String> = new Map<String, String>()
 
     readonly xhr: XMLHttpRequest
 
@@ -72,18 +72,15 @@ export default class AjaxProvider extends Component {
     }
 
     get url(): string {
-        let url = this.getAttribute('url');
-
-        let queryStringParams = [];
-        this.queryParams.forEach(((value: String, key: String) => {
-            queryStringParams.push(`${key}=${value}`)
-        }));
-
-        if (queryStringParams.length > 0) {
-            url += '?' + queryStringParams.join('&');
+        const url = this.getAttribute('url');
+        if ((<any>this.queryParams).length === 0) {
+            return url; // exit if there is no param
         }
-
-        return url;
+        const queryStringParams = []; // const is better as this array wont change (push does not affect reference)
+        this.queryParams.forEach((value: String, key: String) => { // just 2 parenthesis
+            queryStringParams.push(`${key}=${value}`);
+        });
+        return url + '?' + queryStringParams.join('&');
     }
 
     get method(): string {

@@ -17,7 +17,7 @@
     'selected-value-key': '',
     'value-data-attribute': 'data-value',
     'item-selector': '',
-    'show-clean-button': true
+    'show-clean-button': false
 } %}
 
 {% block body %}
@@ -38,7 +38,7 @@
 
     {% block input %}
         <div class="grid">
-            <div class="col col--sm-11">
+            <div class="col {% if not attributes['show-clean-button'] %}col--sm-12{% endif %} {% if attributes['show-clean-button'] %}col--sm-11{% endif %}">
                 <input name="query"
                        type="text"
                        class="input input--expand {{ config.jsName }}__input"
@@ -48,11 +48,11 @@
 
                 <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
             </div>
-            {% block cleanButton %}
+            {% if attributes['show-clean-button'] %}
                 <div class="col col--sm-1">
                     <button type="button" class="button button--warning {{ config.jsName }}__clean-button button--expand">&times</button>
                 </div>
-            {% endblock %}
+            {% endif %}
         </div>
     {% endblock %}
 

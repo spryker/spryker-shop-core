@@ -1,17 +1,22 @@
 {% extends template('widget') %}
 
-{% set isError = errors is defined and errors | length > 0 %}
-{% set customersFound = customers is defined and customers | length > 0 %}
+{% define data = {
+    customers: customers | default([]),
+    errors: errors | default([])
+} %}
+
+{% set isError = data.errors | length > 0 %}
+{% set customersFound = data.customers | length > 0 %}
 
 {% block body %}
     {% if isError %}
-        {{ errors }}
+        {{ data.errors }}
     {% else %}
 
         {% if customersFound %}
             {% include molecule('customer-list', 'AgentWidget') with {
                 data: {
-                    customers: customers
+                    customers: data.customers
                 }
             } only%}
 
