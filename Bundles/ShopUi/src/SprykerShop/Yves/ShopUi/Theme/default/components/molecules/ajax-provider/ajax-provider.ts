@@ -94,4 +94,8 @@ export default class AjaxProvider extends Component {
     get fetchOnLoad(): boolean {
         return this.hasAttribute('fetch-on-load');
     }
+
+    get isFetching(): boolean {
+        return this.isFetchingRequest;
+    }
 }
