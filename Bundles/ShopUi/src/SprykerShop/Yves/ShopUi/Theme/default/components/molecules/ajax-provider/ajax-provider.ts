@@ -73,7 +73,7 @@ export default class AjaxProvider extends Component {
 
     get url(): string {
         const url = this.getAttribute('url');
-        if ((this.queryParams).size === 0) {
+        if (this.queryParams.size === 0) {
             return url;
         }
         const queryStringParams = [];
