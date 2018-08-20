@@ -24,6 +24,7 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addMultiCartClient($container);
+        $container = $this->addCartDeleteCompanyUsersListWidgetPlugins($container);
 
         return $container;
     }
