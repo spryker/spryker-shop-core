@@ -1,7 +1,8 @@
-{% extends template('page-layout-customer') %}
+{% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
     idQuote: _view.idQuote,
+    cartDeleteRequestName: 'test',
 } %}
 
 {% block breadcrumbs %}
@@ -16,6 +17,22 @@
 
 {% block content %}
     <div class="box">
-        {# Add confirmation buttons. #}
+        <div class="box">
+            <h5>{{ "multi_cart_page.cart_delete_confirmation.warning" | trans }}</h5>
+            <hr />
+            {{ "multi_cart_page.cart_delete_confirmation.trying_to_delete" | trans }}: {{ data.cartDeleteRequestName }}<br/>
+            {{ "multi_cart_page.cart_delete_confirmation.shared_with" | trans }}
+
+            {# Add shared cart users rendering. #}
+
+            <div>
+                <a href="{{ url('cart') }}" class="button button--info">
+                    {{ "multi_cart_page.cart_delete_confirmation.cancel" | trans }}
+                </a>
+                <a href="{{ url('multi-cart/delete', { 'idQuote' : data.idQuote }) }}" class="button button--alert">
+                    {{ "multi_cart_page.cart_delete_confirmation.delete" | trans }}
+                </a>
+            </div>
+        </div>
     </div>
 {% endblock %}
