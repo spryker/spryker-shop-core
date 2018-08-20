@@ -204,7 +204,10 @@ class MultiCartController extends AbstractController
     {
         $viewData = $this->executeConfirmDeleteAction($idQuote);
 
-        return $this->view($viewData, [], '@MultiCartPage/views/cart-delete/cart-delete.twig');
+        $widgetPlugins = $this->getFactory()
+            ->getCartDeleteCompanyUsersListWidgetPlugins();
+
+        return $this->view($viewData, $widgetPlugins, '@MultiCartPage/views/cart-delete/cart-delete.twig');
     }
 
     /**

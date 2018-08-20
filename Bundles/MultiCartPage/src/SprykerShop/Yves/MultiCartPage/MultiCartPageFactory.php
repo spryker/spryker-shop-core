@@ -56,4 +56,12 @@ class MultiCartPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
+
+    /**
+     * @return \SprykerShop\Yves\MultiCartPage\Plugin\CartDeleteCompanyUsersListWidgetPluginInterface[]
+     */
+    public function getCartDeleteCompanyUsersListWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(MultiCartPageDependencyProvider::PLUGINS_CART_DELETE_COMPANY_USERS_LIST_WIDGET);
+    }
 }
