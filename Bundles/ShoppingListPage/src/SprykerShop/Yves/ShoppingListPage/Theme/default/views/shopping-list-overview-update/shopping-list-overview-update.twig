@@ -151,6 +151,9 @@
                                         </a>
                                     </td>
                                 </tr>
+                                {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) and widgetExists('ProductAlternativeWidgetPlugin') %}
+                                    {{ widget('ProductAlternativeWidgetPlugin', product, data.shoppingList) }}
+                                {% endif %}
                             {% endfor %}
                                 <tr>
                                     <td colspan="5"></td>
