@@ -194,4 +194,28 @@ class MultiCartController extends AbstractController
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function confirmDeleteAction(int $idQuote)
+    {
+        $viewData = $this->executeConfirmDeleteAction($idQuote);
+
+        return $this->view($viewData, [], '@MultiCartPage/views/cart-delete/cart-delete.twig');
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return array
+     */
+    protected function executeConfirmDeleteAction(int $idQuote): array
+    {
+        return [
+            'idQuote' => $idQuote,
+        ];
+    }
 }

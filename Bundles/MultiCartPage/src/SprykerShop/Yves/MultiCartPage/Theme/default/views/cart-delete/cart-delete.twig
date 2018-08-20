@@ -1,0 +1,21 @@
+{% extends template('page-layout-customer') %}
+
+{% define data = {
+    idQuote: _view.idQuote,
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'cart.cart' | trans
+            }]
+        }
+    } only %}
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        {# Add confirmation buttons. #}
+    </div>
+{% endblock %}
