@@ -18,6 +18,8 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
  */
 class CustomerAutocompleteController extends AbstractController
 {
+    protected const VIEW_PATH = '@AgentWidget/views/customer-autocomplete/customer-autocomplete.twig';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -34,7 +36,7 @@ class CustomerAutocompleteController extends AbstractController
         $isParamsValid = $constraintViolationList->count() === 0;
 
         if (!$isParamsValid) {
-            return $this->errorJsonResponse($constraintViolationList);
+            return $this->errorResponse($constraintViolationList);
         }
 
         $customerQueryTransfer = new CustomerQueryTransfer();
@@ -45,7 +47,7 @@ class CustomerAutocompleteController extends AbstractController
             ->findCustomersByQuery($customerQueryTransfer)
             ->toArray();
 
-        return $this->jsonResponse($customers);
+        return $this->renderView(static::VIEW_PATH, $customers);
     }
 
     /**
@@ -53,10 +55,8 @@ class CustomerAutocompleteController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function errorJsonResponse(ConstraintViolationListInterface $constraintViolationList): Response
+    protected function errorResponse(ConstraintViolationListInterface $constraintViolationList): Response
     {
-        return $this
-            ->jsonResponse(['errors' => (string)$constraintViolationList])
-            ->setStatusCode(422);
+        return $this->renderView(static::VIEW_PATH, ['errors' => (string)$constraintViolationList]);
     }
 }

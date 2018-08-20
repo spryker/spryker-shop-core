@@ -16,7 +16,8 @@
     'query-param-name': 'query',
     'selected-value-key': '',
     'value-data-attribute': 'data-value',
-    'item-selector': ''
+    'item-selector': '',
+    'show-clean-button': false
 } %}
 
 {% block body %}
@@ -37,7 +38,7 @@
 
     {% block input %}
         <div class="grid">
-            <div class="col col--sm-12">
+            <div class="col {% if not attributes['show-clean-button'] %}col--sm-12{% endif %} {% if attributes['show-clean-button'] %}col--sm-11{% endif %}">
                 <input name="query"
                        type="text"
                        class="input input--expand {{ config.jsName }}__input"
@@ -47,6 +48,13 @@
 
                 <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
             </div>
+            {% if attributes['show-clean-button'] %}
+                <div class="col col--sm-1">
+                    {% block cleanButton %}
+                        <button type="button" class="button button--warning {{ config.jsName }}__clean-button button--expand">&times</button>
+                    {% endblock %}
+                </div>
+            {% endif %}
         </div>
     {% endblock %}
 
@@ -57,9 +65,6 @@
                     'provider-selector': '.' ~ config.jsName ~ '__provider',
                     'render-if-response-is-empty': true,
                     'target-selector': config.jsName ~ '__suggestions',
-
-                    'container-selector': '.customer-autocomplete__container',
-                    'item-selector': '.customer-autocomplete__container-item',
                 }
             } only %}
         </div>
