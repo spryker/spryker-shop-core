@@ -21,6 +21,9 @@
         <thead>
             <tr class="active">
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.name' | trans }}</th>
+                {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
+                    <th>{{ 'page.multi_cart.shopping_cart.list.label.access' | trans }}</th>
+                {% endif %}
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.num_of_products' | trans }}</th>
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.total' | trans }}</th>
                 {% if showActions %}
@@ -39,6 +42,11 @@
                             {% if quote.isDefault %}</strong>{% endif %}
                         </a>
                     </td>
+                    {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
+                        <td>
+                            {{ widget('CartListPermissionGroupWidgetPlugin', quote) }}
+                        </td>
+                    {% endif %}
                     <td>
                         {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
                             {{ widget('ProductBundleItemCounterWidgetPlugin', quote) }}
