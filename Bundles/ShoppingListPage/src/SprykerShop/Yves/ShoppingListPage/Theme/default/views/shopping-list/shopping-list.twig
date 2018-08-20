@@ -131,7 +131,7 @@
                             {% endif %}
                         </td>
                         <td class="text-center">
-                            <input class="input" {{ isItemAvailable ? '' : 'disabled' }} type="number" name="shoppingListItem[quantity][{{ item.shoppingListItem.idShoppingListItem }}]" value="{{ item.quantity }}"/>
+                            <input class="input" {{ isItemAvailable ? '' : 'disabled' }} type="number" name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]" value="{{ item.quantity }}"/>
                         </td>
                         <td class="text-center">
                             {% if isItemAvailable %}
