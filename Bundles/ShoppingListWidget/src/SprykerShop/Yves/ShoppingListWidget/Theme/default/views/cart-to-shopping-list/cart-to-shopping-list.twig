@@ -5,5 +5,7 @@
 } %}
 
 {% block body %}
-    <a href="{{ url('shopping-list/create-from-exist-cart', {'idQuote': (data.quote.idQuote)}) }}">To shopping list</a>
+    <a href="{{ url('shopping-list/create-from-exist-cart', {'idQuote': (data.quote.idQuote)}) }}">
+        {{ 'widget.shopping_list.multi_cart.to_shopping_list' | trans }}
+    </a>
 {% endblock %}
