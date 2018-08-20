@@ -25,7 +25,7 @@
         {{ "multi_cart_page.cart_delete_confirmation.trying_to_delete" | trans }}: <strong>{{ data.cart.name }}</strong>
         <br/><br/>
 
-        {% if widgetExists('CartDeleteCompanyUsersListWidgetPlugin') and data.cart.shareDetails is not empty %}
+        {% if data.cart.shareDetails is not empty %}
             {{ "multi_cart_page.cart_delete_confirmation.shared_with" | trans }}:
             {{ widget('CartDeleteCompanyUsersListWidgetPlugin', data.cart) }}
             <span class="text-alert">{{ "multi_cart_page.cart_delete_confirmation.from_all_of_them" | trans }}</span>
