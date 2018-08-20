@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Plugin;
 
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ShoppingListItemNoteWidgetPluginInterface extends WidgetPluginInterface
@@ -15,9 +15,10 @@ interface ShoppingListItemNoteWidgetPluginInterface extends WidgetPluginInterfac
     public const NAME = 'ShoppingListItemNoteWidgetPlugin';
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param int $idShoppingListItem
      *
      * @return void
      */
-    public function initialize(ShoppingListItemTransfer $shoppingListItemTransfer): void;
+    public function initialize(ShoppingListTransfer $shoppingListTransfer, int $idShoppingListItem): void;
 }

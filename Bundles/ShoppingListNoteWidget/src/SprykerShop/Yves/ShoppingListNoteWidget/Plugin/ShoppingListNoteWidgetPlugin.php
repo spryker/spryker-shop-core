@@ -8,19 +8,21 @@
 namespace SprykerShop\Yves\ShoppingListNoteWidget\Plugin;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShoppingListPage\Plugin\ShoppingListItemNoteWidgetPluginInterface;
 
 class ShoppingListNoteWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemNoteWidgetPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param int $idShoppingListItem
      *
      * @return void
      */
-    public function initialize(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function initialize(ShoppingListTransfer $shoppingListTransfer, int $idShoppingListItem): void
     {
-        $this->addParameter('shoppingListItem', $shoppingListItemTransfer);
+        $this->addParameter('shoppingListItem', $this->getShoppingListItem($shoppingListTransfer, $idShoppingListItem));
     }
 
     /**
@@ -45,5 +47,22 @@ class ShoppingListNoteWidgetPlugin extends AbstractWidgetPlugin implements Shopp
     public static function getName(): string
     {
         return static::NAME;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param int $idShoppingListItem
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null
+     */
+    protected function getShoppingListItem(ShoppingListTransfer $shoppingListTransfer, int $idShoppingListItem): ?ShoppingListItemTransfer
+    {
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+            if ($shoppingListItemTransfer->getIdShoppingListItem() === $idShoppingListItem) {
+                return $shoppingListItemTransfer;
+            }
+        }
+
+        return null;
     }
 }

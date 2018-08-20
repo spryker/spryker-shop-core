@@ -115,7 +115,7 @@
                                 {% endif %}
                             {% endfor %}
                             {% if widgetExists('ShoppingListItemNoteWidgetPlugin') %}
-                                {{ widget('ShoppingListItemNoteWidgetPlugin', item.shoppingListItem) }}
+                                {{ widget('ShoppingListItemNoteWidgetPlugin', data.shoppingList, item.idShoppingListItem) }}
                             {% endif %}
                         </td>
                         <td nowrap="nowrap" class="text-center">
