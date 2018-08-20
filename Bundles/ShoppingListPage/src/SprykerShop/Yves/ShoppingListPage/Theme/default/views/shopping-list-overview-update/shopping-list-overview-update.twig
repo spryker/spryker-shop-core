@@ -80,7 +80,7 @@
                         <table class="table table--expand">
                             <thead>
                                 <tr>
-                                    <th class="text-center" colspan="2">{{ data.labels.productLabel  }}</th>
+                                    <th class="text-center" colspan="3">{{ data.labels.productLabel  }}</th>
                                     <th class="text-center">{{ data.labels.priceLabel  }}</th>
                                     <th class="text-center">{{ data.labels.quantityLabel }}</th>
                                     <th class="text-center">{{ data.labels.availabilityLabel  }}</th>
@@ -96,6 +96,7 @@
                                     {% set isProductAvailable = not isDiscontinued and isProductAvailable %}
                                 {% endif %}
                                 <tr>
+                                    <td>&nbsp;</td>
                                     <td class="text-center">
                                         {% if product.images is defined and product.images is not empty %}
                                             {% include atom('thumbnail') with {
@@ -156,7 +157,7 @@
                                 {% endif %}
                             {% endfor %}
                                 <tr>
-                                    <td colspan="5"></td>
+                                    <td colspan="6"></td>
                                     <td>
                                         <a class="" href="{{ path('shopping-list/clear', {idShoppingList: data.shoppingList.idShoppingList}) }}">
                                             {{ data.labels.removeAllItemsLabel }}
