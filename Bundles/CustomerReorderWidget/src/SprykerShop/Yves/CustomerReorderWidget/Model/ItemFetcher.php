@@ -111,7 +111,7 @@ class ItemFetcher implements ItemFetcherInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $idOrderItems
+     * @param int[] $idOrderItems
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
