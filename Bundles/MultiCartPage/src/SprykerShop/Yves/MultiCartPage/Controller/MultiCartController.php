@@ -207,7 +207,11 @@ class MultiCartController extends AbstractController
     {
         $response = $this->executeIndexAction();
 
-        return $this->view($response, [], '@MultiCartPage/views/cart/cart.twig');
+        return $this->view(
+            $response,
+            $this->getFactory()->getMultiCartListWidgetPlugins(),
+            '@MultiCartPage/views/cart/cart.twig'
+        );
     }
 
     /**

@@ -39,7 +39,18 @@
                             {% if quote.isDefault %}</strong>{% endif %}
                         </a>
                     </td>
-                    <td>{{ totals }}</td>
+                    <td>
+                        {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
+                            {{ widget('ProductBundleItemCounterWidgetPlugin', quote) }}
+                        {% else %}
+                            {% set label = (totals == 1)
+                                ? 'page.multi_cart.shopping_cart.list.label.item'
+                                : 'page.multi_cart.shopping_cart.list.label.items'
+                            %}
+
+                            <span class="cart-items-quantity">{{ totals }} {{ label | trans }}</span>
+                        {% endif %}
+                    </td>
                     <td>{{ quote.totals.subtotal | default(0) | money }}</td>
                     {% if showActions %}
                         <td>
