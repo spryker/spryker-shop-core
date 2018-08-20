@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    quote: _widget.quote,
+} %}
+
+{% block body %}
+    <a href="{{ url('shopping-list/create-from-exist-cart', {'idQuote': (data.quote.idQuote)}) }}">To shopping list</a>
+{% endblock %}
