@@ -62,9 +62,8 @@ export default class AutocompleteForm extends Component {
         this.showSuggestions();
         this.ajaxProvider.queryParams.set(this.queryParamName, this.inputValue);
 
-        await this.ajaxProvider.fetch().then(_ => {
-            this.mapItemEvents();
-        });
+        await this.ajaxProvider.fetch();
+        this.mapItemEvents();
     }
 
     protected mapItemEvents(): void {

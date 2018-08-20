@@ -50,7 +50,9 @@
             </div>
             {% if attributes['show-clean-button'] %}
                 <div class="col col--sm-1">
-                    <button type="button" class="button button--warning {{ config.jsName }}__clean-button button--expand">&times</button>
+                    {% block cleanButton %}
+                        <button type="button" class="button button--warning {{ config.jsName }}__clean-button button--expand">&times</button>
+                    {% endblock %}
                 </div>
             {% endif %}
         </div>

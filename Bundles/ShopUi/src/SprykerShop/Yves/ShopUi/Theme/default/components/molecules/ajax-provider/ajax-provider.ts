@@ -73,11 +73,11 @@ export default class AjaxProvider extends Component {
 
     get url(): string {
         const url = this.getAttribute('url');
-        if ((<any>this.queryParams).length === 0) {
-            return url; // exit if there is no param
+        if ((this.queryParams).size === 0) {
+            return url;
         }
-        const queryStringParams = []; // const is better as this array wont change (push does not affect reference)
-        this.queryParams.forEach((value: String, key: String) => { // just 2 parenthesis
+        const queryStringParams = [];
+        this.queryParams.forEach((value: String, key: String) => {
             queryStringParams.push(`${key}=${value}`);
         });
         return url + '?' + queryStringParams.join('&');
@@ -93,9 +93,5 @@ export default class AjaxProvider extends Component {
 
     get fetchOnLoad(): boolean {
         return this.hasAttribute('fetch-on-load');
-    }
-
-    get isFetching(): boolean {
-        return this.isFetchingRequest;
     }
 }
