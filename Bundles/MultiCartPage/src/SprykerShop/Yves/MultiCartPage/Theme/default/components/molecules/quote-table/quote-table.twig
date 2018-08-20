@@ -11,6 +11,7 @@
         update: false,
         delete: false,
         duplicate: false,
+        toShoppingList: false,
     }
 } %}
 
@@ -63,21 +64,16 @@
                     {% if showActions %}
                         <td>
                             <ul class="menu menu--inline">
-                                {% if widgetExists('CartToShoppingListWidgetPlugin') %}
-                                    <li class="menu__item">
-                                        {{ widget('CartToShoppingListWidgetPlugin', quote) }}
-                                    </li>
-                                {% endif %}
                                 {% if data.actions.update %}
                                     <li class="menu__item">
-                                        <a href="#!">
+                                        <a href="{{ url('multi-cart/update', {idQuote: quote.idQuote}) }}">
                                             {{ 'page.multi_cart.shopping_cart.list.link.edit_name' | trans }}
                                         </a>
                                     </li>
                                 {% endif %}
                                 {% if data.actions.duplicate %}
                                     <li class="menu__item">
-                                        <a href="#!">
+                                        <a href="{{ url('multi-cart/duplicate', {idQuote: quote.idQuote}) }}">
                                             {{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}
                                         </a>
                                     </li>
@@ -88,6 +84,13 @@
                                             {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
                                         </a>
                                     </li>
+                                {% endif %}
+                                {% if data.actions.toShoppingList %}
+                                    {% if widgetExists('CartToShoppingListWidgetPlugin') %}
+                                        <li class="menu__item">
+                                            {{ widget('CartToShoppingListWidgetPlugin', quote) }}
+                                        </li>
+                                    {% endif %}
                                 {% endif %}
                             </ul>
                         </td>
