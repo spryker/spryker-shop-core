@@ -20,11 +20,11 @@
     <table class="table table--expand">
         <thead>
             <tr class="active">
-                <th>Name</th>
-                <th>Number of products</th>
-                <th>Total</th>
+                <th>{{ 'page.multi_cart.shopping_cart.list.label.name' | trans }}</th>
+                <th>{{ 'page.multi_cart.shopping_cart.list.label.num_of_products' | trans }}</th>
+                <th>{{ 'page.multi_cart.shopping_cart.list.label.total' | trans }}</th>
                 {% if showActions %}
-                    <th>Actions</th>
+                    <th>{{ 'page.multi_cart.shopping_cart.list.label.actions' | trans }}</th>
                 {% endif %}
             </tr>
         </thead>
@@ -32,7 +32,13 @@
             {% for quote in data.quotes %}
                 {% set totals = quote.items | length %}
                 <tr>
-                    <td>{{ quote.name }}</td>
+                    <td>
+                        <a href="{{ url('multi-cart/set-default', {idQuote: quote.idQuote}) }}">
+                            {% if quote.isDefault %}<strong>{% endif %}
+                                {{ quote.name }}
+                            {% if quote.isDefault %}</strong>{% endif %}
+                        </a>
+                    </td>
                     <td>{{ totals }}</td>
                     <td>{{ quote.totals.subtotal | default(0) | money }}</td>
                     {% if showActions %}
@@ -41,21 +47,21 @@
                                 {% if data.actions.update %}
                                     <li class="menu__item">
                                         <a href="#!">
-                                            Edit name
+                                            {{ 'page.multi_cart.shopping_cart.list.link.edit_name' | trans }}
                                         </a>
                                     </li>
                                 {% endif %}
                                 {% if data.actions.duplicate %}
                                     <li class="menu__item">
                                         <a href="#!">
-                                            Duplicate
+                                            {{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}
                                         </a>
                                     </li>
                                 {% endif %}
                                 {% if data.actions.delete %}
                                     <li class="menu__item">
                                         <a href="#!">
-                                            Delete
+                                            {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
                                         </a>
                                     </li>
                                 {% endif %}

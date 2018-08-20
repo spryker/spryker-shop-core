@@ -3,7 +3,7 @@
 {% define data = {
     quotes: _view.quoteCollection,
 
-    title: 'Shopping carts',
+    title: 'page.multi_cart.shopping_cart.list.title' | trans,
     activePage: 'shoppingList'
 } %}
 
@@ -16,7 +16,7 @@
                     url: url('customer/overview'),
                 },
                 {
-                    label: 'customer.account.shopping_cart' | trans,
+                    label: 'page.multi_cart.shopping_cart.list.title' | trans,
                 }
             ]
         }
@@ -25,7 +25,7 @@
 
 {% block customerContent %}
     <div class="box text-right">
-        <a class="button" href="#!">Create</a>
+        <a class="button" href="#!">{{ 'page.multi_cart.shopping_cart.list.create_link' | trans }}</a>
     </div>
 
     {% if data.quotes is not empty %}
@@ -34,8 +34,8 @@
                 data: {
                     quotes: data.quotes,
                     actions: {
-                        update: true,
-                        delete: true,
+                        update: can('WriteSharedCartPermissionPlugin') ? true : false,
+                        delete: can('WriteSharedCartPermissionPlugin') ? true : false,
                         duplicate: true,
                     }
                 }
