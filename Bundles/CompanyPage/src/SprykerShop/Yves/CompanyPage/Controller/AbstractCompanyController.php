@@ -197,9 +197,9 @@ abstract class AbstractCompanyController extends AbstractController
         $addressTransfer->fromArray($data, true);
 
         if ($idCompanyBusinessUnit) {
-            $companyBusinessUnitCollectionTransfer = $this->createCompanyBusinessUnitCollectionTransfer($idCompanyBusinessUnit);
+            $companyBusinessUnitTransfers = $this->createCompanyBusinessUnitCollectionTransfer($idCompanyBusinessUnit);
             $addressTransfer
-                ->setCompanyBusinessUnitCollection($companyBusinessUnitCollectionTransfer);
+                ->setCompanyBusinessUnits($companyBusinessUnitTransfers);
         }
 
         $addressTransfer = $this
