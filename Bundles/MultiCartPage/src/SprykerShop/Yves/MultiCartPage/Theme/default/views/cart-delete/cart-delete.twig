@@ -1,8 +1,7 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
-    idQuote: _view.idQuote,
-    cartDeleteRequestName: 'test',
+    cart: _view.cart,
 } %}
 
 {% block breadcrumbs %}
@@ -21,22 +20,25 @@
 
 {% block content %}
     <div class="box">
-        <div class="box">
-            <h5>{{ "multi_cart_page.cart_delete_confirmation.warning" | trans }}</h5>
-            <hr />
-            {{ "multi_cart_page.cart_delete_confirmation.trying_to_delete" | trans }}: {{ data.cartDeleteRequestName }}<br/>
-            {{ "multi_cart_page.cart_delete_confirmation.shared_with" | trans }}
+        <h5>{{ "multi_cart_page.cart_delete_confirmation.warning" | trans }}</h5>
+        <hr />
+        {{ "multi_cart_page.cart_delete_confirmation.trying_to_delete" | trans }}: <strong>{{ data.cart.name }}</strong>
+        <br/><br/>
 
-            {# Add shared cart users rendering. #}
+        {% if widgetExists('CartDeleteCompanyUsersListWidgetPlugin') and data.cart.shareDetails is not empty %}
+            {{ "multi_cart_page.cart_delete_confirmation.shared_with" | trans }}:
+            {{ widget('CartDeleteCompanyUsersListWidgetPlugin', data.cart) }}
+            <span class="text-alert">{{ "multi_cart_page.cart_delete_confirmation.from_all_of_them" | trans }}</span>
+            <br/><br/>
+        {% endif %}
 
-            <div>
-                <a href="{{ url('cart') }}" class="button button--info">
-                    {{ "multi_cart_page.cart_delete_confirmation.cancel" | trans }}
-                </a>
-                <a href="{{ url('multi-cart/delete', { 'idQuote' : data.idQuote }) }}" class="button button--alert">
-                    {{ "multi_cart_page.cart_delete_confirmation.delete" | trans }}
-                </a>
-            </div>
+        <div>
+            <a href="{{ url('cart') }}" class="button button--info">
+                {{ "multi_cart_page.cart_delete_confirmation.cancel" | trans }}
+            </a>
+            <a href="{{ url('multi-cart/delete', { 'idQuote' : data.cart.idQuote }) }}" class="button button--alert">
+                {{ "multi_cart_page.cart_delete_confirmation.delete" | trans }}
+            </a>
         </div>
     </div>
 {% endblock %}

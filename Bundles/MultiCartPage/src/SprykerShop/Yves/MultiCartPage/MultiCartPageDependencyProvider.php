@@ -58,7 +58,7 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\MultiCartPage\Plugin\CartDeleteCompanyUsersListWidgetPluginInterface[]
+     * @return string[]
      */
     protected function getCartDeleteCompanyUsersListWidgetPlugins(): array
     {

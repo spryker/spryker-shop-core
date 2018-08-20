@@ -58,7 +58,7 @@ class MultiCartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\MultiCartPage\Plugin\CartDeleteCompanyUsersListWidgetPluginInterface[]
+     * @return string[]
      */
     public function getCartDeleteCompanyUsersListWidgetPlugins(): array
     {

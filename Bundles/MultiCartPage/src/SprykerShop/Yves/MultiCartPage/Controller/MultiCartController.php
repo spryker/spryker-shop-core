@@ -217,8 +217,12 @@ class MultiCartController extends AbstractController
      */
     protected function executeConfirmDeleteAction(int $idQuote): array
     {
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
         return [
-            'idQuote' => $idQuote,
+            'cart' => $quoteTransfer,
         ];
     }
 }
