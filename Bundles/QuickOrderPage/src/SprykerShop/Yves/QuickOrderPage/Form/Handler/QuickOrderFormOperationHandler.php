@@ -38,21 +38,29 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     protected $quoteClient;
 
     /**
+     * @var array|\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
+     */
+    protected $quickOrderItemTransferExpanderPlugins;
+
+    /**
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface $zedRequestClient
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[] $quickOrderItemTransferExpanderPlugins
      */
     public function __construct(
         QuickOrderPageToCartClientInterface $cartClient,
         QuickOrderPageToQuoteClientInterface $quoteClient,
         QuickOrderPageToZedRequestClientInterface $zedRequestClient,
-        Request $request
+        Request $request,
+        array $quickOrderItemTransferExpanderPlugins
     ) {
         $this->cartClient = $cartClient;
         $this->zedRequestClient = $zedRequestClient;
         $this->request = $request;
         $this->quoteClient = $quoteClient;
+        $this->quickOrderItemTransferExpanderPlugins = $quickOrderItemTransferExpanderPlugins;
     }
 
     /**
@@ -96,6 +104,8 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
      */
     protected function addItemsToCart(array $itemTransfers): bool
     {
+        $itemTransfers = $this->expandItemTransfers($itemTransfers);
+
         $this->cartClient->addItems($itemTransfers, $this->request->request->all());
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
 
@@ -137,5 +147,21 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     protected function clearQuote(): void
     {
         $this->quoteClient->setQuote(new QuoteTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function expandItemTransfers(array $itemTransfers)
+    {
+        foreach ($this->quickOrderItemTransferExpanderPlugins as $quickOrderItemTransferExpanderPlugin) {
+            foreach ($itemTransfers as $itemTransfer) {
+                $itemTransfer = $quickOrderItemTransferExpanderPlugin->expand($itemTransfer);
+            }
+        }
+
+        return $itemTransfers;
     }
 }
