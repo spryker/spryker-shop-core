@@ -17,9 +17,8 @@
 
 {% block companyContent %}
     <div class="box text-right">
-        {% if widgetExists('CompanyUserInvitationWidgetPlugin') %}
-            {{ widget('CompanyUserInvitationWidgetPlugin') }}
-        {% endif %}
+        {% include molecule('invitation-link', 'CompanyUserInvitationPage') ignore missing %}
+
         {% if can('AddCompanyUserPermissionPlugin') %}
             <a class="button" href="{{url('company/user/create')}}">{{ 'company.account.company_user.add' | trans }}</a>
         {%  endif %}

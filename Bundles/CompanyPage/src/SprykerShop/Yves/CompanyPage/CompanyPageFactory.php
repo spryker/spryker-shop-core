@@ -131,12 +131,4 @@ class CompanyPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_APPLICATION);
     }
-
-    /**
-     * @return string[]
-     */
-    public function getCompanyUserOverviewWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_COMPANY_USER_OVERVIEW_WIDGETS);
-    }
 }

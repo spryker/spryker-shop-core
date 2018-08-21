@@ -39,10 +39,8 @@ class UserController extends AbstractCompanyController
     public function indexAction(Request $request)
     {
         $viewData = $this->executeIndexAction($request);
-        $companyUserOverviewWidgetPlugins = $this->getFactory()
-            ->getCompanyUserOverviewWidgetPlugins();
 
-        return $this->view($viewData, $companyUserOverviewWidgetPlugins, '@CompanyPage/views/user/user.twig');
+        return $this->view($viewData, [], '@CompanyPage/views/user/user.twig');
     }
 
     /**

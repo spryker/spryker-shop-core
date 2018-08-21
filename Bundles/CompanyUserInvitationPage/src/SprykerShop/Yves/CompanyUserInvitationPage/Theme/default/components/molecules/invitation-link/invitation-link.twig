@@ -1,4 +1,9 @@
-{% extends template('widget') %}
+{% extends model('component') %}
+
+{% define config = {
+    name: 'invitation-link',
+    tag: 'div'
+} %}
 
 {% block body %}
     {% if can('ManageCompanyUserInvitationPermissionPlugin') %}
