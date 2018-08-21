@@ -6,10 +6,10 @@
 
 {% block body %}
     {% if data.note is not null %}
-        {% if data.note.message is not null %}
+        {% if data.note.note is not null %}
             <div class="grid">
                 <div class="col">{{ 'shopping_list.item_note' | trans }}</div>
-                <div class="col">&nbsp;{{ data.note.message }}</div>
+                <div class="col">&nbsp;{{ data.note.note }}</div>
             </div>
         {% endif %}
     {% endif %}
