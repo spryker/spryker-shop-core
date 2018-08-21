@@ -1,10 +1,10 @@
-{% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
+{% extends template('page-layout-multi-cart', 'MultiCartPage') %}
 
 {% define data = {
     quotes: _view.quoteCollection,
 
     title: 'page.multi_cart.shopping_cart.list.title' | trans,
-    activePage: 'shoppingList'
+    activePage: 'multiCart'
 } %}
 
 {% block breadcrumbs %}
