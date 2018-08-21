@@ -83,7 +83,7 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
     {
         $this->createGetController('/{multiCart}/confirm-delete/{idQuote}', static::ROUTE_MULTI_CART_CONFIRM_DELETE, 'MultiCartPage', 'MultiCart', 'confirmDelete')
             ->assert('multiCart', $this->getAllowedLocalesPattern() . 'multi-cart|multi-cart')
-            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->assert(static::PARAM_ID_QUOTE, '\d+')
             ->value('multiCart', 'multi-cart');
 
         return $this;
