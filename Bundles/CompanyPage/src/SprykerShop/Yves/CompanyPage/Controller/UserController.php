@@ -16,7 +16,7 @@ use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -84,14 +84,14 @@ class UserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeCreateAction(Request $request)
     {
         if (!$this->can(AddCompanyUserPermissionPlugin::KEY)) {
-            throw new NotFoundHttpException();
+            throw new AccessDeniedHttpException();
         }
 
         $dataProvider = $this->getFactory()

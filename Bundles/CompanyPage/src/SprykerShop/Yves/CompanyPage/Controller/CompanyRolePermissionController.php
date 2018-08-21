@@ -27,6 +27,8 @@ class CompanyRolePermissionController extends AbstractCompanyController
     protected const PARAMETER_ID_COMPANY_ROLE = 'id';
 
     /**
+     * @deprecated behavior is implemented by CompanyRoleController in updateAction
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
