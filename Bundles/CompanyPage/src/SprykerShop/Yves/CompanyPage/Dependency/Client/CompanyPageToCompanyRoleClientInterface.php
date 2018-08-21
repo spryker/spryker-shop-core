@@ -82,4 +82,15 @@ interface CompanyPageToCompanyRoleClientInterface
      * @return void
      */
     public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $companyRolePermissions
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function filterCompanyRolePermissions(
+        CompanyRoleTransfer $companyRoleTransfer,
+        PermissionCollectionTransfer $companyRolePermissions
+    ): PermissionCollectionTransfer;
 }

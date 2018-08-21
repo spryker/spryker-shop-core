@@ -121,4 +121,20 @@ class CompanyPageToCompanyRoleClientBridge implements CompanyPageToCompanyRoleCl
     {
         $this->companyRoleClient->saveCompanyUser($companyUserTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $companyRolePermissions
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function filterCompanyRolePermissions(
+        CompanyRoleTransfer $companyRoleTransfer,
+        PermissionCollectionTransfer $companyRolePermissions
+    ): PermissionCollectionTransfer {
+        return $this->companyRoleClient->filterCompanyRolePermissions(
+            $companyRoleTransfer,
+            $companyRolePermissions
+        );
+    }
 }

@@ -7,13 +7,12 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\PermissionTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -262,7 +261,7 @@ class CompanyRoleController extends AbstractCompanyController
         return [
             'companyRoleForm' => $companyRoleForm->createView(),
             'idCompanyRole' => $idCompanyRole,
-            'permissions' => $this->getPermissionsList($idCompanyRole),
+            'permissions' => $this->getPermissionsList($idCompanyRole)->getPermissions(),
         ];
     }
 
@@ -338,106 +337,22 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param int $idCompanyRole
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    protected function getPermissionsList(int $idCompanyRole): array
+    protected function getPermissionsList(int $idCompanyRole): PermissionCollectionTransfer
     {
-        $allPermissionTransfers = $this->getFactory()
-            ->getPermissionClient()
-            ->findAll()
-            ->getPermissions();
-
-        $companyRoleTransfer = new CompanyRoleTransfer();
-        $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
+        $companyRoleTransfer = (new CompanyRoleTransfer())
+            ->setIdCompanyRole($idCompanyRole);
 
         $companyRolePermissionTransfers = $this->getFactory()
             ->getCompanyRoleClient()
-            ->findCompanyRolePermissions($companyRoleTransfer)
-            ->getPermissions();
+            ->findCompanyRolePermissions($companyRoleTransfer);
 
-        return $this->preparePermissions(
-            $allPermissionTransfers,
-            $companyRolePermissionTransfers,
-            $idCompanyRole
-        );
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $allPermissionTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $companyRolePermissionTransfers
-     * @param int $idCompanyRole
-     *
-     * @return array
-     */
-    protected function preparePermissions(
-        ArrayObject $allPermissionTransfers,
-        ArrayObject $companyRolePermissionTransfers,
-        int $idCompanyRole
-    ): array {
-        $permissions = [];
-
-        $registeredPermissionTransfers = $this->getFactory()
-            ->getPermissionClient()
-            ->getRegisteredPermissions()
-            ->getPermissions();
-
-        $awareConfigurationPermissionKeys = $this->getAwareConfigurationPermissionKeys($registeredPermissionTransfers);
-
-        foreach ($allPermissionTransfers as $permissionTransfer) {
-            if (in_array($permissionTransfer->getKey(), $awareConfigurationPermissionKeys)) {
-                continue;
-            }
-
-            $permissions[] = $this->transformCompanyRolePermissionTransferToArray(
-                $companyRolePermissionTransfers,
-                $permissionTransfer,
-                $idCompanyRole
+        return $this->getFactory()
+            ->getCompanyRoleClient()
+            ->filterCompanyRolePermissions(
+                $companyRoleTransfer,
+                $companyRolePermissionTransfers
             );
-        }
-
-        return $permissions;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $companyRolePermissionTransfers
-     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
-     * @param int $idCompanyRole
-     *
-     * @return array
-     */
-    protected function transformCompanyRolePermissionTransferToArray(
-        ArrayObject $companyRolePermissionTransfers,
-        PermissionTransfer $permissionTransfer,
-        int $idCompanyRole
-    ): array {
-        $permissionAsArray = $permissionTransfer->toArray(false, true);
-        $permissionAsArray[CompanyRoleTransfer::ID_COMPANY_ROLE] = null;
-
-        foreach ($companyRolePermissionTransfers as $rolePermission) {
-            if ($rolePermission->getKey() === $permissionTransfer->getKey()) {
-                $permissionAsArray[CompanyRoleTransfer::ID_COMPANY_ROLE] = $idCompanyRole;
-                break;
-            }
-        }
-
-        return $permissionAsArray;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $registeredPermissionTransfers
-     *
-     * @return string[]
-     */
-    protected function getAwareConfigurationPermissionKeys(ArrayObject $registeredPermissionTransfers): array
-    {
-        $awareConfigurationPermissionKeys = [];
-
-        foreach ($registeredPermissionTransfers as $permissionTransfer) {
-            if ($permissionTransfer->getIsAwareConfiguration()) {
-                $awareConfigurationPermissionKeys[] = $permissionTransfer->getKey();
-            }
-        }
-
-        return $awareConfigurationPermissionKeys;
     }
 }
