@@ -50,4 +50,20 @@ class ProductWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductWidgetDependencyProvider::PLUGIN_HOME_PAGE_SUB_WIDGETS);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getProductReplacementForWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductWidgetDependencyProvider::PLUGINS_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGET);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getProductAlternativeWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductWidgetDependencyProvider::PLUGINS_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGET);
+    }
 }

@@ -30,21 +30,25 @@
 
                     <tr>
                         {% block row %}
-                            <td>
-                                {{ concreteItem.sku }}
-                            </td>
-                            <td>
-                                {{ concreteItem.name }}
-                            </td>
-                            <td>
-                                {{ concreteItem.unitPrice | money(true, data.currencyIsoCode) }}
-                            </td>
-                            <td>
-                                {{ concreteItem.quantity }}
-                            </td>
-                            <td>
-                                {{ concreteItem.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
-                            </td>
+                            {% if widgetExists('OrderDetailProductPackagingUnitWidgetPlugin') %}
+                                {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item, data.currencyIsoCode) }}
+                            {% else %}
+                                <td>
+                                    {{ concreteItem.sku }}
+                                </td>
+                                <td>
+                                    {{ concreteItem.name }}
+                                </td>
+                                <td>
+                                    {{ concreteItem.sumPrice | money(true, data.currencyIsoCode) }}
+                                </td>
+                                <td>
+                                    {{ concreteItem.quantity }}
+                                </td>
+                                <td>
+                                    {{ concreteItem.sumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+                                </td>
+                            {% endif %}
                         {% endblock %}
                     </tr>
 
@@ -60,7 +64,7 @@
                                     {% if concreteItem.productOptions is not empty %}
                                         {{ "customer.order.options" | trans }} <br />
                                         {% for productOption in concreteItem.productOptions %}
-                                            &nbsp; - {{ productOption.value | trans }} {{ productOption.unitPrice | money(true, data.currencyIsoCode) }}  <br />
+                                            &nbsp; - {{ productOption.value | trans }} {{ productOption.sumPrice | money(true, data.currencyIsoCode) }}  <br />
                                         {% endfor %}
                                     {% endif %}
                                 </td>
@@ -78,7 +82,7 @@
                                             <small>{{ productOption.value | trans }}</small>
                                         </td>
                                         <td>
-                                            <small>{{ productOption.unitPrice | money(true, data.currencyIsoCode) }}</small>
+                                            <small>{{ productOption.sumPrice | money(true, data.currencyIsoCode) }}</small>
                                         </td>
                                         <td colspan="2"></td>
                                     {% endblock %}
