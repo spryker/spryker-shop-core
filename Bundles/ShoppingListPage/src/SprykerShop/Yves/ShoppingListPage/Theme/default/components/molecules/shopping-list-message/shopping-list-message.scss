@@ -1,6 +1,6 @@
-@mixin shopping-list-page-warning-message($name: '.warning-message') {
+@mixin shopping-list-message($name: '.shopping-list-message') {
     #{$name} {
-        &__error {
+        &__title {
             color: map-get($setting-color-actions, 'alert');
         }
     }

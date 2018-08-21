@@ -1,18 +1,18 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'warning-message'
+    name: 'shopping-list-message'
 } %}
 
 {% define data = {
     title: required,
-    shoppingList: required,
+    idShoppingList: required,
     sharedCompanyUsers: required,
-    sharedCompanyBusinessUnits: required,
+    sharedCompanyBusinessUnits: required
 } %}
 
 {% block body %}
-    <h5 class="{{ config.name }}__error spacing-bottom">
+    <h5 class="{{ config.name }}__title spacing-bottom">
         {% include atom('icon') with {
             modifiers: ['big'],
             data: {
@@ -23,7 +23,7 @@
     </h5>
     <p class="spacing-y spacing-y--small">
         {{ 'customer.account.shopping_list.delete.you_are_trying_to_delete_shopping_list' | trans }}
-        <a href="{{ url('shopping-list/details', {'idShoppingList': data.shoppingList.idShoppingList}) }}">{{ data.title }}</a>
+        <a href="{{ url('shopping-list/details', {'idShoppingList': data.idShoppingList}) }}">{{ data.title }}</a>
     </p>
     {% if data.sharedCompanyUsers.count or data.sharedCompanyBusinessUnits.count %}
         <p class="spacing-y spacing-y--small">
@@ -57,6 +57,6 @@
     {% endif %}
     <div class="{{ config.name }}__actions">
         <a href="javascript:history.go(-1)" class="button button--hollow">{{ 'general.back.button' | trans }}</a>
-        <a href="{{ url('shopping-list/delete', {'idShoppingList': data.shoppingList.idShoppingList})}}" class="button button--alert spacing-left">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
+        <a href="{{ url('shopping-list/delete', {'idShoppingList': data.idShoppingList})}}" class="button button--alert spacing-left">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
     </div>
 {% endblock %}
