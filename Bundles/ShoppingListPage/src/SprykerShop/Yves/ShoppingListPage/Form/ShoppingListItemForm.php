@@ -12,10 +12,15 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
 
 class ShoppingListItemForm extends AbstractType
 {
     protected const FIELD_QUANTITY = 'quantity';
+
+    protected const MIN_QUANTITY_RANGE = 1;
+    protected const MAX_QUANTITY_RANGE = 2147483647; // 32 bit integer
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -48,7 +53,15 @@ class ShoppingListItemForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder): self
     {
-        $builder->add(static::FIELD_QUANTITY, HiddenType::class);
+        $builder->add(static::FIELD_QUANTITY, HiddenType::class, [
+            'constraints' => [
+                new NotBlank(),
+                new Range([
+                    'min' => static::MIN_QUANTITY_RANGE,
+                    'max' => static::MAX_QUANTITY_RANGE,
+                ]),
+            ],
+        ]);
 
         return $this;
     }

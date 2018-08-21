@@ -31,6 +31,8 @@
                 label: 'customer.account' | trans,
             },{
                 label: 'customer.account.shopping_list' | trans,
+            },{
+                label: 'customer.account.shopping_list.overview.edit' | trans,
             }]
         }
     } only %}
@@ -149,6 +151,9 @@
                                         </a>
                                     </td>
                                 </tr>
+                                {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) and widgetExists('ProductAlternativeWidgetPlugin') %}
+                                    {{ widget('ProductAlternativeWidgetPlugin', product, data.shoppingList) }}
+                                {% endif %}
                             {% endfor %}
                                 <tr>
                                     <td colspan="5"></td>
@@ -171,7 +176,7 @@
 
                 <div class="form__actions">
                     <div class="col col--sm-6 text-left">
-                        <a class="button button--alert" href="{{ path('shopping-list/delete', {idShoppingList: data.shoppingList.idShoppingList}) }}">{{ data.labels.deleteLabel }}</a>
+                        <a class="button button--alert" href="{{ path('shopping-list/delete/confirm', {idShoppingList: data.shoppingList.idShoppingList}) }}">{{ data.labels.deleteLabel }}</a>
                     </div>
                     <div class="col col--sm-6">
                         <a href="{{ path('shopping-list') }}" class="form__action button button--secondary button--hollow'">
