@@ -2,6 +2,7 @@
 
 {% define data = {
     title: _view.shoppingList.name,
+    backUrl: _view.backUrl,
     shoppingList: _view.shoppingList,
     sharedCompanyUsers: _view.sharedCompanyUsers,
     sharedCompanyBusinessUnits: _view.sharedCompanyBusinessUnits
@@ -32,6 +33,7 @@
         class: 'box',
         data: {
             title: data.title,
+            backUrl: data.backUrl,
             idShoppingList: data.shoppingList.idShoppingList,
             sharedCompanyUsers: data.sharedCompanyUsers,
             sharedCompanyBusinessUnits: data.sharedCompanyBusinessUnits

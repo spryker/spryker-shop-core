@@ -6,6 +6,7 @@
 
 {% define data = {
     title: required,
+    backUrl: required,
     idShoppingList: required,
     sharedCompanyUsers: required,
     sharedCompanyBusinessUnits: required
@@ -56,7 +57,7 @@
         </p>
     {% endif %}
     <div class="{{ config.name }}__actions">
-        <a href="javascript:history.go(-1)" class="button button--hollow">{{ 'general.back.button' | trans }}</a>
+        <a href="{{ data.backUrl }}" class="button button--hollow">{{ 'general.back.button' | trans }}</a>
         <a href="{{ url('shopping-list/delete', {'idShoppingList': data.idShoppingList})}}" class="button button--alert spacing-left">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
     </div>
 {% endblock %}
