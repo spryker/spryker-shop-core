@@ -35,6 +35,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addQuickOrderPageWidgetPlugins($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addQuickOrderItemTransferExpanderPlugins($container);
 
         return $container;
     }
@@ -102,10 +103,10 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addQuickOrderTransferExpanderPlugins(Container $container): Container
+    protected function addQuickOrderItemTransferExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER] = function () {
-            return $this->getQuickOrderTransferExpanderPlugins();
+            return $this->getQuickOrderItemTransferExpanderPlugins();
         };
 
         return $container;
@@ -139,7 +140,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
      */
-    protected function getQuickOrderTransferExpanderPlugins(): array
+    protected function getQuickOrderItemTransferExpanderPlugins(): array
     {
         return [];
     }
