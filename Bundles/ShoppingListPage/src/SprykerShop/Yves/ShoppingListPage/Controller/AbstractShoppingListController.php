@@ -53,7 +53,7 @@ class AbstractShoppingListController extends AbstractController
     {
         $productConcreteStorageData = $this->getFactory()
             ->getProductStorageClient()
-            ->getProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
+            ->findProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
 
         $productViewTransfer = new ProductViewTransfer();
         if (empty($productConcreteStorageData)) {

@@ -2,13 +2,13 @@
 
 {% define data = {
     items: _widget.items,
-    subTotal: _widget.cart.totals.subTotal,
-    currencyCode: _widget.cart.currency.code
 } %}
 
 {% set itemCount = data.items | length %}
 {% set label = (itemCount == 1) ? 'multi_cart_widget.cart.item' : 'multi_cart_widget.cart.items' %}
 
 {% block body %}
-    {{ itemCount }} {{ label | trans }} | {{ data.subTotal | money(true, data.currencyCode) }}
+    <span class="cart-items-quantity">
+        {{ itemCount }} {{ label | trans }}
+    </span>
 {% endblock %}

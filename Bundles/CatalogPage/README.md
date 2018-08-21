@@ -1,6 +1,6 @@
 # CatalogPage Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the catalog page and its components.
 
 ## Installation
 

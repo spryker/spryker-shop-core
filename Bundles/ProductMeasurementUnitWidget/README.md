@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/product-measurement-unit-widget.svg)](https://travis-ci.org/spryker-shop/product-measurement-unit-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/product-measurement-unit-widget/badge.svg)](https://coveralls.io/github/spryker-shop/product-measurement-unit-widget)
 
-Provides YVES widget for handling measurement units for products.
+Provides Yves widget for handling measurement units for products.
 
 ## Installation
 
