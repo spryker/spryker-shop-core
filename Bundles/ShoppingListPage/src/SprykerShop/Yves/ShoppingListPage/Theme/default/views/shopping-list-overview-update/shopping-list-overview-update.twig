@@ -4,7 +4,7 @@
     title: _view.shoppingList.name,
     form: _view.shoppingListForm,
     shoppingList: _view.shoppingList,
-    shoppingListItemProducts: _view.shoppingListItemProducts,
+    productViewTransfers: _view.productViewTransfers,
     labels: {
         addAllToCartLabel: 'customer.account.shopping_list.add_all_available_to_cart' | trans,
         printShoppingList: 'customer.account.shopping_list.print_shopping_list' | trans,
@@ -87,7 +87,7 @@
                             </thead>
                             <tbody>
                             {% for key, shoppingListItem in data.shoppingList.items %}
-                                {% set product = data.shoppingListItemProducts[shoppingListItem.idShoppingListItem] %}
+                                {% set product = data.productViewTransfers[shoppingListItem.idShoppingListItem] %}
                                 {% set isProductAvailable = product.available is defined and product.available and product.price is defined and product.price is not null %}
                                 {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
                                     {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', product.sku) %}

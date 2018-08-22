@@ -20,7 +20,7 @@ class ShoppingListNoteWidgetPlugin extends AbstractWidgetPlugin implements Shopp
      */
     public function initialize(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
-        $this->addParameter('shoppingListItem', $shoppingListItemTransfer);
+        $this->addParameter('shoppingListItemNote', $shoppingListItemTransfer->getNote());
     }
 
     /**
