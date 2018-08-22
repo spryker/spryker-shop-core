@@ -201,7 +201,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
 
         $permissions = [];
         foreach ($allPermissions as $permission) {
-            if ($permission->getIsAwareConfiguration()) {
+            if ($permission->getIsInfrastructural()) {
                 continue;
             }
 
