@@ -38,32 +38,40 @@
                     {% include atom('thumbnail') with {
                         modifiers: ['small', 'min-size'],
                         attributes: {
-                            alt: item.name,
-                            src: item.images.0.externalUrlSmall,
-                            title: item.name
+                            alt: item.name | default(''),
+                            src: item.images.0.externalUrlSmall | default,
+                            title: item.name | default
                         }
                     } only %}
                 {% endif %}
             </td>
             <td class="text-center">
-                <a href="{{ item.url }}">{{ item.name }}</a><br/>
-                <small class="text-secondary">{{ item.sku }}</small><br/>
-                {% for attribute in item.superAttributesDefinition %}
-                    {% if item.attributes[attribute] is defined %}
-                        <strong>{{ ('product.attribute.' ~ attribute) | trans }}</strong>: {{ item.attributes[attribute] }} <br/>
-                    {% endif %}
-                {% endfor %}
+                <ul class="list spacing-y"">
+                    <li class="list__item">
+                        <a href="{{ item.url }}">{{ item.name }}</a>
+                    </li>
+                    <li class="list__item">
+                        <small class="text-secondary">{{ item.sku }}</small>
+                    </li>
+                    {% for attribute in item.superAttributesDefinition %}
+                        {% if item.attributes[attribute] is defined %}
+                            <li class="list__item">
+                                <strong>{{ ('product.attribute.' ~ attribute) | trans }}</strong>: {{ item.attributes[attribute] }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
             </td>
             <td nowrap="nowrap" class="text-center">
-                {% if item.price is null %}
-                    N/A
-                {% else %}
+                {% if item.price is not empty %}
                     {% include molecule('price') with {
                         data: {
                             amount: item.price | money,
                             originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : (item.prices.ORIGINAL | money)
                         }
                     } only %}
+                {% else %}
+                    {{ 'product_alternative_widget.not_applicable' | trans }}
                 {% endif %}
             </td>
             <td class="text-center">

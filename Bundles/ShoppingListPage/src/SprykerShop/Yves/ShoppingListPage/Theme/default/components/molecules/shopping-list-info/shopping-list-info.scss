@@ -1,6 +1,6 @@
 @mixin shopping-list-page-shopping-list-info($name: '.shopping-list-info') {
     #{$name} {
-        padding: 0.5rem;
+        padding: map-get($setting-spacing, 'default');
         background-color: $setting-color-lighter;
 
         &__access-label {
