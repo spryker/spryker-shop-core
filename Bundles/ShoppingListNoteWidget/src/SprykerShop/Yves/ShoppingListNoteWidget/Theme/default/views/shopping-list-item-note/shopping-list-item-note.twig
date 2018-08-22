@@ -1,7 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
-    note: _widget.note | default(),
+    note: _widget.note | default(null),
 } %}
 
 {% block body %}
