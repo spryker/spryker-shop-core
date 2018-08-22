@@ -1,6 +1,6 @@
 # ProductWidget Module
 
-{{ADD DESCRIPTION HERE}}
+The module provides product rendering functionality integration to other modules.
 
 ## Installation
 

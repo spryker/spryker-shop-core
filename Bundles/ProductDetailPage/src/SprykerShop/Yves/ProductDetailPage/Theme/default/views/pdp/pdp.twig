@@ -40,6 +40,8 @@
         </div>
     </div>
 
+    {{ widget('ProductAlternativeWidgetPlugin', data.product) }}
+
     {% include molecule('product-detail', 'ProductDetailPage') with {
         class: 'box',
         data: {
@@ -47,6 +49,8 @@
             attributes: data.product.attributes
         }
     } only %}
+
+    {{ widget('ProductReplacementForWidgetPlugin', data.product.sku) }}
 
     {{ widget('ProductReviewWidgetPlugin', data.product.idProductAbstract) }}
     {{ widget('SimilarProductsWidgetPlugin', data.product) }}
