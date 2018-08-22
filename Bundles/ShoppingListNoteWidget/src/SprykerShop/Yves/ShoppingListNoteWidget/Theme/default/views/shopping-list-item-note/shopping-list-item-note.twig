@@ -1,16 +1,14 @@
 {% extends template('widget') %}
 
 {% define data = {
-    note: _widget.shoppingListItem.note | default(null),
+    shoppingListItemNote: _widget.shoppingListItem.note | default(null),
 } %}
 
 {% block body %}
-    {% if data.note is not null %}
-        {% if data.note.note is not null %}
-            <div class="grid">
-                <div class="col">{{ 'shopping_list.item_note' | trans }}</div>
-                <div class="col">&nbsp;{{ data.note.note }}</div>
-            </div>
-        {% endif %}
+    {% if data.shoppingListItemNote is not null and data.shoppingListItemNote.note is not null %}
+        <div class="grid">
+            <div class="col">{{ 'shopping_list.item_note' | trans }}</div>
+            <div class="col">&nbsp;{{ data.shoppingListItemNote.note }}</div>
+        </div>
     {% endif %}
 {% endblock %}
