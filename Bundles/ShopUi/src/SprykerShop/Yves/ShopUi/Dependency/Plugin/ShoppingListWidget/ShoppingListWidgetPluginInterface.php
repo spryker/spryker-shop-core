@@ -14,9 +14,7 @@ interface ShoppingListWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'ShoppingListWidgetPlugin';
 
     /**
-     * @param int $quantity
-     *
      * @return void
      */
-    public function initialize(int $quantity): void;
+    public function initialize(): void;
 }

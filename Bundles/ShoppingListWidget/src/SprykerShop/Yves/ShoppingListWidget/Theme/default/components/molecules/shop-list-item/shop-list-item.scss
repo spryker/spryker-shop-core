@@ -1,0 +1,40 @@
+@mixin shopping-list-widget-shop-list-item($name: '.shop-list-item') {
+    #{$name} {
+        border-bottom: 1px solid $setting-color-lighter;
+        padding-bottom: map-get($setting-spacing, 'default');
+        margin-bottom: map-get($setting-spacing, 'default');
+
+        &__list {
+            max-height: 21rem;
+            overflow-y: auto;
+        }
+
+        &__name {
+            color: $setting-color-black;
+            padding-right: map-get($setting-spacing, 'small');
+        }
+
+        &__owner {
+            color: $setting-color-darker;
+        }
+
+        &__number-items {
+            padding: map-get($setting-spacing, 'small');
+            color: $setting-color-white;
+            border-radius: 2px;
+            background-color: $setting-color-alt;
+            margin-right: map-get($setting-spacing, 'default');
+        }
+
+        &__access {
+            font-size: map_get($setting-font-size, 'small');
+            color: $setting-color-darker;
+
+            &--full {
+                color: map_get($setting-color-actions, 'success');
+            }
+        }
+
+        @content;
+    }
+}

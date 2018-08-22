@@ -18,12 +18,12 @@ use SprykerShop\Yves\ShopUi\Dependency\Plugin\ShoppingListWidget\ShoppingListWid
 class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListWidgetPluginInterface
 {
     /**
-     * @param int $quantity
+     *
      */
-    public function initialize(int $quantity): void
+    public function initialize(): void
     {
         $this->addParameter('shoppingListCollection', $this->getCustomerShoppingListCollection());
-        $this->addParameter('quantity', $quantity);
+//        $this->addParameter('quantity', $quantity);
     }
 
     /**
