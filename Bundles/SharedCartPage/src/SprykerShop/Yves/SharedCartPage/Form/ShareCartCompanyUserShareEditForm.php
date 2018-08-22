@@ -10,13 +10,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ShareCartDetailsForm extends AbstractType
+class ShareCartCompanyUserEditForm extends AbstractType
 {
     public const FORM_NAME = 'shareCartDetailsForm';
 
     public const FIELD_ID_QUOTE_COMPANY_USER = 'idQuoteCompanyUser';
     public const FIELD_ID_COMPANY_USER = 'idCompanyUser';
-    public const FIELD_CUSTOMER_NAME = 'customerName';
     public const FIELD_QUOTE_PERMISSION_GROUP = 'quotePermissionGroup';
 
     public const OPTION_CUSTOMERS = 'OPTION_CUSTOMERS';
@@ -40,7 +39,6 @@ class ShareCartDetailsForm extends AbstractType
         $resolver->setRequired([
             static::FIELD_ID_QUOTE_COMPANY_USER,
             static::FIELD_ID_COMPANY_USER,
-            static::FIELD_CUSTOMER_NAME,
             static::FIELD_QUOTE_PERMISSION_GROUP,
         ])->setDefaults([
             'data_class' => ShareDetailTransfer::class,
@@ -62,7 +60,7 @@ class ShareCartDetailsForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\SharedCartPage\Form\ShareCartDetailsForm
+     * @return \SprykerShop\Yves\SharedCartPage\Form\ShareCartCompanyUserEditForm
      */
     protected function addIdQuoteCompanyUserField(FormBuilderInterface $builder): self
     {

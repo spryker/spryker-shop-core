@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\SharedCartPage\Form;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
