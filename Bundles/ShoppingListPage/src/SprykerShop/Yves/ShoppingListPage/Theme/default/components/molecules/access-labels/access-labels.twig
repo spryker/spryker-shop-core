@@ -6,14 +6,13 @@
 } %}
 
 {% define data = {
-    hasWritePermission: required,
-    labels: required
+    hasWritePermission: required
 } %}
 
 {% block body %}
     {% if data.hasWritePermission %}
-        <span class="{{ config.name }}__full-access">{{ data.labels.fullAccessLabel }}</span>
+        <span class="{{ config.name }}__full-access">{{ 'customer.account.shopping_list.permissions.FULL_ACCESS' | trans }}</span>
     {% else %}
-        <span class="{{ config.name }}__read-only">{{ data.labels.readOnlyLabel }}</span>
+        <span class="{{ config.name }}__read-only">{{ 'customer.account.shopping_list.permissions.READ_ONLY' | trans }}</span>
     {% endif %}
 {% endblock %}

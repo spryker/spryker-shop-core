@@ -8,8 +8,7 @@
     shoppingLists: required,
     idShoppingList: null,
     shoppingListForm: null,
-    shoppingListResponse: null,
-    labels: required
+    shoppingListResponse: null
 } %}
 
 {% block body %}
@@ -17,12 +16,12 @@
         <thead>
             <tr>
                 <th></th>
-                <th class="text-left">{{ data.labels.nameLabel }}</th>
-                <th>{{ data.labels.ownerLabel }}</th>
-                <th>{{ data.labels.createdDateLabel }}</th>
-                <th>{{ data.labels.accessLabel }}</th>
-                <th>{{ data.labels.itemCountLabel }}</th>
-                <th>{{ data.labels.actionsLabel }}</th>
+                <th class="text-left">{{ 'customer.account.shopping_list.overview.name' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.owner' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.created_date' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.access' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.item_count' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.actions' | trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +32,7 @@
             <tr>
                 <td>
                     {% if data.enableTableForm %}
-                        <input title="{{ data.labels.addShoppingListToCartLabel }}" type="checkbox" name="shoppingLists[]" value="{{ shoppingList.idShoppingList }}" />
+                        <input title="{{ 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans }}" type="checkbox" name="shoppingLists[]" value="{{ shoppingList.idShoppingList }}" />
                     {% endif %}
                 </td>
                 <td>
@@ -44,11 +43,7 @@
                 <td class="text-center">
                     {% include molecule('access-labels', 'ShoppingListPage') with {
                         data: {
-                            hasWritePermission: hasWritePermission,
-                            labels: {
-                                fullAccessLabel: data.labels.fullAccessLabel,
-                                readOnlyLabel: data.labels.readOnlyLabel
-                            }
+                            hasWritePermission: hasWritePermission
                         }
                     } only %}
                 </td>
