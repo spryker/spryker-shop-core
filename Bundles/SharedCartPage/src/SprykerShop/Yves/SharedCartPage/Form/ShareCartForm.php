@@ -9,19 +9,17 @@ namespace SprykerShop\Yves\SharedCartPage\Form;
 
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ShareCartForm extends AbstractType
 {
     public const FORM_NAME = 'shareCartForm';
+
     public const FIELD_ID_QUOTE = 'idQuote';
-    public const FIELD_COMPANY_USER_ID = 'idCompanyUser';
-    public const FIELD_QUOTE_PERMISSION_GROUP_ID = 'idQuotePermissionGroup';
-    public const OPTION_CUSTOMERS = 'OPTION_CUSTOMERS';
+    public const FIELD_COMPANY_USERS = 'companyUsers';
+
     public const OPTION_PERMISSION_GROUPS = 'OPTION_PERMISSION_GROUPS';
 
     /**
@@ -39,8 +37,7 @@ class ShareCartForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(self::OPTION_CUSTOMERS);
-        $resolver->setRequired(self::OPTION_PERMISSION_GROUPS);
+        $resolver->setRequired(static::OPTION_PERMISSION_GROUPS);
         $resolver->setDefaults([
             'data_class' => ShareCartRequestTransfer::class,
         ]);
@@ -55,8 +52,7 @@ class ShareCartForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addQuoteIdField($builder);
-        $this->addCompanyUserIdField($builder, $options);
-        $this->addQuotePermissionGroupIdQuoteIdField($builder, $options);
+        $this->addCompanyUsersField($builder, $options);
     }
 
     /**
@@ -64,9 +60,9 @@ class ShareCartForm extends AbstractType
      *
      * @return $this
      */
-    protected function addQuoteIdField(FormBuilderInterface $builder)
+    protected function addQuoteIdField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_ID_QUOTE, HiddenType::class, []);
+        $builder->add(static::FIELD_ID_QUOTE, HiddenType::class, []);
 
         return $this;
     }
@@ -77,41 +73,16 @@ class ShareCartForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyUserIdField(FormBuilderInterface $builder, array $options)
+    protected function addCompanyUsersField(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_COMPANY_USER_ID, ChoiceType::class, [
-            'choices' => array_flip($options[static::OPTION_CUSTOMERS]),
-            'choices_as_values' => true,
-            'expanded' => false,
-            'required' => true,
-            'placeholder' => 'shared_cart.form.select_customer',
-            'constraints' => [
-                new NotBlank(),
+        $builder->add(static::FIELD_COMPANY_USERS, CollectionType::class, [
+            'entry_type' => ShareCartCompanyUserShareEditForm::class,
+            'entry_options' => [
+                static::OPTION_PERMISSION_GROUPS => $options[static::OPTION_PERMISSION_GROUPS],
             ],
-            'label' => 'shared_cart.form.customer',
-            ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addQuotePermissionGroupIdQuoteIdField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(static::FIELD_QUOTE_PERMISSION_GROUP_ID, ChoiceType::class, [
-            'choices' => array_flip($options[static::OPTION_PERMISSION_GROUPS]),
-            'choices_as_values' => true,
-            'expanded' => false,
-            'required' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
-            'label' => 'shared_cart.form.select_permissions',
-            ]);
+            'label' => 'shared_cart.form.select_customer',
+            'required' => false,
+        ]);
 
         return $this;
     }
