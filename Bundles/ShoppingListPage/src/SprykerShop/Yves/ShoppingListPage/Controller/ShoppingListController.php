@@ -46,7 +46,11 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $viewData = $this->executeIndexAction($idShoppingList);
 
-        return $this->view($viewData, [], '@ShoppingListPage/views/shopping-list/shopping-list.twig');
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getShoppingListViewWidgetPlugins(),
+            '@ShoppingListPage/views/shopping-list/shopping-list.twig'
+        );
     }
 
     /**
@@ -214,10 +218,10 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $productConcreteStorageData = $this->getFactory()
             ->getProductStorageClient()
-            ->getProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
+            ->findProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
 
         $productViewTransfer = new ProductViewTransfer();
-        if (empty($productConcreteStorageData)) {
+        if ($productConcreteStorageData === null) {
             $productConcreteStorageData = [
                 ProductViewTransfer::SKU => $shoppingListItemTransfer->getSku(),
             ];
@@ -225,14 +229,14 @@ class ShoppingListController extends AbstractShoppingListController
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         foreach ($this->getFactory()->getShoppingListItemExpanderPlugins() as $productViewExpanderPlugin) {
+            $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
+            $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+
             $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer(
                 $productViewTransfer,
                 $productConcreteStorageData,
                 $this->getLocale()
             );
-
-            $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
-            $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
         }
 
         return $productViewTransfer;

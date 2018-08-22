@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
@@ -191,6 +192,14 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface
+     */
+    public function getQuoteClient(): CustomerPageToQuoteClientInteface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
      * @return string[]
      */
     public function getCustomerOverviewWidgetPlugins(): array
@@ -236,5 +245,13 @@ class CustomerPageFactory extends AbstractFactory
     public function getPreRegistrationCustomerTransferExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStrategyPluginInterface[]
+     */
+    public function getAfterLoginCustomerRedirectPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT);
     }
 }

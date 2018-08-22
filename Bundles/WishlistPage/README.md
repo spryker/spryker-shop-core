@@ -1,6 +1,6 @@
 # WishlistPage Module
 
-{{ADD DESCRIPTION HERE}}
+The module provides wishlist management functionality.
 
 ## Installation
 
