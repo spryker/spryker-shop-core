@@ -38,7 +38,7 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     protected $quoteClient;
 
     /**
-     * @return \Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
+     * @var \Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
      */
     protected $quickOrderItemTransferExpanderPlugins;
 
