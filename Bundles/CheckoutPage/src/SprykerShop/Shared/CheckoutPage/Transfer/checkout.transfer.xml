@@ -7,4 +7,9 @@
         <property name="checkoutConfirmed" type="bool" />
     </transfer>
 
+    <transfer name="CheckoutError">
+        <property name="parameters" type="array"/>
+        <property name="errorType" type="string"/>
+    </transfer>
+
 </transfers>

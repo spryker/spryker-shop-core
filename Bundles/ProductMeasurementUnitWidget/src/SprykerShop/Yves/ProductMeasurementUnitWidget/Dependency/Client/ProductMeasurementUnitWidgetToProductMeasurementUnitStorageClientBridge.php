@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 
 class ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge implements ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface
 {
@@ -47,5 +48,25 @@ class ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge im
         int $idProduct
     ): ?ProductConcreteMeasurementUnitStorageTransfer {
         return $this->productMeasurementUnitStorageClient->findProductConcreteMeasurementUnitStorage($idProduct);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null
+     */
+    public function findProductMeasurementSalesUnitByIdProductConcrete(int $idProductConcrete): ?array
+    {
+        return $this->productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProduct($idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
+     */
+    public function findProductMeasurementBaseUnitByIdProductConcrete(int $idProductConcrete): ?ProductMeasurementUnitTransfer
+    {
+        return $this->productMeasurementUnitStorageClient->findProductMeasurementBaseUnitByIdProduct($idProductConcrete);
     }
 }

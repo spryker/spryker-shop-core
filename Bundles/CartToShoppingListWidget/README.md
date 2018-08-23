@@ -1,6 +1,6 @@
 # CartToShoppingListWidget Module
 
-{{ADD DESCRIPTION HERE}}
+The module provides functionality to extend cart page with shopping list functionality.
 
 ## Installation
 

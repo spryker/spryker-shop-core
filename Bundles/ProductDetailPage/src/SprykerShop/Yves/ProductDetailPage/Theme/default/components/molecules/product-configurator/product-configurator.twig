@@ -15,6 +15,7 @@
 {% set sku = data.product.sku %}
 {% set availabilityWidget = '' %}
 {% set isDisabled = data.product.idProductConcrete is empty or data.product.price is empty %}
+{% set isProductAvailable = true %}
 
 {% for index in 1..data.maxQuantity %}
     {% set options = options | merge([{
@@ -28,6 +29,12 @@
     {% set isDisabled = not isAvailable or isDisabled %}
 {% endif %}
 
+{% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+    {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', sku) %}
+    {% set isDisabled = isDiscontinued or isDisabled %}
+    {% set isProductAvailable = not isDiscontinued %}
+{% endif %}
+
 {% block body %}
     {% if brand is not empty %}
         <h5><small>{{'page.product.by' | trans}}</small> {{brand}}</h5>
@@ -35,7 +42,12 @@
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
     <hr />
-    {{ widget('PriceWidgetPlugin', data.product) }}
+    {% if widgetExists('PriceProductVolumeWidgetPlugin') %}
+        {{ widget('PriceProductVolumeWidgetPlugin', data.product) }}
+    {% else %}
+        {{ widget('PriceWidgetPlugin', data.product) }}
+    {% endif %}
+
     {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
     {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
 
@@ -92,13 +104,18 @@
         {{ widget('AvailabilityWidgetPlugin', data.product) }}
     </form>
 
-    {% if can('SeeShoppingListPermissionPlugin') and widgetExists('ShoppingListWidgetPlugin') %}
+    {% if can('SeeShoppingListPermissionPlugin') and widgetExists('ShoppingListWidgetPlugin')  and isProductAvailable %}
         <hr />
         {{ widget('ShoppingListWidgetPlugin', sku, isDisabled) }}
     {% endif %}
 
-    {% if can('SeeWishlistPermissionPlugin') and widgetExists('WishlistWidgetPlugin') %}
+    {% if can('SeeWishlistPermissionPlugin') and widgetExists('WishlistWidgetPlugin')  and isProductAvailable %}
         <hr />
         {{ widget('WishlistWidgetPlugin', data.product) }}
     {% endif %}
+
+    {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+        {{ widget('ProductDiscontinuedWidgetPlugin', sku) }}
+    {% endif %}
+
 {% endblock %}
