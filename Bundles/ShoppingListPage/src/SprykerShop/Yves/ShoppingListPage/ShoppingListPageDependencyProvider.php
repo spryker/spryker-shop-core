@@ -197,7 +197,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addMultiCartClient(Container $container): Container
     {
-        $container[self::CLIENT_MULTI_CART] = function (Container $container) {
+        $container[static::CLIENT_MULTI_CART] = function (Container $container) {
             return new ShoppingListPageToMultiCartClientBridge($container->getLocator()->multiCart()->client());
         };
 

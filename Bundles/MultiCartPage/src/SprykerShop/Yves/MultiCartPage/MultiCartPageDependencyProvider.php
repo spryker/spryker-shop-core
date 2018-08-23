@@ -50,7 +50,7 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMultiCartListWidgetPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_MULTI_CART_LIST_WIDGETS] = function () {
+        $container[static::PLUGIN_MULTI_CART_LIST_WIDGETS] = function () {
             return $this->getMultiCartListWidgetPlugins();
         };
 
