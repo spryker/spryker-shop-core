@@ -26,7 +26,10 @@
             <div class="col col--sm-4 col--lg-8">
                 {% if data.showSearchForm %}
                     {% include molecule('search-form') with {
-                        class: config.name ~ '__search-form is-hidden-sm-md'
+                        class: config.name ~ '__search-form is-hidden-sm-md',
+                        attributes: {
+                            'data-search-id': 'desktop'
+                        }
                     } only %}
                 {% endif %}
 
@@ -44,7 +47,10 @@
 
         {% if data.showSearchForm %}
             {% include molecule('search-form') with {
-                class: config.name ~ '__row' ~ config.name ~ '__search-form is-hidden-lg-xl'
+                class: config.name ~ '__row' ~ config.name ~ '__search-form is-hidden-lg-xl',
+                attributes: {
+                    'data-search-id': 'mobile'
+                }
             } only %}
         {% endif %}
     </div>
