@@ -1,0 +1,11 @@
+@mixin shopping-list-page-access-labels($name: '.access-labels') {
+    #{$name} {
+        &__full-access {
+            color: map-get($setting-color-actions, 'success');
+        }
+
+        &__read-only {
+            color: $setting-color-dark;
+        }
+    }
+}

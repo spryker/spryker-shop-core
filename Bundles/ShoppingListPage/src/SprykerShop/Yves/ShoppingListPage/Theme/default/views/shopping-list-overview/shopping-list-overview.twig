@@ -5,6 +5,7 @@
     shoppingListForm: _view.shoppingListForm,
     shoppingListResponse: _view.shoppingListResponse,
     labels: {
+        addShoppingListToCartLabel: 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans,
         addNewSubmitLabel: 'customer.account.shopping_list.overview.add_new' | trans,
         overviewTitle: 'customer.account.shopping_list.overview.title' | trans,
         emptyShoppingListsLabel: 'customer.account.shopping_list.overview.empty' | trans,
@@ -19,21 +20,36 @@
                 form: data.shoppingListForm,
                 submit: {
                     enable: true,
-                    text: data.labels.addNewSubmitLabel,
+                    text: 'customer.account.shopping_list.overview.add_new' | trans
                 }
             }
         } only %}
+
+        <br />
         <hr/>
+        <br />
+
         {% if data.shoppingListCollection.shoppingLists | length %}
-            {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
-                data: {
-                    shoppingLists: data.shoppingListCollection.shoppingLists,
-                    enableTableForm: true,
-                    shoppingListResponse: data.shoppingListResponse
-                }
-            } only %}
+            <form method="POST" action="{{ path('shopping-list/add-shopping-list-to-cart') }}">
+                <button type="submit" class="button button--success" {{qa('submit-button')}}>
+                    {{ 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans }}
+                    {% include atom('icon') with {
+                        data: {
+                            name: 'shopping-cart'
+                        }
+                    } only %}
+                </button>
+
+                {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
+                    data: {
+                        shoppingLists: data.shoppingListCollection.shoppingLists,
+                        enableTableForm: true,
+                        shoppingListResponse: data.shoppingListResponse
+                    }
+                } only %}
+            </form>
         {% else %}
-            {{ data.labels.emptyShoppingListsLabel }}
+            {{ 'customer.account.shopping_list.overview.empty' | trans }}
         {% endif %}
     </div>
 {% endblock %}

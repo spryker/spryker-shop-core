@@ -8,41 +8,20 @@
     shoppingLists: required,
     idShoppingList: null,
     shoppingListForm: null,
-    shoppingListResponse: null,
-    labels: {
-        addShoppingListToCartLabel: 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans,
-        nameLabel: 'customer.account.shopping_list.overview.name' | trans,
-        itemCountLabel: 'customer.account.shopping_list.overview.item_count' | trans,
-        createdDateLabel: 'customer.account.shopping_list.overview.created_date' | trans,
-        ownerLabel: 'customer.account.shopping_list.overview.owner' | trans,
-        actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
-        accessLabel: 'customer.account.shopping_list.access' | trans,
-        readOnlyLabel: 'customer.account.shopping_list.permissions.READ_ONLY' | trans,
-        fullAccessLabel: 'customer.account.shopping_list.permissions.FULL_ACCESS' | trans,
-        submitLabel: 'forms.submit-btn' | trans
-    }
+    shoppingListResponse: null
 } %}
 
 {% block body %}
-<form method="POST" action="{{ path('shopping-list/add-shopping-list-to-cart') }}">
-    <button type="submit" class="button button--success" {{qa('submit-button')}}>
-        {{ data.labels.addShoppingListToCartLabel }}
-        {% include atom('icon') with {
-            data: {
-                name: 'shopping-cart'
-            }
-        } only %}
-    </button>
     <table class="table table--expand">
         <thead>
             <tr>
                 <th></th>
-                <th class="text-left">{{ data.labels.nameLabel }}</th>
-                <th>{{ data.labels.ownerLabel }}</th>
-                <th>{{ data.labels.createdDateLabel }}</th>
-                <th>{{ data.labels.accessLabel }}</th>
-                <th>{{ data.labels.itemCountLabel }}</th>
-                <th>{{ data.labels.actionsLabel }}</th>
+                <th class="text-left">{{ 'customer.account.shopping_list.overview.name' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.owner' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.created_date' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.access' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.item_count' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.actions' | trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -53,7 +32,7 @@
             <tr>
                 <td>
                     {% if data.enableTableForm %}
-                        <input title="{{ data.labels.addShoppingListToCartLabel }}" type="checkbox" name="shoppingLists[]" value="{{ shoppingList.idShoppingList }}" />
+                        <input title="{{ 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans }}" type="checkbox" name="shoppingLists[]" value="{{ shoppingList.idShoppingList }}" />
                     {% endif %}
                 </td>
                 <td>
@@ -62,11 +41,11 @@
                 <td class="text-center">{{ shoppingList.owner }}</td>
                 <td class="text-center">{{ shoppingList.createdAt | formatDate }}</td>
                 <td class="text-center">
-                    {% if hasWritePermission %}
-                        <label>{{ data.labels.fullAccessLabel }}</label>
-                    {% else %}
-                        <label>{{ data.labels.readOnlyLabel }}</label>
-                    {% endif %}
+                    {% include molecule('access-labels', 'ShoppingListPage') with {
+                        data: {
+                            hasWritePermission: hasWritePermission
+                        }
+                    } only %}
                 </td>
                 <td class="text-center">{{ shoppingList.numberOfItems }}</td>
                 <td>
@@ -81,5 +60,4 @@
         {% endfor %}
         </tbody>
     </table>
-</form>
 {% endblock %}
