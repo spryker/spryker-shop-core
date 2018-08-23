@@ -46,11 +46,7 @@
 
                 {{ widget('DiscountPromotionItemListWidgetPlugin', data.cart, data.request) }}
 
-                {% set cartOperation = widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) %}
-
-                {% if cartOperation is not empty %}
-                    {{ cartOperation | raw }}
-                {% endif %}
+                {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) | raw }}
             </div>
 
             <div class="col col--sm-12 col--xl-4">
