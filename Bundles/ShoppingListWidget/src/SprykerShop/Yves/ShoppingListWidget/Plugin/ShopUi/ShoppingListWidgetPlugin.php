@@ -23,7 +23,6 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
     public function initialize(): void
     {
         $this->addParameter('shoppingListCollection', $this->getCustomerShoppingListCollection());
-//        $this->addParameter('quantity', $quantity);
     }
 
     /**

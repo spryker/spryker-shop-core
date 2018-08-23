@@ -10,7 +10,7 @@
 
 {% block body %}
 
-    {% set wrightAccess =  can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+    {% set writeAccess =  can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
 
     <div class="spacing-bottom spacing-bottom--small">
         <a href="{{ path('shopping-list/details', { idShoppingList: (data.shoppingList.idShoppingList)}) }}" class="{{ config.name }}__name">
@@ -24,8 +24,8 @@
             {{ data.shoppingList.numberOfItems }}
             {{ 'shopping_list_widget.items' | trans }}
         </span>
-        <span class="{{ config.name }}__access {% if wrightAccess %}{{ config.name }}__access--full{% else %}__access--read-only{% endif %}" >
-            {% if wrightAccess %}
+        <span class="{{ config.name }}__access {% if writeAccess %}{{ config.name }}__access--full{% else %}__access--read-only{% endif %}" >
+            {% if writeAccess %}
                 {{ 'shopping_list_widget.full_access' | trans }}
             {% else %}
                 {{ 'shopping_list_widget.read_only' | trans }}
