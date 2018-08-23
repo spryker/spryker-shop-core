@@ -81,7 +81,7 @@ class CompanyUserFormDataProvider
     {
         return [
             CompanyUserForm::OPTION_BUSINESS_UNIT_CHOICES => $this->getAvailableBusinessUnits($idCompany),
-            CompanyUserForm::OPTION_COMPANY_ROLE_CHOICES => $this->getAvailableCompanyRoles($idCompany),
+            CompanyUserForm::OPTION_COMPANY_ROLE_CHOICES => $this->getAvailableCompanyRoleIds($idCompany),
         ];
     }
 
@@ -135,12 +135,12 @@ class CompanyUserFormDataProvider
     /**
      * @param int $idCompany
      *
-     * @return int[]
+     * @return int[] Keys are role names
      */
-    protected function getAvailableCompanyRoles(int $idCompany): array
+    protected function getAvailableCompanyRoleIds(int $idCompany): array
     {
-        $criteriaFilterTransfer = new CompanyRoleCriteriaFilterTransfer();
-        $criteriaFilterTransfer->setIdCompany($idCompany);
+        $criteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
+            ->setIdCompany($idCompany);
 
         $companyRoleCollection = $this->companyRoleClient->getCompanyRoleCollection($criteriaFilterTransfer);
 
