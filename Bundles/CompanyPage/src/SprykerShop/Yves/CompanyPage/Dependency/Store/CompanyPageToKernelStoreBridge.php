@@ -33,7 +33,7 @@ class CompanyPageToKernelStoreBridge implements CompanyPageToKernelStoreInterfac
     /**
      * @return string
      */
-    public function getCurrentLocale(): string
+    public function getCurrentLocale()
     {
         return $this->store->getCurrentLocale();
     }

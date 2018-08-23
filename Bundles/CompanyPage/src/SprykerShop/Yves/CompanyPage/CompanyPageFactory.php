@@ -20,8 +20,14 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageC
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
-use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeBuilder;
-use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeBuilderInterface;
+use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressReader;
+use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressReaderInterface;
+use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressSaver;
+use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressSaverInterface;
+use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeReader;
+use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeReaderInterface;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserChecker;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserCheckerInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaver;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface;
 
@@ -128,11 +134,11 @@ class CompanyPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeBuilderInterface
+     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeReaderInterface
      */
-    public function createCompanyBusinessUnitTreeBuilder(): CompanyBusinessUnitTreeBuilderInterface
+    public function createCompanyBusinessUnitTreeBuilder(): CompanyBusinessUnitTreeReaderInterface
     {
-        return new CompanyBusinessUnitTreeBuilder(
+        return new CompanyBusinessUnitTreeReader(
             $this->getCustomerClient(),
             $this->getCompanyBusinessUnitClient()
         );
@@ -152,5 +158,33 @@ class CompanyPageFactory extends AbstractFactory
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressSaverInterface
+     */
+    public function createCompanyBusinessAddressSaver(): CompanyBusinessUnitAddressSaverInterface
+    {
+        return new CompanyBusinessUnitAddressSaver(
+            $this->getCompanyUnitAddressClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressReaderInterface
+     */
+    public function createCompanyBusinessAddressReader(): CompanyBusinessUnitAddressReaderInterface
+    {
+        return new CompanyBusinessUnitAddressReader(
+            $this->getCompanyUnitAddressClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserCheckerInterface
+     */
+    public function createCompanyUserChecker(): CompanyUserCheckerInterface
+    {
+        return new CompanyUserChecker();
     }
 }

@@ -167,7 +167,7 @@ class CompanyBusinessUnitFormDataProvider
 
         $businessUnits = [];
         foreach ($companyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnit) {
-            if ($idCompanyBusinessUnit == $companyBusinessUnit->getIdCompanyBusinessUnit()) {
+            if ($idCompanyBusinessUnit === $companyBusinessUnit->getIdCompanyBusinessUnit()) {
                 continue;
             }
             $businessUnits[$companyBusinessUnit->getIdCompanyBusinessUnit()] = $companyBusinessUnit->getName();

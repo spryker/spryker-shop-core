@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTreeTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 class CompanyPageToCompanyBusinessUnitClientBridge implements CompanyPageToCompanyBusinessUnitClientInterface
 {
@@ -80,5 +82,15 @@ class CompanyPageToCompanyBusinessUnitClientBridge implements CompanyPageToCompa
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
         return $this->companyBusinessUnitClient->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeTransfer
+     */
+    public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeTransfer
+    {
+        return $this->companyBusinessUnitClient->getCustomerCompanyBusinessUnitTree($customerTransfer);
     }
 }

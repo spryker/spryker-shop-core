@@ -21,5 +21,5 @@ interface CompanyPageToMessengerClientInterface
      *
      * @return void
      */
-    public function addSuccessMessage($message): void;
+    public function addSuccessMessage($message);
 }

@@ -48,7 +48,7 @@ class BusinessUnitController extends AbstractCompanyController
     protected function executeIndexAction(): array
     {
         return [
-            'businessUnitsTree' => $this->getFactory()->createCompanyBusinessUnitTreeBuilder()->getCompanyBusinessUnitTree(),
+            'businessUnitsTree' => $this->getFactory()->createCompanyBusinessUnitTreeBuilder()->getCustomerCompanyBusinessUnitTree(),
         ];
     }
 

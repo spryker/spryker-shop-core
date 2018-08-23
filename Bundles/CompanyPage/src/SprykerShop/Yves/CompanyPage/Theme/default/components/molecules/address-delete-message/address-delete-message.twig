@@ -28,7 +28,7 @@
         <address class="{{ config.name }}__address">{{ data.companyUnitAddress.address1 }} {{ data.companyUnitAddress.address2 }}</address>
         <address class="{{ config.name }}__address">{{ data.companyUnitAddress.zipCode }} {{ data.companyUnitAddress.city }}, {{ ('countries.iso.' ~ data.companyUnitAddress.iso2code) | trans }}</address>
 
-        {% if data.companyBusinessUnits|length %}
+        {% if data.companyBusinessUnits is not empty %}
             {{ "company.account.address.delete.message.belongs" | trans }}:
 
             <ul class="list list--bullet">
@@ -39,13 +39,13 @@
         {% endif %}
     </div>
 
-    {% if data.companyBusinessUnits %}
+    {% if data.companyBusinessUnits is not empty %}
         <p class="{{ config.name }}__title {{ config.name }}__title--alert">
             {{ "company.account.address.delete.message.all" | trans }}.
         </p>
     {% endif %}
 
-    {% if data.idCompanyBusinessUnit %}
+    {% if data.idCompanyBusinessUnit is not empty %}
         <a class="button button--hollow {{ config.name }}__action" href="{{ url('company/business-unit/update', {'id': data.idCompanyBusinessUnit }) }}">
             {{ "label.button.cancel" | trans }}
         </a>

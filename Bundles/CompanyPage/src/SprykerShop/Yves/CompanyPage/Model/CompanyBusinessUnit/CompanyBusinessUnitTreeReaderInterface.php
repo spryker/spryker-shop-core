@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit;
 
-interface CompanyBusinessUnitTreeBuilderInterface
+interface CompanyBusinessUnitTreeReaderInterface
 {
     /**
      * @return array
      */
-    public function getCompanyBusinessUnitTree(): array;
+    public function getCustomerCompanyBusinessUnitTree(): array;
 }
