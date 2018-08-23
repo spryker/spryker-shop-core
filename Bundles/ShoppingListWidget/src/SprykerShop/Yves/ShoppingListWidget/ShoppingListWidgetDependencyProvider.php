@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\ShoppingListWidget;
 
+use Spryker\Client\ShoppingListSession\ShoppingListSessionClient;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCustomerClientBridge;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientBridge;
-use Spryker\Client\ShoppingListSession\ShoppingListSessionClient;
 
 class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {

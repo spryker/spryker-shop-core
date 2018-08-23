@@ -1,16 +1,15 @@
 <?php
 
-namespace SprykerShop\Yves\ShoppingListWidget\Plugin\ShopUi;
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+namespace SprykerShop\Yves\ShoppingListWidget\Plugin\ShopUi;
+
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\ShoppingListWidget\ShoppingListWidgetPluginInterface;
-
 
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
@@ -18,7 +17,7 @@ use SprykerShop\Yves\ShopUi\Dependency\Plugin\ShoppingListWidget\ShoppingListWid
 class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListWidgetPluginInterface
 {
     /**
-     *
+     * {@inheritDoc}
      */
     public function initialize(): void
     {
@@ -26,7 +25,7 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getTemplate()
     {
@@ -34,13 +33,16 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getName()
     {
         return static::NAME;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
     protected function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
     {
         $shoppingListCollection = new ShoppingListCollectionTransfer();

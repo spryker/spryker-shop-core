@@ -42,7 +42,7 @@ class ShoppingListWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return ShoppingListSessionClient
+     * @return \Spryker\Client\ShoppingListSession\ShoppingListSessionClient
      */
     public function getShoppingListSessionClient(): ShoppingListSessionClient
     {
