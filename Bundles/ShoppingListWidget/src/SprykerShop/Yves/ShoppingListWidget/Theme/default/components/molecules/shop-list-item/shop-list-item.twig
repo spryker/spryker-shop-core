@@ -20,11 +20,11 @@
     </div>
 
     <div class="spacing-bottom spacing-bottom--small">
-        <span class="{{ config.name }}__number-items">
+        <span class="{{ config.name }}__items-count">
             {{ data.shoppingList.numberOfItems }}
             {{ 'shopping_list_widget.items' | trans }}
         </span>
-        <span class="{{ config.name }}__access {% if writeAccess %}{{ config.name }}__access--full{% else %}__access--read-only{% endif %}" >
+        <span class="{{ config.name }}__access {% if writeAccess %}{{ config.name }}__access--full{% endif %}" >
             {% if writeAccess %}
                 {{ 'shopping_list_widget.full_access' | trans }}
             {% else %}
