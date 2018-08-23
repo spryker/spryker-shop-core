@@ -1,0 +1,38 @@
+{
+  "name": "spryker-shop/shopping-list-note-widget",
+  "description": "ShoppingListNoteWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/kernel": "^3.23.1",
+    "spryker-shop/shop-ui": "^1.2.0"
+  },
+  "require-dev": {
+    "spryker-shop/shopping-list-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker-shop/shopping-list-page": "Widget plugins are available for this module."
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
