@@ -12,14 +12,12 @@
 {% block body %}
     <div class="grid grid--middle">
         <div class="col col--md-9 col--sm-12">
-            {% filter replace({'&lt;br /&gt;': '<br />'}) | raw %}
-                {{ form_widget(data.address, {
-                    'attr': {
-                        'label': data.address.vars.label
-                        }
-                    })
-                }}
-            {% endfilter %}
+            {{ form_widget(data.address, {
+                'attr': {
+                    'label': data.address.vars.label
+                    }
+                })
+            }}
         </div>
         <div class="col col--md-3 col--sm-12 {{ config.name }}__actions">
             <a href="{{ url('company/address/update', {'id': data.address.vars.value, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
