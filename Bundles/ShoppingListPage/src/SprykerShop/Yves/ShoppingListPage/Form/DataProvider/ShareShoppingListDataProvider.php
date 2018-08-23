@@ -118,6 +118,10 @@ class ShareShoppingListDataProvider
         }
 
         foreach ($companyUsers as $companyUserTransfer) {
+            if ($companyUserTransfer->getIdCompanyUser() === $shoppingListTransfer->getIdCompanyUser()) {
+                continue;
+            }
+
             if (array_key_exists($companyUserTransfer->getIdCompanyUser(), $sharedCompanyUsers)) {
                 $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()]->setCompanyUser($companyUserTransfer);
                 continue;

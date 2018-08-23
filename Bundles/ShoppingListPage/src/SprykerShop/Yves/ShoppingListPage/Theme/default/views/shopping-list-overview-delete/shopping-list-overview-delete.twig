@@ -31,8 +31,10 @@
     <div class="box">
         <h5>{{ 'customer.account.shopping_list.delete.warning' | trans }}</h5>
         <hr />
-        {{ 'customer.account.shopping_list.delete.you_are_trying_to_delete_shopping_list' | trans }}
-        <a href="{{ url('shopping-list/details', {'idShoppingList': data.shoppingList.idShoppingList}) }}">{{ data.title }}</a>
+        {{ 'customer.account.shopping_list.delete.you_are_trying_to_delete_shopping_list' | trans({
+            '%link%': url('shopping-list/details', {'idShoppingList': data.shoppingList.idShoppingList}),
+            '%name%': data.title
+        }) | raw}}
         <br/>
         {% if data.sharedCompanyUsers.count or data.sharedCompanyBusinessUnits.count %}
             {{ 'customer.account.shopping_list.delete.it_belongs_to_follow' | trans }}
