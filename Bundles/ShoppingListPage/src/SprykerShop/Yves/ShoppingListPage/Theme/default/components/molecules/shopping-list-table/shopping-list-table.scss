@@ -1,0 +1,23 @@
+@mixin shopping-list-page-shopping-list-table($name: '.shopping-list-table') {
+    #{$name} {
+        &__row {
+            &--disable {
+                opacity: 0.4;
+            }
+        }
+
+        tbody {
+            tr {
+                &:nth-child(even) {
+                    background-color: transparent;
+                }
+
+                &:not(:first-child) {
+                    border-top: 1px solid $setting-color-light;
+                }
+            }
+        }
+
+        @content;
+    }
+}

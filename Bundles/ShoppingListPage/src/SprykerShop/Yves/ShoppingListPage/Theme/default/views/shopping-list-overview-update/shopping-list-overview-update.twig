@@ -51,32 +51,33 @@
                 {{ form_errors(data.form) }}
 
                 <div class="form__fields grid grid--bottom">
-                        {{ form_row(data.form.idShoppingList) }}
+                    {{ form_row(data.form.idShoppingList) }}
 
-                        {{ form_row(data.form.name, {
-                            rowAttr: {
-                                class: 'form__field col col--sm-12'
-                            }
-                        }) }}
+                    {{ form_row(data.form.name, {
+                        rowAttr: {
+                            class: 'form__field col col--sm-12'
+                        }
+                    }) }}
 
-                        <div class="col col--sm-6">
-                            <strong>{{ 'customer.account.shopping_list.overview.owner' | trans }}:</strong>
-                            {{ data.shoppingList.owner }}
+                    <div class="form__field col col--sm-12">
+                        <div class="grid">
+                            <div class="col col--sm-6">
+                                <strong>{{ 'customer.account.shopping_list.overview.owner' | trans }}:</strong>
+                                {{ data.shoppingList.owner }}
+                            </div>
+
+                            <div class="col col--sm-6">
+                                <strong>{{ 'customer.account.shopping_list.access' | trans }}:</strong>
+                                {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+                                    {{ 'customer.account.shopping_list.access.full_access' | trans }}
+                                {% else %}
+                                    {{ 'customer.account.shopping_list.access.read_only' | trans }}
+                                {% endif %}
+                            </div>
                         </div>
+                    </div>
 
-                        {# could be moved to molecule #}
-                        {# start molecule #}
-                        <div class="col col--sm-6">
-                            <strong>{{ 'customer.account.shopping_list.access' | trans }}:</strong>
-                            {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
-                                {{ 'customer.account.shopping_list.access.full_access' | trans }}
-                            {% else %}
-                                {{ 'customer.account.shopping_list.access.read_only' | trans }}
-                            {% endif %}
-                        </div>
-                        {# end molecule #}
-
-                        {% if data.shoppingList.items | length %}
+                    {% if data.shoppingList.items is not empty %}
                         <table class="table table--expand">
                             <thead>
                                 <tr>
@@ -88,13 +89,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for key, shoppingListItem in data.shoppingList.items %}
-                                {% set product = data.shoppingListItemProducts[shoppingListItem.idShoppingListItem] %}
-                                {% set isProductAvailable = product.available is defined and product.available and product.price is defined and product.price is not null %}
-                                {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                                    {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', product.sku) %}
-                                    {% set isProductAvailable = not isDiscontinued and isProductAvailable %}
-                                {% endif %}
+                        {% for key, shoppingListItem in data.shoppingList.items %}
+                            {% set product = data.shoppingListItemProducts[shoppingListItem.idShoppingListItem] %}
+                            {% set isProductAvailable = product.available is defined and product.available and product.price is defined and product.price is not null %}
+                            {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+                                {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', product.sku) %}
+                                {% set isProductAvailable = not isDiscontinued and isProductAvailable %}
+                            {% endif %}
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td class="text-center">
@@ -166,14 +167,13 @@
                                 </tr>
                             </tbody>
                         </table>
-                        {% else %}
+                    {% else %}
                             <div class="form__field col col--sm-12 text-center">
                                 <hr />
                                 {{ data.labels.shoppingListEmptyLabel }}
                             </div>
-                        {% endif %}
+                    {% endif %}
                 </div>
-
 
                 <div class="form__actions">
                     <div class="col col--sm-6 text-left">

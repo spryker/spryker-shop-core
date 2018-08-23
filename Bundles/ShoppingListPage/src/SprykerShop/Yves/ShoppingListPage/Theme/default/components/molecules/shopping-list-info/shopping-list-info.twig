@@ -1,0 +1,40 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-info'
+} %}
+
+{% define data = {
+    shoppingList: required,
+    labels: required
+} %}
+
+{% block body %}
+    <div class="grid">
+        <div class="col col--sm-12 col--md-6 col--lg-4">
+            <b>{{ data.labels.ownerLabel }}</b>: {{ data.shoppingList.owner }}
+        </div>
+        <div class="col col--sm-12 col--md-6 col--lg-4">
+            <b>{{ data.labels.accessLabel }}</b>:
+            {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+                <span class="{{ config.name }}__access-label {{ config.name }}__access-label--full">{{ data.labels.fullAccessLabel }}</span>
+            {% else %}
+                <span class="{{ config.name }}__access-label {{ config.name }}__access-label--read">{{ data.labels.readOnlyLabel }}</span>
+            {% endif %}
+        </div>
+        <div class="col col--sm-12 col--md-6 col--lg-4">
+            <b>{{ data.labels.sharedWithLabel }}</b>:
+            {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+                <a href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">
+                    {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ data.labels.usersLabel }},
+                    {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ data.labels.businessUnitsLabel }}
+                </a>
+            {% else %}
+                <span>
+                    {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ data.labels.usersLabel }},
+                    {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ data.labels.businessUnitsLabel }}
+                </span>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
