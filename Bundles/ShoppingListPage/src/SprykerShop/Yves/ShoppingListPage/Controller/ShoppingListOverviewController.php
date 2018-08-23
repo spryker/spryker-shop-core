@@ -202,6 +202,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             'shoppingList' => $shoppingListTransfer,
             'sharedCompanyUsers' => $this->getSharedCompanyUsers($shoppingListTransfer, $customerTransfer),
             'sharedCompanyBusinessUnits' => $this->getSharedCompanyBusinessUnits($shoppingListTransfer, $customerTransfer),
+            'backUrl' => $request->headers->get('referer'),
         ];
     }
 
