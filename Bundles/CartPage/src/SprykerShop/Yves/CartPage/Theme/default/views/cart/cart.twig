@@ -46,16 +46,10 @@
 
                 {{ widget('DiscountPromotionItemListWidgetPlugin', data.cart, data.request) }}
 
-                {% if widgetExists('CartOperationsWidgetPlugin') %}
-                    {% set cartOperation = widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) %}
+                {% set cartOperation = widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) %}
 
-                    {% if cartOperation is not empty %}
-                        {{ cartOperation | raw }}
-                    {% else %}
-                        {{ parent() }}
-                    {% endif %}
-                {% else %}
-                    {{ parent() }}
+                {% if cartOperation is not empty %}
+                    {{ cartOperation | raw }}
                 {% endif %}
             </div>
 
