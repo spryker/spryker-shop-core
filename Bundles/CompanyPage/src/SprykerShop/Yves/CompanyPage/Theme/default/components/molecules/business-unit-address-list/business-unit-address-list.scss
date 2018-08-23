@@ -1,7 +1,7 @@
 @mixin company-page-business-unit-address-list($name: '.business-unit-address-list') {
     #{$name} {
         &__list {
-            max-height: 14.625rem;
+            max-height: 15rem;
             overflow-y: auto;
             border-top: 1px solid $setting-color-lighter;
             border-bottom: 1px solid $setting-color-lighter;
