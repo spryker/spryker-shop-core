@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
@@ -187,6 +188,14 @@ class CustomerPageFactory extends AbstractFactory
     public function getCustomerClient(): CustomerPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface
+     */
+    public function getQuoteClient(): CustomerPageToQuoteClientInteface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_QUOTE);
     }
 
     /**

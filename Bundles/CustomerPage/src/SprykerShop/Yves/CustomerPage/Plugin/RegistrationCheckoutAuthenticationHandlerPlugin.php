@@ -30,6 +30,7 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
         $this->processErrorMessages($customerResponseTransfer);
 
         if ($customerResponseTransfer->getIsSuccess() === true) {
+            $quoteTransfer = $this->getQuoteClient()->getQuote();
             $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
         }
 
@@ -64,5 +65,13 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
     public function canHandle(QuoteTransfer $quoteTransfer)
     {
         return ($quoteTransfer->getCustomer() !== null);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface
+     */
+    protected function getQuoteClient()
+    {
+        return $this->getFactory()->getQuoteClient();
     }
 }
