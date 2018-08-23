@@ -67,10 +67,6 @@ class CompanyUserAccountSelectorFormDataProvider
     {
         $companies = [];
         foreach ($companyCollection->getCompanyUsers() as $companyUser) {
-            if (!$companyUser->getIsActive()) {
-                continue;
-            }
-
             $key = sprintf(
                 static::FORMAT_COMPANY_USER_DISPLAY,
                 $companyUser->getCompany()->getName(),
