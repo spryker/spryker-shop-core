@@ -5,14 +5,13 @@
 } %}
 
 {% define data = {
-    shoppingList: required,
-    labels: required
+    shoppingList: required
 } %}
 
 {% block body %}
     <div class="grid">
         <div class="col col--sm-12 col--md-6 col--lg-4">
-            <b>{{ data.labels.ownerLabel }}</b>: {{ data.shoppingList.owner }}
+            <b>{{ 'customer.account.shopping_list.overview.owner' | trans }}</b>: {{ data.shoppingList.owner }}
         </div>
         <div class="col col--sm-12 col--md-6 col--lg-4">
             <b>{{ data.labels.accessLabel }}</b>:
