@@ -20,6 +20,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
+    public const PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
@@ -34,6 +35,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addQuickOrderPageWidgetPlugins($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addQuickOrderItemTransferExpanderPlugins($container);
 
         return $container;
     }
@@ -101,6 +103,20 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addQuickOrderItemTransferExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER] = function () {
+            return $this->getQuickOrderItemTransferExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     protected function addZedRequestClient($container): Container
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
@@ -117,6 +133,14 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return string[]
      */
     protected function getQuickOrderPageWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
+     */
+    protected function getQuickOrderItemTransferExpanderPlugins(): array
     {
         return [];
     }
