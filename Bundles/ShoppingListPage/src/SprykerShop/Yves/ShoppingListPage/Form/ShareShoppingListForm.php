@@ -64,7 +64,7 @@ class ShareShoppingListForm extends AbstractType
             'entry_options' => [
                 static::OPTION_PERMISSION_GROUPS => $options[static::OPTION_PERMISSION_GROUPS],
             ],
-            'label' => 'customer.account.shopping_list.share.select_company_business_unit',
+            'label' => false,
             'required' => false,
         ]);
 
@@ -84,7 +84,7 @@ class ShareShoppingListForm extends AbstractType
             'entry_options' => [
                 static::OPTION_PERMISSION_GROUPS => $options[static::OPTION_PERMISSION_GROUPS],
             ],
-            'label' => 'customer.account.shopping_list.share.select_company_user',
+            'label' => false,
             'required' => false,
         ]);
 

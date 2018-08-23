@@ -10,35 +10,50 @@
     shareForm: required
 } %}
 
+{% set hasSharedUnit = false %}
+{% set hasNotSharedUnit = false %}
+
+{% for unit in data.shareUnits if not hasSharedUnit or not hasNotSharedUnit %}
+    {% if unit.idShoppingListPermissionGroup is not null %}
+        {% set hasSharedUnit = true %}
+    {% else %}
+        {% set hasNotSharedUnit = true %}
+    {% endif %}
+{% endfor %}
+
 {% block body %}
-    <div class="box">
-        <ul class="{{ config.name }}__list">
-            {% for key, unit in data.shareUnits %}
-                {% if unit.idShoppingListPermissionGroup is not null %}
-                    {% include molecule('share-list-item', 'ShoppingListPage') with {
-                        class: 'spacing-y spacing-y--inner',
-                        data: {
-                            name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
-                            shareForm: data.shareForm[key]
-                        }
-                    } only %}
-                {% endif %}
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="box">
-        <ul class="{{ config.name }}__list">
-            {% for key, unit in data.shareUnits %}
-                {% if unit.idShoppingListPermissionGroup is null %}
-                    {% include molecule('share-list-item', 'ShoppingListPage') with {
-                        class: 'spacing-y spacing-y--inner',
-                        data: {
-                            name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
-                            shareForm: data.shareForm[key]
-                        }
-                    } only %}
-                {% endif %}
-            {% endfor %}
-        </ul>
-    </div>
+    {% if hasSharedUnit %}
+        <div class="box">
+            <ul class="{{ config.name }}__list">
+                {% for key, unit in data.shareUnits %}
+                    {% if unit.idShoppingListPermissionGroup is not null %}
+                        {% include molecule('share-list-item', 'ShoppingListPage') with {
+                            class: 'spacing-y spacing-y--inner',
+                            data: {
+                                name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
+                                shareForm: data.shareForm[key]
+                            }
+                        } only %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    {% if hasNotSharedUnit %}
+        <div class="box">
+            <ul class="{{ config.name }}__list">
+                {% for key, unit in data.shareUnits %}
+                    {% if unit.idShoppingListPermissionGroup is null %}
+                        {% include molecule('share-list-item', 'ShoppingListPage') with {
+                            class: 'spacing-y spacing-y--inner',
+                            data: {
+                                name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
+                                shareForm: data.shareForm[key]
+                            }
+                        } only %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 {% endblock %}
