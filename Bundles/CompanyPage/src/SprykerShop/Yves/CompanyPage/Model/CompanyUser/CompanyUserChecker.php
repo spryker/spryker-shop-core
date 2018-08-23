@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 class CompanyUserChecker implements CompanyUserCheckerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
      *
      * @return bool
      */
-    public function isCompanyUserHasBusinessUnit(CompanyUserTransfer $companyUserTransfer): bool
+    public function isCompanyUserHasBusinessUnit(?CompanyUserTransfer $companyUserTransfer = null): bool
     {
         return $companyUserTransfer && $companyUserTransfer->getCompanyBusinessUnit();
     }

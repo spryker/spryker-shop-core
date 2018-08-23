@@ -73,7 +73,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
                 ->createCompanyBusinessAddressSaver()
                 ->saveAddress($data);
 
-            if ($companyUnitAddressTransfer) {
+            if ($companyUnitAddressTransfer->getIdCompanyUnitAddress()) {
                 $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS, [
                     '%address%' => $companyUnitAddressTransfer->getAddress1(),
                 ]);

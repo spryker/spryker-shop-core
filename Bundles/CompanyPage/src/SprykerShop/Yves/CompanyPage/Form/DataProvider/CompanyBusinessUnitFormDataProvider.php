@@ -72,22 +72,18 @@ class CompanyBusinessUnitFormDataProvider
             return $this->getDefaultBusinessUnitData($companyUserTransfer);
         }
 
-        if ($idCompanyBusinessUnit) {
-            $companyBusinessUnitTransfer = $this->loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
+        $companyBusinessUnitTransfer = $this->loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
 
-            $addressCollection = $this->companyUnitAddressClient->getCompanyUnitAddressCollection(
-                $this->prepareCompanyUnitAddressCriteriaFilterTransfer(
-                    $companyBusinessUnitTransfer->getFkCompany(),
-                    $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
-                )
-            );
+        $addressCollection = $this->companyUnitAddressClient->getCompanyUnitAddressCollection(
+            $this->prepareCompanyUnitAddressCriteriaFilterTransfer(
+                $companyBusinessUnitTransfer->getFkCompany(),
+                $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+            )
+        );
 
-            $companyBusinessUnitTransfer->setAddressCollection($addressCollection);
+        $companyBusinessUnitTransfer->setAddressCollection($addressCollection);
 
-            return $companyBusinessUnitTransfer->modifiedToArray();
-        }
-
-        return [];
+        return $companyBusinessUnitTransfer->modifiedToArray();
     }
 
     /**
