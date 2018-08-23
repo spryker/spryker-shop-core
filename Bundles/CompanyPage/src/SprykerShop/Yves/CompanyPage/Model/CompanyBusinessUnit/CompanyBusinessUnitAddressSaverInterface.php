@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit;
 
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+
 interface CompanyBusinessUnitAddressSaverInterface
 {
     /**
@@ -14,5 +16,5 @@ interface CompanyBusinessUnitAddressSaverInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function saveAddress(array $data);
+    public function saveAddress(array $data): CompanyUnitAddressTransfer;
 }

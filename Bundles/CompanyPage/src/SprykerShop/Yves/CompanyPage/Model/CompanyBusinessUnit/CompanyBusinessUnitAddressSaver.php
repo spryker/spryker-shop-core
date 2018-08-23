@@ -38,10 +38,6 @@ class CompanyBusinessUnitAddressSaver implements CompanyBusinessUnitAddressSaver
         $addressTransfer = new CompanyUnitAddressTransfer();
         $addressTransfer->fromArray($data, true);
 
-        $companyBusinessUnitTransfers = $this->createCompanyBusinessUnitCollectionTransfer(41);
-        $addressTransfer
-            ->setCompanyBusinessUnits($companyBusinessUnitTransfers);
-
         $addressTransfer = $this->companyUnitAddressClient->createCompanyUnitAddress($addressTransfer);
 
         return $addressTransfer->getCompanyUnitAddressTransfer();

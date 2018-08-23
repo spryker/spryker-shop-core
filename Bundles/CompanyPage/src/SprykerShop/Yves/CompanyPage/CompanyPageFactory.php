@@ -173,7 +173,7 @@ class CompanyPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressReaderInterface
      */
-    public function createCompanyBusinessAddressReader(): CompanyBusinessUnitAddressReaderInterface
+    public function createCompanyBusinessUnitAddressReader(): CompanyBusinessUnitAddressReaderInterface
     {
         return new CompanyBusinessUnitAddressReader(
             $this->getCompanyUnitAddressClient()

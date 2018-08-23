@@ -49,7 +49,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function createCompanyUnitAddressTransfer(CompanyUserTransfer $companyUserTransfer): CompanyUnitAddressTransfer
+    protected function createCompanyUnitAddressTransfer(CompanyUserTransfer $companyUserTransfer): CompanyUnitAddressTransfer
     {
         $defaultBillingAddressId = $companyUserTransfer->getCompanyBusinessUnit()->getDefaultBillingAddress();
 
