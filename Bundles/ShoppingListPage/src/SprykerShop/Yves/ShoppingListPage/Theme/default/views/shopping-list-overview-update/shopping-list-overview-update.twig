@@ -6,20 +6,9 @@
     shoppingList: _view.shoppingList,
     shoppingListItemProducts: _view.shoppingListItemProducts,
     labels: {
-        addAllToCartLabel: 'customer.account.shopping_list.add_all_available_to_cart' | trans,
-        printShoppingList: 'customer.account.shopping_list.print_shopping_list' | trans,
-        productLabel: 'customer.account.shopping_list.product' | trans,
-        priceLabel: 'customer.account.shopping_list.price' | trans,
-        variantLabel: 'customer.account.shopping_list.overview.variant' | trans,
-        availabilityLabel: 'customer.account.shopping_list.availability' | trans,
-        productAvailableLabel: 'customer.account.shopping_list.available' | trans,
-        productNotAvailableLabel: 'customer.account.shopping_list.not_available' | trans,
-        shoppingListEmptyLabel: 'customer.account.shopping_list.empty' | trans,
-        quantityLabel: 'customer.account.shopping_list.quantity' | trans,
-        addItemToCartLabel: 'customer.account.shopping_list.add-to-cart' | trans,
-        removeItemFromShoppingListLabel: 'customer.account.shopping_list.remove' | trans,
-        actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
-        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
+
+
+
         removeAllItemsLabel: 'Remove all'
     }
 } %}
@@ -81,11 +70,11 @@
                         <table class="table table--expand">
                             <thead>
                                 <tr>
-                                    <th class="text-center" colspan="3">{{ data.labels.productLabel  }}</th>
-                                    <th class="text-center">{{ data.labels.priceLabel  }}</th>
-                                    <th class="text-center">{{ data.labels.quantityLabel }}</th>
-                                    <th class="text-center">{{ data.labels.availabilityLabel  }}</th>
-                                    <th class="text-center">{{ data.labels.actionsLabel }}</th>
+                                    <th class="text-center" colspan="3">{{ 'customer.account.shopping_list.product' | trans }}</th>
+                                    <th class="text-center">{{ 'customer.account.shopping_list.price' | trans }}</th>
+                                    <th class="text-center">{{ 'customer.account.shopping_list.quantity' | trans }}</th>
+                                    <th class="text-center">{{ 'customer.account.shopping_list.availability' | trans }}</th>
+                                    <th class="text-center">{{ 'customer.account.shopping_list.overview.actions' | trans }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -136,12 +125,12 @@
                                     </td>
                                     <td class="text-center">
                                         {% if isProductAvailable %}
-                                            {{ data.labels.productAvailableLabel }}
+                                            {{ 'customer.account.shopping_list.available' | trans }}
                                         {% else %}
                                             {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
                                                 {{ widget('ProductDiscontinuedWidgetPlugin', product.sku) }}
                                             {% else %}
-                                                {{ data.labels.productNotAvailableLabel }}
+                                                {{ 'customer.account.shopping_list.not_available' | trans }}
                                             {% endif %}
                                         {% endif %}
                                     </td>
@@ -149,7 +138,7 @@
                                         <a class="button button--alert" href="{{ path('shopping-list/remove-item', {
                                             idShoppingList: data.shoppingList.idShoppingList, idShoppingListItem: shoppingListItem.idShoppingListItem
                                         }) }}">
-                                            {{data.labels.removeItemFromShoppingListLabel}}
+                                            {{'customer.account.shopping_list.remove' | trans}}
                                         </a>
                                     </td>
                                 </tr>
@@ -170,14 +159,14 @@
                     {% else %}
                             <div class="form__field col col--sm-12 text-center">
                                 <hr />
-                                {{ data.labels.shoppingListEmptyLabel }}
+                                {{ 'customer.account.shopping_list.empty' | trans }}
                             </div>
                     {% endif %}
                 </div>
 
                 <div class="form__actions">
                     <div class="col col--sm-6 text-left">
-                        <a class="button button--alert" href="{{ path('shopping-list/delete/confirm', {idShoppingList: data.shoppingList.idShoppingList}) }}">{{ data.labels.deleteLabel }}</a>
+                        <a class="button button--alert" href="{{ path('shopping-list/delete/confirm', {idShoppingList: data.shoppingList.idShoppingList}) }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
                     </div>
                     <div class="col col--sm-6">
                         <a href="{{ path('shopping-list') }}" class="form__action button button--secondary button--hollow'">

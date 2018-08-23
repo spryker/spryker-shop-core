@@ -6,10 +6,7 @@
     idShoppingList: _view.idShoppingList,
     shoppingList: _view.shoppingList,
     sharedCompanyUsers: _view.shoppingList.sharedCompanyUsers,
-    sharedCompanyBusinessUnits: _view.shoppingList.sharedCompanyBusinessUnits,
-    labels: {
-        shareFormSubmit: 'customer.account.shopping_list.share.from.share' | trans,
-    }
+    sharedCompanyBusinessUnits: _view.shoppingList.sharedCompanyBusinessUnits
 } %}
 
 {% block breadcrumbs %}
@@ -79,7 +76,7 @@
 
             <div class="form__actions spacing-x">
                 <button type="submit" class="form__action button button--success" data-qa="submit-button">
-                    {{ data.labels.shareFormSubmit }}
+                    {{ 'customer.account.shopping_list.share.from.share' | trans }}
                 </button>
             </div>
         </div>

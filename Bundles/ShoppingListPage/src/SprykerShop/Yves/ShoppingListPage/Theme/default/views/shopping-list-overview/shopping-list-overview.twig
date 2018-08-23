@@ -18,9 +18,9 @@
             }
         } only %}
 
-        <br />
-        <hr/>
-        <br />
+        <div class="spacing-y">
+            <hr/>
+        </div>
 
         {% if data.shoppingListCollection.shoppingLists | length %}
             <form method="POST" action="{{ path('shopping-list/add-shopping-list-to-cart') }}">
