@@ -4,13 +4,13 @@ $business-unit-chart-link-color: $setting-color-darkest;
 @mixin business-unit-chart-item($name: '.business-unit-chart-item') {
     #{$name} {
         & & {
-            padding-left: 1.25rem;
+            padding-left: map-get($setting-spacing, 'big');
         }
 
         &__link {
             display: block;
-            padding: 0.45rem 0.6rem;
-            margin-bottom: 0.4rem;
+            padding: map-get($setting-spacing, 'default');
+            margin-bottom: map-get($setting-spacing, 'default');
             background: $business-unit-chart-link-bg;
             color: $business-unit-chart-link-color;
             border-radius: 4px;
