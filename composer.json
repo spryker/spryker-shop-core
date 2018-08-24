@@ -25,7 +25,7 @@
   },
   "replace": {
     "spryker-shop/availability-widget": "*",
-    "spryker/business-on-behalf-widget": "*",
+    "spryker-shop/business-on-behalf-widget": "*",
     "spryker-shop/calculation-page": "*",
     "spryker-shop/cart-page": "*",
     "spryker-shop/catalog-page": "*",

@@ -63,7 +63,7 @@ class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin impleme
 
             $productStorageData = $this->getFactory()
                 ->getProductStorageClient()
-                ->getProductAbstractStorageData($promotionItemTransfer->getIdProductAbstract(), $this->getLocale());
+                ->findProductAbstractStorageData($promotionItemTransfer->getIdProductAbstract(), $this->getLocale());
 
             if (!$productStorageData) {
                 continue;

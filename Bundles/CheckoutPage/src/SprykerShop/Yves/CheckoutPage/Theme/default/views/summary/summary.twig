@@ -71,7 +71,9 @@
                             price: item.sumPrice | money,
                             options: item.productOptions | default({}),
                             bundleItems: item.bundleItems | default([]),
-                            quantitySalesUnit: item.quantitySalesUnit
+                            quantitySalesUnit: item.quantitySalesUnit,
+                            amountSalesUnit: item.amountSalesUnit,
+                            amount: item.amount
                         },
                         embed: {
                             isLast: not loop.last,

@@ -1,6 +1,6 @@
 # CmsContentWidgetProductConnector Module
 
-{{ADD DESCRIPTION HERE}}
+Cms content widget product connector
 
 ## Installation
 
