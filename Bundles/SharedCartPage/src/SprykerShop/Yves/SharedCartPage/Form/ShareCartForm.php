@@ -19,7 +19,8 @@ class ShareCartForm extends AbstractType
     public const FORM_NAME = 'shareCartForm';
 
     public const FIELD_ID_QUOTE = 'idQuote';
-    public const FIELD_COMPANY_USERS = 'companyUsers';
+    public const FIELD_ID_COMPANY_USER = 'idCompanyUser';
+    public const FIELD_SHARE_DETAILS = 'shareDetails';
 
     public const OPTION_PERMISSION_GROUPS = 'OPTION_PERMISSION_GROUPS';
 
@@ -28,7 +29,7 @@ class ShareCartForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return self::FORM_NAME;
+        return static::FORM_NAME;
     }
 
     /**
@@ -38,7 +39,9 @@ class ShareCartForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(static::OPTION_PERMISSION_GROUPS);
+        $resolver->setRequired([
+            static::OPTION_PERMISSION_GROUPS,
+        ]);
         $resolver->setDefaults([
             'data_class' => ShareCartRequestTransfer::class,
         ]);
@@ -52,8 +55,9 @@ class ShareCartForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addQuoteIdField($builder);
-        $this->addCompanyUsersField($builder, $options);
+        $this->addIdQuoteField($builder);
+        $this->addIdCompanyUserField($builder);
+        $this->addShareDetailsField($builder, $options);
     }
 
     /**
@@ -61,9 +65,21 @@ class ShareCartForm extends AbstractType
      *
      * @return $this
      */
-    protected function addQuoteIdField(FormBuilderInterface $builder): self
+    protected function addIdQuoteField(FormBuilderInterface $builder): self
     {
-        $builder->add(static::FIELD_ID_QUOTE, HiddenType::class, []);
+        $builder->add(static::FIELD_ID_QUOTE, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdCompanyUserField(FormBuilderInterface $builder): self
+    {
+        $builder->add(static::FIELD_ID_COMPANY_USER, HiddenType::class);
 
         return $this;
     }
@@ -74,9 +90,9 @@ class ShareCartForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyUsersField(FormBuilderInterface $builder, array $options): self
+    protected function addShareDetailsField(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_COMPANY_USERS, CollectionType::class, [
+        $builder->add(static::FIELD_SHARE_DETAILS, CollectionType::class, [
             'entry_type' => ShareCartCompanyUserShareEditForm::class,
             'entry_options' => [
                 static::OPTION_PERMISSION_GROUPS => $options[static::OPTION_PERMISSION_GROUPS],

@@ -16,7 +16,7 @@ interface ShareCartFormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\ShareCartRequestTransfer
      */
-    public function getData($idQuote): ShareCartRequestTransfer;
+    public function getData(int $idQuote): ShareCartRequestTransfer;
 
     /**
      * @return array

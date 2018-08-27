@@ -29,10 +29,7 @@ class ShareCartCompanyUserShareEditForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired([
-            static::FIELD_ID_COMPANY_USER,
-            static::FIELD_QUOTE_PERMISSION_GROUP,
-        ]);
+        $resolver->setDefined(ShareCartForm::OPTION_PERMISSION_GROUPS);
         $resolver->setDefaults([
             'data_class' => ShareDetailTransfer::class,
         ]);
@@ -97,8 +94,7 @@ class ShareCartCompanyUserShareEditForm extends AbstractType
     protected function addQuotePermissionGroupField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_QUOTE_PERMISSION_GROUP, ChoiceType::class, [
-            'choices' => array_flip($options[ShareCartForm::OPTION_PERMISSION_GROUPS]),
-            'choices_as_values' => true,
+            'choices' => $options[ShareCartForm::OPTION_PERMISSION_GROUPS],
             'expanded' => false,
             'required' => true,
             'constraints' => [

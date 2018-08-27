@@ -7,10 +7,13 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Form\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCompanyUserClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCustomerClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToSharedCartClientInterface;
@@ -18,7 +21,7 @@ use SprykerShop\Yves\SharedCartPage\Form\ShareCartForm;
 
 class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
 {
-    protected const GLOSSARY_KEY_PERMISSIONS = 'shared_cart.form.select_permissions';
+    protected const GLOSSARY_KEY_PERMISSIONS = 'shared_cart.share_list.permissions.';
     protected const PERMISSION_NO_ACCESS = 'NO_ACCESS';
 
     /**
@@ -57,7 +60,6 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     public function getOptions(): array
     {
         return [
-            ShareCartForm::OPTION_CUSTOMERS => $this->getCustomerListData(),
             ShareCartForm::OPTION_PERMISSION_GROUPS => $this->getQuotePermissionGroups(),
         ];
     }
@@ -67,31 +69,85 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\ShareCartRequestTransfer
      */
-    public function getData($idQuote): ShareCartRequestTransfer
+    public function getData(int $idQuote): ShareCartRequestTransfer
     {
-        $shareCartRequestTransfer = new ShareCartRequestTransfer();
-        $shareCartRequestTransfer->setIdQuote($idQuote);
+        $customerTransfer = $this->customerClient->getCustomer();
+        $customerTransfer->requireCompanyUserTransfer();
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+
+        $formShareDetails = $this->getCompanyUsersShareDetails($idQuote);
+
+        $shareCartRequestTransfer = (new ShareCartRequestTransfer())
+            ->setIdQuote($idQuote)
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+            ->setShareDetails($formShareDetails);
 
         return $shareCartRequestTransfer;
     }
 
     /**
-     * @return array
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartRequestTransfer
      */
-    protected function getCustomerListData(): array
+    protected function updateShareDetails(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartRequestTransfer
     {
-        $customer = $this->customerClient->getCustomer();
-        $companyBusinessUnitTransfer = $customer
-            ->requireCompanyUserTransfer()->getCompanyUserTransfer()->getCompanyBusinessUnit();
+        $quoteResponseTransfer = $this->sharedCartClient->updateQuotePermissions($shareCartRequestTransfer);
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $shareCartRequestTransfer->setShareDetails(
+                $quoteResponseTransfer->getQuoteTransfer()->getShareDetails()
+            );
+        }
+
+        return $shareCartRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailTransfer
+     */
+    protected function createCompanyUserShareDetailTransfer(CompanyUserTransfer $companyUserTransfer, int $idQuote): ShareDetailTransfer
+    {
+        $companyUserTransfer->requireIdCompanyUser();
+        $companyUserTransfer->requireCustomer();
+
+        $customerTransfer = $companyUserTransfer->getCustomer();
+
+        $customerTransfer->requireFirstName();
+        $customerTransfer->requireLastName();
+
+        return (new ShareDetailTransfer())
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+            ->setIdQuoteCompanyUser($idQuote)
+            ->setCustomerName($customerTransfer->getLastName() . ' ' . $customerTransfer->getFirstName());
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \ArrayObject
+     */
+    protected function getCompanyUsersShareDetails(int $idQuote): ArrayObject
+    {
+        $currentCustomerTransfer = $this->customerClient->getCustomer();
+        $currentCustomerTransfer->requireCompanyUserTransfer();
+        $companyBusinessUnitTransfer = $currentCustomerTransfer->getCompanyUserTransfer()
+            ->getCompanyBusinessUnit();
+
         $businessUnitCompanyUserList = $this->getBusinessUnitCustomers($companyBusinessUnitTransfer);
-        $customerListData = [];
+
+        $customerListData = new ArrayObject();
         foreach ($businessUnitCompanyUserList as $companyUserTransfer) {
-            if ($customer->getIdCustomer() === $companyUserTransfer->getFkCustomer()) {
+            if ($currentCustomerTransfer->getIdCustomer() === $companyUserTransfer->getFkCustomer()) {
                 continue;
             }
-            $customerTransfer = $companyUserTransfer->getCustomer();
-            $customerListData[$companyUserTransfer->getIdCompanyUser()] =
-                $customerTransfer->getLastName() . ' ' . $customerTransfer->getFirstName();
+
+            $customerListData[$companyUserTransfer->getIdCompanyUser()] = $this->createCompanyUserShareDetailTransfer(
+                $companyUserTransfer,
+                $idQuote
+            );
         }
 
         return $customerListData;
@@ -128,10 +184,13 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
         if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
             return [];
         }
-        $quotePermissionGroupData = [];
+
+        $noAccessPermissionGroupName = static::GLOSSARY_KEY_PERMISSIONS . static::PERMISSION_NO_ACCESS;
+
+        $quotePermissionGroupData = [$noAccessPermissionGroupName => null];
         foreach ($quotePermissionGroupResponseTransfer->getQuotePermissionGroups() as $quotePermissionGroupTransfer) {
-            $quotePermissionGroupData[$quotePermissionGroupTransfer->getIdQuotePermissionGroup()]
-                = 'shared_cart.share_list.permissions.' . $quotePermissionGroupTransfer->getName();
+            $quotePermissionGroupKey = static::GLOSSARY_KEY_PERMISSIONS . $quotePermissionGroupTransfer->getName();
+            $quotePermissionGroupData[$quotePermissionGroupKey] = $quotePermissionGroupTransfer;
         }
 
         return $quotePermissionGroupData;
