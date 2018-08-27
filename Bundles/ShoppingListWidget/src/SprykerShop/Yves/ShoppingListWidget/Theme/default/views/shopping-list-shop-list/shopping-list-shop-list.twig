@@ -16,7 +16,7 @@
     </a>
 
     <ul class="menu menu--wide text-left shop-list-item__list">
-        {% if data.shoppingListCollection is not empty %}
+        {% if data.shoppingListCollection.shoppingLists | length %}
             {% for shoppingList in data.shoppingListCollection.shoppingLists %}
                 <li class="menu__item">
                     {% include molecule('shop-list-item', 'ShoppingListWidget') with {
@@ -26,6 +26,12 @@
                     } only %}
                 </li>
             {% endfor %}
+        {% else %}
+            <li class="menu__item">
+                <span class="no-items no-shopping-lists">
+                    {{ 'shopping_list.no_lists_created' | trans }}
+                </span>
+            </li>
         {% endif %}
         <li class="menu__item">
             <a href="{{ path('shopping-list') }}" class="button">
