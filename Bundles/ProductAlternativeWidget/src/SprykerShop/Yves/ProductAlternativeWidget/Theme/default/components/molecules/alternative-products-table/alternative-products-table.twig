@@ -18,12 +18,12 @@
     {% for item in data.products %}
         <tr class="{{ loop.index > data.maxShownItems ? 'js-product-alternative-' ~ idShoppingListItem ~ '__show-all-target is-hidden' : '' }}">
             <td class="text-center">
-                {% if item.images is defined and item.images is not empty %}
+                {% if item.images is defined and item.images is not empty and item.images.0.externalUrlSmall is not empty %}
                     {% include atom('thumbnail') with {
                         modifiers: ['small', 'min-size'],
                         attributes: {
                             alt: item.name | default,
-                            src: item.images.0.externalUrlSmall | default,
+                            src: item.images.0.externalUrlSmall,
                             title: item.name | default
                         }
                     } only %}
@@ -31,12 +31,18 @@
             </td>
             <td class="text-center">
                 <ul class="list spacing-y">
-                    <li class="list__item">
-                        <a href="{{ item.url }}">{{ item.name }}</a>
-                    </li>
-                    <li class="list__item">
-                        <small class="text-secondary">{{ item.sku }}</small>
-                    </li>
+                    {% if item.name is not empty %}
+                        <li class="list__item">
+                            <a href="{% if item.url is not empty %}{{ item.url }}{% endif %}">{{ item.name }}</a>
+                        </li>
+                    {% endif %}
+                    {% if item.sku is not empty %}}
+                        <li class="list__item">
+                            <small class="text-secondary">
+                                {{ item.sku }}
+                            </small>
+                        </li>
+                    {% endif %}
                     {% for attribute in item.superAttributesDefinition %}
                         {% if item.attributes[attribute] is defined %}
                             <li class="list__item">
