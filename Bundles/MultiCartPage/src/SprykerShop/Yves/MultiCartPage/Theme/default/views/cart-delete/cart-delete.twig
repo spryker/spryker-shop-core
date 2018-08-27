@@ -1,10 +1,10 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
-    cart: _view.cart,
-    cartName: _view.cart.name,
-    cartIdQuote: _view.cart.idQuote,
-    cartShareDetails: _view.cart.shareDetails
+    cart: _view.cart | default([]),
+    cartName: _view.cart.name | default,
+    cartIdQuote: _view.cart.idQuote | default,
+    cartShareDetails: _view.cart.shareDetails | default
 } %}
 
 {% block breadcrumbs %}
