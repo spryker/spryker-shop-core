@@ -1,6 +1,6 @@
 # DiscountPromotionWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Widget for discount promotions
 
 ## Installation
 

@@ -23,6 +23,8 @@ class ProductGroupWidgetToProductStorageClientBridge implements ProductGroupWidg
     }
 
     /**
+     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+     *
      * @param int $idProductAbstract
      * @param string $localeName
      *
@@ -43,5 +45,16 @@ class ProductGroupWidgetToProductStorageClientBridge implements ProductGroupWidg
     public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
     {
         return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+    {
+        return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
     }
 }
