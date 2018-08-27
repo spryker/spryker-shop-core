@@ -3,6 +3,7 @@
 {% define data = {
     role: _view.companyRole,
     users: _view.companyUserCollection,
+    currentCompanyUserId: _view.currentCompanyUser.idCompanyUser,
     permissions: _view.permissions,
 
     title: 'company.account.company_role.details' | trans,
@@ -38,6 +39,7 @@
             {% include molecule('user-table', 'CompanyPage') with {
                 data: {
                     users: data.users,
+                    currentCompanyUserId: data.currentCompanyUserId,
                     actions: {
                         update: false,
                         delete: false
