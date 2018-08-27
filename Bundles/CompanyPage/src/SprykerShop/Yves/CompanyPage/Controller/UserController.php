@@ -28,7 +28,9 @@ class UserController extends AbstractCompanyController
     public const COMPANY_USER_LIST_SORT_FIELD = 'id_company_user';
 
     protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
-    protected const ERROR_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.error';
+
+    protected const ERROR_MESSAGE_DELETE_COMPANY_USER = 'company.account.company_user.delete.error';
+    protected const ERROR_MESSAGE_DELETE_YOURSELF = 'company.account.company_user.delete.error.delete_yourself';
     protected const ERROR_MESSAGE_COMPANY_USER_ASSIGN_EMPTY_ROLES = 'company.account.company_user.assign_roles.empty_roles.error';
 
     /**
@@ -194,7 +196,7 @@ class UserController extends AbstractCompanyController
 
         $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
         if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_DELETE);
+            $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_YOURSELF);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
         }
@@ -209,7 +211,7 @@ class UserController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
         }
 
-        $this->addErrorMessage(static::ERROR_MESSAGE_COMPANY_USER_DELETE);
+        $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_COMPANY_USER);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
     }

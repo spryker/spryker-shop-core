@@ -20,11 +20,15 @@ class CompanyUserStatusController extends AbstractController
 {
     protected const ID_COMPANY_USER_PARAMETER = 'id';
 
-    protected const ERROR_MESSAGE_STATUS_ENABLE_COMPANY_USER = 'company.account.company_user.status.enable.error';
     protected const SUCCESS_MESSAGE_STATUS_ENABLE_COMPANY_USER = 'company.account.company_user.status.enable.success';
+    protected const SUCCESS_MESSAGE_STATUS_DISABLE_COMPANY_USER = 'company.account.company_user.status.disable.success';
+
+    protected const ERROR_MESSAGE_STATUS_ENABLE_COMPANY_USER = 'company.account.company_user.status.enable.error';
+    protected const ERROR_MESSAGE_STATUS_ENABLE_YOURSELF = 'company.account.company_user.status.enable.error.cannot_enable_yourself';
 
     protected const ERROR_MESSAGE_STATUS_DISABLE_COMPANY_USER = 'company.account.company_user.status.disable.error';
-    protected const SUCCESS_MESSAGE_STATUS_DISABLE_COMPANY_USER = 'company.account.company_user.status.disable.success';
+    protected const ERROR_MESSAGE_STATUS_DISABLE_YOURSELF = 'company.account.company_user.status.disable.error.cannot_disable_yourself';
+
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -49,7 +53,7 @@ class CompanyUserStatusController extends AbstractController
 
         $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
         if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_ENABLE_COMPANY_USER);
+            $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_ENABLE_YOURSELF);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
         }
@@ -92,7 +96,7 @@ class CompanyUserStatusController extends AbstractController
 
         $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
         if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_DISABLE_COMPANY_USER);
+            $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_DISABLE_YOURSELF);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
         }
