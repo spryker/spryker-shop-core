@@ -15,26 +15,10 @@
 {% endblock %}
 
 {% block title %}
-    {% if widgetExists('CartOperationsWidgetPlugin') %}
-        {% set cartOperation = widget('CartOperationsWidgetPlugin', data.cart) | trim %}
-
-        {% if cartOperation is not empty %}
-            {{ cartOperation | raw }}
-        {% else %}
-            {{ parent() }}
-        {% endif %}
-    {% else %}
-        {{ parent() }}
-    {% endif %}
+    {{ widgetBlock('CartOperationsWidgetPlugin', 'title', data.cart) }}
 {% endblock %}
 
 {% block content %}
-    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty and data.cart.items is not empty %}
-        <div class="box">
-            {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
-        </div>
-    {% endif %}
-
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
@@ -61,6 +45,8 @@
                 {% endfor %}
 
                 {{ widget('DiscountPromotionItemListWidgetPlugin', data.cart, data.request) }}
+
+                {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }}
             </div>
 
             <div class="col col--sm-12 col--xl-4">
@@ -72,6 +58,11 @@
 
                     {% if not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
                         {{ widget('DiscountVoucherFormWidgetPlugin') }}
+                        <hr />
+                    {% endif %}
+
+                    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty and data.cart.items is not empty %}
+                        {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
                         <hr />
                     {% endif %}
 
@@ -87,7 +78,6 @@
     {% endif %}
 
     {{ widget('UpSellingProductsWidgetPlugin', data.cart) }}
-    {{ widget('MultiCartListWidgetPlugin', data.cart) }}
 {% endblock %}
 
 {% block footer %}{% endblock %}
