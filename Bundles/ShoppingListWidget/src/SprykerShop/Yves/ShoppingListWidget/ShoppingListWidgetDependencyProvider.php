@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\ShoppingListWidget;
 
-use Spryker\Client\ShoppingListSession\ShoppingListSessionClient;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCustomerClientBridge;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientBridge;
+use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListSessionClientBridge;
 
 class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -69,7 +69,7 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
     protected function addShoppingListSessionClient(Container $container): Container
     {
         $container[static::CLIENT_SHOPPING_LIST_SESSION] = function (Container $container) {
-            return new ShoppingListSessionClient();
+            return new ShoppingListWidgetToShoppingListSessionClientBridge($container->getLocator()->shoppingListSession()->client());
         };
 
         return $container;

@@ -18,6 +18,8 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
 {
     /**
      * {@inheritDoc}
+     *
+     * @return void
      */
     public function initialize(): void
     {
@@ -26,6 +28,8 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
 
     /**
      * {@inheritDoc}
+     *
+     * @api
      */
     public static function getTemplate()
     {
@@ -34,6 +38,8 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
 
     /**
      * {@inheritDoc}
+     *
+     * @api
      */
     public static function getName()
     {
@@ -45,12 +51,6 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
      */
     protected function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
     {
-        $shoppingListCollection = new ShoppingListCollectionTransfer();
-
-        if (!$this->getFactory()->getCustomerClient()->isLoggedIn()) {
-            return $shoppingListCollection;
-        }
-
         return $this->getFactory()
             ->getShoppingListSessionClient()
             ->getCustomerShoppingListCollection();
