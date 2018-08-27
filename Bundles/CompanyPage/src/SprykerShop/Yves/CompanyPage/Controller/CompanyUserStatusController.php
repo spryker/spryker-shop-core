@@ -29,7 +29,6 @@ class CompanyUserStatusController extends AbstractController
     protected const ERROR_MESSAGE_STATUS_DISABLE_COMPANY_USER = 'company.account.company_user.status.disable.error';
     protected const ERROR_MESSAGE_STATUS_DISABLE_YOURSELF = 'company.account.company_user.status.disable.error.cannot_disable_yourself';
 
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
