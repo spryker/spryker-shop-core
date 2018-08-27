@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class ShoppingListPageToMultiCartClientBridge implements ShoppingListPageToMultiCartClientBridgeInterface
+class ShoppingListPageToMultiCartClientBridge implements ShoppingListPageToMultiCartClientInterface
 {
     /**
      * @var \Spryker\Client\MultiCart\MultiCartClientInterface

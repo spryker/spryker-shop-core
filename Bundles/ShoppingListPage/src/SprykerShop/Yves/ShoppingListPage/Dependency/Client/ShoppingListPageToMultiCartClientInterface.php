@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ShoppingListPageToMultiCartClientBridgeInterface
+interface ShoppingListPageToMultiCartClientInterface
 {
     /**
      * @param int $idQuote

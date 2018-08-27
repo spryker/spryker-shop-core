@@ -15,7 +15,7 @@ use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandlerInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
-use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientBridgeInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint;
@@ -219,9 +219,9 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientBridgeInterface
+     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientInterface
      */
-    public function getMultiCartClient(): ShoppingListPageToMultiCartClientBridgeInterface
+    public function getMultiCartClient(): ShoppingListPageToMultiCartClientInterface
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::CLIENT_MULTI_CART);
     }
