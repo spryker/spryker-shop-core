@@ -1,6 +1,6 @@
 # NewsletterWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Newsletter widget displays the subscription form and provide subscription functionality.
 
 ## Installation
 

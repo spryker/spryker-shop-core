@@ -1,6 +1,6 @@
 # NavigationWidget Module
 
-Newsletter widget displays the subscription form and provide subscription functionality.
+{{ADD DESCRIPTION HERE}}
 
 ## Installation
 
