@@ -16,33 +16,7 @@
     title: _view.shoppingListOverview.shoppingList.name,
     shoppingList: _view.shoppingListOverview.shoppingList,
     shoppingListCollection: _view.shoppingListOverview.shoppingLists,
-    shoppingListItems: _view.shoppingListItems,
-    labels: {
-        addAllToCartLabel: 'customer.account.shopping_list.add_all_available_to_cart' | trans,
-        printShoppingList: 'customer.account.shopping_list.print_shopping_list' | trans,
-        productLabel: 'customer.account.shopping_list.product' | trans,
-        priceLabel: 'customer.account.shopping_list.price' | trans,
-        variantLabel: 'customer.account.shopping_list.overview.variant' | trans,
-        availabilityLabel: 'customer.account.shopping_list.availability' | trans,
-        itemAvailableLabel: 'customer.account.shopping_list.available' | trans,
-        itemNotAvailableLabel: 'customer.account.shopping_list.not_available' | trans,
-        shoppingListEmptyLabel: 'customer.account.shopping_list.empty' | trans,
-        quantityLabel: 'customer.account.shopping_list.quantity' | trans,
-        addItemToCartLabel: 'customer.account.shopping_list.add-to-cart' | trans,
-        removeItemFromShoppingListLabel: 'customer.account.shopping_list.remove' | trans,
-        actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
-        editLabel: 'customer.account.shopping_list.overview.edit' | trans,
-        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
-        shareLabel: 'customer.account.shopping_list.overview.share' | trans,
-        addSelectedItemsToCartLabel: 'customer.account.shopping_list.add_selected_items_to_cart' | trans,
-        ownerLabel: 'customer.account.shopping_list.overview.owner' | trans,
-        fullAccessLabel: 'customer.account.shopping_list.permissions.FULL_ACCESS' | trans,
-        readOnlyLabel: 'customer.account.shopping_list.permissions.READ_ONLY' | trans,
-        accessLabel: 'customer.account.shopping_list.access' | trans,
-        sharedWithLabel: 'customer.account.shopping_list.overview.shared_with' | trans,
-        usersLabel: 'company.account.company_user' | trans,
-        businessUnitsLabel: 'company.account.business_unit' | trans,
-    }
+    shoppingListItems: _view.shoppingListItems
 } %}
 
 {% block customerNavigation %}
@@ -67,18 +41,7 @@
 
         {% include molecule('shopping-list-info', 'ShoppingListPage') with {
             data: {
-                shoppingList: data.shoppingList,
-                labels: {
-                    ownerLabel: data.labels.ownerLabel,
-                    accessLabel: data.labels.accessLabel,
-                    fullAccessLabel: data.labels.fullAccessLabel,
-                    readOnlyLabel: data.labels.readOnlyLabel,
-                    sharedWithLabel: data.labels.sharedWithLabel,
-                    usersLabel: data.labels.usersLabel,
-                    businessUnitsLabel: data.labels.businessUnitsLabel,
-                    usersLabel: data.labels.usersLabel,
-                    businessUnitsLabel: data.labels.businessUnitsLabel
-                }
+                shoppingList: data.shoppingList
             }
         } only %}
 
@@ -105,17 +68,7 @@
                         class: 'table table--expand',
                         data: {
                             shoppingList: data.shoppingList,
-                            shoppingListItems: data.shoppingListItems,
-                            labels: {
-                                productLabel: data.labels.productLabel,
-                                priceLabel: data.labels.priceLabel,
-                                quantityLabel: data.labels.quantityLabel,
-                                availabilityLabel: data.labels.availabilityLabel,
-                                actionsLabel: data.labels.actionsLabel,
-                                itemAvailableLabel: data.labels.itemAvailableLabel,
-                                itemNotAvailableLabel: data.labels.itemNotAvailableLabel,
-                                addItemToCartLabel: data.labels.addItemToCartLabel
-                            }
+                            shoppingListItems: data.shoppingListItems
                         }
                     } only %}
                 </div>

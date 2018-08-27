@@ -22,7 +22,7 @@
                     {% include atom('thumbnail') with {
                         modifiers: ['small', 'min-size'],
                         attributes: {
-                            alt: item.name | default(''),
+                            alt: item.name | default,
                             src: item.images.0.externalUrlSmall | default,
                             title: item.name | default
                         }
