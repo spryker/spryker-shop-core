@@ -19,10 +19,20 @@ interface ProductReplacementForWidgetToProductStorageClientInterface
     public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
 
     /**
+     * @deprecated Use getProductConcreteStorageData($idProductConcrete, $localeName)
+     *
      * @param int $idProductConcrete
      * @param string $localeName
      *
      * @return array
      */
     public function getProductConcreteStorageData($idProductConcrete, $localeName);
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
 }
