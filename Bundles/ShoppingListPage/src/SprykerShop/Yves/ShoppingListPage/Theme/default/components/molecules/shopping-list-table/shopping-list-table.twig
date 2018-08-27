@@ -7,19 +7,18 @@
 
 {% define data = {
     shoppingList: required,
-    shoppingListItems: required,
-    labels: required
+    shoppingListItems: required
 } %}
 
 {% block body %}
     <thead>
         <tr>
             <th></th>
-            <th class="text-center" colspan="2">{{ data.labels.productLabel }}</th>
-            <th class="text-center">{{ data.labels.priceLabel  }}</th>
-            <th class="text-center">{{ data.labels.quantityLabel }}</th>
-            <th class="text-center">{{ data.labels.availabilityLabel  }}</th>
-            <th class="text-center">{{ data.labels.actionsLabel }}</th>
+            <th class="text-center" colspan="2">{{ 'customer.account.shopping_list.product' | trans }}</th>
+            <th class="text-center">{{ 'customer.account.shopping_list.price' | trans }}</th>
+            <th class="text-center">{{ 'customer.account.shopping_list.quantity' | trans }}</th>
+            <th class="text-center">{{ 'customer.account.shopping_list.availability' | trans }}</th>
+            <th class="text-center">{{ 'customer.account.shopping_list.overview.actions' | trans }}</th>
         </tr>
     </thead>
     <tbody class="{{ config.name }}__body">
@@ -46,7 +45,7 @@
                 {% endif %}
             </td>
             <td class="text-center">
-                <ul class="list spacing-y"">
+                <ul class="list spacing-y">
                     <li class="list__item">
                         <a href="{{ item.url }}">{{ item.name }}</a>
                     </li>
@@ -79,19 +78,19 @@
             </td>
             <td class="text-center">
                 {% if isItemAvailable %}
-                    {{ data.labels.itemAvailableLabel }}
+                    {{ 'customer.account.shopping_list.available' | trans }}
                 {% else %}
                     {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
                         {{ widget('ProductDiscontinuedWidgetPlugin', item.sku) }}
                     {% else %}
-                        {{ data.labels.itemNotAvailableLabel }}
+                        {{ 'customer.account.shopping_list.not_available' | trans }}
                     {% endif %}
                 {% endif %}
             </td>
             <td>
                 {% if isItemAvailable %}
                     <button type="submit" name="add-item" class="button button--success" value="{{ item.idShoppingListItem }}" {{qa('submit-button')}}>
-                        {{data.labels.addItemToCartLabel}}
+                        {{'customer.account.shopping_list.add-to-cart' | trans}}
                     </button>
                 {% endif %}
             </td>

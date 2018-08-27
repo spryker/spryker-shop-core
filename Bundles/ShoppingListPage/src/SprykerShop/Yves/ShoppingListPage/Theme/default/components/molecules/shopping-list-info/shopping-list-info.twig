@@ -9,29 +9,34 @@
 } %}
 
 {% block body %}
+
+    {% set hasWritePermission = can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+
     <div class="grid">
         <div class="col col--sm-12 col--md-6 col--lg-4">
             <b>{{ 'customer.account.shopping_list.overview.owner' | trans }}</b>: {{ data.shoppingList.owner }}
         </div>
         <div class="col col--sm-12 col--md-6 col--lg-4">
-            <b>{{ data.labels.accessLabel }}</b>:
-            {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
-                <span class="{{ config.name }}__access-label {{ config.name }}__access-label--full">{{ data.labels.fullAccessLabel }}</span>
-            {% else %}
-                <span class="{{ config.name }}__access-label {{ config.name }}__access-label--read">{{ data.labels.readOnlyLabel }}</span>
-            {% endif %}
+            <b>{{ 'customer.account.shopping_list.access' | trans }}</b>:
+
+            {% include molecule('shopping-list-permission', 'ShoppingListPage') with {
+                data: {
+                    hasWritePermission: hasWritePermission
+                }
+            } only %}
+
         </div>
         <div class="col col--sm-12 col--md-6 col--lg-4">
-            <b>{{ data.labels.sharedWithLabel }}</b>:
+            <b>{{ 'customer.account.shopping_list.overview.shared_with' | trans }}</b>:
             {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
                 <a href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">
-                    {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ data.labels.usersLabel }},
-                    {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ data.labels.businessUnitsLabel }}
+                    {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ 'company.account.company_user' | trans }},
+                    {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ 'company.account.business_unit' | trans }}
                 </a>
             {% else %}
                 <span>
-                    {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ data.labels.usersLabel }},
-                    {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ data.labels.businessUnitsLabel }}
+                    {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ 'company.account.company_user' | trans }},
+                    {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ 'company.account.business_unit' | trans }}
                 </span>
             {% endif %}
         </div>

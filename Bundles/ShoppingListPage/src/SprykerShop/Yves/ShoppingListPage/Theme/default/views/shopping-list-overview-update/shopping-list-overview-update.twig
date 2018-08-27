@@ -4,13 +4,7 @@
     title: _view.shoppingList.name,
     form: _view.shoppingListForm,
     shoppingList: _view.shoppingList,
-    shoppingListItemProducts: _view.shoppingListItemProducts,
-    labels: {
-
-
-
-        removeAllItemsLabel: 'Remove all'
-    }
+    shoppingListItemProducts: _view.shoppingListItemProducts
 } %}
 
 {% block breadcrumbs %}
@@ -150,7 +144,7 @@
                                     <td colspan="6"></td>
                                     <td>
                                         <a class="" href="{{ path('shopping-list/clear', {idShoppingList: data.shoppingList.idShoppingList}) }}">
-                                            {{ data.labels.removeAllItemsLabel }}
+                                            {{ 'shopping_list.remove_all_items' | trans }}
                                         </a>
                                     </td>
                                 </tr>
