@@ -20,4 +20,12 @@ class ShopApplicationConfig extends AbstractBundleConfig
             'core_form_div_layout.html.twig',
         ];
     }
+
+    /**
+     * @return bool
+     */
+    public function useViewParametersToRenderTwig(): bool
+    {
+        return false;
+    }
 }

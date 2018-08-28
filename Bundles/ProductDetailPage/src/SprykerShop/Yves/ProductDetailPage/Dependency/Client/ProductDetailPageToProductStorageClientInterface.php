@@ -17,4 +17,11 @@ interface ProductDetailPageToProductStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductAbstractRestricted(int $idProductAbstract): bool;
 }

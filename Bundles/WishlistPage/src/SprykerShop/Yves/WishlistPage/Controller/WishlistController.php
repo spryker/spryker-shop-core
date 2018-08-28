@@ -44,7 +44,11 @@ class WishlistController extends AbstractController
     {
         $viewData = $this->executeIndexAction($wishlistName, $request);
 
-        return $this->view($viewData, [], '@WishlistPage/views/wishlist-detail/wishlist-detail.twig');
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getWishlistViewWidgetPlugins(),
+            '@WishlistPage/views/wishlist-detail/wishlist-detail.twig'
+        );
     }
 
     /**
@@ -307,9 +311,13 @@ class WishlistController extends AbstractController
     {
         $productConcreteStorageData = $this->getFactory()
             ->getProductStorageClient()
-            ->getProductConcreteStorageData($wishlistItemTransfer->getIdProduct(), $this->getLocale());
+            ->findProductConcreteStorageData($wishlistItemTransfer->getIdProduct(), $this->getLocale());
 
         $productViewTransfer = new ProductViewTransfer();
+        if ($productConcreteStorageData === null) {
+            return $productViewTransfer;
+        }
+
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         foreach ($this->getFactory()->getWishlistItemExpanderPlugins() as $productViewExpanderPlugin) {

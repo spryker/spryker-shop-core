@@ -1,0 +1,5 @@
+{
+  "include-dev": {
+    "MoneyWidget": "MoneyWidget provides moneySymbol twig method for twig files."
+  }
+}

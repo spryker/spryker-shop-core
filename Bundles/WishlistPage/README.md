@@ -1,6 +1,6 @@
 # WishlistPage Module
 
-Provides wishlist page which allows customers to add products to their wishlist so they can check the wishlist and add products to the cart later.
+The module provides wishlist management functionality.
 
 ## Installation
 
