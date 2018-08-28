@@ -226,7 +226,6 @@ class MultiCartController extends AbstractController
         ];
     }
 
-
     /**
      * @param int $idQuote
      *
