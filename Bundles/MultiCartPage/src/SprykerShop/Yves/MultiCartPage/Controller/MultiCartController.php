@@ -139,11 +139,16 @@ class MultiCartController extends AbstractController
             ->getMultiCartClient()
             ->findQuoteById($idQuote);
 
-        $this->getFactory()
+        $idNewQuote = $this->getFactory()
             ->getMultiCartClient()
-            ->duplicateQuote($quoteTransfer);
+            ->duplicateQuote($quoteTransfer)
+            ->getQuoteTransfer()
+            ->getIdQuote();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(
+            MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE,
+            [MultiCartPageControllerProvider::PARAM_ID_QUOTE => $idNewQuote]
+        );
     }
 
     /**
@@ -194,6 +199,33 @@ class MultiCartController extends AbstractController
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
+
+    /**
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function indexAction()
+    {
+        $response = $this->executeIndexAction();
+
+        return $this->view(
+            $response,
+            $this->getFactory()->getMultiCartListWidgetPlugins(),
+            '@MultiCartPage/views/cart/cart.twig'
+        );
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeIndexAction(): array
+    {
+        $quoteCollectionTransfer = $this->getFactory()->getMultiCartClient()->getQuoteCollection();
+
+        return [
+            'quoteCollection' => $quoteCollectionTransfer->getQuotes(),
+        ];
+    }
+
 
     /**
      * @param int $idQuote

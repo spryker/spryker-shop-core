@@ -6,9 +6,20 @@
     isDeleteCartAllowed: _widget.isDeleteCartAllowed
 } %}
 
+{% block actions %}
+    <li class="menu__item">
+        <a href="{{ path('multi-cart/clear', {idQuote: _widget.cart.idQuote}) }}" class="button clear">
+            {{ "multi_cart_widget.cart.action.clear" | trans }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block title %}
+    <h3>{{ _widget.cart.name }}</h3>
+{% endblock %}
+
 {% block body %}
     {% if data.isMultiCartAllowed is not empty %}
-        <h3>{{ data.cart.name }}</h3>
         {% if widgetExists('SharedCartOperationsWidgetPlugin') %}
             {{ widget('SharedCartOperationsWidgetPlugin', data.cart) }}
         {% else %}

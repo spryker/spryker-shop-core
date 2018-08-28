@@ -1,9 +1,11 @@
-{% extends template('page-layout-customer', 'CustomerPage') %}
+{% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
 
 {% define data = {
-    form: _view.quoteForm,
-    formAction: url('multi-cart/create'),
-    title: 'multi_cart.form.create_cart' | trans,
+    form: _view.cartToShoppingListForm,
+    cart: _view.cart,
+
+    title: 'customer.account.shopping_list.create_from_cart.title' | trans,
+    activePage: 'shoppingList'
 } %}
 
 {% block breadcrumbs %}
@@ -15,32 +17,27 @@
                     url: url('customer/overview'),
                 },
                 {
-                    label: 'page.multi_cart.shopping_cart.list.title' | trans,
-                    url: url('multi-cart'),
-                },
-                {
-                    label: 'page.multi_cart.shopping_cart.create.title' | trans,
+                    label: 'customer.account.shopping_list.shopping_cart' | trans,
                 }
             ]
         }
     } only %}
 {% endblock %}
 
-{% block content %}
+{% block customerContent %}
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'page.multi_cart.shopping_cart.create.title' | trans,
+                title: 'customer.account.shopping_list.create_from_cart.form_title' | trans({
+                    '%cart_name%' : data.cart.name,
+                }),
                 form: data.form,
-                options: {
-                    action: data.formAction
-                },
                 submit: {
                     enable: true
                 },
                 cancel: {
                     enable: true,
-                    url: url('cart'),
+                    url: url('shopping-list'),
                     text: 'general.back.button' | trans
                 }
             }

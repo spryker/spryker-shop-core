@@ -1,0 +1,46 @@
+{% extends template('page-layout-multi-cart', 'MultiCartPage') %}
+
+{% define data = {
+    quotes: _view.quoteCollection,
+
+    title: 'page.multi_cart.shopping_cart.list.title' | trans,
+    activePage: 'multiCart'
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'page.multi_cart.shopping_cart.list.title' | trans,
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% block customerContent %}
+    <div class="box text-right">
+        <a class="button" href="{{ url('multi-cart/create') }}">{{ 'page.multi_cart.shopping_cart.list.create_link' | trans }}</a>
+    </div>
+
+    {% if data.quotes is not empty %}
+        <div class="box">
+            {% include molecule('quote-table', 'MultiCartPage') with {
+                data: {
+                    quotes: data.quotes,
+                    actions: {
+                        update: can('WriteSharedCartPermissionPlugin') ? true : false,
+                        delete: can('WriteSharedCartPermissionPlugin') ? true : false,
+                        duplicate: true,
+                        toShoppingList: true,
+                    }
+                }
+            } only %}
+        </div>
+    {% endif %}
+{% endblock %}
