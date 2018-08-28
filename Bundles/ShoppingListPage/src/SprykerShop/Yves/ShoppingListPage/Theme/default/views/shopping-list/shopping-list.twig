@@ -31,10 +31,10 @@
             </div>
             <div class="col">
                 {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
-                    <a class="button button--success" href="{{ url('shopping-list/update', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.editLabel }}</a>
-                    <a class="button button--success" href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.shareLabel }}</a>
+                    <a class="button button--success" href="{{ url('shopping-list/update', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ 'customer.account.shopping_list.overview.edit' | trans }}</a>
+                    <a class="button button--success" href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ 'customer.account.shopping_list.overview.share' | trans }}</a>
                 {% endif %}
-                <a class="button button--success" href="{{ path('shopping-list/print', {idShoppingList: data.shoppingList.idShoppingList}) }}" target="_blank">{{data.labels.printShoppingList}}</a>
+                <a class="button button--success" href="{{ path('shopping-list/print', {idShoppingList: data.shoppingList.idShoppingList}) }}" target="_blank">{{ 'customer.account.shopping_list.print_shopping_list' | trans }}</a>
             </div>
         </div>
         <hr>
@@ -51,12 +51,12 @@
                 <div class="grid grid--justify spacing-y spacing-y--inner">
                     <div class="col">
                         <button type="submit" class="button button--success" {{qa('submit-button')}}>
-                            {{ data.labels.addSelectedItemsToCartLabel }}
+                            {{ 'customer.account.shopping_list.add_selected_items_to_cart' | trans }}
                         </button>
                     </div>
                     <div class="col">
                         <button type="submit" class="button button--success" name="add-all-available" value="1" {{qa('submit-button')}}>
-                            {{ data.labels.addAllToCartLabel }}
+                            {{ 'customer.account.shopping_list.add_all_available_to_cart' | trans }}
                         </button>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                 </div>
             </form>
         {% else %}
-            {{ data.labels.shoppingListEmptyLabel }}
+            {{ 'customer.account.shopping_list.empty' | trans }}
         {% endif %}
     </div>
 {% endblock %}

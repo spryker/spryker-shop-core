@@ -19,6 +19,6 @@
     <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/print', { idShoppingList: data.idShoppingList }) }}" target="_blank">{{ 'customer.account.shopping_list.overview.print' | trans }}</a>
 
     {% if data.hasWritePermission %}
-        <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/delete', { idShoppingList: data.idShoppingList }) }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
+        <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/delete/confirm', { idShoppingList: data.idShoppingList }) }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
     {% endif %}
 {% endblock %}

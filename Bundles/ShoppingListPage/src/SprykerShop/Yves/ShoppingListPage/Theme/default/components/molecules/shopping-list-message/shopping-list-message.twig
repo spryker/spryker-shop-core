@@ -26,7 +26,7 @@
         {{ 'customer.account.shopping_list.delete.you_are_trying_to_delete_shopping_list' | trans({
             '%link%': url('shopping-list/details', {'idShoppingList': data.idShoppingList}),
             '%name%': data.title
-        }) | raw}}
+        }) | raw }}
     </p>
     {% if data.sharedCompanyUsers.count or data.sharedCompanyBusinessUnits.count %}
         <p class="spacing-y spacing-y--small">
@@ -59,7 +59,7 @@
         </p>
     {% endif %}
     <div class="{{ config.name }}__actions">
-        <a href="{{ data.backUrl }}" class="button button--hollow">{{ 'general.back.button' | trans }}</a>
+        <a href="{{ data.backUrl }}" class="button button--hollow">{{ 'general.cancel.button' | trans }}</a>
         <a href="{{ url('shopping-list/delete', {'idShoppingList': data.idShoppingList})}}" class="button button--alert spacing-left">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
     </div>
 {% endblock %}
