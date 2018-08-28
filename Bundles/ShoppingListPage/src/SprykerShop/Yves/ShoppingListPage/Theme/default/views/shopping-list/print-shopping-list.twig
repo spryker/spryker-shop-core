@@ -11,6 +11,7 @@
         productSku: 'customer.account.print_shopping_list.table.product_sku' | trans,
         productName: 'customer.account.print_shopping_list.table.product_name' | trans,
         defaultPrice: 'customer.account.print_shopping_list.table.default_price' | trans,
+        note: 'customer.account.print_shopping_list.table.note' | trans,
     }
 } %}
 <head>
@@ -50,6 +51,9 @@
         <th>{{ data.labels.productSku }}</th>
         <th>{{ data.labels.productName }}</th>
         <th>{{ data.labels.defaultPrice }}</th>
+        {% if widgetExists('ShoppingListItemNoteWidgetPlugin') %}
+            <th>{{ data.labels.note }}</th>
+        {% endif %}
     </tr>
     </thead>
     <tbody>
@@ -65,6 +69,9 @@
                 {{ item.prices.DEFAULT | money }}
             {% endif %}
         </td>
+        {% if widgetExists('ShoppingListItemNoteWidgetPlugin') %}
+            <td>{{ item.shoppingListItem.shoppingListItemNote.note }}</td>
+        {% endif %}
     </tr>
     {% endfor %}
     </tbody>
