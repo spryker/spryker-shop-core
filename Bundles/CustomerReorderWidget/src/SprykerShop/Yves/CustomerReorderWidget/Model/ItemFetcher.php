@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
@@ -66,7 +67,7 @@ class ItemFetcher implements ItemFetcherInterface
         $items = $this->productBundleClient
             ->getItemsWithBundlesItems($quoteTransfer);
 
-        return $this->dropIds($items);
+        return $this->cleanUpItems($items);
     }
 
     /**
@@ -74,20 +75,43 @@ class ItemFetcher implements ItemFetcherInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function dropIds(array $items): array
+    protected function cleanUpItems(array $items): array
     {
         $cleanItems = [];
+
         foreach ($items as $item) {
             $idSaleOrderItem = $item->getIdSalesOrderItem();
             $item->setIdSalesOrderItem(null);
+            $item->setIsOrdered(false);
+            $cleanProductOptions = $this->cleanUpProductOptions($item->getProductOptions());
+            $item->setProductOptions($cleanProductOptions);
+
             $cleanItems[$idSaleOrderItem] = $item;
         }
+
         return $cleanItems;
     }
 
     /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptions
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[]
+     */
+    protected function cleanUpProductOptions(ArrayObject $productOptions): ArrayObject
+    {
+        $cleanProductOptions = [];
+
+        foreach ($productOptions as $productOption) {
+            $productOption->setIsOrdered(false);
+            $cleanProductOptions[] = $productOption;
+        }
+
+        return new ArrayObject($cleanProductOptions);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $idOrderItems
+     * @param int[] $idOrderItems
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */

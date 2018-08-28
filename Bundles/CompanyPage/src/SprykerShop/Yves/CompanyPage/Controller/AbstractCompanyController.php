@@ -26,7 +26,7 @@ abstract class AbstractCompanyController extends AbstractController
     public const DEFAULT_PAGE = 1;
 
     /**
-     * @deprecated Behaviour is implemented by CompanyUserRestrictionHandlerPlugin
+     * @deprecated Behavior is implemented by CompanyUserRestrictionHandlerPlugin
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *

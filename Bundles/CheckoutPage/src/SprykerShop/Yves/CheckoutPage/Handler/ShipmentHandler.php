@@ -116,11 +116,13 @@ class ShipmentHandler implements ShipmentHandlerInterface
     {
         if ($priceMode === $this->priceClient->getNetPriceModeIdentifier()) {
             $shipmentExpenseTransfer->setUnitGrossPrice(0);
+            $shipmentExpenseTransfer->setSumGrossPrice(0);
             $shipmentExpenseTransfer->setUnitNetPrice($price);
             return;
         }
 
         $shipmentExpenseTransfer->setUnitNetPrice(0);
+        $shipmentExpenseTransfer->setSumNetPrice(0);
         $shipmentExpenseTransfer->setUnitGrossPrice($price);
     }
 

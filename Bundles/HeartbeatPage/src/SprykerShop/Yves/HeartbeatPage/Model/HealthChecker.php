@@ -18,7 +18,7 @@ class HealthChecker
     protected $healthReport;
 
     /**
-     * @var \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface[]
+     * @var \SprykerShop\Yves\HeartbeatPage\Model\HealthIndicator\AbstractHealthIndicator[]
      */
     protected $healthIndicator;
 
