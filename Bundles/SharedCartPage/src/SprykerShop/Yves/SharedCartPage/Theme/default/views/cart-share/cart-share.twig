@@ -1,26 +1,57 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
+    companyUserNames: _view.companyUserNames | default([]),
     form: _view.sharedCartForm,
     title: 'shared_cart.form.share_cart' | trans,
 } %}
 
 {% block content %}
+    {{ form_start(data.form) }}
+
     <div class="box">
-        {% include molecule('form') with {
-            data: {
-                title: 'shared_cart.form.share_cart' | trans,
-                form: data.form,
-                submit: {
-                    enable: true,
-                    text: 'shared_cart.form.share_button' | trans
-                },
-                cancel: {
-                    enable: true,
-                    url: url('cart'),
-                    text: 'general.back.button' | trans
-                }
-            }
-        } only %}
+        {% set formShareDetailsValues = data.form.vars.value.shareDetails.getArrayCopy() %}
+
+        {% for key, shareDetail in data.form.shareDetails %}
+            {% if formShareDetailsValues[key].quotePermissionGroup is not null %}
+                <div>
+                    <div class="col-md-6">
+                        <label class="label label-info">{{ data.companyUserNames[key] }}</label>
+                        {{ form_errors(shareDetail) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(shareDetail) }}
+                    </div>
+                </div>
+                <br/>
+            {% endif %}
+        {% endfor %}
     </div>
+
+    <div class="box">
+        {% set formShareDetailsValues = data.form.vars.value.shareDetails.getArrayCopy() %}
+
+        {% for key, shareDetail in data.form.shareDetails %}
+            {% if formShareDetailsValues[key].quotePermissionGroup is null %}
+                <div>
+                    <div class="col-md-6">
+                        <label class="label label-info">{{ data.companyUserNames[key] }}</label>
+                        {{ form_errors(shareDetail) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(shareDetail) }}
+                    </div>
+                </div>
+                <br/>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="box">
+        <button type="submit" class="button button--success float-right">
+            {{ 'shared_cart.form.save_button' | trans }}
+        </button>
+    </div>
+
+    {{ form_end(data.form) }}
 {% endblock %}

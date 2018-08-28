@@ -7,14 +7,9 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Form\DataProvider;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
-use Generated\Shared\Transfer\ShareDetailTransfer;
-use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCompanyUserClientInterface;
+use SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinderInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCustomerClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToSharedCartClientInterface;
 use SprykerShop\Yves\SharedCartPage\Form\ShareCartForm;
@@ -30,28 +25,28 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     protected $customerClient;
 
     /**
-     * @var \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCompanyUserClientInterface
-     */
-    protected $companyUserClient;
-
-    /**
      * @var \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToSharedCartClientInterface
      */
     protected $sharedCartClient;
 
     /**
+     * @var \SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinderInterface
+     */
+    protected $companyUserFinder;
+
+    /**
      * @param \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCustomerClientInterface $customerClient
-     * @param \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCompanyUserClientInterface $companyUserClient
      * @param \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToSharedCartClientInterface $sharedCartClient
+     * @param \SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinderInterface $companyUserFinder
      */
     public function __construct(
         SharedCartPageToCustomerClientInterface $customerClient,
-        SharedCartPageToCompanyUserClientInterface $companyUserClient,
-        SharedCartPageToSharedCartClientInterface $sharedCartClient
+        SharedCartPageToSharedCartClientInterface $sharedCartClient,
+        CompanyUserFinderInterface $companyUserFinder
     ) {
         $this->customerClient = $customerClient;
-        $this->companyUserClient = $companyUserClient;
         $this->sharedCartClient = $sharedCartClient;
+        $this->companyUserFinder = $companyUserFinder;
     }
 
     /**
@@ -75,7 +70,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
         $customerTransfer->requireCompanyUserTransfer();
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
 
-        $formShareDetails = $this->getCompanyUsersShareDetails($idQuote);
+        $formShareDetails = $this->companyUserFinder->getCompanyUsersShareDetails($idQuote);
 
         $shareCartRequestTransfer = (new ShareCartRequestTransfer())
             ->setIdQuote($idQuote)
@@ -83,95 +78,6 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
             ->setShareDetails($formShareDetails);
 
         return $shareCartRequestTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShareCartRequestTransfer
-     */
-    protected function updateShareDetails(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartRequestTransfer
-    {
-        $quoteResponseTransfer = $this->sharedCartClient->updateQuotePermissions($shareCartRequestTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $shareCartRequestTransfer->setShareDetails(
-                $quoteResponseTransfer->getQuoteTransfer()->getShareDetails()
-            );
-        }
-
-        return $shareCartRequestTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param int $idQuote
-     *
-     * @return \Generated\Shared\Transfer\ShareDetailTransfer
-     */
-    protected function createCompanyUserShareDetailTransfer(CompanyUserTransfer $companyUserTransfer, int $idQuote): ShareDetailTransfer
-    {
-        $companyUserTransfer->requireIdCompanyUser();
-        $companyUserTransfer->requireCustomer();
-
-        $customerTransfer = $companyUserTransfer->getCustomer();
-
-        $customerTransfer->requireFirstName();
-        $customerTransfer->requireLastName();
-
-        return (new ShareDetailTransfer())
-            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-            ->setIdQuoteCompanyUser($idQuote)
-            ->setCustomerName($customerTransfer->getLastName() . ' ' . $customerTransfer->getFirstName());
-    }
-
-    /**
-     * @param int $idQuote
-     *
-     * @return \ArrayObject
-     */
-    protected function getCompanyUsersShareDetails(int $idQuote): ArrayObject
-    {
-        $currentCustomerTransfer = $this->customerClient->getCustomer();
-        $currentCustomerTransfer->requireCompanyUserTransfer();
-        $companyBusinessUnitTransfer = $currentCustomerTransfer->getCompanyUserTransfer()
-            ->getCompanyBusinessUnit();
-
-        $businessUnitCompanyUserList = $this->getBusinessUnitCustomers($companyBusinessUnitTransfer);
-
-        $customerListData = new ArrayObject();
-        foreach ($businessUnitCompanyUserList as $companyUserTransfer) {
-            if ($currentCustomerTransfer->getIdCustomer() === $companyUserTransfer->getFkCustomer()) {
-                continue;
-            }
-
-            $customerListData[$companyUserTransfer->getIdCompanyUser()] = $this->createCompanyUserShareDetailTransfer(
-                $companyUserTransfer,
-                $idQuote
-            );
-        }
-
-        return $customerListData;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
-     */
-    protected function getBusinessUnitCustomers(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): array
-    {
-        $companyUserCriteriaFilterTransfer = new CompanyUserCriteriaFilterTransfer();
-        $companyUserCriteriaFilterTransfer->setIdCompany($companyBusinessUnitTransfer->getFkCompany());
-        $companyUserCollectionTransfer = $this->companyUserClient->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
-
-        $businessUnitCompanyUserList = [];
-        foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
-            if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit() === $companyUserTransfer->getFkCompanyBusinessUnit()) {
-                $businessUnitCompanyUserList[] = $companyUserTransfer;
-            }
-        }
-
-        return $businessUnitCompanyUserList;
     }
 
     /**

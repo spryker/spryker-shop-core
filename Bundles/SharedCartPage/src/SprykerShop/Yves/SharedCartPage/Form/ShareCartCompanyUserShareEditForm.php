@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ShareCartCompanyUserShareEditForm extends AbstractType
 {
@@ -97,9 +96,6 @@ class ShareCartCompanyUserShareEditForm extends AbstractType
             'choices' => $options[ShareCartForm::OPTION_PERMISSION_GROUPS],
             'expanded' => false,
             'required' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
             'label' => 'shared_cart.form.select_permissions',
         ]);
 

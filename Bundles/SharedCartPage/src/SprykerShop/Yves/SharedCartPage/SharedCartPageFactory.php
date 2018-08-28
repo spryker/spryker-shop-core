@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\SharedCartPage;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinder;
+use SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinderInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCompanyUserClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCustomerClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToSharedCartClientInterface;
@@ -43,8 +45,19 @@ class SharedCartPageFactory extends AbstractFactory
     {
         return new ShareCartFormDataProvider(
             $this->getCustomerClient(),
-            $this->getCompanyUserClient(),
-            $this->getSharedCartClient()
+            $this->getSharedCartClient(),
+            $this->createCompanyUserFinder()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinderInterface
+     */
+    public function createCompanyUserFinder(): CompanyUserFinderInterface
+    {
+        return new CompanyUserFinder(
+            $this->getCustomerClient(),
+            $this->getCompanyUserClient()
         );
     }
 

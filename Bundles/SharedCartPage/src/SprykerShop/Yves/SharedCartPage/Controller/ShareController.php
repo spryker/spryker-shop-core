@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Controller;
 
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
+use SprykerShop\Yves\SharedCartPage\Plugin\Provider\SharedCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -50,17 +50,24 @@ class ShareController extends AbstractController
         if ($sharedCartForm->isSubmitted() && $sharedCartForm->isValid()) {
             $shareCartRequestTransfer = $sharedCartForm->getData();
             $quoteResponseTransfer = $this->getFactory()->getSharedCartClient()
-                ->addShareCart($shareCartRequestTransfer);
+                ->updateQuotePermissions($shareCartRequestTransfer);
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::KEY_GLOSSARY_SHARED_CART_PAGE_SHARE_SUCCESS);
 
-                return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+                return $this->redirectResponseInternal(SharedCartPageControllerProvider::ROUTE_SHARED_CART_SHARE, [
+                    'idQuote' => $idQuote,
+                ]);
             }
         }
+
+        $companyUserNames = $this->getFactory()
+            ->createCompanyUserFinder()
+            ->getCompanyUserNames();
 
         return [
             'idQuote' => $idQuote,
             'sharedCartForm' => $sharedCartForm->createView(),
+            'companyUserNames' => $companyUserNames,
         ];
     }
 }
