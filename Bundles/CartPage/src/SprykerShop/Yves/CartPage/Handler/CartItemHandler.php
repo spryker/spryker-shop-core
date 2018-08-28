@@ -119,10 +119,14 @@ class CartItemHandler implements CartItemHandlerInterface
      */
     protected function getStorageProductForSelectedAttributes(array $selectedAttributes, $item, $localeName)
     {
-        $productData = $this->productClient->getProductAbstractStorageData(
+        $productData = $this->productClient->findProductAbstractStorageData(
             $item->getIdProductAbstract(),
             $localeName
         );
+
+        if ($productData === null) {
+            return new ProductViewTransfer();
+        }
 
         return $this->productClient->mapProductStorageData(
             $productData,

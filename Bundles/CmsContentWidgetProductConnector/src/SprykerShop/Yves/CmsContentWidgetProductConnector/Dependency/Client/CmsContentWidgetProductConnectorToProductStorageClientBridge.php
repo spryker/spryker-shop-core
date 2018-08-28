@@ -35,6 +35,8 @@ class CmsContentWidgetProductConnectorToProductStorageClientBridge implements Cm
     }
 
     /**
+     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+     *
      * @param int $idProductAbstract
      * @param string $localeName
      *
@@ -43,5 +45,16 @@ class CmsContentWidgetProductConnectorToProductStorageClientBridge implements Cm
     public function getProductAbstractStorageData($idProductAbstract, $localeName)
     {
         return $this->productStorageClient->getProductAbstractStorageData($idProductAbstract, $localeName);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+    {
+        return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
     }
 }
