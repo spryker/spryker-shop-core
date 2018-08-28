@@ -114,6 +114,16 @@
                                                 {{ ('product.attribute.'~attribute) | trans }}: {{ product.attributes[attribute] }} <br/>
                                             {% endif %}
                                         {% endfor %}
+
+                                        {% for subForm in data.form.items[key].children  %}
+                                            {% if not subForm.rendered %}
+                                                {% if subForm.vars.template_path is defined %}
+                                                    {% include subForm.vars.template_path with {'form': subForm} %}
+                                                {% else %}
+                                                    {{ form_row(subForm) }}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
                                     </td>
                                     <td nowrap="nowrap" class="text-center">
                                         {% if product.price is not null %}

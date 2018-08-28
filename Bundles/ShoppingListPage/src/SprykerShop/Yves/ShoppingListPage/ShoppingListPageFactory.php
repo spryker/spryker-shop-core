@@ -120,6 +120,14 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListItemFormExpanderPluginInterface[]
+     */
+    public function getShoppingListItemFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS);
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig
      */
     public function getBundleConfig(): ShoppingListPageConfig

@@ -1,0 +1,22 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'note-update',
+    tag: 'note-update',
+} %}
+
+{% define data = {
+    shoppingListItemNoteForm: required
+} %}
+
+{% block body %}
+    {% if data.shoppingListItemNoteForm.vars.data.note %}
+        {% set shoppingListItemNoteClass = 'is-visible' %}
+    {% else %}
+        {% set shoppingListItemNoteClass = 'is-hidden' %}
+        <a href="#" class="{{ config.jsName }}">{{ 'shopping_list.item_note.add' | trans }}</a>
+    {% endif %}
+    <span class="shopping-list-item-note-wrapper {{ shoppingListItemNoteClass }}">
+        {{ form_row(data.shoppingListItemNoteForm.note, { 'label': 'shopping_list.item_note' | trans, 'attr' : { 'class' : "shopping-list-item-note" }}) }}
+    </span>
+{% endblock %}
