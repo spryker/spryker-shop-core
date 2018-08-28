@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\AgentWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\AgentWidget\Dependency\Client\AgentWidgetToAgentClientInterface;
+use SprykerShop\Yves\AgentWidget\Dependency\Client\AgentWidgetToCustomerClientInterface;
 use SprykerShop\Yves\AgentWidget\Validator\CustomerAutocompleteValidator;
 use SprykerShop\Yves\AgentWidget\Validator\CustomerAutocompleteValidatorInterface;
 use Symfony\Component\Validator\Validation;
@@ -22,6 +23,14 @@ class AgentWidgetFactory extends AbstractFactory
     public function getAgentClient(): AgentWidgetToAgentClientInterface
     {
         return $this->getProvidedDependency(AgentWidgetDependencyProvider::CLIENT_AGENT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentWidget\Dependency\Client\AgentWidgetToCustomerClientInterface
+     */
+    public function getCustomerClient(): AgentWidgetToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(AgentWidgetDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**

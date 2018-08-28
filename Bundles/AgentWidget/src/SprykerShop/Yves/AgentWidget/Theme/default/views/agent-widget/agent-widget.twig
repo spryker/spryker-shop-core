@@ -2,14 +2,16 @@
 
 {% define data = {
     isLoggedIn: _widget.isLoggedIn,
-    agent: _widget.agent
+    agent: _widget.agent,
+    customer: _widget.customer
 } %}
 
 {% block body %}
     {% if data.isLoggedIn %}
         {% include organism('agent-control-bar', 'AgentWidget') with {
             data: {
-                agent: data.agent
+                agent: data.agent,
+                customer: data.customer
             }
         } only %}
     {% endif %}

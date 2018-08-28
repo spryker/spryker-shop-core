@@ -14,6 +14,7 @@ use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
+use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
@@ -108,6 +109,14 @@ class AgentPageFactory extends AbstractFactory
     public function getCustomerClient(): AgentPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(AgentPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface
+     */
+    public function getQuoteClient(): AgentPageToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(AgentPageDependencyProvider::CLIENT_QUOTE);
     }
 
     /**
