@@ -14,7 +14,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/shopping-list-page": "Use it if you want see ProductBarcodeWidget in action"
+    "spryker-shop/shopping-list-page": "If you want see ProductBarcodeWidget in action"
   },
   "autoload": {
     "psr-4": {
