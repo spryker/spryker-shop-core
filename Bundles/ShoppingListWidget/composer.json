@@ -13,13 +13,17 @@
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",
+    "spryker-shop/shopping-list-page": "*",
+    "spryker/code-sniffer": "*",
     "spryker/product-detail-page": "*",
-    "spryker/silex": "*"
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "Widget plugins are available for this module.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker/product-detail-page": "To use ShoppingListWidget plugin, ShoppingListWidgetPluginInterface from product-detail-page v0.2.2 is needed"
+    "spryker-shop/shopping-list-page": "ADD SUGGEST DESCRIPTION",
+    "spryker/product-detail-page": "To use ShoppingListWidget plugin, ShoppingListWidgetPluginInterface from product-detail-page v0.2.2 is needed",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {
