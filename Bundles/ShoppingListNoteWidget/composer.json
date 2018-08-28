@@ -4,8 +4,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.23.1",
-    "spryker-shop/shop-ui": "^1.2.0"
+    "spryker-shop/shop-ui": "^1.2.0",
+    "spryker/kernel": "^3.23.1"
   },
   "require-dev": {
     "spryker-shop/shopping-list-page": "*",
@@ -18,11 +18,6 @@
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
