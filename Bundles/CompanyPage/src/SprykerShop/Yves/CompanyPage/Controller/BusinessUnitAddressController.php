@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BusinessUnitAddressController extends AbstractCompanyController
 {
-    protected const COMPANY_BUSINESS_UNIT_ID_FIELD = 'fk_company_business_unit';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -65,10 +63,8 @@ class BusinessUnitAddressController extends AbstractCompanyController
         }
 
         if ($addressForm->isValid()) {
-            $addressFormData = $addressForm->getData();
-            $idCompanyBusinessUnit = $addressFormData[static::COMPANY_BUSINESS_UNIT_ID_FIELD];
-            $companyUnitAddressTransfer = $this->saveAddress($addressFormData);
-
+            $idCompanyBusinessUnit = (int)$addressForm->getData()[CompanyBusinessUnitAddressForm::FIELD_FK_COMPANY_BUSINESS_UNIT];
+            $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData());
             $this->saveCompanyBusinessUnitAddress(
                 $companyUnitAddressTransfer,
                 $idCompanyBusinessUnit
