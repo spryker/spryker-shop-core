@@ -62,8 +62,13 @@ class ShareController extends AbstractController
             ->createCompanyUserFinder()
             ->getCompanyUserNames();
 
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
         return [
             'idQuote' => $idQuote,
+            'cartName' => ($quoteTransfer !== null) ? $quoteTransfer->getName() : null,
             'sharedCartForm' => $sharedCartForm->createView(),
             'companyUserNames' => $companyUserNames,
         ];

@@ -2,16 +2,33 @@
 
 {% define data = {
     companyUserNames: _view.companyUserNames | default([]),
+    cartName: _view.cartName | default,
     form: _view.sharedCartForm,
     title: 'shared_cart.form.share_cart' | trans,
 } %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'company.account.page-title' | trans
+            },{
+                label: 'shared_cart.share.breadcrumbs.shopping_carts' | trans
+            },{
+                label: data.cartName
+            },{
+                label: 'shared_cart.share.breadcrumbs.share' | trans
+            }]
+        }
+    } only %}
+{% endblock %}
+
 {% block content %}
     {{ form_start(data.form) }}
 
-    <div class="box">
-        {% set formShareDetailsValues = data.form.vars.value.shareDetails.getArrayCopy() %}
+    {% set formShareDetailsValues = data.form.vars.value.shareDetails.getArrayCopy() %}
 
+    <div class="box">
         {% for key, shareDetail in data.form.shareDetails %}
             {% if formShareDetailsValues[key].quotePermissionGroup is not null %}
                 <div>
@@ -29,8 +46,6 @@
     </div>
 
     <div class="box">
-        {% set formShareDetailsValues = data.form.vars.value.shareDetails.getArrayCopy() %}
-
         {% for key, shareDetail in data.form.shareDetails %}
             {% if formShareDetailsValues[key].quotePermissionGroup is null %}
                 <div>
