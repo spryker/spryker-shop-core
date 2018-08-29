@@ -16,7 +16,7 @@
   },
   "suggest": {
     "spryker-shop/product-detail-page": "if you want to use ProductDiscontinuedWidgetPlugin: ^1.1.0",
-    "spryker-shop/shopping-list-page": "if you want to use ProductDiscontinuedWidgetPlugin: ~0.4.1",
+    "spryker-shop/shopping-list-page": "if you want to use ProductDiscontinuedWidgetPlugin: ^0.4.1",
     "spryker-shop/wishlist-page": "if you want to use ProductDiscontinuedWidgetPlugin: ^1.1.0"
   },
   "autoload": {
