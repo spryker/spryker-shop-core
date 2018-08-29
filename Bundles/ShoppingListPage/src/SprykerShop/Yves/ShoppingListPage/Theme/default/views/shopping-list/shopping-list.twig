@@ -92,7 +92,7 @@
                     {% endif %}
                     <tr>
                         <td>
-                            <input type="checkbox" {{ isItemAvailable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.idShoppingListItem }}]" value="{{ item.idShoppingListItem }}"/>
+                            <input type="checkbox" {{ isItemAvailable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.shoppingListItem.idShoppingListItem }}]" value="{{ item.shoppingListItem.idShoppingListItem }}"/>
                         </td>
                         <td class="text-center">
                             {% if item.images is defined and item.images is not empty %}
@@ -131,7 +131,7 @@
                             {% endif %}
                         </td>
                         <td class="text-center">
-                            <input class="input" {{ isItemAvailable ? '' : 'disabled' }} type="number" name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]" value="{{ item.quantity }}"/>
+                            <input class="input" {{ isItemAvailable ? '' : 'disabled' }} type="number" name="shoppingListItem[quantity][{{ item.shoppingListItem.idShoppingListItem }}]" value="{{ item.quantity }}"/>
                         </td>
                         <td class="text-center">
                             {% if isItemAvailable %}
@@ -146,7 +146,7 @@
                         </td>
                         <td>
                             {% if isItemAvailable %}
-                                <button type="submit" name="add-item" class="button button--success" value="{{ item.idShoppingListItem }}" {{qa('submit-button')}}>
+                                <button type="submit" name="add-item" class="button button--success" value="{{ item.shoppingListItem.idShoppingListItem }}" {{qa('submit-button')}}>
                                     {{data.labels.addItemToCartLabel}}
                                 </button>
                             {% endif %}
