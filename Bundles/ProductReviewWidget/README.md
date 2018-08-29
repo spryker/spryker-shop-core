@@ -1,6 +1,6 @@
 # ProductReviewWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the product review widget and it's components.
 
 ## Installation
 
