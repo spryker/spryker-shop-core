@@ -4,7 +4,8 @@
     title: _view.shoppingList.name,
     form: _view.shoppingListForm,
     shoppingList: _view.shoppingList,
-    shoppingListItemProducts: _view.shoppingListItemProducts
+    shoppingListItemProducts: _view.shoppingListItemProducts,
+    idShoppingList: _view.shoppingList.idShoppingList | default(0)
 } %}
 
 {% block breadcrumbs %}
@@ -22,10 +23,12 @@
 {% endblock %}
 
 {% block customerNavigation %}
-    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.shoppingList.idShoppingList) }}
+    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.idShoppingList) }}
 {% endblock %}
 
 {% block customerContent %}
+
+    {% set hasWritePermission = can('WriteShoppingListPermissionPlugin', data.idShoppingList) %}
     <div class="box">
         <div class="form" data-qa="component form">
             {{ form_start(data.form) }}
@@ -50,11 +53,11 @@
 
                         <div class="col col--sm-6">
                             <strong>{{ 'customer.account.shopping_list.access' | trans }}:</strong>
-                            {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
-                                {{ 'customer.account.shopping_list.access.full_access' | trans }}
-                            {% else %}
-                                {{ 'customer.account.shopping_list.access.read_only' | trans }}
-                            {% endif %}
+                            {% include molecule('shopping-list-permission', 'ShoppingListPage') with {
+                                data: {
+                                    hasWritePermission: hasWritePermission
+                                }
+                            } only %}
                         </div>
                     </div>
                 </div>
@@ -81,7 +84,7 @@
                             <tr>
                                 <td>&nbsp;</td>
                                 <td class="text-center">
-                                    {% if product.images is defined and product.images is not empty and item.images.0.externalUrlSmall is not empty %}
+                                    {% if product.images is defined and product.images is not empty and product.images.0.externalUrlSmall is not empty %}
                                         {% include atom('thumbnail') with {
                                             modifiers: ['small', 'min-size'],
                                             attributes: {
@@ -133,7 +136,7 @@
                                 </td>
                                 <td>
                                     <a class="button button--alert" href="{{ path('shopping-list/remove-item', {
-                                        idShoppingList: data.shoppingList.idShoppingList, idShoppingListItem: shoppingListItem.idShoppingListItem
+                                        idShoppingList: data.idShoppingList, idShoppingListItem: shoppingListItem.idShoppingListItem
                                     }) }}">
                                         {{'customer.account.shopping_list.remove' | trans}}
                                     </a>
@@ -146,7 +149,7 @@
                             <tr>
                                 <td colspan="6"></td>
                                 <td>
-                                    <a href="{{ path('shopping-list/clear', {idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                    <a href="{{ path('shopping-list/clear', {idShoppingList: data.idShoppingList}) }}">
                                         {{ 'shopping_list.remove_all_items' | trans }}
                                     </a>
                                 </td>
@@ -163,7 +166,7 @@
 
             <div class="grid">
                 <div class="col col--sm-6 text-left">
-                    <a class="button button--alert" href="{{ path('shopping-list/delete/confirm', {idShoppingList: data.shoppingList.idShoppingList}) }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
+                    <a class="button button--alert" href="{{ path('shopping-list/delete/confirm', {idShoppingList: data.idShoppingList}) }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
                 </div>
                 <div class="col col--sm-6 text-right">
                     <a href="{{ path('shopping-list') }}" class="button spacing-right">
