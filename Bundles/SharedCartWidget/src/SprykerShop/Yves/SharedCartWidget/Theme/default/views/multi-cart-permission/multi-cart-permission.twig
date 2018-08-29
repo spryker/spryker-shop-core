@@ -22,3 +22,11 @@
     {% endif %}
     </span>
 {% endblock %}
+
+{% block actions %}
+    {% if _widget.accessType == 'OWNER_ACCESS' %}
+        <a href="{{ url('shared-cart/share', {idQuote: _widget.cart.idQuote}) }}" title="{{ 'shared_cart_widget.cart.share' | trans }}">
+            {{ 'shared_cart_widget.cart.share' | trans }}
+        </a>
+    {% endif %}
+{% endblock %}
