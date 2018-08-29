@@ -47,6 +47,7 @@ class SharedCartPageFactory extends AbstractFactory
         return new ShareCartFormDataProvider(
             $this->getCustomerClient(),
             $this->getSharedCartClient(),
+            $this->getMultiCartClient(),
             $this->createCompanyUserFinder()
         );
     }

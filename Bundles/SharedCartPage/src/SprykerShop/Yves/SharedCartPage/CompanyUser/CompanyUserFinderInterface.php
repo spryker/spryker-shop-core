@@ -7,19 +7,24 @@
 
 namespace SprykerShop\Yves\SharedCartPage\CompanyUser;
 
-use ArrayObject;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 interface CompanyUserFinderInterface
 {
     /**
-     * @param int $idQuote
-     *
-     * @return \ArrayObject
-     */
-    public function getCompanyUsersShareDetails(int $idQuote): ArrayObject;
-
-    /**
      * @return string[]
      */
     public function getCompanyUserNames(): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function getCompanyBusinessUnit(): CompanyBusinessUnitTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function getBusinessUnitCustomers(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): array;
 }

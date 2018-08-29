@@ -7,10 +7,15 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Form\DataProvider;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 use SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinderInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCustomerClientInterface;
+use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToMultiCartClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToSharedCartClientInterface;
 use SprykerShop\Yves\SharedCartPage\Form\ShareCartForm;
 
@@ -30,6 +35,11 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     protected $sharedCartClient;
 
     /**
+     * @var \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToMultiCartClientInterface
+     */
+    protected $multiCartClient;
+
+    /**
      * @var \SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinderInterface
      */
     protected $companyUserFinder;
@@ -37,15 +47,18 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     /**
      * @param \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToSharedCartClientInterface $sharedCartClient
+     * @param \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToMultiCartClientInterface $multiCartClient
      * @param \SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinderInterface $companyUserFinder
      */
     public function __construct(
         SharedCartPageToCustomerClientInterface $customerClient,
         SharedCartPageToSharedCartClientInterface $sharedCartClient,
+        SharedCartPageToMultiCartClientInterface $multiCartClient,
         CompanyUserFinderInterface $companyUserFinder
     ) {
         $this->customerClient = $customerClient;
         $this->sharedCartClient = $sharedCartClient;
+        $this->multiCartClient = $multiCartClient;
         $this->companyUserFinder = $companyUserFinder;
     }
 
@@ -70,7 +83,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
         $customerTransfer->requireCompanyUserTransfer();
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
 
-        $formShareDetails = $this->companyUserFinder->getCompanyUsersShareDetails($idQuote);
+        $formShareDetails = $this->getCompanyUsersShareDetails($idQuote);
 
         $shareCartRequestTransfer = (new ShareCartRequestTransfer())
             ->setIdQuote($idQuote)
@@ -78,6 +91,65 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
             ->setShareDetails($formShareDetails);
 
         return $shareCartRequestTransfer;
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \ArrayObject|ShareDetailTransfer[]
+     */
+    protected function getCompanyUsersShareDetails(int $idQuote): ArrayObject
+    {
+        $customerTransfer = $this->customerClient->getCustomer();
+
+        $companyBusinessUnitTransfer = $this->companyUserFinder->getCompanyBusinessUnit();
+        $businessUnitCompanyUserList = $this->companyUserFinder->getBusinessUnitCustomers($companyBusinessUnitTransfer);
+
+        $quoteTransfer = $this->multiCartClient->findQuoteById($idQuote);
+
+        $formShareDetails = new ArrayObject();
+        foreach ($businessUnitCompanyUserList as $companyUserTransfer) {
+            if ($customerTransfer->getIdCustomer() === $companyUserTransfer->getFkCustomer()) {
+                continue;
+            }
+
+            $formShareDetails[$companyUserTransfer->getIdCompanyUser()] = $this->findOrCreateCompanyUserShareDetailTransfer(
+                $companyUserTransfer,
+                $quoteTransfer
+            );
+        }
+
+        return $formShareDetails;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailTransfer
+     */
+    protected function findOrCreateCompanyUserShareDetailTransfer(
+        CompanyUserTransfer $companyUserTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ShareDetailTransfer {
+        $companyUserTransfer->requireIdCompanyUser();
+        $companyUserTransfer->requireCustomer();
+
+        $customerTransfer = $companyUserTransfer->getCustomer();
+
+        $customerTransfer->requireFirstName();
+        $customerTransfer->requireLastName();
+
+        foreach ($quoteTransfer->getShareDetails() as $quoteShareDetail) {
+            if ($quoteShareDetail->getIdCompanyUser() === $companyUserTransfer->getIdCompanyUser()) {
+                return $quoteShareDetail;
+            }
+        }
+
+        return (new ShareDetailTransfer())
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+            ->setIdQuoteCompanyUser($quoteTransfer->getIdQuote())
+            ->setCustomerName($customerTransfer->getLastName() . ' ' . $customerTransfer->getFirstName());
     }
 
     /**
