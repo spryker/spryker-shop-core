@@ -111,9 +111,14 @@
                             <div><small>{{ item.sku }}</small></div>
                             {% for attribute in item.superAttributesDefinition %}
                                 {% if item.attributes[attribute] is defined %}
-                                    {{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }} <br/>
+                                    <strong>{{ ('product.attribute.'~attribute) | trans }}:</strong> {{ item.attributes[attribute] }} <br/>
                                 {% endif %}
                             {% endfor %}
+
+                            {% if item.shoppingListItem is not empty %}
+                                {{ widget('ShoppingListItemProductOptionWidgetPlugin', item.shoppingListItem) }}
+                            {% endif %}
+
                         </td>
                         <td nowrap="nowrap" class="text-center">
                             {% if item.price is not null %}
