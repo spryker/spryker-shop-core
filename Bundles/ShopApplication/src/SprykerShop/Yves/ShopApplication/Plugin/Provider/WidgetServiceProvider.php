@@ -8,25 +8,20 @@
 namespace SprykerShop\Yves\ShopApplication\Plugin\Provider;
 
 use Silex\Application;
-use Silex\ServiceProviderInterface;
-use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
-use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Kernel\View\ViewInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use SprykerShop\Yves\ShopApplication\Exception\EmptyWidgetRegistryException;
-use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
 use SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Throwable;
 use Twig_Environment;
 use Twig_SimpleFunction;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ShopApplication\Plugin\Provider\WidgetTagServiceProvider instead.
+ *
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
  */
-class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+class WidgetServiceProvider extends WidgetTagServiceProvider
 {
     /**
      * @param \Silex\Application $application
@@ -35,32 +30,13 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     public function register(Application $application)
     {
+        parent::register($application);
+
         $application['twig'] = $application->share(
             $application->extend('twig', function (\Twig_Environment $twig) {
                 return $this->registerWidgetTwigFunction($twig);
             })
         );
-    }
-
-    /**
-     * @param \Silex\Application $app
-     *
-     * @throws \SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException
-     *
-     * @return void
-     */
-    public function boot(Application $app)
-    {
-        if (!$app instanceof SprykerApplication) {
-            throw new InvalidApplicationException(sprintf(
-                'The used application object need to be an instance of %s.',
-                SprykerApplication::class
-            ));
-        }
-
-        $app['dispatcher']->addListener(KernelEvents::VIEW, function (GetResponseForControllerResultEvent $event) use ($app) {
-            $this->onKernelView($event, $app);
-        }, 0);
     }
 
     /**
@@ -126,16 +102,14 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
             }
 
             $widgetClass = $widgetContainer->getWidgetClassName($widgetName);
-            $widgetFactory = $this->getFactory()->createWidgetFactory();
+            $widgetFactory = $this->getFactory()->createWidgetPluginFactory();
             $widget = $widgetFactory->build($widgetClass, $arguments);
-
-            $twig->addGlobal('_widget', $widget);
 
             $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
             $widgetContainerRegistry->add($widget);
 
             $template = $twig->load($widget::getTemplate());
-            $result = $template->render();
+            $result = $template->render(['_widget' => $widget]);
 
             $widgetContainerRegistry->removeLastAdded();
 
@@ -165,16 +139,14 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
             }
 
             $widgetClass = $widgetContainer->getWidgetClassName($widgetName);
-            $widgetFactory = $this->getFactory()->createWidgetFactory();
+            $widgetFactory = $this->getFactory()->createWidgetPluginFactory();
             $widget = $widgetFactory->build($widgetClass, $arguments);
-
-            $twig->addGlobal('_widget', $widget);
 
             $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
             $widgetContainerRegistry->add($widget);
 
             $template = $twig->load($widget::getTemplate());
-            $result = $template->renderBlock($block);
+            $result = $template->renderBlock($block, ['_widget' => $widget]);
 
             $widgetContainerRegistry->removeLastAdded();
 
@@ -196,23 +168,21 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
     public function widgetGlobal(Twig_Environment $twig, $widgetName, ...$arguments)
     {
         try {
-            $widgetCollection = $this->getFactory()->createWidgetCollection();
+            $widgetCollection = $this->getFactory()->getGlobalWidgetCollection();
 
             if (!$widgetCollection->hasWidget($widgetName)) {
                 return '';
             }
 
             $widgetClass = $widgetCollection->getWidgetClassName($widgetName);
-            $widgetFactory = $this->getFactory()->createWidgetFactory();
+            $widgetFactory = $this->getFactory()->createWidgetPluginFactory();
             $widget = $widgetFactory->build($widgetClass, $arguments);
-
-            $twig->addGlobal('_widget', $widget);
 
             $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
             $widgetContainerRegistry->add($widget);
 
             $template = $twig->load($widget::getTemplate());
-            $result = $template->render();
+            $result = $template->render(['_widget' => $widget]);
 
             $widgetContainerRegistry->removeLastAdded();
 
@@ -239,7 +209,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     public function widgetGlobalExists($name)
     {
-        return $this->getFactory()->createWidgetCollection()->hasWidget($name);
+        return $this->getFactory()->getGlobalWidgetCollection()->hasWidget($name);
     }
 
     /**
@@ -260,54 +230,6 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
         }
 
         return $widgetContainer;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
-     * @param \Spryker\Shared\Kernel\Communication\Application $application
-     *
-     * @return void
-     */
-    protected function onKernelView(GetResponseForControllerResultEvent $event, SprykerApplication $application)
-    {
-        /** @var \Spryker\Yves\Kernel\Widget\WidgetContainerInterface $result */
-        $result = $event->getControllerResult();
-
-        if (!$result instanceof ViewInterface) {
-            return;
-        }
-
-        /** @var \Twig_Environment $twig */
-        $twig = $application['twig'];
-        $twig->addGlobal('_view', $result);
-
-        $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
-        $widgetContainerRegistry->add($result);
-
-        if ($result->getTemplate()) {
-            $response = $application->render($result->getTemplate(), $this->getViewParameters($result));
-        } else {
-            $response = $this->getFactory()
-                ->createTwigRenderer()
-                ->render($application, $this->getViewParameters($result));
-        }
-
-        $event->setResponse($response);
-        $widgetContainerRegistry->removeLastAdded();
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\View\ViewInterface $view
-     *
-     * @return array|null
-     */
-    protected function getViewParameters(ViewInterface $view)
-    {
-        if ($this->getConfig()->useViewParametersToRenderTwig()) {
-            return $view->getData();
-        }
-
-        return [];
     }
 
     /**

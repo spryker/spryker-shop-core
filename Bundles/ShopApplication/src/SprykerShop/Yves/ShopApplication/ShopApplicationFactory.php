@@ -10,20 +10,41 @@ namespace SprykerShop\Yves\ShopApplication;
 use Silex\Provider\TwigServiceProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
+use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
 use Spryker\Yves\Kernel\Widget\WidgetFactory;
+use Spryker\Yves\Kernel\Widget\WidgetPluginFactory;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
 use SprykerShop\Yves\ShopApplication\Twig\RoutingHelper;
 use SprykerShop\Yves\ShopApplication\Twig\TwigRenderer;
+use SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTokenParser;
+use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagService;
+use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagServiceInterface;
+use Twig_TokenParserInterface;
 
 class ShopApplicationFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerRegistry
+     * @var \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
+     */
+    protected static $globalWidgetCollection;
+
+    /**
+     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerRegistryInterface
      */
     public function createWidgetContainerRegistry()
     {
         return new WidgetContainerRegistry();
+    }
+
+    /**
+     * @deprecated Use createWidgetFactory() method instead.
+     *
+     * @return \Spryker\Yves\Kernel\Widget\WidgetPluginFactoryInterface
+     */
+    public function createWidgetPluginFactory()
+    {
+        return new WidgetPluginFactory();
     }
 
     /**
@@ -59,17 +80,31 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Widget\WidgetCollection
+     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
      */
-    public function createWidgetCollection()
+    public function getGlobalWidgetCollection(): WidgetContainerInterface
     {
-        return new WidgetCollection($this->getGlobalWidgetPlugins());
+        if (static::$globalWidgetCollection === null) {
+            static::$globalWidgetCollection = new WidgetCollection($this->getGlobalWidgets());
+        }
+
+        return static::$globalWidgetCollection;
+    }
+
+    /**
+     * @deprecated Use $this->getGlobalWidgets() instead.
+     *
+     * @return string[]
+     */
+    public function getGlobalWidgetPlugins(): array
+    {
+        return $this->getGlobalWidgetPlugins();
     }
 
     /**
      * @return string[]
      */
-    public function getGlobalWidgetPlugins(): array
+    public function getGlobalWidgets(): array
     {
         return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGIN_GLOBAL_WIDGETS);
     }
@@ -104,5 +139,25 @@ class ShopApplicationFactory extends AbstractFactory
     public function getUtilTextService(): ShopApplicationToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(ShopApplicationDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Twig_TokenParserInterface
+     */
+    public function createWidgetTagTokenParser(): Twig_TokenParserInterface
+    {
+        return new WidgetTagTokenParser();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagServiceInterface
+     */
+    public function createWidgetTagService(): WidgetTagServiceInterface
+    {
+        return new WidgetTagService(
+            $this->createWidgetContainerRegistry(),
+            $this->createWidgetFactory(),
+            $this->getGlobalWidgetCollection()
+        );
     }
 }

@@ -14,7 +14,11 @@
         <div class="col col--sm-12 col--md-6">
             <div class="box">
                 <h5>{{ 'global.payment_providers' | trans }}</h5>
-                {{ widgetGlobal('NavigationWidgetPlugin', 'PAYMENT_PROVIDERS', 'navigation-providers-payment') }}
+                {% widget 'NavigationWidget' args ['PAYMENT_PROVIDERS', 'navigation-providers-payment'] %}
+                {% nowidget %}
+                    {# @deprecated Kept for BC reasons, will be removed in next major. #}
+                    {{ widgetGlobal('NavigationWidgetPlugin', 'PAYMENT_PROVIDERS', 'navigation-providers-payment') }}
+                {% endwidget %}
             </div>
         </div>
 
@@ -37,7 +41,7 @@
                 <li>+49 (0)30 2084983 50</li>
                 <li><a href="mailto:info@spryker.com">info@spryker.com</a></li>
             </ul>
-            
+
             <div class="col col--lg-3 is-hidden-sm-md">
                 <h5>{{ 'global.social' | trans }}</h5>
                 {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', 'navigation-social') }}
