@@ -64,7 +64,7 @@
                     {% if showActions %}
                         <td>
                             <ul class="menu menu--inline">
-                                {% if data.actions.update %}
+                                {% if data.actions.update and can('WriteSharedCartPermissionPlugin', quote.idQuote) %}
                                     <li class="menu__item">
                                         <a href="{{ url('multi-cart/update', {idQuote: quote.idQuote}) }}">
                                             {{ 'page.multi_cart.shopping_cart.list.link.edit_name' | trans }}
@@ -78,7 +78,7 @@
                                         </a>
                                     </li>
                                 {% endif %}
-                                {% if data.actions.delete %}
+                                {% if data.actions.delete and can('WriteSharedCartPermissionPlugin', quote.idQuote) %}
                                     <li class="menu__item">
                                         <a href="{{ url('multi-cart/confirm-delete', {idQuote: quote.idQuote}) }}">
                                             {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
