@@ -10,11 +10,13 @@
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
-    "spryker-shop/product-detail-page": "*"
+    "spryker-shop/product-detail-page": "*",
+    "spryker-shop/shopping-list-page": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "Widget plugins are available for this module.",
-    "spryker-shop/product-detail-page": "Widget plugins are available for this module."
+    "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
+    "spryker-shop/shopping-list-page": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {
