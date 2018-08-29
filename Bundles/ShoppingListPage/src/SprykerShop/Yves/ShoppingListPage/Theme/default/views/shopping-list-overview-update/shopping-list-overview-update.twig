@@ -81,20 +81,24 @@
                             <tr>
                                 <td>&nbsp;</td>
                                 <td class="text-center">
-                                    {% if product.images is defined and product.images is not empty %}
+                                    {% if product.images is defined and product.images is not empty and item.images.0.externalUrlSmall is not empty %}
                                         {% include atom('thumbnail') with {
                                             modifiers: ['small', 'min-size'],
                                             attributes: {
-                                                alt: product.name,
+                                                alt: product.name | default,
                                                 src: product.images.0.externalUrlSmall,
-                                                title: product.name
+                                                title: product.name | default
                                             }
                                         } only %}
                                     {% endif %}
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ product.url }}">{{ product.name }}</a>
-                                    <div><small>{{ product.sku }}</small></div>
+                                    {% if product.name is not empty %}
+                                        <a href="{% if product.url is not empty %}{{ product.url }}{% endif %}">{{ product.name }}</a>
+                                    {% endif %}
+                                    {% if product.sku is not empty %}
+                                        <div><small>{{ product.sku }}</small></div>
+                                    {% endif %}
                                     {% for attribute in product.superAttributesDefinition %}
                                         {% if product.attributes[attribute] is defined %}
                                             {{ ('product.attribute.'~attribute) | trans }}: {{ product.attributes[attribute] }} <br/>
@@ -110,7 +114,7 @@
                                             }
                                         } only %}
                                     {% else %}
-                                        N/A
+                                        {{ 'product_alternative_widget.not_applicable' | trans }}
                                     {% endif %}
                                 </td>
                                 <td class="text-center">
