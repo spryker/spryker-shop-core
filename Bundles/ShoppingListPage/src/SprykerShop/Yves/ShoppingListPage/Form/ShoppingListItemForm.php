@@ -13,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
+ */
 class ShoppingListItemForm extends AbstractType
 {
     protected const FIELD_QUANTITY = 'quantity';
@@ -39,6 +42,8 @@ class ShoppingListItemForm extends AbstractType
     {
         $this
             ->addQuantityField($builder);
+
+        $this->addFormExpanders($builder, $options);
     }
 
     /**
@@ -51,5 +56,18 @@ class ShoppingListItemForm extends AbstractType
         $builder->add(static::FIELD_QUANTITY, HiddenType::class);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function addFormExpanders(FormBuilderInterface $builder, array $options): void
+    {
+        foreach ($this->getFactory()->getShoppingListItemFormExpanderPlugins() as $shoppingItemFormTypeExpanderPlugin) {
+            $shoppingItemFormTypeExpanderPlugin->buildForm($builder, $options);
+        }
     }
 }
