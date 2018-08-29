@@ -46,7 +46,9 @@
 
                 {{ widget('DiscountPromotionItemListWidgetPlugin', data.cart, data.request) }}
 
-                {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }}
+                {% if data.cart.idQuote is not empty %}
+                    {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }}
+                {% endif %}
             </div>
 
             <div class="col col--sm-12 col--xl-4">
