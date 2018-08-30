@@ -87,7 +87,7 @@
                             </thead>
                             <tbody>
                             {% for key, shoppingListItem in data.shoppingList.items %}
-                                {% set product = data.productViewTransfers[shoppingListItem.shoppingListItem.idShoppingListItem] %}
+                                {% set product = data.productViewTransfers[shoppingListItem.idShoppingListItem] %}
                                 {% set isProductAvailable = product.available is defined and product.available and product.price is defined and product.price is not null %}
                                 {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
                                     {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', product.sku) %}
@@ -153,7 +153,7 @@
                                     </td>
                                     <td>
                                         <a class="button button--alert" href="{{ path('shopping-list/remove-item', {
-                                            idShoppingList: data.shoppingList.idShoppingList, idShoppingListItem: shoppingListItem.shoppingListItem.idShoppingListItem
+                                            idShoppingList: data.shoppingList.idShoppingList, idShoppingListItem: shoppingListItem.idShoppingListItem
                                         }) }}">
                                             {{data.labels.removeItemFromShoppingListLabel}}
                                         </a>

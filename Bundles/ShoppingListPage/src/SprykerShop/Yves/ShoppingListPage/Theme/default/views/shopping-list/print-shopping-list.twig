@@ -6,7 +6,7 @@
     barcodeGeneratorPlugin: _view.barcodeGeneratorPlugin | default(null),
 } %}
 
-{% set notesSupported = widgetExists('ShoppingListItemNoteWidgetPlugin') %}
+{% set isNotesSupported = widgetExists('ShoppingListItemNoteWidgetPlugin') %}
 <head>
     <meta charset="utf-8" />
     <title>{{ data.shoppingList.name }}</title>
@@ -21,7 +21,6 @@
     </style>
 </head>
 <body>
-
 <table class="shopping-list-title">
     <tr>
         <td>{{ 'customer.account.print_shopping_list.title.shopping_list_id' | trans }}</td>
@@ -44,7 +43,7 @@
         <th>{{ 'customer.account.print_shopping_list.table.product_sku' | trans }}</th>
         <th>{{ 'customer.account.print_shopping_list.table.product_name' | trans }}</th>
         <th>{{ 'customer.account.print_shopping_list.table.default_price' | trans }}</th>
-        {% if notesSupported %}
+        {% if isNotesSupported %}
             <th>{{ 'customer.account.print_shopping_list.table.note' | trans }}</th>
         {% endif %}
     </tr>
@@ -62,7 +61,7 @@
                 {{ item.prices.DEFAULT | money }}
             {% endif %}
         </td>
-        {% if notesSupported %}
+        {% if isNotesSupported %}
             <td>{{ item.shoppingListItem.shoppingListItemNote.note }}</td>
         {% endif %}
     </tr>
