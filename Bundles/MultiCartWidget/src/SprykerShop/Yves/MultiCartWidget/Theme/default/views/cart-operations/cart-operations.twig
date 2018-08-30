@@ -48,7 +48,7 @@
                 </li>
                 {% if data.isDeleteCartAllowed is not empty %}
                 <li class="menu__item">
-                    <a href="{{ path('multi-cart/delete', {idQuote: data.cart.idQuote}) }}" class="button delete" onclick="return confirm('{{ 'multi_cart_widget.cart.remove.confirm' | trans }}')">
+                    <a href="{{ path('multi-cart/confirm-delete', {idQuote: data.cart.idQuote}) }}" class="button delete">
                         {{ "multi_cart_widget.cart.action.delete" | trans }}
                     </a>
                 </li>
