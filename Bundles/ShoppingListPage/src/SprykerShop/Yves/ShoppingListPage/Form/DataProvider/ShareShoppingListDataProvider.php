@@ -118,7 +118,7 @@ class ShareShoppingListDataProvider
         }
 
         foreach ($companyUsers as $companyUserTransfer) {
-            if ($companyUserTransfer->getIdCompanyUser() === $shoppingListTransfer->getIdCompanyUser()) {
+            if (strcmp($companyUserTransfer->getCustomer()->getCustomerReference(), $shoppingListTransfer->getCustomerReference()) === 0) {
                 continue;
             }
 
