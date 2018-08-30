@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Controller;
 
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ShareController extends AbstractController
 {
     public const KEY_GLOSSARY_SHARED_CART_PAGE_SHARE_SUCCESS = 'shared_cart_page.share.success';
+    public const URL_REDIRECT_MULTI_CART_PAGE = 'multi-cart';
 
     /**
      * @param int $idQuote
@@ -54,7 +54,7 @@ class ShareController extends AbstractController
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::KEY_GLOSSARY_SHARED_CART_PAGE_SHARE_SUCCESS);
 
-                return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+                return $this->redirectResponseInternal(static::URL_REDIRECT_MULTI_CART_PAGE);
             }
         }
 
