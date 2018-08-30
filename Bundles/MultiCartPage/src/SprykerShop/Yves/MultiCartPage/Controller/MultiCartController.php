@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MultiCartPage\Controller;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
