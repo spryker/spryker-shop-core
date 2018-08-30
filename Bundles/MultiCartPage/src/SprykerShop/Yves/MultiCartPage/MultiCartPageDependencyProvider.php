@@ -14,6 +14,7 @@ use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartCli
 class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
+    public const PLUGINS_CART_DELETE_COMPANY_USERS_LIST_WIDGET = 'PLUGINS_CART_DELETE_COMPANY_USERS_LIST_WIDGET';
     public const PLUGIN_MULTI_CART_LIST_WIDGETS = 'PLUGIN_MULTI_CART_LIST_WIDGETS';
 
     /**
@@ -24,6 +25,7 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addMultiCartClient($container);
+        $container = $this->addCartDeleteCompanyUsersListWidgetPlugins($container);
         $container = $this->addMultiCartListWidgetPlugins($container);
 
         return $container;
@@ -41,6 +43,28 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCartDeleteCompanyUsersListWidgetPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CART_DELETE_COMPANY_USERS_LIST_WIDGET] = function (Container $container) {
+            return $this->getCartDeleteCompanyUsersListWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCartDeleteCompanyUsersListWidgetPlugins(): array
+    {
+        return [];
     }
 
     /**

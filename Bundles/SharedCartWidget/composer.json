@@ -17,11 +17,11 @@
     "spryker/silex": "*"
   },
   "suggest": {
+    "spryker-shop/multi-cart-page": "If you want to use CartDeleteCompanyUsersListWidgetPlugin and CartListPermissionGroupWidgetPlugin: ^1.0.0",
     "spryker-shop/multi-cart-widget": "Widget plugins are available for this module.",
     "spryker/shared-cart": "Use this module when using plugins that need Cart dependencies.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker/permission": "If you want to use permissions plugins",
-    "spryker-shop/multi-cart-page": "If you want to use CartListPermissionGroupWidgetPlugin: ^1.0.0"
+    "spryker/permission": "If you want to use permissions plugins"
   },
   "autoload": {
     "psr-4": {

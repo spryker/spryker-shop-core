@@ -225,4 +225,35 @@ class MultiCartController extends AbstractController
             'quoteCollection' => $quoteCollectionTransfer->getQuotes(),
         ];
     }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function confirmDeleteAction(int $idQuote)
+    {
+        $viewData = $this->executeConfirmDeleteAction($idQuote);
+
+        $widgetPlugins = $this->getFactory()
+            ->getCartDeleteCompanyUsersListWidgetPlugins();
+
+        return $this->view($viewData, $widgetPlugins, '@MultiCartPage/views/cart-delete/cart-delete.twig');
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return array
+     */
+    protected function executeConfirmDeleteAction(int $idQuote): array
+    {
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
+        return [
+            'cart' => $quoteTransfer,
+        ];
+    }
 }

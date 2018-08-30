@@ -1,6 +1,6 @@
 # MultiCartPage Module
 
-The module provides multi cart management functionality.
+This module provides a page where you can manage multiple carts (create, duplicate, edit, share, clear, rename).
 
 ## Installation
 
