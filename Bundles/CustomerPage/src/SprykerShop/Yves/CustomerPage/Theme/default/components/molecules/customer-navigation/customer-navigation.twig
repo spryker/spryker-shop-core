@@ -45,6 +45,11 @@
         </li>
         {{ widget('WishlistMenuItemWidgetPlugin', data.activePage, data.activeEntityId) }}
         {{ widget('ShoppingListMenuItemWidgetPlugin', data.activePage, data.activeEntityId) }}
+
+        {% if widgetExists('MultiCartMenuItemWidgetPlugin') %}
+            {{ widget('MultiCartMenuItemWidgetPlugin', data.activePage) }}
+        {% endif %}
+
         {% if widgetGlobalExists('MenuItemBusinessOnBehalfWidgetPlugin') %}
             <li class="menu__item menu__item--has-children-list {{macros.isActive('menuItemBusinessOnBehalfWidget', data.activePage)}}">
                 {{ widgetGlobal('MenuItemBusinessOnBehalfWidgetPlugin') }}

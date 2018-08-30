@@ -1,6 +1,6 @@
 # MultiCartPage Module
 
-{{ADD DESCRIPTION HERE}}
+The module provides multi cart management functionality.
 
 ## Installation
 

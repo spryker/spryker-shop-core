@@ -1,4 +1,4 @@
-{% extends template('page-layout-main') %}
+{% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
     form: _view.quoteForm,
@@ -9,9 +9,19 @@
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                label: 'cart.cart' | trans
-            }]
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'page.multi_cart.shopping_cart.list.title' | trans,
+                    url: url('multi-cart'),
+                },
+                {
+                    label: 'page.multi_cart.shopping_cart.create.title' | trans,
+                }
+            ]
         }
     } only %}
 {% endblock %}
@@ -20,7 +30,7 @@
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'multi_cart.form.edit_cart_information' | trans,
+                title: 'page.multi_cart.shopping_cart.create.title' | trans,
                 form: data.form,
                 options: {
                     action: data.formAction
