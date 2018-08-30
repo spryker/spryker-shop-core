@@ -146,6 +146,8 @@ class ShareCartCompanyUserShareEditForm extends AbstractType
                 return (new QuotePermissionGroupTransfer())
                     ->setIdQuotePermissionGroup($idQuotePermissionGroup);
             }
+
+            return null;
         };
     }
 }
