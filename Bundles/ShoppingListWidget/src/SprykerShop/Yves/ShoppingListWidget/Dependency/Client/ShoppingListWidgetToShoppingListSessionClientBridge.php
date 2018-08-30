@@ -24,8 +24,6 @@ class ShoppingListWidgetToShoppingListSessionClientBridge implements ShoppingLis
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
