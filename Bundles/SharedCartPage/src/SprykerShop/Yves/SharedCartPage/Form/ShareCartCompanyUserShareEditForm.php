@@ -7,8 +7,12 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Form;
 
+use Closure;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -99,6 +103,49 @@ class ShareCartCompanyUserShareEditForm extends AbstractType
             'label' => 'shared_cart.form.select_permissions',
         ]);
 
+        $builder->get(static::FIELD_QUOTE_PERMISSION_GROUP)
+            ->addModelTransformer($this->createModelTransformer());
+
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    protected function createModelTransformer(): DataTransformerInterface
+    {
+        return new CallbackTransformer(
+            $this->createTransformCallback(),
+            $this->createReverseTransformCallback()
+        );
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function createTransformCallback(): Closure
+    {
+        return function ($quotePermissionGroupTransfer) {
+            if ($quotePermissionGroupTransfer
+                && $quotePermissionGroupTransfer instanceof QuotePermissionGroupTransfer
+            ) {
+                return $quotePermissionGroupTransfer->getIdQuotePermissionGroup();
+            }
+
+            return '';
+        };
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function createReverseTransformCallback(): Closure
+    {
+        return function ($idQuotePermissionGroup) {
+            if ($idQuotePermissionGroup) {
+                return (new QuotePermissionGroupTransfer())
+                    ->setIdQuotePermissionGroup($idQuotePermissionGroup);
+            }
+        };
     }
 }

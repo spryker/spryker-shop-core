@@ -148,7 +148,6 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
 
         return (new ShareDetailTransfer())
             ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-            ->setIdQuoteCompanyUser($quoteTransfer->getIdQuote())
             ->setCustomerName($customerTransfer->getLastName() . ' ' . $customerTransfer->getFirstName());
     }
 
@@ -168,7 +167,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
         $quotePermissionGroupData = [$noAccessPermissionGroupName => null];
         foreach ($quotePermissionGroupResponseTransfer->getQuotePermissionGroups() as $quotePermissionGroupTransfer) {
             $quotePermissionGroupKey = static::GLOSSARY_KEY_PERMISSIONS . $quotePermissionGroupTransfer->getName();
-            $quotePermissionGroupData[$quotePermissionGroupKey] = $quotePermissionGroupTransfer;
+            $quotePermissionGroupData[$quotePermissionGroupKey] = $quotePermissionGroupTransfer->getIdQuotePermissionGroup();
         }
 
         return $quotePermissionGroupData;
