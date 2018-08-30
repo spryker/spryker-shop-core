@@ -44,7 +44,7 @@ class WidgetTagTest extends Twig_Test_NodeTestCase
         $expectedCode = <<<EOF
 // line 1
 if (\$context['app']['widget_tag_service']->openWidgetContext(\$this->getEnvironment(), "foo")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath())));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$context['app']['widget_tag_service']->getCurrentWidget(), "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath())));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
 EOF;
@@ -73,7 +73,7 @@ EOF;
         $expectedCode = <<<EOF
 // line 1
 if (\$context['app']['widget_tag_service']->openWidgetContext(\$this->getEnvironment(), "foo", array(0 => "foo", 1 => 123))) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath())));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$context['app']['widget_tag_service']->getCurrentWidget(), "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath())));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
 EOF;
@@ -97,7 +97,7 @@ EOF;
         $expectedCode = <<<EOF
 // line 1
 if (\$context['app']['widget_tag_service']->openWidgetContext(\$this->getEnvironment(), "foo")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath("custom-view.twig"))));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$context['app']['widget_tag_service']->getCurrentWidget(), "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath("custom-view.twig"))));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
 EOF;
@@ -134,7 +134,7 @@ EOF;
         $expectedCode = <<<EOF
 // line 1
 if (\$context['app']['widget_tag_service']->openWidgetContext(\$this->getEnvironment(), "foo")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath()), array("foo" => "bar", "baz" => array("a" => "b"))));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$context['app']['widget_tag_service']->getCurrentWidget(), "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath()), array("foo" => "bar", "baz" => array("a" => "b"))));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
 EOF;
@@ -175,7 +175,7 @@ EOF;
         $expectedCode = <<<EOF
 // line 1
 if (\$context['app']['widget_tag_service']->openWidgetContext(\$this->getEnvironment(), "foo")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(array("_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath()), array("foo" => "bar", "baz" => array("a" => "b"))));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(array("_widget" => \$context['app']['widget_tag_service']->getCurrentWidget(), "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath()), array("foo" => "bar", "baz" => array("a" => "b"))));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
 EOF;
@@ -201,7 +201,7 @@ EOF;
         $expectedCode = <<<EOF
 // line 1
 if (\$context['app']['widget_tag_service']->openWidgetContext(\$this->getEnvironment(), "foo")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array("_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath()));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array("_widget" => \$context['app']['widget_tag_service']->getCurrentWidget(), "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath()));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
 EOF;
@@ -228,7 +228,7 @@ EOF;
         $expectedCode = <<<EOF
 // line 1
 if (\$context['app']['widget_tag_service']->openWidgetContext(\$this->getEnvironment(), "foo")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath())));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$context['app']['widget_tag_service']->getCurrentWidget(), "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath())));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 } else {
     echo "content of nowidget";
