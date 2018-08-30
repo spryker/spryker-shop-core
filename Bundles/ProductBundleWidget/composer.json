@@ -10,11 +10,13 @@
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
+    "spryker-shop/multi-cart-page": "*",
     "spryker-shop/multi-cart-widget": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "Widget plugins are available for this module.",
-    "spryker-shop/multi-cart-widget": "Add to use bundle product widgets"
+    "spryker-shop/multi-cart-widget": "Add to use bundle product widgets",
+    "spryker-shop/multi-cart-page": "If you want to use ProductBundleItemCounterWidgetPlugin: ^1.0.0"
   },
   "autoload": {
     "psr-4": {
