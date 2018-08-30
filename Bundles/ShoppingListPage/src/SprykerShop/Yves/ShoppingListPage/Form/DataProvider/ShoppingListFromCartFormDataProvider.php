@@ -19,7 +19,7 @@ class ShoppingListFromCartFormDataProvider
     protected const GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ADD_NEW = 'cart.add-to-shopping-list.form.add_new';
 
     /**
-     * @var \SprykerShop\Yves\CartToShoppingListWidget\Dependency\Client\CartToShoppingListWidgetToShoppingListClientInterface
+     * @var \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface
      */
     protected $shoppingListClient;
 
