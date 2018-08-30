@@ -17,8 +17,6 @@ use SprykerShop\Yves\ShopUi\Dependency\Plugin\ShoppingListWidget\ShoppingListWid
 class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListWidgetPluginInterface
 {
     /**
-     * {@inheritDoc}
-     *
      * @return void
      */
     public function initialize(): void
