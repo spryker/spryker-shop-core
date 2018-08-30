@@ -97,7 +97,7 @@ class ShareCartForm extends AbstractType
             'entry_options' => [
                 static::OPTION_PERMISSION_GROUPS => $options[static::OPTION_PERMISSION_GROUPS],
             ],
-            'label' => 'shared_cart.form.select_customer',
+            'label' => false,
             'required' => false,
         ]);
 
