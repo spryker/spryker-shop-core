@@ -12,6 +12,7 @@
         delete: false,
         duplicate: false,
         toShoppingList: false,
+        share: false,
     }
 } %}
 
@@ -89,6 +90,13 @@
                                     {% if widgetExists('CartToShoppingListWidgetPlugin') %}
                                         <li class="menu__item">
                                             {{ widget('CartToShoppingListWidgetPlugin', quote) }}
+                                        </li>
+                                    {% endif %}
+                                {% endif %}
+                                {% if data.actions.share %}
+                                    {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
+                                        <li class="menu__item">
+                                            {{ widgetBlock('CartListPermissionGroupWidgetPlugin', 'actions', quote) }}
                                         </li>
                                     {% endif %}
                                 {% endif %}
