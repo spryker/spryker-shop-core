@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% block body %}
+    {% include molecule('note-update', 'ShoppingListNoteWidget') with {
+        data: {
+            shoppingListItemNoteForm: form
+        }
+    } only %}
+{% endblock %}
