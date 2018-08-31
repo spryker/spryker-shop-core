@@ -37,6 +37,7 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
         $this->setAuthenticationSuccessHandler($app);
         $this->setAuthenticationFailureHandler($app);
         $this->setSwitchUserEventSubscriber($app);
+        $this->setFilterControllerEventSubscriber($app);
     }
 
     /**
@@ -181,5 +182,15 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
     protected function getDispatcher(Application $app): EventDispatcherInterface
     {
         return $app['dispatcher'];
+    }
+
+    /**
+     * @param \Silex\Application $app
+     */
+    protected function setFilterControllerEventSubscriber(Application $app): void
+    {
+        $this->getDispatcher($app)->addSubscriber(
+            $this->getFactory()->createFilterControllerEventSubscriber()
+        );
     }
 }

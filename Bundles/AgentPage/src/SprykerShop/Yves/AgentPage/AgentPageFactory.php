@@ -16,10 +16,13 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterf
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
+use SprykerShop\Yves\AgentPage\Model\User\UserChanger;
+use SprykerShop\Yves\AgentPage\Model\User\UserChangerInterface;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentPageSecurityServiceProvider;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentUserProvider;
+use SprykerShop\Yves\AgentPage\Plugin\Subscriber\FilterControllerEventSubscriber;
 use SprykerShop\Yves\AgentPage\Plugin\Subscriber\SwitchUserEventSubscriber;
 use SprykerShop\Yves\AgentPage\Security\Agent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -38,6 +41,14 @@ class AgentPageFactory extends AbstractFactory
     public function createSwitchUserEventSubscriber(): EventSubscriberInterface
     {
         return new SwitchUserEventSubscriber();
+    }
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createFilterControllerEventSubscriber(): EventSubscriberInterface
+    {
+        return new FilterControllerEventSubscriber();
     }
 
     /**
@@ -88,6 +99,18 @@ class AgentPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\AgentPage\Model\User\UserChangerInterface
+     */
+    public function createUserChanger(): UserChangerInterface
+    {
+        return new UserChanger(
+            $this->getSecurityContext(),
+            $this->getAgentClient(),
+            $this->getCustomerClient()
+        );
+    }
+
+    /**
      * @return \SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface
      */
     public function getMessengerClient(): AgentPageToMessengerClientInterface
@@ -133,6 +156,16 @@ class AgentPageFactory extends AbstractFactory
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(AgentPageDependencyProvider::APPLICATION);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
+     */
+    public function getSecurityContext()
+    {
+        $application = $this->getApplication();
+
+        return $application['security.token_storage'];
     }
 
     /**
