@@ -121,7 +121,7 @@
                                     {% endif %}
                                 </td>
                                 <td class="text-center">
-                                    {{ form_row(data.form.items[key].quantity, {disabled: not isProductAvailable, type: 'number'}) }}
+                                    {{ form_row(data.form.items[key].quantity, {'attr': {'readonly': not isProductAvailable}, type: 'number'}) }}
                                 </td>
                                 <td class="text-center">
                                     {% if isProductAvailable %}
