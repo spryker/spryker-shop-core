@@ -19,6 +19,7 @@
 {% endblock %}
 
 {% block content %}
+    {% set canWriteSharedCart = can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
@@ -32,7 +33,7 @@
         </div>
     {% else %}
         <div class="grid">
-            <div class="col col--sm-12 col--xl-8">
+            <div class="col col--sm-12 {% if canWriteSharedCart %}col--xl-8{% else %}col--xl-12{% endif %}">
                 {% for cartItem in data.cartItems %}
                     {% include molecule('cart-item', 'CartPage') with {
                         class: 'box',
@@ -51,31 +52,33 @@
                 {% endif %}
             </div>
 
-            <div class="col col--sm-12 col--xl-4">
-                <div class="box">
-                    {% if widgetExists('CartNoteQuoteWidgetPlugin') %}
-                        {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
-                        <hr />
-                    {% endif %}
+            {% if canWriteSharedCart %}
+                <div class="col col--sm-12 col--xl-4">
+                    <div class="box">
+                        {% if widgetExists('CartNoteQuoteWidgetPlugin') %}
+                            {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
+                            <hr />
+                        {% endif %}
 
-                    {% if not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
-                        {{ widget('DiscountVoucherFormWidgetPlugin') }}
-                        <hr />
-                    {% endif %}
+                        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                            {{ widget('DiscountVoucherFormWidgetPlugin') }}
+                            <hr />
+                        {% endif %}
 
-                    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty and data.cart.items is not empty %}
-                        {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
-                        <hr />
-                    {% endif %}
+                        {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty and data.cart.items is not empty %}
+                            {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
+                            <hr />
+                        {% endif %}
 
-                    {% include molecule('cart-summary', 'CartPage') with {
-                        data: {
-                            cart: data.cart,
-                            isQuoteValid: data.isQuoteValid
-                        }
-                    } only %}
+                        {% include molecule('cart-summary', 'CartPage') with {
+                            data: {
+                                cart: data.cart,
+                                isQuoteValid: data.isQuoteValid
+                            }
+                        } only %}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     {% endif %}
 
