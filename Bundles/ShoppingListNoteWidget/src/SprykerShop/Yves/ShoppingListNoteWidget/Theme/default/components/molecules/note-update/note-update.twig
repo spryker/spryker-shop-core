@@ -16,7 +16,13 @@
         {% set shoppingListItemNoteClass = 'is-hidden' %}
         <button type="button" class="link {{ config.jsName }}">{{ 'shopping_list.item_note.add' | trans }}</button>
     {% endif %}
-    <span class="{{ config.jsName }}__wrapper {{ shoppingListItemNoteClass }}">
-        {{ form_row(data.shoppingListItemNoteForm.note, { 'label': 'shopping_list.item_note' | trans, 'attr' : { 'class' : "shopping-list-item-note" }}) }}
-    </span>
+    <div class="{{ config.jsName }}__wrapper {{ shoppingListItemNoteClass }}">
+        {{ form_row(data.shoppingListItemNoteForm.note, {
+            label: 'shopping_list.item_note' | trans,
+            attr : {
+                'class' : config.jsName ~'__item-note',
+                placeholder: ' '
+            }})
+        }}
+    </div>
 {% endblock %}
