@@ -3,19 +3,19 @@
   "description": "ShoppingListPageExtension module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/symfony": "If you want to use ShoppingListPage form expander plugins."
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
