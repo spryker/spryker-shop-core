@@ -39,9 +39,7 @@ class ShareCartForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired([
-            static::OPTION_PERMISSION_GROUPS,
-        ]);
+        $resolver->setRequired(static::OPTION_PERMISSION_GROUPS);
         $resolver->setDefaults([
             'data_class' => ShareCartRequestTransfer::class,
         ]);
