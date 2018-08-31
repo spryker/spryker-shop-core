@@ -1,12 +1,14 @@
 import Component from 'ShopUi/models/component';
 
 export default class ShoppingListNote extends Component {
-    button: HTMLElement
+    button: HTMLFormElement
     noteTextFieldWrapper: HTMLElement
+    hiddenClass: string
 
     protected readyCallback(): void {
         this.button = <HTMLFormElement>this.querySelector(`.${this.jsName}`);
-        this.noteTextFieldWrapper = <HTMLFormElement>this.querySelector(`.${'shopping-list-item-note-wrapper'}`);
+        this.noteTextFieldWrapper = <HTMLFormElement>this.querySelector(`.${this.jsName}__wrapper`);
+        this.hiddenClass = 'is-hidden';
         this.mapEvents();
     }
 
@@ -14,8 +16,8 @@ export default class ShoppingListNote extends Component {
         if(this.button) {
             this.button.addEventListener('click', (e)=>{
                 e.preventDefault();
-                this.button.classList.add('is-hidden');
-                this.noteTextFieldWrapper.classList.remove('is-hidden');
+                this.button.classList.add(this.hiddenClass);
+                this.noteTextFieldWrapper.classList.remove(this.hiddenClass);
             })
         }
     }

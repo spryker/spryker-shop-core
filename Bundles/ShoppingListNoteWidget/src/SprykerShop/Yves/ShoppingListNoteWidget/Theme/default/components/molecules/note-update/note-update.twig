@@ -9,14 +9,14 @@
     shoppingListItemNoteForm: required
 } %}
 
+{% set shoppingListItemNoteClass = '' %}
+
 {% block body %}
-    {% if data.shoppingListItemNoteForm.vars.data.note %}
-        {% set shoppingListItemNoteClass = 'is-visible' %}
-    {% else %}
+    {% if not data.shoppingListItemNoteForm.vars.data.note %}
         {% set shoppingListItemNoteClass = 'is-hidden' %}
-        <a href="#" class="{{ config.jsName }}">{{ 'shopping_list.item_note.add' | trans }}</a>
+        <button type="button" class="button {{ config.jsName }}">{{ 'shopping_list.item_note.add' | trans }}</button>
     {% endif %}
-    <span class="shopping-list-item-note-wrapper {{ shoppingListItemNoteClass }}">
+    <span class="{{ config.jsName }}__wrapper {{ shoppingListItemNoteClass }}">
         {{ form_row(data.shoppingListItemNoteForm.note, { 'label': 'shopping_list.item_note' | trans, 'attr' : { 'class' : "shopping-list-item-note" }}) }}
     </span>
 {% endblock %}
