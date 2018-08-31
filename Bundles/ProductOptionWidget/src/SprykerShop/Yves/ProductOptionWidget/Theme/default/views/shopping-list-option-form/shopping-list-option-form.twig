@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    shoppingListItem: shoppingListItem,
+} %}
+
+{% block body %}
+    {% for child in form.children %}
+        <strong>{{ form_label(child) }}:</strong>
+        {{ widget('ShoppingListItemProductOptionEditWidgetPlugin', child.vars.choices, child.vars.full_name) }}
+        {{ form_errors(child) }}
+    {% endfor %}
+{% endblock %}

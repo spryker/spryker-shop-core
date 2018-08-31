@@ -1,14 +1,37 @@
-{% extends model('component') %}
+{% extends template('widget') %}
 
-{% define config = {
-    name: 'note-update',
-    tag: 'note-update',
- } %}
+{% define data = {
+    optionGroups: _widget.productOptionGroups,
+    full_name: _widget.name
+} %}
 
- {% define data = {
-    shoppingListItemProductOptionForm: required
- } %}
+{% block template %}
+    {% if data.optionGroups is not empty %}{{parent()}}{% endif %}
+{% endblock %}
 
- {% block body %}
-    Todo: add display
- {% endblock %}
+{% block body %}
+    {# todo: current template and "option-configurator.twig" have to be refactored #}
+    <ul class="list">
+            <li class="list__item spacing-y">
+                {% embed atom('select') with {
+                    modifiers: ['expand'],
+                    attributes: {
+                        name: data.full_name,
+                    },
+                    embed: {
+                        options: data.optionGroups
+                    }
+                } only %}
+                    {% block options %}
+                        <option value="0">{{ 'product.product_options_select' | trans }}</option>
+                        {% for option in embed.options %}
+                            <option value="{{option.idProductOptionValue}}" {% if option.isSelected %} selected {% endif %}>
+                                {{ option.value | trans }} {{ option.price | money }}
+                            </option>
+                        {% endfor %}
+                    {% endblock %}
+                {% endembed %}
+            </li>
+    </ul>
+    <hr />
+{% endblock %}

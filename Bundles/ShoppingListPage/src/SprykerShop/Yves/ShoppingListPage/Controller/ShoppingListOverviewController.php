@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Controller;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use SprykerShop\Yves\ProductOptionWidget\Plugin\ShoppingListPage\ShoppingListItemProductOptionEditWidgetPlugin;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\Form\FormInterface;
@@ -91,7 +92,13 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             return $response;
         }
 
-        return $this->view($response, [], '@ShoppingListPage/views/shopping-list-overview-update/shopping-list-overview-update.twig');
+        return $this->view(
+            $response,
+            [
+                ShoppingListItemProductOptionEditWidgetPlugin::class, //todo:update
+            ],
+            '@ShoppingListPage/views/shopping-list-overview-update/shopping-list-overview-update.twig'
+        );
     }
 
     /**
