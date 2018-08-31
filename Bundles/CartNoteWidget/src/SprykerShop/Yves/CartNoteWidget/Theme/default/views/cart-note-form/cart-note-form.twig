@@ -21,5 +21,7 @@
                 }
             }
         } only %}
+    {% else %}
+        {{ 'cart_note.checkout_page.quote_note' | trans }}: {{ data.form.cartNote.vars.value }}
     {% endif %}
 {% endblock %}
