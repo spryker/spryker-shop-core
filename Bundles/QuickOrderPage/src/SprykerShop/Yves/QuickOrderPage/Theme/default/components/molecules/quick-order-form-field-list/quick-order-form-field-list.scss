@@ -1,10 +1,6 @@
-@mixin quick-order-page-quick-order-form($name: '.quick-order-form') {
+@mixin quick-order-quick-order-form-field-list($name: '.quick-order-form-field-list') {
     #{$name} {
-        position: relative;
-
-        &__list {
-            width: 100%;
-
+        &__item {
             &:not(:first-child) {
                 border-top: 1px solid $setting-color-lighter;
             }
