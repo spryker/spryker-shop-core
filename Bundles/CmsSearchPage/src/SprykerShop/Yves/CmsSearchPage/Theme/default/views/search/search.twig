@@ -1,0 +1,44 @@
+{% extends template('page-layout-catalog', 'CatalogPage') %}
+
+{% define data = {
+    pages: _view.cms_pages,
+    searchString: _view.searchString,
+    suggestion: _view.spellingSuggestion,
+
+    title: ('global.search.results' | trans) ~ ' ' ~ _view.searchString,
+    metaTitle: _view.pageTitle | default,
+    metaDescription: _view.pageDescription | default,
+    metaKeywords: _view.pageKeywords | default,
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'global.search' | trans
+            }]
+        }
+    } only %}
+{% endblock %}
+
+{% block title %}
+    <h3>{{ 'global.search.results' | trans }} "<strong>{{ data.searchString }}</strong>"</h3>
+
+    {% embed molecule('spelling-suggestion', 'CatalogPage') with {
+        data: {
+            suggestion: data.suggestion
+        }
+    } only %}
+        {% block body %}
+            <hr />
+            {{parent()}}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block form %}
+    {{parent()}}
+    {% if data.searchString is not empty %}
+        <input type="hidden" name="q" value="{{ data.searchString }}" />
+    {% endif %}
+{% endblock %}
