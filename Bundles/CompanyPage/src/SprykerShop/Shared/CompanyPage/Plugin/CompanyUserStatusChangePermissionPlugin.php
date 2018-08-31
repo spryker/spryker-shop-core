@@ -18,7 +18,7 @@ class CompanyUserStatusChangePermissionPlugin implements PermissionPluginInterfa
 
     /**
      * Specification:
-     * - Returns plugin name as key which is passed to company account page to manage enable / disable company users permission.
+     * - Returns plugin name as key to permission manage for enable / disable status of company users.
      *
      * @api
      *
