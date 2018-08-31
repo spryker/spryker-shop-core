@@ -1,0 +1,24 @@
+{% extends template('widget') %}
+
+{% define data = {
+    shoppingListCollection: _widget.shoppingListCollection,
+    labels: {
+        shoppingListNameLabel: 'customer.account.shopping_list.overview.name' | trans
+    }
+} %}
+
+{% set shoppingListOptions = [{ value: 0, label: 'Choose shopping list' }] %}
+
+{% if data.shoppingListCollection.shoppingLists|length %}
+    {% for shoppingList in data.shoppingListCollection.shoppingLists %}
+        {% set shoppingListOptions = shoppingListOptions|merge([{ value: shoppingList.idShoppingList, label: shoppingList.name }]) %}
+    {% endfor %}
+{% endif %}
+
+{% block body %}
+    {% include molecule('submit-shopping-list', 'QuickOrderToShoppingListWidget') with {
+        data: {
+            shoppingListOptions: shoppingListOptions
+        }
+    } %}
+{% endblock %}
