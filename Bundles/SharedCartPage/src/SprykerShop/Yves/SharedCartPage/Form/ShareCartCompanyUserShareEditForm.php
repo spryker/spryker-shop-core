@@ -46,10 +46,10 @@ class ShareCartCompanyUserShareEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addIdQuoteCompanyUserField($builder);
-        $this->addIdCompanyUserField($builder);
-        $this->addCustomerNameField($builder);
-        $this->addQuotePermissionGroupField($builder, $options);
+        $this->addIdQuoteCompanyUserField($builder)
+            ->addIdCompanyUserField($builder)
+            ->addCustomerNameField($builder)
+            ->addQuotePermissionGroupField($builder, $options);
     }
 
     /**
