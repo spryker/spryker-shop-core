@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\SharedCartPage;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinder;
-use SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinderInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCompanyUserClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCustomerClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToMultiCartClientInterface;
@@ -25,17 +25,22 @@ class SharedCartPageFactory extends AbstractFactory
 {
     /**
      * @param int $idQuote
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]|null $quoteShareDetails
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getShareCartForm($idQuote): FormInterface
-    {
+    public function getShareCartForm(
+        $idQuote,
+        ?ArrayObject $quoteShareDetails = null,
+        ?CustomerTransfer $customerTransfer = null
+    ): FormInterface {
         $dataProvider = $this->createShareCartFormDataProvider();
 
         return $this->getFormFactory()->create(
             ShareCartForm::class,
-            $dataProvider->getData($idQuote),
-            $dataProvider->getOptions()
+            $dataProvider->getData($idQuote, $quoteShareDetails),
+            $dataProvider->getOptions($customerTransfer)
         );
     }
 
@@ -46,20 +51,8 @@ class SharedCartPageFactory extends AbstractFactory
     {
         return new ShareCartFormDataProvider(
             $this->getCustomerClient(),
-            $this->getSharedCartClient(),
-            $this->getMultiCartClient(),
-            $this->createCompanyUserFinder()
-        );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\SharedCartPage\CompanyUser\CompanyUserFinderInterface
-     */
-    public function createCompanyUserFinder(): CompanyUserFinderInterface
-    {
-        return new CompanyUserFinder(
-            $this->getCustomerClient(),
-            $this->getCompanyUserClient()
+            $this->getCompanyUserClient(),
+            $this->getSharedCartClient()
         );
     }
 

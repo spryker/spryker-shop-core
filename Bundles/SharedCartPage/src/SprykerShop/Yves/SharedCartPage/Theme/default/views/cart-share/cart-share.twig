@@ -2,7 +2,7 @@
 
 {% define data = {
     companyUserNames: _view.companyUserNames | default([]),
-    cartName: _view.cartName | default,
+    cartName: _view.cart.name | default,
     form: _view.sharedCartForm,
     title: 'shared_cart.form.share_cart' | trans,
 } %}

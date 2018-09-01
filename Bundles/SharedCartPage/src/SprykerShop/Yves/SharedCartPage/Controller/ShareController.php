@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Controller;
 
+use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -43,8 +44,20 @@ class ShareController extends AbstractController
      */
     protected function executeIndexAction(int $idQuote, Request $request)
     {
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if ($quoteTransfer === null || $customerTransfer === null) {
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $sharedCartForm = $this->getFactory()
-            ->getShareCartForm($idQuote)
+            ->getShareCartForm($idQuote, $quoteTransfer->getShareDetails(), $customerTransfer)
             ->handleRequest($request);
 
         if ($sharedCartForm->isSubmitted() && $sharedCartForm->isValid()) {
@@ -59,16 +72,11 @@ class ShareController extends AbstractController
         }
 
         $companyUserNames = $this->getFactory()
-            ->createCompanyUserFinder()
-            ->getCompanyUserNames();
-
-        $quoteTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->findQuoteById($idQuote);
+            ->createShareCartFormDataProvider()
+            ->getCompanyUserNames($customerTransfer);
 
         return [
-            'idQuote' => $idQuote,
-            'cartName' => ($quoteTransfer !== null) ? $quoteTransfer->getName() : null,
+            'cart' => $quoteTransfer,
             'sharedCartForm' => $sharedCartForm->createView(),
             'companyUserNames' => $companyUserNames,
         ];
