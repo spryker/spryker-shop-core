@@ -1,7 +1,7 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    cartName: _view.cartName | default,
+    cartName: _view.cart.name | default,
     form: _view.sharedCartForm,
     title: 'shared_cart.form.share_cart' | trans
 } %}
@@ -30,7 +30,6 @@
  {% endblock %}
 
 {% block content %}
-
     <div class="grid">
         <div class="col col--sm-12 col--md-2">
             <div class="box">
@@ -39,7 +38,6 @@
         </div>
         <div class="col col--sm-12 col--md-10">
             {{ form_start(data.form) }}
-
                 {% set formShareDetailsValues = data.form.vars.value.shareDetails.getArrayCopy() %}
                 {% set companyUserIdsWithPermissions = [] %}
                 {% set companyUserIdsWithoutPermissions = [] %}
@@ -71,7 +69,6 @@
                         {{ 'shared_cart.form.save_button' | trans }}
                     </button>
                 </div>
-
             {{ form_end(data.form) }}
         </div>
     </div>

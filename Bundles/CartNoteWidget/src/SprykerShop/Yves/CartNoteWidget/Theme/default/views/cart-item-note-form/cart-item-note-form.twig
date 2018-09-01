@@ -21,5 +21,9 @@
                 }
             }
         } only %}
+    {% else %}
+        <div class="form">
+            {{ 'cart_note.checkout_page.item_note' | trans }}: {{ data.form.cartNote.vars.value }}
+        </div>
     {% endif %}
 {% endblock %}
