@@ -33,7 +33,7 @@
         </div>
     {% else %}
         <div class="grid">
-            <div class="col col--sm-12 {% if canWriteSharedCart %}col--xl-8{% else %}col--xl-12{% endif %}">
+            <div class="col col--sm-12 col--xl-8">
                 {% for cartItem in data.cartItems %}
                     {% include molecule('cart-item', 'CartPage') with {
                         class: 'box',
@@ -47,19 +47,19 @@
 
                 {{ widget('DiscountPromotionItemListWidgetPlugin', data.cart, data.request) }}
 
-                {% if data.cart.idQuote is not empty %}
+                {% if canWriteSharedCart and data.cart.idQuote is not empty %}
                     {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }}
                 {% endif %}
             </div>
 
-            {% if canWriteSharedCart %}
-                <div class="col col--sm-12 col--xl-4">
-                    <div class="box">
-                        {% if widgetExists('CartNoteQuoteWidgetPlugin') %}
-                            {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
-                            <hr />
-                        {% endif %}
+            <div class="col col--sm-12 col--xl-4">
+                <div class="box">
+                    {% if widgetExists('CartNoteQuoteWidgetPlugin') %}
+                        {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
+                        <hr />
+                    {% endif %}
 
+                    {% if canWriteSharedCart %}
                         {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                             {{ widget('DiscountVoucherFormWidgetPlugin') }}
                             <hr />
@@ -69,16 +69,16 @@
                             {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
                             <hr />
                         {% endif %}
+                    {% endif %}
 
-                        {% include molecule('cart-summary', 'CartPage') with {
-                            data: {
-                                cart: data.cart,
-                                isQuoteValid: data.isQuoteValid
-                            }
-                        } only %}
-                    </div>
+                    {% include molecule('cart-summary', 'CartPage') with {
+                        data: {
+                            cart: data.cart,
+                            isQuoteValid: data.isQuoteValid
+                        }
+                    } only %}
                 </div>
-            {% endif %}
+            </div>
         </div>
     {% endif %}
 

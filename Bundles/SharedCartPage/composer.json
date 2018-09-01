@@ -16,12 +16,13 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker/permission": "*",
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker/permission": "If you want to use permissions plugins"
+    "spryker/permission": "If you want to use permissions plugins",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {
