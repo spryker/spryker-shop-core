@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'user-share-list'
+} %}
+
+{% define data = {
+    shareDetailsForm: required,
+    companyUserIdsToRender: required
+} %}
+
+{% block body %}
+    {% if data.companyUserIdsToRender is not empty %}
+        <div class="box spacing spacing-bottom--big">
+            <ul class="list">
+                {% for formRow in data.shareDetailsForm %}
+                    {% if formRow.vars.value.idCompanyUser in data.companyUserIdsToRender %}
+                        <li class="list__item box spacing spacing-bottom--small">
+                            <div class="grid grid--middle">
+                                <div class="col--sm-6 col--md-9">
+                                    <strong class="label label-info">{{ formRow.vars.value.customerName }}</strong>
+                                    {{ form_errors(formRow) }}
+                                </div>
+                                <div class="col--sm-6 col--md-3">
+                                    {{ form_widget(formRow) }}
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock body %}
