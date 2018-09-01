@@ -1,4 +1,4 @@
-namespace: QuickOrderToShoppingListWidget
+namespace: QuickOrderPageExtension
 actor: Tester
 paths:
     tests: tests

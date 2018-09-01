@@ -1,12 +1,17 @@
 {
-  "name": "spryker-shop/quick-order-to-shopping-list-widget",
-  "description": "QuickOrderToShoppingListWidget module",
+  "name": "spryker-shop/quick-order-page-extension",
+  "description": "QuickOrderPageExtension module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/symfony": "If you want to use symfony forms"
   },
   "autoload": {
     "psr-4": {

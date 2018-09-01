@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/quick-order-page-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/customer": "^7.4.0",
@@ -13,11 +14,13 @@
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",
+    "spryker-shop/quick-order-page": "*",
     "spryker/product-detail-page": "*",
     "spryker/silex": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "Widget plugins are available for this module.",
+    "spryker-shop/quick-order-page": "if you want to use ShoppingListQuickOrderPageWidgetPlugin: ^1.1.0",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker/product-detail-page": "To use ShoppingListWidget plugin, ShoppingListWidgetPluginInterface from product-detail-page v0.2.2 is needed"
   },
