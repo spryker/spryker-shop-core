@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormInterface;
 class MultiCartPageFactory extends AbstractFactory
 {
     /**
-     * @param null|int $idQuote
+     * @param int|null $idQuote
      *
      * @return \Symfony\Component\Form\FormInterface
      */
