@@ -48,16 +48,12 @@ class ShareController extends AbstractController
             ->getMultiCartClient()
             ->findQuoteById($idQuote);
 
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        if ($quoteTransfer === null || $customerTransfer === null) {
+        if ($quoteTransfer === null) {
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
         $sharedCartForm = $this->getFactory()
-            ->getShareCartForm($idQuote, $quoteTransfer->getShareDetails(), $customerTransfer)
+            ->getShareCartForm($idQuote)
             ->handleRequest($request);
 
         if ($sharedCartForm->isSubmitted() && $sharedCartForm->isValid()) {
@@ -71,14 +67,10 @@ class ShareController extends AbstractController
             }
         }
 
-        $companyUserNames = $this->getFactory()
-            ->createShareCartFormDataProvider()
-            ->getCompanyUserNames($customerTransfer);
-
         return [
-            'cart' => $quoteTransfer,
+            'idQuote' => $idQuote,
             'sharedCartForm' => $sharedCartForm->createView(),
-            'companyUserNames' => $companyUserNames,
+            'cart' => $quoteTransfer,
         ];
     }
 }

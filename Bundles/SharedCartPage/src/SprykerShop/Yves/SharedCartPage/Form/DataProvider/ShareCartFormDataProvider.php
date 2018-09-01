@@ -10,13 +10,12 @@ namespace SprykerShop\Yves\SharedCartPage\Form\DataProvider;
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCompanyUserClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCustomerClientInterface;
+use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToMultiCartClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToSharedCartClientInterface;
 use SprykerShop\Yves\SharedCartPage\Form\ShareCartForm;
 
@@ -41,132 +40,100 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     protected $sharedCartClient;
 
     /**
+     * @var \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToMultiCartClientInterface
+     */
+    protected $multiCartClient;
+
+    /**
      * @param \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCompanyUserClientInterface $companyUserClient
      * @param \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToSharedCartClientInterface $sharedCartClient
+     * @param \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToMultiCartClientInterface $multiCartClient
      */
     public function __construct(
         SharedCartPageToCustomerClientInterface $customerClient,
         SharedCartPageToCompanyUserClientInterface $companyUserClient,
-        SharedCartPageToSharedCartClientInterface $sharedCartClient
+        SharedCartPageToSharedCartClientInterface $sharedCartClient,
+        SharedCartPageToMultiCartClientInterface $multiCartClient
     ) {
         $this->customerClient = $customerClient;
         $this->companyUserClient = $companyUserClient;
         $this->sharedCartClient = $sharedCartClient;
+        $this->multiCartClient = $multiCartClient;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
-     *
      * @return array
      */
-    public function getOptions(?CustomerTransfer $customerTransfer = null): array
+    public function getOptions(): array
     {
         return [
-            ShareCartForm::OPTION_CUSTOMERS => $this->getCustomerListData($customerTransfer),
             ShareCartForm::OPTION_PERMISSION_GROUPS => $this->getQuotePermissionGroups(),
         ];
     }
 
     /**
      * @param int $idQuote
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]|null $quoteShareDetails
      *
      * @return \Generated\Shared\Transfer\ShareCartRequestTransfer
      */
-    public function getData($idQuote, ?ArrayObject $quoteShareDetails = null): ShareCartRequestTransfer
+    public function getData($idQuote): ShareCartRequestTransfer
     {
-        $customerTransfer = $this->customerClient->getCustomer();
-        $customerTransfer->requireCompanyUserTransfer();
-        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
-
-        $formShareDetails = $quoteShareDetails ?: new ArrayObject();
-        $formShareDetails = $this->hydrateCompanyUsersShareDetails($formShareDetails);
-
-        $shareCartRequestTransfer = (new ShareCartRequestTransfer())
-            ->setIdQuote($idQuote)
-            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-            ->setShareDetails($formShareDetails);
+        $shareCartRequestTransfer = new ShareCartRequestTransfer();
+        $shareCartRequestTransfer->setIdQuote($idQuote)
+            ->setShareDetails($this->getShareDetails($idQuote));
 
         return $shareCartRequestTransfer;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[] $quoteShareDetails
+     * @param int $idQuote
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]
      */
-    protected function hydrateCompanyUsersShareDetails(ArrayObject $quoteShareDetails): ArrayObject
+    protected function getShareDetails(int $idQuote): ArrayObject
     {
-        $customer = $this->customerClient->getCustomer();
-        $companyBusinessUnitTransfer = $customer
-            ->requireCompanyUserTransfer()->getCompanyUserTransfer()->getCompanyBusinessUnit();
-        $businessUnitCompanyUserList = $this->getBusinessUnitCustomers($companyBusinessUnitTransfer);
-
-        $hydratedFormShareDetails = new ArrayObject();
-        foreach ($businessUnitCompanyUserList as $companyUserTransfer) {
-            if ($companyUserTransfer->getFkCustomer() === $customer->getIdCustomer()) {
-                continue;
-            }
-
-            $hasQuoteShareDetail = false;
-            $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
-            foreach ($quoteShareDetails as $quoteShareDetail) {
-                if ($quoteShareDetail->getIdCompanyUser() === $idCompanyUser) {
-                    $hasQuoteShareDetail = true;
-                    $hydratedFormShareDetails[$idCompanyUser] = $quoteShareDetail;
-                }
-            }
-            if (!$hasQuoteShareDetail) {
-                $hydratedFormShareDetails[$idCompanyUser] = $this->createShareDetailForCompanyUser($companyUserTransfer);
+        $quoteTransfer = $this->multiCartClient->findQuoteById($idQuote);
+        $shareDetailTransfers = $quoteTransfer->getShareDetails();
+        $companyUserData = $this->getCustomerListData();
+        $indexedSharedCompanyUsers = $this->indexExistingCompanyUsers($shareDetailTransfers);
+        foreach ($companyUserData as $idCompanyUser => $companyUserName) {
+            if (!in_array($idCompanyUser, $indexedSharedCompanyUsers)) {
+                $shareDetailTransfers->append(
+                    (new ShareDetailTransfer)
+                        ->setIdCompanyUser($idCompanyUser)
+                        ->setCustomerName($companyUserName)
+                );
             }
         }
 
-        return $hydratedFormShareDetails;
+        return $shareDetailTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[] $shareDetailTransfers
      *
-     * @return \Generated\Shared\Transfer\ShareDetailTransfer
+     * @return int[]
      */
-    protected function createShareDetailForCompanyUser(
-        CompanyUserTransfer $companyUserTransfer
-    ): ShareDetailTransfer {
-        $companyUserTransfer->requireIdCompanyUser();
-        $companyUserTransfer->requireCustomer();
+    protected function indexExistingCompanyUsers(ArrayObject $shareDetailTransfers): array
+    {
+        $indexedExistingCompanyUsers = [];
+        foreach ($shareDetailTransfers as $shareDetailTransfer) {
+            $indexedExistingCompanyUsers[] = $shareDetailTransfer->getIdCompanyUser();
+        }
 
-        $customerTransfer = $companyUserTransfer->getCustomer();
-
-        $customerTransfer->requireFirstName();
-        $customerTransfer->requireLastName();
-
-        return (new ShareDetailTransfer())
-            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-            ->setCustomerName($customerTransfer->getLastName() . ' ' . $customerTransfer->getFirstName());
+        return $indexedExistingCompanyUsers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
-     *
      * @return array
      */
-    public function getCompanyUserNames(?CustomerTransfer $customerTransfer = null): array
+    protected function getCustomerListData(): array
     {
-        return $this->getCustomerListData($customerTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
-     *
-     * @return array
-     */
-    protected function getCustomerListData(?CustomerTransfer $customerTransfer = null): array
-    {
-        $customer = $customerTransfer ?? $this->customerClient->getCustomer();
-
-        $companyBusinessUnitTransfer = $customer
-            ->requireCompanyUserTransfer()->getCompanyUserTransfer()->getCompanyBusinessUnit();
+        $customer = $this->customerClient->getCustomer();
+        $companyBusinessUnitTransfer = $customer->requireCompanyUserTransfer()
+            ->getCompanyUserTransfer()
+            ->getCompanyBusinessUnit();
         $businessUnitCompanyUserList = $this->getBusinessUnitCustomers($companyBusinessUnitTransfer);
         $customerListData = [];
         foreach ($businessUnitCompanyUserList as $companyUserTransfer) {

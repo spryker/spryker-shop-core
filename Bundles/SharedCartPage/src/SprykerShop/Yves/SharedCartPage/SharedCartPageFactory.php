@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\SharedCartPage;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCompanyUserClientInterface;
@@ -25,22 +23,17 @@ class SharedCartPageFactory extends AbstractFactory
 {
     /**
      * @param int $idQuote
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]|null $quoteShareDetails
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getShareCartForm(
-        $idQuote,
-        ?ArrayObject $quoteShareDetails = null,
-        ?CustomerTransfer $customerTransfer = null
-    ): FormInterface {
+    public function getShareCartForm($idQuote): FormInterface
+    {
         $dataProvider = $this->createShareCartFormDataProvider();
 
         return $this->getFormFactory()->create(
             ShareCartForm::class,
-            $dataProvider->getData($idQuote, $quoteShareDetails),
-            $dataProvider->getOptions($customerTransfer)
+            $dataProvider->getData($idQuote),
+            $dataProvider->getOptions()
         );
     }
 
@@ -52,7 +45,8 @@ class SharedCartPageFactory extends AbstractFactory
         return new ShareCartFormDataProvider(
             $this->getCustomerClient(),
             $this->getCompanyUserClient(),
-            $this->getSharedCartClient()
+            $this->getSharedCartClient(),
+            $this->getMultiCartClient()
         );
     }
 

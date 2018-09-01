@@ -1,10 +1,9 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    companyUserNames: _view.companyUserNames | default([]),
     cartName: _view.cart.name | default,
     form: _view.sharedCartForm,
-    title: 'shared_cart.form.share_cart' | trans,
+    title: 'shared_cart.form.share_cart.title' | trans({cart_name: _view.cart.name | default}),
 } %}
 
 {% block breadcrumbs %}
@@ -25,41 +24,38 @@
 
 {% block content %}
     {{ form_start(data.form) }}
+    <div class="share-cart-table box" data-qa="component share-cart-table">
+        <table class="table table--expand">
+            <tbody>
+                {% for key, shareDetail in data.form.shareDetails %}
+                    {% if shareDetail.vars.value.quotePermissionGroup is not null %}
+                    <tr>
+                        <td>
+                            {{ shareDetail.vars.value.customerName }}
+                        </td>
+                        <td>
+                            {{ form_widget(shareDetail.quotePermissionGroup) }}
+                            {{ form_errors(shareDetail.quotePermissionGroup) }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
 
-    {% set formShareDetailsValues = data.form.vars.value.shareDetails.getArrayCopy() %}
-
-    <div class="box">
-        {% for key, shareDetail in data.form.shareDetails %}
-            {% if formShareDetailsValues[key].quotePermissionGroup is not null %}
-                <div>
-                    <div class="col-md-6">
-                        <label class="label label-info">{{ data.companyUserNames[key] }}</label>
-                        {{ form_errors(shareDetail) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_widget(shareDetail) }}
-                    </div>
-                </div>
-                <br/>
-            {% endif %}
-        {% endfor %}
-    </div>
-
-    <div class="box">
-        {% for key, shareDetail in data.form.shareDetails %}
-            {% if formShareDetailsValues[key].quotePermissionGroup is null %}
-                <div>
-                    <div class="col-md-6">
-                        <label class="label label-info">{{ data.companyUserNames[key] }}</label>
-                        {{ form_errors(shareDetail) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_widget(shareDetail) }}
-                    </div>
-                </div>
-                <br/>
-            {% endif %}
-        {% endfor %}
+                {% for key, shareDetail in data.form.shareDetails %}
+                    {% if shareDetail.vars.value.quotePermissionGroup is null %}
+                    <tr>
+                        <td>
+                            {{ shareDetail.vars.value.customerName }}
+                        </td>
+                        <td>
+                            {{ form_widget(shareDetail.quotePermissionGroup) }}
+                            {{ form_errors(shareDetail.quotePermissionGroup) }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
     <div class="box">
