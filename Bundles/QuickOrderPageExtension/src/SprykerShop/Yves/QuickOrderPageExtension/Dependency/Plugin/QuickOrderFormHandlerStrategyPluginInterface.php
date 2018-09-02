@@ -29,7 +29,7 @@ interface QuickOrderFormHandlerStrategyPluginInterface
     /**
      * Specification:
      *  - Handle quick order form submit.
-     *  - Returns true if handling was successful.
+     *  - Returns redirect to response.
      *
      * @api
      *

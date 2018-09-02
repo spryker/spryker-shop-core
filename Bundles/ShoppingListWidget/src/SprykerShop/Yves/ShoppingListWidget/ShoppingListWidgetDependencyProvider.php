@@ -68,7 +68,7 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addApplication(Container $container): Container
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container[static::PLUGIN_APPLICATION] = function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
