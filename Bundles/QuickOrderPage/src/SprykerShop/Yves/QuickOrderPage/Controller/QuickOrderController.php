@@ -246,7 +246,7 @@ class QuickOrderController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $quickOrderForm
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return null|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
      */
     protected function executeQuickOrderFormHandlerStrategyPlugin(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
     {
