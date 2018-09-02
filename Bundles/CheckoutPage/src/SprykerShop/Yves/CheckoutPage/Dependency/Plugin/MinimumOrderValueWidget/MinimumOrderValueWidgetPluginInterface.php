@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface MinimumOrderValueWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'MinimumOrderValueWidgetPlugin';
+    public const NAME = 'MinimumOrderValueWidgetPlugin';
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers

@@ -18,6 +18,11 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\MinimumOrderValueWidget\MinimumO
 class MinimumOrderValueWidgetPlugin extends AbstractWidgetPlugin implements MinimumOrderValueWidgetPluginInterface
 {
     /**
+     * @see \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE
+     */
+    protected const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
      *
      * @return void
@@ -25,13 +30,17 @@ class MinimumOrderValueWidgetPlugin extends AbstractWidgetPlugin implements Mini
     public function initialize(ArrayObject $expenseTransfers): void
     {
         $expenseTransfers = array_filter($expenseTransfers->getArrayCopy(), function (ExpenseTransfer $expenseTransfer) {
-            return $expenseTransfer->getType() === 'THRESHOLD_EXPENSE_TYPE';
+            return $expenseTransfer->getType() === static::THRESHOLD_EXPENSE_TYPE;
         });
 
         $this->addParameter('expenses', $expenseTransfers);
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getName(): string
@@ -40,6 +49,10 @@ class MinimumOrderValueWidgetPlugin extends AbstractWidgetPlugin implements Mini
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getTemplate(): string

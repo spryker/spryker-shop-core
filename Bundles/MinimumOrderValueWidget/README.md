@@ -1,6 +1,6 @@
 # MinimumOrderValueWidget Module
 
-MinimumOrderValueWidget TODO.
+Provides Yves widget for displaying minimum order value expenses.
 
 ## Installation
 

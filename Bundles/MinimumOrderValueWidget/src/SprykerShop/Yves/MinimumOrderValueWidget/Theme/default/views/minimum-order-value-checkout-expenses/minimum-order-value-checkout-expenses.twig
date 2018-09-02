@@ -7,7 +7,7 @@
 {% block body %}
     {% if data.expenses is not empty %}
         <strong>{{ 'checkout.minimum-order-value' | trans }}</strong>
-        <ul>
+        <ul class="list">
             {% for expense in data.expenses %}
                 {% include molecule('minimum-order-value-expense', 'MinimumOrderValueWidget') with {
                     data: {'expense': expense}

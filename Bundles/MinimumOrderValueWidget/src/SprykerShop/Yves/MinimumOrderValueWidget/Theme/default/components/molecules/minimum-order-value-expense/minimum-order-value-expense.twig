@@ -10,8 +10,8 @@
 } %}
 
 {% block body %}
-    <li class="grid grid--justify">
-        <span class="col col--sm-8">{{ 'minimum-order-value.expense.name' | trans }}</span>
-        <span class="col col--expand text-right"> {{ data.expense.sumPrice | money }}</span>
-    </li>
+    <div class="grid grid--justify">
+        <div class="col col--sm-8">{{ 'minimum-order-value.expense.name' | trans }}</div>
+        <div class="col col--sm-4 text-right"> {{ data.expense.sumPrice | money }}</div>
+    </div>
 {% endblock %}
