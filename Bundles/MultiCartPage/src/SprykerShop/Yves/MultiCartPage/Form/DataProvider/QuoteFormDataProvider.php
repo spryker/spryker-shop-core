@@ -26,7 +26,7 @@ class QuoteFormDataProvider implements QuoteFormDataProviderInterface
     }
 
     /**
-     * @param null|int $idQuote
+     * @param int|null $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

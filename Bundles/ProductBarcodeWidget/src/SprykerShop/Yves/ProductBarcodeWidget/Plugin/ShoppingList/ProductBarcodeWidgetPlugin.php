@@ -46,7 +46,7 @@ class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements Product
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param null|string $barcodeGeneratorPlugin
+     * @param string|null $barcodeGeneratorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
