@@ -11,10 +11,13 @@
     {% include molecule('breadcrumb') with {
         data: {
             steps: [{
-                label: 'customer.account' | trans
+                url: 'customer/overview',
+                label: 'customer.profile' | trans
             },{
+                url: 'multi-cart',
                 label: 'shared_cart.share.breadcrumbs.shopping_carts' | trans
             },{
+                url: 'cart',
                 label: data.cartName
             },{
                 label: 'shared_cart.share.breadcrumbs.share' | trans
@@ -23,50 +26,41 @@
     } only %}
 {% endblock %}
 
+{% set shared = [] %}
+{% set unShared = [] %}
+
+{% for shareDetail in data.form.shareDetails %}
+    {% if shareDetail.vars.value.quotePermissionGroup is null %}
+        {% set unShared = unShared | merge([shareDetail]) %}
+    {% else %}
+        {% set shared = shared | merge([shareDetail]) %}
+    {% endif %}
+{% endfor %}
+
 {% block customerContent %}
     {{ form_start(data.form) }}
-    <div class="share-cart-table box" data-qa="component share-cart-table">
-        <h3>{{ 'shared_cart.share.form.users' | trans }}</h3>
-        <table class="table table--expand">
-            <tbody>
-                {% for key, shareDetail in data.form.shareDetails %}
-                    {% if shareDetail.vars.value.quotePermissionGroup is not null %}
-                    <tr>
-                        <td>
-                            {{ shareDetail.vars.value.customerName }}
-                        </td>
-                        <td>
-                            {{ form_widget(shareDetail.quotePermissionGroup) }}
-                            {{ form_errors(shareDetail.quotePermissionGroup) }}
-                        </td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
+        <div class="box" data-qa="component share-cart-table">
+            <h3 class="spacing-left">{{ 'shared_cart.share.form.users' | trans }}</h3>
 
-            <tbody>
-                {% for key, shareDetail in data.form.shareDetails %}
-                    {% if shareDetail.vars.value.quotePermissionGroup is null %}
-                    <tr>
-                        <td>
-                            {{ shareDetail.vars.value.customerName }}
-                        </td>
-                        <td>
-                            {{ form_widget(shareDetail.quotePermissionGroup) }}
-                            {{ form_errors(shareDetail.quotePermissionGroup) }}
-                        </td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            {% include molecule('user-share-list', 'SharedCartPage') with {
+                data: {
+                    shareDetailsForm: data.form,
+                    shared: shared
+                }
+            } only %}
 
-    <div class="box">
-        <button type="submit" class="button button--success float-right">
-            {{ 'shared_cart.form.save_button' | trans }}
-        </button>
-    </div>
+            {% include molecule('user-share-list', 'SharedCartPage') with {
+                data: {
+                    shareDetailsForm: data.form,
+                    shared: unShared
+                }
+            } only %}
 
+            <div class="box">
+                <button type="submit" class="button button--success float-right">
+                    {{ 'shared_cart.form.save_button' | trans }}
+                </button>
+            </div>
+        </div>
     {{ form_end(data.form) }}
 {% endblock %}
