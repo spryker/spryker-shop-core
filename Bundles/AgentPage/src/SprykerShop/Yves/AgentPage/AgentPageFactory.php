@@ -16,6 +16,8 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterf
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
+use SprykerShop\Yves\AgentPage\Model\AgentRedirectHandler;
+use SprykerShop\Yves\AgentPage\Model\AgentRedirectHandlerInterface;
 use SprykerShop\Yves\AgentPage\Model\User\UserChanger;
 use SprykerShop\Yves\AgentPage\Model\User\UserChangerInterface;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
@@ -107,6 +109,18 @@ class AgentPageFactory extends AbstractFactory
             $this->getSecurityContext(),
             $this->getAgentClient(),
             $this->getCustomerClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Model\AgentRedirectHandlerInterface
+     */
+    public function createAgentRedirectHandler(): AgentRedirectHandlerInterface
+    {
+        return new AgentRedirectHandler(
+            $this->getAgentClient(),
+            $this->getCustomerClient(),
+            $this->getApplication()
         );
     }
 

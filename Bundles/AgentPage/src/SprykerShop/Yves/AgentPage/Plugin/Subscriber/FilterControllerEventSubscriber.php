@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\AgentPage\Plugin\Subscriber;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -24,6 +25,7 @@ class FilterControllerEventSubscriber extends AbstractPlugin implements EventSub
     {
         return [
             KernelEvents::CONTROLLER => 'onKernelController',
+            KernelEvents::EXCEPTION => 'onKernelRequest',
         ];
     }
 
@@ -38,6 +40,16 @@ class FilterControllerEventSubscriber extends AbstractPlugin implements EventSub
     }
 
     /**
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     *
+     * @return void
+     */
+    public function onKernelRequest(GetResponseEvent $event)
+    {
+        $this->redirectToLogin($event);
+    }
+
+    /**
      * @return void
      */
     protected function changeUser(): void
@@ -45,5 +57,17 @@ class FilterControllerEventSubscriber extends AbstractPlugin implements EventSub
         $this->getFactory()
             ->createUserChanger()
             ->change();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     *
+     * @return void
+     */
+    protected function redirectToLogin(GetResponseEvent $event): void
+    {
+        $this->getFactory()
+            ->createAgentRedirectHandler()
+            ->redirect($event);
     }
 }
