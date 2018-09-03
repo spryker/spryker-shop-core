@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentPageSecurityServiceProvider;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerSecurityServiceProvider;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -120,7 +119,7 @@ class UserChanger implements UserChangerInterface
     protected function getRoles(): array
     {
         return [
-            CustomerSecurityServiceProvider::ROLE_USER,
+            AgentPageSecurityServiceProvider::ROLE_USER,
             AgentPageSecurityServiceProvider::ROLE_AGENT,
             AgentPageSecurityServiceProvider::ROLE_ALLOWED_TO_SWITCH
         ];
