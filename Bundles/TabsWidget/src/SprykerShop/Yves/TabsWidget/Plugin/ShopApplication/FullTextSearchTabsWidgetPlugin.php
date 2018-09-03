@@ -48,7 +48,7 @@ class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements Ful
     {
         $this->addParameter('tabs', $this->executeFullTextSearchPlugins($searchString, $activeTabName, $requestParams))
             ->addParameter('searchString', $searchString)
-            ->addParameter('requestParams', $requestParams);
+            ->addParameter('requestParams', array_merge($requestParams, ['q' => $searchString]));
     }
 
     /**

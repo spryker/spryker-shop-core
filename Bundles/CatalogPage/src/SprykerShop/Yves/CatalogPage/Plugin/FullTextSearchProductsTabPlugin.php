@@ -36,7 +36,7 @@ class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullText
      *
      * @api
      *
-     * @return TabsMetaDataTransfer
+     * @return \Generated\Shared\Transfer\TabMetaDataTransfer
      */
     public function getTabMetaData(): TabMetaDataTransfer
     {

@@ -26,7 +26,9 @@
 
 {% block form %}
     <div class="col col--sm-12">
-        {{ widget('FullTextSearchTabsWidgetPlugin', data.searchString, 'FullTextSearchCmsPage') }}
+        <div class="col col--sm-12 spacing spacing--inner">
+            {{ widget('FullTextSearchTabsWidgetPlugin', data.searchString, 'FullTextSearchCmsPage') }}
+        </div>
         {% include molecule('search-cms-results', 'CmsSearchPage') with {
             data: {
                 pages: data.pages

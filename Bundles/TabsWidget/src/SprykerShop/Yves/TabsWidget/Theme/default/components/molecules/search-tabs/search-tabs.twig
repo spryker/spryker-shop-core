@@ -7,12 +7,13 @@
 
 {% define data = {
     tabs: required,
-    searchString: required
+    searchString: required,
+    requestParams: required
 } %}
 
 {% block body %}
     {% for key, tab in data.tabs %}
-        <a href="{{ url(tab.route, {q: data.searchString}) }}" class="col col--sm-12 {{ config.name }}__item {{ tab.isActive ? config.name ~ '__item--active' : '' }}">
+        <a href="{{ url(tab.route, data.requestParams) }}" class="col col--sm-12 {{ config.name }}__item {{ tab.isActive ? config.name ~ '__item--active' : '' }}">
             <span class="{{ config.name }}__title">
                 {{ tab.title | trans }}
             </span>
