@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\TabsWidget\Plugin\ShopApplication;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
@@ -12,7 +17,6 @@ use SprykerShop\Yves\ShopApplication\Dependency\Plugin\TabsWidget\FullTextSearch
  */
 class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements FullTextSearchTabsWidgetPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -57,8 +61,6 @@ class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements Ful
      * @param array $requestParams
      *
      * @return array
-     *
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     protected function executeFullTextSearchPlugins(string $searchString, string $activeTabName, array $requestParams = []): array
     {

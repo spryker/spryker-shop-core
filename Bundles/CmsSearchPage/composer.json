@@ -3,10 +3,19 @@
   "description": "CmsSearchPage module",
   "license": "proprietary",
   "require": {
+    "spryker/cms-page-search": "^1.0.1",
+    "spryker/kernel": "^3.23.1",
+    "spryker-shop/shop-application": "^1.1.1",
+    "spryker/symfony": "^3.1.5",
+    "spryker-shop/tabs-widget-extension": "^0.0.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/silex": "*"
+  },
+  "suggest": {
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

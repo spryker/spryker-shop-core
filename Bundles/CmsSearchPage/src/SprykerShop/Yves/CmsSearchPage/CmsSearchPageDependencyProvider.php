@@ -29,7 +29,6 @@ class CmsSearchPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
