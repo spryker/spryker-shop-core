@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/tabs-widget.svg)](https://travis-ci.org/spryker-shop/tabs-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/tabs-widget/badge.svg)](https://coveralls.io/github/spryker-shop/tabs-widget)
 
-{{ADD DESCRIPTION HERE}}
+The module provides tabs functionality.
 
 ## Installation
 
