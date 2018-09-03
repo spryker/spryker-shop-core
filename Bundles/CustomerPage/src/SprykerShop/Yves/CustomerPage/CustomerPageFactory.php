@@ -15,6 +15,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleC
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
+use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerSecurityServiceProvider;
@@ -22,6 +23,7 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 
 class CustomerPageFactory extends AbstractFactory
 {
@@ -55,6 +57,16 @@ class CustomerPageFactory extends AbstractFactory
     public function createCustomerUserProvider()
     {
         return new CustomerUserProvider();
+    }
+
+    /**
+     * @param string $targetUrl
+     *
+     * @return \Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface
+     */
+    public function createAccessDeniedHandler(string $targetUrl): AccessDeniedHandlerInterface
+    {
+        return new AccessDeniedHandler($targetUrl);
     }
 
     /**

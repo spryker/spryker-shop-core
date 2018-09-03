@@ -17,6 +17,6 @@ class AgentPageConfig extends AbstractBundleConfig
      */
     public function getAgentFirewallRegex(): string
     {
-        return $this->get(AgentPageConstants::AGENT_FIREWALL_REGEX, '\/agent(.+)?\/(?!login$).+|^(/en|/de)?/wishlist|^(/en|/de)?/shopping-list');
+        return $this->get(AgentPageConstants::AGENT_FIREWALL_REGEX, '\/agent(.+)?\/(?!login$).+');
     }
 }

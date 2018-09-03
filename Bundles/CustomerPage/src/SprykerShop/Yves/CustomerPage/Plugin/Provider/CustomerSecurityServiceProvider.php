@@ -14,6 +14,12 @@ use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Form\LoginForm;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
+use Symfony\Component\Security\Http\Firewall\ExceptionListener;
 use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 
 /**
@@ -36,6 +42,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         $this->setSecurityAccessRules($app);
         $this->setAuthenticationSuccessHandler($app);
         $this->setAuthenticationFailureHandler($app);
+        $this->setAccessDeniedHandler($app);
     }
 
     /**
@@ -66,6 +73,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
                     'username_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_EMAIL . ']',
                     'password_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_PASSWORD . ']',
                     'listener_class' => UsernamePasswordFormAuthenticationListener::class,
+                    'failure_path' => '/login'
                 ],
                 'logout' => [
                     'logout_path' => $this->buildLogoutPath($selectedLanguage),
@@ -120,6 +128,32 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
             return $this->getFactory()->createCustomerAuthenticationFailureHandler();
         });
     }
+
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return void
+     */
+    protected function setAccessDeniedHandler(Application &$app)
+    {
+        $selectedLanguage = $this->findSelectedLanguage($app);
+
+        $app['security.exception_listener._proto'] = $app->protect(function ($entryPoint, $name) use ($app, $selectedLanguage) {
+            return $app->share(function () use ($app, $entryPoint, $name, $selectedLanguage) {
+                return new ExceptionListener(
+                    $app['security.token_storage'],
+                    $app['security.trust_resolver'],
+                    $app['security.http_utils'],
+                    $name,
+                    $app[$entryPoint],
+                    null,
+                    $this->getFactory()->createAccessDeniedHandler($this->buildLoginPath($selectedLanguage)),
+                    $app['logger']
+                );
+            });
+        });
+    }
+
 
     /**
      * @param string $prefixLocale
