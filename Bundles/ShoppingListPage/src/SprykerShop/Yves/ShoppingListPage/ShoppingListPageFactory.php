@@ -181,10 +181,18 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getPrintShoppingListWidgetPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_WIDGETS);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getShoppingListViewWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_VIEW_WIDGETS);
     }
 }

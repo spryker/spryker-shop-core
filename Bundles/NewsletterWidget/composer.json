@@ -13,7 +13,9 @@
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "Widget plugins are available for this module.",

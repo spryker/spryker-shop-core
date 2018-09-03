@@ -30,12 +30,12 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
     const REQUEST_URI = 'REQUEST_URI';
 
     /**
-     * @var \Silex\Application
+     * @var \Spryker\Shared\Kernel\Communication\Application
      */
     private $application;
 
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Shared\Kernel\Communication\Application $app
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
     }
 
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Shared\Kernel\Communication\Application $app
      *
      * @return void
      */
@@ -143,7 +143,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
     }
 
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Shared\Kernel\Communication\Application $app
      * @param array $globalTemplateVariables
      *
      * @return void
