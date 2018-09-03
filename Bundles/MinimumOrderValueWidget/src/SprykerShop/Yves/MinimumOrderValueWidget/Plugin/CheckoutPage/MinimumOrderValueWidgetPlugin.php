@@ -8,20 +8,14 @@
 namespace SprykerShop\Yves\MinimumOrderValueWidget\Plugin\CheckoutPage;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\MinimumOrderValueWidget\MinimumOrderValueWidgetPluginInterface;
+use SprykerShop\Yves\MinimumOrderValueWidget\Plugin\AbstractMinimumOrderValueWidgetPlugin;
 
 /**
  * @method \SprykerShop\Yves\MinimumOrderValueWidget\MinimumOrderValueWidgetFactory getFactory()
  */
-class MinimumOrderValueWidgetPlugin extends AbstractWidgetPlugin implements MinimumOrderValueWidgetPluginInterface
+class MinimumOrderValueWidgetPlugin extends AbstractMinimumOrderValueWidgetPlugin implements MinimumOrderValueWidgetPluginInterface
 {
-    /**
-     * @see \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE
-     */
-    protected const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
-
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
      *
@@ -29,14 +23,10 @@ class MinimumOrderValueWidgetPlugin extends AbstractWidgetPlugin implements Mini
      */
     public function initialize(ArrayObject $expenseTransfers): void
     {
-        $expenseTransfers = array_filter($expenseTransfers->getArrayCopy(), function (ExpenseTransfer $expenseTransfer) {
-            return $expenseTransfer->getType() === static::THRESHOLD_EXPENSE_TYPE;
-        });
-
-        $this->addParameter('expenses', $expenseTransfers);
+        $this->addParameter('expenses', $this->filterMinimumOrderValueExpenses($expenseTransfers));
     }
 
-    /**
+    /**˚
      * {@inheritdoc}
      *
      * @api
