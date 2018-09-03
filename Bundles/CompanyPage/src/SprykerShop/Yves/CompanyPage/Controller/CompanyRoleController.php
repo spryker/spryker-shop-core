@@ -165,7 +165,7 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
@@ -346,16 +346,9 @@ class CompanyRoleController extends AbstractCompanyController
         $companyRoleTransfer = (new CompanyRoleTransfer())
             ->setIdCompanyRole($idCompanyRole);
 
-        $companyRolePermissionTransfers = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->findCompanyRolePermissions($companyRoleTransfer);
-
         return $this->getFactory()
             ->getCompanyRoleClient()
-            ->filterCompanyRolePermissions(
-                $companyRoleTransfer,
-                $companyRolePermissionTransfers
-            );
+            ->findFilteredCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
     }
 
     /**

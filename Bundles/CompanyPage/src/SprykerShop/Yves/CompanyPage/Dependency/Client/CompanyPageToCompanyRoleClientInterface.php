@@ -85,12 +85,10 @@ interface CompanyPageToCompanyRoleClientInterface
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
-     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $companyRolePermissions
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function filterCompanyRolePermissions(
-        CompanyRoleTransfer $companyRoleTransfer,
-        PermissionCollectionTransfer $companyRolePermissions
+    public function findFilteredCompanyRolePermissionsByIdCompanyRole(
+        CompanyRoleTransfer $companyRoleTransfer
     ): PermissionCollectionTransfer;
 }
