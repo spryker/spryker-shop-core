@@ -33,12 +33,14 @@
 
     {% block price %}
         <p>
-            {% include molecule('price') with {
-                data: {
-                    amount: data.price | money,
-                    originalAmount: data.originalPrice is empty ? null : (data.originalPrice | money)
-                }
-            } only %}
+            {% if data.price %}
+                {% include molecule('price') with {
+                    data: {
+                        amount: data.price | money,
+                        originalAmount: data.originalPrice is empty ? null : (data.originalPrice | money)
+                    }
+                } only %}
+            {% endif %}
         </p>
     {% endblock %}
 {% endblock %}
