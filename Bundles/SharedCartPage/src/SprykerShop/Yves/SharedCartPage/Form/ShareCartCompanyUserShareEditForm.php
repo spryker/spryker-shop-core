@@ -14,15 +14,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ShareCartCompanyUserShareEditForm extends AbstractType
 {
-    public const FIELD_ID_QUOTE_COMPANY_USER = 'idQuoteCompanyUser';
-    public const FIELD_ID_COMPANY_USER = 'idCompanyUser';
-    public const FIELD_CUSTOMER_NAME = 'customerName';
     public const FIELD_QUOTE_PERMISSION_GROUP = 'quotePermissionGroup';
 
     /**
@@ -46,46 +42,8 @@ class ShareCartCompanyUserShareEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addIdQuoteCompanyUserField($builder)
-            ->addIdCompanyUserField($builder)
-            ->addCustomerNameField($builder)
+        $this
             ->addQuotePermissionGroupField($builder, $options);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdQuoteCompanyUserField(FormBuilderInterface $builder): self
-    {
-        $builder->add(static::FIELD_ID_QUOTE_COMPANY_USER, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdCompanyUserField(FormBuilderInterface $builder): self
-    {
-        $builder->add(static::FIELD_ID_COMPANY_USER, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addCustomerNameField(FormBuilderInterface $builder): self
-    {
-        $builder->add(static::FIELD_CUSTOMER_NAME, HiddenType::class);
-
-        return $this;
     }
 
     /**

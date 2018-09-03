@@ -1,9 +1,10 @@
-{% extends template('page-layout-main') %}
+{% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
     cartName: _view.cart.name | default,
     form: _view.sharedCartForm,
-    title: 'shared_cart.form.share_cart' | trans
+    title: 'shared_cart.form.share_cart.title' | trans({cart_name: _view.cart.name | default}),
+    activePage: 'multiCart'
 } %}
 
 {% block breadcrumbs %}
@@ -25,51 +26,50 @@
     } only %}
 {% endblock %}
 
- {% block title %}
-     <h3>{{data.title}} &laquo;{{ data.cartName }}&raquo;</h3>
- {% endblock %}
-
-{% block content %}
-    <div class="grid">
-        <div class="col col--sm-12 col--md-2">
-            <div class="box">
-                <a href="{{url('company/user')}}">{{ 'company.account.company_user' | trans }}</a>
-            </div>
-        </div>
-        <div class="col col--sm-12 col--md-10">
-            {{ form_start(data.form) }}
-                {% set formShareDetailsValues = data.form.vars.value.shareDetails.getArrayCopy() %}
-                {% set companyUserIdsWithPermissions = [] %}
-                {% set companyUserIdsWithoutPermissions = [] %}
-
-                {% for shareDetail in formShareDetailsValues %}
-                    {% if formShareDetailsValues[shareDetail.idCompanyUser].quotePermissionGroup is null %}
-                        {% set companyUserIdsWithoutPermissions = companyUserIdsWithoutPermissions | merge([shareDetail.idCompanyUser]) %}
-                    {% else %}
-                        {% set companyUserIdsWithPermissions = companyUserIdsWithPermissions | merge([shareDetail.idCompanyUser]) %}
+{% block customerContent %}
+    {{ form_start(data.form) }}
+    <div class="share-cart-table box" data-qa="component share-cart-table">
+        <h3>{{ 'shared_cart.share.form.users' | trans }}</h3>
+        <table class="table table--expand">
+            <tbody>
+                {% for key, shareDetail in data.form.shareDetails %}
+                    {% if shareDetail.vars.value.quotePermissionGroup is not null %}
+                    <tr>
+                        <td>
+                            {{ shareDetail.vars.value.customerName }}
+                        </td>
+                        <td>
+                            {{ form_widget(shareDetail.quotePermissionGroup) }}
+                            {{ form_errors(shareDetail.quotePermissionGroup) }}
+                        </td>
+                    </tr>
                     {% endif %}
                 {% endfor %}
+            </tbody>
 
-                {% include molecule('user-share-list', 'SharedCartPage') with {
-                    data: {
-                        shareDetailsForm: data.form.shareDetails,
-                        companyUserIdsToRender: companyUserIdsWithPermissions
-                    }
-                } only %}
-
-                {% include molecule('user-share-list', 'SharedCartPage') with {
-                    data: {
-                        shareDetailsForm: data.form.shareDetails,
-                        companyUserIdsToRender: companyUserIdsWithoutPermissions
-                    }
-                } only %}
-
-                <div class="box">
-                    <button type="submit" class="button button--success float-right">
-                        {{ 'shared_cart.form.save_button' | trans }}
-                    </button>
-                </div>
-            {{ form_end(data.form) }}
-        </div>
+            <tbody>
+                {% for key, shareDetail in data.form.shareDetails %}
+                    {% if shareDetail.vars.value.quotePermissionGroup is null %}
+                    <tr>
+                        <td>
+                            {{ shareDetail.vars.value.customerName }}
+                        </td>
+                        <td>
+                            {{ form_widget(shareDetail.quotePermissionGroup) }}
+                            {{ form_errors(shareDetail.quotePermissionGroup) }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+
+    <div class="box">
+        <button type="submit" class="button button--success float-right">
+            {{ 'shared_cart.form.save_button' | trans }}
+        </button>
+    </div>
+
+    {{ form_end(data.form) }}
 {% endblock %}

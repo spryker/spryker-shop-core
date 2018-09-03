@@ -18,10 +18,19 @@ class ShareCartForm extends AbstractType
 {
     public const FORM_NAME = 'shareCartForm';
     public const FIELD_ID_QUOTE = 'idQuote';
+    /**
+     * @deprecated
+     */
     public const FIELD_COMPANY_USER_ID = 'idCompanyUser';
+    /**
+     * @deprecated
+     */
     public const FIELD_QUOTE_PERMISSION_GROUP_ID = 'idQuotePermissionGroup';
-    public const FIELD_SHARE_DETAILS = 'shareDetails';
+    /**
+     * @deprecated
+     */
     public const OPTION_CUSTOMERS = 'OPTION_CUSTOMERS';
+    public const FIELD_SHARE_DETAILS = 'shareDetails';
     public const OPTION_PERMISSION_GROUPS = 'OPTION_PERMISSION_GROUPS';
 
     /**
@@ -29,7 +38,7 @@ class ShareCartForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return self::FORM_NAME;
+        return static::FORM_NAME;
     }
 
     /**
@@ -39,8 +48,7 @@ class ShareCartForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(self::OPTION_CUSTOMERS);
-        $resolver->setRequired(self::OPTION_PERMISSION_GROUPS);
+        $resolver->setRequired(static::OPTION_PERMISSION_GROUPS);
         $resolver->setDefaults([
             'data_class' => ShareCartRequestTransfer::class,
         ]);
@@ -55,8 +63,6 @@ class ShareCartForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addQuoteIdField($builder)
-            ->addCompanyUserIdField($builder, $options)
-            ->addQuotePermissionGroupIdQuoteIdField($builder, $options)
             ->addShareDetailsField($builder, $options);
     }
 
@@ -67,33 +73,7 @@ class ShareCartForm extends AbstractType
      */
     protected function addQuoteIdField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_QUOTE, HiddenType::class, []);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addCompanyUserIdField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(static::FIELD_COMPANY_USER_ID, HiddenType::class, []);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addQuotePermissionGroupIdQuoteIdField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(static::FIELD_QUOTE_PERMISSION_GROUP_ID, HiddenType::class, []);
+        $builder->add(static::FIELD_ID_QUOTE, HiddenType::class, []);
 
         return $this;
     }
@@ -111,8 +91,7 @@ class ShareCartForm extends AbstractType
             'entry_options' => [
                 static::OPTION_PERMISSION_GROUPS => $options[static::OPTION_PERMISSION_GROUPS],
             ],
-            'label' => false,
-            'required' => false,
+            'label' => 'shared_cart.form.select_permissions',
         ]);
 
         return $this;
