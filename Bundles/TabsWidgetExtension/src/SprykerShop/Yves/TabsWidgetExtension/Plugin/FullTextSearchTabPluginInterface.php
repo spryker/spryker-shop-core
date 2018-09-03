@@ -17,7 +17,7 @@ interface FullTextSearchTabPluginInterface
      *
      * @return int
      */
-    public function calculateItemCount(string $searchString, array $requestParams = []): int;
+    public function getTabCount(string $searchString, array $requestParams = []): int;
 
     /**
      * Specification:

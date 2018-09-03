@@ -63,13 +63,14 @@ class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements Ful
     protected function executeFullTextSearchPlugins(string $searchString, string $activeTabName, array $requestParams = []): array
     {
         $tabs = [];
-        foreach ($this->getFactory()->getFullTextSearchPlugins() as $fullTextSearchPlugin) {
+        $fulltextSearchPlugins = $this->getFactory()->getFullTextSearchPlugins();
+        foreach ($fulltextSearchPlugins as $fullTextSearchPlugin) {
             $metaData = $fullTextSearchPlugin->getTabMetaData();
-            $isActive = $metaData->getName() === $activeTabName;
+            $isCurrentTabActive = $metaData->getName() === $activeTabName;
             $tab = $metaData->toArray();
-            $tab['isActive'] = $isActive;
-            if (!$isActive) {
-                $tab['count'] = $fullTextSearchPlugin->calculateItemCount($searchString, $requestParams);
+            $tab['isActive'] = $isCurrentTabActive;
+            if (!$isCurrentTabActive) {
+                $tab['count'] = $fullTextSearchPlugin->getTabCount($searchString, $requestParams);
                 if (!$tab['count']) {
                     continue;
                 }
