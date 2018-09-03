@@ -6,29 +6,29 @@
 
 {% define data = {
     shareDetailsForm: required,
-    companyUserIdsToRender: required
+    shared: required
 } %}
 
 {% block body %}
-    {% if data.companyUserIdsToRender is not empty %}
+
+    {% if data.shared is not empty %}
         <div class="box spacing spacing-bottom--big">
             <ul class="list">
-                {% for formRow in data.shareDetailsForm %}
-                    {% if formRow.vars.value.idCompanyUser in data.companyUserIdsToRender %}
-                        <li class="list__item box spacing spacing-bottom--small">
-                            <div class="grid grid--middle">
-                                <div class="col--sm-6 col--md-9">
-                                    <strong class="label label-info">{{ formRow.vars.value.customerName }}</strong>
-                                    {{ form_errors(formRow) }}
-                                </div>
-                                <div class="col--sm-6 col--md-3">
-                                    {{ form_widget(formRow) }}
-                                </div>
+                {% for shareDetail in data.shared %}
+                    <li class="list__item box spacing--bottom spacing-bottom--small">
+                        <div class="grid grid--middle">
+                            <div class="col--sm-6 col--md-9">
+                                <strong class="label label-info"> {{ shareDetail.vars.value.customerName }}</strong>
                             </div>
-                        </li>
-                    {% endif %}
+                            <div class="col--sm-6 col--md-3">
+                                {{ form_widget(shareDetail.quotePermissionGroup) }}
+                                {{ form_errors(shareDetail.quotePermissionGroup) }}
+                            </div>
+                        </div>
+                    </li>
                 {% endfor %}
             </ul>
         </div>
     {% endif %}
+
 {% endblock body %}
