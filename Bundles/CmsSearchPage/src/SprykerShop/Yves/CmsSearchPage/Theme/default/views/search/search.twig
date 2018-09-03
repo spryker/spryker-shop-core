@@ -1,9 +1,8 @@
-{% extends template('page-layout-catalog', 'CatalogPage') %}
+{% extends template('search-cms-template', 'CmsSearchPage') %}
 
 {% define data = {
     pages: _view.cms_pages,
     searchString: _view.searchString,
-    suggestion: _view.spellingSuggestion,
 
     title: ('global.search.results' | trans) ~ ' ' ~ _view.searchString,
     metaTitle: _view.pageTitle | default,
@@ -23,20 +22,17 @@
 
 {% block title %}
     <h3>{{ 'global.search.results' | trans }} "<strong>{{ data.searchString }}</strong>"</h3>
-
-    {% embed molecule('spelling-suggestion', 'CatalogPage') with {
-        data: {
-            suggestion: data.suggestion
-        }
-    } only %}
-        {% block body %}
-            <hr />
-            {{parent()}}
-        {% endblock %}
-    {% endembed %}
 {% endblock %}
 
 {% block form %}
+    <div class="col col--sm-12">
+        {{ widget('FullTextSearchTabsWidgetPlugin', data.searchString, 'FullTextSearchCmsPage') }}
+        {% include molecule('search-cms-results', 'CmsSearchPage') with {
+            data: {
+                pages: data.pages
+            }
+        } only %}
+    </div>
     {{parent()}}
     {% if data.searchString is not empty %}
         <input type="hidden" name="q" value="{{ data.searchString }}" />

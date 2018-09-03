@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CatalogPage;
+namespace SprykerShop\Yves\CmsSearchPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\CatalogPage\Dependency\Client\CmsSearchPageToCmsSearchPageClientBridge;
+use SprykerShop\Yves\CmsSearchPage\Dependency\Client\CmsSearchPageToCmsSearchPageClientBridge;
 
 class CmsSearchPageDependencyProvider extends AbstractBundleDependencyProvider
 {

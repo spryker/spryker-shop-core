@@ -7,19 +7,15 @@
 
 namespace SprykerShop\Yves\CmsSearchPage;
 
-use Spryker\Client\CmsPageSearch\CmsPageSearchClientInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CatalogPage\CmsSearchPageDependencyProvider;
+use SprykerShop\Yves\CmsSearchPage\Dependency\Client\CmsSearchPageToCmsPageSearchClientInterface;
 
-/**
- * @method \SprykerShop\Yves\CmsSearchPage\CmsSearchPageConfig getConfig()
- */
 class CmsSearchPageFactory extends AbstractFactory
 {
     /**
      * @return \SprykerShop\Yves\CmsSearchPage\Dependency\Client\CmsSearchPageToCmsPageSearchClientInterface
      */
-    public function getCmsPageSearchClient(): CmsPageSearchClientInterface
+    public function getCmsPageSearchClient(): CmsSearchPageToCmsPageSearchClientInterface
     {
         return $this->getProvidedDependency(CmsSearchPageDependencyProvider::CLIENT_CMS_SEARCH_PAGE);
     }
