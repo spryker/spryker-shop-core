@@ -34,9 +34,7 @@ class AccessDeniedHandler extends AbstractPlugin implements AccessDeniedHandlerI
     }
 
     /**
-     * @api
-     *
-     * @inheritdoc
+     * Handles an access denied failure.
      *
      * @param Request $request
      * @param AccessDeniedException $accessDeniedException
