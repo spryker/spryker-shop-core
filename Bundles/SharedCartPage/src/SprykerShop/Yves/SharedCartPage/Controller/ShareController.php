@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ShareController extends AbstractController
 {
     public const KEY_GLOSSARY_SHARED_CART_PAGE_SHARE_SUCCESS = 'shared_cart_page.share.success';
+    public const URL_REDIRECT_MULTI_CART_PAGE = 'multi-cart';
 
     /**
      * @param int $idQuote
@@ -43,6 +44,14 @@ class ShareController extends AbstractController
      */
     protected function executeIndexAction(int $idQuote, Request $request)
     {
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
+        if ($quoteTransfer === null) {
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $sharedCartForm = $this->getFactory()
             ->getShareCartForm($idQuote)
             ->handleRequest($request);
@@ -50,17 +59,18 @@ class ShareController extends AbstractController
         if ($sharedCartForm->isSubmitted() && $sharedCartForm->isValid()) {
             $shareCartRequestTransfer = $sharedCartForm->getData();
             $quoteResponseTransfer = $this->getFactory()->getSharedCartClient()
-                ->addShareCart($shareCartRequestTransfer);
+                ->updateQuotePermissions($shareCartRequestTransfer);
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::KEY_GLOSSARY_SHARED_CART_PAGE_SHARE_SUCCESS);
 
-                return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+                return $this->redirectResponseInternal(static::URL_REDIRECT_MULTI_CART_PAGE);
             }
         }
 
         return [
             'idQuote' => $idQuote,
             'sharedCartForm' => $sharedCartForm->createView(),
+            'cart' => $quoteTransfer,
         ];
     }
 }

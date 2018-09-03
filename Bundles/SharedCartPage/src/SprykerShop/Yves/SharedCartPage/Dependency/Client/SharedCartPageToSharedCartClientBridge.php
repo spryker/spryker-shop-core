@@ -56,4 +56,14 @@ class SharedCartPageToSharedCartClientBridge implements SharedCartPageToSharedCa
     {
         return $this->sharedCartClient->removeShareCart($shareCartRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuotePermissions(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->sharedCartClient->updateQuotePermissions($shareCartRequestTransfer);
+    }
 }
