@@ -73,7 +73,6 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
                     'username_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_EMAIL . ']',
                     'password_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_PASSWORD . ']',
                     'listener_class' => UsernamePasswordFormAuthenticationListener::class,
-                    'failure_path' => '/login'
                 ],
                 'logout' => [
                     'logout_path' => $this->buildLogoutPath($selectedLanguage),
