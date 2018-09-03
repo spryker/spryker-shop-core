@@ -29,8 +29,10 @@ class FilterControllerEventSubscriber extends AbstractPlugin implements EventSub
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     *
+     * @return void
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event): void
     {
         $this->changeUser();
     }

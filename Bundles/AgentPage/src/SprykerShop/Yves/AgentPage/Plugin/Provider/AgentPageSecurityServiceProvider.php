@@ -187,6 +187,8 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
 
     /**
      * @param \Silex\Application $app
+     *
+     * @return void
      */
     protected function setFilterControllerEventSubscriber(Application $app): void
     {

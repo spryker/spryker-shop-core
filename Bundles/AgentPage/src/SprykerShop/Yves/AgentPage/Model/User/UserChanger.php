@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\AgentPage\Model\User;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentPageSecurityServiceProvider;
@@ -16,7 +17,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserInterface;
-use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 
 class UserChanger implements UserChangerInterface
 {
@@ -37,17 +37,14 @@ class UserChanger implements UserChangerInterface
 
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     *
      * @param \SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientInterface $agentClient
-     *
      * @param \SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface $customerClient
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         AgentPageToAgentClientInterface $agentClient,
         AgentPageToCustomerClientInterface $customerClient
-    )
-    {
+    ) {
         $this->tokenStorage = $tokenStorage;
         $this->agentClient = $agentClient;
         $this->customerClient = $customerClient;
@@ -121,7 +118,7 @@ class UserChanger implements UserChangerInterface
         return [
             AgentPageSecurityServiceProvider::ROLE_USER,
             AgentPageSecurityServiceProvider::ROLE_AGENT,
-            AgentPageSecurityServiceProvider::ROLE_ALLOWED_TO_SWITCH
+            AgentPageSecurityServiceProvider::ROLE_ALLOWED_TO_SWITCH,
         ];
     }
 }
