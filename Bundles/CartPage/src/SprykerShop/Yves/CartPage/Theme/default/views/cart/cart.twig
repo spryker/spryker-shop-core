@@ -59,16 +59,14 @@
                         <hr />
                     {% endif %}
 
-                    {% if canWriteSharedCart %}
-                        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-                            {{ widget('DiscountVoucherFormWidgetPlugin') }}
-                            <hr />
-                        {% endif %}
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') or canWriteSharedCart %}
+                        {{ widget('DiscountVoucherFormWidgetPlugin') }}
+                        <hr />
+                    {% endif %}
 
-                        {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty and data.cart.items is not empty %}
-                            {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
-                            <hr />
-                        {% endif %}
+                    {% if canWriteSharedCart and data.cart.idQuote is not empty and widgetExists('CartToShoppingListWidgetPlugin') %}
+                        {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
+                        <hr />
                     {% endif %}
 
                     {% include molecule('cart-summary', 'CartPage') with {
