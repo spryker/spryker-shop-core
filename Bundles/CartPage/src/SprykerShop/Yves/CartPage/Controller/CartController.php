@@ -87,7 +87,7 @@ class CartController extends AbstractController
      */
     public function addAction($sku, $quantity, array $optionValueIds, Request $request)
     {
-        if ($this->canAddCartItem()) {
+        if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
