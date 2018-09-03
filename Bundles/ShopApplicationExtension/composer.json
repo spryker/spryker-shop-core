@@ -6,8 +6,9 @@
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/silex": "*",
-    "spryker/symfony": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/silex": "",
