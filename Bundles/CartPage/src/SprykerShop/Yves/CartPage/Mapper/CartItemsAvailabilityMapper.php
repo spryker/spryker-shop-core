@@ -22,8 +22,6 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
     protected $productAvailabilityClient;
 
     /**
-     * CartItemsAvailabilityMapper constructor.
-     *
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface $productAvailabilityClient
      */
     public function __construct(CartPageToAvailabilityStorageClientInterface $productAvailabilityClient)

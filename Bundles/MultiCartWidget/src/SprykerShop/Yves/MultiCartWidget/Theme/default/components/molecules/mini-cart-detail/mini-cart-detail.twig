@@ -2,68 +2,58 @@
 
 {% define config = {
     name: 'mini-cart-detail',
-    tag: 'div'
+    tag: 'div',
 } %}
 
 {% define data = {
     cart: required,
-    itemDisplayLimit: 2
+    total: data.cart.totals.grandTotal | default(0),
 } %}
 
 {% set itemCount = data.cart.items | length %}
 
 {% block body %}
-    <div class="text-small text-left">
-        <div>
-            {% if itemCount > 0 %}
-                <span class=" float-right">
-                    {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
-                        {{ widget('ProductBundleItemCounterWidgetPlugin', data.cart) }}
-                    {% else %}
-                    {{ itemCount }} {{ itemCount == 1 ? 'multi_cart_widget.cart.item' | trans : 'multi_cart_widget.cart.items' | trans }} | {{ data.cart.totals.subTotal | money(true, data.cart.currency.code) }}<br>
-                    {% endif %}
-                </span>
-            {% endif %}
+    <div class="grid grid--middle text-small text-left">
+        <div class="col col--sm-1">
+            {% include molecule('mini-cart-radio', 'MultiCartWidget') with {
+                data: {
+                    idCart: data.cart.idQuote,
+                    isDefault: data.cart.isDefault,
+                }
+            } only %}
+        </div>
 
-            <strong>{{ data.cart.name }}</strong>
+        <div class="col col--sm-8">
+            <a href="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
+                <strong>{{ data.cart.name }}</strong>
+            </a>
+
             {% if data.cart.isDefault %}
                 ({{ 'multi_cart_widget.cart.default' | trans }})
             {% endif %}
-        </div>
-
-        <div>
-            {% if data.cart.items is not empty %}
-                {% if widgetExists('ProductBundleItemsWidgetPlugin') %}
-                    {{ widget('ProductBundleItemsWidgetPlugin', data.cart, data.itemDisplayLimit) }}
+            <div>
+                {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
+                    {{ widget('ProductBundleItemCounterWidgetPlugin', data.cart) }}
                 {% else %}
-                <ul class="list list--bullet">
-                    {% for item in data.cart.items | slice(0, data.itemDisplayLimit) %}
-                        <li class="list__item">{{ item.name }}</li>
-                    {% endfor %}
-                    {% if data.itemDisplayLimit < data.cart.items|length %}
-                        <li class="list__item">&hellip;</li>
-                    {% endif %}
-                </ul>
+                    {% set label = (itemCount == 1)
+                        ? 'multi_cart_widget.cart.item'
+                        : 'multi_cart_widget.cart.items'
+                    %}
+
+                    <span class="cart-items-quantity">
+                      {{ itemCount }} {{ label | trans }}
+                    </span>
                 {% endif %}
-            {% else %}
-                {{ 'cart.empty' | trans }}
-            {% endif %}
+
+                {{ widget('SharedCartPermissionGroupWidgetPlugin', data.cart) }}
+            </div>
         </div>
 
-        <ul class="menu menu--inline">
-            {% if data.cart.isDefault %}
-                <li class="menu__item">
-                    <a href="{{ path('cart') }}">
-                        {{ 'multi_cart_widget.cart.action.view' | trans }}
-                    </a>
-                </li>
-            {% else %}
-                <li class="menu__item">
-                    <a href="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
-                        {{ 'multi_cart_widget.cart.action.view' | trans }}
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
+        <div class="col col--sm-3 text-right">
+            <span>
+               {{ data.total | money(true, data.cart.currency.code) }}<br>
+            </span>
+        </div>
+
     </div>
 {% endblock %}

@@ -61,7 +61,7 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
     protected function getStorageProductOptionGroupCollectionTransfer(ProductViewTransfer $productViewTransfer)
     {

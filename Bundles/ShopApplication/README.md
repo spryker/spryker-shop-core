@@ -1,6 +1,7 @@
 # ShopApplication Module
 
-{{ADD DESCRIPTION HERE}}
+This module brings basic infrastructure for SprykerShop modules.
+
 
 ## Installation
 

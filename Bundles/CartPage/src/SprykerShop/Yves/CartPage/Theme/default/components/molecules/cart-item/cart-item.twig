@@ -11,10 +11,7 @@
     attributes: required
 } %}
 
-{% set isGuestUser = (not is_granted('IS_AUTHENTICATED_FULLY')) %}
-{% set canEditSharedCart = isGuestUser or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
-{% set canChangeCartItem = isGuestUser or canEditSharedCart or can('ChangeCartItemPermissionPlugin') %}
-{% set canRemoveCartItem = isGuestUser or canEditSharedCart or can('RemoveCartItemPermissionPlugin') %}
+{% set canEditCart = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
 
 {% block body %}
     <div class="grid grid--stretch grid--justify">
@@ -53,25 +50,30 @@
                     cartItem: data.cartItem
                 }
             } only %}
+
         </div>
 
         <div class="col col--sm-12 col--lg-4">
-            {% if canChangeCartItem %}
-                {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
-                    {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
+            {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }}
+
+            {% if data.cartItem.amountSalesUnit is empty %}
+                {% if canEditCart %}
+                    {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
+                        {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
+                    {% else %}
+                        {% include molecule('cart-quantity-input', 'CartPage') with {
+                            data: {
+                                cartItem: data.cartItem
+                            }
+                        } only %}
+                    {% endif %}
                 {% else %}
-                    {% include molecule('cart-quantity-input', 'CartPage') with {
-                        data: {
-                            cartItem: data.cartItem
-                        }
-                    } only %}
+                    {{ 'cart.item_quantity' | trans }}
+                    <strong>{{ data.cartItem.quantity }}</strong>
                 {% endif %}
-            {% else %}
-                {{ 'cart.item_quantity' | trans }}
-                <strong>{{ data.cartItem.quantity }}</strong>
             {% endif %}
 
-            {% if canRemoveCartItem %}
+            {% if canEditCart %}
                 <a class="float-right" href="{{ path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': data.cartItem.groupKey }) }}">
                     &times; {{ 'remove' | trans }}
                 </a>

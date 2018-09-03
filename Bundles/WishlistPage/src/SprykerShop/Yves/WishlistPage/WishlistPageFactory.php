@@ -128,4 +128,12 @@ class WishlistPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(WishlistPageDependencyProvider::PLUGIN_WISHLIST_ITEM_EXPANDERS);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getWishlistViewWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistPageDependencyProvider::PLUGIN_WISHLIST_VIEW_WIDGETS);
+    }
 }
