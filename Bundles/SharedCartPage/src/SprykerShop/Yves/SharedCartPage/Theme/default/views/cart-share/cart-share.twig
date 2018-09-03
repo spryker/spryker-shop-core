@@ -1,9 +1,10 @@
-{% extends template('page-layout-main') %}
+{% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
     cartName: _view.cart.name | default,
     form: _view.sharedCartForm,
     title: 'shared_cart.form.share_cart.title' | trans({cart_name: _view.cart.name | default}),
+    activePage: 'multiCart'
 } %}
 
 {% block breadcrumbs %}
@@ -22,9 +23,10 @@
     } only %}
 {% endblock %}
 
-{% block content %}
+{% block customerContent %}
     {{ form_start(data.form) }}
     <div class="share-cart-table box" data-qa="component share-cart-table">
+        <h3>{{ 'shared_cart.share.form.users' | trans }}</h3>
         <table class="table table--expand">
             <tbody>
                 {% for key, shareDetail in data.form.shareDetails %}
@@ -40,7 +42,9 @@
                     </tr>
                     {% endif %}
                 {% endfor %}
+            </tbody>
 
+            <tbody>
                 {% for key, shareDetail in data.form.shareDetails %}
                     {% if shareDetail.vars.value.quotePermissionGroup is null %}
                     <tr>
