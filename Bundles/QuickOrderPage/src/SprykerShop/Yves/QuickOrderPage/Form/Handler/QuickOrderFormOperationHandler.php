@@ -158,7 +158,7 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     {
         foreach ($this->quickOrderItemTransferExpanderPlugins as $quickOrderItemTransferExpanderPlugin) {
             foreach ($itemTransfers as $itemTransfer) {
-                $itemTransfer = $quickOrderItemTransferExpanderPlugin->expand($itemTransfer);
+                $quickOrderItemTransferExpanderPlugin->expand($itemTransfer);
             }
         }
 
