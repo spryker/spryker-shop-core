@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    tabs: _widget.tabs
+} %}
+
+{% block body %}
+{% include molecule('search-tabs', 'CatalogPage') with {
+    class: 'grid',
+    data: {
+        tabs: data.tabs
+    }
+} only %}
+{% endblock %}
