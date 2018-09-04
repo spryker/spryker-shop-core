@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\FileManagerWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\FileStorageDataTransfer;
 
-class FileManagerWidgetToFileManagerStorageClientBridge implements FileManagerWidgetToFileManagerStorageClientInterface
+class ProductSearchWidgetToProductSearchPageClientBridge implements FileManagerWidgetToFileManagerStorageClientInterface
 {
     /**
      * @var \Spryker\Client\FileManagerStorage\FileManagerStorageClientInterface
