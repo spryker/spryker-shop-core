@@ -10,8 +10,6 @@ namespace SprykerShop\Yves\AgentPage\Model\User;
 interface UserChangerInterface
 {
     /**
-     * Change user token and add additional roles to it
-     *
      * @return void
      */
     public function change(): void;
