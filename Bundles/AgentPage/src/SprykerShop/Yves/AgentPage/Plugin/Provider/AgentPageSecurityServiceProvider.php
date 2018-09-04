@@ -25,6 +25,7 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
     public const ROLE_AGENT = 'ROLE_AGENT';
     public const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
     public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_PREVIOUS_ADMIN = 'ROLE_PREVIOUS_ADMIN';
 
     /**
      * @param \Silex\Application $app
@@ -38,7 +39,6 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
         $this->setAuthenticationSuccessHandler($app);
         $this->setAuthenticationFailureHandler($app);
         $this->setSwitchUserEventSubscriber($app);
-        $this->setFilterControllerEventSubscriber($app);
     }
 
     /**
@@ -183,17 +183,5 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
     protected function getDispatcher(Application $app): EventDispatcherInterface
     {
         return $app['dispatcher'];
-    }
-
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return void
-     */
-    protected function setFilterControllerEventSubscriber(Application $app): void
-    {
-        $this->getDispatcher($app)->addSubscriber(
-            $this->getFactory()->createFilterControllerEventSubscriber()
-        );
     }
 }

@@ -16,8 +16,8 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterf
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
-use SprykerShop\Yves\AgentPage\Model\User\UserChanger;
-use SprykerShop\Yves\AgentPage\Model\User\UserChangerInterface;
+use SprykerShop\Yves\AgentPage\Model\Agent\AgentImpersonateHandler;
+use SprykerShop\Yves\AgentPage\Model\Agent\AgentImpersonateHandlerInterface;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentPageSecurityServiceProvider;
@@ -28,6 +28,7 @@ use SprykerShop\Yves\AgentPage\Security\Agent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
@@ -99,14 +100,15 @@ class AgentPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\AgentPage\Model\User\UserChangerInterface
+     * @return \SprykerShop\Yves\AgentPage\Model\Agent\AgentImpersonateHandlerInterface
      */
-    public function createUserChanger(): UserChangerInterface
+    public function createAgentImpersonateHandler(): AgentImpersonateHandlerInterface
     {
-        return new UserChanger(
+        return new AgentImpersonateHandler(
             $this->getSecurityContext(),
             $this->getAgentClient(),
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
+            $this->getSecurityAuthorizationChecker()
         );
     }
 
@@ -166,6 +168,16 @@ class AgentPageFactory extends AbstractFactory
         $application = $this->getApplication();
 
         return $application['security.token_storage'];
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+     */
+    public function getSecurityAuthorizationChecker(): AuthorizationCheckerInterface
+    {
+        $application = $this->getApplication();
+
+        return $application['security.authorization_checker'];
     }
 
     /**

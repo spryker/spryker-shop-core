@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\AgentPage\Model\User;
+namespace SprykerShop\Yves\AgentPage\Model\Agent;
 
-interface UserChangerInterface
+interface AgentImpersonateHandlerInterface
 {
     /**
      * @return void
      */
-    public function change(): void;
+    public function fixAgentToken(): void;
 }
