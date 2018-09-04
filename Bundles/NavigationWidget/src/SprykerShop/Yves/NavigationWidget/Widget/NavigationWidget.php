@@ -30,8 +30,6 @@ class NavigationWidget extends AbstractWidget
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -40,8 +38,6 @@ class NavigationWidget extends AbstractWidget
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

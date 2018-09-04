@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\LanguageSwitcherWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget instead.
+ */
 interface LanguageSwitcherWidgetPluginInterface extends WidgetPluginInterface
 {
     const NAME = 'LanguageSwitcherWidgetPlugin';

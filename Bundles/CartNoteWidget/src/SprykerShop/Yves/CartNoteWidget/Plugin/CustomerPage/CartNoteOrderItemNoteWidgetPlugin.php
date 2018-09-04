@@ -9,8 +9,12 @@ namespace SprykerShop\Yves\CartNoteWidget\Plugin\CustomerPage;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\CartNoteWidget\Widget\DisplayOrderItemNoteWidget;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\CartNoteWidget\CartNoteOrderItemNoteWidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\DisplayOrderItemNoteWidget instead.
+ */
 class CartNoteOrderItemNoteWidgetPlugin extends AbstractWidgetPlugin implements CartNoteOrderItemNoteWidgetPluginInterface
 {
     /**
@@ -20,7 +24,9 @@ class CartNoteOrderItemNoteWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public function initialize(ItemTransfer $itemTransfer): void
     {
-        $this->addParameter('item', $itemTransfer);
+        $widget = new DisplayOrderItemNoteWidget($itemTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -44,6 +50,6 @@ class CartNoteOrderItemNoteWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getTemplate()
     {
-        return '@CartNoteWidget/views/customer-cart-item-note-display/customer-cart-item-note-display.twig';
+        return DisplayOrderItemNoteWidget::getTemplate();
     }
 }

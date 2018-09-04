@@ -21,8 +21,6 @@ class CurrencyWidget extends AbstractWidget
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -31,8 +29,6 @@ class CurrencyWidget extends AbstractWidget
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string
@@ -66,6 +62,7 @@ class CurrencyWidget extends AbstractWidget
         if (!$currentCurrencyIsoCode) {
             return $this->getFactory()->getStore()->getCurrencyIsoCode();
         }
+
         return $currentCurrencyIsoCode;
     }
 }

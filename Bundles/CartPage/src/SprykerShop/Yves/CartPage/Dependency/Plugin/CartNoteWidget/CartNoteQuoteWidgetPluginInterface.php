@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CartPage\Dependency\Plugin\CartNoteWidget;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\CartNoteFormWidget instead.
+ */
 interface CartNoteQuoteWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'CartNoteQuoteWidgetPlugin';

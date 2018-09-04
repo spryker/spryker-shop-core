@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\CompanyWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\CompanyWidget\Widget\CompanyMenuItemWidget instead.
+ */
 interface MenuItemCompanyWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'MenuItemCompanyWidgetPlugin';

@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\CartPage\Dependency\Plugin\MultiCartWidget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\MultiCartListWidget instead.
+ */
 interface MultiCartListWidgetPluginInterface
 {
     public const NAME = 'MultiCartListWidgetPlugin';

@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget instead.
+ */
 interface DiscountPromotionItemListWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'DiscountPromotionItemListWidgetPlugin';

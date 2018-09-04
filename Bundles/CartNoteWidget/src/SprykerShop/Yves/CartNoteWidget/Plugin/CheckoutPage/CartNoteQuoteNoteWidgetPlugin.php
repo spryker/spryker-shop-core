@@ -9,8 +9,12 @@ namespace SprykerShop\Yves\CartNoteWidget\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\CartNoteWidget\Widget\DisplayCartNoteWidget;
 use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\CartNoteWidget\CartNoteQuoteNoteWidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\DisplayCartNoteWidget instead.
+ */
 class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements CartNoteQuoteNoteWidgetPluginInterface
 {
     /**
@@ -20,7 +24,9 @@ class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('quote', $quoteTransfer);
+        $widget = new DisplayCartNoteWidget($quoteTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -44,6 +50,6 @@ class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
      */
     public static function getTemplate()
     {
-        return '@CartNoteWidget/views/checkout-cart-note-display/checkout-cart-note-display.twig';
+        return DisplayCartNoteWidget::getTemplate();
     }
 }

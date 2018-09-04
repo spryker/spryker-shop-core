@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CartPage\Dependency\Plugin\CheckoutWidget;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\CheckoutWidget\Widget\CheckoutBreadcrumbWidget instead.
+ */
 interface CheckoutBreadcrumbWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'CheckoutBreadcrumbWidgetPlugin';

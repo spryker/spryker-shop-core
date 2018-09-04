@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CheckoutPage\Dependency\Plugin\DiscountWidget;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\VoucherFormWidget instead.
+ */
 interface CheckoutVoucherFormWidgetPluginInterface extends WidgetPluginInterface
 {
     const NAME = 'CheckoutVoucherFormWidgetPlugin';

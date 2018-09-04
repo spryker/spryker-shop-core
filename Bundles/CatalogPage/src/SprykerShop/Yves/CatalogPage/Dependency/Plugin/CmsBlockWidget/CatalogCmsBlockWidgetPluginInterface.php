@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\CatalogPage\Dependency\Plugin\CmsBlockWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Widget\CatalogWithCmsBlockWidget instead.
+ */
 interface CatalogCmsBlockWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'CatalogCmsBlockWidgetPlugin';
