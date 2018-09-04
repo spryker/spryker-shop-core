@@ -16,11 +16,13 @@
     "spryker/symfony": "^3.1.4"
   },
   "require-dev": {
-    "spryker-shop/shop-router": "*",
+    "spryker-shop/company-page": "*",
+    "spryker/code-sniffer": "*",
     "spryker/silex": "*",
-    "spryker/twig": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/company-page": "ADD SUGGEST DESCRIPTION",
     "spryker/silex": "If you want to use the shops router provider"
   },
   "autoload": {

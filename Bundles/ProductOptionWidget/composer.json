@@ -11,7 +11,9 @@
   "require-dev": {
     "spryker-shop/cart-page": "*",
     "spryker-shop/product-detail-page": "*",
-    "spryker-shop/shopping-list-page": "*"
+    "spryker-shop/shopping-list-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "Widget plugins are available for this module.",
