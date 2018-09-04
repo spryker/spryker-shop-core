@@ -130,6 +130,6 @@ class CompanyPageToCompanyRoleClientBridge implements CompanyPageToCompanyRoleCl
     public function findFilteredCompanyRolePermissionsByIdCompanyRole(
         CompanyRoleTransfer $companyRoleTransfer
     ): PermissionCollectionTransfer {
-        return $this->companyRoleClient->getCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
+        return $this->companyRoleClient->findFilteredCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
     }
 }
