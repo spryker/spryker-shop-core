@@ -20,7 +20,7 @@ class ProductBundleCartItemsWidgetPlugin extends AbstractWidgetPlugin implements
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param null|int $itemDisplayLimit
+     * @param int|null $itemDisplayLimit
      *
      * @return void
      */

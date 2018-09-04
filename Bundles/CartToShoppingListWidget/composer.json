@@ -14,11 +14,13 @@
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker-shop/cart-page": "If CartToShoppingListWidgetPlugin is to be used, minimum version is 0.5.2"
+    "spryker-shop/cart-page": "If CartToShoppingListWidgetPlugin is to be used, minimum version is 0.5.2",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

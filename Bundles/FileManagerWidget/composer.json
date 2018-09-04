@@ -12,13 +12,15 @@
   },
   "require-dev": {
     "spryker-shop/shop-application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/silex": "*",
+    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {
+    "spryker-shop/shop-application": "Use this module when using plugins that need Twig dependencies.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker/twig": "Use this module when using plugins that need Twig dependencies.",
-    "spryker-shop/shop-application": "Use this module when using plugins that need Twig dependencies."
+    "spryker/twig": "Use this module when using plugins that need Twig dependencies."
   },
   "autoload": {
     "psr-4": {
