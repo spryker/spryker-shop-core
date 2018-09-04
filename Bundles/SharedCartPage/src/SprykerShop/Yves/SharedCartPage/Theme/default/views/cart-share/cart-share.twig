@@ -1,6 +1,7 @@
 {% extends template('page-layout-multi-cart', 'MultiCartPage') %}
 
 {% define data = {
+    cart: _view.cart,
     cartName: _view.cart.name | default,
     form: _view.sharedCartForm,
     title: 'shared_cart.form.share_cart.title' | trans({cart_name: _view.cart.name | default}),
@@ -11,13 +12,13 @@
     {% include molecule('breadcrumb') with {
         data: {
             steps: [{
-                url: 'customer/overview',
+                url: url('customer/overview'),
                 label: 'customer.profile' | trans
             },{
-                url: 'multi-cart',
+                url: url('multi-cart'),
                 label: 'shared_cart.share.breadcrumbs.shopping_carts' | trans
             },{
-                url: 'cart',
+                url: data.cart.isDefault ? url('cart') : url('multi-cart/set-default', {idQuote: data.cart.idQuote}),
                 label: data.cartName
             },{
                 label: 'shared_cart.share.breadcrumbs.share' | trans

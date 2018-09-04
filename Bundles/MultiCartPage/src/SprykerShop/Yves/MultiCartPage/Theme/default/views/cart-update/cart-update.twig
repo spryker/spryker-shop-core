@@ -21,7 +21,7 @@
                 },
                 {
                     label: data.cart.name,
-                    url: url('multi-cart/update', {idQuote: data.cart.idQuote}),
+                    url: data.cart.isDefault ? url('cart') : url('multi-cart/set-default', {idQuote: data.cart.idQuote}),
                 },
                 {
                     label: 'page.multi_cart.shopping_cart.update.title' | trans,
