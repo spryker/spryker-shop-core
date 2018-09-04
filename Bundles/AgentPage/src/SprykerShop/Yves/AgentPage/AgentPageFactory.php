@@ -16,8 +16,6 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterf
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
-use SprykerShop\Yves\AgentPage\Model\Agent\AgentImpersonateHandler;
-use SprykerShop\Yves\AgentPage\Model\Agent\AgentImpersonateHandlerInterface;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentPageSecurityServiceProvider;
@@ -91,19 +89,6 @@ class AgentPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\AgentPage\Model\Agent\AgentImpersonateHandlerInterface
-     */
-    public function createAgentImpersonateHandler(): AgentImpersonateHandlerInterface
-    {
-        return new AgentImpersonateHandler(
-            $this->getSecurityContext(),
-            $this->getAgentClient(),
-            $this->getCustomerClient(),
-            $this->getSecurityAuthorizationChecker()
-        );
-    }
-
-    /**
      * @return \SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface
      */
     public function getMessengerClient(): AgentPageToMessengerClientInterface
@@ -154,7 +139,7 @@ class AgentPageFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
      */
-    public function getSecurityContext()
+    public function getTokenStorage()
     {
         $application = $this->getApplication();
 
