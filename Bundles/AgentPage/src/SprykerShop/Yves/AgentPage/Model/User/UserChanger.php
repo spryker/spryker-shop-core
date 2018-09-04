@@ -51,10 +51,6 @@ class UserChanger implements UserChangerInterface
     }
 
     /**
-     * @api
-     *
-     * @inheritdoc
-     *
      * @return void
      */
     public function change(): void
