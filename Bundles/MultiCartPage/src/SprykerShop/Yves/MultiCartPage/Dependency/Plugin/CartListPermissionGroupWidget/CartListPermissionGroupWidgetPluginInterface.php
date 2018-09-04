@@ -16,8 +16,9 @@ interface CartListPermissionGroupWidgetPluginInterface extends WidgetPluginInter
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param bool $isDeleteAllowed
      *
      * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer): void;
+    public function initialize(QuoteTransfer $quoteTransfer, bool $isDeleteAllowed): void;
 }

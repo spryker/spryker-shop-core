@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\MultiCartPage;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCartClientInterface;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientInterface;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProvider;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProviderInterface;
@@ -47,6 +48,14 @@ class MultiCartPageFactory extends AbstractFactory
     public function getMultiCartClient(): MultiCartPageToMultiCartClientInterface
     {
         return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_MULTI_CART);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCartClientInterface
+     */
+    public function getCartClient(): MultiCartPageToCartClientInterface
+    {
+        return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_CART);
     }
 
     /**

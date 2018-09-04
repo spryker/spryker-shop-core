@@ -10,13 +10,12 @@
     actions: {
         update: false,
         delete: false,
-        duplicate: false,
-        toShoppingList: false,
-        share: false,
+        duplicate: false
     }
 } %}
 
 {% set showActions = data.actions.update or data.actions.delete or data.actions.duplicate %}
+{% set isDeleteAllowed = data.quotes|length > 1 and data.actions.delete %}
 
 {% block body %}
     <table class="table table--expand">
@@ -38,15 +37,21 @@
                 {% set totals = quote.items | length %}
                 <tr>
                     <td>
-                        <a href="{{ url('multi-cart/set-default', {idQuote: quote.idQuote}) }}">
-                            {% if quote.isDefault %}<strong>{% endif %}
+                        {% if quote.isDefault %}
+                        <a href="{{ url('cart', {idQuote: quote.idQuote}) }}">
+                            <strong>
                                 {{ quote.name }}
-                            {% if quote.isDefault %}</strong>{% endif %}
+                            </strong>
                         </a>
+                        {% else %}
+                        <a href="{{ url('multi-cart/set-default', {idQuote: quote.idQuote}) }}">
+                                {{ quote.name }}
+                        </a>
+                        {% endif %}
                     </td>
                     {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
                         <td>
-                            {{ widget('CartListPermissionGroupWidgetPlugin', quote) }}
+                            {{ widget('CartListPermissionGroupWidgetPlugin', quote, isDeleteAllowed) }}
                         </td>
                     {% endif %}
                     <td>
@@ -79,26 +84,23 @@
                                         </a>
                                     </li>
                                 {% endif %}
-                                {% if data.actions.delete and can('WriteSharedCartPermissionPlugin', quote.idQuote) %}
+                                {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
                                     <li class="menu__item">
-                                        <a href="{{ url('multi-cart/confirm-delete', {idQuote: quote.idQuote}) }}">
-                                            {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
-                                        </a>
+                                        {{ widgetBlock('CartListPermissionGroupWidgetPlugin', 'actions', quote, isDeleteAllowed) }}
                                     </li>
-                                {% endif %}
-                                {% if data.actions.toShoppingList %}
-                                    {% if widgetExists('CartToShoppingListWidgetPlugin') %}
+                                {% else %}
+                                    {% if isDeleteAllowed and can('WriteSharedCartPermissionPlugin', quote.idQuote) %}
                                         <li class="menu__item">
-                                            {{ widget('CartToShoppingListWidgetPlugin', quote) }}
+                                            <a href="{{ url('multi-cart/confirm-delete', {idQuote: quote.idQuote}) }}">
+                                                {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
+                                            </a>
                                         </li>
                                     {% endif %}
                                 {% endif %}
-                                {% if data.actions.share %}
-                                    {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
-                                        <li class="menu__item">
-                                            {{ widgetBlock('CartListPermissionGroupWidgetPlugin', 'actions', quote) }}
-                                        </li>
-                                    {% endif %}
+                                {% if widgetExists('CartToShoppingListWidgetPlugin') %}
+                                    <li class="menu__item">
+                                        {{ widget('CartToShoppingListWidgetPlugin', quote) }}
+                                    </li>
                                 {% endif %}
                             </ul>
                         </td>

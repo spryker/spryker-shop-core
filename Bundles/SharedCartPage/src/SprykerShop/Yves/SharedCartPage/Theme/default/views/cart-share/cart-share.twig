@@ -57,8 +57,8 @@
                 }
             } only %}
 
-            <div class="box">
-                <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
+            <div class="form__actions">
+                <a href="{{ data.backUrl }}" class="form__action button button--secondary button--hollow">
                     {% include atom('icon') with {
                         modifiers: ['small'],
                         data: {
@@ -67,7 +67,7 @@
                     } only %}
                     {{ "general.back.button" | trans }}
                 </a>
-                <button type="submit" class="button button--success float-right">
+                <button type="submit" class="form__action button button--success float-right">
                     {{ 'shared_cart.form.save_button' | trans }}
                 </button>
             </div>

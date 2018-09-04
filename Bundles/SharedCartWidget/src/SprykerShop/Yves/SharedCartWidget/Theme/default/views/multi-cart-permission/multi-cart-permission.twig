@@ -3,6 +3,7 @@
 {% define data = {
     cart: _widget.cart,
     accessType: _widget.accessType,
+    isDeleteAllowed: _widget.isDeleteAllowed,
 } %}
 
 {% block body %}
@@ -28,5 +29,12 @@
         <a href="{{ url('shared-cart/share', {idQuote: _widget.cart.idQuote}) }}" title="{{ 'shared_cart_widget.cart.share' | trans }}">
             {{ 'shared_cart_widget.cart.share' | trans }}
         </a>
+    {% endif %}
+    {% if _widget.isDeleteAllowed and can('WriteSharedCartPermissionPlugin', _widget.cart.idQuote) %}
+            <li class="menu__item">
+                <a href="{{ url('multi-cart/confirm-delete', {idQuote: _widget.cart.idQuote}) }}">
+                    {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
+                </a>
+            </li>
     {% endif %}
 {% endblock %}

@@ -188,16 +188,7 @@ class MultiCartController extends AbstractController
         $multiCartClient
             ->deleteQuote($quoteTransfer);
 
-        $customerQuoteTransferList = $multiCartClient->getQuoteCollection()->getQuotes();
-        if ($quoteTransfer->getIsDefault() && count($customerQuoteTransferList)) {
-            $quoteTransfer = reset($customerQuoteTransferList);
-
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_SET_DEFAULT, [
-                MultiCartPageControllerProvider::PARAM_ID_QUOTE => $quoteTransfer->getIdQuote(),
-            ]);
-        }
-
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
     }
 
     /**
@@ -219,6 +210,7 @@ class MultiCartController extends AbstractController
      */
     protected function executeIndexAction(): array
     {
+        $this->getFactory()->getCartClient()->validateQuote();
         $quoteCollectionTransfer = $this->getFactory()->getMultiCartClient()->getQuoteCollection();
 
         return [
