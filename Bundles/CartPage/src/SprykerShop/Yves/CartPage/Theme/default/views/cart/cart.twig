@@ -54,10 +54,7 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    {% if widgetExists('CartNoteQuoteWidgetPlugin') %}
-                        {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
-                        <hr />
-                    {% endif %}
+                    {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
 
                     {% if not is_granted('IS_AUTHENTICATED_FULLY') or canWriteSharedCart %}
                         {{ widget('DiscountVoucherFormWidgetPlugin') }}

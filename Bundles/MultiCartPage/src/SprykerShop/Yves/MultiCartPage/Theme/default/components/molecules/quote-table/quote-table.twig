@@ -38,14 +38,14 @@
                 <tr>
                     <td>
                         {% if quote.isDefault %}
-                        <a href="{{ url('cart', {idQuote: quote.idQuote}) }}">
+                        <a href="{{ url('cart') }}">
                             <strong>
                                 {{ quote.name }}
                             </strong>
                         </a>
                         {% else %}
                         <a href="{{ url('multi-cart/set-default', {idQuote: quote.idQuote}) }}">
-                                {{ quote.name }}
+                            {{ quote.name }}
                         </a>
                         {% endif %}
                     </td>
