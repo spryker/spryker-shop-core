@@ -8,13 +8,15 @@
 namespace SprykerShop\Yves\MinimumOrderValueWidget\Plugin\CheckoutPage;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\MinimumOrderValueWidget\MinimumOrderValueWidgetPluginInterface;
-use SprykerShop\Yves\MinimumOrderValueWidget\Plugin\AbstractMinimumOrderValueWidgetPlugin;
+use SprykerShop\Yves\MinimumOrderValueWidget\MinimumOrderValueWidgetConfig;
 
 /**
  * @method \SprykerShop\Yves\MinimumOrderValueWidget\MinimumOrderValueWidgetFactory getFactory()
  */
-class MinimumOrderValueWidgetPlugin extends AbstractMinimumOrderValueWidgetPlugin implements MinimumOrderValueWidgetPluginInterface
+class MinimumOrderValueWidgetPlugin extends AbstractWidgetPlugin implements MinimumOrderValueWidgetPluginInterface
 {
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
@@ -26,7 +28,7 @@ class MinimumOrderValueWidgetPlugin extends AbstractMinimumOrderValueWidgetPlugi
         $this->addParameter('expenses', $this->filterMinimumOrderValueExpenses($expenseTransfers));
     }
 
-    /**˚
+    /**
      * {@inheritdoc}
      *
      * @api
@@ -48,5 +50,17 @@ class MinimumOrderValueWidgetPlugin extends AbstractMinimumOrderValueWidgetPlugi
     public static function getTemplate(): string
     {
         return '@MinimumOrderValueWidget/views/minimum-order-value-checkout-expenses/minimum-order-value-checkout-expenses.twig';
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     *
+     * @return \ArrayObject
+     */
+    protected function filterMinimumOrderValueExpenses(ArrayObject $expenseTransfers): ArrayObject
+    {
+        return array_filter($expenseTransfers->getArrayCopy(), function (ExpenseTransfer $expenseTransfer) {
+            return $expenseTransfer->getType() === MinimumOrderValueWidgetConfig::THRESHOLD_EXPENSE_TYPE;
+        });
     }
 }

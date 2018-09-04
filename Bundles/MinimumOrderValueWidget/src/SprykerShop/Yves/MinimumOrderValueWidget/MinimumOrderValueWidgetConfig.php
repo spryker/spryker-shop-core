@@ -5,9 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Shared\MinimumOrderValueWidget;
+namespace SprykerShop\Yves\MinimumOrderValueWidget;
 
-class MinimumOrderValueWidgetConfig
+use Spryker\Yves\Kernel\AbstractBundleConfig;
+
+class MinimumOrderValueWidgetConfig extends AbstractBundleConfig
 {
     /**
      * @see \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE
