@@ -1,4 +1,4 @@
-{% extends template('page-layout-customer', 'CustomerPage') %}
+{% extends template('page-layout-multi-cart', 'MultiCartPage') %}
 
 {% define data = {
     form: _view.quoteForm,
@@ -26,7 +26,7 @@
     } only %}
 {% endblock %}
 
-{% block content %}
+{% block customerContent %}
     <div class="box">
         {% include molecule('form') with {
             data: {
@@ -40,7 +40,7 @@
                 },
                 cancel: {
                     enable: true,
-                    url: url('cart'),
+                    url: data.backUrl,
                     text: 'general.back.button' | trans
                 }
             }

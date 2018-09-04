@@ -1,4 +1,4 @@
-{% extends template('page-layout-customer', 'CustomerPage') %}
+{% extends template('page-layout-multi-cart', 'MultiCartPage') %}
 
 {% define data = {
     cartName: _view.cart.name | default,
@@ -38,8 +38,9 @@
 {% endfor %}
 
 {% block customerContent %}
+    {% if data.form.vars.value.shareDetails is not empty %}
     {{ form_start(data.form) }}
-        <div class="box" data-qa="component share-cart-table">
+        <div class="box" {{ qa('share-cart-table') }}>
             <h3 class="spacing-left">{{ 'shared_cart.share.form.users' | trans }}</h3>
 
             {% include molecule('user-share-list', 'SharedCartPage') with {
@@ -57,10 +58,35 @@
             } only %}
 
             <div class="box">
+                <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
+                    {% include atom('icon') with {
+                        modifiers: ['small'],
+                        data: {
+                            name: 'chevron-left'
+                        }
+                    } only %}
+                    {{ "general.back.button" | trans }}
+                </a>
                 <button type="submit" class="button button--success float-right">
                     {{ 'shared_cart.form.save_button' | trans }}
                 </button>
             </div>
         </div>
     {{ form_end(data.form) }}
+    {% else %}
+        <div class="box" {{ qa('share-cart-table') }}>
+            {{ 'shared_cart.form.data_empty' | trans }}
+            <div class="form__actions">
+                <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
+                    {% include atom('icon') with {
+                        modifiers: ['small'],
+                        data: {
+                            name: 'chevron-left'
+                        }
+                    } only %}
+                    {{ "general.back.button" | trans }}
+                </a>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

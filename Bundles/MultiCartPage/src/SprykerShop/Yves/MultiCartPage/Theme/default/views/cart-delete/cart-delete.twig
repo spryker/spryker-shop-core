@@ -1,4 +1,4 @@
-{% extends template('page-layout-customer', 'CustomerPage') %}
+{% extends template('page-layout-multi-cart', 'MultiCartPage') %}
 
 {% define data = {
     cart: _view.cart | default([]),
@@ -21,7 +21,7 @@
     } only %}
 {% endblock %}
 
-{% block content %}
+{% block customerContent %}
     <div class="box">
         <h5>{{ "multi_cart_page.cart_delete_confirmation.warning" | trans }}</h5>
         <hr />
@@ -35,9 +35,15 @@
             <br/><br/>
         {% endif %}
 
-        <div>
-            <a href="{{ url('cart') }}" class="button button--info">
-                {{ "multi_cart_page.cart_delete_confirmation.cancel" | trans }}
+        <div class="form__actions">
+            <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
+                {% include atom('icon') with {
+                    modifiers: ['small'],
+                    data: {
+                        name: 'chevron-left'
+                    }
+                } only %}
+                {{ "general.back.button" | trans }}
             </a>
             <a href="{{ url('multi-cart/delete', { 'idQuote' : data.cartIdQuote }) }}" class="button button--alert">
                 {{ "multi_cart_page.cart_delete_confirmation.delete" | trans }}
