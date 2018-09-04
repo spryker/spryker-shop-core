@@ -25,6 +25,7 @@ use SprykerShop\Yves\AgentPage\Security\Agent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
@@ -133,6 +134,26 @@ class AgentPageFactory extends AbstractFactory
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(AgentPageDependencyProvider::APPLICATION);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
+     */
+    public function getTokenStorage()
+    {
+        $application = $this->getApplication();
+
+        return $application['security.token_storage'];
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+     */
+    public function getSecurityAuthorizationChecker(): AuthorizationCheckerInterface
+    {
+        $application = $this->getApplication();
+
+        return $application['security.authorization_checker'];
     }
 
     /**

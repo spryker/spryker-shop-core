@@ -24,6 +24,8 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
 {
     public const ROLE_AGENT = 'ROLE_AGENT';
     public const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
+    public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_PREVIOUS_ADMIN = 'ROLE_PREVIOUS_ADMIN';
 
     /**
      * @param \Silex\Application $app
