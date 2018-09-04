@@ -177,45 +177,4 @@ class CompanyRolePermissionController extends AbstractCompanyController
 
         return $permissionCollection->getPermissions();
     }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function getPermissionsList(Request $request): array
-    {
-        $idCompanyRole = $request->query->getInt('id');
-        $allPermissions = $this->getFactory()
-            ->getPermissionClient()
-            ->findAll()
-            ->getPermissions();
-
-        $companyRoleTransfer = new CompanyRoleTransfer();
-        $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
-
-        $companyPermissions = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->findCompanyRolePermissions($companyRoleTransfer)
-            ->getPermissions();
-
-        $permissions = [];
-        foreach ($allPermissions as $permission) {
-            if ($permission->getIsInfrastructural()) {
-                continue;
-            }
-
-            $permissionAsArray = $permission->toArray(false, true);
-            $permissionAsArray['idCompanyRole'] = null;
-            foreach ($companyPermissions as $rolePermission) {
-                if ($rolePermission->getKey() === $permission->getKey()) {
-                    $permissionAsArray['idCompanyRole'] = $idCompanyRole;
-                    break;
-                }
-            }
-            $permissions[] = $permissionAsArray;
-        }
-
-        return $permissions;
-    }
 }
