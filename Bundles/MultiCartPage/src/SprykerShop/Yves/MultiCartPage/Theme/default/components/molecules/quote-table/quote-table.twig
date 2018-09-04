@@ -23,7 +23,9 @@
             <tr class="active">
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.name' | trans }}</th>
                 {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
+                    {% if widgetBlock('CartListPermissionGroupWidgetPlugin', 'isSharingAllowed', data.quotes|first, isDeleteAllowed) %}
                     <th>{{ 'page.multi_cart.shopping_cart.list.label.access' | trans }}</th>
+                    {% endif %}
                 {% endif %}
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.num_of_products' | trans }}</th>
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.total' | trans }}</th>
@@ -49,11 +51,7 @@
                         </a>
                         {% endif %}
                     </td>
-                    {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
-                        <td>
-                            {{ widget('CartListPermissionGroupWidgetPlugin', quote, isDeleteAllowed) }}
-                        </td>
-                    {% endif %}
+                    {{ widget('CartListPermissionGroupWidgetPlugin', quote, isDeleteAllowed) }}
                     <td>
                         {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
                             {{ widget('ProductBundleItemCounterWidgetPlugin', quote) }}
@@ -69,8 +67,9 @@
                     <td>{{ quote.totals.subtotal | default(0) | money }}</td>
                     {% if showActions %}
                         <td>
+                            {% if can('WriteSharedCartPermissionPlugin', quote.idQuote) %}
                             <ul class="menu menu--inline">
-                                {% if data.actions.update and can('WriteSharedCartPermissionPlugin', quote.idQuote) %}
+                                {% if data.actions.update %}
                                     <li class="menu__item">
                                         <a href="{{ url('multi-cart/update', {idQuote: quote.idQuote}) }}">
                                             {{ 'page.multi_cart.shopping_cart.list.link.edit_name' | trans }}
@@ -85,11 +84,9 @@
                                     </li>
                                 {% endif %}
                                 {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
-                                    <li class="menu__item">
-                                        {{ widgetBlock('CartListPermissionGroupWidgetPlugin', 'actions', quote, isDeleteAllowed) }}
-                                    </li>
+                                    {{ widgetBlock('CartListPermissionGroupWidgetPlugin', 'actions', quote, isDeleteAllowed) }}
                                 {% else %}
-                                    {% if isDeleteAllowed and can('WriteSharedCartPermissionPlugin', quote.idQuote) %}
+                                    {% if isDeleteAllowed %}
                                         <li class="menu__item">
                                             <a href="{{ url('multi-cart/confirm-delete', {idQuote: quote.idQuote}) }}">
                                                 {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
@@ -103,6 +100,7 @@
                                     </li>
                                 {% endif %}
                             </ul>
+                            {% endif %}
                         </td>
                     {% endif %}
                 </tr>
