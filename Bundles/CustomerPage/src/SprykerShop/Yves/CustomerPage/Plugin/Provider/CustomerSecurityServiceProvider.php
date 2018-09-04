@@ -14,11 +14,6 @@ use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Form\LoginForm;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 use Symfony\Component\Security\Http\Firewall\ExceptionListener;
 use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 
@@ -152,7 +147,6 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
             });
         });
     }
-
 
     /**
      * @param string $prefixLocale
