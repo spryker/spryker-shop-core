@@ -27,7 +27,7 @@ class ProductSearchWidgetConfigurationProvider implements CmsContentWidgetConfig
     public function getAvailableTemplates(): array
     {
         return [
-            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@ProductSearchWidget/views/product-search-dropdown/product-search-dropdown.twig',
+            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@ProductSearchWidget/views/product-search-field/product-search-field.twig',
         ];
     }
 
@@ -36,6 +36,6 @@ class ProductSearchWidgetConfigurationProvider implements CmsContentWidgetConfig
      */
     public function getUsageInformation(): string
     {
-        return "{{ product_search('limit', 'offset') }}";
+        return "{{ product_search('limit') }}";
     }
 }

@@ -41,15 +41,16 @@ class ProductSearchWidgetPlugin extends AbstractPlugin implements CmsContentWidg
     /**
      * @param \Twig_Environment $twig
      * @param array $context
-     * @param string|int|array $idFiles
+     * @param string|int $limit
      * @param null|string $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, $idFiles, ?string $templateIdentifier = null): string
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, $limit, ?string $templateIdentifier = null): string
     {
         return $twig->render(
-            $this->resolveTemplatePath($templateIdentifier)
+            $this->resolveTemplatePath($templateIdentifier),
+            ['limit' => $limit]
         );
     }
 

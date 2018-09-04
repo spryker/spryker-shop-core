@@ -7,13 +7,11 @@
 
 namespace SprykerShop\Yves\ProductSearchWidget\Controller;
 
-use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @method \SprykerShop\Yves\ProductSearchWidget\ProductSearchWidgetFactory getFactory()
@@ -21,12 +19,42 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class ProductConcreteSearchController extends AbstractController
 {
     protected const PARAM_SEARCH_STRING = 'searchString';
+    protected const PARAM_LIMIT = 'limit';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(Request $request)
     {
-       
+        $products = $this->getFactory()->getProductPageSearchClient()->searchProductConcretesBySku(
+            $this->createProductConcreteCriteriaFilterTransfer($request)
+        );
+
+        return $this->view(reset($products), [], '@ProductSearchWidget/views/product-search-results/product-search-results.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer
+     */
+    protected function createProductConcreteCriteriaFilterTransfer(Request $request): ProductConcreteCriteriaFilterTransfer
+    {
+        $productConcreteCriteriaFilterTransfer = new ProductConcreteCriteriaFilterTransfer();
+
+        $filterTransfer = new FilterTransfer();
+        $filterTransfer->setLimit($request->get(static::PARAM_LIMIT, 10));
+
+        $localeName = $this->getFactory()
+            ->getLocaleClient()
+            ->getCurrentLocale();
+
+        $productConcreteCriteriaFilterTransfer->setLocale((new LocaleTransfer())->setLocaleName($localeName));
+        $productConcreteCriteriaFilterTransfer->setSearchString($request->get(static::PARAM_SEARCH_STRING));
+        $productConcreteCriteriaFilterTransfer->setFilter($filterTransfer);
+
+        return $productConcreteCriteriaFilterTransfer;
     }
 }

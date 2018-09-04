@@ -1,0 +1,7 @@
+{% define data = {
+    products: _view.data
+} %}
+
+{% for product in data.products %}
+    <li>{{ product.sku }}: {{ product.name }}</li>
+{% endfor %}
