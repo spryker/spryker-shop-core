@@ -44,8 +44,14 @@
         <div class="col col--sm-6">
             <input type="hidden" name="sku" value="{{ data.sku }}" />
 
-            <button type="submit" class="button button--expand"
-                    onclick="this.form.submit(); this.disabled='disabled'; return false;"
+            {% include molecule('form-data-injector', 'ShoppingListWidget') with {
+                attributes: {
+                    'form-class': '.js-form-data-injector',
+                    'fields-selector': 'select:not([name="quantity"]):not([name="id_quote"])'
+                }
+            } only %}
+
+            <button type="submit" class="button button--expand js-add-to-shopping-list"
                     {{ qa('add-to-shopping-list-button') }}
                     {{ data.isDisabled ? 'disabled' : '' }}>
                 {% include atom('icon') with {
