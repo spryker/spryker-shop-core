@@ -27,7 +27,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
     protected const PARAMETER_ID_COMPANY_ROLE = 'id';
 
     /**
-     * @deprecated behavior is implemented by CompanyRoleController in updateAction
+     * @deprecated Please use CompanyRoleController::updateAction() instead, as it implements the same behaviour
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
