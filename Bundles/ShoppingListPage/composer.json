@@ -16,9 +16,13 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker/silex": "*"
+    "spryker-shop/customer-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/customer-page": "ADD SUGGEST DESCRIPTION",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
