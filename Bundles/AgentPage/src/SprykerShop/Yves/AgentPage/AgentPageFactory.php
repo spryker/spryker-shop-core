@@ -22,7 +22,6 @@ use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentPageSecurityServiceProvider;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentUserProvider;
-use SprykerShop\Yves\AgentPage\Plugin\Subscriber\FilterControllerEventSubscriber;
 use SprykerShop\Yves\AgentPage\Plugin\Subscriber\SwitchUserEventSubscriber;
 use SprykerShop\Yves\AgentPage\Security\Agent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -42,14 +41,6 @@ class AgentPageFactory extends AbstractFactory
     public function createSwitchUserEventSubscriber(): EventSubscriberInterface
     {
         return new SwitchUserEventSubscriber();
-    }
-
-    /**
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
-     */
-    public function createFilterControllerEventSubscriber(): EventSubscriberInterface
-    {
-        return new FilterControllerEventSubscriber();
     }
 
     /**
