@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\SharedCartPage\Dependency\Client;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 
 interface SharedCartPageToSharedCartClientInterface
@@ -41,4 +42,11 @@ interface SharedCartPageToSharedCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateQuotePermissions(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string|null
+     */
+    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): ?string;
 }

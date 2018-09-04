@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Controller;
 
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,6 +18,10 @@ class ShareController extends AbstractController
 {
     public const KEY_GLOSSARY_SHARED_CART_PAGE_SHARE_SUCCESS = 'shared_cart_page.share.success';
     public const URL_REDIRECT_MULTI_CART_PAGE = 'multi-cart';
+    /**
+     * @see \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_OWNER_ACCESS
+     */
+    protected const PERMISSION_GROUP_OWNER_ACCESS = 'OWNER_ACCESS';
 
     /**
      * @param int $idQuote
@@ -48,8 +52,8 @@ class ShareController extends AbstractController
             ->getMultiCartClient()
             ->findQuoteById($idQuote);
 
-        if ($quoteTransfer === null) {
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        if ($quoteTransfer === null || !$this->isQuoteAccessOwner($quoteTransfer)) {
+            return $this->redirectResponseInternal(static::URL_REDIRECT_MULTI_CART_PAGE);
         }
 
         $sharedCartForm = $this->getFactory()
@@ -72,5 +76,15 @@ class ShareController extends AbstractController
             'sharedCartForm' => $sharedCartForm->createView(),
             'cart' => $quoteTransfer,
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteAccessOwner(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()->getSharedCartClient()->getQuoteAccessLevel($quoteTransfer) === static::PERMISSION_GROUP_OWNER_ACCESS;
     }
 }
