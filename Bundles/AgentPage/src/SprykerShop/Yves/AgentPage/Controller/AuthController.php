@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormView;
 class AuthController extends AbstractController
 {
     /**
-     * @return string
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function loginAction()
     {

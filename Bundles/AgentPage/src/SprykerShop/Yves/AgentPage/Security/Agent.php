@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Agent implements UserInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
+     * @var \Generated\Shared\Transfer\UserTransfer
      */
     protected $userTransfer;
 

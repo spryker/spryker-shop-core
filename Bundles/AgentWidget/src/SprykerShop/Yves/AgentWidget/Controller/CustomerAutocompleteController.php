@@ -8,10 +8,10 @@
 namespace SprykerShop\Yves\AgentWidget\Controller;
 
 use Generated\Shared\Transfer\CustomerQueryTransfer;
-use Spryker\Yves\Kernel\Controller\AbstractController;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\ConstraintViolationList;
 
 /**
  * @method \SprykerShop\Yves\AgentWidget\AgentWidgetFactory getFactory()
@@ -29,6 +29,7 @@ class CustomerAutocompleteController extends AbstractController
     {
         $queryParams = $request->query->all();
 
+        /** @var \Symfony\Component\Validator\ConstraintViolationList $constraintViolationList */
         $constraintViolationList = $this->getFactory()
             ->createCustomerAutocompleteValidator()
             ->validate($queryParams);
@@ -51,11 +52,11 @@ class CustomerAutocompleteController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Validator\ConstraintViolationListInterface $constraintViolationList
+     * @param \Symfony\Component\Validator\ConstraintViolationList $constraintViolationList
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function errorResponse(ConstraintViolationListInterface $constraintViolationList): Response
+    protected function errorResponse(ConstraintViolationList $constraintViolationList): Response
     {
         return $this->renderView(static::VIEW_PATH, ['errors' => (string)$constraintViolationList]);
     }

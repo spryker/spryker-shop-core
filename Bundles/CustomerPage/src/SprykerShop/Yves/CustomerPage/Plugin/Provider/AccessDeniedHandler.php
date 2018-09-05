@@ -37,7 +37,7 @@ class AccessDeniedHandler extends AbstractPlugin implements AccessDeniedHandlerI
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Exception\AccessDeniedException $accessDeniedException
      *
-     * @return null|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
      */
     public function handle(Request $request, AccessDeniedException $accessDeniedException): ?RedirectResponse
     {
