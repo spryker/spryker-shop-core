@@ -16,8 +16,8 @@
             'suggestion-url': '/product-search/concrete',
             'selected-value-key': data.selectedValueKey,
             'value-data-attribute': 'data-value',
-            'item-selector': '.customer-list__container-item',
-            'query-param-name': 'searchString'
+            'item-selector': '.products-list__item',
+            'query-param-name': 'limit=' ~ data.searchResultsLimit ~ '&searchString'
         }
     } only %}
 {% endblock %}

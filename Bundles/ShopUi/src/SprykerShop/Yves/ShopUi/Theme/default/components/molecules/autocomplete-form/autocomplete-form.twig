@@ -23,7 +23,6 @@
 } %}
 
 {% block body %}
-
     {% include molecule('ajax-provider') with {
         class: config.jsName ~ '__provider',
         attributes: {
@@ -65,7 +64,7 @@
         <div class="box is-hidden {{ config.name }}__suggestion {{ config.jsName }}__container">
             {% include molecule('ajax-renderer') with {
                 attributes: {
-                    'provider-selector': '.' ~ config.jsName ~ '__provider',
+                    'provider-selector': '#' ~ data.id,
                     'render-if-response-is-empty': true,
                     'target-selector': config.jsName ~ '__suggestions',
                 }

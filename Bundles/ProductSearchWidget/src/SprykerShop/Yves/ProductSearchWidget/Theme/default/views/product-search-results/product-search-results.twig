@@ -1,17 +1,12 @@
+{% extends template('widget') %}
+
 {% define data = {
     products: _view.data
 } %}
 
-{% if (data.products|length) %}
-    <ul>
-        {% for product in data.products %}
-            <li data-id-product="{{ product.fkProduct }}">
-                <b>{{ product.sku }}</b>: {{ product.name }}
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <ul class="no-results">
-        <li>Item cannot be found</li>
-    </ul>
-{% endif %}
+{% block body %}
+    {% include molecule('products-list', 'ProductSearchWidget') with {
+        class: 'list',
+        data: data
+    } only %}
+{% endblock %}

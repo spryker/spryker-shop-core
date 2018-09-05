@@ -1,0 +1,11 @@
+@mixin product-search-widget-products-list($name: '.products-list') {
+    #{$name} {
+        &__item {
+            cursor: pointer;
+
+            &:hover {
+                background-color: $setting-color-lighter;
+            }
+        }
+    }
+}
