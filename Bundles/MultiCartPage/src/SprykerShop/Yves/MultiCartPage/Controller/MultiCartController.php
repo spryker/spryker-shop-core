@@ -100,7 +100,8 @@ class MultiCartController extends AbstractController
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CART_UPDATED_SUCCESS);
-                return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+
+                return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
             }
         }
 
