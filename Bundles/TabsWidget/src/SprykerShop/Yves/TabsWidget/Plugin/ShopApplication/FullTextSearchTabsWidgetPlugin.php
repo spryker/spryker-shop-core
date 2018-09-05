@@ -49,7 +49,7 @@ class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements Ful
      */
     public function initialize(string $searchString, string $activeTabName, array $requestParams = []): void
     {
-        $this->addParameter('tabs', $this->executeFullTextSearchPlugins($searchString, $activeTabName, $requestParams))
+        $this->addParameter('tabs', $this->getTabs($searchString, $activeTabName, $requestParams))
             ->addParameter('searchString', $searchString)
             ->addParameter('requestParams', $requestParams);
     }
@@ -61,11 +61,11 @@ class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements Ful
      *
      * @return array
      */
-    protected function executeFullTextSearchPlugins(string $searchString, string $activeTabName, array $requestParams = []): array
+    protected function getTabs(string $searchString, string $activeTabName, array $requestParams = []): array
     {
+        $fullTextSearchTabPlugins = $this->getFullTextSearchTabPlugins();
         $tabs = [];
-        $fullTextSearchTabPlugins = $this->getFullTextSearchTabPluginsSe();
-
+        
         foreach ($fullTextSearchTabPlugins as $fullTextSearchTabPlugin) {
             $tab = $this->createTab($fullTextSearchTabPlugin->getTabMetaData(), $activeTabName);
             $tab['count'] = !$tab['isActive'] ? $fullTextSearchTabPlugin->getTabCount($searchString, $requestParams) : null;
@@ -73,14 +73,14 @@ class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements Ful
                 $tabs[] = $tab;
             }
         }
-        
+
         return $tabs;
     }
 
     /**
      * @return array
      */
-    protected function getFullTextSearchTabPluginsSe(): array
+    protected function getFullTextSearchTabPlugins(): array
     {
         return $this->getFactory()->getFullTextSearchTabPlugins();
     }
