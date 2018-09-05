@@ -43,11 +43,12 @@
             }
         },
         embed: {
+            name: config.name,
             selector: config.jsName
         }
     } only %}
         {% block fields %}
-            <div class="{{embed.selector}}__list">
+            <div class="{{embed.selector}}__list {{ embed.name }}__list">
                 {% embed molecule('quick-order-form-field-list', 'QuickOrderPage') with {
                     data: {
                         items: data.form.items
