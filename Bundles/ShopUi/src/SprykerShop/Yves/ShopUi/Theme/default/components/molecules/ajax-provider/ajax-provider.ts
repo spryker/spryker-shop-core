@@ -77,7 +77,6 @@ export default class AjaxProvider extends Component {
             return url;
         }
         const queryStringParams = [];
-
         this.queryParams.forEach((value: String, key: String) => {
             queryStringParams.push(`${key}=${value}`);
         });
