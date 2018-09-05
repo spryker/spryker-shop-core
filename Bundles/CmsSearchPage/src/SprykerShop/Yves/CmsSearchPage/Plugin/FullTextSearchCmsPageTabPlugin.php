@@ -16,7 +16,7 @@ class FullTextSearchCmsPageTabPlugin extends AbstractPlugin implements FullTextS
 {
     protected const NAME = 'FullTextSearchCmsPage';
 
-    protected const TITLE = 'global.search.pages';
+    protected const TAB_TRANSLATED_TITLE = 'global.search.pages';
 
     /**
      * {@inheritdoc}
@@ -44,7 +44,7 @@ class FullTextSearchCmsPageTabPlugin extends AbstractPlugin implements FullTextS
     {
         $tabsMetaDataTransfer = (new TabMetaDataTransfer())
             ->setName(static::NAME)
-            ->setTitle(static::TITLE)
+            ->setTitle(static::TAB_TRANSLATED_TITLE)
             ->setRoute(CmsSearchPageControllerProvider::ROUTE_SEARCH);
 
         return $tabsMetaDataTransfer;

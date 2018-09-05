@@ -7,7 +7,7 @@
     "spryker/kernel": "^3.23.1",
     "spryker-shop/shop-application": "^1.1.1",
     "spryker/symfony": "^3.1.5",
-    "spryker-shop/tabs-widget-extension": "^0.0.1"
+    "spryker-shop/tabs-widget-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

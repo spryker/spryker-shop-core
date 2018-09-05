@@ -17,7 +17,7 @@
             <span class="{{ config.name }}__title">
                 {{ tab.title | trans }}
             </span>
-            {% if tab.count is defined %}
+            {% if tab.count %}
                 <span class="{{ config.name }}__counter">
                     ({{ tab.count }})
                 </span>

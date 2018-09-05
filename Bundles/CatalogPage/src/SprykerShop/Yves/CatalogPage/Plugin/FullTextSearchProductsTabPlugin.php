@@ -16,13 +16,10 @@ class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullText
 {
     protected const NAME = 'FullTextSearchProductsTab';
 
-    protected const TITLE = 'global.search.suggestion.in_products';
+    protected const TAB_TRANSLATED_TITLE = 'global.search.suggestion.in_products';
 
     /**
      * {@inheritdoc}
-     *
-     * Specification
-     *  - Counts product search result
      *
      * @api
      *
@@ -36,9 +33,6 @@ class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullText
     /**
      * {@inheritdoc}
      *
-     * Specification:
-     *  - Returns TabsMetaDataTransfer with product tab information
-     *
      * @api
      *
      * @return \Generated\Shared\Transfer\TabMetaDataTransfer
@@ -48,7 +42,7 @@ class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullText
         $tabsMetaDataTransfer = (new TabMetaDataTransfer())
             ->setName(static::NAME)
             ->setRoute(CatalogPageControllerProvider::ROUTE_SEARCH)
-            ->setTitle(static::TITLE);
+            ->setTitle(static::TAB_TRANSLATED_TITLE);
 
         return $tabsMetaDataTransfer;
     }

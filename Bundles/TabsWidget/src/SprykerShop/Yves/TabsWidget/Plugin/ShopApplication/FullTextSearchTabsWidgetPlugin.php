@@ -7,12 +7,11 @@
 
 namespace SprykerShop\Yves\TabsWidget\Plugin\ShopApplication;
 
+use Generated\Shared\Transfer\TabMetaDataTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShopApplication\Dependency\Plugin\TabsWidget\FullTextSearchTabsWidgetPluginInterface;
 
 /**
- * Class FullTextSearchTabsWidgetPlugin
- * @package SprykerShop\Yves\TabsWidget\Plugin\ShopApplication
  * @method \SprykerShop\Yves\TabsWidget\TabsWidgetFactory getFactory()
  */
 class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements FullTextSearchTabsWidgetPluginInterface
@@ -65,20 +64,37 @@ class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements Ful
     protected function executeFullTextSearchPlugins(string $searchString, string $activeTabName, array $requestParams = []): array
     {
         $tabs = [];
-        $fulltextSearchPlugins = $this->getFactory()->getFullTextSearchPlugins();
-        foreach ($fulltextSearchPlugins as $fullTextSearchPlugin) {
-            $metaData = $fullTextSearchPlugin->getTabMetaData();
-            $isCurrentTabActive = $metaData->getName() === $activeTabName;
-            $tab = $metaData->toArray();
-            $tab['isActive'] = $isCurrentTabActive;
-            if (!$isCurrentTabActive) {
-                $tab['count'] = $fullTextSearchPlugin->getTabCount($searchString, $requestParams);
-                if (!$tab['count']) {
-                    continue;
-                }
+        $fullTextSearchTabPlugins = $this->getFullTextSearchTabPluginsSe();
+
+        foreach ($fullTextSearchTabPlugins as $fullTextSearchTabPlugin) {
+            $tab = $this->createTab($fullTextSearchTabPlugin->getTabMetaData(), $activeTabName);
+            $tab['count'] = !$tab['isActive'] ? $fullTextSearchTabPlugin->getTabCount($searchString, $requestParams) : null;
+            if ($tab['isActive'] || $tab['count']) {
+                $tabs[] = $tab;
             }
-            $tabs[] = $tab;
         }
+        
         return $tabs;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFullTextSearchTabPluginsSe(): array
+    {
+        return $this->getFactory()->getFullTextSearchTabPlugins();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabMetaDataTransfer $tabMetaDataTransfer
+     * @param string $activeTabName
+     *
+     * @return array
+     */
+    protected function createTab(TabMetaDataTransfer $tabMetaDataTransfer, string $activeTabName): array
+    {
+        $tab = $tabMetaDataTransfer->toArray();
+        $tab['isActive'] = $tabMetaDataTransfer->getName() === $activeTabName;
+        return $tab;
     }
 }

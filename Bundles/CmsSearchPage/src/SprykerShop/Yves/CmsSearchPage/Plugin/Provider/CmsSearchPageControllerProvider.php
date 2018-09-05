@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class CmsSearchPageControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_SEARCH = 'cms_page_search';
+    public const ROUTE_SEARCH = 'search-cms';
 
     /**
      * @param \Silex\Application $app

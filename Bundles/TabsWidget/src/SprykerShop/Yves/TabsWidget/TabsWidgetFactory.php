@@ -14,7 +14,7 @@ class TabsWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface[]
      */
-    public function getFullTextSearchPlugins(): array
+    public function getFullTextSearchTabPlugins(): array
     {
         return $this->getProvidedDependency(TabsWidgetDependencyProvider::PLUGINS_FULL_TEXT_SEARCH_TAB);
     }
