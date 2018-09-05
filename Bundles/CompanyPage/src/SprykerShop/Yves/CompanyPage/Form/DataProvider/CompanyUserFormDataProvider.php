@@ -49,7 +49,7 @@ class CompanyUserFormDataProvider
             return $this->getDefaultCompanyUserData($idCompany);
         }
 
-        if ($idCompanyUser !== null) {
+        if ($idCompanyUser) {
             $companyUserTransfer = $this->loadCompanyUserTransfer($idCompanyUser);
             $customerTransfer = $companyUserTransfer->getCustomer();
 

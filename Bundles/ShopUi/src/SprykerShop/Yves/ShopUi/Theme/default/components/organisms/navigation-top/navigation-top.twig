@@ -35,7 +35,7 @@
             {% endif %}
         </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
-        <li class="menu__item">
+        <li class="menu__item menu__item--has-children-dropdown">
             {% if widgetGlobalExists('MiniCartWidgetPlugin') %}
                 {{ widgetGlobal('MiniCartWidgetPlugin', cartQuantity) }}
             {% else %}
@@ -51,8 +51,11 @@
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
 
         {% if data.showUserMenu %}
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if is_granted('ROLE_USER') %}
                 <li class="menu__item"><a href="{{ url('customer/overview') }}">{{ 'customer.profile'|trans }}</a></li>
+                {% if widgetGlobalExists('MenuItemCompanyWidgetPlugin') %}
+                    <li class="menu__item">{% spaceless %}{{ widgetGlobal('MenuItemCompanyWidgetPlugin') }}{% endspaceless %}</li>
+                {% endif %}
                 <li class="menu__item"><a href="{{ url('wishlist/overview') }}">{{ 'wishlist.wishlist'|trans }}</a></li>
                 <li class="menu__item"><a href="{{ url('logout') }}">{{ 'customer.logout'|trans }}</a></li>
             {% else %}

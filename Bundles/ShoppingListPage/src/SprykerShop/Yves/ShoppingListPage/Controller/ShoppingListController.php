@@ -218,10 +218,10 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $productConcreteStorageData = $this->getFactory()
             ->getProductStorageClient()
-            ->getProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
+            ->findProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
 
         $productViewTransfer = new ProductViewTransfer();
-        if (empty($productConcreteStorageData)) {
+        if ($productConcreteStorageData === null) {
             $productConcreteStorageData = [
                 ProductViewTransfer::SKU => $shoppingListItemTransfer->getSku(),
             ];
@@ -238,6 +238,8 @@ class ShoppingListController extends AbstractShoppingListController
                 $this->getLocale()
             );
         }
+        $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
+        $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
 
         return $productViewTransfer;
     }

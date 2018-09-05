@@ -1,6 +1,6 @@
 # ProductBundleWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Provides YVES product bundle to display and manipulate product bundles.
 
 ## Installation
 
