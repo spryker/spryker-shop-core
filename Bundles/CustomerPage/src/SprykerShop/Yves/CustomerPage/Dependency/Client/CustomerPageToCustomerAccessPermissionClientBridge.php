@@ -23,12 +23,10 @@ class CustomerPageToCustomerAccessPermissionClientBridge implements CustomerPage
     }
 
     /**
-     * @param string $customerSecuredPattern
-     *
      * @return string
      */
-    public function getCustomerSecuredPatternAccordingCustomerAccess(string $customerSecuredPattern): string
+    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string
     {
-        return $this->customerAccessPermissionClient->getCustomerSecuredPatternAccordingCustomerAccess($customerSecuredPattern);
+        return $this->customerAccessPermissionClient->getCustomerSecuredPatternForUnauthenticatedCustomerAccess();
     }
 }

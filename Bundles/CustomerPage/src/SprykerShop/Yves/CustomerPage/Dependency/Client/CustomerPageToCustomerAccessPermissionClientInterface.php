@@ -10,9 +10,7 @@ namespace SprykerShop\Yves\CustomerPage\Dependency\Client;
 interface CustomerPageToCustomerAccessPermissionClientInterface
 {
     /**
-     * @param string $customerSecuredPattern
-     *
      * @return string
      */
-    public function getCustomerSecuredPatternAccordingCustomerAccess(string $customerSecuredPattern): string;
+    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string;
 }
