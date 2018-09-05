@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Form\DataProvider;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ShoppingListFormDataProvider
 {
@@ -24,21 +25,32 @@ class ShoppingListFormDataProvider
     protected $customerClient;
 
     /**
+     * @var \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListDataProviderExpanderPluginInterface[]
+     */
+    protected $shoppingListDataProviderExpanderPlugins;
+
+    /**
      * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface $shoppingListClient
      * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListDataProviderExpanderPluginInterface[] $shoppingListDataProviderExpanderPlugins
      */
-    public function __construct(ShoppingListPageToShoppingListClientInterface $shoppingListClient, ShoppingListPageToCustomerClientInterface $customerClient)
-    {
+    public function __construct(
+        ShoppingListPageToShoppingListClientInterface $shoppingListClient,
+        ShoppingListPageToCustomerClientInterface $customerClient,
+        array $shoppingListDataProviderExpanderPlugins
+    ) {
         $this->shoppingListClient = $shoppingListClient;
         $this->customerClient = $customerClient;
+        $this->shoppingListDataProviderExpanderPlugins = $shoppingListDataProviderExpanderPlugins;
     }
 
     /**
      * @param string $idShoppingList
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function getData(string $idShoppingList): ShoppingListTransfer
+    public function getData(string $idShoppingList, Request $request): ShoppingListTransfer
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
@@ -47,6 +59,12 @@ class ShoppingListFormDataProvider
             ->setIdShoppingList($idShoppingList)
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
-        return $this->shoppingListClient->getShoppingList($shoppingListTransfer);
+        $shoppingListTransfer = $this->shoppingListClient->getShoppingList($shoppingListTransfer);
+
+        foreach ($this->shoppingListDataProviderExpanderPlugins as $shoppingListDataProviderExpanderPlugin) {
+            $shoppingListTransfer = $shoppingListDataProviderExpanderPlugin->expandData($shoppingListTransfer, $request);
+        }
+
+        return $shoppingListTransfer;
     }
 }
