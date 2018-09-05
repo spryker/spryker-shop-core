@@ -98,9 +98,9 @@ class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements Ful
      *
      * @return \Generated\Shared\Transfer\FullTextSearchTabTransfer
      */
-    protected function createTab(TabMetaDataTransfer $tabMetaDataTransfer, bool $isActive): FullTextSearchTabTransfer
+    protected function createTab(TabMetaDataTransfer $tabMetaDataTransfer, bool $isActive = false): FullTextSearchTabTransfer
     {
-        $fullTextTabTransfer = (new FullTextSearchTabTransfer());
+        $fullTextTabTransfer = new FullTextSearchTabTransfer();
 
         $fullTextTabTransfer->fromArray($tabMetaDataTransfer->toArray(), true);
         $fullTextTabTransfer->setIsActive($isActive);
