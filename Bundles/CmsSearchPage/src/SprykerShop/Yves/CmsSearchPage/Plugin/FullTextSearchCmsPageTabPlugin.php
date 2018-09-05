@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CmsSearchPage\Plugin\Provider\CmsSearchPageControllerProvider;
 use SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface;
 
+/**
+ * @method \SprykerShop\Yves\CmsSearchPage\CmsSearchPageFactory getFactory()
+ */
 class FullTextSearchCmsPageTabPlugin extends AbstractPlugin implements FullTextSearchTabPluginInterface
 {
     protected const NAME = 'FullTextSearchCmsPage';
@@ -30,7 +33,10 @@ class FullTextSearchCmsPageTabPlugin extends AbstractPlugin implements FullTextS
      */
     public function calculateItemCount(string $searchString, array $requestParams = []): int
     {
-        return 1; //Will be provided in next user story
+        return $this
+            ->getFactory()
+            ->getCmsPageSearchClient()
+            ->searchCount($searchString, $requestParams);
     }
 
     /**
