@@ -27,7 +27,7 @@ class ShoppingListPageToMultiCartClientBridge implements ShoppingListPageToMulti
     /**
      * @param int $idQuote
      *
-     * @return null|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
     public function findQuoteById(int $idQuote): ?QuoteTransfer
     {
