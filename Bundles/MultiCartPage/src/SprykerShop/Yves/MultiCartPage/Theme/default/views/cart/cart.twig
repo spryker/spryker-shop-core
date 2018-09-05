@@ -7,29 +7,14 @@
     activePage: 'multiCart'
 } %}
 
-{% block breadcrumbs %}
-    {% include molecule('breadcrumb') with {
-        data: {
-            steps: [
-                {
-                    label: 'customer.account' | trans,
-                    url: url('customer/overview'),
-                },
-                {
-                    label: 'page.multi_cart.shopping_cart.list.title' | trans,
-                }
-            ]
-        }
-    } only %}
-{% endblock %}
 
 {% block customerContent %}
-    <div class="box text-right">
-        <a class="button" href="{{ url('multi-cart/create') }}">{{ 'page.multi_cart.shopping_cart.list.create_link' | trans }}</a>
-    </div>
+    <div class="box">
+        <a class="button float-right" href="{{ url('multi-cart/create') }}">{{ 'page.multi_cart.shopping_cart.list.create_link' | trans }}</a>
+        <h4>{{ 'customer.account.shopping_cart.list.title' | trans }}</h4>
 
-    {% if data.quotes is not empty %}
-        <div class="box">
+        <hr />
+        {% if data.quotes is not empty %}
             {% include molecule('quote-table', 'MultiCartPage') with {
                 data: {
                     quotes: data.quotes,
@@ -42,6 +27,7 @@
                     }
                 }
             } only %}
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
+
 {% endblock %}
