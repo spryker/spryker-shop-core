@@ -34,7 +34,7 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
      *
      * @return void
      */
-    protected function defineControllers(Application $app)
+    protected function defineControllers(Application $app): void
     {
         $this->createController('{productSearch}/concrete', static::ROUTE_PRODUCT_CONCRETE_SEARCH, 'ProductSearchWidget', 'ProductConcreteSearch', 'index')
             ->assert('productSearch', $this->allowedLocalesPattern . 'product-search|product-search')

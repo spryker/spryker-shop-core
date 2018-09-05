@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\ResultFormatter\ProductConcretePageSearchResultFormatterPlugin;
 use Spryker\Yves\Kernel\Controller\AbstractController;
+use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,7 +28,7 @@ class ProductConcreteSearchController extends AbstractController
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): View
     {
         $products = $this->getFactory()->getProductPageSearchClient()->searchProductConcretesBySku(
             $this->createProductConcreteCriteriaFilterTransfer($request)
