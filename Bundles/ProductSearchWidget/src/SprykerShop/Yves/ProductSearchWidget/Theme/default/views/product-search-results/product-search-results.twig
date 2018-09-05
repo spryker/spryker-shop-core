@@ -2,6 +2,16 @@
     products: _view.data
 } %}
 
-{% for product in data.products %}
-    <li>{{ product.sku }}: {{ product.name }}</li>
-{% endfor %}
+{% if (data.products|length) %}
+    <ul>
+        {% for product in data.products %}
+            <li data-id-product="{{ product.fkProduct }}">
+                <b>{{ product.sku }}</b>: {{ product.name }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <ul class="no-results">
+        <li>Item cannot be found</li>
+    </ul>
+{% endif %}

@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Form;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\QtyFieldConstraint;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -62,9 +63,9 @@ class OrderItemEmbeddedForm extends AbstractType
     protected function addSku(FormBuilderInterface $builder): FormTypeInterface
     {
         $builder
-            ->add(static::FIELD_SKU, TextType::class, [
+            ->add(static::FIELD_SKU, HiddenType::class, [
                 'required' => false,
-                'label' => static::FIELD_SKU_LABEL,
+                'label' => false,
             ]);
 
         return $this;
@@ -79,7 +80,7 @@ class OrderItemEmbeddedForm extends AbstractType
     {
         $builder->add(static::FIELD_QTY, IntegerType::class, [
             'required' => false,
-            'label' => static::FIELD_QTY_LABEL,
+            'label' => false,
             'attr' => ['min' => 1],
         ]);
 

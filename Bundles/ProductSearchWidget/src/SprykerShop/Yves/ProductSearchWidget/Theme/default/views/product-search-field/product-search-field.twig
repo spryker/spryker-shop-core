@@ -1,9 +1,27 @@
 {% extends template('widget') %}
 
 {% define data = {
-
+    index: _widget.index,
+    selectedValueKey: _widget.selectedValueKey,
+    searchResultsLimit: _widget.searchResultsLimit,
 } %}
 
 {% block body %}
-    <p>PLACEHOLDER</p>
+    {% include molecule('autocomplete-form') with {
+        data: {
+            id: data.index,
+            placeholder: 'quick-order.input.placeholder'
+        },
+        attributes: {
+            'suggestion-url': '/product-search/concrete',
+            'selected-value-key': data.selectedValueKey,
+            'value-data-attribute': 'data-value',
+            'item-selector': '.customer-list__container-item',
+            'query-param-name': 'searchString'
+        }
+    } only %}
 {% endblock %}
+
+{# Here we also need to pass additional query param called 'limit' with value taken from data.searchResultsLimit #}
+{# Seems like autocompete-form component doesn't support it out of the box #}
+

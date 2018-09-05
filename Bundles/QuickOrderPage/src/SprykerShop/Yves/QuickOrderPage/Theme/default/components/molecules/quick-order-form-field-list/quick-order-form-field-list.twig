@@ -17,24 +17,13 @@
     {% for item in data.items %}
         <div class="grid grid--middle {{ config.name }}__item">
             <div class="col col--sm-7 spacing spacing--inner">
-                {% include molecule('autocomplete-form') with {
-                    data: {
-                        id: 'autocomplete' ~ loop.index,
-                        placeholder: 'quick-order.input.placeholder'
-                    },
-                    attributes: {
-                        'suggestion-url': 'test',
-                        'selected-value-key': item.vars.full_name ~ '[sku]',
-                        'value-data-attribute': 'data-value',
-                        'item-selector': '.customer-list__container-item'
-                    }
-                } only %}
-
-                {# 'suggestion-url' - url for response #}
-                {# 'selected-value-key' - name of #}
-                {# 'value-data-attribute' - item value attribute, which will be inserted into hidden input #}
-                {# 'item-selector' - dropdown item class #}
-
+                {% if widgetGlobalExists('QuickOrderPageProductSearchWidgetPlugin') %}
+                    {{ widgetGlobal(
+                        'QuickOrderPageProductSearchWidgetPlugin',
+                        'autocomplete' ~ loop.index,
+                        item.vars.full_name ~ '[sku]'
+                    ) }}
+                {% endif %}
             </div>
             <div class="col col--sm-4 spacing spacing--inner">
                 {{ form_row(item.qty, {
@@ -44,7 +33,9 @@
             </div>
             <div class="col col--sm-1 spacing spacing--inner">
                 {% if not loop.first %}
-                    <a href="#remove" class="button button--expand button--warning {% block removeActionClass %}{% endblock %}" data-row-index="{{loop.index0}}">
+                    <a href="#remove"
+                       class="button button--expand button--warning {% block removeActionClass %}{% endblock %}"
+                       data-row-index="{{ loop.index0 }}">
                         {% include atom('icon') with {
                             modifiers: ['small'],
                             data: {
