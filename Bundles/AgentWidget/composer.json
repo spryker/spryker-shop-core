@@ -3,6 +3,7 @@
   "description": "AgentWidget module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.3.0",
     "spryker/agent": "^1.0.0",
@@ -21,11 +22,6 @@
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

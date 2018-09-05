@@ -3,6 +3,7 @@
   "description": "AgentPage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker-shop/customer-page": "^1.4.0",
     "spryker-shop/customer-page-extension": "^1.2.0",
     "spryker-shop/shop-application": "^1.1.0",
@@ -28,11 +29,6 @@
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
