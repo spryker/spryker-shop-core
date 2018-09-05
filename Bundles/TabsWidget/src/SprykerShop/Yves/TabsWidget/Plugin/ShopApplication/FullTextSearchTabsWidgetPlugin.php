@@ -7,9 +7,11 @@
 
 namespace SprykerShop\Yves\TabsWidget\Plugin\ShopApplication;
 
+use Generated\Shared\Transfer\FullTextSearchTabTransfer;
 use Generated\Shared\Transfer\TabMetaDataTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShopApplication\Dependency\Plugin\TabsWidget\FullTextSearchTabsWidgetPluginInterface;
+use SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\TabsWidget\TabsWidgetFactory getFactory()
@@ -67,9 +69,14 @@ class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements Ful
         $tabs = [];
 
         foreach ($fullTextSearchTabPlugins as $fullTextSearchTabPlugin) {
-            $tab = $this->createTab($fullTextSearchTabPlugin->getTabMetaData(), $activeTabName);
-            $tab['count'] = !$tab['isActive'] ? $fullTextSearchTabPlugin->getTabCount($searchString, $requestParams) : null;
-            if ($tab['isActive'] || $tab['count']) {
+            $metaData = $fullTextSearchTabPlugin->getTabMetaData();
+            $tab = $this->createTab($metaData, $metaData->getName() === $activeTabName);
+
+            if (!$tab->getIsActive()) {
+                $tab->setCount($this->getTabCount($fullTextSearchTabPlugin, $searchString, $requestParams));
+            }
+
+            if ($tab->getIsActive() || $tab->getCount()) {
                 $tabs[] = $tab;
             }
         }
@@ -87,14 +94,32 @@ class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements Ful
 
     /**
      * @param \Generated\Shared\Transfer\TabMetaDataTransfer $tabMetaDataTransfer
-     * @param string $activeTabName
+     * @param bool $isActive
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\FullTextSearchTabTransfer
      */
-    protected function createTab(TabMetaDataTransfer $tabMetaDataTransfer, string $activeTabName): array
+    protected function createTab(TabMetaDataTransfer $tabMetaDataTransfer, bool $isActive): FullTextSearchTabTransfer
     {
-        $tab = $tabMetaDataTransfer->toArray();
-        $tab['isActive'] = $tabMetaDataTransfer->getName() === $activeTabName;
-        return $tab;
+        $fullTextTabTransfer = (new FullTextSearchTabTransfer());
+
+        $fullTextTabTransfer->fromArray($tabMetaDataTransfer->toArray(), true);
+        $fullTextTabTransfer->setIsActive($isActive);
+
+        return $fullTextTabTransfer;
+    }
+
+    /**
+     * @param \SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface $fullTextSearchTabPlugin
+     * @param string $searchString
+     * @param array $requestParams
+     *
+     * @return int
+     */
+    protected function getTabCount(
+        FullTextSearchTabPluginInterface $fullTextSearchTabPlugin,
+        string $searchString,
+        array $requestParams = []
+    ): int {
+        return $fullTextSearchTabPlugin->calculateItemCount($searchString, $requestParams);
     }
 }
