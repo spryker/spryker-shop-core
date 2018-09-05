@@ -90,7 +90,7 @@ class AddToCartHandler implements AddToCartHandlerInterface
         return (new ShoppingListAddToCartRequestTransfer())
             ->setSku($shoppingListItemTransfer->getSku())
             ->setQuantity($shoppingListItemTransfer->getQuantity())
-            ->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+            ->setShoppingListItem($shoppingListItemTransfer);
     }
 
     /**
