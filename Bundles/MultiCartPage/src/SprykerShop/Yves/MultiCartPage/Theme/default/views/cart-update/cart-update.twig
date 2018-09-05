@@ -22,9 +22,6 @@
                 {
                     label: data.cart.name,
                     url: data.cart.isDefault ? url('cart') : url('multi-cart/set-default', {idQuote: data.cart.idQuote}),
-                },
-                {
-                    label: 'page.multi_cart.shopping_cart.update.title' | trans,
                 }
             ]
         }
@@ -35,7 +32,7 @@
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'multi_cart.form.edit_cart_information' | trans,
+                title: 'multi_cart.form.edit_cart_information' | trans({cart_name: data.cart.name}),
                 form: data.form,
                 options: {
                     action: data.formAction
