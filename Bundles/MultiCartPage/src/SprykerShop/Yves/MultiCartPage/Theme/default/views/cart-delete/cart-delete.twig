@@ -30,12 +30,7 @@
         {{ "multi_cart_page.cart_delete_confirmation.trying_to_delete" | trans }}: <strong>{{ data.cartName }}</strong>
         <br/><br/>
 
-        {% if data.cartShareDetails is not empty %}
-            {{ "multi_cart_page.cart_delete_confirmation.shared_with" | trans }}:
-            {{ widget('CartDeleteCompanyUsersListWidgetPlugin', data.cart) }}
-            <span class="text-alert">{{ "multi_cart_page.cart_delete_confirmation.from_all_of_them" | trans }}</span>
-            <br/><br/>
-        {% endif %}
+        {{ widget('CartDeleteCompanyUsersListWidgetPlugin', data.cart) }}
 
         <div class="form__actions">
             <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">

@@ -5,8 +5,9 @@
 } %}
 
 {% block body %}
-    <div class="box">
-        {% if data.quoteShareDetails is not empty %}
+    {% if data.quoteShareDetails is not empty %}
+        <div class="box">
+            {{ "multi_cart_page.cart_delete_confirmation.shared_with" | trans }}:
             <ul class="list list--bullet">
                 {% for shareDetail in data.quoteShareDetails %}
                     <li class="list__item">
@@ -14,6 +15,8 @@
                     </li>
                 {% endfor %}
             </ul>
-        {% endif %}
-    </div>
+            <span class="text-alert">{{ "multi_cart_page.cart_delete_confirmation.from_all_of_them" | trans }}</span>
+            <br/><br/>
+        </div>
+    {% endif %}
 {% endblock %}

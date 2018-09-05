@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\SharedCartWidget\CartDeleteCompanyUsersListWidgetPluginInterface;
 
+/**
+ * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
+ */
 class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implements CartDeleteCompanyUsersListWidgetPluginInterface
 {
     /**
@@ -20,7 +23,20 @@ class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implem
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('quoteShareDetails', $quoteTransfer->getShareDetails());
+        $this->addQuoteShareDetailsParameter($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addQuoteShareDetailsParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(
+            'quoteShareDetails',
+            $this->getFactory()->getSharedCartClient()->getShareDetailsByIdQuoteAction($quoteTransfer)->getShareDetails()
+        );
     }
 
     /**
