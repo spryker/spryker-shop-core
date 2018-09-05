@@ -1,4 +1,4 @@
-@mixin catalog-page-sort($name: '.sort') {
+@mixin cms-page-sort($name: '.sort') {
     #{$name} {
         &__col:not(:last-child) {
             padding-right: 0.5rem;
