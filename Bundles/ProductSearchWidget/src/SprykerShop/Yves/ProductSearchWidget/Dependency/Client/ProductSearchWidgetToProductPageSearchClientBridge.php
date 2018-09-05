@@ -33,14 +33,4 @@ class ProductSearchWidgetToProductPageSearchClientBridge implements ProductSearc
     {
         return $this->productPageSearchClient->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
-     *
-     * @return array
-     */
-    public function searchProductConcretesBySku(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array
-    {
-        return $this->productPageSearchClient->searchProductConcretesBySku($productConcreteCriteriaFilterTransfer);
-    }
 }

@@ -30,7 +30,7 @@ class ProductConcreteSearchController extends AbstractController
      */
     public function indexAction(Request $request): View
     {
-        $products = $this->getFactory()->getProductPageSearchClient()->searchProductConcretesBySku(
+        $products = $this->getFactory()->getProductPageSearchClient()->searchProductConcretesByFullText(
             $this->createProductConcreteCriteriaFilterTransfer($request)
         );
 
