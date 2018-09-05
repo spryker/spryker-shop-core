@@ -14,6 +14,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig_SimpleFilter;
 use Twig_SimpleFunction;
+use Twig_Environment;
 
 /**
  * @method \Spryker\Yves\Money\MoneyFactory getFactory()
@@ -28,7 +29,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) {
+            $app->extend('twig', function (Twig_Environment $twig) {
                 $twig->addFilter($this->getMoneyFilter());
                 $twig->addFilter($this->getMoneyRawFilter());
                 $twig->addFunction($this->getMoneySymbol());
