@@ -12,9 +12,9 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Twig_Environment;
 use Twig_SimpleFilter;
 use Twig_SimpleFunction;
-use Twig_Environment;
 
 /**
  * @method \Spryker\Yves\Money\MoneyFactory getFactory()
