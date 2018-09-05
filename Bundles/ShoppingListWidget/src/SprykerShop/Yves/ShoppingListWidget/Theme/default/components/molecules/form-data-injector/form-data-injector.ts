@@ -20,7 +20,7 @@ export default class FormDataInjector extends Component {
         event.preventDefault();
 
         this.disableButton();
-        this.addHiddenInputs();
+        this.addHiddenFields();
         this.formForInject.submit();
     }
 
@@ -28,14 +28,14 @@ export default class FormDataInjector extends Component {
         this.formForInject.querySelector('[type="submit"]').setAttribute('disabled', 'disabled');
     }
 
-    private addHiddenInputs(): void {
+    private addHiddenFields(): void {
         const fieldsArray: HTMLFormElement[] = Array.from(this.formTakeOutFrom.querySelectorAll(this.getFieldsSelector));
 
         this.innerHTML = '';
-        fieldsArray.forEach(field => this.addHiddenField(field));
+        fieldsArray.forEach(field => this.addField(field));
     }
 
-    private addHiddenField(field): void {
+    private addField(field): void {
         let insertField = document.createElement('input');
 
         insertField.setAttribute('type', 'hidden');
