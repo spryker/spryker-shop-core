@@ -65,7 +65,7 @@ class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements Ful
     {
         $fullTextSearchTabPlugins = $this->getFullTextSearchTabPlugins();
         $tabs = [];
-        
+
         foreach ($fullTextSearchTabPlugins as $fullTextSearchTabPlugin) {
             $tab = $this->createTab($fullTextSearchTabPlugin->getTabMetaData(), $activeTabName);
             $tab['count'] = !$tab['isActive'] ? $fullTextSearchTabPlugin->getTabCount($searchString, $requestParams) : null;
