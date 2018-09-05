@@ -12,9 +12,11 @@
     "spryker/util-text": "^1.2.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/log": "*",
     "spryker/symfony": "*",
+    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {
