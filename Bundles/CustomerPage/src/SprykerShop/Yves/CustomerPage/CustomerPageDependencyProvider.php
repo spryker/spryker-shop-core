@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerAccessPermissionClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
@@ -24,6 +25,7 @@ use SprykerShop\Yves\CustomerPage\Plugin\RegistrationCheckoutAuthenticationHandl
 class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_CUSTOMER_ACCESS_PERMISSION = 'CLIENT_CUSTOMER_ACCESS_PERMISSION';
     const CLIENT_SALES = 'CLIENT_SALES';
     const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
@@ -51,6 +53,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addCustomerClient($container);
+        $container = $this->addCustomerAccessPermissionClient($container);
         $container = $this->addSalesClient($container);
         $container = $this->addProductGroupClient($container);
         $container = $this->addQuoteClient($container);
@@ -181,6 +184,20 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_CUSTOMER] = function (Container $container) {
             return new CustomerPageToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerAccessPermissionClient(Container $container): Container
+    {
+        $container[self::CLIENT_CUSTOMER_ACCESS_PERMISSION] = function (Container $container) {
+            return new CustomerPageToCustomerAccessPermissionClientBridge($container->getLocator()->customerAccessPermission()->client());
         };
 
         return $container;

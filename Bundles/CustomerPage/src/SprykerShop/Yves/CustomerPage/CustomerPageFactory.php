@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerAccessPermissionClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
@@ -188,6 +189,14 @@ class CustomerPageFactory extends AbstractFactory
     public function getCustomerClient(): CustomerPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerAccessPermissionClientInterface
+     */
+    public function getCustomerAccessPermissionClient(): CustomerPageToCustomerAccessPermissionClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_CUSTOMER_ACCESS_PERMISSION);
     }
 
     /**
