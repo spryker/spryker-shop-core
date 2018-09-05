@@ -1,0 +1,42 @@
+{% extends template('search-cms-template', 'CmsSearchPage') %}
+
+{% define data = {
+    pages: _view.cms_pages,
+    searchString: _view.searchString,
+
+    title: ('global.search.results' | trans) ~ ' ' ~ _view.searchString,
+    metaTitle: _view.pageTitle | default,
+    metaDescription: _view.pageDescription | default,
+    metaKeywords: _view.pageKeywords | default,
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'global.search' | trans
+            }]
+        }
+    } only %}
+{% endblock %}
+
+{% block title %}
+    <h3>{{ 'global.search.results' | trans }} "<strong>{{ data.searchString }}</strong>"</h3>
+{% endblock %}
+
+{% block form %}
+    <div class="col col--sm-12">
+        <div class="col col--sm-12 spacing spacing--inner">
+            {{ widget('FullTextSearchTabsWidgetPlugin', data.searchString, 'FullTextSearchCmsPage') }}
+        </div>
+        {% include molecule('search-cms-results', 'CmsSearchPage') with {
+            data: {
+                pages: data.pages
+            }
+        } only %}
+    </div>
+    {{parent()}}
+    {% if data.searchString is not empty %}
+        <input type="hidden" name="q" value="{{ data.searchString }}" />
+    {% endif %}
+{% endblock %}

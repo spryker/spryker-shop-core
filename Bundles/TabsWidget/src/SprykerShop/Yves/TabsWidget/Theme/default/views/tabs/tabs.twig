@@ -1,0 +1,18 @@
+{% extends template('widget') %}
+
+{% define data = {
+    tabs: _widget.tabs,
+    searchString: _widget.searchString,
+    requestParams: _widget.requestParams
+} %}
+
+{% block body %}
+{% include molecule('search-tabs', 'TabsWidget') with {
+    class: 'grid',
+    data: {
+        tabs: data.tabs,
+        searchString: data.searchString,
+        requestParams: data.requestParams
+    }
+} only %}
+{% endblock %}

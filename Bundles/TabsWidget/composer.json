@@ -1,0 +1,37 @@
+{
+  "name": "spryker-shop/tabs-widget",
+  "description": "TabsWidget module",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.23.1",
+    "spryker-shop/tabs-widget-extension": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*",
+    "spryker-shop/shop-application": "^1.1.1"
+  },
+  "suggest": {
+    "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies."
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
