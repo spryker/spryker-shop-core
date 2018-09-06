@@ -50,7 +50,7 @@ class UrlGenerator extends SymfonyUrlGenerator
 
         $url = parent::generate($name, $parameters, $referenceType);
 
-        list($url, $queryParams) = $this->stripQueryParams($url);
+        [$url, $queryParams] = $this->stripQueryParams($url);
 
         $url = $this->setVariablePath($name, $url, $compiledRoute, $route, $referenceType);
         $url = $this->appendQueryParams($url, $queryParams);
@@ -82,7 +82,7 @@ class UrlGenerator extends SymfonyUrlGenerator
      * @param string $url
      * @param \Symfony\Component\Routing\CompiledRoute $compiledRoute
      * @param \Symfony\Component\Routing\Route $route
-     * @param bool $referenceType
+     * @param int|string $referenceType
      *
      * @return string
      */

@@ -8,8 +8,11 @@
 
 {% block customerContent %}
     <div class="box">
+        <h4>{{ data.labels.overviewTitle }}</h4>
+        <hr/>
         {% include molecule('form') with {
             data: {
+                title: data.labels.newFormTitle,
                 form: data.shoppingListForm,
                 submit: {
                     enable: true,

@@ -116,7 +116,6 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
                 $productConcretePackagingStorageTransfer,
                 $productQuantityStorageTransfer
             ));
-        ;
     }
 
     /**

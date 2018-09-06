@@ -6,11 +6,13 @@
     "php": ">=7.1",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0",
-    "spryker/product-storage": "^1.0.0"
+    "spryker/product-storage": "^1.1.0"
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
-    "spryker/symfony": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "Widget plugins are available for this module.",
