@@ -1,0 +1,8 @@
+@mixin shop-ui-navigation-top($name: '.navigation-top') {
+    #{$name} {
+        position: relative;
+        z-index: 10000;
+
+        @content;
+    }
+}
