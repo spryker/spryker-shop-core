@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemProductOptionFormDataProviderInterface
 {
-    protected const FORM_NAME = 'shopping_list_update_form';
+    protected const SHOPPING_LIST_UPDATE_FORM_NAME = 'shopping_list_update_form';
     protected const PRODUCT_OPTIONS_FIELD_NAME = 'productOptions';
 
     /**
@@ -42,24 +42,86 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
      */
     public function expandData(ShoppingListTransfer $shoppingListTransfer, Request $request): ShoppingListTransfer
     {
-        if (!$request->request->has(static::FORM_NAME)) {
+        if (!$request->request->has(static::SHOPPING_LIST_UPDATE_FORM_NAME)) {
             return $shoppingListTransfer;
         }
 
-        $requestFormData = $request->request->get(static::FORM_NAME);
-
-        foreach ($shoppingListTransfer->getItems() as $key => $itemTransfer) {
-            if ($requestFormData[ShoppingListTransfer::ITEMS] && $requestFormData[ShoppingListTransfer::ITEMS][$key]) {
-                $idsProductOptionValue = array_filter($requestFormData[ShoppingListTransfer::ITEMS][$key][static::PRODUCT_OPTIONS_FIELD_NAME]);
-                $productOptionTransfers = [];
-                foreach ($idsProductOptionValue as $idProductOptionValue) {
-                    $productOptionTransfers[] = (new ProductOptionTransfer())->setIdProductOptionValue($idProductOptionValue);
-                }
-                $itemTransfer->setProductOptions(new ArrayObject($productOptionTransfers));
-            }
-        }
+        $requestFormData = $request->request->get(static::SHOPPING_LIST_UPDATE_FORM_NAME);
+        $shoppingListTransfer = $this->setUpProductOptions($shoppingListTransfer, $requestFormData);
 
         return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param array $requestFormData
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function setUpProductOptions(ShoppingListTransfer $shoppingListTransfer, array $requestFormData): ShoppingListTransfer
+    {
+        $shoppingListItems = [];
+
+        foreach ($shoppingListTransfer->getItems() as $itemKey => $shoppingListItemTransfer) {
+            if (!$requestFormData[ShoppingListTransfer::ITEMS] || !$requestFormData[ShoppingListTransfer::ITEMS][$itemKey]) {
+                continue;
+            }
+            $idsProductOptionValue = $this->getIdsProductOptionValue($requestFormData, $itemKey);
+            $shoppingListItems[] = $this->setUpProductOptionsPerShoppingListItemTransfer($shoppingListItemTransfer, $idsProductOptionValue);
+        }
+
+        return $shoppingListTransfer->setItems(new ArrayObject($shoppingListItems));
+    }
+
+    /**
+     * @param array $requestFormData
+     * @param string $itemKey
+     *
+     * @return int[]
+     */
+    protected function getIdsProductOptionValue(array $requestFormData, string $itemKey): array
+    {
+        return array_filter($requestFormData[ShoppingListTransfer::ITEMS][$itemKey][static::PRODUCT_OPTIONS_FIELD_NAME]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param int[] $idsProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected function setUpProductOptionsPerShoppingListItemTransfer(ShoppingListItemTransfer $shoppingListItemTransfer, array $idsProductOptionValue): ShoppingListItemTransfer
+    {
+        $productOptionTransfers = $this->createProductOptionTransfers($idsProductOptionValue);
+        $shoppingListItemTransfer->setProductOptions($productOptionTransfers);
+
+        return $shoppingListItemTransfer;
+    }
+
+    /**
+     * @param int[] $idsProductOptionValue
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[]
+     */
+    protected function createProductOptionTransfers(array $idsProductOptionValue): ArrayObject
+    {
+        $productOptionTransfers = [];
+
+        foreach ($idsProductOptionValue as $idProductOptionValue) {
+            $productOptionTransfers[] = $this->createProductOptionTransfer($idProductOptionValue);
+        }
+
+        return new ArrayObject($productOptionTransfers);
+    }
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
+     */
+    protected function createProductOptionTransfer(int $idProductOptionValue): ProductOptionTransfer
+    {
+        return (new ProductOptionTransfer())->setIdProductOptionValue($idProductOptionValue);
     }
 
     /**
