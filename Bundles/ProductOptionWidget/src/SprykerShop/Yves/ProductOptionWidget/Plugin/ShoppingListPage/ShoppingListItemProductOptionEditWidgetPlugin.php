@@ -28,7 +28,7 @@ class ShoppingListItemProductOptionEditWidgetPlugin extends AbstractWidgetPlugin
 
         $this->addParameter(
             'productOptionGroups',
-            new ArrayObject($mappedProductOptionGroups)
+            $mappedProductOptionGroups
         );
 
         $this->addParameter(

@@ -12,8 +12,6 @@ namespace SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin;
 
 interface ShoppingListDataProviderExpanderPluginInterface
 {
-    public const FORM_NAME = 'shopping_list_update_form';
-
     /**
      * Specification:
      *  - Expands ShoppingListTransfer with additional request parameters.

@@ -64,10 +64,9 @@ class ShoppingListItemProductOptionForm extends AbstractType
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
             $form = $event->getForm();
-            $data = $event->getData();
             /** @var \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer $option */
             foreach ($options[static::PRODUCT_OPTION_GROUP_KEY] as $option) {
-                $form->add(str_replace('.', '_', $option->getName()), ChoiceType::class, [
+                $form->add($this->generateFormTypeName($option->getName()), ChoiceType::class, [
                     'label' => $option->getName(),
                     'choices' => $option->getProductOptionValues()->getArrayCopy(),
                     'multiple' => false,
@@ -89,5 +88,15 @@ class ShoppingListItemProductOptionForm extends AbstractType
         $resolver->setDefaults([
             static::PRODUCT_OPTION_GROUP_KEY,
         ]);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function generateFormTypeName(string $name): string
+    {
+        return str_replace('.', '_', $name);
     }
 }
