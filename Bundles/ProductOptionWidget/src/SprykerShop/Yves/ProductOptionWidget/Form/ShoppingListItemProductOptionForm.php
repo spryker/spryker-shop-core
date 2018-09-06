@@ -21,6 +21,8 @@ class ShoppingListItemProductOptionForm extends AbstractType
 {
     public const PRODUCT_OPTION_GROUP_KEY = 'product_option_group';
     protected const TEMPLATE_PATH = '@ProductOptionWidget/views/shopping-list-option-form/shopping-list-option-form.twig';
+    protected const PROHIBITED_SYMBOLS = ['.'];
+    protected const SYMBOL_FOR_SUBSTITUTE = '_';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -97,6 +99,10 @@ class ShoppingListItemProductOptionForm extends AbstractType
      */
     protected function generateFormTypeName(string $name): string
     {
-        return str_replace('.', '_', $name);
+        foreach (static::PROHIBITED_SYMBOLS as $prohibitedSymbol) {
+            $name = str_replace($prohibitedSymbol, static::SYMBOL_FOR_SUBSTITUTE, $name);
+        }
+
+        return $name;
     }
 }
