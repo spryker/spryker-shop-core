@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\WishlistPage\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
@@ -20,7 +21,6 @@ use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
 use SprykerShop\Yves\WishlistPage\Plugin\Provider\WishlistPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use ArrayObject;
 
 /**
  * @method \SprykerShop\Yves\WishlistPage\WishlistPageFactory getFactory()
