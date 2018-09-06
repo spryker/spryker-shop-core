@@ -10,6 +10,8 @@
     "spryker/storage": "^3.4.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*",
     "spryker/url-storage": "*"
   },
   "suggest": {
