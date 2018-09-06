@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\WishlistPage\Controller;
 
+use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
@@ -19,6 +20,7 @@ use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
 use SprykerShop\Yves\WishlistPage\Plugin\Provider\WishlistPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use ArrayObject;
 
 /**
  * @method \SprykerShop\Yves\WishlistPage\WishlistPageFactory getFactory()
@@ -310,21 +312,66 @@ class WishlistController extends AbstractController
             ->getProductStorageClient()
             ->findProductConcreteStorageData($wishlistItemTransfer->getIdProduct(), $this->getLocale());
 
-        $productViewTransfer = new ProductViewTransfer();
         if ($productConcreteStorageData === null) {
-            return $productViewTransfer;
+            return $this->prepareDeactivatedProductViewTransfer($wishlistItemTransfer);
         }
 
+        return $this->prepareConcreteProductViewTransfer($productConcreteStorageData, $this->getLocale());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function prepareDeactivatedProductViewTransfer(WishlistItemTransfer $wishlistItemTransfer): ProductViewTransfer
+    {
+        $productViewTransfer = $this->createProductViewTransfer();
+        $productViewTransfer->setSku($wishlistItemTransfer->getSku());
+        $productViewTransfer->setIdProductConcrete($wishlistItemTransfer->getIdProduct());
+
+        $images = new ArrayObject();
+        $images->append($this->createProductImageStorageTransfer());
+        $productViewTransfer->setImages($images);
+
+        return $productViewTransfer;
+    }
+
+    /**
+     * @param array $productConcreteStorageData
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function prepareConcreteProductViewTransfer(array $productConcreteStorageData, string $locale): ProductViewTransfer
+    {
+        $productViewTransfer = $this->createProductViewTransfer();
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         foreach ($this->getFactory()->getWishlistItemExpanderPlugins() as $productViewExpanderPlugin) {
             $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer(
                 $productViewTransfer,
                 $productConcreteStorageData,
-                $this->getLocale()
+                $locale
             );
         }
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function createProductViewTransfer(): ProductViewTransfer
+    {
+        return new ProductViewTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer
+     */
+    protected function createProductImageStorageTransfer(): ProductImageStorageTransfer
+    {
+        return new ProductImageStorageTransfer();
     }
 }
