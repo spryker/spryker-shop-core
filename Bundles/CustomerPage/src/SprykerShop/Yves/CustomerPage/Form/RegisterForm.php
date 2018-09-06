@@ -17,8 +17,10 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
+ */
 class RegisterForm extends AbstractType
 {
     const FIELD_SALUTATION = 'salutation';
@@ -75,7 +77,7 @@ class RegisterForm extends AbstractType
             'required' => true,
             'label' => 'address.salutation',
             'constraints' => [
-                new NotBlank(),
+                $this->getFactory()->createNotBlankConstraint(),
             ],
         ]);
 
@@ -93,7 +95,7 @@ class RegisterForm extends AbstractType
             'label' => 'customer.first_name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->getFactory()->createNotBlankConstraint(),
             ],
         ]);
 
@@ -111,7 +113,7 @@ class RegisterForm extends AbstractType
             'label' => 'customer.last_name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->getFactory()->createNotBlankConstraint(),
             ],
         ]);
 
@@ -129,7 +131,7 @@ class RegisterForm extends AbstractType
             'label' => 'auth.email',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->getFactory()->createNotBlankConstraint(),
             ],
         ]);
 
@@ -158,7 +160,7 @@ class RegisterForm extends AbstractType
                 'attr' => ['autocomplete' => 'off'],
             ],
             'constraints' => [
-                new NotBlank(),
+                $this->getFactory()->createNotBlankConstraint(),
             ],
         ]);
 
@@ -177,7 +179,7 @@ class RegisterForm extends AbstractType
             'mapped' => false,
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->getFactory()->createNotBlankConstraint(),
             ],
         ]);
 
