@@ -236,7 +236,7 @@ class QuickOrderController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $quickOrderForm
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return null|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
      */
     protected function handleQuickOrderForm(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
     {
@@ -266,6 +266,26 @@ class QuickOrderController extends AbstractController
 
                 return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_INDEX);
             }
+
+            return $this->executeQuickOrderFormHandlerStrategyPlugin($quickOrderForm, $request);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+     */
+    protected function executeQuickOrderFormHandlerStrategyPlugin(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
+    {
+        foreach ($this->getFactory()->getQuickOrderFormHandlerStrategyPlugins() as $quickOrderFormHandlerStrategyPlugin) {
+            if (!$quickOrderFormHandlerStrategyPlugin->isApplicable($quickOrderForm, $request)) {
+                continue;
+            }
+            return $quickOrderFormHandlerStrategyPlugin->execute($quickOrderForm, $request);
         }
 
         return null;
