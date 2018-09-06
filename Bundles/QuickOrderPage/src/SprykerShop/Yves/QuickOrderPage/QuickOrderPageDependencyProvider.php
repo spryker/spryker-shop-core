@@ -21,6 +21,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
     public const PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER';
+    public const PLUGINS_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA_TRANSFER_EXPANDER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
@@ -36,6 +37,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuickOrderPageWidgetPlugins($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addQuickOrderItemTransferExpanderPlugins($container);
+        $container = $this->addQuickOrderProductAdditionalDataTransferExpanderPlugins($container);
 
         return $container;
     }
@@ -117,6 +119,20 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addQuickOrderProductAdditionalDataTransferExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA_TRANSFER_EXPANDER] = function () {
+            return $this->getQuickOrderProductAdditionalDataTransferExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     protected function addZedRequestClient($container): Container
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
@@ -141,6 +157,14 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
      */
     protected function getQuickOrderItemTransferExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderProductAdditionalDataTransferExpanderPluginInterface[]
+     */
+    protected function getQuickOrderProductAdditionalDataTransferExpanderPlugins(): array
     {
         return [];
     }

@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\QtyFieldConstraint;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -62,7 +62,7 @@ class QuickOrderForm extends AbstractType
             'allow_delete' => true,
             'label' => false,
             'entry_options' => [
-                'label' => false
+                'label' => false,
             ],
             'constraints' => [
                     new ItemsFieldConstraint(),
