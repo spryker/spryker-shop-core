@@ -26,8 +26,8 @@ use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAd
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressSaverInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeReader;
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeReaderInterface;
-use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserChecker;
-use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserCheckerInterface;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidator;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidatorInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaver;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface;
 
@@ -181,10 +181,10 @@ class CompanyPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserCheckerInterface
+     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidatorInterface
      */
-    public function createCompanyUserChecker(): CompanyUserCheckerInterface
+    public function createCompanyUserValidator(): CompanyUserValidatorInterface
     {
-        return new CompanyUserChecker();
+        return new CompanyUserValidator();
     }
 }

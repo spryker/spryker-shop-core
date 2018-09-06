@@ -26,7 +26,7 @@ class CompanyController extends AbstractCompanyController
             'company' => $this->getCompanyUser()->getCompanyBusinessUnit()->getCompany(),
         ];
 
-        if ($this->getFactory()->createCompanyUserChecker()->isCompanyUserHasBusinessUnit($companyUserTransfer)) {
+        if ($this->getFactory()->createCompanyUserValidator()->hasBusinessUnit($companyUserTransfer)) {
             $company = $companyUserTransfer->getCompanyBusinessUnit()->getCompany();
             $defaultBillingAddress = $this->getFactory()
                 ->createCompanyBusinessUnitAddressReader()

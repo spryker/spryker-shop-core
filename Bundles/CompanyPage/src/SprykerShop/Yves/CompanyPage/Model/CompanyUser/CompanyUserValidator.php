@@ -9,15 +9,15 @@ namespace SprykerShop\Yves\CompanyPage\Model\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
-class CompanyUserChecker implements CompanyUserCheckerInterface
+class CompanyUserValidator implements CompanyUserValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
      *
      * @return bool
      */
-    public function isCompanyUserHasBusinessUnit(?CompanyUserTransfer $companyUserTransfer = null): bool
+    public function hasBusinessUnit(?CompanyUserTransfer $companyUserTransfer): bool
     {
-        return $companyUserTransfer && $companyUserTransfer->getCompanyBusinessUnit();
+        return (bool)($companyUserTransfer && $companyUserTransfer->getCompanyBusinessUnit());
     }
 }
