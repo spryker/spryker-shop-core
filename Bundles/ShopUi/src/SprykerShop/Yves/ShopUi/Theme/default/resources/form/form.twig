@@ -92,26 +92,18 @@
 {%- endblock -%}
 
 {% block choice_widget_expanded -%}
-    {% if '--inline' in label_attr.class|default('') %}
-        <ul class="list list--inline">
-            {% for child in form %}
-                <li class="list__item">{{ form_widget(child, {
-                        parent_label_class: label_attr.class|default(''),
-                    }) }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <div {{ block('widget_container_attributes') }}>
-            {% for child in form %}
+    <ul class="list {{ '--inline' in label_attr.class|default('') ? 'list--inline' : '' }}" {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            <li class="list__item">
                 {{- form_errors(child, {
                     parent_label_class: label_attr.class|default(''),
                 }) -}}
                 {{- form_widget(child, {
                     parent_label_class: label_attr.class|default(''),
                 }) -}}
-            {% endfor %}
-        </div>
-    {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 {%- endblock choice_widget_expanded %}
 
 {%- block checkbox_widget -%}
