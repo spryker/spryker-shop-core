@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CatalogPage\Plugin\Provider\CatalogPageControllerProvider;
 use SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface;
 
+/**
+ * @method \SprykerShop\Yves\CatalogPage\CatalogPageFactory getFactory()
+ */
 class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullTextSearchTabPluginInterface
 {
     protected const NAME = 'FullTextSearchProductsTab';
@@ -27,7 +30,7 @@ class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullText
      */
     public function calculateItemCount(string $searchString, array $requestParams = []): int
     {
-        return 1; //Will be provided in next user story
+        return $this->getFactory()->getCatalogClient()->catalogSearchCount($searchString, $requestParams);
     }
 
     /**
