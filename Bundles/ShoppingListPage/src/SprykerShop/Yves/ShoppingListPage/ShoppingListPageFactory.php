@@ -215,4 +215,12 @@ class ShoppingListPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_DATA_PROVIDER_EXPANDERS);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getProductDetailPageWidgetPlugins()
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_OVERVIEW_UPDATE_PAGE_WIDGETS);
+    }
 }

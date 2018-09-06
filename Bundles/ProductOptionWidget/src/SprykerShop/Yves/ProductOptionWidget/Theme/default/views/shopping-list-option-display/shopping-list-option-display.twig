@@ -1,7 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
-    options: _widget.item.productOptions ?? null
+    options: _widget.item.productOptions | default([])
 } %}
 
 {% block template %}

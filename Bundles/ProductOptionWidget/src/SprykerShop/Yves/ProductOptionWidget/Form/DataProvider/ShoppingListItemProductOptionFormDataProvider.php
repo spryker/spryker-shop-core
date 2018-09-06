@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemProductOptionFormDataProviderInterface
 {
     protected const FORM_NAME = 'shopping_list_update_form';
-    protected const ITEMS_FIELD_NAME = 'items';
     protected const PRODUCT_OPTIONS_FIELD_NAME = 'productOptions';
 
     /**
@@ -47,16 +46,16 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
             return $shoppingListTransfer;
         }
 
-        $data = $request->request->get(static::FORM_NAME);
+        $requestFormData = $request->request->get(static::FORM_NAME);
 
         foreach ($shoppingListTransfer->getItems() as $key => $itemTransfer) {
-            if ($data[ShoppingListTransfer::ITEMS] && $data[ShoppingListTransfer::ITEMS][$key]) {
-                $options = array_filter($data[ShoppingListTransfer::ITEMS][$key][static::PRODUCT_OPTIONS_FIELD_NAME]);
-                $productOptions = [];
-                foreach ($options as $idProductOptionValue) {
-                    $productOptions[] = (new ProductOptionTransfer())->setIdProductOptionValue($idProductOptionValue);
+            if ($requestFormData[ShoppingListTransfer::ITEMS] && $requestFormData[ShoppingListTransfer::ITEMS][$key]) {
+                $idsProductOptionValue = array_filter($requestFormData[ShoppingListTransfer::ITEMS][$key][static::PRODUCT_OPTIONS_FIELD_NAME]);
+                $productOptionTransfers = [];
+                foreach ($idsProductOptionValue as $idProductOptionValue) {
+                    $productOptionTransfers[] = (new ProductOptionTransfer())->setIdProductOptionValue($idProductOptionValue);
                 }
-                $itemTransfer->setProductOptions(new ArrayObject($productOptions));
+                $itemTransfer->setProductOptions(new ArrayObject($productOptionTransfers));
             }
         }
 
@@ -153,7 +152,6 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
         ProductOptionValueStorageTransfer $productOptionValue,
         array $selectedProductOptionIds
     ): ProductOptionValueStorageTransfer {
-
         if (in_array($productOptionValue->getIdProductOptionValue(), $selectedProductOptionIds)) {
             $productOptionValue->setIsSelected(true);
         }

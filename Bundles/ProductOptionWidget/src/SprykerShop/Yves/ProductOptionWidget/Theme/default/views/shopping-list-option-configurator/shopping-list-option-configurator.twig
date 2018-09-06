@@ -1,8 +1,8 @@
 {% extends template('widget') %}
 
 {% define data = {
-    optionGroups: _widget.productOptionGroups,
-    full_name: _widget.name
+    optionGroups: _widget.productOptionGroups | default([]),
+    selectName: _widget.selectName | default(''),
 } %}
 
 {% block template %}
@@ -10,28 +10,27 @@
 {% endblock %}
 
 {% block body %}
-    {# todo: current template and "option-configurator.twig" have to be refactored #}
     <ul class="list">
-            <li class="list__item spacing-y">
-                {% embed atom('select') with {
-                    modifiers: ['expand'],
-                    attributes: {
-                        name: data.full_name,
-                    },
-                    embed: {
-                        options: data.optionGroups
-                    }
-                } only %}
-                    {% block options %}
-                        <option value="0">{{ 'product.product_options_select' | trans }}</option>
-                        {% for option in embed.options %}
-                            <option value="{{option.idProductOptionValue}}" {% if option.isSelected %} selected {% endif %}>
-                                {{ option.value | trans }} {{ option.price | money }}
-                            </option>
-                        {% endfor %}
-                    {% endblock %}
-                {% endembed %}
-            </li>
+        <li class="list__item spacing-y">
+            {% embed atom('select') with {
+                modifiers: ['expand'],
+                attributes: {
+                    name: data.selectName,
+                },
+                embed: {
+                    options: data.optionGroups
+                }
+            } only %}
+                {% block options %}
+                    <option value="0">{{ 'product.product_options_select' | trans }}</option>
+                    {% for option in embed.options %}
+                        <option value="{{option.idProductOptionValue}}" {% if option.isSelected %} selected {% endif %}>
+                            {{ option.value | trans }} {{ option.price | money }}
+                        </option>
+                    {% endfor %}
+                {% endblock %}
+            {% endembed %}
+        </li>
     </ul>
     <hr />
 {% endblock %}
