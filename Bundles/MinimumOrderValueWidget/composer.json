@@ -4,8 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/minimum-order-value": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.0.0"
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
