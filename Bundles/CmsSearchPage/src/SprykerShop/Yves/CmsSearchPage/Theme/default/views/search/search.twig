@@ -8,6 +8,14 @@
     metaTitle: _view.pageTitle | default,
     metaDescription: _view.pageDescription | default,
     metaKeywords: _view.pageKeywords | default,
+
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.currentPage,
+        paginationPath: app.request.attributes.get('_route'),
+        maxPage: _view.pagination.maxPage,
+        showAlwaysFirstAndLast: true
+    }
 } %}
 
 {% block breadcrumbs %}
@@ -29,6 +37,12 @@
         {% include molecule('sort', 'CmsSearchPage') with {
             class: 'box'
         } only %}
+
+        {% include molecule('pagination') with {
+            class: 'box',
+            data: data.pagination
+        } only %}
+
         <div class="col col--sm-12 spacing spacing--inner">
             {{ widget('FullTextSearchTabsWidgetPlugin', data.searchString, 'FullTextSearchCmsPage') }}
         </div>
@@ -37,6 +51,12 @@
                 pages: data.pages
             }
         } only %}
+
+        {% include molecule('pagination') with {
+            class: 'box',
+            data: data.pagination
+        } only %}
+
     </div>
     {{parent()}}
     {% if data.searchString is not empty %}
