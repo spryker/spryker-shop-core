@@ -14,6 +14,8 @@ interface MultiCartWidgetPluginInterface
     const NAME = 'MultiCartWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $disabled
      *

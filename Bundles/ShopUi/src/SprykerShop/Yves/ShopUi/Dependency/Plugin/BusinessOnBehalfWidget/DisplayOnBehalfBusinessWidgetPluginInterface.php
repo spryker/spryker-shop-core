@@ -14,6 +14,8 @@ interface DisplayOnBehalfBusinessWidgetPluginInterface extends WidgetPluginInter
     public const NAME = 'DisplayOnBehalfBusinessWidgetPlugin';
 
     /**
+     * @api
+     *
      * @return void
      */
     public function initialize(): void;
