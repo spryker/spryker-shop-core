@@ -18,6 +18,7 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClien
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToShoppingListClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaver;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface;
@@ -110,6 +111,14 @@ class CompanyPageFactory extends AbstractFactory
     public function getMessengerClient(): CompanyPageToMessengerClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_MESSENGER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToShoppingListClientInterface
+     */
+    public function getShoppingListClient(): CompanyPageToShoppingListClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_SHOPPING_LIST);
     }
 
     /**
