@@ -69,6 +69,7 @@ class QuickOrderController extends AbstractController
             ->handleRequest($request);
 
         $response = $this->handleQuickOrderForm($quickOrderForm, $request);
+
         if ($response !== null) {
             return $response;
         }
@@ -76,7 +77,22 @@ class QuickOrderController extends AbstractController
         return [
             'itemsForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
+            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
         ];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormAdditionalDataColumnProviderPluginInterface[]
+     */
+    protected function getQuickOrderFormAdditionalDataColumnProviderPlugins()
+    {
+        $plugins = [];
+
+        foreach ($this->getFactory()->getQuickOrderFormAdditionalDataColumnProviderPlugins() as $plugin) {
+            $plugins[$plugin->getFieldName()] = $plugin;
+        }
+
+        return $plugins;
     }
 
     /**

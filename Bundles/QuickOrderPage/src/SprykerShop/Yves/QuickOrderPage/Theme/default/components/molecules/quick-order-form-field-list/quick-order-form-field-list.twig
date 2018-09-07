@@ -1,3 +1,7 @@
+{# IMPORTANT #}
+{# Template should be rendered in a flexible way (columns amount is variable) #}
+{# Currently its hardcoded in order to be compatible with measurement unit column #}
+
 {% extends model('component') %}
 
 {% define config = {
@@ -7,16 +11,21 @@
 
 {% block body %}
     <div class="grid grid--middle {{ config.name }}__item">
-        <div class="col col--sm-7 spacing spacing--inner">
+        <div class="col col--sm-5 spacing spacing--inner">
             {{ 'quick-order.input-label.sku.name' | trans }}
         </div>
+        {% if (data.additionalDataColumnProviderPlugins.measurementUnit is defined) %}
+            <div class="col col--sm-3 spacing spacing--inner">
+                {{ data.additionalDataColumnProviderPlugins.measurementUnit.getColumnTitle() | trans }}
+            </div>
+        {% endif %}
         <div class="col col--sm-4 spacing spacing--inner">
             {{ 'quick-order.input-label.qty' | trans }}
         </div>
     </div>
     {% for item in data.items %}
         <div class="grid grid--middle {{ config.name }}__item">
-            <div class="col col--sm-7 spacing spacing--inner">
+            <div class="col col--sm-5 spacing spacing--inner">
                 {% if widgetGlobalExists('QuickOrderPageProductSearchWidgetPlugin') %}
                     {{ widgetGlobal(
                         'QuickOrderPageProductSearchWidgetPlugin',
@@ -25,7 +34,14 @@
                     ) }}
                 {% endif %}
             </div>
-            <div class="col col--sm-4 spacing spacing--inner">
+            {% if  data.additionalDataColumnProviderPlugins.measurementUnit is defined %}
+                <div class="col col--sm-3 spacing spacing--inner">
+                    <div class="{{ data.additionalDataColumnProviderPlugins.measurementUnit.getFieldName() }}">
+
+                    </div>
+                </div>
+            {% endif %}
+            <div class="col col--sm-3 spacing spacing--inner">
                 {{ form_row(item.qty, {
                     required: loop.first,
                     label: false
