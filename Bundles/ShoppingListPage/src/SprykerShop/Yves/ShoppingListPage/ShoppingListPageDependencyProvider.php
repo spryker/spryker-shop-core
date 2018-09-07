@@ -179,7 +179,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     protected function addShoppingListItemFormExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS] = function () {
-            return $this->getShoppingListItemFormWidgetPlugins();
+            return $this->getShoppingListItemFormExpanderPlugins();
         };
 
         return $container;
@@ -238,7 +238,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     /**
      * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListItemFormExpanderPluginInterface[]
      */
-    protected function getShoppingListItemFormWidgetPlugins(): array
+    protected function getShoppingListItemFormExpanderPlugins(): array
     {
         return [];
     }
