@@ -6,7 +6,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitTreeTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
 
@@ -50,26 +50,24 @@ class CompanyBusinessUnitTreeReader implements CompanyBusinessUnitTreeReaderInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTreeTransfer $customerCompanyBusinessUnitTree
-     * @param int|null $idParentCompanyBusinessUnit
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer $customerCompanyBusinessUnitTree
      *
      * @return array
      */
-    protected function mapTreeToArray(CompanyBusinessUnitTreeTransfer $customerCompanyBusinessUnitTree, ?int $idParentCompanyBusinessUnit = null): array
+    protected function mapTreeToArray(CompanyBusinessUnitTreeNodeCollectionTransfer $customerCompanyBusinessUnitTree): array
     {
-        $customerCompanyBusinessUnitTreeArray = [];
-        foreach ($customerCompanyBusinessUnitTree->getCompanyBusinessUnitTreeItems() as $customerCompanyBusinessUnitTreeItem) {
-            $customerCompanyBusinessUnitTreeItemArray = $customerCompanyBusinessUnitTreeItem->getCompanyBusinessUnit()->toArray();
-            $customerCompanyBusinessUnitTreeItemArray = array_merge($customerCompanyBusinessUnitTreeItemArray, $customerCompanyBusinessUnitTreeItem->toArray());
-            if ($customerCompanyBusinessUnitTreeItem->getFkParentCompanyBusinessUnit() === $idParentCompanyBusinessUnit) {
-                $customerCompanyBusinessUnitTreeItemArray[static::LEVEL_KEY] = $customerCompanyBusinessUnitTreeItem->getLevel();
-                $customerCompanyBusinessUnitTreeItemArray[static::CHILDREN_KEY] = [];
-                $children = $this->mapTreeToArray($customerCompanyBusinessUnitTreeItem->getChildren(), $customerCompanyBusinessUnitTreeItem->getIdCompanyBusinessUnit());
-                $customerCompanyBusinessUnitTreeItemArray[static::CHILDREN_KEY] = $children ? $children : null;
-                $customerCompanyBusinessUnitTreeArray[$customerCompanyBusinessUnitTreeItem->getIdCompanyBusinessUnit()] = $customerCompanyBusinessUnitTreeItemArray;
-            }
+        $companyBusinessUnitTreeNodes = [];
+        foreach ($customerCompanyBusinessUnitTree->getCompanyBusinessUnitTreeNodes() as $companyBusinessUnitTreeNode) {
+            $companyBusinessUnitTreeNodeArray = $companyBusinessUnitTreeNode->getCompanyBusinessUnit()->toArray();
+            $companyBusinessUnitTreeNodeArray[static::LEVEL_KEY] = $companyBusinessUnitTreeNode->getLevel();
+
+            $children = $this->mapTreeToArray($companyBusinessUnitTreeNode->getChildren());
+
+            $idCompanyBusinessUnit = $companyBusinessUnitTreeNode->getCompanyBusinessUnit()->getIdCompanyBusinessUnit();
+            $companyBusinessUnitTreeNodeArray[static::CHILDREN_KEY] = $children ? $children : null;
+            $companyBusinessUnitTreeNodes[$idCompanyBusinessUnit] = $companyBusinessUnitTreeNodeArray;
         }
 
-        return $customerCompanyBusinessUnitTreeArray;
+        return $companyBusinessUnitTreeNodes;
     }
 }

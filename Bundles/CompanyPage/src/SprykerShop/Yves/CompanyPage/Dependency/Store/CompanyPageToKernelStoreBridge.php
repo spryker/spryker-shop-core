@@ -25,7 +25,7 @@ class CompanyPageToKernelStoreBridge implements CompanyPageToKernelStoreInterfac
     /**
      * @return array
      */
-    public function getCountries(): array
+    public function getCountries()
     {
         return $this->store->getCountries();
     }
