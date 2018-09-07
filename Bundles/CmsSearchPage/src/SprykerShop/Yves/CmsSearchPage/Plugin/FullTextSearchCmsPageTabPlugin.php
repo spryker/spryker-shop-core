@@ -23,6 +23,7 @@ class FullTextSearchCmsPageTabPlugin extends AbstractPlugin implements FullTextS
 
     /**
      * {@inheritdoc}
+     *  - Calculates total hist for cms pages tab via CmsPageSearch client module's method call
      *
      * @api
      *

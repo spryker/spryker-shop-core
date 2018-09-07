@@ -23,14 +23,21 @@ class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullText
 
     /**
      * {@inheritdoc}
+     *  - Calculates total hits for catalog page tab via Catalog module's method call
      *
      * @api
+     *
+     * @param string $searchString
+     * @param array $requestParams
      *
      * @return int
      */
     public function calculateItemCount(string $searchString, array $requestParams = []): int
     {
-        return $this->getFactory()->getCatalogClient()->catalogSearchCount($searchString, $requestParams);
+        return $this
+            ->getFactory()
+            ->getCatalogClient()
+            ->catalogSearchCount($searchString, $requestParams);
     }
 
     /**
