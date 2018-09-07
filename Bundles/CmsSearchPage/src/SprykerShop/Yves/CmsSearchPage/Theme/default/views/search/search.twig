@@ -26,6 +26,9 @@
 
 {% block form %}
     <div class="col col--sm-12">
+        {% include molecule('sort', 'CmsSearchPage') with {
+            class: 'box'
+        } only %}
         <div class="col col--sm-12 spacing spacing--inner">
             {{ widget('FullTextSearchTabsWidgetPlugin', data.searchString, 'FullTextSearchCmsPage') }}
         </div>
