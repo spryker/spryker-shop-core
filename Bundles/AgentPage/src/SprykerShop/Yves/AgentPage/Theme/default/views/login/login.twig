@@ -1,0 +1,31 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    forms: {
+        login: _view.loginForm
+    }
+} %}
+
+{% block pageInfo %}{% endblock %}
+
+{% block content %}
+    <div class="grid">
+        <div class="col col--sm-12">
+            {% include molecule('form') with {
+                class: 'box',
+                data: {
+                    title: 'agent.login.title' | trans,
+                    form: data.forms.login,
+                    layout: {
+                        email: 'col col--sm-6',
+                        password: 'col col--sm-6'
+                    },
+                    submit: {
+                        enable: true,
+                        text: 'forms.submit.login' | trans
+                    }
+                }
+            } only %}
+        </div>
+    </div>
+{% endblock %}
