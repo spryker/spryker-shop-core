@@ -10,12 +10,12 @@ namespace SprykerShop\Yves\CustomerPage\Dependency\Client;
 class CustomerPageToCustomerAccessPermissionClientBridge implements CustomerPageToCustomerAccessPermissionClientInterface
 {
     /**
-     * @var \Spryker\Client\CustomerAccessPermission\CustomerAccess\CustomerAccessInterface
+     * @var \Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionClientInterface
      */
     protected $customerAccessPermissionClient;
 
     /**
-     * @param \Spryker\Client\CustomerAccessPermission\CustomerAccess\CustomerAccessInterface $customerAccessPermissionClient
+     * @param \Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionClientInterface $customerAccessPermissionClient
      */
     public function __construct($customerAccessPermissionClient)
     {
