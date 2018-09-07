@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductOptionWidget\Form\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,4 +28,11 @@ interface ShoppingListItemProductOptionFormDataProviderInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]|null
      */
     public function getProductOptionGroups(ShoppingListItemTransfer $shoppingListItemTransfer);
+
+    /**
+     * @param \Symfony\Component\Form\ChoiceList\View\ChoiceView[] $productOptionGroups
+     *
+     * @return \ArrayObject
+     */
+    public function mapProductOptionGroups(array $productOptionGroups): ArrayObject;
 }

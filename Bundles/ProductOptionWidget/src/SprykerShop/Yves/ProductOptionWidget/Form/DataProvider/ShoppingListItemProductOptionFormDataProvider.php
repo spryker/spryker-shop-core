@@ -53,6 +53,21 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
     }
 
     /**
+     * @param \Symfony\Component\Form\ChoiceList\View\ChoiceView[] $productOptionGroups
+     *
+     * @return \ArrayObject
+     */
+    public function mapProductOptionGroups(array $productOptionGroups): ArrayObject
+    {
+        $mappedProductOptionGroups = [];
+        foreach ($productOptionGroups as $productOptionGroup) {
+            $mappedProductOptionGroups[] = $productOptionGroup->data;
+        }
+
+        return new ArrayObject($mappedProductOptionGroups);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param array $requestFormData
      *

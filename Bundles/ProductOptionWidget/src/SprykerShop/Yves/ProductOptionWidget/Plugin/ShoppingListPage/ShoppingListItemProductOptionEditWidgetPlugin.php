@@ -17,7 +17,7 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductOptionWidget\Shop
 class ShoppingListItemProductOptionEditWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemProductOptionEditWidgetPluginInterface
 {
     /**
-     * @param \Symfony\Component\Form\ChoiceList\View\ChoiceView[] $productOptionGroups //todo: check parameter
+     * @param \Symfony\Component\Form\ChoiceList\View\ChoiceView[] $productOptionGroups
      * @param string $selectName
      *
      * @return void
@@ -68,12 +68,8 @@ class ShoppingListItemProductOptionEditWidgetPlugin extends AbstractWidgetPlugin
      */
     protected function mapProductOptionGroups(array $productOptionGroups): ArrayObject
     {
-        //todo: check and refactor;
-        $mappedProductOptionGroups = [];
-        foreach ($productOptionGroups as $productOptionGroup) {
-            $mappedProductOptionGroups[] = $productOptionGroup->data;
-        }
-
-        return new ArrayObject($mappedProductOptionGroups);
+        return $this->getFactory()
+            ->createShoppingListItemProductOptionFormDataProvider()
+            ->mapProductOptionGroups($productOptionGroups);
     }
 }
