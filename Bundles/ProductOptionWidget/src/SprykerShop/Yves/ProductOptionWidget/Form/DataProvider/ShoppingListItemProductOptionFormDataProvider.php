@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetToProductOptionStorageClientInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemProductOptionFormDataProviderInterface
 {
@@ -36,17 +35,17 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function expandData(ShoppingListTransfer $shoppingListTransfer, Request $request): ShoppingListTransfer
+    public function expandData(ShoppingListTransfer $shoppingListTransfer, array $params): ShoppingListTransfer
     {
-        if (!$request->request->has(static::SHOPPING_LIST_UPDATE_FORM_NAME)) {
+        if (!isset($params[static::SHOPPING_LIST_UPDATE_FORM_NAME])) {
             return $shoppingListTransfer;
         }
 
-        $requestFormData = $request->request->get(static::SHOPPING_LIST_UPDATE_FORM_NAME);
+        $requestFormData = $params[static::SHOPPING_LIST_UPDATE_FORM_NAME];
         $shoppingListTransfer = $this->setUpProductOptions($shoppingListTransfer, $requestFormData);
 
         return $shoppingListTransfer;

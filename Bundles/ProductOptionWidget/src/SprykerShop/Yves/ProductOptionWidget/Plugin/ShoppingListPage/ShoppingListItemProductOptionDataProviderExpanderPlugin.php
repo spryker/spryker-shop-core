@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\ProductOptionWidget\Plugin\ShoppingListPage;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListDataProviderExpanderPluginInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\ProductOptionWidget\ProductOptionWidgetFactory getFactory()
@@ -24,14 +23,14 @@ class ShoppingListItemProductOptionDataProviderExpanderPlugin extends AbstractPl
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function expandData(ShoppingListTransfer $shoppingListTransfer, Request $request): ShoppingListTransfer
+    public function expandData(ShoppingListTransfer $shoppingListTransfer, array $params): ShoppingListTransfer
     {
         return $this->getFactory()
             ->createShoppingListItemProductOptionFormDataProvider()
-            ->expandData($shoppingListTransfer, $request);
+            ->expandData($shoppingListTransfer, $params);
     }
 }

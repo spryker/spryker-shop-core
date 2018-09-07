@@ -10,17 +10,16 @@ namespace SprykerShop\Yves\ProductOptionWidget\Form\DataProvider;
 use ArrayObject;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Symfony\Component\HttpFoundation\Request;
 
 interface ShoppingListItemProductOptionFormDataProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function expandData(ShoppingListTransfer $shoppingListTransfer, Request $request): ShoppingListTransfer;
+    public function expandData(ShoppingListTransfer $shoppingListTransfer, array $params): ShoppingListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer

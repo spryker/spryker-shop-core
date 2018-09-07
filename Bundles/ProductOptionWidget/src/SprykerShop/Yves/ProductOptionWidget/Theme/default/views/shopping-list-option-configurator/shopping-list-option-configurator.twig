@@ -2,7 +2,7 @@
 
 {% define data = {
     optionGroups: _widget.productOptionGroups | default([]),
-    selectName: _widget.selectName | default(''),
+    productOptionDropdownName: _widget.productOptionDropdownName | default(''),
 } %}
 
 {% block template %}
@@ -15,14 +15,14 @@
             {% embed atom('select') with {
                 modifiers: ['expand'],
                 attributes: {
-                    name: data.selectName,
+                    name: data.productOptionDropdownName,
                 },
                 embed: {
                     options: data.optionGroups
                 }
             } only %}
                 {% block options %}
-                    <option value="0">{{ 'product.product_options_select' | trans }}</option>
+                    <option value="">{{ 'product.product_options_select' | trans }}</option>
                     {% for option in embed.options %}
                         <option value="{{option.idProductOptionValue}}" {% if option.isSelected %} selected {% endif %}>
                             {{ option.value | trans }} {{ option.price | money }}

@@ -18,11 +18,11 @@ class ShoppingListItemProductOptionEditWidgetPlugin extends AbstractWidgetPlugin
 {
     /**
      * @param \Symfony\Component\Form\ChoiceList\View\ChoiceView[] $productOptionGroups
-     * @param string $selectName
+     * @param string $productOptionDropdownName
      *
      * @return void
      */
-    public function initialize(array $productOptionGroups, string $selectName): void
+    public function initialize(array $productOptionGroups, string $productOptionDropdownName): void
     {
         $mappedProductOptionGroups = $this->mapProductOptionGroups($productOptionGroups);
 
@@ -32,8 +32,8 @@ class ShoppingListItemProductOptionEditWidgetPlugin extends AbstractWidgetPlugin
         );
 
         $this->addParameter(
-            'selectName',
-            $selectName
+            'productOptionDropdownName',
+            $productOptionDropdownName
         );
     }
 

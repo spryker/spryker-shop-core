@@ -15,9 +15,9 @@ interface ShoppingListItemProductOptionEditWidgetPluginInterface extends WidgetP
 
     /**
      * @param \Symfony\Component\Form\ChoiceList\View\ChoiceView[] $productOptionGroups
-     * @param string $name
+     * @param string $productOptionDropdownName
      *
      * @return void
      */
-    public function initialize(array $productOptionGroups, string $name): void;
+    public function initialize(array $productOptionGroups, string $productOptionDropdownName): void;
 }

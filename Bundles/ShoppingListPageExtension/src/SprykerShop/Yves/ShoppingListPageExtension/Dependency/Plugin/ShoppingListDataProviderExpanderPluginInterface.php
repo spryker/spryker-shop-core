@@ -14,14 +14,14 @@ interface ShoppingListDataProviderExpanderPluginInterface
 {
     /**
      * Specification:
-     *  - Expands ShoppingListTransfer with additional request parameters.
+     *  - Expands ShoppingListTransfer with additional parameters.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function expandData(ShoppingListTransfer $shoppingListTransfer, Request $request): ShoppingListTransfer;
+    public function expandData(ShoppingListTransfer $shoppingListTransfer, array $params): ShoppingListTransfer;
 }

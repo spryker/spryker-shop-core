@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\ShoppingListPage\Form\DataProvider;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class ShoppingListFormDataProvider
 {
@@ -46,11 +45,11 @@ class ShoppingListFormDataProvider
 
     /**
      * @param string $idShoppingList
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function getData(string $idShoppingList, Request $request): ShoppingListTransfer
+    public function getData(string $idShoppingList, array $params): ShoppingListTransfer
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
@@ -62,7 +61,7 @@ class ShoppingListFormDataProvider
         $shoppingListTransfer = $this->shoppingListClient->getShoppingList($shoppingListTransfer);
 
         foreach ($this->shoppingListDataProviderExpanderPlugins as $shoppingListDataProviderExpanderPlugin) {
-            $shoppingListTransfer = $shoppingListDataProviderExpanderPlugin->expandData($shoppingListTransfer, $request);
+            $shoppingListTransfer = $shoppingListDataProviderExpanderPlugin->expandData($shoppingListTransfer, $params);
         }
 
         return $shoppingListTransfer;

@@ -1,11 +1,11 @@
 {% extends template('widget') %}
 
 {% define data = {
-    shoppingListItem: shoppingListItem,
+    formObject: form,
 } %}
 
 {% block body %}
-    {% for child in form.children %}
+    {% for child in data.formObject.children %}
         <strong>{{ form_label(child) }}:</strong>
         {{ widget('ShoppingListItemProductOptionEditWidgetPlugin', child.vars.choices, child.vars.full_name) }}
         {{ form_errors(child) }}
