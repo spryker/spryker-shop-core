@@ -15,6 +15,8 @@ interface AvailabilityWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'AvailabilityWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void

@@ -15,6 +15,8 @@ interface ProductSetWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'ProductSetWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
      *
