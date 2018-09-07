@@ -16,4 +16,12 @@ interface CmsSearchPageToCmsPageSearchClientInterface
      * @return array
      */
     public function search(string $searchString, array $requestParameters = []): array;
+
+    /**
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return int
+     */
+    public function searchCount(string $searchString, array $requestParameters = []): int;
 }

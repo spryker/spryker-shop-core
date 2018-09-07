@@ -32,4 +32,15 @@ class CmsSearchPageToCmsSearchPageClientBridge implements CmsSearchPageToCmsPage
     {
         return $this->cmsPageSearchClient->search($searchString, $requestParameters);
     }
+
+    /**
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return int
+     */
+    public function searchCount(string $searchString, array $requestParameters = []): int
+    {
+        return $this->cmsPageSearchClient->searchCount($searchString, $requestParameters);
+    }
 }
