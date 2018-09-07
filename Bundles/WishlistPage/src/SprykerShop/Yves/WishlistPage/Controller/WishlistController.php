@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\WishlistPage\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
@@ -329,10 +328,7 @@ class WishlistController extends AbstractController
         $productViewTransfer = new ProductViewTransfer();
         $productViewTransfer->setSku($wishlistItemTransfer->getSku());
         $productViewTransfer->setIdProductConcrete($wishlistItemTransfer->getIdProduct());
-
-        $images = new ArrayObject();
-        $images->append(new ProductImageStorageTransfer());
-        $productViewTransfer->setImages($images);
+        $productViewTransfer->addImage(new ProductImageStorageTransfer());
 
         return $productViewTransfer;
     }
