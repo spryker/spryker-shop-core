@@ -59,8 +59,10 @@ class MinimumOrderValueWidgetPlugin extends AbstractWidgetPlugin implements Mini
      */
     protected function filterMinimumOrderValueExpenses(ArrayObject $expenseTransfers): ArrayObject
     {
-        return array_filter($expenseTransfers->getArrayCopy(), function (ExpenseTransfer $expenseTransfer) {
+        $filteredResult = array_filter($expenseTransfers->getArrayCopy(), function (ExpenseTransfer $expenseTransfer) {
             return $expenseTransfer->getType() === MinimumOrderValueWidgetConfig::THRESHOLD_EXPENSE_TYPE;
         });
+
+        return new ArrayObject($filteredResult);
     }
 }
