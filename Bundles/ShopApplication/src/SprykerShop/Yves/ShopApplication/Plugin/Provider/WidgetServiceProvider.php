@@ -36,7 +36,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
     public function register(Application $application)
     {
         $application['twig'] = $application->share(
-            $application->extend('twig', function (\Twig_Environment $twig) {
+            $application->extend('twig', function (Twig_Environment $twig) {
                 return $this->registerWidgetTwigFunction($twig);
             })
         );

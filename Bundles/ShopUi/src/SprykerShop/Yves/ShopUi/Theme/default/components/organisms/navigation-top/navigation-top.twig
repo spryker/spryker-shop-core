@@ -51,7 +51,7 @@
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
 
         {% if data.showUserMenu %}
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if is_granted('ROLE_USER') %}
                 {% if widgetGlobalExists('ShoppingListWidgetPlugin') %}
                     <li class="menu__item menu__item--has-children-dropdown">
                         {{ widgetGlobal('ShoppingListWidgetPlugin') }}

@@ -14,6 +14,8 @@ interface ProductGroupWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'ProductGroupWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return void

@@ -1,0 +1,6 @@
+{
+  "include": {
+    "ShopUi": "ShopUi provides basic frontend infrastructure.",
+    "CustomerPage": "AgentPage components are depending on CustomerPage functionality."
+  }
+}

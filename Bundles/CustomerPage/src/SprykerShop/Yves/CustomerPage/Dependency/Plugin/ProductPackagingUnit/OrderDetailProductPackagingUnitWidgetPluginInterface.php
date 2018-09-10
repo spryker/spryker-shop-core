@@ -15,6 +15,8 @@ interface OrderDetailProductPackagingUnitWidgetPluginInterface extends WidgetPlu
     public const NAME = 'OrderDetailProductPackagingUnitWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $currencyIsoCode
      *
