@@ -273,6 +273,6 @@ class BusinessUnitController extends AbstractCompanyController
             return $companyBusinessUnitClient->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
         }
 
-        return $companyBusinessUnitClient->createCompanyBusinessUnit($companyBusinessUnitTransfer);;
+        return $companyBusinessUnitClient->createCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 }
