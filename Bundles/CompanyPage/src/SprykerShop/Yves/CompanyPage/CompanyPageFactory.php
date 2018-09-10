@@ -26,10 +26,10 @@ use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAd
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressSaverInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeReader;
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeReaderInterface;
-use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidator;
-use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidatorInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaver;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidator;
+use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidatorInterface;
 
 class CompanyPageFactory extends AbstractFactory
 {

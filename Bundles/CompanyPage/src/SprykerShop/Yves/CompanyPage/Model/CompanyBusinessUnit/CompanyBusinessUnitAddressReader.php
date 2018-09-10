@@ -19,8 +19,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     protected $companyUnitAddressClient;
 
     /**
-     * CompanyBusinessUnitAddressSaver constructor.
-     *
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
      */
     public function __construct(CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient)
