@@ -242,7 +242,8 @@ class BusinessUnitController extends AbstractCompanyController
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
      */
-    protected function createCompanyUnitAddressCriteriaFilterTransfer(Request $request
+    protected function createCompanyUnitAddressCriteriaFilterTransfer(
+        Request $request
     ): CompanyUnitAddressCriteriaFilterTransfer {
         $criteriaFilterTransfer = new CompanyUnitAddressCriteriaFilterTransfer();
         $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
