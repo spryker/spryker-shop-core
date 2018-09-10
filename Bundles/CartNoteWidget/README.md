@@ -1,6 +1,6 @@
 # CartNoteWidget Module
 
-The module provides cart notes functionality integration to other modules.
+This module contains the cart note widget and its components.
 
 ## Installation
 

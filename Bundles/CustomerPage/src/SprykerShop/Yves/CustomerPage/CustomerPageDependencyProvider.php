@@ -43,6 +43,8 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS = 'PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS';
     public const PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
 
+    public const PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS = 'PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -68,6 +70,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilValidateService($container);
         $container = $this->addPreRegistrationCustomerTransferExpanderPlugins($container);
         $container = $this->addAfterLoginCustomerRedirectPlugins($container);
+        $container = $this->addAfterCustomerAuthenticationSuccessPlugins($container);
 
         return $container;
     }
@@ -370,6 +373,28 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return string[]
      */
     protected function getCustomerOverviewWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAfterCustomerAuthenticationSuccessPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS] = function () {
+            return $this->getAfterCustomerAuthenticationSuccessPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Plugin\FixAgentTokenAfterCustomerAuthenticationSuccessPlugin[]
+     */
+    protected function getAfterCustomerAuthenticationSuccessPlugins(): array
     {
         return [];
     }

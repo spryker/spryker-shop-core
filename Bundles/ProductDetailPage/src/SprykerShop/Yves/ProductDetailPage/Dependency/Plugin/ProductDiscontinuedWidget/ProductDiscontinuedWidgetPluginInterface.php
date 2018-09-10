@@ -14,6 +14,8 @@ interface ProductDiscontinuedWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'ProductDiscontinuedWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return void
