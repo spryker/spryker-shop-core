@@ -17,6 +17,8 @@ interface MenuItemBusinessOnBehalfWidgetPluginInterface extends WidgetPluginInte
     const NAME = 'MenuItemBusinessOnBehalfWidgetPlugin';
 
     /**
+     * @api
+     *
      * @return void
      */
     public function initialize(): void;

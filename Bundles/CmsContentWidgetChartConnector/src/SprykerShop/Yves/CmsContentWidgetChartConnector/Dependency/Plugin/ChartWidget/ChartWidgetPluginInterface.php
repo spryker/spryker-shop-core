@@ -17,6 +17,8 @@ interface ChartWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'ChartWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $chartPluginName
      * @param string|null $dataIdentifier
      *

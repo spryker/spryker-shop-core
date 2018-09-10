@@ -17,6 +17,8 @@ interface LanguageSwitcherWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'LanguageSwitcherWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $pathInfo
      * @param string $queryString
      * @param string $requestUri

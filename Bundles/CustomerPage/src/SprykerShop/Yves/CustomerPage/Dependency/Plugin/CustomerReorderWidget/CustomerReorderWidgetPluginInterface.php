@@ -19,6 +19,8 @@ interface CustomerReorderWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'CustomerReorderWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
      *

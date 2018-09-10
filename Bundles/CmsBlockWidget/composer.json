@@ -11,8 +11,9 @@
   "require-dev": {
     "spryker-shop/catalog-page": "*",
     "spryker-shop/product-detail-page": "*",
-    "spryker-shop/shop-application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/silex": "*",
+    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {

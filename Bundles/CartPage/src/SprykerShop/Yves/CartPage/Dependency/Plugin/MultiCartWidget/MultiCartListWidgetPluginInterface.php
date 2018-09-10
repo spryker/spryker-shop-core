@@ -17,6 +17,8 @@ interface MultiCartListWidgetPluginInterface
     public const NAME = 'MultiCartListWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

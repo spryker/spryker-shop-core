@@ -17,6 +17,8 @@ interface CurrencyWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'CurrencyWidgetPlugin';
 
     /**
+     * @api
+     *
      * @return void
      */
     public function initialize(): void;

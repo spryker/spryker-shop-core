@@ -17,6 +17,8 @@ interface DiscountVoucherFormWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'DiscountVoucherFormWidgetPlugin';
 
     /**
+     * @api
+     *
      * @return void
      */
     public function initialize(): void;

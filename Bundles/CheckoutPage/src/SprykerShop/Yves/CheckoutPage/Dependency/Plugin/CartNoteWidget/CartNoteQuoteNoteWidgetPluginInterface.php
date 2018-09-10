@@ -18,6 +18,8 @@ interface CartNoteQuoteNoteWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'CartNoteQuoteNoteWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

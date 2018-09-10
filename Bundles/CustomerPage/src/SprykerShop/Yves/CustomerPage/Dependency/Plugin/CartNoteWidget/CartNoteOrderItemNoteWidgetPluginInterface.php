@@ -18,6 +18,8 @@ interface CartNoteOrderItemNoteWidgetPluginInterface extends WidgetPluginInterfa
     const NAME = 'CartNoteOrderItemNoteWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void

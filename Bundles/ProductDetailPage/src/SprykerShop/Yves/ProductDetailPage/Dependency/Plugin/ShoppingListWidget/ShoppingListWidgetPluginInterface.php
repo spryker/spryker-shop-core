@@ -12,6 +12,8 @@ interface ShoppingListWidgetPluginInterface
     const NAME = 'ShoppingListWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $sku
      * @param bool $isDisabled
      *

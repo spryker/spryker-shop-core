@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\DiscountWidget\Plugin\CartPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-
 use SprykerShop\Yves\CartPage\Dependency\Plugin\DiscountWidget\DiscountSummaryWidgetPluginInterface;
 use SprykerShop\Yves\DiscountWidget\Widget\DiscountSummaryWidget;
 

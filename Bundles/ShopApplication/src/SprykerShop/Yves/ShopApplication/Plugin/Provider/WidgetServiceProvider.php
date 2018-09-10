@@ -33,7 +33,7 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
         parent::register($application);
 
         $application['twig'] = $application->share(
-            $application->extend('twig', function (\Twig_Environment $twig) {
+            $application->extend('twig', function (Twig_Environment $twig) {
                 return $this->registerWidgetTwigFunction($twig);
             })
         );

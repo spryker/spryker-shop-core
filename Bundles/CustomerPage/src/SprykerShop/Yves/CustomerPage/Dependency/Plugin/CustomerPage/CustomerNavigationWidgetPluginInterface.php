@@ -12,6 +12,8 @@ interface CustomerNavigationWidgetPluginInterface
     public const NAME = 'CustomerNavigationWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $activePage
      * @param int|null $activeEntityId
      *
