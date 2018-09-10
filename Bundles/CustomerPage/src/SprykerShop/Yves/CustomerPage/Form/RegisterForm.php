@@ -77,7 +77,7 @@ class RegisterForm extends AbstractType
             'required' => true,
             'label' => 'address.salutation',
             'constraints' => [
-                $this->getFactory()->createNotBlankConstraint(),
+                $this->getFactory()->createCustomerFormFactory()->createNotBlankConstraint(),
             ],
         ]);
 
@@ -95,7 +95,7 @@ class RegisterForm extends AbstractType
             'label' => 'customer.first_name',
             'required' => true,
             'constraints' => [
-                $this->getFactory()->createNotBlankConstraint(),
+                $this->getFactory()->createCustomerFormFactory()->createNotBlankConstraint(),
             ],
         ]);
 
@@ -113,7 +113,7 @@ class RegisterForm extends AbstractType
             'label' => 'customer.last_name',
             'required' => true,
             'constraints' => [
-                $this->getFactory()->createNotBlankConstraint(),
+                $this->getFactory()->createCustomerFormFactory()->createNotBlankConstraint(),
             ],
         ]);
 
@@ -131,7 +131,7 @@ class RegisterForm extends AbstractType
             'label' => 'auth.email',
             'required' => true,
             'constraints' => [
-                $this->getFactory()->createNotBlankConstraint(),
+                $this->getFactory()->createCustomerFormFactory()->createNotBlankConstraint(),
             ],
         ]);
 
@@ -160,7 +160,7 @@ class RegisterForm extends AbstractType
                 'attr' => ['autocomplete' => 'off'],
             ],
             'constraints' => [
-                $this->getFactory()->createNotBlankConstraint(),
+                $this->getFactory()->createCustomerFormFactory()->createNotBlankConstraint(),
             ],
         ]);
 
@@ -179,7 +179,7 @@ class RegisterForm extends AbstractType
             'mapped' => false,
             'required' => true,
             'constraints' => [
-                $this->getFactory()->createNotBlankConstraint(),
+                $this->getFactory()->createCustomerFormFactory()->createNotBlankConstraint(),
             ],
         ]);
 

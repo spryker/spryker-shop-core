@@ -24,12 +24,9 @@ use SprykerShop\Yves\CustomerPage\Security\Customer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CustomerPageFactory extends AbstractFactory
 {
-    public const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
-
     /**
      * @return \SprykerShop\Yves\CustomerPage\Form\FormFactory
      */
@@ -276,13 +273,5 @@ class CustomerPageFactory extends AbstractFactory
     public function getAfterCustomerAuthenticationSuccessPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS);
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraints\NotBlank
-     */
-    public function createNotBlankConstraint(): NotBlank
-    {
-        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }
