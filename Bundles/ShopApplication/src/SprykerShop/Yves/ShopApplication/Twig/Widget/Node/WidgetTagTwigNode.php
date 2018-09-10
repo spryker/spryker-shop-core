@@ -24,7 +24,7 @@ class WidgetTagTwigNode extends Twig_Node
      * @param array $nodes
      * @param array $attributes
      * @param int $lineno
-     * @param null|string $tag
+     * @param string|null $tag
      */
     public function __construct(string $widgetName, array $nodes = [], array $attributes = [], int $lineno = 0, ?string $tag = null)
     {
@@ -40,9 +40,12 @@ class WidgetTagTwigNode extends Twig_Node
      */
     public function compile(Twig_Compiler $compiler): void
     {
-        $compiler->addDebugInfo($this);
+        if (!$this->getAttribute(WidgetTagTokenParser::ATTRIBUTE_ELSEWIDGET_CASE)) {
+            $compiler
+                ->addDebugInfo($this)
+                ->write('if (');
+        }
 
-        $compiler->write('if (');
         $this->addOpenWidgetContext($compiler);
         $compiler->raw(")) {\n")->indent(1);
 
@@ -50,18 +53,10 @@ class WidgetTagTwigNode extends Twig_Node
 
         $this->addCloseWidgetContext($compiler);
 
-        $compiler->outdent(1)->write("}");
+        $compiler->outdent(1)->write('}');
 
-        if ($this->hasNode(WidgetTagTokenParser::NODE_NOWIDGET)) {
-            $compiler
-                ->raw(" else {\n")
-                ->indent(1)
-
-                ->subcompile($this->getNode(WidgetTagTokenParser::NODE_NOWIDGET))
-
-                ->outdent(1)
-                ->write("}\n");
-        }
+        $this->compileElsewidgets($compiler);
+        $this->compileNowidget($compiler);
     }
 
     /**
@@ -71,9 +66,13 @@ class WidgetTagTwigNode extends Twig_Node
      */
     protected function addOpenWidgetContext(Twig_Compiler $compiler): void
     {
-        $compiler
-            ->raw(sprintf('$context[\'app\'][\'%s\']->openWidgetContext($this->getEnvironment(), ', WidgetTagServiceProvider::WIDGET_TAG_SERVICE))
-            ->string($this->widgetName);
+        $compiler->raw(sprintf('$widget = $context[\'app\'][\'%s\']->openWidgetContext(', WidgetTagServiceProvider::WIDGET_TAG_SERVICE));
+
+        if ($this->hasNode(WidgetTagTokenParser::NODE_WIDGET_EXPRESSION)) {
+            $compiler->subcompile($this->getNode(WidgetTagTokenParser::NODE_WIDGET_EXPRESSION));
+        } else {
+            $compiler->string($this->widgetName);
+        }
 
         if ($this->hasNode(WidgetTagTokenParser::NODE_ARGS)) {
             $compiler
@@ -98,7 +97,7 @@ class WidgetTagTwigNode extends Twig_Node
             ->repr($this->getTemplateLine())
             ->raw(', ')
             ->repr($this->attributes['index'])
-            ->raw(")->display(");
+            ->raw(')->display(');
 
         $this->addTemplateArguments($compiler);
 
@@ -180,11 +179,7 @@ class WidgetTagTwigNode extends Twig_Node
      */
     protected function addWidgetMetaArgument(Twig_Compiler $compiler): void
     {
-        $compiler->raw(sprintf(
-            "\"%s\" => \$context['app']['%s']->getCurrentWidget()",
-            WidgetTagTokenParser::VARIABLE_WIDGET,
-            WidgetTagServiceProvider::WIDGET_TAG_SERVICE
-        ));
+        $compiler->raw(sprintf('"%s" => $widget', WidgetTagTokenParser::VARIABLE_WIDGET));
     }
 
     /**
@@ -195,15 +190,58 @@ class WidgetTagTwigNode extends Twig_Node
     protected function addTemplatePathMetaArgument(Twig_Compiler $compiler): void
     {
         $compiler->raw(sprintf(
-            "\"%s\" => \$context['app']['%s']->getTemplatePath(",
+            '"%s" => $context[\'app\'][\'%s\']->getTemplatePath($widget',
             WidgetTagTokenParser::VARIABLE_WIDGET_TEMPLATE_PATH,
             WidgetTagServiceProvider::WIDGET_TAG_SERVICE
         ));
 
         if ($this->hasNode(WidgetTagTokenParser::NODE_USE)) {
-            $compiler->subcompile($this->getNode(WidgetTagTokenParser::NODE_USE));
+            $compiler
+                ->raw(', ')
+                ->subcompile($this->getNode(WidgetTagTokenParser::NODE_USE));
         }
 
         $compiler->raw(')');
+    }
+
+    /**
+     * @param \Twig_Compiler $compiler
+     *
+     * @return void
+     */
+    protected function compileElsewidgets(Twig_Compiler $compiler): void
+    {
+        if (!$this->hasNode(WidgetTagTokenParser::NODE_ELSEWIDGETS)) {
+            return;
+        }
+
+        foreach ($this->getNode(WidgetTagTokenParser::NODE_ELSEWIDGETS) as $widgetTagTwigNode) {
+            if (!$widgetTagTwigNode instanceof static) {
+                continue;
+            }
+
+            $compiler
+                ->raw(' elseif (')
+                ->subcompile($widgetTagTwigNode);
+        }
+    }
+
+    /**
+     * @param \Twig_Compiler $compiler
+     *
+     * @return void
+     */
+    protected function compileNowidget(Twig_Compiler $compiler): void
+    {
+        if (!$this->hasNode(WidgetTagTokenParser::NODE_NOWIDGET)) {
+            return;
+        }
+
+        $compiler
+            ->raw(" else {\n")
+            ->indent(1)
+            ->subcompile($this->getNode(WidgetTagTokenParser::NODE_NOWIDGET))
+            ->outdent(1)
+            ->write("}\n");
     }
 }

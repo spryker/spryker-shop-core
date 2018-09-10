@@ -8,10 +8,11 @@
 namespace SprykerShop\Yves\CurrencyWidget\Plugin\ShopUi;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\CurrencyWidget\Widget\CurrencyWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\CurrencyWidget\CurrencyWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CurrencyWidget\Plugin\ShopUi\CurrencyWidget instead.
+ * @deprecated Use \SprykerShop\Yves\CurrencyWidget\Widget\CurrencyWidget instead.
  */
 class CurrencyWidgetPlugin extends AbstractWidgetPlugin implements CurrencyWidgetPluginInterface
 {

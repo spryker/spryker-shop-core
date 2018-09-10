@@ -7,38 +7,30 @@
 
 namespace SprykerShop\Yves\ShopApplication\Twig\Widget;
 
-use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
-use Twig_Environment;
+use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 
 interface WidgetTagServiceInterface
 {
     /**
-     * @param \Twig_Environment $twig
-     * @param string $widgetName
+     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|string|null $widgetExpression
      * @param array $arguments
      *
      * @throws \SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException
      *
-     * @return bool
+     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|null
      */
-    public function openWidgetContext(Twig_Environment $twig, string $widgetName, array $arguments = []): bool;
+    public function openWidgetContext($widgetExpression, array $arguments = []): ?WidgetInterface;
 
     /**
-     * @param null|string $templatePath
-     *
-     * @throws \Exception
+     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface $widget
+     * @param string|null $templatePath
      *
      * @return string
      */
-    public function getTemplatePath(?string $templatePath = null): string;
+    public function getTemplatePath(WidgetInterface $widget, ?string $templatePath = null): string;
 
     /**
      * @return void
      */
     public function closeWidgetContext(): void;
-
-    /**
-     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
-     */
-    public function getCurrentWidget(): WidgetContainerInterface;
 }

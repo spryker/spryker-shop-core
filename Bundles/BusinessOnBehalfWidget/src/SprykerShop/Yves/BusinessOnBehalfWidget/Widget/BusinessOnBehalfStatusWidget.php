@@ -65,12 +65,11 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
      */
     protected function getCompanyName(?CustomerTransfer $customerTransfer): string
     {
-        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
-        if (!$customerTransfer || !$companyUserTransfer || !$companyUserTransfer->getCompany()) {
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer() || !$customerTransfer->getCompanyUserTransfer()->getCompany()) {
             return '';
         }
 
-        return $companyUserTransfer->getCompany()->getName();
+        return $customerTransfer->getCompanyUserTransfer()->getCompany()->getName();
     }
 
     /**
@@ -80,12 +79,11 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
      */
     protected function getCompanyBusinessUnitName(?CustomerTransfer $customerTransfer): string
     {
-        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
-        if (!$customerTransfer || !$companyUserTransfer || !$companyUserTransfer->getCompanyBusinessUnit()) {
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer() || !$customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()) {
             return '';
         }
 
-        return $companyUserTransfer->getCompanyBusinessUnit()->getName();
+        return $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getName();
     }
 
     /**

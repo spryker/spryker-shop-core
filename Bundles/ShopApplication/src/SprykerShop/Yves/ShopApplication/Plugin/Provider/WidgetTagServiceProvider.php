@@ -11,10 +11,13 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 use Spryker\Yves\Kernel\View\ViewInterface;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Twig_Environment;
+use Twig_SimpleFunction;
 
 /**
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
@@ -33,6 +36,12 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     {
         $this->addWidgetTagService($application);
         $this->addWidgetTagTokenParser($application);
+
+        $application['twig'] = $application->share(
+            $application->extend('twig', function (Twig_Environment $twig) {
+                return $this->registerWidgetTwigFunction($twig);
+            })
+        );
     }
 
     /**
@@ -85,6 +94,52 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * @param \Twig_Environment $twig
+     *
+     * @return \Twig_Environment
+     */
+    protected function registerWidgetTwigFunction(Twig_Environment $twig)
+    {
+        foreach ($this->getFunctions() as $function) {
+            $twig->addFunction($function->getName(), $function);
+        }
+
+        return $twig;
+    }
+
+    /**
+     * @return \Twig_SimpleFunction[]
+     */
+    protected function getFunctions()
+    {
+        return [
+            new Twig_SimpleFunction('findWidget', [$this, 'findWidget'], [
+                'needs_context' => false,
+            ]),
+        ];
+    }
+
+    /**
+     * @param string $widgetName
+     * @param array $arguments
+     *
+     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|null
+     */
+    public function findWidget(string $widgetName, array $arguments = []): ?WidgetInterface
+    {
+        $widgetTagService = $this->getFactory()->createWidgetTagService();
+        $widget = $widgetTagService->openWidgetContext($widgetName, $arguments);
+
+        if (!$widget) {
+            return null;
+        }
+
+        $widgetTagService->closeWidgetContext();
+
+        return $widget;
+    }
+
+    /**
      * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
      * @param \Spryker\Shared\Kernel\Communication\Application $application
      *
@@ -121,9 +176,9 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     /**
      * @param \Spryker\Yves\Kernel\View\ViewInterface $view
      *
-     * @return array|null
+     * @return array
      */
-    protected function getViewParameters(ViewInterface $view)
+    protected function getViewParameters(ViewInterface $view): array
     {
         if ($this->getConfig()->useViewParametersToRenderTwig()) {
             return $view->getData();

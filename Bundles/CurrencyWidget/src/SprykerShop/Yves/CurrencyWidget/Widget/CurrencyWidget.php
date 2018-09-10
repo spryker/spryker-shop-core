@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CurrencyWidget\Plugin\ShopUi;
+namespace SprykerShop\Yves\CurrencyWidget\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -25,7 +25,7 @@ class CurrencyWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'CurrencyWidgetPlugin';
+        return 'CurrencyWidget';
     }
 
     /**
