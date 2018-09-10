@@ -15,6 +15,8 @@ interface NewsletterSubscriptionSummaryWidgetPluginInterface extends WidgetPlugi
     public const NAME = 'NewsletterSubscriptionSummaryWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void

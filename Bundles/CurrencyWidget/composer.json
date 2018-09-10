@@ -11,7 +11,9 @@
   },
   "require-dev": {
     "spryker-shop/shop-application": "*",
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
