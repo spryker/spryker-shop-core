@@ -15,6 +15,8 @@ interface ProductPackagingUnitWidgetPluginInterface extends WidgetPluginInterfac
     public const NAME = 'ProductPackagingUnitWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isAddToCartDisabled
      * @param array $quantityOptions Contains the selectable quantity options; each option is structured as ['label' => 1, 'value' => 1]
