@@ -26,7 +26,7 @@ interface ShoppingListItemProductOptionFormDataProviderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]|null
      */
-    public function getProductOptionGroups(ShoppingListItemTransfer $shoppingListItemTransfer);
+    public function getProductOptionGroups(ShoppingListItemTransfer $shoppingListItemTransfer): ArrayObject;
 
     /**
      * @param \Symfony\Component\Form\ChoiceList\View\ChoiceView[] $productOptionGroups

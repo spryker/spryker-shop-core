@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductOptionWidget\Form\DataProvider;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
+use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
@@ -64,6 +65,24 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
         }
 
         return new ArrayObject($mappedProductOptionGroups);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]|null
+     */
+    public function getProductOptionGroups(ShoppingListItemTransfer $shoppingListItemTransfer): ArrayObject
+    {
+        $storageProductOptionGroupCollectionTransfer = $this->getStorageProductOptionGroupCollectionTransfer($shoppingListItemTransfer);
+
+        if (!$storageProductOptionGroupCollectionTransfer) {
+            return new ArrayObject();
+        }
+
+        $storageProductOptionGroupCollectionTransfer = $this->hydrateStorageProductOptionGroupCollectionTransfer($storageProductOptionGroupCollectionTransfer, $shoppingListItemTransfer);
+
+        return $storageProductOptionGroupCollectionTransfer->getProductOptionGroups();
     }
 
     /**
@@ -141,24 +160,6 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]|null
-     */
-    public function getProductOptionGroups(ShoppingListItemTransfer $shoppingListItemTransfer)
-    {
-        $storageProductOptionGroupCollectionTransfer = $this->getStorageProductOptionGroupCollectionTransfer($shoppingListItemTransfer);
-
-        if (!$storageProductOptionGroupCollectionTransfer) {
-            return new ArrayObject();
-        }
-
-        $storageProductOptionGroupCollectionTransfer = $this->hydrateStorageProductOptionGroupCollectionTransfer($storageProductOptionGroupCollectionTransfer, $shoppingListItemTransfer);
-
-        return $storageProductOptionGroupCollectionTransfer->getProductOptionGroups();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
     protected function getStorageProductOptionGroupCollectionTransfer(ShoppingListItemTransfer $shoppingListItemTransfer)
@@ -194,13 +195,32 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
     ): ProductAbstractOptionStorageTransfer {
         $selectedProductOptionIds = $this->getSelectedProductOptionIds($shoppingListItemTransfer);
 
+        $productOptionGroups = new ArrayObject();
         foreach ($storageProductOptionGroupCollectionTransfer->getProductOptionGroups() as $productOptionGroup) {
-            foreach ($productOptionGroup->getProductOptionValues() as $productOptionValue) {
-                $this->hydrateProductOptionValueIsSelected($productOptionValue, $selectedProductOptionIds);
-            }
+            $productOptionGroup = $this->hydrateProductOptionValuesPerOptionGroupIsSelected($productOptionGroup, $selectedProductOptionIds);
+            $productOptionGroups->append($productOptionGroup);
         }
 
-        return $storageProductOptionGroupCollectionTransfer;
+        return $storageProductOptionGroupCollectionTransfer->setProductOptionGroups($productOptionGroups);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer $productOptionGroup
+     * @param int[] $selectedProductOptionIds
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer
+     */
+    protected function hydrateProductOptionValuesPerOptionGroupIsSelected(
+        ProductOptionGroupStorageTransfer $productOptionGroup,
+        array $selectedProductOptionIds
+    ): ProductOptionGroupStorageTransfer {
+        $productOptionValues = new ArrayObject();
+        foreach ($productOptionGroup->getProductOptionValues() as $productOptionValue) {
+            $productOptionValues->append($this->hydrateProductOptionValueIsSelected($productOptionValue, $selectedProductOptionIds));
+        }
+        $productOptionGroup->setProductOptionValues($productOptionValues);
+
+        return $productOptionGroup;
     }
 
     /**
