@@ -242,10 +242,8 @@ class BusinessUnitController extends AbstractCompanyController
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
      */
-    protected function createCompanyUnitAddressCriteriaFilterTransfer(
-        Request $request
-    ): CompanyUnitAddressCriteriaFilterTransfer
-    {
+    protected function createCompanyUnitAddressCriteriaFilterTransfer(Request $request
+    ): CompanyUnitAddressCriteriaFilterTransfer {
         $criteriaFilterTransfer = new CompanyUnitAddressCriteriaFilterTransfer();
         $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
 
@@ -271,11 +269,9 @@ class BusinessUnitController extends AbstractCompanyController
         $companyBusinessUnitClient = $this->getFactory()->getCompanyBusinessUnitClient();
 
         if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()) {
-            $companyBusinessUnitResponseTransfer = $companyBusinessUnitClient->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
-        } else {
-            $companyBusinessUnitResponseTransfer = $companyBusinessUnitClient->createCompanyBusinessUnit($companyBusinessUnitTransfer);
+            return $companyBusinessUnitClient->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
         }
 
-        return $companyBusinessUnitResponseTransfer;
+        return $companyBusinessUnitClient->createCompanyBusinessUnit($companyBusinessUnitTransfer);;
     }
 }
