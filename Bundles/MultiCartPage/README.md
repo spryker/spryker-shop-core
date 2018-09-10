@@ -1,6 +1,6 @@
 # MultiCartPage Module
 
-This module contains the multi cart page and it's components.
+This module contains the multi cart page and its components.
 
 
 ## Installation
