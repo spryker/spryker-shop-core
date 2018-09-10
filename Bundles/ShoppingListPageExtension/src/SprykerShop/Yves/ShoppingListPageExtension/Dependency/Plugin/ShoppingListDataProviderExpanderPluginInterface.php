@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin;
 
  use Generated\Shared\Transfer\ShoppingListTransfer;
- use Symfony\Component\HttpFoundation\Request;
 
 interface ShoppingListDataProviderExpanderPluginInterface
 {
