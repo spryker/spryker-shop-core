@@ -10,6 +10,7 @@ export interface Config {
 
     events: {
         ready: string
+        bootstrap: string
         error: string
     }
 
@@ -26,8 +27,9 @@ export const defaultConfig = <Config>{
     isProduction: __PRODUCTION__,
 
     events: {
-        ready: 'app-ready',
-        error: 'app-error'
+        ready: 'component-ready',
+        bootstrap: 'application-bootstrap-completed',
+        error: 'application-error'
     },
 
     log: {
