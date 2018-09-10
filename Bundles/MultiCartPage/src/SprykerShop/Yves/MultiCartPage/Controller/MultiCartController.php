@@ -125,6 +125,7 @@ class MultiCartController extends AbstractController
 
         if (!$quoteTransfer) {
             $this->addInfoMessage(static::GLOSSARY_KEY_CART_WAS_DELETED);
+
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
@@ -187,6 +188,7 @@ class MultiCartController extends AbstractController
 
         if (!$quoteTransfer) {
             $this->addInfoMessage(static::GLOSSARY_KEY_CART_WAS_DELETED);
+
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
         $multiCartClient
