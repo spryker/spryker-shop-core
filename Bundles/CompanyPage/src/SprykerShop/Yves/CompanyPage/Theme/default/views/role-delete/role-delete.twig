@@ -19,9 +19,9 @@
         {% else %}
             {{ "company.account.company_role.delete.confirmation.assigned_users_message" | trans }}
             <p>{{ "company.account.company_role.delete.confirmation.assigned_users" | trans }}:</p>
-            <ul>
+            <ul class="list list--bullet">
                 {% for user in data.assignedUsers %}
-                    <li class="list list--bullet">* {{ user.customer.firstName }} {{ user.customer.lastName }}</li>
+                    <li class="list__item">* {{ user.customer.firstName }} {{ user.customer.lastName }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
