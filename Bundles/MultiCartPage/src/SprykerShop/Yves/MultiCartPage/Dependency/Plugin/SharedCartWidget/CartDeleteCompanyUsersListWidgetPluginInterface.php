@@ -15,6 +15,8 @@ interface CartDeleteCompanyUsersListWidgetPluginInterface extends WidgetPluginIn
     public const NAME = 'CartDeleteCompanyUsersListWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

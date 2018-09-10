@@ -38,7 +38,7 @@ class ShoppingListFromCartFormDataProvider
      */
     public function getData(?int $idQuote): ShoppingListFromCartRequestTransfer
     {
-        return (new ShoppingListFromCartRequestTransfer)->setIdQuote($idQuote)->setShoppingListName(null);
+        return (new ShoppingListFromCartRequestTransfer())->setIdQuote($idQuote)->setShoppingListName(null);
     }
 
     /**

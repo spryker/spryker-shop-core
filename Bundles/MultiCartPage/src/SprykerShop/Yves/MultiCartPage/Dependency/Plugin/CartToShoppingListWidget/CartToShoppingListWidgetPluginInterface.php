@@ -15,6 +15,8 @@ interface CartToShoppingListWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'CartToShoppingListWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

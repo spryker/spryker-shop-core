@@ -14,6 +14,8 @@ interface MultiCartMenuItemWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'MultiCartMenuItemWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $activePage
      *
      * @return void

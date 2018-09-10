@@ -100,7 +100,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
         foreach ($companyUserData as $idCompanyUser => $companyUserName) {
             if (!in_array($idCompanyUser, $indexedSharedCompanyUsers)) {
                 $shareDetailTransfers->append(
-                    (new ShareDetailTransfer)
+                    (new ShareDetailTransfer())
                         ->setIdCompanyUser($idCompanyUser)
                         ->setCustomerName($companyUserName)
                 );

@@ -15,6 +15,8 @@ interface CartListPermissionGroupWidgetPluginInterface extends WidgetPluginInter
     public const NAME = 'CartListPermissionGroupWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param bool $isDeleteAllowed
      *
