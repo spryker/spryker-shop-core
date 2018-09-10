@@ -99,7 +99,7 @@ class BusinessUnitController extends AbstractCompanyController
         if ($companyBusinessUnitForm->isSubmitted() === false) {
             $companyBusinessUnitForm->setData($dataProvider->getData($this->getCompanyUser()));
         } elseif ($companyBusinessUnitForm->isValid()) {
-            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
+            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitEdit($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
@@ -152,7 +152,7 @@ class BusinessUnitController extends AbstractCompanyController
                 )
             );
         } elseif ($companyBusinessUnitForm->isValid()) {
-            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
+            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitEdit($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
@@ -244,7 +244,8 @@ class BusinessUnitController extends AbstractCompanyController
      */
     protected function createCompanyUnitAddressCriteriaFilterTransfer(
         Request $request
-    ): CompanyUnitAddressCriteriaFilterTransfer {
+    ): CompanyUnitAddressCriteriaFilterTransfer
+    {
         $criteriaFilterTransfer = new CompanyUnitAddressCriteriaFilterTransfer();
         $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
 
@@ -262,13 +263,19 @@ class BusinessUnitController extends AbstractCompanyController
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    protected function companyBusinessUnitUpdate(array $data): CompanyBusinessUnitResponseTransfer
+    protected function companyBusinessUnitEdit(array $data): CompanyBusinessUnitResponseTransfer
     {
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->fromArray($data, true);
 
-        return $this->getFactory()
-            ->getCompanyBusinessUnitClient()
-            ->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
+        $companyBusinessUnitClient = $this->getFactory()->getCompanyBusinessUnitClient();
+
+        if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()) {
+            $companyBusinessUnitResponseTransfer = $companyBusinessUnitClient->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
+        } else {
+            $companyBusinessUnitResponseTransfer = $companyBusinessUnitClient->createCompanyBusinessUnit($companyBusinessUnitTransfer);
+        }
+
+        return $companyBusinessUnitResponseTransfer;
     }
 }
