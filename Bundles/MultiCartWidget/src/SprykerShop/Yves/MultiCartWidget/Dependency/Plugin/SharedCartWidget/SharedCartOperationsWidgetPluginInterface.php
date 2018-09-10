@@ -14,6 +14,8 @@ interface SharedCartOperationsWidgetPluginInterface
     public const NAME = 'SharedCartOperationsWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
