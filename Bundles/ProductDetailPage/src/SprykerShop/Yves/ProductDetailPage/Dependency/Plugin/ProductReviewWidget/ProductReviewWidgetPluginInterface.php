@@ -14,6 +14,8 @@ interface ProductReviewWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'ProductReviewWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @return void

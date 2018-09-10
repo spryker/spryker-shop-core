@@ -15,6 +15,8 @@ interface SharedCartPermissionGroupWidgetPluginInterface extends WidgetPluginInt
     public const NAME = 'SharedCartPermissionGroupWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

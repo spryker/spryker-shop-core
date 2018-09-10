@@ -14,6 +14,8 @@ interface MenuItemCompanyWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'MenuItemCompanyWidgetPlugin';
 
     /**
+     * @api
+     *
      * @return void
      */
     public function initialize(): void;
