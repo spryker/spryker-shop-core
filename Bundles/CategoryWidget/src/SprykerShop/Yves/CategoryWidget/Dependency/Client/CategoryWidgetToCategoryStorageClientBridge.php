@@ -25,7 +25,7 @@ class CategoryWidgetToCategoryStorageClientBridge implements CategoryWidgetToCat
     /**
      * @param string $locale
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
     public function getCategories($locale)
     {

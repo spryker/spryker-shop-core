@@ -1,0 +1,9 @@
+@mixin agent-control-bar($name: '.agent-control-bar') {
+    #{$name} {
+        position: relative;
+        z-index: $setting-zi-header + 1;
+
+        @content;
+    }
+}
+

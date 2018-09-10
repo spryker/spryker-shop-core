@@ -11,7 +11,7 @@
     attributes: required
 } %}
 
-{% set canEditCart = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
+{% set canEditCart = (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
 
 {% block body %}
     <div class="grid grid--stretch grid--justify">
