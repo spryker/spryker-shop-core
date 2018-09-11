@@ -18,6 +18,6 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
      */
     public function hasBusinessUnit(?CompanyUserTransfer $companyUserTransfer): bool
     {
-        return (bool)($companyUserTransfer && $companyUserTransfer->getCompanyBusinessUnit());
+        return $companyUserTransfer && $companyUserTransfer->getCompanyBusinessUnit();
     }
 }
