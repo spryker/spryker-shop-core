@@ -7,18 +7,19 @@
 namespace SprykerShop\Yves\ShoppingListWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Spryker\Client\ShoppingListSession\ShoppingListSessionClientInterface;
 
 class ShoppingListWidgetToShoppingListSessionClientBridge implements ShoppingListWidgetToShoppingListSessionClientInterface
 {
     /**
-     * @var \Spryker\Client\ShoppingList\ShoppingListClientInterface
+     * @var \Spryker\Client\ShoppingListSession\ShoppingListSessionClientInterface
      */
     protected $shoppingListSessionClient;
 
     /**
      * @param \Spryker\Client\ShoppingListSession\ShoppingListSessionClientInterface $shoppingListSessionClient
      */
-    public function __construct($shoppingListSessionClient)
+    public function __construct(ShoppingListSessionClientInterface $shoppingListSessionClient)
     {
         $this->shoppingListSessionClient = $shoppingListSessionClient;
     }
