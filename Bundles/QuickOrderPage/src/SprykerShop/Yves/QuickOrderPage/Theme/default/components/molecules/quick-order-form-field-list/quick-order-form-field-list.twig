@@ -34,6 +34,9 @@
                     ) }}
                 {% endif %}
             </div>
+
+            {{ form_row(item.sku) }}
+
             {% if  data.additionalDataColumnProviderPlugins.measurementUnit is defined %}
                 <div class="col col--sm-3 spacing spacing--inner">
                     <div class="{{ data.additionalDataColumnProviderPlugins.measurementUnit.getFieldName() }}">
@@ -41,12 +44,14 @@
                     </div>
                 </div>
             {% endif %}
+
             <div class="col col--sm-3 spacing spacing--inner">
                 {{ form_row(item.qty, {
                     required: loop.first,
                     label: false
                 }) }}
             </div>
+
             <div class="col col--sm-1 spacing spacing--inner">
                 {% if not loop.first %}
                     <a href="#remove"
