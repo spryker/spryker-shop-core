@@ -16,6 +16,7 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_QUICK_ORDER_ADD_ROWS = 'quick-order/add-rows';
     public const ROUTE_QUICK_ORDER_DELETE_ROW = 'quick-order/delete-row';
     public const ROUTE_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA = 'quick-order/product-additional-data';
+    public const ROUTE_QUICK_ORDER_PRODUCT_PRICE = 'quick-order/product-price';
 
     /**
      * @param \Silex\Application $app
@@ -27,7 +28,8 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
         $this->addQuickOrderRoute()
             ->addQuickOrderAddRowsRoute()
             ->addQuickOrderDeleteRowRoute()
-            ->addQuickOrderProductAdditionalDataRoute();
+            ->addQuickOrderProductAdditionalDataRoute()
+            ->addQuickOrderProductPriceRoute();
     }
 
     /**
@@ -72,6 +74,18 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
     protected function addQuickOrderProductAdditionalDataRoute(): AbstractYvesControllerProvider
     {
         $this->createController('/{quickOrder}/product-additional-data', static::ROUTE_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA, 'QuickOrderPage', 'QuickOrder', 'productAdditionalData')
+            ->assert('quickOrder', $this->getAllowedLocalesPattern() . 'quick-order|quick-order')
+            ->value('quickOrder', 'quick-order');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addQuickOrderProductPriceRoute(): AbstractYvesControllerProvider
+    {
+        $this->createController('/{quickOrder}/product-price', static::ROUTE_QUICK_ORDER_PRODUCT_PRICE, 'QuickOrderPage', 'QuickOrder', 'productPrice')
             ->assert('quickOrder', $this->getAllowedLocalesPattern() . 'quick-order|quick-order')
             ->value('quickOrder', 'quick-order');
 

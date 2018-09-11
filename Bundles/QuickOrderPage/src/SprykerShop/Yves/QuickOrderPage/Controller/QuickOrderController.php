@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
 use Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer;
+use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -17,6 +18,7 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
@@ -27,6 +29,7 @@ class QuickOrderController extends AbstractController
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
     public const PARAM_ID_PRODUCT = 'id-product';
+    public const PARAM_QUANTITY = 'quantity';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -229,6 +232,47 @@ class QuickOrderController extends AbstractController
         }
 
         return $quickOrderProductAdditionalDataTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function productPriceAction(Request $request)
+    {
+        $quickOrderProductPriceTransfer = $this->executeProductPriceAction($request);
+
+        if (!$request->query->getInt(static::PARAM_ID_PRODUCT)) {
+            return $this->jsonResponse(
+                (new QuickOrderProductPriceTransfer())->toArray(true, true),
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+
+        return $this->jsonResponse($quickOrderProductPriceTransfer->toArray(true, true));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     */
+    protected function executeProductPriceAction(Request $request)
+    {
+        $quickOrderProductPriceTransfer = new QuickOrderProductPriceTransfer();
+        $quickOrderProductPriceTransfer->setIdProductConcrete(
+            $request->query->getInt(static::PARAM_ID_PRODUCT)
+        );
+        $quickOrderProductPriceTransfer->setQuantity(
+            $request->query->getInt(static::PARAM_QUANTITY, 0)
+        );
+
+        foreach ($this->getFactory()->getQuickOrderProductPriceTransferExpanderPlugins() as $plugin) {
+            $plugin->expand($quickOrderProductPriceTransfer);
+        }
+
+        return $quickOrderProductPriceTransfer;
     }
 
     /**
