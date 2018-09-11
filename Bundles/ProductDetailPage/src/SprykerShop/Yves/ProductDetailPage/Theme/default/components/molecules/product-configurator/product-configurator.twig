@@ -62,7 +62,7 @@
     {% endembed %}
 
     <hr />
-    <form method="POST" action="{{ url("cart/add", {"sku": sku}) }}">
+    <form method="POST" action="{{ path("cart/add", {"sku": sku}) }}">
         {{ widget('ProductOptionWidgetPlugin', data.product) }}
 
         {% if widgetExists('ProductPackagingUnitWidgetPlugin') %}
