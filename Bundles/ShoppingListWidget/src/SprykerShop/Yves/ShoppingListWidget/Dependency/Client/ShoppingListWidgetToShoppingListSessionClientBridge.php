@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ShoppingListWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
-use Spryker\Client\ShoppingListSession\ShoppingListSessionClientInterface;
 
 class ShoppingListWidgetToShoppingListSessionClientBridge implements ShoppingListWidgetToShoppingListSessionClientInterface
 {
