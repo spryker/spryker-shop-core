@@ -66,6 +66,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
             $this->handleResponseErrors($shoppingListResponseTransfer);
         }
+        $this->getFactory()->getShoppingListClient()->updateShoppingListPermissions();
 
         return [
             'shoppingListCollection' => $this->getCustomerShoppingListCollection(),

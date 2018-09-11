@@ -54,7 +54,6 @@ class BusinessOnBehalfController extends AbstractController
         if ($companyUserAccountForm->isSubmitted() && $companyUserAccountForm->isValid()) {
             $isDefault = $this->isDefaultFieldSelected($request);
             $this->getFactory()->createCompanyUserSaver()->saveCompanyUser($activeCompanyUsers, $companyUserAccountForm->getData(), $isDefault);
-            $this->getFactory()->getShoppingListClient()->updateShoppingListPermissions();
         }
 
         return [
