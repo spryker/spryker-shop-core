@@ -8,7 +8,8 @@
 {% define data = {
     value: '',
     id: required,
-    placeholder: 'autocomplete.placeholder'
+    placeholder: 'autocomplete.placeholder',
+    hiddenInput: false
 } %}
 
 {% define attributes = {
@@ -16,7 +17,7 @@
     'debounce-delay': 500,
     'min-letters': 3,
     'query-param-name': 'query',
-    'selected-value-key': '',
+    'hidden-input-name': required,
     'value-data-attribute': 'data-value',
     'item-selector': '',
     'show-clean-button': false
@@ -48,7 +49,9 @@
                        value="{{ data.value }}"
                        autocomplete="off">
 
-                <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
+                {% if data.hiddenInput %}
+                    <input type="hidden" name="{{ attributes['hidden-input-name'] }}" class="{{ config.jsName }}__input-hidden"/>
+                {% endif %}
             </div>
             {% if attributes['show-clean-button'] %}
                 <div class="col col--sm-1">

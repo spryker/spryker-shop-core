@@ -11,7 +11,7 @@
 
 {% block body %}
     <div class="grid grid--middle {{ config.name }}__item">
-        <div class="col col--sm-4 spacing spacing--inner">
+        <div class="col col--sm-5 spacing spacing--inner">
             {{ 'quick-order.input-label.sku.name' | trans }}
         </div>
         {% if (data.additionalDataColumnProviderPlugins.measurementUnit is defined) %}
@@ -19,18 +19,13 @@
                 {{ data.additionalDataColumnProviderPlugins.measurementUnit.getColumnTitle() | trans }}
             </div>
         {% endif %}
-        <div class="col col--sm-3 spacing spacing--inner">
+        <div class="col col--sm-4 spacing spacing--inner">
             {{ 'quick-order.input-label.qty' | trans }}
         </div>
-        {% if (data.additionalDataColumnProviderPlugins.price is defined) %}
-            <div class="col col--sm-2 spacing spacing--inner">
-                {{ data.additionalDataColumnProviderPlugins.price.getColumnTitle() | trans }}
-            </div>
-        {% endif %}
     </div>
     {% for item in data.items %}
         <div class="grid grid--middle {{ config.name }}__item">
-            <div class="col col--sm-4 spacing spacing--inner">
+            <div class="col col--sm-5 spacing spacing--inner">
                 {% if widgetGlobalExists('QuickOrderPageProductSearchWidgetPlugin') %}
                     {{ widgetGlobal(
                         'QuickOrderPageProductSearchWidgetPlugin',
@@ -39,6 +34,9 @@
                     ) }}
                 {% endif %}
             </div>
+
+            {{ form_row(item.sku) }}
+
             {% if  data.additionalDataColumnProviderPlugins.measurementUnit is defined %}
                 <div class="col col--sm-3 spacing spacing--inner">
                     <div class="{{ data.additionalDataColumnProviderPlugins.measurementUnit.getFieldName() }}">
@@ -46,19 +44,14 @@
                     </div>
                 </div>
             {% endif %}
-            <div class="col col--sm-2 spacing spacing--inner">
+
+            <div class="col col--sm-3 spacing spacing--inner">
                 {{ form_row(item.qty, {
                     required: loop.first,
                     label: false
                 }) }}
             </div>
-            {% if  data.additionalDataColumnProviderPlugins.price is defined %}
-                <div class="col col--sm-2 spacing spacing--inner">
-                    <div class="{{ data.additionalDataColumnProviderPlugins.price.getFieldName() }}">
 
-                    </div>
-                </div>
-            {% endif %}
             <div class="col col--sm-1 spacing spacing--inner">
                 {% if not loop.first %}
                     <a href="#remove"

@@ -143,6 +143,7 @@ class QuickOrderController extends AbstractController
 
         return [
             'form' => $quickOrderForm->createView(),
+            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
         ];
     }
 
