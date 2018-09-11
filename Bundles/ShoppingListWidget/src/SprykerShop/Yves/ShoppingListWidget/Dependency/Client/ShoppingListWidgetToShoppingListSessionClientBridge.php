@@ -20,7 +20,7 @@ class ShoppingListWidgetToShoppingListSessionClientBridge implements ShoppingLis
     /**
      * @param \Spryker\Client\ShoppingListSession\ShoppingListSessionClientInterface $shoppingListSessionClient
      */
-    public function __construct(ShoppingListSessionClientInterface $shoppingListSessionClient)
+    public function __construct($shoppingListSessionClient)
     {
         $this->shoppingListSessionClient = $shoppingListSessionClient;
     }
