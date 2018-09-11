@@ -11,7 +11,6 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 use Spryker\Yves\Kernel\View\ViewInterface;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
@@ -123,9 +122,9 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
      * @param string $widgetName
      * @param array $arguments
      *
-     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|null
+     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|\Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface|null
      */
-    public function findWidget(string $widgetName, array $arguments = []): ?WidgetInterface
+    public function findWidget(string $widgetName, array $arguments = [])
     {
         $widgetTagService = $this->getFactory()->createWidgetTagService();
         $widget = $widgetTagService->openWidgetContext($widgetName, $arguments);

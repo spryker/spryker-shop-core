@@ -7,27 +7,25 @@
 
 namespace SprykerShop\Yves\ShopApplication\Twig\Widget;
 
-use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
-
 interface WidgetTagServiceInterface
 {
     /**
-     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|string|null $widgetExpression
+     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|\Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface|string|null $widgetExpression
      * @param array $arguments
      *
      * @throws \SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException
      *
-     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|null
+     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|\Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface|null
      */
-    public function openWidgetContext($widgetExpression, array $arguments = []): ?WidgetInterface;
+    public function openWidgetContext($widgetExpression, array $arguments = []);
 
     /**
-     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface $widget
+     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|\Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface $widget
      * @param string|null $templatePath
      *
      * @return string
      */
-    public function getTemplatePath(WidgetInterface $widget, ?string $templatePath = null): string;
+    public function getTemplatePath($widget, ?string $templatePath = null): string;
 
     /**
      * @return void

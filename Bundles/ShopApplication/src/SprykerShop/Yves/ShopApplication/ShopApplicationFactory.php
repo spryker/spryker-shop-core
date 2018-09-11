@@ -18,6 +18,8 @@ use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTex
 use SprykerShop\Yves\ShopApplication\Twig\RoutingHelper;
 use SprykerShop\Yves\ShopApplication\Twig\TwigRenderer;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTokenParser;
+use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetBuilder;
+use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetBuilderInterface;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagService;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagServiceInterface;
 use Twig_TokenParserInterface;
@@ -156,8 +158,16 @@ class ShopApplicationFactory extends AbstractFactory
     {
         return new WidgetTagService(
             $this->createWidgetContainerRegistry(),
-            $this->createWidgetFactory(),
-            $this->getGlobalWidgetCollection()
+            $this->getGlobalWidgetCollection(),
+            $this->createWidgetBuilder()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetBuilderInterface
+     */
+    protected function createWidgetBuilder(): WidgetBuilderInterface
+    {
+        return new WidgetBuilder($this->createWidgetFactory(), $this->createWidgetPluginFactory());
     }
 }

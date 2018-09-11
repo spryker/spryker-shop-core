@@ -7,10 +7,8 @@
 
 namespace SprykerShop\Yves\ShopApplication\Twig\Widget;
 
-use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistryInterface;
-use Spryker\Yves\Kernel\Widget\WidgetFactoryInterface;
 use SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException;
 use Throwable;
 
@@ -22,39 +20,39 @@ class WidgetTagService implements WidgetTagServiceInterface
     protected $widgetContainerRegistry;
 
     /**
-     * @var \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface
-     */
-    protected $widgetFactory;
-
-    /**
      * @var \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
      */
     protected $globalWidgetCollection;
 
     /**
+     * @var \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetBuilderInterface
+     */
+    protected $widgetBuilder;
+
+    /**
      * @param \Spryker\Yves\Kernel\Widget\WidgetContainerRegistryInterface $widgetContainerRegistry
-     * @param \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface $widgetFactory
      * @param \Spryker\Yves\Kernel\Widget\WidgetContainerInterface $globalWidgetCollection
+     * @param \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetBuilderInterface $widgetBuilder
      */
     public function __construct(
         WidgetContainerRegistryInterface $widgetContainerRegistry,
-        WidgetFactoryInterface $widgetFactory,
-        WidgetContainerInterface $globalWidgetCollection
+        WidgetContainerInterface $globalWidgetCollection,
+        WidgetBuilderInterface $widgetBuilder
     ) {
         $this->widgetContainerRegistry = $widgetContainerRegistry;
-        $this->widgetFactory = $widgetFactory;
         $this->globalWidgetCollection = $globalWidgetCollection;
+        $this->widgetBuilder = $widgetBuilder;
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|string|null $widgetExpression
+     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|\Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface|string|null $widgetExpression
      * @param array $arguments
      *
      * @throws \SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException
      *
-     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|null
+     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|\Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface|null
      */
-    public function openWidgetContext($widgetExpression, array $arguments = []): ?WidgetInterface
+    public function openWidgetContext($widgetExpression, array $arguments = [])
     {
         if ($widgetExpression === null) {
             return null;
@@ -63,7 +61,7 @@ class WidgetTagService implements WidgetTagServiceInterface
         try {
             $widget = $widgetExpression;
 
-            if (!$widget instanceof WidgetInterface) {
+            if (!$widget instanceof WidgetContainerInterface) {
                 $widget = $this->createWidgetByName($widget, $arguments);
             }
 
@@ -78,12 +76,12 @@ class WidgetTagService implements WidgetTagServiceInterface
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface $widget
+     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|\Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface $widget
      * @param string|null $templatePath
      *
      * @return string
      */
-    public function getTemplatePath(WidgetInterface $widget, ?string $templatePath = null): string
+    public function getTemplatePath($widget, ?string $templatePath = null): string
     {
         if ($templatePath !== null) {
             return $templatePath;
@@ -104,9 +102,9 @@ class WidgetTagService implements WidgetTagServiceInterface
      * @param string $widgetName
      * @param array $arguments
      *
-     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|null
+     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|\Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface|null
      */
-    protected function createWidgetByName(string $widgetName, array $arguments): ?WidgetInterface
+    protected function createWidgetByName(string $widgetName, array $arguments)
     {
         $widgetContainer = $this->widgetContainerRegistry->getLastAdded();
 
@@ -120,11 +118,11 @@ class WidgetTagService implements WidgetTagServiceInterface
 
         $widgetClass = $widgetContainer->getWidgetClassName($widgetName);
 
-        return $this->widgetFactory->build($widgetClass, $arguments);
+        return $this->widgetBuilder->build($widgetClass, $arguments);
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|string $widgetExpression
+     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|\Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface|string $widgetExpression
      * @param \Throwable $e
      *
      * @return \SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException
