@@ -14,6 +14,8 @@ interface MiniCartWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'MiniCartWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param int $cartQuantity
      *
      * @return void
