@@ -6,12 +6,10 @@
 } %}
 
 {% block template %}
-    {% embed molecule('quick-order-form-field-list', 'QuickOrderPage') with {
+    {% include molecule('quick-order-form-field-list', 'QuickOrderPage') with {
         data: {
             items: data.form.items,
             additionalDataColumnProviderPlugins: data.additionalDataColumnProviderPlugins
         }
-    } only %}   
-        {% block removeActionClass %}js-quick-order-form__remove-row-trigger{% endblock %}
-    {% endembed %}
+    } only %}
 {% endblock %}
