@@ -1,38 +1,34 @@
 import Component from 'ShopUi/models/component';
 
 export default class FormDataInjector extends Component {
-    injectFields: HTMLElement[];
-    formForInject: HTMLFormElement;
-    formTakeOutFrom: HTMLFormElement;
+    formToEnrich: HTMLFormElement;
+    fieldsToInject: HTMLElement[];
 
     protected readyCallback(): void {
-        this.formForInject = this.closest('form');
-        this.formTakeOutFrom = document.querySelector(this.getFormSelector);
+        this.formToEnrich = this.closest('form');
+        this.fieldsToInject = <HTMLElement[]>Array.from(document.querySelectorAll(this.fieldsSelector));
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.formForInject.addEventListener('submit', event => this.submitHandle(event), false);
+        this.formToEnrich.addEventListener('submit', (event: Event) => this.submitHandle(event), false);
     }
 
-    private submitHandle(event): void {
+    private submitHandle(event: Event): void {
         event.preventDefault();
 
         this.disableButton();
-        this.addHiddenFields();
-        this.formForInject.submit();
+        this.injectData();
+        this.formToEnrich.submit();
     }
 
     private disableButton(): void {
-        this.formForInject.querySelector('[type="submit"]').setAttribute('disabled', 'disabled');
+        this.formToEnrich.querySelector('[type="submit"]').setAttribute('disabled', 'disabled');
     }
 
-    private addHiddenFields(): void {
-        const fieldsArray: HTMLFormElement[] = Array.from(this.formTakeOutFrom.querySelectorAll(this.getFieldsSelector));
-
-        this.innerHTML = '';
-        fieldsArray.forEach(field => this.addField(field));
+    private injectData(): void {
+        this.fieldsToInject.forEach(field => this.addField(field));
     }
 
     private addField(field): void {
@@ -45,11 +41,11 @@ export default class FormDataInjector extends Component {
         this.appendChild(insertField);
     }
 
-    get getFormSelector() {
-        return this.getAttribute('form-class');
+    get formSelector() {
+        return this.getAttribute('form-selector');
     }
 
-    get getFieldsSelector() {
+    get fieldsSelector() {
         return this.getAttribute('fields-selector');
     }
 }

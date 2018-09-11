@@ -46,8 +46,7 @@
 
             {% include molecule('form-data-injector', 'ShoppingListWidget') with {
                 attributes: {
-                    'form-class': '.js-form-data-injector',
-                    'fields-selector': 'select:not([name="quantity"]):not([name="id_quote"])'
+                    'fields-selector': '.js-form-data-injector select:not([name="quantity"]):not([name="id_quote"])'
                 }
             } only %}
 
