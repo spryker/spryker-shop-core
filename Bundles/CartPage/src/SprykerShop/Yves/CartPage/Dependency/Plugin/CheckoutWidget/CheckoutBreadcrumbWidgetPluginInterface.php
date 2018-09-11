@@ -15,6 +15,8 @@ interface CheckoutBreadcrumbWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'CheckoutBreadcrumbWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

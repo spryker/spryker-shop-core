@@ -14,6 +14,8 @@ interface ProductBundleItemCounterWidgetPluginInterface
     public const NAME = 'ProductBundleItemCounterWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

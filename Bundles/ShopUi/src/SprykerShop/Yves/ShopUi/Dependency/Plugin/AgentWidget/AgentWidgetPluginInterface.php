@@ -14,6 +14,8 @@ interface AgentWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'AgentWidgetPlugin';
 
     /**
+     * @api
+     *
      * @return void
      */
     public function initialize(): void;

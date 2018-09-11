@@ -14,6 +14,8 @@ interface NavigationWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'NavigationWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $navigationKey
      * @param string $template
      *

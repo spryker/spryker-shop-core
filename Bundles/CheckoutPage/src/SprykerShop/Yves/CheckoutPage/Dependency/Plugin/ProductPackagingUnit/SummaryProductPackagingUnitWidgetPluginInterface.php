@@ -14,6 +14,8 @@ interface SummaryProductPackagingUnitWidgetPluginInterface extends WidgetPluginI
     const NAME = 'SummaryProductPackagingUnitWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param array $item
      *
      * @return void
