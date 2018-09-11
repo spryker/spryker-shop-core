@@ -21,7 +21,7 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
      */
     public function initialize(): void
     {
-        $this->addParameter('shoppingListCollection', $this->getCustomerShoppingListCollection());
+        $this->addShoppingListCollectionParameter();
     }
 
     /**
@@ -52,5 +52,13 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
         return $this->getFactory()
             ->getShoppingListSessionClient()
             ->getCustomerShoppingListCollection();
+    }
+
+    /**
+     * @return void
+     */
+    protected function addShoppingListCollectionParameter(): void
+    {
+        $this->addParameter('shoppingListCollection', $this->getCustomerShoppingListCollection());
     }
 }
