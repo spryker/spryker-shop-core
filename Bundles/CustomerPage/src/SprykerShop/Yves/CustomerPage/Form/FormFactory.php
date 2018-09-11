@@ -11,12 +11,9 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class FormFactory extends AbstractFactory
 {
-    public const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
-
     /**
      * @return \Symfony\Component\Form\FormFactory
      */
@@ -105,13 +102,5 @@ class FormFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::STORE);
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraints\NotBlank
-     */
-    public function createNotBlankConstraint(): NotBlank
-    {
-        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }
