@@ -160,12 +160,4 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
     {
         return $this->shoppingListClient->addItemCollectionToCart($shoppingListAddToCartRequestCollectionTransfer);
     }
-
-    /**
-     * @return void
-     */
-    public function updateShoppingListPermissions(): void
-    {
-        $this->shoppingListClient->updateShoppingListPermissions();
-    }
 }

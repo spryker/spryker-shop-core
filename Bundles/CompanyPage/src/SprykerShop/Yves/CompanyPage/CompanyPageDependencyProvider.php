@@ -20,7 +20,6 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClien
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientBridge;
-use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToShoppingListClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreBridge;
 
 class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -34,7 +33,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
     public const CLIENT_BUSINESS_ON_BEHALF = 'CLIENT_BUSINESS_ON_BEHALF';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
-    public const CLIENT_SHOPPING_LIST = 'CLIENT_SHOPPING_LIST';
 
     public const STORE = 'STORE';
 
@@ -61,7 +59,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addBusinessOnBehalfClient($container);
         $container = $this->addMessengerClient($container);
-        $container = $this->addShoppingListClient($container);
         $container = $this->addApplication($container);
 
         return $container;
@@ -218,20 +215,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_MESSENGER] = function (Container $container) {
             return new CompanyPageToMessengerClientBridge($container->getLocator()->messenger()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addShoppingListClient(Container $container): Container
-    {
-        $container[static::CLIENT_SHOPPING_LIST] = function (Container $container) {
-            return new CompanyPageToShoppingListClientBridge($container->getLocator()->shoppingList()->client());
         };
 
         return $container;
