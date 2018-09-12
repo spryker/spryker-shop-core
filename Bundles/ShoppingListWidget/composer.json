@@ -9,12 +9,12 @@
     "spryker/customer": "^7.4.0",
     "spryker/kernel": "^3.16.0",
     "spryker/shopping-list": "^1.0.0",
+    "spryker/shopping-list-session": "^1.0.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",
     "spryker-shop/shopping-list-page": "*",
-    "spryker-shop/shopping-list-session": "^1.0.0",
     "spryker/code-sniffer": "*",
     "spryker/product-detail-page": "*",
     "spryker/silex": "*",
@@ -23,7 +23,6 @@
   "suggest": {
     "spryker-shop/customer-page": "Widget plugins are available for this module.",
     "spryker-shop/shopping-list-page": "ADD SUGGEST DESCRIPTION",
-    "spryker-shop/shopping-list-session": "Use this module to use ShoppingListWidget plugin.",
     "spryker/product-detail-page": "To use ShoppingListWidget plugin, ShoppingListWidgetPluginInterface from product-detail-page v0.2.2 is needed",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
