@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\MultiCartPage\Controller;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\MultiCartPage\MultiCartPageFactory getFactory()
@@ -117,9 +119,7 @@ class MultiCartController extends AbstractController
      */
     public function setDefaultAction(int $idQuote)
     {
-        $quoteTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->findQuoteById($idQuote);
+        $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
         $this->getFactory()
             ->getMultiCartClient()
@@ -135,9 +135,7 @@ class MultiCartController extends AbstractController
      */
     public function duplicateAction(int $idQuote)
     {
-        $quoteTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->findQuoteById($idQuote);
+        $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
         $this->getFactory()
             ->getMultiCartClient()
@@ -153,13 +151,12 @@ class MultiCartController extends AbstractController
      */
     public function clearAction(int $idQuote)
     {
-        $quoteTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->findQuoteById($idQuote);
+        $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
         $quoteResponseTransfer = $this->getFactory()
             ->getMultiCartClient()
             ->clearQuote($quoteTransfer);
+
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage('multi_cart_page.cart_clear.success');
         }
@@ -174,14 +171,10 @@ class MultiCartController extends AbstractController
      */
     public function deleteAction(int $idQuote)
     {
+        $quoteTransfer = $this->findQuoteOrFail($idQuote);
+
         $multiCartClient = $this->getFactory()->getMultiCartClient();
-
-        $quoteTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->findQuoteById($idQuote);
-
-        $multiCartClient
-            ->deleteQuote($quoteTransfer);
+        $multiCartClient->deleteQuote($quoteTransfer);
 
         $customerQuoteTransferList = $multiCartClient->getQuoteCollection()->getQuotes();
         if ($quoteTransfer->getIsDefault() && count($customerQuoteTransferList)) {
@@ -193,5 +186,25 @@ class MultiCartController extends AbstractController
         }
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function findQuoteOrFail(int $idQuote): QuoteTransfer
+    {
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
+        if ($quoteTransfer) {
+            return $quoteTransfer;
+        }
+
+        throw new NotFoundHttpException();
     }
 }
