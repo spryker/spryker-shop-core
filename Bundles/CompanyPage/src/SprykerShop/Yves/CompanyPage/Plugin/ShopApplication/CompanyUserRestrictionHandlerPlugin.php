@@ -36,7 +36,7 @@ class CompanyUserRestrictionHandlerPlugin extends AbstractPlugin implements Filt
             return;
         }
 
-        list($controllerInstance, $actionName) = $eventController;
+        [$controllerInstance, $actionName] = $eventController;
 
         if (!($controllerInstance instanceof AbstractCompanyController)) {
             return;
