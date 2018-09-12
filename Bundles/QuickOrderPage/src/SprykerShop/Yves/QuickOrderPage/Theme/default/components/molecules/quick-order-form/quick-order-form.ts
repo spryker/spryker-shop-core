@@ -1,6 +1,5 @@
 import Component from 'ShopUi/models/component';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
-import { mount } from 'ShopUi/app';
 
 export default class QuickOrderForm extends Component {
     form: HTMLFormElement
@@ -53,8 +52,6 @@ export default class QuickOrderForm extends Component {
         this.fieldList.innerHTML = response;
         this.registerRemoveRowTriggers();
         this.mapRemoveRowTriggersEvents();
-
-        mount();
     }
 
     async removeRow(rowIndex: string): Promise<void> {

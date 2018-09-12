@@ -6,7 +6,8 @@
 } %}
 
 {% define data = {
-    form: required
+    form: required,
+    additionalDataColumnProviderPlugins: null
 } %}
 
 {% block body %}
@@ -56,7 +57,7 @@
                     },
                     embed: embed
                 } only %}
-                    {% block removeActionClass %}{{embed.selector}}__remove-row-trigger{% endblock %}
+
                 {% endembed %}
             </div>
         {% endblock %}

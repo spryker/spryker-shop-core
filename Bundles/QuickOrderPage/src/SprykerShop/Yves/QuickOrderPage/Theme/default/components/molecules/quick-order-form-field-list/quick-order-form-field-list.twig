@@ -1,7 +1,3 @@
-{# IMPORTANT #}
-{# Template should be rendered in a flexible way (columns amount is variable) #}
-{# Currently its hardcoded in order to be compatible with measurement unit column #}
-
 {% extends model('component') %}
 
 {% define config = {
@@ -9,63 +5,43 @@
     tag: 'div'
 } %}
 
+{% define data = {
+    additionalDataColumnProviderPlugins: null,
+    items: required,
+} %}
+
 {% block body %}
-    <div class="grid grid--middle {{ config.name }}__item">
-        <div class="col col--sm-5 spacing spacing--inner">
+    <div class="{{ config.name }}__row">
+        <div class="{{ config.name }}__col">
             {{ 'quick-order.input-label.sku.name' | trans }}
         </div>
         {% if (data.additionalDataColumnProviderPlugins.measurementUnit is defined) %}
-            <div class="col col--sm-3 spacing spacing--inner">
+            <div class="{{ config.name }}__col">
                 {{ data.additionalDataColumnProviderPlugins.measurementUnit.getColumnTitle() | trans }}
             </div>
         {% endif %}
-        <div class="col col--sm-4 spacing spacing--inner">
+        <div class="{{ config.name }}__col {{ config.name }}__col--quantity">
             {{ 'quick-order.input-label.qty' | trans }}
         </div>
+        <div class="{{ config.name }}__col {{ config.name }}__col--remove"></div>
     </div>
     {% for item in data.items %}
-        <div class="grid grid--middle {{ config.name }}__item">
-            <div class="col col--sm-5 spacing spacing--inner">
-                {% if widgetGlobalExists('QuickOrderPageProductSearchWidgetPlugin') %}
-                    {{ widgetGlobal(
-                        'QuickOrderPageProductSearchWidgetPlugin',
-                        'autocomplete' ~ loop.index,
-                        item.vars.full_name ~ '[sku]'
-                    ) }}
-                {% endif %}
-            </div>
-
-            {{ form_row(item.sku) }}
-
-            {% if  data.additionalDataColumnProviderPlugins.measurementUnit is defined %}
-                <div class="col col--sm-3 spacing spacing--inner">
-                    <div class="{{ data.additionalDataColumnProviderPlugins.measurementUnit.getFieldName() }}">
-
-                    </div>
-                </div>
-            {% endif %}
-
-            <div class="col col--sm-3 spacing spacing--inner">
-                {{ form_row(item.qty, {
-                    required: loop.first,
-                    label: false
-                }) }}
-            </div>
-
-            <div class="col col--sm-1 spacing spacing--inner">
-                {% if not loop.first %}
-                    <a href="#remove"
-                       class="button button--expand button--warning {% block removeActionClass %}{% endblock %}"
-                       data-row-index="{{ loop.index0 }}">
-                        {% include atom('icon') with {
-                            modifiers: ['small'],
-                            data: {
-                                name: 'times'
-                            }
-                        } only %}
-                    </a>
-                {% endif %}
-            </div>
-        </div>
+        {% embed molecule('quick-order-form-field', 'QuickOrderPage') with {
+            class: config.name ~ '__row',
+            data: {
+                additionalDataColumnProviderPlugins: data.additionalDataColumnProviderPlugins,
+                first: loop.first,
+                index: loop.index,
+                sku: item.sku,
+                qty: item.qty,
+                fullName: item.vars.full_name
+            },
+            embed: {
+                name: config.name
+            }
+        } only %}
+            {% block cellClass %}{{ embed.name }}__col{% endblock %}
+            {% block removeActionClass %}js-quick-order-form__remove-row-trigger{% endblock %}
+        {% endembed %}
     {% endfor %}
 {% endblock %}
