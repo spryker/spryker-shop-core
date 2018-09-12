@@ -1,6 +1,6 @@
 # ProductRelationWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the product relation widget and its components.
 
 ## Installation
 
