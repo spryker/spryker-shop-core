@@ -4,16 +4,15 @@ import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provide
 interface MeasurementUnitJSON {
     baseMeasurementUnit: {
         code: string,
-        defaultPrecision: Number,
-        idProductMeasurementUnit: Number,
+        defaultPrecision: number,
+        idProductMeasurementUnit: number,
         name: string,
     },
-    idProductConcrete: Number
+    idProductConcrete: number
 }
 
 export default class MeasurementUnit extends Component {
     ajaxProvider: AjaxProvider;
-    selectedItemId: String;
     wrapper: HTMLElement;
 
     protected readyCallback(): void {
@@ -29,12 +28,12 @@ export default class MeasurementUnit extends Component {
         this.ajaxProvider.queryParams.set('id-product', id);
 
         try {
-            const response: string = await this.ajaxProvider.fetch();
-            const data: MeasurementUnitJSON = this.generateResponseData(response);
+            const response: string = <string>await this.ajaxProvider.fetch();
+            const data: MeasurementUnitJSON = <MeasurementUnitJSON>this.generateResponseData(response);
 
             this.addMeasurementUnit(data.baseMeasurementUnit.name);
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
 

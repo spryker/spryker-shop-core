@@ -1,27 +1,46 @@
 import Component from 'ShopUi/models/component';
+import AutocompleteForm from 'ShopUi/components/molecules/autocomplete-form/autocomplete-form';
 import MeasurementUnit from '../measurement-unit/measurement-unit';
+import OrderItemPrice from '../order-item-price/order-item-price';
 
 export default class QuickOrderForm extends Component {
     autocompleteComponent: HTMLElement;
     measurementUnitComponent: MeasurementUnit;
+    orderItemPriceComponent: OrderItemPrice;
     selectedItem: HTMLElement;
 
     protected readyCallback(): void {
-        this.autocompleteComponent = this.querySelector('autocomplete-form');
-        this.measurementUnitComponent = this.querySelector('measurement-unit');
+        this.autocompleteComponent = <AutocompleteForm>this.querySelector('autocomplete-form');
+        this.measurementUnitComponent = <MeasurementUnit>this.querySelector('measurement-unit');
+        this.orderItemPriceComponent = <OrderItemPrice>this.querySelector('order-item-price');
 
         this.mapEvents();
     }
 
-    mapEvents(): void {
+    protected mapEvents(): void {
         this.addEventListener('click', (event: Event) => this.componentClickHandler(event))
     }
 
-    componentClickHandler(event: Event): void {
-        this.selectedItem = (<HTMLElement>event.target);
+    private componentClickHandler(event: Event): void {
+        this.selectedItem = <HTMLElement>event.target;
 
-        if(this.selectedItem.matches(this.dropDownItemSelector)) {
+        if (this.selectedItem.matches(this.dropDownItemSelector)) {
+            event.stopPropagation();
+            
+            this.loadMeasurementUnits();
+            this.loadOrderItemPrice();
+        }
+    }
+
+    private loadMeasurementUnits(): void {
+        if (this.measurementUnitComponent) {
             this.measurementUnitComponent.load(this.selectedId);
+        }
+    }
+
+    private loadOrderItemPrice(): void {
+        if (this.orderItemPriceComponent) {
+            this.orderItemPriceComponent.addDataIdValue(this.selectedId);
         }
     }
 

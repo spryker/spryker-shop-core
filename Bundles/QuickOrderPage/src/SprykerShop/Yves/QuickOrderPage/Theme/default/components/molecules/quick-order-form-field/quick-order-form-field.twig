@@ -43,6 +43,7 @@
 
     <div class="{{ block('cellClass') }}">
         {{ form_row(data.qty, {
+            id: 'quantity-input-' ~ data.index,
             required: data.first,
             label: false
         }) }}
@@ -50,18 +51,18 @@
 
     {% if data.additionalDataColumnProviderPlugins.price is defined %}
         <div class="{{ block('cellClass') }}">
-            {% include molecule('measurement-unit', 'QuickOrderPage') with {
+            {% include molecule('order-item-price', 'QuickOrderPage') with {
                 data: {
-                    id:  'measurement-unit-' ~ data.index,
-                    ajaxUrl: 'quick-order/product-additional-data'
+                    id: 'order-price-' ~ data.index,
+                    ajaxUrl: 'quick-order/product-price'
                 },
                 attributes: {
-                    'data-ajax-selector': '#measurement-unit-' ~ data.index
+                    'quantity-input-selector': '#quantity-input-' ~ data.index,
+                    'data-ajax-selector': '#order-price-' ~ data.index
                 }
             } only %}
         </div>
     {% endif %}
-
 
     <div class="{{ block('cellClass') }}">
         {% if not data.first %}
