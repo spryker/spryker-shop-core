@@ -72,9 +72,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
                 $idCompanyBusinessUnit
             );
 
-            if ($companyUnitAddressTransfer) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
-            }
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
         }
 
         return [

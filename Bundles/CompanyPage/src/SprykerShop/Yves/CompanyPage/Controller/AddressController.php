@@ -88,11 +88,9 @@ class AddressController extends AbstractCompanyController
         }
 
         if ($addressForm->isValid()) {
-            $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData());
+            $this->saveAddress($addressForm->getData());
 
-            if ($companyUnitAddressTransfer) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ADDRESS);
-            }
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ADDRESS);
         }
 
         return [

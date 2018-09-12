@@ -59,17 +59,13 @@ class CompanyUserFormDataProvider
             return $this->getDefaultCompanyUserData($idCompany);
         }
 
-        if ($idCompanyUser) {
-            $companyUserTransfer = $this->loadCompanyUserTransfer($idCompanyUser);
-            $customerTransfer = $companyUserTransfer->getCustomer();
+        $companyUserTransfer = $this->loadCompanyUserTransfer($idCompanyUser);
+        $customerTransfer = $companyUserTransfer->getCustomer();
 
-            return array_merge(
-                $companyUserTransfer->toArray(),
-                $customerTransfer->toArray()
-            );
-        }
-
-        return [];
+        return array_merge(
+            $companyUserTransfer->toArray(),
+            $customerTransfer->toArray()
+        );
     }
 
     /**

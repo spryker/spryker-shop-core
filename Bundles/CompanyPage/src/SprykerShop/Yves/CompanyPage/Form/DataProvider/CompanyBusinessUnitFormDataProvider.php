@@ -40,13 +40,9 @@ class CompanyBusinessUnitFormDataProvider
             return $this->getDefaultBusinessUnitData($companyUserTransfer);
         }
 
-        if ($idCompanyBusinessUnit) {
-            $companyBusinessUnitTransfer = $this->loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
+        $companyBusinessUnitTransfer = $this->loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
 
-            return $companyBusinessUnitTransfer->modifiedToArray();
-        }
-
-        return [];
+        return $companyBusinessUnitTransfer->modifiedToArray();
     }
 
     /**
