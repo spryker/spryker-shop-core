@@ -23,9 +23,11 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
+        $productsCollection = $this->findRelatedProducts($productViewTransfer);
+
         $this
             ->addParameter('product', $productViewTransfer)
-            ->addParameter('productCollection', $this->findRelatedProducts($productViewTransfer))
+            ->addParameter('productCollection', $this->filterRelatedProducts($productsCollection))
             ->addWidgets($this->getFactory()->getProductDetailPageSimilarProductsWidgetPlugins());
     }
 
@@ -55,5 +57,33 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
         return $this->getFactory()
             ->getProductRelationStorageClient()
             ->findRelatedProducts($productViewTransfer->getIdProductAbstract(), $this->getLocale());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function filterRelatedProducts(array $productViewTransfers): array
+    {
+        $filteredProductViewTransfers = [];
+        foreach ($productViewTransfers as $productViewTransfer) {
+            if (!$this->canShowProduct($productViewTransfer)) {
+                continue;
+            }
+            $filteredProductViewTransfers[] = $productViewTransfer;
+        }
+
+        return $filteredProductViewTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    protected function canShowProduct(ProductViewTransfer $productViewTransfer): bool
+    {
+        return (bool)$productViewTransfer->getPrices();
     }
 }
