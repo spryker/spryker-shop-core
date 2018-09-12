@@ -39,7 +39,7 @@ class CmsSearchController extends AbstractController
      */
     protected function executeFulltextSearchAction(Request $request): array
     {
-        $searchString = $request->query->get('q');
+        $searchString = $request->query->get('q', '');
 
         $searchResults = $this
             ->getFactory()
