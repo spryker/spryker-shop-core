@@ -28,11 +28,11 @@ export default class FormDataInjector extends Component {
     }
 
     private injectData(): void {
-        this.fieldsToInject.forEach(field => this.addField(field));
+        this.fieldsToInject.forEach((field: HTMLFormElement) => this.addField(field));
     }
 
-    private addField(field): void {
-        let insertField = document.createElement('input');
+    private addField(field: HTMLFormElement): void {
+        let insertField: HTMLInputElement = <HTMLInputElement>document.createElement('input');
 
         insertField.setAttribute('type', 'hidden');
         insertField.setAttribute('name', field.name);
