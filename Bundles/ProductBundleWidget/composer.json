@@ -10,7 +10,9 @@
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
-    "spryker-shop/multi-cart-widget": "*"
+    "spryker-shop/multi-cart-widget": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "Widget plugins are available for this module.",

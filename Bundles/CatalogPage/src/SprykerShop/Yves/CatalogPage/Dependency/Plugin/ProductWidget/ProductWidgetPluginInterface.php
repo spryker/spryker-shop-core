@@ -14,6 +14,8 @@ interface ProductWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'ProductWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param array $product
      * @param string|null $viewMode
      *

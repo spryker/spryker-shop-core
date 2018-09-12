@@ -89,7 +89,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Customer\CustomerClientInterface
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface
      */
     public function getCustomerClient()
     {

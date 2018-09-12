@@ -15,6 +15,8 @@ interface UpSellingProductsWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'UpSellingProductsWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
