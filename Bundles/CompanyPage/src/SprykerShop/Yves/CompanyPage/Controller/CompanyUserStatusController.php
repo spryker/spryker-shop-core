@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Yves\Kernel\Controller\AbstractController;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
-class CompanyUserStatusController extends AbstractController
+class CompanyUserStatusController extends AbstractCompanyController
 {
     protected const ID_COMPANY_USER_PARAMETER = 'id';
 
@@ -36,38 +36,22 @@ class CompanyUserStatusController extends AbstractController
      */
     public function enableAction(Request $request): RedirectResponse
     {
-        return $this->executeEnableAction($request);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function executeEnableAction(Request $request): RedirectResponse
-    {
         $idCompanyUser = $request->query->getInt(static::ID_COMPANY_USER_PARAMETER);
-        $companyUserTransfer = (new CompanyUserTransfer())
-            ->setIdCompanyUser($idCompanyUser);
 
-        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
-        if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
+        if ($this->isCurrentCompanyUser($idCompanyUser)) {
             $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_ENABLE_YOURSELF);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
         }
 
-        $companyUserResponseTransfer = $this->getFactory()
-            ->getCompanyUserClient()
-            ->enableCompanyUser($companyUserTransfer);
-
-        if ($companyUserResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::SUCCESS_MESSAGE_STATUS_ENABLE_COMPANY_USER);
+        $companyUserResponseTransfer = $this->enableCompanyUser($idCompanyUser);
+        if (!$companyUserResponseTransfer->getIsSuccessful()) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_ENABLE_COMPANY_USER);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
         }
 
-        $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_ENABLE_COMPANY_USER);
+        $this->addSuccessMessage(static::SUCCESS_MESSAGE_STATUS_ENABLE_COMPANY_USER);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
     }
@@ -79,40 +63,72 @@ class CompanyUserStatusController extends AbstractController
      */
     public function disableAction(Request $request): RedirectResponse
     {
-        return $this->executeDisableAction($request);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function executeDisableAction(Request $request): RedirectResponse
-    {
         $idCompanyUser = $request->query->getInt(static::ID_COMPANY_USER_PARAMETER);
-        $companyUserTransfer = (new CompanyUserTransfer())
-            ->setIdCompanyUser($idCompanyUser);
 
-        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
-        if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
+        if ($this->isCurrentCompanyUser($idCompanyUser)) {
             $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_DISABLE_YOURSELF);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
         }
 
-        $companyUserResponseTransfer = $this->getFactory()
-            ->getCompanyUserClient()
-            ->disableCompanyUser($companyUserTransfer);
-
-        if ($companyUserResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::SUCCESS_MESSAGE_STATUS_DISABLE_COMPANY_USER);
+        $companyUserResponseTransfer = $this->disableCompanyUser($idCompanyUser);
+        if (!$companyUserResponseTransfer->getIsSuccessful()) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_DISABLE_COMPANY_USER);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
         }
 
-        $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_DISABLE_COMPANY_USER);
+        $this->addSuccessMessage(static::SUCCESS_MESSAGE_STATUS_DISABLE_COMPANY_USER);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    protected function enableCompanyUser(int $idCompanyUser): CompanyUserResponseTransfer
+    {
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($idCompanyUser);
+
+        return $this->getFactory()
+            ->getCompanyUserClient()
+            ->enableCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    protected function disableCompanyUser(int $idCompanyUser): CompanyUserResponseTransfer
+    {
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($idCompanyUser);
+
+        return $this->getFactory()
+            ->getCompanyUserClient()
+            ->disableCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return bool
+     */
+    protected function isCurrentCompanyUser(int $idCompanyUser): bool
+    {
+        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
+
+        if ($currentCompanyUserTransfer) {
+            $currentCompanyUserTransfer->requireIdCompanyUser();
+
+            return $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser;
+        }
+
+        return false;
     }
 
     /**
