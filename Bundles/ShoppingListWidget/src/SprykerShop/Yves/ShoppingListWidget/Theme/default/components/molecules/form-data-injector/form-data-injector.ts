@@ -5,7 +5,7 @@ export default class FormDataInjector extends Component {
     fieldsToInject: HTMLElement[];
 
     protected readyCallback(): void {
-        this.formToEnrich = this.closest('form');
+        this.formToEnrich = <HTMLFormElement>document.querySelector(this.formSelector);
         this.fieldsToInject = <HTMLElement[]>Array.from(document.querySelectorAll(this.fieldsSelector));
 
         this.mapEvents();
@@ -18,12 +18,12 @@ export default class FormDataInjector extends Component {
     private submitHandle(event: Event): void {
         event.preventDefault();
 
-        this.disableButton();
+        this.preventSubmitButton();
         this.injectData();
         this.formToEnrich.submit();
     }
 
-    private disableButton(): void {
+    private preventSubmitButton(): void {
         this.formToEnrich.querySelector('[type="submit"]').setAttribute('disabled', 'disabled');
     }
 
@@ -38,14 +38,14 @@ export default class FormDataInjector extends Component {
         insertField.setAttribute('name', field.name);
         insertField.setAttribute('value', field.value);
 
-        this.appendChild(insertField);
+        this.formToEnrich.appendChild(insertField);
     }
 
-    get formSelector() {
-        return this.getAttribute('form-selector');
+    get formSelector(): string {
+        return this.getAttribute('destination-form-selector');
     }
 
-    get fieldsSelector() {
+    get fieldsSelector(): string {
         return this.getAttribute('fields-selector');
     }
 }

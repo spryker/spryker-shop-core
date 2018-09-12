@@ -28,7 +28,7 @@
 {% endif %}
 
 {% block body %}
-    <form class="grid grid--justify grid--bottom" method="POST" action="{{ path('shopping-list/add-item') }}">
+    <form class="grid grid--justify grid--bottom js-form-data-injector__inject" method="POST" action="{{ path('shopping-list/add-item') }}">
         <div class="col--sm-5">
             <label>{{ 'shopping_list.item_quantity' | trans }}</label>
                 {% include atom('select') with {
@@ -46,6 +46,7 @@
 
             {% include molecule('form-data-injector', 'ShoppingListWidget') with {
                 attributes: {
+                    'destination-form-selector': '.js-form-data-injector__inject',
                     'fields-selector': '.js-form-data-injector select:not([name="quantity"]):not([name="id_quote"])'
                 }
             } only %}
