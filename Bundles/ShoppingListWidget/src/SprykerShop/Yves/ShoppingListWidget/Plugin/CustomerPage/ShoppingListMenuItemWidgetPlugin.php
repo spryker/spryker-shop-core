@@ -108,10 +108,6 @@ class ShoppingListMenuItemWidgetPlugin extends AbstractWidgetPlugin implements S
             ->getShoppingListClient()
             ->getCustomerShoppingListCollection();
 
-        if ($customerShoppingListCollectionTransfer->getShoppingLists() === null) {
-            return [];
-        }
-
         return (array)$customerShoppingListCollectionTransfer->getShoppingLists();
     }
 }

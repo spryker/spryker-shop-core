@@ -12,6 +12,8 @@ interface ProductReplacementForWidgetPluginInterface
     public const NAME = 'ProductReplacementForWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return void

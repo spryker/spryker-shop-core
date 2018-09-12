@@ -238,6 +238,8 @@ class ShoppingListController extends AbstractShoppingListController
                 $this->getLocale()
             );
         }
+        $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
+        $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
 
         return $productViewTransfer;
     }
