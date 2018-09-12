@@ -37,7 +37,7 @@
             }
         } only %}
 
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if is_granted('ROLE_USER') %}
             <a id="review"></a>
             <button class="button float-right js-review__new-review-trigger">
                 {{ 'product_review.submit.add_a_review' | trans }}
@@ -49,7 +49,7 @@
         {% endif %}
     </div>
 
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    {% if is_granted('ROLE_USER') %}
         <div class="is-hidden js-review__new-review-form-target">
             {{ render(path('product-review/submit', {'idProductAbstract': data.idProductAbstract})) }}
         </div>

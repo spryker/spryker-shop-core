@@ -29,10 +29,13 @@
     "spryker/util-validate": "^1.0.0"
   },
   "require-dev": {
-    "spryker/silex": "*"
+    "spryker-shop/checkout-widget": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/money": "Use this module when using plugins that need Money dependencies.",
+    "spryker-shop/checkout-widget": "ADD SUGGEST DESCRIPTION",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
