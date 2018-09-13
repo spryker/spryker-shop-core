@@ -40,7 +40,9 @@ export default class OrderItemPrice extends Component {
         this.quantityInput.addEventListener('change', () => this.addIdHandler(this.productId, this.quantityCount));
 
         document.addEventListener('application-bootstrap-completed', () => {
-            this.currentFieldComponent.autocompleteForm.hiddenInputElement.addEventListener('addId', () => this.addIdHandler(this.productId, this.quantityCount));
+            this.currentFieldComponent.autocompleteForm.hiddenInputElement.addEventListener('addId', () =>{
+                this.addIdHandler(this.productId, this.quantityCount);
+            });
         });
     }
 

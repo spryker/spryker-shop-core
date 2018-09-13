@@ -34,7 +34,7 @@ export default class QuickOrderFormField extends Component {
     private componentClickHandler(event: Event): void {
         this.selectedItem = <HTMLElement>event.target;
 
-        if (this.selectedItem.matches(this.dropDownItemSelector)) {
+        if (this.selectedItem.matches(this.autocompleteForm.itemSelector)) {
             event.stopPropagation();
 
             this.changeDataId(this.selectedId);
@@ -50,10 +50,6 @@ export default class QuickOrderFormField extends Component {
     private changeDataId(id: string): void {
         this.autocompleteForm.hiddenInputElement.setAttribute('data-id', id);
         this.autocompleteForm.hiddenInputElement.dispatchEvent(this.addIdEvent);
-    }
-
-    get dropDownItemSelector(): string {
-        return this.autocompleteForm.getAttribute('item-selector');
     }
 
     get selectedId(): string {
