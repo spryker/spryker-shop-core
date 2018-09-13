@@ -25,6 +25,7 @@ use SprykerShop\Yves\CustomerPage\Plugin\RegistrationCheckoutAuthenticationHandl
 class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_CUSTOMER_ACCESS_PERMISSION = 'CLIENT_CUSTOMER_ACCESS_PERMISSION';
     const CLIENT_SALES = 'CLIENT_SALES';
     const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
