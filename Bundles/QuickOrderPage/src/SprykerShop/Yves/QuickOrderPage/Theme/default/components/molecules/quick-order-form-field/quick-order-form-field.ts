@@ -1,24 +1,34 @@
 import Component from 'ShopUi/models/component';
 import AutocompleteForm from 'ShopUi/components/molecules/autocomplete-form/autocomplete-form';
-import MeasurementUnit from '../measurement-unit/measurement-unit';
-import OrderItemPrice from '../order-item-price/order-item-price';
 
-export default class QuickOrderForm extends Component {
-    autocompleteComponent: HTMLElement;
-    measurementUnitComponent: MeasurementUnit;
-    orderItemPriceComponent: OrderItemPrice;
+export default class QuickOrderFormField extends Component {
+    autocompleteForm: AutocompleteForm;
     selectedItem: HTMLElement;
+    addIdEvent: CustomEvent;
+    autocompleteFormInput: HTMLFormElement;
 
     protected readyCallback(): void {
-        this.autocompleteComponent = <AutocompleteForm>this.querySelector('autocomplete-form');
-        this.measurementUnitComponent = <MeasurementUnit>this.querySelector('measurement-unit');
-        this.orderItemPriceComponent = <OrderItemPrice>this.querySelector('order-item-price');
+        this.autocompleteForm = <AutocompleteForm>this.querySelector('autocomplete-form');
+        this.autocompleteFormInput = <HTMLFormElement>this.autocompleteForm.querySelector(`.${this.autocompleteForm.jsName}__input`);
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.addEventListener('click', (event: Event) => this.componentClickHandler(event))
+        this.createCustomEvents();
+        this.addEventListener('click', (event: Event) => this.componentClickHandler(event));
+
+        this.autocompleteFormInput.addEventListener('input', () => {
+            this.autocompleteFormInputChangeHandler();
+        });
+    }
+
+    private createCustomEvents(): void {
+        this.addIdEvent = <CustomEvent>new CustomEvent("addId", {
+            detail: {
+                username: "addId"
+            }
+        });
     }
 
     private componentClickHandler(event: Event): void {
@@ -26,29 +36,31 @@ export default class QuickOrderForm extends Component {
 
         if (this.selectedItem.matches(this.dropDownItemSelector)) {
             event.stopPropagation();
-            
-            this.loadMeasurementUnits();
-            this.loadOrderItemPrice();
+
+            this.changeDataId(this.selectedId);
         }
     }
 
-    private loadMeasurementUnits(): void {
-        if (this.measurementUnitComponent) {
-            this.measurementUnitComponent.load(this.selectedId);
+    private autocompleteFormInputChangeHandler(): void {
+        if(this.autocompleteFormInput.value.length <= this.autocompleteForm.minLetters) {
+            this.changeDataId('');
         }
     }
 
-    private loadOrderItemPrice(): void {
-        if (this.orderItemPriceComponent) {
-            this.orderItemPriceComponent.addDataIdValue(this.selectedId);
-        }
+    private changeDataId(id: string): void {
+        this.autocompleteForm.hiddenInputElement.setAttribute('data-id', id);
+        this.autocompleteForm.hiddenInputElement.dispatchEvent(this.addIdEvent);
     }
 
     get dropDownItemSelector(): string {
-        return this.autocompleteComponent.getAttribute('item-selector');
+        return this.autocompleteForm.getAttribute('item-selector');
     }
 
     get selectedId(): string {
         return this.selectedItem.getAttribute('data-id-product');
+    }
+
+    get productId(): string {
+        return this.autocompleteForm.hiddenInputElement.dataset.id;
     }
 }

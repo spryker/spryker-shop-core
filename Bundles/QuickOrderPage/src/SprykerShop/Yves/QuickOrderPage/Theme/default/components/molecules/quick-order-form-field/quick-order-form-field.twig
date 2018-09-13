@@ -24,7 +24,11 @@
             ) }}
         {% endif %}
 
-        {{ form_row(data.sku) }}
+        {{ form_row(data.sku, {
+            attr: {
+                'data-id': ''
+            }
+        }) }}
     </div>
 
     {% if data.additionalDataColumnProviderPlugins.measurementUnit is defined %}

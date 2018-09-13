@@ -24,7 +24,7 @@
             {{ 'quick-order.input-label.qty' | trans }}
         </div>
         {% if (data.additionalDataColumnProviderPlugins.price is defined) %}
-            <div class="{{ config.name }}__col">
+            <div class="{{ config.name }}__col {{ config.name }}__col--price">
                 {{ data.additionalDataColumnProviderPlugins.price.getColumnTitle() | trans }}
             </div>
         {% endif %}

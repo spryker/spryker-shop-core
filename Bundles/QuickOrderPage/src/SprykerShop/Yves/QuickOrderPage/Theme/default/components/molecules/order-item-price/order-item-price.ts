@@ -1,5 +1,6 @@
 import Component from 'ShopUi/models/component';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
+import QuickOrderFormField from '../quick-order-form-field/quick-order-form-field';
 
 interface PricesJSON {
     idProductConcrete: number,
@@ -20,9 +21,9 @@ interface PricesJSON {
 }
 
 export default class OrderItemPrice extends Component {
-    wrapperInjector: HTMLElement;
-    addIdEvent: CustomEvent;
     ajaxProvider: AjaxProvider;
+    currentFieldComponent: QuickOrderFormField;
+    wrapperInjector: HTMLElement;
     quantityInput: HTMLFormElement;
     timerId: number;
 
@@ -30,34 +31,23 @@ export default class OrderItemPrice extends Component {
         this.wrapperInjector = <HTMLElement>this.querySelector(`.${this.jsName}`);
         this.quantityInput = <HTMLFormElement>document.querySelector(this.quantityInputSelector);
         this.ajaxProvider = <AjaxProvider>this.querySelector('ajax-provider');
+        this.currentFieldComponent = <QuickOrderFormField>this.closest('quick-order-form-field');
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.createCustomEvents();
+        this.quantityInput.addEventListener('change', () => this.addIdHandler(this.productId, this.quantityCount));
 
-        this.addEventListener('addId', () => this.addIdHandler());
-        this.quantityInput.addEventListener('change', () => this.dispatchEvent(this.addIdEvent));
-    }
-
-    public addDataIdValue(id: string): void {
-        this.setAttribute('data-id', id);
-        this.dispatchEvent(this.addIdEvent);
-    }
-
-    private createCustomEvents(): void {
-        this.addIdEvent = <CustomEvent>new CustomEvent("addId", {
-            detail: {
-                username: "addId"
-            }
+        document.addEventListener('application-bootstrap-completed', () => {
+            this.currentFieldComponent.autocompleteForm.hiddenInputElement.addEventListener('addId', () => this.addIdHandler(this.productId, this.quantityCount));
         });
     }
 
-    private addIdHandler(): void {
-        if (this.dataId && this.quantityCount > 0) {
+    private addIdHandler(productId: string, quantityCount: number): void {
+        if (productId && quantityCount > 0) {
             clearImmediate(<number>this.timerId);
-            this.timerId = <number>setTimeout(() => this.loadPrices(this.dataId, this.quantityCount), 150);
+            this.timerId = <number>setTimeout(() => this.loadPrices(productId, quantityCount), 150);
             return;
         }
 
@@ -97,7 +87,7 @@ export default class OrderItemPrice extends Component {
         return this.getAttribute('quantity-input-selector');
     }
 
-    get dataId(): string {
-        return this.getAttribute('data-id')
+    get productId(): string {
+        return this.currentFieldComponent.productId;
     }
 }

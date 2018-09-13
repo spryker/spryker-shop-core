@@ -1,5 +1,6 @@
 import Component from 'ShopUi/models/component';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
+import QuickOrderFormField from '../quick-order-form-field/quick-order-form-field';
 
 interface MeasurementUnitJSON {
     baseMeasurementUnit: {
@@ -14,24 +15,41 @@ interface MeasurementUnitJSON {
 export default class MeasurementUnit extends Component {
     ajaxProvider: AjaxProvider;
     wrapper: HTMLElement;
+    currentFieldComponent: QuickOrderFormField;
 
     protected readyCallback(): void {
         this.ajaxProvider = this.querySelector(this.ajaxSelector);
         this.wrapper = this.querySelector(`.${this.jsName}__wrapper`);
+        this.currentFieldComponent = <QuickOrderFormField>this.closest('quick-order-form-field');
+
+        this.mapEvents();
     }
 
-    public load(id: string): void {
-        this.loadMeasurementUnit(id);
+    private mapEvents(): void {
+        document.addEventListener('application-bootstrap-completed', () => {
+            this.currentFieldComponent.autocompleteForm.hiddenInputElement.addEventListener('addId', () => {
+                this.load(this.productId);
+            });
+        });
     }
 
-    async loadMeasurementUnit(id: string): Promise<void> {
-        this.ajaxProvider.queryParams.set('id-product', id);
+    public load(productId: string): void {
+        if(productId) {
+            this.loadMeasurementUnit(productId);
+            return;
+        }
+
+        this.measurementUnitContent('');
+    }
+
+    async loadMeasurementUnit(productId: string): Promise<void> {
+        this.ajaxProvider.queryParams.set('id-product', productId);
 
         try {
             const response: string = <string>await this.ajaxProvider.fetch();
             const data: MeasurementUnitJSON = <MeasurementUnitJSON>this.generateResponseData(response);
 
-            this.addMeasurementUnit(data.baseMeasurementUnit.name);
+            this.measurementUnitContent(data.baseMeasurementUnit.name);
         } catch (err) {
             throw err;
         }
@@ -41,11 +59,15 @@ export default class MeasurementUnit extends Component {
         return Object.assign({}, JSON.parse(response));
     }
 
-    protected addMeasurementUnit(content: string) {
+    private measurementUnitContent(content: string): void {
         this.wrapper.innerHTML = content;
     }
 
     get ajaxSelector(): string {
         return this.dataset.ajaxSelector;
+    }
+
+    get productId(): string {
+        return this.currentFieldComponent.productId;
     }
 }
