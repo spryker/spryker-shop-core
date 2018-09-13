@@ -66,10 +66,10 @@
         <span class="float-right">{{ data.prices.storeCurrency | money }}</span>
         {{ 'checkout.step.summary.shipping' | trans }} (<strong>{{ data.shipmentMethod }}</strong>)
     </li>
-    {% if widgetExists('MinimumOrderValueWidgetPlugin') %}
+    {% if widgetExists('SalesOrderThresholdWidgetPlugin') %}
         {{block('separator')}}
         <li>
-            {{ widget('MinimumOrderValueWidgetPlugin', data.expenses) }}
+            {{ widget('SalesOrderThresholdWidgetPlugin', data.expenses) }}
         </li>
     {% endif %}
     {{block('separator')}}
