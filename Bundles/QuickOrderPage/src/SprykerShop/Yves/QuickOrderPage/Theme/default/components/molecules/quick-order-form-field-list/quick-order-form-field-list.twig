@@ -17,13 +17,11 @@
     {% for item in data.items %}
         <div class="grid grid--middle {{ config.name }}__item">
             <div class="col col--sm-7 spacing spacing--inner">
-                {% if widgetExists('QuickOrderPageProductSearchWidgetPlugin') %}
-                    {{ widget(
-                        'QuickOrderPageProductSearchWidgetPlugin',
-                        'autocomplete' ~ loop.index,
-                        item.vars.full_name ~ '[sku]'
-                    ) }}
-                {% endif %}
+                {{ widget(
+                    'QuickOrderPageProductSearchWidgetPlugin',
+                    'autocomplete' ~ loop.index,
+                    item.vars.full_name ~ '[sku]'
+                ) }}
             </div>
             <div class="col col--sm-4 spacing spacing--inner">
                 {{ form_row(item.qty, {

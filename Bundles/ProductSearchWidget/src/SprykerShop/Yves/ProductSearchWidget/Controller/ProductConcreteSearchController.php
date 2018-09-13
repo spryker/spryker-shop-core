@@ -35,7 +35,7 @@ class ProductConcreteSearchController extends AbstractController
         );
 
         return $this->view(
-            $products[ProductConcretePageSearchResultFormatterPlugin::NAME],
+            $products[ProductConcretePageSearchResultFormatterPlugin::NAME] ?? [],
             [],
             '@ProductSearchWidget/views/product-search-results/product-search-results.twig'
         );

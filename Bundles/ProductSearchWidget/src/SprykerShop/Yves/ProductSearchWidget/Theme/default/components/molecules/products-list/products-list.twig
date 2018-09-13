@@ -17,6 +17,6 @@
             </li>
         {% endfor %}
     {% else %}
-        <li class="list__item spacing-y">Item cannot be found</li>
+        <li class="list__item spacing-y">{{ 'quick-order.search.no_results' | trans }}</li>
     {% endif %}
 {% endblock %}
