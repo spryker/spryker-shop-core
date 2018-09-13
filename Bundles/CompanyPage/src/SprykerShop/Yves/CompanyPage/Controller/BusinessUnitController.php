@@ -99,7 +99,7 @@ class BusinessUnitController extends AbstractCompanyController
         if ($companyBusinessUnitForm->isSubmitted() === false) {
             $companyBusinessUnitForm->setData($dataProvider->getData($this->getCompanyUser()));
         } elseif ($companyBusinessUnitForm->isValid()) {
-            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitEdit($companyBusinessUnitForm->getData());
+            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitSave($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
@@ -152,7 +152,7 @@ class BusinessUnitController extends AbstractCompanyController
                 )
             );
         } elseif ($companyBusinessUnitForm->isValid()) {
-            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitEdit($companyBusinessUnitForm->getData());
+            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitSave($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
@@ -262,7 +262,7 @@ class BusinessUnitController extends AbstractCompanyController
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    protected function companyBusinessUnitEdit(array $data): CompanyBusinessUnitResponseTransfer
+    protected function companyBusinessUnitSave(array $data): CompanyBusinessUnitResponseTransfer
     {
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->fromArray($data, true);
