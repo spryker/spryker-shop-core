@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\DiscountWidget\DiscountVoucherFormWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\VoucherFormWidget instead
+ *
  * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
  */
 class DiscountVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements DiscountVoucherFormWidgetPluginInterface

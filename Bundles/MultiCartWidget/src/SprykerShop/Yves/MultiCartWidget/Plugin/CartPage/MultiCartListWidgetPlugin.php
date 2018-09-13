@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\MultiCartWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\MultiCartWidget\MultiCartListWidgetPluginInterface;
+use SprykerShop\Yves\MultiCartWidget\Widget\MultiCartListWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\MultiCartListWidget instead.
+ *
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
 class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCartListWidgetPluginInterface
@@ -23,12 +26,11 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this
-            ->addParameter('cartCollection', $this->getInactiveQuoteList())
-            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
-            ->addParameter('cart', $quoteTransfer)
-            ->addParameter('widgetList', $this->getFactory()->getViewExtendWidgetPlugins())
-            ->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
+        $widget = new MultiCartListWidget($quoteTransfer);
+
+        $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 
     /**
@@ -52,35 +54,6 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/views/customer-cart-list/customer-cart-list.twig';
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer[]
-     */
-    protected function getInactiveQuoteList()
-    {
-        $quoteCollectionTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->getQuoteCollection();
-
-        $inActiveQuoteTransferList = [];
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if (!$quoteTransfer->getIsDefault()) {
-                $inActiveQuoteTransferList[] = $quoteTransfer;
-            }
-        }
-
-        return $inActiveQuoteTransferList;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isMultiCartAllowed(): bool
-    {
-        return $this->getFactory()
-            ->getMultiCartClient()
-            ->isMultiCartAllowed();
+        return MultiCartListWidget::getTemplate();
     }
 }

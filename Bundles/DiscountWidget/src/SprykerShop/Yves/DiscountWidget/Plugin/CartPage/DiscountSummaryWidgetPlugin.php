@@ -10,9 +10,10 @@ namespace SprykerShop\Yves\DiscountWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\DiscountWidget\DiscountSummaryWidgetPluginInterface;
+use SprykerShop\Yves\DiscountWidget\Widget\DiscountSummaryWidget;
 
 /**
- * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
+ * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\DiscountSummaryWidget instead.
  */
 class DiscountSummaryWidgetPlugin extends AbstractWidgetPlugin implements DiscountSummaryWidgetPluginInterface
 {
@@ -23,7 +24,9 @@ class DiscountSummaryWidgetPlugin extends AbstractWidgetPlugin implements Discou
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('cart', $quoteTransfer);
+        $widget = new DiscountSummaryWidget($quoteTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -43,6 +46,6 @@ class DiscountSummaryWidgetPlugin extends AbstractWidgetPlugin implements Discou
      */
     public static function getTemplate(): string
     {
-        return '@DiscountWidget/views/cart-discount-summary/cart-discount-summary.twig';
+        return DiscountSummaryWidget::getTemplate();
     }
 }

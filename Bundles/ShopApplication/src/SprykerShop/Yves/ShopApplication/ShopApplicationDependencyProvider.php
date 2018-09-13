@@ -29,7 +29,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addApplicationPlugin($container);
-        $container = $this->addGlobalWidgetPlugins($container);
+        $container = $this->addGlobalWidgets($container);
         $container = $this->addStore($container);
         $container = $this->addUtilTextService($container);
         $container = $this->addFilterControllerEventSubscriberPlugins($container);
@@ -82,23 +82,45 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use $this->addGlobalWidgets() instead.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
     protected function addGlobalWidgetPlugins(Container $container)
     {
+        return $this->addGlobalWidgets($container);
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlobalWidgets(Container $container)
+    {
         $container[self::PLUGIN_GLOBAL_WIDGETS] = function () {
-            return $this->getGlobalWidgetPlugins();
+            return array_unique(array_merge($this->getGlobalWidgets(), $this->getGlobalWidgetPlugins()));
         };
 
         return $container;
     }
 
     /**
+     * @deprecated Use $this->getGlobalWidgets() instead.
+     *
      * @return string[]
      */
     protected function getGlobalWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getGlobalWidgets(): array
     {
         return [];
     }

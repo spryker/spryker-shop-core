@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin\CartNoteWidget;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\DisplayOrderItemNoteWidget instead.
+ */
 interface CartNoteOrderItemNoteWidgetPluginInterface extends WidgetPluginInterface
 {
     const NAME = 'CartNoteOrderItemNoteWidgetPlugin';

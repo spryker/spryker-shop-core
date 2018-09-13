@@ -10,9 +10,10 @@ namespace SprykerShop\Yves\DiscountWidget\Plugin\CheckoutPage;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\DiscountWidget\CheckoutVoucherFormWidgetPluginInterface;
+use SprykerShop\Yves\DiscountWidget\Widget\VoucherFormWidget;
 
 /**
- * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
+ * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\VoucherFormWidget instead.
  */
 class CheckoutVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements CheckoutVoucherFormWidgetPluginInterface
 {
@@ -23,9 +24,9 @@ class CheckoutVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements Ch
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this
-            ->addParameter('voucherForm', $this->getVoucherForm())
-            ->addParameter('quoteTransfer', $quoteTransfer);
+        $widget = new VoucherFormWidget($quoteTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -42,13 +43,5 @@ class CheckoutVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements Ch
     public static function getTemplate(): string
     {
         return '@DiscountWidget/views/checkout-summary-dicount-voucher-form/checkout-summary-dicount-voucher-form.twig';
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormView
-     */
-    protected function getVoucherForm()
-    {
-        return $this->getFactory()->getCheckoutVoucherForm()->createView();
     }
 }

@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\CmsContentWidgetChartConnector\Dependency\Plugin\Char
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ChartWidget\Widget\ChartWidget instead.
+ */
 interface ChartWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ChartWidgetPlugin';
