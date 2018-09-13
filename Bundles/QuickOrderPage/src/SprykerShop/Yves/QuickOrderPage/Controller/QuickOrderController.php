@@ -205,8 +205,8 @@ class QuickOrderController extends AbstractController
         $quickOrderProductAdditionalDataTransfer = new QuickOrderProductAdditionalDataTransfer();
         $quickOrderProductAdditionalDataTransfer->setIdProductConcrete($request->get(static::PARAM_ID_PRODUCT));
 
-        foreach ($this->getFactory()->getQuickOrderProductAdditionalDataTransferExpanderPlugins() as $plugin) {
-            $plugin->expand($quickOrderProductAdditionalDataTransfer);
+        foreach ($this->getFactory()->getQuickOrderProductAdditionalDataTransferExpanderPlugins() as $quickOrderProductAdditionalDataTransferExpanderPlugin) {
+            $quickOrderProductAdditionalDataTransferExpanderPlugin->expand($quickOrderProductAdditionalDataTransfer);
         }
 
         return $quickOrderProductAdditionalDataTransfer;

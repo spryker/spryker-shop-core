@@ -126,7 +126,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
      */
     public function getQuickOrderItemTransferExpanderPlugins(): array
     {
@@ -134,7 +134,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderProductAdditionalDataTransferExpanderPluginInterface[]
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductAdditionalDataTransferExpanderPluginInterface[]
      */
     public function getQuickOrderProductAdditionalDataTransferExpanderPlugins(): array
     {
