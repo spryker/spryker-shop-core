@@ -70,7 +70,7 @@
                         <hr />
                     {% endif %}
 
-                    {% if not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
+                    {% if not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
                         {{ widget('DiscountVoucherFormWidgetPlugin') }}
                         <hr />
                     {% endif %}

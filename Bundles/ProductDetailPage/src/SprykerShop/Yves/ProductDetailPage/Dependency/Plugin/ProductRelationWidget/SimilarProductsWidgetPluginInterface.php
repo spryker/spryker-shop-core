@@ -15,6 +15,8 @@ interface SimilarProductsWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'SimilarProductsWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void

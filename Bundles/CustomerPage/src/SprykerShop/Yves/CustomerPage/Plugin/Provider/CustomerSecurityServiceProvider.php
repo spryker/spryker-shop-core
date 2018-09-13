@@ -12,7 +12,9 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Form\LoginForm;
+use Symfony\Component\Security\Http\Firewall\ExceptionListener;
 use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 
 /**
@@ -21,7 +23,6 @@ use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationL
  */
 class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const FIREWALL_SECURED = 'secured';
     const ROLE_USER = 'ROLE_USER';
     const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
@@ -36,6 +37,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         $this->setSecurityAccessRules($app);
         $this->setAuthenticationSuccessHandler($app);
         $this->setAuthenticationFailureHandler($app);
+        $this->setAccessDeniedHandler($app);
     }
 
     /**
@@ -57,7 +59,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         $selectedLanguage = $this->findSelectedLanguage($app);
 
         $app['security.firewalls'] = [
-            self::FIREWALL_SECURED => [
+            CustomerPageConfig::SECURITY_FIREWALL_NAME => [
                 'anonymous' => true,
                 'pattern' => '^/',
                 'form' => [
@@ -108,10 +110,8 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function setAuthenticationSuccessHandler(Application &$app)
     {
-        $app['security.authentication.success_handler._proto'] = $app->protect(function () use ($app) {
-            return $app->share(function () {
-                return $this->getFactory()->createCustomerAuthenticationSuccessHandler();
-            });
+        $app['security.authentication.success_handler.' . CustomerPageConfig::SECURITY_FIREWALL_NAME] = $app->share(function () {
+            return $this->getFactory()->createCustomerAuthenticationSuccessHandler();
         });
     }
 
@@ -122,9 +122,32 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function setAuthenticationFailureHandler(Application &$app)
     {
-        $app['security.authentication.failure_handler._proto'] = $app->protect(function () use ($app) {
-            return $app->share(function () {
-                return $this->getFactory()->createCustomerAuthenticationFailureHandler();
+        $app['security.authentication.failure_handler.' . CustomerPageConfig::SECURITY_FIREWALL_NAME] = $app->share(function () {
+            return $this->getFactory()->createCustomerAuthenticationFailureHandler();
+        });
+    }
+
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return void
+     */
+    protected function setAccessDeniedHandler(Application &$app)
+    {
+        $selectedLanguage = $this->findSelectedLanguage($app);
+
+        $app['security.exception_listener._proto'] = $app->protect(function ($entryPoint, $name) use ($app, $selectedLanguage) {
+            return $app->share(function () use ($app, $entryPoint, $name, $selectedLanguage) {
+                return new ExceptionListener(
+                    $app['security.token_storage'],
+                    $app['security.trust_resolver'],
+                    $app['security.http_utils'],
+                    $name,
+                    $app[$entryPoint],
+                    null,
+                    $this->getFactory()->createAccessDeniedHandler($this->buildLoginPath($selectedLanguage)),
+                    $app['logger']
+                );
             });
         });
     }

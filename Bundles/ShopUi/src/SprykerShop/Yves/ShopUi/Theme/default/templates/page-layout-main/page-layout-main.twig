@@ -17,7 +17,9 @@
         } only %}
     {% endblock %}
 
-    {% block outside %}{% endblock %}
+    {% block outside %}
+        {% include molecule('outside-widgets') only %}
+    {% endblock %}
 
     {% block header %}
         {% embed organism('header') only %}

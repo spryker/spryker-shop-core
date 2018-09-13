@@ -14,6 +14,8 @@ interface ProductLabelWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'ProductLabelWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param array $idProductLabels
      *
      * @return void
