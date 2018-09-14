@@ -17,6 +17,10 @@ use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\SharedCartWidget\CartDelete
 class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implements CartDeleteCompanyUsersListWidgetPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -24,19 +28,6 @@ class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implem
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
         $this->addQuoteShareDetailsParameter($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function addQuoteShareDetailsParameter(QuoteTransfer $quoteTransfer): void
-    {
-        $this->addParameter(
-            'quoteShareDetails',
-            $this->getFactory()->getSharedCartClient()->getShareDetailsByIdQuoteAction($quoteTransfer)->getShareDetails()
-        );
     }
 
     /**
@@ -61,5 +52,18 @@ class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implem
     public static function getTemplate(): string
     {
         return '@SharedCartWidget/views/shared-cart-users/shared-cart-users.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addQuoteShareDetailsParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(
+            'quoteShareDetails',
+            $this->getFactory()->getSharedCartClient()->getShareDetailsByIdQuoteAction($quoteTransfer)->getShareDetails()
+        );
     }
 }

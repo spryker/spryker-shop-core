@@ -18,10 +18,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ShoppingListFromCartForm extends AbstractType
 {
-    protected const FIELD_ID_QUOTE = 'idQuote';
-    protected const FIELD_SHOPPING_LIST_NAME = 'shoppingListName';
     public const FIELD_NEW_SHOPPING_LIST_NAME_INPUT = 'newShoppingListName';
     public const OPTION_SHOPPING_LISTS = 'OPTION_SHOPPING_LISTS';
+    protected const FIELD_ID_QUOTE = 'idQuote';
+    protected const FIELD_SHOPPING_LIST_NAME = 'shoppingListName';
     protected const GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_PLACEHOLDER = 'cart.add-to-shopping-list.form.placeholder';
     protected const GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ERROR_EMPTY_NAME = 'cart.add-to-shopping-list.form.error.empty_name';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CREATE_FROM_CART_CHOOSE_SHOPPING_LIST = 'customer.account.shopping_list.create_from_cart.choose_shopping_list';

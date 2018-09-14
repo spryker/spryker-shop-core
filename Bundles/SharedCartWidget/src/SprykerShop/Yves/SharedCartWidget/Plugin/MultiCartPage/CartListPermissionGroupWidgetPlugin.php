@@ -18,6 +18,10 @@ use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\CartListPermissionGroupWidg
 class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implements CartListPermissionGroupWidgetPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param bool $isDeleteAllowed
      *

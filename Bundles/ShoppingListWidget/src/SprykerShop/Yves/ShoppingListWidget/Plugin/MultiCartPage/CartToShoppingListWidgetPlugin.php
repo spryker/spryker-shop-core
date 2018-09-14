@@ -14,6 +14,10 @@ use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\CartToShoppingListWidget\Ca
 class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin implements CartToShoppingListWidgetPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
