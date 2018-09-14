@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
 use SprykerShop\Yves\CartToShoppingListWidget\CartToShoppingListWidgetConfig;
-use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListFromCartForm;
 use Symfony\Component\HttpFoundation\Request;
 
 class CartToShoppingListController extends AbstractShoppingListController
@@ -46,15 +45,9 @@ class CartToShoppingListController extends AbstractShoppingListController
             ->handleRequest($request);
 
         if ($cartToShoppingListForm->isSubmitted() && $cartToShoppingListForm->isValid()) {
-            $shoppingListFromCartRequest = $cartToShoppingListForm->getData();
-            if (!$shoppingListFromCartRequest->getShoppingListName()) {
-                $shoppingListFromCartRequest->setShoppingListName(
-                    $cartToShoppingListForm->get(ShoppingListFromCartForm::FIELD_NEW_SHOPPING_LIST_NAME_INPUT)->getData()
-                );
-            }
-            $shoppingListFromCartRequest->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
-
-            $shoppingListTransfer = $this->getFactory()->getShoppingListClient()->createShoppingListFromQuote($shoppingListFromCartRequest);
+            $shoppingListTransfer = $this->getFactory()
+                ->createCreateFromCartHandler()
+                ->createShoppingListFromCart($cartToShoppingListForm);
 
             $this->addSuccessMessage(static::GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS);
 

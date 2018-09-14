@@ -71,7 +71,10 @@ class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implement
      */
     protected function addIsDeleteAllowedParameter(bool $isDeleteAllowed, QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): void
     {
-        $this->addParameter('isDeleteAllowed', $isDeleteAllowed && $this->isDeleteCartAllowed($quoteTransfer, $customerTransfer));
+        $this->addParameter(
+            'isDeleteAllowed',
+            $isDeleteAllowed && $this->getFactory()->getMultiCartClient()->isDeleteCartAllowed($quoteTransfer, $customerTransfer)
+        );
     }
 
     /**
@@ -82,35 +85,6 @@ class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implement
     protected function addIsSharingAllowedParameter(CustomerTransfer $customerTransfer): void
     {
         $this->addParameter('isSharingAllowed', $this->isSharingAllowed($customerTransfer));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer, CustomerTransfer $customerTransfer): bool
-    {
-        $ownedQuoteNumber = 0;
-        foreach ($this->getFactory()->getMultiCartClient()->getQuoteCollection()->getQuotes() as $quoteTransfer) {
-            if ($this->isQuoteOwner($quoteTransfer, $customerTransfer)) {
-                $ownedQuoteNumber++;
-            }
-        }
-
-        return $ownedQuoteNumber > 1 || (!$this->isQuoteOwner($currentQuoteTransfer, $customerTransfer) && $ownedQuoteNumber > 0);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
-    {
-        return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
     }
 
     /**
