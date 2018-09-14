@@ -15,6 +15,8 @@ interface PriceProductVolumeWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'PriceProductVolumeWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void
