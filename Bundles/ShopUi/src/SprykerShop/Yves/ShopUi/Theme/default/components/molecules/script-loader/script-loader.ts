@@ -1,5 +1,7 @@
 import Component from '../../../models/component';
 
+const EVENT_LOADED = 'loaded';
+
 export default class ScriptLoader extends Component {
     readonly scriptSource: string
     readonly ignoredAttributes: string[]
@@ -17,6 +19,12 @@ export default class ScriptLoader extends Component {
         this.appendScriptTag();
     }
 
+    protected mapEvents(script) {
+        script.addEventListener('load', (event: Event) => {
+            this.fireEvent(EVENT_LOADED);
+        });
+    }
+
     protected appendScriptTag(): void {
         const head = document.querySelector('head');
         const script = this.createScriptTag();
@@ -26,8 +34,14 @@ export default class ScriptLoader extends Component {
 
     protected createScriptTag(): HTMLElement {
         let script = document.createElement('script');
+        this.mapEvents(script);
 
         return this.setScriptAttributes(script);
+    }
+
+    protected fireEvent(name: string): void {
+        const event = new CustomEvent(name);
+        this.dispatchEvent(event);
     }
 
     protected setScriptAttributes(script: HTMLElement): HTMLElement {
