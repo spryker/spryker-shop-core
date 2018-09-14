@@ -10,26 +10,36 @@ namespace SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin;
 interface ResourceCreatorPluginInterface
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getType();
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getModuleName();
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getControllerName();
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getActionName();
 
     /**
+     * @api
+     *
      * @param array $data
      *
      * @return array

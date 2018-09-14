@@ -14,6 +14,8 @@ interface WishlistMenuItemWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'WishlistMenuItemWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $activePage
      * @param int|null $activeEntityId
      *

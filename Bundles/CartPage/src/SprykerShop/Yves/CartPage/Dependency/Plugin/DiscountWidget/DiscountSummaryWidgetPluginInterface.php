@@ -15,6 +15,8 @@ interface DiscountSummaryWidgetPluginInterface extends WidgetPluginInterface
     const NAME = 'DiscountSummaryWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

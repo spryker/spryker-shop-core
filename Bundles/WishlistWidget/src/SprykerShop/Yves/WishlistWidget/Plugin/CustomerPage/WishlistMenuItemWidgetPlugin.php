@@ -110,10 +110,6 @@ class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Wishl
             ->getWishlistClient()
             ->getCustomerWishlistCollection();
 
-        if ($customerWishlistCollectionTransfer->getWishlists() === null) {
-            return [];
-        }
-
         return (array)$customerWishlistCollectionTransfer->getWishlists();
     }
 }
