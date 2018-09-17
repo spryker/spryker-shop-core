@@ -15,6 +15,8 @@ interface QuantitySalesUnitWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'QuantitySalesUnitWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
