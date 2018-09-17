@@ -5,30 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\NewsletterWidget\Plugin\CustomerPage;
+namespace SprykerShop\Yves\NewsletterWidget\Widget;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Spryker\Shared\Newsletter\NewsletterConstants;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CustomerPage\Dependency\Plugin\NewsletterWidget\NewsletterSubscriptionSummaryWidgetPluginInterface;
-use SprykerShop\Yves\NewsletterWidget\Widget\NewsletterSubscriptionSummaryWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\NewsletterWidget\Widget\NewsletterSubscriptionSummaryWidget instead.
- *
  * @method \SprykerShop\Yves\NewsletterWidget\NewsletterWidgetFactory getFactory()
  */
-class NewsletterSubscriptionSummaryWidgetPlugin extends AbstractWidgetPlugin implements NewsletterSubscriptionSummaryWidgetPluginInterface
+class NewsletterSubscriptionSummaryWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
      */
-    public function initialize(CustomerTransfer $customerTransfer): void
+    public function __construct(CustomerTransfer $customerTransfer)
     {
         $this->addParameter('isSubscribed', $this->getIsSubscribed($customerTransfer));
     }
@@ -38,7 +32,7 @@ class NewsletterSubscriptionSummaryWidgetPlugin extends AbstractWidgetPlugin imp
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'NewsletterSubscriptionSummaryWidget';
     }
 
     /**
@@ -46,7 +40,7 @@ class NewsletterSubscriptionSummaryWidgetPlugin extends AbstractWidgetPlugin imp
      */
     public static function getTemplate(): string
     {
-        return NewsletterSubscriptionSummaryWidget::getTemplate();
+        return '@NewsletterWidget/views/newsletter-subscription-summary/newsletter-subscription-summary.twig';
     }
 
     /**

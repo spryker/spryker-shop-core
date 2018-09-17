@@ -5,26 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CustomerPage\Plugin\CustomerPage;
+namespace SprykerShop\Yves\CustomerPage\Widget;
 
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CustomerPage\Dependency\Plugin\CustomerPage\CustomerNavigationWidgetPluginInterface;
-use SprykerShop\Yves\CustomerPage\Widget\CustomerNavigationWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CustomerPage\Widget\CustomerNavigationWidget instead.
- *
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
-class CustomerNavigationWidgetPlugin extends AbstractWidgetPlugin implements CustomerNavigationWidgetPluginInterface
+class CustomerNavigationWidget extends AbstractWidget
 {
     /**
      * @param string $activePage
      * @param int|null $activeEntityId
-     *
-     * @return void
      */
-    public function initialize(string $activePage, ?int $activeEntityId = null): void
+    public function __construct(string $activePage, ?int $activeEntityId = null)
     {
         $this->addParameter('activePage', $activePage)
             ->addParameter('activeEntityId', $activeEntityId)
@@ -39,9 +33,9 @@ class CustomerNavigationWidgetPlugin extends AbstractWidgetPlugin implements Cus
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
-        return static::NAME;
+        return 'CustomerNavigationWidget';
     }
 
     /**
@@ -52,8 +46,8 @@ class CustomerNavigationWidgetPlugin extends AbstractWidgetPlugin implements Cus
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return CustomerNavigationWidget::getTemplate();
+        return '@CustomerPage/views/customer-navigation/customer-navigation.twig';
     }
 }

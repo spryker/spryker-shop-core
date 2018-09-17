@@ -39,7 +39,9 @@
 } %}
 
 {% block customerNavigation %}
-    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.shoppingList.idShoppingList) }}
+    {% widget 'CustomerNavigationWidget' args ['shoppingList', data.shoppingList.idShoppingList] only %}
+    {% elsewidget 'CustomerNavigationWidgetPlugin' args ['shoppingList', data.shoppingList.idShoppingList] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
+    {% endwidget %}
 {% endblock %}
 
 {% block customerContent %}
@@ -155,8 +157,10 @@
                             {% endif %}
                         </td>
                     </tr>
-                    {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) and widgetExists('ProductAlternativeWidgetPlugin') %}
-                        {{ widget('ProductAlternativeWidgetPlugin', item, data.shoppingList) }}
+                    {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+                        {% widget 'ShoppingListProductAlternativeWidget' args [item, data.shoppingList] only %}
+                        {% elsewidget 'ProductAlternativeWidgetPlugin' args [item, data.shoppingList] only %} {# @deprecated Use ShoppingListProductAlternativeWidget instead. #}
+                        {% endwidget %}
                     {% endif %}
                 {% endfor %}
                 </tbody>

@@ -5,29 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\MultiCartWidget\Plugin\ShopUi;
+namespace SprykerShop\Yves\MultiCartWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\MultiCartWidget\Widget\MiniCartWidget;
-use SprykerShop\Yves\ShopUi\Dependency\Plugin\MultiCart\MiniCartWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\MiniCartWidget instead.
- *
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
-class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidgetPluginInterface
+class MiniCartWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
     /**
      * @param int $cartQuantity
-     *
-     * @return void
      */
-    public function initialize($cartQuantity): void
+    public function __construct($cartQuantity)
     {
         $this->addParameter('cartQuantity', $cartQuantity)
             ->addParameter('activeCart', $this->getActiveCart())
@@ -43,9 +37,9 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
-        return static::NAME;
+        return 'MiniCartWidget';
     }
 
     /**
@@ -55,9 +49,9 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return MiniCartWidget::getTemplate();
+        return '@MultiCartWidget/views/mini-cart/mini-cart.twig';
     }
 
     /**

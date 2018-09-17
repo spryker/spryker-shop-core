@@ -5,27 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\PriceProductVolumeWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\PriceProductVolumeWidget\Widget;
 
 use Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\PriceProductVolumeWidget\Widget\PriceProductVolumeWidget;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\VolumePriceProductWidget\PriceProductVolumeWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\PriceProductVolumeWidget\Widget instead.
- *
  * @method \SprykerShop\Yves\PriceProductVolumeWidget\PriceProductVolumeWidgetFactory getFactory()
  */
-class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements PriceProductVolumeWidgetPluginInterface
+class PriceProductVolumeWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer): void
+    public function __construct(ProductViewTransfer $productViewTransfer)
     {
         $this
             ->addParameter('product', $productViewTransfer)
@@ -42,9 +36,9 @@ class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements Pri
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
-        return static::NAME;
+        return 'PriceProductVolumeWidget';
     }
 
     /**
@@ -54,9 +48,9 @@ class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements Pri
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return PriceProductVolumeWidget::getTemplate();
+        return '@PriceProductVolumeWidget/views/volume-price-product-widget/volume-price-product.twig';
     }
 
     /**

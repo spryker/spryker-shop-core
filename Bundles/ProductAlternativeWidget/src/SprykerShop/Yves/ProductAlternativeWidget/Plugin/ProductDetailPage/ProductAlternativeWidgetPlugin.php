@@ -9,9 +9,12 @@ namespace SprykerShop\Yves\ProductAlternativeWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductAlternativeWidget\Widget\ProductAlternativeListWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductAlternativeWidget\Widget\ProductAlternativeListWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeWidgetFactory getFactory()
  */
 class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements ProductAlternativeWidgetPluginInterface
@@ -48,7 +51,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate(): string
     {
-        return '@ProductAlternativeWidget/views/product-alternative-list/product-alternative-list.twig';
+        return ProductAlternativeListWidget::getTemplate();
     }
 
     /**

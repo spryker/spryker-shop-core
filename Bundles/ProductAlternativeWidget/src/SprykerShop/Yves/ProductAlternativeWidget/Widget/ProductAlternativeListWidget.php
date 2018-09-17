@@ -5,32 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductAlternativeWidget\Plugin\WishlistPage;
+namespace SprykerShop\Yves\ProductAlternativeWidget\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductAlternativeWidget\Widget\WishlistProductAlternativeWidget;
-use SprykerShop\Yves\WishlistPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductAlternativeWidget\Widget\WishlistProductAlternativeWidget instead.
- *
  * @method \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeWidgetFactory getFactory()
  */
-class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements ProductAlternativeWidgetPluginInterface
+class ProductAlternativeListWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $wishlistName
-     *
-     * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, string $wishlistName): void
+    public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this
-            ->addParameter('item', $productViewTransfer)
-            ->addParameter('wishlistName', $wishlistName)
-            ->addParameter('products', $this->findAlternativesProducts($productViewTransfer));
+        $this->addParameter('products', $this->findAlternativesProducts($productViewTransfer))
+            ->addWidgets($this->getFactory()->getProductDetailPageProductAlternativeWidgetPlugins());
     }
 
     /**
@@ -42,7 +33,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductAlternativeListWidget';
     }
 
     /**
@@ -54,7 +45,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate(): string
     {
-        return WishlistProductAlternativeWidget::getTemplate();
+        return '@ProductAlternativeWidget/views/product-alternative-list/product-alternative-list.twig';
     }
 
     /**
@@ -69,6 +60,6 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
         }
 
         return $this->getFactory()->getProductAlternativeStorageClient()
-            ->getConcreteAlternativeProducts($productViewTransfer, $this->getLocale());
+            ->getAlternativeProducts($productViewTransfer, $this->getLocale());
     }
 }

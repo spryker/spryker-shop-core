@@ -5,26 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\MultiCartWidget\Plugin\QuickOrderPage;
+namespace SprykerShop\Yves\MultiCartWidget\Widget;
 
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\MultiCartWidget\Widget\QuickOrderPageWidget;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Plugin\MultiCartWidget\MultiCartListWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\QuickOrderPageWidget instead.
- *
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
-class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCartListWidgetPluginInterface
+class QuickOrderPageWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
-    /**
-     * @return void
-     */
-    public function initialize(): void
+    public function initialize()
     {
         $this
             ->addParameter('carts', $this->getQuoteList())
@@ -39,9 +32,9 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
-        return static::NAME;
+        return 'QuickOrderPageWidget';
     }
 
     /**
@@ -52,9 +45,9 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return QuickOrderPageWidget::getTemplate();
+        return '@MultiCartWidget/views/quick-order-page/quick-order-page.twig';
     }
 
     /**

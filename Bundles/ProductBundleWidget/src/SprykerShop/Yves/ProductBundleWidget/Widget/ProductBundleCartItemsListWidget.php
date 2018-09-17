@@ -5,28 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductBundleWidget\Plugin\CartPage;
+namespace SprykerShop\Yves\ProductBundleWidget\Widget;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductBundleWidget\ProductBundleItemsWidgetPluginInterface;
-use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleCartItemsListWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleCartItemsListWidget instead.
- *
  * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */
-class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements ProductBundleItemsWidgetPluginInterface
+class ProductBundleCartItemsListWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
      */
-    public function initialize(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
+    public function __construct(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer)
     {
         $this->addParameter('bundleItems', $this->getBundleItems($itemTransfer, $quoteTransfer));
     }
@@ -36,7 +30,7 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getName(): string
     {
-        return ProductBundleCartItemsListWidget::getTemplate();
+        return 'ProductBundleCartItemsListWidget';
     }
 
     /**

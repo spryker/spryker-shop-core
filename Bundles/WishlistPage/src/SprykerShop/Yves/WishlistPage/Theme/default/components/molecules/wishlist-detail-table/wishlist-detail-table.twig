@@ -111,9 +111,9 @@
                         </ul>
                     </td>
                 </tr>
-                {% if widgetExists('ProductAlternativeWidgetPlugin') %}
-                    {{ widget('ProductAlternativeWidgetPlugin', item, data.wishlistName) }}
-                {% endif %}
+                {% widget 'WishlistProductAlternativeWidget' args [item, data.wishlistName] only %}
+                {% elsewidget 'ProductAlternativeWidgetPlugin' args [item, data.wishlistName] only %} {# @deprecated Use WishlistProductAlternativeWidget instead. #}
+                {% endwidget %}
             {% endfor %}
             </tbody>
         </table>

@@ -5,28 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductBarcodeWidget\Plugin\ShoppingList;
+namespace SprykerShop\Yves\ProductBarcodeWidget\Widget;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductBarcodeWidget\Widget\ProductBarcodeWidget;
-use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductBarcodeWidget\ProductBarcodeWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductBarcodeWidget\Widget\ProductBarcodeWidget instead.
- *
  * @method \SprykerShop\Yves\ProductBarcodeWidget\ProductBarcodeWidgetFactory getFactory()
  */
-class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements ProductBarcodeWidgetPluginInterface
+class ProductBarcodeWidget extends AbstractWidget
 {
      /**
       * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
       * @param string|null $barcodeGeneratorPlugin
-      *
-      * @return void
       */
-    public function initialize(ProductViewTransfer $productViewTransfer, ?string $barcodeGeneratorPlugin = null): void
+    public function __construct(ProductViewTransfer $productViewTransfer, ?string $barcodeGeneratorPlugin = null)
     {
         $this->addParameter('barcodeResponseTransfer', $this->getBarcodeResponseTransfer($productViewTransfer, $barcodeGeneratorPlugin));
     }
@@ -36,7 +30,7 @@ class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements Product
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductBarcodeWidget';
     }
 
     /**
@@ -44,7 +38,7 @@ class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements Product
      */
     public static function getTemplate(): string
     {
-        return ProductBarcodeWidget::getTemplate();
+        return '@ProductBarcodeWidget/views/barcode/barcode.twig';
     }
 
     /**
