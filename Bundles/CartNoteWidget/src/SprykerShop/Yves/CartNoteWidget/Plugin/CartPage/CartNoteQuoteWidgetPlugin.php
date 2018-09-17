@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartNoteWidget\Widget\CartNoteFormWidget;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\CartNoteWidget\CartNoteQuoteWidgetPluginInterface;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\CartNoteFormWidget instead.
