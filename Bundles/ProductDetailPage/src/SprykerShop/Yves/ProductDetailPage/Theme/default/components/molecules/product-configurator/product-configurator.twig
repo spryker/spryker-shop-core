@@ -62,7 +62,7 @@
     {% endembed %}
 
     <hr />
-    <form method="POST" class="js-form-data-injector" action="/cart/add/{{sku}}">
+    <form method="POST" class="{{ config.jsName }}__form" action="/cart/add/{{sku}}">
         {{ widget('ProductOptionWidgetPlugin', data.product) }}
 
         {% if widgetExists('ProductPackagingUnitWidgetPlugin') %}

@@ -1,30 +1,30 @@
 import Component from 'ShopUi/models/component';
 
 export default class FormDataInjector extends Component {
-    formToEnrich: HTMLFormElement;
+    destinationForm: HTMLFormElement;
     fieldsToInject: HTMLElement[];
 
     protected readyCallback(): void {
-        this.formToEnrich = <HTMLFormElement>document.querySelector(this.formSelector);
+        this.destinationForm = <HTMLFormElement>document.querySelector(this.destinationFormSelector);
         this.fieldsToInject = <HTMLElement[]>Array.from(document.querySelectorAll(this.fieldsSelector));
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.formToEnrich.addEventListener('submit', (event: Event) => this.submitHandle(event), false);
+        this.destinationForm.addEventListener('submit', (event: Event) => this.onSubmit(event), false);
     }
 
-    private submitHandle(event: Event): void {
+    private onSubmit(event: Event): void {
         event.preventDefault();
 
         this.preventSubmitButton();
         this.injectData();
-        this.formToEnrich.submit();
+        this.destinationForm.submit();
     }
 
     private preventSubmitButton(): void {
-        this.formToEnrich.querySelector('[type="submit"]').setAttribute('disabled', 'disabled');
+        this.destinationForm.querySelector('[type="submit"]').setAttribute('disabled', 'disabled');
     }
 
     private injectData(): void {
@@ -32,16 +32,16 @@ export default class FormDataInjector extends Component {
     }
 
     private addField(field: HTMLFormElement): void {
-        let insertField: HTMLInputElement = <HTMLInputElement>document.createElement('input');
+        const insertField: HTMLInputElement = <HTMLInputElement>document.createElement('input');
 
         insertField.setAttribute('type', 'hidden');
         insertField.setAttribute('name', field.name);
         insertField.setAttribute('value', field.value);
 
-        this.formToEnrich.appendChild(insertField);
+        this.destinationForm.appendChild(insertField);
     }
 
-    get formSelector(): string {
+    get destinationFormSelector(): string {
         return this.getAttribute('destination-form-selector');
     }
 
