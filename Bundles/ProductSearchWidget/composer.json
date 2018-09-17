@@ -3,10 +3,22 @@
   "description": "ProductSearchWidget module",
   "license": "proprietary",
   "require": {
+    "php": "7.1",
+    "spryker/kernel": "^3.0.0",
+    "spryker/product-page-search": "^2.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
+    "spryker-shop/quick-order-page": "*",
+    "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/silex": "*"
+  },
+  "suggest": {
+    "spryker-shop/quick-order-page": "Use this module when using plugins that need QuickOrderPage dependencies.",
+    "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

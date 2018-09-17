@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductSearchWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToLocaleClientBridge;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductPageSearchClientBridge;
 
 class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProvider

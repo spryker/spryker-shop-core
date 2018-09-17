@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductSearchWidget\Controller;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\ResultFormatter\ProductConcretePageSearchResultFormatterPlugin;
 use Spryker\Yves\Kernel\Controller\AbstractController;

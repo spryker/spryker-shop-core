@@ -104,7 +104,9 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
      */
     protected function addItemsToCart(array $itemTransfers): bool
     {
-        $itemTransfers = $this->expandItemTransfers($itemTransfers);
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemTransfer = $this->expandItemTransfer($itemTransfer);
+        }
 
         $this->cartClient->addItems($itemTransfers, $this->request->request->all());
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
@@ -150,18 +152,16 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function expandItemTransfers(array $itemTransfers)
+    protected function expandItemTransfer(ItemTransfer $itemTransfer): ItemTransfer
     {
         foreach ($this->quickOrderItemTransferExpanderPlugins as $quickOrderItemTransferExpanderPlugin) {
-            foreach ($itemTransfers as $itemTransfer) {
-                $quickOrderItemTransferExpanderPlugin->expand($itemTransfer);
-            }
+            $itemTransfer = $quickOrderItemTransferExpanderPlugin->expandItemTransfer($itemTransfer);
         }
 
-        return $itemTransfers;
+        return $itemTransfer;
     }
 }

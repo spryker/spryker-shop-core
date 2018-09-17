@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductSearchWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToLocaleClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductPageSearchClientInterface;
 
 class ProductSearchWidgetFactory extends AbstractFactory
