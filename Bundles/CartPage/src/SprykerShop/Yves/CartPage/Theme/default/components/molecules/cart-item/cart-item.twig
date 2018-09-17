@@ -11,7 +11,7 @@
     attributes: required
 } %}
 
-{% set canEditCart = (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
+{% set canEditCart = (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
 
 {% block body %}
     <div class="grid grid--stretch grid--justify">
@@ -50,22 +50,27 @@
                     cartItem: data.cartItem
                 }
             } only %}
+
         </div>
 
         <div class="col col--sm-12 col--lg-4">
-            {% if canEditCart %}
-                {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
-                    {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
+            {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }}
+
+            {% if data.cartItem.amountSalesUnit is empty %}
+                {% if canEditCart %}
+                    {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
+                        {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
+                    {% else %}
+                        {% include molecule('cart-quantity-input', 'CartPage') with {
+                            data: {
+                                cartItem: data.cartItem
+                            }
+                        } only %}
+                    {% endif %}
                 {% else %}
-                    {% include molecule('cart-quantity-input', 'CartPage') with {
-                        data: {
-                            cartItem: data.cartItem
-                        }
-                    } only %}
+                    {{ 'cart.item_quantity' | trans }}
+                    <strong>{{ data.cartItem.quantity }}</strong>
                 {% endif %}
-            {% else %}
-                {{ 'cart.item_quantity' | trans }}
-                <strong>{{ cartItem.quantity }}</strong>
             {% endif %}
 
             {% if canEditCart %}

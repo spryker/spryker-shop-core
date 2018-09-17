@@ -82,7 +82,7 @@ class ShoppingListMenuItemWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     protected function addShoppingListCollectionParameter(): void
     {
-        $this->addParameter('shoppingListCollection', $this->isShoppingListPageActive()? $this->getCustomerShoppingListCollection() : []);
+        $this->addParameter('shoppingListCollection', $this->isShoppingListPageActive() ? $this->getCustomerShoppingListCollection() : []);
     }
 
     /**
@@ -90,7 +90,7 @@ class ShoppingListMenuItemWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     protected function addActiveShoppingListIdParameter(): void
     {
-        $this->addParameter('activeShoppingListId', $this->isShoppingListPageActive()? $this->activeShoppingListId : []);
+        $this->addParameter('activeShoppingListId', $this->isShoppingListPageActive() ? $this->activeShoppingListId : []);
     }
 
     /**
@@ -106,9 +106,10 @@ class ShoppingListMenuItemWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     protected function getCustomerShoppingListCollection(): array
     {
-        return (array)$this->getFactory()
+        $customerShoppingListCollectionTransfer = $this->getFactory()
             ->getShoppingListClient()
-            ->getCustomerShoppingListCollection()
-            ->getShoppingLists();
+            ->getCustomerShoppingListCollection();
+
+        return (array)$customerShoppingListCollectionTransfer->getShoppingLists();
     }
 }

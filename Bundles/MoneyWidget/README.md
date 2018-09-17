@@ -1,6 +1,6 @@
 # MoneyWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Provides Yves widget for displaying and formatting money.
 
 ## Installation
 

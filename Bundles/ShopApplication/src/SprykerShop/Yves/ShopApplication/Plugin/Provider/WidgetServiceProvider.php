@@ -24,6 +24,7 @@ use Twig_SimpleFunction;
 
 /**
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
+ * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
  */
 class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -35,7 +36,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
     public function register(Application $application)
     {
         $application['twig'] = $application->share(
-            $application->extend('twig', function (\Twig_Environment $twig) {
+            $application->extend('twig', function (Twig_Environment $twig) {
                 return $this->registerWidgetTwigFunction($twig);
             })
         );
@@ -269,6 +270,7 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     protected function onKernelView(GetResponseForControllerResultEvent $event, SprykerApplication $application)
     {
+        /** @var \Spryker\Yves\Kernel\Widget\WidgetContainerInterface $result */
         $result = $event->getControllerResult();
 
         if (!$result instanceof ViewInterface) {
@@ -283,15 +285,29 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $widgetContainerRegistry->add($result);
 
         if ($result->getTemplate()) {
-            $response = $application->render($result->getTemplate());
+            $response = $application->render($result->getTemplate(), $this->getViewParameters($result));
         } else {
             $response = $this->getFactory()
                 ->createTwigRenderer()
-                ->render($application);
+                ->render($application, $this->getViewParameters($result));
         }
 
         $event->setResponse($response);
         $widgetContainerRegistry->removeLastAdded();
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\View\ViewInterface $view
+     *
+     * @return array|null
+     */
+    protected function getViewParameters(ViewInterface $view)
+    {
+        if ($this->getConfig()->useViewParametersToRenderTwig()) {
+            return $view->getData();
+        }
+
+        return [];
     }
 
     /**

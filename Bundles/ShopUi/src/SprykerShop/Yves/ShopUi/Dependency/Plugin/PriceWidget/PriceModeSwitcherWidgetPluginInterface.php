@@ -14,6 +14,8 @@ interface PriceModeSwitcherWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'PriceModeSwitcherWidgetPlugin';
 
     /**
+     * @api
+     *
      * @return void
      */
     public function initialize(): void;

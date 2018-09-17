@@ -24,8 +24,6 @@ class ShoppingListFromCartFormDataProvider
     protected $shoppingListClient;
 
     /**
-     * ShoppingListFromCartFormDataProvider constructor.
-     *
      * @param \SprykerShop\Yves\CartToShoppingListWidget\Dependency\Client\CartToShoppingListWidgetToShoppingListClientInterface $shoppingListClient
      */
     public function __construct(CartToShoppingListWidgetToShoppingListClientInterface $shoppingListClient)
@@ -40,7 +38,7 @@ class ShoppingListFromCartFormDataProvider
      */
     public function getData(?int $idQuote): ShoppingListFromCartRequestTransfer
     {
-        return (new ShoppingListFromCartRequestTransfer)->setIdQuote($idQuote)->setShoppingListName(null);
+        return (new ShoppingListFromCartRequestTransfer())->setIdQuote($idQuote)->setShoppingListName(null);
     }
 
     /**

@@ -13,6 +13,8 @@ use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConstants;
 class QuickOrderPageConfig extends AbstractBundleConfig
 {
     /**
+     * Deprecated: Do not use ENV config here.
+     *
      * @return array
      */
     public function getAllowedSeparators(): array
@@ -21,6 +23,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * Deprecated: Do not use ENV config here.
+     *
      * @return int
      */
     public function getProductRowsNumber(): int

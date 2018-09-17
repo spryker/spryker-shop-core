@@ -82,7 +82,7 @@ class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Wishl
      */
     protected function addWishlistCollectionParameter(): void
     {
-        $this->addParameter('wishlistCollection', $this->isWishlistPageActive()? $this->getCustomerWishlistCollection() : []);
+        $this->addParameter('wishlistCollection', $this->isWishlistPageActive() ? $this->getCustomerWishlistCollection() : []);
     }
 
     /**
@@ -90,7 +90,7 @@ class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Wishl
      */
     protected function addActiveWishlistIdParameter(): void
     {
-        $this->addParameter('activeWishlistId', $this->isWishlistPageActive()? $this->activeWishlistId : []);
+        $this->addParameter('activeWishlistId', $this->isWishlistPageActive() ? $this->activeWishlistId : []);
     }
 
     /**
@@ -106,9 +106,10 @@ class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Wishl
      */
     protected function getCustomerWishlistCollection(): array
     {
-        return (array)$this->getFactory()
+        $customerWishlistCollectionTransfer = $this->getFactory()
             ->getWishlistClient()
-            ->getCustomerWishlistCollection()
-            ->getWishlists();
+            ->getCustomerWishlistCollection();
+
+        return (array)$customerWishlistCollectionTransfer->getWishlists();
     }
 }

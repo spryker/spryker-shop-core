@@ -4,14 +4,14 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/checkout-page": "^1.0.0",
-    "spryker-shop/customer-page-extension": "^1.0.0",
+    "spryker-shop/customer-page-extension": "^1.2.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/application": "^3.8.0",
     "spryker/customer": "^7.4.0",
     "spryker/kernel": "^3.16.0",
     "spryker/product-bundle": "^4.1.0",
+    "spryker/quote": "^1.0.0 || ^2.1.0",
     "spryker/sales": "^8.5.0",
     "spryker/step-engine": "^3.1.0",
     "spryker/symfony": "^3.1.0",
@@ -19,14 +19,16 @@
   },
   "require-dev": {
     "spryker-shop/home-page": "*",
+    "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/messenger": "*",
     "spryker/silex": "*",
+    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {
-    "spryker/config": "Use this module when using plugins that need Config dependencies.",
     "spryker-shop/home-page": "Widget plugins are available for this module.",
+    "spryker/config": "Use this module when using plugins that need Config dependencies.",
     "spryker/messenger": "Use this module when using plugins that need Messenger dependencies.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker/twig": "Use this module when using plugins that need Twig dependencies."

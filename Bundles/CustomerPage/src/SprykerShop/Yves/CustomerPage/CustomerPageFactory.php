@@ -9,10 +9,13 @@ namespace SprykerShop\Yves\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
+use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerSecurityServiceProvider;
@@ -20,6 +23,7 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 
 class CustomerPageFactory extends AbstractFactory
 {
@@ -56,6 +60,16 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @param string $targetUrl
+     *
+     * @return \Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface
+     */
+    public function createAccessDeniedHandler(string $targetUrl): AccessDeniedHandlerInterface
+    {
+        return new AccessDeniedHandler($targetUrl);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
@@ -82,7 +96,7 @@ class CustomerPageFactory extends AbstractFactory
         return new UsernamePasswordToken(
             $user,
             $user->getPassword(),
-            CustomerSecurityServiceProvider::FIREWALL_SECURED,
+            CustomerPageConfig::SECURITY_FIREWALL_NAME,
             [CustomerSecurityServiceProvider::ROLE_USER]
         );
     }
@@ -190,6 +204,14 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface
+     */
+    public function getQuoteClient(): CustomerPageToQuoteClientInteface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
      * @return string[]
      */
     public function getCustomerOverviewWidgetPlugins(): array
@@ -235,5 +257,21 @@ class CustomerPageFactory extends AbstractFactory
     public function getPreRegistrationCustomerTransferExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStrategyPluginInterface[]
+     */
+    public function getAfterLoginCustomerRedirectPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Plugin\FixAgentTokenAfterCustomerAuthenticationSuccessPlugin[]
+     */
+    public function getAfterCustomerAuthenticationSuccessPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS);
     }
 }

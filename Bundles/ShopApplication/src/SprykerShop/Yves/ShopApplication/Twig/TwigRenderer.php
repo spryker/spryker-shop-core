@@ -30,7 +30,7 @@ class TwigRenderer implements TwigRendererInterface
      * @param \Spryker\Shared\Kernel\Communication\Application $application
      * @param array $parameters
      *
-     * @return null|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response|null
      */
     public function render(Application $application, array $parameters = [])
     {

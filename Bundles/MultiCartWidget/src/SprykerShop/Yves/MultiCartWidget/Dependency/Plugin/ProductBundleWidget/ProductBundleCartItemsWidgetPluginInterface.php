@@ -14,8 +14,10 @@ interface ProductBundleCartItemsWidgetPluginInterface
     public const NAME = 'ProductBundleCartItemsWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param null|int $itemDisplayLimit
+     * @param int|null $itemDisplayLimit
      *
      * @return void
      */

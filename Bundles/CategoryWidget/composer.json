@@ -5,11 +5,13 @@
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/category-storage": "^1.0.0",
+    "spryker/category-storage": "^1.1.0",
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
