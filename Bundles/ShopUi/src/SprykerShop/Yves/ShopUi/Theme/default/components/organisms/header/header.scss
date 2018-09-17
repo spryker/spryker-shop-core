@@ -11,17 +11,17 @@
 
         &__navigation-top {
             position: relative;
-            z-index: $setting-zi-element + 3;
+            z-index: $setting-zi-header + 3;
         }
 
         &__search-form {
             position: relative;
-            z-index: $setting-zi-element + 2;
+            z-index: $setting-zi-header + 2;
         }
 
         &__navigation-main {
             position: relative;
-            z-index: $setting-zi-element + 1;
+            z-index: $setting-zi-header + 1;
         }
 
         @content;
