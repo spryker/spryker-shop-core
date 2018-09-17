@@ -11,28 +11,34 @@
 } %}
 
 {% block breadcrumbs %}
-    {{ widget('CheckoutBreadcrumbWidgetPlugin', data.cart) }}
+    {% widget 'CheckoutBreadcrumbWidget' args [data.cart] only %}
+    {% elsewidget 'CheckoutBreadcrumbWidgetPlugin' args [data.cart] only %} {# @deprecated Use CheckoutBreadcrumbWidget instead. #}
+    {% endwidget %}
 {% endblock %}
 
 {% block title %}
-    {% if widgetExists('CartOperationsWidgetPlugin') %}
-        {% set cartOperation = widget('CartOperationsWidgetPlugin', data.cart) | trim %}
-
-        {% if cartOperation is not empty %}
-            {{ cartOperation | raw }}
-        {% else %}
-            {{ parent() }}
-        {% endif %}
-    {% else %}
+    {% widget 'CartOperationsWidget' args [data.cart] only %}
+    {% elsewidget 'CartOperationsWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartOperationsWidget instead. #}
+    {% nowidget %}
         {{ parent() }}
-    {% endif %}
+    {% endwidget %}
 {% endblock %}
 
 {% block content %}
-    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty and data.cart.items is not empty %}
-        <div class="box">
-            {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
-        </div>
+    {% if data.cart.idQuote is not empty and data.cart.items is not empty %}
+        {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
+            {% block body %}
+                <div class="box">
+                    {{ parent() }}
+                </div>
+            {% endblock %}
+        {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
+            {% block body %}
+                <div class="box">
+                    {{ parent() }}
+                </div>
+            {% endblock %}
+        {% endwidget %}
     {% endif %}
 
     {% if data.cart.items is empty %}
@@ -60,7 +66,9 @@
                     } only %}
                 {% endfor %}
 
-                {{ widget('DiscountPromotionItemListWidgetPlugin', data.cart, data.request) }}
+                {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
+                {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
+                {% endwidget %}
             </div>
 
             <div class="col col--sm-12 col--xl-4">
@@ -69,9 +77,22 @@
                         {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
                         <hr />
                     {% endif %}
+                    {% widget 'CartNoteFormWidget' args [data.cart] only %}
+                        {% block body %}
+                            {{ parent() }}
+                            <hr />
+                        {% endblock %}
+                    {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
+                        {% block body %}
+                            {{ parent() }}
+                            <hr />
+                        {% endblock %}
+                    {% endwidget %}
 
                     {% if not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
-                        {{ widget('DiscountVoucherFormWidgetPlugin') }}
+                        {% widget 'VoucherFormWidget' only %}
+                        {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use VoucherFormWidget instead. #}
+                        {% endwidget %}
                         <hr />
                     {% endif %}
 
@@ -87,7 +108,9 @@
     {% endif %}
 
     {{ widget('UpSellingProductsWidgetPlugin', data.cart) }}
-    {{ widget('MultiCartListWidgetPlugin', data.cart) }}
+    {% widget 'MultiCartListWidget' args [data.cart] only %}
+    {% elsewidget 'MultiCartListWidgetPlugin' args [data.cart] only %} {# @deprecated Use MultiCartListWidget instead. #}
+    {% endwidget %}
 {% endblock %}
 
 {% block footer %}{% endblock %}

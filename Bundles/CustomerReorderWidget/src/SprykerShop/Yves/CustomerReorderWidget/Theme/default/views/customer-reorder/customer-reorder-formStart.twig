@@ -1,0 +1,7 @@
+{% extends template('widget') %}
+
+{% block body %}
+    <customer-reorder class="custom-component customer-reorder">
+        <form action="{{ path('customer/order/reorder-items') }}" method="post">
+            <input type="hidden" name="id" value="{{ _widget.order.idSalesOrder }}" />
+{% endblock %}

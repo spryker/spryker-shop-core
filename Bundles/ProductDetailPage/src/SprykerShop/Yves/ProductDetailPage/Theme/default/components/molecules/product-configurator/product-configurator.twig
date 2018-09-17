@@ -24,10 +24,9 @@
     }]) %}
 {% endfor %}
 
-{% if widgetExists('AvailabilityWidgetPlugin') %}
-    {% set isAvailable = widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product) %}
-    {% set isDisabled = not isAvailable or isDisabled %}
-{% endif %}
+{% set productViewAvailabilityWidget = findWidget('ProductViewAvailabilityWidget', ['isAvailable', data.product]) %}
+{% set isAvailable = productViewAvailabilityWidget.isAvailable | default(widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product)) %} {# @deprecated Use ProductViewAvailabilityWidget instead of AvailabilityWidgetPlugin. #}
+{% set isDisabled = not isAvailable or isDisabled %}
 
 {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
     {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', sku) %}
@@ -100,8 +99,12 @@
             </div>
         {% endif %}
 
-        {{ widget('MultiCartWidgetPlugin', data.product, isDisabled) }}
-        {{ widget('AvailabilityWidgetPlugin', data.product) }}
+        {% widget 'AddToMultiCartWidget' args [data.product, isDisabled] only %}
+        {% elsewidget 'MultiCartWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
+        {% endwidget %}
+        {% widget 'ProductViewAvailabilityWidget' args [data.product] only %}
+        {% elsewidget 'AvailabilityWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductViewAvailabilityWidget instead. #}
+        {% endwidget %}
     </form>
 
     {% if widgetExists('ShoppingListWidgetPlugin') and isProductAvailable %}

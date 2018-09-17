@@ -19,20 +19,29 @@
     <ul class="menu {{menuClass}}">
         <li class="menu__item">{{ widgetGlobal('PriceModeSwitcherWidgetPlugin') }}</li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
-        <li class="menu__item">{{ widgetGlobal('CurrencyWidgetPlugin') }}</li>
+        <li class="menu__item">
+            {%- widget 'CurrencyWidget' only -%}
+            {%- elsewidget 'CurrencyWidgetPlugin' only -%} {# @deprecated Use CurrencyWidget instead. #}
+            {%- endwidget -%}
+        </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item">
-            {{ widgetGlobal(
-                'LanguageSwitcherWidgetPlugin',
+            {% widget 'LanguageSwitcherWidget' args [
                 app.request.pathInfo,
                 app.request.queryString,
                 app.request.requestUri
-            ) }}
+            ] only %}
+            {% elsewidget 'LanguageSwitcherWidgetPlugin' args [
+                app.request.pathInfo,
+                app.request.queryString,
+                app.request.requestUri
+            ] only %} {# @deprecated Use LanguageSwitcherWidget instead. #}
+            {% endwidget %}
         </li>
         <li class="menu__item">
-            {% if widgetGlobalExists('DisplayOnBehalfBusinessWidgetPlugin') %}
-                {{ widgetGlobal('DisplayOnBehalfBusinessWidgetPlugin') }}
-            {% endif %}
+            {% widget 'BusinessOnBehalfStatusWidget' only %}
+            {% elsewidget 'DisplayOnBehalfBusinessWidgetPlugin' only %} {# @deprecated Use BusinessOnBehalfStatusWidget instead. #}
+            {% endwidget %}
         </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item menu__item--has-children-dropdown">
@@ -53,9 +62,15 @@
         {% if data.showUserMenu %}
             {% if is_granted('ROLE_USER') %}
                 <li class="menu__item"><a href="{{ url('customer/overview') }}">{{ 'customer.profile'|trans }}</a></li>
-                {% if widgetGlobalExists('MenuItemCompanyWidgetPlugin') %}
-                    <li class="menu__item">{% spaceless %}{{ widgetGlobal('MenuItemCompanyWidgetPlugin') }}{% endspaceless %}</li>
-                {% endif %}
+                {% widget 'CompanyMenuItemWidget' only %}
+                    {% block body %}
+                        <li class="menu__item">{% spaceless %}{{ parent() }}{% endspaceless %}</li>
+                    {% endblock %}
+                {% elsewidget 'MenuItemCompanyWidgetPlugin' only %} {# @deprecated Use CompanyMenuItemWidget instead. #}
+                    {% block body %}
+                        <li class="menu__item">{% spaceless %}{{ parent() }}{% endspaceless %}</li>
+                    {% endblock %}
+                {% endwidget %}
                 <li class="menu__item"><a href="{{ url('wishlist/overview') }}">{{ 'wishlist.wishlist'|trans }}</a></li>
                 <li class="menu__item"><a href="{{ url('logout') }}">{{ 'customer.logout'|trans }}</a></li>
             {% else %}

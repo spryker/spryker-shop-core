@@ -79,7 +79,9 @@
                 </a>
             {% endif %}
 
-            {{ widget('CartNoteQuoteItemWidgetPlugin', data.cartItem, data.cart) }}
+            {% widget 'CartItemNoteFormWidget' args [data.cartItem, data.cart] only %}
+            {% elsewidget 'CartNoteQuoteItemWidgetPlugin' args [data.cartItem, data.cart] only %} {# @deprecated Use CartItemNoteFormWidget instead. #}
+            {% endwidget %}
         </div>
     </div>
 {% endblock %}

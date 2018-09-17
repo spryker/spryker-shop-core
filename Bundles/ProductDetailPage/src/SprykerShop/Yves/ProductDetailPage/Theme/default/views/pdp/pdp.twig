@@ -54,5 +54,7 @@
 
     {{ widget('ProductReviewWidgetPlugin', data.product.idProductAbstract) }}
     {{ widget('SimilarProductsWidgetPlugin', data.product) }}
-    {{ widget('ProductCmsBlockWidgetPlugin', data.product) }}
+    {% widget 'ProductWithCmsBlockWidget' args [data.product] only %}
+    {% elsewidget 'ProductCmsBlockWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductWithCmsBlockWidget instead. #}
+    {% endwidget %}
 {% endblock %}

@@ -1,0 +1,7 @@
+{% extends template('widget') %}
+
+{% block body %}
+    <a href="{{ path('customer/order/reorder', {'idOrder': _widget.order.idSalesOrder}) }}">
+        {{ 'customer.order.reorder' | trans }}
+    </a>
+{% endblock %}
