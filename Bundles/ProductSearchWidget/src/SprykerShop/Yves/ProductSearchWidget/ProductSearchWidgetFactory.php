@@ -20,12 +20,4 @@ class ProductSearchWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_PRODUCT_PAGE_SEARCH);
     }
-
-    /**
-     * @return \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToLocaleClientInterface
-     */
-    public function getLocaleClient(): ProductSearchWidgetToLocaleClientInterface
-    {
-        return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_LOCALE);
-    }
 }

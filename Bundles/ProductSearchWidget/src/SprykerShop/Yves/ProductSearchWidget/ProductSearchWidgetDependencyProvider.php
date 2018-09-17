@@ -15,7 +15,6 @@ use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetTo
 class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRODUCT_PAGE_SEARCH = 'CLIENT_PRODUCT_PAGE_SEARCH';
-    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -26,7 +25,6 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideDependencies($container);
         $container = $this->addProductPageSearchClient($container);
-        $container = $this->addLocaleClient($container);
 
         return $container;
     }
@@ -41,22 +39,6 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
         $container[static::CLIENT_PRODUCT_PAGE_SEARCH] = function (Container $container) {
             return new ProductSearchWidgetToProductPageSearchClientBridge(
                 $container->getLocator()->productPageSearch()->client()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addLocaleClient(Container $container): Container
-    {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
-            return new ProductSearchWidgetToLocaleClientBridge(
-                $container->getLocator()->locale()->client()
             );
         };
 

@@ -49,11 +49,6 @@ class ProductConcreteSearchController extends AbstractController
     {
         $productConcreteCriteriaFilterTransfer = new ProductConcreteCriteriaFilterTransfer();
 
-        $localeName = $this->getFactory()
-            ->getLocaleClient()
-            ->getCurrentLocale();
-
-        $productConcreteCriteriaFilterTransfer->setLocale((new LocaleTransfer())->setLocaleName($localeName));
         $productConcreteCriteriaFilterTransfer->setSearchString($request->get(static::PARAM_SEARCH_STRING));
         $productConcreteCriteriaFilterTransfer->setLimit($request->get(static::PARAM_LIMIT));
 
