@@ -15,6 +15,8 @@ interface ProductMeasurementUnitWidgetPluginInterface extends WidgetPluginInterf
     public const NAME = 'ProductMeasurementUnitWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isAddToCartDisabled
      * @param array $quantityOptions

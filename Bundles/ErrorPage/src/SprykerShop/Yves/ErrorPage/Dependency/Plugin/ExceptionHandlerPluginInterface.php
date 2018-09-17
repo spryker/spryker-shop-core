@@ -12,6 +12,8 @@ use Symfony\Component\Debug\Exception\FlattenException;
 interface ExceptionHandlerPluginInterface
 {
     /**
+     * @api
+     *
      * @param int $statusCode
      *
      * @return bool
@@ -19,6 +21,8 @@ interface ExceptionHandlerPluginInterface
     public function canHandle($statusCode);
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\Debug\Exception\FlattenException $exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
