@@ -14,9 +14,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class AgentWidget extends AbstractWidget
 {
-    /**
-     * @return void
-     */
     public function __construct()
     {
         $isLoggedIn = $this->getFactory()->getAgentClient()->isLoggedIn();

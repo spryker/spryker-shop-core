@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductBundleWidget\Plugin\MultiCartWidget;
+namespace SprykerShop\Yves\ProductBundleWidget\Widget;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
