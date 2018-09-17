@@ -5,19 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductRelationWidget\Plugin\CartPage;
+namespace SprykerShop\Yves\ProductRelationWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductRelationWidget\UpSellingProductsWidgetPluginInterface;
-use SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget instead.
- *
  * @method \SprykerShop\Yves\ProductRelationWidget\ProductRelationWidgetFactory getFactory()
  */
-class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSellingProductsWidgetPluginInterface
+class UpSellingProductsWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -37,7 +33,7 @@ class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSe
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'UpSellingProductsWidget';
     }
 
     /**
@@ -45,7 +41,7 @@ class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSe
      */
     public static function getTemplate(): string
     {
-        return UpSellingProductsWidget::getTemplate();
+        return '@ProductRelationWidget/views/cart-similar-products-carousel/cart-similar-products-carousel.twig';
     }
 
     /**

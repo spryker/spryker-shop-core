@@ -5,17 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductOptionWidget\Plugin\CartPage;
+namespace SprykerShop\Yves\ProductOptionWidget\Widget;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductOptionWidget\CartItemProductOptionWidgetPluginInterface;
-use SprykerShop\Yves\ProductOptionWidget\Widget\CartItemProductOptionWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
-/**
- * @depricated Use \SprykerShop\Yves\ProductOptionWidget\Widget\CartItemProductOptionWidget instead.
- */
-class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements CartItemProductOptionWidgetPluginInterface
+class CartItemProductOptionWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -32,7 +27,7 @@ class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'CartItemProductOptionWidget';
     }
 
     /**
@@ -40,6 +35,6 @@ class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getTemplate(): string
     {
-        return CartItemProductOptionWidget::getTemplate();
+        return '@ProductOptionWidget/views/option-display/option-display.twig';
     }
 }

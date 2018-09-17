@@ -107,7 +107,9 @@
         </div>
     {% endif %}
 
-    {{ widget('UpSellingProductsWidgetPlugin', data.cart) }}
+    {% widget 'UpSellingProductsWidget' args [data.cart] only %}
+    {% elsewidget 'UpSellingProductsWidgetPlugin' args [data.cart] only %} {# @deprecated Use UpSellingProductsWidget instead. #}
+    {% endwidget %}
     {% widget 'MultiCartListWidget' args [data.cart] only %}
     {% elsewidget 'MultiCartListWidgetPlugin' args [data.cart] only %} {# @deprecated Use MultiCartListWidget instead. #}
     {% endwidget %}

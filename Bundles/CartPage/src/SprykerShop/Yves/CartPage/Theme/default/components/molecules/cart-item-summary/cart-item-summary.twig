@@ -21,7 +21,9 @@
 
     {% if data.cartItem.productOptions | length > 0 %}
         <li class="list__item text-small">
-            {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }}
+            {% widget 'CartItemProductOptionWidget' args [data.cartItem] only %}
+            {% elsewidget 'CartItemProductOptionWidgetPlugin' args [data.cartItem] only %} {# @deprecated Use CartItemProductOptionWidget instead. #}
+            {% endwidget %}
         </li>
     {% endif %}
 

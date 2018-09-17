@@ -5,19 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductPackagingUnitWidget\Plugin\CartPage;
+namespace SprykerShop\Yves\ProductPackagingUnitWidget\Widget;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductPackagingUnitWidget\CartProductPackagingUnitWidgetPluginInterface;
-use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\CartProductPackagingUnitWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\CartProductPackagingUnitWidget instead.
- *
  * @method \SprykerShop\Yves\ProductPackagingUnitWidget\ProductPackagingUnitWidgetFactory getFactory()
  */
-class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements CartProductPackagingUnitWidgetPluginInterface
+class CartProductPackagingUnitWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -39,7 +35,7 @@ class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implemen
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'CartProductPackagingUnitWidget';
     }
 
     /**
@@ -51,6 +47,6 @@ class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implemen
      */
     public static function getTemplate(): string
     {
-        return CartProductPackagingUnitWidget::getTemplate();
+        return '@ProductPackagingUnitWidget/views/cart-product-packaging-unit/cart-product-packaging-unit.twig';
     }
 }

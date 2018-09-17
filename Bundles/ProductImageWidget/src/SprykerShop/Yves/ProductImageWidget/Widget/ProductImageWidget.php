@@ -5,17 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductImageWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ProductImageWidget\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductImageWidget\ProductImageWidgetPluginInterface;
-use SprykerShop\Yves\ProductImageWidget\Widget\ProductImageWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
-/**
- * @depricated Use \SprykerShop\Yves\ProductImageWidget\Widget\ProductImageWidget instead.
- */
-class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductImageWidgetPluginInterface
+class ProductImageWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -32,7 +27,7 @@ class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductIm
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductImageWidget';
     }
 
     /**
@@ -40,6 +35,6 @@ class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductIm
      */
     public static function getTemplate(): string
     {
-        return ProductImageWidget::getTemplate();
+        return '@ProductImageWidget/views/image-slider/image-slider.twig';
     }
 }

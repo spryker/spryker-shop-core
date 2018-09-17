@@ -5,18 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductGroupWidget\Plugin\ShopUi;
+namespace SprykerShop\Yves\ProductGroupWidget\Widget;
 
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget;
-use SprykerShop\Yves\ShopUi\Dependency\Plugin\ProductGroupWidget\ProductGroupWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget instead.
- *
  * @method \SprykerShop\Yves\ProductGroupWidget\ProductGroupWidgetFactory getFactory()
  */
-class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGroupWidgetPluginInterface
+class ProductGroupWidget extends AbstractWidget
 {
     /**
      * @param int $idProductAbstract
@@ -39,7 +35,7 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductGroupWidget';
     }
 
     /**
@@ -49,7 +45,7 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public static function getTemplate(): string
     {
-        return ProductGroupWidget::getTemplate();
+        return '@ProductGroupWidget/views/product-group/product-group.twig';
     }
 
     /**

@@ -5,19 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductPackagingUnitWidget\Plugin\CustomerPage;
+namespace SprykerShop\Yves\ProductPackagingUnitWidget\Widget;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CustomerPage\Dependency\Plugin\ProductPackagingUnit\OrderDetailProductPackagingUnitWidgetPluginInterface;
-use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\OrderDetailProductPackagingUnitWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\OrderDetailProductPackagingUnitWidget instead.
- *
  * @method \SprykerShop\Yves\ProductPackagingUnitWidget\ProductPackagingUnitWidgetFactory getFactory()
  */
-class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements OrderDetailProductPackagingUnitWidgetPluginInterface
+class OrderDetailProductPackagingUnitWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -41,7 +37,7 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'OrderDetailProductPackagingUnitWidget';
     }
 
     /**
@@ -53,6 +49,6 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
      */
     public static function getTemplate(): string
     {
-        return OrderDetailProductPackagingUnitWidget::getTemplate();
+        return '@ProductPackagingUnitWidget/views/order-detail-product-packaging-unit/order-detail-product-packaging-unit.twig';
     }
 }

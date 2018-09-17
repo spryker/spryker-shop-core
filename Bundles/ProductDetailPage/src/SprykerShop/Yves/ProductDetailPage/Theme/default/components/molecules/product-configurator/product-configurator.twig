@@ -48,7 +48,9 @@
     {% endif %}
 
     {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
-    {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
+    {% widget 'ProductGroupWidget' args [data.product.idProductAbstract] only %}
+    {% elsewidget 'ProductGroupWidgetPlugin' args [data.product.idProductAbstract] only %} {# @deprecated Use ProductGroupWidget instead. #}
+    {% endwidget %}
 
     {% embed molecule('variant-configurator', 'ProductDetailPage') with {
         data: {
@@ -62,13 +64,15 @@
 
     <hr />
     <form method="POST" action="/cart/add/{{sku}}">
-        {{ widget('ProductOptionWidgetPlugin', data.product) }}
+        {% widget 'ProductOptionWidget' args [data.product] only %}
+        {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionWidget instead. #}
+        {% endwidget %}
 
-        {% if widgetExists('ProductPackagingUnitWidgetPlugin') %}
-            {{ widget('ProductPackagingUnitWidgetPlugin', data.product, isDisabled, options) }}
-        {% elseif widgetExists('ProductMeasurementUnitWidgetPlugin') %}
-            {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, isDisabled, options) }}
-        {% else %}
+        {% widget 'ProductPackagingUnitWidget' args [data.product, isDisabled, options] only %}
+        {% elsewidget 'ProductPackagingUnitWidgetPlugin' args [data.product, isDisabled, options] only %} {# @deprecated Use ProductPackagingUnitWidget instead. #}
+        {% elsewidget 'ProductMeasurementUnitWidget' args [data.product, isDisabled, options] only %}
+        {% elsewidget 'ProductMeasurementUnitWidgetPlugin' args [data.product, isDisabled, options] only %} {# @deprecated Use ProductMeasurementUnitWidget instead. #}
+        {% nowidget %}
             <div class="grid grid--bottom grid--justify">
                 <div class="col col--sm-5">
                     <label>
@@ -97,7 +101,7 @@
                     </button>
                 </div>
             </div>
-        {% endif %}
+        {% endwidget %}
 
         {% widget 'AddToMultiCartWidget' args [data.product, isDisabled] only %}
         {% elsewidget 'MultiCartWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}

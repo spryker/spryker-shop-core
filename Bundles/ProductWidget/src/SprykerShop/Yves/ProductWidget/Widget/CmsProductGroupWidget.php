@@ -5,19 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductWidget\Plugin\CmsContentWidget;
+namespace SprykerShop\Yves\ProductWidget\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CmsContentWidgetProductConnector\Dependency\Plugin\ProductWidget\ProductGroupWidgetPluginInterface;
-use SprykerShop\Yves\ProductWidget\Widget\CmsProductGroupWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductWidget\Widget\CmsProductGroupWidget instead.
- *
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */
-class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGroupWidgetPluginInterface
+class CmsProductGroupWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -36,7 +32,7 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'CmsProductGroupWidget';
     }
 
     /**
@@ -44,6 +40,6 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public static function getTemplate(): string
     {
-        return CmsProductGroupWidget::getTemplate();
+        return '@ProductWidget/views/cms-product-group/cms-product-group.twig';
     }
 }

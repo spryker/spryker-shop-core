@@ -8,9 +8,12 @@
 namespace SprykerShop\Yves\ProductDiscontinuedWidget\Plugin\ShoppingListPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductDiscontinuedWidget\ProductDiscontinuedWidgetPluginInterface;
 
 /**
+ * @depricated Use \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductDiscontinuedWidget\ProductDiscontinuedWidgetFactory getFactory()
  */
 class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements ProductDiscontinuedWidgetPluginInterface
@@ -51,6 +54,6 @@ class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public static function getTemplate(): string
     {
-        return '@ProductDiscontinuedWidget/views/wishlist-product-discontinued/wishlist-product-discontinued.twig';
+        return ProductDiscontinuedWidget::getTemplate();
     }
 }

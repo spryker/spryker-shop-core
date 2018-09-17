@@ -28,7 +28,9 @@
         }
     } only %}
         {% block labels %}
-            {{ widget('ProductLabelWidgetPlugin', _widget.product.id_product_labels) }}
+            {% widget 'ProductConcreteLabelWidget' args [_widget.product.id_product_labels] only %}
+            {% elsewidget 'ProductLabelWidgetPlugin' args [_widget.product.id_product_labels] only %} {# @deprecated Use ProductConcreteLabelWidget instead. #}
+            {% endwidget %}
         {% endblock %}
 
         {% block rating %}

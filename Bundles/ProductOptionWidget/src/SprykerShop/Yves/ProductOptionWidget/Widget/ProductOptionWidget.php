@@ -5,20 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductOptionWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ProductOptionWidget\Widget;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductOptionWidget\ProductOptionWidgetPluginInterface;
-use SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionWidget instead.
- *
  * @method \SprykerShop\Yves\ProductOptionWidget\ProductOptionWidgetFactory getFactory()
  */
-class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductOptionWidgetPluginInterface
+class ProductOptionWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -35,7 +31,7 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductOptionWidget';
     }
 
     /**
@@ -43,7 +39,7 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
      */
     public static function getTemplate(): string
     {
-        return ProductOptionWidget::getTemplate();
+        return '@ProductOptionWidget/views/option-configurator/option-configurator.twig';
     }
 
     /**

@@ -5,19 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductLabelWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ProductLabelWidget\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductLabelWidget\ProductLabelWidgetPluginInterface;
-use SprykerShop\Yves\ProductLabelWidget\Widget\ProductAbstractLabelWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductLabelWidget\Widget\ProductAbstractLabelWidget instead.
- *
  * @method \SprykerShop\Yves\ProductLabelWidget\ProductLabelWidgetFactory getFactory()
  */
-class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLabelWidgetPluginInterface
+class ProductAbstractLabelWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -36,7 +32,7 @@ class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements P
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductAbstractLabelWidget';
     }
 
     /**
@@ -44,7 +40,7 @@ class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements P
      */
     public static function getTemplate(): string
     {
-        return ProductAbstractLabelWidget::getTemplate();
+        return '@ProductLabelWidget/views/product-label-group/product-label-group.twig';
     }
 
     /**

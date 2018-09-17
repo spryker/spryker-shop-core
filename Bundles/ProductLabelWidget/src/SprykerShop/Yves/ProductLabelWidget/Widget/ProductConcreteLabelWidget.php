@@ -5,18 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductLabelWidget\Plugin\ProductWidget;
+namespace SprykerShop\Yves\ProductLabelWidget\Widget;
 
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductLabelWidget\Widget\ProductConcreteLabelWidget;
-use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductLabelWidget\ProductLabelWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductLabelWidget\Widget\ProductConcreteLabelWidget instead.
- *
  * @method \SprykerShop\Yves\ProductLabelWidget\ProductLabelWidgetFactory getFactory()
  */
-class ProductLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLabelWidgetPluginInterface
+class ProductConcreteLabelWidget extends AbstractWidget
 {
     /**
      * @param array $idProductLabels
@@ -35,7 +31,7 @@ class ProductLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLa
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductConcreteLabelWidget';
     }
 
     /**
@@ -43,7 +39,7 @@ class ProductLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLa
      */
     public static function getTemplate(): string
     {
-        return ProductConcreteLabelWidget::getTemplate();
+        return '@ProductLabelWidget/views/product-label-group/product-label-group.twig';
     }
 
     /**

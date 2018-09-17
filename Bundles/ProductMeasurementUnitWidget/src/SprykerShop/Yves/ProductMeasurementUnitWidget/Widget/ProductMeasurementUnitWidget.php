@@ -5,21 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Widget;
 
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetPluginInterface;
-use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\ProductMeasurementUnitWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\ProductMeasurementUnitWidget instead.
- *
  * @method \SprykerShop\Yves\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetFactory getFactory()
  */
-class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements ProductMeasurementUnitWidgetPluginInterface
+class ProductMeasurementUnitWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -103,9 +99,9 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductMeasurementUnitWidget';
     }
 
     /**
@@ -115,9 +111,9 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return ProductMeasurementUnitWidget::getTemplate();
+        return '@ProductMeasurementUnitWidget/views/pdp-product-measurement-unit/pdp-product-measurement-unit.twig';
     }
 
     /**
