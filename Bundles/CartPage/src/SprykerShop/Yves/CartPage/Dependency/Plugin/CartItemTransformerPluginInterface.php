@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CartItemTransformerPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer[] $cartItems
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

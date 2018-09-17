@@ -16,6 +16,8 @@ interface ProductRatingFilterWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'ProductRatingFilterWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeSearchResultTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

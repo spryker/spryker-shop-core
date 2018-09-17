@@ -12,6 +12,8 @@ interface MultiCartListWidgetPluginInterface
     public const NAME = 'MultiCartListWidgetPlugin';
 
     /**
+     * @api
+     *
      * @return void
      */
     public function initialize(): void;
