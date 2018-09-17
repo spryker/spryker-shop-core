@@ -8,11 +8,18 @@ export default class FormDataInjector extends Component {
         this.destinationForm = <HTMLFormElement>document.querySelector(this.destinationFormSelector);
         this.fieldsToInject = <HTMLElement[]>Array.from(document.querySelectorAll(this.fieldsSelector));
 
+        this.checkForm();
         this.mapEvents();
     }
 
     protected mapEvents(): void {
         this.destinationForm.addEventListener('submit', (event: Event) => this.onSubmit(event), false);
+    }
+
+    private checkForm(): void {
+        if (!this.destinationForm.length) {
+            this.destinationForm = this.closest('form');
+        }
     }
 
     private onSubmit(event: Event): void {
