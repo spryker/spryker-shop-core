@@ -7,14 +7,9 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\Form\FormInterface;
@@ -27,12 +22,9 @@ use Symfony\Component\HttpFoundation\Request;
 class ShoppingListOverviewController extends AbstractShoppingListController
 {
     protected const PARAM_SHOPPING_LISTS = 'shoppingLists';
-    protected const ROUTE_PARAM_ID_SHOPPING_LIST = 'idShoppingList';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_UPDATED = 'customer.account.shopping_list.updated';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS = 'customer.account.shopping_list.delete.success';
-    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_FAILED = 'customer.account.shopping_list.clear.failed';
-    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS = 'customer.account.shopping_list.clear.success';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_NOT_FOUND = 'customer.account.shopping_list.items.added_to_cart.not_found';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_FAILED = 'customer.account.shopping_list.items.added_to_cart.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART = 'customer.account.shopping_list.items.added_to_cart';
@@ -172,74 +164,6 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View
-     */
-    public function deleteConfirmAction(Request $request): View
-    {
-        $response = $this->executeDeleteConfirmAction($request);
-
-        return $this->view($response, [], '@ShoppingListPage/views/shopping-list-overview-delete/shopping-list-overview-delete.twig');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function executeDeleteConfirmAction(Request $request): array
-    {
-        $customerTransfer = $this->getCustomer();
-
-        $shoppingListTransfer = (new ShoppingListTransfer)
-            ->setIdShoppingList((int)$request->get(static::ROUTE_PARAM_ID_SHOPPING_LIST))
-            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
-
-        $shoppingListTransfer = $this->getFactory()
-            ->getShoppingListClient()
-            ->getShoppingList($shoppingListTransfer);
-
-        return [
-            'shoppingList' => $shoppingListTransfer,
-            'sharedCompanyUsers' => $this->getSharedCompanyUsers($shoppingListTransfer, $customerTransfer),
-            'sharedCompanyBusinessUnits' => $this->getSharedCompanyBusinessUnits($shoppingListTransfer, $customerTransfer),
-            'backUrl' => $request->headers->get('referer'),
-        ];
-    }
-
-    /**
-     * @param int $idShoppingList
-     *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function clearAction(int $idShoppingList)
-    {
-        $shoppingListTransfer = new ShoppingListTransfer();
-        $shoppingListTransfer
-            ->setIdShoppingList($idShoppingList)
-            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
-
-        $shoppingListResponseTransfer = $this->getFactory()
-            ->getShoppingListClient()
-            ->clearShoppingList($shoppingListTransfer);
-
-        if (!$shoppingListResponseTransfer->getIsSuccess()) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_FAILED);
-
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
-                static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
-            ]);
-        }
-
-        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS);
-
-        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
-            static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
-        ]);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addShoppingListToCartAction(Request $request): RedirectResponse
@@ -301,7 +225,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         if ($shareShoppingListForm->isSubmitted() && $shareShoppingListForm->isValid()) {
             $shoppingListShareResponseTransfer = $this->getFactory()
                 ->getShoppingListClient()
-                ->updateShareShoppingList($shareShoppingListForm->getData());
+                ->updateShoppingListSharedEntities($shareShoppingListForm->getData());
 
             if ($shoppingListShareResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_SHARE_SHOPPING_LIST_SUCCESSFUL);
@@ -414,65 +338,5 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         }
 
         return new ShoppingListTransfer();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUserTransfer[]
-     */
-    protected function getSharedCompanyUsers(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): ArrayObject
-    {
-        $sharedCompanyUserIds = [];
-
-        foreach ($shoppingListTransfer->getSharedCompanyUsers() as $shoppingListCompanyUserTransfer) {
-            $sharedCompanyUserIds[] = $shoppingListCompanyUserTransfer->getIdCompanyUser();
-        }
-
-        if (!$sharedCompanyUserIds) {
-            return new ArrayObject();
-        }
-
-        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
-            ->setIdCompany($customerTransfer->getCompanyUserTransfer()->getFkCompany())
-            ->setCompanyUserIds($sharedCompanyUserIds);
-
-        $companyUserTransfers = $this->getFactory()
-            ->getCompanyUserClient()
-            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer)
-            ->getCompanyUsers();
-
-        return $companyUserTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]
-     */
-    protected function getSharedCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): ArrayObject
-    {
-        $sharedCompanyBusinessUnitIds = [];
-
-        foreach ($shoppingListTransfer->getSharedCompanyBusinessUnits() as $shoppingListCompanyBusinessUnitTransfer) {
-            $sharedCompanyBusinessUnitIds[] = $shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit();
-        }
-
-        if (!$sharedCompanyBusinessUnitIds) {
-            return new ArrayObject();
-        }
-
-        $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
-            ->setIdCompany($customerTransfer->getCompanyUserTransfer()->getFkCompany())
-            ->setCompanyBusinessUnitIds($sharedCompanyBusinessUnitIds);
-
-        $companyBusinessUnitTransfers = $this->getFactory()
-            ->getCompanyBusinessUnitClient()
-            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer)
-            ->getCompanyBusinessUnits();
-
-        return $companyBusinessUnitTransfers;
     }
 }

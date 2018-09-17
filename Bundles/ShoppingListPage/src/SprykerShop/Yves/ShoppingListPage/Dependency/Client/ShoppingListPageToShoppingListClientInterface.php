@@ -49,7 +49,7 @@ interface ShoppingListPageToShoppingListClientInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
+    public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
@@ -59,7 +59,7 @@ interface ShoppingListPageToShoppingListClientInterface
     /**
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
-    public function getShoppingListPermissionGroupCollection(): ShoppingListPermissionGroupCollectionTransfer;
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer

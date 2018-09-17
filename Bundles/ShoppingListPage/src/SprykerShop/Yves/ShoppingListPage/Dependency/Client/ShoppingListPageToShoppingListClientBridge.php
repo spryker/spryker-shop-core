@@ -71,9 +71,9 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->shoppingListClient->updateShareShoppingList($shoppingListTransfer);
+        return $this->shoppingListClient->updateShoppingListSharedEntities($shoppingListTransfer);
     }
 
     /**
@@ -87,7 +87,7 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
     /**
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
-    public function getShoppingListPermissionGroupCollection(): ShoppingListPermissionGroupCollectionTransfer
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
     {
         return $this->shoppingListClient->getShoppingListPermissionGroups();
     }
