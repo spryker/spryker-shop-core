@@ -9,9 +9,12 @@ namespace SprykerShop\Yves\ProductCategoryWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductCategoryWidget\Widget\ProductCategoryWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductCategoryWidget\ProductCategoryWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductCategoryWidget\Widget\ProductCategoryWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductCategoryWidget\ProductCategoryWidgetFactory getFactory()
  */
 class ProductCategoryWidgetPlugin extends AbstractWidgetPlugin implements ProductCategoryWidgetPluginInterface
@@ -29,7 +32,7 @@ class ProductCategoryWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public static function getTemplate(): string
     {
-        return '@ProductCategoryWidget/views/product-detail-page-breadcrumb/product-detail-page-breadcrumb.twig';
+        return ProductCategoryWidget::getTemplate();
     }
 
     /**

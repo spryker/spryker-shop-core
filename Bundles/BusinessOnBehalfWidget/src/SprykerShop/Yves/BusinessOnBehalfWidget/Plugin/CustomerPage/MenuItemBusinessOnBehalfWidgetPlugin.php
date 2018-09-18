@@ -12,7 +12,7 @@ use SprykerShop\Yves\BusinessOnBehalfWidget\Widget\BusinessOnBehalfStatusWidget;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\BusinessOnBehalfWidget\MenuItemBusinessOnBehalfWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\BusinessOnBehalfWidget\Widget\BusinessOnBehalfStatusWidget::__construct instead.
+ * @deprecated Use \SprykerShop\Yves\BusinessOnBehalfWidget\Widget\BusinessOnBehalfStatusWidget instead.
  *
  * @method \SprykerShop\Yves\BusinessOnBehalfWidget\BusinessOnBehalfWidgetFactory getFactory()
  */

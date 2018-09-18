@@ -8,9 +8,12 @@
 namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductWidget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductReviewWidget\Widget\ProductReviewDisplayWidget;
 use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductReviewWidget\ProductReviewWidgetPluginInterface;
 
 /**
+ * @depricated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductReviewDisplayWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
 class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductReviewWidgetPluginInterface
@@ -40,7 +43,7 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public static function getTemplate(): string
     {
-        return '@ProductReviewWidget/views/product-review-display/product-review-display.twig';
+        return ProductReviewDisplayWidget::getTemplate();
     }
 
     /**

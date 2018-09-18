@@ -10,9 +10,12 @@ namespace SprykerShop\Yves\MultiCartWidget\Plugin\ShopUi;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\MultiCartWidget\Widget\MiniCartWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\MultiCart\MiniCartWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\MiniCartWidget instead.
+ *
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
 class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidgetPluginInterface
@@ -54,7 +57,7 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/views/mini-cart/mini-cart.twig';
+        return MiniCartWidget::getTemplate();
     }
 
     /**

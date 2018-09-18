@@ -10,7 +10,11 @@ namespace SprykerShop\Yves\ProductOptionWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductOptionWidget\CartItemProductOptionWidgetPluginInterface;
+use SprykerShop\Yves\ProductOptionWidget\Widget\CartItemProductOptionWidget;
 
+/**
+ * @depricated Use \SprykerShop\Yves\ProductOptionWidget\Widget\CartItemProductOptionWidget instead.
+ */
 class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements CartItemProductOptionWidgetPluginInterface
 {
     /**
@@ -36,6 +40,6 @@ class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getTemplate(): string
     {
-        return '@ProductOptionWidget/views/option-display/option-display.twig';
+        return CartItemProductOptionWidget::getTemplate();
     }
 }

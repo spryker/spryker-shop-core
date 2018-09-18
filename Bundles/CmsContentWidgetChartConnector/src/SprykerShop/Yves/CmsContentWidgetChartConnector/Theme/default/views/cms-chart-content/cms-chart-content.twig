@@ -6,6 +6,8 @@
 } %}
 {% block body %}
     {% if data.chartPluginName is not empty %}
-        {{ widget('ChartWidgetPlugin', data.chartPluginName, data.dataIdentifier) }}
+        {% widget 'ChartWidget' args [data.chartPluginName, data.dataIdentifier] only %}
+        {% elsewidget 'ChartWidgetPlugin' args [data.chartPluginName, data.dataIdentifier] only %} {# @deprecated Use ChartWidget instead. #}
+        {% endwidget %}
     {% endif %}
 {% endblock %}

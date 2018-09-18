@@ -9,9 +9,12 @@ namespace SprykerShop\Yves\MultiCartWidget\Plugin\QuickOrderPage;
 
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\MultiCartWidget\Widget\QuickOrderPageWidget;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Plugin\MultiCartWidget\MultiCartListWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\QuickOrderPageWidget instead.
+ *
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
 class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCartListWidgetPluginInterface
@@ -51,7 +54,7 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/views/quick-order-page/quick-order-page.twig';
+        return QuickOrderPageWidget::getTemplate();
     }
 
     /**

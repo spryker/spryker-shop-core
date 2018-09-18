@@ -13,8 +13,11 @@ use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductPackagingUnitWidget\ProductPackagingUnitWidgetPluginInterface;
+use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\ProductPackagingUnitWidget;
 
 /**
+ * @depricated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\ProductPackagingUnitWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductPackagingUnitWidget\ProductPackagingUnitWidgetFactory getFactory()
  */
 class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements ProductPackagingUnitWidgetPluginInterface
@@ -40,7 +43,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
      */
     public static function getTemplate()
     {
-        return '@ProductPackagingUnitWidget/views/pdp-product-packaging-unit/pdp-product-packaging-unit.twig';
+        return ProductPackagingUnitWidget::getTemplate();
     }
 
     /**

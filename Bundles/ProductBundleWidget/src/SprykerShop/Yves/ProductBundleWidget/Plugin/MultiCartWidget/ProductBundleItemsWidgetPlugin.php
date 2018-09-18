@@ -12,8 +12,11 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\ProductBundleWidget\ProductBundleItemsWidgetPluginInterface;
+use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemsMultiCartItemsListWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemsMultiCartItemsListWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */
 class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements ProductBundleItemsWidgetPluginInterface
@@ -93,6 +96,6 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate()
     {
-        return '@ProductBundleWidget/views/multi-cart-items-list/multi-cart-items-list.twig';
+        return ProductBundleItemsMultiCartItemsListWidget::getTemplate();
     }
 }

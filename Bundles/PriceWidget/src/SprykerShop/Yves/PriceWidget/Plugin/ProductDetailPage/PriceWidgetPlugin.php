@@ -9,9 +9,12 @@ namespace SprykerShop\Yves\PriceWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\PriceWidget\Widget\PriceWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\PriceWidget\PriceWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\PriceWidget\Widget\PriceWidget instead.
+ *
  * @method \SprykerShop\Yves\PriceWidget\PriceWidgetFactory getFactory()
  */
 class PriceWidgetPlugin extends AbstractWidgetPlugin implements PriceWidgetPluginInterface
@@ -29,7 +32,7 @@ class PriceWidgetPlugin extends AbstractWidgetPlugin implements PriceWidgetPlugi
      */
     public static function getTemplate(): string
     {
-        return '@PriceWidget/views/price/price.twig';
+        return PriceWidget::getTemplate();
     }
 
     /**

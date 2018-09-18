@@ -9,9 +9,12 @@ namespace SprykerShop\Yves\ProductAlternativeWidget\Plugin\WishlistPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductAlternativeWidget\Widget\WishlistProductAlternativeWidget;
 use SprykerShop\Yves\WishlistPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductAlternativeWidget\Widget\WishlistProductAlternativeWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeWidgetFactory getFactory()
  */
 class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements ProductAlternativeWidgetPluginInterface
@@ -51,7 +54,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate(): string
     {
-        return '@ProductAlternativeWidget/views/wishlist-product-alternative/wishlist-product-alternative.twig';
+        return WishlistProductAlternativeWidget::getTemplate();
     }
 
     /**

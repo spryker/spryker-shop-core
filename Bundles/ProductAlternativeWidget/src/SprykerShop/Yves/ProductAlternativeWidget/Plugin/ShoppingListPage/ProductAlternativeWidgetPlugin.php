@@ -10,9 +10,12 @@ namespace SprykerShop\Yves\ProductAlternativeWidget\Plugin\ShoppingListPage;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductAlternativeWidget\Widget\ShoppingListProductAlternativeWidget;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductAlternativeWidget\Widget\ShoppingListProductAlternativeWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeWidgetFactory getFactory()
  */
 class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements ProductAlternativeWidgetPluginInterface
@@ -52,7 +55,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate(): string
     {
-        return '@ProductAlternativeWidget/views/shopping-list-product-alternative/shopping-list-product-alternative.twig';
+        return ShoppingListProductAlternativeWidget::getTemplate();
     }
 
     /**

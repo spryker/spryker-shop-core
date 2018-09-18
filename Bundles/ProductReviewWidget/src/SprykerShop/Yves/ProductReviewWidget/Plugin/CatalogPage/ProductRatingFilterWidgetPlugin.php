@@ -10,9 +10,12 @@ namespace SprykerShop\Yves\ProductReviewWidget\Plugin\CatalogPage;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CatalogPage\Dependency\Plugin\ProductReviewWidget\ProductRatingFilterWidgetPluginInterface;
+use SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @depricated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
 class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements ProductRatingFilterWidgetPluginInterface
@@ -44,7 +47,7 @@ class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public static function getTemplate(): string
     {
-        return '@ProductReviewWidget/views/catalog-rating-filter/catalog-rating-filter.twig';
+        return ProductRatingFilterWidget::getTemplate();
     }
 
     /**

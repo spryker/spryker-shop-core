@@ -12,8 +12,11 @@ use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetPluginInterface;
+use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\ProductMeasurementUnitWidget;
 
 /**
+ * @depricated Use \SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\ProductMeasurementUnitWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetFactory getFactory()
  */
 class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements ProductMeasurementUnitWidgetPluginInterface
@@ -114,7 +117,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      */
     public static function getTemplate()
     {
-        return '@ProductMeasurementUnitWidget/views/pdp-product-measurement-unit/pdp-product-measurement-unit.twig';
+        return ProductMeasurementUnitWidget::getTemplate();
     }
 
     /**

@@ -10,9 +10,12 @@ namespace SprykerShop\Yves\ProductBarcodeWidget\Plugin\ShoppingList;
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductBarcodeWidget\Widget\ProductBarcodeWidget;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductBarcodeWidget\ProductBarcodeWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductBarcodeWidget\Widget\ProductBarcodeWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductBarcodeWidget\ProductBarcodeWidgetFactory getFactory()
  */
 class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements ProductBarcodeWidgetPluginInterface
@@ -41,7 +44,7 @@ class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements Product
      */
     public static function getTemplate(): string
     {
-        return '@ProductBarcodeWidget/views/barcode/barcode.twig';
+        return ProductBarcodeWidget::getTemplate();
     }
 
     /**

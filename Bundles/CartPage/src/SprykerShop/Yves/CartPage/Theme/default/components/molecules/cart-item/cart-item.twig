@@ -41,7 +41,9 @@
                 } only %}
             {% endif %}
 
-            {{ widget('ProductBundleItemsWidgetPlugin', data.cartItem, data.cart) }}
+            {% widget 'ProductBundleCartItemsListWidget' args [data.cartItem, data.cart] only %}
+            {% elsewidget 'ProductBundleItemsWidgetPlugin' args [data.cartItem, data.cart] only %} {# @deprecated Use ProductBundleCartItemsListWidget instead. #}
+            {% endwidget %}
 
             {% include molecule('cart-item-summary', 'CartPage') with {
                 data: {
@@ -55,6 +57,9 @@
 
         <div class="col col--sm-12 col--lg-4">
             {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }}
+            {% widget 'SummaryProductPackagingUnitWidget' args [data] only %}
+            {% elsewidget 'CartProductPackagingUnitWidgetPlugin' args [data] only %} {# @deprecated Use SummaryProductPackagingUnitWidget instead. #}
+            {% endwidget %}
 
             {% if data.cartItem.amountSalesUnit is empty %}
                 {% if canEditCart %}
@@ -79,7 +84,9 @@
                 </a>
             {% endif %}
 
-            {{ widget('CartNoteQuoteItemWidgetPlugin', data.cartItem, data.cart) }}
+            {% widget 'CartItemNoteFormWidget' args [data.cartItem, data.cart] only %}
+            {% elsewidget 'CartNoteQuoteItemWidgetPlugin' args [data.cartItem, data.cart] only %} {# @deprecated Use CartItemNoteFormWidget instead. #}
+            {% endwidget %}
         </div>
     </div>
 {% endblock %}

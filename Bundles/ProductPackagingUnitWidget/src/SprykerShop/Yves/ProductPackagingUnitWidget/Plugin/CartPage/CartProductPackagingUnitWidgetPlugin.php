@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\ProductPackagingUnitWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductPackagingUnitWidget\CartProductPackagingUnitWidgetPluginInterface;
+use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\CartProductPackagingUnitWidget;
 
 /**
+ * @depricated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\CartProductPackagingUnitWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductPackagingUnitWidget\ProductPackagingUnitWidgetFactory getFactory()
  */
 class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements CartProductPackagingUnitWidgetPluginInterface
@@ -34,7 +37,7 @@ class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implemen
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -46,8 +49,8 @@ class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implemen
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return '@ProductPackagingUnitWidget/views/cart-product-packaging-unit/cart-product-packaging-unit.twig';
+        return CartProductPackagingUnitWidget::getTemplate();
     }
 }

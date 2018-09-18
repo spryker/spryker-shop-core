@@ -9,7 +9,11 @@ namespace SprykerShop\Yves\ProductPackagingUnitWidget\Plugin\CheckoutPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\ProductPackagingUnit\SummaryProductPackagingUnitWidgetPluginInterface;
+use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\SummaryProductPackagingUnitWidget;
 
+/**
+ * @depricated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\SummaryProductPackagingUnitWidget instead.
+ */
 class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements SummaryProductPackagingUnitWidgetPluginInterface
 {
     /**
@@ -30,7 +34,7 @@ class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin imple
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -42,8 +46,8 @@ class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin imple
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return '@ProductPackagingUnitWidget/views/summary-product-packaging-unit/summary-product-packaging-unit.twig';
+        return SummaryProductPackagingUnitWidget::getTemplate();
     }
 }

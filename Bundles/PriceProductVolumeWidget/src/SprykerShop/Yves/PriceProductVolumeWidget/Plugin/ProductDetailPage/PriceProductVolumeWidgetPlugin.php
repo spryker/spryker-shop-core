@@ -10,9 +10,12 @@ namespace SprykerShop\Yves\PriceProductVolumeWidget\Plugin\ProductDetailPage;
 use Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\PriceProductVolumeWidget\Widget\PriceProductVolumeWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\VolumePriceProductWidget\PriceProductVolumeWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\PriceProductVolumeWidget\Widget instead.
+ *
  * @method \SprykerShop\Yves\PriceProductVolumeWidget\PriceProductVolumeWidgetFactory getFactory()
  */
 class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements PriceProductVolumeWidgetPluginInterface
@@ -53,7 +56,7 @@ class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements Pri
      */
     public static function getTemplate()
     {
-        return '@PriceProductVolumeWidget/views/volume-price-product-widget/volume-price-product.twig';
+        return PriceProductVolumeWidget::getTemplate();
     }
 
     /**

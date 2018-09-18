@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\ProductRelationWidget\Plugin\ProductDetailPage;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductRelationWidget\SimilarProductsWidgetPluginInterface;
+use SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget;
 
 /**
+ * @depricated Use \SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductRelationWidget\ProductRelationWidgetFactory getFactory()
  */
 class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements SimilarProductsWidgetPluginInterface
@@ -42,7 +45,7 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
      */
     public static function getTemplate(): string
     {
-        return '@ProductRelationWidget/views/pdp-similar-products-carousel/pdp-similar-products-carousel.twig';
+        return SimilarProductsWidget::getTemplate();
     }
 
     /**

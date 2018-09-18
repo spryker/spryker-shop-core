@@ -52,10 +52,18 @@
         {% elsewidget 'ShoppingListMenuItemWidgetPlugin' args [data.activePage, data.activeEntityId] only %} {# @deprecated Use ShoppingListMenuItemWidget instead. #}
         {% endwidget %}
 
-        {% if widgetGlobalExists('MenuItemBusinessOnBehalfWidgetPlugin') %}
-            <li class="menu__item menu__item--has-children-list {{macros.isActive('menuItemBusinessOnBehalfWidget', data.activePage)}}">
-                {{ widgetGlobal('MenuItemBusinessOnBehalfWidgetPlugin') }}
-            </li>
-        {% endif %}
+        {% widget 'BusinessOnBehalfStatusWidget' with {activePage: macros.isActive('menuItemBusinessOnBehalfWidget', data.activePage)} only %}
+            {% block body %}
+                <li class="menu__item menu__item--has-children-list {{ activePage }}">
+                    {{ parent() }}
+                </li>
+            {% endblock %}
+        {% elsewidget 'MenuItemBusinessOnBehalfWidgetPlugin' with {activePage: macros.isActive('menuItemBusinessOnBehalfWidget', data.activePage)} only %} {# @deprecated Use BusinessOnBehalfStatusWidget instead. #}
+            {% block body %}
+                <li class="menu__item menu__item--has-children-list {{ activePage }}">
+                    {{ parent() }}
+                </li>
+            {% endblock %}
+        {% endwidget %}
     </ul>
 {% endblock %}

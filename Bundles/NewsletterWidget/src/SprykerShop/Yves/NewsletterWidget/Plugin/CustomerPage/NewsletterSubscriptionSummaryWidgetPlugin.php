@@ -14,8 +14,11 @@ use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\NewsletterWidget\NewsletterSubscriptionSummaryWidgetPluginInterface;
+use SprykerShop\Yves\NewsletterWidget\Widget\NewsletterSubscriptionSummaryWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\NewsletterWidget\Widget\NewsletterSubscriptionSummaryWidget instead.
+ *
  * @method \SprykerShop\Yves\NewsletterWidget\NewsletterWidgetFactory getFactory()
  */
 class NewsletterSubscriptionSummaryWidgetPlugin extends AbstractWidgetPlugin implements NewsletterSubscriptionSummaryWidgetPluginInterface
@@ -43,7 +46,7 @@ class NewsletterSubscriptionSummaryWidgetPlugin extends AbstractWidgetPlugin imp
      */
     public static function getTemplate(): string
     {
-        return '@NewsletterWidget/views/newsletter-subscription-summary/newsletter-subscription-summary.twig';
+        return NewsletterSubscriptionSummaryWidget::getTemplate();
     }
 
     /**

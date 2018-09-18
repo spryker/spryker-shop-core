@@ -32,9 +32,9 @@
                 ({{ 'multi_cart_widget.cart.default' | trans }})
             {% endif %}
             <div>
-                {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
-                    {{ widget('ProductBundleItemCounterWidgetPlugin', data.cart) }}
-                {% else %}
+                {% widget 'ProductBundleItemCounterWidget' args [data.cart] only %}
+                {% elsewidget 'ProductBundleItemCounterWidgetPlugin' args [data.cart] only %} {# @deprecated Use ProductBundleItemCounterWidget instead. #}
+                {% nowidget %}
                     {% set label = (itemCount == 1)
                         ? 'multi_cart_widget.cart.item'
                         : 'multi_cart_widget.cart.items'
@@ -43,7 +43,7 @@
                     <span class="cart-items-quantity">
                       {{ itemCount }} {{ label | trans }}
                     </span>
-                {% endif %}
+                {% endwidget %}
 
                 {% widget 'SharedCartPermissionGroupWidget' args [data.cart] only %}
                 {% elsewidget 'SharedCartPermissionGroupWidgetPlugin' args [data.cart] only %} {# @deprecated Use SharedCartPermissionGroupWidget instead. #}
