@@ -17,25 +17,6 @@
     shoppingList: _view.shoppingListOverview.shoppingList,
     shoppingListCollection: _view.shoppingListOverview.shoppingLists,
     shoppingListItems: _view.shoppingListItems,
-    labels: {
-        addAllToCartLabel: 'customer.account.shopping_list.add_all_available_to_cart' | trans,
-        printShoppingList: 'customer.account.shopping_list.print_shopping_list' | trans,
-        productLabel: 'customer.account.shopping_list.product' | trans,
-        priceLabel: 'customer.account.shopping_list.price' | trans,
-        variantLabel: 'customer.account.shopping_list.overview.variant' | trans,
-        availabilityLabel: 'customer.account.shopping_list.availability' | trans,
-        itemAvailableLabel: 'customer.account.shopping_list.available' | trans,
-        itemNotAvailableLabel: 'customer.account.shopping_list.not_available' | trans,
-        shoppingListEmptyLabel: 'customer.account.shopping_list.empty' | trans,
-        quantityLabel: 'customer.account.shopping_list.quantity' | trans,
-        addItemToCartLabel: 'customer.account.shopping_list.add-to-cart' | trans,
-        removeItemFromShoppingListLabel: 'customer.account.shopping_list.remove' | trans,
-        actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
-        editLabel: 'customer.account.shopping_list.overview.edit' | trans,
-        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
-        shareLabel: 'customer.account.shopping_list.overview.share' | trans,
-        addSelectedItemsToCartLabel: 'customer.account.shopping_list.add_selected_items_to_cart' | trans
-    }
 } %}
 
 {% block customerNavigation %}
@@ -50,10 +31,16 @@
             </div>
             <div class="col">
                 {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
-                    <a class="button button--success" href="{{ url('shopping-list/update', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.editLabel }}</a>
-                    <a class="button button--success" href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">{{ data.labels.shareLabel }}</a>
+                    <a class="button button--success" href="{{ url('shopping-list/update', { idShoppingList: data.shoppingList.idShoppingList }) }}">
+                        {{ 'customer.account.shopping_list.overview.edit' | trans }}
+                    </a>
+                    <a class="button button--success" href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">
+                        {{ 'customer.account.shopping_list.overview.share' | trans }}
+                    </a>
                 {% endif %}
-                <a class="button button--success" href="{{ path('shopping-list/print', {idShoppingList: data.shoppingList.idShoppingList}) }}" target="_blank">{{data.labels.printShoppingList}}</a>
+                <a class="button button--success" href="{{ path('shopping-list/print', {idShoppingList: data.shoppingList.idShoppingList}) }}" target="_blank">
+                    {{ 'customer.account.shopping_list.print_shopping_list' | trans }}
+                </a>
             </div>
         </div>
         <hr>
@@ -62,12 +49,12 @@
                 <div class="grid grid--justify">
                     <div class="col">
                         <button type="submit" class="button button--success" {{qa('submit-button')}}>
-                            {{ data.labels.addSelectedItemsToCartLabel }}
+                            {{ 'customer.account.shopping_list.add_selected_items_to_cart' | trans }}
                         </button>
                     </div>
                     <div class="col">
                         <button type="submit" class="button button--success" name="add-all-available" value="1" {{qa('submit-button')}}>
-                            {{ data.labels.addAllToCartLabel }}
+                            {{ 'customer.account.shopping_list.add_all_available_to_cart' | trans }}
                         </button>
                     </div>
                 </div>
@@ -76,11 +63,11 @@
                 <thead>
                 <tr>
                     <th></th>
-                    <th class="text-center" colspan="2">{{ data.labels.productLabel }}</th>
-                    <th class="text-center">{{ data.labels.priceLabel  }}</th>
-                    <th class="text-center">{{ data.labels.quantityLabel }}</th>
-                    <th class="text-center">{{ data.labels.availabilityLabel  }}</th>
-                    <th class="text-center">{{ data.labels.actionsLabel }}</th>
+                    <th class="text-center" colspan="2">{{ 'customer.account.shopping_list.product' | trans }}</th>
+                    <th class="text-center">{{ 'customer.account.shopping_list.price' | trans  }}</th>
+                    <th class="text-center">{{ 'customer.account.shopping_list.quantity' | trans }}</th>
+                    <th class="text-center">{{ 'customer.account.shopping_list.availability' | trans }}</th>
+                    <th class="text-center">{{ 'customer.account.shopping_list.overview.actions' | trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -108,10 +95,16 @@
                         </td>
                         <td class="text-center">
                             <a href="{{ item.url }}">{{ item.name }}</a>
-                            <div><small>{{ item.sku }}</small></div>
+                            <div>
+                                <small>{{ item.sku }}</small>
+                            </div>
                             {% for attribute in item.superAttributesDefinition %}
                                 {% if item.attributes[attribute] is defined %}
-                                    <strong>{{ ('product.attribute.'~attribute) | trans }}:</strong> {{ item.attributes[attribute] }} <br/>
+                                    <strong>
+                                        {{ ('product.attribute.'~attribute) | trans }}:
+                                    </strong>
+                                    {{ item.attributes[attribute] }}
+                                    <br/>
                                 {% endif %}
                             {% endfor %}
 
@@ -137,19 +130,19 @@
                         </td>
                         <td class="text-center">
                             {% if isItemAvailable %}
-                                {{ data.labels.itemAvailableLabel }}
+                                {{ 'customer.account.shopping_list.available' | trans }}
                             {% else %}
                                 {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
                                     {{ widget('ProductDiscontinuedWidgetPlugin', item.sku) }}
                                 {% else %}
-                                    {{ data.labels.itemNotAvailableLabel }}
+                                    {{ 'customer.account.shopping_list.not_available' | trans }}
                                 {% endif %}
                             {% endif %}
                         </td>
                         <td>
                             {% if isItemAvailable %}
                                 <button type="submit" name="add-item" class="button button--success" value="{{ item.idShoppingListItem }}" {{qa('submit-button')}}>
-                                    {{data.labels.addItemToCartLabel}}
+                                    {{ 'customer.account.shopping_list.add-to-cart' | trans }}
                                 </button>
                             {% endif %}
                         </td>
@@ -162,7 +155,7 @@
             </table>
             </form>
         {% else %}
-            {{ data.labels.shoppingListEmptyLabel }}
+            {{ 'customer.account.shopping_list.empty' | trans }}
         {% endif %}
     </div>
 {% endblock %}

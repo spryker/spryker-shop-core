@@ -2,12 +2,20 @@
 
 {% define data = {
     formObject: form,
+    rowCLass: rowClass
 } %}
 
 {% block body %}
-    {% for child in data.formObject.children %}
-        <strong>{{ form_label(child) }}:</strong>
-        {{ widget('ShoppingListItemProductOptionEditWidgetPlugin', child.vars.choices, child.vars.full_name) }}
-        {{ form_errors(child) }}
-    {% endfor %}
+    {% if data.formObject.children | length %}
+        <tr class="{{ data.rowCLass }}">
+            <td>&nbsp;</td>
+            <td colspan="5">
+                {% include molecule('shopping-list-product-option-list', 'ProductOptionWidget') with {
+                    data: {
+                        options: data.formObject.children
+                    }
+                } only %}
+            </td>
+        </tr>
+    {% endif %}
 {% endblock %}
