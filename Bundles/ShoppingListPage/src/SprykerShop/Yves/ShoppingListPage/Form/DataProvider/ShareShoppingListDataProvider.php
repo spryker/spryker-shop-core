@@ -10,8 +10,10 @@ namespace SprykerShop\Yves\ShoppingListPage\Form\DataProvider;
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
@@ -115,32 +117,62 @@ class ShareShoppingListDataProvider
         ShoppingListTransfer $shoppingListTransfer,
         CustomerTransfer $customerTransfer
     ): ShoppingListTransfer {
-        $sharedCompanyUsers = [];
+        $sharedCompanyUsers = $this->indexSharedCompanyUsers($shoppingListTransfer);
         $companyUsers = $this->getCompanyUserCollection($customerTransfer)->getCompanyUsers();
-
-        foreach ($shoppingListTransfer->getSharedCompanyUsers() as $shoppingListCompanyUserTransfer) {
-            $sharedCompanyUsers[$shoppingListCompanyUserTransfer->getIdCompanyUser()] = $shoppingListCompanyUserTransfer;
-        }
 
         foreach ($companyUsers as $companyUserTransfer) {
             if (strcmp($companyUserTransfer->getCustomer()->getCustomerReference(), $shoppingListTransfer->getCustomerReference()) === 0) {
                 continue;
             }
 
-            if (isset($sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()])) {
-                $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()]->setCompanyUser($companyUserTransfer);
-                continue;
-            }
-
-            $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()] = (new ShoppingListCompanyUserTransfer())
-                ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-                ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-                ->setCompanyUser($companyUserTransfer);
+            $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()] = $this->getSharedByCompanyUser(
+                $shoppingListTransfer,
+                $companyUserTransfer,
+                $sharedCompanyUsers
+            );
         }
 
         $shoppingListTransfer->setSharedCompanyUsers(new ArrayObject($sharedCompanyUsers));
 
         return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]
+     */
+    protected function indexSharedCompanyUsers(ShoppingListTransfer $shoppingListTransfer): array
+    {
+        $sharedCompanyUsers = [];
+
+        foreach ($shoppingListTransfer->getSharedCompanyUsers() as $shoppingListCompanyUserTransfer) {
+            $sharedCompanyUsers[$shoppingListCompanyUserTransfer->getIdCompanyUser()] = $shoppingListCompanyUserTransfer;
+        }
+
+        return $sharedCompanyUsers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[] $sharedCompanyUsers
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer
+     */
+    protected function getSharedByCompanyUser(
+        ShoppingListTransfer $shoppingListTransfer,
+        CompanyUserTransfer $companyUserTransfer,
+        $sharedCompanyUsers
+    ): ShoppingListCompanyUserTransfer {
+        if (isset($sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()])) {
+            return $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()]->setCompanyUser($companyUserTransfer);
+        }
+
+        return (new ShoppingListCompanyUserTransfer())
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setCompanyUser($companyUserTransfer);
     }
 
     /**
@@ -167,28 +199,58 @@ class ShareShoppingListDataProvider
         ShoppingListTransfer $shoppingListTransfer,
         CustomerTransfer $customerTransfer
     ): ShoppingListTransfer {
-        $sharedCompanyBusinessUnits = [];
+        $sharedCompanyBusinessUnits = $this->indexSharedCompanyBusinessUnits($shoppingListTransfer);
         $companyBusinessUnits = $this->getCompanyBusinessUnitCollection($customerTransfer)->getCompanyBusinessUnits();
 
-        foreach ($shoppingListTransfer->getSharedCompanyBusinessUnits() as $shoppingListCompanyBusinessUnitTransfer) {
-            $sharedCompanyBusinessUnits[$shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = $shoppingListCompanyBusinessUnitTransfer;
-        }
-
         foreach ($companyBusinessUnits as $companyBusinessUnitTransfer) {
-            if (isset($sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()])) {
-                $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()]->setCompanyBusinessUnit($companyBusinessUnitTransfer);
-                continue;
-            }
-
-            $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = (new ShoppingListCompanyBusinessUnitTransfer())
-                ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
-                ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-                ->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+            $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = $this->getSharedByCompanyBusinessUnit(
+                $shoppingListTransfer,
+                $companyBusinessUnitTransfer,
+                $sharedCompanyBusinessUnits
+            );
         }
 
         $shoppingListTransfer->setSharedCompanyBusinessUnits(new ArrayObject($sharedCompanyBusinessUnits));
 
         return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[]
+     */
+    protected function indexSharedCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): array
+    {
+        $sharedCompanyBusinessUnits = [];
+
+        foreach ($shoppingListTransfer->getSharedCompanyBusinessUnits() as $shoppingListCompanyBusinessUnitTransfer) {
+            $sharedCompanyBusinessUnits[$shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = $shoppingListCompanyBusinessUnitTransfer;
+        }
+
+        return $sharedCompanyBusinessUnits;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[] $sharedCompanyBusinessUnits
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer
+     */
+    protected function getSharedByCompanyBusinessUnit(
+        ShoppingListTransfer $shoppingListTransfer,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
+        $sharedCompanyBusinessUnits
+    ): ShoppingListCompanyBusinessUnitTransfer {
+        if (isset($sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()])) {
+            return $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()]->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+        }
+
+        return (new ShoppingListCompanyBusinessUnitTransfer())
+            ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 
     /**
