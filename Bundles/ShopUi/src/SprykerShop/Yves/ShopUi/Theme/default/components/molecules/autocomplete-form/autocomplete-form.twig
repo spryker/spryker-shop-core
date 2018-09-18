@@ -6,7 +6,10 @@
 } %}
 
 {% define data = {
-    value: ''
+    value: '',
+    id: required,
+    placeholder: 'autocomplete.placeholder',
+    hiddenInput: false
 } %}
 
 {% define attributes = {
@@ -14,17 +17,17 @@
     'debounce-delay': 500,
     'min-letters': 3,
     'query-param-name': 'query',
-    'selected-value-key': '',
+    'hidden-input-name': required,
     'value-data-attribute': 'data-value',
     'item-selector': '',
     'show-clean-button': false
 } %}
 
 {% block body %}
-
     {% include molecule('ajax-provider') with {
         class: config.jsName ~ '__provider',
         attributes: {
+            id: data.id,
             method: 'GET',
             url: attributes['suggestion-url']
         }
@@ -32,7 +35,7 @@
 
     {% include molecule('ajax-loader') with {
         attributes: {
-            'provider-selector': '.' ~ config.jsName ~ '__provider'
+            'provider-selector': '#' ~ data.id
         }
     } only %}
 
@@ -42,11 +45,13 @@
                 <input name="query"
                        type="text"
                        class="input input--expand {{ config.jsName }}__input"
-                       placeholder="{{ 'autocomplete.placeholder' | trans }}"
+                       placeholder="{{ data.placeholder | trans }}"
                        value="{{ data.value }}"
                        autocomplete="off">
 
-                <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
+                {% if data.hiddenInput %}
+                    <input type="hidden" name="{{ attributes['hidden-input-name'] }}" class="{{ config.jsName }}__input-hidden"/>
+                {% endif %}
             </div>
             {% if attributes['show-clean-button'] %}
                 <div class="col col--sm-1">
@@ -62,7 +67,7 @@
         <div class="box is-hidden {{ config.name }}__suggestion {{ config.jsName }}__container">
             {% include molecule('ajax-renderer') with {
                 attributes: {
-                    'provider-selector': '.' ~ config.jsName ~ '__provider',
+                    'provider-selector': '#' ~ data.id,
                     'render-if-response-is-empty': true,
                     'target-selector': config.jsName ~ '__suggestions',
                 }

@@ -1,15 +1,15 @@
 {% extends model('template') %}
 
 {% define data = {
-    form: _view.form
+    form: _view.form,
+    additionalDataColumnProviderPlugins: _view.additionalDataColumnProviderPlugins
 } %}
 
 {% block template %}
-    {% embed molecule('quick-order-form-field-list', 'QuickOrderPage') with {
+    {% include molecule('quick-order-form-field-list', 'QuickOrderPage') with {
         data: {
-            items: data.form.items
+            items: data.form.items,
+            additionalDataColumnProviderPlugins: data.additionalDataColumnProviderPlugins
         }
-    } only %}   
-        {% block removeActionClass %}js-quick-order-form__remove-row-trigger{% endblock %}
-    {% endembed %}
+    } only %}
 {% endblock %}

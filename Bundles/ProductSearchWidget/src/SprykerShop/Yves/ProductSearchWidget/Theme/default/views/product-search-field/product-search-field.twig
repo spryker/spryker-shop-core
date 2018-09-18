@@ -1,0 +1,23 @@
+{% extends template('widget') %}
+
+{% define data = {
+    index: _widget.index,
+    selectedValueKey: _widget.selectedValueKey,
+    searchResultsLimit: _widget.searchResultsLimit,
+} %}
+
+{% block body %}
+    {% include molecule('autocomplete-form') with {
+        data: {
+            id: data.index,
+            placeholder: 'quick-order.input.placeholder'
+        },
+        attributes: {
+            'suggestion-url': '/product-search/concrete',
+            'hidden-input-name': data.selectedValueKey,
+            'value-data-attribute': 'data-value',
+            'item-selector': '.products-list__item',
+            'query-param-name': 'limit=' ~ data.searchResultsLimit ~ '&searchString'
+        }
+    } only %}
+{% endblock %}

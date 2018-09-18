@@ -2,6 +2,10 @@
     #{$name} {
         position: relative;
 
+        * {
+            z-index: initial;
+        }
+
         @content;
     }
 }

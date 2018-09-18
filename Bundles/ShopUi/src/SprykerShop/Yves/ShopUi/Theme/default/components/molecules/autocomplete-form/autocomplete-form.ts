@@ -13,7 +13,7 @@ export default class AutocompleteForm extends Component {
         this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}__provider`);
         this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}__container`);
         this.inputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
-        this.hiddenInputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input-hidden`);
+        this.hiddenInputElement = <HTMLInputElement>document.querySelector(`input[name="${this.hiddenInputName}"]`);
         this.cleanButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__clean-button`);
         this.mapEvents();
     }
@@ -47,6 +47,7 @@ export default class AutocompleteForm extends Component {
             this.loadSuggestions();
             return;
         }
+        this.resetHiddenInput();
         this.hideSuggestions();
     }
 
@@ -86,6 +87,10 @@ export default class AutocompleteForm extends Component {
         this.hiddenInputElement.value = data;
     }
 
+    resetHiddenInput(): void {
+        this.hiddenInputElement.value = '';
+    }
+
     cleanFields(): void {
         this.setInputs('', '');
     }
@@ -108,6 +113,10 @@ export default class AutocompleteForm extends Component {
 
     get itemSelector(): string {
         return this.getAttribute('item-selector');
+    }
+
+    get hiddenInputName(): string {
+        return this.getAttribute('hidden-input-name');
     }
 
     get debounceDelay(): number {

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
+use Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -25,6 +26,7 @@ class QuickOrderController extends AbstractController
 {
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
+    public const PARAM_ID_PRODUCT = 'id-product';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -67,6 +69,7 @@ class QuickOrderController extends AbstractController
             ->handleRequest($request);
 
         $response = $this->handleQuickOrderForm($quickOrderForm, $request);
+
         if ($response !== null) {
             return $response;
         }
@@ -74,7 +77,22 @@ class QuickOrderController extends AbstractController
         return [
             'itemsForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
+            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
         ];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormAdditionalDataColumnProviderPluginInterface[]
+     */
+    protected function getQuickOrderFormAdditionalDataColumnProviderPlugins()
+    {
+        $quickOrderFormAdditionalDataColumnProviderPluginCollection = [];
+
+        foreach ($this->getFactory()->getQuickOrderFormAdditionalDataColumnProviderPlugins() as $quickOrderFormAdditionalDataColumnProviderPlugin) {
+            $quickOrderFormAdditionalDataColumnProviderPluginCollection[$quickOrderFormAdditionalDataColumnProviderPlugin->getFieldName()] = $quickOrderFormAdditionalDataColumnProviderPlugin;
+        }
+
+        return $quickOrderFormAdditionalDataColumnProviderPluginCollection;
     }
 
     /**
@@ -125,6 +143,7 @@ class QuickOrderController extends AbstractController
 
         return [
             'form' => $quickOrderForm->createView(),
+            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
         ];
     }
 
@@ -182,6 +201,37 @@ class QuickOrderController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function productAdditionalDataAction(Request $request)
+    {
+        $quickOrderProductAdditionalDataTransfer = $this->executeProductAdditionalDataAction($request);
+
+        return $this->jsonResponse($quickOrderProductAdditionalDataTransfer->toArray(true, true));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer
+     */
+    protected function executeProductAdditionalDataAction(Request $request)
+    {
+        $quickOrderProductAdditionalDataTransfer = new QuickOrderProductAdditionalDataTransfer();
+        $quickOrderProductAdditionalDataTransfer->setIdProductConcrete(
+            $request->query->getInt(static::PARAM_ID_PRODUCT)
+        );
+
+        foreach ($this->getFactory()->getQuickOrderProductAdditionalDataTransferExpanderPlugins() as $quickOrderProductAdditionalDataTransferExpanderPlugin) {
+            $quickOrderProductAdditionalDataTransfer = $quickOrderProductAdditionalDataTransferExpanderPlugin->expandQuickOrderProductAdditionalDataTransfer($quickOrderProductAdditionalDataTransfer);
+        }
+
+        return $quickOrderProductAdditionalDataTransfer;
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormInterface $textOrderForm
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
@@ -235,6 +285,26 @@ class QuickOrderController extends AbstractController
 
                 return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_INDEX);
             }
+
+            return $this->executeQuickOrderFormHandlerStrategyPlugin($quickOrderForm, $request);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+     */
+    protected function executeQuickOrderFormHandlerStrategyPlugin(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
+    {
+        foreach ($this->getFactory()->getQuickOrderFormHandlerStrategyPlugins() as $quickOrderFormHandlerStrategyPlugin) {
+            if (!$quickOrderFormHandlerStrategyPlugin->isApplicable($quickOrderForm, $request)) {
+                continue;
+            }
+            return $quickOrderFormHandlerStrategyPlugin->execute($quickOrderForm, $request);
         }
 
         return null;

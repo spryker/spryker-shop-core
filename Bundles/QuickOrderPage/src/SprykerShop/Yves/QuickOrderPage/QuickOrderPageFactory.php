@@ -47,7 +47,13 @@ class QuickOrderPageFactory extends AbstractFactory
      */
     public function createFormOperationHandler(): QuickOrderFormOperationHandlerInterface
     {
-        return new QuickOrderFormOperationHandler($this->getCartClient(), $this->getQuoteClient(), $this->getZedRequestClient(), $this->getRequest());
+        return new QuickOrderFormOperationHandler(
+            $this->getCartClient(),
+            $this->getQuoteClient(),
+            $this->getZedRequestClient(),
+            $this->getRequest(),
+            $this->getQuickOrderItemTransferExpanderPlugins()
+        );
     }
 
     /**
@@ -117,5 +123,37 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getQuickOrderPageWidgetPlugins(): array
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_PAGE_WIDGETS);
+    }
+
+    /**
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
+     */
+    public function getQuickOrderItemTransferExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductAdditionalDataTransferExpanderPluginInterface[]
+     */
+    public function getQuickOrderProductAdditionalDataTransferExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormHandlerStrategyPluginInterface[]
+     */
+    public function getQuickOrderFormHandlerStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormAdditionalDataColumnProviderPluginInterface[]
+     */
+    public function getQuickOrderFormAdditionalDataColumnProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER);
     }
 }
