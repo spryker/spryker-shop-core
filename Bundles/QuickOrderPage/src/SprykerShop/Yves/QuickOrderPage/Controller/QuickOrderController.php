@@ -269,8 +269,8 @@ class QuickOrderController extends AbstractController
             $request->query->getInt(static::PARAM_QUANTITY, 0)
         );
 
-        foreach ($this->getFactory()->getQuickOrderProductPriceTransferExpanderPlugins() as $plugin) {
-            $plugin->expand($quickOrderProductPriceTransfer);
+        foreach ($this->getFactory()->getQuickOrderProductPriceTransferExpanderPlugins() as $quickOrderProductPriceTransferExpanderPlugin) {
+            $quickOrderProductPriceTransfer = $quickOrderProductPriceTransferExpanderPlugin->expandQuickOrderProductPriceTransfer($quickOrderProductPriceTransfer);
         }
 
         return $quickOrderProductPriceTransfer;
