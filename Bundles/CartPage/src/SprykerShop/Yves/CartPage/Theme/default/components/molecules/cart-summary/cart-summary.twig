@@ -37,9 +37,9 @@
             </li>
         {% endif %}
 
-        {% if widgetExists('MinimumOrderValueWidgetPlugin') %}
+        {% if widgetExists('SalesOrderThresholdWidgetPlugin') %}
             <li class="list__item spacing-y">
-                {{ widget('MinimumOrderValueWidgetPlugin', data.cart.expenses) }}
+                {{ widget('SalesOrderThresholdWidgetPlugin', data.cart.expenses) }}
             </li>
             <hr />
         {% endif %}

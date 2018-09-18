@@ -1,0 +1,32 @@
+{
+  "name": "spryker-shop/sales-order-threshold-widget",
+  "description": "SalesOrderThresholdWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker-shop/shop-ui": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker-shop/cart-page": "*",
+    "spryker-shop/checkout-page": "*"
+  },
+  "suggest": {
+    "spryker-shop/cart-page": "Widget plugins are available for this module.",
+    "spryker-shop/checkout-page": "Widget plugins are available for this module."
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
