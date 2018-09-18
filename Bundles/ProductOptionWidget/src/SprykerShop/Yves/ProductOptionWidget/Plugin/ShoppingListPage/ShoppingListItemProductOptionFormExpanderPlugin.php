@@ -20,7 +20,7 @@ class ShoppingListItemProductOptionFormExpanderPlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritdoc}
-     * - Extends shopping list item form with product option form.
+     * - Extends shopping list item form with product options form.
      *
      * @api
      *

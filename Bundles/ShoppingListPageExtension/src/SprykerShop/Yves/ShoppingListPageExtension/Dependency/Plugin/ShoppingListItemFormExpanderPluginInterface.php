@@ -13,7 +13,7 @@ interface ShoppingListItemFormExpanderPluginInterface
 {
     /**
      * Specification:
-     *  - Extends shopping list item form with additional input fields.
+     *  - Expands shopping list item form with additional input fields.
      *
      * @api
      *

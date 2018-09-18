@@ -10,13 +10,14 @@ namespace SprykerShop\Yves\ProductOptionWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetToProductOptionStorageClientInterface;
 use SprykerShop\Yves\ProductOptionWidget\Form\DataProvider\ShoppingListItemProductOptionFormDataProvider;
+use SprykerShop\Yves\ProductOptionWidget\Form\DataProvider\ShoppingListItemProductOptionFormDataProviderInterface;
 
 class ProductOptionWidgetFactory extends AbstractFactory
 {
     /**
      * @return \SprykerShop\Yves\ProductOptionWidget\Form\DataProvider\ShoppingListItemProductOptionFormDataProviderInterface
      */
-    public function createShoppingListItemProductOptionFormDataProvider()
+    public function createShoppingListItemProductOptionFormDataProvider(): ShoppingListItemProductOptionFormDataProviderInterface
     {
         return new ShoppingListItemProductOptionFormDataProvider(
             $this->getProductOptionStorageClient()

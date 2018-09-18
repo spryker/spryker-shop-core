@@ -47,24 +47,9 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
         }
 
         $requestFormData = $params[static::SHOPPING_LIST_UPDATE_FORM_NAME];
-        $shoppingListTransfer = $this->setUpProductOptions($shoppingListTransfer, $requestFormData);
+        $shoppingListTransfer = $this->populateProductOptions($shoppingListTransfer, $requestFormData);
 
         return $shoppingListTransfer;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\ChoiceList\View\ChoiceView[] $productOptionGroups
-     *
-     * @return \ArrayObject
-     */
-    public function mapProductOptionGroups(array $productOptionGroups): ArrayObject
-    {
-        $mappedProductOptionGroups = [];
-        foreach ($productOptionGroups as $productOptionGroup) {
-            $mappedProductOptionGroups[] = $productOptionGroup->data;
-        }
-
-        return new ArrayObject($mappedProductOptionGroups);
     }
 
     /**
@@ -91,7 +76,7 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    protected function setUpProductOptions(ShoppingListTransfer $shoppingListTransfer, array $requestFormData): ShoppingListTransfer
+    protected function populateProductOptions(ShoppingListTransfer $shoppingListTransfer, array $requestFormData): ShoppingListTransfer
     {
         $shoppingListItems = [];
 
@@ -100,7 +85,7 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
                 continue;
             }
             $idsProductOptionValue = $this->getIdsProductOptionValue($requestFormData, $itemKey);
-            $shoppingListItems[] = $this->setUpProductOptionsPerShoppingListItemTransfer($shoppingListItemTransfer, $idsProductOptionValue);
+            $shoppingListItems[] = $this->populateProductOptionsPerShoppingListItemTransfer($shoppingListItemTransfer, $idsProductOptionValue);
         }
 
         return $shoppingListTransfer->setItems(new ArrayObject($shoppingListItems));
@@ -123,7 +108,7 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected function setUpProductOptionsPerShoppingListItemTransfer(ShoppingListItemTransfer $shoppingListItemTransfer, array $idsProductOptionValue): ShoppingListItemTransfer
+    protected function populateProductOptionsPerShoppingListItemTransfer(ShoppingListItemTransfer $shoppingListItemTransfer, array $idsProductOptionValue): ShoppingListItemTransfer
     {
         $productOptionTransfers = $this->createProductOptionTransfers($idsProductOptionValue);
         $shoppingListItemTransfer->setProductOptions($productOptionTransfers);
