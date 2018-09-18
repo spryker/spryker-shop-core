@@ -1,6 +1,6 @@
 # ProductSetWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the product set widget.
 
 ## Installation
 

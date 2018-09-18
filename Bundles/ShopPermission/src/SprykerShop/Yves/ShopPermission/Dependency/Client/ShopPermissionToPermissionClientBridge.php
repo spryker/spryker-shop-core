@@ -9,7 +9,9 @@ namespace SprykerShop\Yves\ShopPermission\Dependency\Client;
 
 class ShopPermissionToPermissionClientBridge implements ShopPermissionToPermissionClientInterface
 {
-    /** @var \Spryker\Client\Permission\PermissionClientInterface */
+    /**
+     * @var \Spryker\Client\Permission\PermissionClientInterface
+     */
     protected $permissionClient;
 
     /**
