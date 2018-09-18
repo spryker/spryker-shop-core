@@ -225,7 +225,7 @@ class QuickOrderController extends AbstractController
         );
 
         foreach ($this->getFactory()->getQuickOrderProductAdditionalDataTransferExpanderPlugins() as $quickOrderProductAdditionalDataTransferExpanderPlugin) {
-            $quickOrderProductAdditionalDataTransfer = $quickOrderProductAdditionalDataTransferExpanderPlugin->expand($quickOrderProductAdditionalDataTransfer);
+            $quickOrderProductAdditionalDataTransfer = $quickOrderProductAdditionalDataTransferExpanderPlugin->expandQuickOrderProductAdditionalDataTransfer($quickOrderProductAdditionalDataTransfer);
         }
 
         return $quickOrderProductAdditionalDataTransfer;
