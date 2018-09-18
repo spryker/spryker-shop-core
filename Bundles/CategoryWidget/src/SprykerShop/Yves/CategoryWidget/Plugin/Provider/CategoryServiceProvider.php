@@ -23,9 +23,11 @@ class CategoryServiceProvider extends AbstractPlugin implements ServiceProviderI
      */
     public function register(Application $app)
     {
-        $this->addGlobalTemplateVariable($app, [
-            'categories' => $this->getFactory()->getCategoryStorageClient()->getCategories($app['locale']),
-        ]);
+        $app['twig.global.variables'] = $app->share(
+            $app->extend('twig.global.variables', function (array $variables) use ($app) {
+                return array_merge($variables, $this->getGlobalTemplateVariables($app));
+            })
+        );
     }
 
     /**
@@ -39,16 +41,13 @@ class CategoryServiceProvider extends AbstractPlugin implements ServiceProviderI
 
     /**
      * @param \Silex\Application $app
-     * @param array $globalTemplateVariables
      *
-     * @return void
+     * @return array
      */
-    protected function addGlobalTemplateVariable(Application $app, array $globalTemplateVariables)
+    protected function getGlobalTemplateVariables(Application $app): array
     {
-        $app['twig.global.variables'] = $app->share(
-            $app->extend('twig.global.variables', function (array $variables) use ($globalTemplateVariables) {
-                return array_merge($variables, $globalTemplateVariables);
-            })
-        );
+        return [
+            'categories' => $this->getFactory()->getCategoryStorageClient()->getCategories($app['locale']),
+        ];
     }
 }
