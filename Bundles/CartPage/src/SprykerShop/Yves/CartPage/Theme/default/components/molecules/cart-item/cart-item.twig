@@ -56,9 +56,8 @@
         </div>
 
         <div class="col col--sm-12 col--lg-4">
-            {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }}
-            {% widget 'SummaryProductPackagingUnitWidget' args [data] only %}
-            {% elsewidget 'CartProductPackagingUnitWidgetPlugin' args [data] only %} {# @deprecated Use SummaryProductPackagingUnitWidget instead. #}
+            {% widget 'SummaryProductPackagingUnitWidget' args [data.cartItem] only %}
+            {% elsewidget 'CartProductPackagingUnitWidgetPlugin' args [data.cartItem] only %} {# @deprecated Use SummaryProductPackagingUnitWidget instead. #}
             {% endwidget %}
 
             {% if data.cartItem.amountSalesUnit is empty %}
