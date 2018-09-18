@@ -35,7 +35,7 @@
                                         {{ 'customer.order.view_order' | trans }}
                                     </a>
                                 </li>
-                                {% widget 'CustomerReorderWidget' use view('@CustomerReorderWidget/views/customer-reorder/customer-reorder-reorderAction.twig'), args [order] only %}
+                                {% widget 'CustomerReorderWidget' args [order] use view('@views/customer-reorder/customer-reorder-reorderAction.twig', 'CustomerReorderWidget') only %}
                                     {% block body %}
                                         <li class="menu__item">
                                             {{ parent() }}

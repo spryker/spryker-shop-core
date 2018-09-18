@@ -42,10 +42,11 @@
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
     <hr />
-    {% widget 'PriceProductVolumeWidget' only %}
-    {% elsewidget 'PriceProductVolumeWidgetPlugin'  only %} {# @deprecated Use PriceProductVolumeWidget instead. #}
-    {% elsewidget 'PriceWidget' only %}
-    {% elsewidget 'PriceWidgetPlugin' only %} {# @deprecated Use PriceWidget instead. #}
+    {% widget 'PriceProductVolumeWidget' args [data.product] only %}
+    {% elsewidget 'PriceProductVolumeWidgetPlugin' args [data.product] only %} {# @deprecated Use PriceProductVolumeWidget instead. #}
+    {% elsewidget 'PriceWidget' args [data.product] only %}
+    {% elsewidget 'PriceWidgetPlugin' args [data.product] only %} {# @deprecated Use PriceWidget instead. #}
+    {% endwidget %}
 
     {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] use view('@ProductReviewWidget/views/pdp-review/pdp-review-rating.twig') only %}
     {% nowidget %}
@@ -109,6 +110,7 @@
         {% widget 'AddToMultiCartWidget' args [data.product, isDisabled] only %}
         {% elsewidget 'MultiCartWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
         {% endwidget %}
+
         {% widget 'ProductViewAvailabilityWidget' args [data.product] only %}
         {% elsewidget 'AvailabilityWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductViewAvailabilityWidget instead. #}
         {% endwidget %}
