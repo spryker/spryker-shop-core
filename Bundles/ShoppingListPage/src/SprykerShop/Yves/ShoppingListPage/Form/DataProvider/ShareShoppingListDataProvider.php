@@ -213,7 +213,7 @@ class ShareShoppingListDataProvider
     protected function getCompanyBusinessUnitCollection(CustomerTransfer $customerTransfer): CompanyBusinessUnitCollectionTransfer
     {
         $idCompany = $customerTransfer->requireCompanyUserTransfer()->getCompanyUserTransfer()->getFkCompany();
-        $filter = (new FilterTransfer)
+        $filter = (new FilterTransfer())
             ->setOrderBy(static::ORDER_BUSINESS_UNIT_SORT_FIELD)
             ->setOrderDirection(static::ORDER_BUSINESS_UNIT_SORT_DIRECTION);
 
