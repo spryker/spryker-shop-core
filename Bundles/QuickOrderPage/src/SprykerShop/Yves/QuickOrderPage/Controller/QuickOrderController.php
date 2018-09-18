@@ -86,13 +86,13 @@ class QuickOrderController extends AbstractController
      */
     protected function getQuickOrderFormAdditionalDataColumnProviderPlugins()
     {
-        $uickOrderFormAdditionalDataColumnProviderPluginCollection = [];
+        $quickOrderFormAdditionalDataColumnProviderPluginCollection = [];
 
         foreach ($this->getFactory()->getQuickOrderFormAdditionalDataColumnProviderPlugins() as $quickOrderFormAdditionalDataColumnProviderPlugin) {
-            $uickOrderFormAdditionalDataColumnProviderPluginCollection[$quickOrderFormAdditionalDataColumnProviderPlugin->getFieldName()] = $quickOrderFormAdditionalDataColumnProviderPlugin;
+            $quickOrderFormAdditionalDataColumnProviderPluginCollection[$quickOrderFormAdditionalDataColumnProviderPlugin->getFieldName()] = $quickOrderFormAdditionalDataColumnProviderPlugin;
         }
 
-        return $uickOrderFormAdditionalDataColumnProviderPluginCollection;
+        return $quickOrderFormAdditionalDataColumnProviderPluginCollection;
     }
 
     /**
