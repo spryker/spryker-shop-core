@@ -32,7 +32,7 @@ class ShoppingListItemProductOptionForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addProductOptionsSelectors($builder, $options);
+        $this->addProductOptionSelectTypeFields($builder, $options);
     }
 
     /**
@@ -62,7 +62,7 @@ class ShoppingListItemProductOptionForm extends AbstractType
      *
      * @return void
      */
-    protected function addProductOptionsSelectors(FormBuilderInterface $builder, array $options): void
+    protected function addProductOptionSelectTypeFields(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
             $form = $event->getForm();
