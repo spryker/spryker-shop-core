@@ -6,7 +6,8 @@
 } %}
 
 {% define data = {
-    form: required
+    form: required,
+    additionalDataColumnProviderPlugins: null
 } %}
 
 {% block body %}
@@ -51,11 +52,12 @@
             <div class="{{embed.selector}}__list {{ embed.name }}__list">
                 {% embed molecule('quick-order-form-field-list', 'QuickOrderPage') with {
                     data: {
-                        items: data.form.items
+                        items: data.form.items,
+                        additionalDataColumnProviderPlugins: _view.additionalDataColumnProviderPlugins
                     },
                     embed: embed
                 } only %}
-                    {% block removeActionClass %}{{embed.selector}}__remove-row-trigger{% endblock %}
+
                 {% endembed %}
             </div>
         {% endblock %}

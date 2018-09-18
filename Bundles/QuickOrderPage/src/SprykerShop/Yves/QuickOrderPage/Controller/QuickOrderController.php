@@ -69,6 +69,7 @@ class QuickOrderController extends AbstractController
             ->handleRequest($request);
 
         $response = $this->handleQuickOrderForm($quickOrderForm, $request);
+
         if ($response !== null) {
             return $response;
         }
@@ -76,7 +77,22 @@ class QuickOrderController extends AbstractController
         return [
             'itemsForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
+            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
         ];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormAdditionalDataColumnProviderPluginInterface[]
+     */
+    protected function getQuickOrderFormAdditionalDataColumnProviderPlugins()
+    {
+        $quickOrderFormAdditionalDataColumnProviderPluginCollection = [];
+
+        foreach ($this->getFactory()->getQuickOrderFormAdditionalDataColumnProviderPlugins() as $quickOrderFormAdditionalDataColumnProviderPlugin) {
+            $quickOrderFormAdditionalDataColumnProviderPluginCollection[$quickOrderFormAdditionalDataColumnProviderPlugin->getFieldName()] = $quickOrderFormAdditionalDataColumnProviderPlugin;
+        }
+
+        return $quickOrderFormAdditionalDataColumnProviderPluginCollection;
     }
 
     /**
@@ -127,6 +143,7 @@ class QuickOrderController extends AbstractController
 
         return [
             'form' => $quickOrderForm->createView(),
+            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
         ];
     }
 
@@ -203,10 +220,12 @@ class QuickOrderController extends AbstractController
     protected function executeProductAdditionalDataAction(Request $request)
     {
         $quickOrderProductAdditionalDataTransfer = new QuickOrderProductAdditionalDataTransfer();
-        $quickOrderProductAdditionalDataTransfer->setIdProductConcrete($request->get(static::PARAM_ID_PRODUCT));
+        $quickOrderProductAdditionalDataTransfer->setIdProductConcrete(
+            $request->query->getInt(static::PARAM_ID_PRODUCT)
+        );
 
         foreach ($this->getFactory()->getQuickOrderProductAdditionalDataTransferExpanderPlugins() as $quickOrderProductAdditionalDataTransferExpanderPlugin) {
-            $quickOrderProductAdditionalDataTransfer = $quickOrderProductAdditionalDataTransferExpanderPlugin->expand($quickOrderProductAdditionalDataTransfer);
+            $quickOrderProductAdditionalDataTransfer = $quickOrderProductAdditionalDataTransferExpanderPlugin->expandQuickOrderProductAdditionalDataTransfer($quickOrderProductAdditionalDataTransfer);
         }
 
         return $quickOrderProductAdditionalDataTransfer;

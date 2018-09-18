@@ -47,6 +47,7 @@ export default class AutocompleteForm extends Component {
             this.loadSuggestions();
             return;
         }
+        this.resetHiddenInput();
         this.hideSuggestions();
     }
 
@@ -84,6 +85,10 @@ export default class AutocompleteForm extends Component {
     setInputs(data: string, text: string): void {
         this.inputElement.value = text;
         this.hiddenInputElement.value = data;
+    }
+
+    resetHiddenInput(): void {
+        this.hiddenInputElement.value = '';
     }
 
     cleanFields(): void {
