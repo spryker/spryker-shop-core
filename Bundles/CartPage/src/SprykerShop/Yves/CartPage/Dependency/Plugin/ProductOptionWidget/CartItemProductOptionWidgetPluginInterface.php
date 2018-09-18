@@ -15,6 +15,8 @@ interface CartItemProductOptionWidgetPluginInterface extends WidgetPluginInterfa
     public const NAME = 'CartItemProductOptionWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
