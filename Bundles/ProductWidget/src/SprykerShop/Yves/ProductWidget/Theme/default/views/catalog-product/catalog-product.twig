@@ -35,7 +35,9 @@
 
         {% block rating %}
             {% if _widget.product.rating is defined %}
-                {{ widget('ProductReviewWidgetPlugin', _widget.product.rating) }}
+                {% widget 'ProductReviewDisplayWidget' args [_widget.product.rating] only %}
+                {% elsewidget 'ProductReviewWidgetPlugin' args [_widget.product.rating] only %} {# @deprecated Use ProductReviewDisplayWidget instead. #}
+                {% endwidget %}
             {% endif %}
         {% endblock %}
     {% endembed %}

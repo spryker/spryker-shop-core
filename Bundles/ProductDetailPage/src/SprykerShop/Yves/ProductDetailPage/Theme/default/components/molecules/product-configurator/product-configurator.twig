@@ -47,7 +47,10 @@
         {{ widget('PriceWidgetPlugin', data.product) }}
     {% endif %}
 
-    {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
+    {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] use view('@ProductReviewWidget/views/pdp-review/pdp-review-rating.twig') only %}
+    {% nowidget %}
+        {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }} {# @deprecated Use ProductDetailPageReviewWidget instead. #}
+    {% endwidget %}
     {% widget 'ProductGroupWidget' args [data.product.idProductAbstract] only %}
     {% elsewidget 'ProductGroupWidgetPlugin' args [data.product.idProductAbstract] only %} {# @deprecated Use ProductGroupWidget instead. #}
     {% endwidget %}

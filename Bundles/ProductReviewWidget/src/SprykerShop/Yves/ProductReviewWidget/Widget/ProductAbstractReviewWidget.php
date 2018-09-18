@@ -5,18 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ProductReviewWidget\Widget;
 
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReviewWidget\ProductReviewWidgetPluginInterface;
-use SprykerShop\Yves\ProductReviewWidget\Widget\ProductDetailPageReviewWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductDetailPageReviewWidget instead.
- *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
-class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductReviewWidgetPluginInterface
+class ProductAbstractReviewWidget extends AbstractWidget
 {
     /**
      * @param int $idProductAbstract
@@ -26,7 +22,6 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
     public function initialize(int $idProductAbstract): void
     {
         $this
-            ->addParameter('idProductAbstract', $idProductAbstract)
             ->addParameter('productReviewStorageTransfer', $this->findProductAbstractReview($idProductAbstract))
             ->addParameter('maximumRating', $this->getMaximumRating());
     }
@@ -36,7 +31,7 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductAbstractReviewWidget';
     }
 
     /**
@@ -44,7 +39,7 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public static function getTemplate(): string
     {
-        return ProductDetailPageReviewWidget::getTemplate();
+        return '@ProductReviewWidget/views/product-abstract-review-display/product-abstract-review-display.twig';
     }
 
     /**

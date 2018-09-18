@@ -16,8 +16,6 @@ class ProductDiscontinuedWidget extends AbstractWidget
 {
     /**
      * @param string $sku
-     *
-     * @return void
      */
     public function __construct(string $sku)
     {

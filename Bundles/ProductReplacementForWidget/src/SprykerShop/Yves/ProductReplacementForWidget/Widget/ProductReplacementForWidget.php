@@ -5,21 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductReplacementForWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ProductReplacementForWidget\Widget;
 
 use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReplacementForWidgetPlugin\ProductReplacementForWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetConfig;
-use SprykerShop\Yves\ProductReplacementForWidget\Widget\ProductReplacementForWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductReplacementForWidget\Widget\ProductReplacementForWidget instead.
- *
  * @method \SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetFactory getFactory()
  */
-class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements ProductReplacementForWidgetPluginInterface
+class ProductReplacementForWidget extends AbstractWidget
 {
     /**
      * @param string $sku
@@ -41,7 +37,7 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductReplacementForWidget';
     }
 
     /**
@@ -53,7 +49,7 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getTemplate(): string
     {
-        return ProductReplacementForWidget::getTemplate();
+        return '@ProductReplacementForWidget/views/product-replacement-for-list/product-replacement-for-list.twig';
     }
 
     /**

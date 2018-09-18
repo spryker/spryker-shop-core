@@ -5,19 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductRelationWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ProductRelationWidget\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductRelationWidget\SimilarProductsWidgetPluginInterface;
-use SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget instead.
- *
  * @method \SprykerShop\Yves\ProductRelationWidget\ProductRelationWidgetFactory getFactory()
  */
-class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements SimilarProductsWidgetPluginInterface
+class SimilarProductsWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -37,7 +33,7 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'SimilarProductsWidget';
     }
 
     /**
@@ -45,7 +41,7 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
      */
     public static function getTemplate(): string
     {
-        return SimilarProductsWidget::getTemplate();
+        return '@ProductRelationWidget/views/pdp-similar-products-carousel/pdp-similar-products-carousel.twig';
     }
 
     /**

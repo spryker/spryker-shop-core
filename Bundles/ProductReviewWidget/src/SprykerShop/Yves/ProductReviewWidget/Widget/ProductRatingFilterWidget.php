@@ -5,20 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductReviewWidget\Plugin\CatalogPage;
+namespace SprykerShop\Yves\ProductReviewWidget\Widget;
 
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CatalogPage\Dependency\Plugin\ProductReviewWidget\ProductRatingFilterWidgetPluginInterface;
-use SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget instead.
- *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
-class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements ProductRatingFilterWidgetPluginInterface
+class ProductRatingFilterWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeSearchResultTransfer
@@ -39,7 +35,7 @@ class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductRatingFilterWidget';
     }
 
     /**
@@ -47,7 +43,7 @@ class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public static function getTemplate(): string
     {
-        return ProductRatingFilterWidget::getTemplate();
+        return '@ProductReviewWidget/views/catalog-rating-filter/catalog-rating-filter.twig';
     }
 
     /**

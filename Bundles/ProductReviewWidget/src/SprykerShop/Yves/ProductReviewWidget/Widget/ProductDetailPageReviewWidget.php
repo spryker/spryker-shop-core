@@ -5,18 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ProductReviewWidget\Widget;
 
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReviewWidget\ProductReviewWidgetPluginInterface;
-use SprykerShop\Yves\ProductReviewWidget\Widget\ProductDetailPageReviewWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductDetailPageReviewWidget instead.
- *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
-class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductReviewWidgetPluginInterface
+class ProductDetailPageReviewWidget extends AbstractWidget
 {
     /**
      * @param int $idProductAbstract
@@ -36,7 +32,7 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductDetailPageReviewWidget';
     }
 
     /**
@@ -44,7 +40,7 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public static function getTemplate(): string
     {
-        return ProductDetailPageReviewWidget::getTemplate();
+        return '@ProductReviewWidget/views/pdp-review/pdp-review.twig';
     }
 
     /**
