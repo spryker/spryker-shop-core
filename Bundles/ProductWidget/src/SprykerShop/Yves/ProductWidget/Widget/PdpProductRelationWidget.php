@@ -5,19 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\AvailabilityWidget\Widget;
+namespace SprykerShop\Yves\ProductWidget\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
-class ProductViewAvailabilityWidget extends AbstractWidget
+/**
+ * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
+ */
+class PdpProductRelationWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this->addParameter('product', $productViewTransfer);
+        $this
+            ->addParameter('product', $productViewTransfer)
+            ->addWidgets($this->getFactory()->getProductRelationWidgetSubWidgets());
     }
 
     /**
@@ -25,7 +30,7 @@ class ProductViewAvailabilityWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductViewAvailabilityWidget';
+        return 'PdpProductRelationWidget';
     }
 
     /**
@@ -33,6 +38,6 @@ class ProductViewAvailabilityWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@AvailabilityWidget/views/availability/availability.twig';
+        return '@ProductWidget/views/pdp-product/pdp-product.twig';
     }
 }

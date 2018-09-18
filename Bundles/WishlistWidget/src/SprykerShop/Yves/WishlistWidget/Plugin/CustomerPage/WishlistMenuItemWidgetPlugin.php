@@ -9,23 +9,16 @@ namespace SprykerShop\Yves\WishlistWidget\Plugin\CustomerPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\WishlistWidget\WishlistMenuItemWidgetPluginInterface;
+use SprykerShop\Yves\WishlistWidget\Widget\WishlistMenuItemWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\WishlistWidget\Widget\WishlistMenuItemWidget instead.
+ *
  * @method \SprykerShop\Yves\WishlistWidget\WishlistWidgetFactory getFactory()
  */
 class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements WishlistMenuItemWidgetPluginInterface
 {
     protected const PAGE_KEY_WISHLIST = 'wishlist';
-
-    /**
-     * @var string
-     */
-    protected $activePage;
-
-    /**
-     * @var int
-     */
-    protected $activeWishlistId;
 
     /**
      * @param string $activePage
@@ -35,12 +28,9 @@ class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Wishl
      */
     public function initialize(string $activePage, ?int $activeEntityId = null): void
     {
-        $this->activePage = $activePage;
-        $this->activeWishlistId = $activeEntityId;
+        $widget = new WishlistMenuItemWidget($activePage, $activeEntityId);
 
-        $this->addActivePageParameter();
-        $this->addWishlistCollectionParameter();
-        $this->addActiveWishlistIdParameter();
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -66,54 +56,6 @@ class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Wishl
      */
     public static function getTemplate()
     {
-        return '@WishlistWidget/views/wishlist-menu-item/wishlist-menu-item.twig';
-    }
-
-    /**
-     * @return void
-     */
-    protected function addActivePageParameter(): void
-    {
-        $this->addParameter('isActivePage', $this->isWishlistPageActive());
-    }
-
-    /**
-     * @return void
-     */
-    protected function addWishlistCollectionParameter(): void
-    {
-        $this->addParameter('wishlistCollection', $this->isWishlistPageActive() ? $this->getCustomerWishlistCollection() : []);
-    }
-
-    /**
-     * @return void
-     */
-    protected function addActiveWishlistIdParameter(): void
-    {
-        $this->addParameter('activeWishlistId', $this->isWishlistPageActive() ? $this->activeWishlistId : []);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isWishlistPageActive(): bool
-    {
-        return $this->activePage === static::PAGE_KEY_WISHLIST;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\WishlistTransfer[]
-     */
-    protected function getCustomerWishlistCollection(): array
-    {
-        $customerWishlistCollectionTransfer = $this->getFactory()
-            ->getWishlistClient()
-            ->getCustomerWishlistCollection();
-
-        if ($customerWishlistCollectionTransfer->getWishlists() === null) {
-            return [];
-        }
-
-        return (array)$customerWishlistCollectionTransfer->getWishlists();
+        return WishlistMenuItemWidget::getTemplate();
     }
 }

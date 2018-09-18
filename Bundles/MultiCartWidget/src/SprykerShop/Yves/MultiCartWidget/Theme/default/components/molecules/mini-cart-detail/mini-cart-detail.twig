@@ -45,7 +45,9 @@
                     </span>
                 {% endif %}
 
-                {{ widget('SharedCartPermissionGroupWidgetPlugin', data.cart) }}
+                {% widget 'SharedCartPermissionGroupWidget' args [data.cart] only %}
+                {% elsewidget 'SharedCartPermissionGroupWidgetPlugin' args [data.cart] only %} {# @deprecated Use SharedCartPermissionGroupWidget instead. #}
+                {% endwidget %}
             </div>
         </div>
 

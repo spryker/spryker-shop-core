@@ -5,23 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartWidget;
+namespace SprykerShop\Yves\SharedCartWidget\Widget;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCartDetailsWidgetPluginInterface;
-use SprykerShop\Yves\SharedCartWidget\Widget\SharedCartDetailsWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartDetailsWidget instead.
- *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
-class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements SharedCartDetailsWidgetPluginInterface
+class SharedCartDetailsWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
@@ -29,14 +25,11 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param array $actions
      * @param string[]|null $widgetList
-     *
-     * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer, array $actions, ?array $widgetList = null): void
+    public function __construct(QuoteTransfer $quoteTransfer, array $actions, ?array $widgetList = null)
     {
-        $widget = new SharedCartDetailsWidget($quoteTransfer, $actions, $widgetList);
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('cart', $quoteTransfer)
+            ->addParameter('actions', $this->checkActionsPermission($quoteTransfer, $actions));
 
         if ($widgetList) {
             $this->addWidgets($widgetList);
@@ -99,9 +92,9 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
-        return static::NAME;
+        return 'SharedCartDetailsWidget';
     }
 
     /**
@@ -112,8 +105,8 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return SharedCartDetailsWidget::getTemplate();
+        return '@SharedCartWidget/views/shared-cart-details/shared-cart-details.twig';
     }
 }

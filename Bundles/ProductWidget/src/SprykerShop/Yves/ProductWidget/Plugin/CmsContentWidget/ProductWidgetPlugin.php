@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\ProductWidget\Plugin\CmsContentWidget;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CmsContentWidgetProductConnector\Dependency\Plugin\ProductWidget\ProductWidgetPluginInterface;
+use SprykerShop\Yves\ProductWidget\Widget\CmsProductWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\CmsProductWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */
 class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetPluginInterface
@@ -23,9 +26,9 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addWidgets($this->getFactory()->getCmsContentWidgetProductWidgetPlugins());
+        $widget = new CmsProductWidget($productViewTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -41,6 +44,6 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
      */
     public static function getTemplate(): string
     {
-        return '@ProductWidget/views/cms-product/cms-product.twig';
+        return CmsProductWidget::getTemplate();
     }
 }

@@ -5,34 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShoppingListWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ShoppingListWidget\Widget;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ShoppingListWidget\ShoppingListWidgetPluginInterface;
-use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListWidget instead.
- *
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
  */
-class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListWidgetPluginInterface
+class ShoppingListWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
     /**
      * @param string $sku
      * @param bool $isDisabled
-     *
-     * @return void
      */
-    public function initialize(string $sku, bool $isDisabled): void
+    public function __construct(string $sku, bool $isDisabled)
     {
-        $widget = new ShoppingListWidget($sku, $isDisabled);
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('sku', $sku)
+            ->addParameter('isDisabled', $isDisabled)
+            ->addParameter('shoppingListCollection', $this->getShoppingListCollection());
     }
 
     /**
@@ -40,7 +34,7 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ShoppingListWidget';
     }
 
     /**
@@ -48,7 +42,7 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
      */
     public static function getTemplate(): string
     {
-        return ShoppingListWidget::getTemplate();
+        return '@ShoppingListWidget/views/shopping-list/shopping-list.twig';
     }
 
     /**

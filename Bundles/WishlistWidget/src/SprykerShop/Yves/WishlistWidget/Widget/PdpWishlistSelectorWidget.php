@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\AvailabilityWidget\Widget;
+namespace SprykerShop\Yves\WishlistWidget\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
-class ProductViewAvailabilityWidget extends AbstractWidget
+class PdpWishlistSelectorWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -25,7 +25,7 @@ class ProductViewAvailabilityWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductViewAvailabilityWidget';
+        return 'PdpWishlistSelectorWidget';
     }
 
     /**
@@ -33,6 +33,6 @@ class ProductViewAvailabilityWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@AvailabilityWidget/views/availability/availability.twig';
+        return '@WishlistWidget/views/pdp-wishlist-selector/pdp-wishlist-selector.twig';
     }
 }
