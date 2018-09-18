@@ -5,10 +5,9 @@
 
     <transfer name="ProductReviewSummary">
         <property name="maximumRating" type="int" />
-        <property name="averageRating" type="int" />
+        <property name="averageRating" type="float" />
         <property name="totalReview" type="int" />
         <property name="ratingAggregation" type="array" />
     </transfer>
 
 </transfers>
-
