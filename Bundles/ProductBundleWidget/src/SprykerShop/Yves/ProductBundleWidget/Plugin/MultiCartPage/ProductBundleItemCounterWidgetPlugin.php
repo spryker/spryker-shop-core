@@ -19,6 +19,10 @@ use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\ProductBundleItemCounterWid
 class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implements ProductBundleItemCounterWidgetPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
