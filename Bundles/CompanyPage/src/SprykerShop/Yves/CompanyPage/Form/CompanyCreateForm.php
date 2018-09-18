@@ -29,6 +29,8 @@ class CompanyCreateForm extends AbstractType
     public const FIELD_IS_GUEST = 'is_guest';
     public const FIELD_COMPANY_NAME = 'company_name';
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @return string
      */
@@ -72,7 +74,7 @@ class CompanyCreateForm extends AbstractType
             'required' => true,
             'label' => 'address.salutation',
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -90,7 +92,7 @@ class CompanyCreateForm extends AbstractType
             'label' => 'customer.first_name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -108,7 +110,7 @@ class CompanyCreateForm extends AbstractType
             'label' => 'customer.last_name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -126,7 +128,7 @@ class CompanyCreateForm extends AbstractType
             'label' => 'company.company_name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -144,7 +146,7 @@ class CompanyCreateForm extends AbstractType
             'label' => 'auth.email',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -173,7 +175,7 @@ class CompanyCreateForm extends AbstractType
                 'attr' => ['autocomplete' => 'off'],
             ],
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -192,7 +194,7 @@ class CompanyCreateForm extends AbstractType
             'mapped' => false,
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -230,5 +232,13 @@ class CompanyCreateForm extends AbstractType
                 return (bool)$isGuestSubmittedValue;
             }
         ));
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }

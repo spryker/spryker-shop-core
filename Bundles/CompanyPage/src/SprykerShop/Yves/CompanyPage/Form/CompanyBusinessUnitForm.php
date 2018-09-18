@@ -25,6 +25,9 @@ class CompanyBusinessUnitForm extends AbstractType
     public const FIELD_FK_COMPANY = 'fk_company';
     public const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
+
     /**
      * @return string
      */
@@ -74,7 +77,7 @@ class CompanyBusinessUnitForm extends AbstractType
         $builder->add(static::FIELD_FK_COMPANY, HiddenType::class, [
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -92,7 +95,7 @@ class CompanyBusinessUnitForm extends AbstractType
             'label' => 'company.account.business_unit.name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -110,8 +113,8 @@ class CompanyBusinessUnitForm extends AbstractType
             'label' => 'company.account.business_unit.email',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
-                new Email(),
+                $this->createNotBlankConstraint(),
+                $this->createEmailConstraint(),
             ],
         ]);
 
@@ -146,5 +149,21 @@ class CompanyBusinessUnitForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Email
+     */
+    protected function createEmailConstraint(): Email
+    {
+        return new Email(['message' => static::VALIDATION_EMAIL_MESSAGE]);
     }
 }

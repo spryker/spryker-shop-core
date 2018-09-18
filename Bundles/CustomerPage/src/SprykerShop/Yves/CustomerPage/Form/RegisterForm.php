@@ -31,7 +31,7 @@ class RegisterForm extends AbstractType
 
     public const BLOCK_PREFIX = 'registerForm';
 
-    public const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**
      * @return string
@@ -222,7 +222,7 @@ class RegisterForm extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
-    public function createNotBlankConstraint(): NotBlank
+    protected function createNotBlankConstraint(): NotBlank
     {
         return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }

@@ -24,6 +24,8 @@ class ShareCartForm extends AbstractType
     public const OPTION_CUSTOMERS = 'OPTION_CUSTOMERS';
     public const OPTION_PERMISSION_GROUPS = 'OPTION_PERMISSION_GROUPS';
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @return string
      */
@@ -89,6 +91,7 @@ class ShareCartForm extends AbstractType
                 new NotBlank(),
             ],
             'label' => 'shared_cart.form.customer',
+            'invalid_message' => static::VALIDATION_NOT_BLANK_MESSAGE,
             ]);
 
         return $this;
@@ -111,6 +114,7 @@ class ShareCartForm extends AbstractType
                 new NotBlank(),
             ],
             'label' => 'shared_cart.form.select_permissions',
+            'invalid_message' => static::VALIDATION_NOT_BLANK_MESSAGE,
             ]);
 
         return $this;

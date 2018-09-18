@@ -29,6 +29,8 @@ class PaymentForm extends AbstractType
     const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
     const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @return string
      */
@@ -85,7 +87,7 @@ class PaymentForm extends AbstractType
                 'placeholder' => false,
                 'property_path' => self::PAYMENT_SELECTION_PROPERTY_PATH,
                 'constraints' => [
-                    new NotBlank(),
+                    $this->createNotBlankConstraint(),
                 ],
             ]
         );
@@ -188,5 +190,13 @@ class PaymentForm extends AbstractType
         ]);
 
         $resolver->setRequired(SubFormInterface::OPTIONS_FIELD_NAME);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }
