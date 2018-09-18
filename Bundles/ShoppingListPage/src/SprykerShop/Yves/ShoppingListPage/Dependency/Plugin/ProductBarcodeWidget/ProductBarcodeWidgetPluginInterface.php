@@ -15,6 +15,8 @@ interface ProductBarcodeWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'ProductBarcodeWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string|null $barcodeGeneratorPlugin
      *

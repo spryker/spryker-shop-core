@@ -12,6 +12,8 @@ interface ShoppingListWidgetPluginInterface
     public const NAME = 'ShoppingListQuickOrderWidgetPlugin';
 
     /**
+     * @api
+     *
      * @return void
      */
     public function initialize(): void;

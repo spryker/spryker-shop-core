@@ -89,13 +89,13 @@ class QuickOrderController extends AbstractController
      */
     protected function getQuickOrderFormAdditionalDataColumnProviderPlugins()
     {
-        $plugins = [];
+        $quickOrderFormAdditionalDataColumnProviderPluginCollection = [];
 
-        foreach ($this->getFactory()->getQuickOrderFormAdditionalDataColumnProviderPlugins() as $plugin) {
-            $plugins[$plugin->getFieldName()] = $plugin;
+        foreach ($this->getFactory()->getQuickOrderFormAdditionalDataColumnProviderPlugins() as $quickOrderFormAdditionalDataColumnProviderPlugin) {
+            $quickOrderFormAdditionalDataColumnProviderPluginCollection[$quickOrderFormAdditionalDataColumnProviderPlugin->getFieldName()] = $quickOrderFormAdditionalDataColumnProviderPlugin;
         }
 
-        return $plugins;
+        return $quickOrderFormAdditionalDataColumnProviderPluginCollection;
     }
 
     /**
@@ -228,8 +228,8 @@ class QuickOrderController extends AbstractController
             $request->query->getInt(static::PARAM_ID_PRODUCT)
         );
 
-        foreach ($this->getFactory()->getQuickOrderProductAdditionalDataTransferExpanderPlugins() as $plugin) {
-            $plugin->expand($quickOrderProductAdditionalDataTransfer);
+        foreach ($this->getFactory()->getQuickOrderProductAdditionalDataTransferExpanderPlugins() as $quickOrderProductAdditionalDataTransferExpanderPlugin) {
+            $quickOrderProductAdditionalDataTransfer = $quickOrderProductAdditionalDataTransferExpanderPlugin->expandQuickOrderProductAdditionalDataTransfer($quickOrderProductAdditionalDataTransfer);
         }
 
         return $quickOrderProductAdditionalDataTransfer;
