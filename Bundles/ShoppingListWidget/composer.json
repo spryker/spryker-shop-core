@@ -23,7 +23,7 @@
   "suggest": {
     "spryker-shop/customer-page": "Widget plugins are available for this module.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker-shop/shopping-list-page": "ADD SUGGEST DESCRIPTION",
+    "spryker-shop/shopping-list-page": "Use this module if you want see shopping list pages",
     "spryker/product-detail-page": "To use ShoppingListWidget plugin, ShoppingListWidgetPluginInterface from product-detail-page v0.2.2 is needed",
     "spryker-shop/multi-cart-page": "If you want to use CartToShoppingListWidgetPlugin: ^1.0.0"
   },
