@@ -7,57 +7,13 @@
 
 namespace SprykerShop\Client\CheckoutPage\Plugin;
 
-use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\CheckoutPermissionConnector\Plugin\Permission\PlaceOrderWithAmountUpToPermissionPlugin as SharedPlaceOrderWithAmountUpToPermissionPlugin;
 
 /**
  * For Client PermissionDependencyProvider::getPermissionPlugins() registration
  *
- * @deprecated Use \Spryker\Client\CheckoutPermissionConnector\Plugin\PermissionExtension\PlaceOrderWithAmountUpToPermissionPlugin instead
+ * @deprecated Use \Spryker\Shared\CheckoutPermissionConnector\Plugin\PermissionExtension\PlaceOrderWithAmountUpToPermissionPlugin instead
  */
-class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPluginInterface
+class PlaceOrderWithAmountUpToPermissionPlugin extends SharedPlaceOrderWithAmountUpToPermissionPlugin
 {
-    public const KEY = 'PlaceOrderWithAmountUpToPermissionPlugin';
-
-    protected const FIELD_CENT_AMOUNT = 'cent_amount';
-
-    /**
-     * @param array $configuration
-     * @param int|null $centAmount
-     *
-     * @return bool
-     */
-    public function can(array $configuration, $centAmount = null): bool
-    {
-        if (!$centAmount) {
-            return false;
-        }
-
-        if (!isset($configuration[static::FIELD_CENT_AMOUNT])) {
-            return false;
-        }
-
-        if ((int)$configuration[static::FIELD_CENT_AMOUNT] <= (int)$centAmount) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @return array
-     */
-    public function getConfigurationSignature(): array
-    {
-        return [
-            static::FIELD_CENT_AMOUNT => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT,
-        ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getKey(): string
-    {
-        return static::KEY;
-    }
 }

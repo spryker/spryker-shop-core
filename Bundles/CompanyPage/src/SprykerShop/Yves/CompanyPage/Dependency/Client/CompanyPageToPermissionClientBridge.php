@@ -31,12 +31,4 @@ class CompanyPageToPermissionClientBridge implements CompanyPageToPermissionClie
     {
         return $this->permissionClient->findAll();
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
-    public function getRegisteredPermissions(): PermissionCollectionTransfer
-    {
-        return $this->permissionClient->getRegisteredPermissions();
-    }
 }
