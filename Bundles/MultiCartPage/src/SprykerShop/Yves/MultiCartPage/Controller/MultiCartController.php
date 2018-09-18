@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MultiCartController extends AbstractController
 {
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
+    public const GLOSSARY_KEY_CART_WAS_DELETED = 'multi_cart_widget.cart.was-deleted-before';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -117,13 +118,18 @@ class MultiCartController extends AbstractController
      */
     public function setDefaultAction(int $idQuote)
     {
-        $quoteTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->findQuoteById($idQuote);
+        $multiCartClient = $this->getFactory()
+            ->getMultiCartClient();
 
-        $this->getFactory()
-            ->getMultiCartClient()
-            ->setDefaultQuote($quoteTransfer);
+        $quoteTransfer = $multiCartClient->findQuoteById($idQuote);
+
+        if (!$quoteTransfer) {
+            $this->addInfoMessage(static::GLOSSARY_KEY_CART_WAS_DELETED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
+        $multiCartClient->setDefaultQuote($quoteTransfer);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -180,6 +186,11 @@ class MultiCartController extends AbstractController
             ->getMultiCartClient()
             ->findQuoteById($idQuote);
 
+        if (!$quoteTransfer) {
+            $this->addInfoMessage(static::GLOSSARY_KEY_CART_WAS_DELETED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
         $multiCartClient
             ->deleteQuote($quoteTransfer);
 
