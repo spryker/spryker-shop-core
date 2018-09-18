@@ -88,7 +88,7 @@ interface CompanyPageToCompanyRoleClientInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findFilteredCompanyRolePermissionsByIdCompanyRole(
+    public function findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole(
         CompanyRoleTransfer $companyRoleTransfer
     ): PermissionCollectionTransfer;
 }

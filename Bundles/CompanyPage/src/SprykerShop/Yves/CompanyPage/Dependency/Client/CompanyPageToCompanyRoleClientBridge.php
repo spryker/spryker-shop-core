@@ -127,9 +127,9 @@ class CompanyPageToCompanyRoleClientBridge implements CompanyPageToCompanyRoleCl
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findFilteredCompanyRolePermissionsByIdCompanyRole(
+    public function findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole(
         CompanyRoleTransfer $companyRoleTransfer
     ): PermissionCollectionTransfer {
-        return $this->companyRoleClient->findFilteredCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
+        return $this->companyRoleClient->findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
     }
 }

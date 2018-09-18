@@ -268,7 +268,7 @@ class CompanyRoleController extends AbstractCompanyController
         return [
             'companyRoleForm' => $companyRoleForm->createView(),
             'idCompanyRole' => $idCompanyRole,
-            'permissions' => $this->getPermissionsList($idCompanyRole)->getPermissions(),
+            'permissions' => $this->getSelectablePermissionsList($idCompanyRole)->getPermissions(),
         ];
     }
 
@@ -346,14 +346,14 @@ class CompanyRoleController extends AbstractCompanyController
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    protected function getPermissionsList(int $idCompanyRole): PermissionCollectionTransfer
+    protected function getSelectablePermissionsList(int $idCompanyRole): PermissionCollectionTransfer
     {
         $companyRoleTransfer = (new CompanyRoleTransfer())
             ->setIdCompanyRole($idCompanyRole);
 
         return $this->getFactory()
             ->getCompanyRoleClient()
-            ->findFilteredCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
+            ->findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
     }
 
     /**
