@@ -1,0 +1,21 @@
+$option-item-padding: map-get($setting-spacing, 'small');
+
+@mixin product-option-widget-shopping-list-product-option-list($name: '.shopping-list-product-option-list') {
+    #{$name} {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        &__item {
+            flex-grow: 1;
+            width: 50%;
+            max-width: 50%;
+            padding: 0 $option-item-padding map-get($setting-spacing, 'default');
+
+            @include helper-breakpoint('lg') {
+                width: 30%;
+                max-width: calc(100% / 3);
+            }
+        }
+    }
+}

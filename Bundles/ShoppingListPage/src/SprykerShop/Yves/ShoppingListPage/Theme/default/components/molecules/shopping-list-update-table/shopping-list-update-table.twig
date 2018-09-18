@@ -1,0 +1,130 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-update-table'
+} %}
+
+{% define data = {
+    shoppingList: null,
+    shoppingListItems: null,
+    shoppingListItemProducts: null,
+    form: []
+} %}
+
+
+{% block body %}
+    {% if data.shoppingListItems | length %}
+        <div class="is-scrollable">
+            <table class="table table--expand">
+                <thead>
+                <tr>
+                    <th class="text-center" colspan="2">{{ 'customer.account.shopping_list.product' | trans }}</th>
+                    <th class="text-center">{{ 'customer.account.shopping_list.price' | trans }}</th>
+                    <th class="text-center">{{ 'customer.account.shopping_list.quantity' | trans }}</th>
+                    <th class="text-center">{{ 'customer.account.shopping_list.availability' | trans }}</th>
+                    <th class="text-center">{{ 'customer.account.shopping_list.overview.actions' | trans }}</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for key, shoppingListItem in data.shoppingListItems %}
+                    {% set product = data.shoppingListItemProducts[shoppingListItem.idShoppingListItem] %}
+                    {% set isProductAvailable = product.available is defined and product.available and product.price is defined and product.price is not null %}
+                    {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+                        {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', product.sku) %}
+                        {% set isProductAvailable = not isDiscontinued and isProductAvailable %}
+                    {% endif %}
+                    <tr>
+                        <td class="text-center">
+                            {% if product.images is defined and product.images is not empty %}
+                                {% include atom('thumbnail') with {
+                                    modifiers: ['small', 'min-size'],
+                                    attributes: {
+                                        alt: product.name | default,
+                                        src: product.images.0.externalUrlSmall,
+                                        title: product.name | default
+                                    }
+                                } only %}
+                            {% endif %}
+                        </td>
+
+                        <td class="text-center">
+                            <a href="{{ product.url }}">{{ product.name }}</a>
+                            <div>
+                                <small>
+                                    {{ product.sku }}
+                                </small>
+                            </div>
+                            {% for attribute in product.superAttributesDefinition %}
+                                {% if product.attributes[attribute] is defined %}
+                                    {{ ('product.attribute.' ~ attribute) | trans }}: {{ product.attributes[attribute] }} <br/>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+
+                        <td nowrap="nowrap" class="text-center">
+                            {% if product.price is not null %}
+                                {% include molecule('price') with {
+                                    data: {
+                                        amount: product.price | money,
+                                        originalAmount: product.prices.ORIGINAL is not defined or product.prices.ORIGINAL is empty ? null : (product.prices.ORIGINAL | money)
+                                    }
+                                } only %}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+
+                        <td class="text-center">
+                            {{ form_row(data.form.items[key].quantity, {disabled: not isProductAvailable, type: 'number'}) }}
+                        </td>
+
+                        <td class="text-center">
+                            {% if isProductAvailable %}
+                                {{ 'customer.account.shopping_list.available' | trans }}
+                            {% else %}
+                                {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+                                    {{ widget('ProductDiscontinuedWidgetPlugin', product.sku) }}
+                                {% else %}
+                                    {{ 'customer.account.shopping_list.not_available' | trans }}
+                                {% endif %}
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a class="button button--alert" href="{{ path('shopping-list/remove-item', {
+                                idShoppingList: data.shoppingList.idShoppingList, idShoppingListItem: shoppingListItem.idShoppingListItem
+                            }) }}">
+                                {{ 'customer.account.shopping_list.remove' | trans }}
+                            </a>
+                        </td>
+                    </tr>
+                    {% for subForm in data.form.items[key].children  %}
+                        {% if subForm.vars.template_path is defined and not subForm.rendered %}
+                            {% include subForm.vars.template_path with {'form': subForm, 'rowClass': config.name ~ '__options-row'} %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+
+                </tbody>
+                <tfoot class="{{ config.name }}__actions">
+                <tr>
+                    <td colspan="5">&nbsp;</td>
+                    <td colspan="2">
+                        <div class="text-right spacing-right spacing-right--inner spacing-right--small">
+                            <a class="button button--alert" href="{{ path('shopping-list/clear', {idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                {{ 'customer.account.shopping_list.remove_all' | trans }}
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    {% else %}
+        <div class="form__field col col--sm-12 text-center">
+            <hr />
+            {{ 'customer.account.shopping_list.empty' | trans }}
+        </div>
+    {% endif %}
+{% endblock %}
