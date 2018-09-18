@@ -70,8 +70,8 @@
                         {% if isItemAvailable %}
                             {{ 'customer.account.wishlist.available' | trans }}
                         {% else %}
-                            {% widget 'ProductDiscontinuedWidget' args [item.sku] use view('@ProductDiscontinuedWidget/views/wishlist-product-discontinued/wishlist-product-discontinued.twig') only %}
-                            {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [item.sku] view('@ProductDiscontinuedWidget/views/wishlist-product-discontinued/wishlist-product-discontinued.twig') only %} {# @deprecated Use ProductDiscontinuedWidget instead. #}
+                            {% widget 'ProductDiscontinuedWidget' args [item.sku] use view('wishlist-product-discontinued', 'ProductDiscontinuedWidget') only %}
+                            {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [item.sku] use view('wishlist-product-discontinued', 'ProductDiscontinuedWidget') only %} {# @deprecated Use ProductDiscontinuedWidget instead. #}
                             {% nowidget %}
                                 {{ 'customer.account.wishlist.not_available' | trans }}
                             {% endwidget %}

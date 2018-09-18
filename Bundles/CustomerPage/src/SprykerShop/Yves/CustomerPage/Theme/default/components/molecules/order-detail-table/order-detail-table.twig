@@ -90,6 +90,7 @@
                             {% endfor %}
                         {% endif %}
                     {% endif %}
+
                     {% widget 'DisplayOrderItemNoteWidget' args [item] only %}
                     {% elsewidget 'CartNoteOrderItemNoteWidgetPlugin' args [item] only %} {# @deprecated Use DisplayOrderItemNoteWidget instead. #}
                     {% endwidget %}

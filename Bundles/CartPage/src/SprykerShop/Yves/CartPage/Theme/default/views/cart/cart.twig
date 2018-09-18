@@ -73,10 +73,18 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    {% if widgetExists('CartNoteQuoteWidgetPlugin') %}
-                        {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
-                        <hr />
-                    {% endif %}
+                    {% widget 'CartNoteFormWidget' args [data.cart] only %}
+                        {% block body %}
+                            {{ parent() }}
+                            <hr />
+                        {% endblock %}
+                    {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
+                        {% block body %}
+                            {{ parent() }}
+                            <hr />
+                        {% endblock %}
+                    {% endwidget %}
+
                     {% widget 'CartNoteFormWidget' args [data.cart] only %}
                         {% block body %}
                             {{ parent() }}
@@ -110,6 +118,7 @@
     {% widget 'UpSellingProductsWidget' args [data.cart] only %}
     {% elsewidget 'UpSellingProductsWidgetPlugin' args [data.cart] only %} {# @deprecated Use UpSellingProductsWidget instead. #}
     {% endwidget %}
+
     {% widget 'MultiCartListWidget' args [data.cart] only %}
     {% elsewidget 'MultiCartListWidgetPlugin' args [data.cart] only %} {# @deprecated Use MultiCartListWidget instead. #}
     {% endwidget %}

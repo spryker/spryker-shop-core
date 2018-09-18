@@ -9,7 +9,7 @@
 } %}
 
 {% block customerContent %}
-    {% widget 'CustomerReorderWidget' use view('@CustomerReorderWidget/views/customer-reorder/customer-reorder-formStart.twig'), args [data.order] only %}
+    {% widget 'CustomerReorderWidget' args [data.order] use view('customer-reorder-formStart', 'CustomerReorderWidget') only %}
     {% nowidget %}
         {{ widgetBlock('CustomerReorderWidgetPlugin', 'formStart', data.order) }} {# @deprecated Use CustomerReorderWidget instead. #}
     {% endwidget %}
@@ -53,7 +53,7 @@
 
             {% block row %}
                 <td>
-                    {% widget 'CustomerReorderWidget' use view('@CustomerReorderWidget/views/customer-reorder/customer-reorder-formCheckbox.twig'), args [embed.order, concreteItem] only %}
+                    {% widget 'CustomerReorderWidget' args [embed.order, concreteItem] use view('customer-reorder-formCheckbox', 'CustomerReorderWidget') only %}
                     {% nowidget %}
                         {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, concreteItem) }} {# @deprecated Use CustomerReorderWidget instead. #}
                     {% endwidget %}
@@ -93,11 +93,13 @@
     {% widget 'DisplayOrderNoteWidget' args [data.order] only %}
     {% elsewidget 'CartNoteOrderNoteWidgetPlugin' args [data.order] only %} {# @deprecated Use DisplayOrderNoteWidget instead. #}
     {% endwidget %}
-    {% widget 'CustomerReorderWidget' use view('@CustomerReorderWidget/views/customer-reorder/customer-reorder-formActions.twig'), args [data.order] only %}
+
+    {% widget 'CustomerReorderWidget' args [data.order] use view('customer-reorder-formActions', 'CustomerReorderWidget') only %}
     {% nowidget %}
         {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }} {# @deprecated Use CustomerReorderWidget instead. #}
     {% endwidget %}
-    {% widget 'CustomerReorderWidget' use view('@CustomerReorderWidget/views/customer-reorder/customer-reorder-formEnd.twig'), args [data.order] only %}
+
+    {% widget 'CustomerReorderWidget' args [data.order] use view('customer-reorder-formEnd', 'CustomerReorderWidget') only %}
     {% nowidget %}
         {{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }} {# @deprecated Use CustomerReorderWidget instead. #}
     {% endwidget %}
