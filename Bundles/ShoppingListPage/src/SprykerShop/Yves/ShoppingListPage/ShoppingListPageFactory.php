@@ -12,6 +12,8 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandler;
 use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandlerInterface;
+use SprykerShop\Yves\ShoppingListPage\Business\SharedShoppingListReader;
+use SprykerShop\Yves\ShoppingListPage\Business\SharedShoppingListReaderInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
@@ -85,6 +87,14 @@ class ShoppingListPageFactory extends AbstractFactory
     public function createAddToCartHandler(): AddToCartHandlerInterface
     {
         return new AddToCartHandler($this->getShoppingListClient(), $this->getCustomerClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Business\SharedShoppingListReaderInterface
+     */
+    public function createSharedShoppingListReader(): SharedShoppingListReaderInterface
+    {
+        return new SharedShoppingListReader($this->getCompanyUserClient(), $this->getCompanyBusinessUnitClient());
     }
 
     /**

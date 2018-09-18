@@ -132,7 +132,7 @@ class ShareShoppingListDataProvider
                 continue;
             }
 
-            $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()] = (new ShoppingListCompanyUserTransfer)
+            $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()] = (new ShoppingListCompanyUserTransfer())
                 ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
                 ->setCompanyUser($companyUserTransfer);
@@ -180,7 +180,7 @@ class ShareShoppingListDataProvider
                 continue;
             }
 
-            $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = (new ShoppingListCompanyBusinessUnitTransfer)
+            $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = (new ShoppingListCompanyBusinessUnitTransfer())
                 ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
                 ->setCompanyBusinessUnit($companyBusinessUnitTransfer);

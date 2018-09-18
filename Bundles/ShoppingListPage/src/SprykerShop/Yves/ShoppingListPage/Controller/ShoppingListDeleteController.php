@@ -7,10 +7,6 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
@@ -84,71 +80,15 @@ class ShoppingListDeleteController extends AbstractShoppingListController
             ->getShoppingListClient()
             ->getShoppingList($shoppingListTransfer);
 
+        $sharedShoppingListEntities = $this->getFactory()
+            ->createSharedShoppingListReader()
+            ->getSharedShoppingListEntities($shoppingListTransfer, $customerTransfer);
+
         return [
             'shoppingList' => $shoppingListTransfer,
-            'sharedCompanyUsers' => $this->getSharedCompanyUsers($shoppingListTransfer, $customerTransfer),
-            'sharedCompanyBusinessUnits' => $this->getSharedCompanyBusinessUnits($shoppingListTransfer, $customerTransfer),
+            'sharedCompanyUsers' => $sharedShoppingListEntities['sharedCompanyUsers'],
+            'sharedCompanyBusinessUnits' => $sharedShoppingListEntities['sharedCompanyBusinessUnits'],
             'backUrl' => $request->headers->get('referer'),
         ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUserTransfer[]
-     */
-    protected function getSharedCompanyUsers(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): ArrayObject
-    {
-        $sharedCompanyUserIds = [];
-
-        foreach ($shoppingListTransfer->getSharedCompanyUsers() as $shoppingListCompanyUserTransfer) {
-            $sharedCompanyUserIds[] = $shoppingListCompanyUserTransfer->getIdCompanyUser();
-        }
-
-        if (!$sharedCompanyUserIds) {
-            return new ArrayObject();
-        }
-
-        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
-            ->setIdCompany($customerTransfer->getCompanyUserTransfer()->getFkCompany())
-            ->setCompanyUserIds($sharedCompanyUserIds);
-
-        $companyUserTransfers = $this->getFactory()
-            ->getCompanyUserClient()
-            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer)
-            ->getCompanyUsers();
-
-        return $companyUserTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]
-     */
-    protected function getSharedCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): ArrayObject
-    {
-        $sharedCompanyBusinessUnitIds = [];
-
-        foreach ($shoppingListTransfer->getSharedCompanyBusinessUnits() as $shoppingListCompanyBusinessUnitTransfer) {
-            $sharedCompanyBusinessUnitIds[] = $shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit();
-        }
-
-        if (!$sharedCompanyBusinessUnitIds) {
-            return new ArrayObject();
-        }
-
-        $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
-            ->setIdCompany($customerTransfer->getCompanyUserTransfer()->getFkCompany())
-            ->setCompanyBusinessUnitIds($sharedCompanyBusinessUnitIds);
-
-        $companyBusinessUnitTransfers = $this->getFactory()
-            ->getCompanyBusinessUnitClient()
-            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer)
-            ->getCompanyBusinessUnits();
-
-        return $companyBusinessUnitTransfers;
     }
 }
