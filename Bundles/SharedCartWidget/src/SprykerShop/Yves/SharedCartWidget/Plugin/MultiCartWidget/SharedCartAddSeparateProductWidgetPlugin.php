@@ -9,7 +9,11 @@ namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartWidget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCartAddSeparateProductWidgetPluginInterface;
+use SprykerShop\Yves\SharedCartWidget\Widget\SharedCartAddSeparateProductWidget;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartAddSeparateProductWidget instead.
+ */
 class SharedCartAddSeparateProductWidgetPlugin extends AbstractWidgetPlugin implements SharedCartAddSeparateProductWidgetPluginInterface
 {
     /**
@@ -17,6 +21,9 @@ class SharedCartAddSeparateProductWidgetPlugin extends AbstractWidgetPlugin impl
      */
     public function initialize(): void
     {
+        $widget = new SharedCartAddSeparateProductWidget();
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -42,6 +49,6 @@ class SharedCartAddSeparateProductWidgetPlugin extends AbstractWidgetPlugin impl
      */
     public static function getTemplate()
     {
-        return '@SharedCartWidget/views/shared-cart-separate-product/shared-cart-separate-product.twig';
+        return SharedCartAddSeparateProductWidget::getTemplate();
     }
 }

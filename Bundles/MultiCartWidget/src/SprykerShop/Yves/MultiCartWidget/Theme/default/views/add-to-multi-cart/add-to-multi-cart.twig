@@ -20,6 +20,8 @@
         {% endif %}
         </div>
     </div>
-    {{ widget('SharedCartAddSeparateProductWidgetPlugin') }}
+    {% widget 'SharedCartAddSeparateProductWidget' only %}
+    {% elsewidget 'SharedCartAddSeparateProductWidgetPlugin' only %} {# @deprecated Use SharedCartAddSeparateProductWidget instead. #}
+    {% endwidget %}
     {% endif %}
 {% endblock %}

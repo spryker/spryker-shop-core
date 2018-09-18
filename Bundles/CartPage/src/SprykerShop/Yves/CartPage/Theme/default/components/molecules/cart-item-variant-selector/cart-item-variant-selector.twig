@@ -13,8 +13,10 @@
 {% block component %}
     {% set isItemVariantReplaceAvailable = data.cartItemAttributes is not empty %}
 
-    {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
-        {% set isItemVariantReplaceAvailable = not widgetBlock('QuantitySalesUnitWidgetPlugin', 'hasSalesUnit', data.cartItem) and isItemVariantReplaceAvailable %}
+    {% set quantitySalesUnitWidget = findWidget('QuantitySalesUnitWidget', [data.cartItem]) %}
+    {% set hasSalesUnit = quantitySalesUnitWidget.hasSalesUnit | default(widgetBlock('QuantitySalesUnitWidgetPlugin', 'hasSalesUnit', data.cartItem)) %} {# @deprecated Use QuantitySalesUnitWidget instead of QuantitySalesUnitWidgetPlugin. #}
+    {% if hasSalesUnit is null %}
+        {% set isItemVariantReplaceAvailable = not hasSalesUnit and isItemVariantReplaceAvailable %}
     {% endif %}
 
     {% if isItemVariantReplaceAvailable %}{{parent()}}{% endif %}

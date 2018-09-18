@@ -10,7 +10,11 @@ namespace SprykerShop\Yves\ProductSetWidget\Plugin\CmsContentWidgetProductSetCon
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CmsContentWidgetProductSetConnector\Dependency\Plugin\ProductSetWidget\ProductSetWidgetPluginInterface;
+use SprykerShop\Yves\ProductSetWidget\Widget\CmsContentProductSetWidget;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductSetWidget\Widget\CmsContentProductSetWidget instead.
+ */
 class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetWidgetPluginInterface
 {
     /**
@@ -21,9 +25,9 @@ class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetW
      */
     public function initialize(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers): void
     {
-        $this
-            ->addParameter('productSet', $productSetDataStorageTransfer)
-            ->addParameter('productViews', $productViewTransfers);
+        $widget = new CmsContentProductSetWidget($productSetDataStorageTransfer, $productViewTransfers);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -39,6 +43,6 @@ class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetW
      */
     public static function getTemplate(): string
     {
-        return '@ProductSetWidget/views/product-set-widget/product-set-widget.twig';
+        return CmsContentProductSetWidget::getTemplate();
     }
 }

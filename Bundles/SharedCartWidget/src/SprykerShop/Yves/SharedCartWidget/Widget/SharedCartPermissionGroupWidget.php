@@ -5,30 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartWidget;
+namespace SprykerShop\Yves\SharedCartWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCartPermissionGroupWidgetPluginInterface;
-use SprykerShop\Yves\SharedCartWidget\Widget\SharedCartPermissionGroupWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartPermissionGroupWidget instead.
- *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
-class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implements SharedCartPermissionGroupWidgetPluginInterface
+class SharedCartPermissionGroupWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer): void
+    public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $widget = new SharedCartPermissionGroupWidget($quoteTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this
+            ->addParameter('cart', $quoteTransfer)
+            ->addParameter('accessType', $this->getAccessType($quoteTransfer));
     }
 
     /**
@@ -52,7 +46,7 @@ class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin impleme
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'SharedCartPermissionGroupWidget';
     }
 
     /**
@@ -64,6 +58,6 @@ class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin impleme
      */
     public static function getTemplate(): string
     {
-        return SharedCartPermissionGroupWidget::getTemplate();
+        return '@SharedCartWidget/views/shared-cart-permission/shared-cart-permission.twig';
     }
 }

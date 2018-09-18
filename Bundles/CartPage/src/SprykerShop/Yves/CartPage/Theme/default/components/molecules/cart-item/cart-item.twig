@@ -62,15 +62,15 @@
 
             {% if data.cartItem.amountSalesUnit is empty %}
                 {% if canEditCart %}
-                    {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
-                        {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
-                    {% else %}
+                    {% widget 'QuantitySalesUnitWidget' args [data.cartItem] only %}
+                    {% elsewidget 'QuantitySalesUnitWidgetPlugin' args [data.cartItem] only %} {# @deprecated Use QuantitySalesUnitWidget instead. #}
+                    {% nowidget %}
                         {% include molecule('cart-quantity-input', 'CartPage') with {
                             data: {
                                 cartItem: data.cartItem
                             }
                         } only %}
-                    {% endif %}
+                    {% endwidget %}
                 {% else %}
                     {{ 'cart.item_quantity' | trans }}
                     <strong>{{ data.cartItem.quantity }}</strong>

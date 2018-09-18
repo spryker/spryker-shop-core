@@ -8,5 +8,7 @@
 } %}
 
 {% block content %}
-    {{ widget('ProductSetWidgetPlugin', data.set, data.views) }}
+    {% widget 'CmsContentProductSetWidget' args [data.set, data.views] only %}
+    {% elsewidget 'ProductSetWidgetPlugin' args [data.set, data.views] only %} {# @deprecated Use CmsContentProductSetWidget instead. #}
+    {% endwidget %}
 {% endblock %}

@@ -116,14 +116,32 @@
         {% endwidget %}
     </form>
 
-    {% if widgetExists('ShoppingListWidgetPlugin') and isProductAvailable %}
-        <hr />
-        {{ widget('ShoppingListWidgetPlugin', sku, isDisabled) }}
+    {% if isProductAvailable %}
+        {% widget 'ShoppingListWidget' args [sku, isDisabled] only %}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
+        {% elsewidget 'ShoppingListWidgetPlugin' args [sku, isDisabled] only %} {# @deprecated Use ShoppingListWidget instead. #}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
+        {% endwidget %}
     {% endif %}
 
-    {% if widgetExists('WishlistWidgetPlugin') and isProductAvailable %}
-        <hr />
-        {{ widget('WishlistWidgetPlugin', data.product) }}
+    {% if isProductAvailable %}
+        {% widget 'WishlistWidget' args [data.product] only %}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
+        {% elsewidget 'WishlistWidgetPlugin' args [data.product] only %} {# @deprecated Use WishlistWidget instead. #}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
+        {% endwidget %}
     {% endif %}
 
     {% widget 'ProductDiscontinuedNoteWidget' args [sku] only %}

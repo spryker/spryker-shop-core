@@ -5,30 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Plugin\CartPage;
+namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Widget;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductMeasurementUnitWidget\QuantitySalesUnitWidgetPluginInterface;
-use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\QuantitySalesUnitWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\QuantitySalesUnitWidget instead.
- *
  * @method \SprykerShop\Yves\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetFactory getFactory()
  */
-class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements QuantitySalesUnitWidgetPluginInterface
+class QuantitySalesUnitWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
      */
-    public function initialize(ItemTransfer $itemTransfer): void
+    public function __construct(ItemTransfer $itemTransfer)
     {
-        $widget = new QuantitySalesUnitWidget($itemTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this
+            ->addParameter('itemTransfer', $itemTransfer)
+            ->addParameter('isBaseUnit', $this->isBaseUnit($itemTransfer));
     }
 
     /**
@@ -66,9 +60,9 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
-        return static::NAME;
+        return 'QuantitySalesUnitWidget';
     }
 
     /**
@@ -78,8 +72,8 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return QuantitySalesUnitWidget::getTemplate();
+        return '@ProductMeasurementUnitWidget/views/cart-product-measurement-unit-quantity-selector/cart-product-measurement-unit-quantity-selector.twig';
     }
 }

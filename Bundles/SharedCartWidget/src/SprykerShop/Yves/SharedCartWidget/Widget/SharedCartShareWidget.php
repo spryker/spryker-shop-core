@@ -5,30 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartWidget;
+namespace SprykerShop\Yves\SharedCartWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCartShareWidgetPluginInterface;
-use SprykerShop\Yves\SharedCartWidget\Widget\SharedCartShareWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartShareWidget instead.
- *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
-class SharedCartShareWidgetPlugin extends AbstractWidgetPlugin implements SharedCartShareWidgetPluginInterface
+class SharedCartShareWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer): void
+    public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $widget = new SharedCartShareWidget($quoteTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this
+            ->addParameter('cart', $quoteTransfer)
+            ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer));
     }
 
     /**
@@ -50,9 +44,9 @@ class SharedCartShareWidgetPlugin extends AbstractWidgetPlugin implements Shared
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
-        return static::NAME;
+        return 'SharedCartShareWidget';
     }
 
     /**
@@ -63,8 +57,8 @@ class SharedCartShareWidgetPlugin extends AbstractWidgetPlugin implements Shared
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return SharedCartShareWidget::getTemplate();
+        return '@SharedCartWidget/views/shared-cart-share/shared-cart-share.twig';
     }
 }

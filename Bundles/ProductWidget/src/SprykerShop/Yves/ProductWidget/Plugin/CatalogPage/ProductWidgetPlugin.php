@@ -9,8 +9,11 @@ namespace SprykerShop\Yves\ProductWidget\Plugin\CatalogPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CatalogPage\Dependency\Plugin\ProductWidget\ProductWidgetPluginInterface;
+use SprykerShop\Yves\ProductWidget\Widget\CatalogPageProductWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\CatalogPageProductWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */
 class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetPluginInterface
@@ -23,10 +26,9 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
      */
     public function initialize(array $product, $viewMode = null): void
     {
-        $this
-            ->addParameter('product', $product)
-            ->addParameter('viewMode', $viewMode)
-            ->addWidgets($this->getFactory()->getCatalogPageSubWidgets());
+        $widget = new CatalogPageProductWidget($product, $viewMode);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -42,6 +44,6 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
      */
     public static function getTemplate(): string
     {
-        return '@ProductWidget/views/catalog-product/catalog-product.twig';
+        return CatalogPageProductWidget::getTemplate();
     }
 }

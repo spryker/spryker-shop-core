@@ -5,36 +5,33 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartWidget;
+namespace SprykerShop\Yves\SharedCartWidget\Widget;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCartOperationsWidgetPluginInterface;
-use SprykerShop\Yves\SharedCartWidget\Widget\SharedCartOperationsWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartOperationsWidget instead.
- *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
-class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements SharedCartOperationsWidgetPluginInterface
+class SharedCartOperationsWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer): void
+    public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $widget = new SharedCartOperationsWidget($quoteTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $this
+            ->addParameter('cart', $quoteTransfer)
+            ->addParameter('actions', $this->getCartActions($quoteTransfer, $customerTransfer))
+            ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer, $customerTransfer))
+            ->addParameter('isSharedCartAllowed', $this->isSharedCartAllowed($customerTransfer));
     }
 
     /**
@@ -109,9 +106,9 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
-        return static::NAME;
+        return 'SharedCartOperationsWidget';
     }
 
     /**
@@ -122,8 +119,8 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return SharedCartOperationsWidget::getTemplate();
+        return '@SharedCartWidget/views/shared-cart-operations/shared-cart-operations.twig';
     }
 }
