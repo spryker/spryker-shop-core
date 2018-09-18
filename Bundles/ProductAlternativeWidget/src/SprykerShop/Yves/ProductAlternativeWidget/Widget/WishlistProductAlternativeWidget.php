@@ -5,32 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductAlternativeWidget\Plugin\ShoppingListPage;
+namespace SprykerShop\Yves\ProductAlternativeWidget\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Generated\Shared\Transfer\ShoppingListTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductAlternativeWidget\Widget\ShoppingListProductAlternativeWidget;
-use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductAlternativeWidget\Widget\ShoppingListProductAlternativeWidget instead.
- *
  * @method \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeWidgetFactory getFactory()
  */
-class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements ProductAlternativeWidgetPluginInterface
+class WishlistProductAlternativeWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return void
+     * @param string $wishlistName
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, ShoppingListTransfer $shoppingListTransfer): void
+    public function __construct(ProductViewTransfer $productViewTransfer, string $wishlistName)
     {
         $this
             ->addParameter('item', $productViewTransfer)
-            ->addParameter('shoppingList', $shoppingListTransfer)
+            ->addParameter('wishlistName', $wishlistName)
             ->addParameter('products', $this->findAlternativesProducts($productViewTransfer));
     }
 
@@ -43,7 +36,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'WishlistProductAlternativeWidget';
     }
 
     /**
@@ -55,7 +48,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate(): string
     {
-        return ShoppingListProductAlternativeWidget::getTemplate();
+        return '@ProductAlternativeWidget/views/wishlist-product-alternative/wishlist-product-alternative.twig';
     }
 
     /**

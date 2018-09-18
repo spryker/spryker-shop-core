@@ -5,23 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\PriceWidget\Plugin\ShopUi;
+namespace SprykerShop\Yves\PriceWidget\Widget;
 
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\PriceWidget\Widget\PriceModeSwitcherWidget;
-use SprykerShop\Yves\ShopUi\Dependency\Plugin\PriceWidget\PriceModeSwitcherWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\PriceWidget\Widget\PriceModeSwitcherWidget instead.
- *
  * @method \SprykerShop\Yves\PriceWidget\PriceWidgetFactory getFactory()
  */
-class PriceModeSwitcherWidgetPlugin extends AbstractWidgetPlugin implements PriceModeSwitcherWidgetPluginInterface
+class PriceModeSwitcherWidget extends AbstractWidget
 {
-    /**
-     * @return void
-     */
-    public function initialize(): void
+    public function __construct()
     {
         $this
             ->addParameter('priceModes', $this->getFactory()->getPriceClient()->getPriceModes())
@@ -33,7 +26,7 @@ class PriceModeSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Pric
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'PriceModeSwitcherWidget';
     }
 
     /**
@@ -41,6 +34,6 @@ class PriceModeSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Pric
      */
     public static function getTemplate(): string
     {
-        return PriceModeSwitcherWidget::getTemplate();
+        return '@PriceWidget/views/price-switch/price-switch.twig';
     }
 }

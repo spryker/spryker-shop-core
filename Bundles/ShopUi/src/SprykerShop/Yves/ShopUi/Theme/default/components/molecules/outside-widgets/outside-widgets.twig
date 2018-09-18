@@ -6,5 +6,7 @@
 } %}
 
 {% block body %}
-    {{ widgetGlobal('AgentWidgetPlugin') }}
+    {% widget 'AgentWidget' only %}
+    {% elsewidget 'AgentWidgetPlugin' only %} {# @deprecated Use AgentWidget instead. #}
+    {% endwidget %}
 {% endblock %}

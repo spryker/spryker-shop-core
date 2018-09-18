@@ -5,23 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\AgentWidget\Plugin\Widget;
+namespace SprykerShop\Yves\AgentWidget\Widget;
 
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\AgentWidget\Widget\AgentWidget;
-use SprykerShop\Yves\ShopUi\Dependency\Plugin\AgentWidget\AgentWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\AgentWidget\Widget\AgentWidget instead.
- *
  * @method \SprykerShop\Yves\AgentWidget\AgentWidgetFactory getFactory()
  */
-class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPluginInterface
+class AgentWidget extends AbstractWidget
 {
-    /**
-     * @return void
-     */
-    public function initialize(): void
+    public function __construct()
     {
         $isLoggedIn = $this->getFactory()->getAgentClient()->isLoggedIn();
 
@@ -38,9 +31,9 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
-        return static::NAME;
+        return 'AgentWidget';
     }
 
     /**
@@ -50,8 +43,8 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return AgentWidget::getTemplate();
+        return '@AgentWidget/views/agent-widget/agent-widget.twig';
     }
 }

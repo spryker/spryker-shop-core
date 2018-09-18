@@ -5,36 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductBundleWidget\Plugin\MultiCartWidget;
+namespace SprykerShop\Yves\ProductBundleWidget\Widget;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\ProductBundleWidget\ProductBundleItemsWidgetPluginInterface;
-use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemsMultiCartItemsListWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemsMultiCartItemsListWidget instead.
- *
  * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */
-class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements ProductBundleItemsWidgetPluginInterface
+class ProductBundleItemCounterWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int|null $itemDisplayLimit
-     *
-     * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer, ?int $itemDisplayLimit = null): void
+    public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $items = $this->transformCartItems($quoteTransfer->getItems(), $quoteTransfer);
-        if (!$itemDisplayLimit) {
-            $itemDisplayLimit = count($items);
-        }
-        $this->addParameter('items', $items)
-            ->addParameter('itemDisplayLimit', $itemDisplayLimit);
+        $this->addParameter('items', $this->transformCartItems($quoteTransfer->getItems(), $quoteTransfer))
+            ->addParameter('cart', $quoteTransfer);
     }
 
     /**
@@ -81,9 +70,9 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductBundleItemCounterWidget';
     }
 
     /**
@@ -94,8 +83,8 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return ProductBundleItemsMultiCartItemsListWidget::getTemplate();
+        return '@ProductBundleWidget/views/multi-cart-items-counter/multi-cart-items-counter.twig';
     }
 }

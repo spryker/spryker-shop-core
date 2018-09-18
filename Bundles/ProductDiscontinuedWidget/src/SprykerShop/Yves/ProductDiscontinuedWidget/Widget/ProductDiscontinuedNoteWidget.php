@@ -5,25 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductDiscontinuedWidget\Plugin\ProductDetailPage;
+namespace SprykerShop\Yves\ProductDiscontinuedWidget\Widget;
 
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductDiscontinuedWidget\ProductDiscontinuedWidgetPluginInterface;
-use SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedNoteWidget;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedNoteWidget instead.
- *
  * @method \SprykerShop\Yves\ProductDiscontinuedWidget\ProductDiscontinuedWidgetFactory getFactory()
  */
-class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements ProductDiscontinuedWidgetPluginInterface
+class ProductDiscontinuedNoteWidget extends AbstractWidget
 {
     /**
      * @param string $sku
-     *
-     * @return void
      */
-    public function initialize(string $sku): void
+    public function __construct(string $sku)
     {
         $this->addParameter(
             'discontinuedProduct',
@@ -42,7 +36,7 @@ class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductDiscontinuedNoteWidget';
     }
 
     /**
@@ -54,6 +48,6 @@ class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public static function getTemplate(): string
     {
-        return ProductDiscontinuedNoteWidget::getTemplate();
+        return '@ProductDiscontinuedWidget/views/product-discontinued-note/product-discontinued-note.twig';
     }
 }

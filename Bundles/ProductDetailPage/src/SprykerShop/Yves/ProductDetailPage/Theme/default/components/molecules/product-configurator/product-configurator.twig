@@ -28,8 +28,9 @@
 {% set isAvailable = productViewAvailabilityWidget.isAvailable | default(widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product)) %} {# @deprecated Use ProductViewAvailabilityWidget instead of AvailabilityWidgetPlugin. #}
 {% set isDisabled = not isAvailable or isDisabled %}
 
-{% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-    {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', sku) %}
+{% set productDiscontinuedNoteWidget = findWidget('ProductDiscontinuedNoteWidget', [sku]) %}
+{% set isDiscontinued = productDiscontinuedNoteWidget.isDiscontinued | default(widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', sku)) %} {# @deprecated Use productDiscontinuedNoteWidget instead of ProductDiscontinuedWidgetPlugin. #}
+{% if isDiscontinued is not null %}
     {% set isDisabled = isDiscontinued or isDisabled %}
     {% set isProductAvailable = not isDiscontinued %}
 {% endif %}
@@ -41,11 +42,10 @@
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
     <hr />
-    {% if widgetExists('PriceProductVolumeWidgetPlugin') %}
-        {{ widget('PriceProductVolumeWidgetPlugin', data.product) }}
-    {% else %}
-        {{ widget('PriceWidgetPlugin', data.product) }}
-    {% endif %}
+    {% widget 'PriceProductVolumeWidget' only %}
+    {% elsewidget 'PriceProductVolumeWidgetPlugin'  only %} {# @deprecated Use PriceProductVolumeWidget instead. #}
+    {% elsewidget 'PriceWidget' only %}
+    {% elsewidget 'PriceWidgetPlugin' only %} {# @deprecated Use PriceWidget instead. #}
 
     {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
     {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
@@ -117,8 +117,8 @@
         {{ widget('WishlistWidgetPlugin', data.product) }}
     {% endif %}
 
-    {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-        {{ widget('ProductDiscontinuedWidgetPlugin', sku) }}
-    {% endif %}
+    {% widget 'ProductDiscontinuedNoteWidget' args [sku] only %}
+    {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [sku] only %} {# @deprecated Use ProductDiscontinuedNoteWidget instead. #}
+    {% endwidget %}
 
 {% endblock %}

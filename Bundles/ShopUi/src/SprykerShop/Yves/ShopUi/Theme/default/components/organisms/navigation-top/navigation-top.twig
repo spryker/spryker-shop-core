@@ -17,7 +17,11 @@
 
 {% block body %}
     <ul class="menu {{menuClass}}">
-        <li class="menu__item">{{ widgetGlobal('PriceModeSwitcherWidgetPlugin') }}</li>
+        <li class="menu__item">
+            {% widget 'PriceModeSwitcherWidget' only %}
+            {% elsewidget 'PriceModeSwitcherWidgetPlugin' only %} {# @deprecated Use PriceModeSwitcherWidget instead. #}
+            {% endwidget %}
+        </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item">
             {%- widget 'CurrencyWidget' only -%}
@@ -45,15 +49,15 @@
         </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item menu__item--has-children-dropdown">
-            {% if widgetGlobalExists('MiniCartWidgetPlugin') %}
-                {{ widgetGlobal('MiniCartWidgetPlugin', cartQuantity) }}
-            {% else %}
+            {% widget 'MiniCartWidget' args [cartQuantity] only %}
+            {% elsewidget 'MiniCartWidgetPlugin' args [cartQuantity] only %} {# @deprecated Use MiniCartWidget instead. #}
+            {% nowidget %}
                 {% include molecule('cart-items-counter') with {
                     data: {
                         quantity: data.cartQuantity
                     }
                 } only %}
-            {% endif %}
+            {% endwidget %}
         </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item"><a href="{{ url('quick-order') }}">{{ 'quick-order.page-title'|trans }}</a></li>

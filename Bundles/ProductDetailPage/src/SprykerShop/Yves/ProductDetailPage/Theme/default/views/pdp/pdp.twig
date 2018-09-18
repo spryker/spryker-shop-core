@@ -11,7 +11,9 @@
 } %}
 
 {% block breadcrumbs %}
-    {{ widget('ProductCategoryWidgetPlugin', data.product, app.locale) }}
+    {% widget 'ProductCategoryWidget' args [data.product, app.locale] only %}
+    {% elsewidget 'ProductCategoryWidgetPlugin' args [data.product, app.locale] only %} {# @deprecated Use ProductCategoryWidget instead. #}
+    {% endwidget %}
 {% endblock %}
 
 {% block title %}
@@ -40,7 +42,9 @@
         </div>
     </div>
 
-    {{ widget('ProductAlternativeWidgetPlugin', data.product) }}
+    {% widget 'ProductAlternativeListWidget' args [data.product] only %}
+    {% elsewidget 'ProductAlternativeWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductAlternativeListWidget instead. #}
+    {% endwidget %}
 
     {% include molecule('product-detail', 'ProductDetailPage') with {
         class: 'box',
