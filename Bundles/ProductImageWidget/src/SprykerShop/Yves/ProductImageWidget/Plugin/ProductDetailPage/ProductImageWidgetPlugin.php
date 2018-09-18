@@ -10,7 +10,11 @@ namespace SprykerShop\Yves\ProductImageWidget\Plugin\ProductDetailPage;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductImageWidget\ProductImageWidgetPluginInterface;
+use SprykerShop\Yves\ProductImageWidget\Widget\ProductImageWidget;
 
+/**
+ * @depricated Use \SprykerShop\Yves\ProductImageWidget\Widget\ProductImageWidget instead.
+ */
 class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductImageWidgetPluginInterface
 {
     /**
@@ -36,6 +40,6 @@ class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductIm
      */
     public static function getTemplate(): string
     {
-        return '@ProductImageWidget/views/image-slider/image-slider.twig';
+        return ProductImageWidget::getTemplate();
     }
 }

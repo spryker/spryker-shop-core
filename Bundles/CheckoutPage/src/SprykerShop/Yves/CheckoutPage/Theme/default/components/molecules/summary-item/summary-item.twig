@@ -17,9 +17,9 @@
 } %}
 
 {% block body %}
-    {% if widgetExists('SummaryProductPackagingUnitWidgetPlugin') %}
-        {{ widget('SummaryProductPackagingUnitWidgetPlugin', data) }}
-    {% else %}
+    {% widget 'SummaryProductPackagingUnitWidget' args [data] only %}
+    {% elsewidget 'SummaryProductPackagingUnitWidgetPlugin' args [data] only %} {# @deprecated Use SummaryProductPackagingUnitWidget instead. #}
+    {% nowidget %}
         {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
         {% set salesUnitSummary = '' %}
         {% if salesUnitName %}
@@ -28,7 +28,7 @@
 
         <strong class="float-right">{{data.price}}</strong>
         {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(= {{ salesUnitSummary }}){% endif %}
-    {% endif %}
+    {% endwidget %}
 
     {% if data.bundleItems is not empty %}
         <ul>

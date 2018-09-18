@@ -12,8 +12,11 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReplacementForWidgetPlugin\ProductReplacementForWidgetPluginInterface;
 use SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetConfig;
+use SprykerShop\Yves\ProductReplacementForWidget\Widget\ProductReplacementForWidget;
 
 /**
+ * @depricated Use \SprykerShop\Yves\ProductReplacementForWidget\Widget\ProductReplacementForWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetFactory getFactory()
  */
 class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements ProductReplacementForWidgetPluginInterface
@@ -50,7 +53,7 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getTemplate(): string
     {
-        return '@ProductReplacementForWidget/views/product-replacement-for-list/product-replacement-for-list.twig';
+        return ProductReplacementForWidget::getTemplate();
     }
 
     /**

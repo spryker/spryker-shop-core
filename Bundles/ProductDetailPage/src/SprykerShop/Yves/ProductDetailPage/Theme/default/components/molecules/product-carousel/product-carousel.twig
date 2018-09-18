@@ -10,6 +10,10 @@
 } %}
 
 {% block body %}
-    {{ widget('ProductImageWidgetPlugin', data.product) }}
-    {{ widget('ProductAbstractLabelWidgetPlugin', data.product) }}
+    {% widget 'ProductImageWidget' args [data.product.IdProductAbstract] only %}
+    {% elsewidget 'ProductImageWidgetPlugin' args [data.product.] only %} {# @deprecated Use ProductImageWidget instead. #}
+    {% endwidget %}
+    {% widget 'ProductAbstractLabelWidget' args [data.product.IdProductAbstract] only %}
+    {% elsewidget 'ProductAbstractLabelWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductAbstractLabelWidget instead. #}
+    {% endwidget %}
 {% endblock %}

@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\ProductRelationWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductRelationWidget\UpSellingProductsWidgetPluginInterface;
+use SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget;
 
 /**
+ * @depricated Use \SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductRelationWidget\ProductRelationWidgetFactory getFactory()
  */
 class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSellingProductsWidgetPluginInterface
@@ -42,7 +45,7 @@ class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSe
      */
     public static function getTemplate(): string
     {
-        return '@ProductRelationWidget/views/cart-similar-products-carousel/cart-similar-products-carousel.twig';
+        return UpSellingProductsWidget::getTemplate();
     }
 
     /**

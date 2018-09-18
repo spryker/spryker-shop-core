@@ -89,8 +89,9 @@
                 <tbody>
                 {% for item in data.shoppingListItems %}
                     {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
-                    {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                        {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %}
+                    {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [item.sku]) %}
+                    {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued | default(widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku)) %} {# @deprecated Use ProductDiscontinuedWidget instead of ProductDiscontinuedWidgetPlugin. #}
+                    {% if isDiscontinued is not null %}
                         {% set isItemAvailable = not isDiscontinued and isItemAvailable %}
                     {% endif %}
                     <tr>
@@ -137,11 +138,11 @@
                             {% if isItemAvailable %}
                                 {{ data.labels.itemAvailableLabel }}
                             {% else %}
-                                {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                                    {{ widget('ProductDiscontinuedWidgetPlugin', item.sku) }}
-                                {% else %}
+                                {% widget 'ProductDiscontinuedWidget' args [item.sku] only %}
+                                {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [item.sku] only %} {# @deprecated Use ProductDiscontinuedWidget instead. #}
+                                {% nowidget %}
                                     {{ data.labels.itemNotAvailableLabel }}
-                                {% endif %}
+                                {% endwidget %}
                             {% endif %}
                         </td>
                         <td>

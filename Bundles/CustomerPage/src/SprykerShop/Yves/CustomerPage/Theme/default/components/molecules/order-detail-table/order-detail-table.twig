@@ -30,9 +30,9 @@
 
                     <tr>
                         {% block row %}
-                            {% if widgetExists('OrderDetailProductPackagingUnitWidgetPlugin') %}
-                                {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item, data.currencyIsoCode) }}
-                            {% else %}
+                            {% widget 'OrderDetailProductPackagingUnitWidget' args [item, data.currencyIsoCode] only %}
+                            {% elsewidget 'OrderDetailProductPackagingUnitWidgetPlugin' args [item, data.currencyIsoCode] only %} {# @deprecated Use OrderDetailProductPackagingUnitWidget instead. #}
+                            {% nowidget %}
                                 <td>
                                     {{ concreteItem.sku }}
                                 </td>
@@ -48,7 +48,7 @@
                                 <td>
                                     {{ concreteItem.sumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
                                 </td>
-                            {% endif %}
+                            {% endwidget %}
                         {% endblock %}
                     </tr>
 

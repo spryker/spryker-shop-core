@@ -8,9 +8,12 @@
 namespace SprykerShop\Yves\ProductLabelWidget\Plugin\ProductWidget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductLabelWidget\Widget\ProductConcreteLabelWidget;
 use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductLabelWidget\ProductLabelWidgetPluginInterface;
 
 /**
+ * @depricated Use \SprykerShop\Yves\ProductLabelWidget\Widget\ProductConcreteLabelWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductLabelWidget\ProductLabelWidgetFactory getFactory()
  */
 class ProductLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLabelWidgetPluginInterface
@@ -40,7 +43,7 @@ class ProductLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLa
      */
     public static function getTemplate(): string
     {
-        return '@ProductLabelWidget/views/product-label-group/product-label-group.twig';
+        return ProductConcreteLabelWidget::getTemplate();
     }
 
     /**

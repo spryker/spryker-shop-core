@@ -8,9 +8,12 @@
 namespace SprykerShop\Yves\ProductGroupWidget\Plugin\ShopUi;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\ProductGroupWidget\ProductGroupWidgetPluginInterface;
 
 /**
+ * @depricated Use \SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductGroupWidget\ProductGroupWidgetFactory getFactory()
  */
 class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGroupWidgetPluginInterface
@@ -46,7 +49,7 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public static function getTemplate(): string
     {
-        return '@ProductGroupWidget/views/product-group/product-group.twig';
+        return ProductGroupWidget::getTemplate();
     }
 
     /**
