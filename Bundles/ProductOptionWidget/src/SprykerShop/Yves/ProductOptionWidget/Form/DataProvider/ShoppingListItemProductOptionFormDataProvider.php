@@ -163,7 +163,7 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
         ProductAbstractOptionStorageTransfer $storageProductOptionGroupCollectionTransfer,
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): ProductAbstractOptionStorageTransfer {
-        $storageProductOptionGroupCollectionTransfer = $this->hydrateProductOptionValuesIsSelected($storageProductOptionGroupCollectionTransfer, $shoppingListItemTransfer);
+        $storageProductOptionGroupCollectionTransfer = $this->hydrateProductOptionValues($storageProductOptionGroupCollectionTransfer, $shoppingListItemTransfer);
 
         return $storageProductOptionGroupCollectionTransfer;
     }
@@ -174,7 +174,7 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
      */
-    protected function hydrateProductOptionValuesIsSelected(
+    protected function hydrateProductOptionValues(
         ProductAbstractOptionStorageTransfer $storageProductOptionGroupCollectionTransfer,
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): ProductAbstractOptionStorageTransfer {
@@ -182,7 +182,7 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
 
         $productOptionGroups = new ArrayObject();
         foreach ($storageProductOptionGroupCollectionTransfer->getProductOptionGroups() as $productOptionGroup) {
-            $productOptionGroup = $this->hydrateProductOptionValuesPerOptionGroupIsSelected($productOptionGroup, $selectedProductOptionIds);
+            $productOptionGroup = $this->hydrateProductOptionValuesPerOptionGroup($productOptionGroup, $selectedProductOptionIds);
             $productOptionGroups->append($productOptionGroup);
         }
 
@@ -195,7 +195,7 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer
      */
-    protected function hydrateProductOptionValuesPerOptionGroupIsSelected(
+    protected function hydrateProductOptionValuesPerOptionGroup(
         ProductOptionGroupStorageTransfer $productOptionGroup,
         array $selectedProductOptionIds
     ): ProductOptionGroupStorageTransfer {
