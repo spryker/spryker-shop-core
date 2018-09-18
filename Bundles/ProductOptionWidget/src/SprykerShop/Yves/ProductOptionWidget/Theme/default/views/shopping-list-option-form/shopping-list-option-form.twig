@@ -10,7 +10,7 @@
         <tr class="{{ data.rowCLass }}">
             <td>&nbsp;</td>
             <td colspan="5">
-                {% include molecule('shopping-list-option-list', 'ProductOptionWidget') with {
+                {% include molecule('shopping-list-product-option-list', 'ProductOptionWidget') with {
                     data: {
                         options: data.formObject.children
                     }
