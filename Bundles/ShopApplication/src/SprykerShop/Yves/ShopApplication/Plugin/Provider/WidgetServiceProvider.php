@@ -103,11 +103,13 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
             $widgetFactory = $this->getFactory()->createWidgetPluginFactory();
             $widget = $widgetFactory->build($widgetClass, $arguments);
 
+            $twig->addGlobal('_widget', $widget);
+
             $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
             $widgetContainerRegistry->add($widget);
 
             $template = $twig->load($widget::getTemplate());
-            $result = $template->render(['_widget' => $widget]);
+            $result = $template->render();
 
             $widgetContainerRegistry->removeLastAdded();
 
@@ -140,11 +142,13 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
             $widgetFactory = $this->getFactory()->createWidgetPluginFactory();
             $widget = $widgetFactory->build($widgetClass, $arguments);
 
+            $twig->addGlobal('_widget', $widget);
+
             $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
             $widgetContainerRegistry->add($widget);
 
             $template = $twig->load($widget::getTemplate());
-            $result = $template->renderBlock($block, ['_widget' => $widget]);
+            $result = $template->renderBlock($block);
 
             $widgetContainerRegistry->removeLastAdded();
 
@@ -176,11 +180,13 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
             $widgetFactory = $this->getFactory()->createWidgetPluginFactory();
             $widget = $widgetFactory->build($widgetClass, $arguments);
 
+            $twig->addGlobal('_widget', $widget);
+
             $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
             $widgetContainerRegistry->add($widget);
 
             $template = $twig->load($widget::getTemplate());
-            $result = $template->render(['_widget' => $widget]);
+            $result = $template->render();
 
             $widgetContainerRegistry->removeLastAdded();
 
