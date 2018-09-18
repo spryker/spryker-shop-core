@@ -1,0 +1,21 @@
+{% extends template('widget') %}
+
+{% define data = {
+    formObject: form,
+    rowCLass: rowClass
+} %}
+
+{% block body %}
+    {% if data.formObject.children | length %}
+        <tr class="{{ data.rowCLass }}">
+            <td>&nbsp;</td>
+            <td colspan="5">
+                {% include molecule('shopping-list-product-option-list', 'ProductOptionWidget') with {
+                    data: {
+                        options: data.formObject.children
+                    }
+                } only %}
+            </td>
+        </tr>
+    {% endif %}
+{% endblock %}

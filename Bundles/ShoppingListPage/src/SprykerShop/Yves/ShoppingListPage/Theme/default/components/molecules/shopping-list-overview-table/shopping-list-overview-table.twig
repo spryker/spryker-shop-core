@@ -9,36 +9,22 @@
     idShoppingList: null,
     shoppingListForm: null,
     shoppingListResponse: null,
-    labels: {
-        viewLabel: 'customer.account.shopping_list.overview.view' | trans,
-        editLabel: 'customer.account.shopping_list.overview.edit' | trans,
-        deleteLabel: 'customer.account.shopping_list.overview.delete' | trans,
-        addShoppingListToCartLabel: 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans,
-        shareLabel: 'customer.account.shopping_list.overview.share' | trans,
-        printLabel: 'customer.account.shopping_list.overview.print' | trans,
-        nameLabel: 'customer.account.shopping_list.overview.name' | trans,
-        itemCountLabel: 'customer.account.shopping_list.overview.item_count' | trans,
-        createdDateLabel: 'customer.account.shopping_list.overview.created_date' | trans,
-        ownerLabel: 'customer.account.shopping_list.overview.owner' | trans,
-        actionsLabel: 'customer.account.shopping_list.overview.actions' | trans,
-        submitLabel: 'forms.submit-btn' | trans
-    }
 } %}
 
 {% block body %}
 <form method="POST" action="{{ path('shopping-list/add-shopping-list-to-cart') }}">
     <button type="submit" class="button button--success" {{qa('submit-button')}}>
-        {{ data.labels.addShoppingListToCartLabel }}
+        {{ 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans }}
     </button>
     <table class="table table--expand">
         <thead>
             <tr>
                 <th></th>
-                <th class="text-left">{{ data.labels.nameLabel }}</th>
-                <th>{{ data.labels.ownerLabel }}</th>
-                <th>{{ data.labels.createdDateLabel }}</th>
-                <th>{{ data.labels.itemCountLabel }}</th>
-                <th>{{ data.labels.actionsLabel }}</th>
+                <th class="text-left">{{ 'customer.account.shopping_list.overview.name' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.owner' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.created_date' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.item_count' | trans }}</th>
+                <th>{{ 'customer.account.shopping_list.overview.actions' | trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -46,7 +32,7 @@
             <tr>
                 <td>
                     {% if data.enableTableForm %}
-                        <input title="{{ data.labels.addShoppingListToCartLabel }}" type="checkbox" name="shoppingLists[]" value="{{ shoppingList.idShoppingList }}" />
+                        <input title="{{ 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans }}" type="checkbox" name="shoppingLists[]" value="{{ shoppingList.idShoppingList }}" />
                     {% endif %}
                 </td>
                 <td>
@@ -56,13 +42,23 @@
                 <td class="text-center">{{ shoppingList.createdAt | formatDate }}</td>
                 <td class="text-center">{{ shoppingList.numberOfItems }}</td>
                 <td>
-                    <a href="{{ url('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.viewLabel }}</a>
+                    <a href="{{ url('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">
+                        {{ 'customer.account.shopping_list.overview.view' | trans }}
+                    </a>
                     {% if can('WriteShoppingListPermissionPlugin', shoppingList.idShoppingList) %}
-                        <a href="{{ url('shopping-list/update', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.editLabel }}</a>
-                        <a href="{{ url('shopping-list/delete', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.deleteLabel }}</a>
-                        <a href="{{ url('shopping-list/share', { idShoppingList: shoppingList.idShoppingList }) }}">{{ data.labels.shareLabel }}</a>
+                        <a href="{{ url('shopping-list/update', { idShoppingList: shoppingList.idShoppingList }) }}">
+                            {{ 'customer.account.shopping_list.overview.edit' | trans }}
+                        </a>
+                        <a href="{{ url('shopping-list/delete', { idShoppingList: shoppingList.idShoppingList }) }}">
+                            {{ 'customer.account.shopping_list.overview.delete' | trans }}
+                        </a>
+                        <a href="{{ url('shopping-list/share', { idShoppingList: shoppingList.idShoppingList }) }}">
+                            {{ 'customer.account.shopping_list.overview.share' | trans }}
+                        </a>
                     {% endif %}
-                    <a href="{{ url('shopping-list/print', { idShoppingList: shoppingList.idShoppingList }) }}" target="_blank">{{ data.labels.printLabel }}</a>
+                    <a href="{{ url('shopping-list/print', { idShoppingList: shoppingList.idShoppingList }) }}" target="_blank">
+                        {{ 'customer.account.shopping_list.overview.print' | trans }}
+                    </a>
                 </td>
             </tr>
         {% endfor %}

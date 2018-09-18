@@ -14,6 +14,8 @@ interface CartProductPackagingUnitWidgetPluginInterface
     public const NAME = 'CartProductPackagingUnitWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
