@@ -21,6 +21,8 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
 
     /**
      * {@inheritdoc}
+     *
+     * @param bool|null $sslEnabled
      */
     public function __construct(?bool $sslEnabled = null)
     {

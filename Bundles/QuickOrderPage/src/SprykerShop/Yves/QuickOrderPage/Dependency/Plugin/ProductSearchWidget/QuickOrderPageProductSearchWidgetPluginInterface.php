@@ -14,6 +14,8 @@ interface QuickOrderPageProductSearchWidgetPluginInterface extends WidgetPluginI
     public const NAME = 'QuickOrderPageProductSearchWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $index
      * @param string $selectedValueKey
      * @param int|null $searchResultsLimit

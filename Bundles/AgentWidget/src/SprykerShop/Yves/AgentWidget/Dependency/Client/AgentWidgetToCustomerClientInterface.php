@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductSearchWidget\Dependency\Client;
+namespace SprykerShop\Yves\AgentWidget\Dependency\Client;
 
-interface ProductSearchWidgetToLocaleClientInterface
+interface AgentWidgetToCustomerClientInterface
 {
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCurrentLocale();
+    public function getCustomer();
 }

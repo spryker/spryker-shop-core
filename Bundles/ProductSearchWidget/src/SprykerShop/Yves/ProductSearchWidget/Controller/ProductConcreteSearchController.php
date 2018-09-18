@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ProductSearchWidget\Controller;
 
-use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\ResultFormatter\ProductConcretePageSearchResultFormatterPlugin;
 use Spryker\Yves\Kernel\Controller\AbstractController;
@@ -35,7 +33,7 @@ class ProductConcreteSearchController extends AbstractController
         );
 
         return $this->view(
-            $products[ProductConcretePageSearchResultFormatterPlugin::NAME],
+            $products[ProductConcretePageSearchResultFormatterPlugin::NAME] ?? [],
             [],
             '@ProductSearchWidget/views/product-search-results/product-search-results.twig'
         );
@@ -50,16 +48,8 @@ class ProductConcreteSearchController extends AbstractController
     {
         $productConcreteCriteriaFilterTransfer = new ProductConcreteCriteriaFilterTransfer();
 
-        $filterTransfer = new FilterTransfer();
-        $filterTransfer->setLimit($request->get(static::PARAM_LIMIT));
-
-        $localeName = $this->getFactory()
-            ->getLocaleClient()
-            ->getCurrentLocale();
-
-        $productConcreteCriteriaFilterTransfer->setLocale((new LocaleTransfer())->setLocaleName($localeName));
         $productConcreteCriteriaFilterTransfer->setSearchString($request->get(static::PARAM_SEARCH_STRING));
-        $productConcreteCriteriaFilterTransfer->setFilter($filterTransfer);
+        $productConcreteCriteriaFilterTransfer->setLimit($request->get(static::PARAM_LIMIT));
 
         return $productConcreteCriteriaFilterTransfer;
     }
