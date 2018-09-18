@@ -216,6 +216,7 @@ class MultiCartController extends AbstractController
 
         return [
             'quoteCollection' => $quoteCollectionTransfer->getQuotes(),
+            'isQuoteDeletable' => $this->getFactory()->getMultiCartClient()->isQuoteDeletable(),
         ];
     }
 

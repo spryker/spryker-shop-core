@@ -25,4 +25,11 @@ interface SharedCartWidgetToSharedCartClientInterface
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
     public function getShareDetailsByIdQuoteAction(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteDeletable(QuoteTransfer $quoteTransfer): bool;
 }

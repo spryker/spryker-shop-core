@@ -31,27 +31,25 @@ class MultiCartMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Mult
     }
 
     /**
-     * Specification:
-     * - Returns the name of the widget as it's used in templates.
+     * {@inheritdoc}
      *
      * @api
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
 
     /**
-     * Specification:
-     * - Returns the the template file path to render the widget.
+     * {@inheritdoc}
      *
      * @api
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return '@MultiCartWidget/views/cart-list-menu-item/cart-list-menu-item.twig';
     }

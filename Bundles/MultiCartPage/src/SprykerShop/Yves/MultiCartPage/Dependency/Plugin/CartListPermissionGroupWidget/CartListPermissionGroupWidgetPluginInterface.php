@@ -15,12 +15,16 @@ interface CartListPermissionGroupWidgetPluginInterface extends WidgetPluginInter
     public const NAME = 'CartListPermissionGroupWidgetPlugin';
 
     /**
+     * Specification:
+     *  - Represents block 'body' which display access level of customer for cart
+     *  - Represents block 'actions' which display share and delete actions for cart depends on access level
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param bool $isDeleteAllowed
+     * @param bool $isQuoteDeletable
      *
      * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer, bool $isDeleteAllowed): void;
+    public function initialize(QuoteTransfer $quoteTransfer, bool $isQuoteDeletable): void;
 }

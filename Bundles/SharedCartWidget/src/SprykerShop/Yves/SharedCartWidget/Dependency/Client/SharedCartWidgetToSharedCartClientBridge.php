@@ -44,4 +44,14 @@ class SharedCartWidgetToSharedCartClientBridge implements SharedCartWidgetToShar
     {
         return $this->sharedCartClient->getShareDetailsByIdQuoteAction($quoteTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteDeletable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->sharedCartClient->isQuoteDeletable($quoteTransfer);
+    }
 }

@@ -14,6 +14,9 @@ interface MultiCartMenuItemWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'MultiCartMenuItemWidgetPlugin';
 
     /**
+     * Specification:
+     *  - Represents the link to multi cart list page on "My account" page in left sidebar
+     *
      * @api
      *
      * @param string $activePage

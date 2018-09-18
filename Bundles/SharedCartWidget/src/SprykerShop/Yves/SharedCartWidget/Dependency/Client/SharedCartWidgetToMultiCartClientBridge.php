@@ -7,9 +7,7 @@
 
 namespace SprykerShop\Yves\SharedCartWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 class SharedCartWidgetToMultiCartClientBridge implements SharedCartWidgetToMultiCartClientInterface
 {
@@ -35,13 +33,10 @@ class SharedCartWidgetToMultiCartClientBridge implements SharedCartWidgetToMulti
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return bool
      */
-    public function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer, CustomerTransfer $customerTransfer): bool
+    public function isQuoteDeletable(): bool
     {
-        return $this->multiCartClient->isDeleteCartAllowed($currentQuoteTransfer, $customerTransfer);
+        return $this->multiCartClient->isQuoteDeletable();
     }
 }

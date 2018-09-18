@@ -32,18 +32,17 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $this
             ->addParameter('cart', $quoteTransfer)
-            ->addParameter('actions', $this->getCartActions($quoteTransfer, $customerTransfer))
+            ->addParameter('actions', $this->getCartActions($quoteTransfer))
             ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer, $customerTransfer))
             ->addParameter('isSharedCartAllowed', $this->isSharedCartAllowed($customerTransfer));
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return array
      */
-    protected function getCartActions(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): array
+    protected function getCartActions(QuoteTransfer $quoteTransfer): array
     {
         $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
         $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote()) || $writeAllowed;
@@ -54,7 +53,7 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
             'set_default' => $viewAllowed && !$quoteTransfer->getIsDefault(),
             'duplicate' => $writeAllowed,
             'clear' => $writeAllowed,
-            'delete' => $writeAllowed && $this->isDeleteCartAllowed($quoteTransfer, $customerTransfer),
+            'delete' => $writeAllowed && $this->isDeleteCartAllowed($quoteTransfer),
         ];
     }
 
@@ -85,20 +84,12 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
-    protected function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer, CustomerTransfer $customerTransfer): bool
+    protected function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer): bool
     {
-        $ownedQuoteNumber = 0;
-        foreach ($this->getFactory()->getMultiCartClient()->getQuoteCollection()->getQuotes() as $quoteTransfer) {
-            if ($this->isQuoteOwner($quoteTransfer, $customerTransfer)) {
-                $ownedQuoteNumber++;
-            }
-        }
-
-        return $ownedQuoteNumber > 1 || (!$this->isQuoteOwner($currentQuoteTransfer, $customerTransfer) && $ownedQuoteNumber > 0);
+        return $this->getFactory()->getSharedCartClient()->isQuoteDeletable($currentQuoteTransfer);
     }
 
     /**

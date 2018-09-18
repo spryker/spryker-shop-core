@@ -23,18 +23,18 @@ class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implement
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param bool $isDeleteAllowed
+     * @param bool $isQuoteDeletable
      *
      * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer, bool $isDeleteAllowed): void
+    public function initialize(QuoteTransfer $quoteTransfer, bool $isQuoteDeletable): void
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         $this->addCartParameter($quoteTransfer);
         $this->addAccessTypeParameter($quoteTransfer);
         $this->addIsSharingAllowedParameter($customerTransfer);
-        $this->addIsDeleteAllowedParameter($isDeleteAllowed, $quoteTransfer, $customerTransfer);
+        $this->addIsQuoteDeletableParameter($isQuoteDeletable, $quoteTransfer);
     }
 
     /**
@@ -63,17 +63,16 @@ class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implement
     }
 
     /**
-     * @param bool $isDeleteAllowed
+     * @param bool $isQuoteDeletable
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
-    protected function addIsDeleteAllowedParameter(bool $isDeleteAllowed, QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): void
+    protected function addIsQuoteDeletableParameter(bool $isQuoteDeletable, QuoteTransfer $quoteTransfer): void
     {
         $this->addParameter(
-            'isDeleteAllowed',
-            $isDeleteAllowed && $this->getFactory()->getMultiCartClient()->isDeleteCartAllowed($quoteTransfer, $customerTransfer)
+            'isQuoteDeletable',
+            $isQuoteDeletable && $this->getFactory()->getSharedCartClient()->isQuoteDeletable($quoteTransfer)
         );
     }
 
