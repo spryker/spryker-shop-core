@@ -1,13 +1,5 @@
 import { get as config } from '../app/config';
 
-export interface IComponentContructor {
-    new(): Component
-}
-
-export interface IComponentImporter {
-    (): Promise<{ default: IComponentContructor }>
-}
-
 export default abstract class Component extends HTMLElement {
     readonly name: string
     readonly jsName: string

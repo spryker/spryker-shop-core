@@ -126,11 +126,19 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
      */
     public function getQuickOrderItemTransferExpanderPlugins(): array
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductAdditionalDataTransferExpanderPluginInterface[]
+     */
+    public function getQuickOrderProductAdditionalDataTransferExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA_TRANSFER_EXPANDER);
     }
 
     /**

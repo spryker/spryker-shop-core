@@ -1,0 +1,11 @@
+@mixin quick-order-quick-order-form-field-list($name: '.quick-order-form-field-list') {
+    #{$name} {
+        &__item {
+            &:not(:first-child) {
+                border-top: 1px solid $setting-color-lighter;
+            }
+        }
+
+        @content;
+    }
+}

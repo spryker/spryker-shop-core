@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
+use Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -25,6 +26,7 @@ class QuickOrderController extends AbstractController
 {
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
+    public const PARAM_ID_PRODUCT = 'id-product';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -179,6 +181,35 @@ class QuickOrderController extends AbstractController
         return [
             'form' => $quickOrderForm->createView(),
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function productAdditionalDataAction(Request $request)
+    {
+        $quickOrderProductAdditionalDataTransfer = $this->executeProductAdditionalDataAction($request);
+
+        return $this->jsonResponse($quickOrderProductAdditionalDataTransfer->toArray(true, true));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer
+     */
+    protected function executeProductAdditionalDataAction(Request $request)
+    {
+        $quickOrderProductAdditionalDataTransfer = new QuickOrderProductAdditionalDataTransfer();
+        $quickOrderProductAdditionalDataTransfer->setIdProductConcrete($request->get(static::PARAM_ID_PRODUCT));
+
+        foreach ($this->getFactory()->getQuickOrderProductAdditionalDataTransferExpanderPlugins() as $quickOrderProductAdditionalDataTransferExpanderPlugin) {
+            $quickOrderProductAdditionalDataTransfer = $quickOrderProductAdditionalDataTransferExpanderPlugin->expand($quickOrderProductAdditionalDataTransfer);
+        }
+
+        return $quickOrderProductAdditionalDataTransfer;
     }
 
     /**
