@@ -118,21 +118,29 @@
 
     {% if isProductAvailable %}
         {% widget 'ShoppingListWidget' args [sku, isDisabled] only %}
-            <hr />
-            {{ parent() }}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
         {% elsewidget 'ShoppingListWidgetPlugin' args [sku, isDisabled] only %} {# @deprecated Use ShoppingListWidget instead. #}
-            <hr />
-            {{ parent() }}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
         {% endwidget %}
     {% endif %}
 
     {% if isProductAvailable %}
         {% widget 'WishlistWidget' args [data.product] only %}
-            <hr />
-            {{ parent() }}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
         {% elsewidget 'WishlistWidgetPlugin' args [data.product] only %} {# @deprecated Use WishlistWidget instead. #}
-            <hr />
-            {{ parent() }}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
         {% endwidget %}
     {% endif %}
 
