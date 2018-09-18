@@ -84,7 +84,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     protected function addWidgetTagTokenParser(Application $application): void
     {
         $application['twig'] = $application->share(
-            $application->extend('twig', function (\Twig_Environment $twig) {
+            $application->extend('twig', function (Twig_Environment $twig) {
                 $twig->addTokenParser($this->getFactory()->createWidgetTagTokenParser());
 
                 return $twig;
