@@ -147,7 +147,7 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
-    protected function getStorageProductOptionGroupCollectionTransfer(ShoppingListItemTransfer $shoppingListItemTransfer)
+    protected function getStorageProductOptionGroupCollectionTransfer(ShoppingListItemTransfer $shoppingListItemTransfer): ?ProductAbstractOptionStorageTransfer
     {
         return $this->productOptionStorageClient
             ->getProductOptionsForCurrentStore($shoppingListItemTransfer->getIdProductAbstract());
