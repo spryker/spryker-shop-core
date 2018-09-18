@@ -16,13 +16,11 @@
 
 {% block body %}
     <div class="{{ block('cellClass') }}">
-        {% if widgetGlobalExists('QuickOrderPageProductSearchWidgetPlugin') %}
-            {{ widgetGlobal(
-                'QuickOrderPageProductSearchWidgetPlugin',
-                'ajax-provider' ~ data.index,
-                data.fullName ~ '[sku]'
-            ) }}
-        {% endif %}
+        {{ widget(
+            'QuickOrderPageProductSearchWidgetPlugin',
+            'ajax-provider' ~ data.index,
+            data.fullName ~ '[sku]'
+        ) }}
 
         {{ form_row(data.sku) }}
     </div>
