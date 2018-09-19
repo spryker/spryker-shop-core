@@ -7,6 +7,11 @@
 
         &__row {
             padding: 0.5rem;
+
+            &--middle {
+                position: relative;
+                z-index: $setting-zi-header + 2;
+            }
         }
 
         &__navigation-top {
