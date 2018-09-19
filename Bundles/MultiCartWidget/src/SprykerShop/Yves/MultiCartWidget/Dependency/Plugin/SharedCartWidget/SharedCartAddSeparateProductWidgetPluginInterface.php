@@ -12,6 +12,8 @@ interface SharedCartAddSeparateProductWidgetPluginInterface
     public const NAME = 'SharedCartAddSeparateProductWidgetPlugin';
 
     /**
+     * @api
+     *
      * @return void
      */
     public function initialize(): void;

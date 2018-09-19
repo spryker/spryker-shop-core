@@ -14,6 +14,8 @@ interface ShoppingListMenuItemWidgetPluginInterface extends WidgetPluginInterfac
     public const NAME = 'ShoppingListMenuItemWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $activePage
      * @param int|null $activeEntityId
      *
