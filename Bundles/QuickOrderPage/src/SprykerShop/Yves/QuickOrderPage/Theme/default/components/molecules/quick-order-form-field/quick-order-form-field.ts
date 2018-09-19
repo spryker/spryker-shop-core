@@ -1,15 +1,36 @@
 import Component from 'ShopUi/models/component';
 import AutocompleteForm from 'ShopUi/components/molecules/autocomplete-form/autocomplete-form';
+import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
+
+interface ProductJSON {
+    baseMeasurementUnit: {
+        code: string,
+        defaultPrecision: number,
+        idProductMeasurementUnit: number,
+        name: string,
+    },
+    idProductConcrete: number,
+    productQuantityStorage: {
+        idProduct: number,
+        quantityInterval: number,
+        quantityMax: number,
+        quantityMin: 1
+    }
+}
 
 export default class QuickOrderFormField extends Component {
     autocompleteForm: AutocompleteForm;
     selectedItem: HTMLElement;
-    addIdEvent: CustomEvent;
-    autocompleteFormInput: HTMLFormElement;
+    productLoadedEvent: CustomEvent;
+    productDeleteEvent: CustomEvent;
+    autocompleteFormInput: HTMLInputElement;
+    ajaxProvider: AjaxProvider;
+    productData: ProductJSON;
 
     protected readyCallback(): void {
         this.autocompleteForm = <AutocompleteForm>this.querySelector('autocomplete-form');
-        this.autocompleteFormInput = <HTMLFormElement>this.autocompleteForm.querySelector(`.${this.autocompleteForm.jsName}__input`);
+        this.autocompleteFormInput = <HTMLInputElement>this.autocompleteForm.querySelector(`.${this.autocompleteForm.jsName}__input`);
+        this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
 
         this.mapEvents();
     }
@@ -18,15 +39,19 @@ export default class QuickOrderFormField extends Component {
         this.createCustomEvents();
         this.addEventListener('click', (event: Event) => this.componentClickHandler(event));
 
-        this.autocompleteFormInput.addEventListener('input', () => {
-            this.autocompleteFormInputChangeHandler();
-        });
+        this.autocompleteFormInput.addEventListener('input', () => this.autocompleteFormInputOnChange());
     }
 
     private createCustomEvents(): void {
-        this.addIdEvent = <CustomEvent>new CustomEvent("addId", {
+        this.productLoadedEvent = <CustomEvent>new CustomEvent("product-loaded-event", {
             detail: {
-                username: "addId"
+                username: "product-loaded-event"
+            }
+        });
+
+        this.productDeleteEvent = <CustomEvent>new CustomEvent("product-delete-event", {
+            detail: {
+                username: "product-delete-event"
             }
         });
     }
@@ -36,20 +61,32 @@ export default class QuickOrderFormField extends Component {
 
         if (this.selectedItem.matches(this.autocompleteForm.itemSelector)) {
             event.stopPropagation();
-
-            this.changeDataId(this.selectedId);
+            this.loadProduct();
         }
     }
 
-    private autocompleteFormInputChangeHandler(): void {
+    async loadProduct(): Promise<void> {
+        this.ajaxProvider.queryParams.set('id-product', this.selectedId);
+
+        try {
+            const response: string = <string>await this.ajaxProvider.fetch();
+            this.productData = <ProductJSON>this.generateResponseData(response);
+
+            this.dispatchEvent(this.productLoadedEvent);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    private generateResponseData(response: string): ProductJSON {
+        return Object.assign({}, JSON.parse(response));
+    }
+
+    private autocompleteFormInputOnChange(): void {
         if(this.autocompleteFormInput.value.length <= this.autocompleteForm.minLetters) {
-            this.changeDataId('');
+            this.productData = <ProductJSON>{};
+            this.dispatchEvent(this.productDeleteEvent);
         }
-    }
-
-    private changeDataId(id: string): void {
-        this.autocompleteForm.hiddenInputElement.setAttribute('data-id', id);
-        this.autocompleteForm.hiddenInputElement.dispatchEvent(this.addIdEvent);
     }
 
     get selectedId(): string {

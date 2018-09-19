@@ -1,0 +1,37 @@
+@mixin quick-order-page-order-quantity($name: '.order-quantity') {
+    #{$name} {
+        position: relative;
+
+        &__error {
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 10px);
+            transform: translate3d(-50%, 0, 0);
+            width: 17rem;
+            padding: map-get($setting-spacing, 'small') map-get($setting-spacing, 'default');
+            font-size: map-get($setting-font-size, 'small');
+            background-color: $setting-color-white;
+            border: 1px solid $setting-color-light;
+            opacity: 0;
+
+            &:after,
+            &:before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: -12%;
+                transform: rotate(45deg);
+                margin-left: -0.175rem;
+                border: 0.35rem solid $setting-color-white;
+                border-top-color: transparent;
+                border-left-color: transparent;
+            }
+
+            &:before {
+                bottom: calc((12% + 1px) * -1);
+                border-bottom-color: $setting-color-light;
+                border-right-color: $setting-color-light;
+            }
+        }
+    }
+}

@@ -1,8 +1,8 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'measurement-unit',
-    tag: 'measurement-unit'
+    name: 'order-measurement-unit',
+    tag: 'order-measurement-unit'
 } %}
 
 {% define data = {
@@ -10,20 +10,7 @@
     ajaxUrl: required
 } %}
 
-{% define attributes = {
-    'data-ajax-selector': required
-} %}
-
 {% block body %}
-    {% include molecule('ajax-provider') with {
-        class: config.jsName ~ '__provider',
-        attributes: {
-            id: data.id,
-            method: 'GET',
-            url: data.ajaxUrl
-        }
-    } only %}
-
     {% include molecule('ajax-loader') with {
         modifiers: ['small'],
         attributes: {
