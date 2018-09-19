@@ -1,11 +1,13 @@
 import Component from 'ShopUi/models/component';
 import QuickOrderFormField from '../quick-order-form-field/quick-order-form-field';
+import debounce from 'lodash-es/debounce';
 
 export default class OrderQuantity extends Component {
     quantityInput: HTMLInputElement;
     currentFieldComponent: QuickOrderFormField;
     quantityInputUpdate: CustomEvent;
     errorMessage: HTMLElement;
+    errorMessageTimerId: number;
 
     protected readyCallback(): void {
         this.currentFieldComponent = <QuickOrderFormField>this.closest('quick-order-form-field');
@@ -19,7 +21,7 @@ export default class OrderQuantity extends Component {
         this.createCustomEvents();
         this.currentFieldComponent.addEventListener('product-loaded-event', () => this.onLoad());
         this.currentFieldComponent.addEventListener('product-delete-event', () => this.resetAttrValues(''));
-        this.quantityInput.addEventListener('input', () => this.validateInputValue());
+        this.quantityInput.addEventListener('input', debounce(() => this.validateInputValue(), 500));
     }
 
     private createCustomEvents(): void {
@@ -40,18 +42,19 @@ export default class OrderQuantity extends Component {
                 String(productQuantityStorage.quantityMax),
                 String(productQuantityStorage.quantityInterval)
             );
-
             return;
         }
+
+        this.resetAttrValues('1');
     }
 
     private resetAttrValues(inputValue: string): void {
-        this.quantityInputAttributes('1',inputValue,'','1');
+        this.quantityInputAttributes('1', inputValue,'','1');
     }
 
     private quantityInputAttributes(min: string, value: string, max: string, step: string): void {
         this.setAttrValue('min', min);
-        this.setAttrValue('value', value);
+        this.quantityInput.value = value;
         this.setAttrValue('max', max);
         this.setAttrValue('step', step);
         this.dispatchEvent(this.quantityInputUpdate);
@@ -63,10 +66,31 @@ export default class OrderQuantity extends Component {
 
     private validateInputValue(): void {
         if(this.currentInputValue % this.stepAttrValue !== 0) {
-
+            this.roundOfQuantityInputValue();
+            this.showErrorMessage();
         }
 
-        this.dispatchEvent(this.quantityInputUpdate)
+        this.dispatchEvent(this.quantityInputUpdate);
+    }
+
+    private roundOfQuantityInputValue(): void {
+        let inputValue = this.currentInputValue;
+
+        while(inputValue % this.stepAttrValue !== 0) {
+            inputValue++;
+        }
+
+        this.quantityInput.value = String(inputValue);
+    }
+
+    private showErrorMessage(): void {
+        clearTimeout(<number>this.errorMessageTimerId);
+
+        if(!this.errorMessage.matches(`.${this.showErrorMessageClass}`)) {
+            this.errorMessage.classList.add(this.showErrorMessageClass);
+        }
+
+        this.errorMessageTimerId = setTimeout(() => this.errorMessage.classList.remove(this.showErrorMessageClass), 4000);
     }
 
     get currentInputValue(): number {
@@ -75,5 +99,9 @@ export default class OrderQuantity extends Component {
 
     get stepAttrValue(): number {
         return Number(this.quantityInput.getAttribute('step'));
+    }
+
+    get showErrorMessageClass(): string {
+        return `${ this.name }__error--show`;
     }
 }

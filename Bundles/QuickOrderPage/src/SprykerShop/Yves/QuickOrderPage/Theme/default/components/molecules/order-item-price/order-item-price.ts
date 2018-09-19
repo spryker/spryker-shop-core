@@ -26,7 +26,6 @@ export default class OrderItemPrice extends Component {
     currentFieldComponent: QuickOrderFormField;
     quantityComponent: OrderQuantity;
     wrapperInjector: HTMLElement;
-    timerId: number;
 
     protected readyCallback(): void {
         this.wrapperInjector = <HTMLElement>this.querySelector(`.${this.jsName}`);
@@ -44,8 +43,7 @@ export default class OrderItemPrice extends Component {
 
     private changePrice(): void {
         if (this.productId && this.quantityCount > 0) {
-            clearTimeout(<number>this.timerId);
-            this.timerId = <number>setTimeout(() => this.loadPrices(), 250);
+            this.loadPrices();
             return;
         }
 
