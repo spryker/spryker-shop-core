@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\ProductGroupWidget\ProductGroupWidgetPluginInterface;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget instead.
  *
  * @method \SprykerShop\Yves\ProductGroupWidget\ProductGroupWidgetFactory getFactory()
  */
@@ -26,10 +26,9 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public function initialize($idProductAbstract, $template): void
     {
-        $this
-            ->addParameter('productGroupItems', $this->getProductGroups($idProductAbstract))
-            ->addParameter('idProductAbstract', $idProductAbstract)
-            ->addParameter('template', $template);
+        $widget = new ProductGroupWidget($idProductAbstract, $template);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

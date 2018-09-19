@@ -19,37 +19,11 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ProductPackagingUnitWidget extends AbstractWidget
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public static function getName(): string
-    {
-        return 'ProductPackagingUnitWidget';
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public static function getTemplate(): string
-    {
-        return '@ProductPackagingUnitWidget/views/pdp-product-packaging-unit/pdp-product-packaging-unit.twig';
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isAddToCartDisabled
      * @param array $quantityOptions Contains the selectable quantity options; each option is structured as ['label' => 1, 'value' => 1]
-     *
-     * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = []): void
+    public function __construct(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = [])
     {
         $baseUnit = null;
         $salesUnits = null;
@@ -115,6 +89,30 @@ class ProductPackagingUnitWidget extends AbstractWidget
                 $productConcretePackagingStorageTransfer,
                 $productQuantityStorageTransfer
             ));
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public static function getName(): string
+    {
+        return 'ProductPackagingUnitWidget';
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public static function getTemplate(): string
+    {
+        return '@ProductPackagingUnitWidget/views/pdp-product-packaging-unit/pdp-product-packaging-unit.twig';
     }
 
     /**

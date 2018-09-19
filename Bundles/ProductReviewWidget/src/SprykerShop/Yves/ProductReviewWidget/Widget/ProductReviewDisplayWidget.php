@@ -16,10 +16,8 @@ class ProductReviewDisplayWidget extends AbstractWidget
 {
     /**
      * @param float $rating
-     *
-     * @return void
      */
-    public function initialize(float $rating): void
+    public function __construct(float $rating)
     {
         $this
             ->addParameter('rating', $rating)

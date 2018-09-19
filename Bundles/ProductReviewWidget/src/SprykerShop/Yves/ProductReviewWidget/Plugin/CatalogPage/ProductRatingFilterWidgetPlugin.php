@@ -14,7 +14,7 @@ use SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget instead.
  *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
@@ -28,10 +28,9 @@ class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public function initialize(RangeSearchResultTransfer $rangeSearchResultTransfer, Request $request): void
     {
-        $this
-            ->addParameter('filter', $rangeSearchResultTransfer)
-            ->addParameter('filterValue', $this->getFilterValue($rangeSearchResultTransfer, $request))
-            ->addParameter('maximumRating', $this->getMaximumRating());
+        $widget = new ProductRatingFilterWidget($rangeSearchResultTransfer, $request);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

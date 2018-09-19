@@ -7,14 +7,13 @@
 
 namespace SprykerShop\Yves\ProductOptionWidget\Plugin\ProductDetailPage;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductOptionWidget\ProductOptionWidgetPluginInterface;
 use SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionWidget instead.
  *
  * @method \SprykerShop\Yves\ProductOptionWidget\ProductOptionWidgetFactory getFactory()
  */
@@ -27,7 +26,9 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter('productOptionGroups', $this->getProductOptionGroups($productViewTransfer));
+        $widget = new ProductOptionWidget($productViewTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -44,33 +45,5 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
     public static function getTemplate(): string
     {
         return ProductOptionWidget::getTemplate();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]
-     */
-    protected function getProductOptionGroups(ProductViewTransfer $productViewTransfer)
-    {
-        $productAbstractOptionStorageTransfer = $this->getStorageProductOptionGroupCollectionTransfer($productViewTransfer);
-        if (!$productAbstractOptionStorageTransfer) {
-            return new ArrayObject();
-        }
-
-        return $this->getStorageProductOptionGroupCollectionTransfer($productViewTransfer)->getProductOptionGroups();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
-     */
-    protected function getStorageProductOptionGroupCollectionTransfer(ProductViewTransfer $productViewTransfer)
-    {
-        return $this
-            ->getFactory()
-            ->getProductOptionStorageClient()
-            ->getProductOptionsForCurrentStore($productViewTransfer->getIdProductAbstract());
     }
 }

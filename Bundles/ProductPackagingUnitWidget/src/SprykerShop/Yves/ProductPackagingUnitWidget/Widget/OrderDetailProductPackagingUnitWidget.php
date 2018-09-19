@@ -18,10 +18,8 @@ class OrderDetailProductPackagingUnitWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $currencyIsoCode
-     *
-     * @return void
      */
-    public function initialize(ItemTransfer $itemTransfer, string $currencyIsoCode): void
+    public function __construct(ItemTransfer $itemTransfer, string $currencyIsoCode)
     {
         $this
             ->addParameter('item', $itemTransfer)

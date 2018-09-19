@@ -19,10 +19,8 @@ class ProductReplacementForWidget extends AbstractWidget
 {
     /**
      * @param string $sku
-     *
-     * @return void
      */
-    public function initialize(string $sku): void
+    public function __construct(string $sku)
     {
         $this->addParameter('products', $this->findReplacementForProducts($sku))
             ->addWidgets($this->getFactory()->getProductDetailPageProductReplacementsForWidgetPlugins());

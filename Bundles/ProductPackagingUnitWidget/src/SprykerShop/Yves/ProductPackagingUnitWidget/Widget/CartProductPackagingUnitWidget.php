@@ -17,10 +17,8 @@ class CartProductPackagingUnitWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
      */
-    public function initialize(ItemTransfer $itemTransfer): void
+    public function __construct(ItemTransfer $itemTransfer)
     {
         $this
             ->addParameter('item', $itemTransfer);

@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductLabelWidget\Widget\ProductConcreteLabelWidget;
 use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductLabelWidget\ProductLabelWidgetPluginInterface;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductLabelWidget\Widget\ProductConcreteLabelWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductLabelWidget\Widget\ProductConcreteLabelWidget instead.
  *
  * @method \SprykerShop\Yves\ProductLabelWidget\ProductLabelWidgetFactory getFactory()
  */
@@ -25,9 +25,9 @@ class ProductLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLa
      */
     public function initialize(array $idProductLabels): void
     {
-        $this
-            ->addParameter('idProductLabels', $idProductLabels)
-            ->addParameter('productLabelDictionaryItemTransfers', $this->getProductLabelDictionaryItems($idProductLabels));
+        $widget = new ProductConcreteLabelWidget($idProductLabels);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -51,7 +51,7 @@ class ProductLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLa
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    protected function getProductLabelDictionaryItems(array $idProductLabels)
+    protected function getProductLabelDictionaryItems(array $idProductLabels): array
     {
         return $this->getFactory()
             ->getProductLabelStorageClient()

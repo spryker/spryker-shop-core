@@ -23,9 +23,9 @@ class PriceModeSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Pric
      */
     public function initialize(): void
     {
-        $this
-            ->addParameter('priceModes', $this->getFactory()->getPriceClient()->getPriceModes())
-            ->addParameter('currentPriceMode', $this->getFactory()->getPriceClient()->getCurrentPriceMode());
+        $widget = new PriceModeSwitcherWidget();
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

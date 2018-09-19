@@ -17,10 +17,8 @@ class UpSellingProductsWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
      */
-    public function initialize(QuoteTransfer $quoteTransfer): void
+    public function __construct(QuoteTransfer $quoteTransfer)
     {
         $this
             ->addParameter('quote', $quoteTransfer)

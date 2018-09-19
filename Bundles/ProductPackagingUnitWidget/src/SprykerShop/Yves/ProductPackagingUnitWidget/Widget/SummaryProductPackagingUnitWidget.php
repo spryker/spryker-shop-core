@@ -13,10 +13,8 @@ class SummaryProductPackagingUnitWidget extends AbstractWidget
 {
     /**
      * @param array $item
-     *
-     * @return void
      */
-    public function initialize(array $item): void
+    public function __construct(array $item)
     {
         $this
             ->addParameter('item', $item);

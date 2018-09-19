@@ -28,10 +28,9 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public function initialize(ProductViewTransfer $productViewTransfer, ShoppingListTransfer $shoppingListTransfer): void
     {
-        $this
-            ->addParameter('item', $productViewTransfer)
-            ->addParameter('shoppingList', $shoppingListTransfer)
-            ->addParameter('products', $this->findAlternativesProducts($productViewTransfer));
+        $widget = new ShoppingListProductAlternativeWidget($productViewTransfer, $shoppingListTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -56,20 +55,5 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
     public static function getTemplate(): string
     {
         return ShoppingListProductAlternativeWidget::getTemplate();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function findAlternativesProducts(ProductViewTransfer $productViewTransfer): array
-    {
-        if (!$this->getFactory()->getProductAlternativeStorageClient()->isAlternativeProductApplicable($productViewTransfer)) {
-            return [];
-        }
-
-        return $this->getFactory()->getProductAlternativeStorageClient()
-            ->getConcreteAlternativeProducts($productViewTransfer, $this->getLocale());
     }
 }

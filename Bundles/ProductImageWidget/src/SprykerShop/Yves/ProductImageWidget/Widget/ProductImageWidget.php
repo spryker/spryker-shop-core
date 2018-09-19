@@ -14,10 +14,8 @@ class ProductImageWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer): void
+    public function __construct(ProductViewTransfer $productViewTransfer)
     {
         $this->addParameter('product', $productViewTransfer);
     }

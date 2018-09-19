@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MultiCartWidget\Plugin\ShopUi;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartWidget\Widget\MiniCartWidget;
@@ -29,11 +28,9 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
      */
     public function initialize($cartQuantity): void
     {
-        $this->addParameter('cartQuantity', $cartQuantity)
-            ->addParameter('activeCart', $this->getActiveCart())
-            ->addParameter('cartList', $this->getInActiveQuoteList())
-            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
-            ->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
+        $widget = new MiniCartWidget($cartQuantity);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -58,42 +55,5 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
     public static function getTemplate()
     {
         return MiniCartWidget::getTemplate();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function getActiveCart(): QuoteTransfer
-    {
-        return $this->getFactory()->getMultiCartClient()->getDefaultCart();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer[]
-     */
-    protected function getInActiveQuoteList(): array
-    {
-        $quoteCollectionTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->getQuoteCollection();
-
-        $inActiveQuoteTransferList = [];
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if (!$quoteTransfer->getIsDefault() && $this->can('ReadSharedCartPermissionPlugin', $quoteTransfer->getIdQuote())) {
-                $inActiveQuoteTransferList[] = $quoteTransfer;
-            }
-        }
-
-        return $inActiveQuoteTransferList;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isMultiCartAllowed(): bool
-    {
-        return $this->getFactory()
-            ->getMultiCartClient()
-            ->isMultiCartAllowed();
     }
 }

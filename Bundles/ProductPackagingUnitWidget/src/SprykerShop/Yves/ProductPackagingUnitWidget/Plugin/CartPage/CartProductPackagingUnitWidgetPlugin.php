@@ -13,7 +13,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductPackagingUnitWidget\CartP
 use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\CartProductPackagingUnitWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\CartProductPackagingUnitWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\CartProductPackagingUnitWidget instead.
  *
  * @method \SprykerShop\Yves\ProductPackagingUnitWidget\ProductPackagingUnitWidgetFactory getFactory()
  */
@@ -26,8 +26,9 @@ class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implemen
      */
     public function initialize(ItemTransfer $itemTransfer): void
     {
-        $this
-            ->addParameter('item', $itemTransfer);
+        $widget = new CartProductPackagingUnitWidget($itemTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

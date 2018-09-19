@@ -16,10 +16,8 @@ class ProductAbstractReviewWidget extends AbstractWidget
 {
     /**
      * @param int $idProductAbstract
-     *
-     * @return void
      */
-    public function initialize(int $idProductAbstract): void
+    public function __construct(int $idProductAbstract)
     {
         $this
             ->addParameter('productReviewStorageTransfer', $this->findProductAbstractReview($idProductAbstract))

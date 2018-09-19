@@ -17,10 +17,8 @@ class ProductGroupWidget extends AbstractWidget
     /**
      * @param int $idProductAbstract
      * @param string $template
-     *
-     * @return void
      */
-    public function initialize($idProductAbstract, $template): void
+    public function __construct($idProductAbstract, $template)
     {
         $this
             ->addParameter('productGroupItems', $this->getProductGroups($idProductAbstract))

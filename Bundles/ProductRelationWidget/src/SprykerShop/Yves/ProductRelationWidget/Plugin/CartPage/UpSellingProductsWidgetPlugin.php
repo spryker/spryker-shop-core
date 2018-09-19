@@ -13,7 +13,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductRelationWidget\UpSellingP
 use SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget instead.
  *
  * @method \SprykerShop\Yves\ProductRelationWidget\ProductRelationWidgetFactory getFactory()
  */
@@ -26,10 +26,9 @@ class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSe
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this
-            ->addParameter('quote', $quoteTransfer)
-            ->addParameter('productCollection', $this->findUpSellingProducts($quoteTransfer))
-            ->addWidgets($this->getFactory()->getCartPageUpSellingProductsWidgetPlugins());
+        $widget = new UpSellingProductsWidget($quoteTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -46,17 +45,5 @@ class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSe
     public static function getTemplate(): string
     {
         return UpSellingProductsWidget::getTemplate();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function findUpSellingProducts(QuoteTransfer $quoteTransfer)
-    {
-        return $this->getFactory()
-            ->getProductRelationStorageClient()
-            ->findUpSellingProducts($quoteTransfer, $this->getLocale());
     }
 }
