@@ -1,0 +1,55 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cart: _widget.cart,
+    accessType: _widget.accessType,
+    isDeleteAllowed: _widget.isDeleteAllowed,
+    isSharingAllowed: _widget.isSharingAllowed,
+} %}
+
+{% block template %}
+    {% if data.isSharingAllowed %}
+        {{parent()}}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <td>
+        <span class="cart-permission">
+        {% if data.accessType == 'OWNER_ACCESS' %}
+            <span class="cart-permission__owner">
+                {{ 'widget.shared_cart.multi_cart.permissions.OWNER_ACCESS' | trans }}
+            </span>
+        {%  elseif data.accessType == 'FULL_ACCESS' %}
+            <span class="cart-permission__full">
+                {{ 'widget.shared_cart.multi_cart.permissions.FULL_ACCESS' | trans }}
+            </span>
+        {% elseif data.accessType == 'READ_ONLY' %}
+            <span class="cart-permission__read">
+                {{ 'widget.shared_cart.multi_cart.permissions.READ_ONLY' | trans }}
+            </span>
+        {% endif %}
+        </span>
+    </td>
+{% endblock %}
+
+{%- block isSharingAllowed -%}
+    {{- _widget.isSharingAllowed -}}
+{%- endblock -%}
+
+{% block actions %}
+    {% if _widget.isSharingAllowed and _widget.accessType == 'OWNER_ACCESS' %}
+        <li class="menu__item">
+            <a href="{{ url('shared-cart/share', {idQuote: _widget.cart.idQuote}) }}" title="{{ 'shared_cart_widget.cart.share' | trans }}">
+                {{ 'shared_cart_widget.cart.share' | trans }}
+            </a>
+        </li>
+    {% endif %}
+    {% if _widget.isDeleteAllowed and can('WriteSharedCartPermissionPlugin', _widget.cart.idQuote) %}
+            <li class="menu__item">
+                <a href="{{ url('multi-cart/confirm-delete', {idQuote: _widget.cart.idQuote}) }}">
+                    {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
+                </a>
+            </li>
+    {% endif %}
+{% endblock %}

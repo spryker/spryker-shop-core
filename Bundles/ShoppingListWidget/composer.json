@@ -13,6 +13,7 @@
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",
+    "spryker-shop/multi-cart-page": "*",
     "spryker-shop/shopping-list-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/product-detail-page": "*",
@@ -21,9 +22,10 @@
   },
   "suggest": {
     "spryker-shop/customer-page": "Widget plugins are available for this module.",
-    "spryker-shop/shopping-list-page": "ADD SUGGEST DESCRIPTION",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+    "spryker-shop/shopping-list-page": "Use this module if you want see shopping list pages",
     "spryker/product-detail-page": "To use ShoppingListWidget plugin, ShoppingListWidgetPluginInterface from product-detail-page v0.2.2 is needed",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    "spryker-shop/multi-cart-page": "If you want to use CartToShoppingListWidgetPlugin: ^1.0.0"
   },
   "autoload": {
     "psr-4": {
