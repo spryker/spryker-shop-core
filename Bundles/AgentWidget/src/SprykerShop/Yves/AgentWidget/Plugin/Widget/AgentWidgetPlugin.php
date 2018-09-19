@@ -23,7 +23,7 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
      */
     public function initialize(): void
     {
-        $widget = new AgentWidget();
+        $widget = new AgentControlBarWidget();
 
         $this->parameters = $widget->getParameters();
     }

@@ -45,9 +45,13 @@
     <thead>
     <tr>
         {% widget 'ProductBarcodeWidget' only %}
-            <th>{{ data.labels.barcode }}</th>
+            {% block body %}
+                <th>{{ data.labels.barcode }}</th>
+            {% endblock %}
         {% elsewidget 'ProductBarcodeWidgetPlugin' only %} {# @deprecated Use ProductBarcodeWidget instead. #}
-            <th>{{ data.labels.barcode }}</th>
+            {% block body %}
+                <th>{{ data.labels.barcode }}</th>
+            {% endblock %}
         {% endwidget %}
         <th>{{ data.labels.productSku }}</th>
         <th>{{ data.labels.productName }}</th>
@@ -58,9 +62,13 @@
     {% for item in data.shoppingListItems %}
     <tr>
         {% widget 'ProductBarcodeWidget' args [item, data.barcodeGeneratorPlugin] only %}
-            <td>{{ parent() }}</td>
+            {% block body %}
+                <td>{{ parent() }}</td>
+            {% endblock %}
         {% elsewidget 'ProductBarcodeWidgetPlugin' args [item, data.barcodeGeneratorPlugin] only %} {# @deprecated Use ProductBarcodeWidget instead. #}
-            <td>{{ parent() }}</td>
+            {% block body %}
+                <td>{{ parent() }}</td>
+            {% endblock %}
         {% endwidget %}
         <td>{{ item.sku }}</td>
         <td>{{ item.name }}</td>

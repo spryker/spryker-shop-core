@@ -33,7 +33,7 @@ class AgentControlBarWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'AgentWidget';
+        return 'AgentControlBarWidget';
     }
 
     /**

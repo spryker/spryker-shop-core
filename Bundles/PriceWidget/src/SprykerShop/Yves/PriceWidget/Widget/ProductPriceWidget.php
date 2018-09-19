@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\PriceWidget\PriceWidgetFactory getFactory()
  */
-class PriceWidget extends AbstractWidget
+class ProductPriceWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -28,7 +28,7 @@ class PriceWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'PriceWidget';
+        return 'ProductPriceWidget';
     }
 
     /**

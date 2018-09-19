@@ -42,10 +42,10 @@
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
     <hr />
-    {% widget 'PriceProductVolumeWidget' args [data.product] only %}
-    {% elsewidget 'PriceProductVolumeWidgetPlugin' args [data.product] only %} {# @deprecated Use PriceProductVolumeWidget instead. #}
-    {% elsewidget 'PriceWidget' args [data.product] only %}
-    {% elsewidget 'PriceWidgetPlugin' args [data.product] only %} {# @deprecated Use PriceWidget instead. #}
+    {% widget 'ProductPriceVolumeWidget' args [data.product] only %}
+    {% elsewidget 'PriceProductVolumeWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductPriceVolumeWidget instead. #}
+    {% elsewidget 'ProductPriceWidget' args [data.product] only %}
+    {% elsewidget 'PriceWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductPriceWidget instead. #}
     {% endwidget %}
 
     {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] use view('@ProductReviewWidget/views/pdp-review/pdp-review-rating.twig') only %}

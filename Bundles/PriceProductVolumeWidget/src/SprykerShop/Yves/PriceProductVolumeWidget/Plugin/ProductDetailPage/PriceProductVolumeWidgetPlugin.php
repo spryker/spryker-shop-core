@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\PriceProductVolumeWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\PriceProductVolumeWidget\Widget\PriceProductVolumeWidget;
+use SprykerShop\Yves\PriceProductVolumeWidget\Widget\ProductPriceVolumeWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\VolumePriceProductWidget\PriceProductVolumeWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\PriceProductVolumeWidget\Widget\PriceProductVolumeWidget instead.
+ * @deprecated Use \SprykerShop\Yves\PriceProductVolumeWidget\Widget\ProductPriceVolumeWidget instead.
  *
  * @method \SprykerShop\Yves\PriceProductVolumeWidget\PriceProductVolumeWidgetFactory getFactory()
  */
@@ -26,7 +26,7 @@ class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements Pri
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $widget = new PriceProductVolumeWidget($productViewTransfer);
+        $widget = new ProductPriceVolumeWidget($productViewTransfer);
 
         $this->parameters = $widget->getParameters();
     }
@@ -52,6 +52,6 @@ class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements Pri
      */
     public static function getTemplate()
     {
-        return PriceProductVolumeWidget::getTemplate();
+        return ProductPriceVolumeWidget::getTemplate();
     }
 }
