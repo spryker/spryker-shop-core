@@ -51,6 +51,6 @@ class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public static function getTemplate(): string
     {
-        return ProductDiscontinuedWidget::getTemplate();
+        return '@ProductDiscontinuedWidget/views/wishlist-product-discontinued/wishlist-product-discontinued.twig';
     }
 }

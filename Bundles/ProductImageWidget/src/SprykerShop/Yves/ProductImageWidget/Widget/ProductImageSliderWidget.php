@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductImageWidget\Widget;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
-class ProductImageWidget extends AbstractWidget
+class ProductImageSliderWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -25,7 +25,7 @@ class ProductImageWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductImageWidget';
+        return 'ProductImageSliderWidget';
     }
 
     /**

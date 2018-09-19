@@ -10,10 +10,10 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductMeasurementUnitWidget\QuantitySalesUnitWidgetPluginInterface;
-use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\QuantitySalesUnitWidget;
+use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\CartProductMeasurementUnitQuantitySelectorWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\QuantitySalesUnitWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\CartProductMeasurementUnitQuantitySelectorWidget instead.
  *
  * @method \SprykerShop\Yves\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetFactory getFactory()
  */
@@ -26,7 +26,7 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
      */
     public function initialize(ItemTransfer $itemTransfer): void
     {
-        $widget = new QuantitySalesUnitWidget($itemTransfer);
+        $widget = new CartProductMeasurementUnitQuantitySelectorWidget($itemTransfer);
 
         $this->parameters = $widget->getParameters();
     }
@@ -80,6 +80,6 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
      */
     public static function getTemplate()
     {
-        return QuantitySalesUnitWidget::getTemplate();
+        return CartProductMeasurementUnitQuantitySelectorWidget::getTemplate();
     }
 }

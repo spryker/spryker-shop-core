@@ -50,25 +50,4 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
     {
         return ProductGroupWidget::getTemplate();
     }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function getProductGroups($idProductAbstract)
-    {
-        $productGroup = $this->getFactory()->getProductGroupStorageClient()->findProductGroupItemsByIdProductAbstract($idProductAbstract);
-        $productViewTransfers = [];
-        foreach ($productGroup->getGroupProductAbstractIds() as $idProductAbstract) {
-            $productData = $this->getFactory()->getProductStorageClient()->findProductAbstractStorageData($idProductAbstract, $this->getLocale());
-            if (!$productData) {
-                continue;
-            }
-
-            $productViewTransfers[] = $this->getFactory()->getProductStorageClient()->mapProductStorageData($productData, $this->getLocale());
-        }
-
-        return $productViewTransfers;
-    }
 }

@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\ProductCategoryWidget\ProductCategoryWidgetFactory getFactory()
  */
-class ProductCategoryWidget extends AbstractWidget
+class ProductBreadcrumbsWithCategoriesWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -29,7 +29,7 @@ class ProductCategoryWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductCategoryWidget';
+        return 'ProductBreadcrumbsWithCategoriesWidget';
     }
 
     /**

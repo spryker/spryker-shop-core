@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\ProductCategoryWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductCategoryWidget\Widget\ProductCategoryWidget;
+use SprykerShop\Yves\ProductCategoryWidget\Widget\ProductBreadcrumbsWithCategoriesWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductCategoryWidget\ProductCategoryWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductCategoryWidget\Widget\ProductCategoryWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductCategoryWidget\Widget\ProductBreadcrumbsWithCategoriesWidget instead.
  *
  * @method \SprykerShop\Yves\ProductCategoryWidget\ProductCategoryWidgetFactory getFactory()
  */
@@ -32,7 +32,7 @@ class ProductCategoryWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public static function getTemplate(): string
     {
-        return ProductCategoryWidget::getTemplate();
+        return ProductBreadcrumbsWithCategoriesWidget::getTemplate();
     }
 
     /**
@@ -42,7 +42,7 @@ class ProductCategoryWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $widget = new ProductCategoryWidget($productViewTransfer);
+        $widget = new ProductBreadcrumbsWithCategoriesWidget($productViewTransfer);
 
         $this->parameters = $widget->getParameters();
     }

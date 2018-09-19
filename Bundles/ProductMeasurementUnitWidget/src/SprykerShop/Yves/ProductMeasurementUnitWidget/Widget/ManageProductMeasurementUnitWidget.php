@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetFactory getFactory()
  */
-class ProductMeasurementUnitWidget extends AbstractWidget
+class ManageProductMeasurementUnitWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -99,7 +99,7 @@ class ProductMeasurementUnitWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductMeasurementUnitWidget';
+        return 'ManageProductMeasurementUnitWidget';
     }
 
     /**

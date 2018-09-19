@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductOptionWidget\Widget;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
-class CartItemProductOptionWidget extends AbstractWidget
+class DisplayCartItemProductOptionWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -25,7 +25,7 @@ class CartItemProductOptionWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'CartItemProductOptionWidget';
+        return 'DisplayCartItemProductOptionWidget';
     }
 
     /**

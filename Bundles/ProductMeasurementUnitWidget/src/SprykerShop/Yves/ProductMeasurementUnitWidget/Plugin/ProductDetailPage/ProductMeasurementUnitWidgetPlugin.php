@@ -10,10 +10,10 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Plugin\ProductDetailPage
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetPluginInterface;
-use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\ProductMeasurementUnitWidget;
+use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\ManageProductMeasurementUnitWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\ProductMeasurementUnitWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\ManageProductMeasurementUnitWidget instead.
  *
  * @method \SprykerShop\Yves\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetFactory getFactory()
  */
@@ -28,7 +28,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      */
     public function initialize(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = []): void
     {
-        $widget = new ProductMeasurementUnitWidget($productViewTransfer, $isAddToCartDisabled, $quantityOptions);
+        $widget = new ManageProductMeasurementUnitWidget($productViewTransfer, $isAddToCartDisabled, $quantityOptions);
 
         $this->parameters = $widget->getParameters();
     }
@@ -54,6 +54,6 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
      */
     public static function getTemplate()
     {
-        return ProductMeasurementUnitWidget::getTemplate();
+        return ManageProductMeasurementUnitWidget::getTemplate();
     }
 }

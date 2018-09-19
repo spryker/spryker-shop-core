@@ -10,10 +10,10 @@ namespace SprykerShop\Yves\ProductOptionWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductOptionWidget\CartItemProductOptionWidgetPluginInterface;
-use SprykerShop\Yves\ProductOptionWidget\Widget\CartItemProductOptionWidget;
+use SprykerShop\Yves\ProductOptionWidget\Widget\DisplayCartItemProductOptionWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductOptionWidget\Widget\CartItemProductOptionWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductOptionWidget\Widget\DisplayCartItemProductOptionWidget instead.
  */
 class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements CartItemProductOptionWidgetPluginInterface
 {
@@ -24,7 +24,7 @@ class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public function initialize(ItemTransfer $itemTransfer): void
     {
-        $widget = new CartItemProductOptionWidget($itemTransfer);
+        $widget = new DisplayCartItemProductOptionWidget($itemTransfer);
 
         $this->parameters = $widget->getParameters();
     }
@@ -42,6 +42,6 @@ class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getTemplate(): string
     {
-        return CartItemProductOptionWidget::getTemplate();
+        return DisplayCartItemProductOptionWidget::getTemplate();
     }
 }
