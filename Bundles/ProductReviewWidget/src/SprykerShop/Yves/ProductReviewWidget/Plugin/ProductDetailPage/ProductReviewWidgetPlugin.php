@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReviewWidget\Pro
 use SprykerShop\Yves\ProductReviewWidget\Widget\ProductDetailPageReviewWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductDetailPageReviewWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductDetailPageReviewWidget instead.
  *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
@@ -25,10 +25,9 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public function initialize(int $idProductAbstract): void
     {
-        $this
-            ->addParameter('idProductAbstract', $idProductAbstract)
-            ->addParameter('productReviewStorageTransfer', $this->findProductAbstractReview($idProductAbstract))
-            ->addParameter('maximumRating', $this->getMaximumRating());
+        $widget = new ProductDetailPageReviewWidget($idProductAbstract);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

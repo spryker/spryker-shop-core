@@ -17,10 +17,7 @@ class QuickOrderPageWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
-    /**
-     * @return void
-     */
-    public function initialize()
+    public function __construct()
     {
         $this
             ->addParameter('carts', $this->getQuoteList())

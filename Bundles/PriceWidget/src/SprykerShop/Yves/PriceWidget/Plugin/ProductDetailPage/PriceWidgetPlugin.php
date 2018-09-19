@@ -42,6 +42,8 @@ class PriceWidgetPlugin extends AbstractWidgetPlugin implements PriceWidgetPlugi
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter('product', $productViewTransfer);
+        $widget = new PriceWidget($productViewTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 }

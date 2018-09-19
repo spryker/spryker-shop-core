@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductReviewWidget\Widget\ProductReviewDisplayWidget;
 use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductReviewWidget\ProductReviewWidgetPluginInterface;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductReviewDisplayWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductReviewDisplayWidget instead.
  *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
@@ -25,9 +25,9 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public function initialize(float $rating): void
     {
-        $this
-            ->addParameter('rating', $rating)
-            ->addParameter('maximumRating', $this->getMaximumRating());
+        $widget = new ProductReviewDisplayWidget($rating);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -44,15 +44,5 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
     public static function getTemplate(): string
     {
         return ProductReviewDisplayWidget::getTemplate();
-    }
-
-    /**
-     * @return int
-     */
-    protected function getMaximumRating()
-    {
-        return $this->getFactory()
-            ->getProductReviewClient()
-            ->getMaximumRating();
     }
 }

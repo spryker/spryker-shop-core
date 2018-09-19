@@ -13,7 +13,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Plugin\ProductPackagingUnit\OrderDe
 use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\OrderDetailProductPackagingUnitWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\OrderDetailProductPackagingUnitWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\OrderDetailProductPackagingUnitWidget instead.
  *
  * @method \SprykerShop\Yves\ProductPackagingUnitWidget\ProductPackagingUnitWidgetFactory getFactory()
  */
@@ -27,9 +27,9 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
      */
     public function initialize(ItemTransfer $itemTransfer, string $currencyIsoCode): void
     {
-        $this
-            ->addParameter('item', $itemTransfer)
-            ->addParameter('currencyIsoCode', $currencyIsoCode);
+        $widget = new OrderDetailProductPackagingUnitWidget($itemTransfer, $currencyIsoCode);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

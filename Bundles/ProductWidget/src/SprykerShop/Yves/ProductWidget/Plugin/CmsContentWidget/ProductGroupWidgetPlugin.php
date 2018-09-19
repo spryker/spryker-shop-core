@@ -13,7 +13,7 @@ use SprykerShop\Yves\CmsContentWidgetProductConnector\Dependency\Plugin\ProductW
 use SprykerShop\Yves\ProductWidget\Widget\CmsProductGroupWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductWidget\Widget\CmsProductGroupWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\CmsProductGroupWidget instead.
  *
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */
@@ -26,9 +26,9 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addWidgets($this->getFactory()->getCmsContentWidgetProductGroupWidgetPlugins());
+        $widget = new CmsProductGroupWidget($productViewTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

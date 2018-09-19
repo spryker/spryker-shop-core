@@ -25,7 +25,7 @@ class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implemen
     {
         $widget = new BusinessOnBehalfStatusWidget();
 
-        $this->addParameter('isVisible', $widget['isVisible']);
+        $this->parameters = $widget->getParameters();
     }
 
     /**

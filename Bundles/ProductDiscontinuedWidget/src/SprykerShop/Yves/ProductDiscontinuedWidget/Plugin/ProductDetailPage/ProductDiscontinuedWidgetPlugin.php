@@ -25,12 +25,9 @@ class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public function initialize(string $sku): void
     {
-        $this->addParameter(
-            'discontinuedProduct',
-            $this->getFactory()
-                ->getProductDiscontinuedStorageClient()
-                ->findProductDiscontinuedStorage($sku, $this->getLocale())
-        );
+        $widget = new ProductDiscontinuedNoteWidget($sku);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

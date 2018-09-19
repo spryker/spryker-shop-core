@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget;
 use SprykerShop\Yves\WishlistPage\Dependency\Plugin\ProductDiscontinuedWidget\ProductDiscontinuedWidgetPluginInterface;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget instead.
  *
  * @method \SprykerShop\Yves\ProductDiscontinuedWidget\ProductDiscontinuedWidgetFactory getFactory()
  */
@@ -25,12 +25,9 @@ class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public function initialize(string $sku): void
     {
-        $this->addParameter(
-            'discontinuedProduct',
-            $this->getFactory()
-                ->getProductDiscontinuedStorageClient()
-                ->findProductDiscontinuedStorage($sku, $this->getLocale())
-        );
+        $widget = new ProductDiscontinuedWidget($sku);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

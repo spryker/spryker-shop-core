@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductRelationWidget\S
 use SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget instead.
  *
  * @method \SprykerShop\Yves\ProductRelationWidget\ProductRelationWidgetFactory getFactory()
  */
@@ -26,10 +26,9 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addParameter('productCollection', $this->findRelatedProducts($productViewTransfer))
-            ->addWidgets($this->getFactory()->getProductDetailPageSimilarProductsWidgetPlugins());
+        $widget = new SimilarProductsWidget($productViewTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -46,17 +45,5 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
     public static function getTemplate(): string
     {
         return SimilarProductsWidget::getTemplate();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function findRelatedProducts(ProductViewTransfer $productViewTransfer)
-    {
-        return $this->getFactory()
-            ->getProductRelationStorageClient()
-            ->findRelatedProducts($productViewTransfer->getIdProductAbstract(), $this->getLocale());
     }
 }

@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductImageWidget\Prod
 use SprykerShop\Yves\ProductImageWidget\Widget\ProductImageWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductImageWidget\Widget\ProductImageWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductImageWidget\Widget\ProductImageWidget instead.
  */
 class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductImageWidgetPluginInterface
 {
@@ -24,7 +24,9 @@ class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductIm
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter('product', $productViewTransfer);
+        $widget = new ProductImageWidget($productViewTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

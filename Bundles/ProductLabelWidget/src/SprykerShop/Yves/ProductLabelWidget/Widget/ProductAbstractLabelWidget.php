@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductLabelWidget\Widget;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -16,15 +15,15 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ProductAbstractLabelWidget extends AbstractWidget
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return void
+     * @param int $idProductAbstract
      */
-    public function initialize(ProductViewTransfer $productViewTransfer): void
+    public function __construct(int $idProductAbstract)
     {
         $this
-            ->addParameter('product', $productViewTransfer)
-            ->addParameter('productLabelDictionaryItemTransfers', $this->getProductLabelDictionaryItems($productViewTransfer));
+            ->addParameter(
+                'productLabelDictionaryItemTransfers',
+                $this->getProductLabelDictionaryItems($idProductAbstract)
+            );
     }
 
     /**
@@ -44,14 +43,14 @@ class ProductAbstractLabelWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    protected function getProductLabelDictionaryItems(ProductViewTransfer $productViewTransfer)
+    protected function getProductLabelDictionaryItems(int $idProductAbstract): array
     {
         return $this->getFactory()
             ->getProductLabelStorageClient()
-            ->findLabelsByIdProductAbstract($productViewTransfer->getIdProductAbstract(), $this->getLocale());
+            ->findLabelsByIdProductAbstract($idProductAbstract, $this->getLocale());
     }
 }

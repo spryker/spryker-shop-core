@@ -16,10 +16,8 @@ class ProductConcreteLabelWidget extends AbstractWidget
 {
     /**
      * @param array $idProductLabels
-     *
-     * @return void
      */
-    public function initialize(array $idProductLabels): void
+    public function __construct(array $idProductLabels)
     {
         $this
             ->addParameter('idProductLabels', $idProductLabels)

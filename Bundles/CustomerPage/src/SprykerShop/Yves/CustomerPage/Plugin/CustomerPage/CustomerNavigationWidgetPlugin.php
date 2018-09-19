@@ -26,9 +26,9 @@ class CustomerNavigationWidgetPlugin extends AbstractWidgetPlugin implements Cus
      */
     public function initialize(string $activePage, ?int $activeEntityId = null): void
     {
-        $this->addParameter('activePage', $activePage)
-            ->addParameter('activeEntityId', $activeEntityId)
-            ->addWidgets($this->getFactory()->getCustomerMenuItemWidgetPlugins());
+        $widget = new CustomerNavigationWidget($activePage, $activeEntityId);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

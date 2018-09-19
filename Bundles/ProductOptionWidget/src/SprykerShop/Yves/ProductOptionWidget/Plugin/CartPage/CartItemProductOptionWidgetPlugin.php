@@ -13,7 +13,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductOptionWidget\CartItemProd
 use SprykerShop\Yves\ProductOptionWidget\Widget\CartItemProductOptionWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductOptionWidget\Widget\CartItemProductOptionWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductOptionWidget\Widget\CartItemProductOptionWidget instead.
  */
 class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements CartItemProductOptionWidgetPluginInterface
 {
@@ -24,7 +24,9 @@ class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public function initialize(ItemTransfer $itemTransfer): void
     {
-        $this->addParameter('cartItem', $itemTransfer);
+        $widget = new CartItemProductOptionWidget($itemTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

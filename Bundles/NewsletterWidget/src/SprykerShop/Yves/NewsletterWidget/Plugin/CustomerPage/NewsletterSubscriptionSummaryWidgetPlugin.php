@@ -8,10 +8,6 @@
 namespace SprykerShop\Yves\NewsletterWidget\Plugin\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
-use Generated\Shared\Transfer\NewsletterTypeTransfer;
-use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\NewsletterWidget\NewsletterSubscriptionSummaryWidgetPluginInterface;
 use SprykerShop\Yves\NewsletterWidget\Widget\NewsletterSubscriptionSummaryWidget;
@@ -30,7 +26,9 @@ class NewsletterSubscriptionSummaryWidgetPlugin extends AbstractWidgetPlugin imp
      */
     public function initialize(CustomerTransfer $customerTransfer): void
     {
-        $this->addParameter('isSubscribed', $this->getIsSubscribed($customerTransfer));
+        $widget = new NewsletterSubscriptionSummaryWidget($customerTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -47,33 +45,5 @@ class NewsletterSubscriptionSummaryWidgetPlugin extends AbstractWidgetPlugin imp
     public static function getTemplate(): string
     {
         return NewsletterSubscriptionSummaryWidget::getTemplate();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
-     */
-    protected function getIsSubscribed(CustomerTransfer $customerTransfer)
-    {
-        $subscriptionRequestTransfer = new NewsletterSubscriptionRequestTransfer();
-
-        $subscriberTransfer = new NewsletterSubscriberTransfer();
-        $subscriberTransfer->setFkCustomer($customerTransfer->getIdCustomer());
-        $subscriberTransfer->setEmail($customerTransfer->getEmail());
-        $subscriptionRequestTransfer->setNewsletterSubscriber($subscriberTransfer);
-
-        $newsletterTypeTransfer = new NewsletterTypeTransfer();
-        $newsletterTypeTransfer->setName(NewsletterConstants::DEFAULT_NEWSLETTER_TYPE);
-
-        $subscriptionRequestTransfer->addSubscriptionType($newsletterTypeTransfer);
-
-        $subscriptionResponseTransfer = $this->getFactory()
-            ->getNewsletterClient()
-            ->checkSubscription($subscriptionRequestTransfer);
-
-        $result = current($subscriptionResponseTransfer->getSubscriptionResults());
-
-        return $result->getisSuccess();
     }
 }

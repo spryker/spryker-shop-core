@@ -12,7 +12,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\ProductPackagingUnit\Summary
 use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\SummaryProductPackagingUnitWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\SummaryProductPackagingUnitWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\SummaryProductPackagingUnitWidget instead.
  */
 class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements SummaryProductPackagingUnitWidgetPluginInterface
 {
@@ -23,8 +23,9 @@ class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin imple
      */
     public function initialize(array $item): void
     {
-        $this
-            ->addParameter('item', $item);
+        $widget = new SummaryProductPackagingUnitWidget($item);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**

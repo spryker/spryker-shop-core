@@ -21,10 +21,8 @@ class ProductMeasurementUnitWidget extends AbstractWidget
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isAddToCartDisabled
      * @param array $quantityOptions
-     *
-     * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = []): void
+    public function __construct(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = [])
     {
         $salesUnits = null;
         $idBaseUnit = null;

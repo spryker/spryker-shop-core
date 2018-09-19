@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ProductBundleWidget\Plugin\MultiCartWidget;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\ProductBundleWidget\ProductBundleItemCounterWidgetPluginInterface;
@@ -28,44 +26,9 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implemen
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('items', $this->transformCartItems($quoteTransfer->getItems(), $quoteTransfer))
-            ->addParameter('cart', $quoteTransfer);
-    }
+        $widget = new ProductBundleItemCounterWidget($quoteTransfer);
 
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    public function transformCartItems(ArrayObject $cartItems, QuoteTransfer $quoteTransfer): array
-    {
-        $transformedCartItems = [];
-
-        $groupedItems = $this->getGroupedItems($cartItems, $quoteTransfer);
-        foreach ($groupedItems as $groupedItem) {
-            if ($groupedItem instanceof ItemTransfer) {
-                $transformedCartItems[] = $groupedItem;
-                continue;
-            }
-
-            $transformedCartItems[] = $groupedItem['bundleProduct'];
-        }
-
-        return $transformedCartItems;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function getGroupedItems(ArrayObject $cartItems, QuoteTransfer $quoteTransfer): array
-    {
-        return $this->getFactory()
-            ->getProductBundleClient()
-            ->getGroupedBundleItems($cartItems, $quoteTransfer->getBundleItems());
+        $this->parameters = $widget->getParameters();
     }
 
     /**

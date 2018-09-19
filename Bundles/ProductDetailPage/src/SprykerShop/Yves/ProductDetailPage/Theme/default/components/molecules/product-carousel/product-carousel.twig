@@ -10,11 +10,11 @@
 } %}
 
 {% block body %}
-    {% widget 'ProductImageWidget' args [data.product.IdProductAbstract] only %}
+    {% widget 'ProductImageWidget' args [data.product.idProductAbstract] only %}
     {% elsewidget 'ProductImageWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductImageWidget instead. #}
     {% endwidget %}
 
-    {% widget 'ProductAbstractLabelWidget' args [data.product.IdProductAbstract] only %}
+    {% widget 'ProductAbstractLabelWidget' args [data.product.idProductAbstract] only %}
     {% elsewidget 'ProductAbstractLabelWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductAbstractLabelWidget instead. #}
     {% endwidget %}
 {% endblock %}

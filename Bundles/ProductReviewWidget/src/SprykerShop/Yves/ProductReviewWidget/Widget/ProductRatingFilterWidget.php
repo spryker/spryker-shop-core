@@ -19,10 +19,8 @@ class ProductRatingFilterWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeSearchResultTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return void
      */
-    public function initialize(RangeSearchResultTransfer $rangeSearchResultTransfer, Request $request): void
+    public function __construct(RangeSearchResultTransfer $rangeSearchResultTransfer, Request $request)
     {
         $this
             ->addParameter('filter', $rangeSearchResultTransfer)

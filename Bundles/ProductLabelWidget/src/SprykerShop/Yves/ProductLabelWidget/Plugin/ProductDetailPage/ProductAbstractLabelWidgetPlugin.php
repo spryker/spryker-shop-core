@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductLabelWidget\Prod
 use SprykerShop\Yves\ProductLabelWidget\Widget\ProductAbstractLabelWidget;
 
 /**
- * @depricated Use \SprykerShop\Yves\ProductLabelWidget\Widget\ProductAbstractLabelWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductLabelWidget\Widget\ProductAbstractLabelWidget instead.
  *
  * @method \SprykerShop\Yves\ProductLabelWidget\ProductLabelWidgetFactory getFactory()
  */
@@ -26,9 +26,9 @@ class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements P
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addParameter('productLabelDictionaryItemTransfers', $this->getProductLabelDictionaryItems($productViewTransfer));
+        $widget = new ProductAbstractLabelWidget($productViewTransfer->getIdProductAbstract());
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
