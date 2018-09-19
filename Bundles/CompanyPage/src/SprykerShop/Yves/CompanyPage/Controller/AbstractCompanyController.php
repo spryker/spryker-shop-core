@@ -26,24 +26,6 @@ abstract class AbstractCompanyController extends AbstractController
     public const DEFAULT_PAGE = 1;
 
     /**
-     * @deprecated Behavior is implemented by CompanyUserRestrictionHandlerPlugin
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
-
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer() && !$customerTransfer->getIsOnBehalf()) {
-            throw new NotFoundHttpException("Regular customers are not allowed to operate on company pages");
-        }
-    }
-
-    /**
      * @return bool
      */
     protected function isCompanyActive(): bool
