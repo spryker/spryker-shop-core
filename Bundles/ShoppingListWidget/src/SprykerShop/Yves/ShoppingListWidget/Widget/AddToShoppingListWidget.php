@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
  */
-class ShoppingListWidget extends AbstractWidget
+class AddToShoppingListWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
@@ -34,7 +34,7 @@ class ShoppingListWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ShoppingListWidget';
+        return 'AddToShoppingListWidget';
     }
 
     /**

@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
-class ProductAbstractReviewWidget extends AbstractWidget
+class DisplayProductAbstractReviewWidget extends AbstractWidget
 {
     /**
      * @param int $idProductAbstract
@@ -29,7 +29,7 @@ class ProductAbstractReviewWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductAbstractReviewWidget';
+        return 'DisplayProductAbstractReviewWidget';
     }
 
     /**

@@ -10,10 +10,10 @@ namespace SprykerShop\Yves\ProductOptionWidget\Plugin\ProductDetailPage;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductOptionWidget\ProductOptionWidgetPluginInterface;
-use SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionWidget;
+use SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionConfiguratorWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionConfiguratorWidget instead.
  *
  * @method \SprykerShop\Yves\ProductOptionWidget\ProductOptionWidgetFactory getFactory()
  */
@@ -26,7 +26,7 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $widget = new ProductOptionWidget($productViewTransfer);
+        $widget = new ProductOptionConfiguratorWidget($productViewTransfer);
 
         $this->parameters = $widget->getParameters();
     }
@@ -44,6 +44,6 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
      */
     public static function getTemplate(): string
     {
-        return ProductOptionWidget::getTemplate();
+        return ProductOptionConfiguratorWidget::getTemplate();
     }
 }

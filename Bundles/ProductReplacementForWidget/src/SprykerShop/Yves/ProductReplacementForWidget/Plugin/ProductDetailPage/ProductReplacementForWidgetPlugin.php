@@ -9,10 +9,10 @@ namespace SprykerShop\Yves\ProductReplacementForWidget\Plugin\ProductDetailPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReplacementForWidgetPlugin\ProductReplacementForWidgetPluginInterface;
-use SprykerShop\Yves\ProductReplacementForWidget\Widget\ProductReplacementForWidget;
+use SprykerShop\Yves\ProductReplacementForWidget\Widget\ProductReplacementForListWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductReplacementForWidget\Widget\ProductReplacementForWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductReplacementForWidget\Widget\ProductReplacementForListWidget instead.
  *
  * @method \SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetFactory getFactory()
  */
@@ -25,7 +25,7 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public function initialize(string $sku): void
     {
-        $widget = new ProductReplacementForWidget($sku);
+        $widget = new ProductReplacementForListWidget($sku);
 
         $this->parameters = $widget->getParameters();
     }
@@ -51,6 +51,6 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getTemplate(): string
     {
-        return ProductReplacementForWidget::getTemplate();
+        return ProductReplacementForListWidget::getTemplate();
     }
 }

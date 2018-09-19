@@ -32,17 +32,6 @@ class SharedCartShareWidgetPlugin extends AbstractWidgetPlugin implements Shared
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer)
-    {
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-        return strcmp($customer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
-    }
-
-    /**
      * Specification:
      * - Returns the name of the widget as it's used in templates.
      *

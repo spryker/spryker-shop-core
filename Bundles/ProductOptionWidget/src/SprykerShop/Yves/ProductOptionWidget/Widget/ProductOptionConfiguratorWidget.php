@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\ProductOptionWidget\ProductOptionWidgetFactory getFactory()
  */
-class ProductOptionWidget extends AbstractWidget
+class ProductOptionConfiguratorWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -29,7 +29,7 @@ class ProductOptionWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductOptionWidget';
+        return 'ProductOptionConfiguratorWidget';
     }
 
     /**

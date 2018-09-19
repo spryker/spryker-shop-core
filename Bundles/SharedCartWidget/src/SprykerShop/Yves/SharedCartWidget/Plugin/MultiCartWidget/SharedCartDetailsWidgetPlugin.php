@@ -44,54 +44,6 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $actions
-     *
-     * @return array
-     */
-    protected function checkActionsPermission(QuoteTransfer $quoteTransfer, array $actions): array
-    {
-        $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
-        $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote()) || $writeAllowed;
-        $deleteAllowed = $this->isDeleteCartAllowed($quoteTransfer) && $writeAllowed;
-        $actions['view'] = isset($actions['view']) ? $actions['view'] && $viewAllowed : $viewAllowed;
-        $actions['update'] = isset($actions['update']) ? $actions['update'] && $writeAllowed : $writeAllowed;
-        $actions['set_default'] = isset($actions['set_default']) ? $actions['set_default'] && $viewAllowed : $viewAllowed;
-        $actions['delete'] = isset($actions['delete']) ? $actions['delete'] && $deleteAllowed : $deleteAllowed;
-
-        return $actions;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
-     *
-     * @return bool
-     */
-    protected function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer): bool
-    {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        $ownedQuoteNumber = 0;
-        foreach ($this->getFactory()->getMultiCartClient()->getQuoteCollection()->getQuotes() as $quoteTransfer) {
-            if ($this->isQuoteOwner($quoteTransfer, $customerTransfer)) {
-                $ownedQuoteNumber++;
-            }
-        }
-
-        return $ownedQuoteNumber > 1 || (!$this->isQuoteOwner($currentQuoteTransfer, $customerTransfer) && $ownedQuoteNumber > 0);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
-    {
-        return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
-    }
-
-    /**
      * Specification:
      * - Returns the name of the widget as it's used in templates.
      *

@@ -8,11 +8,11 @@
 namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductWidget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductReviewWidget\Widget\ProductAbstractReviewWidget;
+use SprykerShop\Yves\ProductReviewWidget\Widget\DisplayProductAbstractReviewWidget;
 use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductReviewWidget\ProductAbstractReviewWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductAbstractReviewWidget instead.
+ * @deprecated Use \SprykerShop\Yves\ProductReviewWidget\Widget\DisplayProductAbstractReviewWidget instead.
  *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
@@ -25,7 +25,7 @@ class ProductAbstractReviewWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public function initialize(int $idProductAbstract): void
     {
-        $widget = new ProductAbstractReviewWidget($idProductAbstract);
+        $widget = new DisplayProductAbstractReviewWidget($idProductAbstract);
 
         $this->parameters = $widget->getParameters();
     }
@@ -43,6 +43,6 @@ class ProductAbstractReviewWidgetPlugin extends AbstractWidgetPlugin implements 
      */
     public static function getTemplate(): string
     {
-        return ProductAbstractReviewWidget::getTemplate();
+        return DisplayProductAbstractReviewWidget::getTemplate();
     }
 }

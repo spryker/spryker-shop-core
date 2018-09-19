@@ -42,8 +42,8 @@
                 {% endblock %}
 
                 {% block rating %}
-                    {% widget 'ProductAbstractReviewWidget' args [data.abstractId] only %}
-                    {% elsewidget 'ProductAbstractReviewWidgetPlugin' args [data.abstractId] only %} {# @deprecated Use ProductAbstractReviewWidget instead. #}
+                    {% widget 'DisplayProductAbstractReviewWidget' args [data.abstractId] only %}
+                    {% elsewidget 'ProductAbstractReviewWidgetPlugin' args [data.abstractId] only %} {# @deprecated Use DisplayProductAbstractReviewWidget instead. #}
                     {% endwidget %}
                 {% endblock %}
 

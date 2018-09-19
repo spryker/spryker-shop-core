@@ -15,7 +15,7 @@ use SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetConf
 /**
  * @method \SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetFactory getFactory()
  */
-class ProductReplacementForWidget extends AbstractWidget
+class ProductReplacementForListWidget extends AbstractWidget
 {
     /**
      * @param string $sku
@@ -35,7 +35,7 @@ class ProductReplacementForWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductReplacementForWidget';
+        return 'ProductReplacementForListWidget';
     }
 
     /**

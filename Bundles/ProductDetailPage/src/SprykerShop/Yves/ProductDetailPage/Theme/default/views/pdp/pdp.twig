@@ -54,8 +54,8 @@
         }
     } only %}
 
-    {% widget 'ProductReplacementForWidget' args [data.product.sku] only %}
-    {% elsewidget 'ProductReplacementForWidgetPlugin' args [data.product.sku] only %} {# @deprecated Use ProductReplacementForWidget instead. #}
+    {% widget 'ProductReplacementForListWidget' args [data.product.sku] only %}
+    {% elsewidget 'ProductReplacementForWidgetPlugin' args [data.product.sku] only %} {# @deprecated Use ProductReplacementForListWidget instead. #}
     {% endwidget %}
 
     {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] only %}

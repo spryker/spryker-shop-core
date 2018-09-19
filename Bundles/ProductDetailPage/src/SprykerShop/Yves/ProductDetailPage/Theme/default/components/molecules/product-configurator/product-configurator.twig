@@ -48,7 +48,7 @@
     {% elsewidget 'PriceWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductPriceWidget instead. #}
     {% endwidget %}
 
-    {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] use view('@ProductReviewWidget/views/pdp-review/pdp-review-rating.twig') only %}
+    {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] use view('pdp-review-rating', 'ProductReviewWidget') only %}
     {% nowidget %}
         {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }} {# @deprecated Use ProductDetailPageReviewWidget instead. #}
     {% endwidget %}
@@ -68,8 +68,8 @@
 
     <hr />
     <form method="POST" action="/cart/add/{{sku}}">
-        {% widget 'ProductOptionWidget' args [data.product] only %}
-        {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionWidget instead. #}
+        {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}
+        {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionConfiguratorWidget instead. #}
         {% endwidget %}
 
         {% widget 'ProductPackagingUnitWidget' args [data.product, isDisabled, options] only %}
