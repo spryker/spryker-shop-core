@@ -121,16 +121,21 @@ class ShareShoppingListDataProvider
         $companyUsers = $this->getCompanyUserCollection($customerTransfer)->getCompanyUsers();
 
         foreach ($companyUsers as $companyUserTransfer) {
+            $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
+
             if (strcmp($companyUserTransfer->getCustomer()->getCustomerReference(), $shoppingListTransfer->getCustomerReference()) === 0) {
                 continue;
             }
 
-            if (isset($shoppingListCompanyUsers[$companyUserTransfer->getIdCompanyUser()])) {
-                $shoppingListCompanyUsers[$companyUserTransfer->getIdCompanyUser()]->setCompanyUser($companyUserTransfer);
+            if (isset($shoppingListCompanyUsers[$idCompanyUser])) {
+                $shoppingListCompanyUser = $shoppingListCompanyUsers[$idCompanyUser];
+                $shoppingListCompanyUser->setCompanyUser($companyUserTransfer);
+
+                $shoppingListCompanyUsers[$idCompanyUser] = $shoppingListCompanyUser;
                 continue;
             }
 
-            $shoppingListCompanyUsers[$companyUserTransfer->getIdCompanyUser()] = $this->createShoppingListCompanyUser(
+            $shoppingListCompanyUsers[$idCompanyUser] = $this->createShoppingListCompanyUser(
                 $shoppingListTransfer,
                 $companyUserTransfer
             );
@@ -203,12 +208,17 @@ class ShareShoppingListDataProvider
         $companyBusinessUnits = $this->getCompanyBusinessUnitCollection($customerTransfer)->getCompanyBusinessUnits();
 
         foreach ($companyBusinessUnits as $companyBusinessUnitTransfer) {
-            if (isset($shoppingListCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()])) {
-                $shoppingListCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()]->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+            $idCompanyBusinessUnit = $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
+
+            if (isset($shoppingListCompanyBusinessUnits[$idCompanyBusinessUnit])) {
+                $shoppingListCompanyBusinessUnit = $shoppingListCompanyBusinessUnits[$idCompanyBusinessUnit];
+                $shoppingListCompanyBusinessUnit->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+
+                $shoppingListCompanyBusinessUnits[$idCompanyBusinessUnit] = $shoppingListCompanyBusinessUnit;
                 continue;
             }
 
-            $shoppingListCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = $this->createShoppingListCompanyBusinessUnit(
+            $shoppingListCompanyBusinessUnits[$idCompanyBusinessUnit] = $this->createShoppingListCompanyBusinessUnit(
                 $shoppingListTransfer,
                 $companyBusinessUnitTransfer
             );
