@@ -17,6 +17,9 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompan
 
 class SharedShoppingListReader implements SharedShoppingListReaderInterface
 {
+    public const SHARED_COMPANY_USERS = 'sharedCompanyUsers';
+    public const SHARED_COMPANY_BUSINESS_UNITS = 'sharedCompanyBusinessUnits';
+
     /**
      * @var \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface
      */
@@ -48,8 +51,8 @@ class SharedShoppingListReader implements SharedShoppingListReaderInterface
     public function getSharedShoppingListEntities(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): array
     {
         return [
-            'sharedCompanyUsers' => $this->getSharedCompanyUsers($shoppingListTransfer, $customerTransfer),
-            'sharedCompanyBusinessUnits' => $this->getSharedCompanyBusinessUnits($shoppingListTransfer, $customerTransfer),
+            static::SHARED_COMPANY_USERS => $this->getSharedCompanyUsers($shoppingListTransfer, $customerTransfer),
+            static::SHARED_COMPANY_BUSINESS_UNITS => $this->getSharedCompanyBusinessUnits($shoppingListTransfer, $customerTransfer),
         ];
     }
 

@@ -9,7 +9,9 @@ namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\View\View;
+use SprykerShop\Yves\ShoppingListPage\Business\SharedShoppingListReader;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,8 +19,35 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ShoppingListDeleteController extends AbstractShoppingListController
 {
-    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_FAILED = 'customer.account.shopping_list.clear.failed';
-    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS = 'customer.account.shopping_list.clear.success';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS = 'customer.account.shopping_list.delete.success';
+
+    /**
+     * @param int $idShoppingList
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction(int $idShoppingList): RedirectResponse
+    {
+        $shoppingListTransfer = new ShoppingListTransfer();
+        $shoppingListTransfer
+            ->setIdShoppingList($idShoppingList)
+            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+
+        $shoppingListResponseTransfer = $this->getFactory()
+            ->getShoppingListClient()
+            ->removeShoppingList($shoppingListTransfer);
+
+        if (!$shoppingListResponseTransfer->getIsSuccess()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
+
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+        }
+
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS);
+
+        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -30,37 +59,6 @@ class ShoppingListDeleteController extends AbstractShoppingListController
         $response = $this->executeDeleteConfirmAction($request);
 
         return $this->view($response, [], '@ShoppingListPage/views/shopping-list-overview-delete/shopping-list-overview-delete.twig');
-    }
-
-    /**
-     * @param int $idShoppingList
-     *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function clearAction(int $idShoppingList)
-    {
-        $shoppingListTransfer = new ShoppingListTransfer();
-        $shoppingListTransfer
-            ->setIdShoppingList($idShoppingList)
-            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
-
-        $shoppingListResponseTransfer = $this->getFactory()
-            ->getShoppingListClient()
-            ->clearShoppingList($shoppingListTransfer);
-
-        if (!$shoppingListResponseTransfer->getIsSuccess()) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_FAILED);
-
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
-                static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
-            ]);
-        }
-
-        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS);
-
-        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
-            static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
-        ]);
     }
 
     /**
@@ -86,8 +84,8 @@ class ShoppingListDeleteController extends AbstractShoppingListController
 
         return [
             'shoppingList' => $shoppingListTransfer,
-            'sharedCompanyUsers' => $sharedShoppingListEntities['sharedCompanyUsers'],
-            'sharedCompanyBusinessUnits' => $sharedShoppingListEntities['sharedCompanyBusinessUnits'],
+            'sharedCompanyUsers' => $sharedShoppingListEntities[SharedShoppingListReader::SHARED_COMPANY_USERS],
+            'sharedCompanyBusinessUnits' => $sharedShoppingListEntities[SharedShoppingListReader::SHARED_COMPANY_BUSINESS_UNITS],
             'backUrl' => $request->headers->get('referer'),
         ];
     }

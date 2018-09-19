@@ -81,10 +81,10 @@ class ShareShoppingListDataProvider
         $shoppingListTransfer = $this->shoppingListClient->getShoppingList($shoppingListTransfer);
 
         $shoppingListTransfer = $this->expandSharedCompanyUsers($shoppingListTransfer, $customerTransfer);
-        $this->sortShoppingListCompanyUsers($shoppingListTransfer);
+        $shoppingListTransfer = $this->sortShoppingListCompanyUsers($shoppingListTransfer);
 
         $shoppingListTransfer = $this->expandSharedCompanyBusinessUnits($shoppingListTransfer, $customerTransfer);
-        $this->sortShoppingListCompanyBusinessUnit($shoppingListTransfer);
+        $shoppingListTransfer = $this->sortShoppingListCompanyBusinessUnit($shoppingListTransfer);
 
         return $shoppingListTransfer;
     }
@@ -117,7 +117,7 @@ class ShareShoppingListDataProvider
         ShoppingListTransfer $shoppingListTransfer,
         CustomerTransfer $customerTransfer
     ): ShoppingListTransfer {
-        $sharedCompanyUsers = $this->indexSharedCompanyUsers($shoppingListTransfer);
+        $shoppingListCompanyUsers = $this->indexShoppingListCompanyUsers($shoppingListTransfer);
         $companyUsers = $this->getCompanyUserCollection($customerTransfer)->getCompanyUsers();
 
         foreach ($companyUsers as $companyUserTransfer) {
@@ -125,14 +125,18 @@ class ShareShoppingListDataProvider
                 continue;
             }
 
-            $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()] = $this->getSharedByCompanyUser(
+            if (isset($shoppingListCompanyUsers[$companyUserTransfer->getIdCompanyUser()])) {
+                $shoppingListCompanyUsers[$companyUserTransfer->getIdCompanyUser()]->setCompanyUser($companyUserTransfer);
+                continue;
+            }
+
+            $shoppingListCompanyUsers[$companyUserTransfer->getIdCompanyUser()] = $this->createShoppingListCompanyUser(
                 $shoppingListTransfer,
-                $companyUserTransfer,
-                $sharedCompanyUsers
+                $companyUserTransfer
             );
         }
 
-        $shoppingListTransfer->setSharedCompanyUsers(new ArrayObject($sharedCompanyUsers));
+        $shoppingListTransfer->setSharedCompanyUsers(new ArrayObject($shoppingListCompanyUsers));
 
         return $shoppingListTransfer;
     }
@@ -142,7 +146,7 @@ class ShareShoppingListDataProvider
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]
      */
-    protected function indexSharedCompanyUsers(ShoppingListTransfer $shoppingListTransfer): array
+    protected function indexShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): array
     {
         $sharedCompanyUsers = [];
 
@@ -156,19 +160,13 @@ class ShareShoppingListDataProvider
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[] $sharedCompanyUsers
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer
      */
-    protected function getSharedByCompanyUser(
+    protected function createShoppingListCompanyUser(
         ShoppingListTransfer $shoppingListTransfer,
-        CompanyUserTransfer $companyUserTransfer,
-        $sharedCompanyUsers
+        CompanyUserTransfer $companyUserTransfer
     ): ShoppingListCompanyUserTransfer {
-        if (isset($sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()])) {
-            return $sharedCompanyUsers[$companyUserTransfer->getIdCompanyUser()]->setCompanyUser($companyUserTransfer);
-        }
-
         return (new ShoppingListCompanyUserTransfer())
             ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
             ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
@@ -178,15 +176,17 @@ class ShareShoppingListDataProvider
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    protected function sortShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): void
+    protected function sortShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         $shoppingListTransfer->getSharedCompanyUsers()->uasort(
             function (ShoppingListCompanyUserTransfer $firstUserTransfer, ShoppingListCompanyUserTransfer $secondUserTransfer) {
                 return strcmp($firstUserTransfer->getCompanyUser()->getCustomer()->getFirstName(), $secondUserTransfer->getCompanyUser()->getCustomer()->getFirstName());
             }
         );
+
+        return $shoppingListTransfer;
     }
 
     /**
@@ -199,18 +199,22 @@ class ShareShoppingListDataProvider
         ShoppingListTransfer $shoppingListTransfer,
         CustomerTransfer $customerTransfer
     ): ShoppingListTransfer {
-        $sharedCompanyBusinessUnits = $this->indexSharedCompanyBusinessUnits($shoppingListTransfer);
+        $shoppingListCompanyBusinessUnits = $this->indexShoppingListCompanyBusinessUnits($shoppingListTransfer);
         $companyBusinessUnits = $this->getCompanyBusinessUnitCollection($customerTransfer)->getCompanyBusinessUnits();
 
         foreach ($companyBusinessUnits as $companyBusinessUnitTransfer) {
-            $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = $this->getSharedByCompanyBusinessUnit(
+            if (isset($shoppingListCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()])) {
+                $shoppingListCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()]->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+                continue;
+            }
+
+            $shoppingListCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = $this->createShoppingListCompanyBusinessUnit(
                 $shoppingListTransfer,
-                $companyBusinessUnitTransfer,
-                $sharedCompanyBusinessUnits
+                $companyBusinessUnitTransfer
             );
         }
 
-        $shoppingListTransfer->setSharedCompanyBusinessUnits(new ArrayObject($sharedCompanyBusinessUnits));
+        $shoppingListTransfer->setSharedCompanyBusinessUnits(new ArrayObject($shoppingListCompanyBusinessUnits));
 
         return $shoppingListTransfer;
     }
@@ -220,7 +224,7 @@ class ShareShoppingListDataProvider
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[]
      */
-    protected function indexSharedCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): array
+    protected function indexShoppingListCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): array
     {
         $sharedCompanyBusinessUnits = [];
 
@@ -234,19 +238,13 @@ class ShareShoppingListDataProvider
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[] $sharedCompanyBusinessUnits
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer
      */
-    protected function getSharedByCompanyBusinessUnit(
+    protected function createShoppingListCompanyBusinessUnit(
         ShoppingListTransfer $shoppingListTransfer,
-        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
-        $sharedCompanyBusinessUnits
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): ShoppingListCompanyBusinessUnitTransfer {
-        if (isset($sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()])) {
-            return $sharedCompanyBusinessUnits[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()]->setCompanyBusinessUnit($companyBusinessUnitTransfer);
-        }
-
         return (new ShoppingListCompanyBusinessUnitTransfer())
             ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
             ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
@@ -256,15 +254,17 @@ class ShareShoppingListDataProvider
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    protected function sortShoppingListCompanyBusinessUnit(ShoppingListTransfer $shoppingListTransfer): void
+    protected function sortShoppingListCompanyBusinessUnit(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         $shoppingListTransfer->getSharedCompanyBusinessUnits()->uasort(
             function (ShoppingListCompanyBusinessUnitTransfer $firstBusinessUnitTransfer, ShoppingListCompanyBusinessUnitTransfer $secondBusinessUnitTransfer) {
                 return strcmp($firstBusinessUnitTransfer->getCompanyBusinessUnit()->getName(), $secondBusinessUnitTransfer->getCompanyBusinessUnit()->getName());
             }
         );
+
+        return $shoppingListTransfer;
     }
 
     /**
