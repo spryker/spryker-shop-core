@@ -27,25 +27,6 @@ class CompanyRolePermissionController extends AbstractCompanyController
     protected const PARAMETER_ID_COMPANY_ROLE = 'id';
 
     /**
-     * @deprecated Please use CompanyRoleController::updateAction() instead, as it implements the same behaviour
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function manageAction(Request $request)
-    {
-        $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
-
-        return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
-            [
-                static::PARAMETER_ID_COMPANY_ROLE => $idCompanyRole,
-            ]
-        );
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -64,7 +45,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
         $this->saveCompanyRolePermissions($idCompanyRole, $companyRolePermissions);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_PERMISSION_MANAGE,
+            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
             ['id' => $idCompanyRole]
         );
     }
@@ -91,7 +72,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
         $this->saveCompanyRolePermissions($idCompanyRole, $permissions);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_PERMISSION_MANAGE,
+            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
             ['id' => $idCompanyRole]
         );
     }

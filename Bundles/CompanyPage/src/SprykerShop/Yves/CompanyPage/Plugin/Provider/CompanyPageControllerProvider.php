@@ -40,7 +40,6 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_ROLE_USER_UNASSIGN = 'company/company-role/user/unassign';
 
     public const ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE = 'company/company-role-permission/configure';
-    public const ROUTE_COMPANY_ROLE_PERMISSION_MANAGE = 'company/company-role-permission/manage';
     public const ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN = 'company/company-role-permission/assign';
     public const ROUTE_COMPANY_ROLE_PERMISSION_UNASSIGN = 'company/company-role-permission/unassign';
 
@@ -170,9 +169,6 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     protected function addPermissionRoutes(): self
     {
         $this->createController('/{company}/company-role-permission/configure', static::ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE, 'CompanyPage', 'CompanyRolePermission', 'configure')
-            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
-            ->value('company', 'company');
-        $this->createController('/{company}/company-role-permission/manage', static::ROUTE_COMPANY_ROLE_PERMISSION_MANAGE, 'CompanyPage', 'CompanyRolePermission', 'manage')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/company-role-permission/assign', static::ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN, 'CompanyPage', 'CompanyRolePermission', 'assign')
