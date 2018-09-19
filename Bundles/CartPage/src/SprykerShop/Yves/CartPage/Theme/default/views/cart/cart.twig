@@ -17,8 +17,8 @@
 {% endblock %}
 
 {% block title %}
-    {% widget 'CartOperationsWidget' args [data.cart] only %}
-    {% elsewidget 'CartOperationsWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartOperationsWidget instead. #}
+    {%- widget 'CartOperationsWidget' args [data.cart] only -%}
+    {%- elsewidget 'CartOperationsWidgetPlugin' args [data.cart] only -%} {# @deprecated Use CartOperationsWidget instead. #}
     {% nowidget %}
         {{ parent() }}
     {% endwidget %}
@@ -98,7 +98,7 @@
                     {% endwidget %}
 
                     {% if not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
-                        {% widget 'VoucherFormWidget' only %}
+                        {% widget 'VoucherFormWidget' use view('cart-discount-voucher-form', 'DiscountWidget') only %}
                         {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use VoucherFormWidget instead. #}
                         {% endwidget %}
                         <hr />

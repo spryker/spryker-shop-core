@@ -61,9 +61,11 @@
     {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] only %}
     {% elsewidget 'ProductReviewWidgetPlugin' args [data.product.idProductAbstract] only %} {# @deprecated Use ProductDetailPageReviewWidget instead. #}
     {% endwidget %}
+
     {% widget 'SimilarProductsWidget' args [data.product] only %}
     {% elsewidget 'SimilarProductsWidgetPlugin' args [data.product] only %} {# @deprecated Use SimilarProductsWidget instead. #}
     {% endwidget %}
+
     {% widget 'ProductWithCmsBlockWidget' args [data.product] only %}
     {% elsewidget 'ProductCmsBlockWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductWithCmsBlockWidget instead. #}
     {% endwidget %}

@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\AgentWidget\AgentWidgetFactory getFactory()
  */
-class AgentWidget extends AbstractWidget
+class AgentControlBarWidget extends AbstractWidget
 {
     public function __construct()
     {

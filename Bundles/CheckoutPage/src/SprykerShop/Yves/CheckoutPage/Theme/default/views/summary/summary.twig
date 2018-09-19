@@ -96,7 +96,7 @@
             {% endwidget %}
 
             <div class="box">
-                {% widget 'VoucherFormWidget' args [data.transfer] only %}
+                {% widget 'VoucherFormWidget' args [data.transfer] use view('checkout-summary-dicount-voucher-form', 'DiscountWidget') only %}
                 {% elsewidget 'CheckoutVoucherFormWidgetPlugin' args [data.transfer] only %} {# @deprecated Use VoucherFormWidget instead. #}
                 {% endwidget %}
             </div>

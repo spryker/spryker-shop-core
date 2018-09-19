@@ -6,7 +6,7 @@
 } %}
 
 {% block body %}
-    {% widget 'AgentWidget' only %}
-    {% elsewidget 'AgentWidgetPlugin' only %} {# @deprecated Use AgentWidget instead. #}
+    {% widget 'AgentControlBarWidget' only %}
+    {% elsewidget 'AgentWidgetPlugin' only %} {# @deprecated Use AgentControlBarWidget instead. #}
     {% endwidget %}
 {% endblock %}

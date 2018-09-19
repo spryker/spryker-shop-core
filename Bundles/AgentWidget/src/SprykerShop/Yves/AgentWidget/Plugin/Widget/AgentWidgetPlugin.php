@@ -8,11 +8,11 @@
 namespace SprykerShop\Yves\AgentWidget\Plugin\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\AgentWidget\Widget\AgentWidget;
+use SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\AgentWidget\AgentWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\AgentWidget\Widget\AgentWidget instead.
+ * @deprecated Use \SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget instead.
  *
  * @method \SprykerShop\Yves\AgentWidget\AgentWidgetFactory getFactory()
  */
@@ -52,6 +52,6 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
      */
     public static function getTemplate()
     {
-        return AgentWidget::getTemplate();
+        return AgentControlBarWidget::getTemplate();
     }
 }
