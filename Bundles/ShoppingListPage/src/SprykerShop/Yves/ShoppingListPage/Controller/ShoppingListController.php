@@ -36,18 +36,23 @@ class ShoppingListController extends AbstractShoppingListController
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_ALL_AVAILABLE_TO_CART_FAILED = 'customer.account.shopping_list.item.added_all_available_to_cart.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_ALL_AVAILABLE_TO_CART = 'customer.account.shopping_list.item.added_all_available_to_cart';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_SELECT_ITEM = 'customer.account.shopping_list.item.select_item';
+    protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
 
     /**
      * @param int $idShoppingList
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(int $idShoppingList): View
+    public function indexAction(int $idShoppingList)
     {
-        $viewData = $this->executeIndexAction($idShoppingList);
+        $response = $this->executeIndexAction($idShoppingList);
+
+        if (!is_array($response)) {
+            return $response;
+        }
 
         return $this->view(
-            $viewData,
+            $response,
             $this->getFactory()->getShoppingListViewWidgetPlugins(),
             '@ShoppingListPage/views/shopping-list/shopping-list.twig'
         );
@@ -56,11 +61,9 @@ class ShoppingListController extends AbstractShoppingListController
     /**
      * @param int $idShoppingList
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeIndexAction(int $idShoppingList): array
+    protected function executeIndexAction(int $idShoppingList)
     {
         $shoppingListTransfer = (new ShoppingListTransfer())
             ->setIdShoppingList($idShoppingList)
@@ -73,8 +76,8 @@ class ShoppingListController extends AbstractShoppingListController
             ->getShoppingListClient()
             ->getShoppingListOverviewWithoutProductDetails($shoppingListOverviewRequest);
 
-        if (!$shoppingListOverviewResponseTransfer->getShoppingList()->getIdShoppingList()) {
-            throw new NotFoundHttpException();
+        if (!$shoppingListOverviewResponseTransfer->getShoppingList()) {
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
         $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);
@@ -156,14 +159,18 @@ class ShoppingListController extends AbstractShoppingListController
     /**
      * @param int $idShoppingList
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function printShoppingListAction(int $idShoppingList): View
+    public function printShoppingListAction(int $idShoppingList)
     {
-        $viewData = $this->executePrintShoppingListAction($idShoppingList);
+        $response = $this->executePrintShoppingListAction($idShoppingList);
+
+        if (!is_array($response)) {
+            return $response;
+        }
 
         return $this->view(
-            $viewData,
+            $response,
             $this->getFactory()->getPrintShoppingListWidgetPlugins(),
             '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
         );
@@ -174,14 +181,14 @@ class ShoppingListController extends AbstractShoppingListController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePrintShoppingListAction(int $idShoppingList): array
+    protected function executePrintShoppingListAction(int $idShoppingList)
     {
         $shoppingListOverviewResponseTransfer = $this->getShoppingListOverviewResponseTransfer($idShoppingList);
 
-        if (!$shoppingListOverviewResponseTransfer->getShoppingList()->getIdShoppingList()) {
-            throw new NotFoundHttpException();
+        if (!$shoppingListOverviewResponseTransfer->getShoppingList()) {
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
         $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);

@@ -15,6 +15,7 @@ use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
@@ -29,6 +30,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_FAILED = 'customer.account.shopping_list.items.added_to_cart.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART = 'customer.account.shopping_list.items.added_to_cart';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_SHARE_SHOPPING_LIST_SUCCESSFUL = 'customer.account.shopping_list.share.share_shopping_list_successful';
+    protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -100,9 +102,15 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected function executeUpdateAction(int $idShoppingList, Request $request)
     {
         $shoppingListFormDataProvider = $this->getFactory()->createShoppingListFormDataProvider();
+        $shoppingListFormData = $shoppingListFormDataProvider->getData($idShoppingList);
+
+        if (!$shoppingListFormData->getIdShoppingList()) {
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+        }
+
         $shoppingListForm = $this->getFactory()
             ->getShoppingListUpdateForm(
-                $shoppingListFormDataProvider->getData($idShoppingList)
+                $shoppingListFormData
             )
             ->handleRequest($request);
 
@@ -153,8 +161,6 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             ->removeShoppingList($shoppingListTransfer);
 
         if (!$shoppingListResponseTransfer->getIsSuccess()) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
-
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
@@ -220,6 +226,13 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      */
     protected function executeShareShoppingListAction(int $idShoppingList, Request $request)
     {
+        $shoppingListTransfer = new ShoppingListTransfer();
+        $shoppingList = $this->getFactory()->getShoppingListClient()->getShoppingList($shoppingListTransfer->setIdShoppingList($idShoppingList));
+
+        if (!$shoppingList->getIdShoppingList()) {
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+        }
+
         $shareShoppingListForm = $this->getFactory()
             ->getShareShoppingListForm($idShoppingList)
             ->handleRequest($request);
