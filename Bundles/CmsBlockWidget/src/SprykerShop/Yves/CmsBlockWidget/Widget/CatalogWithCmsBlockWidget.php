@@ -13,12 +13,10 @@ class CatalogWithCmsBlockWidget extends AbstractWidget
 {
     /**
      * @param int $idCategory
-     * @param string $position
      */
-    public function __construct(int $idCategory, string $position)
+    public function __construct(int $idCategory)
     {
-        $this->addParameter('idCategory', $idCategory)
-            ->addParameter('position', $position);
+        $this->addParameter('idCategory', $idCategory);
     }
 
     /**
