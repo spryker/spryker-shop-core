@@ -56,6 +56,9 @@ class WidgetTagTokenParser extends Twig_TokenParser
 
     protected const TOKEN_ARGS = 'args';
 
+    /**
+     * @return string
+     */
     public function getTag(): string
     {
         return 'widget';
