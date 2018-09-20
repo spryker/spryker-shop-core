@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
  */
-class VoucherFormWidget extends AbstractWidget
+class CheckoutVoucherFormWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -30,7 +30,7 @@ class VoucherFormWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'VoucherFormWidget';
+        return 'CheckoutVoucherFormWidget';
     }
 
     /**
@@ -38,7 +38,7 @@ class VoucherFormWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@DiscountWidget/views/voucher-form/voucher-form.twig';
+        return '@DiscountWidget/views/checkout-summary-dicount-voucher-form/checkout-summary-dicount-voucher-form.twig';
     }
 
     /**

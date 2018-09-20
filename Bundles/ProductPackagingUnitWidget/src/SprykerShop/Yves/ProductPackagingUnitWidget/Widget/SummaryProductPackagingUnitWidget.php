@@ -16,8 +16,7 @@ class SummaryProductPackagingUnitWidget extends AbstractWidget
      */
     public function __construct(array $item)
     {
-        $this
-            ->addParameter('item', $item);
+        $this->addParameter('item', $item);
     }
 
     /**

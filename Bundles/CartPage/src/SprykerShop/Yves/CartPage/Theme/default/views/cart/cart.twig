@@ -98,7 +98,7 @@
                     {% endwidget %}
 
                     {% if not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
-                        {% widget 'VoucherFormWidget' use view('cart-discount-voucher-form', 'DiscountWidget') only %}
+                        {% widget 'DiscountVoucherFormWidget' only %}
                         {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use VoucherFormWidget instead. #}
                         {% endwidget %}
                         <hr />
