@@ -23,20 +23,16 @@ export default class OrderMeasurementUnit extends Component {
         const baseMeasurementUnit = this.currentFieldComponent.productData.baseMeasurementUnit;
 
         if(baseMeasurementUnit) {
-            this.wrapper.innerHTML = baseMeasurementUnit.name;
+            this.wrapper.innerHTML = <string>baseMeasurementUnit.name;
             return;
         }
     }
 
     private onDelete(): void {
-        this.wrapper.innerHTML = '';
+        this.wrapper.innerHTML = <string>'';
     }
 
     get ajaxSelector(): string {
-        return this.dataset.ajaxSelector;
-    }
-
-    get productId(): string {
-        return this.currentFieldComponent.productId;
+        return <string>this.dataset.ajaxSelector;
     }
 }

@@ -3,7 +3,7 @@ import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provide
 import QuickOrderFormField from '../quick-order-form-field/quick-order-form-field';
 import OrderQuantity from '../order-quantity/order-quantity';
 
-    interface PricesJSON {
+interface PricesJSON {
     idProductConcrete: number,
     total: number,
     quantity: number,
@@ -42,7 +42,7 @@ export default class OrderItemPrice extends Component {
     }
 
     private changePrice(): void {
-        if (this.productId && this.quantityCount > 0) {
+        if (<number>this.productId && <number>this.quantityCount > 0) {
             this.loadPrices();
             return;
         }
@@ -56,30 +56,30 @@ export default class OrderItemPrice extends Component {
 
         try {
             const response: string = await this.ajaxProvider.fetch();
-            const data: PricesJSON = this.generateResponseData(response);
-            this.injectData(this.generateDataToInject(data));
+            const data: PricesJSON = <PricesJSON>this.parseResponseData(<string>response);
+            this.injectData(this.generateDataToInject(<PricesJSON>data));
         } catch (err) {
             throw err;
         }
     }
 
-    private generateResponseData(response: string): PricesJSON {
-        return Object.assign({}, JSON.parse(response));
+    private parseResponseData(response: string): PricesJSON {
+        return <PricesJSON>JSON.parse(response);
     }
 
     private generateDataToInject(data: PricesJSON): string {
-        return `${data.currency.symbol} ${data.total / 100}`;
+        return <string>`${data.currency.symbol} ${data.total / 100}`;
     }
 
     private injectData(data: string): void {
-        this.wrapperInjector.innerHTML = data;
+        this.wrapperInjector.innerHTML = <string>data;
     }
 
     get quantityCount(): number {
-        return this.quantityComponent.currentInputValue;
+        return <number>this.quantityComponent.currentInputValue;
     }
 
     get productId(): number {
-        return this.currentFieldComponent.productData.idProductConcrete;
+        return <number>this.currentFieldComponent.productData.idProductConcrete;
     }
 }

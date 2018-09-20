@@ -14,7 +14,7 @@ interface ProductJSON {
         idProduct: number,
         quantityInterval: number,
         quantityMax: number,
-        quantityMin: 1
+        quantityMin: number
     }
 }
 
@@ -37,9 +37,9 @@ export default class QuickOrderFormField extends Component {
 
     protected mapEvents(): void {
         this.createCustomEvents();
-        this.addEventListener('click', (event: Event) => this.componentClickHandler(event));
+        this.addEventListener('click', (event: Event) => this.onClick(<Event>event));
 
-        this.autocompleteFormInput.addEventListener('input', () => this.autocompleteFormInputOnChange());
+        this.autocompleteFormInput.addEventListener('input', () => this.onChange());
     }
 
     private createCustomEvents(): void {
@@ -56,7 +56,7 @@ export default class QuickOrderFormField extends Component {
         });
     }
 
-    private componentClickHandler(event: Event): void {
+    private onClick(event: Event): void {
         this.selectedItem = <HTMLElement>event.target;
 
         if (this.selectedItem.matches(this.autocompleteForm.itemSelector)) {
@@ -65,35 +65,31 @@ export default class QuickOrderFormField extends Component {
         }
     }
 
+    private onChange(): void {
+        if(this.autocompleteFormInput.value.length <= this.autocompleteForm.minLetters) {
+            this.productData = <ProductJSON>{};
+            this.dispatchEvent(<CustomEvent>this.productDeleteEvent);
+        }
+    }
+
     async loadProduct(): Promise<void> {
-        this.ajaxProvider.queryParams.set('id-product', this.selectedId);
+        this.ajaxProvider.queryParams.set('id-product', <string>this.selectedId);
 
         try {
             const response: string = <string>await this.ajaxProvider.fetch();
             this.productData = <ProductJSON>this.generateResponseData(response);
 
-            this.dispatchEvent(this.productLoadedEvent);
+            this.dispatchEvent(<CustomEvent>this.productLoadedEvent);
         } catch (err) {
             throw err;
         }
     }
 
     private generateResponseData(response: string): ProductJSON {
-        return Object.assign({}, JSON.parse(response));
-    }
-
-    private autocompleteFormInputOnChange(): void {
-        if(this.autocompleteFormInput.value.length <= this.autocompleteForm.minLetters) {
-            this.productData = <ProductJSON>{};
-            this.dispatchEvent(this.productDeleteEvent);
-        }
+        return <ProductJSON>JSON.parse(response);
     }
 
     get selectedId(): string {
-        return this.selectedItem.getAttribute('data-id-product');
-    }
-
-    get productId(): string {
-        return this.autocompleteForm.hiddenInputElement.dataset.id;
+        return <string>this.selectedItem.getAttribute('data-id-product');
     }
 }

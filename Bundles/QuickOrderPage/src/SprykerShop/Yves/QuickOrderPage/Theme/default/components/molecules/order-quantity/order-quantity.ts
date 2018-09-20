@@ -54,9 +54,9 @@ export default class OrderQuantity extends Component {
 
     private quantityInputAttributes(min: string, value: string, max: string, step: string): void {
         this.setAttrValue('min', min);
-        this.quantityInput.value = value;
         this.setAttrValue('max', max);
         this.setAttrValue('step', step);
+        this.quantityInput.value = value;
         this.dispatchEvent(this.quantityInputUpdate);
     }
 
@@ -74,13 +74,13 @@ export default class OrderQuantity extends Component {
     }
 
     private roundOfQuantityInputValue(): void {
-        let inputValue = this.currentInputValue;
+        let inputValue: number = <number>this.currentInputValue;
 
         while(inputValue % this.stepAttrValue !== 0) {
             inputValue++;
         }
 
-        this.quantityInput.value = String(inputValue);
+        this.quantityInput.value = <string>String(inputValue);
     }
 
     private showErrorMessage(): void {
@@ -90,18 +90,18 @@ export default class OrderQuantity extends Component {
             this.errorMessage.classList.add(this.showErrorMessageClass);
         }
 
-        this.errorMessageTimerId = setTimeout(() => this.errorMessage.classList.remove(this.showErrorMessageClass), 4000);
+        this.errorMessageTimerId = <number>setTimeout(() => this.errorMessage.classList.remove(this.showErrorMessageClass), 5000);
     }
 
     get currentInputValue(): number {
-        return Number(this.quantityInput.value);
+        return <number>Number(this.quantityInput.value);
     }
 
     get stepAttrValue(): number {
-        return Number(this.quantityInput.getAttribute('step'));
+        return <number>Number(this.quantityInput.getAttribute('step'));
     }
 
     get showErrorMessageClass(): string {
-        return `${ this.name }__error--show`;
+        return <string>`${ this.name }__error--show`;
     }
 }
