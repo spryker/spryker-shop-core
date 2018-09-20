@@ -21,8 +21,7 @@ class OrderDetailProductPackagingUnitWidget extends AbstractWidget
      */
     public function __construct(ItemTransfer $itemTransfer, string $currencyIsoCode)
     {
-        $this
-            ->addParameter('item', $itemTransfer)
+        $this->addParameter('item', $itemTransfer)
             ->addParameter('currencyIsoCode', $currencyIsoCode);
     }
 

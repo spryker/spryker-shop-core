@@ -20,8 +20,7 @@ class CartProductPackagingUnitWidget extends AbstractWidget
      */
     public function __construct(ItemTransfer $itemTransfer)
     {
-        $this
-            ->addParameter('item', $itemTransfer);
+        $this->addParameter('item', $itemTransfer);
     }
 
     /**
