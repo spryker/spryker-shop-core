@@ -6,6 +6,7 @@
 } %}
 
 {% define data = {
+    unit: null,
     id: required,
     ajaxUrl: required
 } %}
@@ -18,5 +19,5 @@
         }
     } only %}
 
-    <div class="{{ config.jsName }}__wrapper"></div>
+    <div class="{{ config.jsName }}__wrapper">{{ data.unit }}</div>
 {% endblock %}
