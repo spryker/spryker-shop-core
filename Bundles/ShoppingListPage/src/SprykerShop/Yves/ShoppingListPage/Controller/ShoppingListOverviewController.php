@@ -104,6 +104,8 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $shoppingListFormData = $shoppingListFormDataProvider->getData($idShoppingList);
 
         if (!$shoppingListFormData->getIdShoppingList()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
+
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
@@ -160,6 +162,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             ->removeShoppingList($shoppingListTransfer);
 
         if (!$shoppingListResponseTransfer->getIsSuccess()) {
+            $this->handleResponseErrors($shoppingListResponseTransfer);
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
@@ -229,6 +232,8 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         $shoppingList = $this->getFactory()->getShoppingListClient()->getShoppingList($shoppingListTransfer->setIdShoppingList($idShoppingList));
 
         if (!$shoppingList->getIdShoppingList()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
+
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
