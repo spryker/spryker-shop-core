@@ -23,7 +23,7 @@ class CatalogCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements Catalo
      */
     public function initialize(int $idCategory): void
     {
-        $widget = new CatalogWithCmsBlockWidget($idCategory, '');
+        $widget = new CatalogWithCmsBlockWidget($idCategory);
 
         $this->parameters = $widget->getParameters();
     }
