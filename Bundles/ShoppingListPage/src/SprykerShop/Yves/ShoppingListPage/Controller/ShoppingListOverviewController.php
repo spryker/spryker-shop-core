@@ -15,7 +15,6 @@ use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()

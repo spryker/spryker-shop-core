@@ -12,12 +12,10 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
@@ -178,8 +176,6 @@ class ShoppingListController extends AbstractShoppingListController
 
     /**
      * @param int $idShoppingList
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
