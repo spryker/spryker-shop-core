@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CompanyBusinessUnitFormDataProvider
 {
@@ -32,6 +33,8 @@ class CompanyBusinessUnitFormDataProvider
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param int|null $idCompanyBusinessUnit
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     public function getData(CompanyUserTransfer $companyUserTransfer, ?int $idCompanyBusinessUnit = null): array
@@ -42,6 +45,10 @@ class CompanyBusinessUnitFormDataProvider
 
         if ($idCompanyBusinessUnit) {
             $companyBusinessUnitTransfer = $this->loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
+
+            if ($companyBusinessUnitTransfer->getFkCompany() !== $companyUserTransfer->getFkCompany()) {
+                throw new NotFoundHttpException("Only company users are allowed to access this page");
+            }
 
             return $companyBusinessUnitTransfer->modifiedToArray();
         }
