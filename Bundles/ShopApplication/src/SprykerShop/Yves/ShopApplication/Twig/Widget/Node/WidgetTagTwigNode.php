@@ -109,7 +109,7 @@ class WidgetTagTwigNode extends Twig_Node
      *
      * @return void
      */
-    protected function addTemplateArguments(Twig_Compiler $compiler)
+    protected function addTemplateArguments(Twig_Compiler $compiler): void
     {
         if (!$this->hasNode(WidgetTagTokenParser::NODE_WITH)) {
             if ($this->getAttribute(WidgetTagTokenParser::ATTRIBUTE_ONLY)) {
@@ -153,7 +153,7 @@ class WidgetTagTwigNode extends Twig_Node
      *
      * @return void
      */
-    protected function addDisplayMetaArguments(Twig_Compiler $compiler)
+    protected function addDisplayMetaArguments(Twig_Compiler $compiler): void
     {
         $compiler->raw('array(');
         $this->addWidgetMetaArgument($compiler);

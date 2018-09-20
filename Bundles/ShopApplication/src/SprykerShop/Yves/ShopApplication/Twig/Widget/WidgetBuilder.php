@@ -8,28 +8,28 @@
 namespace SprykerShop\Yves\ShopApplication\Twig\Widget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\WidgetAbstractFactoryInterface;
 use Spryker\Yves\Kernel\Widget\WidgetFactoryInterface;
-use Spryker\Yves\Kernel\Widget\WidgetPluginFactoryInterface;
 
 class WidgetBuilder implements WidgetBuilderInterface
 {
     /**
-     * @var \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface
+     * @var \Spryker\Yves\Kernel\Widget\WidgetAbstractFactoryInterface
      */
-    protected $widgetFactory;
+    protected $widgetAbstractFactory;
 
     /**
-     * @var \Spryker\Yves\Kernel\Widget\WidgetPluginFactoryInterface
+     * @var \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface
      */
     protected $widgetPluginFactory;
 
     /**
-     * @param \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface $widgetFactory
-     * @param \Spryker\Yves\Kernel\Widget\WidgetPluginFactoryInterface $widgetPluginFactory
+     * @param \Spryker\Yves\Kernel\Widget\WidgetAbstractFactoryInterface $widgetAbstractFactory
+     * @param \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface $widgetPluginFactory
      */
-    public function __construct(WidgetFactoryInterface $widgetFactory, WidgetPluginFactoryInterface $widgetPluginFactory)
+    public function __construct(WidgetAbstractFactoryInterface $widgetAbstractFactory, WidgetFactoryInterface $widgetPluginFactory)
     {
-        $this->widgetFactory = $widgetFactory;
+        $this->widgetAbstractFactory = $widgetAbstractFactory;
         $this->widgetPluginFactory = $widgetPluginFactory;
     }
 
@@ -45,6 +45,6 @@ class WidgetBuilder implements WidgetBuilderInterface
             return $this->widgetPluginFactory->build($widgetClassName, $arguments);
         }
 
-        return $this->widgetFactory->build($widgetClassName, $arguments);
+        return $this->widgetAbstractFactory->create($widgetClassName, $arguments);
     }
 }

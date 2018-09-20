@@ -42,9 +42,20 @@ class WidgetTagTokenParser extends Twig_TokenParser
 
     public const VARIABLE_WIDGET = '_widget';
 
-    /**
-     * @return string
-     */
+    protected const TOKEN_ELSEWIDGET = 'elsewidget';
+
+    protected const TOKEN_NOWIDGET = 'nowidget';
+
+    protected const TOKEN_ENDWIDGET = 'endwidget';
+
+    protected const TOKEN_ONLY = 'only';
+
+    protected const TOKEN_WITH = 'with';
+
+    protected const TOKEN_USE = 'use';
+
+    protected const TOKEN_ARGS = 'args';
+
     public function getTag(): string
     {
         return 'widget';
@@ -132,7 +143,7 @@ class WidgetTagTokenParser extends Twig_TokenParser
      */
     protected function parseArgs(Twig_TokenStream $stream): ?Twig_Node
     {
-        if ($stream->nextIf(Twig_Token::NAME_TYPE, 'args')) {
+        if ($stream->nextIf(Twig_Token::NAME_TYPE, static::TOKEN_ARGS)) {
             return $this->parser->getExpressionParser()->parseExpression();
         }
 
@@ -146,7 +157,7 @@ class WidgetTagTokenParser extends Twig_TokenParser
      */
     protected function parseUse(Twig_TokenStream $stream): ?Twig_Node
     {
-        if ($stream->nextIf(Twig_Token::NAME_TYPE, 'use')) {
+        if ($stream->nextIf(Twig_Token::NAME_TYPE, static::TOKEN_USE)) {
             return $this->parser->getExpressionParser()->parseExpression();
         }
 
@@ -160,7 +171,7 @@ class WidgetTagTokenParser extends Twig_TokenParser
      */
     protected function parseWith(Twig_TokenStream $stream): ?Twig_Node
     {
-        if ($stream->nextIf(Twig_Token::NAME_TYPE, 'with')) {
+        if ($stream->nextIf(Twig_Token::NAME_TYPE, static::TOKEN_WITH)) {
             return $this->parser->getExpressionParser()->parseExpression();
         }
 
@@ -174,7 +185,7 @@ class WidgetTagTokenParser extends Twig_TokenParser
      */
     protected function parseOnly(Twig_TokenStream $stream): bool
     {
-        if ($stream->nextIf(Twig_Token::NAME_TYPE, 'only')) {
+        if ($stream->nextIf(Twig_Token::NAME_TYPE, static::TOKEN_ONLY)) {
             return true;
         }
 
@@ -195,7 +206,7 @@ class WidgetTagTokenParser extends Twig_TokenParser
         $stream->injectTokens([
             new Twig_Token(Twig_Token::BLOCK_START_TYPE, '', $token->getLine()),
             new Twig_Token(Twig_Token::NAME_TYPE, 'extends', $token->getLine()),
-            new Twig_Token(Twig_Token::NAME_TYPE, self::VARIABLE_WIDGET_TEMPLATE_PATH, $token->getLine()),
+            new Twig_Token(Twig_Token::NAME_TYPE, static::VARIABLE_WIDGET_TEMPLATE_PATH, $token->getLine()),
             new Twig_Token(Twig_Token::BLOCK_END_TYPE, '', $token->getLine()),
         ]);
 
@@ -203,8 +214,8 @@ class WidgetTagTokenParser extends Twig_TokenParser
 
         $this->parser->embedTemplate($body);
 
-        $attributes[self::ATTRIBUTE_PARENT_TEMPLATE_NAME] = $body->getTemplateName();
-        $attributes[self::ATTRIBUTE_INDEX] = $body->getAttribute('index');
+        $attributes[static::ATTRIBUTE_PARENT_TEMPLATE_NAME] = $body->getTemplateName();
+        $attributes[static::ATTRIBUTE_INDEX] = $body->getAttribute('index');
 
         return [$nodes, $attributes];
     }
@@ -225,17 +236,17 @@ class WidgetTagTokenParser extends Twig_TokenParser
         $elsewidgets = [];
         while (!$end) {
             switch ($stream->next()->getValue()) {
-                case 'elsewidget':
+                case static::TOKEN_ELSEWIDGET:
                     $index = count($elsewidgets) / 2;
                     $elsewidgets[] = new Twig_Node_Expression_Constant($index, $token->getLine());
                     $elsewidgets[] = $this->parseElsewidget($stream, $token);
                     break;
 
-                case 'nowidget':
+                case static::TOKEN_NOWIDGET:
                     $nodes[static::NODE_NOWIDGET] = $this->parseNowidget($stream);
                     break;
 
-                case 'endwidget':
+                case static::TOKEN_ENDWIDGET:
                     $end = true;
                     break;
 
@@ -297,9 +308,9 @@ class WidgetTagTokenParser extends Twig_TokenParser
     public function decideIfFork(Twig_Token $token): bool
     {
         return $token->test([
-            'elsewidget',
-            'nowidget',
-            'endwidget',
+            static::TOKEN_ELSEWIDGET,
+            static::TOKEN_NOWIDGET,
+            static::TOKEN_ENDWIDGET,
         ]);
     }
 
@@ -310,6 +321,6 @@ class WidgetTagTokenParser extends Twig_TokenParser
      */
     public function decideIfEnd(Twig_Token $token): bool
     {
-        return $token->test(['endwidget']);
+        return $token->test([static::TOKEN_ENDWIDGET]);
     }
 }

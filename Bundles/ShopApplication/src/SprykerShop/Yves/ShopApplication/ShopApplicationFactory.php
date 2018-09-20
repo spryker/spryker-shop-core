@@ -9,11 +9,12 @@ namespace SprykerShop\Yves\ShopApplication;
 
 use Silex\Provider\TwigServiceProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\Widget\WidgetAbstractFactoryInterface;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
+use Spryker\Yves\Kernel\Widget\WidgetAbstractFactory;
 use Spryker\Yves\Kernel\Widget\WidgetFactory;
-use Spryker\Yves\Kernel\Widget\WidgetPluginFactory;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
 use SprykerShop\Yves\ShopApplication\Twig\RoutingHelper;
 use SprykerShop\Yves\ShopApplication\Twig\TwigRenderer;
@@ -40,21 +41,21 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use createWidgetFactory() method instead.
+     * @deprecated Use createWidgetAbstractFactory() method instead.
      *
-     * @return \Spryker\Yves\Kernel\Widget\WidgetPluginFactoryInterface
-     */
-    public function createWidgetPluginFactory()
-    {
-        return new WidgetPluginFactory();
-    }
-
-    /**
      * @return \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface
      */
     public function createWidgetFactory()
     {
         return new WidgetFactory();
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Widget\WidgetAbstractFactoryInterface
+     */
+    public function createWidgetAbstractFactory(): WidgetAbstractFactoryInterface
+    {
+        return new WidgetAbstractFactory();
     }
 
     /**
@@ -82,6 +83,16 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use getGlobalWidgetCollection() method instead.
+     *
+     * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
+     */
+    public function createWidgetCollection()
+    {
+        return $this->getGlobalWidgetCollection();
+    }
+
+    /**
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
      */
     public function getGlobalWidgetCollection(): WidgetContainerInterface
@@ -100,7 +111,7 @@ class ShopApplicationFactory extends AbstractFactory
      */
     public function getGlobalWidgetPlugins(): array
     {
-        return $this->getGlobalWidgetPlugins();
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGIN_GLOBAL_WIDGETS);
     }
 
     /**
@@ -108,7 +119,7 @@ class ShopApplicationFactory extends AbstractFactory
      */
     public function getGlobalWidgets(): array
     {
-        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGIN_GLOBAL_WIDGETS);
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::WIDGET_GLOBAL);
     }
 
     /**
@@ -168,6 +179,6 @@ class ShopApplicationFactory extends AbstractFactory
      */
     protected function createWidgetBuilder(): WidgetBuilderInterface
     {
-        return new WidgetBuilder($this->createWidgetFactory(), $this->createWidgetPluginFactory());
+        return new WidgetBuilder($this->createWidgetAbstractFactory(), $this->createWidgetFactory());
     }
 }
