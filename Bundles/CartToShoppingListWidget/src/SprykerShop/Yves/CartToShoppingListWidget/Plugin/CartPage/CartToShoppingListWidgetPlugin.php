@@ -23,6 +23,21 @@ class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin implements Car
     public function initialize(int $idQuote): void
     {
         $this->addParameter('form', $this->getFactory()->getCartFromShoppingListForm($idQuote)->createView());
+        $this->addParameter('isVisible', $this->isVisible());
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isVisible(): bool
+    {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if (!($customerTransfer && $customerTransfer->getCompanyUserTransfer())) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
