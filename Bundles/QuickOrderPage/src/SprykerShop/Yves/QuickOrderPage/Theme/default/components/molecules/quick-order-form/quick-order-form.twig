@@ -54,8 +54,7 @@
                     data: {
                         items: data.form.items,
                         additionalDataColumnProviderPlugins: _view.additionalDataColumnProviderPlugins
-                    },
-                    embed: embed
+                    }
                 } only %}
 
                 {% endembed %}
@@ -87,10 +86,10 @@
                     </button>
                 </div>
             </div>
+
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 {{ widget('ShoppingListQuickOrderWidgetPlugin') }}
             {% endif %}
-
         {% endblock %}
     {% endembed %}
 {% endblock %}

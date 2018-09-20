@@ -22,7 +22,11 @@
             data.fullName ~ '[sku]'
         ) }}
 
-        {{ form_row(data.sku) }}
+        {{ form_row(data.sku, {
+            attr: {
+                'data-id': ''
+            }
+        }) }}
     </div>
 
     {% if data.additionalDataColumnProviderPlugins.measurementUnit is defined %}
@@ -41,9 +45,23 @@
 
     <div class="{{ block('cellClass') }}">
         {{ form_row(data.qty, {
+            id: 'quantity-input-' ~ data.index,
             required: data.first,
             label: false
         }) }}
+    </div>
+
+    <div class="{{ block('cellClass') }}">
+        {% include molecule('order-item-price', 'QuickOrderPage') with {
+            data: {
+                id: 'order-price-' ~ data.index,
+                ajaxUrl: 'quick-order/product-price'
+            },
+            attributes: {
+                'quantity-input-selector': '#quantity-input-' ~ data.index,
+                'data-ajax-selector': '#order-price-' ~ data.index
+            }
+        } only %}
     </div>
 
     <div class="{{ block('cellClass') }}">

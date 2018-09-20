@@ -4,13 +4,15 @@
     index: _widget.index,
     selectedValueKey: _widget.selectedValueKey,
     searchResultsLimit: _widget.searchResultsLimit,
+    value: _widget.inputValue | default
 } %}
 
 {% block body %}
     {% include molecule('autocomplete-form') with {
         data: {
             id: data.index,
-            placeholder: 'quick-order.input.placeholder'
+            placeholder: 'quick-order.input.placeholder',
+            value: data.value
         },
         attributes: {
             'suggestion-url': '/product-search/concrete',
