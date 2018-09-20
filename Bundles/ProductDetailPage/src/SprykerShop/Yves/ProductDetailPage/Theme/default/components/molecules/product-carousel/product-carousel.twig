@@ -10,7 +10,7 @@
 } %}
 
 {% block body %}
-    {% widget 'ProductImageSliderWidget' args [data.product.idProductAbstract] only %}
+    {% widget 'ProductImageSliderWidget' args [data.product] only %}
     {% elsewidget 'ProductImageWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductImageSliderWidget instead. #}
     {% endwidget %}
 
