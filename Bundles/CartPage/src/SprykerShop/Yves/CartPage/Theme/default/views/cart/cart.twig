@@ -15,11 +15,15 @@
 {% endblock %}
 
 {% block title %}
-    {{ widgetBlock('CartOperationsWidgetPlugin', 'title', data.cart) }}
+    {% if widgetExists('CartOperationsWidgetPlugin') %}
+        {{ widgetBlock('CartOperationsWidgetPlugin', 'title', data.cart) }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-    {% set canWriteSharedCart = can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
+    {% set canEditCart = can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
@@ -47,7 +51,7 @@
 
                 {{ widget('DiscountPromotionItemListWidgetPlugin', data.cart, data.request) }}
 
-                {% if canWriteSharedCart and data.cart.idQuote is not empty %}
+                {% if canEditCart and data.cart.idQuote is not empty %}
                     {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }}
                 {% endif %}
             </div>
@@ -56,12 +60,12 @@
                 <div class="box">
                     {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
 
-                    {% if not is_granted('IS_AUTHENTICATED_FULLY') or canWriteSharedCart %}
+                    {% if not is_granted('ROLE_USER') or canEditCart %}
                         {{ widget('DiscountVoucherFormWidgetPlugin') }}
                         <hr />
                     {% endif %}
 
-                    {% if canWriteSharedCart and data.cart.idQuote is not empty and widgetExists('CartToShoppingListWidgetPlugin') %}
+                    {% if canEditCart and data.cart.idQuote is not empty and widgetExists('CartToShoppingListWidgetPlugin') %}
                         {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
                         <hr />
                     {% endif %}
