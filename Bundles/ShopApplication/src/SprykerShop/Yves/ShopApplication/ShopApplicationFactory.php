@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\ShopApplication;
 
 use Silex\Provider\TwigServiceProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\Widget\WidgetAbstractFactory;
 use Spryker\Yves\Kernel\Widget\WidgetAbstractFactoryInterface;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
-use Spryker\Yves\Kernel\Widget\WidgetAbstractFactory;
 use Spryker\Yves\Kernel\Widget\WidgetFactory;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
 use SprykerShop\Yves\ShopApplication\Twig\RoutingHelper;
@@ -28,7 +28,7 @@ use Twig_TokenParserInterface;
 class ShopApplicationFactory extends AbstractFactory
 {
     /**
-     * @var \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
+     * @var \Spryker\Yves\Kernel\Widget\WidgetContainerInterface|null
      */
     protected static $globalWidgetCollection;
 

@@ -24,8 +24,8 @@ class CategoryServiceProvider extends AbstractPlugin implements ServiceProviderI
     public function register(Application $app)
     {
         $app['twig.global.variables'] = $app->share(
-            $app->extend('twig.global.variables', function (array $variables) use ($app) {
-                return array_merge($variables, $this->getGlobalTemplateVariables($app));
+            $app->extend('twig.global.variables', function (array $globals) use ($app) {
+                return $globals + $this->getGlobalTemplateVariables($app);
             })
         );
     }
