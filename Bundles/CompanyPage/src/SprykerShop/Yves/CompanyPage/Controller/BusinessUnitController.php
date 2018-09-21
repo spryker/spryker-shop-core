@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
-use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -214,9 +213,25 @@ class BusinessUnitController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function confirmDeleteAction(Request $request): View
+    public function confirmDeleteAction(Request $request)
+    {
+        $response = $this->executeConfirmDeleteAction($request);
+
+        return $this->view(
+            $response,
+            [],
+            '@CompanyPage/views/business-unit-delete-confirmation-page/business-unit-delete-confirmation-page.twig'
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeConfirmDeleteAction(Request $request): array
     {
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
@@ -226,9 +241,9 @@ class BusinessUnitController extends AbstractCompanyController
             ->getCompanyBusinessUnitClient()
             ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
 
-        return $this->view([
+        return [
             'companyBusinessUnit' => $companyBusinessUnitTransfer,
-        ], [], '@CompanyPage/views/business-unit-delete-confirmation-page/business-unit-delete-confirmation-page.twig');
+        ];
     }
 
     /**
