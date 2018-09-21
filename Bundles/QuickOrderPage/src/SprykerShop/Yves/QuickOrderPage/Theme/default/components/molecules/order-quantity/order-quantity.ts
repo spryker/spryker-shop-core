@@ -52,14 +52,14 @@ export default class OrderQuantity extends Component {
     }
 
     private quantityInputAttributes([min, max, step, value]: string[]): void {
-        this.setAttrValue('min', min);
-        this.setAttrValue('max', max);
-        this.setAttrValue('step', step);
+        this.setAttributeValue('min', min);
+        this.setAttributeValue('max', max);
+        this.setAttributeValue('step', step);
         this.quantityInput.value = value;
         this.dispatchEvent(this.quantityInputUpdate);
     }
 
-    private setAttrValue(attr: string, value: string): void {
+    private setAttributeValue(attr: string, value: string): void {
         this.quantityInput.setAttribute(attr, value == "null" ? '' : value);
     }
 
