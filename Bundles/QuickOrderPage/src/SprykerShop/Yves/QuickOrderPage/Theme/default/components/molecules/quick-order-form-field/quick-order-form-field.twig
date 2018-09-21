@@ -54,20 +54,18 @@
         } only %}
     </div>
 
-    {% if data.additionalDataColumnProviderPlugins.price is defined %}
-        <div class="{{ block('cellClass') }}">
-            {% include molecule('order-item-price', 'QuickOrderPage') with {
-                data: {
-                    id: 'order-price-' ~ data.index,
-                    ajaxUrl: 'quick-order/product-price'
-                },
-                attributes: {
-                    'quantity-input-selector': '#quantity-input-' ~ data.index,
-                    'data-ajax-selector': '#order-price-' ~ data.index
-                }
-            } only %}
-        </div>
-    {% endif %}
+    <div class="{{ block('cellClass') }}">
+        {% include molecule('order-item-price', 'QuickOrderPage') with {
+            data: {
+                id: 'order-price-' ~ data.index,
+                ajaxUrl: 'quick-order/product-price'
+            },
+            attributes: {
+                'quantity-input-selector': '#quantity-input-' ~ data.index,
+                'data-ajax-selector': '#order-price-' ~ data.index
+            }
+        } only %}
+    </div>
 
     <div class="{{ block('cellClass') }}">
         {% if not data.first %}

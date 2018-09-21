@@ -228,9 +228,9 @@ class QuickOrderController extends AbstractController
             $request->query->getInt(static::PARAM_ID_PRODUCT)
         );
 
-        foreach ($this->getFactory()->getQuickOrderProductAdditionalDataTransferExpanderPlugins() as $quickOrderProductAdditionalDataTransferExpanderPlugin) {
-            $quickOrderProductAdditionalDataTransfer = $quickOrderProductAdditionalDataTransferExpanderPlugin->expandQuickOrderProductAdditionalDataTransfer($quickOrderProductAdditionalDataTransfer);
-        }
+        $quickOrderProductAdditionalDataTransfer = $this->getFactory()
+            ->createQuickOrderProductAdditionalDataTransferExpander()
+            ->expandQuickOrderProductAdditionalDataTransferWithPlugins($quickOrderProductAdditionalDataTransfer);
 
         return $quickOrderProductAdditionalDataTransfer;
     }
@@ -269,9 +269,9 @@ class QuickOrderController extends AbstractController
             $request->query->getInt(static::PARAM_QUANTITY, 0)
         );
 
-        foreach ($this->getFactory()->getQuickOrderProductPriceTransferExpanderPlugins() as $plugin) {
-            $plugin->expand($quickOrderProductPriceTransfer);
-        }
+        $quickOrderProductPriceTransfer = $this->getFactory()
+            ->createQuickOrderProductPriceTransferExpander()
+            ->expandQuickOrderProductPriceTransferWithPlugins($quickOrderProductPriceTransfer);
 
         return $quickOrderProductPriceTransfer;
     }
