@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -213,9 +214,9 @@ class BusinessUnitController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
-    public function confirmDeleteAction(Request $request)
+    public function confirmDeleteAction(Request $request): View
     {
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
