@@ -64,7 +64,7 @@ export default class OrderQuantity extends Component {
     }
 
     private validateInputValue(): void {
-        if(this.currentInputValue % this.stepAttrValue !== 0) {
+        if(this.currentInputValue % this.stepAttributeValue !== 0) {
             this.roundOfQuantityInputValue();
             this.showErrorMessage();
         }
@@ -75,7 +75,7 @@ export default class OrderQuantity extends Component {
     private roundOfQuantityInputValue(): void {
         let inputValue: number = <number>this.currentInputValue;
 
-        while(inputValue % this.stepAttrValue !== 0) {
+        while(inputValue % this.stepAttributeValue !== 0) {
             inputValue++;
         }
 
@@ -96,7 +96,7 @@ export default class OrderQuantity extends Component {
         return Number(this.quantityInput.value);
     }
 
-    get stepAttrValue(): number {
+    get stepAttributeValue(): number {
         return Number(this.quantityInput.getAttribute('step'));
     }
 
