@@ -74,7 +74,7 @@ class ShoppingListQuickOrderPageWidgetPlugin extends AbstractWidgetPlugin implem
     }
 
     /**
-     * @return string[]
+     * @return array[]
      */
     protected function getShoppingListOptions(): array
     {
