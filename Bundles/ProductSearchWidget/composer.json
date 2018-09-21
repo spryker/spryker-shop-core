@@ -12,8 +12,8 @@
     "spryker-shop/quick-order-page": "*",
     "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/silex": "*"
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/quick-order-page": "Use this module when using plugins that need QuickOrderPage dependencies.",
@@ -23,11 +23,6 @@
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
