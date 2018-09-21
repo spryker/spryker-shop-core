@@ -287,10 +287,8 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected function getProductViewTransfers(ShoppingListTransfer $shoppingListTransfer): array
     {
         $productViewTransfers = [];
-        if ($shoppingListTransfer->getItems()) {
-            foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-                $productViewTransfers[$shoppingListItemTransfer->getIdShoppingListItem()] = $this->createProductView($shoppingListItemTransfer);
-            }
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+            $productViewTransfers[$shoppingListItemTransfer->getIdShoppingListItem()] = $this->createProductView($shoppingListItemTransfer);
         }
 
         return $productViewTransfers;

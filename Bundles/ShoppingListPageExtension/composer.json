@@ -1,21 +1,17 @@
 {
-  "name": "spryker-shop/shopping-list-note-widget",
-  "description": "ShoppingListNoteWidget module",
+  "name": "spryker-shop/shopping-list-page-extension",
+  "description": "ShoppingListPageExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker-shop/shop-ui": "^1.2.0",
-    "spryker-shop/shopping-list-page-extension": "^1.0.0",
-    "spryker/kernel": "^3.23.1",
-    "spryker/symfony": "^3.1.0"
+    "php": ">=7.1"
   },
   "require-dev": {
-    "spryker-shop/shopping-list-page": "*",
     "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/shopping-list-page": "Widget plugins are available for this module."
+    "spryker/symfony": "If you want to use ShoppingListPage form expander plugins."
   },
   "autoload": {
     "psr-4": {
