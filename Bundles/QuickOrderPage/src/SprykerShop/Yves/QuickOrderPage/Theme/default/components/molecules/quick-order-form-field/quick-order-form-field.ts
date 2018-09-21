@@ -43,17 +43,9 @@ export default class QuickOrderFormField extends Component {
     }
 
     private createCustomEvents(): void {
-        this.productLoadedEvent = <CustomEvent>new CustomEvent("product-loaded-event", {
-            detail: {
-                username: "product-loaded-event"
-            }
-        });
+        this.productLoadedEvent = <CustomEvent>new CustomEvent("product-loaded-event");
 
-        this.productDeleteEvent = <CustomEvent>new CustomEvent("product-delete-event", {
-            detail: {
-                username: "product-delete-event"
-            }
-        });
+        this.productDeleteEvent = <CustomEvent>new CustomEvent("product-delete-event");
     }
 
     private onClick(event: Event): void {
@@ -86,10 +78,10 @@ export default class QuickOrderFormField extends Component {
     }
 
     private generateResponseData(response: string): ProductJSON {
-        return <ProductJSON>JSON.parse(response);
+        return JSON.parse(response);
     }
 
     get selectedId(): string {
-        return <string>this.selectedItem.getAttribute('data-id-product');
+        return this.selectedItem.getAttribute('data-id-product');
     }
 }

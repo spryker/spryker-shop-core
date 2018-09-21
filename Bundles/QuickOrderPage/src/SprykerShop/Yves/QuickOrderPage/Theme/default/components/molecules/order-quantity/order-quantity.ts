@@ -8,11 +8,14 @@ export default class OrderQuantity extends Component {
     quantityInputUpdate: CustomEvent;
     errorMessage: HTMLElement;
     errorMessageTimerId: number;
+    inputAttributes: string[];
+    inputAttributesDefault: string[];
 
     protected readyCallback(): void {
         this.currentFieldComponent = <QuickOrderFormField>this.closest('quick-order-form-field');
         this.quantityInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
         this.errorMessage = <HTMLInputElement>this.querySelector(`.${this.jsName}__error`);
+        this.inputAttributesDefault = ['1', '', '1', ''];
 
         this.mapEvents();
     }
@@ -20,39 +23,35 @@ export default class OrderQuantity extends Component {
     private mapEvents(): void {
         this.createCustomEvents();
         this.currentFieldComponent.addEventListener('product-loaded-event', () => this.onLoad());
-        this.currentFieldComponent.addEventListener('product-delete-event', () => this.resetAttrValues(''));
+        this.currentFieldComponent.addEventListener('product-delete-event', () => this.defaultAttributesValues());
         this.quantityInput.addEventListener('input', debounce(() => this.validateInputValue(), 500));
     }
 
     private createCustomEvents(): void {
-        this.quantityInputUpdate = <CustomEvent>new CustomEvent("quantity-input-update", {
-            detail: {
-                username: "quantity-input-update"
-            }
-        });
+        this.quantityInputUpdate = <CustomEvent>new CustomEvent("quantity-input-update");
     }
 
     private onLoad(): void {
         const productQuantityStorage = this.currentFieldComponent.productData.productQuantityStorage;
 
         if(productQuantityStorage) {
-            this.quantityInputAttributes(
-                String(productQuantityStorage.quantityMin),
+            this.quantityInputAttributes([
                 String(productQuantityStorage.quantityMin),
                 String(productQuantityStorage.quantityMax),
-                String(productQuantityStorage.quantityInterval)
-            );
+                String(productQuantityStorage.quantityInterval),
+                String(productQuantityStorage.quantityMin)
+            ]);
             return;
         }
 
-        this.resetAttrValues('1');
+        this.defaultAttributesValues();
     }
 
-    private resetAttrValues(inputValue: string): void {
-        this.quantityInputAttributes('1', inputValue,'','1');
+    private defaultAttributesValues(): void {
+        this.quantityInputAttributes(this.inputAttributesDefault);
     }
 
-    private quantityInputAttributes(min: string, value: string, max: string, step: string): void {
+    private quantityInputAttributes([min, max, step, value]: string[]): void {
         this.setAttrValue('min', min);
         this.setAttrValue('max', max);
         this.setAttrValue('step', step);
@@ -80,7 +79,7 @@ export default class OrderQuantity extends Component {
             inputValue++;
         }
 
-        this.quantityInput.value = <string>String(inputValue);
+        this.quantityInput.value = String(inputValue);
     }
 
     private showErrorMessage(): void {
@@ -94,14 +93,14 @@ export default class OrderQuantity extends Component {
     }
 
     get currentInputValue(): number {
-        return <number>Number(this.quantityInput.value);
+        return Number(this.quantityInput.value);
     }
 
     get stepAttrValue(): number {
-        return <number>Number(this.quantityInput.getAttribute('step'));
+        return Number(this.quantityInput.getAttribute('step'));
     }
 
     get showErrorMessageClass(): string {
-        return <string>`${ this.name }__error--show`;
+        return `${ this.name }__error--show`;
     }
 }
