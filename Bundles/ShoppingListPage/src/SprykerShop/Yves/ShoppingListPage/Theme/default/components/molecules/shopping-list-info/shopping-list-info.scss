@@ -3,16 +3,6 @@
         padding: map-get($setting-spacing, 'default');
         background-color: $setting-color-lighter;
 
-        &__access-label {
-            &--full {
-                color: map-get($setting-color-actions, 'success');
-            }
-
-            &--read {
-                color: $setting-color-dark;
-            }
-        }
-
         @content;
     }
 }

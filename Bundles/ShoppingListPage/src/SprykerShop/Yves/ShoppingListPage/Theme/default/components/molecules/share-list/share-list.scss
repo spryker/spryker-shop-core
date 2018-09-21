@@ -4,5 +4,7 @@
             max-height: 14.688rem;
             overflow: auto;
         }
+
+        @content;
     }
 }

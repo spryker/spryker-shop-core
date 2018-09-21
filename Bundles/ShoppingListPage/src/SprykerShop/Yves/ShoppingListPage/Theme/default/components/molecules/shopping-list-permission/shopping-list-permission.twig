@@ -11,7 +11,7 @@
 
 {% block body %}
     {% if data.hasWritePermission %}
-        <span class="{{ config.name }}--full">{{ 'customer.account.shopping_list.permissions.FULL_ACCESS' | trans }}</span>
+        <span class="{{ config.name }}__full">{{ 'customer.account.shopping_list.permissions.FULL_ACCESS' | trans }}</span>
     {% else %}
         <span>{{ 'customer.account.shopping_list.permissions.READ_ONLY' | trans }}</span>
     {% endif %}

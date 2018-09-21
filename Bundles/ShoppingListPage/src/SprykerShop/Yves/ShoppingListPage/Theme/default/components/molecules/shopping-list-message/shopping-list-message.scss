@@ -3,5 +3,7 @@
         &__title {
             color: map-get($setting-color-actions, 'alert');
         }
+
+        @content;
     }
 }

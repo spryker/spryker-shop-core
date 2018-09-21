@@ -16,7 +16,7 @@
 
 {% block body %}
     {% for item in data.products %}
-        <tr class="{{ loop.index > data.maxShownItems ? 'js-product-alternative-' ~ idShoppingListItem ~ '__show-all-target is-hidden' : '' }}">
+        <tr class="{{ loop.index > data.maxShownItems ? config.jsName ~ '-' ~ idShoppingListItem ~ '__show-all-target is-hidden' : '' }}">
             <td class="text-center">
                 {% if item.images is defined and item.images is not empty and item.images.0.externalUrlSmall is not empty %}
                     {% include atom('thumbnail') with {
@@ -77,17 +77,17 @@
             </td>
         </tr>
         {% if loop.index > data.maxShownItems and loop.last %}
-            <tr class="js-product-alternative-{{- idShoppingListItem -}}__show-all-target">
+            <tr class="{{ config.jsName }}-{{- idShoppingListItem -}}__show-all-target">
                 <td colspan="5">
                     <div class="text-center spacing-y">
-                        <span class="button button--hollow js-product-alternative-{{- idShoppingListItem -}}__show-all-trigger">{{ 'product_alternative_widget.show_all' | trans }}</span>
+                        <span class="button button--hollow {{ config.jsName }}-{{- idShoppingListItem -}}__show-all-trigger">{{ 'product_alternative_widget.show_all' | trans }}</span>
                     </div>
                 </td>
             </tr>
             {% include molecule('toggler-click') with {
                 attributes: {
-                    'trigger-selector': '.js-product-alternative-' ~ idShoppingListItem ~ '__show-all-trigger',
-                    'target-selector': '.js-product-alternative-' ~ idShoppingListItem ~ '__show-all-target',
+                    'trigger-selector': '.' ~ config.jsName ~ '-' ~ idShoppingListItem ~ '__show-all-trigger',
+                    'target-selector': '.' ~ config.jsName ~ '-' ~ idShoppingListItem ~ '__show-all-target',
                     'class-to-toggle': 'is-hidden'
                 }
             } only %}

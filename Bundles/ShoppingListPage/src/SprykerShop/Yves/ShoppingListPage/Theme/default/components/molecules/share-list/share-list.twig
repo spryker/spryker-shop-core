@@ -27,13 +27,14 @@
             <ul class="{{ config.name }}__list">
                 {% for key, unit in data.shareUnits %}
                     {% if unit.idShoppingListPermissionGroup is not null %}
-                        {% include molecule('share-list-item', 'ShoppingListPage') with {
-                            class: 'spacing-y spacing-y--inner',
-                            data: {
-                                name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
-                                shareForm: data.shareForm[key]
-                            }
-                        } only %}
+                        <li class="{{ config.name }}__item spacing-y spacing-y--inner">
+                            {% include molecule('share-list-item', 'ShoppingListPage') with {
+                                data: {
+                                    name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
+                                    shareForm: data.shareForm[key]
+                                }
+                            } only %}
+                        </li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -44,13 +45,15 @@
             <ul class="{{ config.name }}__list">
                 {% for key, unit in data.shareUnits %}
                     {% if unit.idShoppingListPermissionGroup is null %}
-                        {% include molecule('share-list-item', 'ShoppingListPage') with {
-                            class: 'spacing-y spacing-y--inner',
-                            data: {
-                                name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
-                                shareForm: data.shareForm[key]
-                            }
-                        } only %}
+                        <li class="{{ config.name }}__item">
+                            {% include molecule('share-list-item', 'ShoppingListPage') with {
+                                class: 'spacing-y spacing-y--inner',
+                                data: {
+                                    name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
+                                    shareForm: data.shareForm[key]
+                                }
+                            } only %}
+                        </li>
                     {% endif %}
                 {% endfor %}
             </ul>
