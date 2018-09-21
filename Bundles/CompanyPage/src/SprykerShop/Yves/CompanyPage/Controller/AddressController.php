@@ -27,6 +27,8 @@ class AddressController extends AbstractCompanyController
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'message.business_unit_address.update';
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS = 'message.business_unit_address.delete';
 
+    protected const REFERER_PARAM = 'referer';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -189,6 +191,7 @@ class AddressController extends AbstractCompanyController
         return [
             'form' => $addressForm->createView(),
             'idCompanyBusinessUnit' => $idCompanyBusinessUnit,
+            'idCompanyUnitAddress' => $idCompanyUnitAddress,
         ];
     }
 
@@ -227,6 +230,8 @@ class AddressController extends AbstractCompanyController
         $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
+        $referrer = $request->headers->get(static::REFERER_PARAM);
+
         $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())
             ->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
@@ -237,6 +242,7 @@ class AddressController extends AbstractCompanyController
         return $this->view([
             'companyUnitAddress' => $companyUnitAddressTransfer,
             'idCompanyBusinessUnit' => $idCompanyBusinessUnit,
+            'cancelUrl' => $referrer,
         ], [], '@CompanyPage/views/address-delete-confirmation-page/address-delete-confirmation-page.twig');
     }
 

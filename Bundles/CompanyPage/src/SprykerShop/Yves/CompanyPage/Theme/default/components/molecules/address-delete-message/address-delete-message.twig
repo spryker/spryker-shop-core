@@ -7,6 +7,7 @@
 
 {% define data = {
     companyUnitAddress: required,
+    cancelUrl: required,
     companyBusinessUnits: null,
     idCompanyBusinessUnit: null
 } %}
@@ -45,15 +46,9 @@
         </p>
     {% endif %}
 
-    {% if data.idCompanyBusinessUnit is not empty %}
-        <a class="button button--hollow {{ config.name }}__action" href="{{ url('company/business-unit/update', {'id': data.idCompanyBusinessUnit }) }}">
-            {{ "label.button.cancel" | trans }}
-        </a>
-    {% else %}
-        <a class="button button--hollow {{ config.name }}__action" href="{{ url('company/business-unit') }}">
-            {{ "label.button.cancel" | trans }}
-        </a>
-    {% endif %}
+    <a class="button button--hollow {{ config.name }}__action" href="{{ data.cancelUrl }}">
+        {{ "label.button.cancel" | trans }}
+    </a>
 
     <a class="button" href="{{ url('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
         {{ "label.button.submit" | trans }}
