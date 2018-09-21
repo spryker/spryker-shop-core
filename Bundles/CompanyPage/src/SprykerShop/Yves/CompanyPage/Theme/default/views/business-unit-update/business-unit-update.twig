@@ -26,7 +26,7 @@
                 <h5>{{ 'company.account.business_unit.edit_information' | trans }}</h5>
             </div>
             <div class="col">
-                <a class="button button--alert" href="{{ url('company/business-unit/delete', {'id': data.form.vars.value.id_company_business_unit }) }}">{{ 'company.account.business_unit.delete' | trans }}</a>
+                <a class="button button--alert" href="{{ url('company/business-unit/delete-confirmation', {'id': data.form.vars.value.id_company_business_unit }) }}">{{ 'company.account.business_unit.delete' | trans }}</a>
             </div>
         </div>
         {% embed molecule('form') with {

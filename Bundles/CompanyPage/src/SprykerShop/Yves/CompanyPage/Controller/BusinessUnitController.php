@@ -213,6 +213,26 @@ class BusinessUnitController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmDeleteAction(Request $request)
+    {
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
+        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
+        $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
+
+        $companyBusinessUnitTransfer = $this->getFactory()
+            ->getCompanyBusinessUnitClient()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+
+        return $this->view([
+            'companyBusinessUnit' => $companyBusinessUnitTransfer,
+        ], [], '@CompanyPage/views/business-unit-delete-confirmation-page/business-unit-delete-confirmation-page.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer
      */
     protected function createBusinessUnitCriteriaFilterTransfer(Request $request): CompanyBusinessUnitCriteriaFilterTransfer
