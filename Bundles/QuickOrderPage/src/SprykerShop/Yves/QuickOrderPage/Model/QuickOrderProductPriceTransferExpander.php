@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 class QuickOrderProductPriceTransferExpander implements QuickOrderProductPriceTransferExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface[]
+     * @var \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface[]
      */
     protected $quickOrderProductPriceTransferExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface[] $quickOrderProductPriceTransferExpanderPlugins
+     * @param \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface[] $quickOrderProductPriceTransferExpanderPlugins
      */
     public function __construct(array $quickOrderProductPriceTransferExpanderPlugins)
     {
