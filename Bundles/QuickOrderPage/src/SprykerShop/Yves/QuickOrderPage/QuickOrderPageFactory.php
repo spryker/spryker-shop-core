@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\QuickOrderPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider;
@@ -21,6 +24,8 @@ use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductAdditionalDataTransfe
 use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductAdditionalDataTransferExpanderInterface;
 use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductPriceTransferExpander;
 use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductPriceTransferExpanderInterface;
+use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductQuantityRestrictionsValidator;
+use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductQuantityRestrictionsValidatorInterface;
 use SprykerShop\Yves\QuickOrderPage\Model\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\Model\TextOrderParserInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -108,6 +113,42 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getZedRequestClient(): QuickOrderPageToZedRequestClientInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductQuantityRestrictionsValidatorInterface
+     */
+    public function createQuickOrderQuantityRestrictionsValidator(): QuickOrderProductQuantityRestrictionsValidatorInterface
+    {
+        return new QuickOrderProductQuantityRestrictionsValidator(
+            $this->getProductClient(),
+            $this->getProductQuantityClient(),
+            $this->getProductQuantityStorageClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductClientInterface
+     */
+    public function getProductClient(): QuickOrderPageToProductClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRODUCT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityClientInterface
+     */
+    public function getProductQuantityClient(): QuickOrderPageToProductQuantityClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRODUCT_QUANTITY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface
+     */
+    public function getProductQuantityStorageClient(): QuickOrderPageToProductQuantityStorageClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRODUCT_QUANTITY_STORAGE);
     }
 
     /**
