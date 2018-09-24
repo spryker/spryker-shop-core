@@ -228,15 +228,6 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      */
     protected function executeShareShoppingListAction(int $idShoppingList, Request $request)
     {
-        $shoppingListTransfer = new ShoppingListTransfer();
-        $shoppingList = $this->getFactory()->getShoppingListClient()->getShoppingList($shoppingListTransfer->setIdShoppingList($idShoppingList));
-
-        if (!$shoppingList->getIdShoppingList()) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
-
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
-        }
-
         $shareShoppingListForm = $this->getFactory()
             ->getShareShoppingListForm($idShoppingList)
             ->handleRequest($request);
@@ -259,6 +250,12 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
         $shippingListTransferCollection = $this->getCustomerShoppingListCollection();
         $shoppingListTransfer = $this->getShoppingListById($idShoppingList, $shippingListTransferCollection);
+
+        if (!$shoppingListTransfer->getIdShoppingList()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
+
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+        }
 
         return [
             'idShoppingList' => $idShoppingList,
