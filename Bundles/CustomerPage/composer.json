@@ -15,7 +15,8 @@
     "spryker/sales": "^8.5.0",
     "spryker/step-engine": "^3.1.0",
     "spryker/symfony": "^3.1.0",
-    "spryker/util-validate": "^1.0.0"
+    "spryker/util-validate": "^1.0.0",
+    "spryker/customer-access-permission": "^0.1.0"
   },
   "require-dev": {
     "spryker-shop/home-page": "*",
