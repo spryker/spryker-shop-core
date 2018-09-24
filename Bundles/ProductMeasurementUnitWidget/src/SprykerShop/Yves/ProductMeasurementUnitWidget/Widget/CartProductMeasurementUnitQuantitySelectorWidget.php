@@ -34,23 +34,23 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
     {
         $quantitySalesUnitTransfer = $itemTransfer->getQuantitySalesUnit();
 
-        if ($quantitySalesUnitTransfer !== null) {
-            $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
-                ->getProductMeasurementUnitStorageClient()
-                ->findProductConcreteMeasurementUnitStorage($itemTransfer->getId());
-
-            if ($productConcreteMeasurementUnitStorageTransfer !== null) {
-                $baseUnitTransfer = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit();
-
-                if ($baseUnitTransfer->getIdProductMeasurementUnit() === $quantitySalesUnitTransfer->getProductMeasurementUnit()->getIdProductMeasurementUnit()) {
-                    return true;
-                }
-            }
-
-            return false;
+        if($quantitySalesUnitTransfer === null) {
+            return true;
         }
 
-        return true;
+        $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
+            ->getProductMeasurementUnitStorageClient()
+            ->findProductConcreteMeasurementUnitStorage($itemTransfer->getId());
+
+        if ($productConcreteMeasurementUnitStorageTransfer !== null) {
+            $baseUnitTransfer = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit();
+
+            if ($baseUnitTransfer->getIdProductMeasurementUnit() === $quantitySalesUnitTransfer->getProductMeasurementUnit()->getIdProductMeasurementUnit()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

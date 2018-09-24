@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductReviewWidget\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use Generated\Shared\Transfer\ProductReviewStorageTransfer;
 
 /**
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
@@ -45,7 +46,7 @@ class DisplayProductAbstractReviewWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer
      */
-    protected function findProductAbstractReview($idProductAbstract)
+    protected function findProductAbstractReview($idProductAbstract): ProductReviewStorageTransfer
     {
         return $this->getFactory()
             ->getProductReviewStorageClient()
@@ -55,7 +56,7 @@ class DisplayProductAbstractReviewWidget extends AbstractWidget
     /**
      * @return int
      */
-    protected function getMaximumRating()
+    protected function getMaximumRating(): int
     {
         return $this->getFactory()
             ->getProductReviewClient()

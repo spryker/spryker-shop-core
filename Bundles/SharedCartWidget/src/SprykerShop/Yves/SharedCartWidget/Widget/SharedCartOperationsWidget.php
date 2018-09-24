@@ -73,11 +73,7 @@ class SharedCartOperationsWidget extends AbstractWidget
      */
     protected function isSharedCartAllowed(CustomerTransfer $customerTransfer): bool
     {
-        if ($customerTransfer->getCompanyUserTransfer()) {
-            return true;
-        }
-
-        return false;
+        return (bool)$customerTransfer->getCompanyUserTransfer();
     }
 
     /**

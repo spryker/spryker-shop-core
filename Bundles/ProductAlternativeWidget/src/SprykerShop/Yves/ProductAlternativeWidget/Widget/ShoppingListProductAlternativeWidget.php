@@ -59,11 +59,12 @@ class ShoppingListProductAlternativeWidget extends AbstractWidget
      */
     protected function findAlternativesProducts(ProductViewTransfer $productViewTransfer): array
     {
-        if (!$this->getFactory()->getProductAlternativeStorageClient()->isAlternativeProductApplicable($productViewTransfer)) {
+        $productAlternativeStorageClient = $this->getFactory()->getProductAlternativeStorageClient();
+
+        if (!$productAlternativeStorageClient->isAlternativeProductApplicable($productViewTransfer)) {
             return [];
         }
 
-        return $this->getFactory()->getProductAlternativeStorageClient()
-            ->getConcreteAlternativeProducts($productViewTransfer, $this->getLocale());
+        return $productAlternativeStorageClient->getConcreteAlternativeProducts($productViewTransfer, $this->getLocale());
     }
 }

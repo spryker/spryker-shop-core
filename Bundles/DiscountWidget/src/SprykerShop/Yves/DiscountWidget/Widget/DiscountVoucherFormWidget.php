@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\DiscountWidget\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use Symfony\Component\Form\FormView;
 
 /**
  * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
@@ -41,7 +42,7 @@ class DiscountVoucherFormWidget extends AbstractWidget
     /**
      * @return \Symfony\Component\Form\FormView
      */
-    protected function getVoucherForm()
+    protected function getVoucherForm(): FormView
     {
         return $this->getFactory()->getCheckoutVoucherForm()->createView();
     }

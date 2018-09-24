@@ -47,7 +47,7 @@ class UpSellingProductsWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function findUpSellingProducts(QuoteTransfer $quoteTransfer)
+    protected function findUpSellingProducts(QuoteTransfer $quoteTransfer): array
     {
         return $this->getFactory()
             ->getProductRelationStorageClient()
