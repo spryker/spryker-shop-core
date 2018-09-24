@@ -44,9 +44,9 @@ class DisplayProductAbstractReviewWidget extends AbstractWidget
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer
+     * @return null|\Generated\Shared\Transfer\ProductReviewStorageTransfer
      */
-    protected function findProductAbstractReview($idProductAbstract): ProductReviewStorageTransfer
+    protected function findProductAbstractReview($idProductAbstract): ?ProductReviewStorageTransfer
     {
         return $this->getFactory()
             ->getProductReviewStorageClient()
