@@ -217,10 +217,10 @@ class BusinessUnitController extends AbstractCompanyController
      */
     public function confirmDeleteAction(Request $request)
     {
-        $response = $this->executeConfirmDeleteAction($request);
+        $viewData = $this->executeConfirmDeleteAction($request);
 
         return $this->view(
-            $response,
+            $viewData,
             [],
             '@CompanyPage/views/business-unit-delete-confirmation-page/business-unit-delete-confirmation-page.twig'
         );
