@@ -30,8 +30,8 @@
 
                     <tr>
                         {% block row %}
-                            {% widget 'OrderDetailProductPackagingUnitWidget' args [item, data.currencyIsoCode] only %}
-                            {% elsewidget 'OrderDetailProductPackagingUnitWidgetPlugin' args [item, data.currencyIsoCode] only %} {# @deprecated Use OrderDetailProductPackagingUnitWidget instead. #}
+                            {% widget 'OrderDetailProductPackagingUnitWidget2' args [item, data.currencyIsoCode] only %}
+                            {% elsewidget 'OrderDetailProductPackagingUnitWidgetPlugin2' args [item, data.currencyIsoCode] only %} {# @deprecated Use OrderDetailProductPackagingUnitWidget instead. #}
                             {% nowidget %}
                                 <td>
                                     {{ concreteItem.sku }}

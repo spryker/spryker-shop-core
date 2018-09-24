@@ -26,9 +26,10 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public function initialize($idProductAbstract, $template): void
     {
-        $widget = new ProductGroupWidget($idProductAbstract, $template);
+        $widget = new ProductGroupWidget($idProductAbstract);
 
         $this->parameters = $widget->getParameters();
+        $this->addParameter('template', $template);
     }
 
     /**
@@ -48,6 +49,6 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public static function getTemplate(): string
     {
-        return ProductGroupWidget::getTemplate();
+        return '@ProductGroupWidget/views/product-group-deprecated/product-group-deprecated.twig';
     }
 }
