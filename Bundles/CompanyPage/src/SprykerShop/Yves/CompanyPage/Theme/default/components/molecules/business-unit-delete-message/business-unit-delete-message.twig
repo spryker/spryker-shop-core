@@ -1,0 +1,35 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'business-unit-delete-message',
+    tag: 'div'
+} %}
+
+{% define data = {
+    companyBusinessUnit: required
+} %}
+
+{% block body %}
+    <h5 class="{{ config.name }}__delete-message">
+        {% include atom('icon') with {
+            modifiers: ['big'],
+            data: {
+                name: 'action-warning'
+            }
+        } only %}
+        {{ "company.account.address.delete.message.title" | trans }}
+    </h5>
+
+    <div class="spacing-y spacing-y--big">
+        {{ "company.business_unit.delete.message.description" | trans }}:
+        <div class="{{ config.name }}__business-unit">{{ data.companyBusinessUnit.name }}</div>
+    </div>
+
+    <a class="button button--hollow {{ config.name }}__action" href="{{ url('company/business-unit/update', {'id': data.companyBusinessUnit.idCompanyBusinessUnit}) }}">
+        {{ "label.button.cancel" | trans }}
+    </a>
+
+    <a class="button" href="{{ url('company/business-unit/delete', {'id': data.companyBusinessUnit.idCompanyBusinessUnit}) }}">
+        {{ "label.button.submit" | trans }}
+    </a>
+{% endblock %}

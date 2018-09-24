@@ -28,6 +28,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
     public const ROUTE_COMPANY_BUSINESS_UNIT_DELETE = 'company/business-unit/delete';
     public const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE = 'company/business-unit/address/create';
+    public const ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION = 'company/business-unit/delete-confirmation';
 
     public const ROUTE_COMPANY_ROLE = 'company/company-role';
     public const ROUTE_COMPANY_ROLE_CREATE = 'company/company-role/create';
@@ -126,6 +127,9 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/business-unit/delete', static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE, 'CompanyPage', 'BusinessUnit', 'delete')
+            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/business-unit/delete-confirmation', static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION, 'CompanyPage', 'BusinessUnit', 'confirmDelete')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/business-unit/address/create', static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, 'CompanyPage', 'BusinessUnitAddress', 'create')
