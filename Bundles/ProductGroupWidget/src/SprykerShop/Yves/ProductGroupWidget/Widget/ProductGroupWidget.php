@@ -16,14 +16,11 @@ class ProductGroupWidget extends AbstractWidget
 {
     /**
      * @param int $idProductAbstract
-     * @param string $template
      */
-    public function __construct($idProductAbstract, $template)
+    public function __construct(int $idProductAbstract)
     {
-        $this
-            ->addParameter('productGroupItems', $this->getProductGroups($idProductAbstract))
-            ->addParameter('idProductAbstract', $idProductAbstract)
-            ->addParameter('template', $template);
+        $this->addParameter('productGroupItems', $this->getProductGroups($idProductAbstract))
+            ->addParameter('idProductAbstract', $idProductAbstract);
     }
 
     /**
@@ -51,7 +48,7 @@ class ProductGroupWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function getProductGroups($idProductAbstract)
+    protected function getProductGroups(int $idProductAbstract): array
     {
         $productGroup = $this->getFactory()->getProductGroupStorageClient()->findProductGroupItemsByIdProductAbstract($idProductAbstract);
         $productViewTransfers = [];

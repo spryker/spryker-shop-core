@@ -111,18 +111,18 @@
         {% elsewidget 'MultiCartWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
         {% endwidget %}
 
-        {% widget 'ProductViewAvailabilityWidget' args [data.product] only %}
+        {% widget productViewAvailabilityWidget only %}
         {% elsewidget 'AvailabilityWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductViewAvailabilityWidget instead. #}
         {% endwidget %}
     </form>
 
     {% if isProductAvailable %}
-        {% widget 'ShoppingListWidget' args [sku, isDisabled] only %}
+        {% widget 'AddToShoppingListWidget' args [sku, isDisabled] only %}
             {% block body %}
                 <hr />
                 {{ parent() }}
             {% endblock %}
-        {% elsewidget 'ShoppingListWidgetPlugin' args [sku, isDisabled] only %} {# @deprecated Use ShoppingListWidget instead. #}
+        {% elsewidget 'ShoppingListWidgetPlugin' args [sku, isDisabled] only %} {# @deprecated Use AddToShoppingListWidget instead. #}
             {% block body %}
                 <hr />
                 {{ parent() }}
@@ -131,7 +131,7 @@
     {% endif %}
 
     {% if isProductAvailable %}
-        {% widget 'WishlistWidget' args [data.product] only %}
+        {% widget 'PdpWishlistSelectorWidget' args [data.product] only %}
             {% block body %}
                 <hr />
                 {{ parent() }}
