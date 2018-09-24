@@ -1,6 +1,6 @@
 # ProductOptionWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Provides widgets for displaying product options.
 
 ## Installation
 
