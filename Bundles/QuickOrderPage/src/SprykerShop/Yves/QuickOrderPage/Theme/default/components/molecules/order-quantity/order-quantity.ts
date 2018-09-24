@@ -63,13 +63,15 @@ export default class OrderQuantity extends Component {
         if(this.currentInputValue % this.stepAttributeValue !== 0) {
             this.roundOfQuantityInputValue();
             this.showErrorMessage();
+        } else if(this.currentInputValue > Number(this.maxQuantityAttributeValue)) {
+            this.quantityInput.value = this.maxQuantityAttributeValue;
         }
 
         this.dispatchEvent(this.quantityInputUpdate);
     }
 
     private roundOfQuantityInputValue(): void {
-        let inputValue: number = <number>this.currentInputValue;
+        let inputValue: number = <number>Math.floor(this.currentInputValue);
 
         while(inputValue % this.stepAttributeValue !== 0) {
             inputValue++;
@@ -90,6 +92,10 @@ export default class OrderQuantity extends Component {
 
     get currentInputValue(): number {
         return Number(this.quantityInput.value);
+    }
+
+    get maxQuantityAttributeValue(): string {
+        return this.quantityInput.getAttribute('max');
     }
 
     get stepAttributeValue(): number {
