@@ -9,18 +9,15 @@ namespace SprykerShop\Yves\ShopApplication;
 
 use Silex\Provider\TwigServiceProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Kernel\Widget\WidgetAbstractFactory;
-use Spryker\Yves\Kernel\Widget\WidgetAbstractFactoryInterface;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
-use Spryker\Yves\Kernel\Widget\WidgetFactory;
+use Spryker\Yves\Kernel\Widget\WidgetFactory as LegacyWidgetFactory;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
 use SprykerShop\Yves\ShopApplication\Twig\RoutingHelper;
 use SprykerShop\Yves\ShopApplication\Twig\TwigRenderer;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTokenParser;
-use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetBuilder;
-use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetBuilderInterface;
+use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetFactory;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagService;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagServiceInterface;
 use Twig_TokenParserInterface;
@@ -41,21 +38,21 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use createWidgetAbstractFactory() method instead.
+     * @deprecated Use createWidgetFactory() method instead.
      *
      * @return \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface
      */
-    public function createWidgetFactory()
+    public function createLegacyWidgetFactory()
     {
-        return new WidgetFactory();
+        return new LegacyWidgetFactory();
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Widget\WidgetAbstractFactoryInterface
+     * @return \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetFactoryInterface
      */
-    public function createWidgetAbstractFactory(): WidgetAbstractFactoryInterface
+    public function createWidgetFactory()
     {
-        return new WidgetAbstractFactory();
+        return new WidgetFactory($this->createLegacyWidgetFactory());
     }
 
     /**
@@ -170,15 +167,7 @@ class ShopApplicationFactory extends AbstractFactory
         return new WidgetTagService(
             $this->createWidgetContainerRegistry(),
             $this->getGlobalWidgetCollection(),
-            $this->createWidgetBuilder()
+            $this->createWidgetFactory()
         );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetBuilderInterface
-     */
-    protected function createWidgetBuilder(): WidgetBuilderInterface
-    {
-        return new WidgetBuilder($this->createWidgetAbstractFactory(), $this->createWidgetFactory());
     }
 }

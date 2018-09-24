@@ -7,13 +7,13 @@
 
 namespace SprykerShop\Yves\ShopApplication\Twig\Widget;
 
-interface WidgetBuilderInterface
+interface WidgetFactoryInterface
 {
     /**
      * @param string $widgetClassName
      * @param array $arguments
      *
-     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface|\Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface
+     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|\Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface
      */
     public function build(string $widgetClassName, array $arguments);
 }
