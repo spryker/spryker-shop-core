@@ -33,23 +33,26 @@ class ProductPackagingUnitWidget extends AbstractWidget
         $productConcretePackagingStorageTransfer = null;
 
         if ($productViewTransfer->getIdProductConcrete()) {
-            $baseUnit = $this->getFactory()->getProductMeasurementUnitStorageClient()->findProductMeasurementBaseUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());
+            $productMeasurementUnitStorageClient = $this->getFactory()->getProductMeasurementUnitStorageClient();
+            $productPackagingUnitStorageClient = $this->getFactory()->getProductPackagingUnitStorageClient();
 
-            $productConcretePackagingStorageTransfer = $this->getFactory()->getProductPackagingUnitStorageClient()->findProductConcretePackagingById(
+            $baseUnit = $productMeasurementUnitStorageClient->findProductMeasurementBaseUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());
+
+            $productConcretePackagingStorageTransfer = $productPackagingUnitStorageClient->findProductConcretePackagingById(
                 $productViewTransfer->getIdProductAbstract(),
                 $productViewTransfer->getIdProductConcrete()
             );
 
-            $productAbstractPackaging = $this->getFactory()->getProductPackagingUnitStorageClient()->findProductAbstractPackagingById(
+            $productAbstractPackaging = $productPackagingUnitStorageClient->findProductAbstractPackagingById(
                 $productViewTransfer->getIdProductAbstract()
             );
 
-            $salesUnits = $this->getFactory()->getProductMeasurementUnitStorageClient()->findProductMeasurementSalesUnitByIdProductConcrete(
+            $salesUnits = $productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProductConcrete(
                 $productViewTransfer->getIdProductConcrete()
             );
 
             if ($productAbstractPackaging) {
-                $leadProductSalesUnits = $this->getFactory()->getProductMeasurementUnitStorageClient()->findProductMeasurementSalesUnitByIdProductConcrete(
+                $leadProductSalesUnits = $productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProductConcrete(
                     $productAbstractPackaging->getLeadProduct()
                 );
 

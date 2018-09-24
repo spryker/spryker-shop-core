@@ -47,7 +47,7 @@ class SimilarProductsWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function findRelatedProducts(ProductViewTransfer $productViewTransfer)
+    protected function findRelatedProducts(ProductViewTransfer $productViewTransfer): array
     {
         return $this->getFactory()
             ->getProductRelationStorageClient()

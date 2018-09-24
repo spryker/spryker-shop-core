@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductOptionWidget\Widget;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -60,8 +61,9 @@ class ProductOptionConfiguratorWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
-    protected function getStorageProductOptionGroupCollectionTransfer(ProductViewTransfer $productViewTransfer)
-    {
+    protected function getStorageProductOptionGroupCollectionTransfer(
+        ProductViewTransfer $productViewTransfer
+    ): ?ProductAbstractOptionStorageTransfer {
         return $this
             ->getFactory()
             ->getProductOptionStorageClient()

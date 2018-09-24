@@ -163,6 +163,6 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
             }
         }
 
-        return $minQuantityInBaseUnits;
+        return (float)$minQuantityInBaseUnits;
     }
 }

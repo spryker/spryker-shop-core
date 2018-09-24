@@ -46,9 +46,9 @@ class NewsletterSubscriptionSummaryWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
+     * @return bool
      */
-    protected function getIsSubscribed(CustomerTransfer $customerTransfer)
+    protected function getIsSubscribed(CustomerTransfer $customerTransfer): bool
     {
         $subscriptionRequestTransfer = new NewsletterSubscriptionRequestTransfer();
 
@@ -68,6 +68,6 @@ class NewsletterSubscriptionSummaryWidget extends AbstractWidget
 
         $result = current($subscriptionResponseTransfer->getSubscriptionResults());
 
-        return $result->getisSuccess();
+        return $result->getIsSuccess();
     }
 }
