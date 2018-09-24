@@ -6,6 +6,7 @@
     companyUnitAddress: _view.companyUnitAddress,
     companyBusinessUnits: _view.companyUnitAddress.companyBusinessUnitCollection.companyBusinessUnits|default([]),
     idCompanyBusinessUnit: _view.idCompanyBusinessUnit,
+    cancelUrl: _view.cancelUrl,
 } %}
 
 {% block companyContent %}
@@ -14,7 +15,8 @@
             data: {
                 companyUnitAddress: data.companyUnitAddress,
                 companyBusinessUnits: data.companyBusinessUnits,
-                idCompanyBusinessUnit: data.idCompanyBusinessUnit
+                idCompanyBusinessUnit: data.idCompanyBusinessUnit,
+                cancelUrl: data.cancelUrl
             }
         } only %}
     </div>
