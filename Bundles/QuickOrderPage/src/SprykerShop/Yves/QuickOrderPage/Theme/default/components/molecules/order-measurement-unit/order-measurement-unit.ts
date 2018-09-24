@@ -29,10 +29,10 @@ export default class OrderMeasurementUnit extends Component {
     }
 
     private onDelete(): void {
-        this.wrapper.innerHTML = <string>'';
+        this.wrapper.innerHTML = '';
     }
 
     get ajaxSelector(): string {
-        return <string>this.dataset.ajaxSelector;
+        return this.dataset.ajaxSelector;
     }
 }

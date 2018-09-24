@@ -40,20 +40,13 @@ export default class QuickOrderFormField extends Component {
         this.addEventListener('click', (event: Event) => this.onClick(<Event>event));
 
         this.autocompleteFormInput.addEventListener('input', () => this.onChange());
+        this.autocompleteFormInput.addEventListener('keydown', (event: KeyboardEvent) => this.onInputKeyDown(event));
     }
 
     private createCustomEvents(): void {
-        this.productLoadedEvent = <CustomEvent>new CustomEvent("product-loaded-event", {
-            detail: {
-                username: "product-loaded-event"
-            }
-        });
+        this.productLoadedEvent = <CustomEvent>new CustomEvent("product-loaded-event");
 
-        this.productDeleteEvent = <CustomEvent>new CustomEvent("product-delete-event", {
-            detail: {
-                username: "product-delete-event"
-            }
-        });
+        this.productDeleteEvent = <CustomEvent>new CustomEvent("product-delete-event");
     }
 
     private onClick(event: Event): void {
@@ -72,6 +65,16 @@ export default class QuickOrderFormField extends Component {
         }
     }
 
+    private onInputKeyDown(event: KeyboardEvent): void {
+        const keyCode = event.keyCode;
+        const dropDownItems = <NodeList>this.querySelectorAll(this.autocompleteForm.itemSelector);
+
+        if(this.autocompleteFormInput.value.length && dropDownItems.length && keyCode === 9) {
+            (<HTMLElement>dropDownItems[0]).click();
+            return;
+        }
+    }
+
     async loadProduct(): Promise<void> {
         this.ajaxProvider.queryParams.set('id-product', <string>this.selectedId);
 
@@ -86,10 +89,10 @@ export default class QuickOrderFormField extends Component {
     }
 
     private generateResponseData(response: string): ProductJSON {
-        return <ProductJSON>JSON.parse(response);
+        return JSON.parse(response);
     }
 
     get selectedId(): string {
-        return <string>this.selectedItem.getAttribute('data-id-product');
+        return this.selectedItem.getAttribute('data-id-product');
     }
 }
