@@ -15,7 +15,7 @@ export default class OrderQuantity extends Component {
         this.currentFieldComponent = <QuickOrderFormField>this.closest('quick-order-form-field');
         this.quantityInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
         this.errorMessage = <HTMLInputElement>this.querySelector(`.${this.jsName}__error`);
-        this.inputAttributesDefault = ['1', '', '1', ''];
+        this.inputAttributesDefault = ['1', '', '1', '1'];
 
         this.mapEvents();
     }
@@ -23,7 +23,7 @@ export default class OrderQuantity extends Component {
     private mapEvents(): void {
         this.createCustomEvents();
         this.currentFieldComponent.addEventListener('product-loaded-event', () => this.onLoad());
-        this.currentFieldComponent.addEventListener('product-delete-event', () => this.defaultAttributesValues());
+        this.currentFieldComponent.addEventListener('product-delete-event', () => this.quantityInputAttributes(<string[]>['1', '', '1', '']));
         this.quantityInput.addEventListener('input', debounce(() => this.validateInputValue(), 500));
     }
 
@@ -44,10 +44,6 @@ export default class OrderQuantity extends Component {
             return;
         }
 
-        this.defaultAttributesValues();
-    }
-
-    private defaultAttributesValues(): void {
         this.quantityInputAttributes(this.inputAttributesDefault);
     }
 

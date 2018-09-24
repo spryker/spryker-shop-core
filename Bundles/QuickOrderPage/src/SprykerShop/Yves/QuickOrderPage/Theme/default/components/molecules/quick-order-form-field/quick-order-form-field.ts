@@ -40,6 +40,7 @@ export default class QuickOrderFormField extends Component {
         this.addEventListener('click', (event: Event) => this.onClick(<Event>event));
 
         this.autocompleteFormInput.addEventListener('input', () => this.onChange());
+        this.autocompleteFormInput.addEventListener('keydown', (event: KeyboardEvent) => this.onInputKeyDown(event));
     }
 
     private createCustomEvents(): void {
@@ -61,6 +62,16 @@ export default class QuickOrderFormField extends Component {
         if(this.autocompleteFormInput.value.length <= this.autocompleteForm.minLetters) {
             this.productData = <ProductJSON>{};
             this.dispatchEvent(<CustomEvent>this.productDeleteEvent);
+        }
+    }
+
+    private onInputKeyDown(event: KeyboardEvent): void {
+        const keyCode = event.keyCode;
+        const dropDownItems = <NodeList>this.querySelectorAll(this.autocompleteForm.itemSelector);
+
+        if(this.autocompleteFormInput.value.length && dropDownItems.length && keyCode === 9) {
+            (<HTMLElement>dropDownItems[0]).click();
+            return;
         }
     }
 
