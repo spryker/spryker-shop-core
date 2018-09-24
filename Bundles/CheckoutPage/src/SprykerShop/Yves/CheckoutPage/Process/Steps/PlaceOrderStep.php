@@ -42,7 +42,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected $errorCodeToRouteMatching = [];
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $postConditionErrorRoute;
 
@@ -180,7 +180,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPostConditionErrorRoute()
     {
