@@ -230,7 +230,7 @@ class AddressController extends AbstractCompanyController
         $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
-        $referrer = $request->headers->get(static::REFERER_PARAM);
+        $referer = $request->headers->get(static::REFERER_PARAM);
 
         $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())
             ->setIdCompanyUnitAddress($idCompanyUnitAddress);
@@ -242,7 +242,7 @@ class AddressController extends AbstractCompanyController
         return $this->view([
             'companyUnitAddress' => $companyUnitAddressTransfer,
             'idCompanyBusinessUnit' => $idCompanyBusinessUnit,
-            'cancelUrl' => $referrer,
+            'cancelUrl' => $referer,
         ], [], '@CompanyPage/views/address-delete-confirmation-page/address-delete-confirmation-page.twig');
     }
 

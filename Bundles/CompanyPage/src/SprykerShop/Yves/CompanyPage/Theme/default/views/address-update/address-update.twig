@@ -2,8 +2,8 @@
 
 {% define data = {
     form: _view.form,
-    idCompanyBusinessUnit: _view.idCompanyBusinessUnit|default(''),
-    idCompanyUnitAddress: _view.idCompanyUnitAddress|default(''),
+    idCompanyBusinessUnit: _view.idCompanyBusinessUnit | default(''),
+    idCompanyUnitAddress: _view.idCompanyUnitAddress | default(''),
     title: 'company.account.address' | trans,
     activePage: 'business-unit'
 } %}
@@ -26,11 +26,11 @@
                 <h5>{{ 'company.account.edit_address_information' | trans }}</h5>
             </div>
             <div class="col">
-                <a class="button button--alert" href="{{ url('company/address/delete-confirmation', {'id': data.idCompanyUnitAddress, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">{{ 'company.account.business_unit.delete' | trans }}</a>
+                <a class="button button--alert" href="{{ path('company/address/delete-confirmation', {'id': data.idCompanyUnitAddress, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">{{ 'company.account.business_unit.delete' | trans }}</a>
             </div>
         </div>
-        {% set buIndexUrl = url('company/business-unit/update', { id: data.idCompanyBusinessUnit }) %}
-        {% set buListUrl = url('company/business-unit') %}
+        {% set buIndexUrl = path('company/business-unit/update', { id: data.idCompanyBusinessUnit }) %}
+        {% set buListUrl = path('company/business-unit') %}
         {% include molecule('form') with {
             data: {
                 form: data.form,
