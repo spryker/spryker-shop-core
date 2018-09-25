@@ -103,6 +103,6 @@ export default class OrderQuantity extends Component {
     }
 
     get showErrorMessageClass(): string {
-        return `${ this.name }__error--show`;
+        return this.getAttribute('error-show');
     }
 }

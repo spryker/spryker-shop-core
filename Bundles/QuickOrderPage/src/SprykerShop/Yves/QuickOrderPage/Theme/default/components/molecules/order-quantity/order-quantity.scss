@@ -21,8 +21,8 @@
                 opacity: 1;
             }
 
-            &:after,
-            &:before {
+            &::after,
+            &::before {
                 content: '';
                 position: absolute;
                 left: 50%;
@@ -34,7 +34,7 @@
                 border-left-color: transparent;
             }
 
-            &:before {
+            &::before {
                 bottom: calc((12% + 1px) * -1);
                 border-bottom-color: $setting-color-light;
                 border-right-color: $setting-color-light;

@@ -13,6 +13,10 @@
     step: 1
 } %}
 
+{% define attributes = {
+    'error-show': config.name ~ '__error--show'
+} %}
+
 {% block body %}
     {{ form_row(data.qty, {
         required: data.required,
