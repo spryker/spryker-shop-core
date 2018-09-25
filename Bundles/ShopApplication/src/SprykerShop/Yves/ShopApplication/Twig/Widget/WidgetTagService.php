@@ -25,23 +25,23 @@ class WidgetTagService implements WidgetTagServiceInterface
     protected $globalWidgetCollection;
 
     /**
-     * @var \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetBuilderInterface
+     * @var \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetFactoryInterface
      */
-    protected $widgetBuilder;
+    protected $widgetFactory;
 
     /**
      * @param \Spryker\Yves\Kernel\Widget\WidgetContainerRegistryInterface $widgetContainerRegistry
      * @param \Spryker\Yves\Kernel\Widget\WidgetContainerInterface $globalWidgetCollection
-     * @param \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetBuilderInterface $widgetBuilder
+     * @param \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetFactoryInterface $widgetFactory
      */
     public function __construct(
         WidgetContainerRegistryInterface $widgetContainerRegistry,
         WidgetContainerInterface $globalWidgetCollection,
-        WidgetBuilderInterface $widgetBuilder
+        WidgetFactoryInterface $widgetFactory
     ) {
         $this->widgetContainerRegistry = $widgetContainerRegistry;
         $this->globalWidgetCollection = $globalWidgetCollection;
-        $this->widgetBuilder = $widgetBuilder;
+        $this->widgetFactory = $widgetFactory;
     }
 
     /**
@@ -118,7 +118,7 @@ class WidgetTagService implements WidgetTagServiceInterface
 
         $widgetClass = $widgetContainer->getWidgetClassName($widgetName);
 
-        return $this->widgetBuilder->build($widgetClass, $arguments);
+        return $this->widgetFactory->build($widgetClass, $arguments);
     }
 
     /**

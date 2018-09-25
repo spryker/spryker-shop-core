@@ -53,7 +53,7 @@ class ProductOptionConfiguratorWidget extends AbstractWidget
             return new ArrayObject();
         }
 
-        return $this->getStorageProductOptionGroupCollectionTransfer($productViewTransfer)->getProductOptionGroups();
+        return $productAbstractOptionStorageTransfer->getProductOptionGroups();
     }
 
     /**
@@ -61,9 +61,8 @@ class ProductOptionConfiguratorWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
-    protected function getStorageProductOptionGroupCollectionTransfer(
-        ProductViewTransfer $productViewTransfer
-    ): ?ProductAbstractOptionStorageTransfer {
+    protected function getStorageProductOptionGroupCollectionTransfer(ProductViewTransfer $productViewTransfer)
+    {
         return $this
             ->getFactory()
             ->getProductOptionStorageClient()

@@ -26,7 +26,7 @@ abstract class AbstractBaseStep extends SprykerBaseStep
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */

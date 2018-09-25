@@ -1,6 +1,6 @@
 # MultiCartWidget Module
 
-Provides YVES multi cart widget to display and manipulate several carts.
+Provides multi cart widgets to display and manipulate several carts.
 
 ## Installation
 
