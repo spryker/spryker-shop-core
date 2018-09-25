@@ -75,7 +75,7 @@ class CheckoutAddressForm extends AddressForm
         $builder->add(static::FIELD_ID_CUSTOMER_ADDRESS, ChoiceType::class, [
             'choices' => array_flip($choices),
             'choices_as_values' => true,
-            'required' => true,
+            'required' => false,
             'expanded' => true,
             'multiple' => false,
         ]);
