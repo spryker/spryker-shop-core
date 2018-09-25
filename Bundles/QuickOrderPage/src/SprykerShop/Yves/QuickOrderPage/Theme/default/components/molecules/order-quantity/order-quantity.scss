@@ -35,7 +35,7 @@
             }
 
             &::before {
-                bottom: calc((12% + 1px) * -1);
+                bottom: calc(-12% + -1px);
                 border-bottom-color: $setting-color-light;
                 border-right-color: $setting-color-light;
             }

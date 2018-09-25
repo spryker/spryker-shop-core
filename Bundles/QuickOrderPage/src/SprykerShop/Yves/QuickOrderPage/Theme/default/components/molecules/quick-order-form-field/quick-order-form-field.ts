@@ -88,7 +88,7 @@ export default class QuickOrderFormField extends Component {
         }
     }
 
-    private generateResponseData(response: string): ProductJSON {
+    private generateResponseData(response: string): ProductJSON {  
         return JSON.parse(response);
     }
 
