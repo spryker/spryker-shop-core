@@ -35,7 +35,7 @@ class AuthController extends AbstractCustomerController
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     protected function getRedirectUrlFromPlugins(): ?string
     {
