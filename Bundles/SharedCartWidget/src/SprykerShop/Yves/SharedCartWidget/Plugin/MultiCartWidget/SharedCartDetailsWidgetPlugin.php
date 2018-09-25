@@ -25,7 +25,7 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param array $actions
-     * @param \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[]|null $widgetList
+     * @param string[]|null $widgetList
      *
      * @return void
      */

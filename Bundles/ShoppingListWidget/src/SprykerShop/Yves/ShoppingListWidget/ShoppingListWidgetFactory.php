@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface;
+use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListSessionClientInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -60,5 +61,13 @@ class ShoppingListWidgetFactory extends AbstractFactory
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListSessionClientInterface
+     */
+    public function getShoppingListSessionClient(): ShoppingListWidgetToShoppingListSessionClientInterface
+    {
+        return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::CLIENT_SHOPPING_LIST_SESSION);
     }
 }
