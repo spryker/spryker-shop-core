@@ -56,6 +56,9 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
         $moneyFactory = $this->getFactory();
 
         $filter = new Twig_SimpleFilter('money', function ($money, $withSymbol = true, $isoCode = null) use ($moneyFactory) {
+            if ($money === null) {
+                return $money;
+            }
             if (!($money instanceof MoneyTransfer)) {
                 $money = $this->getMoneyTransfer($money, $isoCode);
             }
