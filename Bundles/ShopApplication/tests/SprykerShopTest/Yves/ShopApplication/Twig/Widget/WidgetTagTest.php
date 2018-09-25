@@ -252,7 +252,7 @@ EOF;
         $elsewidgetNode = new WidgetTagTwigNode('bar', [], $this->getAttributes([WidgetTagTokenParser::ATTRIBUTE_ELSEWIDGET_CASE => true]), 1);
 
         $nodes = [
-            WidgetTagTokenParser::NODE_ELSEWIDGETS => new \Twig_Node_Expression_Array([
+            WidgetTagTokenParser::NODE_ELSEWIDGETS => new Twig_Node_Expression_Array([
                 new Twig_Node_Expression_Constant(0, 1),
                 $elsewidgetNode,
             ], 1),
