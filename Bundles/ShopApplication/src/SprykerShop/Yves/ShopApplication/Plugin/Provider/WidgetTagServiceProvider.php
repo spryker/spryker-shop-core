@@ -26,6 +26,8 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
 {
     public const WIDGET_TAG_SERVICE = 'widget_tag_service';
 
+    protected const TWIG_FUNCTION_FIND_WIDGET = 'findWidget';
+
     /**
      * @param \Silex\Application $application
      *
@@ -71,7 +73,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
      */
     protected function addWidgetTagService(Application $application): void
     {
-        $application[self::WIDGET_TAG_SERVICE] = $application->share(function () {
+        $application[static::WIDGET_TAG_SERVICE] = $application->share(function () {
             return $this->getFactory()->createWidgetTagService();
         });
     }
@@ -84,7 +86,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     protected function addWidgetTagTokenParser(Application $application): void
     {
         $application['twig'] = $application->share(
-            $application->extend('twig', function (\Twig_Environment $twig) {
+            $application->extend('twig', function (Twig_Environment $twig) {
                 $twig->addTokenParser($this->getFactory()->createWidgetTagTokenParser());
 
                 return $twig;
@@ -109,10 +111,10 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     /**
      * @return \Twig_SimpleFunction[]
      */
-    protected function getFunctions()
+    protected function getFunctions(): array
     {
         return [
-            new Twig_SimpleFunction('findWidget', [$this, 'findWidget'], [
+            new Twig_SimpleFunction(static::TWIG_FUNCTION_FIND_WIDGET, [$this, 'findWidget'], [
                 'needs_context' => false,
             ]),
         ];
@@ -144,7 +146,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
      *
      * @return void
      */
-    protected function onKernelView(GetResponseForControllerResultEvent $event, SprykerApplication $application)
+    protected function onKernelView(GetResponseForControllerResultEvent $event, SprykerApplication $application): void
     {
         /** @var \Spryker\Yves\Kernel\Widget\WidgetContainerInterface $result */
         $result = $event->getControllerResult();
