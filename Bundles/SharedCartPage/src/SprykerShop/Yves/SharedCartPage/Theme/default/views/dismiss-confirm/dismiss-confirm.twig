@@ -30,11 +30,16 @@
 {% block customerContent %}
     <div class="box">
         <h5>{{ "shared_cart_page.dismiss_confirmation.warning" | trans }}</h5>
+
         <hr />
-        {{ "shared_cart_page.dismiss_confirmation.trying_to_dismiss" | trans }}
-        <br/>
-        <strong>{{ data.quoteName }}</strong>
-        <br/>
+
+        <div class="spacing-bottom">
+            {{ "shared_cart_page.dismiss_confirmation.trying_to_dismiss" | trans }}
+        </div>
+
+        <div class="spacing-bottom spacing-bottom--big">
+            <strong>{{ data.quoteName }}</strong>
+        </div>
 
         <div class="form__actions">
             <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
