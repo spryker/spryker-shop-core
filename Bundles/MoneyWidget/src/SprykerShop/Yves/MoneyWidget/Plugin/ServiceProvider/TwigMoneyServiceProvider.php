@@ -59,6 +59,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
             if ($money === null) {
                 return $money;
             }
+
             if (!($money instanceof MoneyTransfer)) {
                 $money = $this->getMoneyTransfer($money, $isoCode);
             }
