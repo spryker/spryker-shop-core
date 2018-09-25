@@ -1,6 +1,7 @@
 import Component from 'ShopUi/models/component';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 import QuickOrderFormField from '../quick-order-form-field/quick-order-form-field';
+import OrderQuantity from '../order-quantity/order-quantity';
 
 interface PricesJSON {
     idProductConcrete: number,
@@ -23,73 +24,62 @@ interface PricesJSON {
 export default class OrderItemPrice extends Component {
     ajaxProvider: AjaxProvider;
     currentFieldComponent: QuickOrderFormField;
-    wrapperInjector: HTMLElement;
-    quantityInput: HTMLFormElement;
-    timerId: number;
+    quantityComponent: OrderQuantity;
+    wrapperForInsertData: HTMLElement;
 
     protected readyCallback(): void {
-        this.wrapperInjector = <HTMLElement>this.querySelector(`.${this.jsName}`);
-        this.quantityInput = <HTMLFormElement>document.querySelector(this.quantityInputSelector);
+        this.wrapperForInsertData = <HTMLElement>this.querySelector(`.${this.jsName}`);
         this.ajaxProvider = <AjaxProvider>this.querySelector('ajax-provider');
         this.currentFieldComponent = <QuickOrderFormField>this.closest('quick-order-form-field');
+        this.quantityComponent = <OrderQuantity>this.currentFieldComponent.querySelector('order-quantity');
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.quantityInput.addEventListener('change', () => this.addIdHandler(this.productId, this.quantityCount));
-
-        document.addEventListener('application-bootstrap-completed', () => {
-            this.currentFieldComponent.autocompleteForm.hiddenInputElement.addEventListener('addId', () =>{
-                this.addIdHandler(this.productId, this.quantityCount);
-            });
-        });
+        this.quantityComponent.addEventListener('quantity-input-update', () => this.changePrice());
+        this.currentFieldComponent.addEventListener('product-delete-event', () => this.changePrice());
     }
 
-    private addIdHandler(productId: string, quantityCount: number): void {
-        if (productId && quantityCount > 0) {
-            clearImmediate(<number>this.timerId);
-            this.timerId = <number>setTimeout(() => this.loadPrices(productId, quantityCount), 150);
+    private changePrice(): void {
+        if (this.productId && this.quantityCount > 0) {
+            this.loadPrices();
             return;
         }
 
         this.injectData('');
     }
 
-    async loadPrices(id: string, count: number): Promise<void> {
-        this.ajaxProvider.queryParams.set('quantity', String(count));
-        this.ajaxProvider.queryParams.set('id-product', id);
+    async loadPrices(): Promise<void> {
+        this.ajaxProvider.queryParams.set('quantity', String(this.quantityCount));
+        this.ajaxProvider.queryParams.set('id-product', String(this.productId));
 
         try {
             const response: string = await this.ajaxProvider.fetch();
-            const data: PricesJSON = this.generateResponseData(response);
+            const data: PricesJSON = <PricesJSON>this.parseResponseData(<string>response);
             this.injectData(this.generateDataToInject(data));
         } catch (err) {
             throw err;
         }
     }
 
-    private generateResponseData(response: string): PricesJSON {
-        return Object.assign({}, JSON.parse(response));
+    private parseResponseData(response: string): PricesJSON {
+        return <PricesJSON>JSON.parse(response);
     }
 
     private generateDataToInject(data: PricesJSON): string {
-        return `${data.currency.symbol} ${data.total / 100}`;
+        return <string>`${data.currency.symbol} ${data.total / 100}`;
     }
 
     private injectData(data: string): void {
-        this.wrapperInjector.innerHTML = data;
+        this.wrapperForInsertData.innerHTML = <string>data;
     }
 
     get quantityCount(): number {
-        return Number(this.quantityInput.value);
+        return this.quantityComponent.currentInputValue;
     }
 
-    get quantityInputSelector(): string {
-        return this.getAttribute('quantity-input-selector');
-    }
-
-    get productId(): string {
-        return this.currentFieldComponent.productId;
+    get productId(): number {
+        return this.currentFieldComponent.productData.idProductConcrete;
     }
 }

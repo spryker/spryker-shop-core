@@ -3,7 +3,8 @@
         &__item {
             cursor: pointer;
 
-            &:hover {
+            &:hover,
+            &:first-child {
                 background-color: $setting-color-lighter;
             }
         }

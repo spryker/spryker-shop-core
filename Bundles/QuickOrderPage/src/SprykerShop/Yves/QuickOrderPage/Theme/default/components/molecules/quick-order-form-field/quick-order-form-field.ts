@@ -1,62 +1,98 @@
 import Component from 'ShopUi/models/component';
 import AutocompleteForm from 'ShopUi/components/molecules/autocomplete-form/autocomplete-form';
+import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
+
+interface ProductJSON {
+    baseMeasurementUnit: {
+        code: string,
+        defaultPrecision: number,
+        idProductMeasurementUnit: number,
+        name: string,
+    },
+    idProductConcrete: number,
+    productQuantityStorage: {
+        idProduct: number,
+        quantityInterval: number,
+        quantityMax: number,
+        quantityMin: number
+    }
+}
 
 export default class QuickOrderFormField extends Component {
     autocompleteForm: AutocompleteForm;
     selectedItem: HTMLElement;
-    addIdEvent: CustomEvent;
-    autocompleteFormInput: HTMLFormElement;
+    productLoadedEvent: CustomEvent;
+    productDeleteEvent: CustomEvent;
+    autocompleteFormInput: HTMLInputElement;
+    ajaxProvider: AjaxProvider;
+    productData: ProductJSON;
 
     protected readyCallback(): void {
         this.autocompleteForm = <AutocompleteForm>this.querySelector('autocomplete-form');
-        this.autocompleteFormInput = <HTMLFormElement>this.autocompleteForm.querySelector(`.${this.autocompleteForm.jsName}__input`);
+        this.autocompleteFormInput = <HTMLInputElement>this.autocompleteForm.querySelector(`.${this.autocompleteForm.jsName}__input`);
+        this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
         this.createCustomEvents();
-        this.addEventListener('click', (event: Event) => this.componentClickHandler(event));
+        this.addEventListener('click', (event: Event) => this.onClick(<Event>event));
 
-        this.autocompleteFormInput.addEventListener('input', () => {
-            this.autocompleteFormInputChangeHandler();
-        });
+        this.autocompleteFormInput.addEventListener('input', () => this.onChange());
+        this.autocompleteFormInput.addEventListener('keydown', (event: KeyboardEvent) => this.onInputKeyDown(event));
     }
 
     private createCustomEvents(): void {
-        this.addIdEvent = <CustomEvent>new CustomEvent("addId", {
-            detail: {
-                username: "addId"
-            }
-        });
+        this.productLoadedEvent = <CustomEvent>new CustomEvent("product-loaded-event");
+
+        this.productDeleteEvent = <CustomEvent>new CustomEvent("product-delete-event");
     }
 
-    private componentClickHandler(event: Event): void {
+    private onClick(event: Event): void {
         this.selectedItem = <HTMLElement>event.target;
 
         if (this.selectedItem.matches(this.autocompleteForm.itemSelector)) {
             event.stopPropagation();
-
-            this.changeDataId(this.selectedId);
+            this.loadProduct();
         }
     }
 
-    private autocompleteFormInputChangeHandler(): void {
+    private onChange(): void {
         if(this.autocompleteFormInput.value.length <= this.autocompleteForm.minLetters) {
-            this.changeDataId('');
+            this.productData = <ProductJSON>{};
+            this.dispatchEvent(<CustomEvent>this.productDeleteEvent);
         }
     }
 
-    private changeDataId(id: string): void {
-        this.autocompleteForm.hiddenInputElement.setAttribute('data-id', id);
-        this.autocompleteForm.hiddenInputElement.dispatchEvent(this.addIdEvent);
+    private onInputKeyDown(event: KeyboardEvent): void {
+        const keyCode = event.keyCode;
+        const dropDownItems = <NodeList>this.querySelectorAll(this.autocompleteForm.itemSelector);
+
+        if(this.autocompleteFormInput.value.length && dropDownItems.length && keyCode === 9) {
+            (<HTMLElement>dropDownItems[0]).click();
+            return;
+        }
+    }
+
+    async loadProduct(): Promise<void> {
+        this.ajaxProvider.queryParams.set('id-product', <string>this.selectedId);
+
+        try {
+            const response: string = <string>await this.ajaxProvider.fetch();
+            this.productData = <ProductJSON>this.generateResponseData(response);
+
+            this.dispatchEvent(<CustomEvent>this.productLoadedEvent);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    private generateResponseData(response: string): ProductJSON {  
+        return JSON.parse(response);
     }
 
     get selectedId(): string {
         return this.selectedItem.getAttribute('data-id-product');
-    }
-
-    get productId(): string {
-        return this.autocompleteForm.hiddenInputElement.dataset.id;
     }
 }
