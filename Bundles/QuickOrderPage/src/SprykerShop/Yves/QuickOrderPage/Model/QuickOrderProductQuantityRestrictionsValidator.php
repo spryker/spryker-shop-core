@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuickOrderPage\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
@@ -54,29 +55,57 @@ class QuickOrderProductQuantityRestrictionsValidator implements QuickOrderProduc
      */
     public function validateQuantityRestrictions(QuickOrderItemTransfer $quickOrderItemTransfer): ProductQuantityValidationResponseTransfer
     {
-        $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->setSku($quickOrderItemTransfer->getSku());
-
-        $productConcreteTransfer = $this->productClient->findProductConcreteIdBySku($productConcreteTransfer);
+        $productConcreteTransfer = $this->getProductConcreteTransfer($quickOrderItemTransfer);
 
         if (!$productConcreteTransfer->getIdProductConcrete()) {
-            return (new ProductQuantityValidationResponseTransfer())->setIsValid(false);
+            return $this->createValidationResponse(false);
         }
 
         $productQuantityStorageTransfer = $this->productQuantityStorageClient->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
 
         if ($productQuantityStorageTransfer === null) {
-            return (new ProductQuantityValidationResponseTransfer())->setIsValid(true);
+            return $this->createValidationResponse(true);
         }
-
-        $productQuantityTransfer = (new ProductQuantityTransfer())->fromArray(
-            $productQuantityStorageTransfer->toArray(),
-            true
-        );
 
         return $this->productQuantityClient->validateProductQuantityRestrictions(
             $quickOrderItemTransfer->getQty(),
-            $productQuantityTransfer
+            $this->createProductQuantityTransferFromProductQuantityStorageTransfer($productQuantityStorageTransfer)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function getProductConcreteTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): ProductConcreteTransfer
+    {
+        $productConcreteTransfer = (new ProductConcreteTransfer())
+            ->setSku($quickOrderItemTransfer->getSku());
+
+        return $this->productClient->findProductConcreteIdBySku($productConcreteTransfer);
+    }
+
+    /**
+     * @param bool $validity
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
+     */
+    protected function createValidationResponse(bool $validity): ProductQuantityValidationResponseTransfer
+    {
+        return (new ProductQuantityValidationResponseTransfer())->setIsValid($validity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer
+     */
+    protected function createProductQuantityTransferFromProductQuantityStorageTransfer(ProductQuantityStorageTransfer $productQuantityStorageTransfer): ProductQuantityTransfer
+    {
+        return (new ProductQuantityTransfer())->fromArray(
+            $productQuantityStorageTransfer->toArray(),
+            true
         );
     }
 }

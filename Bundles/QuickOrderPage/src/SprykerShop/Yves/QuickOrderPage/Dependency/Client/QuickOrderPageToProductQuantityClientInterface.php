@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
 interface QuickOrderPageToProductQuantityClientInterface
 {
     /**
-     * @api
-     *
      * @param int $quantity
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      *
