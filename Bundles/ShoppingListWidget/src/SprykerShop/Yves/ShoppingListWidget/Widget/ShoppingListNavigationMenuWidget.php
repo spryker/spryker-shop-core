@@ -5,43 +5,38 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShoppingListWidget\Plugin\ShopUi;
+namespace SprykerShop\Yves\ShoppingListWidget\Widget;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShopUi\Dependency\Plugin\ShoppingListWidget\ShoppingListWidgetPluginInterface;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
  */
-class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListWidgetPluginInterface
+class ShoppingListNavigationMenuWidget extends AbstractWidget
 {
-    /**
-     * @return void
-     */
-    public function initialize(): void
+    use PermissionAwareTrait;
+
+    public function __construct()
     {
         $this->addShoppingListCollectionParameter();
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
+     * @return string
      */
-    public static function getTemplate()
+    public static function getName(): string
     {
-        return '@ShoppingListWidget/views/shopping-list-shop-list/shopping-list-shop-list.twig';
+        return 'ShoppingListNavigationMenuWidget';
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
+     * @return string
      */
-    public static function getName()
+    public static function getTemplate(): string
     {
-        return static::NAME;
+        return '@ShoppingListWidget/views/shopping-list-shop-list/shopping-list-shop-list.twig';
     }
 
     /**

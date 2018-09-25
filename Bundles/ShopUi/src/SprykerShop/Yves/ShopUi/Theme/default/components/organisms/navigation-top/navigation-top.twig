@@ -65,12 +65,21 @@
 
         {% if data.showUserMenu %}
             {% if is_granted('ROLE_USER') %}
-                {% if widgetGlobalExists('ShoppingListWidgetPlugin') %}
-                    <li class="menu__item menu__item--has-children-dropdown">
-                        {{ widgetGlobal('ShoppingListWidgetPlugin') }}
-                    </li>
-                    {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
-                {% endif %}
+                {% widget 'ShoppingListNavigationMenuWidget' with {withSeparators: data.withSeparators} only %}
+                    {% block body %}
+                        <li class="menu__item menu__item--has-children-dropdown">
+                            {{ parent() }}
+                        </li>
+                        {% if withSeparators %}<li class="menu__separator"></li>{% endif %}
+                    {% endblock %}
+                {% elsewidget 'ShoppingListNavigationMenuWidgetPlugin' with {withSeparators: data.withSeparators} only %} {# @deprecated Use ShoppingListNavigationMenuWidget instead. #}
+                    {% block body %}
+                        <li class="menu__item menu__item--has-children-dropdown">
+                            {{ parent() }}
+                        </li>
+                        {% if withSeparators %}<li class="menu__separator"></li>{% endif %}
+                    {% endblock %}
+                {% endwidget %}
                 <li class="menu__item"><a href="{{ url('customer/overview') }}">{{ 'customer.profile'|trans }}</a></li>
                 {% widget 'CompanyMenuItemWidget' only %}
                     {% block body %}
