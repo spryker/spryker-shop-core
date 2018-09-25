@@ -1,7 +1,7 @@
 {% extends template('widget') %}
 
 {% block body %}
-    {% include molecule('note-update', 'ShoppingListNoteWidget') with {
+    {% include molecule('shopping-list-note-toggler', 'ShoppingListNoteWidget') with {
         data: {
             shoppingListItemNoteForm: form
         }

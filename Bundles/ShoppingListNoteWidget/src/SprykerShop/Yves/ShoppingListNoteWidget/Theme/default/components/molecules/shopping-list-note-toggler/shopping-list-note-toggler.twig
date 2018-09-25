@@ -1,8 +1,8 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'note-update',
-    tag: 'note-update',
+    name: 'shopping-list-note-toggler',
+    tag: 'shopping-list-note-toggler',
 } %}
 
 {% define data = {
@@ -14,13 +14,15 @@
 {% block body %}
     {% if not data.shoppingListItemNoteForm.vars.data.note %}
         {% set shoppingListItemNoteClass = 'is-hidden' %}
-        <button type="button" class="link {{ config.jsName }}">{{ 'shopping_list.item_note.add' | trans }}</button>
+        <button type="button" class="link {{ config.jsName }}__button">
+            {{ 'shopping_list.item_note.add' | trans }}
+        </button>
     {% endif %}
     <div class="{{ config.jsName }}__wrapper {{ shoppingListItemNoteClass }}">
         {{ form_row(data.shoppingListItemNoteForm.note, {
             label: 'shopping_list.item_note' | trans,
             attr : {
-                'class' : config.jsName ~'__item-note',
+                class : config.jsName ~ '__note-textarea',
                 placeholder: ' '
             }})
         }}
