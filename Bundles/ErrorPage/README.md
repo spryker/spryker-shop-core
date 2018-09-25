@@ -1,6 +1,6 @@
 # ErrorPage Module
 
-{{ADD DESCRIPTION HERE}}
+This module provides error page.
 
 ## Installation
 
