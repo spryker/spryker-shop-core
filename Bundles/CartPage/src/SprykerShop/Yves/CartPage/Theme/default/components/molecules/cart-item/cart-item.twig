@@ -56,9 +56,11 @@
         </div>
 
         <div class="col col--sm-12 col--lg-4">
-            {% widget 'CartProductPackagingUnitWidget' args [data.cartItem] only %}
-            {% elsewidget 'CartProductPackagingUnitWidgetPlugin' args [data.cartItem] only %} {# @deprecated Use CartProductPackagingUnitWidget instead. #}
-            {% endwidget %}
+            {% if widgetExists('CartProductPackagingUnitWidgetPlugin') %}
+                {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }} {# @deprecated Use NEW_MOLECULE instead. #}
+            {% else %}
+                {# todo: include NEW_MOLECULE here #}
+            {% endif %}
 
             {% if data.cartItem.amountSalesUnit is empty %}
                 {% if canEditCart %}

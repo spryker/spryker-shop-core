@@ -24,9 +24,13 @@
     }]) %}
 {% endfor %}
 
-{% set productViewAvailabilityWidget = findWidget('ProductViewAvailabilityWidget', [data.product]) %}
-{% set isAvailable = productViewAvailabilityWidget.isAvailable | default(widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product)) %} {# @deprecated Use ProductViewAvailabilityWidget instead of AvailabilityWidgetPlugin. #}
-{% set isDisabled = not isAvailable or isDisabled %}
+{% if widgetExists('AvailabilityWidgetPlugin') %} {# @deprecated Use NEW_MOLECULE instead of AvailabilityWidgetPlugin. #}
+    {% set isAvailable = widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product) %}
+    {% set isDisabled = not isAvailable or isDisabled %}
+{% else %}
+    {% set isAvailable = data.product.idProductConcrete and data.product.available %}
+    {% set isDisabled = not isAvailable or isDisabled %}
+{% endif %}
 
 {% set productDiscontinuedNoteWidget = findWidget('ProductDiscontinuedNoteWidget', [sku]) %}
 {% set isDiscontinued = productDiscontinuedNoteWidget.isDiscontinued | default(widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', sku)) %} {# @deprecated Use productDiscontinuedNoteWidget instead of ProductDiscontinuedWidgetPlugin. #}
@@ -44,9 +48,20 @@
     <hr />
     {% widget 'ProductPriceVolumeWidget' args [data.product] only %}
     {% elsewidget 'PriceProductVolumeWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductPriceVolumeWidget instead. #}
-    {% elsewidget 'ProductPriceWidget' args [data.product] only %}
-    {% elsewidget 'PriceWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductPriceWidget instead. #}
+    {% nowidget %}
+        {% if widgetExists('PriceWidgetPlugin') %}
+            {{ widget('PriceWidgetPlugin', data.product) }} {# @deprecated Use NEW_MOLECULE instead. #}
+        {% else %}
+            {# todo: include NEW_MOLECULE here #}
+        {% endif %}
     {% endwidget %}
+
+
+
+
+
+
+
 
     {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] use view('pdp-review-rating', 'ProductReviewWidget') only %}
     {% nowidget %}
@@ -111,9 +126,11 @@
         {% elsewidget 'MultiCartWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
         {% endwidget %}
 
-        {% widget productViewAvailabilityWidget only %}
-        {% elsewidget 'AvailabilityWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductViewAvailabilityWidget instead. #}
-        {% endwidget %}
+        {% if widgetExists('AvailabilityWidgetPlugin') %}
+            {{ widget('AvailabilityWidgetPlugin', data.product) }} {# @deprecated Use NEW_MOLECULE instead. #}
+        {% else %}
+            {# todo: include NEW_MOLECULE here #}
+        {% endif %}
     </form>
 
     {% if isProductAvailable %}
@@ -131,17 +148,13 @@
     {% endif %}
 
     {% if isProductAvailable %}
-        {% widget 'PdpWishlistSelectorWidget' args [data.product] only %}
-            {% block body %}
-                <hr />
-                {{ parent() }}
-            {% endblock %}
-        {% elsewidget 'WishlistWidgetPlugin' args [data.product] only %} {# @deprecated Use WishlistWidget instead. #}
-            {% block body %}
-                <hr />
-                {{ parent() }}
-            {% endblock %}
-        {% endwidget %}
+        {% if widgetExists('WishlistWidgetPlugin') %}
+            <hr />
+            {{ widget('WishlistWidgetPlugin', data.product) }} {# @deprecated Use NEW_MOLECULE instead. #}
+        {% else %}
+            <hr />
+            {# todo: include NEW_MOLECULE here #}
+        {% endif %}
     {% endif %}
 
     {% widget 'ProductDiscontinuedNoteWidget' args [sku] only %}

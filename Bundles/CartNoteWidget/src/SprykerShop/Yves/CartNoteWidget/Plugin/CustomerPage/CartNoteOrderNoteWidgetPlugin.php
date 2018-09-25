@@ -9,11 +9,10 @@ namespace SprykerShop\Yves\CartNoteWidget\Plugin\CustomerPage;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CartNoteWidget\Widget\DisplayOrderNoteWidget;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\CartNoteWidget\CartNoteOrderNoteWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\DisplayOrderNoteWidget instead.
+ * @deprecated Use NEW_MOLECULE instead.
  */
 class CartNoteOrderNoteWidgetPlugin extends AbstractWidgetPlugin implements CartNoteOrderNoteWidgetPluginInterface
 {
@@ -24,9 +23,7 @@ class CartNoteOrderNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
      */
     public function initialize(OrderTransfer $orderTransfer): void
     {
-        $widget = new DisplayOrderNoteWidget($orderTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('order', $orderTransfer);
     }
 
     /**
@@ -36,7 +33,7 @@ class CartNoteOrderNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -48,8 +45,8 @@ class CartNoteOrderNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return DisplayOrderNoteWidget::getTemplate();
+        return '@CartNoteWidget/views/customer-cart-note-display/customer-cart-note-display.twig';
     }
 }

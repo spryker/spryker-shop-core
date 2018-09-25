@@ -11,9 +11,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-/**
- * @deprecated Use \SprykerShop\Yves\CustomerReorderWidget\Widget\CustomerReorderWidget instead.
- */
 interface CustomerReorderWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'CustomerReorderWidgetPlugin';

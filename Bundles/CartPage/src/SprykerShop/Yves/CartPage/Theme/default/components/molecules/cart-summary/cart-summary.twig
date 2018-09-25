@@ -21,19 +21,15 @@
     <hr />
 
     <ul class="list spacing-y">
-        {% widget 'DiscountSummaryWidget' args [data.cart] only %}
-            {% block body %}
-                <li class="list__item spacing-y">
-                    {{ parent() }}
-                </li>
-            {% endblock %}
-        {% elsewidget 'DiscountSummaryWidgetPlugin' args [data.cart] only %} {# @deprecated Use DiscountSummaryWidget instead. #}
-            {% block body %}
-                <li class="list__item spacing-y">
-                    {{ parent() }}
-                </li>
-            {% endblock %}
-        {% endwidget %}
+        {% if widgetExists('DiscountSummaryWidgetPlugin') %}
+            <li class="list__item spacing-y">
+                {{ widget('DiscountSummaryWidgetPlugin', data.cart) }} {# @deprecated Use NEW_MOLECULE instead. #}
+            </li>
+        {% else %}
+            <li class="list__item spacing-y">
+                {# todo: include NEW_MOLECULE here #}
+            </li>
+        {% endif %}
 
         {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
             <li class="list__item spacing-y">

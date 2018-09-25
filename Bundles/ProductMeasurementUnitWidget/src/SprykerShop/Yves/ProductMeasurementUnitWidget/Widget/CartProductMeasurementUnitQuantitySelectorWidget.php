@@ -34,7 +34,7 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
     {
         $quantitySalesUnitTransfer = $itemTransfer->getQuantitySalesUnit();
 
-        if($quantitySalesUnitTransfer === null) {
+        if ($quantitySalesUnitTransfer === null) {
             return true;
         }
 

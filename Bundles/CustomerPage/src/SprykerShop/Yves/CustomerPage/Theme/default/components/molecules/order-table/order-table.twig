@@ -35,19 +35,11 @@
                                         {{ 'customer.order.view_order' | trans }}
                                     </a>
                                 </li>
-                                {% widget 'CustomerReorderWidget' args [order] use view('customer-reorder-reorder-action', 'CustomerReorderWidget') only %}
-                                    {% block body %}
-                                        <li class="menu__item">
-                                            {{ parent() }}
-                                        </li>
-                                    {% endblock %}
-                                {% nowidget %}
-                                    {% if widgetExists('CustomerReorderWidgetPlugin') %}
-                                        <li class="menu__item">
-                                            {{ widgetBlock('CustomerReorderWidgetPlugin', 'reorderAction', order) }} {# @deprecated Use CustomerReorderWidget instead. #}
-                                        </li>
-                                    {% endif %}
-                                {% endwidget %}
+                                {% if widgetExists('CustomerReorderWidgetPlugin') %}
+                                    <li class="menu__item">
+                                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'reorderAction', order) }}
+                                    </li>
+                                {% endif %}
                             </ul>
                         </td>
                     </tr>

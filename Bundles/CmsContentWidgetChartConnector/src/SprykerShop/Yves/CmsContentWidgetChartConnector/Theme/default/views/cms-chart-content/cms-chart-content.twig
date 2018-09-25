@@ -6,8 +6,10 @@
 } %}
 {% block body %}
     {% if data.chartPluginName is not empty %}
-        {% widget 'ChartWidget' args [data.chartPluginName, data.dataIdentifier] only %}
-        {% elsewidget 'ChartWidgetPlugin' args [data.chartPluginName, data.dataIdentifier] only %} {# @deprecated Use ChartWidget instead. #}
-        {% endwidget %}
+        {% if widgetExists('ChartWidgetPlugin') %}
+            {{ widget('ChartWidgetPlugin', data.chartPluginName, data.dataIdentifier) }} {# @deprecated Use NEW_MOLECULE instead. #}
+        {% else %}
+            {# todo: include NEW_MOLECULE here #}
+        {% endif %}
     {% endif %}
 {% endblock %}

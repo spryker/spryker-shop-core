@@ -10,10 +10,9 @@ namespace SprykerShop\Yves\ProductPackagingUnitWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductPackagingUnitWidget\CartProductPackagingUnitWidgetPluginInterface;
-use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\CartProductPackagingUnitWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\CartProductPackagingUnitWidget instead.
+ * @deprecated Use NEW_MOLECULE instead.
  *
  * @method \SprykerShop\Yves\ProductPackagingUnitWidget\ProductPackagingUnitWidgetFactory getFactory()
  */
@@ -26,9 +25,7 @@ class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implemen
      */
     public function initialize(ItemTransfer $itemTransfer): void
     {
-        $widget = new CartProductPackagingUnitWidget($itemTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('item', $itemTransfer);
     }
 
     /**
@@ -52,6 +49,6 @@ class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implemen
      */
     public static function getTemplate(): string
     {
-        return CartProductPackagingUnitWidget::getTemplate();
+        return '@ProductPackagingUnitWidget/views/cart-product-packaging-unit/cart-product-packaging-unit.twig';
     }
 }

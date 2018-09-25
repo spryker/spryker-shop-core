@@ -17,9 +17,10 @@
 } %}
 
 {% block body %}
-    {% widget 'SummaryProductPackagingUnitWidget' args [data] only %}
-    {% elsewidget 'SummaryProductPackagingUnitWidgetPlugin' args [data] only %} {# @deprecated Use SummaryProductPackagingUnitWidget instead. #}
-    {% nowidget %}
+    {% if widgetExists('SummaryProductPackagingUnitWidgetPlugin') %}
+        {{ widget('SummaryProductPackagingUnitWidgetPlugin', data) }} {# @deprecated Use NEW_MOLECULE instead. #}
+    {# todo: add check (else if - NEW_MOLECULE exist - use it) here #}
+    {% else %}
         {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
         {% set salesUnitSummary = '' %}
         {% if salesUnitName %}
@@ -28,7 +29,7 @@
 
         <strong class="float-right">{{data.price}}</strong>
         {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(= {{ salesUnitSummary }}){% endif %}
-    {% endwidget %}
+    {% endif %}
 
     {% if data.bundleItems is not empty %}
         <ul>

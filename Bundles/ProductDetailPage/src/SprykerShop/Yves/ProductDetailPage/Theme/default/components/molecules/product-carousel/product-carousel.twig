@@ -10,9 +10,11 @@
 } %}
 
 {% block body %}
-    {% widget 'ProductImageSliderWidget' args [data.product] only %}
-    {% elsewidget 'ProductImageWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductImageSliderWidget instead. #}
-    {% endwidget %}
+    {% if widgetExists('ProductImageWidgetPlugin') %}
+        {{ widget('ProductImageWidgetPlugin', data.product) }} {# @deprecated Use NEW_MOLECULE instead. #}
+    {% else %}
+        {# todo: include NEW_MOLECULE here #}
+    {% endif %}
 
     {% widget 'ProductAbstractLabelWidget' args [data.product.idProductAbstract] only %}
     {% elsewidget 'ProductAbstractLabelWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductAbstractLabelWidget instead. #}

@@ -8,11 +8,10 @@
 namespace SprykerShop\Yves\ChartWidget\Plugin\CmsContentWidgetChartConnector;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ChartWidget\Widget\ChartWidget;
 use SprykerShop\Yves\CmsContentWidgetChartConnector\Dependency\Plugin\ChartWidget\ChartWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ChartWidget\Widget\ChartWidget instead.
+ * @deprecated Use NEW_MOLECULE instead.
  */
 class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPluginInterface
 {
@@ -24,9 +23,9 @@ class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPlugi
      */
     public function initialize(string $chartPluginName, ?string $dataIdentifier = null): void
     {
-        $widget = new ChartWidget($chartPluginName, $dataIdentifier);
-
-        $this->parameters = $widget->getParameters();
+        $this
+            ->addParameter('chartPluginName', $chartPluginName)
+            ->addParameter('dataIdentifier', $dataIdentifier);
     }
 
     /**
@@ -42,6 +41,6 @@ class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPlugi
      */
     public static function getTemplate(): string
     {
-        return ChartWidget::getTemplate();
+        return '@ChartWidget/views/chart/chart.twig';
     }
 }

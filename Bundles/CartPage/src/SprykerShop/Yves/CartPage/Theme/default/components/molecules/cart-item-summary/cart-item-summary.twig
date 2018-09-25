@@ -21,9 +21,11 @@
 
     {% if data.cartItem.productOptions | length > 0 %}
         <li class="list__item text-small">
-            {% widget 'DisplayCartItemProductOptionWidget' args [data.cartItem] only %}
-            {% elsewidget 'CartItemProductOptionWidgetPlugin' args [data.cartItem] only %} {# @deprecated Use DisplayCartItemProductOptionWidget instead. #}
-            {% endwidget %}
+            {% if widgetExists('CartItemProductOptionWidgetPlugin') %}
+                {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }} {# @deprecated Use NEW_MOLECULE instead. #}
+            {% else %}
+                {# todo: include NEW_MOLECULE here #}
+            {% endif %}
         </li>
     {% endif %}
 

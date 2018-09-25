@@ -5,7 +5,9 @@
 {% endif %}
 
 {% if productSet is defined %}
-    {% widget 'ProductSetDetailPageWidget' args [productSet, productViews] only %}
-    {% elsewidget 'ProductSetWidgetPlugin' args [productSet, productViews] only %} {# @deprecated Use ProductSetDetailPageWidget instead. #}
-    {% endwidget %}
+    {% if widgetExists('ProductSetWidgetPlugin') %}
+        {{ widget('ProductSetWidgetPlugin', productSet, productViews) }} {# @deprecated Use NEW_MOLECULE instead. #}
+    {% else %}
+        {# todo: include NEW_MOLECULE here #}
+    {% endif %}
 {% endif %}

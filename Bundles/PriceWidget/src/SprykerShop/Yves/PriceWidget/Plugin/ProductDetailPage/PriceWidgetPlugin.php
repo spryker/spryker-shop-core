@@ -9,13 +9,10 @@ namespace SprykerShop\Yves\PriceWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\PriceWidget\Widget\ProductPriceWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\PriceWidget\PriceWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\PriceWidget\Widget\ProductPriceWidget instead.
- *
- * @method \SprykerShop\Yves\PriceWidget\PriceWidgetFactory getFactory()
+ * @deprecated Use NEW_MOLECULE instead.
  */
 class PriceWidgetPlugin extends AbstractWidgetPlugin implements PriceWidgetPluginInterface
 {
@@ -32,7 +29,7 @@ class PriceWidgetPlugin extends AbstractWidgetPlugin implements PriceWidgetPlugi
      */
     public static function getTemplate(): string
     {
-        return ProductPriceWidget::getTemplate();
+        return '@PriceWidget/views/price/price.twig';
     }
 
     /**
@@ -42,8 +39,6 @@ class PriceWidgetPlugin extends AbstractWidgetPlugin implements PriceWidgetPlugi
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $widget = new ProductPriceWidget($productViewTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('product', $productViewTransfer);
     }
 }

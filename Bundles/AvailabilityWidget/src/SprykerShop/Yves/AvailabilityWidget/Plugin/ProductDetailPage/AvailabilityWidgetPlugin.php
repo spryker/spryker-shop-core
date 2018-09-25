@@ -9,11 +9,10 @@ namespace SprykerShop\Yves\AvailabilityWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\AvailabilityWidget\Widget\ProductViewAvailabilityWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\AvailabilityWidget\AvailabilityWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\AvailabilityWidget\Widget\ProductViewAvailabilityWidget instead.
+ * @deprecated Use NEW_MOLECULE instead.
  */
 class AvailabilityWidgetPlugin extends AbstractWidgetPlugin implements AvailabilityWidgetPluginInterface
 {
@@ -24,9 +23,7 @@ class AvailabilityWidgetPlugin extends AbstractWidgetPlugin implements Availabil
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $widget = new ProductViewAvailabilityWidget($productViewTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('product', $productViewTransfer);
     }
 
     /**
@@ -42,6 +39,6 @@ class AvailabilityWidgetPlugin extends AbstractWidgetPlugin implements Availabil
      */
     public static function getTemplate(): string
     {
-        return ProductViewAvailabilityWidget::getTemplate();
+        return '@AvailabilityWidget/views/availability/availability.twig';
     }
 }

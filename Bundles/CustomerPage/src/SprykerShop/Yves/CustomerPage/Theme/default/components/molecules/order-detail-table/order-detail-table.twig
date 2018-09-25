@@ -30,9 +30,10 @@
 
                     <tr>
                         {% block row %}
-                            {% widget 'OrderDetailProductPackagingUnitWidget2' args [item, data.currencyIsoCode] only %}
-                            {% elsewidget 'OrderDetailProductPackagingUnitWidgetPlugin2' args [item, data.currencyIsoCode] only %} {# @deprecated Use OrderDetailProductPackagingUnitWidget instead. #}
-                            {% nowidget %}
+                            {% if widgetExists('OrderDetailProductPackagingUnitWidgetPlugin') %}
+                                {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item, data.currencyIsoCode) }} {# @deprecated Use NEW_MOLECULE instead. #}
+                            {# todo: add check (else if - NEW_MOLECULE exist - use it) here #}
+                            {% else %}
                                 <td>
                                     {{ concreteItem.sku }}
                                 </td>
@@ -48,7 +49,16 @@
                                 <td>
                                     {{ concreteItem.sumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
                                 </td>
-                            {% endwidget %}
+                            {% endif %}
+
+
+
+
+
+
+
+
+
                         {% endblock %}
                     </tr>
 
@@ -91,9 +101,12 @@
                         {% endif %}
                     {% endif %}
 
-                    {% widget 'DisplayOrderItemNoteWidget' args [item] only %}
-                    {% elsewidget 'CartNoteOrderItemNoteWidgetPlugin' args [item] only %} {# @deprecated Use DisplayOrderItemNoteWidget instead. #}
-                    {% endwidget %}
+                    {% if widgetExists('CartNoteOrderItemNoteWidgetPlugin') %}
+                        {{ widget('CartNoteOrderItemNoteWidgetPlugin', item) }} {# @deprecated Use NEW_MOLECULE instead. #}
+                    {% else %}
+                        {# todo: include NEW_MOLECULE here #}
+                    {% endif %}
+
                 {% endfor %}
         </tbody>
     </table>

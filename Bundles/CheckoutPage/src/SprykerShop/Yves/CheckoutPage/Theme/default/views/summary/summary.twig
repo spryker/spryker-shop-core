@@ -82,18 +82,22 @@
                     } only %}
                         {% block body %}
                             {{parent()}}
-                            {% widget 'DisplayCartItemNoteWidget' args [embed.item] only %}
-                            {% elsewidget 'CartNoteQuoteItemNoteWidgetPlugin' args [embed.item] only %} {# @deprecated Use DisplayCartItemNoteWidget instead. #}
-                            {% endwidget %}
+                            {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
+                                {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }} {# @deprecated Use NEW_MOLECULE instead. #}
+                            {% else %}
+                                {# todo: include NEW_MOLECULE here #}
+                            {% endif %}
                             {% if embed.isLast %}<hr/>{% endif %}
                         {% endblock %}
                     {% endembed %}
                 {% endfor %}
             </div>
 
-            {% widget 'DisplayCartNoteWidget' args [data.transfer] only %}
-            {% elsewidget 'CartNoteQuoteNoteWidgetPlugin' args [data.transfer] only %} {# @deprecated Use DisplayCartNoteWidget instead. #}
-            {% endwidget %}
+            {% if widgetExists('CartNoteQuoteNoteWidgetPlugin') %}
+                {{ widget('CartNoteQuoteNoteWidgetPlugin', data.transfer) }} {# @deprecated Use NEW_MOLECULE instead. #}
+            {% else %}
+                {# todo: include NEW_MOLECULE here #}
+            {% endif %}
 
             <div class="box">
                 {% widget 'CheckoutVoucherFormWidget' args [data.transfer] only %}

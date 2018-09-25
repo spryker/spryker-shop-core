@@ -8,20 +8,22 @@
 
 {% block body %}
     {% if data.isMultiCartAllowed %}
-    <div class="grid grid--right">
-        <div class="col col--sm-6 col--right">
-        {% if data.carts %}
-            {% include molecule('add-to-cart-selector', 'MultiCartWidget') with {
-                data: {
-                    carts: data.carts,
-                    disabled: data.disabled
-                }
-            } only %}
-        {% endif %}
+        <div class="grid grid--right">
+            <div class="col col--sm-6 col--right">
+            {% if data.carts %}
+                {% include molecule('add-to-cart-selector', 'MultiCartWidget') with {
+                    data: {
+                        carts: data.carts,
+                        disabled: data.disabled
+                    }
+                } only %}
+            {% endif %}
+            </div>
         </div>
-    </div>
-    {% widget 'SharedCartAddSeparateProductWidget' only %}
-    {% elsewidget 'SharedCartAddSeparateProductWidgetPlugin' only %} {# @deprecated Use SharedCartAddSeparateProductWidget instead. #}
-    {% endwidget %}
+        {% if widgetExists('SharedCartAddSeparateProductWidgetPlugin') %}
+            {{ widget('SharedCartAddSeparateProductWidgetPlugin') }} {# @deprecated Use NEW_MOLECULE instead. #}
+        {% else %}
+            {# todo: include NEW_MOLECULE here #}
+        {% endif %}
     {% endif %}
 {% endblock %}

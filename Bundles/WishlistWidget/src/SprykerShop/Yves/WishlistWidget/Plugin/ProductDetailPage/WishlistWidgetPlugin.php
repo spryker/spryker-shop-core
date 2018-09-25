@@ -10,10 +10,9 @@ namespace SprykerShop\Yves\WishlistWidget\Plugin\ProductDetailPage;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\WishlistWidget\WishlistWidgetPluginInterface;
-use SprykerShop\Yves\WishlistWidget\Widget\PdpWishlistSelectorWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\WishlistWidget\Widget\PdpWishlistSelectorWidget instead.
+ * @deprecated Use NEW_MOLECULE instead.
  */
 class WishlistWidgetPlugin extends AbstractWidgetPlugin implements WishlistWidgetPluginInterface
 {
@@ -24,9 +23,7 @@ class WishlistWidgetPlugin extends AbstractWidgetPlugin implements WishlistWidge
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $widget = new PdpWishlistSelectorWidget($productViewTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('product', $productViewTransfer);
     }
 
     /**
@@ -42,6 +39,6 @@ class WishlistWidgetPlugin extends AbstractWidgetPlugin implements WishlistWidge
      */
     public static function getTemplate(): string
     {
-        return PdpWishlistSelectorWidget::getTemplate();
+        return '@WishlistWidget/views/pdp-wishlist-selector/pdp-wishlist-selector.twig';
     }
 }

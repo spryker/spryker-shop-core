@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\ProductReviewWidget\Widget;
 
-use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Generated\Shared\Transfer\ProductReviewStorageTransfer;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
@@ -45,7 +45,7 @@ class ProductDetailPageReviewWidget extends AbstractWidget
     /**
      * @param int $idProductAbstract
      *
-     * @return null|\Generated\Shared\Transfer\ProductReviewStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer|null
      */
     protected function findProductAbstractReview($idProductAbstract): ?ProductReviewStorageTransfer
     {

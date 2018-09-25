@@ -10,9 +10,6 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\CmsBlockWidget;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
-/**
- * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Widget\ProductWithCmsBlockWidget instead.
- */
 interface ProductCmsBlockWidgetPluginInterface extends WidgetPluginInterface
 {
     const NAME = 'ProductCmsBlockWidgetPlugin';

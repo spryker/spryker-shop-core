@@ -9,11 +9,10 @@ namespace SprykerShop\Yves\CartNoteWidget\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CartNoteWidget\Widget\DisplayCartNoteWidget;
 use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\CartNoteWidget\CartNoteQuoteNoteWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\DisplayCartNoteWidget instead.
+ * @deprecated Use NEW_MOLECULE instead.
  */
 class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements CartNoteQuoteNoteWidgetPluginInterface
 {
@@ -24,9 +23,7 @@ class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $widget = new DisplayCartNoteWidget($quoteTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('quote', $quoteTransfer);
     }
 
     /**
@@ -36,7 +33,7 @@ class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -48,8 +45,8 @@ class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return DisplayCartNoteWidget::getTemplate();
+        return '@CartNoteWidget/views/checkout-cart-note-display/checkout-cart-note-display.twig';
     }
 }

@@ -10,10 +10,9 @@ namespace SprykerShop\Yves\ProductSetWidget\Plugin\ProductSetDetailPage;
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductSetDetailPage\Dependency\ProductSetWidget\ProductSetWidgetPluginInterface;
-use SprykerShop\Yves\ProductSetWidget\Widget\ProductSetDetailPageWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductSetWidget\Widget\ProductSetDetailPageWidget instead.
+ * @deprecated Use NEW_MOLECULE instead.
  */
 class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetWidgetPluginInterface
 {
@@ -25,9 +24,9 @@ class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetW
      */
     public function initialize(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers): void
     {
-        $widget = new ProductSetDetailPageWidget($productSetDataStorageTransfer, $productViewTransfers);
-
-        $this->parameters = $widget->getParameters();
+        $this
+            ->addParameter('productSet', $productSetDataStorageTransfer)
+            ->addParameter('productViews', $productViewTransfers);
     }
 
     /**
@@ -43,6 +42,6 @@ class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetW
      */
     public static function getTemplate(): string
     {
-        return ProductSetDetailPageWidget::getTemplate();
+        return '@ProductSetWidget/views/product-set-page/product-set-page.twig';
     }
 }

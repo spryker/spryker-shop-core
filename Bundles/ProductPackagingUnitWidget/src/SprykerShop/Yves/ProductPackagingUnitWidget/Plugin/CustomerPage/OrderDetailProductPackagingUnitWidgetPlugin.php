@@ -10,10 +10,9 @@ namespace SprykerShop\Yves\ProductPackagingUnitWidget\Plugin\CustomerPage;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\ProductPackagingUnit\OrderDetailProductPackagingUnitWidgetPluginInterface;
-use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\OrderDetailProductPackagingUnitWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\OrderDetailProductPackagingUnitWidget instead.
+ * @deprecated Use NEW_MOLECULE instead.
  *
  * @method \SprykerShop\Yves\ProductPackagingUnitWidget\ProductPackagingUnitWidgetFactory getFactory()
  */
@@ -27,9 +26,9 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
      */
     public function initialize(ItemTransfer $itemTransfer, string $currencyIsoCode): void
     {
-        $widget = new OrderDetailProductPackagingUnitWidget($itemTransfer, $currencyIsoCode);
-
-        $this->parameters = $widget->getParameters();
+        $this
+            ->addParameter('item', $itemTransfer)
+            ->addParameter('currencyIsoCode', $currencyIsoCode);
     }
 
     /**
@@ -53,6 +52,6 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
      */
     public static function getTemplate(): string
     {
-        return OrderDetailProductPackagingUnitWidget::getTemplate();
+        return '@ProductPackagingUnitWidget/views/order-detail-product-packaging-unit/order-detail-product-packaging-unit.twig';
     }
 }

@@ -10,10 +10,9 @@ namespace SprykerShop\Yves\ProductImageWidget\Plugin\ProductDetailPage;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductImageWidget\ProductImageWidgetPluginInterface;
-use SprykerShop\Yves\ProductImageWidget\Widget\ProductImageSliderWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductImageWidget\Widget\ProductImageSliderWidget instead.
+ * @deprecated Use NEW_MOLECULE instead.
  */
 class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductImageWidgetPluginInterface
 {
@@ -24,9 +23,7 @@ class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductIm
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $widget = new ProductImageSliderWidget($productViewTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('product', $productViewTransfer);
     }
 
     /**
@@ -42,6 +39,6 @@ class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductIm
      */
     public static function getTemplate(): string
     {
-        return ProductImageSliderWidget::getTemplate();
+        return '@ProductImageWidget/views/image-slider/image-slider.twig';
     }
 }
