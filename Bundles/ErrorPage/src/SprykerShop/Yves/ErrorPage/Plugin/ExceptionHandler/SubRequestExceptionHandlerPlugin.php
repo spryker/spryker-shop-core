@@ -40,12 +40,25 @@ class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements Excepti
     {
         $application = $this->getFactory()->getApplication();
 
+        $request = $application[$application::REQUEST];
         $errorPageUrl = $application->url(static::URL_NAME_PREFIX . $exception->getStatusCode());
-        $request = Request::create($errorPageUrl, Request::METHOD_GET, [
-            'exception' => $exception,
-        ]);
+        $cookies = $request->cookies->all();
 
-        $response = $application->handle($request, HttpKernelInterface::SUB_REQUEST, false);
+        $subRequest = Request::create(
+            $errorPageUrl,
+            Request::METHOD_GET,
+            [
+            'exception' => $exception,
+            ],
+            $cookies
+        );
+
+        $session = $request->getSession();
+
+        if ($session) {
+            $subRequest->setSession($session);
+        }
+        $response = $application->handle($subRequest, HttpKernelInterface::MASTER_REQUEST, false);
 
         return $response;
     }
