@@ -29,10 +29,10 @@
         }) | raw }}
     </p>
     {% if data.sharedCompanyUsers.count or data.sharedCompanyBusinessUnits.count %}
-        <p class="spacing-y spacing-y--small">
+        <p class="spacing-y spacing-y--small spacing-bottom spacing-bottom--big">
             {{ 'customer.account.shopping_list.delete.it_belongs_to_follow' | trans }}
         </p>
-        <br />
+
         {% if data.sharedCompanyBusinessUnits.count %}
             <b>{{ 'company.account.business_unit' | trans }}:</b>
             <ul class="list">
@@ -41,7 +41,9 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <br/>
+
+        <br>
+
         {% if data.sharedCompanyUsers.count %}
             <b>{{ 'company.account.company_user' | trans }}:</b>
             <ul class="list">
@@ -51,7 +53,8 @@
             </ul>
         {% endif %}
 
-        <br/>
+        <br>
+
         <p>
             <strong>
                 {{ 'customer.account.shopping_list.delete.it_wll_be_deleted_from_all_of_them' | trans }}

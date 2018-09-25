@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'share-list',
-    tag: 'div'
 } %}
 
 {% define data = {
@@ -27,14 +26,16 @@
             <ul class="{{ config.name }}__list">
                 {% for key, unit in data.shareUnits %}
                     {% if unit.idShoppingListPermissionGroup is not null %}
-                        <li class="spacing-y spacing-y--inner">
-                            {% include molecule('share-list-item', 'ShoppingListPage') with {
-                                data: {
-                                    name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
-                                    shareForm: data.shareForm[key]
-                                }
-                            } only %}
-                        </li>
+                        {% block shareListItem %}
+                            <li class="spacing-y spacing-y--inner">
+                                {% include molecule('share-list-item', 'ShoppingListPage') with {
+                                    data: {
+                                        name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
+                                        shareForm: data.shareForm[key]
+                                    }
+                                } only %}
+                            </li>
+                        {% endblock %}
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -45,15 +46,7 @@
             <ul class="{{ config.name }}__list">
                 {% for key, unit in data.shareUnits %}
                     {% if unit.idShoppingListPermissionGroup is null %}
-                        <li class="spacing-y spacing-y--inner">
-                            {% include molecule('share-list-item', 'ShoppingListPage') with {
-                                class: 'spacing-y spacing-y--inner',
-                                data: {
-                                    name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
-                                    shareForm: data.shareForm[key]
-                                }
-                            } only %}
-                        </li>
+                        {{ block('shareListItem') }}
                     {% endif %}
                 {% endfor %}
             </ul>

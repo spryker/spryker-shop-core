@@ -45,11 +45,13 @@
                         <a href="{% if product.url is not empty %}{{ product.url }}{% endif %}">{{ product.name }}</a>
                     {% endif %}
                     {% if product.sku is not empty %}
-                        <div><small>{{ product.sku }}</small></div>
+                        <div>
+                            <small>{{ product.sku }}</small>
+                        </div>
                     {% endif %}
                     {% for attribute in product.superAttributesDefinition %}
                         {% if product.attributes[attribute] is defined %}
-                            {{ ('product.attribute.'~attribute) | trans }}: {{ product.attributes[attribute] }} <br/>
+                            {{ ('product.attribute.'~attribute) | trans }}: {{ product.attributes[attribute] }} <br>
                         {% endif %}
                     {% endfor %}
                 </td>
