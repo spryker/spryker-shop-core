@@ -63,7 +63,7 @@ export default class OrderQuantity extends Component {
         if(this.currentInputValue % this.stepAttributeValue !== 0) {
             this.roundOfQuantityInputValue();
             this.showErrorMessage();
-        } else if(this.currentInputValue > Number(this.maxQuantityAttributeValue)) {
+        } else if(this.maxQuantityAttributeValue && this.currentInputValue > Number(this.maxQuantityAttributeValue)) {
             this.quantityInput.value = this.maxQuantityAttributeValue;
         }
 

@@ -80,6 +80,6 @@ export default class OrderItemPrice extends Component {
     }
 
     get productId(): number {
-        return this.currentFieldComponent.productData.idProductConcrete;
+        return this.currentFieldComponent.productData ? this.currentFieldComponent.productData.idProductConcrete : 0;
     }
 }
