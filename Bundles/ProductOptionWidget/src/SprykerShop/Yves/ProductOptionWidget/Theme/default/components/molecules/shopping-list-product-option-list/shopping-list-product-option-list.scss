@@ -4,7 +4,6 @@ $option-item-padding: map-get($setting-spacing, 'small');
     #{$name} {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
 
         &__item {
             flex-grow: 1;
