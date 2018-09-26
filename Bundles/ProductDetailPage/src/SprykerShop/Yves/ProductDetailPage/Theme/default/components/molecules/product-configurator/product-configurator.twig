@@ -56,13 +56,6 @@
         {% endif %}
     {% endwidget %}
 
-
-
-
-
-
-
-
     {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] use view('pdp-review-rating', 'ProductReviewWidget') only %}
     {% nowidget %}
         {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }} {# @deprecated Use ProductDetailPageReviewWidget instead. #}
@@ -127,9 +120,14 @@
         {% endwidget %}
 
         {% if widgetExists('AvailabilityWidgetPlugin') %}
-            {{ widget('AvailabilityWidgetPlugin', data.product) }} {# @deprecated Use NEW_MOLECULE instead. #}
+            {{ widget('AvailabilityWidgetPlugin', data.product) }}
         {% else %}
-            {# todo: include NEW_MOLECULE here #}
+            {% include molecule('availability-product', 'AvailabilityWidget') ignore missing with {
+                data: {
+                    idProductConcrete: data.product.idProductConcrete,
+                    isAvailable: data.product.available
+                }
+            } only %}
         {% endif %}
     </form>
 
