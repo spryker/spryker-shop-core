@@ -32,7 +32,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected $externalRedirectUrl;
 
     /**
-     * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @var \Generated\Shared\Transfer\CheckoutResponseTransfer|null
      */
     protected $checkoutResponseTransfer;
 
@@ -42,7 +42,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     protected $errorCodeToRouteMatching = [];
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $postConditionErrorRoute;
 
@@ -138,7 +138,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -180,7 +180,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPostConditionErrorRoute()
     {

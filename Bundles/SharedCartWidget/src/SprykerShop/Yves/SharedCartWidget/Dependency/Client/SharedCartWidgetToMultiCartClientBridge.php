@@ -31,4 +31,12 @@ class SharedCartWidgetToMultiCartClientBridge implements SharedCartWidgetToMulti
     {
         return $this->multiCartClient->getQuoteCollection();
     }
+
+    /**
+     * @return bool
+     */
+    public function isQuoteDeletable(): bool
+    {
+        return $this->multiCartClient->isQuoteDeletable();
+    }
 }
