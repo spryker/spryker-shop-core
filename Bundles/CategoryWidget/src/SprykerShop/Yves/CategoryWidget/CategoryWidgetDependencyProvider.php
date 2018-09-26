@@ -13,7 +13,7 @@ use SprykerShop\Yves\CategoryWidget\Dependency\Client\CategoryWidgetToCategorySt
 
 class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';
+    public const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

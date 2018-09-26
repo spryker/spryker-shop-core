@@ -13,8 +13,8 @@ use SprykerShop\Yves\ProductSetListPage\Dependency\Client\ProductSetListPageToPr
 
 class ProductSetListPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_PRODUCT_SET_PAGE_SEARCH = 'CLIENT_PRODUCT_SET_PAGE_SEARCH';
-    const PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS = 'PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS';
+    public const CLIENT_PRODUCT_SET_PAGE_SEARCH = 'CLIENT_PRODUCT_SET_PAGE_SEARCH';
+    public const PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS = 'PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
