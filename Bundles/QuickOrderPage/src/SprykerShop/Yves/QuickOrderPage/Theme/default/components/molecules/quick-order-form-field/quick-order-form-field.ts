@@ -24,12 +24,14 @@ export default class QuickOrderFormField extends Component {
     productLoadedEvent: CustomEvent;
     productDeleteEvent: CustomEvent;
     autocompleteFormInput: HTMLInputElement;
+    hiddenIdInputElement: HTMLInputElement;
     ajaxProvider: AjaxProvider;
     productData: ProductJSON;
 
     protected readyCallback(): void {
         this.autocompleteForm = <AutocompleteForm>this.querySelector('autocomplete-form');
         this.autocompleteFormInput = <HTMLInputElement>this.autocompleteForm.querySelector(`.${this.autocompleteForm.jsName}__input`);
+        this.hiddenIdInputElement = <HTMLInputElement>document.querySelector(`input[name='${this.hiddenIdInputName}']`);
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
 
         this.mapEvents();
@@ -54,6 +56,7 @@ export default class QuickOrderFormField extends Component {
 
         if (this.selectedItem.matches(this.autocompleteForm.itemSelector)) {
             event.stopPropagation();
+            this.setInputId(this.selectedId);
             this.loadProduct();
         }
     }
@@ -92,7 +95,15 @@ export default class QuickOrderFormField extends Component {
         return JSON.parse(response);
     }
 
+    private setInputId(data: string): void {
+        this.hiddenIdInputElement.value = data;
+    }
+
     get selectedId(): string {
         return this.selectedItem.getAttribute('data-id-product');
+    }
+
+    get hiddenIdInputName(): string {
+        return this.autocompleteForm.getAttribute('hidden-id-input-name');
     }
 }
