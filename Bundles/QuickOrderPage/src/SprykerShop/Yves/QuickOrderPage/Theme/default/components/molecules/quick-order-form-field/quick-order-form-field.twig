@@ -11,6 +11,7 @@
     index: required,
     sku: required,
     qty: required,
+    idProductConcrete: required,
     fullName: required
 } %}
 
@@ -23,6 +24,7 @@
         ) }}
 
         {{ form_row(data.sku) }}
+        {{ form_row(data.idProductConcrete) }}
 
         {% include molecule('ajax-provider') with {
             class: config.jsName ~ '__provider',

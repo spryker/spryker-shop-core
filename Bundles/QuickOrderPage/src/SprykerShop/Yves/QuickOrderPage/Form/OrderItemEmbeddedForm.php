@@ -26,6 +26,7 @@ class OrderItemEmbeddedForm extends AbstractType
     public const FIELD_SKU_LABEL = 'quick-order.input-label.sku';
     public const FIELD_QTY = 'qty';
     public const FIELD_QTY_LABEL = 'quick-order.input-label.qty';
+    public const FIELD_ID_PRODUCT_CONCRETE = 'id_product_concrete';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -37,7 +38,8 @@ class OrderItemEmbeddedForm extends AbstractType
     {
         $this
             ->addSku($builder)
-            ->addQty($builder);
+            ->addQty($builder)
+            ->addIdProductConcrete($builder);
     }
 
     /**
@@ -83,6 +85,20 @@ class OrderItemEmbeddedForm extends AbstractType
             'required' => false,
             'label' => false,
             'attr' => ['min' => 1],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdProductConcrete(FormBuilderInterface $builder): FormTypeInterface
+    {
+        $builder->add(static::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class, [
+            'required' => false,
         ]);
 
         return $this;
