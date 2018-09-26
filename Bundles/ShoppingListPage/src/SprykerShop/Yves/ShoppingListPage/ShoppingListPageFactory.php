@@ -12,6 +12,8 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandler;
 use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandlerInterface;
+use SprykerShop\Yves\ShoppingListPage\Business\SharedShoppingListReader;
+use SprykerShop\Yves\ShoppingListPage\Business\SharedShoppingListReaderInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
@@ -88,6 +90,14 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Business\SharedShoppingListReaderInterface
+     */
+    public function createSharedShoppingListReader(): SharedShoppingListReaderInterface
+    {
+        return new SharedShoppingListReader($this->getCompanyUserClient(), $this->getCompanyBusinessUnitClient());
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandlerInterface
      */
     public function createAddToCartFormHandler(): AddToCartFormHandlerInterface
@@ -128,17 +138,17 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @param int $idShoppingList
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getShareShoppingListForm(int $idShoppingList): FormInterface
+    public function getShareShoppingListForm(ShoppingListTransfer $shoppingListTransfer): FormInterface
     {
         $shareShoppingListFormDataProvider = $this->createShareShoppingListFormDataProvider();
 
         return $this->getFormFactory()->create(
             ShareShoppingListForm::class,
-            $shareShoppingListFormDataProvider->getData($idShoppingList),
+            $shareShoppingListFormDataProvider->getData($shoppingListTransfer),
             $shareShoppingListFormDataProvider->getOptions()
         );
     }
@@ -194,5 +204,13 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getShoppingListViewWidgetPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_VIEW_WIDGETS);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getShoppingListEditWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_EDIT_WIDGETS);
     }
 }
