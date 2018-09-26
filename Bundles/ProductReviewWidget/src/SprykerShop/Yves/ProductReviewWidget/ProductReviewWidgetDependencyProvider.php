@@ -15,10 +15,10 @@ use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetTo
 
 class ProductReviewWidgetDependencyProvider extends SprykerProductReviewDependencyProvider
 {
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
-    const CLIENT_PRODUCT_REVIEW = 'CLIENT_PRODUCT_REVIEW';
-    const CLIENT_PRODUCT_REVIEW_STORAGE = 'CLIENT_PRODUCT_REVIEW_STORAGE';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    public const CLIENT_PRODUCT_REVIEW = 'CLIENT_PRODUCT_REVIEW';
+    public const CLIENT_PRODUCT_REVIEW_STORAGE = 'CLIENT_PRODUCT_REVIEW_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

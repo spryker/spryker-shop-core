@@ -14,8 +14,8 @@ use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToQuoteClientBridg
 
 class PriceWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    const CLIENT_PRICE = 'CLIENT_PRICE';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_PRICE = 'CLIENT_PRICE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

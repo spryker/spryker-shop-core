@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface AvailabilityWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'AvailabilityWidgetPlugin';
+    public const NAME = 'AvailabilityWidgetPlugin';
 
     /**
      * @api

@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class HeartbeatPageControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_HEARTBEAT = 'heartbeat';
+    public const ROUTE_HEARTBEAT = 'heartbeat';
 
     /**
      * @param \Silex\Application $app
