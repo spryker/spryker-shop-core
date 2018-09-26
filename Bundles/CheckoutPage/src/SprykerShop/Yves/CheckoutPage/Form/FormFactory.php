@@ -144,7 +144,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param \Symfony\Component\Form\FormTypeInterface[] $formTypes
+     * @param \Symfony\Component\Form\FormTypeInterface[]|string[] $formTypes
      * @param \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null $dataProvider
      *
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface

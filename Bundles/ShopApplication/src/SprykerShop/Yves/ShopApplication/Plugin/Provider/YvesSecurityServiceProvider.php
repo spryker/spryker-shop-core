@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class YvesSecurityServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const BCRYPT_FACTOR = 12;
+    public const BCRYPT_FACTOR = 12;
 
     /**
      * @param \Silex\Application $app
