@@ -20,7 +20,8 @@
         {{ widget(
             'QuickOrderPageProductSearchWidgetPlugin',
             'ajax-provider' ~ data.index,
-            data.fullName ~ '[sku]'
+            data.fullName ~ '[sku]',
+            data.fullName ~ '[id_product_concrete]'
         ) }}
 
         {{ form_row(data.sku) }}
