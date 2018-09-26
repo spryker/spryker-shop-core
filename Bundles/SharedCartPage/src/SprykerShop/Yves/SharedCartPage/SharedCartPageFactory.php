@@ -11,6 +11,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCompanyUserClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToCustomerClientInterface;
+use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToMultiCartClientInterface;
 use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToSharedCartClientInterface;
 use SprykerShop\Yves\SharedCartPage\Form\DataProvider\ShareCartFormDataProvider;
 use SprykerShop\Yves\SharedCartPage\Form\DataProvider\ShareCartFormDataProviderInterface;
@@ -44,8 +45,17 @@ class SharedCartPageFactory extends AbstractFactory
         return new ShareCartFormDataProvider(
             $this->getCustomerClient(),
             $this->getCompanyUserClient(),
-            $this->getSharedCartClient()
+            $this->getSharedCartClient(),
+            $this->getMultiCartClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToMultiCartClientInterface
+     */
+    public function getMultiCartClient(): SharedCartPageToMultiCartClientInterface
+    {
+        return $this->getProvidedDependency(SharedCartPageDependencyProvider::CLIENT_MULTI_CART);
     }
 
     /**
