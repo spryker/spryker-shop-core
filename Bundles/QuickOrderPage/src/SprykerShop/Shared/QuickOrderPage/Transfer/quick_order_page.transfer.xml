@@ -15,6 +15,7 @@
 
     <transfer name="QuickOrderProductAdditionalData">
         <property name="idProductConcrete" type="int" />
+        <property name="productQuantityStorage" type="ProductQuantityStorage" />
     </transfer>
 
 </transfers>

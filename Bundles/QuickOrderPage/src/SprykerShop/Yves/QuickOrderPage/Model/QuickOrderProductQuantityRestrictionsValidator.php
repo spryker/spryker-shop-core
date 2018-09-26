@@ -12,17 +12,11 @@ use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface;
 
 class QuickOrderProductQuantityRestrictionsValidator implements QuickOrderProductQuantityRestrictionsValidatorInterface
 {
-    /**
-     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductClientInterface
-     */
-    protected $productClient;
-
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityClientInterface
      */
@@ -34,16 +28,13 @@ class QuickOrderProductQuantityRestrictionsValidator implements QuickOrderProduc
     protected $productQuantityStorageClient;
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductClientInterface $productClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityClientInterface $productQuantityClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface $productQuantityStorageClient
      */
     public function __construct(
-        QuickOrderPageToProductClientInterface $productClient,
         QuickOrderPageToProductQuantityClientInterface $productQuantityClient,
         QuickOrderPageToProductQuantityStorageClientInterface $productQuantityStorageClient
     ) {
-        $this->productClient = $productClient;
         $this->productQuantityClient = $productQuantityClient;
         $this->productQuantityStorageClient = $productQuantityStorageClient;
     }
@@ -55,7 +46,7 @@ class QuickOrderProductQuantityRestrictionsValidator implements QuickOrderProduc
      */
     public function validateQuantityRestrictions(QuickOrderItemTransfer $quickOrderItemTransfer): ProductQuantityValidationResponseTransfer
     {
-        $productConcreteTransfer = $this->getProductConcreteTransfer($quickOrderItemTransfer);
+        $productConcreteTransfer = $this->createProductConcreteTransferFromQuickOrderItemTransfer($quickOrderItemTransfer);
 
         if (!$productConcreteTransfer->getIdProductConcrete()) {
             return $this->createValidationResponse(false);
@@ -78,12 +69,12 @@ class QuickOrderProductQuantityRestrictionsValidator implements QuickOrderProduc
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function getProductConcreteTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): ProductConcreteTransfer
+    protected function createProductConcreteTransferFromQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): ProductConcreteTransfer
     {
-        $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->setSku($quickOrderItemTransfer->getSku());
-
-        return $this->productClient->findProductConcreteIdBySku($productConcreteTransfer);
+        return (new ProductConcreteTransfer())->fromArray(
+            $quickOrderItemTransfer->toArray(),
+            true
+        );
     }
 
     /**

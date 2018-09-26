@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientBridge;
@@ -21,7 +20,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     public const CLIENT_PRODUCT_QUANTITY = 'CLIENT_PRODUCT_QUANTITY';
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
@@ -43,7 +41,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addApplication($container);
         $container = $this->addCartClient($container);
         $container = $this->addQuoteClient($container);
-        $container = $this->addProductClient($container);
         $container = $this->addProductQuantityClient($container);
         $container = $this->addProductQuantityStorageClient($container);
         $container = $this->addQuickOrderPageWidgetPlugins($container);
@@ -96,22 +93,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_QUOTE] = function (Container $container) {
             return new QuickOrderPageToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addProductClient(Container $container): Container
-    {
-        $container[static::CLIENT_PRODUCT] = function (Container $container) {
-            return new QuickOrderPageToProductClientBridge(
-                $container->getLocator()->product()->client()
-            );
         };
 
         return $container;

@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\QuickOrderPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
@@ -121,18 +120,9 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createQuickOrderQuantityRestrictionsValidator(): QuickOrderProductQuantityRestrictionsValidatorInterface
     {
         return new QuickOrderProductQuantityRestrictionsValidator(
-            $this->getProductClient(),
             $this->getProductQuantityClient(),
             $this->getProductQuantityStorageClient()
         );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductClientInterface
-     */
-    public function getProductClient(): QuickOrderPageToProductClientInterface
-    {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRODUCT);
     }
 
     /**
