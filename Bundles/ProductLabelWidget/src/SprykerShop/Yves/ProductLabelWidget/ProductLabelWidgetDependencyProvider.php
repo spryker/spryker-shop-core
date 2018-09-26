@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductLabelWidget\Dependency\Client\ProductLabelWidgetToPr
 
 class ProductLabelWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_PRODUCT_LABEL_STORAGE = 'CLIENT_PRODUCT_LABEL_STORAGE';
+    public const CLIENT_PRODUCT_LABEL_STORAGE = 'CLIENT_PRODUCT_LABEL_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
