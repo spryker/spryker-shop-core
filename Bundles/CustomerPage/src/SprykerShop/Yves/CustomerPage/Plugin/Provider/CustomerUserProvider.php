@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -34,14 +33,12 @@ class CustomerUserProvider extends AbstractPlugin implements UserProviderInterfa
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
-     * @throws \Symfony\Component\Security\Core\Exception\UnsupportedUserException
-     *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
     public function refreshUser(UserInterface $user)
     {
         if (!$user instanceof Customer) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+            return $user;
         }
 
         $customerTransfer = $this->getCustomerTransfer($user);

@@ -14,17 +14,17 @@ use Twig_SimpleFunction;
 
 class ShopUiTwigExtension extends TwigExtension
 {
-    const FUNCTION_GET_PUBLIC_FOLDER_PATH = 'publicPath';
-    const FUNCTION_GET_QA_ATTRIBUTE = 'qa';
-    const FUNCTION_GET_QA_ATTRIBUTE_SUB = 'qa_*';
+    public const FUNCTION_GET_PUBLIC_FOLDER_PATH = 'publicPath';
+    public const FUNCTION_GET_QA_ATTRIBUTE = 'qa';
+    public const FUNCTION_GET_QA_ATTRIBUTE_SUB = 'qa_*';
 
-    const FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE = 'model';
-    const FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE = 'atom';
-    const FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE = 'molecule';
-    const FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE = 'organism';
-    const FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE = 'template';
-    const FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE = 'view';
-    const DEFAULT_MODULE = 'ShopUi';
+    public const FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE = 'model';
+    public const FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE = 'atom';
+    public const FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE = 'molecule';
+    public const FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE = 'organism';
+    public const FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE = 'template';
+    public const FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE = 'view';
+    public const DEFAULT_MODULE = 'ShopUi';
 
     /**
      * @return string[]

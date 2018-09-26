@@ -12,9 +12,11 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductOptionWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'ProductOptionWidgetPlugin';
+    public const NAME = 'ProductOptionWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void

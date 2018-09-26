@@ -18,7 +18,7 @@ use Twig_SimpleFunction;
  */
 class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const CMS_PREFIX_KEY = 'generated.cms';
+    public const CMS_PREFIX_KEY = 'generated.cms';
 
     /**
      * @param \Silex\Application $app
@@ -28,7 +28,7 @@ class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServicePr
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
+            $app->extend('twig', function (Twig_Environment $twig) use ($app) {
                 return $this->registerCmsTwigFunction($twig, $app);
             })
         );

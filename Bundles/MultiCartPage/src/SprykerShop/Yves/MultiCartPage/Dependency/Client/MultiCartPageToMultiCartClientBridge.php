@@ -110,4 +110,12 @@ class MultiCartPageToMultiCartClientBridge implements MultiCartPageToMultiCartCl
     {
         return $this->multiCartClient->clearQuote($quoteTransfer);
     }
+
+    /**
+     * @return bool
+     */
+    public function isQuoteDeletable(): bool
+    {
+        return $this->multiCartClient->isQuoteDeletable();
+    }
 }

@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AddressController extends AbstractCustomerController
 {
-    const KEY_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
-    const KEY_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
-    const KEY_ADDRESSES = 'addresses';
+    public const KEY_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
+    public const KEY_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
+    public const KEY_ADDRESSES = 'addresses';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -90,15 +90,11 @@ class AddressController extends AbstractCustomerController
         }
 
         if ($addressForm->isSubmitted() && $addressForm->isValid()) {
-            $customerTransfer = $this->createAddress($customerTransfer, $addressForm->getData());
+            $this->createAddress($customerTransfer, $addressForm->getData());
 
-            if ($customerTransfer) {
-                $this->addSuccessMessage(Messages::CUSTOMER_ADDRESS_ADDED);
+            $this->addSuccessMessage(Messages::CUSTOMER_ADDRESS_ADDED);
 
-                return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
-            }
-
-            $this->addErrorMessage(Messages::CUSTOMER_ADDRESS_NOT_ADDED);
+            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
         }
 
         return [
@@ -140,9 +136,9 @@ class AddressController extends AbstractCustomerController
             ->handleRequest($request);
         $idCustomerAddress = $request->query->getInt('id');
 
-        if ($addressForm->isSubmitted() === false) {
+        if (!$addressForm->isSubmitted()) {
             $addressForm->setData($dataProvider->getData($idCustomerAddress));
-        } elseif ($addressForm->isSubmitted() && $addressForm->isValid()) {
+        } elseif ($addressForm->isValid()) {
             $customerTransfer = $this->processAddressUpdate($addressForm->getData());
 
             if ($customerTransfer !== null) {

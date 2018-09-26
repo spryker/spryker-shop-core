@@ -11,9 +11,11 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductGroupWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'ProductGroupWidgetPlugin';
+    public const NAME = 'ProductGroupWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param string $template
      *

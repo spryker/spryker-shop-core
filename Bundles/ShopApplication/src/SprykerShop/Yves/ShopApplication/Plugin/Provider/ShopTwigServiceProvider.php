@@ -129,7 +129,7 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
             return [];
         });
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
+            $app->extend('twig', function (Twig_Environment $twig) use ($app) {
                 if (class_exists('Symfony\Bridge\Twig\Extension\RoutingExtension')) {
                     if (isset($app['form.factory'])) {
                         $app['twig.loader']->addLoader(

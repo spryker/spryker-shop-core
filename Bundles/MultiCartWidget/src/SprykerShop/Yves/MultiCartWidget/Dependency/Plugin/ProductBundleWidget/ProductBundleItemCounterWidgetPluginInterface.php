@@ -14,6 +14,11 @@ interface ProductBundleItemCounterWidgetPluginInterface
     public const NAME = 'ProductBundleItemCounterWidgetPlugin';
 
     /**
+     * Specification:
+     *  - Represents correct calculation count of items in quote
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

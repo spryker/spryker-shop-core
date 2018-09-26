@@ -15,6 +15,8 @@ interface ProductGroupWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'ProductGroupWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void

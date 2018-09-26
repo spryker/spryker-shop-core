@@ -31,6 +31,8 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
 
         $response = $this->createRedirectResponse($request);
 
+        $this->executeAfterPlugins();
+
         return $response;
     }
 
@@ -72,5 +74,17 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
         }
 
         return HomePageControllerProvider::ROUTE_HOME;
+    }
+
+    /**
+     * @return void
+     */
+    protected function executeAfterPlugins(): void
+    {
+        $afterCustomerAuthenticationSuccessPlugins = $this->getFactory()->getAfterCustomerAuthenticationSuccessPlugins();
+
+        foreach ($afterCustomerAuthenticationSuccessPlugins as $afterCustomerAuthenticationSuccessPlugin) {
+            $afterCustomerAuthenticationSuccessPlugin->execute();
+        }
     }
 }

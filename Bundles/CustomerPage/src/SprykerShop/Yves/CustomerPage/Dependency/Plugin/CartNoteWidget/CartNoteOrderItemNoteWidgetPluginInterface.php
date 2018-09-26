@@ -12,9 +12,11 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface CartNoteOrderItemNoteWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'CartNoteOrderItemNoteWidgetPlugin';
+    public const NAME = 'CartNoteOrderItemNoteWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
