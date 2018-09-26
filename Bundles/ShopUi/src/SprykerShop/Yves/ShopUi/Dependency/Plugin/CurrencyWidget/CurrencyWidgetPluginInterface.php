@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface CurrencyWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'CurrencyWidgetPlugin';
+    public const NAME = 'CurrencyWidgetPlugin';
 
     /**
      * @api

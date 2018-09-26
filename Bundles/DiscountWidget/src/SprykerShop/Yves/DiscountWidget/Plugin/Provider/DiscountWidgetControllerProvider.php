@@ -12,12 +12,12 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
-    const ROUTE_DISCOUNT_VOUCHER_REMOVE = 'discount/voucher/remove';
-    const ROUTE_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';
-    const CHECKOUT_VOUCHER_ADD = 'checkout-voucher-add';
+    public const ROUTE_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
+    public const ROUTE_DISCOUNT_VOUCHER_REMOVE = 'discount/voucher/remove';
+    public const ROUTE_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';
+    public const CHECKOUT_VOUCHER_ADD = 'checkout-voucher-add';
 
-    const SKU_PATTERN = '[a-zA-Z0-9-_]+';
+    public const SKU_PATTERN = '[a-zA-Z0-9-_]+';
 
     /**
      * @param \Silex\Application $app
