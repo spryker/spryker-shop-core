@@ -5,55 +5,45 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\TabsWidget\Plugin\ShopApplication;
+namespace SprykerShop\Yves\TabsWidget\Widget;
 
 use Generated\Shared\Transfer\FullTextSearchTabTransfer;
 use Generated\Shared\Transfer\TabMetaDataTransfer;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShopApplication\Dependency\Plugin\TabsWidget\FullTextSearchTabsWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\TabsWidget\TabsWidgetFactory getFactory()
  */
-class FullTextSearchTabsWidgetPlugin extends AbstractWidgetPlugin implements FullTextSearchTabsWidgetPluginInterface
+class FullTextSearchTabsWidget extends AbstractWidget
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
+     * @param string $searchString
+     * @param string $activeTabName
+     * @param array $requestParams
+     */
+    public function __construct(string $searchString, string $activeTabName, array $requestParams = [])
+    {
+        $this
+            ->addParameter('tabs', $this->getTabs($searchString, $activeTabName, $requestParams))
+            ->addParameter('searchString', $searchString)
+            ->addParameter('requestParams', $requestParams);
+    }
+
+    /**
      * @return string
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'FullTextSearchTabsWidget';
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string
     {
         return '@TabsWidget/views/tabs/tabs.twig';
-    }
-
-    /**
-     * @param string $searchString
-     * @param string $activeTabName
-     * @param array $requestParams
-     *
-     * @return void
-     */
-    public function initialize(string $searchString, string $activeTabName, array $requestParams = []): void
-    {
-        $this->addParameter('tabs', $this->getTabs($searchString, $activeTabName, $requestParams))
-            ->addParameter('searchString', $searchString)
-            ->addParameter('requestParams', $requestParams);
     }
 
     /**

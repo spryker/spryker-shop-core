@@ -14,7 +14,6 @@ use SprykerShop\Yves\CmsSearchPage\Dependency\Client\CmsSearchPageToCmsSearchPag
 class CmsSearchPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CMS_SEARCH_PAGE = 'CLIENT_CMS_SEARCH_PAGE';
-    public const PLUGIN_CMS_SEARCH_PAGE_WIDGETS = 'PLUGIN_CMS_SEARCH_PAGE_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -24,7 +23,6 @@ class CmsSearchPageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container): Container
     {
         $container = $this->addCmsSearchPageClient($container);
-        $container = $this->addCmsSearchPageWidgetPlugins($container);
 
         return $container;
     }
@@ -41,27 +39,5 @@ class CmsSearchPageDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addCmsSearchPageWidgetPlugins(Container $container): Container
-    {
-        $container[static::PLUGIN_CMS_SEARCH_PAGE_WIDGETS] = function () {
-            return $this->getCmsSearchPageWidgetPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getCmsSearchPageWidgetPlugins(): array
-    {
-        return [];
     }
 }
