@@ -59,7 +59,7 @@ class QuickOrderProductQuantityRestrictionsValidator implements QuickOrderProduc
         }
 
         return $this->productQuantityClient->validateProductQuantityRestrictions(
-            $quickOrderItemTransfer->getQty(),
+            (int)$quickOrderItemTransfer->getQty(),
             $this->createProductQuantityTransferFromProductQuantityStorageTransfer($productQuantityStorageTransfer)
         );
     }

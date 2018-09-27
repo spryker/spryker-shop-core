@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider;
@@ -19,8 +20,6 @@ use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandler;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandlerInterface;
-use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductAdditionalDataTransferExpander;
-use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductAdditionalDataTransferExpanderInterface;
 use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductPriceTransferExpander;
 use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductPriceTransferExpanderInterface;
 use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductQuantityRestrictionsValidator;
@@ -91,14 +90,6 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductAdditionalDataTransferExpanderInterface
-     */
-    public function createQuickOrderProductAdditionalDataTransferExpander(): QuickOrderProductAdditionalDataTransferExpanderInterface
-    {
-        return new QuickOrderProductAdditionalDataTransferExpander($this->getQuickOrderProductAdditionalDataTransferExpanderPlugins());
-    }
-
-    /**
      * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface
      */
     public function getCartClient(): QuickOrderPageToCartClientInterface
@@ -142,6 +133,14 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface
+     */
+    public function getQuickOrderClient(): QuickOrderPageToQuickOrderClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_QUICK_ORDER);
+    }
+
+    /**
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication(): Application
@@ -182,14 +181,6 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getQuickOrderItemTransferExpanderPlugins(): array
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductAdditionalDataTransferExpanderPluginInterface[]
-     */
-    public function getQuickOrderProductAdditionalDataTransferExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA_TRANSFER_EXPANDER);
     }
 
     /**

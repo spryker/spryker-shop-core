@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
-use Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
@@ -211,28 +211,28 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quickOrderProductAdditionalDataTransfer = $this->executeProductAdditionalDataAction($request);
+        $productConcreteTransfer = $this->executeProductAdditionalDataAction($request);
 
-        return $this->jsonResponse($quickOrderProductAdditionalDataTransfer->toArray(true, true));
+        return $this->jsonResponse($productConcreteTransfer->toArray(true, true));
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function executeProductAdditionalDataAction(Request $request)
+    protected function executeProductAdditionalDataAction(Request $request): ProductConcreteTransfer
     {
-        $quickOrderProductAdditionalDataTransfer = new QuickOrderProductAdditionalDataTransfer();
-        $quickOrderProductAdditionalDataTransfer->setIdProductConcrete(
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setIdProductConcrete(
             $request->query->getInt(static::PARAM_ID_PRODUCT)
         );
 
-        $quickOrderProductAdditionalDataTransfer = $this->getFactory()
-            ->createQuickOrderProductAdditionalDataTransferExpander()
-            ->expandQuickOrderProductAdditionalDataTransferWithPlugins($quickOrderProductAdditionalDataTransfer);
+        $productConcreteTransfer = $this->getFactory()
+            ->getQuickOrderClient()
+            ->expandProductConcreteTransfer($productConcreteTransfer);
 
-        return $quickOrderProductAdditionalDataTransfer;
+        return $productConcreteTransfer;
     }
 
     /**
