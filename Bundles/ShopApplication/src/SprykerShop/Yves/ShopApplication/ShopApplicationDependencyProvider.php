@@ -15,10 +15,14 @@ use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTex
 
 class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
-    const PLUGIN_GLOBAL_WIDGETS = 'PLUGIN_GLOBAL_WIDGETS';
-    const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
-    const STORE = 'STORE';
+    /**
+     * @deprecated Use static::WIDGET_GLOBAL instead.
+     */
+    public const PLUGIN_GLOBAL_WIDGETS = 'PLUGIN_GLOBAL_WIDGETS';
+    public const WIDGET_GLOBAL = 'WIDGET_GLOBAL';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+    public const STORE = 'STORE';
     public const PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER = 'PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER';
 
     /**
@@ -29,7 +33,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addApplicationPlugin($container);
-        $container = $this->addGlobalWidgetPlugins($container);
+        $container = $this->addGlobalWidgets($container);
         $container = $this->addStore($container);
         $container = $this->addUtilTextService($container);
         $container = $this->addFilterControllerEventSubscriberPlugins($container);
@@ -82,12 +86,29 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use $this->addGlobalWidgets() instead.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
     protected function addGlobalWidgetPlugins(Container $container)
     {
+        return $this->addGlobalWidgets($container);
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlobalWidgets(Container $container)
+    {
+        $container[self::WIDGET_GLOBAL] = function () {
+            return array_unique(array_merge($this->getGlobalWidgets(), $this->getGlobalWidgetPlugins()));
+        };
+
+        // Kept for BC reasons
         $container[self::PLUGIN_GLOBAL_WIDGETS] = function () {
             return $this->getGlobalWidgetPlugins();
         };
@@ -96,9 +117,19 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use $this->getGlobalWidgets() instead.
+     *
      * @return string[]
      */
     protected function getGlobalWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getGlobalWidgets(): array
     {
         return [];
     }
