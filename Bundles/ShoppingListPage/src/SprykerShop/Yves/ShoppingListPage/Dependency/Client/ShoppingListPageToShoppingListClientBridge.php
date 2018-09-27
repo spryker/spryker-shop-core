@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
 
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
@@ -159,5 +160,15 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
     public function addItemCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer
     {
         return $this->shoppingListClient->addItemCollectionToCart($shoppingListAddToCartRequestCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
+    {
+        return $this->shoppingListClient->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
     }
 }

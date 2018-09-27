@@ -13,8 +13,8 @@ use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockSt
 
 class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const TWIG_FUNCTION_PLUGINS = 'TWIG_FUNCTION_PLUGINS';
-    const CLIENT_CMS_BLOCK_STORAGE = 'CLIENT_CMS_BLOCK_STORAGE';
+    public const TWIG_FUNCTION_PLUGINS = 'TWIG_FUNCTION_PLUGINS';
+    public const CLIENT_CMS_BLOCK_STORAGE = 'CLIENT_CMS_BLOCK_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

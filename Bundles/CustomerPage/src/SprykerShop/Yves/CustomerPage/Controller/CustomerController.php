@@ -17,12 +17,12 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider
  */
 class CustomerController extends AbstractCustomerController
 {
-    const ORDER_LIST_LIMIT = 5;
-    const ORDER_LIST_SORT_FIELD = 'created_at';
-    const ORDER_LIST_SORT_DIRECTION = 'DESC';
+    public const ORDER_LIST_LIMIT = 5;
+    public const ORDER_LIST_SORT_FIELD = 'created_at';
+    public const ORDER_LIST_SORT_DIRECTION = 'DESC';
 
-    const KEY_BILLING = 'billing';
-    const KEY_SHIPPING = 'shipping';
+    public const KEY_BILLING = 'billing';
+    public const KEY_SHIPPING = 'shipping';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse

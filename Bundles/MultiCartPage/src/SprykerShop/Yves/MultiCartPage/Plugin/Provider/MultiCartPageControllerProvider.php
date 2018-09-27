@@ -12,9 +12,11 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
 {
+    public const ROUTE_MULTI_CART_INDEX = 'multi-cart';
     public const ROUTE_MULTI_CART_CREATE = 'multi-cart/create';
     public const ROUTE_MULTI_CART_UPDATE = 'multi-cart/update';
     public const ROUTE_MULTI_CART_DELETE = 'multi-cart/delete';
+    public const ROUTE_MULTI_CART_CONFIRM_DELETE = 'multi-cart/confirm-delete';
     public const ROUTE_MULTI_CART_SET_DEFAULT = 'multi-cart/set-default';
     public const ROUTE_MULTI_CART_CLEAR = 'multi-cart/clear';
     public const ROUTE_MULTI_CART_DUPLICATE = 'multi-cart/duplicate';
@@ -31,9 +33,11 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
         $this->addMultiCartCreateRoute()
             ->addMultiCartUpdateRoute()
             ->addMultiCartDeleteRoute()
+            ->addMultiCartConfirmDeleteRoute()
             ->addMultiCartClearRoute()
             ->addMultiCartDuplicateRoute()
-            ->addMultiCartSetDefaultRoute();
+            ->addMultiCartSetDefaultRoute()
+            ->addMultiCartIndexRoute();
     }
 
     /**
@@ -77,6 +81,19 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
+    protected function addMultiCartConfirmDeleteRoute(): self
+    {
+        $this->createGetController('/{multiCart}/confirm-delete/{idQuote}', static::ROUTE_MULTI_CART_CONFIRM_DELETE, 'MultiCartPage', 'MultiCart', 'confirmDelete')
+            ->assert('multiCart', $this->getAllowedLocalesPattern() . 'multi-cart|multi-cart')
+            ->assert(static::PARAM_ID_QUOTE, '\d+')
+            ->value('multiCart', 'multi-cart');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     protected function addMultiCartClearRoute(): self
     {
         $this->createGetController('/{multiCart}/clear/{idQuote}', static::ROUTE_MULTI_CART_CLEAR, 'MultiCartPage', 'MultiCart', 'clear')
@@ -108,6 +125,18 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
         $this->createGetController('/{multiCart}/set-default/{idQuote}', static::ROUTE_MULTI_CART_SET_DEFAULT, 'MultiCartPage', 'MultiCart', 'setDefault')
             ->assert('multiCart', $this->getAllowedLocalesPattern() . 'multi-cart|multi-cart')
             ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->value('multiCart', 'multi-cart');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addMultiCartIndexRoute(): self
+    {
+        $this->createGetController('/{multiCart}/', static::ROUTE_MULTI_CART_INDEX, 'MultiCartPage', 'MultiCart', 'index')
+            ->assert('multiCart', $this->getAllowedLocalesPattern() . 'multi-cart|multi-cart')
             ->value('multiCart', 'multi-cart');
 
         return $this;
