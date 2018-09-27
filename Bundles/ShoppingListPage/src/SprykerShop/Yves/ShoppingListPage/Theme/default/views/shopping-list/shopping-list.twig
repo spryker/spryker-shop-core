@@ -100,9 +100,7 @@
                             </div>
                             {% for attribute in item.superAttributesDefinition %}
                                 {% if item.attributes[attribute] is defined %}
-                                    <strong>
-                                        {{ ('product.attribute.'~attribute) | trans }}:
-                                    </strong>
+                                    {{ ('product.attribute.'~attribute) | trans }}:
                                     {{ item.attributes[attribute] }}
                                     <br/>
                                 {% endif %}
