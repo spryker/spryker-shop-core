@@ -1,6 +1,6 @@
 # ProductBundleWidget Module
 
-Provides YVES product bundle to display and manipulate product bundles.
+Provides widgets to display and manipulate product bundles.
 
 ## Installation
 

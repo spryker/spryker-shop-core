@@ -20,7 +20,7 @@ use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
-    const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
+    public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
 
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface

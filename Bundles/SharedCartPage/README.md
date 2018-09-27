@@ -1,6 +1,6 @@
 # SharedCartPage Module
 
-{{ADD DESCRIPTION HERE}}
+This page allows you to share your cart with other company users from your business units, defining permissions for each of them.
 
 ## Installation
 
