@@ -18,17 +18,21 @@
 
 {% block body %}
     {% if widgetExists('SummaryProductPackagingUnitWidgetPlugin') %}
-        {{ widget('SummaryProductPackagingUnitWidgetPlugin', data) }} {# @deprecated Use NEW_MOLECULE instead. #}
-    {# todo: add check (else if - NEW_MOLECULE exist - use it) here #}
+        {{ widget('SummaryProductPackagingUnitWidgetPlugin', data) }} {# @deprecated Use molecule('summary-product-packaging-unit', 'ProductPackagingUnitWidget') instead. #}
     {% else %}
-        {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-        {% set salesUnitSummary = '' %}
-        {% if salesUnitName %}
-            {% set salesUnitSummary = data.quantitySalesUnit.value / data.quantitySalesUnit.precision ~ ' ' ~ salesUnitName | trans %}
-        {% endif %}
-
-        <strong class="float-right">{{data.price}}</strong>
-        {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(= {{ salesUnitSummary }}){% endif %}
+        {% include [
+            molecule('summary-product-packaging-unit', 'ProductPackagingUnitWidget'),
+            molecule('summary-product-packaging-unit-default', 'CheckoutPage')
+        ] ignore missing with {
+            data: {
+                name: data.name,
+                quantity: data.quantity,
+                amount: data.amount,
+                price: data.price,
+                quantitySalesUnit: data.quantitySalesUnit,
+                amountSalesUnit: data.amountSalesUnit
+            }
+        } only %}
     {% endif %}
 
     {% if data.bundleItems is not empty %}

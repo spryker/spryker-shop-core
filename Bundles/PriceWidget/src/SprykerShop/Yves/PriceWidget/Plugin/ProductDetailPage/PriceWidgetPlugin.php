@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\PriceWidget\PriceWidgetPluginInterface;
 
 /**
- * @deprecated Use NEW_MOLECULE instead.
+ * @deprecated Use molecule('price') instead.
  */
 class PriceWidgetPlugin extends AbstractWidgetPlugin implements PriceWidgetPluginInterface
 {

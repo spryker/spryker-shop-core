@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\CartNoteWidget\CartNoteOrderNoteWidgetPluginInterface;
 
 /**
- * @deprecated Use NEW_MOLECULE instead.
+ * @deprecated Use molecule('note-list', 'CartNoteWidget') instead.
  */
 class CartNoteOrderNoteWidgetPlugin extends AbstractWidgetPlugin implements CartNoteOrderNoteWidgetPluginInterface
 {
@@ -27,10 +27,6 @@ class CartNoteOrderNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -39,10 +35,6 @@ class CartNoteOrderNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

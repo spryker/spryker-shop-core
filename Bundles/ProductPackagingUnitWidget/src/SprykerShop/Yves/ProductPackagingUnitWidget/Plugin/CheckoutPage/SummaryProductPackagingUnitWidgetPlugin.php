@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\ProductPackagingUnit\SummaryProductPackagingUnitWidgetPluginInterface;
 
 /**
- * @deprecated Use NEW_MOLECULE instead.
+ * @deprecated Use molecule('summary-product-packaging-unit', 'ProductPackagingUnitWidget') instead.
  */
 class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements SummaryProductPackagingUnitWidgetPluginInterface
 {
@@ -26,10 +26,6 @@ class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin imple
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -38,10 +34,6 @@ class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin imple
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

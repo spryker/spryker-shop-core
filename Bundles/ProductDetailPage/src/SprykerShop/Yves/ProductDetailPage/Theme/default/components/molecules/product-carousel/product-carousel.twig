@@ -10,10 +10,26 @@
 } %}
 
 {% block body %}
-    {% if widgetExists('ProductImageWidgetPlugin') %}
-        {{ widget('ProductImageWidgetPlugin', data.product) }} {# @deprecated Use NEW_MOLECULE instead. #}
+    {% if widgetExists('ProductImageWidgetPlugin123') %}
+        {{ widget('ProductImageWidgetPlugin', data.product) }} {# @deprecated Use molecule('simple-carousel') instead. #}
     {% else %}
-        {# todo: include NEW_MOLECULE here #}
+        {% embed molecule('simple-carousel') with {
+            data: {
+                slides: data.product.images | default([])
+            }
+        } only %}
+            {% block slide %}
+                <div class="text-center">
+                    {% include atom('thumbnail') with {
+                        modifiers: ['bigger'],
+                        attributes: {
+                            itemprop: 'image',
+                            src: slide.externalUrlLarge
+                        }
+                    } only %}
+                </div>
+            {% endblock %}
+        {% endembed %}
     {% endif %}
 
     {% widget 'ProductAbstractLabelWidget' args [data.product.idProductAbstract] only %}

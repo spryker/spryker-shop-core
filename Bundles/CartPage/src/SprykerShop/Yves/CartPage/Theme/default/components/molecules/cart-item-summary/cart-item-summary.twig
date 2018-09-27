@@ -22,11 +22,11 @@
     {% if data.cartItem.productOptions | length > 0 %}
         <li class="list__item text-small">
             {% if widgetExists('CartItemProductOptionWidgetPlugin') %}
-                {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }} {# @deprecated Use molecule('product-option-of-cart-item', 'ProductOptionWidget') instead. #}
+                {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }} {# @deprecated Use molecule('product-options', 'ProductOptionWidget') instead. #}
             {% else %}
-                {% include molecule('product-option-of-cart-item', 'ProductOptionWidget') ignore missing with {
+                {% include molecule('product-options', 'ProductOptionWidget') ignore missing with {
                     data: {
-                        options: data.cartItem.productOptions
+                        options: data.cartItem.productOptions | default([])
                     }
                 } only %}
             {% endif %}

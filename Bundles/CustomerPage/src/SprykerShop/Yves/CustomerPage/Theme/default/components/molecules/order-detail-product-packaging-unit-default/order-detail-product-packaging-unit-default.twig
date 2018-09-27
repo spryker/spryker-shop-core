@@ -1,0 +1,29 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-detail-product-packaging-unit-default',
+    tag: 'tr'
+} %}
+
+{% define data = {
+    concreteItemDefault: required,
+    currencyIsoCode: required
+} %}
+
+{% block body %}
+    <td>
+        {{ data.concreteItemDefault.sku }}
+    </td>
+    <td>
+        {{ data.concreteItemDefault.name }}
+    </td>
+    <td>
+        {{ data.concreteItemDefault.sumPrice | money(true, data.currencyIsoCode) }}
+    </td>
+    <td>
+        {{ data.concreteItemDefault.quantity }}
+    </td>
+    <td>
+        {{ data.concreteItemDefault.sumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+    </td>
+{% endblock body %}

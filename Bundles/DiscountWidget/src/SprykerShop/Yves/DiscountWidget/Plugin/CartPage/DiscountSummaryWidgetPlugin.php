@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\DiscountWidget\DiscountSummaryWidgetPluginInterface;
 
 /**
- * @deprecated Use NEW_MOLECULE instead.
+ * @deprecated Use molecule('cart-discount-summary', 'DiscountWidget') instead.
  *
  * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
  */
@@ -29,8 +29,6 @@ class DiscountSummaryWidgetPlugin extends AbstractWidgetPlugin implements Discou
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -39,8 +37,6 @@ class DiscountSummaryWidgetPlugin extends AbstractWidgetPlugin implements Discou
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

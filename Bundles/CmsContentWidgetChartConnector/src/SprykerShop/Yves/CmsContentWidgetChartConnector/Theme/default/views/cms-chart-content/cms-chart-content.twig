@@ -7,9 +7,9 @@
 {% block body %}
     {% if data.chartPluginName is not empty %}
         {% if widgetExists('ChartWidgetPlugin') %}
-            {{ widget('ChartWidgetPlugin', data.chartPluginName, data.dataIdentifier) }} {# @deprecated Use NEW_MOLECULE instead. #}
+            {{ widget('ChartWidgetPlugin', data.chartPluginName, data.dataIdentifier) }} {# @deprecated Use chart() instead. #}
         {% else %}
-            {# todo: include NEW_MOLECULE here #}
+            {{ chart(data.chartPluginName, data.dataIdentifier) }}
         {% endif %}
     {% endif %}
 {% endblock %}

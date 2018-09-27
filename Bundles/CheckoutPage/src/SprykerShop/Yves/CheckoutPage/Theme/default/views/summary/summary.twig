@@ -83,9 +83,18 @@
                         {% block body %}
                             {{parent()}}
                             {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
-                                {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }} {# @deprecated Use NEW_MOLECULE instead. #}
+                                {% if embed.item.cartNote is not empty %}
+                                    {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+                                {% endif %}
                             {% else %}
-                                {# todo: include NEW_MOLECULE here #}
+                                {% if embed.item.cartNote is not empty %}
+                                    {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                        data: {
+                                            label: 'cart_note.checkout_page.item_note',
+                                            note: embed.item.cartNote
+                                        }
+                                    } only %}
+                                {% endif %}
                             {% endif %}
                             {% if embed.isLast %}<hr/>{% endif %}
                         {% endblock %}
@@ -94,9 +103,22 @@
             </div>
 
             {% if widgetExists('CartNoteQuoteNoteWidgetPlugin') %}
-                {{ widget('CartNoteQuoteNoteWidgetPlugin', data.transfer) }} {# @deprecated Use NEW_MOLECULE instead. #}
+                {% if data.transfer.cartNote is not empty %}
+                    <div class="box">
+                        {{ widget('CartNoteQuoteNoteWidgetPlugin', data.transfer) }}  {#@deprecated Use molecule('note-list', 'CartNoteWidget') instead.#}
+                    </div>
+                {% endif %}
             {% else %}
-                {# todo: include NEW_MOLECULE here #}
+                {% if data.transfer.cartNote is not empty %}
+                    <div class="box">
+                        {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                            data: {
+                                label: 'cart_note.checkout_page.quote_note',
+                                note: data.transfer.cartNote
+                            }
+                        } only %}
+                    </div>
+                {% endif %}
             {% endif %}
 
             <div class="box">

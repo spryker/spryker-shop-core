@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\ProductPackagingUnit\OrderDetailProductPackagingUnitWidgetPluginInterface;
 
 /**
- * @deprecated Use NEW_MOLECULE instead.
+ * @deprecated Use molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget') instead.
  *
  * @method \SprykerShop\Yves\ProductPackagingUnitWidget\ProductPackagingUnitWidgetFactory getFactory()
  */
@@ -26,16 +26,11 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
      */
     public function initialize(ItemTransfer $itemTransfer, string $currencyIsoCode): void
     {
-        $this
-            ->addParameter('item', $itemTransfer)
+        $this->addParameter('item', $itemTransfer)
             ->addParameter('currencyIsoCode', $currencyIsoCode);
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -44,10 +39,6 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

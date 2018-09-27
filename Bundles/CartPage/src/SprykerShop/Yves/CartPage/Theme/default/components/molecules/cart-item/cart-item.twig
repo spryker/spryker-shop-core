@@ -57,9 +57,23 @@
 
         <div class="col col--sm-12 col--lg-4">
             {% if widgetExists('CartProductPackagingUnitWidgetPlugin') %}
-                {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }} {# @deprecated Use NEW_MOLECULE instead. #}
+                {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }} {# @deprecated Use molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') instead. #}
             {% else %}
-                {# todo: include NEW_MOLECULE here #}
+                {% if data.cartItem.quantitySalesUnit is not empty and data.cartItem.amountSalesUnit is not empty %}
+                    {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') ignore missing with {
+                        data: {
+                            amount: data.cartItem.amount,
+                            quantity: data.cartItem.quantity,
+                            quantitySalesUnit: data.cartItem.quantitySalesUnit,
+                            quantityConversion: data.cartItem.quantitySalesUnit.conversion,
+                            quantityProductMeasurementUnit: data.cartItem.quantitySalesUnit.productMeasurementUnit,
+                            amountSalesUnit: data.cartItem.amountSalesUnit,
+                            amountConversion: data.cartItem.amountSalesUnit.conversion,
+                            amountProductMeasurementUnit: data.cartItem.amountSalesUnit.productMeasurementUnit,
+                            amountValue: data.cartItem.amountSalesUnit.value
+                        }
+                    } only %}
+                {% endif %}
             {% endif %}
 
             {% if data.cartItem.amountSalesUnit is empty %}
