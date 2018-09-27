@@ -13,8 +13,8 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 
 class ErrorPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
-    const PLUGIN_EXCEPTION_HANDLERS = 'PLUGIN_EXCEPTION_HANDLERS';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const PLUGIN_EXCEPTION_HANDLERS = 'PLUGIN_EXCEPTION_HANDLERS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

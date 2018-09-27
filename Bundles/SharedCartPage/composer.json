@@ -11,15 +11,18 @@
     "spryker/company-user": "^1.0.0",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.19.0",
+    "spryker/multi-cart": "^1.1.0",
     "spryker/shared-cart": "^1.0.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
+    "spryker-shop/multi-cart-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/multi-cart-page": "if you want to use customer layout templates: ^1.1.0",
     "spryker/permission": "If you want to use permissions plugins",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
