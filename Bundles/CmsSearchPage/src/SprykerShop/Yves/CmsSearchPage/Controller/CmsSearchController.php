@@ -27,7 +27,7 @@ class CmsSearchController extends AbstractController
 
         return $this->view(
             $viewData,
-            $this->getFactory()->getCmsSearchPageWidgetPlugins(),
+            [],
             '@CmsSearchPage/views/search/search.twig'
         );
     }

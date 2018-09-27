@@ -7,12 +7,12 @@
 } %}
 
 {% block body %}
-{% include molecule('search-tabs', 'TabsWidget') with {
-    class: 'grid',
-    data: {
-        tabs: data.tabs,
-        searchString: data.searchString,
-        requestParams: data.requestParams
-    }
-} only %}
+    {% include molecule('search-tabs', 'TabsWidget') with {
+        class: 'grid',
+        data: {
+            tabs: data.tabs,
+            searchString: data.searchString,
+            requestParams: data.requestParams
+        }
+    } only %}
 {% endblock %}

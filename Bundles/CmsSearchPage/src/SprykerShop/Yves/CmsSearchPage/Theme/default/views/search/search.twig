@@ -33,6 +33,9 @@
 {% endblock %}
 
 {% block form %}
+    <div class="col col--sm-12 spacing spacing--inner">
+        {% widget 'FullTextSearchTabsWidget' args [data.searchString, 'FullTextSearchCmsPage'] only %}{% endwidget %}
+    </div>
     <div class="col col--sm-12">
         {% include molecule('sort', 'CmsSearchPage') with {
             class: 'box'
@@ -43,9 +46,6 @@
             data: data.pagination
         } only %}
 
-        <div class="col col--sm-12 spacing spacing--inner">
-            {{ widget('FullTextSearchTabsWidgetPlugin', data.searchString, 'FullTextSearchCmsPage') }}
-        </div>
         {% include molecule('search-cms-results', 'CmsSearchPage') with {
             data: {
                 pages: data.pages

@@ -8,11 +8,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker-shop/shop-application": "^1.1.1"
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies."
   },
   "autoload": {
     "psr-4": {

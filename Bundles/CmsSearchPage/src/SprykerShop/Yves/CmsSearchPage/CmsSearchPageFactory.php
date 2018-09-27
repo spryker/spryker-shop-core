@@ -19,12 +19,4 @@ class CmsSearchPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CmsSearchPageDependencyProvider::CLIENT_CMS_SEARCH_PAGE);
     }
-
-    /**
-     * @return string[]
-     */
-    public function getCmsSearchPageWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(CmsSearchPageDependencyProvider::PLUGIN_CMS_SEARCH_PAGE_WIDGETS);
-    }
 }
