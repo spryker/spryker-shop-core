@@ -65,7 +65,7 @@
     <form method="POST" action="/cart/add/{{sku}}">
         {{ widget('ProductOptionWidgetPlugin', data.product) }}
 
-        {#{% if can('SeeAddToCartPermissionPlugin') %}#}
+        {% if can('SeeAddToCartPermissionPlugin') %}
             {% if widgetExists('ProductMeasurementUnitWidgetPlugin') %}
                 {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, isDisabled, options) }}
             {% else %}
@@ -98,7 +98,7 @@
                     </div>
                 </div>
             {% endif %}
-        {#{% endif %}#}
+        {% endif %}
 
         {{ widget('MultiCartWidgetPlugin', data.product, isDisabled) }}
         {{ widget('AvailabilityWidgetPlugin', data.product) }}
