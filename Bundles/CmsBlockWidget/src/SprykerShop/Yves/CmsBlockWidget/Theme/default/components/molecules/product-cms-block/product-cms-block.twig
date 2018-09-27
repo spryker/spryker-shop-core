@@ -1,0 +1,13 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'product-cms-block'
+} %}
+
+{% define data = {
+    idProductAbstract: required
+} %}
+
+{% block body %}
+    {{ spyCmsBlock({ product: data.idProductAbstract }) }}
+{% endblock %}

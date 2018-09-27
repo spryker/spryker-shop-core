@@ -67,9 +67,14 @@
     {% endwidget %}
 
     {% if widgetExists('ProductCmsBlockWidgetPlugin') %}
-        {{ widget('ProductCmsBlockWidgetPlugin', data.product) }} {# @deprecated Use NEW_MOLECULE instead. #}
+        {{ widget('ProductCmsBlockWidgetPlugin', data.product) }} {# @deprecated Use molecule('product-cms-block', 'CmsBlockWidget') instead. #}
     {% else %}
-        {# todo: include NEW_MOLECULE here #}
+        {% include molecule('product-cms-block', 'CmsBlockWidget') ignore missing with {
+            class: 'box',
+            data: {
+                idProductAbstract: data.product.idProductAbstract
+            }
+        } only %}
     {% endif %}
 
 {% endblock %}

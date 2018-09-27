@@ -84,10 +84,23 @@
         } only %}
     </div>
 
-    {% if widgetExists('CartNoteOrderNoteWidgetPlugin') %}
-        {{ widget('CartNoteOrderNoteWidgetPlugin', data.order) }} {# @deprecated Use NEW_MOLECULE instead. #}
+    {% if widgetExists('CartNoteOrderNoteWidgetPlugin222') %}
+        {% if data.order.cartNote is not empty %}
+            <div class="box">
+                {{ widget('CartNoteOrderNoteWidgetPlugin', data.order) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+            </div>
+        {% endif %}
     {% else %}
-        {# todo: include NEW_MOLECULE here #}
+        {% if data.order.cartNote is not empty %}
+            <div class="box">
+                {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                    data: {
+                        label: 'cart_note.customer_page.order_note',
+                        note: data.order.cartNote
+                    }
+                } only %}
+            </div>
+        {% endif %}
     {% endif %}
 
     {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }}
