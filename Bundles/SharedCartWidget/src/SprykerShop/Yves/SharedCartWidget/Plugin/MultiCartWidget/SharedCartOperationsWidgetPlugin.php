@@ -42,7 +42,6 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
             ->addParameter('actions', $this->getCartActions($quoteTransfer))
             ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer, $customerTransfer))
             ->addParameter('isSharedCartAllowed', $this->isSharedCartAllowed($customerTransfer));
-
     }
 
     /**
