@@ -30,13 +30,15 @@ class CartToShoppingListController extends AbstractController
         $cartToShoppingListForm = $this->getFactory()->getCartFromShoppingListForm(null)->handleRequest($request);
 
         if ($cartToShoppingListForm->isSubmitted() && $cartToShoppingListForm->isValid()) {
+            /** @var \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequest */
             $shoppingListFromCartRequest = $cartToShoppingListForm->getData();
-            if (!$shoppingListFromCartRequest->getShoppingListName()) {
+            $shoppingListFromCartRequest->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+
+            if (!$shoppingListFromCartRequest->getIdShoppingList()) {
                 $shoppingListFromCartRequest->setShoppingListName(
                     $cartToShoppingListForm->get(ShoppingListFromCartForm::FIELD_NEW_SHOPPING_LIST_NAME_INPUT)->getData()
                 );
             }
-            $shoppingListFromCartRequest->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
 
             $shoppingListTransfer = $this->getFactory()->getShoppingListClient()->createShoppingListFromQuote($shoppingListFromCartRequest);
 
