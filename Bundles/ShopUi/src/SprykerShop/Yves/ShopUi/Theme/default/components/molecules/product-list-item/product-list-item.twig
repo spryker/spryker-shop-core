@@ -32,8 +32,9 @@
 
             <div class="col col--sm-6 col--md-7 col--xl-8 col--middle">
                 {% block groups %}
+                    +++++
                     {% widget 'ProductGroupWidget' args [data.abstractId] only %}
-                    {% elsewidget 'ProductGroupWidgetPlugin' args [data.abstractId] only %} {# @deprecated Use ProductGroupWidget instead. #}
+                    {% elsewidget 'ProductGroupWidgetPlugin' args [data.abstractId] %} {# @deprecated Use ProductGroupWidget instead. #}
                     {% endwidget %}
                 {% endblock %}
 

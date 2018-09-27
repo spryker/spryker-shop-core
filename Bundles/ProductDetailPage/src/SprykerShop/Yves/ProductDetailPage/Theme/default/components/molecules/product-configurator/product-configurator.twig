@@ -24,7 +24,7 @@
     }]) %}
 {% endfor %}
 
-{% if widgetExists('AvailabilityWidgetPlugin') %} {# @deprecated Use NEW_MOLECULE instead of AvailabilityWidgetPlugin. #}
+{% if widgetExists('AvailabilityWidgetPlugin') %} {# @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead of AvailabilityWidgetPlugin. #}
     {% set isAvailable = widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product) %}
     {% set isDisabled = not isAvailable or isDisabled %}
 {% else %}

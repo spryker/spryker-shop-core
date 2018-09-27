@@ -22,15 +22,10 @@ class ProductReplacementForListWidget extends AbstractWidget
      */
     public function __construct(string $sku)
     {
-        $this->addParameter('products', $this->findReplacementForProducts($sku))
-            ->addWidgets($this->getFactory()->getProductDetailPageProductReplacementsForWidgetPlugins());
+        $this->addParameter('products', $this->findReplacementForProducts($sku));
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -39,10 +34,6 @@ class ProductReplacementForListWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

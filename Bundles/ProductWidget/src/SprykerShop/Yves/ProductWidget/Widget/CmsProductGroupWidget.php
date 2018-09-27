@@ -20,9 +20,7 @@ class CmsProductGroupWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addWidgets($this->getFactory()->getCmsContentWidgetProductGroupWidgetPlugins());
+        $this->addParameter('product', $productViewTransfer);
     }
 
     /**

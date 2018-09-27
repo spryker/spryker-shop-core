@@ -29,6 +29,8 @@ class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSe
         $widget = new UpSellingProductsWidget($quoteTransfer);
 
         $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getCartPageUpSellingProductsWidgetPlugins());
     }
 
     /**

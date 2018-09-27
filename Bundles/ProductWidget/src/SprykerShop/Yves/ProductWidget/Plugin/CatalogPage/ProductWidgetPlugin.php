@@ -29,6 +29,8 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
         $widget = new CatalogPageProductWidget($product, $viewMode);
 
         $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getCatalogPageSubWidgets());
     }
 
     /**

@@ -20,10 +20,8 @@ class UpSellingProductsWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $this
-            ->addParameter('quote', $quoteTransfer)
-            ->addParameter('productCollection', $this->findUpSellingProducts($quoteTransfer))
-            ->addWidgets($this->getFactory()->getCartPageUpSellingProductsWidgetPlugins());
+        $this->addParameter('quote', $quoteTransfer)
+            ->addParameter('productCollection', $this->findUpSellingProducts($quoteTransfer));
     }
 
     /**

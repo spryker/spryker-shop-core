@@ -28,13 +28,11 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
         $widget = new ProductReplacementForListWidget($sku);
 
         $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getProductDetailPageProductReplacementsForWidgetPlugins());
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -43,10 +41,6 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

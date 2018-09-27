@@ -20,10 +20,8 @@ class SimilarProductsWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addParameter('productCollection', $this->findRelatedProducts($productViewTransfer))
-            ->addWidgets($this->getFactory()->getProductDetailPageSimilarProductsWidgetPlugins());
+        $this->addParameter('product', $productViewTransfer)
+            ->addParameter('productCollection', $this->findRelatedProducts($productViewTransfer));
     }
 
     /**

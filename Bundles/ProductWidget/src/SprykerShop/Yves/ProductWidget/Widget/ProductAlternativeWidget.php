@@ -20,8 +20,7 @@ class ProductAlternativeWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this->addParameter('product', $productViewTransfer)
-            ->addWidgets($this->getFactory()->getProductReplacementForWidgetPlugins());
+        $this->addParameter('product', $productViewTransfer);
     }
 
     /**

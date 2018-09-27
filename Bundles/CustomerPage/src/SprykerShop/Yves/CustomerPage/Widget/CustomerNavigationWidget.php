@@ -21,8 +21,7 @@ class CustomerNavigationWidget extends AbstractWidget
     public function __construct(string $activePage, ?int $activeEntityId = null)
     {
         $this->addParameter('activePage', $activePage)
-            ->addParameter('activeEntityId', $activeEntityId)
-            ->addWidgets($this->getFactory()->getCustomerMenuItemWidgetPlugins());
+            ->addParameter('activeEntityId', $activeEntityId);
     }
 
     /**

@@ -29,6 +29,8 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
         $widget = new CmsProductWidget($productViewTransfer);
 
         $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getCmsContentWidgetProductWidgetPlugins());
     }
 
     /**

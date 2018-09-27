@@ -31,6 +31,8 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
         $widget = new MiniCartWidget($cartQuantity);
 
         $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 
     /**

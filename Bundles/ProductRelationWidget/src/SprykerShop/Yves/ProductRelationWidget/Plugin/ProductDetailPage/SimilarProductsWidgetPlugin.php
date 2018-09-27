@@ -29,6 +29,8 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
         $widget = new SimilarProductsWidget($productViewTransfer);
 
         $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getProductDetailPageSimilarProductsWidgetPlugins());
     }
 
     /**

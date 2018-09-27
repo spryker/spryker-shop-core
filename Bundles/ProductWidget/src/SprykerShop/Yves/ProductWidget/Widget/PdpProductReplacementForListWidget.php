@@ -13,16 +13,14 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */
-class PdpProductReplacementForWidget extends AbstractWidget
+class PdpProductReplacementForListWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addWidgets($this->getFactory()->getProductReplacementForWidgetPlugins());
+        $this->addParameter('product', $productViewTransfer);
     }
 
     /**
@@ -30,7 +28,7 @@ class PdpProductReplacementForWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'PdpProductReplacementForWidget';
+        return 'PdpProductReplacementForListWidget';
     }
 
     /**

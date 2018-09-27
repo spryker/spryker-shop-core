@@ -20,10 +20,8 @@ class CatalogPageProductWidget extends AbstractWidget
      */
     public function __construct(array $product, $viewMode = null)
     {
-        $this
-            ->addParameter('product', $product)
-            ->addParameter('viewMode', $viewMode)
-            ->addWidgets($this->getFactory()->getCatalogPageSubWidgets());
+        $this->addParameter('product', $product)
+            ->addParameter('viewMode', $viewMode);
     }
 
     /**

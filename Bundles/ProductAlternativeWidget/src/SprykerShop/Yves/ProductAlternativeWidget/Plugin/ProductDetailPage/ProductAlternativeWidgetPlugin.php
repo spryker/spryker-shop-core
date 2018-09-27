@@ -29,6 +29,8 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
         $widget = new ProductAlternativeListWidget($productViewTransfer);
 
         $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getProductDetailPageProductAlternativeWidgetPlugins());
     }
 
     /**

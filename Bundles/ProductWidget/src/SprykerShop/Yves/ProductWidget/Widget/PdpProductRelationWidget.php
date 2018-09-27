@@ -20,9 +20,7 @@ class PdpProductRelationWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addWidgets($this->getFactory()->getProductRelationWidgetSubWidgets());
+        $this->addParameter('product', $productViewTransfer);
     }
 
     /**

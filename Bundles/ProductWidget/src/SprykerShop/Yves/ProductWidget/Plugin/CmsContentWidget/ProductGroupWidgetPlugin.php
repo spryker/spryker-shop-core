@@ -29,6 +29,8 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
         $widget = new CmsProductGroupWidget($productViewTransfer);
 
         $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getCmsContentWidgetProductGroupWidgetPlugins());
     }
 
     /**

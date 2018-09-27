@@ -20,8 +20,7 @@ class ProductAlternativeListWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this->addParameter('products', $this->findAlternativesProducts($productViewTransfer))
-            ->addWidgets($this->getFactory()->getProductDetailPageProductAlternativeWidgetPlugins());
+        $this->addParameter('products', $this->findAlternativesProducts($productViewTransfer));
     }
 
     /**
