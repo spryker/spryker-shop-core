@@ -11,9 +11,17 @@
 } %}
 
 {% block content %}
+    -------------------
     {% if widgetExists('ProductSetWidgetPlugin') %}
-        {{ widget('ProductSetWidgetPlugin', data.set, data.views) }} {# @deprecated Use NEW_MOLECULE instead. #}
+        {{ widget('ProductSetWidgetPlugin', data.set, data.views) }} {# @deprecated Use molecule('product-set', 'ProductSetWidget') instead. #}
     {% else %}
-        {# todo: include NEW_MOLECULE here #}
+        {% include molecule('product-set', 'ProductSetWidget') ignore missing with {
+            data: {
+                products: data.views,
+                name: data.set.name,
+                description: data.set.description,
+                images: data.set.imageSets.0.images | default([])
+            }
+        } only %}
     {% endif %}
 {% endblock %}
