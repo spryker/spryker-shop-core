@@ -23,8 +23,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NewsletterController extends AbstractController
 {
-    const MESSAGE_UNSUBSCRIPTION_SUCCESS = 'newsletter.unsubscription.success';
-    const MESSAGE_SUBSCRIPTION_SUCCESS = 'newsletter.subscription.success';
+    public const MESSAGE_UNSUBSCRIPTION_SUCCESS = 'newsletter.unsubscription.success';
+    public const MESSAGE_SUBSCRIPTION_SUCCESS = 'newsletter.subscription.success';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

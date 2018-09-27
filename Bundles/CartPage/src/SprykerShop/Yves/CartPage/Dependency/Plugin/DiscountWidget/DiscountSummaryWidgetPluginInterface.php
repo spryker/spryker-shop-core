@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface DiscountSummaryWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'DiscountSummaryWidgetPlugin';
+    public const NAME = 'DiscountSummaryWidgetPlugin';
 
     /**
      * @api

@@ -18,9 +18,9 @@ use SprykerShop\Yves\CurrencyWidget\Plugin\CurrencyPlugin;
 
 class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const STORE = 'MONEY_PARSER';
-    const MONEY_PARSER = 'MONEY_PARSER';
-    const CURRENCY_PLUGIN = 'CURRENCY_PLUGIN';
+    public const STORE = 'MONEY_PARSER';
+    public const MONEY_PARSER = 'MONEY_PARSER';
+    public const CURRENCY_PLUGIN = 'CURRENCY_PLUGIN';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

@@ -16,7 +16,7 @@ use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPlugin
  */
 class CatalogPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface
 {
-    const ATTRIBUTE_CATEGORY_NODE = 'categoryNode';
+    public const ATTRIBUTE_CATEGORY_NODE = 'categoryNode';
 
     /**
      * @return string

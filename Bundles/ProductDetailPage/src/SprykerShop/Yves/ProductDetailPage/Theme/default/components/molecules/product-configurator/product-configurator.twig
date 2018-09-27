@@ -67,6 +67,7 @@
     {% nowidget %}
         {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }} {# @deprecated Use ProductDetailPageReviewWidget instead. #}
     {% endwidget %}
+
     {% widget 'ProductGroupWidget' args [data.product.idProductAbstract] only %}
     {% elsewidget 'ProductGroupWidgetPlugin' args [data.product.idProductAbstract] only %} {# @deprecated Use ProductGroupWidget instead. #}
     {% endwidget %}
@@ -82,7 +83,7 @@
     {% endembed %}
 
     <hr />
-    <form method="POST" action="/cart/add/{{sku}}">
+    <form method="POST" action="{{ path("cart/add", {"sku": sku}) }}">
         {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}
         {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionConfiguratorWidget instead. #}
         {% endwidget %}

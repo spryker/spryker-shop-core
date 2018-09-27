@@ -43,13 +43,16 @@
                class="{{macros.isActive('newsletter', data.activePage)}}"
                data-id="sidebar-newsletter">{{ 'customer.account.newsletter' | trans }}</a>
         </li>
-
         {% widget 'WishlistMenuItemWidget' args [data.activePage, data.activeEntityId] only %}
         {% elsewidget 'WishlistMenuItemWidgetPlugin' args [data.activePage, data.activeEntityId] only %} {# @deprecated Use WishlistMenuItemWidget instead. #}
         {% endwidget %}
 
         {% widget 'ShoppingListMenuItemWidget' args [data.activePage, data.activeEntityId] only %}
         {% elsewidget 'ShoppingListMenuItemWidgetPlugin' args [data.activePage, data.activeEntityId] only %} {# @deprecated Use ShoppingListMenuItemWidget instead. #}
+        {% endwidget %}
+
+        {% widget 'MultiCartMenuItemWidget' args [data.activePage] only %}
+        {% elsewidget 'MultiCartMenuItemWidgetPlugin' args [data.activePage] only %} {# @deprecated Use MultiCartMenuItemWidget instead. #}
         {% endwidget %}
 
         {% widget 'BusinessOnBehalfStatusWidget' with {activePage: macros.isActive('menuItemBusinessOnBehalfWidget', data.activePage)} only %}

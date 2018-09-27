@@ -24,9 +24,15 @@
         </div>
 
         <div class="col col--sm-8">
-            <a href="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
+            {% if data.cart.isDefault %}
+            <a href="{{ url('cart') }}">
                 <strong>{{ data.cart.name }}</strong>
             </a>
+            {% else %}
+            <a href="{{ url('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
+                <strong>{{ data.cart.name }}</strong>
+            </a>
+            {% endif %}
 
             {% if data.cart.isDefault %}
                 ({{ 'multi_cart_widget.cart.default' | trans }})

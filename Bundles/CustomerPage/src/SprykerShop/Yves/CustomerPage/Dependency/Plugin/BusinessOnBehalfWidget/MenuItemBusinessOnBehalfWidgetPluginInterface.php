@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
  */
 interface MenuItemBusinessOnBehalfWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'MenuItemBusinessOnBehalfWidgetPlugin';
+    public const NAME = 'MenuItemBusinessOnBehalfWidgetPlugin';
 
     /**
      * @api

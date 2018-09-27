@@ -7,7 +7,10 @@
 
 namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartWidget;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
+use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCartDetailsWidgetPluginInterface;
@@ -41,11 +44,6 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
     }
 
     /**
-     * Specification:
-     * - Returns the name of the widget as it's used in templates.
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName()
@@ -54,11 +52,6 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
     }
 
     /**
-     * Specification:
-     * - Returns the the template file path to render the widget.
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate()

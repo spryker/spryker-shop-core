@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
  */
 interface CheckoutVoucherFormWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'CheckoutVoucherFormWidgetPlugin';
+    public const NAME = 'CheckoutVoucherFormWidgetPlugin';
 
     /**
      * @api
