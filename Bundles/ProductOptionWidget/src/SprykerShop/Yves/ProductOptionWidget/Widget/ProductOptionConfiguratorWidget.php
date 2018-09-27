@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductOptionWidget\Widget;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
