@@ -21,9 +21,9 @@
             </div>
         </div>
         {% if widgetExists('SharedCartAddSeparateProductWidgetPlugin') %}
-            {{ widget('SharedCartAddSeparateProductWidgetPlugin') }} {# @deprecated Use NEW_MOLECULE instead. #}
+            {{ widget('SharedCartAddSeparateProductWidgetPlugin') }} {# @deprecated Use molecule('shared-cart-add-product-as-separate-item', 'SharedCartWidget') instead. #}
         {% else %}
-            {# todo: include NEW_MOLECULE here #}
+            {% include molecule('shared-cart-add-product-as-separate-item', 'SharedCartWidget') ignore missing only %}
         {% endif %}
     {% endif %}
 {% endblock %}

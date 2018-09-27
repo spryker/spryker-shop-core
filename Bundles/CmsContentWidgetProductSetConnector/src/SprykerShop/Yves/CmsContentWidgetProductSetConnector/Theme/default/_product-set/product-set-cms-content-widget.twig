@@ -1,13 +1,31 @@
 {% if productSetList is defined %}
     {% for productSet in productSetList %}
-        {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.productViews) }}
+        {% if widgetExists('ProductSetWidgetPlugin') %}
+            {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.productViews) }} {# @deprecated Use molecule('product-set', 'ProductSetWidget') instead. #}
+        {% else %}
+            {% include molecule('product-set', 'ProductSetWidget') ignore missing with {
+                data: {
+                    products: productSet.productViews,
+                    name: productSet.productSet.name,
+                    description: productSet.productSet.description,
+                    images: productSet.productSet.imageSets.0.images | default([])
+                }
+            } only %}
+        {% endif %}
     {% endfor %}
 {% endif %}
 
 {% if productSet is defined %}
     {% if widgetExists('ProductSetWidgetPlugin') %}
-        {{ widget('ProductSetWidgetPlugin', productSet, productViews) }} {# @deprecated Use NEW_MOLECULE instead. #}
+        {{ widget('ProductSetWidgetPlugin', productSet, productViews) }} {# @deprecated Use molecule('product-set', 'ProductSetWidget') instead. #}
     {% else %}
-        {# todo: include NEW_MOLECULE here #}
+        {% include molecule('product-set', 'ProductSetWidget') ignore missing with {
+            data: {
+                products: productViews,
+                name: productSet.name,
+                description: productSet.description,
+                images: productSet.imageSets.0.images | default([])
+            }
+        } only %}
     {% endif %}
 {% endif %}
