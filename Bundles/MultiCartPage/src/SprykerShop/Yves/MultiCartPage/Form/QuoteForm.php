@@ -16,9 +16,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class QuoteForm extends AbstractType
 {
-    const FORM_NAME = 'quoteForm';
+    public const FORM_NAME = 'quoteForm';
 
-    const FIELD_NAME = 'name';
+    public const FIELD_NAME = 'name';
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 

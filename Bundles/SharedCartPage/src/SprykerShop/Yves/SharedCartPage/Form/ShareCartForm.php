@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\SharedCartPage\Form;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,9 +20,19 @@ class ShareCartForm extends AbstractType
 {
     public const FORM_NAME = 'shareCartForm';
     public const FIELD_ID_QUOTE = 'idQuote';
+    /**
+     * @deprecated
+     */
     public const FIELD_COMPANY_USER_ID = 'idCompanyUser';
+    /**
+     * @deprecated
+     */
     public const FIELD_QUOTE_PERMISSION_GROUP_ID = 'idQuotePermissionGroup';
+    /**
+     * @deprecated
+     */
     public const OPTION_CUSTOMERS = 'OPTION_CUSTOMERS';
+    public const FIELD_SHARE_DETAILS = 'shareDetails';
     public const OPTION_PERMISSION_GROUPS = 'OPTION_PERMISSION_GROUPS';
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
@@ -31,7 +42,7 @@ class ShareCartForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return self::FORM_NAME;
+        return static::FORM_NAME;
     }
 
     /**
@@ -41,8 +52,7 @@ class ShareCartForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(self::OPTION_CUSTOMERS);
-        $resolver->setRequired(self::OPTION_PERMISSION_GROUPS);
+        $resolver->setRequired(static::OPTION_PERMISSION_GROUPS);
         $resolver->setDefaults([
             'data_class' => ShareCartRequestTransfer::class,
         ]);
@@ -56,9 +66,8 @@ class ShareCartForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addQuoteIdField($builder);
-        $this->addCompanyUserIdField($builder, $options);
-        $this->addQuotePermissionGroupIdQuoteIdField($builder, $options);
+        $this->addQuoteIdField($builder)
+            ->addShareDetailsField($builder, $options);
     }
 
     /**
@@ -68,7 +77,7 @@ class ShareCartForm extends AbstractType
      */
     protected function addQuoteIdField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_QUOTE, HiddenType::class, []);
+        $builder->add(static::FIELD_ID_QUOTE, HiddenType::class, []);
 
         return $this;
     }
@@ -79,7 +88,7 @@ class ShareCartForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyUserIdField(FormBuilderInterface $builder, array $options)
+    protected function addShareDetailsField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_COMPANY_USER_ID, ChoiceType::class, [
             'choices' => array_flip($options[static::OPTION_CUSTOMERS]),
@@ -105,17 +114,13 @@ class ShareCartForm extends AbstractType
      */
     protected function addQuotePermissionGroupIdQuoteIdField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_QUOTE_PERMISSION_GROUP_ID, ChoiceType::class, [
-            'choices' => array_flip($options[static::OPTION_PERMISSION_GROUPS]),
-            'choices_as_values' => true,
-            'expanded' => false,
-            'required' => true,
-            'constraints' => [
-                new NotBlank(),
+        $builder->add(static::FIELD_SHARE_DETAILS, CollectionType::class, [
+            'entry_type' => ShareCartCompanyUserShareEditForm::class,
+            'entry_options' => [
+                static::OPTION_PERMISSION_GROUPS => $options[static::OPTION_PERMISSION_GROUPS],
             ],
             'label' => 'shared_cart.form.select_permissions',
-            'invalid_message' => static::VALIDATION_NOT_BLANK_MESSAGE,
-            ]);
+        ]);
 
         return $this;
     }

@@ -16,8 +16,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewsletterSubscriptionForm extends AbstractType
 {
-    const FIELD_SUBSCRIBE = 'subscribe';
-    const FORM_ID = 'subscription';
+    public const FIELD_SUBSCRIBE = 'subscribe';
+    public const FORM_ID = 'subscription';
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
     protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';

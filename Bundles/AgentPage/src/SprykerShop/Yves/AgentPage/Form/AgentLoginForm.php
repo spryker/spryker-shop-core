@@ -16,10 +16,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AgentLoginForm extends AbstractType
 {
-    const FORM_NAME = 'loginForm';
+    public const FORM_NAME = 'loginForm';
 
-    const FIELD_EMAIL = 'email';
-    const FIELD_PASSWORD = 'password';
+    public const FIELD_EMAIL = 'email';
+    public const FIELD_PASSWORD = 'password';
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
     protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';

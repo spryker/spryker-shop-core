@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ForgottenPasswordForm extends AbstractType
 {
-    const FIELD_EMAIL = 'email';
+    public const FIELD_EMAIL = 'email';
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
