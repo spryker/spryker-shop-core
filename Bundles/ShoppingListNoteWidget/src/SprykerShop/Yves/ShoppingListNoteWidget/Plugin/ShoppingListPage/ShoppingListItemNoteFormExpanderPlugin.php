@@ -20,6 +20,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ShoppingListItemNoteFormExpanderPlugin extends AbstractPlugin implements ShoppingListItemFormExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Adds ShoppingListItemNote form fields to builder using ShoppingListItemNoteForm
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
