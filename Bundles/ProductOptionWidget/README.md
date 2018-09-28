@@ -1,6 +1,6 @@
 # ProductOptionWidget Module
 
-This module provides widget plugins to view or edit product options.
+Provides widgets for displaying product options.
 
 ## Installation
 

@@ -13,14 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CartControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_CART = 'cart';
-    const ROUTE_CART_ADD = 'cart/add';
-    const ROUTE_CART_REMOVE = 'cart/remove';
-    const ROUTE_CART_CHANGE = 'cart/change';
-    const ROUTE_CART_UPDATE = 'cart/update';
-    const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
-    const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
-    const SKU_PATTERN = '[a-zA-Z0-9-_]+';
+    public const ROUTE_CART = 'cart';
+    public const ROUTE_CART_ADD = 'cart/add';
+    public const ROUTE_CART_REMOVE = 'cart/remove';
+    public const ROUTE_CART_CHANGE = 'cart/change';
+    public const ROUTE_CART_UPDATE = 'cart/update';
+    public const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
+    public const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
+    public const SKU_PATTERN = '[a-zA-Z0-9-_]+';
 
     /**
      * @param \Silex\Application $app

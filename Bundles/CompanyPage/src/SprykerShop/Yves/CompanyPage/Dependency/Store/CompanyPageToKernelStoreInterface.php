@@ -13,4 +13,11 @@ interface CompanyPageToKernelStoreInterface
      * @return array
      */
     public function getCountries();
+
+    /**
+     * @throws \Spryker\Shared\Kernel\Locale\LocaleNotFoundException
+     *
+     * @return string
+     */
+    public function getCurrentLocale();
 }
