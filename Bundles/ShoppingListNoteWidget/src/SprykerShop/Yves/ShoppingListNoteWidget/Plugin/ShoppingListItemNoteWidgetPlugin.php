@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShoppingListPage\Plugin\ShoppingListItemNoteWidgetPluginInterface;
 
-class ShoppingListNoteWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemNoteWidgetPluginInterface
+class ShoppingListItemNoteWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemNoteWidgetPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
