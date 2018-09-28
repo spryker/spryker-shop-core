@@ -111,7 +111,7 @@ class UserController extends AbstractCompanyController
             $companyUserForm->setData($dataProvider->getData($this->getCompanyUser()->getFkCompany()));
         }
 
-        if ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
+        if ($companyUserForm->isValid()) {
             $companyUserResponseTransfer = $this->createCompanyUser($companyUserForm->getData());
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
@@ -172,7 +172,7 @@ class UserController extends AbstractCompanyController
             );
         }
 
-        if ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
+        if ($companyUserForm->isValid()) {
             $companyUserResponseTransfer = $this->updateCompanyUser($companyUserForm->getData());
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
