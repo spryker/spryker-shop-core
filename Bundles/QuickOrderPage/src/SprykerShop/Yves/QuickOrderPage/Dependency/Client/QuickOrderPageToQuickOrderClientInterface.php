@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
+use Generated\Shared\Transfer\CurrentProductConcretePriceTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 
 interface QuickOrderPageToQuickOrderClientInterface
 {
@@ -20,9 +20,9 @@ interface QuickOrderPageToQuickOrderClientInterface
     public function expandProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
+     * @param \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer $currentProductConcretePriceTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     * @return \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer
      */
-    public function getQuickOrderProductPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer;
+    public function getProductConcreteSumPrice(CurrentProductConcretePriceTransfer $currentProductConcretePriceTransfer): CurrentProductConcretePriceTransfer;
 }

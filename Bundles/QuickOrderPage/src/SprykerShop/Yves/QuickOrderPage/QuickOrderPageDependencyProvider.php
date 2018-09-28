@@ -235,14 +235,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface[]
-     */
-    protected function getQuickOrderProductPriceTransferExpanderPlugins(): array
-    {
-        return [];
-    }
-
-    /**
      * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormHandlerStrategyPluginInterface[]
      */
     protected function getQuickOrderFormHandlerStrategyPlugins(): array
