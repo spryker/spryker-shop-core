@@ -63,7 +63,8 @@ class ShoppingListFromCartFormDataProvider
         $shoppingListCollection[self::GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ADD_NEW] = '';
         foreach ($shoppingListTransferCollection as $shoppingListTransfer) {
             if ($this->can('WriteShoppingListPermissionPlugin', $shoppingListTransfer->getIdShoppingList())) {
-                $shoppingListCollection[$shoppingListTransfer->getName()] = $shoppingListTransfer->getName();
+                $shoppingListKey = "{$shoppingListTransfer->getName()} ({$shoppingListTransfer->getOwner()})";
+                $shoppingListCollection[$shoppingListKey] = $shoppingListTransfer->getIdShoppingList();
             }
         }
 
