@@ -102,14 +102,12 @@
                 {% endfor %}
             </div>
 
-            {% if widgetExists('CartNoteQuoteNoteWidgetPlugin') %}
-                {% if data.transfer.cartNote is not empty %}
+            {% if data.transfer.cartNote is not empty %}
+                {% if widgetExists('CartNoteQuoteNoteWidgetPlugin') %}
                     <div class="box">
                         {{ widget('CartNoteQuoteNoteWidgetPlugin', data.transfer) }}  {#@deprecated Use molecule('note-list', 'CartNoteWidget') instead.#}
                     </div>
-                {% endif %}
-            {% else %}
-                {% if data.transfer.cartNote is not empty %}
+                {% else %}
                     <div class="box">
                         {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
                             data: {

@@ -86,18 +86,6 @@
                         {% endwidget %}
                     {% endif %}
 
-                    {% widget 'CartNoteFormWidget' args [data.cart] only %}
-                        {% block body %}
-                            {{ parent() }}
-                            <hr />
-                        {% endblock %}
-                    {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
-                        {% block body %}
-                            {{ parent() }}
-                            <hr />
-                        {% endblock %}
-                    {% endwidget %}
-
                     {% if canEditCart and data.cart.idQuote is not empty %}
                         {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
                         {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use UpSellingProductsWidget instead. #}

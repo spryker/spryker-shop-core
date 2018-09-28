@@ -81,6 +81,7 @@
                     {% endblock %}
                 {% endwidget %}
                 <li class="menu__item"><a href="{{ url('customer/overview') }}">{{ 'customer.profile'|trans }}</a></li>
+
                 {% widget 'CompanyMenuItemWidget' only %}
                     {% block body %}
                         <li class="menu__item">{% spaceless %}{{ parent() }}{% endspaceless %}</li>
@@ -90,6 +91,7 @@
                         <li class="menu__item">{% spaceless %}{{ parent() }}{% endspaceless %}</li>
                     {% endblock %}
                 {% endwidget %}
+
                 <li class="menu__item"><a href="{{ url('wishlist/overview') }}">{{ 'wishlist.wishlist'|trans }}</a></li>
                 <li class="menu__item"><a href="{{ url('logout') }}">{{ 'customer.logout'|trans }}</a></li>
             {% else %}

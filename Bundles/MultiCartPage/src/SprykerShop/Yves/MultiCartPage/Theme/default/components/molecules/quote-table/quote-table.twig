@@ -52,8 +52,10 @@
                         </a>
                         {% endif %}
                     </td>
+                    {# // TODO #}
                     {{ widget('CartListPermissionGroupWidgetPlugin', quote, isQuoteDeletable) }}
                     <td>
+                        {# // TODO #}
                         {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
                             {{ widget('ProductBundleItemCounterWidgetPlugin', quote) }}
                         {% else %}
@@ -95,6 +97,7 @@
                                         </li>
                                     {% endif %}
                                 {% endif %}
+                                {# // TODO #}
                                 {% if widgetExists('CartToShoppingListWidgetPlugin') %}
                                     <li class="menu__item">
                                         {{ widget('CartToShoppingListWidgetPlugin', quote) }}

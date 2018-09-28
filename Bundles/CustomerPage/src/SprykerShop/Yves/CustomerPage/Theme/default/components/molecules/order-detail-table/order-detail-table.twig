@@ -84,17 +84,15 @@
                     {% endif %}
                 {% endif %}
 
-                {% if widgetExists('CartNoteOrderItemNoteWidgetPlugin') %}
-                    {% if item.cartNote is not empty %}
+                {% if item.cartNote is not empty %}
+                    {% if widgetExists('CartNoteOrderItemNoteWidgetPlugin') %}
                         <tr>
                             <td></td>
                             <td colspan="5">
                                 {{ widget('CartNoteOrderItemNoteWidgetPlugin', item) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
                             </td>
                         </tr>
-                    {% endif %}
-                {% else %}
-                    {% if item.cartNote is not empty %}
+                    {% else %}
                         <tr>
                             <td></td>
                             <td colspan="5">
