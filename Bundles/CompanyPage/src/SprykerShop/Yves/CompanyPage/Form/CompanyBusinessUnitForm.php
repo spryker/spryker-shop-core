@@ -174,7 +174,6 @@ class CompanyBusinessUnitForm extends AbstractType
     }
 
     /**
-     * <<<<<<< HEAD
      * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
     protected function createNotBlankConstraint(): NotBlank
@@ -191,11 +190,11 @@ class CompanyBusinessUnitForm extends AbstractType
     }
 
     /**
-    * @param \Symfony\Component\Form\FormBuilderInterface $builder
-    * @param array $options
-    *
-    * @return $this
-    */
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
     protected function addFkCompanyBusinessUnitField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
