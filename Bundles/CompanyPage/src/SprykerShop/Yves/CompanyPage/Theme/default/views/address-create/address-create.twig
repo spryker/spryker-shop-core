@@ -2,19 +2,30 @@
 
 {% define data = {
     form: _view.form,
-
+    idCompanyBusinessUnit: _view.idCompanyBusinessUnit|default(''),
     title: 'company.account.address' | trans,
-    activePage: 'address'
+    activePage: 'business-unit'
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'company.account' | trans,
+            }, {
+                label: 'company.account.business_unit' | trans,
+            }]}
+    } only %}
+{% endblock %}
 
 {% block companyContent %}
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'company.account.edit_address_information' | trans,
+                title: 'company.account.create_address_information' | trans,
                 form: data.form,
                 options: {
-                    action: url('company/address/create')
+                    action: url('company/address/create', { idCompanyBusinessUnit: data.idCompanyBusinessUnit })
                 },
                 layout: {
                     address1: 'col col--sm-12 col--lg-10',
@@ -28,7 +39,7 @@
                 },
                 cancel: {
                     enable: true,
-                    url: url('company/address'),
+                    url: url('company/business-unit/update', {'id': data.idCompanyBusinessUnit}),
                     text: 'general.back.button' | trans
                 }
             }

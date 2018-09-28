@@ -2,7 +2,8 @@
 
 {% define data = {
     title: 'company.account.overview' | trans,
-    company: _view.company
+    company: _view.company | default(false),
+    defaultBillingAddress: _view.defaultBillingAddress | default(false)
 } %}
 
 {% block companyContent %}
@@ -13,7 +14,8 @@
 
         {% include molecule('overview-info', 'CompanyPage') with {
             data: {
-                companyName: data.company.name
+                company: data.company,
+                defaultBillingAddress: data.defaultBillingAddress
             }
         } only %}
     </div>
