@@ -3,6 +3,7 @@
 {% define data = {
     role: _view.companyRole,
     users: _view.companyUserCollection,
+    currentCompanyUserId: _view.currentCompanyUser.idCompanyUser,
     permissions: _view.permissions,
 
     title: 'company.account.company_role.details' | trans,
@@ -38,6 +39,7 @@
             {% include molecule('user-table', 'CompanyPage') with {
                 data: {
                     users: data.users,
+                    currentCompanyUserId: data.currentCompanyUserId,
                     actions: {
                         update: false,
                         delete: false
@@ -48,7 +50,7 @@
     </div>
     
     <div class="box">
-        <a class="float-right" href="{{ url('company/company-role-permission/manage', {'id': data.role.idCompanyRole}) }}">
+        <a class="float-right" href="{{ url('company/company-role/update', {'id': data.role.idCompanyRole}) }}">
             {{ 'company.account.company_role.permission.manage' | trans }}
         </a>
         <h5>{{ 'company.account.company_role.permissions' | trans }}</h5>
