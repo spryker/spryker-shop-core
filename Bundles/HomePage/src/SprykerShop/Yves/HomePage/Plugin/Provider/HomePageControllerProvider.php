@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class HomePageControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_HOME = 'home';
+    public const ROUTE_HOME = 'home';
 
     /**
      * @param \Silex\Application $app

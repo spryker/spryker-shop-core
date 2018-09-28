@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetTo
 
 class ProductBundleWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
+    public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

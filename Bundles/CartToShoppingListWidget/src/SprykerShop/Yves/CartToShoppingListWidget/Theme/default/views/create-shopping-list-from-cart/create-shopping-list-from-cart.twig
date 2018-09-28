@@ -22,8 +22,6 @@
 
 {% block body %}
 
-    <hr>
-
     {{ form_start(data.form, data.formOptions) }}
 
         <div class="grid grid--bottom">
@@ -39,13 +37,13 @@
                     }
                 } only %}
             </div>
-            <div class="col col--sm-12 js-add-new-shopping-list">
+            <div class="col col--sm-12 js-add-new-shopping-list spacing-y">
                 {{ form_row(attribute(data.form.children, 'newShoppingListName')) }}
             </div>
         </div>
 
         <div class="form-field grid grid--middle grid--right">
-            <button type="submit" class="button button--success col col--sm-12 col--md-5 col--lg-3" data-qa="submit-button">
+            <button type="submit" class="button button--expand button--success" data-qa="submit-button">
                 {{ data.labels.submitLabel | trans }}
             </button>
         </div>

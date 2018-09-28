@@ -16,11 +16,11 @@ use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorage
 
 class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_PRODUCT_NEW = 'CLIENT_PRODUCT_NEW';
-    const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
-    const STORE = 'STORE';
-    const PLUGIN_PRODUCT_NEW_PAGE_WIDGETS = 'PLUGIN_PRODUCT_NEW_PAGE_WIDGETS';
-    const CLIENT_CATALOG = 'CLIENT_CATALOG';
+    public const CLIENT_PRODUCT_NEW = 'CLIENT_PRODUCT_NEW';
+    public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
+    public const STORE = 'STORE';
+    public const PLUGIN_PRODUCT_NEW_PAGE_WIDGETS = 'PLUGIN_PRODUCT_NEW_PAGE_WIDGETS';
+    public const CLIENT_CATALOG = 'CLIENT_CATALOG';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
