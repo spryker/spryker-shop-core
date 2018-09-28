@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 
 class QuickOrderPageToQuickOrderClientBridge implements QuickOrderPageToQuickOrderClientInterface
 {
@@ -32,5 +33,15 @@ class QuickOrderPageToQuickOrderClientBridge implements QuickOrderPageToQuickOrd
     public function expandProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->quickOrderClient->expandProductConcreteTransfer($productConcreteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     */
+    public function getQuickOrderProductPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer
+    {
+        return $this->quickOrderClient->getQuickOrderProductPrice($quickOrderProductPriceTransfer);
     }
 }

@@ -27,7 +27,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
     public const PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER';
-    public const PLUGINS_QUICK_ORDER_PRODUCT_PRICE_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_PRODUCT_PRICE_TRANSFER_EXPANDER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY = 'PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY';
     public const PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER = 'PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER';
@@ -49,7 +48,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addZedRequestClient($container);
         $container = $this->addQuickOrderItemTransferExpanderPlugins($container);
         $container = $this->addQuickOrderFormHandlerStrategyPlugins($container);
-        $container = $this->addQuickOrderProductPriceTransferExpanderPlugins($container);
         $container = $this->addQuickOrderFormAdditionalDataColumnProviderPlugins($container);
 
         return $container;
@@ -170,20 +168,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER] = function () {
             return $this->getQuickOrderItemTransferExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addQuickOrderProductPriceTransferExpanderPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_QUICK_ORDER_PRODUCT_PRICE_TRANSFER_EXPANDER] = function () {
-            return $this->getQuickOrderProductPriceTransferExpanderPlugins();
         };
 
         return $container;

@@ -20,8 +20,6 @@ use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandler;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormOperationHandlerInterface;
-use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductPriceTransferExpander;
-use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductPriceTransferExpanderInterface;
 use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductQuantityRestrictionsValidator;
 use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductQuantityRestrictionsValidatorInterface;
 use SprykerShop\Yves\QuickOrderPage\Model\TextOrderParser;
@@ -79,14 +77,6 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createTextOrderParser(string $textOrder): TextOrderParserInterface
     {
         return new TextOrderParser($textOrder, $this->getConfig());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductPriceTransferExpanderInterface
-     */
-    public function createQuickOrderProductPriceTransferExpander(): QuickOrderProductPriceTransferExpanderInterface
-    {
-        return new QuickOrderProductPriceTransferExpander($this->getQuickOrderProductPriceTransferExpanderPlugins());
     }
 
     /**
@@ -181,14 +171,6 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getQuickOrderItemTransferExpanderPlugins(): array
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface[]
-     */
-    public function getQuickOrderProductPriceTransferExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_PRODUCT_PRICE_TRANSFER_EXPANDER);
     }
 
     /**

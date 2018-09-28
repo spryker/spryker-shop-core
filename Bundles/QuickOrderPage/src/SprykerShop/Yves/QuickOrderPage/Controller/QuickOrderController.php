@@ -270,8 +270,8 @@ class QuickOrderController extends AbstractController
         );
 
         $quickOrderProductPriceTransfer = $this->getFactory()
-            ->createQuickOrderProductPriceTransferExpander()
-            ->expandQuickOrderProductPriceTransferWithPlugins($quickOrderProductPriceTransfer);
+            ->getQuickOrderClient()
+            ->getQuickOrderProductPrice($quickOrderProductPriceTransfer);
 
         return $quickOrderProductPriceTransfer;
     }
