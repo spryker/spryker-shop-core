@@ -24,31 +24,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
     protected const MESSAGE_ERROR_PERMISSION_NOT_FOUND = 'Permission was not found';
     protected const MESSAGE_ERROR_PERMISSION_SAVE_FAILED = 'Permission configuration has not been updated';
     protected const MESSAGE_SUCCESSFUL_PERMISSION_SAVED = 'Permission configuration has been updated';
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array|\Spryker\Yves\Kernel\View\View
-     */
-    public function manageAction(Request $request)
-    {
-        $viewData = $this->executeManageAction($request);
-
-        return $this->view($viewData, [], '@CompanyPage/views/role-permission-manage/role-permission-manage.twig');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function executeManageAction(Request $request): array
-    {
-        return [
-            'idCompanyRole' => $request->query->getInt('id'),
-            'permissions' => $this->getPermissionsList($request),
-        ];
-    }
+    protected const PARAMETER_ID_COMPANY_ROLE = 'id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -69,7 +45,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
         $this->saveCompanyRolePermissions($idCompanyRole, $companyRolePermissions);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_PERMISSION_MANAGE,
+            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
             ['id' => $idCompanyRole]
         );
     }
@@ -96,7 +72,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
         $this->saveCompanyRolePermissions($idCompanyRole, $permissions);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_PERMISSION_MANAGE,
+            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
             ['id' => $idCompanyRole]
         );
     }
@@ -181,42 +157,5 @@ class CompanyRolePermissionController extends AbstractCompanyController
             ->findCompanyRolePermissions($companyRoleTransfer);
 
         return $permissionCollection->getPermissions();
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function getPermissionsList(Request $request): array
-    {
-        $idCompanyRole = $request->query->getInt('id');
-        $allPermissions = $this->getFactory()
-            ->getPermissionClient()
-            ->findAll()
-            ->getPermissions();
-
-        $companyRoleTransfer = new CompanyRoleTransfer();
-        $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
-
-        $companyPermissions = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->findCompanyRolePermissions($companyRoleTransfer)
-            ->getPermissions();
-
-        $permissions = [];
-        foreach ($allPermissions as $permission) {
-            $permissionAsArray = $permission->toArray(false, true);
-            $permissionAsArray['idCompanyRole'] = null;
-            foreach ($companyPermissions as $rolePermission) {
-                if ($rolePermission->getKey() === $permission->getKey()) {
-                    $permissionAsArray['idCompanyRole'] = $idCompanyRole;
-                    break;
-                }
-            }
-            $permissions[] = $permissionAsArray;
-        }
-
-        return $permissions;
     }
 }
