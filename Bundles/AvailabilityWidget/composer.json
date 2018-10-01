@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/availability-widget",
+  "type": "library",
   "description": "AvailabilityWidget module",
   "license": "proprietary",
   "require": {
