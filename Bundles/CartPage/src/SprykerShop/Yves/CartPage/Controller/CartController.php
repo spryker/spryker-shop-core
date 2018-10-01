@@ -49,7 +49,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addAllResponseMessagesToMessenger();
 
         $quoteTransfer = $validateQuoteResponseTransfer->getQuoteTransfer();
 
@@ -92,7 +92,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addAllResponseMessagesToMessenger();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -111,7 +111,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addAllResponseMessagesToMessenger();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -131,7 +131,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addAllResponseMessagesToMessenger();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -152,7 +152,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addAllResponseMessagesToMessenger();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }

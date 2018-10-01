@@ -23,6 +23,14 @@ class QuickOrderPageToZedRequestClientBridge implements QuickOrderPageToZedReque
     }
 
     /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getLastResponseErrorMessages()
+    {
+        return $this->zedRequestClient->getLastResponseErrorMessages();
+    }
+
+    /**
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest()
@@ -31,10 +39,18 @@ class QuickOrderPageToZedRequestClientBridge implements QuickOrderPageToZedReque
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return void
      */
-    public function getLastResponseErrorMessages()
+    public function getAllResponsesErrorMessages()
     {
-        return $this->zedRequestClient->getLastResponseErrorMessages();
+        $this->zedRequestClient->getAllResponsesErrorMessages();
+    }
+
+    /**
+     * @return void
+     */
+    public function addAllResponseMessagesToMessenger(): void
+    {
+        $this->zedRequestClient->addAllResponseMessagesToMessenger();
     }
 }

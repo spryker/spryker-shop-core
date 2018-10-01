@@ -41,7 +41,7 @@ class OrderController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addAllResponseMessagesToMessenger();
 
         return $this->getSuccessRedirect();
     }
@@ -66,7 +66,7 @@ class OrderController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addAllResponseMessagesToMessenger();
 
         return $this->getSuccessRedirect();
     }
