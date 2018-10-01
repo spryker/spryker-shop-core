@@ -7,31 +7,31 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Form\Constraint;
 
-use SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductQuantityRestrictionsValidatorInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface;
 use Symfony\Component\Validator\Constraint;
 
 class QuantityRestrictionsConstraint extends Constraint
 {
     /**
-     * @var \SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductQuantityRestrictionsValidatorInterface
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface
      */
-    protected $quickOrderProductQuantityRestrictionsValidator;
+    protected $quickOrderClient;
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductQuantityRestrictionsValidatorInterface $quickOrderProductQuantityRestrictionsValidator
-     * @param mixed|null $options
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface $quickOrderClient
+     * @param mixed $options
      */
-    public function __construct(QuickOrderProductQuantityRestrictionsValidatorInterface $quickOrderProductQuantityRestrictionsValidator, $options = null)
+    public function __construct(QuickOrderPageToQuickOrderClientInterface $quickOrderClient, $options = null)
     {
         parent::__construct($options);
-        $this->quickOrderProductQuantityRestrictionsValidator = $quickOrderProductQuantityRestrictionsValidator;
+        $this->quickOrderClient = $quickOrderClient;
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Model\QuickOrderProductQuantityRestrictionsValidatorInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface
      */
-    public function getQuickOrderProductQuantityRestrictionsValidator(): QuickOrderProductQuantityRestrictionsValidatorInterface
+    public function getQuickOrderClient(): QuickOrderPageToQuickOrderClientInterface
     {
-        return $this->quickOrderProductQuantityRestrictionsValidator;
+        return $this->quickOrderClient;
     }
 }

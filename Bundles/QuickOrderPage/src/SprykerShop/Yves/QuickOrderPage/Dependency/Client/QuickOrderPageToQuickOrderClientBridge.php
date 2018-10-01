@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
 use Generated\Shared\Transfer\CurrentProductConcretePriceTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
+use Generated\Shared\Transfer\QuickOrderItemTransfer;
 
 class QuickOrderPageToQuickOrderClientBridge implements QuickOrderPageToQuickOrderClientInterface
 {
@@ -43,5 +45,15 @@ class QuickOrderPageToQuickOrderClientBridge implements QuickOrderPageToQuickOrd
     public function getProductConcreteSumPrice(CurrentProductConcretePriceTransfer $currentProductConcretePriceTransfer): CurrentProductConcretePriceTransfer
     {
         return $this->quickOrderClient->getProductConcreteSumPrice($currentProductConcretePriceTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
+     */
+    public function validateQuantityRestrictions(QuickOrderItemTransfer $quickOrderItemTransfer): ProductQuantityValidationResponseTransfer
+    {
+        return $this->quickOrderClient->validateQuantityRestrictions($quickOrderItemTransfer);
     }
 }

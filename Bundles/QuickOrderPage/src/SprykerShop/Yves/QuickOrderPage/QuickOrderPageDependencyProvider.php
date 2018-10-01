@@ -11,8 +11,6 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityClientBridge;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientBridge;
@@ -21,8 +19,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    public const CLIENT_PRODUCT_QUANTITY = 'CLIENT_PRODUCT_QUANTITY';
-    public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
     public const CLIENT_QUICK_ORDER = 'CLIENT_QUICK_ORDER';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
@@ -41,8 +37,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addApplication($container);
         $container = $this->addCartClient($container);
         $container = $this->addQuoteClient($container);
-        $container = $this->addProductQuantityClient($container);
-        $container = $this->addProductQuantityStorageClient($container);
         $container = $this->addQuickOrderClient($container);
         $container = $this->addQuickOrderPageWidgetPlugins($container);
         $container = $this->addZedRequestClient($container);
@@ -92,38 +86,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_QUOTE] = function (Container $container) {
             return new QuickOrderPageToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addProductQuantityClient(Container $container): Container
-    {
-        $container[static::CLIENT_PRODUCT_QUANTITY] = function (Container $container) {
-            return new QuickOrderPageToProductQuantityClientBridge(
-                $container->getLocator()->productQuantity()->client()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addProductQuantityStorageClient(Container $container): Container
-    {
-        $container[static::CLIENT_PRODUCT_QUANTITY_STORAGE] = function (Container $container) {
-            return new QuickOrderPageToProductQuantityStorageClientBridge(
-                $container->getLocator()->productQuantityStorage()->client()
-            );
         };
 
         return $container;

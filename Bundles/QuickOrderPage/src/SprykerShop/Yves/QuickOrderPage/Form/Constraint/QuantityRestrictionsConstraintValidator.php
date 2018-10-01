@@ -36,7 +36,7 @@ class QuantityRestrictionsConstraintValidator extends ConstraintValidator
             return;
         }
 
-        $productQuantityValidationTransfer = $constraint->getQuickOrderProductQuantityRestrictionsValidator()
+        $productQuantityValidationTransfer = $constraint->getQuickOrderClient()
             ->validateQuantityRestrictions($quickOrderItemTransfer);
 
         if (!$productQuantityValidationTransfer->getIsValid()) {
