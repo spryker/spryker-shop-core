@@ -11,6 +11,7 @@
     index: required,
     sku: required,
     qty: required,
+    idProductConcrete: required,
     fullName: required
 } %}
 
@@ -19,36 +20,41 @@
         {{ widget(
             'QuickOrderPageProductSearchWidgetPlugin',
             'ajax-provider' ~ data.index,
-            data.fullName ~ '[sku]'
+            data.fullName ~ '[sku]',
+            data.fullName ~ '[id_product_concrete]'
         ) }}
 
-        {{ form_row(data.sku, {
-            attr: {
-                'data-id': ''
+        {{ form_row(data.sku) }}
+        {{ form_row(data.idProductConcrete) }}
+
+        {% include molecule('ajax-provider') with {
+            class: config.jsName ~ '__provider',
+            attributes: {
+                id: config.jsName ~ '-' ~ data.index,
+                method: 'GET',
+                url: 'quick-order/product-additional-data'
             }
-        }) }}
+        } only %}
     </div>
 
     {% if data.additionalDataColumnProviderPlugins.measurementUnit is defined %}
         <div class="{{ block('cellClass') }}">
-            {% include molecule('measurement-unit', 'QuickOrderPage') with {
+            {% include molecule('order-measurement-unit', 'QuickOrderPage') with {
                 data: {
-                    id:  'measurement-unit-' ~ data.index,
+                    id:  config.jsName ~ '-' ~ data.index,
                     ajaxUrl: 'quick-order/product-additional-data'
-                },
-                attributes: {
-                    'data-ajax-selector': '#measurement-unit-' ~ data.index
                 }
             } only %}
         </div>
     {% endif %}
 
     <div class="{{ block('cellClass') }}">
-        {{ form_row(data.qty, {
-            id: 'quantity-input-' ~ data.index,
-            required: data.first,
-            label: false
-        }) }}
+        {% include molecule('order-quantity', 'QuickOrderPage') with {
+            data: {
+                qty: data.qty,
+                required: data.first,
+            }
+        } only %}
     </div>
 
     <div class="{{ block('cellClass') }}">

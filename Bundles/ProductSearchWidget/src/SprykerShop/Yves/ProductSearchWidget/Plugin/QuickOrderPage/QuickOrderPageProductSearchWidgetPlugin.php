@@ -17,15 +17,17 @@ class QuickOrderPageProductSearchWidgetPlugin extends AbstractWidgetPlugin imple
 {
     /**
      * @param string $index
-     * @param string $selectedValueKey
+     * @param string $skuInputName
+     * @param string $idProductInputName
      * @param int|null $searchResultsLimit
      *
      * @return void
      */
-    public function initialize(string $index, string $selectedValueKey, ?int $searchResultsLimit = null): void
+    public function initialize(string $index, string $skuInputName, string $idProductInputName, ?int $searchResultsLimit = null): void
     {
         $this->addParameter('index', $index)
-            ->addParameter('selectedValueKey', $selectedValueKey)
+            ->addParameter('skuInputName', $skuInputName)
+            ->addParameter('idProductInputName', $idProductInputName)
             ->addParameter('searchResultsLimit', $searchResultsLimit ?: $this->getConfig()->getSearchResultsDefaultLimit());
     }
 
