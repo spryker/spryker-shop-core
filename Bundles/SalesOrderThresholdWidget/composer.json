@@ -4,11 +4,14 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-ui": "^1.0.0"
+    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/kernel": "^3.19.0"
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
-    "spryker-shop/checkout-page": "*"
+    "spryker-shop/checkout-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "Widget plugins are available for this module.",

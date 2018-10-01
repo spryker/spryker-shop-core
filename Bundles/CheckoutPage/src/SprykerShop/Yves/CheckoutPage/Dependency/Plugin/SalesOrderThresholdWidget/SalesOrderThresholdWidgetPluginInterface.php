@@ -15,6 +15,8 @@ interface SalesOrderThresholdWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'SalesOrderThresholdWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
      *
      * @return void

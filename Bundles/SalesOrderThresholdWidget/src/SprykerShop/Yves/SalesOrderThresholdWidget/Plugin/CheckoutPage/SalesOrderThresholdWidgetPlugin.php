@@ -19,6 +19,8 @@ use SprykerShop\Yves\SalesOrderThresholdWidget\SalesOrderThresholdWidgetConfig;
 class SalesOrderThresholdWidgetPlugin extends AbstractWidgetPlugin implements SalesOrderThresholdWidgetPluginInterface
 {
     /**
+     * @api
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
      *
      * @return void
