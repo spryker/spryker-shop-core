@@ -19,19 +19,15 @@ class ProductDiscontinuedNoteWidget extends AbstractWidget
      */
     public function __construct(string $sku)
     {
-        $this->addParameter(
-            'discontinuedProduct',
-            $this->getFactory()
-                ->getProductDiscontinuedStorageClient()
-                ->findProductDiscontinuedStorage($sku, $this->getLocale())
-        );
+        $discontinuedProduct = $this->getFactory()
+            ->getProductDiscontinuedStorageClient()
+            ->findProductDiscontinuedStorage($sku, $this->getLocale());
+
+        $this->addParameter('discontinuedProduct', $discontinuedProduct);
+        $this->addParameter('isDiscontinued', (bool)$discontinuedProduct);
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -40,10 +36,6 @@ class ProductDiscontinuedNoteWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

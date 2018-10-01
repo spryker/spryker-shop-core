@@ -20,9 +20,9 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
      */
     public function __construct(ItemTransfer $itemTransfer)
     {
-        $this
-            ->addParameter('itemTransfer', $itemTransfer)
-            ->addParameter('isBaseUnit', $this->isBaseUnit($itemTransfer));
+        $this->addParameter('itemTransfer', $itemTransfer)
+            ->addParameter('isBaseUnit', $this->isBaseUnit($itemTransfer))
+            ->addParameter('hasSalesUnit', $itemTransfer->getQuantitySalesUnit()->getIdProductMeasurementSalesUnit() ?? false);
     }
 
     /**

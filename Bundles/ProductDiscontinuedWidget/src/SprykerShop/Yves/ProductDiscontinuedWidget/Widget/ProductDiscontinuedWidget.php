@@ -19,12 +19,12 @@ class ProductDiscontinuedWidget extends AbstractWidget
      */
     public function __construct(string $sku)
     {
-        $this->addParameter(
-            'discontinuedProduct',
-            $this->getFactory()
-                ->getProductDiscontinuedStorageClient()
-                ->findProductDiscontinuedStorage($sku, $this->getLocale())
-        );
+        $discontinuedProduct = $this->getFactory()
+            ->getProductDiscontinuedStorageClient()
+            ->findProductDiscontinuedStorage($sku, $this->getLocale());
+
+        $this->addParameter('discontinuedProduct', $discontinuedProduct);
+        $this->addParameter('isDiscontinued', (bool)$discontinuedProduct);
     }
 
     /**

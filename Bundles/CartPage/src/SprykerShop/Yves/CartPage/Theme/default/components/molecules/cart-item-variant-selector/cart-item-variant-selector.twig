@@ -14,7 +14,7 @@
     {% set isItemVariantReplaceAvailable = data.cartItemAttributes is not empty %}
 
     {% set quantitySalesUnitWidget = findWidget('CartProductMeasurementUnitQuantitySelectorWidget', [data.cartItem]) %}
-    {% set hasSalesUnit = quantitySalesUnitWidget.hasSalesUnit | default(widgetBlock('QuantitySalesUnitWidgetPlugin', 'hasSalesUnit', data.cartItem)) %} {# @deprecated Use CartProductMeasurementUnitQuantitySelectorWidget instead of QuantitySalesUnitWidgetPlugin. #}
+    {% set hasSalesUnit = quantitySalesUnitWidget.hasSalesUnit ?? widgetBlock('QuantitySalesUnitWidgetPlugin', 'hasSalesUnit', data.cartItem) %} {# @deprecated Use CartProductMeasurementUnitQuantitySelectorWidget instead of QuantitySalesUnitWidgetPlugin. #}
     {% if hasSalesUnit is null %}
         {% set isItemVariantReplaceAvailable = not hasSalesUnit and isItemVariantReplaceAvailable %}
     {% endif %}

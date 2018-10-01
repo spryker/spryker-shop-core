@@ -25,6 +25,8 @@ class AddToMultiCartWidget extends AbstractWidget
         $this->addParameter('carts', $this->getQuoteCollection())
             ->addParameter('disabled', $disabled)
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
+
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 
     /**

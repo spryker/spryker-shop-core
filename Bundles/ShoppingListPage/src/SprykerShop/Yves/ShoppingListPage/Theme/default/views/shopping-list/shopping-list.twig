@@ -90,7 +90,7 @@
                 {% for item in data.shoppingListItems %}
                     {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
                     {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [item.sku]) %}
-                    {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued | default(widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku)) %} {# @deprecated Use ProductDiscontinuedWidget instead of ProductDiscontinuedWidgetPlugin. #}
+                    {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued ?? widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %} {# @deprecated Use ProductDiscontinuedWidget instead of ProductDiscontinuedWidgetPlugin. #}
                     {% if isDiscontinued is not null %}
                         {% set isItemAvailable = not isDiscontinued and isItemAvailable %}
                     {% endif %}

@@ -24,7 +24,7 @@
             <tr class="active">
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.name' | trans }}</th>
                 {% set cartListPermissionGroupWidget = findWidget('CartListPermissionGroupWidget', [data.quotes|first, isQuoteDeletable]) %}
-                {% set isSharingAllowed = cartListPermissionGroupWidget.isSharingAllowed | default(widget('CartListPermissionGroupWidgetPlugin', data.quotes|first, isQuoteDeletable)) %} {# @deprecated Use CartListPermissionGroupWidget instead of CartListPermissionGroupWidgetPlugin. #}
+                {% set isSharingAllowed = cartListPermissionGroupWidget.isSharingAllowed ?? widget('CartListPermissionGroupWidgetPlugin', data.quotes|first, isQuoteDeletable) %} {# @deprecated Use CartListPermissionGroupWidget instead of CartListPermissionGroupWidgetPlugin. #}
                 {% if isSharingAllowed %}
                     <th>{{ 'page.multi_cart.shopping_cart.list.label.access' | trans }}</th>
                 {% endif %}
