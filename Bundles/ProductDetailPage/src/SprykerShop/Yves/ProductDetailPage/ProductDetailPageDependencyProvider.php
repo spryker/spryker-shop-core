@@ -13,8 +13,8 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProd
 
 class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
-    const PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

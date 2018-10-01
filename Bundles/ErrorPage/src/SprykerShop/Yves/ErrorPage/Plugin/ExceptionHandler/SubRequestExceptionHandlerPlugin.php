@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements ExceptionHandlerPluginInterface
 {
-    const URL_NAME_PREFIX = 'error/';
+    public const URL_NAME_PREFIX = 'error/';
 
     /**
      * @param int $statusCode

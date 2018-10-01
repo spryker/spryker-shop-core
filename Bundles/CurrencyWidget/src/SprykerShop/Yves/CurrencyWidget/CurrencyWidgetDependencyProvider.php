@@ -14,7 +14,7 @@ use SprykerShop\Yves\CurrencyWidget\Dependency\Client\CurrencyWidgetToCurrencyCl
 
 class CurrencyWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const STORE = 'STORE';
+    public const STORE = 'STORE';
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
 
     /**
