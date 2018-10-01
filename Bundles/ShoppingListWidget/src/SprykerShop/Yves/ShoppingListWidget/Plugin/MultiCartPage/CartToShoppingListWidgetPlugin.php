@@ -14,10 +14,6 @@ use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\CartToShoppingListWidget\Ca
 class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin implements CartToShoppingListWidgetPluginInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -31,10 +27,6 @@ class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin implements Car
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -43,10 +35,6 @@ class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin implements Car
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

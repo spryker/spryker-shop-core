@@ -44,15 +44,22 @@
 <table class="shopping-list-items">
     <thead>
     <tr>
-        {% widget 'ProductBarcodeWidget' only %}
-            {% block body %}
-                <th>{{ data.labels.barcode }}</th>
-            {% endblock %}
-        {% elsewidget 'ProductBarcodeWidgetPlugin' only %} {# @deprecated Use ProductBarcodeWidget instead. #}
-            {% block body %}
-                <th>{{ data.labels.barcode }}</th>
-            {% endblock %}
-        {% endwidget %}
+        {# TODO: Discuss with Tamash and update after #}
+        {% if data.shoppingListItems|length > 0 %}
+            {% widget 'ProductBarcodeWidget' args [data.shoppingListItems|first, data.barcodeGeneratorPlugin] with {
+                barcodeLabel: data.labels.barcode
+            } only %}
+                {% block body %}
+                    <th>{{ barcodeLabel }}</th>
+                {% endblock %}
+            {% elsewidget 'ProductBarcodeWidgetPlugin' args [data.shoppingListItems|first, data.barcodeGeneratorPlugin] with {
+                barcodeLabel: data.labels.barcode
+            } only %} {# @deprecated Use ProductBarcodeWidget instead. #}
+                {% block body %}
+                    <th>{{ barcodeLabel }}</th>
+                {% endblock %}
+            {% endwidget %}
+        {% endif %}
         <th>{{ data.labels.productSku }}</th>
         <th>{{ data.labels.productName }}</th>
         <th>{{ data.labels.defaultPrice }}</th>

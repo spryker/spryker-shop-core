@@ -99,19 +99,17 @@
                                     {% endif %}
                                 {% endwidget %}
 
-                                {% widget 'CreateShoppingListFromCartWidget' args [quote] only %}
-                                    {% block body %}
-                                        <li class="menu__item">
-                                            {{ parent() }}
-                                        </li>
-                                    {% endblock %}
-                                {% elsewidget 'CartToShoppingListWidgetPlugin' args [quote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
-                                    {% block body %}
-                                        <li class="menu__item">
-                                            {{ parent() }}
-                                        </li>
-                                    {% endblock %}
-                                {% endwidget %}
+                                {% if widgetExists('CartToShoppingListWidgetPlugin') %}
+                                    <li class="menu__item">
+                                        {{ widget('CartToShoppingListWidgetPlugin', quote) }}
+                                    </li>
+                                {% else %}
+                                    {% include molecule('cart-to-shopping-list', 'ShoppingListWidget') ignore missing with {
+                                        data: {
+                                            quote: quote
+                                        }
+                                    } only %}
+                                {% endif %}
                             </ul>
                             {% endif %}
                         </td>
