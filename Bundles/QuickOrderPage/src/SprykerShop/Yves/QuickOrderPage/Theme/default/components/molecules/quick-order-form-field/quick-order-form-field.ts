@@ -10,7 +10,7 @@ interface ProductJSON {
         name: string,
     },
     idProductConcrete: number,
-    productQuantityStorage: {
+    productQuantity: {
         idProduct: number,
         quantityInterval: number,
         quantityMax: number,
@@ -56,7 +56,7 @@ export default class QuickOrderFormField extends Component {
 
         if (this.selectedItem.matches(this.autocompleteForm.itemSelector)) {
             event.stopPropagation();
-            this.setInputId(this.selectedId);
+            this.setInputId(this.selectedProductId);
             this.loadProduct();
         }
     }
@@ -79,7 +79,7 @@ export default class QuickOrderFormField extends Component {
     }
 
     async loadProduct(): Promise<void> {
-        this.ajaxProvider.queryParams.set('id-product', <string>this.selectedId);
+        this.ajaxProvider.queryParams.set('id-product', <string>this.selectedProductId);
 
         try {
             const response: string = <string>await this.ajaxProvider.fetch();
@@ -99,7 +99,7 @@ export default class QuickOrderFormField extends Component {
         this.hiddenIdInputElement.value = data;
     }
 
-    get selectedId(): string {
+    get selectedProductId(): string {
         return this.selectedItem.getAttribute('data-id-product');
     }
 
