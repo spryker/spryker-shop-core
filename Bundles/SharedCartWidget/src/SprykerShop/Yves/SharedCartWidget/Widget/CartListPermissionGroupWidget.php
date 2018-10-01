@@ -17,8 +17,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class CartListPermissionGroupWidget extends AbstractWidget
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param bool $isQuoteDeletable
      */
@@ -92,10 +90,6 @@ class CartListPermissionGroupWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -104,10 +98,6 @@ class CartListPermissionGroupWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

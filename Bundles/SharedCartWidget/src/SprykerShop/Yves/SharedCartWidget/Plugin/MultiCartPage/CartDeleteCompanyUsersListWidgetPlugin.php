@@ -20,10 +20,6 @@ use SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteCompanyUsersListWidget;
 class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implements CartDeleteCompanyUsersListWidgetPluginInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -36,10 +32,6 @@ class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implem
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -48,10 +40,6 @@ class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implem
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

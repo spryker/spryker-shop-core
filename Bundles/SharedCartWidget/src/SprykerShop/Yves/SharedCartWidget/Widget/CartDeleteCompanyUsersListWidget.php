@@ -16,8 +16,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class CartDeleteCompanyUsersListWidget extends AbstractWidget
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
     public function __construct(QuoteTransfer $quoteTransfer)
@@ -26,10 +24,6 @@ class CartDeleteCompanyUsersListWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -38,8 +32,6 @@ class CartDeleteCompanyUsersListWidget extends AbstractWidget
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

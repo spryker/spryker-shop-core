@@ -23,10 +23,10 @@
         <thead>
             <tr class="active">
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.name' | trans }}</th>
-                {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
-                    {% if widgetBlock('CartListPermissionGroupWidgetPlugin', 'isSharingAllowed', data.quotes|first, isQuoteDeletable) %}
+                {% set cartListPermissionGroupWidget = findWidget('CartListPermissionGroupWidget', [data.quotes|first, isQuoteDeletable]) %}
+                {% set isSharingAllowed = cartListPermissionGroupWidget.isSharingAllowed | default(widget('CartListPermissionGroupWidgetPlugin', data.quotes|first, isQuoteDeletable)) %} {# @deprecated Use CartListPermissionGroupWidget instead of CartListPermissionGroupWidgetPlugin. #}
+                {% if isSharingAllowed %}
                     <th>{{ 'page.multi_cart.shopping_cart.list.label.access' | trans }}</th>
-                    {% endif %}
                 {% endif %}
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.num_of_products' | trans }}</th>
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.total' | trans }}</th>
@@ -52,8 +52,8 @@
                         </a>
                         {% endif %}
                     </td>
-                    {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] only %}
-                    {% elsewidget 'CartListPermissionGroupWidgetPlugin' args [quote, isQuoteDeletable] only %} {# @deprecated Use CartListPermissionGroupWidget instead. #}
+                    {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-show', 'SharedCartWidget') only %}
+                    {% elsewidget 'CartListPermissionGroupWidgetPlugin' args [quote, isQuoteDeletable] use view('multi-cart-permission-show', 'SharedCartWidget') only %} {# @deprecated Use CartListPermissionGroupWidget instead. #}
                     {% endwidget %}
                     <td>
                         {% widget 'ProductBundleItemCounterWidget' args [quote] only %}
@@ -86,9 +86,10 @@
                                         </a>
                                     </li>
                                 {% endif %}
-                                {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
-                                    {{ widgetBlock('CartListPermissionGroupWidgetPlugin', 'actions', quote, isQuoteDeletable) }}
-                                {% else %}
+
+                                {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-actions', 'SharedCartWidget') only %}
+                                {% elsewidget 'CartListPermissionGroupWidgetPlugin' args [quote, isQuoteDeletable] use view('multi-cart-permission-actions', 'SharedCartWidget') only %} {# @deprecated Use ProductBundleItemCounterWidget instead. #}
+                                {% nowidget %}
                                     {% if isQuoteDeletable %}
                                         <li class="menu__item">
                                             <a href="{{ url('multi-cart/confirm-delete', {idQuote: quote.idQuote}) }}">
@@ -96,13 +97,21 @@
                                             </a>
                                         </li>
                                     {% endif %}
-                                {% endif %}
-                                {# // TODO NEW_MOLECULE #}
-                                {% if widgetExists('CartToShoppingListWidgetPlugin') %}
-                                    <li class="menu__item">
-                                        {{ widget('CartToShoppingListWidgetPlugin', quote) }}
-                                    </li>
-                                {% endif %}
+                                {% endwidget %}
+
+                                {% widget 'CreateShoppingListFromCartWidget' args [quote] only %}
+                                    {% block body %}
+                                        <li class="menu__item">
+                                            {{ parent() }}
+                                        </li>
+                                    {% endblock %}
+                                {% elsewidget 'CartToShoppingListWidgetPlugin' args [quote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
+                                    {% block body %}
+                                        <li class="menu__item">
+                                            {{ parent() }}
+                                        </li>
+                                    {% endblock %}
+                                {% endwidget %}
                             </ul>
                             {% endif %}
                         </td>

@@ -19,7 +19,7 @@
 {% block title %}
     {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-title', 'MultiCartWidget') only %}
     {% nowidget %}
-        {% if widgetExists('FooWidgetPlugin') %}
+        {% if widgetExists('CartOperationsWidgetPlugin') %}
             {{ widgetBlock('CartOperationsWidgetPlugin', 'title', data.cart) }} {# @deprecated Use CartOperationsWidget instead. #}
         {% else %}
             {{ parent() }}
