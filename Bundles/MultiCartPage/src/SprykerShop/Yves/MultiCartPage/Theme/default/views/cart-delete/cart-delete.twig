@@ -30,8 +30,9 @@
         {{ "multi_cart_page.cart_delete_confirmation.trying_to_delete" | trans }}: <strong>{{ data.cartName }}</strong>
         <br/><br/>
 
-        {# // TODO #}
-        {{ widget('CartDeleteCompanyUsersListWidgetPlugin', data.cart) }}
+        {% widget 'CartDeleteCompanyUsersListWidget' args [data.cart] only %}
+        {% elsewidget 'CartDeleteCompanyUsersListWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartDeleteCompanyUsersListWidget instead. #}
+        {% endwidget %}
 
         <div class="form__actions">
             <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">

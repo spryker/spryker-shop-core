@@ -52,20 +52,20 @@
                         </a>
                         {% endif %}
                     </td>
-                    {# // TODO #}
-                    {{ widget('CartListPermissionGroupWidgetPlugin', quote, isQuoteDeletable) }}
+                    {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] only %}
+                    {% elsewidget 'CartListPermissionGroupWidgetPlugin' args [quote, isQuoteDeletable] only %} {# @deprecated Use CartListPermissionGroupWidget instead. #}
+                    {% endwidget %}
                     <td>
-                        {# // TODO #}
-                        {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
-                            {{ widget('ProductBundleItemCounterWidgetPlugin', quote) }}
-                        {% else %}
+                        {% widget 'ProductBundleItemCounterWidget' args [quote] only %}
+                        {% elsewidget 'ProductBundleItemCounterWidgetPlugin' args [quote] only %} {# @deprecated Use ProductBundleItemCounterWidget instead. #}
+                        {% nowidget %}
                             {% set label = (totals == 1)
                                 ? 'page.multi_cart.shopping_cart.list.label.item'
                                 : 'page.multi_cart.shopping_cart.list.label.items'
                             %}
 
                             <span class="cart-items-quantity">{{ totals }} {{ label | trans }}</span>
-                        {% endif %}
+                        {% endwidget %}
                     </td>
                     <td>{{ quote.totals.subtotal | default(0) | money }}</td>
                     {% if showActions %}
@@ -97,7 +97,7 @@
                                         </li>
                                     {% endif %}
                                 {% endif %}
-                                {# // TODO #}
+                                {# // TODO NEW_MOLECULE #}
                                 {% if widgetExists('CartToShoppingListWidgetPlugin') %}
                                     <li class="menu__item">
                                         {{ widget('CartToShoppingListWidgetPlugin', quote) }}

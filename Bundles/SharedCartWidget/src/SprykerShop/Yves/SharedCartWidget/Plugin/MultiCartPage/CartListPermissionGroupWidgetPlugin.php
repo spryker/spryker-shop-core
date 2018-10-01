@@ -7,12 +7,13 @@
 
 namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartPage;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\CartListPermissionGroupWidget\CartListPermissionGroupWidgetPluginInterface;
+use SprykerShop\Yves\SharedCartWidget\Widget\CartListPermissionGroupWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\CartListPermissionGroupWidget instead.
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
 class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implements CartListPermissionGroupWidgetPluginInterface
@@ -29,71 +30,9 @@ class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implement
      */
     public function initialize(QuoteTransfer $quoteTransfer, bool $isQuoteDeletable): void
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $widget = new CartListPermissionGroupWidget($quoteTransfer, $isQuoteDeletable);
 
-        $this->addCartParameter($quoteTransfer);
-        $this->addAccessTypeParameter($quoteTransfer);
-        $this->addIsSharingAllowedParameter($customerTransfer);
-        $this->addIsQuoteDeletableParameter($isQuoteDeletable, $quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function addAccessTypeParameter(QuoteTransfer $quoteTransfer): void
-    {
-        $this->addParameter(
-            'accessType',
-            $this->getFactory()
-                ->getSharedCartClient()
-                ->getQuoteAccessLevel($quoteTransfer)
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function addCartParameter(QuoteTransfer $quoteTransfer): void
-    {
-        $this->addParameter('cart', $quoteTransfer);
-    }
-
-    /**
-     * @param bool $isQuoteDeletable
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function addIsQuoteDeletableParameter(bool $isQuoteDeletable, QuoteTransfer $quoteTransfer): void
-    {
-        $this->addParameter(
-            'isQuoteDeletable',
-            $isQuoteDeletable && $this->getFactory()->getSharedCartClient()->isQuoteDeletable($quoteTransfer)
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
-    protected function addIsSharingAllowedParameter(CustomerTransfer $customerTransfer): void
-    {
-        $this->addParameter('isSharingAllowed', $this->isSharingAllowed($customerTransfer));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isSharingAllowed(CustomerTransfer $customerTransfer): bool
-    {
-        return $customerTransfer->getCompanyUserTransfer() && $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser();
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -117,6 +56,6 @@ class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implement
      */
     public static function getTemplate(): string
     {
-        return '@SharedCartWidget/views/multi-cart-permission/multi-cart-permission.twig';
+        return CartListPermissionGroupWidget::getTemplate();
     }
 }
