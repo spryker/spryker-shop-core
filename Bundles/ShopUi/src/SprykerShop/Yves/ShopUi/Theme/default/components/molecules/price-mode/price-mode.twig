@@ -13,7 +13,6 @@
 {% block body %}
     {% if data.showIcon %}
         {% include atom('icon') with {
-            class: config.name ~ '__tag',
             data: {
                 name: 'tag'
             }
