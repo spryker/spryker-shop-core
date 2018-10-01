@@ -29,7 +29,7 @@ class CatalogPageProductWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductCatalogPageWidget';
+        return 'CatalogPageProductWidget';
     }
 
     /**

@@ -6,7 +6,7 @@
 
 {% block body %}
     <div class="{{config.name}}__container box">
-        {% block labels %}9999999999-9999
+        {% block labels %}
             {% widget 'ProductAbstractLabelWidget' args [data.abstractId] only %}
             {% elsewidget 'ProductAbstractLabelWidgetPlugin' args [data.abstractId] only %} {# @deprecated Use ProductAbstractLabelWidget instead. #}
             {% endwidget %}
