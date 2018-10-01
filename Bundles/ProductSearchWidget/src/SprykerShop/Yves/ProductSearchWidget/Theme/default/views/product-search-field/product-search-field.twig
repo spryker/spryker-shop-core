@@ -2,8 +2,8 @@
 
 {% define data = {
     index: _widget.index,
-    selectedValueKey: _widget.selectedValueKey,
-    idProductConcreteKey: _widget.idProductConcreteKey,
+    skuInputName: _widget.skuInputName,
+    idProductInputName: _widget.idProductInputName,
     searchResultsLimit: _widget.searchResultsLimit,
     value: _widget.inputValue | default
 } %}
@@ -17,8 +17,8 @@
         },
         attributes: {
             'suggestion-url': '/product-search/concrete',
-            'hidden-input-name': data.selectedValueKey,
-            'hidden-id-input-name': data.idProductConcreteKey,
+            'hidden-input-name': data.skuInputName,
+            'hidden-id-input-name': data.idProductInputName,
             'value-data-attribute': 'data-value',
             'min-letters': 1,
             'item-selector': '.products-list__item',
