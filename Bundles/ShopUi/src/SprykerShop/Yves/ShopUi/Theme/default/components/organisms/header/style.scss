@@ -1,1 +1,3 @@
-@include shop-ui-header();
+@include helper-import(organism, header) {
+    @include shop-ui-header;
+}
