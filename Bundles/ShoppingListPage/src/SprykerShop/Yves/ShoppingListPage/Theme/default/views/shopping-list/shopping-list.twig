@@ -140,7 +140,7 @@
                         </td>
                         <td>
                             {% if isItemAvailable %}
-                                <button type="submit" name="add-item" class="button button--success" value="{{ item.idShoppingListItem.idShoppingListItem }}" {{qa('submit-button')}}>
+                                <button type="submit" name="add-item" class="button button--success" value="{{ item.idShoppingListItem }}" {{qa('submit-button')}}>
                                     {{ 'customer.account.shopping_list.add-to-cart' | trans }}
                                 </button>
                             {% endif %}
