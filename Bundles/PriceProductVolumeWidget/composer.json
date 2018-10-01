@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/price-product-volume-widget",
+  "type": "library",
   "description": "PriceProductVolumeWidget module",
   "license": "proprietary",
   "require": {

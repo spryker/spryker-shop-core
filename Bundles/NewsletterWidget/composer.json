@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/newsletter-widget",
+  "type": "library",
   "description": "NewsletterWidget module",
   "license": "proprietary",
   "require": {
