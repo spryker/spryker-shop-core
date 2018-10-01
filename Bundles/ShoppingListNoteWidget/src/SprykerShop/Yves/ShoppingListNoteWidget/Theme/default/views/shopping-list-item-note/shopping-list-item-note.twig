@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    note: _widget.note | default(null),
+} %}
+
+{% block body %}
+    {% if data.note is not null %}
+        <div class="grid">
+            <div class="col">{{ 'shopping_list.item_note' | trans }}</div>
+            <div class="col">&nbsp;{{ data.note }}</div>
+        </div>
+    {% endif %}
+{% endblock %}

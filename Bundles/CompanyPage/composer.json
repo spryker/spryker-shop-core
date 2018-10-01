@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/company-page",
+  "type": "library",
   "description": "CompanyPage module",
   "license": "proprietary",
   "require": {

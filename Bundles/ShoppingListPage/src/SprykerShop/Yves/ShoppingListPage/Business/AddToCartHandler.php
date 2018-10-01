@@ -104,8 +104,10 @@ class AddToCartHandler implements AddToCartHandlerInterface
         array $itemQuantity
     ): ShoppingListAddToCartRequestCollectionTransfer {
         foreach ($shoppingListMoveToCartRequestCollectionTransfer->getRequests() as $addToCartRequestTransfer) {
-            if (!empty($addToCartRequestTransfer->getShoppingListItem()->getIdShoppingListItem())) {
-                $addToCartRequestTransfer->setQuantity($itemQuantity[$addToCartRequestTransfer->getShoppingListItem()->getIdShoppingListItem()]);
+            $idShoppingListItem = $addToCartRequestTransfer->getShoppingListItem()->getIdShoppingListItem();
+
+            if (!empty($itemQuantity[$idShoppingListItem])) {
+                $addToCartRequestTransfer->setQuantity($itemQuantity[$idShoppingListItem]);
             }
         }
 

@@ -4,6 +4,7 @@
 
 ShoppingListPageExtension module offers plugin interfaces to decouple interface provider modules from satellite modules
 
+
 ## Installation
 
 ```

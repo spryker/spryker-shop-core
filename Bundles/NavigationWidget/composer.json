@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/navigation-widget",
+  "type": "library",
   "description": "NavigationWidget module",
   "license": "proprietary",
   "require": {

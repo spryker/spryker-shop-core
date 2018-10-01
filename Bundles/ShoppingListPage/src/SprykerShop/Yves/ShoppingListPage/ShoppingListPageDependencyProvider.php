@@ -43,11 +43,12 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addProductStorageClient($container);
         $container = $this->addCompanyBusinessUnitClient($container);
         $container = $this->addCompanyUserClient($container);
+        $container = $this->addMultiCartClient($container);
         $container = $this->addShoppingListItemExpanderPlugins($container);
         $container = $this->addShoppingListWidgetPlugins($container);
         $container = $this->addShoppingListViewWidgetPlugins($container);
-        $container = $this->addMultiCartClient($container);
         $container = $this->addShoppingListItemFormExpanderPlugins($container);
+        $container = $this->addMultiCartClient($container);
         $container = $this->addShoppingListDataProviderExpanderPlugins($container);
         $container = $this->addShoppingListOverviewUpdatePageWidgets($container);
 
@@ -247,6 +248,20 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[static::CLIENT_MULTI_CART] = function (Container $container) {
             return new ShoppingListPageToMultiCartClientBridge($container->getLocator()->multiCart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShoppingListItemFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS] = function () {
+            return $this->getShoppingListItemFormExpanderPlugins();
         };
 
         return $container;

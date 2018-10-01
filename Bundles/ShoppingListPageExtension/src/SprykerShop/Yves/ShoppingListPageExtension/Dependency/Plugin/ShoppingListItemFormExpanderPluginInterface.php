@@ -7,13 +7,13 @@
 
 namespace SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin;
 
- use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 interface ShoppingListItemFormExpanderPluginInterface
 {
     /**
      * Specification:
-     *  - Expands shopping list item form with additional input fields.
+     *  - Extend shopping list item form with additional input fields.
      *
      * @api
      *
