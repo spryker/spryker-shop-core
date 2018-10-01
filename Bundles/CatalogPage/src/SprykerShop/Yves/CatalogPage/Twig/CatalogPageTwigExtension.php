@@ -14,8 +14,8 @@ use Twig_SimpleFunction;
 
 class CatalogPageTwigExtension extends TwigExtension
 {
-    const FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER = 'generateUrlWithoutActiveSearchFilter';
-    const FUNCTION_GET_URL_WITHOUT_ALL_ACTIVE_SEARCH_FILTERS = 'generateUrlWithoutAllActiveSearchFilters';
+    public const FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER = 'generateUrlWithoutActiveSearchFilter';
+    public const FUNCTION_GET_URL_WITHOUT_ALL_ACTIVE_SEARCH_FILTERS = 'generateUrlWithoutAllActiveSearchFilters';
 
     /**
      * @var \SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGeneratorInterface
@@ -49,7 +49,7 @@ class CatalogPageTwigExtension extends TwigExtension
 
     /**
      * @param array $context
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $searchResultTransfer
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer $searchResultTransfer
      * @param string $filterValue
      *
      * @return string
@@ -63,7 +63,7 @@ class CatalogPageTwigExtension extends TwigExtension
 
     /**
      * @param array $context
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $facetFilters
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facetFilters
      *
      * @return string
      */

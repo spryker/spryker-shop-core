@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin implements DiscountPromotionItemListWidgetPluginInterface
 {
-    const PARAM_VARIANT_ATTRIBUTES = 'attributes';
+    public const PARAM_VARIANT_ATTRIBUTES = 'attributes';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -46,7 +46,7 @@ class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin impleme
      */
     public static function getTemplate(): string
     {
-        return '@DiscountPromotionWidget/_cart-page/item-list.twig';
+        return '@DiscountPromotionWidget/views/cart-discount-promotion-products-list/cart-discount-promotion-products-list.twig';
     }
 
     /**
@@ -63,7 +63,7 @@ class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin impleme
 
             $productStorageData = $this->getFactory()
                 ->getProductStorageClient()
-                ->getProductAbstractStorageData($promotionItemTransfer->getIdProductAbstract(), $this->getLocale());
+                ->findProductAbstractStorageData($promotionItemTransfer->getIdProductAbstract(), $this->getLocale());
 
             if (!$productStorageData) {
                 continue;

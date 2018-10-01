@@ -1,0 +1,59 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cart: _widget.cart,
+    actions: _widget.actions,
+    isQuoteOwner: _widget.isQuoteOwner,
+    isSharedCartAllowed: _widget.isSharedCartAllowed
+} %}
+
+{% set showActions = data.isQuoteOwner or data.actions.update or data.actions.set_default or data.actions.duplicate or data.actions.clear or data.actions.delete %}
+
+{% block body %}
+    {% if showActions %}
+    <ul class="menu menu--inline">
+        {% if data.actions.update %}
+            <li class="menu__item">
+                <a href="{{ path('multi-cart/update', {idQuote: data.cart.idQuote}) }}" class="button update">
+                    {{ "multi_cart_widget.cart.action.change_name" | trans }}
+                </a>
+            </li>
+        {% endif %}
+        {% if data.actions.set_default %}
+            <li class="menu__item">
+                <a href="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}" class="button set-default">
+                    {{ 'multi_cart_widget.cart.action.set_default' | trans }}
+                </a>
+            </li>
+        {% endif %}
+        {% if data.actions.duplicate %}
+            <li class="menu__item">
+                <a href="{{ path('multi-cart/duplicate', {idQuote: data.cart.idQuote}) }}" class="button duplicate">
+                    {{ "multi_cart_widget.cart.action.duplicate" | trans }}
+                </a>
+            </li>
+        {% endif %}
+        {% if data.actions.clear %}
+            <li class="menu__item">
+                <a href="{{ path('multi-cart/clear', {idQuote: data.cart.idQuote}) }}" class="button clear">
+                    {{ "multi_cart_widget.cart.action.clear" | trans }}
+                </a>
+            </li>
+        {% endif %}
+        {% if data.actions.delete %}
+            <li class="menu__item">
+                <a href="{{ path('multi-cart/confirm-delete', {idQuote: data.cart.idQuote}) }}" class="button delete">
+                    {{ "multi_cart_widget.cart.action.delete" | trans }}
+                </a>
+            </li>
+        {% endif %}
+        {% if data.isQuoteOwner and data.isSharedCartAllowed %}
+        <ul class="menu menu--inline">
+            <li class="menu__item">
+                <a class="button" href="{{ path('shared-cart/share', {idQuote: data.cart.idQuote}) }}" title="{{ 'shared_cart_widget.cart.share' | trans }}">{{ 'shared_cart_widget.cart.share' | trans }}</a>
+            </li>
+        </ul>
+        {% endif %}
+    </ul>
+    {% endif %}
+{% endblock %}

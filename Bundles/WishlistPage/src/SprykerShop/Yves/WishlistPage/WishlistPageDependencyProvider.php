@@ -15,10 +15,11 @@ use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClient
 
 class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
-    const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
-    const PLUGIN_WISHLIST_ITEM_EXPANDERS = 'PLUGIN_WISHLIST_ITEM_EXPANDERS';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const PLUGIN_WISHLIST_ITEM_EXPANDERS = 'PLUGIN_WISHLIST_ITEM_EXPANDERS';
+    public const PLUGIN_WISHLIST_VIEW_WIDGETS = 'PLUGIN_WISHLIST_VIEW_WIDGETS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -31,6 +32,7 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addWishlistClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addWishlistItemExpanderPlugins($container);
+        $container = $this->addWishlistViewWidgetPlugins($container);
 
         return $container;
     }
@@ -92,9 +94,34 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addWishlistViewWidgetPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_WISHLIST_VIEW_WIDGETS] = function () {
+            return $this->getWishlistViewWidgetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected function getWishlistItemExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * Returns a list of widget plugin class names that implement
+     * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     *
+     * @return string[]
+     */
+    protected function getWishlistViewWidgetPlugins(): array
     {
         return [];
     }

@@ -26,8 +26,6 @@ class AttributeVariantsProvider
     protected $cartItemHandler;
 
     /**
-     * AttributeVariantsProvider constructor.
-     *
      * @param \SprykerShop\Yves\CartPage\Dependency\Plugin\CartVariantAttributeMapperPluginInterface $cartVariantAttributeMapperPlugin
      * @param \SprykerShop\Yves\CartPage\Handler\CartItemHandlerInterface $cartItemHandler
      */
@@ -66,7 +64,7 @@ class AttributeVariantsProvider
      * @param array $optionValueIds
      * @param string $localeName
      *
-     * @return true
+     * @return bool
      */
     public function tryToReplaceItem($sku, $quantity, $selectedAttributes, ArrayObject $items, $groupKey, $optionValueIds, $localeName)
     {

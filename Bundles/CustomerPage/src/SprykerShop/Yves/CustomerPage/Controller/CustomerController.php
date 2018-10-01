@@ -17,39 +17,26 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider
  */
 class CustomerController extends AbstractCustomerController
 {
-    const ORDER_LIST_LIMIT = 5;
-    const ORDER_LIST_SORT_FIELD = 'created_at';
-    const ORDER_LIST_SORT_DIRECTION = 'DESC';
+    public const ORDER_LIST_LIMIT = 5;
+    public const ORDER_LIST_SORT_FIELD = 'created_at';
+    public const ORDER_LIST_SORT_DIRECTION = 'DESC';
 
-    const KEY_BILLING = 'billing';
-    const KEY_SHIPPING = 'shipping';
+    public const KEY_BILLING = 'billing';
+    public const KEY_SHIPPING = 'shipping';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction()
     {
-        $loggedInCustomerTransfer = $this->getLoggedInCustomerTransfer();
-        $customerTransfer = $this
-            ->getFactory()
-            ->getCustomerClient()
-            ->getCustomerByEmail($loggedInCustomerTransfer);
+        $response = $this->executeIndexAction();
 
-        if (!$customerTransfer->getIdCustomer()) {
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGOUT);
+        if (!is_array($response)) {
+            return $response;
         }
 
-        $orderListTransfer = $this->createOrderListTransfer($customerTransfer);
-        $orderList = $this->getFactory()->getSalesClient()->getPaginatedCustomerOrdersOverview($orderListTransfer);
-
-        $data = [
-            'customer' => $customerTransfer,
-            'orderList' => $orderList->getOrders(),
-            'addresses' => $this->getDefaultAddresses($customerTransfer),
-        ];
-
         return $this->view(
-            $data,
+            $response,
             $this->getFactory()->getCustomerOverviewWidgetPlugins(),
             '@CustomerPage/views/overview/overview.twig'
         );
@@ -110,5 +97,30 @@ class CustomerController extends AbstractCustomerController
         }
 
         return $addresses;
+    }
+
+    /**
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction()
+    {
+        $loggedInCustomerTransfer = $this->getLoggedInCustomerTransfer();
+        $customerTransfer = $this
+            ->getFactory()
+            ->getCustomerClient()
+            ->getCustomerByEmail($loggedInCustomerTransfer);
+
+        if (!$customerTransfer->getIdCustomer()) {
+            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGOUT);
+        }
+
+        $orderListTransfer = $this->createOrderListTransfer($customerTransfer);
+        $orderList = $this->getFactory()->getSalesClient()->getPaginatedCustomerOrdersOverview($orderListTransfer);
+
+        return [
+            'customer' => $customerTransfer,
+            'orderList' => $orderList->getOrders(),
+            'addresses' => $this->getDefaultAddresses($customerTransfer),
+        ];
     }
 }

@@ -1,7 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
-    cartQuantity: _widget.cartQuantity,
+    cartQuantity: _widget.cartQuantity | default,
     activeCart: _widget.activeCart,
     carts: _widget.cartList,
     isMultiCartAllowed: _widget.isMultiCartAllowed
@@ -11,41 +11,55 @@
 
 {% block body %}
     {% if data.isMultiCartAllowed is not empty %}
-        <ul class="menu">
-            <li class="menu__item menu__item--has-children-dropdown">
-                <a href="{{ url('cart') }}">{{cartAmount}} {{ cartAmount == 1 ? 'multi_cart_widget.cart.cart' | trans : 'multi_cart_widget.cart.carts' | trans }}</a>
+        {% include molecule('cart-items-counter') with {
+            data: {
+                label: (cartAmount == 1 ? 'multi_cart_widget.cart.cart' : 'multi_cart_widget.cart.carts') | trans,
+                quantity: data.cartQuantity
+            }
+        } only %}
 
-                <ul class="menu">
-                    {% if data.activeCart is not empty %}
-                        <li class="menu__item">
-                            {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
-                                data: {
-                                    cart: data.activeCart
-                                }
-                            } only %}
-                        </li>
-                        <li class="menu__separator menu__separator--horizontal-line"></li>
-                    {% endif %}
+        <ul class="menu menu--wide">
+            {% if data.activeCart is not empty %}
+                <li class="menu__item">
+                    {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                        data: {
+                            cart: data.activeCart
+                        }
+                    } only %}
+                </li>
+                <li class="menu__separator menu__separator--horizontal-line"></li>
+            {% endif %}
 
-                    {% if data.carts is not empty %}
-                        {% for cart in data.carts %}
-                            <li class="menu__item">
-                                {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
-                                    data: {
-                                        cart: cart
-                                    }
-                                } only %}
-                            </li>
-                            <li class="menu__separator menu__separator--horizontal-line"></li>
-                        {% endfor %}
-                    {% endif %}
+            {% if data.carts is not empty %}
+                {% for cart in data.carts %}
                     <li class="menu__item">
-                        <a class="button" href="{{url('multi-cart/create')}}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
+                        {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                            data: {
+                                cart: cart
+                            }
+                        } only %}
                     </li>
-                </ul>
+                    <li class="menu__separator menu__separator--horizontal-line"></li>
+                {% endfor %}
+            {% endif %}
+            <li class="menu__item">
+                <div class="grid grid--justify">
+                    <div class="col">
+                        <a class="button" href="{{ path('multi-cart') }}" title="{{ 'multi_cart_widget.cart.view_all' | trans }}">
+                            {{ 'multi_cart_widget.cart.view_all' | trans }}
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a class="button" href="{{url('multi-cart/create')}}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
+                    </div>
+                </div>
             </li>
         </ul>
     {% else %}
-        <a href="{{ url('cart') }}">{{ data.cartQuantity }}{{ 'global.cart' | trans }}</a>
+        {% include molecule('cart-items-counter') with {
+            data: {
+                quantity: data.cartQuantity
+            }
+        } only %}
     {% endif %}
 {% endblock %}

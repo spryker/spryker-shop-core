@@ -11,17 +11,27 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
 class UserController extends AbstractCompanyController
 {
+    use PermissionAwareTrait;
+
     public const COMPANY_USER_LIST_SORT_FIELD = 'id_company_user';
 
-    protected const SUCCESS_MESSAGE_DELETED = 'company.account.company_user.delete.successful';
+    protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
+
+    protected const ERROR_MESSAGE_DELETE_COMPANY_USER = 'company.account.company_user.delete.error';
+    protected const ERROR_MESSAGE_DELETE_YOURSELF = 'company.account.company_user.delete.error.delete_yourself';
+    protected const ERROR_MESSAGE_COMPANY_USER_ASSIGN_EMPTY_ROLES = 'company.account.company_user.assign_roles.empty_roles.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -30,18 +40,29 @@ class UserController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/user/user.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
+    {
         $criteriaFilterTransfer = $this->createCompanyUserCriteriaFilterTransfer($request);
 
         $companyUserCollectionTransfer = $this->getFactory()
             ->getCompanyUserClient()
             ->getCompanyUserCollection($criteriaFilterTransfer);
 
-        $data = [
+        return [
             'pagination' => $companyUserCollectionTransfer->getPagination(),
             'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
+            'currentCompanyUser' => $this->findCurrentCompanyUserTransfer(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/user/user.twig');
     }
 
     /**
@@ -51,6 +72,28 @@ class UserController extends AbstractCompanyController
      */
     public function createAction(Request $request)
     {
+        $response = $this->executeCreateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/user-create/user-create.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeCreateAction(Request $request)
+    {
+        if (!$this->can(AddCompanyUserPermissionPlugin::KEY)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $dataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->createCompanyUserFormDataProvider();
@@ -66,7 +109,9 @@ class UserController extends AbstractCompanyController
 
         if ($companyUserForm->isSubmitted() === false) {
             $companyUserForm->setData($dataProvider->getData($this->getCompanyUser()->getFkCompany()));
-        } elseif ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
+        }
+
+        if ($companyUserForm->isValid()) {
             $companyUserResponseTransfer = $this->createCompanyUser($companyUserForm->getData());
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
@@ -76,11 +121,9 @@ class UserController extends AbstractCompanyController
             $this->processResponseMessages($companyUserResponseTransfer);
         }
 
-        $data = [
+        return [
             'companyUserForm' => $companyUserForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/user-create/user-create.twig');
     }
 
     /**
@@ -89,6 +132,22 @@ class UserController extends AbstractCompanyController
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
+    {
+        $response = $this->executeUpdateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CompanyPage/views/user-update/user-update.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeUpdateAction(Request $request)
     {
         $dataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -111,7 +170,9 @@ class UserController extends AbstractCompanyController
                     $idCompanyUser
                 )
             );
-        } elseif ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
+        }
+
+        if ($companyUserForm->isValid()) {
             $companyUserResponseTransfer = $this->updateCompanyUser($companyUserForm->getData());
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
@@ -121,11 +182,9 @@ class UserController extends AbstractCompanyController
             $this->processResponseMessages($companyUserResponseTransfer);
         }
 
-        $data = [
+        return [
             'companyUserForm' => $companyUserForm->createView(),
         ];
-
-        return $this->view($data, [], '@CompanyPage/views/user-update/user-update.twig');
     }
 
     /**
@@ -136,13 +195,83 @@ class UserController extends AbstractCompanyController
     public function deleteAction(Request $request)
     {
         $idCompanyUser = $request->query->getInt('id');
-        $companyUserTransfer = new CompanyUserTransfer();
-        $companyUserTransfer->setIdCompanyUser($idCompanyUser);
-        $this->getFactory()->getCompanyUserClient()->deleteCompanyUser($companyUserTransfer);
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($idCompanyUser);
 
-        $this->addSuccessMessage(static::SUCCESS_MESSAGE_DELETED);
+        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
+        if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_YOURSELF);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $companyUserResponseTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->deleteCompanyUser($companyUserTransfer);
+
+        if ($companyUserResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_DELETE);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_COMPANY_USER);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function confirmDeleteAction(Request $request): View
+    {
+        $viewData = $this->executeConfirmDeleteAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/user-delete/user-delete.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeConfirmDeleteAction(Request $request): array
+    {
+        $idCompanyUser = $request->query->getInt('id');
+
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($idCompanyUser);
+
+        $companyUserTransfer->requireIdCompanyUser();
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->getCompanyUserById($companyUserTransfer);
+
+        $companyUserTransfer->requireCustomer();
+        $customerTransfer = $companyUserTransfer->getCustomer();
+
+        return [
+            'idCompanyUser' => $idCompanyUser,
+            'customer' => $customerTransfer,
+        ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    protected function findCurrentCompanyUserTransfer(): ?CompanyUserTransfer
+    {
+        $currentCustomerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if (!$currentCustomerTransfer) {
+            return null;
+        }
+
+        return $currentCustomerTransfer->getCompanyUserTransfer();
     }
 
     /**

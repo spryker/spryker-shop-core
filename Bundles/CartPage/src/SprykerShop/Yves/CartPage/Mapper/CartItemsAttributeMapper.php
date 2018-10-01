@@ -17,9 +17,9 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientIn
 
 class CartItemsAttributeMapper implements CartItemsMapperInterface
 {
-    const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
-    const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
-    const PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
+    public const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
+    public const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
+    public const PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
 
     /**
      * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface
@@ -32,8 +32,6 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     protected $cartItemsAvailabilityMapper;
 
     /**
-     * CartItemsAttributeMapper constructor.
-     *
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface $productStorageClient
      * @param \SprykerShop\Yves\CartPage\Mapper\CartItemsMapperInterface $cartItemsAvailabilityMapper
      */
@@ -58,6 +56,9 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
 
         foreach ($items as $item) {
             $productData = $this->getAttributesMapByProductAbstract($item, $localeName);
+            if ($productData === null) {
+                continue;
+            }
             $attributes[$item->getSku()] = $this->getAttributesWithAvailability(
                 $item,
                 $productData['attribute_map'],
@@ -89,7 +90,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
             }
 
             $variantNameValue = $this->getParentNode($attributeMapIterator);
-            list($variantName, $variantValue) = explode(':', $variantNameValue);
+            [$variantName, $variantValue] = explode(':', $variantNameValue);
 
             if ($this->isVariantNotSet($variantName, $productVariants, $variantValue)) {
                 $productVariants[$variantName][$variantValue][CartVariantConstants::AVAILABLE] = false;
@@ -111,12 +112,11 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $item
      * @param string $localeName
      *
-     * @return array
+     * @return array|null
      */
     protected function getAttributesMapByProductAbstract(ItemTransfer $item, $localeName)
     {
-        return $this->productStorageClient
-            ->getProductAbstractStorageData($item->getIdProductAbstract(), $localeName);
+        return $this->productStorageClient->findProductAbstractStorageData($item->getIdProductAbstract(), $localeName);
     }
 
     /**
@@ -195,7 +195,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     /**
      * @param \RecursiveIteratorIterator $attributeMapIterator
      *
-     * @return \RecursiveIterator
+     * @return string
      */
     protected function getParentNode(RecursiveIteratorIterator $attributeMapIterator)
     {

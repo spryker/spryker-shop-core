@@ -15,22 +15,30 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
  */
 class IndexController extends AbstractController
 {
-    const FEATURED_PRODUCT_LIMIT = 6;
-    const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
+    public const FEATURED_PRODUCT_LIMIT = 6;
+    public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
+
+    /**
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function indexAction()
+    {
+        $viewData = $this->executeIndexAction();
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getHomePageWidgetPlugins(),
+            '@HomePage/views/home/home.twig'
+        );
+    }
 
     /**
      * @return array
      */
-    public function indexAction()
+    protected function executeIndexAction(): array
     {
-        $data = [
+        return [
             'featuredProductLimit' => static::FEATURED_PRODUCT_LIMIT,
         ];
-
-        return $this->view(
-            $data,
-            $this->getFactory()->getHomePageWidgetPlugins(),
-            '@HomePage/views/home/home.twig'
-        );
     }
 }

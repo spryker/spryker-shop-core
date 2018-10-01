@@ -11,10 +11,11 @@
 } %}
 
 {% set options = [] %}
-{% set brand = data.product.attributes.brand | default(null) %}
+{% set brand = data.product.attributes.brand | default %}
 {% set sku = data.product.sku %}
 {% set availabilityWidget = '' %}
-{% set disabled = data.product.idProductConcrete is empty or data.product.price is empty %}
+{% set isDisabled = data.product.idProductConcrete is empty or data.product.price is empty %}
+{% set isProductAvailable = true %}
 
 {% for index in 1..data.maxQuantity %}
     {% set options = options | merge([{
@@ -25,7 +26,13 @@
 
 {% if widgetExists('AvailabilityWidgetPlugin') %}
     {% set isAvailable = widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product) %}
-    {% set disabled = not isAvailable or disabled %}
+    {% set isDisabled = not isAvailable or isDisabled %}
+{% endif %}
+
+{% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+    {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', sku) %}
+    {% set isDisabled = isDiscontinued or isDisabled %}
+    {% set isProductAvailable = not isDiscontinued %}
 {% endif %}
 
 {% block body %}
@@ -35,9 +42,15 @@
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
     <hr />
+    {% if widgetExists('PriceProductVolumeWidgetPlugin') %}
+        {{ widget('PriceProductVolumeWidgetPlugin', data.product) }}
+    {% else %}
+        {{ widget('PriceWidgetPlugin', data.product) }}
+    {% endif %}
 
-    {{ widget('PriceWidgetPlugin', data.product) }}
-    {# {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }} #}
+    {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
+    {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
+
     {% embed molecule('variant-configurator', 'ProductDetailPage') with {
         data: {
             superAttributes: data.product.attributeMap.superAttributes,
@@ -47,20 +60,17 @@
     } only %}
         {% block body %}<hr />{{parent()}}{% endblock %}
     {% endembed %}
-    {# {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }} #}
 
     <hr />
+    <form method="POST" action="{{ path("cart/add", {"sku": sku}) }}">
+        {{ widget('ProductOptionWidgetPlugin', data.product) }}
 
-    <form method="POST" action="/cart/add/{{sku}}">
-        {% if widgetExists('ProductOptionWidgetPlugin') %}
-            {{ widget('ProductOptionWidgetPlugin', data.product) }}
-            <hr />
-        {% endif %}
-
-        <div class="grid grid--justify grid--bottom">
-            {% if widgetExists('ProductMeasurementUnitWidgetPlugin') %}
-                {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, options) }}
-            {% else %}
+        {% if widgetExists('ProductPackagingUnitWidgetPlugin') %}
+            {{ widget('ProductPackagingUnitWidgetPlugin', data.product, isDisabled, options) }}
+        {% elseif widgetExists('ProductMeasurementUnitWidgetPlugin') %}
+            {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, isDisabled, options) }}
+        {% else %}
+            <div class="grid grid--bottom grid--justify">
                 <div class="col col--sm-5">
                     <label>
                         {{'cart.item_quantity' | trans}}
@@ -70,36 +80,42 @@
                                 options: options
                             },
                             attributes: {
-                                name: 'quantity'
+                                name: 'quantity',
+                                disabled: isDisabled
                             }
                         } only %}
                     </label>
                 </div>
 
                 <div class="col col--sm-6">
-                    {% if widgetExists('MultiCartWidgetPlugin') %}
-                        {{ widget('MultiCartWidgetPlugin', data.product, disabled) }}
-                    {% else %}
-                        <button type="submit" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}">
-                            {% include atom('icon') with {
-                                data: {
-                                    name: 'cart-plus'
-                                }
-                            } only %}
-                            {{ 'page.detail.add-to-cart' | trans }}
-                        </button>
-                    {% endif %}
+                    <button type="submit" class="button button--success button--expand" {{ isDisabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}>
+                        {% include atom('icon') with {
+                            data: {
+                                name: 'cart-plus'
+                            }
+                        } only %}
+                        {{ 'page.detail.add-to-cart' | trans }}
+                    </button>
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
 
+        {{ widget('MultiCartWidgetPlugin', data.product, isDisabled) }}
         {{ widget('AvailabilityWidgetPlugin', data.product) }}
     </form>
 
-    {% if widgetExists('ShoppingListWidgetPlugin') %}
-        <hr/>
-        {{ widget('ShoppingListWidgetPlugin', sku, disabled) }}
+    {% if widgetExists('ShoppingListWidgetPlugin') and isProductAvailable %}
+        <hr />
+        {{ widget('ShoppingListWidgetPlugin', sku, isDisabled) }}
     {% endif %}
 
-    {# {{ widget('WishlistWidgetPlugin', data.product) }} #}
+    {% if widgetExists('WishlistWidgetPlugin') and isProductAvailable %}
+        <hr />
+        {{ widget('WishlistWidgetPlugin', data.product) }}
+    {% endif %}
+
+    {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+        {{ widget('ProductDiscontinuedWidgetPlugin', sku) }}
+    {% endif %}
+
 {% endblock %}

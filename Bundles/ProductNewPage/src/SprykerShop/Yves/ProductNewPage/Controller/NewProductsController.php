@@ -21,11 +21,28 @@ class NewProductsController extends AbstractController
      * @param string $categoryPath
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function indexAction($categoryPath, Request $request)
+    {
+        $viewData = $this->executeIndexAction($categoryPath, $request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getProductNewPageWidgetPlugins(),
+            '@ProductNewPage/views/new-product/new-product.twig'
+        );
+    }
+
+    /**
+     * @param string $categoryPath
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array
      */
-    public function indexAction($categoryPath, Request $request)
+    protected function executeIndexAction($categoryPath, Request $request): array
     {
         $parameters = $request->query->all();
 
@@ -54,11 +71,7 @@ class NewProductsController extends AbstractController
             ->getCatalogClient()
             ->getCatalogViewMode($request);
 
-        return $this->view(
-            $searchResults,
-            $this->getFactory()->getProductNewPageWidgetPlugins(),
-            '@ProductNewPage/views/new-product/new-product.twig'
-        );
+        return $searchResults;
     }
 
     /**

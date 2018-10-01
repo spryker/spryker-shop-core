@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-application": "^0.2.0 || ^0.3.0",
+    "spryker-shop/shop-application": "^1.0.0",
     "spryker/heartbeat": "^3.2.0",
     "spryker/kernel": "^3.16.0",
     "spryker/search": "^7.0.0 || ^8.0.0",
@@ -13,10 +13,12 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "TODO: add suggestion description"
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

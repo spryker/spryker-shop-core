@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SuggestionController extends AbstractController
 {
-    const PARAM_SEARCH_QUERY = 'q';
+    public const PARAM_SEARCH_QUERY = 'q';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,7 +37,7 @@ class SuggestionController extends AbstractController
 
         return $this->jsonResponse([
             'completion' => ($searchResults['completion'] ? $searchResults['completion'][0] : null),
-            'suggestion' => $this->renderView('@CatalogPage/suggestion/index.twig', $searchResults)->getContent(),
+            'suggestion' => $this->renderView('@CatalogPage/views/suggestion-results/suggestion-results.twig', $searchResults)->getContent(),
         ]);
     }
 }

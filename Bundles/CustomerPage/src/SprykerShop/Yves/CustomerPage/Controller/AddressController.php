@@ -16,14 +16,24 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AddressController extends AbstractCustomerController
 {
-    const KEY_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
-    const KEY_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
-    const KEY_ADDRESSES = 'addresses';
+    public const KEY_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
+    public const KEY_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
+    public const KEY_ADDRESSES = 'addresses';
 
     /**
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction()
+    {
+        $responseData = $this->executeIndexAction();
+
+        return $this->view($responseData, [], '@CustomerPage/views/address/address.twig');
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeIndexAction(): array
     {
         $loggedInCustomerTransfer = $this->getLoggedInCustomerTransfer();
 
@@ -37,13 +47,7 @@ class AddressController extends AbstractCustomerController
             ->getCustomerClient()
             ->getAddresses($customerTransfer);
 
-        $responseData = $this->getAddressListResponseData($customerTransfer, $addressesTransfer);
-
-        return $this->view(
-            $responseData,
-            [],
-            '@CustomerPage/views/address/address.twig'
-        );
+        return $this->getAddressListResponseData($customerTransfer, $addressesTransfer);
     }
 
     /**
@@ -52,6 +56,22 @@ class AddressController extends AbstractCustomerController
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
+    {
+        $response = $this->executeCreateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CustomerPage/views/address-create/address-create.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeCreateAction(Request $request)
     {
         $customerTransfer = $this->getLoggedInCustomerTransfer();
 
@@ -70,22 +90,16 @@ class AddressController extends AbstractCustomerController
         }
 
         if ($addressForm->isSubmitted() && $addressForm->isValid()) {
-            $customerTransfer = $this->createAddress($customerTransfer, $addressForm->getData());
+            $this->createAddress($customerTransfer, $addressForm->getData());
 
-            if ($customerTransfer) {
-                $this->addSuccessMessage(Messages::CUSTOMER_ADDRESS_ADDED);
+            $this->addSuccessMessage(Messages::CUSTOMER_ADDRESS_ADDED);
 
-                return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
-            }
-
-            $this->addErrorMessage(Messages::CUSTOMER_ADDRESS_NOT_ADDED);
+            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
         }
 
-        $data = [
+        return [
             'form' => $addressForm->createView(),
         ];
-
-        return $this->view($data, [], '@CustomerPage/views/address-create/address-create.twig');
     }
 
     /**
@@ -94,6 +108,22 @@ class AddressController extends AbstractCustomerController
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(Request $request)
+    {
+        $response = $this->executeUpdateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CustomerPage/views/address-update/address-update.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeUpdateAction(Request $request)
     {
         $dataProvider = $this
             ->getFactory()
@@ -104,12 +134,11 @@ class AddressController extends AbstractCustomerController
             ->createCustomerFormFactory()
             ->getAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
+        $idCustomerAddress = $request->query->getInt('id');
 
-        if ($addressForm->isSubmitted() === false) {
-            $idCustomerAddress = $request->query->getInt('id');
-
+        if (!$addressForm->isSubmitted()) {
             $addressForm->setData($dataProvider->getData($idCustomerAddress));
-        } elseif ($addressForm->isSubmitted() && $addressForm->isValid()) {
+        } elseif ($addressForm->isValid()) {
             $customerTransfer = $this->processAddressUpdate($addressForm->getData());
 
             if ($customerTransfer !== null) {
@@ -123,11 +152,10 @@ class AddressController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
         }
 
-        $data = [
+        return [
             'form' => $addressForm->createView(),
+            'idCustomerAddress' => $idCustomerAddress,
         ];
-
-        return $this->view($data, [], '@CustomerPage/views/address-update/address-update.twig');
     }
 
     /**

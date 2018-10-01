@@ -14,7 +14,7 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageCli
 
 class CartItemsAvailabilityMapper implements CartItemsMapperInterface
 {
-    const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
+    public const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
      * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface
@@ -22,8 +22,6 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
     protected $productAvailabilityClient;
 
     /**
-     * CartItemsAvailabilityMapper constructor.
-     *
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface $productAvailabilityClient
      */
     public function __construct(CartPageToAvailabilityStorageClientInterface $productAvailabilityClient)

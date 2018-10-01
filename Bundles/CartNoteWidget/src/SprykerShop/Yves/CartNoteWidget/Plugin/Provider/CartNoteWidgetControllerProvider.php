@@ -12,36 +12,41 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class CartNoteWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_CART_NOTE_QUOTE = 'cart-note/quote';
-    const ROUTE_CART_NOTE_ITEM = 'cart-note/item';
+    public const ROUTE_CART_NOTE_QUOTE = 'cart-note/quote';
+    public const ROUTE_CART_NOTE_ITEM = 'cart-note/item';
 
     /**
      * @param \Silex\Application $app
      *
      * @return void
      */
-    protected function defineControllers(Application $app)
+    protected function defineControllers(Application $app): void
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addQuoteController()
+            ->addItemController();
+    }
 
-        $this->createPostController(
-            '/{cartNote}/quote',
-            static::ROUTE_CART_NOTE_QUOTE,
-            'CartNoteWidget',
-            'Quote',
-            'index'
-        )
-            ->assert('cartNote', $allowedLocalesPattern . 'cart-note|cart-note')
+    /**
+     * @return $this
+     */
+    protected function addQuoteController(): self
+    {
+        $this->createPostController('/{cartNote}/quote', static::ROUTE_CART_NOTE_QUOTE, 'CartNoteWidget', 'Quote', 'index')
+            ->assert('cartNote', $this->getAllowedLocalesPattern() . 'cart-note|cart-note')
             ->value('cartNote', 'cart-note');
 
-        $this->createPostController(
-            '/{cartNote}/item',
-            static::ROUTE_CART_NOTE_ITEM,
-            'CartNoteWidget',
-            'Item',
-            'index'
-        )
-            ->assert('cartNote', $allowedLocalesPattern . 'cart-note|cart-note')
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addItemController(): self
+    {
+        $this->createPostController('/{cartNote}/item', static::ROUTE_CART_NOTE_ITEM, 'CartNoteWidget', 'Item', 'index')
+            ->assert('cartNote', $this->getAllowedLocalesPattern() . 'cart-note|cart-note')
             ->value('cartNote', 'cart-note');
+
+        return $this;
     }
 }

@@ -3,11 +3,13 @@
 {% define data = {
     products: _view.products,
     facets: _view.facets,
-    category: _view.category | default(null),
+    searchString: _view.searchString,
+    category: _view.category | default,
     categories: categories | default([]),
-    categoryId: _view.idCategory | default(null),
-    filterPath: _view.filterPath | default(null),
-    viewMode: _view.viewMode | default(null),
+    categoryId: _view.idCategory | default,
+    isEmptyCategoryFilterValueVisible: _view.isEmptyCategoryFilterValueVisible | default,
+    filterPath: _view.filterPath | default,
+    viewMode: _view.viewMode | default,
 
     title: _view.category.name | default,
     metaTitle: _view.pageTitle | default(_view.category.name | default),
@@ -22,3 +24,10 @@
         showAlwaysFirstAndLast: true
     }
 } %}
+
+{% block form %}
+    {{parent()}}
+    {% if data.searchString is not empty %}
+        <input type="hidden" name="q" value="{{ data.searchString }}" />
+    {% endif %}
+{% endblock %}

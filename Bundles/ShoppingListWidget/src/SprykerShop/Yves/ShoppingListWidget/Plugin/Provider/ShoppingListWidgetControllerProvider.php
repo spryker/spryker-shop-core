@@ -21,10 +21,18 @@ class ShoppingListWidgetControllerProvider extends AbstractYvesControllerProvide
      */
     protected function defineControllers(Application $app): void
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addAddItemRoute();
+    }
 
-        $this->createPostController('/{shoppingList}/add-item', static::ROUTE_ADD_ITEM, 'ShoppingListWidget', 'ShoppingListWidget')
-            ->assert('shoppingList', $allowedLocalesPattern . 'shopping-list|shopping-list')
+    /**
+     * @return $this
+     */
+    protected function addAddItemRoute(): self
+    {
+        $this->createController('/{shoppingList}/add-item', static::ROUTE_ADD_ITEM, 'ShoppingListWidget', 'ShoppingListWidget')
+            ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list');
+
+        return $this;
     }
 }

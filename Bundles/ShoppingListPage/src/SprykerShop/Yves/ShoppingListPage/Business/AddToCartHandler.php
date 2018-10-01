@@ -39,10 +39,11 @@ class AddToCartHandler implements AddToCartHandlerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param int[] $itemQuantity
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
-    public function addAllAvailableToCart(array $shoppingListItems): ShoppingListAddToCartRequestCollectionTransfer
+    public function addAllAvailableToCart(array $shoppingListItems, array $itemQuantity = []): ShoppingListAddToCartRequestCollectionTransfer
     {
         $shoppingListMoveToCartRequestCollectionTransfer = $this->createMoveAvailableItemsToCartRequestCollection(
             $shoppingListItems
@@ -50,6 +51,10 @@ class AddToCartHandler implements AddToCartHandlerInterface
 
         if ($shoppingListMoveToCartRequestCollectionTransfer->getRequests()->count() === 0) {
             return $shoppingListMoveToCartRequestCollectionTransfer;
+        }
+
+        if (count($itemQuantity)) {
+            $shoppingListMoveToCartRequestCollectionTransfer = $this->addCustomQuantity($shoppingListMoveToCartRequestCollectionTransfer, $itemQuantity);
         }
 
         return $this->shoppingListClient->addItemCollectionToCart($shoppingListMoveToCartRequestCollectionTransfer);
@@ -85,6 +90,27 @@ class AddToCartHandler implements AddToCartHandlerInterface
         return (new ShoppingListAddToCartRequestTransfer())
             ->setSku($shoppingListItemTransfer->getSku())
             ->setQuantity($shoppingListItemTransfer->getQuantity())
-            ->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+            ->setShoppingListItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer $shoppingListMoveToCartRequestCollectionTransfer
+     * @param int[] $itemQuantity
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
+     */
+    protected function addCustomQuantity(
+        ShoppingListAddToCartRequestCollectionTransfer $shoppingListMoveToCartRequestCollectionTransfer,
+        array $itemQuantity
+    ): ShoppingListAddToCartRequestCollectionTransfer {
+        foreach ($shoppingListMoveToCartRequestCollectionTransfer->getRequests() as $addToCartRequestTransfer) {
+            $idShoppingListItem = $addToCartRequestTransfer->getShoppingListItem()->getIdShoppingListItem();
+
+            if (!empty($itemQuantity[$idShoppingListItem])) {
+                $addToCartRequestTransfer->setQuantity($itemQuantity[$idShoppingListItem]);
+            }
+        }
+
+        return $shoppingListMoveToCartRequestCollectionTransfer;
     }
 }

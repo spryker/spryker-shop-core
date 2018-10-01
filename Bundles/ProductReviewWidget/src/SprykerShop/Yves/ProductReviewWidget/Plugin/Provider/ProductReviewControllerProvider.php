@@ -12,10 +12,10 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class ProductReviewControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
-    const ROUTE_PRODUCT_REVIEW_SUBMIT = 'product-review/submit';
+    public const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
+    public const ROUTE_PRODUCT_REVIEW_SUBMIT = 'product-review/submit';
 
-    const ID_ABSTRACT_PRODUCT_REGEX = '[1-9][0-9]*';
+    public const ID_ABSTRACT_PRODUCT_REGEX = '[1-9][0-9]*';
 
     /**
      * @param \Silex\Application $app
@@ -24,16 +24,33 @@ class ProductReviewControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addProductReviewRoute()
+            ->addProductReviewSubmitRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addProductReviewRoute(): self
+    {
         $this->createController('/{productReview}/index/{idProductAbstract}', static::ROUTE_PRODUCT_REVIEW_INDEX, 'ProductReviewWidget', 'Index', 'index')
-            ->assert('productReview', $allowedLocalesPattern . 'product-review|product-review')
+            ->assert('productReview', $this->getAllowedLocalesPattern() . 'product-review|product-review')
             ->value('productReview', 'product-review')
             ->assert('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addProductReviewSubmitRoute(): self
+    {
         $this->createController('/{productReview}/submit/{idProductAbstract}', static::ROUTE_PRODUCT_REVIEW_SUBMIT, 'ProductReviewWidget', 'Submit', 'index')
-            ->assert('productReview', $allowedLocalesPattern . 'product-review|product-review')
+            ->assert('productReview', $this->getAllowedLocalesPattern() . 'product-review|product-review')
             ->value('productReview', 'product-review')
             ->assert('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
+
+        return $this;
     }
 }

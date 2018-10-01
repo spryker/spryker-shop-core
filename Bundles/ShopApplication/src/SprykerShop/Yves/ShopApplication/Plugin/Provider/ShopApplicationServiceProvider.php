@@ -25,16 +25,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ShopApplicationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const LOCALE = 'locale';
-    const REQUEST_URI = 'REQUEST_URI';
+    public const LOCALE = 'locale';
+    public const STORE = 'store';
+    public const REQUEST_URI = 'REQUEST_URI';
 
     /**
-     * @var \Silex\Application
+     * @var \Spryker\Shared\Kernel\Communication\Application
      */
     private $application;
 
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Shared\Kernel\Communication\Application $app
      *
      * @return void
      */
@@ -46,6 +47,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
         $this->setDebugMode();
         $this->setControllerResolver();
         $this->setLocale();
+        $this->setStore();
         $this->setLogLevel();
 
         $this->addGlobalTemplateVariables($app, [
@@ -54,7 +56,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
     }
 
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Shared\Kernel\Communication\Application $app
      *
      * @return void
      */
@@ -114,6 +116,16 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
     /**
      * @return void
      */
+    protected function setStore()
+    {
+        $store = Store::getInstance();
+
+        $this->application[self::STORE] = $store->getStoreName();
+    }
+
+    /**
+     * @return void
+     */
     protected function setLogLevel()
     {
         $this->application['monolog.level'] = Config::get(LogConstants::LOG_LEVEL);
@@ -131,7 +143,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
     }
 
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Shared\Kernel\Communication\Application $app
      * @param array $globalTemplateVariables
      *
      * @return void

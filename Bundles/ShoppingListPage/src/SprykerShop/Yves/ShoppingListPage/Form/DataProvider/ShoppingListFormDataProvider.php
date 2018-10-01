@@ -34,18 +34,18 @@ class ShoppingListFormDataProvider
     }
 
     /**
-     * @param string $idShoppingList
+     * @param int $idShoppingList
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function getData(string $idShoppingList): ShoppingListTransfer
+    public function getData(int $idShoppingList): ShoppingListTransfer
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
         $shoppingListTransfer = new ShoppingListTransfer();
         $shoppingListTransfer
             ->setIdShoppingList($idShoppingList)
-            ->setRequesterId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         return $this->shoppingListClient->getShoppingList($shoppingListTransfer);
     }

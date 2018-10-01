@@ -4,17 +4,18 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-application": "^0.2.0 || ^0.3.0",
+    "spryker-shop/shop-application": "^1.0.0",
+    "spryker-shop/shop-router-extension": "^1.0.0",
     "spryker/kernel": "^3.16.0",
     "spryker/storage": "^3.4.0"
   },
   "require-dev": {
-    "spryker-shop/shop-router": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*",
     "spryker/url-storage": "*"
   },
   "suggest": {
-    "spryker-shop/shop-router": "TODO: add suggestion description",
-    "spryker/url-storage": "TODO: add suggestion description"
+    "spryker/url-storage": "Use this module when using plugins that need UrlStorage dependencies."
   },
   "autoload": {
     "psr-4": {

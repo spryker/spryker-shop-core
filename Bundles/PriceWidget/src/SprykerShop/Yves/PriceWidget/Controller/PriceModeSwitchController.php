@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\PriceWidget\Controller;
 
 use Spryker\Yves\Kernel\Controller\AbstractController;
-use SprykerShop\Yves\PriceWidget\Exception\UnknownPriceModeException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,9 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PriceModeSwitchController extends AbstractController
 {
-    const URL_PARAM_PRICE_MODE = 'price-mode';
-    const URL_PARAM_REFERRER_URL = 'referrer-url';
-    const PRICE_MODE_SWITCH_ERROR_TRANSLATION_KEY = 'price.mode.switch.error';
+    public const URL_PARAM_PRICE_MODE = 'price-mode';
+    public const URL_PARAM_REFERRER_URL = 'referrer-url';
+    public const PRICE_MODE_SWITCH_ERROR_TRANSLATION_KEY = 'price.mode.switch.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,7 +34,7 @@ class PriceModeSwitchController extends AbstractController
             return $this->createRedirectResponse($request);
         }
 
-        $this->switchPriceMode($priceMode);
+        $this->getFactory()->getPriceClient()->switchPriceMode($priceMode);
 
         return $this->createRedirectResponse($request);
     }
@@ -50,28 +49,5 @@ class PriceModeSwitchController extends AbstractController
         return $this->redirectResponseExternal(
             urldecode($request->get(static::URL_PARAM_REFERRER_URL))
         );
-    }
-
-    /**
-     * @param string $priceMode
-     *
-     * @throws \SprykerShop\Yves\PriceWidget\Exception\UnknownPriceModeException
-     *
-     * @return void
-     */
-    protected function switchPriceMode($priceMode)
-    {
-        $priceModes = $this->getFactory()->getPriceClient()->getPriceModes();
-
-        if (!isset($priceModes[$priceMode])) {
-            throw new UnknownPriceModeException(sprintf(
-                'Unknown price mode "%s".',
-                $priceMode
-            ));
-        }
-
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
-        $quoteTransfer->setPriceMode($priceMode);
-        $this->getFactory()->getQuoteClient()->setQuote($quoteTransfer);
     }
 }

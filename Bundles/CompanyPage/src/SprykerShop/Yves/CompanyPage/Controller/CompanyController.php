@@ -21,7 +21,22 @@ class CompanyController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
-        $data = [];
+        $companyUserTransfer = $this->getCompanyUser();
+        $data = [
+            'company' => $this->getCompanyUser()->getCompanyBusinessUnit()->getCompany(),
+        ];
+
+        if ($this->getFactory()->createCompanyUserValidator()->hasBusinessUnit($companyUserTransfer)) {
+            $company = $companyUserTransfer->getCompanyBusinessUnit()->getCompany();
+            $defaultBillingAddress = $this->getFactory()
+                ->createCompanyBusinessUnitAddressReader()
+                ->getDefaultBillingAddress($companyUserTransfer);
+
+            $data = [
+                'company' => $company,
+                'defaultBillingAddress' => $defaultBillingAddress,
+            ];
+        }
 
         return $this->view(
             $data,

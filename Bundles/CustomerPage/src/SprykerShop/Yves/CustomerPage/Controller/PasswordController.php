@@ -21,9 +21,21 @@ class PasswordController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function forgottenPasswordAction(Request $request)
+    {
+        $viewData = $this->executeForgottenPasswordAction($request);
+
+        return $this->view($viewData, [], '@customerPage/views/password-forgotten/password-forgotten.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeForgottenPasswordAction(Request $request): array
     {
         $form = $this
             ->getFactory()
@@ -46,8 +58,7 @@ class PasswordController extends AbstractCustomerController
         $data = [
             'form' => $form->createView(),
         ];
-
-        return $this->view($data, [], '@customerPage/views/password-forgotten/password-forgotten.twig');
+        return $data;
     }
 
     /**
@@ -56,6 +67,22 @@ class PasswordController extends AbstractCustomerController
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function restorePasswordAction(Request $request)
+    {
+        $response = $this->executeRestorePasswordAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@customerPage/views/password-forgotten-recovery/password-forgotten-recovery.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeRestorePasswordAction(Request $request)
     {
         if ($this->isLoggedInCustomer()) {
             $this->addErrorMessage('customer.reset.password.error.already.loggedIn');
@@ -92,11 +119,9 @@ class PasswordController extends AbstractCustomerController
             $this->processResponseErrors($customerResponseTransfer);
         }
 
-        $data = [
+        return [
             'form' => $form->createView(),
         ];
-
-        return $this->view($data, [], '@customerPage/views/password-forgotten-recovery/password-forgotten-recovery.twig');
     }
 
     /**

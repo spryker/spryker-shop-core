@@ -17,6 +17,9 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryF
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
 use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
 
+/**
+ * @method \SprykerShop\Yves\CatalogPage\CatalogPageConfig getConfig()
+ */
 class CatalogPageFactory extends AbstractFactory
 {
     /**
@@ -46,7 +49,7 @@ class CatalogPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface
      */
-    protected function getSearchClient(): CatalogPageToSearchClientInterface
+    public function getSearchClient(): CatalogPageToSearchClientInterface
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_SEARCH);
     }
@@ -89,5 +92,13 @@ class CatalogPageFactory extends AbstractFactory
     public function getProductCategoryFilterStorageClient(): CatalogPageToProductCategoryFilterStorageClientInterface
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CatalogPage\CatalogPageConfig
+     */
+    public function getModuleConfig(): CatalogPageConfig
+    {
+        return $this->getConfig();
     }
 }

@@ -10,12 +10,16 @@ namespace SprykerShop\Yves\CompanyPage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientBridge;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientBridge;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreBridge;
 
@@ -28,9 +32,14 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const CLIENT_COMPANY_ROLE = 'CLIENT_COMPANY_ROLE';
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
+    public const CLIENT_BUSINESS_ON_BEHALF = 'CLIENT_BUSINESS_ON_BEHALF';
+    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+
     public const STORE = 'STORE';
 
     public const PLUGIN_COMPANY_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_OVERVIEW_WIDGETS';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -50,6 +59,26 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyOverviewWidgetPlugins($container);
         $container = $this->addPermissionClient($container);
         $container = $this->addStore($container);
+        $container = $this->addBusinessOnBehalfClient($container);
+        $container = $this->addMessengerClient($container);
+        $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addApplication($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addBusinessOnBehalfClient(Container $container): Container
+    {
+        $container[static::CLIENT_BUSINESS_ON_BEHALF] = function (Container $container) {
+            return new CompanyPageToBusinessOnBehalfClientBridge(
+                $container->getLocator()->businessOnBehalf()->client()
+            );
+        };
 
         return $container;
     }
@@ -181,10 +210,54 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMessengerClient(Container $container): Container
+    {
+        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+            return new CompanyPageToMessengerClientBridge($container->getLocator()->messenger()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+            return new CompanyPageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
      * @return array
      */
     protected function getCompanyOverviewWidgetPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addApplication(Container $container): Container
+    {
+        $container[static::PLUGIN_APPLICATION] = function () {
+            $pimplePlugin = new Pimple();
+
+            return $pimplePlugin->getApplication();
+        };
+
+        return $container;
     }
 }

@@ -25,9 +25,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PaymentForm extends AbstractType
 {
-    const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
-    const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
-    const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
+    public const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
+    public const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
+    public const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
 
     /**
      * @return string
@@ -98,7 +98,7 @@ class PaymentForm extends AbstractType
      * @param \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface[] $paymentMethodSubForms
      * @param array $options
      *
-     * @return \SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm
+     * @return $this
      */
     protected function addPaymentMethodSubForms(FormBuilderInterface $builder, array $paymentMethodSubForms, array $options)
     {
@@ -124,7 +124,7 @@ class PaymentForm extends AbstractType
     {
         $paymentMethodSubForms = [];
 
-        foreach ($this->getFactory()->createPaymentMethodSubForms() as $paymentMethodSubFormPlugin) {
+        foreach ($this->getFactory()->getPaymentMethodSubForms() as $paymentMethodSubFormPlugin) {
             $paymentMethodSubForms[] = $this->createSubForm($paymentMethodSubFormPlugin);
         }
 

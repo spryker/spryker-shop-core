@@ -25,14 +25,31 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class WishlistController extends AbstractController
 {
-    const DEFAULT_NAME = 'My wishlist';
-    const DEFAULT_ITEMS_PER_PAGE = 10;
+    public const DEFAULT_NAME = 'My wishlist';
+    public const DEFAULT_ITEMS_PER_PAGE = 10;
 
-    const PARAM_ITEMS_PER_PAGE = 'ipp';
-    const PARAM_PAGE = 'page';
-    const PARAM_PRODUCT_ID = 'product-id';
-    const PARAM_SKU = 'sku';
-    const PARAM_WISHLIST_NAME = 'wishlist-name';
+    public const PARAM_ITEMS_PER_PAGE = 'ipp';
+    public const PARAM_PAGE = 'page';
+    public const PARAM_PRODUCT_ID = 'product-id';
+    public const PARAM_SKU = 'sku';
+    public const PARAM_WISHLIST_NAME = 'wishlist-name';
+
+    /**
+     * @param string $wishlistName
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function indexAction($wishlistName, Request $request)
+    {
+        $viewData = $this->executeIndexAction($wishlistName, $request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getWishlistViewWidgetPlugins(),
+            '@WishlistPage/views/wishlist-detail/wishlist-detail.twig'
+        );
+    }
 
     /**
      * @param string $wishlistName
@@ -40,9 +57,9 @@ class WishlistController extends AbstractController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return array
      */
-    public function indexAction($wishlistName, Request $request)
+    protected function executeIndexAction($wishlistName, Request $request): array
     {
         $pageNumber = $this->getPageNumber($request);
         $itemsPerPage = $this->getItemsPerPage($request);
@@ -72,14 +89,14 @@ class WishlistController extends AbstractController
 
         $addAllAvailableProductsToCartForm = $this->createAddAllAvailableProductsToCartForm($wishlistOverviewResponse);
 
-        return $this->view([
+        return [
             'wishlistItems' => $wishlistItems,
             'wishlistOverview' => $wishlistOverviewResponse,
             'currentPage' => $wishlistOverviewResponse->getPagination()->getPage(),
             'totalPages' => $wishlistOverviewResponse->getPagination()->getPagesTotal(),
             'wishlistName' => $wishlistName,
             'addAllAvailableProductsToCartForm' => $addAllAvailableProductsToCartForm->createView(),
-        ]);
+        ];
     }
 
     /**
@@ -291,9 +308,13 @@ class WishlistController extends AbstractController
     {
         $productConcreteStorageData = $this->getFactory()
             ->getProductStorageClient()
-            ->getProductConcreteStorageData($wishlistItemTransfer->getIdProduct(), $this->getLocale());
+            ->findProductConcreteStorageData($wishlistItemTransfer->getIdProduct(), $this->getLocale());
 
         $productViewTransfer = new ProductViewTransfer();
+        if ($productConcreteStorageData === null) {
+            return $productViewTransfer;
+        }
+
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         foreach ($this->getFactory()->getWishlistItemExpanderPlugins() as $productViewExpanderPlugin) {

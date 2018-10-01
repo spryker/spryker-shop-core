@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class NewsletterPageControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_CUSTOMER_NEWSLETTER = 'customer/newsletter';
+    public const ROUTE_CUSTOMER_NEWSLETTER = 'customer/newsletter';
 
     /**
      * @param \Silex\Application $app
@@ -21,10 +21,18 @@ class NewsletterPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addNewsletterRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addNewsletterRoute(): self
+    {
         $this->createController('/{customer}/newsletter', self::ROUTE_CUSTOMER_NEWSLETTER, 'NewsletterPage', 'Newsletter', 'index')
-            ->assert('customer', $allowedLocalesPattern . 'customer|customer')
+            ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
             ->value('customer', 'customer');
+
+        return $this;
     }
 }

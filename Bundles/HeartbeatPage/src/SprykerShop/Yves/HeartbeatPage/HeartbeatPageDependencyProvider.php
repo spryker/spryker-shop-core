@@ -15,9 +15,9 @@ use SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToStorageClien
 
 class HeartbeatPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_SEARCH = 'CLIENT_SEARCH';
-    const CLIENT_SESSION = 'CLIENT_SESSION';
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

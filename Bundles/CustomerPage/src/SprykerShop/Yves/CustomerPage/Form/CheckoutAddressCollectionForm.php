@@ -17,15 +17,15 @@ use Symfony\Component\Validator\Constraint;
 
 class CheckoutAddressCollectionForm extends AbstractType
 {
-    const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
-    const FIELD_BILLING_ADDRESS = 'billingAddress';
-    const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
+    public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
+    public const FIELD_BILLING_ADDRESS = 'billingAddress';
+    public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
 
-    const OPTION_ADDRESS_CHOICES = 'address_choices';
-    const OPTION_COUNTRY_CHOICES = 'country_choices';
+    public const OPTION_ADDRESS_CHOICES = 'address_choices';
+    public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
-    const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
-    const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
+    public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
+    public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
 
     /**
      * @return string
@@ -78,7 +78,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm
+     * @return $this
      */
     protected function addShippingAddressSubForm(FormBuilderInterface $builder, array $options)
     {
@@ -105,7 +105,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm
+     * @return $this
      */
     protected function addSameAsShipmentCheckbox(FormBuilderInterface $builder)
     {
@@ -124,7 +124,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm
+     * @return $this
      */
     protected function addBillingAddressSubForm(FormBuilderInterface $builder, array $options)
     {

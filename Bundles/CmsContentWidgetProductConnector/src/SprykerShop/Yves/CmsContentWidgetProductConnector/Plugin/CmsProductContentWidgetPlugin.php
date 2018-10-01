@@ -28,7 +28,7 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
      * @param \Twig_Environment $twig
      * @param array $context
      * @param array|string $productAbstractSkuList $productAbstractSkuList
-     * @param null|string $templateIdentifier
+     * @param string|null $templateIdentifier
      *
      * @return string
      */
@@ -71,14 +71,8 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
      */
     protected function findProductAbstractByIdProductAbstract($idProductAbstract)
     {
-        $productData = $this->getFactory()
+        return $this->getFactory()
             ->getProductStorageClient()
-            ->getProductAbstractStorageData($idProductAbstract, $this->getLocale());
-
-        if (!$productData) {
-            return null;
-        }
-
-        return $productData;
+            ->findProductAbstractStorageData($idProductAbstract, $this->getLocale());
     }
 }

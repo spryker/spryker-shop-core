@@ -19,14 +19,26 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SubmitController extends AbstractController
 {
-    const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INACTIVE;
+    public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INACTIVE;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(Request $request)
+    {
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view($viewData, [], '@ProductReviewWidget/views/review-create/review-create.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
     {
         $parentRequest = $this->getParentRequest();
         $idProductAbstract = $request->attributes->get('idProductAbstract');
@@ -42,11 +54,11 @@ class SubmitController extends AbstractController
             $productReviewForm = $this->getFactory()->createProductReviewForm($idProductAbstract);
         }
 
-        return $this->view([
+        return [
             'hideForm' => $isFormEmpty || $isReviewPosted,
             'form' => $productReviewForm->createView(),
             'showSuccess' => $isReviewPosted,
-        ]);
+        ];
     }
 
     /**

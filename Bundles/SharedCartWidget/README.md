@@ -1,6 +1,6 @@
 # SharedCartWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Provides widgets to display and share carts.
 
 ## Installation
 

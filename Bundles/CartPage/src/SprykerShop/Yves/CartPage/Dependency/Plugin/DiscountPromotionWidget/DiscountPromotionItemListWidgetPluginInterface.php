@@ -16,6 +16,8 @@ interface DiscountPromotionItemListWidgetPluginInterface extends WidgetPluginInt
     public const NAME = 'DiscountPromotionItemListWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

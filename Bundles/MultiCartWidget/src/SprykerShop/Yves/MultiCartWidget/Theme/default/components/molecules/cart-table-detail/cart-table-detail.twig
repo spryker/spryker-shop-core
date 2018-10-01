@@ -32,7 +32,7 @@
     </td>
     <td>
         {% if cart.totals is not empty and cart.items is not empty %}
-            {{ cart.totals.subTotal | money }}
+            {{ cart.totals.subTotal | money(true, data.cart.currency.code) }}
         {% else %}
             N/A
         {% endif %}
@@ -56,7 +56,7 @@
                 {% endif %}
                 {% if data.actions.delete %}
                     <li class="menu__item">
-                        <a href="{{ path('multi-cart/delete', {idQuote: data.cart.idQuote}) }}" onclick="return confirm('{{ 'multi_cart_widget.cart.remove.confirm' | trans }}')">
+                        <a href="{{ path('multi-cart/confirm-delete', {idQuote: data.cart.idQuote}) }}">
                             {{ "multi_cart_widget.cart.action.delete" | trans }}
                         </a>
                     </li>

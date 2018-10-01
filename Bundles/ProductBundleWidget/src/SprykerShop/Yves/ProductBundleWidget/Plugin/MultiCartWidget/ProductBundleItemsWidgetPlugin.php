@@ -20,7 +20,7 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param null|int $itemDisplayLimit
+     * @param int|null $itemDisplayLimit
      *
      * @return void
      */
@@ -93,6 +93,6 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate()
     {
-        return '@ProductBundleWidget/view/multi-cart-widget/items-list.twig';
+        return '@ProductBundleWidget/views/multi-cart-items-list/multi-cart-items-list.twig';
     }
 }

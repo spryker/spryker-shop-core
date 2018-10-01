@@ -32,21 +32,17 @@ class CompanyRoleDataProvider
      *
      * @return array
      */
-    public function getData($fkCompany, $idCompanyRole = null): array
+    public function getData(int $fkCompany, ?int $idCompanyRole = null): array
     {
         if ($idCompanyRole === null) {
             return $this->getDefaultCompanyRoleData($fkCompany);
         }
 
-        if ($idCompanyRole !== null) {
-            $companyRoleTransfer = new CompanyRoleTransfer();
-            $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
-            $companyRole = $this->companyRoleClient->getCompanyRoleById($companyRoleTransfer);
+        $companyRoleTransfer = new CompanyRoleTransfer();
+        $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
+        $companyRole = $this->companyRoleClient->getCompanyRoleById($companyRoleTransfer);
 
-            return $companyRole->modifiedToArray();
-        }
-
-        return [];
+        return $companyRole->modifiedToArray();
     }
 
     /**

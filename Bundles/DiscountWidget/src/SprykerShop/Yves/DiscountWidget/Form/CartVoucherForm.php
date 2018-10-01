@@ -14,8 +14,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CartVoucherForm extends AbstractType
 {
-    const FORM_NAME = 'voucherForm';
-    const FIELD_VOUCHER_CODE = 'voucher_code';
+    public const FORM_NAME = 'voucherForm';
+    public const FIELD_VOUCHER_CODE = 'voucher_code';
 
     /**
      * @return string
@@ -47,7 +47,7 @@ class CartVoucherForm extends AbstractType
     {
         $builder->add(self::FIELD_VOUCHER_CODE, TextType::class, [
             'label' => 'page.checkout.finalize.enter-voucher',
-            'required' => true,
+            'required' => false,
         ]);
 
         return $this;

@@ -4,23 +4,25 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shop-application-extension": "^1.0.0",
     "spryker/application": "^3.8.0",
-    "spryker/kernel": "^3.16.0",
+    "spryker/kernel": "^3.24.0",
     "spryker/silex": "^2.0.0",
     "spryker/storage": "^3.4.0",
+    "spryker/twig": "^3.3.0",
     "spryker/util-text": "^1.2.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/log": "*",
     "spryker/symfony": "*",
-    "spryker/twig": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/config": "TODO: add suggestion description",
-    "spryker/log": "TODO: add suggestion description",
-    "spryker/symfony": "TODO: add suggestion description",
-    "spryker/twig": "TODO: add suggestion description"
+    "spryker/config": "Use this module when using plugins that need Config dependencies.",
+    "spryker/log": "Use this module when using plugins that need Log dependencies.",
+    "spryker/symfony": "Use this module when using plugins that need Symfony dependencies."
   },
   "autoload": {
     "psr-4": {

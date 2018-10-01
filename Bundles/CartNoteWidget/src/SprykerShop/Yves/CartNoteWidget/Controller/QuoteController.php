@@ -32,7 +32,7 @@ class QuoteController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $note = $form->get(QuoteCartNoteForm::FIELD_CART_NOTE)->getData();
+            $note = (string)$form->get(QuoteCartNoteForm::FIELD_CART_NOTE)->getData();
 
             $quoteResponseTransfer = $this->getFactory()
                 ->getCartNoteClient()

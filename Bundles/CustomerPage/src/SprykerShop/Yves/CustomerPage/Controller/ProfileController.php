@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProfileController extends AbstractCustomerController
 {
-    const MESSAGE_PROFILE_CHANGE_SUCCESS = 'customer.profile.change.success';
-    const MESSAGE_PASSWORD_CHANGE_SUCCESS = 'customer.password.change.success';
+    public const MESSAGE_PROFILE_CHANGE_SUCCESS = 'customer.profile.change.success';
+    public const MESSAGE_PASSWORD_CHANGE_SUCCESS = 'customer.password.change.success';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -22,6 +22,22 @@ class ProfileController extends AbstractCustomerController
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
+    {
+        $response = $this->executeIndexAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CustomerPage/views/profile/profile.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(Request $request)
     {
         $profileForm = $this
             ->getFactory()
@@ -54,12 +70,10 @@ class ProfileController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_PROFILE);
         }
 
-        $data = [
+        return [
             'profileForm' => $profileForm->createView(),
             'passwordForm' => $passwordForm->createView(),
         ];
-
-        return $this->view($data, [], '@CustomerPage/views/profile/profile.twig');
     }
 
     /**

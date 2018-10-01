@@ -1,6 +1,6 @@
 # MultiCartWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Provides multi cart widgets to display and manipulate several carts.
 
 ## Installation
 

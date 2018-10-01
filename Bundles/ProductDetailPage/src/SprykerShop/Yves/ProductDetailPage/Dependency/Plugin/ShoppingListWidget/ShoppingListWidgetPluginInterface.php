@@ -9,12 +9,15 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ShoppingListWidge
 
 interface ShoppingListWidgetPluginInterface
 {
-    const NAME = 'ShoppingListWidgetPlugin';
+    public const NAME = 'ShoppingListWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $sku
+     * @param bool $isDisabled
      *
      * @return void
      */
-    public function initialize(string $sku): void;
+    public function initialize(string $sku, bool $isDisabled): void;
 }

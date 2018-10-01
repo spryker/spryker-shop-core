@@ -12,10 +12,11 @@ interface CmsBlockWidgetToCmsBlockStorageClientInterface
     /**
      * @param string[] $blockNames
      * @param string $localeName
+     * @param string $storeName
      *
      * @return array
      */
-    public function findBlocksByNames($blockNames, $localeName);
+    public function findBlocksByNames($blockNames, $localeName, $storeName);
 
     /**
      * @param array $options

@@ -53,7 +53,7 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
             'set_default' => $viewAllowed && !$quoteTransfer->getIsDefault(),
             'duplicate' => $writeAllowed,
             'clear' => $writeAllowed,
-            'delete' => $writeAllowed,
+            'delete' => $writeAllowed && $this->isDeleteCartAllowed($quoteTransfer),
         ];
     }
 
@@ -63,7 +63,7 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      *
      * @return bool
      */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer)
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
         return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
     }
@@ -80,6 +80,16 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
+     *
+     * @return bool
+     */
+    protected function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer): bool
+    {
+        return $this->getFactory()->getSharedCartClient()->isQuoteDeletable($currentQuoteTransfer);
     }
 
     /**
@@ -105,6 +115,6 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public static function getTemplate()
     {
-        return '@SharedCartWidget/views/multi-cart-widget/shared-cart-operations.twig';
+        return '@SharedCartWidget/views/shared-cart-operations/shared-cart-operations.twig';
     }
 }

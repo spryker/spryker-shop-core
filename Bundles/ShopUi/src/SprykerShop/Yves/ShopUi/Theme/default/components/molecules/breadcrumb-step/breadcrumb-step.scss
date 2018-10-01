@@ -3,8 +3,8 @@
         display: inline-block;
 
         &__separator {
-            margin-left: .25rem;
-            margin-right: .25rem;
+            margin-left: 0.25rem;
+            margin-right: 0.25rem;
             color: $setting-color-light;
         }
 
@@ -16,6 +16,6 @@
             color: $setting-color-dark;
         }
 
-        @content
+        @content;
     }
 }

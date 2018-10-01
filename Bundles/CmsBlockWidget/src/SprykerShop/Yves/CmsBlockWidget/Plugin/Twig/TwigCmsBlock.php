@@ -22,13 +22,18 @@ use Twig_SimpleFunction;
  */
 class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
 {
-    const OPTION_NAME = 'name';
-    const OPTION_POSITION = 'position';
+    public const OPTION_NAME = 'name';
+    public const OPTION_POSITION = 'position';
 
     /**
      * @var string
      */
     protected $localeName;
+
+    /**
+     * @var string
+     */
+    protected $storeName;
 
     /**
      * @param \Silex\Application $application
@@ -38,6 +43,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     public function getFunctions(Application $application)
     {
         $this->localeName = $application['locale'];
+        $this->storeName = $application['store'];
 
         return [
             new Twig_SimpleFunction('spyCmsBlock', [
@@ -82,7 +88,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     /**
      * @param array $blockOptions
      *
-     * @return \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer[]
+     * @return array
      */
     protected function getBlockDataByOptions(array &$blockOptions)
     {
@@ -93,7 +99,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
         $availableBlockNames = $this->filterPosition($positionName, $availableBlockNames);
         $availableBlockNames = $this->filterAvailableBlockNames($blockName, $availableBlockNames);
 
-        return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByNames($availableBlockNames, $this->localeName);
+        return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByNames($availableBlockNames, $this->localeName, $this->storeName);
     }
 
     /**
@@ -176,7 +182,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
      */
     protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData)
     {
-        return !($cmsBlockData === null);
+        return $cmsBlockData->getCmsBlockTemplate() !== null;
     }
 
     /**

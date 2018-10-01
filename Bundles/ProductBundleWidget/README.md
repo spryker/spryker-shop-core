@@ -1,6 +1,6 @@
 # ProductBundleWidget Module
 
-{{ADD DESCRIPTION HERE}}
+Provides widgets to display and manipulate product bundles.
 
 ## Installation
 

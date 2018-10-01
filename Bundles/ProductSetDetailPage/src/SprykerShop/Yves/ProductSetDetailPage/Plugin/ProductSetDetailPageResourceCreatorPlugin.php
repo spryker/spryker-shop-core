@@ -12,7 +12,7 @@ use Silex\Application;
 use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController;
-use SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface;
+use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductSetDetailPage\ProductSetDetailPageFactory getFactory()
@@ -77,7 +77,11 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
     {
         $productViewTransfers = [];
         foreach ($productSetDataStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
-            $productAbstractData = $this->getFactory()->getProductStorageClient()->getProductAbstractStorageData($idProductAbstract, $this->getLocale());
+            $productAbstractData = $this->getFactory()->getProductStorageClient()->findProductAbstractStorageData($idProductAbstract, $this->getLocale());
+
+            if ($productAbstractData === null) {
+                continue;
+            }
 
             $productViewTransfers[] = $this->getFactory()->getProductStorageClient()->mapProductStorageData(
                 $productAbstractData,

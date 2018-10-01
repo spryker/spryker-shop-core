@@ -20,9 +20,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ShoppingListWidgetController extends AbstractController
 {
-    const PARAM_SKU = 'sku';
-    const PARAM_QUANTITY = 'quantity';
-    const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+    public const PARAM_SKU = 'sku';
+    public const PARAM_QUANTITY = 'quantity';
+    public const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -35,7 +36,7 @@ class ShoppingListWidgetController extends AbstractController
 
         $customerTransfer = $this->getCustomer();
 
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+        if ($customerTransfer === null || !$customerTransfer->getCompanyUserTransfer()) {
             throw new NotFoundHttpException("Only company users are allowed to access this page");
         }
     }
@@ -54,7 +55,7 @@ class ShoppingListWidgetController extends AbstractController
             ->addItem($shoppingListItemTransfer);
 
         if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
-            $this->addErrorMessage('customer.account.shopping_list.item.not_added');
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED);
         }
 
         return $this->redirectResponseInternal(ShoppingListWidgetConfig::SHOPPING_LIST_REDIRECT_URL, [
@@ -69,20 +70,20 @@ class ShoppingListWidgetController extends AbstractController
      */
     protected function getShoppingListItemTransferFromRequest(Request $request): ShoppingListItemTransfer
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $customerTransfer = $this->getCustomer();
 
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setSku($request->get(static::PARAM_SKU))
             ->setQuantity((int)$request->get(static::PARAM_QUANTITY))
             ->setFkShoppingList($request->get(static::PARAM_ID_SHOPPING_LIST))
             ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setRequesterId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         return $shoppingListItemTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     protected function getCustomer(): ?CustomerTransfer
     {

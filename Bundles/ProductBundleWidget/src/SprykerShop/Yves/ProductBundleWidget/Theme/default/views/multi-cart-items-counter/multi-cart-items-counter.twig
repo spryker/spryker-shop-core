@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    items: _widget.items,
+} %}
+
+{% set itemCount = data.items | length %}
+{% set label = (itemCount == 1) ? 'multi_cart_widget.cart.item' : 'multi_cart_widget.cart.items' %}
+
+{% block body %}
+    <span class="cart-items-quantity">
+        {{ itemCount }} {{ label | trans }}
+    </span>
+{% endblock %}

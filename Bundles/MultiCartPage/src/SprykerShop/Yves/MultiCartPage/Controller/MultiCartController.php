@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MultiCartPage\Controller;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -19,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MultiCartController extends AbstractController
 {
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
+    public const GLOSSARY_KEY_CART_WAS_DELETED = 'multi_cart_widget.cart.was-deleted-before';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -26,6 +26,22 @@ class MultiCartController extends AbstractController
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
+    {
+        $response = $this->executeCreateAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@MultiCartPage/views/cart-create/cart-create.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeCreateAction(Request $request)
     {
         $quoteForm = $this->getFactory()
             ->getQuoteForm()
@@ -43,11 +59,9 @@ class MultiCartController extends AbstractController
             }
         }
 
-        $data = [
+        return [
             'quoteForm' => $quoteForm->createView(),
         ];
-
-        return $this->view($data, [], '@MultiCartPage/views/multi-cart/cart-create.twig');
     }
 
     /**
@@ -57,6 +71,23 @@ class MultiCartController extends AbstractController
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateAction(int $idQuote, Request $request)
+    {
+        $response = $this->executeUpdateAction($idQuote, $request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@MultiCartPage/views/cart-update/cart-update.twig');
+    }
+
+    /**
+     * @param int $idQuote
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeUpdateAction(int $idQuote, Request $request)
     {
         $quoteForm = $this->getFactory()
             ->getQuoteForm($idQuote)
@@ -70,32 +101,36 @@ class MultiCartController extends AbstractController
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CART_UPDATED_SUCCESS);
-                return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+
+                return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
             }
         }
 
-        $data = [
+        return [
             'cart' => $quoteTransfer,
             'quoteForm' => $quoteForm->createView(),
         ];
-
-        return $this->view($data, [], '@MultiCartPage/views/multi-cart/cart-update.twig');
     }
 
     /**
      * @param int $idQuote
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function setDefaultAction(int $idQuote)
     {
-        $quoteTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->findQuoteById($idQuote);
+        $multiCartClient = $this->getFactory()
+            ->getMultiCartClient();
 
-        $this->getFactory()
-            ->getMultiCartClient()
-            ->setDefaultQuote($quoteTransfer);
+        $quoteTransfer = $multiCartClient->findQuoteById($idQuote);
+
+        if (!$quoteTransfer) {
+            $this->addInfoMessage(static::GLOSSARY_KEY_CART_WAS_DELETED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
+        $multiCartClient->setDefaultQuote($quoteTransfer);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -103,7 +138,7 @@ class MultiCartController extends AbstractController
     /**
      * @param int $idQuote
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function duplicateAction(int $idQuote)
     {
@@ -111,11 +146,16 @@ class MultiCartController extends AbstractController
             ->getMultiCartClient()
             ->findQuoteById($idQuote);
 
-        $this->getFactory()
+        $idNewQuote = $this->getFactory()
             ->getMultiCartClient()
-            ->duplicateQuote($quoteTransfer);
+            ->duplicateQuote($quoteTransfer)
+            ->getQuoteTransfer()
+            ->getIdQuote();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(
+            MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE,
+            [MultiCartPageControllerProvider::PARAM_ID_QUOTE => $idNewQuote]
+        );
     }
 
     /**
@@ -142,28 +182,83 @@ class MultiCartController extends AbstractController
     /**
      * @param int $idQuote
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(int $idQuote)
     {
         $multiCartClient = $this->getFactory()->getMultiCartClient();
 
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setIdQuote($idQuote);
-
-        $this->getFactory()
+        $quoteTransfer = $this->getFactory()
             ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
+        if (!$quoteTransfer) {
+            $this->addInfoMessage(static::GLOSSARY_KEY_CART_WAS_DELETED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+        $multiCartClient
             ->deleteQuote($quoteTransfer);
 
-        $customerQuoteTransferList = $multiCartClient->getQuoteCollection()->getQuotes();
-        if ($quoteTransfer->getIsDefault() && count($customerQuoteTransferList)) {
-            $quoteTransfer = reset($customerQuoteTransferList);
+        return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+    }
 
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_SET_DEFAULT, [
-                MultiCartPageControllerProvider::PARAM_ID_QUOTE => $quoteTransfer->getIdQuote(),
-            ]);
-        }
+    /**
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function indexAction()
+    {
+        $response = $this->executeIndexAction();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->view(
+            $response,
+            $this->getFactory()->getMultiCartListWidgetPlugins(),
+            '@MultiCartPage/views/cart/cart.twig'
+        );
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeIndexAction(): array
+    {
+        $this->getFactory()->getCartClient()->validateQuote();
+        $quoteCollectionTransfer = $this->getFactory()->getMultiCartClient()->getQuoteCollection();
+
+        return [
+            'quoteCollection' => $quoteCollectionTransfer->getQuotes(),
+            'isQuoteDeletable' => $this->getFactory()->getMultiCartClient()->isQuoteDeletable(),
+        ];
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function confirmDeleteAction(int $idQuote)
+    {
+        $viewData = $this->executeConfirmDeleteAction($idQuote);
+
+        $widgetPlugins = $this->getFactory()
+            ->getCartDeleteCompanyUsersListWidgetPlugins();
+
+        return $this->view($viewData, $widgetPlugins, '@MultiCartPage/views/cart-delete/cart-delete.twig');
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return array
+     */
+    protected function executeConfirmDeleteAction(int $idQuote): array
+    {
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
+        return [
+            'cart' => $quoteTransfer,
+        ];
     }
 }

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CartPage\Dependency\Plugin\CartNoteWidget;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface CartNoteQuoteItemWidgetPluginInterface extends WidgetPluginInterface
@@ -15,9 +16,12 @@ interface CartNoteQuoteItemWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'CartNoteQuoteItemWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function initialize(ItemTransfer $itemTransfer): void;
+    public function initialize(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void;
 }

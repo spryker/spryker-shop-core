@@ -1,0 +1,37 @@
+{
+  "name": "spryker-shop/chart-widget",
+  "description": "ChartWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/chart": "^1.0.0",
+    "spryker/kernel": "^3.16.0"
+  },
+  "require-dev": {
+    "spryker-shop/cms-content-widget-chart-connector": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*",
+    "spryker/twig": "*"
+  },
+  "suggest": {
+    "spryker-shop/cms-content-widget-chart-connector": "If you want to use ChartWidgetPlugin: ^1.0.0",
+    "spryker/silex": "*",
+    "spryker/twig": "If you want to use ChartWidgetPlugin: ^3.2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

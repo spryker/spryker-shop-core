@@ -25,7 +25,7 @@ class CheckoutController extends AbstractController
     public function addVoucherAction(Request $request)
     {
         $form = $this->getFactory()
-            ->createCheckoutVoucherForm()
+            ->getCheckoutVoucherForm()
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

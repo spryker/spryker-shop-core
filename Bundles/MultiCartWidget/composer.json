@@ -4,22 +4,25 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.19.0",
-    "spryker/multi-cart": "^0.1.0"
+    "spryker/multi-cart": "^1.0.0"
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
+    "spryker-shop/customer-page": "*",
     "spryker-shop/product-detail-page": "*",
-    "spryker-shop/shop-ui": "*",
-    "spryker/permission": "*",
-    "spryker/silex": "*"
+    "spryker-shop/quick-order-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "TODO: add suggestion description",
-    "spryker-shop/product-detail-page": "TODO: add suggestion description",
-    "spryker-shop/shop-ui": "TODO: add suggestion description",
-    "spryker/silex": "TODO: add suggestion description",
-    "spryker/permission": "If you want to use permissions plugins"
+    "spryker-shop/customer-page": "If you want to use MultiCartMenuItemWidgetPlugin: ^1.3.1",
+    "spryker-shop/cart-page": "Widget plugins are available for this module.",
+    "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
+    "spryker-shop/quick-order-page": "If you want to use quick order page widget",
+    "spryker/permission": "If you want to use permissions plugins",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

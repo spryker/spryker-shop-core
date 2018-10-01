@@ -4,15 +4,20 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
+    "spryker-shop/product-detail-page": "*",
     "spryker-shop/product-set-detail-page": "*",
-    "spryker/cms-content-widget-product-set-connector": "*"
+    "spryker/cms-content-widget-product-set-connector": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/cms-content-widget-product-set-connector": "TODO: add suggestion description",
-    "spryker-shop/product-set-detail-page": "TODO: add suggestion description"
+    "spryker-shop/product-detail-page": "ADD SUGGEST DESCRIPTION",
+    "spryker-shop/product-set-detail-page": "Widget plugins are available for this module.",
+    "spryker/cms-content-widget-product-set-connector": "Use this module when using plugins that need CmsContentWidgetProductSetConnector dependencies."
   },
   "autoload": {
     "psr-4": {

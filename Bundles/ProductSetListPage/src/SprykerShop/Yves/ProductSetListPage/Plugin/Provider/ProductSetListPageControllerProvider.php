@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class ProductSetListPageControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_PRODUCT_SETS = 'product-sets';
+    public const ROUTE_PRODUCT_SETS = 'product-sets';
 
     /**
      * @param \Silex\Application $app
@@ -21,10 +21,18 @@ class ProductSetListPageControllerProvider extends AbstractYvesControllerProvide
      */
     protected function defineControllers(Application $app)
     {
-        $allowedLocalesPattern = $this->getAllowedLocalesPattern();
+        $this->addProductSetListRoute();
+    }
 
+    /**
+     * @return $this
+     */
+    protected function addProductSetListRoute(): self
+    {
         $this->createController('/{sets}', self::ROUTE_PRODUCT_SETS, 'ProductSetListPage', 'List', 'index')
-            ->assert('sets', $allowedLocalesPattern . 'product-sets|product-sets')
+            ->assert('sets', $this->getAllowedLocalesPattern() . 'product-sets|product-sets')
             ->value('sets', 'product-sets');
+
+        return $this;
     }
 }

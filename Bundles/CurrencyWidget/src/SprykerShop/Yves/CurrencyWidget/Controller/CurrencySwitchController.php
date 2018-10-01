@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CurrencyWidget\Controller;
 
 use Spryker\Yves\Kernel\Controller\AbstractController;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,8 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CurrencySwitchController extends AbstractController
 {
-    const URL_PARAM_CURRENCY_ISO_CODE = 'currency-iso-code';
-    const URL_PARAM_REFERRER_URL = 'referrer-url';
+    public const URL_PARAM_CURRENCY_ISO_CODE = 'currency-iso-code';
+    public const URL_PARAM_REFERRER_URL = 'referrer-url';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -27,14 +26,9 @@ class CurrencySwitchController extends AbstractController
     public function indexAction(Request $request)
     {
         $currencyIsoCode = $request->get(static::URL_PARAM_CURRENCY_ISO_CODE);
-
         $this->getFactory()
-            ->createCurrencyPersistence()
+            ->getCurrencyClient()
             ->setCurrentCurrencyIsoCode($currencyIsoCode);
-
-        $this->getFactory()
-            ->createCurrencyPostChangePluginExecutor()
-            ->execute($currencyIsoCode);
 
         return $this->redirectResponseExternal(
             urldecode($request->get(static::URL_PARAM_REFERRER_URL))

@@ -4,15 +4,14 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0",
-    "spryker/product-group-storage": "^0.1.0",
-    "spryker/product-storage": "^0.1.0 || ^0.2.0"
+    "spryker/product-group-storage": "^1.0.0",
+    "spryker/product-storage": "^1.1.0"
   },
   "require-dev": {
-    "spryker-shop/shop-layout": "*"
-  },
-  "suggest": {
-    "spryker-shop/shop-layout": "TODO: add suggestion description"
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

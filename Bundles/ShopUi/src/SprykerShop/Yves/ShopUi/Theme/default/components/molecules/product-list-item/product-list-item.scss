@@ -5,5 +5,7 @@
         &__container {
             position: relative;
         }
+
+        @content;
     }
 }

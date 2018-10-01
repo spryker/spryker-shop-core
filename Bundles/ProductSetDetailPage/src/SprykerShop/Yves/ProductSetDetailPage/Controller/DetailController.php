@@ -15,13 +15,13 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
  */
 class DetailController extends AbstractController
 {
-    const PARAM_ATTRIBUTE = 'attributes';
+    public const PARAM_ATTRIBUTE = 'attributes';
 
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
      *
-     * @return array
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers)
     {

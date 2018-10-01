@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -27,18 +29,52 @@ class AbstractShoppingListController extends AbstractController
 
         $customerTransfer = $this->getCustomer();
 
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+        if ($customerTransfer === null || !$customerTransfer->getCompanyUserTransfer()) {
             throw new NotFoundHttpException("Only company users are allowed to access this page");
         }
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     protected function getCustomer(): ?CustomerTransfer
     {
         return $this->getFactory()
             ->getCustomerClient()
             ->getCustomer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function createProductView(ShoppingListItemTransfer $shoppingListItemTransfer): ProductViewTransfer
+    {
+        $productConcreteStorageData = $this->getFactory()
+            ->getProductStorageClient()
+            ->findProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
+
+        $productViewTransfer = new ProductViewTransfer();
+        if (empty($productConcreteStorageData)) {
+            $productConcreteStorageData = [
+                ProductViewTransfer::SKU => $shoppingListItemTransfer->getSku(),
+            ];
+        }
+        $productViewTransfer->fromArray($productConcreteStorageData, true);
+
+        $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
+        $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+        $productViewTransfer->setShoppingListItem($shoppingListItemTransfer);
+
+        foreach ($this->getFactory()->getShoppingListItemExpanderPlugins() as $productViewExpanderPlugin) {
+            $productViewExpanderPlugin->expandProductViewTransfer(
+                $productViewTransfer,
+                $productConcreteStorageData,
+                $this->getLocale()
+            );
+        }
+
+        return $productViewTransfer;
     }
 }

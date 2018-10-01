@@ -15,10 +15,13 @@ interface ProductMeasurementUnitWidgetPluginInterface extends WidgetPluginInterf
     public const NAME = 'ProductMeasurementUnitWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param bool $isAddToCartDisabled
      * @param array $quantityOptions
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, array $quantityOptions = []): void;
+    public function initialize(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = []): void;
 }

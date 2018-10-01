@@ -15,12 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class OrderController extends AbstractCustomerController
 {
-    const ORDER_LIST_LIMIT = 10;
-    const ORDER_LIST_SORT_FIELD = 'created_at';
-    const ORDER_LIST_SORT_DIRECTION = 'DESC';
+    public const ORDER_LIST_LIMIT = 10;
+    public const ORDER_LIST_SORT_FIELD = 'created_at';
+    public const ORDER_LIST_SORT_DIRECTION = 'DESC';
 
-    const PARAM_PAGE = 'page';
-    const DEFAULT_PAGE = 1;
+    public const PARAM_PAGE = 'page';
+    public const DEFAULT_PAGE = 1;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -28,6 +28,22 @@ class OrderController extends AbstractCustomerController
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
+    {
+        $viewData = $this->executeIndexAction($request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getCustomerOrderListWidgetPlugins(),
+            '@CustomerPage/views/order/order.twig'
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(Request $request): array
     {
         $orderListTransfer = $this->createOrderListTransfer($request);
 
@@ -37,16 +53,10 @@ class OrderController extends AbstractCustomerController
 
         $orderList = $orderListTransfer->getOrders();
 
-        $data = [
+        return [
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderList,
         ];
-
-        return $this->view(
-            $data,
-            $this->getFactory()->getCustomerOrderListWidgetPlugins(),
-            '@CustomerPage/views/order/order.twig'
-        );
     }
 
     /**

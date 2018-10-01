@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CartToShoppingListWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
@@ -33,5 +34,13 @@ class CartToShoppingListWidgetToShoppingListClientBridge implements CartToShoppi
     public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
         return $this->shoppingListClient->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
+    {
+        return $this->shoppingListClient->getCustomerShoppingListCollection();
     }
 }

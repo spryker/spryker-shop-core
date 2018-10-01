@@ -14,9 +14,9 @@ use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlStorageClientBr
 
 class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
-    const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
-    const PLUGIN_RESOURCE_CREATORS = 'PLUGIN_RESOURCE_CREATORS';
+    public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const PLUGIN_RESOURCE_CREATORS = 'PLUGIN_RESOURCE_CREATORS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -77,7 +77,7 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopRouter\Dependency\Plugin\ResourceCreatorPluginInterface[]
+     * @return \SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface[]
      */
     protected function getResourceCreatorPlugins()
     {

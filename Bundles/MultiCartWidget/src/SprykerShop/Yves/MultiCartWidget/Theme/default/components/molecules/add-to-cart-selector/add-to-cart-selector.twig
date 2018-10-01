@@ -1,0 +1,40 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'add-to-cart-selector',
+    tag: 'div'
+} %}
+
+{% define data = {
+    carts: required,
+    disabled: false
+} %}
+
+{% set attributes = {
+    name: 'id_quote',
+} %}
+{% set options = [] %}
+{% for cart in data.carts %}
+    {% set options = options | merge([{
+        label: cart.name,
+        value: cart.idQuote
+    }]) %}
+{% endfor %}
+{% if data.disabled %}
+    {% set attributes = attributes | merge({
+        disabled: true
+    }) %}
+{% endif %}
+{% set options = options | merge([{
+    label: 'multi_cart_widget.cart.add' | trans,
+    value: 0
+}]) %}
+{% block body %}
+    {% include atom('select') with {
+        modifiers: ['expand'],
+        attributes: attributes,
+        data: {
+            options: options
+        }
+    } only %}
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends template('similar-products', 'ProductRelationWidget') %}
+
+{% define data = {
+    products: _widget.productCollection | default([])
+} %}

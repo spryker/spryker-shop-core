@@ -7,11 +7,15 @@
 
 namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\MultiCart;
 
-interface MiniCartWidgetPluginInterface
+use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
+
+interface MiniCartWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'MiniCartWidgetPlugin';
+    public const NAME = 'MiniCartWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param int $cartQuantity
      *
      * @return void

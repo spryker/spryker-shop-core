@@ -14,6 +14,8 @@ interface CatalogCmsBlockWidgetPluginInterface extends WidgetPluginInterface
     public const NAME = 'CatalogCmsBlockWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param int $idCategory
      *
      * @return void

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Shared\Storage\StorageConstants;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Client\Product\ProductClientInterface getClient()
@@ -18,11 +19,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductController extends AbstractController
 {
-    const ATTRIBUTE_PRODUCT_DATA = 'productData';
+    public const ATTRIBUTE_PRODUCT_DATA = 'productData';
 
-    const PARAM_ATTRIBUTE = 'attribute';
+    public const PARAM_ATTRIBUTE = 'attribute';
 
-    const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
+    public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
     /**
      * @param array $productData
@@ -32,20 +33,49 @@ class ProductController extends AbstractController
      */
     public function detailAction(array $productData, Request $request)
     {
+        $viewData = $this->executeDetailAction($productData, $request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getProductDetailPageWidgetPlugins(),
+            '@ProductDetailPage/views/pdp/pdp.twig'
+        );
+    }
+
+    /**
+     * @param array $productData
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return array
+     */
+    protected function executeDetailAction(array $productData, Request $request): array
+    {
+        if (!empty($productData['id_product_abstract']) && $this->isProductAbstractRestricted($productData['id_product_abstract'])) {
+            throw new NotFoundHttpException();
+        }
+
         $productViewTransfer = $this->getFactory()
             ->getProductStorageClient()
             ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request));
 
-        $data = [
+        return [
             'product' => $productViewTransfer,
             'productUrl' => $this->getProductUrl($productViewTransfer),
         ];
+    }
 
-        return $this->view(
-            $data,
-            $this->getFactory()->getProductDetailPageWidgetPlugins(),
-            '@ProductDetailPage/views/pdp/pdp.twig'
-        );
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    protected function isProductAbstractRestricted(int $idProductAbstract): bool
+    {
+        return $this->getFactory()
+            ->getProductStorageClient()
+            ->isProductAbstractRestricted($idProductAbstract);
     }
 
     /**

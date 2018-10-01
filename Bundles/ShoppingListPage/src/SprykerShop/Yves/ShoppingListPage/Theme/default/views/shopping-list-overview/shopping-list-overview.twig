@@ -7,35 +7,18 @@
     labels: {
         addNewSubmitLabel: 'customer.account.shopping_list.overview.add_new' | trans,
         overviewTitle: 'customer.account.shopping_list.overview.title' | trans,
-        emptyShoppingListsLabel: 'customer.account.shopping_list.overview.empty' | trans
+        emptyShoppingListsLabel: 'customer.account.shopping_list.overview.empty' | trans,
+        newFormTitle: 'customer.account.shopping_list.overview.form.new' | trans
     }
 } %}
 
-{% block customerNavigation %}
-    {% embed molecule('customer-navigation', 'CustomerPage') with {
-        class: 'box',
-        data: {
-            activePage: data.activePage
-        },
-        embed: {
-            shoppingListCollection: data.shoppingListCollection
-        }
-    } only %}
-        {% block shoppingListNavigation %}
-            {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
-                data: {
-                    shoppingListCollection: embed.shoppingListCollection
-                }
-            } only %}
-        {% endblock %}
-    {% endembed %}
-{% endblock %}
-
 {% block customerContent %}
     <div class="box">
+        <h4>{{ data.labels.overviewTitle }}</h4>
+        <hr/>
         {% include molecule('form') with {
             data: {
-                title: data.labels.overviewTitle,
+                title: data.labels.newFormTitle,
                 form: data.shoppingListForm,
                 submit: {
                     enable: true,
@@ -43,7 +26,7 @@
                 }
             }
         } only %}
-
+        <hr/>
         {% if data.shoppingListCollection.shoppingLists | length %}
             {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
                 data: {

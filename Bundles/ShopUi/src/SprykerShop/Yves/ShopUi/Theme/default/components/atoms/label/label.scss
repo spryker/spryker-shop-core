@@ -1,0 +1,13 @@
+@mixin shop-ui-label($name: '.label') {
+    #{$name} {
+        &--required {
+            &::after {
+                content: '*';
+                margin-left: 0.2rem;
+                color: $setting-color-main;
+            }
+        }
+
+        @content;
+    }
+}

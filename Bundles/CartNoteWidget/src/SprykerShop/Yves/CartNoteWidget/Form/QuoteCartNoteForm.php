@@ -13,8 +13,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class QuoteCartNoteForm extends AbstractType
 {
-    const FORM_NAME = 'quoteCartNote';
-    const FIELD_CART_NOTE = 'cartNote';
+    public const FORM_NAME = 'quoteCartNote';
+    public const FIELD_CART_NOTE = 'cartNote';
 
     /**
      * @return string
@@ -43,8 +43,7 @@ class QuoteCartNoteForm extends AbstractType
     protected function addCartNoteField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CART_NOTE, TextareaType::class, [
-            'label' => false,
-            'empty_data' => 'cart_note.quote_form.placeholder',
+            'label' => 'cart_note.quote_form.enter_note',
             'required' => false,
         ]);
 

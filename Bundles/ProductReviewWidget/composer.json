@@ -4,12 +4,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-application": "^0.2.0 || ^0.3.0",
+    "spryker-shop/shop-application": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.0.0",
     "spryker/application": "^3.8.0",
     "spryker/customer": "^7.4.0",
     "spryker/kernel": "^3.16.0",
     "spryker/product-review": "^1.1.0 || ^2.0.0",
-    "spryker/product-review-storage": "^0.1.0",
+    "spryker/product-review-storage": "^1.0.0",
     "spryker/storage": "^3.4.0",
     "spryker/symfony": "^3.1.0"
   },
@@ -17,13 +18,15 @@
     "spryker-shop/catalog-page": "*",
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/product-widget": "*",
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/catalog-page": "TODO: add suggestion description",
-    "spryker-shop/product-detail-page": "TODO: add suggestion description",
-    "spryker-shop/product-widget": "TODO: add suggestion description",
-    "spryker/silex": "TODO: add suggestion description"
+    "spryker-shop/catalog-page": "Widget plugins are available for this module.",
+    "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
+    "spryker-shop/product-widget": "Widget plugins are available for this module.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

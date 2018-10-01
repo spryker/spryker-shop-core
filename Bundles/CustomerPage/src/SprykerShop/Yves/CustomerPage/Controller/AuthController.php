@@ -20,10 +20,47 @@ class AuthController extends AbstractCustomerController
      */
     public function loginAction()
     {
-        if ($this->isLoggedInCustomer()) {
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW);
+        if (!$this->isLoggedInCustomer()) {
+            $viewData = $this->executeLoginAction();
+
+            return $this->view($viewData, [], '@CustomerPage/views/login/login.twig');
         }
 
+        $redirectUrl = $this->getRedirectUrlFromPlugins();
+        if ($redirectUrl) {
+            return $this->redirectResponseExternal($redirectUrl);
+        }
+
+        return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW);
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getRedirectUrlFromPlugins(): ?string
+    {
+        $customerRedirectAfterLoginPlugins = $this->getFactory()->getAfterLoginCustomerRedirectPlugins();
+        if (!$customerRedirectAfterLoginPlugins) {
+            return null;
+        }
+
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        foreach ($customerRedirectAfterLoginPlugins as $customerRedirectAfterLoginPlugin) {
+            if (!$customerRedirectAfterLoginPlugin->isApplicable($customerTransfer)) {
+                continue;
+            }
+
+            return $customerRedirectAfterLoginPlugin->getRedirectUrl($customerTransfer);
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeLoginAction(): array
+    {
         $loginForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
@@ -33,11 +70,9 @@ class AuthController extends AbstractCustomerController
             ->createCustomerFormFactory()
             ->getRegisterForm();
 
-        $data = [
+        return [
             'loginForm' => $loginForm->createView(),
             'registerForm' => $registerForm->createView(),
         ];
-
-        return $this->view($data, [], '@CustomerPage/views/login/login.twig');
     }
 }

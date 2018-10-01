@@ -11,7 +11,7 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 
 class CmsProductGroupContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
-    const FUNCTION_NAME = 'product_group';
+    public const FUNCTION_NAME = 'product_group';
 
     /**
      * @return string
@@ -27,7 +27,7 @@ class CmsProductGroupContentWidgetConfigurationProvider implements CmsContentWid
     public function getAvailableTemplates()
     {
         return [
-            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@CmsContentWidgetProductConnector/views/featured-products-section/featured-products-section.twig',
+            CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER => '@CmsContentWidgetProductConnector/views/cms-product-group/cms-product-group.twig',
         ];
     }
 

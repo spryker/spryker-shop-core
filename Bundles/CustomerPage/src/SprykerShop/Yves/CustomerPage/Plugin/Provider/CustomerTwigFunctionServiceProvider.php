@@ -14,8 +14,6 @@ use Twig_Environment;
 use Twig_SimpleFunction;
 
 /**
- * Class CustomerTwigServiceProvider
- *
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -28,7 +26,7 @@ class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements Serv
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) {
+            $app->extend('twig', function (Twig_Environment $twig) {
                 return $this->registerCustomerTwigFunction($twig);
             })
         );

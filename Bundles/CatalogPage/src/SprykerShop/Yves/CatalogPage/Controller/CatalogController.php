@@ -19,10 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CatalogController extends AbstractController
 {
-    const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
+    public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
-    const URL_PARAM_VIEW_MODE = 'mode';
-    const URL_PARAM_REFERER_URL = 'referer-url';
+    public const URL_PARAM_VIEW_MODE = 'mode';
+    public const URL_PARAM_REFERER_URL = 'referer-url';
 
     /**
      * @param array $categoryNode
@@ -32,9 +32,31 @@ class CatalogController extends AbstractController
      */
     public function indexAction(array $categoryNode, Request $request)
     {
-        $searchString = $request->query->get('q', '');
         $idCategoryNode = $categoryNode['node_id'];
+
+        $viewData = $this->executeIndexAction($categoryNode, $idCategoryNode, $request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getCatalogPageWidgetPlugins(),
+            $this->getCategoryNodeTemplate($idCategoryNode)
+        );
+    }
+
+    /**
+     * @param array $categoryNode
+     * @param int $idCategoryNode
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeIndexAction(array $categoryNode, int $idCategoryNode, Request $request): array
+    {
+        $searchString = $request->query->get('q', '');
         $idCategory = $categoryNode['id_category'];
+        $isEmptyCategoryFilterValueVisible = $this->getFactory()
+            ->getModuleConfig()
+            ->isEmptyCategoryFilterValueVisible();
 
         $parameters = $request->query->all();
         $parameters[PageIndexMap::CATEGORY] = $idCategoryNode;
@@ -52,6 +74,7 @@ class CatalogController extends AbstractController
         $metaAttributes = [
             'idCategory' => $idCategory,
             'category' => $categoryNode,
+            'isEmptyCategoryFilterValueVisible' => $isEmptyCategoryFilterValueVisible,
             'pageTitle' => ($metaTitle ?: $categoryNode['name']),
             'pageDescription' => $metaDescription,
             'pageKeywords' => $metaKeywords,
@@ -61,14 +84,7 @@ class CatalogController extends AbstractController
                 ->getCatalogViewMode($request),
         ];
 
-        $searchResults = array_merge($searchResults, $metaAttributes);
-        $template = $this->getCategoryNodeTemplate($idCategoryNode);
-
-        return $this->view(
-            $searchResults,
-            $this->getFactory()->getCatalogPageWidgetPlugins(),
-            $template
-        );
+        return array_merge($searchResults, $metaAttributes);
     }
 
     /**
@@ -78,6 +94,22 @@ class CatalogController extends AbstractController
      */
     public function fulltextSearchAction(Request $request)
     {
+        $viewData = $this->executeFulltextSearchAction($request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getCatalogPageWidgetPlugins(),
+            '@CatalogPage/views/search/search.twig'
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeFulltextSearchAction(Request $request): array
+    {
         $searchString = $request->query->get('q');
 
         $searchResults = $this
@@ -85,17 +117,18 @@ class CatalogController extends AbstractController
             ->getCatalogClient()
             ->catalogSearch($searchString, $request->query->all());
 
+        $isEmptyCategoryFilterValueVisible = $this->getFactory()
+            ->getModuleConfig()
+            ->isEmptyCategoryFilterValueVisible();
+
         $searchResults['searchString'] = $searchString;
         $searchResults['idCategory'] = null;
+        $searchResults['isEmptyCategoryFilterValueVisible'] = $isEmptyCategoryFilterValueVisible;
         $searchResults['viewMode'] = $this->getFactory()
             ->getCatalogClient()
             ->getCatalogViewMode($request);
 
-        return $this->view(
-            $searchResults,
-            $this->getFactory()->getCatalogPageWidgetPlugins(),
-            '@CatalogPage/views/search/search.twig'
-        );
+        return $searchResults;
     }
 
     /**

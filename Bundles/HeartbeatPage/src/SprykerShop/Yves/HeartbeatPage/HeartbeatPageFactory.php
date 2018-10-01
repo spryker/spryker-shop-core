@@ -36,7 +36,7 @@ class HeartbeatPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\HeartbeatPage\Model\HealthIndicator\SearchHealthIndicator
      */
-    protected function createSearchHealthIndicator()
+    public function createSearchHealthIndicator()
     {
         return new SearchHealthIndicator($this->getSearchClient());
     }
@@ -44,7 +44,7 @@ class HeartbeatPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSearchClientInterface
      */
-    protected function getSearchClient(): HeartbeatPageToSearchClientInterface
+    public function getSearchClient(): HeartbeatPageToSearchClientInterface
     {
         return $this->getProvidedDependency(HeartbeatPageDependencyProvider::CLIENT_SEARCH);
     }
@@ -52,7 +52,7 @@ class HeartbeatPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\HeartbeatPage\Model\HealthIndicator\SessionHealthIndicator
      */
-    protected function createSessionHealthIndicator()
+    public function createSessionHealthIndicator()
     {
         return new SessionHealthIndicator($this->getSessionClient());
     }
@@ -60,7 +60,7 @@ class HeartbeatPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToSessionClientInterface
      */
-    protected function getSessionClient(): HeartbeatPageToSessionClientInterface
+    public function getSessionClient(): HeartbeatPageToSessionClientInterface
     {
         return $this->getProvidedDependency(HeartbeatPageDependencyProvider::CLIENT_SESSION);
     }
@@ -68,7 +68,7 @@ class HeartbeatPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\HeartbeatPage\Model\HealthIndicator\StorageHealthIndicator
      */
-    protected function createStorageHealthIndicator()
+    public function createStorageHealthIndicator()
     {
         return new StorageHealthIndicator($this->getStorageClient());
     }
@@ -76,7 +76,7 @@ class HeartbeatPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\HeartbeatPage\Dependency\Client\HeartbeatPageToStorageClientInterface
      */
-    protected function getStorageClient(): HeartbeatPageToStorageClientInterface
+    public function getStorageClient(): HeartbeatPageToStorageClientInterface
     {
         return $this->getProvidedDependency(HeartbeatPageDependencyProvider::CLIENT_STORAGE);
     }

@@ -33,6 +33,26 @@ class QuickOrderController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $response = $this->executeIndexAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view(
+            $response,
+            $this->getFactory()->getQuickOrderPageWidgetPlugins(),
+            '@QuickOrderPage/views/quick-order/quick-order.twig'
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(Request $request)
+    {
         $textOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
             ->getTextOrderForm()
@@ -51,18 +71,16 @@ class QuickOrderController extends AbstractController
             return $response;
         }
 
-        $data = [
+        return [
             'itemsForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
         ];
-
-        return $this->view($data, [], '@QuickOrderPage/views/quick-order/quick-order.twig');
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\JsonResponse
      */
     public function addRowsAction(Request $request)
     {
@@ -70,6 +88,22 @@ class QuickOrderController extends AbstractController
             return $this->jsonResponse();
         }
 
+        $viewData = $this->executeAddRowsAction($request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getQuickOrderPageWidgetPlugins(),
+            '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig'
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeAddRowsAction(Request $request): array
+    {
         $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
         $formDataItems = $formData['items'] ?? [];
 
@@ -89,15 +123,15 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormFactory()
             ->getQuickOrderForm($quickOrder);
 
-        return $this->view(['form' => $quickOrderForm->createView()], [], '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig');
+        return [
+            'form' => $quickOrderForm->createView(),
+        ];
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-     *
-     * @return mixed
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\JsonResponse
      */
     public function deleteRowAction(Request $request)
     {
@@ -105,6 +139,24 @@ class QuickOrderController extends AbstractController
             return $this->jsonResponse();
         }
 
+        $viewData = $this->executeDeleteRowAction($request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getQuickOrderPageWidgetPlugins(),
+            '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig'
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     *
+     * @return array
+     */
+    protected function executeDeleteRowAction(Request $request): array
+    {
         $rowIndex = $request->get(static::PARAM_ROW_INDEX);
         $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
         $formDataItems = $formData['items'] ?? [];
@@ -124,7 +176,9 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormFactory()
             ->getQuickOrderForm($quickOrder);
 
-        return $this->view(['form' => $quickOrderForm->createView()], [], '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig');
+        return [
+            'form' => $quickOrderForm->createView(),
+        ];
     }
 
     /**
@@ -151,7 +205,7 @@ class QuickOrderController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $quickOrderForm
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return null|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
      */
     protected function handleQuickOrderForm(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
     {

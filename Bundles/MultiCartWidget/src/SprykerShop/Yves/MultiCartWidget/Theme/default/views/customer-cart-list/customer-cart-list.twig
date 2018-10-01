@@ -15,14 +15,14 @@
             <span class="float-right">
                 <a class="button" href="{{url('multi-cart/create')}}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
             </span>
-        {% if data.carts is not empty and data.carts | length > 0 %}
-                {% include molecule('cart-table', 'MultiCartWidget') with {
-                    data: {
-                        carts: data.carts,
-                        widgets: data.widgets
-                    }
-                } only %}
-        {% endif %}
+            {% if data.carts is not empty and data.carts | length > 0 %}
+                    {% include molecule('cart-table', 'MultiCartWidget') with {
+                        data: {
+                            carts: data.carts,
+                            widgets: data.widgets
+                        }
+                    } only %}
+            {% endif %}
         </div>
     {% endif %}
 {% endblock %}

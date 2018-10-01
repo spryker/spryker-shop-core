@@ -66,28 +66,26 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implemen
     }
 
     /**
-     * Specification:
-     * - Returns the name of the widget as it's used in templates.
+     * {@inheritdoc}
      *
      * @api
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
 
     /**
-     * Specification:
-     * - Returns the the template file path to render the widget.
+     * {@inheritdoc}
      *
      * @api
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return '@ProductBundleWidget/view/multi-cart-widget/items-counter.twig';
+        return '@ProductBundleWidget/views/multi-cart-items-counter/multi-cart-items-counter.twig';
     }
 }
