@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/file-manager-widget",
+  "type": "library",
   "description": "FileManagerWidget module",
   "license": "proprietary",
   "require": {

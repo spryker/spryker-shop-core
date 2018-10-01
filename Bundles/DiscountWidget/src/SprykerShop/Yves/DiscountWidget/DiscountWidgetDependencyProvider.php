@@ -15,9 +15,9 @@ use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClien
 
 class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
-    const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
-    const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

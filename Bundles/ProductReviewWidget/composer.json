@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-review-widget",
+  "type": "library",
   "description": "ProductReviewWidget module",
   "license": "proprietary",
   "require": {
