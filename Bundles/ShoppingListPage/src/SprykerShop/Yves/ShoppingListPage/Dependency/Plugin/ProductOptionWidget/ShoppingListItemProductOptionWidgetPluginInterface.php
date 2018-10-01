@@ -15,6 +15,8 @@ interface ShoppingListItemProductOptionWidgetPluginInterface extends WidgetPlugi
     public const NAME = 'ShoppingListItemProductOptionWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return void
