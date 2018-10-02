@@ -36,6 +36,10 @@ class MultiCartMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Mult
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getName(): string
@@ -44,6 +48,10 @@ class MultiCartMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Mult
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getTemplate(): string

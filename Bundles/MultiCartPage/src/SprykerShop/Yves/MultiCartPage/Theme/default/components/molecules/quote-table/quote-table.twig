@@ -88,7 +88,7 @@
                                 {% endif %}
 
                                 {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-actions', 'SharedCartWidget') only %}
-                                {% elsewidget 'CartListPermissionGroupWidgetPlugin' args [quote, isQuoteDeletable] use view('multi-cart-permission-actions', 'SharedCartWidget') only %} {# @deprecated Use ProductBundleItemCounterWidget instead. #}
+                                {% elsewidget 'CartListPermissionGroupWidgetPlugin' args [quote, isQuoteDeletable] use view('multi-cart-permission-actions', 'SharedCartWidget') only %} {# @deprecated Use CartListPermissionGroupWidget instead. #}
                                 {% nowidget %}
                                     {% if isQuoteDeletable %}
                                         <li class="menu__item">
@@ -101,7 +101,7 @@
 
                                 {% if widgetExists('CartToShoppingListWidgetPlugin') %}
                                     <li class="menu__item">
-                                        {{ widget('CartToShoppingListWidgetPlugin', quote) }}
+                                        {{ widget('CartToShoppingListWidgetPlugin', quote) }} {# @deprecated Use molecule('cart-to-shopping-list', 'ShoppingListWidget') instead. #}
                                     </li>
                                 {% else %}
                                     {% include molecule('cart-to-shopping-list', 'ShoppingListWidget') ignore missing with {

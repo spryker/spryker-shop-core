@@ -28,11 +28,6 @@ class CustomerNavigationWidget extends AbstractWidget
     }
 
     /**
-     * Specification:
-     * - Returns the name of the widget as it's used in templates.
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -41,11 +36,6 @@ class CustomerNavigationWidget extends AbstractWidget
     }
 
     /**
-     * Specification:
-     * - Returns the the template file path to render the widget.
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

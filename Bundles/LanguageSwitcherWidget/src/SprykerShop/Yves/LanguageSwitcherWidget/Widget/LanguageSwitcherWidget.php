@@ -20,10 +20,9 @@ class LanguageSwitcherWidget extends AbstractWidget
      * @param string $queryString
      * @param string $requestUri
      */
-    public function __construct(string $pathInfo, $queryString, string $requestUri)
+    public function __construct(string $pathInfo, string $queryString, string $requestUri)
     {
-        $this
-            ->addParameter('languages', $this->getLanguages($pathInfo, $queryString, $requestUri))
+        $this->addParameter('languages', $this->getLanguages($pathInfo, $queryString, $requestUri))
             ->addParameter('currentLanguage', $this->getCurrentLanguage());
     }
 
@@ -50,7 +49,7 @@ class LanguageSwitcherWidget extends AbstractWidget
      *
      * @return string[]
      */
-    protected function getLanguages(string $pathInfo, $queryString, string $requestUri): array
+    protected function getLanguages(string $pathInfo, string $queryString, string $requestUri): array
     {
         $currentUrlStorage = $this->getFactory()
             ->getUrlStorageClient()
@@ -82,7 +81,7 @@ class LanguageSwitcherWidget extends AbstractWidget
     protected function attachLocaleUrlsFromStorageToLanguages(
         array $locales,
         array $localeUrls,
-        $queryString
+        string $queryString
     ): array {
         $languages = [];
         foreach ($locales as $locale) {
@@ -123,7 +122,7 @@ class LanguageSwitcherWidget extends AbstractWidget
      *
      * @return string
      */
-    protected function replaceCurrentUrlLanguage($currentUrl, array $languages, $replacementLanguage)
+    protected function replaceCurrentUrlLanguage(string $currentUrl, array $languages, string $replacementLanguage): string
     {
         if (preg_match('/\/(' . implode('|', $languages) . ')/', $currentUrl)) {
             return preg_replace('/\/(' . implode('|', $languages) . ')/', '/' . $replacementLanguage, $currentUrl, 1);
@@ -137,7 +136,7 @@ class LanguageSwitcherWidget extends AbstractWidget
      *
      * @return string
      */
-    protected function getLanguageFromLocale($locale): string
+    protected function getLanguageFromLocale(string $locale): string
     {
         return substr($locale, 0, strpos($locale, '_'));
     }

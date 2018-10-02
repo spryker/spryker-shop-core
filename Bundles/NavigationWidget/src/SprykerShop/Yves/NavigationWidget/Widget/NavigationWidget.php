@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\NavigationWidget\Widget;
 
+use Generated\Shared\Transfer\NavigationStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -50,7 +51,7 @@ class NavigationWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\NavigationStorageTransfer|null
      */
-    protected function getNavigation($navigationKey)
+    protected function getNavigation(string $navigationKey): ?NavigationStorageTransfer
     {
         $key = $navigationKey . '-' . $this->getLocale();
 

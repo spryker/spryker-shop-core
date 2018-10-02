@@ -21,8 +21,7 @@ class ProductPriceVolumeWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
+        $this->addParameter('product', $productViewTransfer)
             ->addParameter(
                 'volumeProductPrices',
                 $this->findPriceProductVolume($productViewTransfer)
@@ -30,10 +29,6 @@ class ProductPriceVolumeWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -42,10 +37,6 @@ class ProductPriceVolumeWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

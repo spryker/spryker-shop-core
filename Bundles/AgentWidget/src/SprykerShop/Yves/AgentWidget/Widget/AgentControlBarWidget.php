@@ -18,17 +18,12 @@ class AgentControlBarWidget extends AbstractWidget
     {
         $isLoggedIn = $this->getFactory()->getAgentClient()->isLoggedIn();
 
-        $this
-            ->addParameter('isLoggedIn', $isLoggedIn)
+        $this->addParameter('isLoggedIn', $isLoggedIn)
             ->addParameter('agent', $isLoggedIn ? $this->getFactory()->getAgentClient()->getAgent() : null)
             ->addParameter('customer', $this->getFactory()->getCustomerClient()->getCustomer());
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -37,10 +32,6 @@ class AgentControlBarWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

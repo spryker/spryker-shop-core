@@ -48,7 +48,7 @@ class MultiCartListWidget extends AbstractWidget
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer[]
      */
-    protected function getInactiveQuoteList()
+    protected function getInactiveQuoteList(): array
     {
         $quoteCollectionTransfer = $this->getFactory()
             ->getMultiCartClient()

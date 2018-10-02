@@ -22,17 +22,12 @@ class ShoppingListProductAlternativeWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer, ShoppingListTransfer $shoppingListTransfer)
     {
-        $this
-            ->addParameter('item', $productViewTransfer)
+        $this->addParameter('item', $productViewTransfer)
             ->addParameter('shoppingList', $shoppingListTransfer)
             ->addParameter('products', $this->findAlternativesProducts($productViewTransfer));
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -41,10 +36,6 @@ class ShoppingListProductAlternativeWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

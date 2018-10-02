@@ -29,6 +29,8 @@ class DiscountSummaryWidgetPlugin extends AbstractWidgetPlugin implements Discou
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public static function getName(): string
@@ -37,6 +39,8 @@ class DiscountSummaryWidgetPlugin extends AbstractWidgetPlugin implements Discou
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public static function getTemplate(): string

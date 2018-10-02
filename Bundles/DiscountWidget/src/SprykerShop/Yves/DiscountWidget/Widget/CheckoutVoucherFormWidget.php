@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\DiscountWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use Symfony\Component\Form\FormView;
 
 /**
  * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
@@ -20,8 +21,7 @@ class CheckoutVoucherFormWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $this
-            ->addParameter('voucherForm', $this->getVoucherForm())
+        $this->addParameter('voucherForm', $this->getVoucherForm())
             ->addParameter('quoteTransfer', $quoteTransfer);
     }
 
@@ -44,7 +44,7 @@ class CheckoutVoucherFormWidget extends AbstractWidget
     /**
      * @return \Symfony\Component\Form\FormView
      */
-    protected function getVoucherForm()
+    protected function getVoucherForm(): FormView
     {
         return $this->getFactory()->getCheckoutVoucherForm()->createView();
     }

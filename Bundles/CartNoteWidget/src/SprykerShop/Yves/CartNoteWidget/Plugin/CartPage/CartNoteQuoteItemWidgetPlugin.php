@@ -40,7 +40,7 @@ class CartNoteQuoteItemWidgetPlugin extends AbstractWidgetPlugin implements Cart
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -52,7 +52,7 @@ class CartNoteQuoteItemWidgetPlugin extends AbstractWidgetPlugin implements Cart
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return CartItemNoteFormWidget::getTemplate();
     }

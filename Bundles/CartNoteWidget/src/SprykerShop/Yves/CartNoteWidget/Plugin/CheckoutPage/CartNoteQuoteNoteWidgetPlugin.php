@@ -27,6 +27,10 @@ class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getName(): string
@@ -35,6 +39,10 @@ class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getTemplate(): string

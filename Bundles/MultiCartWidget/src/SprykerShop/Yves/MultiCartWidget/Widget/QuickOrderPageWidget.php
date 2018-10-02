@@ -19,8 +19,7 @@ class QuickOrderPageWidget extends AbstractWidget
 
     public function __construct()
     {
-        $this
-            ->addParameter('carts', $this->getQuoteList())
+        $this->addParameter('carts', $this->getQuoteList())
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
     }
 

@@ -38,7 +38,7 @@ class CartNoteQuoteWidgetPlugin extends AbstractWidgetPlugin implements CartNote
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -50,7 +50,7 @@ class CartNoteQuoteWidgetPlugin extends AbstractWidgetPlugin implements CartNote
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return CartNoteFormWidget::getTemplate();
     }

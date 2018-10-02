@@ -88,7 +88,7 @@
 
                     {% if canEditCart and data.cart.idQuote is not empty %}
                         {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
-                        {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use UpSellingProductsWidget instead. #}
+                        {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
                         {% endwidget %}
                         <hr />
                     {% endif %}

@@ -40,7 +40,7 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -53,7 +53,7 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return ProductBundleItemsMultiCartItemsListWidget::getTemplate();
     }

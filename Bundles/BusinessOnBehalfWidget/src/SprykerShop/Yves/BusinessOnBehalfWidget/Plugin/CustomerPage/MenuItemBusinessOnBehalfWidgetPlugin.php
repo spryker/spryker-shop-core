@@ -36,7 +36,7 @@ class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implemen
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -49,7 +49,7 @@ class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implemen
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return '@BusinessOnBehalfWidget/views/customer-page/change-company-user.twig';
     }

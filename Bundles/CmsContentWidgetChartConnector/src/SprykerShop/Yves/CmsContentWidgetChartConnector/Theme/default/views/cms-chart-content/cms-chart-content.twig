@@ -7,7 +7,7 @@
 {% block body %}
     {% if data.chartPluginName is not empty %}
         {% if widgetExists('ChartWidgetPlugin') %}
-            {{ widget('ChartWidgetPlugin', data.chartPluginName, data.dataIdentifier) }} {# @deprecated Use chart() instead. #}
+            {{ widget('ChartWidgetPlugin', data.chartPluginName, data.dataIdentifier) }} {# @deprecated Use "chart()" function instead. #}
         {% else %}
             {{ chart(data.chartPluginName, data.dataIdentifier) }}
         {% endif %}

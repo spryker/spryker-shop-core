@@ -16,8 +16,7 @@ class PriceModeSwitcherWidget extends AbstractWidget
 {
     public function __construct()
     {
-        $this
-            ->addParameter('priceModes', $this->getFactory()->getPriceClient()->getPriceModes())
+        $this->addParameter('priceModes', $this->getFactory()->getPriceClient()->getPriceModes())
             ->addParameter('currentPriceMode', $this->getFactory()->getPriceClient()->getCurrentPriceMode());
     }
 

@@ -42,7 +42,7 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -54,7 +54,7 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return MiniCartWidget::getTemplate();
     }

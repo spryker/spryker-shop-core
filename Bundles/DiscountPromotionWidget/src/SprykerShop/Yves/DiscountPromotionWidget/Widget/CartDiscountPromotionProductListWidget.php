@@ -88,7 +88,7 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
      *
      * @return array
      */
-    protected function getSelectedAttributes(Request $request, $abstractSku)
+    protected function getSelectedAttributes(Request $request, $abstractSku): array
     {
         $selectedAttributes = $request->query->get(static::PARAM_VARIANT_ATTRIBUTES, []);
 
@@ -100,7 +100,7 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
      *
      * @return string
      */
-    protected function createPromotionProductBucketIdentifier(PromotionItemTransfer $promotionItemTransfer)
+    protected function createPromotionProductBucketIdentifier(PromotionItemTransfer $promotionItemTransfer): string
     {
         return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();
     }
