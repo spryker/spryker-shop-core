@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/redirect-page",
+  "type": "library",
   "description": "RedirectPage module",
   "license": "proprietary",
   "require": {

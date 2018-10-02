@@ -21,23 +21,23 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class AddressForm extends AbstractType
 {
-    const FIELD_SALUTATION = 'salutation';
-    const FIELD_FIRST_NAME = 'first_name';
-    const FIELD_LAST_NAME = 'last_name';
-    const FIELD_COMPANY = 'company';
-    const FIELD_ADDRESS_1 = 'address1';
-    const FIELD_ADDRESS_2 = 'address2';
-    const FIELD_ADDRESS_3 = 'address3';
-    const FIELD_ZIP_CODE = 'zip_code';
-    const FIELD_CITY = 'city';
-    const FIELD_ISO_2_CODE = 'iso2_code';
-    const FIELD_PHONE = 'phone';
-    const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
-    const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
-    const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
-    const FIELD_FK_CUSTOMER = 'fk_customer';
+    public const FIELD_SALUTATION = 'salutation';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_COMPANY = 'company';
+    public const FIELD_ADDRESS_1 = 'address1';
+    public const FIELD_ADDRESS_2 = 'address2';
+    public const FIELD_ADDRESS_3 = 'address3';
+    public const FIELD_ZIP_CODE = 'zip_code';
+    public const FIELD_CITY = 'city';
+    public const FIELD_ISO_2_CODE = 'iso2_code';
+    public const FIELD_PHONE = 'phone';
+    public const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
+    public const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
+    public const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
+    public const FIELD_FK_CUSTOMER = 'fk_customer';
 
-    const OPTION_COUNTRY_CHOICES = 'country_choices';
+    public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
     /**
      * @return string
@@ -234,7 +234,6 @@ class AddressForm extends AbstractType
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
-                $this->createZipCodeConstraint($options),
             ],
         ]);
 
@@ -379,22 +378,6 @@ class AddressForm extends AbstractType
             'min' => 3,
             'groups' => $validationGroup,
             'minMessage' => 'This field must be at least {{ limit }} characters long.',
-        ]);
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return \Symfony\Component\Validator\Constraints\Regex
-     */
-    protected function createZipCodeConstraint(array $options)
-    {
-        $validationGroup = $this->getValidationGroup($options);
-
-        return new Regex([
-            'pattern' => '/^\d{5}$/',
-            'message' => 'This field should contain exactly 5 digits.',
-            'groups' => $validationGroup,
         ]);
     }
 

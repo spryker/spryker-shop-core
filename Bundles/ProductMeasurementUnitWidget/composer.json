@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-measurement-unit-widget",
+  "type": "library",
   "description": "ProductMeasurementUnitWidget module",
   "license": "proprietary",
   "require": {

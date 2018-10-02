@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface SimilarProductsWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'SimilarProductsWidgetPlugin';
+    public const NAME = 'SimilarProductsWidgetPlugin';
 
     /**
      * @api
