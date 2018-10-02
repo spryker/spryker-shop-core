@@ -14,10 +14,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class QuoteItemCartNoteForm extends AbstractType
 {
-    const FORM_NAME = 'quoteItemCartNote';
-    const FIELD_CART_NOTE = 'cartNote';
-    const FIELD_SKU = 'sku';
-    const FIELD_GROUP_KEY = 'groupKey';
+    public const FORM_NAME = 'quoteItemCartNote';
+    public const FIELD_CART_NOTE = 'cartNote';
+    public const FIELD_SKU = 'sku';
+    public const FIELD_GROUP_KEY = 'groupKey';
 
     /**
      * @return string

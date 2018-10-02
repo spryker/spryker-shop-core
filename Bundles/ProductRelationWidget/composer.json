@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-relation-widget",
+  "type": "library",
   "description": "ProductRelationWidget module",
   "license": "proprietary",
   "require": {

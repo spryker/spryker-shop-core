@@ -24,7 +24,12 @@
         <div class="box">
             {% include molecule('role-table', 'CompanyPage') with {
                 data: {
-                    roles: data.roles
+                    roles: data.roles,
+                    actions: {
+                        view: false,
+                        update: true,
+                        delete: true
+                    }
                 }
             } only %}
             <hr/>

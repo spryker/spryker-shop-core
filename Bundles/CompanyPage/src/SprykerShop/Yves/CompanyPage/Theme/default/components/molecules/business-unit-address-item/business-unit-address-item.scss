@@ -1,0 +1,9 @@
+@mixin company-page-business-unit-address-item($name: '.business-unit-address-item') {
+    #{$name} {
+        &__actions {
+            @include helper-breakpoint(md) {
+                text-align: right;
+            }
+        }
+    }
+}

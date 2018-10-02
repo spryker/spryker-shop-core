@@ -1,0 +1,75 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'business-unit-address-list'
+} %}
+
+{% define data = {
+    field: required,
+    idCompanyBusinessUnit: required
+} %}
+
+{% block body %}
+    <div class="grid grid--justify grid--middle spacing-y spacing-y--big">
+        <h6 class="{{ config.name }}__title col">
+            {{ 'company.account.address.assigned' | trans }}
+        </h6>
+        {% if data.idCompanyBusinessUnit is not empty %}
+            <div class="col">
+                <a class="button" href="{{url('company/business-unit/address/create', { 'id': data.idCompanyBusinessUnit })}}">{{ 'company.account.add_new_address' | trans }}</a>
+            </div>
+        {% endif %}
+    </div>
+    <ul class="{{ config.name }}__list spacing-y">
+        {% set isEmpty = true %}
+
+        {% for key, item in data.field.children %}
+            {% if item.vars.checked %}
+                {% set isEmpty = false %}
+                <li class="{{ config.name }}__item">
+                    {% include molecule('business-unit-address-item', 'CompanyPage') with {
+                        class: 'spacing spacing--inner',
+                        data: {
+                            address: item,
+                            idCompanyBusinessUnit: data.idCompanyBusinessUnit
+                        }
+                    } only %}
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if isEmpty %}
+            <li class="{{ config.name }}__item {{ config.name }}__item--empty spacing spacing--inner text-center">
+                {{ 'company.account.address.assigned.empty' | trans }}
+            </li>
+        {% endif %}
+    </ul>
+
+    <h6 class="{{ config.name }}__title spacing-y spacing-y--big">
+        {{ 'company.account.address.unassigned' | trans }}
+    </h6>
+    <ul class="{{ config.name }}__list spacing-y">
+        {% set isEmpty = true %}
+
+        {% for key, item in data.field.children %}
+            {% if not item.vars.checked %}
+                {% set isEmpty = false %}
+                <li class="{{ config.name }}__item">
+                    {% include molecule('business-unit-address-item', 'CompanyPage') with {
+                        class: 'spacing spacing--inner',
+                        data: {
+                            address: item,
+                            idCompanyBusinessUnit: data.idCompanyBusinessUnit
+                        }
+                    } only %}
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if isEmpty %}
+            <li class="{{ config.name }}__item {{ config.name }}__item--empty spacing spacing--inner text-center">
+                {{ 'company.account.address.unassigned.empty' | trans }}
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}

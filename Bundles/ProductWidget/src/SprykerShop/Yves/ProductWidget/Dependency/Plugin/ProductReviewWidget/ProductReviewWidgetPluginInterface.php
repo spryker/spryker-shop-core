@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductReviewWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'ProductReviewWidgetPlugin';
+    public const NAME = 'ProductReviewWidgetPlugin';
 
     /**
      * @api
