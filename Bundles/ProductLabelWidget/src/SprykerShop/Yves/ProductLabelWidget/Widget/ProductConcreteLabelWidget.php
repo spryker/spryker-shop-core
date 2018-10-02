@@ -19,8 +19,7 @@ class ProductConcreteLabelWidget extends AbstractWidget
      */
     public function __construct(array $idProductLabels)
     {
-        $this
-            ->addParameter('idProductLabels', $idProductLabels)
+        $this->addParameter('idProductLabels', $idProductLabels)
             ->addParameter('productLabelDictionaryItemTransfers', $this->getProductLabelDictionaryItems($idProductLabels));
     }
 

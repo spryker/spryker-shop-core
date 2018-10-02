@@ -48,27 +48,4 @@ class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements Pr
     {
         return ProductRatingFilterWidget::getTemplate();
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeSearchResultTransfer
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return float|null
-     */
-    protected function getFilterValue(RangeSearchResultTransfer $rangeSearchResultTransfer, Request $request)
-    {
-        return $request->query->has($rangeSearchResultTransfer->getConfig()->getParameterName()) ?
-            $rangeSearchResultTransfer->getActiveMin() :
-            null;
-    }
-
-    /**
-     * @return int
-     */
-    protected function getMaximumRating()
-    {
-        return $this->getFactory()
-            ->getProductReviewClient()
-            ->getMaximumRating();
-    }
 }

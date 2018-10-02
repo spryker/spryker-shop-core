@@ -46,16 +46,4 @@ class ProductAbstractLabelWidgetPlugin extends AbstractWidgetPlugin implements P
     {
         return ProductAbstractLabelWidget::getTemplate();
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
-     */
-    protected function getProductLabelDictionaryItems(ProductViewTransfer $productViewTransfer)
-    {
-        return $this->getFactory()
-            ->getProductLabelStorageClient()
-            ->findLabelsByIdProductAbstract($productViewTransfer->getIdProductAbstract(), $this->getLocale());
-    }
 }

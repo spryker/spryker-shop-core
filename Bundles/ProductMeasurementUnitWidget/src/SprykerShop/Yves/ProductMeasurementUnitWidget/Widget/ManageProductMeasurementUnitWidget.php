@@ -54,8 +54,7 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
         $minQuantityInBaseUnits = $this->getMinQuantityInBaseUnits($productQuantityStorageTransfer);
         $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($minQuantityInBaseUnits, $salesUnits);
 
-        $this
-            ->addParameter('product', $productViewTransfer)
+        $this->addParameter('product', $productViewTransfer)
             ->addParameter('quantityOptions', $quantityOptions)
             ->addParameter('minQuantityInBaseUnits', $minQuantityInBaseUnits)
             ->addParameter('minQuantityInSalesUnits', $minQuantityInSalesUnits)
@@ -91,10 +90,6 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -103,10 +98,6 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

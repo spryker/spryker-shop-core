@@ -29,21 +29,17 @@ class ShoppingListNavigationMenuWidgetPlugin extends AbstractWidgetPlugin implem
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
+     * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return ShoppingListNavigationMenuWidget::getTemplate();
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
+     * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return 'ShoppingListNavigationMenuWidgetPlugin';
     }

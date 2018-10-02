@@ -20,8 +20,7 @@ class SharedCartPermissionGroupWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $this
-            ->addParameter('cart', $quoteTransfer)
+        $this->addParameter('cart', $quoteTransfer)
             ->addParameter('accessType', $this->getAccessType($quoteTransfer));
     }
 
@@ -38,10 +37,6 @@ class SharedCartPermissionGroupWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -50,10 +45,6 @@ class SharedCartPermissionGroupWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

@@ -42,51 +42,38 @@
 <br/><br/>
 
 <table class="shopping-list-items">
-    <thead>
-    <tr>
-        {# TODO: Discuss with Tamash and update after #}
-        {% if data.shoppingListItems|length > 0 %}
-            {% widget 'ProductBarcodeWidget' args [data.shoppingListItems|first, data.barcodeGeneratorPlugin] with {
-                barcodeLabel: data.labels.barcode
-            } only %}
+    <tbody>
+    {% set productBarcodeWidgetExists = false %}
+    {% for item in data.shoppingListItems %}
+        {% set productBarcodeWidget = findWidget('ProductBarcodeWidget', [item, data.barcodeGeneratorPlugin])
+            | default(findWidget('ProductBarcodeWidgetPlugin', [item, data.barcodeGeneratorPlugin])) %} {# @deprecated Use ProductBarcodeWidget instead. #}
+        {% set productBarcodeWidgetExists = productBarcodeWidget is not null %}
+        <tr>
+            {% widget productBarcodeWidget only %}
                 {% block body %}
-                    <th>{{ barcodeLabel }}</th>
-                {% endblock %}
-            {% elsewidget 'ProductBarcodeWidgetPlugin' args [data.shoppingListItems|first, data.barcodeGeneratorPlugin] with {
-                barcodeLabel: data.labels.barcode
-            } only %} {# @deprecated Use ProductBarcodeWidget instead. #}
-                {% block body %}
-                    <th>{{ barcodeLabel }}</th>
+                    <td>{{ parent() }}</td>
                 {% endblock %}
             {% endwidget %}
+            <td>{{ item.sku }}</td>
+            <td>{{ item.name }}</td>
+            <td>
+                {% if item.prices.DEFAULT is defined %}
+                    {{ item.prices.DEFAULT | money }}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <thead>
+    <tr>
+        {% if productBarcodeWidgetExists %}
+            <th>{{ data.labels.barcode }}</th>
         {% endif %}
         <th>{{ data.labels.productSku }}</th>
         <th>{{ data.labels.productName }}</th>
         <th>{{ data.labels.defaultPrice }}</th>
     </tr>
     </thead>
-    <tbody>
-    {% for item in data.shoppingListItems %}
-    <tr>
-        {% widget 'ProductBarcodeWidget' args [item, data.barcodeGeneratorPlugin] only %}
-            {% block body %}
-                <td>{{ parent() }}</td>
-            {% endblock %}
-        {% elsewidget 'ProductBarcodeWidgetPlugin' args [item, data.barcodeGeneratorPlugin] only %} {# @deprecated Use ProductBarcodeWidget instead. #}
-            {% block body %}
-                <td>{{ parent() }}</td>
-            {% endblock %}
-        {% endwidget %}
-        <td>{{ item.sku }}</td>
-        <td>{{ item.name }}</td>
-        <td>
-            {% if item.prices.DEFAULT is defined %}
-                {{ item.prices.DEFAULT | money }}
-            {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
-    </tbody>
 </table>
 
 </body>

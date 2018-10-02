@@ -20,6 +20,10 @@ use SprykerShop\Yves\SharedCartWidget\Widget\CartListPermissionGroupWidget;
 class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implements CartListPermissionGroupWidgetPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param bool $isQuoteDeletable
      *
@@ -33,6 +37,10 @@ class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implement
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getName(): string
@@ -41,6 +49,10 @@ class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implement
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getTemplate(): string

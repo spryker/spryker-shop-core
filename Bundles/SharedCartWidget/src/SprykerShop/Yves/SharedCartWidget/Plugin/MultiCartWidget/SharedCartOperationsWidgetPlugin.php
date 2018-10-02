@@ -35,68 +35,6 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
         $widget = new SharedCartOperationsWidget($quoteTransfer);
 
         $this->parameters = $widget->getParameters();
-
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        $this
-            ->addParameter('cart', $quoteTransfer)
-            ->addParameter('actions', $this->getCartActions($quoteTransfer))
-            ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer, $customerTransfer))
-            ->addParameter('isSharedCartAllowed', $this->isSharedCartAllowed($customerTransfer));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function getCartActions(QuoteTransfer $quoteTransfer): array
-    {
-        $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
-        $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote()) || $writeAllowed;
-
-        return [
-            'view' => $viewAllowed,
-            'update' => $writeAllowed,
-            'set_default' => $viewAllowed && !$quoteTransfer->getIsDefault(),
-            'duplicate' => $writeAllowed,
-            'clear' => $writeAllowed,
-            'delete' => $writeAllowed && $this->isDeleteCartAllowed($quoteTransfer),
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
-    {
-        return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isSharedCartAllowed(CustomerTransfer $customerTransfer): bool
-    {
-        if ($customerTransfer->getCompanyUserTransfer()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
-     *
-     * @return bool
-     */
-    protected function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer): bool
-    {
-        return $this->getFactory()->getSharedCartClient()->isQuoteDeletable($currentQuoteTransfer);
     }
 
     /**
@@ -107,7 +45,7 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -120,7 +58,7 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return SharedCartOperationsWidget::getTemplate();
     }

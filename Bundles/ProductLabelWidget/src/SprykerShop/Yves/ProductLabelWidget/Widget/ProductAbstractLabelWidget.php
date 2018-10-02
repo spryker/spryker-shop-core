@@ -19,11 +19,10 @@ class ProductAbstractLabelWidget extends AbstractWidget
      */
     public function __construct(int $idProductAbstract)
     {
-        $this
-            ->addParameter(
-                'productLabelDictionaryItemTransfers',
-                $this->getProductLabelDictionaryItems($idProductAbstract)
-            );
+        $this->addParameter(
+            'productLabelDictionaryItemTransfers',
+            $this->getProductLabelDictionaryItems($idProductAbstract)
+        );
     }
 
     /**

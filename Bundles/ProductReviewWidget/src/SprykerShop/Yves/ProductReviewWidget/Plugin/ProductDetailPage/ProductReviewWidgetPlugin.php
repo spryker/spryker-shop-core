@@ -45,26 +45,4 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
     {
         return ProductDetailPageReviewWidget::getTemplate();
     }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer
-     */
-    protected function findProductAbstractReview($idProductAbstract)
-    {
-        return $this->getFactory()
-            ->getProductReviewStorageClient()
-            ->findProductAbstractReview($idProductAbstract);
-    }
-
-    /**
-     * @return int
-     */
-    protected function getMaximumRating()
-    {
-        return $this->getFactory()
-            ->getProductReviewClient()
-            ->getMaximumRating();
-    }
 }

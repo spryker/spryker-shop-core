@@ -41,17 +41,27 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
     }
 
     /**
+     * Specification:
+     * - Returns the name of the widget as it's used in templates.
+     *
+     * @api
+     *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
 
     /**
+     * Specification:
+     * - Returns the the template file path to render the widget.
+     *
+     * @api
+     *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return SharedCartDetailsWidget::getTemplate();
     }

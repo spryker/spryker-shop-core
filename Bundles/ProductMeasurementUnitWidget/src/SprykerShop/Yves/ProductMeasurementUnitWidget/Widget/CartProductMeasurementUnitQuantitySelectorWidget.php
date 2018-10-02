@@ -70,10 +70,6 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -82,10 +78,6 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

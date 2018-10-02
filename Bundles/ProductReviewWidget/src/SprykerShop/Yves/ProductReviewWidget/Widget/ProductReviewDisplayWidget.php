@@ -19,8 +19,7 @@ class ProductReviewDisplayWidget extends AbstractWidget
      */
     public function __construct(float $rating)
     {
-        $this
-            ->addParameter('rating', $rating)
+        $this->addParameter('rating', $rating)
             ->addParameter('maximumRating', $this->getMaximumRating());
     }
 
@@ -43,7 +42,7 @@ class ProductReviewDisplayWidget extends AbstractWidget
     /**
      * @return int
      */
-    protected function getMaximumRating()
+    protected function getMaximumRating(): int
     {
         return $this->getFactory()
             ->getProductReviewClient()

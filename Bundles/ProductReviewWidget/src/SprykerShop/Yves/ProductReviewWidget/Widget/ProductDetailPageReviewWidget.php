@@ -20,8 +20,7 @@ class ProductDetailPageReviewWidget extends AbstractWidget
      */
     public function __construct(int $idProductAbstract)
     {
-        $this
-            ->addParameter('idProductAbstract', $idProductAbstract)
+        $this->addParameter('idProductAbstract', $idProductAbstract)
             ->addParameter('productReviewStorageTransfer', $this->findProductAbstractReview($idProductAbstract))
             ->addParameter('maximumRating', $this->getMaximumRating());
     }

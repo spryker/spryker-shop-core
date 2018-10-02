@@ -45,16 +45,4 @@ class ProductLabelWidgetPlugin extends AbstractWidgetPlugin implements ProductLa
     {
         return ProductConcreteLabelWidget::getTemplate();
     }
-
-    /**
-     * @param array $idProductLabels
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
-     */
-    protected function getProductLabelDictionaryItems(array $idProductLabels): array
-    {
-        return $this->getFactory()
-            ->getProductLabelStorageClient()
-            ->findLabels($idProductLabels, $this->getLocale());
-    }
 }

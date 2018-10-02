@@ -20,8 +20,7 @@ class SharedCartShareWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $this
-            ->addParameter('cart', $quoteTransfer)
+        $this->addParameter('cart', $quoteTransfer)
             ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer));
     }
 
@@ -37,11 +36,6 @@ class SharedCartShareWidget extends AbstractWidget
     }
 
     /**
-     * Specification:
-     * - Returns the name of the widget as it's used in templates.
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -50,11 +44,6 @@ class SharedCartShareWidget extends AbstractWidget
     }
 
     /**
-     * Specification:
-     * - Returns the the template file path to render the widget.
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

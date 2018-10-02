@@ -22,8 +22,7 @@ class ProductRatingFilterWidget extends AbstractWidget
      */
     public function __construct(RangeSearchResultTransfer $rangeSearchResultTransfer, Request $request)
     {
-        $this
-            ->addParameter('filter', $rangeSearchResultTransfer)
+        $this->addParameter('filter', $rangeSearchResultTransfer)
             ->addParameter('filterValue', $this->getFilterValue($rangeSearchResultTransfer, $request))
             ->addParameter('maximumRating', $this->getMaximumRating());
     }
@@ -50,7 +49,7 @@ class ProductRatingFilterWidget extends AbstractWidget
      *
      * @return float|null
      */
-    protected function getFilterValue(RangeSearchResultTransfer $rangeSearchResultTransfer, Request $request)
+    protected function getFilterValue(RangeSearchResultTransfer $rangeSearchResultTransfer, Request $request): ?float
     {
         return $request->query->has($rangeSearchResultTransfer->getConfig()->getParameterName()) ?
             $rangeSearchResultTransfer->getActiveMin() :
@@ -60,7 +59,7 @@ class ProductRatingFilterWidget extends AbstractWidget
     /**
      * @return int
      */
-    protected function getMaximumRating()
+    protected function getMaximumRating(): int
     {
         return $this->getFactory()
             ->getProductReviewClient()

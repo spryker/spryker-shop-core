@@ -95,10 +95,6 @@ class ProductPackagingUnitWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -107,10 +103,6 @@ class ProductPackagingUnitWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string
@@ -137,7 +129,7 @@ class ProductPackagingUnitWidget extends AbstractWidget
         ?array $leadSalesUnits,
         ?ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer,
         ?ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
-    ) {
+    ): string {
         $jsonData = [];
 
         $jsonData['isAddToCartDisabled'] = $isAddToCartDisabled;

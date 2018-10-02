@@ -27,8 +27,8 @@ class SharedCartOperationsWidget extends AbstractWidget
     public function __construct(QuoteTransfer $quoteTransfer)
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        $this
-            ->addParameter('cart', $quoteTransfer)
+
+        $this->addParameter('cart', $quoteTransfer)
             ->addParameter('actions', $this->getCartActions($quoteTransfer, $customerTransfer))
             ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer, $customerTransfer))
             ->addParameter('isSharedCartAllowed', $this->isSharedCartAllowed($customerTransfer));
@@ -95,11 +95,6 @@ class SharedCartOperationsWidget extends AbstractWidget
     }
 
     /**
-     * Specification:
-     * - Returns the name of the widget as it's used in templates.
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -108,11 +103,6 @@ class SharedCartOperationsWidget extends AbstractWidget
     }
 
     /**
-     * Specification:
-     * - Returns the the template file path to render the widget.
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

@@ -26,7 +26,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -38,7 +38,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return ProductPackagingUnitWidget::getTemplate();
     }

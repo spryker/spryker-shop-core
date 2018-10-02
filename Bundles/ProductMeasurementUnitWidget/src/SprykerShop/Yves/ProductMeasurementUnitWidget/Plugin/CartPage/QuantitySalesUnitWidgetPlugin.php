@@ -32,41 +32,13 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    protected function isBaseUnit(ItemTransfer $itemTransfer): bool
-    {
-        $quantitySalesUnitTransfer = $itemTransfer->getQuantitySalesUnit();
-
-        if ($quantitySalesUnitTransfer !== null) {
-            $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
-                ->getProductMeasurementUnitStorageClient()
-                ->findProductConcreteMeasurementUnitStorage($itemTransfer->getId());
-
-            if ($productConcreteMeasurementUnitStorageTransfer !== null) {
-                $baseUnitTransfer = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit();
-
-                if ($baseUnitTransfer->getIdProductMeasurementUnit() === $quantitySalesUnitTransfer->getProductMeasurementUnit()->getIdProductMeasurementUnit()) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * {@inheritdoc}
      *
      * @api
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -78,7 +50,7 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
         return CartProductMeasurementUnitQuantitySelectorWidget::getTemplate();
     }

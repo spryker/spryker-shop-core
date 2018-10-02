@@ -20,7 +20,7 @@ class LanguageSwitcherWidget extends AbstractWidget
      * @param string $queryString
      * @param string $requestUri
      */
-    public function __construct(string $pathInfo, string $queryString, string $requestUri)
+    public function __construct(string $pathInfo, string $queryString = null, string $requestUri)
     {
         $this->addParameter('languages', $this->getLanguages($pathInfo, $queryString, $requestUri))
             ->addParameter('currentLanguage', $this->getCurrentLanguage());
@@ -49,7 +49,7 @@ class LanguageSwitcherWidget extends AbstractWidget
      *
      * @return string[]
      */
-    protected function getLanguages(string $pathInfo, string $queryString, string $requestUri): array
+    protected function getLanguages(string $pathInfo, string $queryString = null, string $requestUri): array
     {
         $currentUrlStorage = $this->getFactory()
             ->getUrlStorageClient()
