@@ -81,7 +81,7 @@ class LanguageSwitcherWidget extends AbstractWidget
     protected function attachLocaleUrlsFromStorageToLanguages(
         array $locales,
         array $localeUrls,
-        string $queryString
+        string $queryString = null
     ): array {
         $languages = [];
         foreach ($locales as $locale) {

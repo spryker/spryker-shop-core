@@ -46,7 +46,7 @@ class ProductOptionConfiguratorWidget extends AbstractWidget
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]
      */
-    protected function getProductOptionGroups(ProductViewTransfer $productViewTransfer): array
+    protected function getProductOptionGroups(ProductViewTransfer $productViewTransfer)
     {
         $productAbstractOptionStorageTransfer = $this->getStorageProductOptionGroupCollectionTransfer($productViewTransfer);
         if (!$productAbstractOptionStorageTransfer) {
