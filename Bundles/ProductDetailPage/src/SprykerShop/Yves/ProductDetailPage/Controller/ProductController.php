@@ -19,11 +19,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ProductController extends AbstractController
 {
-    const ATTRIBUTE_PRODUCT_DATA = 'productData';
+    public const ATTRIBUTE_PRODUCT_DATA = 'productData';
 
-    const PARAM_ATTRIBUTE = 'attribute';
+    public const PARAM_ATTRIBUTE = 'attribute';
 
-    const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
+    public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
     /**
      * @param array $productData

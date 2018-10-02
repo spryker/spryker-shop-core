@@ -13,7 +13,7 @@ use Twig_Node_Expression;
 
 class ShopUiDefineTwigNode extends Twig_Node
 {
-    const REQUIRED_VALUE = '___REQUIRED___';
+    public const REQUIRED_VALUE = '___REQUIRED___';
 
     /**
      * @param string $name

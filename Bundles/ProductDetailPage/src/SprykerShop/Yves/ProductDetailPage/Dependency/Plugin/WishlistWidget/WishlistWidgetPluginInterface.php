@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface WishlistWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'WishlistWidgetPlugin';
+    public const NAME = 'WishlistWidgetPlugin';
 
     /**
      * @api

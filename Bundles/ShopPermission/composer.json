@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/shop-permission",
+  "type": "library",
   "description": "ShopPermission module",
   "license": "proprietary",
   "require": {

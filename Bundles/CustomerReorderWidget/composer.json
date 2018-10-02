@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/customer-reorder-widget",
+  "type": "library",
   "description": "CustomerReorderWidget module",
   "license": "proprietary",
   "require": {

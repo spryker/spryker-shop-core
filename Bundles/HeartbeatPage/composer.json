@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/heartbeat-page",
+  "type": "library",
   "description": "HeartbeatPage module",
   "license": "proprietary",
   "require": {
