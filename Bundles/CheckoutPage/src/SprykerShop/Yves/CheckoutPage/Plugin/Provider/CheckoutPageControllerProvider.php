@@ -12,15 +12,15 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
 {
-    const CHECKOUT_CUSTOMER = 'checkout-customer';
-    const CHECKOUT_ADDRESS = 'checkout-address';
-    const CHECKOUT_SHIPMENT = 'checkout-shipment';
-    const CHECKOUT_PAYMENT = 'checkout-payment';
-    const CHECKOUT_SUMMARY = 'checkout-summary';
-    const CHECKOUT_PLACE_ORDER = 'checkout-place-order';
-    const CHECKOUT_ERROR = 'checkout-error';
-    const CHECKOUT_SUCCESS = 'checkout-success';
-    const CHECKOUT_INDEX = 'checkout-index';
+    public const CHECKOUT_CUSTOMER = 'checkout-customer';
+    public const CHECKOUT_ADDRESS = 'checkout-address';
+    public const CHECKOUT_SHIPMENT = 'checkout-shipment';
+    public const CHECKOUT_PAYMENT = 'checkout-payment';
+    public const CHECKOUT_SUMMARY = 'checkout-summary';
+    public const CHECKOUT_PLACE_ORDER = 'checkout-place-order';
+    public const CHECKOUT_ERROR = 'checkout-error';
+    public const CHECKOUT_SUCCESS = 'checkout-success';
+    public const CHECKOUT_INDEX = 'checkout-index';
 
     /**
      * @param \Silex\Application $app

@@ -12,18 +12,23 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandler;
 use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandlerInterface;
+use SprykerShop\Yves\ShoppingListPage\Business\CreateFromCartHandler;
+use SprykerShop\Yves\ShoppingListPage\Business\CreateFromCartHandlerInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShareShoppingListDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProvider;
+use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFromCartFormDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandler;
 use SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandlerInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\ShareShoppingListForm;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm;
+use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListFromCartForm;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListUpdateForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -120,6 +125,14 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListItemFormExpanderPluginInterface[]
+     */
+    public function getShoppingListItemFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS);
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig
      */
     public function getBundleConfig(): ShoppingListPageConfig
@@ -194,5 +207,40 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getShoppingListViewWidgetPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_VIEW_WIDGETS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFromCartFormDataProvider
+     */
+    public function createCartFromShoppingListFormDataProvider(): ShoppingListFromCartFormDataProvider
+    {
+        return new ShoppingListFromCartFormDataProvider($this->getShoppingListClient());
+    }
+
+    /**
+     * @param int|null $idQuote
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCartFromShoppingListForm(?int $idQuote): FormInterface
+    {
+        $formDataProvider = $this->createCartFromShoppingListFormDataProvider();
+        return $this->getFormFactory()->create(ShoppingListFromCartForm::class, $formDataProvider->getData($idQuote), $formDataProvider->getOptions());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientInterface
+     */
+    public function getMultiCartClient(): ShoppingListPageToMultiCartClientInterface
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::CLIENT_MULTI_CART);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Business\CreateFromCartHandlerInterface
+     */
+    public function createCreateFromCartHandler(): CreateFromCartHandlerInterface
+    {
+        return new CreateFromCartHandler($this->getShoppingListClient(), $this->getCustomerClient());
     }
 }

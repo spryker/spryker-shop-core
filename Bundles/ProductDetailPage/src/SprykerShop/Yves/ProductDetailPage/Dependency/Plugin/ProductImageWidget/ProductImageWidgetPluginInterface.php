@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductImageWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'ProductImageWidgetPlugin';
+    public const NAME = 'ProductImageWidgetPlugin';
 
     /**
      * @api

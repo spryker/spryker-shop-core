@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientBridge;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientBridge;
 
@@ -23,8 +24,10 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_COMPANY_BUSINESS_UNIT = 'CLIENT_COMPANY_BUSINESS_UNIT';
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS = 'PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS';
+    public const PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS = 'PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS';
     public const PLUGIN_SHOPPING_LIST_WIDGETS = 'PLUGIN_SHOPPING_LIST_WIDGETS';
     public const PLUGIN_SHOPPING_LIST_VIEW_WIDGETS = 'PLUGIN_SHOPPING_LIST_VIEW_WIDGETS';
+    public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -38,9 +41,11 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addProductStorageClient($container);
         $container = $this->addCompanyBusinessUnitClient($container);
         $container = $this->addCompanyUserClient($container);
+        $container = $this->addMultiCartClient($container);
         $container = $this->addShoppingListItemExpanderPlugins($container);
         $container = $this->addShoppingListWidgetPlugins($container);
         $container = $this->addShoppingListViewWidgetPlugins($container);
+        $container = $this->addShoppingListItemFormExpanderPlugins($container);
 
         return $container;
     }
@@ -183,6 +188,42 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
      * @return string[]
      */
     protected function getShoppingListViewWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMultiCartClient(Container $container): Container
+    {
+        $container[static::CLIENT_MULTI_CART] = function (Container $container) {
+            return new ShoppingListPageToMultiCartClientBridge($container->getLocator()->multiCart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShoppingListItemFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS] = function () {
+            return $this->getShoppingListItemFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListItemFormExpanderPluginInterface[]
+     */
+    protected function getShoppingListItemFormExpanderPlugins(): array
     {
         return [];
     }

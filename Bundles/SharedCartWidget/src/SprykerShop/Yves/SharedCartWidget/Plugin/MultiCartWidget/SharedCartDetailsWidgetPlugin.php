@@ -25,7 +25,7 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param array $actions
-     * @param \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[]|null $widgetList
+     * @param string[]|null $widgetList
      *
      * @return void
      */
@@ -65,15 +65,7 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      */
     protected function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer): bool
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        $ownedQuoteNumber = 0;
-        foreach ($this->getFactory()->getMultiCartClient()->getQuoteCollection()->getQuotes() as $quoteTransfer) {
-            if ($this->isQuoteOwner($quoteTransfer, $customerTransfer)) {
-                $ownedQuoteNumber++;
-            }
-        }
-
-        return $ownedQuoteNumber > 1 || (!$this->isQuoteOwner($currentQuoteTransfer, $customerTransfer) && $ownedQuoteNumber > 0);
+        return $this->getFactory()->getSharedCartClient()->isQuoteDeletable($currentQuoteTransfer);
     }
 
     /**

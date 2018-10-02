@@ -13,8 +13,8 @@ use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
 
 class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorInterface
 {
-    const MINIMUM_RATING = ProductReviewForm::MINIMUM_RATING;
-    const RATING_PRECISION = 1;
+    public const MINIMUM_RATING = ProductReviewForm::MINIMUM_RATING;
+    public const RATING_PRECISION = 1;
 
     /**
      * @var \SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface
