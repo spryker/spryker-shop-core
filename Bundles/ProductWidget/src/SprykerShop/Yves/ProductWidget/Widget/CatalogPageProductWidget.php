@@ -22,6 +22,9 @@ class CatalogPageProductWidget extends AbstractWidget
     {
         $this->addParameter('product', $product)
             ->addParameter('viewMode', $viewMode);
+
+        /** @deprecated Use global widgets instead. */
+        $this->addWidgets($this->getFactory()->getCatalogPageSubWidgets());
     }
 
     /**

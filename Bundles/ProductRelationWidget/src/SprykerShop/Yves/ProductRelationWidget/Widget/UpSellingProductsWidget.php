@@ -22,6 +22,9 @@ class UpSellingProductsWidget extends AbstractWidget
     {
         $this->addParameter('quote', $quoteTransfer)
             ->addParameter('productCollection', $this->findUpSellingProducts($quoteTransfer));
+
+        /** @deprecated Use global widgets instead. */
+        $this->addWidgets($this->getFactory()->getCartPageUpSellingProductsWidgetPlugins());
     }
 
     /**

@@ -32,6 +32,7 @@ class SharedCartDetailsWidget extends AbstractWidget
             ->addParameter('actions', $this->checkActionsPermission($quoteTransfer, $actions));
 
         if ($widgetList) {
+            /** @deprecated Use global widgets instead. */
             $this->addWidgets($widgetList);
         }
     }

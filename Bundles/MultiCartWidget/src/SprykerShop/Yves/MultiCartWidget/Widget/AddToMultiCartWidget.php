@@ -26,6 +26,7 @@ class AddToMultiCartWidget extends AbstractWidget
             ->addParameter('disabled', $disabled)
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
 
+        /** @deprecated Use global widgets instead. */
         $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 

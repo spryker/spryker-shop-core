@@ -21,6 +21,9 @@ class PdpProductRelationWidget extends AbstractWidget
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
         $this->addParameter('product', $productViewTransfer);
+
+        /** @deprecated Use global widgets instead. */
+        $this->addWidgets($this->getFactory()->getProductRelationWidgetSubWidgets());
     }
 
     /**

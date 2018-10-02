@@ -22,6 +22,9 @@ class CustomerNavigationWidget extends AbstractWidget
     {
         $this->addParameter('activePage', $activePage)
             ->addParameter('activeEntityId', $activeEntityId);
+
+        /** @deprecated Use global widgets instead. */
+        $this->addWidgets($this->getFactory()->getCustomerMenuItemWidgetPlugins());
     }
 
     /**

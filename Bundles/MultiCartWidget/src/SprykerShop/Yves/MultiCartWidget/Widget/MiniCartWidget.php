@@ -27,6 +27,9 @@ class MiniCartWidget extends AbstractWidget
             ->addParameter('activeCart', $this->getActiveCart())
             ->addParameter('cartList', $this->getInActiveQuoteList())
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
+
+        /** @deprecated Use global widgets instead. */
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 
     /**

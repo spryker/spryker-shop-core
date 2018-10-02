@@ -23,6 +23,9 @@ class ProductReplacementForListWidget extends AbstractWidget
     public function __construct(string $sku)
     {
         $this->addParameter('products', $this->findReplacementForProducts($sku));
+
+        /** @deprecated Use global widgets instead. */
+        $this->addWidgets($this->getFactory()->getProductDetailPageProductReplacementsForWidgetPlugins());
     }
 
     /**

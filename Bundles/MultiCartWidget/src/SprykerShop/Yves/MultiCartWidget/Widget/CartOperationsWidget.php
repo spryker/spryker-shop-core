@@ -23,6 +23,9 @@ class CartOperationsWidget extends AbstractWidget
         $this->addParameter('cart', $quoteTransfer)
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
             ->addParameter('isDeleteCartAllowed', $this->isDeleteCartAllowed());
+
+        /** @deprecated Use global widgets instead. */
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 
     /**
