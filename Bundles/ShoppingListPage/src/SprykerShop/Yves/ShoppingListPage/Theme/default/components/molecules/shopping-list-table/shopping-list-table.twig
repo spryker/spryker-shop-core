@@ -58,6 +58,7 @@
                                 </li>
                             {% endif %}
                         {% endfor %}
+                        {{ widget('ShoppingListItemNoteWidgetPlugin', item.shoppingListItem) }}
                     </ul>
                 </td>
                 <td nowrap="nowrap" class="{{ config.name }}__cell text-center">

@@ -47,7 +47,6 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addShoppingListWidgetPlugins($container);
         $container = $this->addShoppingListViewWidgetPlugins($container);
         $container = $this->addShoppingListEditWidgetPlugins($container);
-        $container = $this->addMultiCartClient($container);
         $container = $this->addShoppingListItemFormExpanderPlugins($container);
 
         return $container;
@@ -188,25 +187,17 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * Returns a list of widget plugin class names that implement
-     * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return string[]
+     * @return \Spryker\Yves\Kernel\Container
      */
-    protected function getShoppingListWidgetPlugins(): array
+    protected function addShoppingListItemFormExpanderPlugins(Container $container): Container
     {
-        return [];
-    }
+        $container[static::PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS] = function () {
+            return $this->getShoppingListItemFormExpanderPlugins();
+        };
 
-    /**
-     * Returns a list of widget plugin class names that implement
-     * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
-     *
-     * @return string[]
-     */
-    protected function getShoppingListViewWidgetPlugins(): array
-    {
-        return [];
+        return $container;
     }
 
     /**
@@ -229,23 +220,31 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return string[]
      */
-    protected function getShoppingListEditWidgetPlugins(): array
+    protected function getShoppingListWidgetPlugins(): array
     {
         return [];
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
+     * Returns a list of widget plugin class names that implement
+     * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @return \Spryker\Yves\Kernel\Container
+     * @return string[]
      */
-    protected function addShoppingListItemFormExpanderPlugins(Container $container): Container
+    protected function getShoppingListViewWidgetPlugins(): array
     {
-        $container[static::PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS] = function () {
-            return $this->getShoppingListItemFormExpanderPlugins();
-        };
+        return [];
+    }
 
-        return $container;
+    /**
+     * Returns a list of widget plugin class names that implement
+     * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     *
+     * @return string[]
+     */
+    protected function getShoppingListEditWidgetPlugins(): array
+    {
+        return [];
     }
 
     /**
