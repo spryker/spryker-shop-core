@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CartToShoppingListWidget\Form\DataProvider;
 
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CartToShoppingListWidget\Dependency\Client\CartToShoppingListWidgetToShoppingListClientInterface;
 use SprykerShop\Yves\CartToShoppingListWidget\Form\ShoppingListFromCartForm;
@@ -63,11 +64,20 @@ class ShoppingListFromCartFormDataProvider
         $shoppingListCollection[self::GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ADD_NEW] = '';
         foreach ($shoppingListTransferCollection as $shoppingListTransfer) {
             if ($this->can('WriteShoppingListPermissionPlugin', $shoppingListTransfer->getIdShoppingList())) {
-                $shoppingListKey = "{$shoppingListTransfer->getName()} ({$shoppingListTransfer->getOwner()})";
-                $shoppingListCollection[$shoppingListKey] = $shoppingListTransfer->getIdShoppingList();
+                $shoppingListCollection[$this->generateShoppingListName($shoppingListTransfer)] = $shoppingListTransfer->getIdShoppingList();
             }
         }
 
         return $shoppingListCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return string
+     */
+    protected function generateShoppingListName(ShoppingListTransfer $shoppingListTransfer): string
+    {
+        return "{$shoppingListTransfer->getName()} ({$shoppingListTransfer->getOwner()})";
     }
 }
