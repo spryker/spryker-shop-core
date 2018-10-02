@@ -8,8 +8,10 @@
 namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUserForm;
 
@@ -26,15 +28,23 @@ class CompanyUserFormDataProvider
     protected $companyBusinessUnitClient;
 
     /**
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface
+     */
+    protected $companyRoleClient;
+
+    /**
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface $companyUserClient
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface $companyRoleClient
      */
     public function __construct(
         CompanyPageToCompanyUserClientInterface $companyUserClient,
-        CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
+        CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient,
+        CompanyPageToCompanyRoleClientInterface $companyRoleClient
     ) {
         $this->companyUserClient = $companyUserClient;
         $this->companyBusinessUnitClient = $companyBusinessUnitClient;
+        $this->companyRoleClient = $companyRoleClient;
     }
 
     /**
@@ -49,17 +59,13 @@ class CompanyUserFormDataProvider
             return $this->getDefaultCompanyUserData($idCompany);
         }
 
-        if ($idCompanyUser) {
-            $companyUserTransfer = $this->loadCompanyUserTransfer($idCompanyUser);
-            $customerTransfer = $companyUserTransfer->getCustomer();
+        $companyUserTransfer = $this->loadCompanyUserTransfer($idCompanyUser);
+        $customerTransfer = $companyUserTransfer->getCustomer();
 
-            return array_merge(
-                $companyUserTransfer->toArray(),
-                $customerTransfer->toArray()
-            );
-        }
-
-        return [];
+        return array_merge(
+            $companyUserTransfer->toArray(),
+            $customerTransfer->toArray()
+        );
     }
 
     /**
@@ -71,6 +77,7 @@ class CompanyUserFormDataProvider
     {
         return [
             CompanyUserForm::OPTION_BUSINESS_UNIT_CHOICES => $this->getAvailableBusinessUnits($idCompany),
+            CompanyUserForm::OPTION_COMPANY_ROLE_CHOICES => $this->getAvailableCompanyRoleIds($idCompany),
         ];
     }
 
@@ -119,5 +126,25 @@ class CompanyUserFormDataProvider
         }
 
         return $businessUnits;
+    }
+
+    /**
+     * @param int $idCompany
+     *
+     * @return int[] Keys are role names
+     */
+    protected function getAvailableCompanyRoleIds(int $idCompany): array
+    {
+        $criteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
+            ->setIdCompany($idCompany);
+
+        $companyRoleCollection = $this->companyRoleClient->getCompanyRoleCollection($criteriaFilterTransfer);
+
+        $roles = [];
+        foreach ($companyRoleCollection->getRoles() as $role) {
+            $roles[$role->getName()] = $role->getIdCompanyRole();
+        }
+
+        return $roles;
     }
 }
