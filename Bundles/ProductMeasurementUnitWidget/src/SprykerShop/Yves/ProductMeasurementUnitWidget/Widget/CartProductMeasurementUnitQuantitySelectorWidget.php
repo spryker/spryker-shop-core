@@ -22,7 +22,7 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
     {
         $this->addParameter('itemTransfer', $itemTransfer)
             ->addParameter('isBaseUnit', $this->isBaseUnit($itemTransfer))
-            ->addParameter('hasSalesUnit', $itemTransfer->getQuantitySalesUnit()->getIdProductMeasurementSalesUnit() ?? false);
+            ->addParameter('hasSalesUnit', $this->hasSalesUnit($itemTransfer));
     }
 
     /**
@@ -51,6 +51,22 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function hasSalesUnit(ItemTransfer $itemTransfer): bool
+    {
+        $quantitySalesUnitTransfer = $itemTransfer->getQuantitySalesUnit();
+
+        if ($quantitySalesUnitTransfer === null) {
+            return false;
+        }
+
+        return $quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit();
     }
 
     /**
