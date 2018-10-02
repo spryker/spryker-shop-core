@@ -27,8 +27,6 @@
 
 {% block body %}
 
-    {% if data.isVisible %}
-
     {{ form_start(data.form, data.formOptions) }}
 
         <div class="grid grid--bottom">
@@ -57,7 +55,5 @@
 
         {{ form_errors(data.form) }}
     {{ form_end(data.form) }}
-
-    {% endif %}
 
 {% endblock %}
