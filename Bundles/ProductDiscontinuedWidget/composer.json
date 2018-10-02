@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-discontinued-widget",
+  "type": "library",
   "description": "ProductDiscontinuedWidget module",
   "license": "proprietary",
   "require": {

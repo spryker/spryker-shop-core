@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/catalog-page",
+  "type": "library",
   "description": "CatalogPage module",
   "license": "proprietary",
   "require": {
