@@ -49,6 +49,8 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * @uses TwigMoneyServiceProvider::moneyFilterFunction()
+     *
      * @return \Twig_SimpleFilter
      */
     protected function getMoneyFilter()
@@ -83,6 +85,8 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * @uses TwigMoneyServiceProvider::moneyRawFilterFunction()
+     *
      * @return \Twig_SimpleFilter
      */
     protected function getMoneyRawFilter()
@@ -108,6 +112,8 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * @uses TwigMoneyServiceProvider::moneySymbolFunction()
+     *
      * @return \Twig_SimpleFunction
      */
     protected function getMoneySymbol()
