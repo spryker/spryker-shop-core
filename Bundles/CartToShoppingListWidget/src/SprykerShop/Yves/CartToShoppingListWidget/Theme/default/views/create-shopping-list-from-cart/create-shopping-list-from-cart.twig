@@ -21,6 +21,10 @@
     isVisible: _widget.isVisible
 } %}
 
+{% block template %}
+    {% if data.isVisible %}{{ parent() }}{% endblock%}
+{% endblock %}
+
 {% block body %}
 
     {% if data.isVisible %}
