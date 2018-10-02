@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-packaging-unit-widget",
+  "type": "library",
   "description": "ProductPackagingUnitWidget module",
   "license": "proprietary",
   "require": {

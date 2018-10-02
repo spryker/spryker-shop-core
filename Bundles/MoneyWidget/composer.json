@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/money-widget",
+  "type": "library",
   "description": "MoneyWidget module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/wishlist-widget",
+  "type": "library",
   "description": "WishlistWidget module",
   "license": "proprietary",
   "require": {

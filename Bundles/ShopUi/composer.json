@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/shop-ui",
+  "type": "library",
   "description": "ShopUi module",
   "license": "proprietary",
   "require": {

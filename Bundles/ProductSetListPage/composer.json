@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-set-list-page",
+  "type": "library",
   "description": "ProductSetListPage module",
   "license": "proprietary",
   "require": {
