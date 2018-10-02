@@ -7,8 +7,9 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
-use Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer;
-use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
+use Generated\Shared\Transfer\CurrentProductConcretePriceTransfer;
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -211,28 +212,28 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quickOrderProductAdditionalDataTransfer = $this->executeProductAdditionalDataAction($request);
+        $productConcreteTransfer = $this->executeProductAdditionalDataAction($request);
 
-        return $this->jsonResponse($quickOrderProductAdditionalDataTransfer->toArray(true, true));
+        return $this->jsonResponse($productConcreteTransfer->toArray(true, true));
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function executeProductAdditionalDataAction(Request $request)
+    protected function executeProductAdditionalDataAction(Request $request): ProductConcreteTransfer
     {
-        $quickOrderProductAdditionalDataTransfer = new QuickOrderProductAdditionalDataTransfer();
-        $quickOrderProductAdditionalDataTransfer->setIdProductConcrete(
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setIdProductConcrete(
             $request->query->getInt(static::PARAM_ID_PRODUCT)
         );
 
-        $quickOrderProductAdditionalDataTransfer = $this->getFactory()
-            ->createQuickOrderProductAdditionalDataTransferExpander()
-            ->expandQuickOrderProductAdditionalDataTransferWithPlugins($quickOrderProductAdditionalDataTransfer);
+        $productConcreteTransfer = $this->getFactory()
+            ->getQuickOrderClient()
+            ->expandProductConcreteTransfer($productConcreteTransfer);
 
-        return $quickOrderProductAdditionalDataTransfer;
+        return $productConcreteTransfer;
     }
 
     /**
@@ -242,38 +243,47 @@ class QuickOrderController extends AbstractController
      */
     public function productPriceAction(Request $request)
     {
-        $quickOrderProductPriceTransfer = $this->executeProductPriceAction($request);
+        $currentProductConcretePriceTransfer = $this->executeProductPriceAction($request);
 
         if (!$request->query->getInt(static::PARAM_ID_PRODUCT)) {
             return $this->jsonResponse(
-                (new QuickOrderProductPriceTransfer())->toArray(true, true),
+                (new CurrentProductPriceTransfer())->toArray(true, true),
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
 
-        return $this->jsonResponse($quickOrderProductPriceTransfer->toArray(true, true));
+        return $this->jsonResponse($currentProductConcretePriceTransfer->toArray(true, true));
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     * @return \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer
      */
-    protected function executeProductPriceAction(Request $request)
+    protected function executeProductPriceAction(Request $request): CurrentProductConcretePriceTransfer
     {
-        $quickOrderProductPriceTransfer = new QuickOrderProductPriceTransfer();
-        $quickOrderProductPriceTransfer->setIdProductConcrete(
-            $request->query->getInt(static::PARAM_ID_PRODUCT)
-        );
-        $quickOrderProductPriceTransfer->setQuantity(
+        $currentProductConcretePriceTransfer = $this->createCurrentProductConcretePriceTransfer($request);
+
+        return $this->getFactory()
+            ->getQuickOrderClient()
+            ->getProductConcreteSumPrice($currentProductConcretePriceTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer
+     */
+    protected function createCurrentProductConcretePriceTransfer(Request $request): CurrentProductConcretePriceTransfer
+    {
+        $currentProductPriceTransfer = (new CurrentProductPriceTransfer())->setQuantity(
             $request->query->getInt(static::PARAM_QUANTITY, 0)
         );
+        $currentProductConcretePriceTransfer = (new CurrentProductConcretePriceTransfer())->setIdProductConcrete(
+            $request->query->getInt(static::PARAM_ID_PRODUCT)
+        );
 
-        $quickOrderProductPriceTransfer = $this->getFactory()
-            ->createQuickOrderProductPriceTransferExpander()
-            ->expandQuickOrderProductPriceTransferWithPlugins($quickOrderProductPriceTransfer);
-
-        return $quickOrderProductPriceTransfer;
+        return $currentProductConcretePriceTransfer->setCurrentProductPrice($currentProductPriceTransfer);
     }
 
     /**

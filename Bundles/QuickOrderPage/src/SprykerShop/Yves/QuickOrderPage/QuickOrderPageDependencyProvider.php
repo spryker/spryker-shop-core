@@ -11,8 +11,7 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityClientBridge;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientBridge;
 
@@ -20,13 +19,10 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    public const CLIENT_PRODUCT_QUANTITY = 'CLIENT_PRODUCT_QUANTITY';
-    public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
+    public const CLIENT_QUICK_ORDER = 'CLIENT_QUICK_ORDER';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
     public const PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER';
-    public const PLUGINS_QUICK_ORDER_PRODUCT_PRICE_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_PRODUCT_PRICE_TRANSFER_EXPANDER';
-    public const PLUGINS_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA_TRANSFER_EXPANDER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY = 'PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY';
     public const PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER = 'PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER';
@@ -41,14 +37,11 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addApplication($container);
         $container = $this->addCartClient($container);
         $container = $this->addQuoteClient($container);
-        $container = $this->addProductQuantityClient($container);
-        $container = $this->addProductQuantityStorageClient($container);
+        $container = $this->addQuickOrderClient($container);
         $container = $this->addQuickOrderPageWidgetPlugins($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addQuickOrderItemTransferExpanderPlugins($container);
         $container = $this->addQuickOrderFormHandlerStrategyPlugins($container);
-        $container = $this->addQuickOrderProductAdditionalDataTransferExpanderPlugins($container);
-        $container = $this->addQuickOrderProductPriceTransferExpanderPlugins($container);
         $container = $this->addQuickOrderFormAdditionalDataColumnProviderPlugins($container);
 
         return $container;
@@ -103,27 +96,11 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductQuantityClient(Container $container): Container
+    protected function addQuickOrderClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_QUANTITY] = function (Container $container) {
-            return new QuickOrderPageToProductQuantityClientBridge(
-                $container->getLocator()->productQuantity()->client()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addProductQuantityStorageClient(Container $container): Container
-    {
-        $container[static::CLIENT_PRODUCT_QUANTITY_STORAGE] = function (Container $container) {
-            return new QuickOrderPageToProductQuantityStorageClientBridge(
-                $container->getLocator()->productQuantityStorage()->client()
+        $container[static::CLIENT_QUICK_ORDER] = function (Container $container) {
+            return new QuickOrderPageToQuickOrderClientBridge(
+                $container->getLocator()->quickOrder()->client()
             );
         };
 
@@ -153,34 +130,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER] = function () {
             return $this->getQuickOrderItemTransferExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addQuickOrderProductAdditionalDataTransferExpanderPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA_TRANSFER_EXPANDER] = function () {
-            return $this->getQuickOrderProductAdditionalDataTransferExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addQuickOrderProductPriceTransferExpanderPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_QUICK_ORDER_PRODUCT_PRICE_TRANSFER_EXPANDER] = function () {
-            return $this->getQuickOrderProductPriceTransferExpanderPlugins();
         };
 
         return $container;
@@ -243,22 +192,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
      */
     protected function getQuickOrderItemTransferExpanderPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductAdditionalDataTransferExpanderPluginInterface[]
-     */
-    protected function getQuickOrderProductAdditionalDataTransferExpanderPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface[]
-     */
-    protected function getQuickOrderProductPriceTransferExpanderPlugins(): array
     {
         return [];
     }

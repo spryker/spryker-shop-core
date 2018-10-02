@@ -5,19 +5,19 @@ import OrderQuantity from '../order-quantity/order-quantity';
 
 interface PricesJSON {
     idProductConcrete: number,
-    total: number,
     quantity: number,
     currentProductPrice:{
         price: any,
-        prices: Array<any>
-    },
-    currency: {
-        idCurrency: any,
-        code: string,
-        name: string,
-        symbol: string,
-        isDefault: boolean,
-        fractionDigits: number
+        prices: Array<any>,
+        sumPrice: any,
+        currency: {
+            idCurrency: any,
+            code: string,
+            name: string,
+            symbol: string,
+            isDefault: boolean,
+            fractionDigits: number
+        }
     }
 }
 
@@ -68,7 +68,7 @@ export default class OrderItemPrice extends Component {
     }
 
     private generateDataToInject(data: PricesJSON): string {
-        return <string>`${data.currency.symbol} ${data.total / 100}`;
+        return <string>`${data.currentProductPrice.currency.symbol} ${data.currentProductPrice.sumPrice / 10 ** data.currentProductPrice.currency.fractionDigits}`;
     }
 
     private injectData(data: string): void {

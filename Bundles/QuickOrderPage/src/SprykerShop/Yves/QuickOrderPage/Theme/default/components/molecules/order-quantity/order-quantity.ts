@@ -32,16 +32,16 @@ export default class OrderQuantity extends Component {
     }
 
     private onLoad(): void {
-        const productQuantityStorage = this.currentFieldComponent.productData.productQuantityStorage;
+        const productQuantity = this.currentFieldComponent.productData.productQuantity;
 
         this.setInputFocus();
 
-        if(productQuantityStorage) {
+        if(productQuantity) {
             this.quantityInputAttributes([
-                String(productQuantityStorage.quantityMin),
-                String(productQuantityStorage.quantityMax),
-                String(productQuantityStorage.quantityInterval),
-                String(productQuantityStorage.quantityMin)
+                String(productQuantity.quantityMin),
+                String(productQuantity.quantityMax),
+                String(productQuantity.quantityInterval),
+                String(productQuantity.quantityMin)
             ]);
             return;
         }
