@@ -25,6 +25,8 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS = 'PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS';
     public const PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS = 'PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS';
+    public const PLUGIN_SHOPPING_LIST_DATA_PROVIDER_EXPANDERS = 'PLUGIN_SHOPPING_LIST_DATA_PROVIDER_EXPANDERS';
+    public const PLUGIN_SHOPPING_LIST_OVERVIEW_UPDATE_PAGE_WIDGETS = 'PLUGIN_SHOPPING_LIST_OVERVIEW_UPDATE_PAGE_WIDGETS';
     public const PLUGIN_SHOPPING_LIST_WIDGETS = 'PLUGIN_SHOPPING_LIST_WIDGETS';
     public const PLUGIN_SHOPPING_LIST_VIEW_WIDGETS = 'PLUGIN_SHOPPING_LIST_VIEW_WIDGETS';
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
@@ -46,6 +48,9 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addShoppingListWidgetPlugins($container);
         $container = $this->addShoppingListViewWidgetPlugins($container);
         $container = $this->addShoppingListItemFormExpanderPlugins($container);
+        $container = $this->addMultiCartClient($container);
+        $container = $this->addShoppingListDataProviderExpanderPlugins($container);
+        $container = $this->addShoppingListOverviewUpdatePageWidgets($container);
 
         return $container;
     }
@@ -171,6 +176,48 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShoppingListItemFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS] = function () {
+            return $this->getShoppingListItemFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShoppingListDataProviderExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_SHOPPING_LIST_DATA_PROVIDER_EXPANDERS] = function () {
+            return $this->getShoppingListDataProviderExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShoppingListOverviewUpdatePageWidgets(Container $container): Container
+    {
+        $container[static::PLUGIN_SHOPPING_LIST_OVERVIEW_UPDATE_PAGE_WIDGETS] = function () {
+            return $this->getShoppingListOverviewUpdatePageWidgets();
+        };
+
+        return $container;
+    }
+
+    /**
      * Returns a list of widget plugin class names that implement
      * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
@@ -207,23 +254,25 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addShoppingListItemFormExpanderPlugins(Container $container): Container
-    {
-        $container[static::PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS] = function () {
-            return $this->getShoppingListItemFormExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
      * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListItemFormExpanderPluginInterface[]
      */
     protected function getShoppingListItemFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListDataProviderExpanderPluginInterface[]
+     */
+    protected function getShoppingListDataProviderExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getShoppingListOverviewUpdatePageWidgets(): array
     {
         return [];
     }

@@ -1,0 +1,21 @@
+@mixin shopping-list-page-shopping-list-update-table($name: '.shopping-list-update-table') {
+    #{$name} {
+        tbody {
+            tr {
+                &:not(:first-child):not(#{$name}__options-row) {
+                    border-top: 1px solid $setting-color-lighter;
+                }
+
+                &:nth-child(even) {
+                    background-color: transparent;
+                }
+            }
+        }
+
+        &__actions {
+            border-top: 1px solid $setting-color-light;
+        }
+
+        @content;
+    }
+}

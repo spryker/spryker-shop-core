@@ -91,7 +91,11 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             return $response;
         }
 
-        return $this->view($response, [], '@ShoppingListPage/views/shopping-list-overview-update/shopping-list-overview-update.twig');
+        return $this->view(
+            $response,
+            $this->getFactory()->getShoppingListOverviewUpdatePageWidgetPlugins(),
+            '@ShoppingListPage/views/shopping-list-overview-update/shopping-list-overview-update.twig'
+        );
     }
 
     /**
@@ -103,7 +107,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected function executeUpdateAction(int $idShoppingList, Request $request)
     {
         $shoppingListFormDataProvider = $this->getFactory()->createShoppingListFormDataProvider();
-        $shoppingListTransfer = $shoppingListFormDataProvider->getData($idShoppingList);
+        $shoppingListTransfer = $shoppingListFormDataProvider->getData($idShoppingList, $request->request->all());
         $shoppingListForm = $this->getFactory()
             ->getShoppingListUpdateForm($shoppingListTransfer)
             ->handleRequest($request);

@@ -64,6 +64,7 @@ class AbstractShoppingListController extends AbstractController
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
+        $productViewTransfer->setShoppingListItem($shoppingListItemTransfer);
         $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
         $productViewTransfer->setShoppingListItem($shoppingListItemTransfer);
 
