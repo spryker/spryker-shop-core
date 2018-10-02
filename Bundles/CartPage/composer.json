@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/cart-page",
+  "type": "library",
   "description": "CartPage module",
   "license": "proprietary",
   "require": {

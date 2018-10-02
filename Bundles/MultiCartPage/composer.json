@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/multi-cart-page",
+  "type": "library",
   "description": "MultiCartPage module",
   "license": "proprietary",
   "require": {

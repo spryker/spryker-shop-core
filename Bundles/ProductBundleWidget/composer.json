@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-bundle-widget",
+  "type": "library",
   "description": "ProductBundleWidget module",
   "license": "proprietary",
   "require": {
