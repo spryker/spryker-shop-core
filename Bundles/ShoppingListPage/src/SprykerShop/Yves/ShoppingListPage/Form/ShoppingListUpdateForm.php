@@ -92,7 +92,7 @@ class ShoppingListUpdateForm extends AbstractType
     {
         $builder->add(static::FIELD_ITEMS, CollectionType::class, [
             'required' => false,
-            'label' => null,
+            'label' => false,
             'entry_type' => ShoppingListItemForm::class,
         ]);
     }
