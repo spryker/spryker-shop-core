@@ -24,6 +24,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_COMPANY_BUSINESS_UNIT = 'CLIENT_COMPANY_BUSINESS_UNIT';
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS = 'PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS';
+    public const PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS = 'PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS';
     public const PLUGIN_SHOPPING_LIST_WIDGETS = 'PLUGIN_SHOPPING_LIST_WIDGETS';
     public const PLUGIN_SHOPPING_LIST_VIEW_WIDGETS = 'PLUGIN_SHOPPING_LIST_VIEW_WIDGETS';
     public const PLUGIN_SHOPPING_LIST_EDIT_WIDGETS = 'PLUGIN_SHOPPING_LIST_EDIT_WIDGETS';
@@ -41,11 +42,13 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addProductStorageClient($container);
         $container = $this->addCompanyBusinessUnitClient($container);
         $container = $this->addCompanyUserClient($container);
+        $container = $this->addMultiCartClient($container);
         $container = $this->addShoppingListItemExpanderPlugins($container);
         $container = $this->addShoppingListWidgetPlugins($container);
         $container = $this->addShoppingListViewWidgetPlugins($container);
         $container = $this->addShoppingListEditWidgetPlugins($container);
         $container = $this->addMultiCartClient($container);
+        $container = $this->addShoppingListItemFormExpanderPlugins($container);
 
         return $container;
     }
@@ -227,6 +230,28 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
      * @return string[]
      */
     protected function getShoppingListEditWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShoppingListItemFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS] = function () {
+            return $this->getShoppingListItemFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListItemFormExpanderPluginInterface[]
+     */
+    protected function getShoppingListItemFormExpanderPlugins(): array
     {
         return [];
     }

@@ -16,6 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 
+/**
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
+ */
 class ShoppingListItemForm extends AbstractType
 {
     protected const FIELD_QUANTITY = 'quantity';
@@ -44,6 +47,8 @@ class ShoppingListItemForm extends AbstractType
     {
         $this
             ->addQuantityField($builder);
+
+        $this->addFormExpanders($builder, $options);
     }
 
     /**
@@ -64,5 +69,18 @@ class ShoppingListItemForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function addFormExpanders(FormBuilderInterface $builder, array $options): void
+    {
+        foreach ($this->getFactory()->getShoppingListItemFormExpanderPlugins() as $shoppingItemFormTypeExpanderPlugin) {
+            $shoppingItemFormTypeExpanderPlugin->buildForm($builder, $options);
+        }
     }
 }
