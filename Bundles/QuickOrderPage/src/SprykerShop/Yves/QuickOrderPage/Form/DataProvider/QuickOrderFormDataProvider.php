@@ -55,7 +55,7 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
             $orderItems[] = (new QuickOrderItemTransfer())
                 ->setSku($item[OrderItemEmbeddedForm::FIELD_SKU])
                 ->setQty($item[OrderItemEmbeddedForm::FIELD_QTY] ? (int)$item[OrderItemEmbeddedForm::FIELD_QTY] : null)
-                ->setIdProductConcrete($item[OrderItemEmbeddedForm::FIELD_ID_PRODUCT_CONCRETE] ?? null);
+                ->setIdProductConcrete((int)$item[OrderItemEmbeddedForm::FIELD_ID_PRODUCT_CONCRETE] ?: null);
         }
 
         return $orderItems;

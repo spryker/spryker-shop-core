@@ -34,4 +34,11 @@ interface QuickOrderPageToQuickOrderClientInterface
      * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
      */
     public function validateQuantityRestrictions(QuickOrderItemTransfer $quickOrderItemTransfer): ProductQuantityValidationResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    public function findProductConcretesByQuickOrderItemTransfers(array $quickOrderItemTransfers): array;
 }

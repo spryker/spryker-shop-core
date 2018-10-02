@@ -56,4 +56,14 @@ class QuickOrderPageToQuickOrderClientBridge implements QuickOrderPageToQuickOrd
     {
         return $this->quickOrderClient->validateQuantityRestrictions($quickOrderItemTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    public function findProductConcretesByQuickOrderItemTransfers(array $quickOrderItemTransfers): array
+    {
+        return $this->quickOrderClient->findProductConcretesByQuickOrderItemTransfers($quickOrderItemTransfers);
+    }
 }

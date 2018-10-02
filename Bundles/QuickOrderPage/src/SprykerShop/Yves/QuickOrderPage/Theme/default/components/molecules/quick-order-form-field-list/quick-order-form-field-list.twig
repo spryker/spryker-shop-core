@@ -8,6 +8,7 @@
 {% define data = {
     items: required,
     additionalDataColumnProviderPlugins: required,
+    productConcretesData: []
 } %}
 
 {% block body %}
@@ -29,6 +30,8 @@
         <div class="{{ config.name }}__col {{ config.name }}__col--remove"></div>
     </div>
     {% for item in data.items %}
+        {% set productConcreteData = data.productConcretesData[item.id_product_concrete.vars.value] is defined ? data.productConcretesData[item.id_product_concrete.vars.value]: null %}
+
         {% embed molecule('quick-order-form-field', 'QuickOrderPage') with {
             class: config.name ~ '__row',
             data: {
@@ -38,7 +41,8 @@
                 sku: item.sku,
                 qty: item.qty,
                 idProductConcrete: item.id_product_concrete,
-                fullName: item.vars.full_name
+                fullName: item.vars.full_name,
+                inputValue: productConcreteData is null ? null : productConcreteData.name ~ ' (' ~ productConcreteData.sku ~ ')'
             },
             embed: {
                 name: config.name

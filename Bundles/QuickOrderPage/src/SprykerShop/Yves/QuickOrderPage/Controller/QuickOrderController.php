@@ -148,6 +148,7 @@ class QuickOrderController extends AbstractController
         return [
             'form' => $quickOrderForm->createView(),
             'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
+            'productConcretesData' => $this->getProductConcretesData($orderItems),
         ];
     }
 
@@ -202,6 +203,7 @@ class QuickOrderController extends AbstractController
         return [
             'form' => $quickOrderForm->createView(),
             'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
+            'productConcretesData' => $this->getProductConcretesData($orderItems),
         ];
     }
 
@@ -385,5 +387,17 @@ class QuickOrderController extends AbstractController
         }
 
         return $quickOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    protected function getProductConcretesData(array $quickOrderItemTransfers): array
+    {
+        return $this->getFactory()
+            ->getQuickOrderClient()
+            ->findProductConcretesByQuickOrderItemTransfers($quickOrderItemTransfers);
     }
 }
