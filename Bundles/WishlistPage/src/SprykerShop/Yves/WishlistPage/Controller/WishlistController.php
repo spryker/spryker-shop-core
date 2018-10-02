@@ -319,7 +319,7 @@ class WishlistController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
