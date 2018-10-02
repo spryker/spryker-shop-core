@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin implements DiscountPromotionItemListWidgetPluginInterface
 {
-    const PARAM_VARIANT_ATTRIBUTES = 'attributes';
+    public const PARAM_VARIANT_ATTRIBUTES = 'attributes';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

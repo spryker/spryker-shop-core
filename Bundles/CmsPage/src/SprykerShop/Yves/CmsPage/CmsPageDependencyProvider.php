@@ -17,11 +17,11 @@ use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCustomerClientBridge;
 
 class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CMS_TWIG_CONTENT_RENDERER_PLUGIN = 'CMS_TWIG_CONTENT_RENDERER_PLUGIN';
-    const CLIENT_CMS = 'CLIENT_CMS';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const STORE = 'STORE';
-    const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
+    public const CMS_TWIG_CONTENT_RENDERER_PLUGIN = 'CMS_TWIG_CONTENT_RENDERER_PLUGIN';
+    public const CLIENT_CMS = 'CLIENT_CMS';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const STORE = 'STORE';
+    public const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

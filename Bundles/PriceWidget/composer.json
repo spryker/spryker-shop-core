@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/price-widget",
+  "type": "library",
   "description": "PriceWidget module",
   "license": "proprietary",
   "require": {

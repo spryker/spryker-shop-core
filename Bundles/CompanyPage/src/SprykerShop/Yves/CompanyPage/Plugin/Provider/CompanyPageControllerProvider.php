@@ -20,6 +20,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_ADDRESS_CREATE = 'company/address/create';
     public const ROUTE_COMPANY_ADDRESS_UPDATE = 'company/address/update';
     public const ROUTE_COMPANY_ADDRESS_DELETE = 'company/address/delete';
+    public const ROUTE_COMPANY_ADDRESS_DELETE_CONFIRMATION = 'company/address/delete-confirmation';
 
     public const ROUTE_COMPANY_BUSINESS_UNIT = 'company/business-unit';
     public const ROUTE_COMPANY_BUSINESS_UNIT_DETAILS = 'company/business-unit/details';
@@ -27,11 +28,13 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
     public const ROUTE_COMPANY_BUSINESS_UNIT_DELETE = 'company/business-unit/delete';
     public const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE = 'company/business-unit/address/create';
+    public const ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION = 'company/business-unit/delete-confirmation';
 
     public const ROUTE_COMPANY_ROLE = 'company/company-role';
     public const ROUTE_COMPANY_ROLE_CREATE = 'company/company-role/create';
     public const ROUTE_COMPANY_ROLE_UPDATE = 'company/company-role/update';
     public const ROUTE_COMPANY_ROLE_DELETE = 'company/company-role/delete';
+    public const ROUTE_COMPANY_ROLE_CONFIRM_DELETE = 'company/company-role/confirm-delete';
     public const ROUTE_COMPANY_ROLE_DETAILS = 'company/company-role/details';
 
     public const ROUTE_COMPANY_ROLE_USER_MANAGE = 'company/company-role/user/manage';
@@ -39,7 +42,6 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_ROLE_USER_UNASSIGN = 'company/company-role/user/unassign';
 
     public const ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE = 'company/company-role-permission/configure';
-    public const ROUTE_COMPANY_ROLE_PERMISSION_MANAGE = 'company/company-role-permission/manage';
     public const ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN = 'company/company-role-permission/assign';
     public const ROUTE_COMPANY_ROLE_PERMISSION_UNASSIGN = 'company/company-role-permission/unassign';
 
@@ -47,7 +49,11 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_USER_CREATE = 'company/user/create';
     public const ROUTE_COMPANY_USER_UPDATE = 'company/user/update';
     public const ROUTE_COMPANY_USER_DELETE = 'company/user/delete';
+    public const ROUTE_COMPANY_USER_CONFIRM_DELETE = 'company/user/confirm-delete';
     public const ROUTE_COMPANY_USER_SELECT = 'company/user/select';
+
+    public const ROUTE_COMPANY_USER_STATUS_ENABLE = 'company/company-user-status/enable';
+    public const ROUTE_COMPANY_USER_STATUS_DISABLE = 'company/company-user-status/disable';
 
     /**
      * @param \Silex\Application $app
@@ -62,7 +68,8 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
             ->addCompanyRoleRoutes()
             ->addPermissionRoutes()
             ->addCompanyUserRoutes()
-            ->addCompanyRoleUserRoutes();
+            ->addCompanyRoleUserRoutes()
+            ->addCompanyUserStatusRoutes();
     }
 
     /**
@@ -100,6 +107,9 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{company}/address/delete', static::ROUTE_COMPANY_ADDRESS_DELETE, 'CompanyPage', 'Address', 'delete')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
+        $this->createController('/{company}/address/delete-confirmation', static::ROUTE_COMPANY_ADDRESS_DELETE_CONFIRMATION, 'CompanyPage', 'Address', 'confirmDelete')
+            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
+            ->value('company', 'company');
 
         return $this;
     }
@@ -122,6 +132,9 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/business-unit/delete', static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE, 'CompanyPage', 'BusinessUnit', 'delete')
+            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/business-unit/delete-confirmation', static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION, 'CompanyPage', 'BusinessUnit', 'confirmDelete')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/business-unit/address/create', static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, 'CompanyPage', 'BusinessUnitAddress', 'create')
@@ -148,6 +161,9 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{company}/company-role/delete', static::ROUTE_COMPANY_ROLE_DELETE, 'CompanyPage', 'CompanyRole', 'delete')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
+        $this->createController('/{company}/company-role/confirm-delete', static::ROUTE_COMPANY_ROLE_CONFIRM_DELETE, 'CompanyPage', 'CompanyRole', 'confirmDelete')
+            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
+            ->value('company', 'company');
         $this->createController('/{company}/company-role/details', static::ROUTE_COMPANY_ROLE_DETAILS, 'CompanyPage', 'CompanyRole', 'details')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
@@ -161,9 +177,6 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     protected function addPermissionRoutes(): self
     {
         $this->createController('/{company}/company-role-permission/configure', static::ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE, 'CompanyPage', 'CompanyRolePermission', 'configure')
-            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
-            ->value('company', 'company');
-        $this->createController('/{company}/company-role-permission/manage', static::ROUTE_COMPANY_ROLE_PERMISSION_MANAGE, 'CompanyPage', 'CompanyRolePermission', 'manage')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/company-role-permission/assign', static::ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN, 'CompanyPage', 'CompanyRolePermission', 'assign')
@@ -193,6 +206,9 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{company}/user/delete', static::ROUTE_COMPANY_USER_DELETE, 'CompanyPage', 'User', 'delete')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
+        $this->createController('/{company}/user/confirm-delete', static::ROUTE_COMPANY_USER_CONFIRM_DELETE, 'CompanyPage', 'User', 'confirmDelete')
+            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
+            ->value('company', 'company');
         $this->createController('/{company}/user/select', static::ROUTE_COMPANY_USER_SELECT, 'CompanyPage', 'BusinessOnBehalf', 'selectCompanyUser')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
@@ -212,6 +228,21 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
         $this->createController('/{company}/company-role/user/unassign', static::ROUTE_COMPANY_ROLE_USER_UNASSIGN, 'CompanyPage', 'CompanyRoleUser', 'unassign')
+            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
+            ->value('company', 'company');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCompanyUserStatusRoutes(): self
+    {
+        $this->createController('/{company}/company-user-status/enable', static::ROUTE_COMPANY_USER_STATUS_ENABLE, 'CompanyPage', 'CompanyUserStatus', 'enable')
+            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
+            ->value('company', 'company');
+        $this->createController('/{company}/company-user-status/disable', static::ROUTE_COMPANY_USER_STATUS_DISABLE, 'CompanyPage', 'CompanyUserStatus', 'disable')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
 

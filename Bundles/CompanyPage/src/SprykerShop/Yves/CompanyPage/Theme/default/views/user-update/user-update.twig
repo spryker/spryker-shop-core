@@ -1,17 +1,39 @@
 {% extends template('page-layout-company', 'CompanyPage') %}
 
 {% define data = {
-form: _view.companyUserForm,
+    form: _view.companyUserForm,
 
-title: 'company.account.company_user' | trans,
-activePage: 'users'
+    title: 'company.account.company_user' | trans,
+    activePage: 'users'
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview'),
+                },
+                {
+                    label: 'company.account.company_user.edit_information' | trans({
+                        '%first_name%' : data.form.vars.value.first_name,
+                        '%last_name%' : data.form.vars.value.last_name,
+                    }),
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
 
 {% block companyContent %}
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'company.account.company_user.edit_information' | trans,
+                title: 'company.account.company_user.edit_information' | trans({
+                    '%first_name%' : data.form.vars.value.first_name,
+                    '%last_name%' : data.form.vars.value.last_name,
+                }),
                 form: data.form,
                 options: {
                     action: url('company/user/update')

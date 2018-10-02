@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerShop\Yves\ShoppingListNoteWidget\Form;
+
+use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+
+abstract class ShoppingListItemNoteFormType extends AbstractType
+{
+    /**
+     * @return string
+     */
+    abstract public function getTemplatePath(): string;
+
+    /**
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        parent::buildView($view, $form, $options);
+
+        $view->vars['template_path'] = $this->getTemplatePath();
+    }
+}
