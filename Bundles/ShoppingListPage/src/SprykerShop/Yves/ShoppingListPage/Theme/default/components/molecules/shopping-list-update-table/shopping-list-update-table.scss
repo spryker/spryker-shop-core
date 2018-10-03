@@ -16,6 +16,10 @@
             border-top: 1px solid $setting-color-light;
         }
 
+        &__actions-buttons {
+            justify-content: space-between;
+        }
+
         @content;
     }
 }

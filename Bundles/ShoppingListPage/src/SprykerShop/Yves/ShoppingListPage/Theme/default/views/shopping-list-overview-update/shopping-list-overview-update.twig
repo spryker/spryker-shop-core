@@ -60,23 +60,7 @@
                             }
                         } only %}
                     </div>
-
-                <div class="form__actions spacing-top spacing-top__bigger">
-                    <div class="col col--sm-6 text-left">
-                        <a class="button button--alert" href="{{ path('shopping-list/delete', {idShoppingList: data.shoppingList.idShoppingList}) }}">
-                            {{ 'customer.account.shopping_list.overview.delete' | trans }}
-                        </a>
-                    </div>
-                    <div class="col col--sm-6">
-                        <a href="{{ path('shopping-list') }}" class="form__action button button--secondary button--hollow'">
-                            {{ 'general.back.button' | trans }}
-                        </a>
-                        <button type="submit" class="form__action button button--success">
-                            {{ 'forms.submit-btn' | trans }}
-                        </button>
-                    </div>
                 </div>
-            </div>
 
             {% do data.form.items.setRendered %}
 

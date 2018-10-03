@@ -99,22 +99,47 @@
                             </a>
                         </td>
                     </tr>
-                    {% for subForm in data.form.items[key].children  %}
-                        {% if subForm.vars.template_path is defined and not subForm.rendered %}
-                            {% include subForm.vars.template_path with {'form': subForm, 'rowClass': config.name ~ '__options-row'} %}
-                        {% endif %}
-                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td colspan="5">
+                            {% for subForm in data.form.items[key].children  %}
+                                {% if subForm.vars.template_path is defined and not subForm.rendered %}
+                                    {% include subForm.vars.template_path with {'form': subForm, 'rowClass': config.name ~ '__options-row'} %}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
                 {% endfor %}
 
                 </tbody>
                 <tfoot class="{{ config.name }}__actions">
                 <tr>
-                    <td colspan="5">&nbsp;</td>
-                    <td colspan="2">
-                        <div class="text-right spacing-right spacing-right--inner spacing-right--small">
-                            <a class="button button--alert" href="{{ path('shopping-list/clear', {idShoppingList: data.shoppingList.idShoppingList}) }}">
-                                {{ 'customer.account.shopping_list.remove_all' | trans }}
-                            </a>
+                    <td colspan="7">
+                        <div class="grid {{ config.name }}__actions-buttons">
+                            <div class="col--sm-6">
+                                <div class="spacing-left spacing-left--small">
+                                    <a href="{{ path('shopping-list') }}" class="button button--secondary">
+                                        {{ 'general.back.button' | trans }}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="grid grid--right col--sm-6">
+                                <div class="spacing-right col">
+                                    <button type="submit" class="button button--success">
+                                        {{ 'forms.submit-btn' | trans }}
+                                    </button>
+                                </div>
+                                <div class="spacing-right col">
+                                    <a class="button button--alert" href="{{ path('shopping-list/delete', {idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                        {{ 'customer.account.shopping_list.overview.delete' | trans }}
+                                    </a>
+                                </div>
+                                <div class="spacing-right spacing-right--small col">
+                                    <a class="button button--alert" href="{{ path('shopping-list/clear', {idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                        {{ 'customer.account.shopping_list.remove_all' | trans }}
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </td>
                 </tr>

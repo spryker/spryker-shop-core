@@ -18,13 +18,15 @@
             {{ 'shopping_list.item_note.add' | trans }}
         </button>
     {% endif %}
-    <div class="{{ config.jsName }}__wrapper {{ shoppingListItemNoteClass }}">
-        {{ form_row(data.shoppingListItemNoteForm.note, {
-            label: 'shopping_list.item_note' | trans,
-            attr : {
-                class : config.jsName ~ '__note-textarea',
-                placeholder: ' '
-            }})
-        }}
+    <div class="{{ config.jsName }}__wrapper grid {{ shoppingListItemNoteClass }}">
+        <div class="col--sm-8">
+            {{ form_row(data.shoppingListItemNoteForm.note, {
+                label: 'shopping_list.item_note' | trans,
+                attr : {
+                    class : config.jsName ~ '__note-textarea',
+                    placeholder: ' '
+                }})
+            }}
+        </div>
     </div>
 {% endblock %}
