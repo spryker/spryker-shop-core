@@ -40,7 +40,7 @@
                 {% for voucherDiscount in data.voucherDiscounts %}
                     <div class="grid grid--justify">
                         <span class="col col--sm-10">{{ voucherDiscount.displayName }}</span>
-                        <span class="col col--expand text-right">{{ voucherDiscount.amount | money }}</span>
+                        <span class="col col--expand text-right">- {{ voucherDiscount.amount | money }}</span>
                     </div>
                 {% endfor %}
             </li>
