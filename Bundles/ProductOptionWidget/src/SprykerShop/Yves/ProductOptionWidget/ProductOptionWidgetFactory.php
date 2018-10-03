@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetToProductOptionStorageClientInterface;
 use SprykerShop\Yves\ProductOptionWidget\Form\DataProvider\ShoppingListItemProductOptionFormDataProvider;
 use SprykerShop\Yves\ProductOptionWidget\Form\DataProvider\ShoppingListItemProductOptionFormDataProviderInterface;
+use SprykerShop\Yves\ProductOptionWidget\Mapper\ShoppingListTransferMapper;
+use SprykerShop\Yves\ProductOptionWidget\Mapper\ShoppingListTransferMapperInterface;
 
 class ProductOptionWidgetFactory extends AbstractFactory
 {
@@ -22,6 +24,14 @@ class ProductOptionWidgetFactory extends AbstractFactory
         return new ShoppingListItemProductOptionFormDataProvider(
             $this->getProductOptionStorageClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductOptionWidget\Mapper\ShoppingListTransferMapperInterface
+     */
+    public function createShoppingListTransferMapper(): ShoppingListTransferMapperInterface
+    {
+        return new ShoppingListTransferMapper();
     }
 
     /**

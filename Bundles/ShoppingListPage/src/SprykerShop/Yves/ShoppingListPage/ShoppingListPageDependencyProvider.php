@@ -25,7 +25,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS = 'PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS';
     public const PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS = 'PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS';
-    public const PLUGIN_SHOPPING_LIST_DATA_PROVIDER_EXPANDERS = 'PLUGIN_SHOPPING_LIST_DATA_PROVIDER_EXPANDERS';
+    public const PLUGIN_SHOPPING_LIST_FORM_DATA_PROVIDER_MAPPERS = 'PLUGIN_SHOPPING_LIST_FORM_DATA_PROVIDER_MAPPERS';
     public const PLUGIN_SHOPPING_LIST_OVERVIEW_UPDATE_PAGE_WIDGETS = 'PLUGIN_SHOPPING_LIST_OVERVIEW_UPDATE_PAGE_WIDGETS';
     public const PLUGIN_SHOPPING_LIST_WIDGETS = 'PLUGIN_SHOPPING_LIST_WIDGETS';
     public const PLUGIN_SHOPPING_LIST_VIEW_WIDGETS = 'PLUGIN_SHOPPING_LIST_VIEW_WIDGETS';
@@ -49,7 +49,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addShoppingListViewWidgetPlugins($container);
         $container = $this->addShoppingListItemFormExpanderPlugins($container);
         $container = $this->addMultiCartClient($container);
-        $container = $this->addShoppingListDataProviderExpanderPlugins($container);
+        $container = $this->addShoppingListFormDataProviderMapperPlugins($container);
         $container = $this->addShoppingListOverviewUpdatePageWidgets($container);
 
         return $container;
@@ -194,10 +194,10 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addShoppingListDataProviderExpanderPlugins(Container $container): Container
+    protected function addShoppingListFormDataProviderMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_SHOPPING_LIST_DATA_PROVIDER_EXPANDERS] = function () {
-            return $this->getShoppingListDataProviderExpanderPlugins();
+        $container[static::PLUGIN_SHOPPING_LIST_FORM_DATA_PROVIDER_MAPPERS] = function () {
+            return $this->getShoppingListFormDataProviderMapperPlugins();
         };
 
         return $container;
@@ -262,9 +262,9 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListDataProviderExpanderPluginInterface[]
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[]
      */
-    protected function getShoppingListDataProviderExpanderPlugins(): array
+    protected function getShoppingListFormDataProviderMapperPlugins(): array
     {
         return [];
     }
