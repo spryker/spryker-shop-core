@@ -18,7 +18,7 @@ class ShoppingListItemProductOptionDataProviderExpanderPlugin extends AbstractPl
 {
     /**
      * {@inheritdoc}
-     *  - Expands ShoppingListTransfer with product options.
+     *  - Maps provided parameters into ShoppingLisTransfer to populate product option data.
      *
      * @api
      *

@@ -84,8 +84,8 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
             if (!$requestFormData[ShoppingListTransfer::ITEMS] || !$requestFormData[ShoppingListTransfer::ITEMS][$itemKey]) {
                 continue;
             }
-            $idsProductOptionValue = $this->getIdsProductOptionValue($requestFormData, $itemKey);
-            $shoppingListItems[] = $this->populateProductOptionsPerShoppingListItemTransfer($shoppingListItemTransfer, $idsProductOptionValue);
+            $productOptionValueIds = $this->getProductOptionValueIds($requestFormData, $itemKey);
+            $shoppingListItems[] = $this->populateProductOptionsPerShoppingListItem($shoppingListItemTransfer, $productOptionValueIds);
         }
 
         return $shoppingListTransfer->setItems(new ArrayObject($shoppingListItems));
@@ -97,36 +97,36 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
      *
      * @return int[]
      */
-    protected function getIdsProductOptionValue(array $requestFormData, string $itemKey): array
+    protected function getProductOptionValueIds(array $requestFormData, string $itemKey): array
     {
         return array_filter($requestFormData[ShoppingListTransfer::ITEMS][$itemKey][static::PRODUCT_OPTIONS_FIELD_NAME]);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param int[] $idsProductOptionValue
+     * @param int[] $productOptionValueIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected function populateProductOptionsPerShoppingListItemTransfer(ShoppingListItemTransfer $shoppingListItemTransfer, array $idsProductOptionValue): ShoppingListItemTransfer
+    protected function populateProductOptionsPerShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $productOptionValueIds): ShoppingListItemTransfer
     {
-        $productOptionTransfers = $this->createProductOptionTransfers($idsProductOptionValue);
+        $productOptionTransfers = $this->createProductOptionTransfers($productOptionValueIds);
         $shoppingListItemTransfer->setProductOptions($productOptionTransfers);
 
         return $shoppingListItemTransfer;
     }
 
     /**
-     * @param int[] $idsProductOptionValue
+     * @param int[] $productOptionValueIds
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[]
      */
-    protected function createProductOptionTransfers(array $idsProductOptionValue): ArrayObject
+    protected function createProductOptionTransfers(array $productOptionValueIds): ArrayObject
     {
         $productOptionTransfers = [];
 
-        foreach ($idsProductOptionValue as $idProductOptionValue) {
-            $productOptionTransfers[] = $this->createProductOptionTransfer($idProductOptionValue);
+        foreach ($productOptionValueIds as $productOptionValueId) {
+            $productOptionTransfers[] = $this->createProductOptionTransfer($productOptionValueId);
         }
 
         return new ArrayObject($productOptionTransfers);
