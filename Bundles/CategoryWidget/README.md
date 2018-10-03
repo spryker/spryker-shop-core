@@ -1,6 +1,6 @@
 # CategoryWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the category widget and its components.
 
 ## Installation
 

@@ -7,12 +7,17 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form;
 
+use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -24,6 +29,10 @@ class CompanyBusinessUnitForm extends AbstractType
     public const FIELD_EXTERNAL_URL = 'external_url';
     public const FIELD_FK_COMPANY = 'fk_company';
     public const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+    public const FIELD_COMPANY_UNIT_ADDRESSES = 'address_collection';
+    public const FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT = 'fk_parent_company_business_unit';
+    public const COMPANY_UNIT_ADDRESSES_KEY = 'company_unit_addresses';
+    public const ID_COMPANY_UNIT_ADDRESS_KEY = 'id_company_unit_address';
 
     /**
      * @return string
@@ -31,6 +40,17 @@ class CompanyBusinessUnitForm extends AbstractType
     public function getName(): string
     {
         return 'companyBusinessUnitForm';
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setRequired(static::FIELD_COMPANY_UNIT_ADDRESSES);
+        $resolver->setRequired(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT);
     }
 
     /**
@@ -45,9 +65,11 @@ class CompanyBusinessUnitForm extends AbstractType
             ->addIdCompanyBusinessUnitField($builder)
             ->addFkCompanyField($builder)
             ->addNameField($builder)
+            ->addFkCompanyBusinessUnitField($builder, $options)
             ->addEmailField($builder)
             ->addPhoneField($builder)
-            ->addExternalUrlField($builder);
+            ->addExternalUrlField($builder)
+            ->addCompanyUnitAddressField($builder, $options);
     }
 
     /**
@@ -146,5 +168,82 @@ class CompanyBusinessUnitForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addFkCompanyBusinessUnitField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
+            'placeholder' => 'company.account.form.fk_parent_company_bu.placeholder',
+            'label' => 'company.account.choose_parent_company_business_unit',
+            'choices' => array_flip($options[static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT]),
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addCompanyUnitAddressField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_COMPANY_UNIT_ADDRESSES, ChoiceType::class, [
+            'choices' => array_flip($options[static::FIELD_COMPANY_UNIT_ADDRESSES]),
+            'required' => false,
+            'expanded' => true,
+            'multiple' => true,
+        ]);
+
+        $this->addCompanyUnitAddressTransformer($builder);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addCompanyUnitAddressTransformer(FormBuilderInterface $builder)
+    {
+        $builder->get(static::FIELD_COMPANY_UNIT_ADDRESSES)
+            ->addModelTransformer(
+                new CallbackTransformer(
+                    function ($addresses) {
+                        if (empty($addresses)) {
+                            return $addresses;
+                        }
+
+                        $result = [];
+                        if (isset($addresses[static::COMPANY_UNIT_ADDRESSES_KEY])) {
+                            foreach ($addresses[static::COMPANY_UNIT_ADDRESSES_KEY] as $address) {
+                                $result[] = $address[static::ID_COMPANY_UNIT_ADDRESS_KEY];
+                            }
+                        }
+
+                        return $result;
+                    },
+                    function ($data) {
+
+                        $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
+
+                        foreach ($data as $id) {
+                            $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())->setIdCompanyUnitAddress($id);
+                            $companyUnitAddressCollectionTransfer->addCompanyUnitAddress($companyUnitAddressTransfer);
+                        }
+
+                        return $companyUnitAddressCollectionTransfer;
+                    }
+                )
+            );
     }
 }

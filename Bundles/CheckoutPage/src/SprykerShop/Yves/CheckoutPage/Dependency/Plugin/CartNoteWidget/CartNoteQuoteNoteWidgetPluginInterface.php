@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface CartNoteQuoteNoteWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'CartNoteQuoteNoteWidgetPlugin';
+    public const NAME = 'CartNoteQuoteNoteWidgetPlugin';
 
     /**
      * @api

@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/shop-application-extension",
+  "type": "library",
   "description": "ShopApplicationExtension module",
   "license": "proprietary",
   "require": {
