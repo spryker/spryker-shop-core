@@ -30,6 +30,7 @@ class QuickOrderController extends AbstractController
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
     public const PARAM_ID_PRODUCT = 'id-product';
+    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     public const PARAM_QUANTITY = 'quantity';
 
     /**
@@ -243,14 +244,14 @@ class QuickOrderController extends AbstractController
      */
     public function productPriceAction(Request $request)
     {
-        $currentProductConcretePriceTransfer = $this->executeProductPriceAction($request);
-
-        if (!$request->query->getInt(static::PARAM_ID_PRODUCT)) {
+        if (!$request->query->getInt(static::PARAM_ID_PRODUCT) || !$request->query->getInt(static::PARAM_ID_PRODUCT_ABSTRACT)) {
             return $this->jsonResponse(
                 (new CurrentProductPriceTransfer())->toArray(true, true),
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
+
+        $currentProductConcretePriceTransfer = $this->executeProductPriceAction($request);
 
         return $this->jsonResponse($currentProductConcretePriceTransfer->toArray(true, true));
     }
@@ -279,9 +280,13 @@ class QuickOrderController extends AbstractController
         $currentProductPriceTransfer = (new CurrentProductPriceTransfer())->setQuantity(
             $request->query->getInt(static::PARAM_QUANTITY, 0)
         );
-        $currentProductConcretePriceTransfer = (new CurrentProductConcretePriceTransfer())->setIdProductConcrete(
-            $request->query->getInt(static::PARAM_ID_PRODUCT)
-        );
+        $currentProductConcretePriceTransfer = (new CurrentProductConcretePriceTransfer())
+            ->setIdProductConcrete(
+                $request->query->getInt(static::PARAM_ID_PRODUCT)
+            )
+            ->setIdProductAbstract(
+                $request->query->getInt(static::PARAM_ID_PRODUCT_ABSTRACT)
+            );
 
         return $currentProductConcretePriceTransfer->setCurrentProductPrice($currentProductPriceTransfer);
     }

@@ -53,6 +53,7 @@ export default class OrderItemPrice extends Component {
     async loadPrices(): Promise<void> {
         this.ajaxProvider.queryParams.set('quantity', String(this.quantityCount));
         this.ajaxProvider.queryParams.set('id-product', String(this.productId));
+        this.ajaxProvider.queryParams.set('id-product-abstract', String(this.productAbstractId));
 
         try {
             const response: string = await this.ajaxProvider.fetch();
@@ -81,5 +82,9 @@ export default class OrderItemPrice extends Component {
 
     get productId(): number {
         return this.currentFieldComponent.productData ? this.currentFieldComponent.productData.idProductConcrete : 0;
+    }
+
+    get productAbstractId(): number {
+        return this.currentFieldComponent.productData ? this.currentFieldComponent.productData.idProductAbstract : 0;
     }
 }
