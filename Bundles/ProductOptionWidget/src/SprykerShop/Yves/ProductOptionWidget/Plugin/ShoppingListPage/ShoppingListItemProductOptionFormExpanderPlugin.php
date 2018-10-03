@@ -35,7 +35,7 @@ class ShoppingListItemProductOptionFormExpanderPlugin extends AbstractPlugin imp
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $option[ShoppingListItemProductOptionForm::PRODUCT_OPTION_GROUP_KEY] = $this->getFactory()
                 ->createShoppingListItemProductOptionFormDataProvider()
-                ->getProductOptionGroups($event->getData());
+                ->findProductOptionGroupsByShoppingListItem($event->getData());
             $event->getForm()->add(
                 ShoppingListItemTransfer::PRODUCT_OPTIONS,
                 ShoppingListItemProductOptionForm::class,

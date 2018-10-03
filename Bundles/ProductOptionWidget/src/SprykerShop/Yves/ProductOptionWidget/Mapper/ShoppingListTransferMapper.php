@@ -49,7 +49,7 @@ class ShoppingListTransferMapper implements ShoppingListTransferMapperInterface
             if (!$requestFormData[ShoppingListTransfer::ITEMS] || !$requestFormData[ShoppingListTransfer::ITEMS][$itemKey]) {
                 continue;
             }
-            $productOptionValueIds = $this->getProductOptionValueIds($requestFormData, $itemKey);
+            $productOptionValueIds = $this->filterProductOptionValueIds($requestFormData, $itemKey);
             $shoppingListItems[] = $this->populateProductOptionsPerShoppingListItem($shoppingListItemTransfer, $productOptionValueIds);
         }
 
@@ -62,7 +62,7 @@ class ShoppingListTransferMapper implements ShoppingListTransferMapperInterface
      *
      * @return int[]
      */
-    protected function getProductOptionValueIds(array $requestFormData, string $itemKey): array
+    protected function filterProductOptionValueIds(array $requestFormData, string $itemKey): array
     {
         return array_filter($requestFormData[ShoppingListTransfer::ITEMS][$itemKey][static::PRODUCT_OPTIONS_FIELD_NAME]);
     }
