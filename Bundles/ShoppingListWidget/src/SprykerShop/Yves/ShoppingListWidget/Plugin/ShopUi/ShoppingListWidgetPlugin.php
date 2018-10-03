@@ -16,7 +16,7 @@ use SprykerShop\Yves\ShopUi\Dependency\Plugin\ShoppingListWidget\ShoppingListWid
  *
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
  */
-class ShoppingListNavigationMenuWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListWidgetPluginInterface
+class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListWidgetPluginInterface
 {
     /**
      * @return void
@@ -29,7 +29,9 @@ class ShoppingListNavigationMenuWidgetPlugin extends AbstractWidgetPlugin implem
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
+     *
+     * @api
      */
     public static function getTemplate(): string
     {
@@ -41,6 +43,6 @@ class ShoppingListNavigationMenuWidgetPlugin extends AbstractWidgetPlugin implem
      */
     public static function getName(): string
     {
-        return 'ShoppingListNavigationMenuWidgetPlugin';
+        return static::NAME;;
     }
 }

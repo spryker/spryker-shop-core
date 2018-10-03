@@ -72,7 +72,7 @@
                         </li>
                         {% if withSeparators %}<li class="menu__separator"></li>{% endif %}
                     {% endblock %}
-                {% elsewidget 'ShoppingListNavigationMenuWidgetPlugin' with {withSeparators: data.withSeparators} only %} {# @deprecated Use ShoppingListNavigationMenuWidget instead. #}
+                {% elsewidget 'ShoppingListWidgetPlugin' with {withSeparators: data.withSeparators} only %} {# @deprecated Use ShoppingListNavigationMenuWidget instead. #}
                     {% block body %}
                         <li class="menu__item menu__item--has-children-dropdown">
                             {{ parent() }}
