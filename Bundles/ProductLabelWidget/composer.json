@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-label-widget",
+  "type": "library",
   "description": "ProductLabelWidget module",
   "license": "proprietary",
   "require": {

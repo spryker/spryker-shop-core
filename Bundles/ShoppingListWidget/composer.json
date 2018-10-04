@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/shopping-list-widget",
+  "type": "library",
   "description": "ShoppingListWidget module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/currency-widget",
+  "type": "library",
   "description": "CurrencyWidget module",
   "license": "proprietary",
   "require": {
