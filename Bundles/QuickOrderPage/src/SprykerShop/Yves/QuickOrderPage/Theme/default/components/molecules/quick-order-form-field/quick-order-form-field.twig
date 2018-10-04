@@ -12,7 +12,8 @@
     sku: required,
     qty: required,
     idProductConcrete: required,
-    fullName: required
+    fullName: required,
+    inputValue: null
 } %}
 
 {% block body %}
@@ -21,7 +22,8 @@
             'QuickOrderPageProductSearchWidgetPlugin',
             'ajax-provider' ~ data.index,
             data.fullName ~ '[sku]',
-            data.fullName ~ '[id_product_concrete]'
+            data.fullName ~ '[id_product_concrete]',
+            data.inputValue
         ) }}
 
         {{ form_row(data.sku) }}

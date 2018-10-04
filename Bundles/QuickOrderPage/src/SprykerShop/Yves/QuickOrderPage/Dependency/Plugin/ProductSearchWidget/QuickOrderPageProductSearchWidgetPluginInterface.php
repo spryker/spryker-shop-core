@@ -19,9 +19,10 @@ interface QuickOrderPageProductSearchWidgetPluginInterface extends WidgetPluginI
      * @param string $index
      * @param string $skuInputName
      * @param string $idProductInputName
+     * @param string|null $inputValue
      * @param int|null $searchResultsLimit
      *
      * @return void
      */
-    public function initialize(string $index, string $skuInputName, string $idProductInputName, ?int $searchResultsLimit = null): void;
+    public function initialize(string $index, string $skuInputName, string $idProductInputName, ?string $inputValue, ?int $searchResultsLimit = null): void;
 }

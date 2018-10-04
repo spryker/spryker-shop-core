@@ -42,6 +42,7 @@ export default class QuickOrderFormField extends Component {
         this.createCustomEvents();
         this.addEventListener('click', (event: Event) => this.onClick(<Event>event));
 
+        this.autocompleteForm.addEventListener('products-loaded-event', () => this.onSkuCoincidence());
         this.autocompleteFormInput.addEventListener('input', () => this.onChange());
         this.autocompleteFormInput.addEventListener('keydown', (event: KeyboardEvent) => this.onInputKeyDown(event));
     }
@@ -79,13 +80,23 @@ export default class QuickOrderFormField extends Component {
         }
     }
 
+    private onSkuCoincidence(): void {
+        const dropDownItems = <NodeList>this.querySelectorAll(this.autocompleteForm.itemSelector);
+
+        if(dropDownItems.length === 1) {
+            (<HTMLElement>dropDownItems[0]).click();
+            this.autocompleteFormInput.blur();
+            return;
+        }
+    }
+
     async loadProduct(): Promise<void> {
         this.ajaxProvider.queryParams.set('id-product', <string>this.selectedProductId);
 
         try {
             const response: string = <string>await this.ajaxProvider.fetch();
             this.productData = <ProductJSON>this.generateResponseData(response);
-            this.productData.idProductAbstract = +this.selectedProductAbstractId;
+            this.productData.idProductAbstract = parseInt(this.selectedProductAbstractId);
             this.dispatchEvent(<CustomEvent>this.productLoadedEvent);
         } catch (err) {
             throw err;
