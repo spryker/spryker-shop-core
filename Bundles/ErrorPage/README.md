@@ -1,6 +1,6 @@
 # ErrorPage Module
 
-This module provides error page.
+This module provides error pages.
 
 ## Installation
 
