@@ -106,11 +106,7 @@
                                 {% endif %}
                             {% endfor %}
                             {{ widget('ShoppingListItemNoteWidgetPlugin', item.shoppingListItem) }}
-
-                            {% if item.shoppingListItem is not empty %}
-                                {{ widget('ShoppingListItemProductOptionWidgetPlugin', item.shoppingListItem) }}
-                            {% endif %}
-
+                            {{ widget('ShoppingListItemProductOptionWidgetPlugin', item.shoppingListItem) }}
                         </td>
                         <td nowrap="nowrap" class="text-center">
                             {% if item.price is not null %}
