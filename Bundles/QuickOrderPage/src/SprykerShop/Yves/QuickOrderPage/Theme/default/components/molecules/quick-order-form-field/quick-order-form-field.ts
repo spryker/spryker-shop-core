@@ -10,6 +10,7 @@ interface ProductJSON {
         name: string,
     },
     idProductConcrete: number,
+    idProductAbstract: number,
     productQuantity: {
         idProduct: number,
         quantityInterval: number,
@@ -95,13 +96,14 @@ export default class QuickOrderFormField extends Component {
         try {
             const response: string = <string>await this.ajaxProvider.fetch();
             this.productData = <ProductJSON>this.generateResponseData(response);
+            this.productData.idProductAbstract = +this.selectedProductAbstractId;
             this.dispatchEvent(<CustomEvent>this.productLoadedEvent);
         } catch (err) {
             throw err;
         }
     }
 
-    private generateResponseData(response: string): ProductJSON {  
+    private generateResponseData(response: string): ProductJSON {
         return JSON.parse(response);
     }
 
@@ -111,6 +113,10 @@ export default class QuickOrderFormField extends Component {
 
     get selectedProductId(): string {
         return this.selectedItem.getAttribute('data-id-product');
+    }
+
+    get selectedProductAbstractId(): string {
+        return this.selectedItem.getAttribute('data-id-product-abstract');
     }
 
     get hiddenIdInputName(): string {
