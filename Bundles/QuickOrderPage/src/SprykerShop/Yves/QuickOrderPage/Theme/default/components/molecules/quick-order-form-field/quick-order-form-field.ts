@@ -96,7 +96,7 @@ export default class QuickOrderFormField extends Component {
         try {
             const response: string = <string>await this.ajaxProvider.fetch();
             this.productData = <ProductJSON>this.generateResponseData(response);
-            this.productData.idProductAbstract = +this.selectedProductAbstractId;
+            this.productData.idProductAbstract = parseInt(this.selectedProductAbstractId);
             this.dispatchEvent(<CustomEvent>this.productLoadedEvent);
         } catch (err) {
             throw err;
