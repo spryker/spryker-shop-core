@@ -43,8 +43,7 @@ class SubFormFilter implements SubFormFilterInterface
      */
     public function filterFormsCollection(
         SubFormPluginCollection $subFormPlugins
-    )
-    {
+    ) {
         $quoteTransfer = $this->quoteClient->getQuote();
 
         $filteredSubFormPlugins = clone $subFormPlugins;

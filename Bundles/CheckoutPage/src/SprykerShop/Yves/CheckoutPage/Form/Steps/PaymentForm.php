@@ -198,7 +198,7 @@ class PaymentForm extends AbstractType
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $availablePaymentMethodSubFormPlugins
      *
-     * @return SubFormPluginCollection
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
     protected function filterPaymentMethodSubFormPlugins(SubFormPluginCollection $availablePaymentMethodSubFormPlugins)
     {
