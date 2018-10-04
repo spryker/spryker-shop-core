@@ -9,16 +9,16 @@ namespace SprykerShop\Yves\ProductOptionWidget\Plugin\ShoppingListPage;
 
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListDataProviderExpanderPluginInterface;
+use SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductOptionWidget\ProductOptionWidgetFactory getFactory()
  */
-class ShoppingListItemProductOptionDataProviderExpanderPlugin extends AbstractPlugin implements ShoppingListDataProviderExpanderPluginInterface
+class ShoppingListItemProductOptionFormDataProviderMapperPlugin extends AbstractPlugin implements ShoppingListFormDataProviderMapperPluginInterface
 {
     /**
      * {@inheritdoc}
-     *  - Expands ShoppingListTransfer with product options.
+     *  - Maps provided parameters into ShoppingLisTransfer to populate product option params.
      *
      * @api
      *
@@ -27,10 +27,10 @@ class ShoppingListItemProductOptionDataProviderExpanderPlugin extends AbstractPl
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function expandData(ShoppingListTransfer $shoppingListTransfer, array $params): ShoppingListTransfer
+    public function map(ShoppingListTransfer $shoppingListTransfer, array $params): ShoppingListTransfer
     {
         return $this->getFactory()
-            ->createShoppingListItemProductOptionFormDataProvider()
-            ->expandData($shoppingListTransfer, $params);
+            ->createShoppingListTransferMapper()
+            ->mapProductOptionsToShoppingList($shoppingListTransfer, $params);
     }
 }

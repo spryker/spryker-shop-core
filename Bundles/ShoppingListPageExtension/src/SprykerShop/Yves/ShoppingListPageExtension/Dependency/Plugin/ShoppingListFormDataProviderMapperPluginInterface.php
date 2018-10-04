@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin;
 
  use Generated\Shared\Transfer\ShoppingListTransfer;
 
-interface ShoppingListDataProviderExpanderPluginInterface
+interface ShoppingListFormDataProviderMapperPluginInterface
 {
     /**
      * Specification:
-     *  - Expands ShoppingListTransfer with additional parameters.
+     *  - Maps ShoppingListTransfer with additional parameters.
      *
      * @api
      *
@@ -22,5 +22,5 @@ interface ShoppingListDataProviderExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function expandData(ShoppingListTransfer $shoppingListTransfer, array $params): ShoppingListTransfer;
+    public function map(ShoppingListTransfer $shoppingListTransfer, array $params): ShoppingListTransfer;
 }
