@@ -247,7 +247,7 @@ class QuickOrderController extends AbstractController
         if (!$request->query->getInt(static::PARAM_ID_PRODUCT) || !$request->query->getInt(static::PARAM_ID_PRODUCT_ABSTRACT)) {
             return $this->jsonResponse(
                 (new CurrentProductPriceTransfer())->toArray(true, true),
-                Response::HTTP_UNPROCESSABLE_ENTITY
+                Response::HTTP_BAD_REQUEST
             );
         }
 
