@@ -1,3 +1,5 @@
 # ajax-loader (molecule)
 
-Prohibits double click event.
+Show a "loading" indicator image(spinner) while an AJAX request is going on.
+
+
