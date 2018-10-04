@@ -9,9 +9,9 @@ namespace SprykerShop\Yves\CompanyPage\Plugin\ShopApplication;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CompanyPage\Controller\AbstractCompanyController;
+use SprykerShop\Yves\CompanyPage\Exception\CustomerAccessDeniedException;
 use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -48,7 +48,7 @@ class CompanyUserRestrictionHandlerPlugin extends AbstractPlugin implements Filt
             return;
         }
 
-        throw new NotFoundHttpException(
+        throw new CustomerAccessDeniedException(
             $this->getFactory()
                 ->getGlossaryStorageClient()
                 ->translate(static::GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED, $this->getLocale())
