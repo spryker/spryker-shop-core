@@ -11,22 +11,26 @@
     cartItem: required
 } %}
 
-{% block class %}{{parent()}} list{% endblock %}
+{% block class %}{{ parent() }} list{% endblock %}
 
 {% block body %}
-    <li class="list__item spacing-y">
-        {{ 'cart.item.item_price' | trans }}
-        <span class="float-right">{{ data.unitPrice }}</span>
-    </li>
-
-    {% if data.cartItem.productOptions | length > 0 %}
-        <li class="list__item text-small">
-            {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }}
+    {% if can('SeePricePermissionPlugin') %}
+        <li class="list__item spacing-y">
+            {{ 'cart.item.item_price' | trans }}
+            <span class="float-right">{{ data.unitPrice }}</span>
         </li>
-    {% endif %}
 
-    <li class="list__item spacing-y">
-        <strong>{{ 'cart.item.item_total' | trans }}</strong>
-        <strong class="float-right">{{ data.subtotalPrice }}</strong>
-    </li>
+        {% if data.cartItem.productOptions | length > 0 %}
+            <li class="list__item text-small">
+                {{ widget('CartItemProductOptionWidgetPlugin', data.cartItem) }}
+            </li>
+        {% endif %}
+
+        <li class="list__item spacing-y">
+            <strong>{{ 'cart.item.item_total' | trans }}</strong>
+            <strong class="float-right">{{ data.subtotalPrice }}</strong>
+        </li>
+    {% else %}
+        <li>{{ 'customer.access.cannot_see_price' | trans }}</li>
+    {% endif %}
 {% endblock %}

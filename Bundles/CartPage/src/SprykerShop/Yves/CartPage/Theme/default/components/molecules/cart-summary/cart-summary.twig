@@ -20,6 +20,7 @@
     <h6>{{ 'cart.your-order' | trans }}</h6>
     <hr />
 
+    {% if can('SeePricePermissionPlugin') %}
     <ul class="list spacing-y">
         {% if widgetExists('DiscountSummaryWidgetPlugin') %}
             <li class="list__item spacing-y">
@@ -51,6 +52,9 @@
             <strong class="float-right">{{ data.cart.totals.grandTotal | money }}</strong>
         </li>
     </ul>
+    {% else %}
+    <li>{{ 'customer.access.cannot_see_price' | trans }}</li>
+    {% endif %}
 
     {% if canProceedToCheckout %}
         <hr />
