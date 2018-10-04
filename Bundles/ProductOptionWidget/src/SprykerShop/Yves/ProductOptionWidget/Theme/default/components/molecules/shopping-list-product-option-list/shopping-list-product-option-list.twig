@@ -1,8 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'shopping-list-product-option-list',
-    tag: 'ul'
+    name: 'shopping-list-product-option-list'
 } %}
 
 {% define data = {
@@ -10,8 +9,9 @@
 } %}
 
 {% block body %}
+    <ul class="grid">
     {% for child in data.options %}
-        <li class="{{ config.name }}__item">
+        <li class="{{ config.name }}__item col--sm-6 col--lg-4">
             <strong>{{ form_label(child) }}:</strong>
 
             {% embed atom('select') with {
@@ -36,4 +36,5 @@
             {{ form_errors(child) }}
         </li>
     {% endfor %}
+    </ul>
 {% endblock %}

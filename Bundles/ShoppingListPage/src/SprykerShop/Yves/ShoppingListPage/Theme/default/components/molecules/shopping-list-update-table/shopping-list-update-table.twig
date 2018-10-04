@@ -13,7 +13,7 @@
 
 
 {% block body %}
-    {% if data.shoppingListItems | length %}
+    {% if data.shoppingListItems is not empty %}
         <div class="is-scrollable">
             <table class="table table--expand">
                 <thead>
@@ -115,7 +115,7 @@
                 <tfoot class="{{ config.name }}__actions">
                 <tr>
                     <td colspan="7">
-                        <div class="grid {{ config.name }}__actions-buttons">
+                        <div class="grid">
                             <div class="col--sm-6">
                                 <div class="spacing-left spacing-left--small">
                                     <a href="{{ path('shopping-list') }}" class="button">
