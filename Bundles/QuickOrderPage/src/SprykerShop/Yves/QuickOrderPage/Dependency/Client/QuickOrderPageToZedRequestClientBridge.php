@@ -41,9 +41,9 @@ class QuickOrderPageToZedRequestClientBridge implements QuickOrderPageToZedReque
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesErrorMessages()
+    public function getResponsesErrorMessages()
     {
-        return $this->zedRequestClient->getAllResponsesErrorMessages();
+        return $this->zedRequestClient->getResponsesErrorMessages();
     }
 
     /**

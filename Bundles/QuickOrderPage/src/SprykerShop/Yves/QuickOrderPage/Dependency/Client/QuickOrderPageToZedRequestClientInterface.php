@@ -27,5 +27,5 @@ interface QuickOrderPageToZedRequestClientInterface
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getAllResponsesErrorMessages(): array;
+    public function getResponsesErrorMessages(): array;
 }

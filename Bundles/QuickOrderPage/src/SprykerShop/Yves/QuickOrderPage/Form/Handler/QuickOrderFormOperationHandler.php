@@ -99,7 +99,7 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
         $this->cartClient->addItems($itemTransfers, $this->request->request->all());
         $this->zedRequestClient->addAllResponseMessagesToMessenger();
 
-        return !(count($this->zedRequestClient->getAllResponsesErrorMessages()) > 0);
+        return !(count($this->zedRequestClient->getResponsesErrorMessages()) > 0);
     }
 
     /**
