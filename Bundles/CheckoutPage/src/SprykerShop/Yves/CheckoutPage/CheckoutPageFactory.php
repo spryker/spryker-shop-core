@@ -15,6 +15,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInt
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
+use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
@@ -213,21 +214,21 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
+     * @return \SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface
      */
-    public function getPaymentMethodSubFormsFilter()
+    public function createSubFormFilter(): SubFormFilterInterface
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_PAYMENT_FILTERS);
+        return new SubFormFilter(
+            $this->getPaymentMethodSubFormFilterPlugins(),
+            $this->getQuoteClient()
+        );
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface
+     * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
      */
-    public function createSubFormFilter()
+    protected function getPaymentMethodSubFormFilterPlugins(): array
     {
-        return new SubFormFilter(
-            $this->getPaymentMethodSubFormsFilter(),
-            $this->getQuoteClient()
-        );
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_PAYMENT_METHOD_SUB_FORM_FILTERS);
     }
 }

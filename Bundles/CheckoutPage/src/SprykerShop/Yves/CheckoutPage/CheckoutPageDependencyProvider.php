@@ -64,7 +64,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PAYMENT_METHOD_HANDLER = SprykerCheckoutDependencyProvider::PAYMENT_METHOD_HANDLER; // constant value must be BC because of dependency injector
     public const PAYMENT_SUB_FORMS = SprykerCheckoutDependencyProvider::PAYMENT_SUB_FORMS;  // constant value must be BC because of dependency injector
-    public const PLUGIN_PAYMENT_FILTERS = SprykerCheckoutDependencyProvider::PLUGIN_PAYMENT_FILTERS; // constant value must be BC because of dependency injector
+    public const PLUGIN_PAYMENT_METHOD_SUB_FORM_FILTERS = 'PLUGIN_PAYMENT_METHOD_SUB_FORM_FILTERS';
 
     public const CUSTOMER_STEP_SUB_FORMS = 'CUSTOMER_STEP_SUB_FORMS';
     public const ADDRESS_STEP_SUB_FORMS = 'ADDRESS_STEP_SUB_FORMS';
@@ -95,7 +95,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addSubFormPluginCollection($container);
         $container = $this->addPaymentMethodHandlerPluginCollection($container);
-        $container = $this->addPaymentFormFilterPlugins($container);
+        $container = $this->addPaymentMethodSubFormFilterPlugins($container);
         $container = $this->addCustomerStepHandlerPlugin($container);
         $container = $this->addShipmentHandlerPluginCollection($container);
         $container = $this->addShipmentFormDataProviderPlugin($container);
@@ -625,10 +625,10 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addPaymentFormFilterPlugins(Container $container)
+    protected function addPaymentMethodSubFormFilterPlugins(Container $container)
     {
-        $container[static::PLUGIN_PAYMENT_FILTERS] = function () {
-            return $this->getPaymentFormFilterPlugins();
+        $container[static::PLUGIN_PAYMENT_METHOD_SUB_FORM_FILTERS] = function () {
+            return $this->getPaymentMethodSubFormFilterPlugins();
         };
 
         return $container;
@@ -637,7 +637,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
      */
-    protected function getPaymentFormFilterPlugins()
+    protected function getPaymentMethodSubFormFilterPlugins()
     {
         return [];
     }
