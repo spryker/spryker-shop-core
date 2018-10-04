@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Shared\Storage\StorageConstants;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @method \Spryker\Client\Product\ProductClientInterface getClient()
@@ -53,7 +53,7 @@ class ProductController extends AbstractController
     protected function executeDetailAction(array $productData, Request $request): array
     {
         if (!empty($productData['id_product_abstract']) && $this->isProductAbstractRestricted($productData['id_product_abstract'])) {
-            throw new NotFoundHttpException();
+            throw new AccessDeniedHttpException();
         }
 
         $productViewTransfer = $this->getFactory()
