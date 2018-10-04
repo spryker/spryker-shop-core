@@ -18,9 +18,9 @@
 
 {% block companyContent %}
     <div class="box grid grid--right">
-        {% include molecule('invitation-link', 'CompanyUserInvitationPage') with {
+        {% include molecule('invitation-link', 'CompanyUserInvitationPage') ignore missing with {
             class: 'col spacing-right'
-        } %}
+        } only %}
 
         {% if can('AddCompanyUserPermissionPlugin') %}
             <div class="col">
