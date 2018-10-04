@@ -9,9 +9,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Controller;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Shared\Storage\StorageConstants;
+use SprykerShop\Yves\ProductDetailPage\Exception\ProductAccessDeniedException;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @method \Spryker\Client\Product\ProductClientInterface getClient()
@@ -24,6 +24,8 @@ class ProductController extends AbstractController
     public const PARAM_ATTRIBUTE = 'attribute';
 
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
+
+    protected const GLOSSARY_KEY_PRODUCT_RESTRICTED = 'product.access.denied';
 
     /**
      * @param array $productData
@@ -46,14 +48,14 @@ class ProductController extends AbstractController
      * @param array $productData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \SprykerShop\Yves\ProductDetailPage\Exception\ProductAccessDeniedException
      *
      * @return array
      */
     protected function executeDetailAction(array $productData, Request $request): array
     {
         if (!empty($productData['id_product_abstract']) && $this->isProductAbstractRestricted($productData['id_product_abstract'])) {
-            throw new AccessDeniedHttpException();
+            throw new ProductAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_RESTRICTED);
         }
 
         $productViewTransfer = $this->getFactory()

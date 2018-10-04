@@ -48,10 +48,6 @@ class CompanyUserRestrictionHandlerPlugin extends AbstractPlugin implements Filt
             return;
         }
 
-        throw new CustomerAccessDeniedException(
-            $this->getFactory()
-                ->getGlossaryStorageClient()
-                ->translate(static::GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED, $this->getLocale())
-        );
+        throw new CustomerAccessDeniedException(static::GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED);
     }
 }
