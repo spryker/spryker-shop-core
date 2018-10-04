@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ErrorPage\Controller;
 
-use Spryker\Shared\Config\Environment;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
