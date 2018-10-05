@@ -96,53 +96,5 @@
                 {{ parent() }}
             {% endblock %}
         {% endembed %}
-
-
-
-
-
-        {#<div class="form" data-qa="component form">#}
-            {#{{ form_start(data.form) }}#}
-
-            {#<div class="form__container">#}
-                {#{{ form_errors(data.form) }}#}
-
-                {#<div class="form__fields grid grid--bottom">#}
-                    {#{{ form_row(data.form.idShoppingList) }}#}
-
-                    {#{{ form_row(data.form.name, {#}
-                        {#rowAttr: {#}
-                            {#class: 'form__field col col--sm-12'#}
-                        {#}#}
-                    {#}) }}#}
-
-                    {#<div class="col col--sm-12">#}
-                        {#{% include molecule('shopping-list-info', 'ShoppingListPage') with {#}
-                            {#class: 'box',#}
-                            {#data: {#}
-                                {#owner: data.shoppingList.owner | default(''),#}
-                                {#idShoppingList: data.shoppingList.idShoppingList | default(''),#}
-                            {#}#}
-                        {#} only %}#}
-                    {#</div>#}
-                    {#<div class="col col--sm-12 text-center">#}
-                        {#{% include molecule('shopping-list-update-table', 'ShoppingListPage') with {#}
-                            {#data: {#}
-                                {#shoppingList: data.shoppingList | default([]),#}
-                                {#shoppingListItems: data.shoppingList.items | default([]),#}
-                                {#shoppingListItemProducts: data.productViewTransfers | default([]),#}
-                                {#form: data.form | default([]),#}
-                            {#}#}
-                        {#} only %}#}
-                    {#</div>#}
-                {#</div>#}
-
-                {#{% do data.form.items.setRendered %}#}
-
-                {#{{ form_end(data.form) }}#}
-            {#</div>#}
-
-
-
     </div>
 {% endblock %}

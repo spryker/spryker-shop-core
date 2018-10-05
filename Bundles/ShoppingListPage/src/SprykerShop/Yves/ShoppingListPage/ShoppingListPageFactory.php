@@ -232,14 +232,6 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
-     */
-    public function getShoppingListOverviewUpdatePageWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_OVERVIEW_UPDATE_PAGE_WIDGETS);
-    }
-
-    /**
      * @return \SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFromCartFormDataProvider
      */
     public function createCartFromShoppingListFormDataProvider(): ShoppingListFromCartFormDataProvider

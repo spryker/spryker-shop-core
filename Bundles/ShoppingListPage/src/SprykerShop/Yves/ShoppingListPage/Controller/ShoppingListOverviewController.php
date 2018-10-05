@@ -92,7 +92,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
         return $this->view(
             $response,
-            $this->getFactory()->getShoppingListEditWidgetPlugins(), //todo: fix getShoppingListOverviewUpdatePageWidgetPlugins
+            $this->getFactory()->getShoppingListEditWidgetPlugins(),
             '@ShoppingListPage/views/shopping-list-overview-update/shopping-list-overview-update.twig'
         );
     }

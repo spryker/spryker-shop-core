@@ -34,6 +34,7 @@
             {% endembed %}
 
             {{ form_errors(child) }}
+            {% do child.setRendered %}
         </li>
     {% endfor %}
     </ul>
