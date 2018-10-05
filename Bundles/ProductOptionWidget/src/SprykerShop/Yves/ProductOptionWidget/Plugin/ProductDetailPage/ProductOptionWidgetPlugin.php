@@ -55,7 +55,7 @@ class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductO
             return new ArrayObject();
         }
 
-        return $this->getStorageProductOptionGroupCollectionTransfer($productViewTransfer)->getProductOptionGroups();
+        return $productAbstractOptionStorageTransfer->getProductOptionGroups();
     }
 
     /**

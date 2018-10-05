@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/business-on-behalf-widget",
+  "type": "library",
   "description": "BusinessOnBehalfWidget module",
   "license": "proprietary",
   "require": {

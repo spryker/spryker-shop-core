@@ -1,0 +1,17 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    title: 'company.account.address.delete_confimation_page' | trans,
+    activePage: 'business-unit',
+    companyBusinessUnit: _view.companyBusinessUnit
+} %}
+
+{% block companyContent %}
+    <div class="box">
+        {% include molecule('business-unit-delete-message', 'CompanyPage') with {
+            data: {
+                companyBusinessUnit: data.companyBusinessUnit
+            }
+        } only %}
+    </div>
+{% endblock %}

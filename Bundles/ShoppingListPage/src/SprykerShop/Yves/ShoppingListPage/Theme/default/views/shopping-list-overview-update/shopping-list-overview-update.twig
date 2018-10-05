@@ -4,7 +4,7 @@
     title: _view.shoppingList.name,
     form: _view.shoppingListForm,
     shoppingList: _view.shoppingList,
-    shoppingListItemProducts: _view.shoppingListItemProducts,
+    shoppingListItemProducts: _view.productViewTransfers,
     idShoppingList: _view.shoppingList.idShoppingList | default
 } %}
 
@@ -83,7 +83,7 @@
                             }
                         } only %}
                     {% else %}
-                        <hr />
+                        <hr>
                         {{ 'customer.account.shopping_list.empty' | trans }}
                     {% endif %}
                 </div>

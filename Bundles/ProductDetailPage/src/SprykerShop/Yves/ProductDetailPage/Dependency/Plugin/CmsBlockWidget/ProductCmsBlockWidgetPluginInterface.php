@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface ProductCmsBlockWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'ProductCmsBlockWidgetPlugin';
+    public const NAME = 'ProductCmsBlockWidgetPlugin';
 
     /**
      * @api

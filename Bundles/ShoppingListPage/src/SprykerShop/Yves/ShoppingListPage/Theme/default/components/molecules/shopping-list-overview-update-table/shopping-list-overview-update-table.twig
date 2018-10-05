@@ -45,11 +45,20 @@
                         <a href="{% if product.url is not empty %}{{ product.url }}{% endif %}">{{ product.name }}</a>
                     {% endif %}
                     {% if product.sku is not empty %}
-                        <div><small>{{ product.sku }}</small></div>
+                        <div>
+                            <small>{{ product.sku }}</small>
+                        </div>
                     {% endif %}
                     {% for attribute in product.superAttributesDefinition %}
                         {% if product.attributes[attribute] is defined %}
-                            {{ ('product.attribute.'~attribute) | trans }}: {{ product.attributes[attribute] }} <br/>
+                            {{ ('product.attribute.'~attribute) | trans }}: {{ product.attributes[attribute] }} <br>
+                        {% endif %}
+                    {% endfor %}
+                    {% for subForm in data.form.items[key].children  %}
+                        {% if not subForm.rendered %}
+                            {% if subForm.vars.template_path is defined %}
+                                {% include subForm.vars.template_path with {'form': subForm} %}
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 </td>

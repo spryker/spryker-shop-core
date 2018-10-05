@@ -131,12 +131,12 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             $this->handleResponseErrors($shoppingListResponseTransfer);
         }
 
-        $shoppingListItemProducts = $this->getShoppingListItemProducts($shoppingListTransfer);
+        $productViewTransfers = $this->getProductViewTransfers($shoppingListTransfer);
 
         return [
             'shoppingList' => $shoppingListTransfer,
             'shoppingListForm' => $shoppingListForm->createView(),
-            'shoppingListItemProducts' => $shoppingListItemProducts,
+            'productViewTransfers' => $productViewTransfers,
         ];
     }
 
@@ -287,14 +287,14 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function getShoppingListItemProducts(ShoppingListTransfer $shoppingListTransfer): array
+    protected function getProductViewTransfers(ShoppingListTransfer $shoppingListTransfer): array
     {
-        $shoppingListItemProducts = [];
+        $productViewTransfers = [];
         foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-            $shoppingListItemProducts[$shoppingListItemTransfer->getIdShoppingListItem()] = $this->createProductView($shoppingListItemTransfer);
+            $productViewTransfers[$shoppingListItemTransfer->getIdShoppingListItem()] = $this->createProductView($shoppingListItemTransfer);
         }
 
-        return $shoppingListItemProducts;
+        return $productViewTransfers;
     }
 
     /**

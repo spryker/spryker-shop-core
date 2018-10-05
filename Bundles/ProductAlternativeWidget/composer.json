@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-alternative-widget",
+  "type": "library",
   "description": "ProductAlternativeWidget module",
   "license": "proprietary",
   "require": {

@@ -55,7 +55,7 @@ class AbstractShoppingListController extends AbstractController
     {
         $productConcreteStorageData = $this->getFactory()
             ->getProductStorageClient()
-            ->getProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
+            ->findProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
 
         $productViewTransfer = new ProductViewTransfer();
         if (empty($productConcreteStorageData)) {
@@ -67,6 +67,7 @@ class AbstractShoppingListController extends AbstractController
 
         $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
         $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+        $productViewTransfer->setShoppingListItem($shoppingListItemTransfer);
 
         foreach ($this->getFactory()->getShoppingListItemExpanderPlugins() as $productViewExpanderPlugin) {
             $productViewExpanderPlugin->expandProductViewTransfer(
