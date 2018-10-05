@@ -30,7 +30,7 @@
 {% block body %}
     <form class="js-shopping-list__form" method="POST" action="{{ path('shopping-list/add-item') }}">
         <div class="grid grid--justify grid--bottom">
-            <div class="col--sm-5">
+            <div class="col col--sm-5">
                 <label>{{ 'shopping_list.item_quantity' | trans }}</label>
                 {% include atom('select') with {
                     modifiers: ['expand'],

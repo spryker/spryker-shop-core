@@ -8,14 +8,6 @@ export default class FormDataInjector extends Component {
         this.destinationForm = <HTMLFormElement>document.querySelector(this.destinationFormSelector);
         this.fieldsToInject = <HTMLElement[]>Array.from(document.querySelectorAll(this.fieldsSelector));
 
-        if (!this.destinationForm) {
-            this.destinationForm = this.closest('form');
-        }
-
-        if (!this.destinationForm) {
-            return;
-        }
-
         this.mapEvents();
     }
 
