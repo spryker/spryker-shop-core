@@ -50,6 +50,6 @@ class ShoppingListItemProductOptionWidgetPlugin extends AbstractWidgetPlugin imp
      */
     public static function getTemplate(): string
     {
-        return '@ProductOptionWidget/views/shopping-list-option-display/shopping-list-option-display.twig';
+        return '@ProductOptionWidget/views/shopping-list-item-product-option-display/shopping-list-item-product-option-display.twig';
     }
 }
