@@ -7,8 +7,11 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface;
@@ -88,9 +91,57 @@ class CompanyUserFormDataProvider
      */
     protected function getDefaultCompanyUserData(int $idCompany): array
     {
+        $companyRoleCollection = $this->getCompanyRoleCollectionWithDefaultCompanyRoleOnly($idCompany);
+
         return [
             CompanyUserForm::FIELD_FK_COMPANY => $idCompany,
+            CompanyUserForm::FIELD_COMPANY_ROLE_COLLECTION => $companyRoleCollection->toArray(),
         ];
+    }
+
+    /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    protected function getCompanyRoleCollectionWithDefaultCompanyRoleOnly(int $idCompany): CompanyRoleCollectionTransfer
+    {
+        $companyRoleCollection = new CompanyRoleCollectionTransfer();
+
+        $defaultIdCompanyRole = $this->findDefaultIdCompanyRole($idCompany);
+        if ($defaultIdCompanyRole === null) {
+            return $companyRoleCollection;
+        }
+
+        $companyRoleTransfer = (new CompanyRoleTransfer())
+            ->setIdCompanyRole($defaultIdCompanyRole);
+
+        $companyRoleCollection->setRoles(new ArrayObject([
+            $companyRoleTransfer,
+        ]));
+
+        return $companyRoleCollection;
+    }
+
+    /**
+     * @param int $idCompany
+     *
+     * @return int|null
+     */
+    protected function findDefaultIdCompanyRole(int $idCompany): ?int
+    {
+        $criteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
+            ->setIdCompany($idCompany);
+
+        $companyRoleCollection = $this->companyRoleClient->getCompanyRoleCollection($criteriaFilterTransfer);
+
+        foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {
+            if ($companyRoleTransfer->getIsDefault()) {
+                return $companyRoleTransfer->getIdCompanyRole();
+            }
+        }
+
+        return null;
     }
 
     /**
