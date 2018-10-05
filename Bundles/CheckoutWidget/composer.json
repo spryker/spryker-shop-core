@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/checkout-widget",
+  "type": "library",
   "description": "CheckoutWidget module",
   "license": "proprietary",
   "require": {

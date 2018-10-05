@@ -1,4 +1,4 @@
-{% extends template('page-layout-main') %}
+{% extends template('page-layout-multi-cart', 'MultiCartPage') %}
 
 {% define data = {
     cart: _view.cart,
@@ -10,18 +10,29 @@
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                label: 'cart.cart' | trans
-            }]
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'page.multi_cart.shopping_cart.list.title' | trans,
+                    url: url('multi-cart'),
+                },
+                {
+                    label: data.cart.name,
+                    url: data.cart.isDefault ? url('cart') : url('multi-cart/set-default', {idQuote: data.cart.idQuote}),
+                }
+            ]
         }
     } only %}
 {% endblock %}
 
-{% block content %}
+{% block customerContent %}
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'multi_cart.form.edit_cart_information' | trans,
+                title: 'multi_cart.form.edit_cart_information' | trans({cart_name: data.cart.name}),
                 form: data.form,
                 options: {
                     action: data.formAction
@@ -31,7 +42,7 @@
                 },
                 cancel: {
                     enable: true,
-                    url: url('cart'),
+                    url: data.backUrl,
                     text: 'general.back.button' | trans
                 }
             }

@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartPage;
+
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\SharedCartWidget\CartDeleteCompanyUsersListWidgetPluginInterface;
+
+/**
+ * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
+ */
+class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implements CartDeleteCompanyUsersListWidgetPluginInterface
+{
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function initialize(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addQuoteShareDetailsParameter($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public static function getName(): string
+    {
+        return static::NAME;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public static function getTemplate(): string
+    {
+        return '@SharedCartWidget/views/shared-cart-users/shared-cart-users.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addQuoteShareDetailsParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(
+            'quoteShareDetails',
+            $this->getFactory()->getSharedCartClient()->getShareDetailsByIdQuoteAction($quoteTransfer)->getShareDetails()
+        );
+    }
+}

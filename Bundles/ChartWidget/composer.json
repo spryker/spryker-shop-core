@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/chart-widget",
+  "type": "library",
   "description": "ChartWidget module",
   "license": "proprietary",
   "require": {

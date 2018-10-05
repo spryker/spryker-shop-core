@@ -13,7 +13,7 @@ use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
 
 class CheckoutWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_CHECKOUT_BREADCRUMB = 'PLUGIN_CHECKOUT_BREADCRUMB';
+    public const PLUGIN_CHECKOUT_BREADCRUMB = 'PLUGIN_CHECKOUT_BREADCRUMB';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

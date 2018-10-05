@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -24,24 +23,6 @@ abstract class AbstractCompanyController extends AbstractController
     public const COMPANY_APPROVED_STATUS = 'approved';
     public const PARAM_PAGE = 'page';
     public const DEFAULT_PAGE = 1;
-
-    /**
-     * @deprecated Behavior is implemented by CompanyUserRestrictionHandlerPlugin
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
-
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer() && !$customerTransfer->getIsOnBehalf()) {
-            throw new NotFoundHttpException("Regular customers are not allowed to operate on company pages");
-        }
-    }
 
     /**
      * @return bool
@@ -118,9 +99,50 @@ abstract class AbstractCompanyController extends AbstractController
         if ($responseTransfer->offsetExists('messages')) {
             /** @var \Generated\Shared\Transfer\ResponseMessageTransfer[] $responseMessages */
             $responseMessages = $responseTransfer->offsetGet('messages');
+
             foreach ($responseMessages as $responseMessage) {
                 $this->addErrorMessage($responseMessage->getText());
             }
         }
+    }
+
+    /**
+     * @param string $key
+     * @param string $locale
+     * @param array $params
+     *
+     * @return string
+     */
+    protected function getTranslatedMessage(string $key, string $locale, array $params = []): string
+    {
+        return $this->getFactory()
+            ->getGlossaryStorageClient()
+            ->translate($key, $locale, $params);
+    }
+
+    /**
+     * @param string $key
+     * @param array $params
+     *
+     * @return void
+     */
+    protected function addTranslatedSuccessMessage(string $key, array $params = []): void
+    {
+        $message = $this->getTranslatedMessage($key, $this->getLocale(), $params);
+
+        $this->addSuccessMessage($message);
+    }
+
+    /**
+     * @param string $key
+     * @param array $params
+     *
+     * @return void
+     */
+    protected function addTranslatedErrorMessage(string $key, array $params = []): void
+    {
+        $message = $this->getTranslatedMessage($key, $this->getLocale(), $params);
+
+        $this->addErrorMessage($message);
     }
 }
