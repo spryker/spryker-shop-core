@@ -11,7 +11,6 @@
     form: []
 } %}
 
-
 {% block body %}
     {% if data.shoppingListItems is not empty %}
         <div class="is-scrollable">
@@ -25,7 +24,6 @@
                     <th class="text-center">{{ 'customer.account.shopping_list.overview.actions' | trans }}</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 {% for key, shoppingListItem in data.shoppingListItems %}
                     {% set product = data.shoppingListItemProducts[shoppingListItem.idShoppingListItem] %}
@@ -47,7 +45,6 @@
                                 } only %}
                             {% endif %}
                         </td>
-
                         <td class="text-center">
                             <a href="{{ product.url }}">{{ product.name }}</a>
                             <div>
@@ -61,7 +58,6 @@
                                 {% endif %}
                             {% endfor %}
                         </td>
-
                         <td nowrap="nowrap" class="text-center">
                             {% if product.price is not null %}
                                 {% include molecule('price') with {
@@ -71,14 +67,12 @@
                                     }
                                 } only %}
                             {% else %}
-                                N/A
+                                {{ 'shopping_list.not_available' | trans }}
                             {% endif %}
                         </td>
-
                         <td class="text-center">
                             {{ form_row(data.form.items[key].quantity, {type: 'number'}) }}
                         </td>
-
                         <td class="text-center">
                             {% if isProductAvailable %}
                                 {{ 'customer.account.shopping_list.available' | trans }}
@@ -90,7 +84,6 @@
                                 {% endif %}
                             {% endif %}
                         </td>
-
                         <td>
                             <a class="button button--alert" href="{{ path('shopping-list/remove-item', {
                                 idShoppingList: data.shoppingList.idShoppingList, idShoppingListItem: shoppingListItem.idShoppingListItem
@@ -110,20 +103,19 @@
                         </td>
                     </tr>
                 {% endfor %}
-
                 </tbody>
                 <tfoot class="{{ config.name }}__actions">
                 <tr>
                     <td colspan="7">
                         <div class="grid">
-                            <div class="col--sm-6">
+                            <div class="col col--sm-6">
                                 <div class="spacing-left spacing-left--small">
                                     <a href="{{ path('shopping-list') }}" class="button">
                                         {{ 'general.back.button' | trans }}
                                     </a>
                                 </div>
                             </div>
-                            <div class="grid grid--right col--sm-6">
+                            <div class="grid grid--right col col--sm-6">
                                 <div class="spacing-right col">
                                     <button type="submit" class="button button--success">
                                         {{ 'forms.submit-btn' | trans }}

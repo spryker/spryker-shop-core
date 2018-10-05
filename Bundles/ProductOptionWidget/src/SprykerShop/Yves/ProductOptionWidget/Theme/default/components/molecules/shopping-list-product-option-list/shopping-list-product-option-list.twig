@@ -11,7 +11,7 @@
 {% block body %}
     <ul class="grid">
     {% for child in data.options %}
-        <li class="{{ config.name }}__item col--sm-6 col--lg-4">
+        <li class="{{ config.name }}__item col col--sm-6 col--lg-4">
             <strong>{{ form_label(child) }}:</strong>
 
             {% embed atom('select') with {

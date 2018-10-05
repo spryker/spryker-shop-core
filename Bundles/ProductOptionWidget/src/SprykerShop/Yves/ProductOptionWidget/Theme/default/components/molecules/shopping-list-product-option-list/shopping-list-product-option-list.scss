@@ -1,11 +1,11 @@
-$option-item-indent: map-get($setting-spacing, 'small');
+$shopping-list-product-option-list-padding: map-get($setting-spacing, 'small');
 
 @mixin shopping-list-product-option-list($name: '.shopping-list-product-option-list') {
     #{$name} {
-        margin: 0 -$option-item-indent;
+        margin: 0 -$shopping-list-product-option-list-padding;
 
         &__item {
-            padding: 0 $option-item-indent map-get($setting-spacing, 'default');
+            padding: 0 $shopping-list-product-option-list-padding map-get($setting-spacing, 'default');
         }
     }
 }
