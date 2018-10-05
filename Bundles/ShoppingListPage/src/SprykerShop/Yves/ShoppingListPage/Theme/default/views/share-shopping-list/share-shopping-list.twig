@@ -4,11 +4,9 @@
     title: _view.shoppingList.name,
     shareShoppingListForm: _view.shareShoppingListForm,
     idShoppingList: _view.idShoppingList,
-    shoppingListCollection: _view.shoppingListCollection,
-    labels: {
-        shareFormLabel: 'customer.account.shopping_list.share.from.share_with' | trans,
-        shareFormSubmit: 'customer.account.shopping_list.share.from.share' | trans,
-    }
+    shoppingList: _view.shoppingList,
+    sharedCompanyUsers: _view.shoppingList.sharedCompanyUsers,
+    sharedCompanyBusinessUnits: _view.shoppingList.sharedCompanyBusinessUnits
 } %}
 
 {% block breadcrumbs %}
@@ -18,6 +16,8 @@
                 label: 'customer.account' | trans,
             },{
                 label: 'customer.account.shopping_list' | trans,
+            },{
+                label: 'customer.account.shopping_list.share.from.share' | trans,
             }]
         }
     } only %}
@@ -28,20 +28,58 @@
 {% endblock %}
 
 {% block customerContent %}
-    {% include molecule('form') with {
-        class: 'box',
-        data: {
-            title: data.labels.shareFormLabel,
-            form: data.shareShoppingListForm,
-            submit: {
-                text: data.labels.shareFormSubmit,
-                enable: true
-            },
-            cancel: {
-                enable: true,
-                url: url('shopping-list'),
-                text: 'general.back.button' | trans
-            }
-        }
-    } only %}
+    <div class="form box" data-qa="component form">
+        <h5 class="spacing-bottom spacing-bottom--big">{{ 'customer.account.shopping_list.share.from.share_with' | trans }}</h5>
+
+        {{ form_start(data.shareShoppingListForm) }}
+
+        <div class="form__container">
+            <div class="form__fields grid grid--bottom">
+                <div class="form__field col col--sm-12">
+                    <div class="grid">
+                        <div class="col col--sm-12 col--lg-3 spacing-y">
+                            <b>{{ 'customer.account.shopping_list.share.select_company_business_unit' | trans }}</b>
+                        </div>
+                        <div class="col col--sm-12 col--lg-9">
+                            {% include molecule('share-list', 'ShoppingListPage') with {
+                                data: {
+                                    shareUnits: data.sharedCompanyBusinessUnits,
+                                    shareForm: data.shareShoppingListForm.sharedCompanyBusinessUnits
+                                }
+                            } only %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form__field col col--sm-12">
+                    <hr>
+                </div>
+
+                <div class="form__field col col--sm-12">
+                    <div class="grid">
+                        <div class="col col--sm-12 col--lg-3 spacing-y">
+                            <b>{{ 'customer.account.shopping_list.share.select_company_user' | trans }}</b>
+                        </div>
+                        <div class="col col--sm-12 col--lg-9">
+                            {% include molecule('share-list', 'ShoppingListPage') with {
+                                data: {
+                                    shareUnits: data.sharedCompanyUsers,
+                                    shareForm: data.shareShoppingListForm.sharedCompanyUsers
+                                }
+                            } only %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form__actions spacing-x">
+                <button type="submit" class="form__action button button--success" data-qa="submit-button">
+                    {{ 'customer.account.shopping_list.share.from.share' | trans }}
+                </button>
+            </div>
+        </div>
+
+        {{ form_end(data.shareShoppingListForm) }}
+    </div>
+
 {% endblock %}
