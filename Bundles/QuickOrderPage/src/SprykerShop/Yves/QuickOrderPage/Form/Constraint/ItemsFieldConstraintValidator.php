@@ -31,7 +31,7 @@ class ItemsFieldConstraintValidator extends ConstraintValidator
                 get_class($constraint)
             ));
         }
-        if (!$this->isFilledRowPresent($orderItemTransfers->getArrayCopy())) {
+        if (!$this->hasFilledProduct($orderItemTransfers->getArrayCopy())) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->atPath('[0]')
@@ -45,7 +45,7 @@ class ItemsFieldConstraintValidator extends ConstraintValidator
      *
      * @return bool
      */
-    protected function isFilledRowPresent(array $orderItemTransfers)
+    protected function hasFilledProduct(array $orderItemTransfers)
     {
         foreach ($orderItemTransfers as $orderItemTransfer) {
             if ($orderItemTransfer->getSku()) {
