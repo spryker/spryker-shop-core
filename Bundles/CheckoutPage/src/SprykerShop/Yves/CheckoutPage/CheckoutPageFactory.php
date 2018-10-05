@@ -219,7 +219,7 @@ class CheckoutPageFactory extends AbstractFactory
     public function createSubFormFilter(): SubFormFilterInterface
     {
         return new SubFormFilter(
-            $this->getPaymentMethodSubFormFilterPlugins(),
+            $this->getSubFormFilterPlugins(),
             $this->getQuoteClient()
         );
     }
@@ -227,8 +227,8 @@ class CheckoutPageFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
      */
-    protected function getPaymentMethodSubFormFilterPlugins(): array
+    protected function getSubFormFilterPlugins(): array
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_PAYMENT_METHOD_SUB_FORM_FILTERS);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SUB_FORM_FILTERS);
     }
 }
