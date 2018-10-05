@@ -15,7 +15,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ItemsFieldConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $orderItemTransfers The value that should be validated
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $orderItemTransfers The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
