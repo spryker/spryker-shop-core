@@ -17,8 +17,13 @@
     labels: {
         formLabel: 'cart.add-to-shopping-list.form' | trans,
         submitLabel: 'cart.add-to-shopping-list' | trans
-    }
+    },
+    isVisible: _widget.isVisible
 } %}
+
+{% block template %}
+    {% if data.isVisible %}{{ parent() }}{% endif %}
+{% endblock %}
 
 {% block body %}
 
