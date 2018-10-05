@@ -15,7 +15,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ItemsFieldConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $orderItemTransfers The value that should be validated
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $orderItemTransfers The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
@@ -31,14 +31,28 @@ class ItemsFieldConstraintValidator extends ConstraintValidator
                 get_class($constraint)
             ));
         }
-
-        $firstOrderItemTransfer = $orderItemTransfers[0] ?? null;
-        if ($firstOrderItemTransfer && !$firstOrderItemTransfer->getSku()) {
+        if (!$this->hasFilledProduct($orderItemTransfers->getArrayCopy())) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->atPath('[0]')
                 ->atPath(OrderItemEmbeddedForm::FIELD_SKU)
                 ->addViolation();
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $orderItemTransfers
+     *
+     * @return bool
+     */
+    protected function hasFilledProduct(array $orderItemTransfers)
+    {
+        foreach ($orderItemTransfers as $orderItemTransfer) {
+            if ($orderItemTransfer->getSku()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
