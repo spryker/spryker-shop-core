@@ -29,6 +29,7 @@
                     {% endif %}
                 {% endif %}
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.num_of_products' | trans }}</th>
+                <th>{{ 'page.multi_cart.shopping_cart.list.label.prices' | trans }}</th>
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.total' | trans }}</th>
                 {% if showActions %}
                     <th>{{ 'page.multi_cart.shopping_cart.list.label.actions' | trans }}</th>
@@ -64,6 +65,16 @@
                             %}
 
                             <span class="cart-items-quantity">{{ totals }} {{ label | trans }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if quote.priceMode is not empty %}
+                            {% include molecule('price-mode') with {
+                                data: {
+                                    priceMode: quote.priceMode,
+                                    showIcon: false
+                                }
+                            } only %}
                         {% endif %}
                     </td>
                     <td>{{ quote.totals.subtotal | default(0) | money }}</td>

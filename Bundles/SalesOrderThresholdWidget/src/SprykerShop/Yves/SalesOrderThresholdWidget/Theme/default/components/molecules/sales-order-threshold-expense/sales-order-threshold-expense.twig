@@ -1,0 +1,17 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'sales-order-threshold-expense',
+    tag: 'li'
+} %}
+
+{% define data = {
+    expense: required
+} %}
+
+{% block body %}
+    <div class="grid grid--justify">
+        <div class="col col--sm-8">{{ 'sales-order-threshold.expense.name' | trans }}</div>
+        <div class="col col--sm-4 text-right"> {{ data.expense.sumPrice | money }}</div>
+    </div>
+{% endblock %}
