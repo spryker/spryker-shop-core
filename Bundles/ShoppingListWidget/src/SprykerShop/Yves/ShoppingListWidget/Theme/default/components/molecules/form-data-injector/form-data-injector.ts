@@ -15,7 +15,7 @@ export default class FormDataInjector extends Component {
         this.destinationForm.addEventListener('submit', (event: Event) => this.onSubmit(event), false);
     }
 
-    private onSubmit(event: Event): void {
+    protected onSubmit(event: Event): void {
         event.preventDefault();
 
         this.preventSubmitButton();
@@ -23,15 +23,15 @@ export default class FormDataInjector extends Component {
         this.destinationForm.submit();
     }
 
-    private preventSubmitButton(): void {
+    protected preventSubmitButton(): void {
         this.destinationForm.querySelector('[type="submit"]').setAttribute('disabled', 'disabled');
     }
 
-    private injectData(): void {
+    public injectData(): void {
         this.fieldsToInject.forEach((field: HTMLFormElement) => this.addField(field));
     }
 
-    private addField(field: HTMLFormElement): void {
+    protected addField(field: HTMLFormElement): void {
         const insertField: HTMLInputElement = <HTMLInputElement>document.createElement('input');
 
         insertField.setAttribute('type', 'hidden');
