@@ -31,14 +31,28 @@ class ItemsFieldConstraintValidator extends ConstraintValidator
                 get_class($constraint)
             ));
         }
-
-        $firstOrderItemTransfer = $orderItemTransfers[0] ?? null;
-        if ($firstOrderItemTransfer && !$firstOrderItemTransfer->getSku()) {
+        if (!$this->isFilledRowPresent($orderItemTransfers->getArrayCopy())) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->atPath('[0]')
                 ->atPath(OrderItemEmbeddedForm::FIELD_SKU)
                 ->addViolation();
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $orderItemTransfers
+     *
+     * @return bool
+     */
+    protected function isFilledRowPresent(array $orderItemTransfers)
+    {
+        foreach ($orderItemTransfers as $orderItemTransfer) {
+            if ($orderItemTransfer->getSku()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
