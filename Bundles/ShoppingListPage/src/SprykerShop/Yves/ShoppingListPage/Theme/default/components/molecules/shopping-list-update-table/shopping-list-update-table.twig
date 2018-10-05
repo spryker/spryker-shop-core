@@ -115,21 +115,23 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="grid grid--right col col--sm-6">
-                                <div class="spacing-right col">
-                                    <button type="submit" class="button button--success">
-                                        {{ 'forms.submit-btn' | trans }}
-                                    </button>
-                                </div>
-                                <div class="spacing-right col">
-                                    <a class="button button--alert" href="{{ path('shopping-list/delete', {idShoppingList: data.shoppingList.idShoppingList}) }}">
-                                        {{ 'customer.account.shopping_list.overview.delete' | trans }}
-                                    </a>
-                                </div>
-                                <div class="spacing-right spacing-right--small col">
-                                    <a class="button button--alert" href="{{ path('shopping-list/clear', {idShoppingList: data.shoppingList.idShoppingList}) }}">
-                                        {{ 'customer.account.shopping_list.remove_all' | trans }}
-                                    </a>
+                            <div class="col col--sm-6">
+                                <div class="grid grid--right">
+                                    <div class="spacing-right col">
+                                        <button type="submit" class="button button--success">
+                                            {{ 'forms.submit-btn' | trans }}
+                                        </button>
+                                    </div>
+                                    <div class="spacing-right col">
+                                        <a class="button button--alert" href="{{ path('shopping-list/delete', {idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                            {{ 'customer.account.shopping_list.overview.delete' | trans }}
+                                        </a>
+                                    </div>
+                                    <div class="spacing-right spacing-right--small col">
+                                        <a class="button button--alert" href="{{ path('shopping-list/clear', {idShoppingList: data.shoppingList.idShoppingList}) }}">
+                                            {{ 'customer.account.shopping_list.remove_all' | trans }}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
