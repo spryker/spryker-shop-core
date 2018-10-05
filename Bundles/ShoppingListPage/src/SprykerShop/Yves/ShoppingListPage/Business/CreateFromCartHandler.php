@@ -44,8 +44,10 @@ class CreateFromCartHandler implements CreateFromCartHandlerInterface
      */
     public function createShoppingListFromCart(FormInterface $cartToShoppingListForm): ShoppingListTransfer
     {
+        /** @var \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequest */
         $shoppingListFromCartRequest = $cartToShoppingListForm->getData();
-        if (!$shoppingListFromCartRequest->getShoppingListName()) {
+
+        if (!$shoppingListFromCartRequest->getIdShoppingList()) {
             $shoppingListFromCartRequest->setShoppingListName(
                 $cartToShoppingListForm->get(ShoppingListFromCartForm::FIELD_NEW_SHOPPING_LIST_NAME_INPUT)->getData()
             );

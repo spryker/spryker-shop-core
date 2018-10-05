@@ -21,7 +21,7 @@ class ShoppingListFromCartForm extends AbstractType
     public const FIELD_NEW_SHOPPING_LIST_NAME_INPUT = 'newShoppingListName';
     public const OPTION_SHOPPING_LISTS = 'OPTION_SHOPPING_LISTS';
     protected const FIELD_ID_QUOTE = 'idQuote';
-    protected const FIELD_SHOPPING_LIST_NAME = 'shoppingListName';
+    protected const FIELD_ID_SHOPPING_LIST = 'idShoppingList';
     protected const GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_PLACEHOLDER = 'cart.add-to-shopping-list.form.placeholder';
     protected const GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ERROR_EMPTY_NAME = 'cart.add-to-shopping-list.form.error.empty_name';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CREATE_FROM_CART_CHOOSE_SHOPPING_LIST = 'customer.account.shopping_list.create_from_cart.choose_shopping_list';
@@ -68,7 +68,7 @@ class ShoppingListFromCartForm extends AbstractType
      */
     protected function addShoppingListField(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(static::FIELD_SHOPPING_LIST_NAME, ChoiceType::class, [
+        $builder->add(static::FIELD_ID_SHOPPING_LIST, ChoiceType::class, [
             'choices' => $options[static::OPTION_SHOPPING_LISTS],
             'choices_as_values' => true,
             'expanded' => false,
@@ -108,7 +108,7 @@ class ShoppingListFromCartForm extends AbstractType
     {
         return function ($object, ExecutionContextInterface $context) use ($builder) {
             $data = $builder->getData();
-            if (!$object && !$data[static::FIELD_SHOPPING_LIST_NAME]) {
+            if (!$object && !$data[static::FIELD_ID_SHOPPING_LIST]) {
                 $context->buildViolation(static::GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ERROR_EMPTY_NAME)
                     ->addViolation();
             }
