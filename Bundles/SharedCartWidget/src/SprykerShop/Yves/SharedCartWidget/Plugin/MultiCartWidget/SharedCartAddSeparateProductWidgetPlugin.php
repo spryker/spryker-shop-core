@@ -30,7 +30,7 @@ class SharedCartAddSeparateProductWidgetPlugin extends AbstractWidgetPlugin impl
      *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
@@ -43,7 +43,7 @@ class SharedCartAddSeparateProductWidgetPlugin extends AbstractWidgetPlugin impl
      *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return '@SharedCartWidget/views/shared-cart-separate-product/shared-cart-separate-product.twig';
     }

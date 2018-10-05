@@ -22,21 +22,30 @@ class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin imple
      */
     public function initialize(array $item): void
     {
-        $this->addParameter('item', $item);
+        $this
+            ->addParameter('item', $item);
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return '@ProductPackagingUnitWidget/views/summary-product-packaging-unit/summary-product-packaging-unit.twig';
     }

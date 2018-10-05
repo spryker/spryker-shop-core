@@ -33,16 +33,18 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
      *
      * @api
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return ShoppingListNavigationMenuWidget::getTemplate();
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
+     *
+     * @api
      */
-    public static function getName(): string
+    public static function getName()
     {
-        return static::NAME;;
+        return static::NAME;
     }
 }

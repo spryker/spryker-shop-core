@@ -25,21 +25,30 @@ class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implemen
      */
     public function initialize(ItemTransfer $itemTransfer): void
     {
-        $this->addParameter('item', $itemTransfer);
+        $this
+            ->addParameter('item', $itemTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return '@ProductPackagingUnitWidget/views/cart-product-packaging-unit/cart-product-packaging-unit.twig';
     }

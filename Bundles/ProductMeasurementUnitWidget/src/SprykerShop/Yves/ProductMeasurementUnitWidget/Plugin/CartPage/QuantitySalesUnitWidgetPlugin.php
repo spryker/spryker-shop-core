@@ -38,7 +38,7 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
      *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
@@ -50,7 +50,7 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
      *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return CartProductMeasurementUnitQuantitySelectorWidget::getTemplate();
     }

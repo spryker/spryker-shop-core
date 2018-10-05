@@ -86,15 +86,13 @@
                                 {% if embed.item.cartNote is not empty %}
                                     {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
                                 {% endif %}
-                            {% else %}
-                                {% if embed.item.cartNote is not empty %}
-                                    {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                                        data: {
-                                            label: 'cart_note.checkout_page.item_note',
-                                            note: embed.item.cartNote
-                                        }
-                                    } only %}
-                                {% endif %}
+                            {% elseif embed.item.cartNote is not empty %}
+                                {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                    data: {
+                                        label: 'cart_note.checkout_page.item_note',
+                                        note: embed.item.cartNote
+                                    }
+                                } only %}
                             {% endif %}
                             {% if embed.isLast %}<hr/>{% endif %}
                         {% endblock %}

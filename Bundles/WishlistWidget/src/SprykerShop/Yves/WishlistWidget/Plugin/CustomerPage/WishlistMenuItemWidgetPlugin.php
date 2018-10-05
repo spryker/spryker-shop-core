@@ -41,7 +41,7 @@ class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Wishl
      *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
@@ -54,7 +54,7 @@ class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Wishl
      *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return WishlistMenuItemWidget::getTemplate();
     }

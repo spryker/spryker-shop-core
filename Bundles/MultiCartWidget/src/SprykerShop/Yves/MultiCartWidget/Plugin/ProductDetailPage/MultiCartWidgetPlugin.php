@@ -44,7 +44,7 @@ class MultiCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWid
      *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
@@ -56,7 +56,7 @@ class MultiCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWid
      *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return AddToMultiCartWidget::getTemplate();
     }

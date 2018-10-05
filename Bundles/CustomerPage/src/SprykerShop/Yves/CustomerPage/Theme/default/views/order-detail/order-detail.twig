@@ -90,17 +90,15 @@
                 {{ widget('CartNoteOrderNoteWidgetPlugin', data.order) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
             </div>
         {% endif %}
-    {% else %}
-        {% if data.order.cartNote is not empty %}
-            <div class="box">
-                {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                    data: {
-                        label: 'cart_note.customer_page.order_note',
-                        note: data.order.cartNote
-                    }
-                } only %}
-            </div>
-        {% endif %}
+    {% elseif data.order.cartNote is not empty %}
+        <div class="box">
+            {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                data: {
+                    label: 'cart_note.customer_page.order_note',
+                    note: data.order.cartNote
+                }
+            } only %}
+        </div>
     {% endif %}
 
     {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }}

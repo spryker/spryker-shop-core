@@ -40,7 +40,7 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
      *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
@@ -52,7 +52,7 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
      *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return MultiCartListWidget::getTemplate();
     }

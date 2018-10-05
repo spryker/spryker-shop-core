@@ -33,7 +33,7 @@ class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
      *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
@@ -45,7 +45,7 @@ class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements Cart
      *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return '@CartNoteWidget/views/checkout-cart-note-display/checkout-cart-note-display.twig';
     }

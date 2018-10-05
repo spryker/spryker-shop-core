@@ -33,7 +33,7 @@ class CartNoteOrderItemNoteWidgetPlugin extends AbstractWidgetPlugin implements 
      *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
@@ -45,7 +45,7 @@ class CartNoteOrderItemNoteWidgetPlugin extends AbstractWidgetPlugin implements 
      *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return '@CartNoteWidget/views/customer-cart-item-note-display/customer-cart-item-note-display.twig';
     }

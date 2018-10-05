@@ -42,7 +42,7 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implemen
      *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
@@ -54,7 +54,7 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implemen
      *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return ProductBundleItemCounterWidget::getTemplate();
     }

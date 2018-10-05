@@ -24,7 +24,8 @@ class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetW
      */
     public function initialize(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers): void
     {
-        $this->addParameter('productSet', $productSetDataStorageTransfer)
+        $this
+            ->addParameter('productSet', $productSetDataStorageTransfer)
             ->addParameter('productViews', $productViewTransfers);
     }
 

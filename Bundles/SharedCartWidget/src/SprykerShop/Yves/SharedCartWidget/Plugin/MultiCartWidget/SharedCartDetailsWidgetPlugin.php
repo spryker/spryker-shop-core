@@ -48,7 +48,7 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
@@ -61,7 +61,7 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
      *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return SharedCartDetailsWidget::getTemplate();
     }

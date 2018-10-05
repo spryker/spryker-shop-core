@@ -26,22 +26,31 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
      */
     public function initialize(ItemTransfer $itemTransfer, string $currencyIsoCode): void
     {
-        $this->addParameter('item', $itemTransfer)
+        $this
+            ->addParameter('item', $itemTransfer)
             ->addParameter('currencyIsoCode', $currencyIsoCode);
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return '@ProductPackagingUnitWidget/views/order-detail-product-packaging-unit/order-detail-product-packaging-unit.twig';
     }

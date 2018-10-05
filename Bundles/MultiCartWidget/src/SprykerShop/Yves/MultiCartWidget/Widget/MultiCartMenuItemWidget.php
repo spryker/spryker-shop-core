@@ -17,17 +17,11 @@ class MultiCartMenuItemWidget extends AbstractWidget
     protected const PAGE_KEY_MULTI_CART = 'multiCart';
 
     /**
-     * @var string
-     */
-    protected $activePage;
-
-    /**
      * @param string $activePage
      */
     public function __construct(string $activePage)
     {
-        $this->activePage = $activePage;
-        $this->addParameter('isActivePage', $this->isMultiCartPageActive());
+        $this->addParameter('isActivePage', $this->isMultiCartPageActive($activePage));
     }
 
     /**
@@ -47,10 +41,12 @@ class MultiCartMenuItemWidget extends AbstractWidget
     }
 
     /**
+     * @param string $activePage
+     *
      * @return bool
      */
-    protected function isMultiCartPageActive(): bool
+    protected function isMultiCartPageActive(string $activePage): bool
     {
-        return $this->activePage === static::PAGE_KEY_MULTI_CART;
+        return $activePage === static::PAGE_KEY_MULTI_CART;
     }
 }

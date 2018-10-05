@@ -35,7 +35,7 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
      *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
@@ -47,7 +47,7 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
      *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return AgentControlBarWidget::getTemplate();
     }

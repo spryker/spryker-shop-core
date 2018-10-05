@@ -45,7 +45,7 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      *
      * @return string
      */
-    public static function getName(): string
+    public static function getName()
     {
         return static::NAME;
     }
@@ -58,7 +58,7 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      *
      * @return string
      */
-    public static function getTemplate(): string
+    public static function getTemplate()
     {
         return SharedCartOperationsWidget::getTemplate();
     }
