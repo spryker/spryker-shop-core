@@ -91,11 +91,11 @@ class CompanyUserFormDataProvider
      */
     protected function getDefaultCompanyUserData(int $idCompany): array
     {
-        $companyRoleCollection = $this->getCompanyRoleCollectionWithDefaultCompanyRoleOnly($idCompany);
+        $companyRoleCollection = $this->getCompanyRoleCollectionWithDefaultCompanyRoleOnly($idCompany)->toArray();
 
         return [
             CompanyUserForm::FIELD_FK_COMPANY => $idCompany,
-            CompanyUserForm::FIELD_COMPANY_ROLE_COLLECTION => $companyRoleCollection->toArray(),
+            CompanyUserForm::FIELD_COMPANY_ROLE_COLLECTION => $companyRoleCollection,
         ];
     }
 
