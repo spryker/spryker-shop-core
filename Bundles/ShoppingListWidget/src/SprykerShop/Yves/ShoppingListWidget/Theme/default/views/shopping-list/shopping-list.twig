@@ -52,9 +52,7 @@
                     }
                 } only %}
 
-                <button type="submit" class="button button--expand js-add-to-shopping-list"
-                        {{ qa('add-to-shopping-list-button') }}
-                        {{ data.isDisabled ? 'disabled' : '' }}>
+                <button type="submit" class="button button--expand js-add-to-shopping-list" {{ qa('add-to-shopping-list-button') }} {{ data.isDisabled ? 'disabled' : '' }}>
                     {% include atom('icon') with {
                         data: {
                             name: 'cart-plus'
