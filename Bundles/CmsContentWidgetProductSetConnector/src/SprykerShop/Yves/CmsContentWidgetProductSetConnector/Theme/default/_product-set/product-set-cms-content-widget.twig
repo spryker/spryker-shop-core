@@ -1,9 +1,11 @@
 {% if productSetList is defined %}
     {% for productSet in productSetList %}
-        {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.productViews) }}
+        {% if productSet.productViews is not empty %}
+            {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.productViews) }}
+        {% endif %}
     {% endfor %}
 {% endif %}
 
-{% if productSet is defined %}
+{% if productSet is defined and productViews is not empty %}
     {{ widget('ProductSetWidgetPlugin', productSet, productViews) }}
 {% endif %}
