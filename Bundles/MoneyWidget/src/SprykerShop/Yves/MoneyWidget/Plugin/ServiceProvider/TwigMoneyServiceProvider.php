@@ -98,10 +98,13 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
      * @param \Generated\Shared\Transfer\MoneyTransfer|int|string|float|null $money
      * @param string|null $isoCode
      *
-     * @return float
+     * @return float|null
      */
     public function moneyRawFilterFunction($money, $isoCode = null)
     {
+        if ($money === null) {
+            return null;
+        }
         if (!($money instanceof MoneyTransfer)) {
             $money = $this->getMoneyTransfer($money, $isoCode);
         }
@@ -137,10 +140,10 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @param int|string|float|null $money
+     * @param int|string|float $money
      * @param string|null $isoCode
      *
-     * @return \Generated\Shared\Transfer\MoneyTransfer|null
+     * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     protected function getMoneyTransfer($money, $isoCode = null)
     {
