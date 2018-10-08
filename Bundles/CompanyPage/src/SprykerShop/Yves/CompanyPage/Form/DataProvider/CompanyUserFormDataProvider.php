@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
@@ -53,13 +52,14 @@ class CompanyUserFormDataProvider
     /**
      * @param int $idCompany
      * @param int|null $idCompanyUser
+     * @param array|null $options
      *
      * @return array
      */
-    public function getData(int $idCompany, ?int $idCompanyUser = null): array
+    public function getData(int $idCompany, ?int $idCompanyUser = null, ?array $options = null): array
     {
         if ($idCompanyUser === null) {
-            return $this->getDefaultCompanyUserData($idCompany);
+            return $this->getDefaultCompanyUserData($idCompany, $options);
         }
 
         $companyUserTransfer = $this->loadCompanyUserTransfer($idCompanyUser);
@@ -78,25 +78,69 @@ class CompanyUserFormDataProvider
      */
     public function getOptions(int $idCompany): array
     {
+        $retrievedCompanyRoleCollection = $this->retrieveCompanyRoleCollectionFromCompanyRoleClient($idCompany);
+
         return [
             CompanyUserForm::OPTION_BUSINESS_UNIT_CHOICES => $this->getAvailableBusinessUnits($idCompany),
-            CompanyUserForm::OPTION_COMPANY_ROLE_CHOICES => $this->getAvailableCompanyRoleIds($idCompany),
+            CompanyUserForm::OPTION_COMPANY_ROLE_CHOICES => $this->getAvailableCompanyRoleIds($retrievedCompanyRoleCollection),
+            CompanyUserForm::OPTION_RETRIEVED_COMPANY_ROLES => $retrievedCompanyRoleCollection,
         ];
     }
 
     /**
      * @param int $idCompany
+     * @param array|null $options
      *
      * @return array
      */
-    protected function getDefaultCompanyUserData(int $idCompany): array
+    protected function getDefaultCompanyUserData(int $idCompany, ?array $options = null): array
     {
-        $companyRoleCollection = $this->getCompanyRoleCollectionWithDefaultCompanyRoleOnly($idCompany)->toArray();
+        $companyRolesArray = ($options !== null)
+            ? $this->getCompanyRolesArrayWithDefaultCompanyRoleOnly($options)
+            : null;
 
         return [
             CompanyUserForm::FIELD_FK_COMPANY => $idCompany,
-            CompanyUserForm::FIELD_COMPANY_ROLE_COLLECTION => $companyRoleCollection,
+            CompanyUserForm::FIELD_COMPANY_ROLE_COLLECTION => $companyRolesArray,
         ];
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function getCompanyRolesArrayWithDefaultCompanyRoleOnly(array $options): array
+    {
+        $companyRoles = [];
+
+        $defaultCompanyRole = $this->findDefaultCompanyRole($options);
+        if ($defaultCompanyRole === null) {
+            return $companyRoles;
+        }
+        $companyRoles[] = $defaultCompanyRole->toArray();
+
+        return [
+            CompanyRoleCollectionTransfer::ROLES => $companyRoles,
+        ];
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    protected function findDefaultCompanyRole(array $options): ?CompanyRoleTransfer
+    {
+        $retrievedCompanyRoles = $options[CompanyUserForm::OPTION_RETRIEVED_COMPANY_ROLES];
+
+        foreach ($retrievedCompanyRoles->getRoles() as $companyRoleTransfer) {
+            if ($companyRoleTransfer->getIsDefault()) {
+                return $companyRoleTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -104,44 +148,12 @@ class CompanyUserFormDataProvider
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
-    protected function getCompanyRoleCollectionWithDefaultCompanyRoleOnly(int $idCompany): CompanyRoleCollectionTransfer
+    protected function retrieveCompanyRoleCollectionFromCompanyRoleClient(int $idCompany): CompanyRoleCollectionTransfer
     {
-        $companyRoleCollection = new CompanyRoleCollectionTransfer();
+        $criteriaFilterTransfer = new CompanyRoleCriteriaFilterTransfer();
+        $criteriaFilterTransfer->setIdCompany($idCompany);
 
-        $defaultIdCompanyRole = $this->findDefaultIdCompanyRole($idCompany);
-        if ($defaultIdCompanyRole === null) {
-            return $companyRoleCollection;
-        }
-
-        $companyRoleTransfer = (new CompanyRoleTransfer())
-            ->setIdCompanyRole($defaultIdCompanyRole);
-
-        $companyRoleCollection->setRoles(new ArrayObject([
-            $companyRoleTransfer,
-        ]));
-
-        return $companyRoleCollection;
-    }
-
-    /**
-     * @param int $idCompany
-     *
-     * @return int|null
-     */
-    protected function findDefaultIdCompanyRole(int $idCompany): ?int
-    {
-        $criteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
-            ->setIdCompany($idCompany);
-
-        $companyRoleCollection = $this->companyRoleClient->getCompanyRoleCollection($criteriaFilterTransfer);
-
-        foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {
-            if ($companyRoleTransfer->getIsDefault()) {
-                return $companyRoleTransfer->getIdCompanyRole();
-            }
-        }
-
-        return null;
+        return $this->companyRoleClient->getCompanyRoleCollection($criteriaFilterTransfer);
     }
 
     /**
@@ -180,17 +192,12 @@ class CompanyUserFormDataProvider
     }
 
     /**
-     * @param int $idCompany
+     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollection
      *
      * @return int[] Keys are role names
      */
-    protected function getAvailableCompanyRoleIds(int $idCompany): array
+    protected function getAvailableCompanyRoleIds(CompanyRoleCollectionTransfer $companyRoleCollection): array
     {
-        $criteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
-            ->setIdCompany($idCompany);
-
-        $companyRoleCollection = $this->companyRoleClient->getCompanyRoleCollection($criteriaFilterTransfer);
-
         $roles = [];
         foreach ($companyRoleCollection->getRoles() as $role) {
             $roles[$role->getName()] = $role->getIdCompanyRole();

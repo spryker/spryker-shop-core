@@ -38,6 +38,7 @@ class CompanyUserForm extends AbstractType
 
     public const OPTION_BUSINESS_UNIT_CHOICES = 'business_unit_choices';
     public const OPTION_COMPANY_ROLE_CHOICES = 'company_role_choices';
+    public const OPTION_RETRIEVED_COMPANY_ROLES = 'retrieved_company_roles';
 
     protected const KEY_ROLES = 'roles';
     protected const KEY_ID_COMPANY_ROLE = 'id_company_role';
@@ -51,6 +52,7 @@ class CompanyUserForm extends AbstractType
     {
         $resolver->setRequired(static::OPTION_BUSINESS_UNIT_CHOICES);
         $resolver->setRequired(static::OPTION_COMPANY_ROLE_CHOICES);
+        $resolver->setDefined(static::OPTION_RETRIEVED_COMPANY_ROLES);
     }
 
     /**
