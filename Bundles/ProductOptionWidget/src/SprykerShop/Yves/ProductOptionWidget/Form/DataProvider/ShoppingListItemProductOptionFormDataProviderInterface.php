@@ -15,7 +15,7 @@ interface ShoppingListItemProductOptionFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]|null
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]
      */
     public function findProductOptionGroupsByShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ArrayObject;
 }
