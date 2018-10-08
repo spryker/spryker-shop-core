@@ -1,0 +1,18 @@
+{% extends template('widget') %}
+
+{% define data = {
+    expenses: _widget.expenses | default,
+} %}
+
+{% block body %}
+    {% if data.expenses is not empty %}
+        <strong>{{ 'checkout.sales-order-threshold' | trans }}</strong>
+        <ul class="list">
+            {% for expense in data.expenses %}
+                {% include molecule('sales-order-threshold-expense', 'SalesOrderThresholdWidget') with {
+                    data: {'expense': expense}
+                } only %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
