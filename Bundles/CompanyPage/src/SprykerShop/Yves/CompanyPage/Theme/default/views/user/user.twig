@@ -2,6 +2,7 @@
 
 {% define data = {
     users: _view.companyUserCollection,
+    currentCompanyUserId: _view.currentCompanyUser.idCompanyUser,
 
     pagination: {
         parameters: {},
@@ -17,7 +18,11 @@
 
 {% block companyContent %}
     <div class="box text-right">
-        <a class="button" href="{{url('company/user/create')}}">{{ 'company.account.company_user.add' | trans }}</a>
+        {% include molecule('invitation-link', 'CompanyUserInvitationPage') ignore missing %}
+
+        {% if can('AddCompanyUserPermissionPlugin') %}
+            <a class="button" href="{{url('company/user/create')}}">{{ 'company.account.company_user.add' | trans }}</a>
+        {%  endif %}
     </div>
 
     {% if data.users is not empty %}
@@ -25,6 +30,7 @@
             {% include molecule('user-table', 'CompanyPage') with {
                 data: {
                     users: data.users,
+                    currentCompanyUserId: data.currentCompanyUserId,
                     actions: {
                         update: true,
                         delete: true

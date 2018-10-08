@@ -10,7 +10,7 @@ namespace SprykerShop\Client\CheckoutPage\Plugin;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 /**
- * For Client PermissionDependencyProvider::getPermissionPlugins() registration
+ * @deprecated Use \Spryker\Shared\CheckoutPermissionConnector\Plugin\Permission\PlaceOrderWithAmountUpToPermissionPlugin instead.
  */
 class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPluginInterface
 {

@@ -38,15 +38,11 @@ class CompanyRoleDataProvider
             return $this->getDefaultCompanyRoleData($fkCompany);
         }
 
-        if ($idCompanyRole) {
-            $companyRoleTransfer = new CompanyRoleTransfer();
-            $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
-            $companyRole = $this->companyRoleClient->getCompanyRoleById($companyRoleTransfer);
+        $companyRoleTransfer = new CompanyRoleTransfer();
+        $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
+        $companyRole = $this->companyRoleClient->getCompanyRoleById($companyRoleTransfer);
 
-            return $companyRole->modifiedToArray();
-        }
-
-        return [];
+        return $companyRole->modifiedToArray();
     }
 
     /**

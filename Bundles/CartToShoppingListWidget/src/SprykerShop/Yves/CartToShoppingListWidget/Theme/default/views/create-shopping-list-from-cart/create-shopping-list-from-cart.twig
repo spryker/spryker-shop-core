@@ -17,8 +17,13 @@
     labels: {
         formLabel: 'cart.add-to-shopping-list.form' | trans,
         submitLabel: 'cart.add-to-shopping-list' | trans
-    }
+    },
+    isVisible: _widget.isVisible
 } %}
+
+{% block template %}
+    {% if data.isVisible %}{{ parent() }}{% endif %}
+{% endblock %}
 
 {% block body %}
 
@@ -29,7 +34,7 @@
             <div class="col col--sm-12">
                 {% include molecule('toggle-select-form', 'CartToShoppingListWidget') with {
                     data: {
-                        attribute: attribute(data.form.children, 'shoppingListName'),
+                        attribute: attribute(data.form.children, 'idShoppingList'),
                         selectAttributes: {
                             'target': 'js-add-new-shopping-list',
                             'class-to-toggle': 'is-hidden'

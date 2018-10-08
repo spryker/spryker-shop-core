@@ -14,6 +14,8 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_SHARED_CART_SHARE = 'shared-cart/share';
     public const ROUTE_SHARED_CART_UNSHARE = 'shared-cart/unshare';
+    public const ROUTE_SHARED_CART_DISMISS = 'shared-cart/dismiss';
+    public const ROUTE_SHARED_CART_DISMISS_CONFIRM = 'shared-cart/dismiss-confirm';
 
     /**
      * @param \Silex\Application $app
@@ -23,7 +25,9 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
     protected function defineControllers(Application $app)
     {
         $this->addShareController()
-            ->addUnshareController();
+            ->addUnshareController()
+            ->addDismissController()
+            ->addDismissConfirmController();
     }
 
     /**
@@ -44,6 +48,30 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
     protected function addUnshareController(): self
     {
         $this->createController('/{sharedCart}/unshare/{idQuote}/{idCompanyUser}/{idPermissionGroup}', static::ROUTE_SHARED_CART_UNSHARE, 'SharedCartPage', 'Unshare', 'index')
+            ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
+            ->value('sharedCart', 'shared-cart');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addDismissController(): self
+    {
+        $this->createController('/{sharedCart}/dismiss/{idQuote}', static::ROUTE_SHARED_CART_DISMISS, 'SharedCartPage', 'Dismiss', 'index')
+            ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
+            ->value('sharedCart', 'shared-cart');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addDismissConfirmController(): self
+    {
+        $this->createController('/{sharedCart}/dismiss-confirm/{idQuote}', static::ROUTE_SHARED_CART_DISMISS_CONFIRM, 'SharedCartPage', 'Dismiss', 'Confirm')
             ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
             ->value('sharedCart', 'shared-cart');
 

@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/cart-note-widget",
+  "type": "library",
   "description": "CartNoteWidget module",
   "license": "proprietary",
   "require": {
