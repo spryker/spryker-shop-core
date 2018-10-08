@@ -54,6 +54,14 @@
                 {% widget 'SharedCartPermissionGroupWidget' args [data.cart] only %}
                 {% elsewidget 'SharedCartPermissionGroupWidgetPlugin' args [data.cart] only %} {# @deprecated Use SharedCartPermissionGroupWidget instead. #}
                 {% endwidget %}
+
+                {% if data.cart.priceMode is not empty %}
+                    {% include molecule('price-mode') with {
+                        data: {
+                            priceMode: data.cart.priceMode
+                        }
+                    } only %}
+                {% endif %}
             </div>
         </div>
 

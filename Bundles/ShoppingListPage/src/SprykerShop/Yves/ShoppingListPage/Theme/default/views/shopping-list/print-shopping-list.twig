@@ -4,15 +4,9 @@
     shoppingList: _view.shoppingListOverview.shoppingList,
     shoppingListItems: _view.shoppingListItems,
     barcodeGeneratorPlugin: _view.barcodeGeneratorPlugin | default(null),
-    labels: {
-        shoppingListId: 'customer.account.print_shopping_list.title.shopping_list_id' | trans,
-        shoppingListName: 'customer.account.print_shopping_list.title.shopping_list_name' | trans,
-        barcode: 'customer.account.print_shopping_list.table.barcode' | trans,
-        productSku: 'customer.account.print_shopping_list.table.product_sku' | trans,
-        productName: 'customer.account.print_shopping_list.table.product_name' | trans,
-        defaultPrice: 'customer.account.print_shopping_list.table.default_price' | trans,
-    }
 } %}
+
+{% set isNotesSupported = widgetExists('ShoppingListItemNoteWidgetPlugin') %}
 <head>
     <meta charset="utf-8" />
     <title>{{ data.shoppingList.name }}</title>
@@ -27,19 +21,18 @@
     </style>
 </head>
 <body>
-
 <table class="shopping-list-title">
     <tr>
-        <td>{{ data.labels.shoppingListId }}</td>
+        <td>{{ 'customer.account.print_shopping_list.title.shopping_list_id' | trans }}</td>
         <td>{{ data.shoppingList.idShoppingList }}</td>
     </tr>
     <tr>
-        <td>{{ data.labels.shoppingListName }}</td>
+        <td>{{ 'customer.account.print_shopping_list.title.shopping_list_name' | trans }}</td>
         <td>{{ data.shoppingList.name }}</td>
     </tr>
 </table>
 
-<br/><br/>
+<br><br>
 
 <table class="shopping-list-items">
     <tbody>
@@ -66,14 +59,44 @@
     </tbody>
     <thead>
     <tr>
+<<<<<<< HEAD
         {% if productBarcodeWidgetExists %}
             <th>{{ data.labels.barcode }}</th>
+=======
+        {% if widgetExists('ProductBarcodeWidgetPlugin') %}
+            <th>{{ 'customer.account.print_shopping_list.table.barcode' | trans }}</th>
         {% endif %}
-        <th>{{ data.labels.productSku }}</th>
-        <th>{{ data.labels.productName }}</th>
-        <th>{{ data.labels.defaultPrice }}</th>
+        <th>{{ 'customer.account.print_shopping_list.table.product_sku' | trans }}</th>
+        <th>{{ 'customer.account.print_shopping_list.table.product_name' | trans }}</th>
+        <th>{{ 'customer.account.print_shopping_list.table.default_price' | trans }}</th>
+        {% if isNotesSupported %}
+            <th>{{ 'customer.account.print_shopping_list.table.note' | trans }}</th>
+>>>>>>> feature/te-29/master-global-widgets
+        {% endif %}
     </tr>
     </thead>
+<<<<<<< HEAD
+=======
+    <tbody>
+    {% for item in data.shoppingListItems %}
+    <tr>
+        {% if widgetExists('ProductBarcodeWidgetPlugin') %}
+            <td>{{ widget('ProductBarcodeWidgetPlugin', item, data.barcodeGeneratorPlugin) }}</td>
+        {% endif %}
+        <td>{{ item.sku }}</td>
+        <td>{{ item.name }}</td>
+        <td>
+            {% if item.prices.DEFAULT is defined %}
+                {{ item.prices.DEFAULT | money }}
+            {% endif %}
+        </td>
+        {% if isNotesSupported %}
+            <td>{{ item.shoppingListItem.shoppingListItemNote.note }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+>>>>>>> feature/te-29/master-global-widgets
 </table>
 
 </body>

@@ -43,6 +43,15 @@
     {% else %}
         <div class="grid">
             <div class="col col--sm-12 col--xl-8">
+                {% if data.cart.priceMode is not empty %}
+                    <div class="box">
+                        {% include molecule('price-mode') with {
+                            data: {
+                                priceMode: data.cart.priceMode
+                            }
+                        } only %}
+                    </div>
+                {% endif %}
                 {% for cartItem in data.cartItems %}
                     {% include molecule('cart-item', 'CartPage') with {
                         class: 'box',

@@ -90,7 +90,7 @@ class AddToCartHandler implements AddToCartHandlerInterface
         return (new ShoppingListAddToCartRequestTransfer())
             ->setSku($shoppingListItemTransfer->getSku())
             ->setQuantity($shoppingListItemTransfer->getQuantity())
-            ->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+            ->setShoppingListItem($shoppingListItemTransfer);
     }
 
     /**
@@ -104,8 +104,10 @@ class AddToCartHandler implements AddToCartHandlerInterface
         array $itemQuantity
     ): ShoppingListAddToCartRequestCollectionTransfer {
         foreach ($shoppingListMoveToCartRequestCollectionTransfer->getRequests() as $addToCartRequestTransfer) {
-            if (!empty($itemQuantity[$addToCartRequestTransfer->getIdShoppingListItem()])) {
-                $addToCartRequestTransfer->setQuantity($itemQuantity[$addToCartRequestTransfer->getIdShoppingListItem()]);
+            $idShoppingListItem = $addToCartRequestTransfer->getShoppingListItem()->getIdShoppingListItem();
+
+            if (!empty($itemQuantity[$idShoppingListItem])) {
+                $addToCartRequestTransfer->setQuantity($itemQuantity[$idShoppingListItem]);
             }
         }
 

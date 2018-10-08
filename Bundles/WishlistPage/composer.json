@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/wishlist-page",
+  "type": "library",
   "description": "WishlistPage module",
   "license": "proprietary",
   "require": {

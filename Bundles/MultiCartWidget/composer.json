@@ -1,10 +1,11 @@
 {
   "name": "spryker-shop/multi-cart-widget",
+  "type": "library",
   "description": "MultiCartWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.6.0",
     "spryker/kernel": "^3.19.0",
     "spryker/multi-cart": "^1.0.0"
   },

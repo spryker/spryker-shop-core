@@ -1,12 +1,13 @@
 {
   "name": "spryker-shop/multi-cart-page",
+  "type": "library",
   "description": "MultiCartPage module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker-shop/cart-page": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.6.0",
     "spryker/application": "^3.0.0",
     "spryker/cart": "^5.0.0",
     "spryker/kernel": "^3.19.0",

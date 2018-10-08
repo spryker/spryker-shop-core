@@ -84,27 +84,25 @@
                     {% endif %}
                 {% endif %}
 
-                {% if item.cartNote is not empty %}
-                    {% if widgetExists('CartNoteOrderItemNoteWidgetPlugin') %}
-                        <tr>
-                            <td></td>
-                            <td colspan="5">
-                                {{ widget('CartNoteOrderItemNoteWidgetPlugin', item) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td></td>
-                            <td colspan="5">
-                                {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                                    data: {
-                                        label: 'cart_note.customer_page.item_note',
-                                        note: item.cartNote
-                                    }
-                                } only %}
-                            </td>
-                        </tr>
-                    {% endif %}
+                {% if widgetExists('CartNoteOrderItemNoteWidgetPlugin') %}
+                    <tr>
+                        <td></td>
+                        <td colspan="5">
+                            {{ widget('CartNoteOrderItemNoteWidgetPlugin', concreteItem) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td></td>
+                        <td colspan="5">
+                            {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                data: {
+                                    label: 'cart_note.customer_page.item_note',
+                                    note: concreteItem.cartNote
+                                }
+                            } only %}
+                        </td>
+                    </tr>
                 {% endif %}
             {% endfor %}
         </tbody>
