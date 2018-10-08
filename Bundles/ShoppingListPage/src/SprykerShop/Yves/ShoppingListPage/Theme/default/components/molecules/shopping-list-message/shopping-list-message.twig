@@ -1,0 +1,68 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-message'
+} %}
+
+{% define data = {
+    title: required,
+    backUrl: required,
+    idShoppingList: required,
+    sharedCompanyUsers: required,
+    sharedCompanyBusinessUnits: required
+} %}
+
+{% block body %}
+    <h5 class="{{ config.name }}__title spacing-bottom">
+        {% include atom('icon') with {
+            modifiers: ['big'],
+            data: {
+                name: 'action-warning'
+            }
+        } only %}
+        {{ 'customer.account.shopping_list.delete.warning' | trans }}
+    </h5>
+    <p class="spacing-y spacing-y--small">
+        {{ 'customer.account.shopping_list.delete.you_are_trying_to_delete_shopping_list' | trans({
+            '%link%': url('shopping-list/details', {'idShoppingList': data.idShoppingList}),
+            '%name%': data.title
+        }) | raw }}
+    </p>
+    {% if data.sharedCompanyUsers.count or data.sharedCompanyBusinessUnits.count %}
+        <p class="spacing-y spacing-y--small spacing-bottom spacing-bottom--big">
+            {{ 'customer.account.shopping_list.delete.it_belongs_to_follow' | trans }}
+        </p>
+
+        {% if data.sharedCompanyBusinessUnits.count %}
+            <b>{{ 'company.account.business_unit' | trans }}:</b>
+            <ul class="list">
+                {% for sharedCompanyBusinessUnit in data.sharedCompanyBusinessUnits %}
+                    <li class="list__item">{{ sharedCompanyBusinessUnit.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <br>
+
+        {% if data.sharedCompanyUsers.count %}
+            <b>{{ 'company.account.company_user' | trans }}:</b>
+            <ul class="list">
+                {% for sharedCompanyUser in data.sharedCompanyUsers %}
+                    <li class="list__item">{{ sharedCompanyUser.customer.firstName ~ ' ' ~  sharedCompanyUser.customer.lastName }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <br>
+
+        <p>
+            <strong>
+                {{ 'customer.account.shopping_list.delete.it_wll_be_deleted_from_all_of_them' | trans }}
+            </strong>
+        </p>
+    {% endif %}
+    <div>
+        <a href="{{ data.backUrl }}" class="button button--hollow">{{ 'general.cancel.button' | trans }}</a>
+        <a href="{{ url('shopping-list/delete', {'idShoppingList': data.idShoppingList})}}" class="button button--alert spacing-left">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
+    </div>
+{% endblock %}

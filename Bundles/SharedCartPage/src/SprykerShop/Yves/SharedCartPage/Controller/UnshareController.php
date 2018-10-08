@@ -12,6 +12,7 @@ use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\SharedCartPage\Controller\ShareController to share and unshare.
  * @method \SprykerShop\Yves\SharedCartPage\SharedCartPageFactory getFactory()
  */
 class UnshareController extends AbstractController
