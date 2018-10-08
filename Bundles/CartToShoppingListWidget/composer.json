@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/cart-to-shopping-list-widget",
+  "type": "library",
   "description": "CartToShoppingListWidget module",
   "license": "proprietary",
   "require": {

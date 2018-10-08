@@ -31,7 +31,7 @@
                     <tr>
                         {% block row %}
                             {% if widgetExists('OrderDetailProductPackagingUnitWidgetPlugin') %}
-                                {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item, data.currencyIsoCode) }}
+                                {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', concreteItem, data.currencyIsoCode) }}
                             {% else %}
                                 <td>
                                     {{ concreteItem.sku }}
@@ -90,7 +90,7 @@
                             {% endfor %}
                         {% endif %}
                     {% endif %}
-                    {{ widget('CartNoteOrderItemNoteWidgetPlugin', item) }}
+                    {{ widget('CartNoteOrderItemNoteWidgetPlugin', concreteItem) }}
                 {% endfor %}
         </tbody>
     </table>
