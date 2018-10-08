@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ShoppingListWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCustomerClientBridge;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientBridge;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListSessionClientBridge;
@@ -17,6 +18,7 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
 {
     public const CLIENT_SHOPPING_LIST = 'CLIENT_SHOPPING_LIST';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const CLIENT_SHOPPING_LIST_SESSION = 'CLIENT_SHOPPING_LIST_SESSION';
 
     /**
@@ -28,6 +30,7 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = $this->addShoppingListClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addApplication($container);
         $container = $this->addShoppingListSessionClient($container);
 
         return $container;
@@ -56,6 +59,22 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new ShoppingListWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addApplication(Container $container): Container
+    {
+        $container[static::PLUGIN_APPLICATION] = function () {
+            $pimplePlugin = new Pimple();
+
+            return $pimplePlugin->getApplication();
         };
 
         return $container;

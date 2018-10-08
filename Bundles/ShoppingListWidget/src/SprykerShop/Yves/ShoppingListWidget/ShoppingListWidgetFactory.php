@@ -8,15 +8,29 @@
 namespace SprykerShop\Yves\ShoppingListWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListSessionClientInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetConfig getConfig()
  */
 class ShoppingListWidgetFactory extends AbstractFactory
 {
+    /**
+     * @param string $path
+     * @param array $parameters
+     * @param int $code
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function createRedirectResponse(string $path, array $parameters = [], int $code = 302): RedirectResponse
+    {
+        return new RedirectResponse($this->getApplication()->path($path, $parameters), $code);
+    }
+
     /**
      * @return \SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface
      */
@@ -39,6 +53,14 @@ class ShoppingListWidgetFactory extends AbstractFactory
     public function getBundleConfig(): ShoppingListWidgetConfig
     {
         return $this->getConfig();
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::PLUGIN_APPLICATION);
     }
 
     /**

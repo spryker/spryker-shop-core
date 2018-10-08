@@ -6,6 +6,7 @@
         textOrder: _view.textOrderForm
     },
 
+    additionalDataColumnProviderPlugins: _view.additionalDataColumnProviderPlugins,
     title: 'quick-order.page-title' | trans
 } %}
 
@@ -15,7 +16,8 @@
             {% include molecule('quick-order-form', 'QuickOrderPage') with {
                 class: 'box',
                 data: {
-                    form: data.forms.items
+                    form: data.forms.items,
+                    additionalDataColumnProviderPlugins: data.additionalDataColumnProviderPlugins
                 }
             } only %}
         </div>

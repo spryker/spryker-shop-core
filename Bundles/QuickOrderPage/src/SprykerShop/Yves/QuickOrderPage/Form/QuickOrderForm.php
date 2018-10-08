@@ -60,6 +60,10 @@ class QuickOrderForm extends AbstractType
             'entry_type' => OrderItemEmbeddedForm::class,
             'allow_add' => true,
             'allow_delete' => true,
+            'label' => false,
+            'entry_options' => [
+                'label' => false,
+            ],
             'constraints' => [
                     new ItemsFieldConstraint(),
                 ],

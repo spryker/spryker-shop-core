@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
+use Generated\Shared\Transfer\CurrentProductConcretePriceTransfer;
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -16,6 +19,7 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
@@ -25,6 +29,9 @@ class QuickOrderController extends AbstractController
 {
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
+    public const PARAM_ID_PRODUCT = 'id-product';
+    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const PARAM_QUANTITY = 'quantity';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -67,6 +74,7 @@ class QuickOrderController extends AbstractController
             ->handleRequest($request);
 
         $response = $this->handleQuickOrderForm($quickOrderForm, $request);
+
         if ($response !== null) {
             return $response;
         }
@@ -74,7 +82,22 @@ class QuickOrderController extends AbstractController
         return [
             'itemsForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
+            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
         ];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormAdditionalDataColumnProviderPluginInterface[]
+     */
+    protected function getQuickOrderFormAdditionalDataColumnProviderPlugins()
+    {
+        $quickOrderFormAdditionalDataColumnProviderPluginCollection = [];
+
+        foreach ($this->getFactory()->getQuickOrderFormAdditionalDataColumnProviderPlugins() as $quickOrderFormAdditionalDataColumnProviderPlugin) {
+            $quickOrderFormAdditionalDataColumnProviderPluginCollection[$quickOrderFormAdditionalDataColumnProviderPlugin->getFieldName()] = $quickOrderFormAdditionalDataColumnProviderPlugin;
+        }
+
+        return $quickOrderFormAdditionalDataColumnProviderPluginCollection;
     }
 
     /**
@@ -125,6 +148,8 @@ class QuickOrderController extends AbstractController
 
         return [
             'form' => $quickOrderForm->createView(),
+            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
+            'productConcretesData' => $this->getProductConcretesData($orderItems),
         ];
     }
 
@@ -178,7 +203,94 @@ class QuickOrderController extends AbstractController
 
         return [
             'form' => $quickOrderForm->createView(),
+            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
+            'productConcretesData' => $this->getProductConcretesData($orderItems),
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function productAdditionalDataAction(Request $request)
+    {
+        $productConcreteTransfer = $this->executeProductAdditionalDataAction($request);
+
+        return $this->jsonResponse($productConcreteTransfer->toArray(true, true));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function executeProductAdditionalDataAction(Request $request): ProductConcreteTransfer
+    {
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setIdProductConcrete(
+            $request->query->getInt(static::PARAM_ID_PRODUCT)
+        );
+
+        $productConcreteTransfer = $this->getFactory()
+            ->getQuickOrderClient()
+            ->expandProductConcreteTransfer($productConcreteTransfer);
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function productPriceAction(Request $request)
+    {
+        if (!$request->query->getInt(static::PARAM_ID_PRODUCT) || !$request->query->getInt(static::PARAM_ID_PRODUCT_ABSTRACT)) {
+            return $this->jsonResponse(
+                (new CurrentProductPriceTransfer())->toArray(true, true),
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        $currentProductConcretePriceTransfer = $this->executeProductPriceAction($request);
+
+        return $this->jsonResponse($currentProductConcretePriceTransfer->toArray(true, true));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer
+     */
+    protected function executeProductPriceAction(Request $request): CurrentProductConcretePriceTransfer
+    {
+        $currentProductConcretePriceTransfer = $this->createCurrentProductConcretePriceTransfer($request);
+
+        return $this->getFactory()
+            ->getQuickOrderClient()
+            ->getProductConcreteSumPrice($currentProductConcretePriceTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer
+     */
+    protected function createCurrentProductConcretePriceTransfer(Request $request): CurrentProductConcretePriceTransfer
+    {
+        $currentProductPriceTransfer = (new CurrentProductPriceTransfer())->setQuantity(
+            $request->query->getInt(static::PARAM_QUANTITY, 0)
+        );
+        $currentProductConcretePriceTransfer = (new CurrentProductConcretePriceTransfer())
+            ->setIdProductConcrete(
+                $request->query->getInt(static::PARAM_ID_PRODUCT)
+            )
+            ->setIdProductAbstract(
+                $request->query->getInt(static::PARAM_ID_PRODUCT_ABSTRACT)
+            );
+
+        return $currentProductConcretePriceTransfer->setCurrentProductPrice($currentProductPriceTransfer);
     }
 
     /**
@@ -235,6 +347,26 @@ class QuickOrderController extends AbstractController
 
                 return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_INDEX);
             }
+
+            return $this->executeQuickOrderFormHandlerStrategyPlugin($quickOrderForm, $request);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+     */
+    protected function executeQuickOrderFormHandlerStrategyPlugin(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
+    {
+        foreach ($this->getFactory()->getQuickOrderFormHandlerStrategyPlugins() as $quickOrderFormHandlerStrategyPlugin) {
+            if (!$quickOrderFormHandlerStrategyPlugin->isApplicable($quickOrderForm, $request)) {
+                continue;
+            }
+            return $quickOrderFormHandlerStrategyPlugin->execute($quickOrderForm, $request);
         }
 
         return null;
@@ -260,5 +392,17 @@ class QuickOrderController extends AbstractController
         }
 
         return $quickOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     */
+    protected function getProductConcretesData(array $quickOrderItemTransfers): array
+    {
+        return $this->getFactory()
+            ->getQuickOrderClient()
+            ->findProductConcretesByQuickOrderItemTransfers($quickOrderItemTransfers);
     }
 }

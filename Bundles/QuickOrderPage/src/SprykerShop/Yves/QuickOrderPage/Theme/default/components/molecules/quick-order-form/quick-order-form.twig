@@ -6,7 +6,8 @@
 } %}
 
 {% define data = {
-    form: required
+    form: required,
+    additionalDataColumnProviderPlugins: null
 } %}
 
 {% block body %}
@@ -43,18 +44,19 @@
             }
         },
         embed: {
+            name: config.name,
             selector: config.jsName
         }
     } only %}
         {% block fields %}
-            <div class="{{embed.selector}}__list">
+            <div class="{{embed.selector}}__list {{ embed.name }}__list">
                 {% embed molecule('quick-order-form-field-list', 'QuickOrderPage') with {
                     data: {
-                        items: data.form.items
-                    },
-                    embed: embed
+                        items: data.form.items,
+                        additionalDataColumnProviderPlugins: _view.additionalDataColumnProviderPlugins
+                    }
                 } only %}
-                    {% block removeActionClass %}{{embed.selector}}__remove-row-trigger{% endblock %}
+
                 {% endembed %}
             </div>
         {% endblock %}
@@ -84,6 +86,10 @@
                     </button>
                 </div>
             </div>
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {{ widget('ShoppingListQuickOrderWidgetPlugin') }}
+            {% endif %}
         {% endblock %}
     {% endembed %}
 {% endblock %}

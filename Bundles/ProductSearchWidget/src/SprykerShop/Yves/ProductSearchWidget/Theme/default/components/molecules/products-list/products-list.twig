@@ -1,0 +1,22 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'products-list',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    products: required
+} %}
+
+{% block body %}
+    {% if (data.products|length) %}
+        {% for product in data.products %}
+            <li class="list__item spacing-y spacing-y--inner {{ config.name }}__item" data-value="{{ product.sku }}" data-id-product="{{ product.fkProduct }}" data-id-product-abstract="{{ product.fkProductAbstract }}">
+                {{ product.name }} ({{ product.sku }})
+            </li>
+        {% endfor %}
+    {% else %}
+        <li class="list__item spacing-y">{{ 'quick-order.search.no_results' | trans }}</li>
+    {% endif %}
+{% endblock %}

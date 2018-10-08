@@ -2,6 +2,14 @@
     #{$name} {
         position: relative;
 
+        &__list {
+            width: 100%;
+        }
+
+        * {
+            z-index: initial;
+        }
+
         @content;
     }
 }

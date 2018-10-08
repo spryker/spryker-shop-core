@@ -10,6 +10,12 @@
     <transfer name="QuickOrderItem">
         <property name="sku" type="string" />
         <property name="qty" type="int" />
+        <property name="idProductConcrete" type="int" />
+    </transfer>
+
+    <transfer name="QuickOrderProductAdditionalData">
+        <property name="idProductConcrete" type="int" />
+        <property name="productQuantityStorage" type="ProductQuantityStorage" />
     </transfer>
 
 </transfers>

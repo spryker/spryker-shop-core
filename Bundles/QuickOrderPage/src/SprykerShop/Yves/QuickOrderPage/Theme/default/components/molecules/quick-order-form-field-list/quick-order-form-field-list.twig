@@ -5,31 +5,51 @@
     tag: 'div'
 } %}
 
+{% define data = {
+    items: required,
+    additionalDataColumnProviderPlugins: required,
+    productConcretesData: []
+} %}
+
 {% block body %}
-    <div class="grid grid--bottom">
-        {% for item in data.items %}
-            <div class="col col--sm-7 spacing spacing--inner">
-                {{ form_row(item.sku, {
-                    required: loop.first
-                }) }}
+    <div class="{{ config.name }}__row">
+        <div class="{{ config.name }}__col">
+            {{ 'quick-order.input-label.sku.name' | trans }}
+        </div>
+        {% if (data.additionalDataColumnProviderPlugins.measurementUnit is defined) %}
+            <div class="{{ config.name }}__col">
+                {{ data.additionalDataColumnProviderPlugins.measurementUnit.getColumnTitle() | trans }}
             </div>
-            <div class="col col--sm-4 spacing spacing--inner">
-                {{ form_row(item.qty, {
-                    required: loop.first
-                }) }}
-            </div>
-            <div class="col col--sm-1 spacing spacing--inner">
-                {% if not loop.first %}
-                    <a href="#remove" class="button button--expand button--warning {% block removeActionClass %}{% endblock %}" data-row-index="{{loop.index0}}">
-                        {% include atom('icon') with {
-                            modifiers: ['small'],
-                            data: {
-                                name: 'times'
-                            }
-                        } only %}
-                    </a>
-                {% endif %}
-            </div>
-        {% endfor %}
+        {% endif %}
+        <div class="{{ config.name }}__col {{ config.name }}__col--quantity">
+            {{ 'quick-order.input-label.qty' | trans }}
+        </div>
+        <div class="{{ config.name }}__col {{ config.name }}__col--price">
+            {{ 'quick-order.input-label.price' | trans }}
+        </div>
+        <div class="{{ config.name }}__col {{ config.name }}__col--remove"></div>
     </div>
+    {% for item in data.items %}
+        {% set productConcreteData = data.productConcretesData[item.id_product_concrete.vars.value] ?? null %}
+
+        {% embed molecule('quick-order-form-field', 'QuickOrderPage') with {
+            class: config.name ~ '__row',
+            data: {
+                additionalDataColumnProviderPlugins: data.additionalDataColumnProviderPlugins,
+                first: loop.first,
+                index: loop.index,
+                sku: item.sku,
+                qty: item.qty,
+                idProductConcrete: item.id_product_concrete,
+                fullName: item.vars.full_name,
+                inputValue: productConcreteData is null ? null : productConcreteData.name ~ ' (' ~ productConcreteData.sku ~ ')'
+            },
+            embed: {
+                name: config.name
+            }
+        } only %}
+            {% block cellClass %}{{ embed.name }}__col{% endblock %}
+            {% block removeActionClass %}js-quick-order-form__remove-row-trigger{% endblock %}
+        {% endembed %}
+    {% endfor %}
 {% endblock %}

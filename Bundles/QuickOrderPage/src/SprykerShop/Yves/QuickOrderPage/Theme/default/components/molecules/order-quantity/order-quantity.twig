@@ -1,0 +1,35 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-quantity',
+    tag: 'order-quantity'
+} %}
+
+{% define data = {
+    qty: required,
+    required: false,
+    min: 1,
+    max: '',
+    step: 1
+} %}
+
+{% define attributes = {
+    'error-show': config.name ~ '__error--show'
+} %}
+
+{% block body %}
+    {{ form_row(data.qty, {
+        required: data.required,
+        label: false,
+        attr: {
+            class: config.jsName ~ '__input',
+            min: data.min | default(),
+            max: data.max | default(),
+            step: data.step | default()
+        }
+    }) }}
+
+    <div class="{{ config.name }}__error {{ config.jsName }}__error">
+        {{ 'quick-order.input-quantity.message.error' | trans }}
+    </div>
+{% endblock %}

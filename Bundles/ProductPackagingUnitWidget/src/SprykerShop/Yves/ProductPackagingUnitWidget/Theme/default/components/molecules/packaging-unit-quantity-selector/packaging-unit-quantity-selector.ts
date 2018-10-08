@@ -10,7 +10,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     baseUnit: any;
     salesUnits: any;
     currentSalesUnit: any;
-    productQuantityStorage: any;
+    productQuantity: any;
     currentValue: Number;
     translations: any;
     leadSalesUnits: any;
@@ -125,8 +125,8 @@ export default class PackagingUnitQuantitySelector extends Component {
                 this.productPackagingUnitStorage = jsonData.productPackagingUnitStorage;
             }
 
-            if (jsonData.hasOwnProperty('productQuantityStorage')) {
-                this.productQuantityStorage = jsonData.productQuantityStorage;
+            if (jsonData.hasOwnProperty('productQuantity')) {
+                this.productQuantity = jsonData.productQuantity;
             }
         }
     }
@@ -329,31 +329,31 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private getMinQuantity() {
-        if (typeof this.productQuantityStorage !== 'undefined'
-            && this.productQuantityStorage.hasOwnProperty('quantity_min')
+        if (typeof this.productQuantity !== 'undefined'
+            && this.productQuantity.hasOwnProperty('quantity_min')
         ) {
-            return this.productQuantityStorage.quantity_min;
+            return this.productQuantity.quantity_min;
         }
 
         return 1;
     }
 
     private getMaxQuantity() {
-        if (typeof this.productQuantityStorage !== 'undefined'
-            && this.productQuantityStorage.hasOwnProperty('quantity_max')
-            && this.productQuantityStorage.quantity_max !== null
+        if (typeof this.productQuantity !== 'undefined'
+            && this.productQuantity.hasOwnProperty('quantity_max')
+            && this.productQuantity.quantity_max !== null
         ) {
-            return this.productQuantityStorage.quantity_max;
+            return this.productQuantity.quantity_max;
         }
 
         return 0;
     }
 
     private getQuantityInterval() {
-        if (typeof this.productQuantityStorage !== 'undefined'
-            && this.productQuantityStorage.hasOwnProperty('quantity_interval')
+        if (typeof this.productQuantity !== 'undefined'
+            && this.productQuantity.hasOwnProperty('quantity_interval')
         ) {
-            return this.productQuantityStorage.quantity_interval;
+            return this.productQuantity.quantity_interval;
         }
 
         return 1;

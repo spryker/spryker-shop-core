@@ -8,17 +8,19 @@ export default class AutocompleteForm extends Component {
     hiddenInputElement: HTMLInputElement;
     suggestionsContainer: HTMLElement;
     cleanButton: HTMLButtonElement;
+    productsLoadedEvent: CustomEvent;
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}__provider`);
         this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}__container`);
         this.inputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
-        this.hiddenInputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input-hidden`);
+        this.hiddenInputElement = <HTMLInputElement>document.querySelector(`input[name="${this.hiddenInputName}"]`);
         this.cleanButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__clean-button`);
         this.mapEvents();
     }
 
     protected mapEvents(): void {
+        this.createCustomEvent();
         this.inputElement.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
         this.inputElement.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
         this.inputElement.addEventListener('focus', () => this.onFocus());
@@ -47,6 +49,7 @@ export default class AutocompleteForm extends Component {
             this.loadSuggestions();
             return;
         }
+        this.setInputs('', this.inputValue);
         this.hideSuggestions();
     }
 
@@ -64,6 +67,8 @@ export default class AutocompleteForm extends Component {
 
         await this.ajaxProvider.fetch();
         this.mapItemEvents();
+
+        this.dispatchEvent(<CustomEvent>this.productsLoadedEvent);
     }
 
     protected mapItemEvents(): void {
@@ -79,6 +84,10 @@ export default class AutocompleteForm extends Component {
         const text = textTarget.textContent.trim();
 
         this.setInputs(data, text);
+    }
+
+    private createCustomEvent(): void {
+        this.productsLoadedEvent = <CustomEvent>new CustomEvent("products-loaded-event");
     }
 
     setInputs(data: string, text: string): void {
@@ -108,6 +117,10 @@ export default class AutocompleteForm extends Component {
 
     get itemSelector(): string {
         return this.getAttribute('item-selector');
+    }
+
+    get hiddenInputName(): string {
+        return this.getAttribute('hidden-input-name');
     }
 
     get debounceDelay(): number {
