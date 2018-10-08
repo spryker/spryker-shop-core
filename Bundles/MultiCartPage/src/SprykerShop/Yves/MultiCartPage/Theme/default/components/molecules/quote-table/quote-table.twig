@@ -99,32 +99,20 @@
                                         </li>
                                     {% endif %}
                                 {% endif %}
-<<<<<<< HEAD
 
                                 {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-actions', 'SharedCartWidget') only %}
                                 {% elsewidget 'CartListPermissionGroupWidgetPlugin' args [quote, isQuoteDeletable] use view('multi-cart-permission-actions', 'SharedCartWidget') only %} {# @deprecated Use CartListPermissionGroupWidget instead. #}
                                 {% nowidget %}
-                                    {% if isQuoteDeletable %}
-=======
-                                {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
-                                    {{ widgetBlock('CartListPermissionGroupWidgetPlugin', 'actions', quote, isQuoteDeletable) }}
-                                {% else %}
                                     {% if isQuoteEditable and isQuoteDeletable %}
->>>>>>> feature/te-29/master-global-widgets
                                         <li class="menu__item">
                                             <a href="{{ url('multi-cart/confirm-delete', {idQuote: quote.idQuote}) }}">
                                                 {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
                                             </a>
                                         </li>
                                     {% endif %}
-<<<<<<< HEAD
                                 {% endwidget %}
 
-                                {% if widgetExists('CartToShoppingListWidgetPlugin') %}
-=======
-                                {% endif %}
                                 {% if isQuoteEditable and widgetExists('CartToShoppingListWidgetPlugin') %}
->>>>>>> feature/te-29/master-global-widgets
                                     <li class="menu__item">
                                         {{ widget('CartToShoppingListWidgetPlugin', quote) }} {# @deprecated Use molecule('cart-to-shopping-list', 'ShoppingListWidget') instead. #}
                                     </li>

@@ -47,12 +47,21 @@
             </li>
         {% endif %}
 
-        {% if widgetExists('SalesOrderThresholdWidgetPlugin') %}
-            <li class="list__item spacing-y">
-                {{ widget('SalesOrderThresholdWidgetPlugin', data.cart.expenses) }}
-            </li>
-            <hr />
-        {% endif %}
+        {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
+            {% block body %}
+                <li class="list__item spacing-y">
+                    {{ parent() }}
+                </li>
+                <hr />
+            {% endblock %}
+        {% elsewidget 'SalesOrderThresholdWidgetPlugin' args [data.cart.expenses] only %} {# @deprecated Use SalesOrderThresholdWidget instead. #}
+            {% block body %}
+                <li class="list__item spacing-y">
+                    {{ parent() }}
+                </li>
+                <hr />
+            {% endblock %}
+        {% endwidget %}
 
         <li class="list__item spacing-y">
             {{ 'cart.price.subtotal' | trans }}

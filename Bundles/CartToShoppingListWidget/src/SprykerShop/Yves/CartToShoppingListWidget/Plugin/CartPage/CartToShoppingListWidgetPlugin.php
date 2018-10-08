@@ -9,10 +9,10 @@ namespace SprykerShop\Yves\CartToShoppingListWidget\Plugin\CartPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\CartToShoppingListWidget\CartToShoppingListWidgetPluginInterface;
-use SprykerShop\Yves\CartToShoppingListWidget\Widet\CreateShoppingListFromCartWidget;
+use SprykerShop\Yves\CartToShoppingListWidget\Widget\CreateShoppingListFromCartWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CartToShoppingListWidget\Widet\CreateShoppingListFromCartWidget instead.
+ * @deprecated Use \SprykerShop\Yves\CartToShoppingListWidget\Widget\CreateShoppingListFromCartWidget instead.
  *
  * @method \SprykerShop\Yves\CartToShoppingListWidget\CartToShoppingListWidgetFactory getFactory()
  */

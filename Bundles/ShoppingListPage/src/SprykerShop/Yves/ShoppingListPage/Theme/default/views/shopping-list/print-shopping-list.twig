@@ -54,16 +54,15 @@
                     {{ item.prices.DEFAULT | money }}
                 {% endif %}
             </td>
+            {% if isNotesSupported %}
+                <td>{{ item.shoppingListItem.shoppingListItemNote.note }}</td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>
     <thead>
     <tr>
-<<<<<<< HEAD
         {% if productBarcodeWidgetExists %}
-            <th>{{ data.labels.barcode }}</th>
-=======
-        {% if widgetExists('ProductBarcodeWidgetPlugin') %}
             <th>{{ 'customer.account.print_shopping_list.table.barcode' | trans }}</th>
         {% endif %}
         <th>{{ 'customer.account.print_shopping_list.table.product_sku' | trans }}</th>
@@ -71,32 +70,9 @@
         <th>{{ 'customer.account.print_shopping_list.table.default_price' | trans }}</th>
         {% if isNotesSupported %}
             <th>{{ 'customer.account.print_shopping_list.table.note' | trans }}</th>
->>>>>>> feature/te-29/master-global-widgets
         {% endif %}
     </tr>
     </thead>
-<<<<<<< HEAD
-=======
-    <tbody>
-    {% for item in data.shoppingListItems %}
-    <tr>
-        {% if widgetExists('ProductBarcodeWidgetPlugin') %}
-            <td>{{ widget('ProductBarcodeWidgetPlugin', item, data.barcodeGeneratorPlugin) }}</td>
-        {% endif %}
-        <td>{{ item.sku }}</td>
-        <td>{{ item.name }}</td>
-        <td>
-            {% if item.prices.DEFAULT is defined %}
-                {{ item.prices.DEFAULT | money }}
-            {% endif %}
-        </td>
-        {% if isNotesSupported %}
-            <td>{{ item.shoppingListItem.shoppingListItemNote.note }}</td>
-        {% endif %}
-    </tr>
-    {% endfor %}
-    </tbody>
->>>>>>> feature/te-29/master-global-widgets
 </table>
 
 </body>

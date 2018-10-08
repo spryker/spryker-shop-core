@@ -23,8 +23,9 @@
     <tbody>
         {% for item in data.shoppingListItems %}
             {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
-            {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %}
+            {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [item.sku]) %}
+            {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued ?? widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %} {# @deprecated Use ProductDiscontinuedWidget instead of ProductDiscontinuedWidgetPlugin. #}
+            {% if isDiscontinued is not null %}
                 {% set isItemAvailable = not isDiscontinued and isItemAvailable %}
             {% endif %}
             <tr class="{{ config.name }}__row {{ not isItemAvailable ? config.name ~ '__row--disable' : ''}}">
@@ -58,7 +59,10 @@
                                 </li>
                             {% endif %}
                         {% endfor %}
-                        {{ widget('ShoppingListItemNoteWidgetPlugin', item.shoppingListItem) }}
+
+                        {% widget 'ShoppingListItemNoteWidget' args [item.shoppingListItem] only %}
+                        {% elsewidget 'ShoppingListItemNoteWidgetPlugin' args [item.shoppingListItem] only %} {# @deprecated Use ShoppingListItemNoteWidget instead. #}
+                        {% endwidget %}
                     </ul>
                 </td>
                 <td nowrap="nowrap" class="{{ config.name }}__cell text-center">
@@ -80,11 +84,11 @@
                     {% if isItemAvailable %}
                         {{ 'customer.account.shopping_list.available' | trans }}
                     {% else %}
-                        {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                            {{ widget('ProductDiscontinuedWidgetPlugin', item.sku) }}
-                        {% else %}
+                        {% widget 'ProductDiscontinuedWidget' args [item.sku] only %}
+                        {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [item.sku] only %} {# @deprecated Use ProductDiscontinuedWidget instead. #}
+                        {% nowidget %}
                             {{ 'customer.account.shopping_list.not_available' | trans }}
-                        {% endif %}
+                        {% endwidget %}
                     {% endif %}
                 </td>
                 <td class="{{ config.name }}__cell">
@@ -95,8 +99,10 @@
                     {% endif %}
                 </td>
             </tr>
-            {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) and widgetExists('ProductAlternativeWidgetPlugin') %}
-                {{ widget('ProductAlternativeWidgetPlugin', item, data.shoppingList) }}
+            {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+                {% widget 'ShoppingListProductAlternativeWidget' args [item, data.shoppingList] only %}
+                {% elsewidget 'ProductAlternativeWidgetPlugin' args [item, data.shoppingList] only %} {# @deprecated Use ShoppingListProductAlternativeWidget instead. #}
+                {% endwidget %}
             {% endif %}
         {% endfor %}
     </tbody>
