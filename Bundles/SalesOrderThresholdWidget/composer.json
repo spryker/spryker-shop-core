@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/sales-order-threshold-widget",
+  "type": "library",
   "description": "SalesOrderThresholdWidget module",
   "license": "proprietary",
   "require": {
