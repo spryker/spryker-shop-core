@@ -12,10 +12,6 @@
 } %}
 
 {% block body %}
-{#<form method="POST" action="{{ path('shopping-list/add-shopping-list-to-cart') }}">#}
-    {#<button type="submit" class="button button--success" {{qa('submit-button')}}>#}
-        {#{{ 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans }}#}
-    {#</button>#}
     <table class="table table--expand">
         <thead>
             <tr>
@@ -59,27 +55,9 @@
                             idShoppingList: shoppingList.idShoppingList
                         }
                     } only %}
-                    {#<a href="{{ url('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">#}
-                        {#{{ 'customer.account.shopping_list.overview.view' | trans }}#}
-                    {#</a>#}
-                    {#{% if can('WriteShoppingListPermissionPlugin', shoppingList.idShoppingList) %}#}
-                        {#<a href="{{ url('shopping-list/update', { idShoppingList: shoppingList.idShoppingList }) }}">#}
-                            {#{{ 'customer.account.shopping_list.overview.edit' | trans }}#}
-                        {#</a>#}
-                        {#<a href="{{ url('shopping-list/delete', { idShoppingList: shoppingList.idShoppingList }) }}">#}
-                            {#{{ 'customer.account.shopping_list.overview.delete' | trans }}#}
-                        {#</a>#}
-                        {#<a href="{{ url('shopping-list/share', { idShoppingList: shoppingList.idShoppingList }) }}">#}
-                            {#{{ 'customer.account.shopping_list.overview.share' | trans }}#}
-                        {#</a>#}
-                    {#{% endif %}#}
-                    {#<a href="{{ url('shopping-list/print', { idShoppingList: shoppingList.idShoppingList }) }}" target="_blank">#}
-                        {#{{ 'customer.account.shopping_list.overview.print' | trans }}#}
-                    {#</a>#}
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-{#</form>#}
 {% endblock %}
