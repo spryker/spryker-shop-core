@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface MiniCartWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'MiniCartWidgetPlugin';
+    public const NAME = 'MiniCartWidgetPlugin';
 
     /**
      * @api

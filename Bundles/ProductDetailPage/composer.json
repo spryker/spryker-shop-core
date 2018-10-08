@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-detail-page",
+  "type": "library",
   "description": "ProductDetailPage module",
   "license": "proprietary",
   "require": {

@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class ProductNewPageControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_NEW_PRODUCTS = 'new-products';
+    public const ROUTE_NEW_PRODUCTS = 'new-products';
 
     /**
      * @param \Silex\Application $app

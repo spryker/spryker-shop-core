@@ -42,7 +42,7 @@
                         </a>
                     </li>
                     <li class="menu__item">
-                        <a href="{{ url('company/address/delete', {'id': address.idCompanyUnitAddress }) }}">
+                        <a href="{{ url('company/address/delete', {'id': address.idCompanyUnitAddress, 'idBusinessUnit': data.businessUnit.idCompanyBusinessUnit }) }}">
                             {{ "company.account.address.delete" | trans }}
                         </a>
                     </li>

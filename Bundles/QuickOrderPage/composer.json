@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/quick-order-page",
+  "type": "library",
   "description": "QuickOrderPage module",
   "license": "proprietary",
   "require": {
