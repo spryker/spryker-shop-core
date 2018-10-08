@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\WishlistPage\Controller;
 
+use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
@@ -310,11 +311,36 @@ class WishlistController extends AbstractController
             ->getProductStorageClient()
             ->findProductConcreteStorageData($wishlistItemTransfer->getIdProduct(), $this->getLocale());
 
-        $productViewTransfer = new ProductViewTransfer();
         if ($productConcreteStorageData === null) {
-            return $productViewTransfer;
+            return $this->prepareUnavailableProduct($wishlistItemTransfer);
         }
 
+        return $this->prepareConcreteProduct($productConcreteStorageData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function prepareUnavailableProduct(WishlistItemTransfer $wishlistItemTransfer): ProductViewTransfer
+    {
+        $productViewTransfer = new ProductViewTransfer();
+        $productViewTransfer->setSku($wishlistItemTransfer->getSku());
+        $productViewTransfer->setIdProductConcrete($wishlistItemTransfer->getIdProduct());
+        $productViewTransfer->addImage(new ProductImageStorageTransfer());
+
+        return $productViewTransfer;
+    }
+
+    /**
+     * @param array $productConcreteStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function prepareConcreteProduct(array $productConcreteStorageData): ProductViewTransfer
+    {
+        $productViewTransfer = new ProductViewTransfer();
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         foreach ($this->getFactory()->getWishlistItemExpanderPlugins() as $productViewExpanderPlugin) {
