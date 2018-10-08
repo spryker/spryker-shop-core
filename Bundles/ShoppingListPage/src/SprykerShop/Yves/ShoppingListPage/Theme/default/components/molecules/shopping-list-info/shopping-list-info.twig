@@ -43,19 +43,4 @@
             </div>
         {% endblock %}
     </div>
-
-    {#<div class="grid">#}
-        {#<div class="col col--sm-4">#}
-            {#<strong>{{ 'customer.account.shopping_list.overview.owner' | trans }}:</strong>#}
-            {#{{ data.owner }}#}
-        {#</div>#}
-        {#<div class="col col--sm-4">#}
-            {#<strong>{{ 'customer.account.shopping_list.access' | trans }}:</strong>#}
-            {#{% if can('WriteShoppingListPermissionPlugin', data.idShoppingList) %}#}
-                {#{{ 'customer.account.shopping_list.access.full_access' | trans }}#}
-            {#{% else %}#}
-                {#{{ 'customer.account.shopping_list.access.read_only' | trans }}#}
-            {#{% endif %}#}
-        {#</div>#}
-    {#</div>#}
 {% endblock %}

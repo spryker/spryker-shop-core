@@ -9,7 +9,7 @@
 } %}
 
 {% block body %}
-    <ul class="grid">
+    <ul class="grid spacing-x spacing-x--small spacing-bottom spacing-bottom--big">
     {% for child in data.options %}
         <li class="{{ config.name }}__item col col--sm-6 col--lg-4">
             <strong>{{ form_label(child) }}:</strong>

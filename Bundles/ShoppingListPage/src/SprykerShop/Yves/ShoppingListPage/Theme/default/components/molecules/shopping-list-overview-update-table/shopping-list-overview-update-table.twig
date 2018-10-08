@@ -27,7 +27,6 @@
                 {% set isProductAvailable = not isDiscontinued and isProductAvailable %}
             {% endif %}
             <tr class="{{ config.name }}__row {{ not isProductAvailable ? config.name ~ '__row--disable' : ''}}">
-                <td class="{{ config.name }}__cell">&nbsp;</td>
                 <td class="{{ config.name }}__cell text-center">
                     {% if product.images is defined and product.images is not empty and product.images.0.externalUrlSmall is not empty %}
                         {% include atom('thumbnail') with {
@@ -40,7 +39,7 @@
                         } only %}
                     {% endif %}
                 </td>
-                <td class="{{ config.name }}__cell">
+                <td class="{{ config.name }}__cell" colspan="2">
                     {% if product.name is not empty %}
                         <a href="{% if product.url is not empty %}{{ product.url }}{% endif %}">{{ product.name }}</a>
                     {% endif %}
@@ -52,13 +51,6 @@
                     {% for attribute in product.superAttributesDefinition %}
                         {% if product.attributes[attribute] is defined %}
                             {{ ('product.attribute.'~attribute) | trans }}: {{ product.attributes[attribute] }} <br>
-                        {% endif %}
-                    {% endfor %}
-                    {% for subForm in data.form.items[key].children  %}
-                        {% if not subForm.rendered %}
-                            {% if subForm.vars.template_path is defined %}
-                                {% include subForm.vars.template_path with {'form': subForm, 'rowClass': config.name ~ '__options-row'} %}
-                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 </td>
@@ -88,12 +80,24 @@
                         {% endif %}
                     {% endif %}
                 </td>
-                <td class="{{ config.name }}__cell">
+                <td class="{{ config.name }}__cell text-center">
                     <a class="button button--alert" href="{{ path('shopping-list/remove-item', {
                         idShoppingList: data.idShoppingList, idShoppingListItem: shoppingListItem.idShoppingListItem
                     }) }}">
                         {{'customer.account.shopping_list.remove' | trans}}
                     </a>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="5">
+                    {% for subForm in data.form.items[key].children  %}
+                        {% if not subForm.rendered %}
+                            {% if subForm.vars.template_path is defined %}
+                                {% include subForm.vars.template_path with {'form': subForm, 'rowClass': config.name ~ '__options-row'} %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
                 </td>
             </tr>
             {% if can('WriteShoppingListPermissionPlugin', data.idShoppingList) and widgetExists('ProductAlternativeWidgetPlugin') %}
