@@ -6,7 +6,6 @@
     barcodeGeneratorPlugin: _view.barcodeGeneratorPlugin | default(null),
 } %}
 
-{% set isNotesSupported = widgetExists('ShoppingListItemNoteWidgetPlugin') %}
 <head>
     <meta charset="utf-8" />
     <title>{{ data.shoppingList.name }}</title>
@@ -36,11 +35,20 @@
 
 <table class="shopping-list-items">
     <tbody>
-    {% set productBarcodeWidgetExists = false %}
+    {% set productBarcodeWidgetExists = null %}
+    {% set isNotesSupported = null %}
     {% for item in data.shoppingListItems %}
-        {% set productBarcodeWidget = findWidget('ProductBarcodeWidget', [item, data.barcodeGeneratorPlugin])
-            | default(findWidget('ProductBarcodeWidgetPlugin', [item, data.barcodeGeneratorPlugin])) %} {# @deprecated Use ProductBarcodeWidget instead. #}
-        {% set productBarcodeWidgetExists = productBarcodeWidget is not null %}
+        {% if productBarcodeWidgetExists is null %}
+            {% set productBarcodeWidget = findWidget('ProductBarcodeWidget', [item, data.barcodeGeneratorPlugin])
+                | default(findWidget('ProductBarcodeWidgetPlugin', [item, data.barcodeGeneratorPlugin])) %} {# @deprecated Use ProductBarcodeWidget instead. #}
+            {% set productBarcodeWidgetExists = productBarcodeWidget is not null %}
+        {% endif %}
+
+        {% if isNotesSupported is null %}
+            {% set shoppingListItemNoteWidget = findWidget('ShoppingListItemNoteWidget', [item.shoppingListItem])
+                | default(findWidget('ShoppingListItemNoteWidgetPlugin', [item.shoppingListItem])) %} {# @deprecated Use ShoppingListItemNoteWidget instead. #}
+            {% set isNotesSupported = shoppingListItemNoteWidget is not null %}
+        {% endif %}
         <tr>
             {% widget productBarcodeWidget only %}
                 {% block body %}

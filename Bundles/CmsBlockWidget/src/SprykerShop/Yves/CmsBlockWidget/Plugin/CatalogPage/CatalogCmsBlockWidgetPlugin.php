@@ -10,9 +10,6 @@ namespace SprykerShop\Yves\CmsBlockWidget\Plugin\CatalogPage;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CatalogPage\Dependency\Plugin\CmsBlockWidget\CatalogCmsBlockWidgetPluginInterface;
 
-/**
- * @deprecated Needs to be refactored by Alessadro Bellini.
- */
 class CatalogCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements CatalogCmsBlockWidgetPluginInterface
 {
     /**

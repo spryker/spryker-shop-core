@@ -3,7 +3,7 @@
         {% if widgetExists('ProductSetWidgetPlugin') %}
             {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.productViews) }} {# @deprecated Use molecule('product-set', 'ProductSetWidget') instead. #}
         {% else %}
-            {% include molecule('product-set', 'ProductSetWidget') ignore missing with {
+            {% include molecule('product-set-cms-content', 'ProductSetWidget') ignore missing with {
                 data: {
                     products: productSet.productViews,
                     name: productSet.productSet.name,
@@ -19,7 +19,7 @@
     {% if widgetExists('ProductSetWidgetPlugin') %}
         {{ widget('ProductSetWidgetPlugin', productSet, productViews) }} {# @deprecated Use molecule('product-set', 'ProductSetWidget') instead. #}
     {% else %}
-        {% include molecule('product-set', 'ProductSetWidget') ignore missing with {
+        {% include molecule('product-set-cms-content', 'ProductSetWidget') ignore missing with {
             data: {
                 products: productViews,
                 name: productSet.name,
