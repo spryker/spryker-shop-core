@@ -1,3 +1,3 @@
 # display-address (molecule)
 
-Show customer shipping/billing address.
+Display customer shipping/billing address.

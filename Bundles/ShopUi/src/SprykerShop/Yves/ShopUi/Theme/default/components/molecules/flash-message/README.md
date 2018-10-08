@@ -1,3 +1,3 @@
 # flash-message (molecule)
 
-Show simple notifications to users about important events that may have happened.
+Display a simple notifications to users about important events that may have happened.

@@ -1,3 +1,3 @@
 # jumbotron (molecule)
 
-Сheck the default values of form elements before submiting.
+Display banner with image and short description.
