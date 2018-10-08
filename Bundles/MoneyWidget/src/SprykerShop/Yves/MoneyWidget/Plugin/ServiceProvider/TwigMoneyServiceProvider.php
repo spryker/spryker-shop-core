@@ -140,7 +140,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
      * @param int|string|float|null $money
      * @param string|null $isoCode
      *
-     * @return \Generated\Shared\Transfer\MoneyTransfer
+     * @return \Generated\Shared\Transfer\MoneyTransfer|null
      */
     protected function getMoneyTransfer($money, $isoCode = null)
     {
