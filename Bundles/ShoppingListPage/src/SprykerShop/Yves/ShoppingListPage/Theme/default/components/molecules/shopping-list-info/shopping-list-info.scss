@@ -1,5 +1,7 @@
 @mixin shopping-list-page-shopping-list-info($name: '.shopping-list-info') {
     #{$name} {
         background-color: $setting-color-lighter;
+
+        @content;
     }
 }
