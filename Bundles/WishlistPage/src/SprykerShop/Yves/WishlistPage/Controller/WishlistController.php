@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\WishlistPage\Controller;
 
+use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
@@ -25,14 +26,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class WishlistController extends AbstractController
 {
-    const DEFAULT_NAME = 'My wishlist';
-    const DEFAULT_ITEMS_PER_PAGE = 10;
+    public const DEFAULT_NAME = 'My wishlist';
+    public const DEFAULT_ITEMS_PER_PAGE = 10;
 
-    const PARAM_ITEMS_PER_PAGE = 'ipp';
-    const PARAM_PAGE = 'page';
-    const PARAM_PRODUCT_ID = 'product-id';
-    const PARAM_SKU = 'sku';
-    const PARAM_WISHLIST_NAME = 'wishlist-name';
+    public const PARAM_ITEMS_PER_PAGE = 'ipp';
+    public const PARAM_PAGE = 'page';
+    public const PARAM_PRODUCT_ID = 'product-id';
+    public const PARAM_SKU = 'sku';
+    public const PARAM_WISHLIST_NAME = 'wishlist-name';
 
     /**
      * @param string $wishlistName
@@ -313,11 +314,36 @@ class WishlistController extends AbstractController
             ->getProductStorageClient()
             ->findProductConcreteStorageData($wishlistItemTransfer->getIdProduct(), $this->getLocale());
 
-        $productViewTransfer = new ProductViewTransfer();
         if ($productConcreteStorageData === null) {
-            return $productViewTransfer;
+            return $this->prepareUnavailableProduct($wishlistItemTransfer);
         }
 
+        return $this->prepareConcreteProduct($productConcreteStorageData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function prepareUnavailableProduct(WishlistItemTransfer $wishlistItemTransfer): ProductViewTransfer
+    {
+        $productViewTransfer = new ProductViewTransfer();
+        $productViewTransfer->setSku($wishlistItemTransfer->getSku());
+        $productViewTransfer->setIdProductConcrete($wishlistItemTransfer->getIdProduct());
+        $productViewTransfer->addImage(new ProductImageStorageTransfer());
+
+        return $productViewTransfer;
+    }
+
+    /**
+     * @param array $productConcreteStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function prepareConcreteProduct(array $productConcreteStorageData): ProductViewTransfer
+    {
+        $productViewTransfer = new ProductViewTransfer();
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         foreach ($this->getFactory()->getWishlistItemExpanderPlugins() as $productViewExpanderPlugin) {

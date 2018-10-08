@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/shop-router",
+  "type": "library",
   "description": "ShopRouter module",
   "license": "proprietary",
   "require": {
@@ -12,6 +13,10 @@
     "spryker/symfony": "^3.1.0",
     "spryker/url-storage": "^1.0.0",
     "spryker/util-text": "^1.2.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

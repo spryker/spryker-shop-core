@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-barcode-widget",
+  "type": "library",
   "description": "ProductBarcodeWidget module",
   "license": "proprietary",
   "require": {

@@ -1,11 +1,12 @@
 {
   "name": "spryker-shop/cart-page",
+  "type": "library",
   "description": "CartPage module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-application": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.6.0",
     "spryker/availability": "^5.4.0 || ^6.0.0",
     "spryker/availability-storage": "^1.0.0",
     "spryker/cart": "^5.0.0",
@@ -17,12 +18,13 @@
     "spryker/zed-request": "^3.4.0"
   },
   "require-dev": {
-    "spryker/permission": "^1.0.0",
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker/permission": "If you want to use permissions plugins"
+    "spryker/permission": "If you want to use permissions plugins",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

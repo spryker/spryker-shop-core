@@ -1,0 +1,28 @@
+{% extends template('widget') %}
+
+{% define data = {
+    customers: customers | default([]),
+    errors: errors | default([])
+} %}
+
+{% set isError = data.errors | length > 0 %}
+{% set customersFound = data.customers | length > 0 %}
+
+{% block body %}
+    {% if isError %}
+        {{ data.errors }}
+    {% else %}
+
+        {% if customersFound %}
+            {% include molecule('customer-list', 'AgentWidget') with {
+                data: {
+                    customers: data.customers
+                }
+            } only%}
+
+        {% else %}
+            {{ 'agent.autocomplete.no_results' | trans }}
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

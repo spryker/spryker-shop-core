@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-image-widget",
+  "type": "library",
   "description": "ProductImageWidget module",
   "license": "proprietary",
   "require": {
@@ -8,7 +9,9 @@
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
-    "spryker-shop/product-detail-page": "*"
+    "spryker-shop/product-detail-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/product-detail-page": "Widget plugins are available for this module."

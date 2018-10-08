@@ -7,11 +7,27 @@
     activePage: 'users'
 } %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview'),
+                },
+                {
+                    label: 'company.account.company_user.add' | trans,
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
 {% block companyContent %}
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'company.account.company_user.edit_information' | trans,
+                title: 'company.account.company_user.add' | trans,
                 form: data.form,
                 options: {
                     action: url('company/user/create')

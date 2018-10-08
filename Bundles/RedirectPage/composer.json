@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/redirect-page",
+  "type": "library",
   "description": "RedirectPage module",
   "license": "proprietary",
   "require": {
@@ -10,6 +11,8 @@
     "spryker/storage": "^3.4.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*",
     "spryker/url-storage": "*"
   },
   "suggest": {

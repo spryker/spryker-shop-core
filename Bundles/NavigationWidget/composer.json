@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/navigation-widget",
+  "type": "library",
   "description": "NavigationWidget module",
   "license": "proprietary",
   "require": {
@@ -7,6 +8,10 @@
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.16.0",
     "spryker/navigation-storage": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

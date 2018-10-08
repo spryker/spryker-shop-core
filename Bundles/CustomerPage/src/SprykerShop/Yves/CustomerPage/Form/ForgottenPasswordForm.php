@@ -10,10 +10,12 @@ namespace SprykerShop\Yves\CustomerPage\Form;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ForgottenPasswordForm extends AbstractType
 {
-    const FIELD_EMAIL = 'email';
+    public const FIELD_EMAIL = 'email';
 
     /**
      * @return string
@@ -43,6 +45,11 @@ class ForgottenPasswordForm extends AbstractType
     {
         $builder->add(self::FIELD_EMAIL, EmailType::class, [
             'label' => 'customer.forgotten_password.email',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+                new Email(),
+            ],
         ]);
 
         return $this;

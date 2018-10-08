@@ -51,14 +51,14 @@ class RoutingHelper implements RoutingHelperInterface
     public function getRouteFromDestination($destination)
     {
         if (strpos($destination, '::') !== false) {
-            list($controllerNamespaceName, $actionName) = explode('::', $destination);
+            [$controllerNamespaceName, $actionName] = explode('::', $destination);
         } elseif (strpos($destination, ':') !== false) {
-            list($serviceName, $actionName) = explode(':', $destination);
+            [$serviceName, $actionName] = explode(':', $destination);
             $controllerNamespaceName = get_class($this->app[$serviceName]);
         } else {
             throw new LogicException('Cannot parse destination');
         }
-        list($namespace, $application, $module, $layer, $controllerName) = explode('\\', $controllerNamespaceName);
+        [$namespace, $application, $module, $layer, $controllerName] = explode('\\', $controllerNamespaceName);
 
         $module = str_replace($this->store->getStoreName(), '', $module);
 

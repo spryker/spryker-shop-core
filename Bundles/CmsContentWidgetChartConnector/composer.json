@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/cms-content-widget-chart-connector",
+  "type": "library",
   "description": "CmsContentWidgetChartConnector module",
   "license": "proprietary",
   "require": {
@@ -8,6 +9,8 @@
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/cms-block-widget",
+  "type": "library",
   "description": "CmsBlockWidget module",
   "license": "proprietary",
   "require": {
@@ -11,8 +12,9 @@
   "require-dev": {
     "spryker-shop/catalog-page": "*",
     "spryker-shop/product-detail-page": "*",
-    "spryker-shop/shop-application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/silex": "*",
+    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {

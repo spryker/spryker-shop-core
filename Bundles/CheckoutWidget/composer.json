@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/checkout-widget",
+  "type": "library",
   "description": "CheckoutWidget module",
   "license": "proprietary",
   "require": {
@@ -9,7 +10,9 @@
     "spryker/kernel": "^3.16.0"
   },
   "require-dev": {
-    "spryker-shop/cart-page": "*"
+    "spryker-shop/cart-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "Widget plugins are available for this module."

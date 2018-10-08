@@ -11,9 +11,11 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface DiscountVoucherFormWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'DiscountVoucherFormWidgetPlugin';
+    public const NAME = 'DiscountVoucherFormWidgetPlugin';
 
     /**
+     * @api
+     *
      * @return void
      */
     public function initialize(): void;

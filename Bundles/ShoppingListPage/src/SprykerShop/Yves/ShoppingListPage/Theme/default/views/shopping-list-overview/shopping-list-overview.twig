@@ -3,40 +3,46 @@
 {% define data = {
     shoppingListCollection: _view.shoppingListCollection,
     shoppingListForm: _view.shoppingListForm,
-    shoppingListResponse: _view.shoppingListResponse,
-    labels: {
-        addNewSubmitLabel: 'customer.account.shopping_list.overview.add_new' | trans,
-        overviewTitle: 'customer.account.shopping_list.overview.title' | trans,
-        emptyShoppingListsLabel: 'customer.account.shopping_list.overview.empty' | trans,
-        newFormTitle: 'customer.account.shopping_list.overview.form.new' | trans
-    }
+    shoppingListResponse: _view.shoppingListResponse
 } %}
 
 {% block customerContent %}
     <div class="box">
-        <h4>{{ data.labels.overviewTitle }}</h4>
-        <hr/>
         {% include molecule('form') with {
             data: {
-                title: data.labels.newFormTitle,
                 form: data.shoppingListForm,
                 submit: {
                     enable: true,
-                    text: data.labels.addNewSubmitLabel,
+                    text: 'customer.account.shopping_list.overview.add_new' | trans
                 }
             }
         } only %}
-        <hr/>
+
+        <div class="spacing-y">
+            <hr>
+        </div>
+
         {% if data.shoppingListCollection.shoppingLists | length %}
-            {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
-                data: {
-                    shoppingLists: data.shoppingListCollection.shoppingLists,
-                    enableTableForm: true,
-                    shoppingListResponse: data.shoppingListResponse
-                }
-            } only %}
+            <form method="POST" action="{{ path('shopping-list/add-shopping-list-to-cart') }}">
+                <button type="submit" class="button button--success" {{qa('submit-button')}}>
+                    {{ 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans }}
+                    {% include atom('icon') with {
+                        data: {
+                            name: 'shopping-cart'
+                        }
+                    } only %}
+                </button>
+
+                {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
+                    data: {
+                        shoppingLists: data.shoppingListCollection.shoppingLists,
+                        enableTableForm: true,
+                        shoppingListResponse: data.shoppingListResponse
+                    }
+                } only %}
+            </form>
         {% else %}
-            {{ data.labels.emptyShoppingListsLabel }}
+            {{ 'customer.account.shopping_list.overview.empty' | trans }}
         {% endif %}
     </div>
 {% endblock %}

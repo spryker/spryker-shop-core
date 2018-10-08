@@ -7,17 +7,9 @@
 
 namespace SprykerShop\Yves\ShopApplication\Plugin\Provider;
 
-use Silex\Application;
-use Silex\ServiceProviderInterface;
-use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
-use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Kernel\View\ViewInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use SprykerShop\Yves\ShopApplication\Exception\EmptyWidgetRegistryException;
-use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
 use SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Throwable;
 use Twig_Environment;
 use Twig_SimpleFunction;
@@ -26,85 +18,48 @@ use Twig_SimpleFunction;
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
  */
-class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+class WidgetServiceProvider extends WidgetTagServiceProvider
 {
-    /**
-     * @param \Silex\Application $application
-     *
-     * @return void
-     */
-    public function register(Application $application)
-    {
-        $application['twig'] = $application->share(
-            $application->extend('twig', function (\Twig_Environment $twig) {
-                return $this->registerWidgetTwigFunction($twig);
-            })
-        );
-    }
+    protected const TWIG_FUNCTION_WIDGET = 'widget';
 
-    /**
-     * @param \Silex\Application $app
-     *
-     * @throws \SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException
-     *
-     * @return void
-     */
-    public function boot(Application $app)
-    {
-        if (!$app instanceof SprykerApplication) {
-            throw new InvalidApplicationException(sprintf(
-                'The used application object need to be an instance of %s.',
-                SprykerApplication::class
-            ));
-        }
+    protected const TWIG_FUNCTION_WIDGET_BLOCK = 'widgetBlock';
 
-        $app['dispatcher']->addListener(KernelEvents::VIEW, function (GetResponseForControllerResultEvent $event) use ($app) {
-            $this->onKernelView($event, $app);
-        }, 0);
-    }
+    protected const TWIG_FUNCTION_WIDGET_GLOBAL = 'widgetGlobal';
 
-    /**
-     * @param \Twig_Environment $twig
-     *
-     * @return \Twig_Environment
-     */
-    protected function registerWidgetTwigFunction(Twig_Environment $twig)
-    {
-        foreach ($this->getFunctions() as $function) {
-            $twig->addFunction($function->getName(), $function);
-        }
+    protected const TWIG_FUNCTION_WIDGET_EXISTS = 'widgetExists';
 
-        return $twig;
-    }
+    protected const TWIG_FUNCTION_WIDGET_GLOBAL_EXISTS = 'widgetGlobalExists';
 
     /**
      * @return \Twig_SimpleFunction[]
      */
-    protected function getFunctions()
+    protected function getFunctions(): array
     {
-        return [
-            new Twig_SimpleFunction('widget', [$this, 'widget'], [
+        $functions = array_merge(parent::getFunctions(), [
+            new Twig_SimpleFunction(static::TWIG_FUNCTION_WIDGET, [$this, 'widget'], [
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
             ]),
-            new Twig_SimpleFunction('widgetBlock', [$this, 'widgetBlock'], [
+            new Twig_SimpleFunction(static::TWIG_FUNCTION_WIDGET_BLOCK, [$this, 'widgetBlock'], [
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
             ]),
-            new Twig_SimpleFunction('widgetGlobal', [$this, 'widgetGlobal'], [
+            new Twig_SimpleFunction(static::TWIG_FUNCTION_WIDGET_GLOBAL, [$this, 'widgetGlobal'], [
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
             ]),
-            new Twig_SimpleFunction('widgetExists', [$this, 'widgetExists'], [
+            new Twig_SimpleFunction(static::TWIG_FUNCTION_WIDGET_EXISTS, [$this, 'widgetExists'], [
                 'needs_context' => false,
             ]),
-            new Twig_SimpleFunction('widgetGlobalExists', [$this, 'widgetGlobalExists'], [
+            new Twig_SimpleFunction(static::TWIG_FUNCTION_WIDGET_GLOBAL_EXISTS, [$this, 'widgetGlobalExists'], [
                 'needs_context' => false,
             ]),
-        ];
+        ]);
+
+        return $functions;
     }
 
     /**
@@ -260,54 +215,6 @@ class WidgetServiceProvider extends AbstractPlugin implements ServiceProviderInt
         }
 
         return $widgetContainer;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
-     * @param \Spryker\Shared\Kernel\Communication\Application $application
-     *
-     * @return void
-     */
-    protected function onKernelView(GetResponseForControllerResultEvent $event, SprykerApplication $application)
-    {
-        /** @var \Spryker\Yves\Kernel\Widget\WidgetContainerInterface $result */
-        $result = $event->getControllerResult();
-
-        if (!$result instanceof ViewInterface) {
-            return;
-        }
-
-        /** @var \Twig_Environment $twig */
-        $twig = $application['twig'];
-        $twig->addGlobal('_view', $result);
-
-        $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
-        $widgetContainerRegistry->add($result);
-
-        if ($result->getTemplate()) {
-            $response = $application->render($result->getTemplate(), $this->getViewParameters($result));
-        } else {
-            $response = $this->getFactory()
-                ->createTwigRenderer()
-                ->render($application, $this->getViewParameters($result));
-        }
-
-        $event->setResponse($response);
-        $widgetContainerRegistry->removeLastAdded();
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\View\ViewInterface $view
-     *
-     * @return array|null
-     */
-    protected function getViewParameters(ViewInterface $view)
-    {
-        if ($this->getConfig()->useViewParametersToRenderTwig()) {
-            return $view->getData();
-        }
-
-        return [];
     }
 
     /**

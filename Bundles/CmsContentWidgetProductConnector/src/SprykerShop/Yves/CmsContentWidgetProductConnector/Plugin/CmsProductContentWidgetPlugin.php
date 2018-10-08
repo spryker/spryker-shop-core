@@ -28,7 +28,7 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
      * @param \Twig_Environment $twig
      * @param array $context
      * @param array|string $productAbstractSkuList $productAbstractSkuList
-     * @param null|string $templateIdentifier
+     * @param string|null $templateIdentifier
      *
      * @return string
      */

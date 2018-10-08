@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/heartbeat-page",
+  "type": "library",
   "description": "HeartbeatPage module",
   "license": "proprietary",
   "require": {
@@ -13,7 +14,9 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."

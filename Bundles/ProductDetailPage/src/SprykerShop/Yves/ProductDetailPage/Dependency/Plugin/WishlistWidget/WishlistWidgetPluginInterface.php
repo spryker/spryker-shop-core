@@ -12,9 +12,11 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface WishlistWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'WishlistWidgetPlugin';
+    public const NAME = 'WishlistWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void

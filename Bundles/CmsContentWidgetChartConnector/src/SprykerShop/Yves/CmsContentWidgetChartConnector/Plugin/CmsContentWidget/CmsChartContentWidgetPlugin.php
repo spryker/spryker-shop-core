@@ -65,7 +65,7 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param null|string $templateIdentifier
+     * @param string|null $templateIdentifier
      *
      * @return string
      */

@@ -12,6 +12,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Twig_Environment;
 use Twig_SimpleFilter;
 use Twig_SimpleFunction;
 
@@ -28,7 +29,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) {
+            $app->extend('twig', function (Twig_Environment $twig) {
                 $twig->addFilter($this->getMoneyFilter());
                 $twig->addFilter($this->getMoneyRawFilter());
                 $twig->addFunction($this->getMoneySymbol());
@@ -48,65 +49,96 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * @uses TwigMoneyServiceProvider::moneyFilterFunction()
+     *
      * @return \Twig_SimpleFilter
      */
     protected function getMoneyFilter()
     {
-        $moneyFactory = $this->getFactory();
-
-        $filter = new Twig_SimpleFilter('money', function ($money, $withSymbol = true, $isoCode = null) use ($moneyFactory) {
-            if (!($money instanceof MoneyTransfer)) {
-                $money = $this->getMoneyTransfer($money, $isoCode);
-            }
-
-            if ($withSymbol) {
-                return $moneyFactory->createMoneyFormatter()->format($money, MoneyFormatterCollection::FORMATTER_WITH_SYMBOL);
-            }
-
-            return $moneyFactory->createMoneyFormatter()->format($money, MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL);
-        });
-
-        return $filter;
+        return new Twig_SimpleFilter('money', [$this, 'moneyFilterFunction']);
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MoneyTransfer|int|string|float|null $money
+     * @param bool $withSymbol
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer|string|null
+     */
+    public function moneyFilterFunction($money, $withSymbol = true, $isoCode = null)
+    {
+        if ($money === null) {
+            return $money;
+        }
+
+        if (!($money instanceof MoneyTransfer)) {
+            $money = $this->getMoneyTransfer($money, $isoCode);
+        }
+
+        if ($withSymbol) {
+            return $this->getFactory()->createMoneyFormatter()->format($money, MoneyFormatterCollection::FORMATTER_WITH_SYMBOL);
+        }
+
+        return $this->getFactory()
+            ->createMoneyFormatter()
+            ->format($money, MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL);
+    }
+
+    /**
+     * @uses TwigMoneyServiceProvider::moneyRawFilterFunction()
+     *
      * @return \Twig_SimpleFilter
      */
     protected function getMoneyRawFilter()
     {
-        $moneyFactory = $this->getFactory();
-
-        $filter = new Twig_SimpleFilter('moneyRaw', function ($money, $isoCode = null) use ($moneyFactory) {
-            if (!($money instanceof MoneyTransfer)) {
-                $money = $this->getMoneyTransfer($money, $isoCode);
-            }
-
-            return $moneyFactory->createIntegerToDecimalConverter()->convert((int)$money->getAmount());
-        });
-
-        return $filter;
+        return new Twig_SimpleFilter('moneyRaw', [$this, 'moneyRawFilterFunction']);
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MoneyTransfer|int|string|float|null $money
+     * @param string|null $isoCode
+     *
+     * @return float
+     */
+    public function moneyRawFilterFunction($money, $isoCode = null)
+    {
+        if (!($money instanceof MoneyTransfer)) {
+            $money = $this->getMoneyTransfer($money, $isoCode);
+        }
+
+        return $this->getFactory()
+            ->createIntegerToDecimalConverter()
+            ->convert((int)$money->getAmount());
+    }
+
+    /**
+     * @uses TwigMoneyServiceProvider::moneySymbolFunction()
+     *
      * @return \Twig_SimpleFunction
      */
     protected function getMoneySymbol()
     {
-        $filter = new Twig_SimpleFunction('moneySymbol', function ($isoCode = null) {
-            $money = $this->getMoneyTransfer(100, $isoCode);
-            if ($money->getCurrency() === null || $money->getCurrency()->getSymbol() === null) {
-                return '';
-            }
+        return new Twig_SimpleFunction('moneySymbol', [$this, 'moneySymbolFunction']);
+    }
 
-            return $money->getCurrency()->getSymbol();
-        });
+    /**
+     * @param string|null $isoCode
+     *
+     * @return string|null
+     */
+    public function moneySymbolFunction($isoCode = null)
+    {
+        $money = $this->getMoneyTransfer(100, $isoCode);
+        if ($money->getCurrency() === null || $money->getCurrency()->getSymbol() === null) {
+            return '';
+        }
 
-        return $filter;
+        return $money->getCurrency()->getSymbol();
     }
 
     /**
      * @param int|string|float $money
-     * @param null|string $isoCode
+     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */

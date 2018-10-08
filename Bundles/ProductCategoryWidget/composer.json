@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-category-widget",
+  "type": "library",
   "description": "ProductCategoryWidget module",
   "license": "proprietary",
   "require": {
@@ -9,7 +10,9 @@
     "spryker/product-category-storage": "^1.0.0"
   },
   "require-dev": {
-    "spryker-shop/product-detail-page": "*"
+    "spryker-shop/product-detail-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/product-detail-page": "Widget plugins are available for this module."

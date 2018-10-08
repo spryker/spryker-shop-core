@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/shop-ui",
+  "type": "library",
   "description": "ShopUi module",
   "license": "proprietary",
   "require": {
@@ -8,7 +9,9 @@
     "spryker/twig": "^3.3.1"
   },
   "require-dev": {
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
