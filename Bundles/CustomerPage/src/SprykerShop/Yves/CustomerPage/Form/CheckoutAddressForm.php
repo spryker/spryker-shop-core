@@ -14,8 +14,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CheckoutAddressForm extends AddressForm
 {
-    const OPTION_VALIDATION_GROUP = 'validation_group';
-    const OPTION_ADDRESS_CHOICES = 'addresses_choices';
+    public const OPTION_VALIDATION_GROUP = 'validation_group';
+    public const OPTION_ADDRESS_CHOICES = 'addresses_choices';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -75,7 +75,7 @@ class CheckoutAddressForm extends AddressForm
         $builder->add(static::FIELD_ID_CUSTOMER_ADDRESS, ChoiceType::class, [
             'choices' => array_flip($choices),
             'choices_as_values' => true,
-            'required' => true,
+            'required' => false,
             'expanded' => true,
             'multiple' => false,
         ]);

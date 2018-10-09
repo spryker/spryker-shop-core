@@ -9,15 +9,21 @@ namespace SprykerShop\Yves\ShoppingListPage\Form;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
 
+/**
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
+ */
 class ShoppingListItemForm extends AbstractType
 {
-    protected const FIELD_SKU = 'sku';
     protected const FIELD_QUANTITY = 'quantity';
-    protected const FIELD_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
+
+    protected const MAX_QUANTITY_RANGE = 2147483647; // 32 bit integer
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -40,21 +46,9 @@ class ShoppingListItemForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addQuantityField($builder)
-            ->addSkuField($builder)
-            ->addIdShoppingListItemField($builder);
-    }
+            ->addQuantityField($builder);
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addSkuField(FormBuilderInterface $builder): self
-    {
-        $builder->add(self::FIELD_SKU, HiddenType::class);
-
-        return $this;
+        $this->addFormExpanders($builder, $options);
     }
 
     /**
@@ -64,20 +58,29 @@ class ShoppingListItemForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_ID_SHOPPING_LIST_ITEM, HiddenType::class);
+        $builder->add(static::FIELD_QUANTITY, HiddenType::class, [
+            'constraints' => [
+                new NotBlank(),
+                new Range([
+                    'min' => ShoppingListPageConfig::MIN_QUANTITY_RANGE,
+                    'max' => static::MAX_QUANTITY_RANGE,
+                ]),
+            ],
+        ]);
 
         return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return $this
+     * @return void
      */
-    protected function addIdShoppingListItemField(FormBuilderInterface $builder): self
+    protected function addFormExpanders(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(self::FIELD_QUANTITY, HiddenType::class);
-
-        return $this;
+        foreach ($this->getFactory()->getShoppingListItemFormExpanderPlugins() as $shoppingItemFormTypeExpanderPlugin) {
+            $shoppingItemFormTypeExpanderPlugin->buildForm($builder, $options);
+        }
     }
 }

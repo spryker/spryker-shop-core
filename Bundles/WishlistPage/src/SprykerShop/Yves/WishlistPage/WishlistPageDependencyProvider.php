@@ -15,10 +15,10 @@ use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClient
 
 class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
-    const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
-    const PLUGIN_WISHLIST_ITEM_EXPANDERS = 'PLUGIN_WISHLIST_ITEM_EXPANDERS';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const PLUGIN_WISHLIST_ITEM_EXPANDERS = 'PLUGIN_WISHLIST_ITEM_EXPANDERS';
     public const PLUGIN_WISHLIST_VIEW_WIDGETS = 'PLUGIN_WISHLIST_VIEW_WIDGETS';
 
     /**
@@ -117,7 +117,7 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * Returns a list of widget plugin class names that implement
-     * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     * Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
      * @return string[]
      */

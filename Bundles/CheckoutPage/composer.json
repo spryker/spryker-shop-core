@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/checkout-page",
+  "type": "library",
   "description": "CheckoutPage module",
   "license": "proprietary",
   "require": {

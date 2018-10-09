@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class NewsletterWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
+    public const ROUTE_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
 
     /**
      * @param \Silex\Application $app

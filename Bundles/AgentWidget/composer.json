@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/agent-widget",
+  "type": "library",
   "description": "AgentWidget module",
   "license": "proprietary",
   "require": {

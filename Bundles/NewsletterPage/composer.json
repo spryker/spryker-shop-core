@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/newsletter-page",
+  "type": "library",
   "description": "NewsletterPage module",
   "license": "proprietary",
   "require": {

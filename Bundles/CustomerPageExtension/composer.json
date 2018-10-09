@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/customer-page-extension",
+  "type": "library",
   "description": "CustomerPageExtension module",
   "license": "proprietary",
   "require": {

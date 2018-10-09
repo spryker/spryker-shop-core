@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/language-switcher-widget",
+  "type": "library",
   "description": "LanguageSwitcherWidget module",
   "license": "proprietary",
   "require": {

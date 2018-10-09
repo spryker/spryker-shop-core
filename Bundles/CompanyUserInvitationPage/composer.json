@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/company-user-invitation-page",
+  "type": "library",
   "description": "CompanyUserInvitationPage module",
   "license": "proprietary",
   "require": {

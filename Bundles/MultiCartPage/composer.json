@@ -1,23 +1,27 @@
 {
   "name": "spryker-shop/multi-cart-page",
+  "type": "library",
   "description": "MultiCartPage module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker-shop/cart-page": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.6.0",
     "spryker/application": "^3.0.0",
+    "spryker/cart": "^5.0.0",
     "spryker/kernel": "^3.19.0",
     "spryker/multi-cart": "^1.0.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
+    "spryker-shop/customer-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/customer-page": "if you want to use customer layout templates: ^1.0.0",
     "spryker/permission": "If you want to use permissions plugins",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
