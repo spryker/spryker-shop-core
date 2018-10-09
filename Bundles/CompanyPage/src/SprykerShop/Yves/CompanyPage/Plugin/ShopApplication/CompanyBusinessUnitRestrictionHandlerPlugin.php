@@ -69,9 +69,7 @@ class CompanyBusinessUnitRestrictionHandlerPlugin extends AbstractPlugin impleme
         $companyBusinessUnitTransfer = $this->getFactory()->getCompanyBusinessUnitClient()
             ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
 
-        if ($companyBusinessUnitTransfer &&
-            $companyBusinessUnitTransfer->getFkCompany() === $customerTransfer->getCompanyUserTransfer()->getFkCompany()
-        ) {
+        if ($companyBusinessUnitTransfer->getFkCompany() === $customerTransfer->getCompanyUserTransfer()->getFkCompany()) {
             return;
         }
 
