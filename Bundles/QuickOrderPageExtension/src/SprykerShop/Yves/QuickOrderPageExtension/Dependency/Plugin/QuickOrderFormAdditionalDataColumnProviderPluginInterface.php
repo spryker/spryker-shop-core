@@ -21,8 +21,7 @@ interface QuickOrderFormAdditionalDataColumnProviderPluginInterface
 
     /**
      * Specification:
-     * - Returns string to be used as a field name/id at Quick Order Page.
-     * - Field is used for text data placing.
+     * - Returns string to be used as a field name and ID at Quick Order Page.
      *
      * @api
      *
