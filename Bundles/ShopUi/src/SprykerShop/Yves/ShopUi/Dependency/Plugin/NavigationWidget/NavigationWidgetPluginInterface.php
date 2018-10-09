@@ -11,9 +11,11 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface NavigationWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'NavigationWidgetPlugin';
+    public const NAME = 'NavigationWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param string $navigationKey
      * @param string $template
      *

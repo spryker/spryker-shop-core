@@ -1,26 +1,93 @@
-{% extends template('page-layout-main') %}
+{% extends template('page-layout-multi-cart', 'MultiCartPage') %}
 
 {% define data = {
+    cart: _view.cart,
+    cartName: _view.cart.name | default,
     form: _view.sharedCartForm,
-    title: 'shared_cart.form.share_cart' | trans,
+    title: 'shared_cart.form.share_cart.title' | trans({cart_name: _view.cart.name | default}),
+    activePage: 'multiCart'
 } %}
 
-{% block content %}
-    <div class="box">
-        {% include molecule('form') with {
-            data: {
-                title: 'shared_cart.form.share_cart' | trans,
-                form: data.form,
-                submit: {
-                    enable: true,
-                    text: 'shared_cart.form.share_button' | trans
-                },
-                cancel: {
-                    enable: true,
-                    url: url('cart'),
-                    text: 'general.back.button' | trans
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                url: url('customer/overview'),
+                label: 'customer.profile' | trans
+            },{
+                url: url('multi-cart'),
+                label: 'shared_cart.share.breadcrumbs.shopping_carts' | trans
+            },{
+                url: data.cart.isDefault ? url('cart') : url('multi-cart/set-default', {idQuote: data.cart.idQuote}),
+                label: data.cartName
+            },{
+                label: 'shared_cart.share.breadcrumbs.share' | trans
+            }]
+        }
+    } only %}
+{% endblock %}
+
+{% set shared = [] %}
+{% set unShared = [] %}
+
+{% for shareDetail in data.form.shareDetails %}
+    {% if shareDetail.vars.value.quotePermissionGroup is null %}
+        {% set unShared = unShared | merge([shareDetail]) %}
+    {% else %}
+        {% set shared = shared | merge([shareDetail]) %}
+    {% endif %}
+{% endfor %}
+
+{% block customerContent %}
+    {% if data.form.vars.value.shareDetails is not empty %}
+    {{ form_start(data.form) }}
+        <div class="box" {{ qa('share-cart-table') }}>
+            <h3 class="spacing-left">{{ 'shared_cart.share.form.users' | trans }}</h3>
+
+            {% include molecule('user-share-list', 'SharedCartPage') with {
+                data: {
+                    shareDetailsForm: data.form,
+                    shared: shared
                 }
-            }
-        } only %}
-    </div>
+            } only %}
+
+            {% include molecule('user-share-list', 'SharedCartPage') with {
+                data: {
+                    shareDetailsForm: data.form,
+                    shared: unShared
+                }
+            } only %}
+
+            <div class="form__actions">
+                <a href="{{ data.backUrl }}" class="form__action button button--secondary button--hollow">
+                    {% include atom('icon') with {
+                        modifiers: ['small'],
+                        data: {
+                            name: 'chevron-left'
+                        }
+                    } only %}
+                    {{ "general.back.button" | trans }}
+                </a>
+                <button type="submit" class="form__action button button--success float-right">
+                    {{ 'shared_cart.form.save_button' | trans }}
+                </button>
+            </div>
+        </div>
+    {{ form_end(data.form) }}
+    {% else %}
+        <div class="box" {{ qa('share-cart-table') }}>
+            {{ 'shared_cart.form.data_empty' | trans }}
+            <div class="form__actions">
+                <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
+                    {% include atom('icon') with {
+                        modifiers: ['small'],
+                        data: {
+                            name: 'chevron-left'
+                        }
+                    } only %}
+                    {{ "general.back.button" | trans }}
+                </a>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

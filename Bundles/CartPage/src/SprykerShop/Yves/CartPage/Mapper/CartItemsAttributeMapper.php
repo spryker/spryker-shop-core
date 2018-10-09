@@ -17,9 +17,9 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientIn
 
 class CartItemsAttributeMapper implements CartItemsMapperInterface
 {
-    const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
-    const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
-    const PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
+    public const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
+    public const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
+    public const PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
 
     /**
      * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface
@@ -90,7 +90,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
             }
 
             $variantNameValue = $this->getParentNode($attributeMapIterator);
-            list($variantName, $variantValue) = explode(':', $variantNameValue);
+            [$variantName, $variantValue] = explode(':', $variantNameValue);
 
             if ($this->isVariantNotSet($variantName, $productVariants, $variantValue)) {
                 $productVariants[$variantName][$variantValue][CartVariantConstants::AVAILABLE] = false;

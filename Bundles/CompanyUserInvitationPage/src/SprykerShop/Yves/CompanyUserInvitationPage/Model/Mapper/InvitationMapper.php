@@ -14,10 +14,10 @@ use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvi
 
 class InvitationMapper implements InvitationMapperInterface
 {
-    const COLUMN_EMAIL = 'email';
-    const COLUMN_BUSINESS_UNIT = 'business_unit';
-    const COLUMN_LAST_NAME = 'last_name';
-    const COLUMN_FIRST_NAME = 'first_name';
+    public const COLUMN_EMAIL = 'email';
+    public const COLUMN_BUSINESS_UNIT = 'business_unit';
+    public const COLUMN_LAST_NAME = 'last_name';
+    public const COLUMN_FIRST_NAME = 'first_name';
     /**
      * @var \SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCustomerClientInterface
      */

@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/error-page",
+  "type": "library",
   "description": "ErrorPage module",
   "license": "proprietary",
   "require": {

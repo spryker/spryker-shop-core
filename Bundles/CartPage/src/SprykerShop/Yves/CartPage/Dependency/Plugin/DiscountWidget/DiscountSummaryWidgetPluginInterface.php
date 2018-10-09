@@ -12,9 +12,11 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface DiscountSummaryWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'DiscountSummaryWidgetPlugin';
+    public const NAME = 'DiscountSummaryWidgetPlugin';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
@@ -17,7 +19,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddressController extends AbstractCompanyController
 {
-    public const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+    protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+    protected const REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT = 'idCompanyBusinessUnit';
+    protected const REQUEST_PARAM_ID = 'id';
+
+    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'message.business_unit_address.create';
+    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'message.business_unit_address.update';
+    protected const MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS = 'message.business_unit_address.delete';
+
+    protected const REFERER_PARAM = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -83,20 +93,36 @@ class AddressController extends AbstractCompanyController
             ->getCompanyUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
+
         if ($addressForm->isSubmitted() === false) {
             $addressForm->setData($dataProvider->getData($this->getCompanyUser()));
         }
 
         if ($addressForm->isValid()) {
-            $companyUnitAddressTransfer = $this->saveAddress($addressForm->getData());
+            $data = $addressForm->getData();
+            $data[CompanyUnitAddressTransfer::COMPANY_BUSINESS_UNITS][CompanyBusinessUnitCollectionTransfer::COMPANY_BUSINESS_UNITS][][CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT] = $idCompanyBusinessUnit;
 
-            if ($companyUnitAddressTransfer) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ADDRESS);
+            $companyUnitAddressTransfer = $this->getFactory()
+                ->createCompanyBusinessAddressSaver()
+                ->saveAddress($data);
+
+            $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS, [
+                '%address%' => $companyUnitAddressTransfer->getAddress1(),
+            ]);
+
+            if (empty($idCompanyBusinessUnit)) {
+                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
             }
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                'id' => $idCompanyBusinessUnit,
+            ]);
         }
 
         return [
             'form' => $addressForm->createView(),
+            'idCompanyBusinessUnit' => $idCompanyBusinessUnit,
         ];
     }
 
@@ -134,17 +160,38 @@ class AddressController extends AbstractCompanyController
             ->getCompanyUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
-        if ($addressForm->isSubmitted() === false) {
-            $idCompanyUnitAddress = $request->query->getInt('id');
-            $addressForm->setData($dataProvider->getData($this->getCompanyUser(), $idCompanyUnitAddress));
-        } elseif ($addressForm->isValid()) {
-            $this->saveAddress($addressForm->getData());
+        $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ADDRESS);
+        if ($addressForm->isSubmitted() === false) {
+            $addressForm->setData($dataProvider->getData($this->getCompanyUser(), $idCompanyUnitAddress));
+        }
+
+        if ($addressForm->isValid()) {
+            $data = $addressForm->getData();
+            $data[CompanyUnitAddressTransfer::COMPANY_BUSINESS_UNITS][CompanyBusinessUnitCollectionTransfer::COMPANY_BUSINESS_UNITS][][CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT] = $idCompanyBusinessUnit;
+
+            $companyUnitAddressTransfer = $this->getFactory()
+                ->createCompanyBusinessAddressSaver()
+                ->saveAddress($data);
+
+            $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS, [
+                '%address%' => $companyUnitAddressTransfer->getAddress1(),
+            ]);
+
+            if (empty($idCompanyBusinessUnit)) {
+                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+            }
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                'id' => $idCompanyBusinessUnit,
+            ]);
         }
 
         return [
             'form' => $addressForm->createView(),
+            'idCompanyBusinessUnit' => $idCompanyBusinessUnit,
+            'idCompanyUnitAddress' => $idCompanyUnitAddress,
         ];
     }
 
@@ -155,30 +202,48 @@ class AddressController extends AbstractCompanyController
      */
     public function deleteAction(Request $request)
     {
-        $idCompanyUnitAddress = $request->query->getInt('id');
+        $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
         $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
         $this->getFactory()->getCompanyUnitAddressClient()->deleteCompanyUnitAddress($companyUnitAddressTransfer);
 
-        return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ADDRESS);
+        $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS);
+
+        if (empty($idCompanyBusinessUnit)) {
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+        }
+
+        return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+            'id' => $idCompanyBusinessUnit,
+        ]);
     }
 
     /**
-     * @param array $data
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function saveAddress(array $data)
+    public function confirmDeleteAction(Request $request)
     {
-        $addressTransfer = new CompanyUnitAddressTransfer();
-        $addressTransfer->fromArray($data, true);
-        $addressTransfer = $this
-            ->getFactory()
-            ->getCompanyUnitAddressClient()
-            ->createCompanyUnitAddress($addressTransfer);
+        $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
-        return $addressTransfer->getCompanyUnitAddressTransfer();
+        $referer = $request->headers->get(static::REFERER_PARAM);
+
+        $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())
+            ->setIdCompanyUnitAddress($idCompanyUnitAddress);
+
+        $companyUnitAddressTransfer = $this->getFactory()
+            ->getCompanyUnitAddressClient()
+            ->getCompanyUnitAddressById($companyUnitAddressTransfer);
+
+        return $this->view([
+            'companyUnitAddress' => $companyUnitAddressTransfer,
+            'idCompanyBusinessUnit' => $idCompanyBusinessUnit,
+            'cancelUrl' => $referer,
+        ], [], '@CompanyPage/views/address-delete-confirmation-page/address-delete-confirmation-page.twig');
     }
 
     /**

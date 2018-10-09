@@ -26,7 +26,7 @@ class CartController extends AbstractController
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
-    const PARAM_ITEMS = 'items';
+    public const PARAM_ITEMS = 'items';
 
     /**
      * @param array|null $selectedAttributes

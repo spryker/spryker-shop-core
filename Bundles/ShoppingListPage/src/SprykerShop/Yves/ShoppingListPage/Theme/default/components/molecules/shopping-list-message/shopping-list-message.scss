@@ -1,0 +1,9 @@
+@mixin shopping-list-message($name: '.shopping-list-message') {
+    #{$name} {
+        &__title {
+            color: map-get($setting-color-actions, 'alert');
+        }
+
+        @content;
+    }
+}

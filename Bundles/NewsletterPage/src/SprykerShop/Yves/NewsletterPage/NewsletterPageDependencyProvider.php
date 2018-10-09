@@ -14,8 +14,8 @@ use SprykerShop\Yves\NewsletterPage\Dependency\Client\NewsletterPageToNewsletter
 
 class NewsletterPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_NEWSLETTER = 'CLIENT_NEWSLETTER';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_NEWSLETTER = 'CLIENT_NEWSLETTER';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

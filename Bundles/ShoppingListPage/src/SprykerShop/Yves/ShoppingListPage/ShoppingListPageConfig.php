@@ -16,6 +16,8 @@ class ShoppingListPageConfig extends AbstractBundleConfig
 
     public const CART_REDIRECT_URL = 'cart';
 
+    public const MIN_QUANTITY_RANGE = 1;
+
     /**
      * @return string
      */

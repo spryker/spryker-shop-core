@@ -1,0 +1,17 @@
+@mixin company-page-business-unit-delete-message($name: '.business-unit-delete-message') {
+    #{$name} {
+        &__delete-message {
+            color: map-get($setting-color-actions, 'alert');
+        }
+
+        &__business-unit {
+            color: $setting-color-main;
+        }
+
+        &__action {
+            margin-right: map-get($setting-spacing, 'default');
+        }
+
+        @content
+    }
+}
