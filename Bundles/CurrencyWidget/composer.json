@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/currency-widget",
+  "type": "library",
   "description": "CurrencyWidget module",
   "license": "proprietary",
   "require": {
@@ -11,7 +12,9 @@
   },
   "require-dev": {
     "spryker-shop/shop-application": "*",
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",

@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-barcode-widget",
+  "type": "library",
   "description": "ProductBarcodeWidget module",
   "license": "proprietary",
   "require": {
@@ -14,7 +15,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/shopping-list-page": "*"
+    "spryker-shop/shopping-list-page": "If you want see ProductBarcodeWidget in action"
   },
   "autoload": {
     "psr-4": {

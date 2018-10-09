@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/money-widget",
+  "type": "library",
   "description": "MoneyWidget module",
   "license": "proprietary",
   "require": {
@@ -10,7 +11,9 @@
     "spryker/money": "^2.4.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/silex": "*",
+    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {

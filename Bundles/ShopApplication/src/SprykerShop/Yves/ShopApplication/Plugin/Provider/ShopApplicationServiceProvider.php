@@ -25,9 +25,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ShopApplicationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const LOCALE = 'locale';
-    const STORE = 'store';
-    const REQUEST_URI = 'REQUEST_URI';
+    public const LOCALE = 'locale';
+    public const STORE = 'store';
+    public const REQUEST_URI = 'REQUEST_URI';
 
     /**
      * @var \Spryker\Shared\Kernel\Communication\Application

@@ -11,12 +11,13 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewsletterSubscriptionForm extends AbstractType
 {
-    const FIELD_SUBSCRIBE = 'subscribe';
-    const FORM_ID = 'subscription';
+    public const FIELD_SUBSCRIBE = 'subscribe';
+    public const FORM_ID = 'subscription';
 
     /**
      * @return string
@@ -66,6 +67,7 @@ class NewsletterSubscriptionForm extends AbstractType
             'required' => false,
             'constraints' => [
                 new NotBlank(),
+                new Email(),
             ],
         ]);
 

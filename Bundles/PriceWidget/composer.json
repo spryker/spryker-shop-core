@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/price-widget",
+  "type": "library",
   "description": "PriceWidget module",
   "license": "proprietary",
   "require": {
@@ -13,7 +14,9 @@
   "require-dev": {
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/shop-application": "*",
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/product-detail-page": "Widget plugins are available for this module.",

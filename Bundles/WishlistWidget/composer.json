@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/wishlist-widget",
+  "type": "library",
   "description": "WishlistWidget module",
   "license": "proprietary",
   "require": {
@@ -10,11 +11,13 @@
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",
-    "spryker-shop/product-detail-page": "*"
+    "spryker-shop/product-detail-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
-    "spryker-shop/customer-page": "To have customer account pages"
+    "spryker-shop/customer-page": "To have customer account pages",
+    "spryker-shop/product-detail-page": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {

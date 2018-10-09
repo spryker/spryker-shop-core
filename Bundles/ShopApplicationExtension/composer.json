@@ -1,13 +1,15 @@
 {
   "name": "spryker-shop/shop-application-extension",
+  "type": "library",
   "description": "ShopApplicationExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/silex": "*",
-    "spryker/symfony": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/silex": "",

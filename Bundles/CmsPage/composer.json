@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/cms-page",
+  "type": "library",
   "description": "CmsPage module",
   "license": "proprietary",
   "require": {
@@ -15,7 +16,9 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/silex": "*",
+    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {

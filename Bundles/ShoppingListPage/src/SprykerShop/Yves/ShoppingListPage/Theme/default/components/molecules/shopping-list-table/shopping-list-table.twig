@@ -1,0 +1,103 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-table',
+    tag: 'table'
+} %}
+
+{% define data = {
+    shoppingList: required,
+    shoppingListItems: required
+} %}
+
+{% block body %}
+    <thead class="{{ config.name }}__head">
+        <tr>
+            <th class="{{ config.name }}__cell text-left" colspan="3">{{ 'customer.account.shopping_list.product' | trans }}</th>
+            <th class="{{ config.name }}__cell text-center">{{ 'customer.account.shopping_list.price' | trans }}</th>
+            <th class="{{ config.name }}__cell text-center">{{ 'customer.account.shopping_list.quantity' | trans }}</th>
+            <th class="{{ config.name }}__cell text-center">{{ 'customer.account.shopping_list.availability' | trans }}</th>
+            <th class="{{ config.name }}__cell text-center">{{ 'customer.account.shopping_list.overview.actions' | trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data.shoppingListItems %}
+            {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
+            {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+                {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %}
+                {% set isItemAvailable = not isDiscontinued and isItemAvailable %}
+            {% endif %}
+            <tr class="{{ config.name }}__row {{ not isItemAvailable ? config.name ~ '__row--disable' : ''}}">
+                <td class="{{ config.name }}__cell">
+                    <input type="checkbox" {{ isItemAvailable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.idShoppingListItem }}]" value="{{ item.idShoppingListItem }}"/>
+                </td>
+                <td class="{{ config.name }}__cell text-center">
+                    {% if item.images is defined and item.images is not empty %}
+                        {% include atom('thumbnail') with {
+                            modifiers: ['small', 'min-size'],
+                            attributes: {
+                                alt: item.name | default(''),
+                                src: item.images.0.externalUrlSmall | default,
+                                title: item.name | default
+                            }
+                        } only %}
+                    {% endif %}
+                </td>
+                <td class="{{ config.name }}__cell">
+                    <ul class="list spacing-y">
+                        <li class="list__item">
+                            <a href="{{ item.url }}">{{ item.name }}</a>
+                        </li>
+                        <li class="list__item">
+                            <small class="text-secondary">{{ item.sku }}</small>
+                        </li>
+                        {% for attribute in item.superAttributesDefinition %}
+                            {% if item.attributes[attribute] is defined %}
+                                <li class="list__item">
+                                    <strong>{{ ('product.attribute.' ~ attribute) | trans }}</strong>: {{ item.attributes[attribute] }}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {{ widget('ShoppingListItemNoteWidgetPlugin', item.shoppingListItem) }}
+                    </ul>
+                </td>
+                <td nowrap="nowrap" class="{{ config.name }}__cell text-center">
+                    {% if item.price is not empty %}
+                        {% include molecule('price') with {
+                            data: {
+                                amount: item.price | money,
+                                originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : (item.prices.ORIGINAL | money)
+                            }
+                        } only %}
+                    {% else %}
+                        {{ 'product_alternative_widget.not_applicable' | trans }}
+                    {% endif %}
+                </td>
+                <td class="{{ config.name }}__cell text-center">
+                    <input class="input" {{ isItemAvailable ? '' : 'disabled' }} type="number" name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]" value="{{ item.quantity }}"/>
+                </td>
+                <td class="{{ config.name }}__cell text-center">
+                    {% if isItemAvailable %}
+                        {{ 'customer.account.shopping_list.available' | trans }}
+                    {% else %}
+                        {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
+                            {{ widget('ProductDiscontinuedWidgetPlugin', item.sku) }}
+                        {% else %}
+                            {{ 'customer.account.shopping_list.not_available' | trans }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td class="{{ config.name }}__cell">
+                    {% if isItemAvailable %}
+                        <button type="submit" name="add-item" class="button button--success" value="{{ item.idShoppingListItem }}" {{qa('submit-button')}}>
+                            {{'customer.account.shopping_list.add-to-cart' | trans}}
+                        </button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) and widgetExists('ProductAlternativeWidgetPlugin') %}
+                {{ widget('ProductAlternativeWidgetPlugin', item, data.shoppingList) }}
+            {% endif %}
+        {% endfor %}
+    </tbody>
+{% endblock %}

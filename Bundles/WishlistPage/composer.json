@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/wishlist-page",
+  "type": "library",
   "description": "WishlistPage module",
   "license": "proprietary",
   "require": {
@@ -15,7 +16,9 @@
     "spryker/wishlist": "^5.1.0 || ^6.0.0"
   },
   "require-dev": {
-    "spryker/silex": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."

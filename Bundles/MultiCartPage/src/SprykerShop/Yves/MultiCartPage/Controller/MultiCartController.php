@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MultiCartController extends AbstractController
 {
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
+    public const GLOSSARY_KEY_CART_WAS_DELETED = 'multi_cart_widget.cart.was-deleted-before';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -100,7 +101,8 @@ class MultiCartController extends AbstractController
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CART_UPDATED_SUCCESS);
-                return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+
+                return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
             }
         }
 
@@ -117,13 +119,18 @@ class MultiCartController extends AbstractController
      */
     public function setDefaultAction(int $idQuote)
     {
-        $quoteTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->findQuoteById($idQuote);
+        $multiCartClient = $this->getFactory()
+            ->getMultiCartClient();
 
-        $this->getFactory()
-            ->getMultiCartClient()
-            ->setDefaultQuote($quoteTransfer);
+        $quoteTransfer = $multiCartClient->findQuoteById($idQuote);
+
+        if (!$quoteTransfer) {
+            $this->addInfoMessage(static::GLOSSARY_KEY_CART_WAS_DELETED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
+        $multiCartClient->setDefaultQuote($quoteTransfer);
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -139,11 +146,16 @@ class MultiCartController extends AbstractController
             ->getMultiCartClient()
             ->findQuoteById($idQuote);
 
-        $this->getFactory()
+        $idNewQuote = $this->getFactory()
             ->getMultiCartClient()
-            ->duplicateQuote($quoteTransfer);
+            ->duplicateQuote($quoteTransfer)
+            ->getQuoteTransfer()
+            ->getIdQuote();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(
+            MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE,
+            [MultiCartPageControllerProvider::PARAM_ID_QUOTE => $idNewQuote]
+        );
     }
 
     /**
@@ -180,18 +192,73 @@ class MultiCartController extends AbstractController
             ->getMultiCartClient()
             ->findQuoteById($idQuote);
 
+        if (!$quoteTransfer) {
+            $this->addInfoMessage(static::GLOSSARY_KEY_CART_WAS_DELETED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
         $multiCartClient
             ->deleteQuote($quoteTransfer);
 
-        $customerQuoteTransferList = $multiCartClient->getQuoteCollection()->getQuotes();
-        if ($quoteTransfer->getIsDefault() && count($customerQuoteTransferList)) {
-            $quoteTransfer = reset($customerQuoteTransferList);
+        return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+    }
 
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_SET_DEFAULT, [
-                MultiCartPageControllerProvider::PARAM_ID_QUOTE => $quoteTransfer->getIdQuote(),
-            ]);
-        }
+    /**
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function indexAction()
+    {
+        $response = $this->executeIndexAction();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->view(
+            $response,
+            $this->getFactory()->getMultiCartListWidgetPlugins(),
+            '@MultiCartPage/views/cart/cart.twig'
+        );
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeIndexAction(): array
+    {
+        $this->getFactory()->getCartClient()->validateQuote();
+        $quoteCollectionTransfer = $this->getFactory()->getMultiCartClient()->getQuoteCollection();
+
+        return [
+            'quoteCollection' => $quoteCollectionTransfer->getQuotes(),
+            'isQuoteDeletable' => $this->getFactory()->getMultiCartClient()->isQuoteDeletable(),
+        ];
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function confirmDeleteAction(int $idQuote)
+    {
+        $viewData = $this->executeConfirmDeleteAction($idQuote);
+
+        $widgetPlugins = $this->getFactory()
+            ->getCartDeleteCompanyUsersListWidgetPlugins();
+
+        return $this->view($viewData, $widgetPlugins, '@MultiCartPage/views/cart-delete/cart-delete.twig');
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return array
+     */
+    protected function executeConfirmDeleteAction(int $idQuote): array
+    {
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
+        return [
+            'cart' => $quoteTransfer,
+        ];
     }
 }
