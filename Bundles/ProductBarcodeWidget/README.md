@@ -8,7 +8,7 @@ Widget that generates Barcode by Product SKU.
 ## Installation
 
 ```
-composer require spryker-shop/barcode-widget
+composer require spryker-shop/product-barcode-widget
 ```
 
 ## Documentation
