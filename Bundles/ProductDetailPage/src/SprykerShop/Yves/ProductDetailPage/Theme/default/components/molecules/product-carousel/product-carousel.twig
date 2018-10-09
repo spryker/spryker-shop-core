@@ -10,7 +10,7 @@
 } %}
 
 {% block body %}
-    {% if widgetExists('ProductImageWidgetPlugin123') %}
+    {% if widgetExists('ProductImageWidgetPlugin') %}
         {{ widget('ProductImageWidgetPlugin', data.product) }} {# @deprecated Use molecule('simple-carousel') instead. #}
     {% else %}
         {% embed molecule('simple-carousel') with {
