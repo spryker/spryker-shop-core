@@ -9,8 +9,12 @@
     isAvailable: false
 } %}
 
-{% block body %}
+{% block component %}
     {% if data.idProductConcrete is not empty and not data.isAvailable %}
-        <p class="text-alert">{{ "product.detail.out_of_stock" | trans }}</p>
+        {{parent()}}
     {% endif %}
+{% endblock %}
+
+{% block body %}
+    <p class="text-alert">{{ "product.detail.out_of_stock" | trans }}</p>
 {% endblock %}

@@ -1,9 +1,9 @@
 {% if productSetList is defined %}
     {% for productSet in productSetList %}
         {% if widgetExists('ProductSetWidgetPlugin') %}
-            {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.productViews) }} {# @deprecated Use molecule('product-set', 'ProductSetWidget') instead. #}
+            {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.productViews) }} {# @deprecated Use organism('product-set', 'ProductSetWidget') instead. #}
         {% else %}
-            {% include molecule('product-set-cms-content', 'ProductSetWidget') ignore missing with {
+            {% include organism('product-set-cms-content', 'ProductSetWidget') ignore missing with {
                 data: {
                     products: productSet.productViews,
                     name: productSet.productSet.name,
@@ -17,9 +17,9 @@
 
 {% if productSet is defined %}
     {% if widgetExists('ProductSetWidgetPlugin') %}
-        {{ widget('ProductSetWidgetPlugin', productSet, productViews) }} {# @deprecated Use molecule('product-set', 'ProductSetWidget') instead. #}
+        {{ widget('ProductSetWidgetPlugin', productSet, productViews) }} {# @deprecated Use organism('product-set', 'ProductSetWidget') instead. #}
     {% else %}
-        {% include molecule('product-set-cms-content', 'ProductSetWidget') ignore missing with {
+        {% include organism('product-set-cms-content', 'ProductSetWidget') ignore missing with {
             data: {
                 products: productViews,
                 name: productSet.name,

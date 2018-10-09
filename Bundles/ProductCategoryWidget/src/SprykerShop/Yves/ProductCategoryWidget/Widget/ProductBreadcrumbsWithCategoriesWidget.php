@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductCategoryWidget\Widget;
 
+use \ArrayObject;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -45,7 +46,7 @@ class ProductBreadcrumbsWithCategoriesWidget extends AbstractWidget
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductCategoryStorageTransfer[]
      */
-    protected function getCategories(ProductViewTransfer $productViewTransfer): array
+    protected function getCategories(ProductViewTransfer $productViewTransfer): ArrayObject
     {
         $productAbstractCategoryStorageTransfer = $this->getFactory()
             ->getProductCategoryStorageClient()

@@ -66,7 +66,7 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
             return false;
         }
 
-        return $quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit();
+        return (bool)$quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit();
     }
 
     /**

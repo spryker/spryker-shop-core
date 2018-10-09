@@ -8,15 +8,19 @@
     options: null
 } %}
 
-{% block body %}
+{% block component %}
     {% if data.options is not empty %}
-        <ul class="list list--expand list--plus">
-            {% for option in data.options %}
-                <li class="list__item">
-                    {{ option.value | trans }}
-                    <span class="float-right">{{ option.unitPrice | money }}</span>
-                </li>
-            {% endfor %}
-        </ul>
+        {{parent()}}
     {% endif %}
+{% endblock %}
+
+{% block body %}
+    <ul class="list list--expand list--plus">
+        {% for option in data.options %}
+            <li class="list__item">
+                {{ option.value | trans }}
+                <span class="float-right">{{ option.unitPrice | money }}</span>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
