@@ -52,7 +52,8 @@
                     {% include molecule('shopping-list-action-navigation', 'ShoppingListPage') with {
                         data: {
                             hasWritePermission: hasWritePermission,
-                            idShoppingList: shoppingList.idShoppingList
+                            idShoppingList: shoppingList.idShoppingList,
+                            shoppingList: shoppingList
                         }
                     } only %}
                 </td>
