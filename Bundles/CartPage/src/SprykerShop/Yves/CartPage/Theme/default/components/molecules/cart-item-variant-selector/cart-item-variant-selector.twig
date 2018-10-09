@@ -48,7 +48,7 @@
                             attributes: {
                                 name: 'preselectedAttributes[' ~ attributeName ~ ']',
                                 'onchange': 'this.form.submit();',
-                                disabled: data.canEditCart == false
+                                disabled: not data.canEditCart
                             }
                         } only %}
                     </label>
