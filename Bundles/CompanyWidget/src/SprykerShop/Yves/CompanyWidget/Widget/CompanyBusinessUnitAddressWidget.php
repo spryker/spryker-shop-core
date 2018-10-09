@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\CompanyWidget\Widget;
+namespace SprykerShop\Yves\CompanyWidget\Widget;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
