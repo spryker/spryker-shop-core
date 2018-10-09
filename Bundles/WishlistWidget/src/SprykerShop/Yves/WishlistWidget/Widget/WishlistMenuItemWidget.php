@@ -97,10 +97,6 @@ class WishlistMenuItemWidget extends AbstractWidget
             ->getWishlistClient()
             ->getCustomerWishlistCollection();
 
-        if ($customerWishlistCollectionTransfer->getWishlists() === null) {
-            return [];
-        }
-
         return (array)$customerWishlistCollectionTransfer->getWishlists();
     }
 }

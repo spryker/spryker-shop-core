@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ProductCategoryWidget\Widget;
 
-use \ArrayObject;
+use ArrayObject;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 

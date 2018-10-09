@@ -97,10 +97,6 @@ class ShoppingListMenuItemWidget extends AbstractWidget
             ->getShoppingListClient()
             ->getCustomerShoppingListCollection();
 
-        if ($customerShoppingListCollectionTransfer->getShoppingLists() === null) {
-            return [];
-        }
-
         return (array)$customerShoppingListCollectionTransfer->getShoppingLists();
     }
 }
