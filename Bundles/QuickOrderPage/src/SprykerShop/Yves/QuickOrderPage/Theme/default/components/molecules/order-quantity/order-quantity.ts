@@ -71,6 +71,7 @@ export default class OrderQuantity extends Component {
             this.showErrorMessage();
         } else if(this.maxQuantityAttributeValue && this.currentInputValue > Number(this.maxQuantityAttributeValue)) {
             this.quantityInput.value = this.maxQuantityAttributeValue;
+            this.showErrorMessage();
         }
 
         this.dispatchEvent(this.quantityInputUpdate);
