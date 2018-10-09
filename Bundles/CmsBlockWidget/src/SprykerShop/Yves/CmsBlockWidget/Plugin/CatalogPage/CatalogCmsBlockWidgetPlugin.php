@@ -9,11 +9,7 @@ namespace SprykerShop\Yves\CmsBlockWidget\Plugin\CatalogPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CatalogPage\Dependency\Plugin\CmsBlockWidget\CatalogCmsBlockWidgetPluginInterface;
-use SprykerShop\Yves\CmsBlockWidget\Widget\CatalogWithCmsBlockWidget;
 
-/**
- * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Widget\CatalogWithCmsBlockWidget instead.
- */
 class CatalogCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements CatalogCmsBlockWidgetPluginInterface
 {
     /**
@@ -23,9 +19,7 @@ class CatalogCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements Catalo
      */
     public function initialize(int $idCategory): void
     {
-        $widget = new CatalogWithCmsBlockWidget($idCategory, '');
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('idCategory', $idCategory);
     }
 
     /**
@@ -41,6 +35,6 @@ class CatalogCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements Catalo
      */
     public static function getTemplate(): string
     {
-        return CatalogWithCmsBlockWidget::getTemplate();
+        return '@CmsBlockWidget/views/catalog-with-cms-block/catalog-with-cms-block.twig';
     }
 }

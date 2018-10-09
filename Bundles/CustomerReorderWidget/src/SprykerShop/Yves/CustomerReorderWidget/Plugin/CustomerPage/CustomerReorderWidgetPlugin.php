@@ -11,11 +11,8 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\CustomerReorderWidget\CustomerReorderWidgetPluginInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Widget\CustomerReorderWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CustomerReorderWidget\Widget\CustomerReorderWidget instead.
- *
  * @method \SprykerShop\Yves\CustomerReorderWidget\CustomerReorderWidgetFactory getFactory()
  */
 class CustomerReorderWidgetPlugin extends AbstractWidgetPlugin implements CustomerReorderWidgetPluginInterface
@@ -28,9 +25,9 @@ class CustomerReorderWidgetPlugin extends AbstractWidgetPlugin implements Custom
      */
     public function initialize(OrderTransfer $orderTransfer, ?ItemTransfer $itemTransfer = null): void
     {
-        $widget = new CustomerReorderWidget($orderTransfer, $itemTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('order', $orderTransfer);
+        $this->addParameter('item', $itemTransfer);
+        $this->addParameter('availability', $this->getItemAvailability($itemTransfer));
     }
 
     /**
@@ -46,6 +43,24 @@ class CustomerReorderWidgetPlugin extends AbstractWidgetPlugin implements Custom
      */
     public static function getTemplate(): string
     {
-        return CustomerReorderWidget::getTemplate();
+        return '@CustomerReorderWidget/views/customer-reorder/customer-reorder.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
+     *
+     * @return bool
+     */
+    protected function getItemAvailability(?ItemTransfer $itemTransfer = null): bool
+    {
+        if (!$itemTransfer) {
+            return false;
+        }
+
+        $availability = $this->getFactory()
+            ->createAvailabilityChecker()
+            ->checkBySalesItem($itemTransfer);
+
+        return $availability;
     }
 }

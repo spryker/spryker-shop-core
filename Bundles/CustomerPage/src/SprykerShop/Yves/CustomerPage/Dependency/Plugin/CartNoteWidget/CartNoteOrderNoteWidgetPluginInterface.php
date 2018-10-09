@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\DisplayOrderNoteWidget instead.
+ * @deprecated Use molecule('note-list', 'CartNoteWidget') instead.
  */
 interface CartNoteOrderNoteWidgetPluginInterface extends WidgetPluginInterface
 {

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Widget\ProductWithCmsBlockWidget instead.
+ * @deprecated Use molecule('product-cms-block', 'CmsBlockWidget') instead.
  */
 interface ProductCmsBlockWidgetPluginInterface extends WidgetPluginInterface
 {

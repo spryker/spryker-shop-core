@@ -19,11 +19,12 @@
         </tr>
     </thead>
     <tbody>
-        {% for key, shoppingListItem in data.shoppingListItems %}
+        {% for key, shoppingListItem in data.shoppingListItems %}}
             {% set product = data.shoppingListItemProducts[shoppingListItem.idShoppingListItem] %}
             {% set isProductAvailable = product.available is defined and product.available and product.price is defined and product.price is not null %}
-            {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', product.sku) %}
+            {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [product.sku]) %}
+            {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued ?? widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', product.sku) %} {# @deprecated Use ProductDiscontinuedWidget instead of ProductDiscontinuedWidgetPlugin. #}
+            {% if isDiscontinued is not null %}
                 {% set isProductAvailable = not isDiscontinued and isProductAvailable %}
             {% endif %}
             <tr class="{{ config.name }}__row {{ not isProductAvailable ? config.name ~ '__row--disable' : ''}}">
@@ -81,11 +82,11 @@
                     {% if isProductAvailable %}
                         {{ 'customer.account.shopping_list.available' | trans }}
                     {% else %}
-                        {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                            {{ widget('ProductDiscontinuedWidgetPlugin', product.sku) }}
-                        {% else %}
+                        {% widget 'ProductDiscontinuedWidget' args [product.sku] only %}
+                        {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [product.sku] only %} {# @deprecated Use ProductDiscontinuedWidget instead. #}
+                        {% nowidget %}
                             {{ 'customer.account.shopping_list.not_available' | trans }}
-                        {% endif %}
+                        {% endwidget %}
                     {% endif %}
                 </td>
                 <td class="{{ config.name }}__cell">
@@ -96,8 +97,10 @@
                     </a>
                 </td>
             </tr>
-            {% if can('WriteShoppingListPermissionPlugin', data.idShoppingList) and widgetExists('ProductAlternativeWidgetPlugin') %}
-                {{ widget('ProductAlternativeWidgetPlugin', product, data.shoppingList) }}
+            {% if can('WriteShoppingListPermissionPlugin', data.idShoppingList) %}
+                {% widget 'ShoppingListProductAlternativeWidget' args [product, data.shoppingList] only %}
+                {% elsewidget 'ProductAlternativeWidgetPlugin' args [product, data.shoppingList] only %} {# @deprecated Use ShoppingListProductAlternativeWidget instead. #}
+                {% endwidget %}
             {% endif %}
         {% endfor %}
         <tr class="{{ config.name }}__row">

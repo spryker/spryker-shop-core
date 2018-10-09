@@ -9,9 +9,10 @@ namespace SprykerShop\Yves\DiscountWidget\Plugin\CartPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\DiscountWidget\DiscountVoucherFormWidgetPluginInterface;
+use SprykerShop\Yves\DiscountWidget\Widget\DiscountVoucherFormWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\VoucherFormWidget instead
+ * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\DiscountVoucherFormWidget instead
  *
  * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
  */
@@ -22,10 +23,9 @@ class DiscountVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements Di
      */
     public function initialize(): void
     {
-        $voucherForm = $this->getFactory()
-            ->getCartVoucherForm();
+        $widget = new DiscountVoucherFormWidget();
 
-        $this->addParameter('voucherForm', $voucherForm->createView());
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -45,6 +45,6 @@ class DiscountVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements Di
      */
     public static function getTemplate(): string
     {
-        return '@DiscountWidget/views/cart-discount-voucher-form/cart-discount-voucher-form.twig';
+        return DiscountVoucherFormWidget::getTemplate();
     }
 }

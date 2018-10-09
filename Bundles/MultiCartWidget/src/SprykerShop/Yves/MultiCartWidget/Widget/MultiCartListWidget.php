@@ -24,13 +24,12 @@ class MultiCartListWidget extends AbstractWidget
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
             ->addParameter('cart', $quoteTransfer)
             ->addParameter('widgetList', $this->getFactory()->getViewExtendWidgetPlugins());
+
+        /** @deprecated Use global widgets instead. */
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -39,10 +38,6 @@ class MultiCartListWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string
@@ -53,7 +48,7 @@ class MultiCartListWidget extends AbstractWidget
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer[]
      */
-    protected function getInactiveQuoteList()
+    protected function getInactiveQuoteList(): array
     {
         $quoteCollectionTransfer = $this->getFactory()
             ->getMultiCartClient()

@@ -39,7 +39,7 @@ class CurrencyWidget extends AbstractWidget
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer[]
      */
-    protected function getCurrencies()
+    protected function getCurrencies(): array
     {
         $currencyClient = $this->getFactory()->getCurrencyClient();
         $availableCurrencyCodes = $this->getFactory()->getStore()->getCurrencyIsoCodes();
@@ -55,7 +55,7 @@ class CurrencyWidget extends AbstractWidget
     /**
      * @return string
      */
-    protected function getCurrentCurrency()
+    protected function getCurrentCurrency(): string
     {
         $currentCurrencyIsoCode = $this->getFactory()->getCurrencyClient()->getCurrent()->getCode();
 

@@ -22,8 +22,7 @@ class LanguageSwitcherWidget extends AbstractWidget
      */
     public function __construct(string $pathInfo, $queryString, string $requestUri)
     {
-        $this
-            ->addParameter('languages', $this->getLanguages($pathInfo, $queryString, $requestUri))
+        $this->addParameter('languages', $this->getLanguages($pathInfo, $queryString, $requestUri))
             ->addParameter('currentLanguage', $this->getCurrentLanguage());
     }
 
@@ -123,7 +122,7 @@ class LanguageSwitcherWidget extends AbstractWidget
      *
      * @return string
      */
-    protected function replaceCurrentUrlLanguage($currentUrl, array $languages, $replacementLanguage)
+    protected function replaceCurrentUrlLanguage(string $currentUrl, array $languages, string $replacementLanguage): string
     {
         if (preg_match('/\/(' . implode('|', $languages) . ')/', $currentUrl)) {
             return preg_replace('/\/(' . implode('|', $languages) . ')/', '/' . $replacementLanguage, $currentUrl, 1);
@@ -137,7 +136,7 @@ class LanguageSwitcherWidget extends AbstractWidget
      *
      * @return string
      */
-    protected function getLanguageFromLocale($locale): string
+    protected function getLanguageFromLocale(string $locale): string
     {
         return substr($locale, 0, strpos($locale, '_'));
     }

@@ -10,10 +10,10 @@ namespace SprykerShop\Yves\DiscountWidget\Plugin\CheckoutPage;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\DiscountWidget\CheckoutVoucherFormWidgetPluginInterface;
-use SprykerShop\Yves\DiscountWidget\Widget\VoucherFormWidget;
+use SprykerShop\Yves\DiscountWidget\Widget\CheckoutVoucherFormWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\VoucherFormWidget instead.
+ * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\CheckoutVoucherFormWidget instead.
  */
 class CheckoutVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements CheckoutVoucherFormWidgetPluginInterface
 {
@@ -24,7 +24,7 @@ class CheckoutVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements Ch
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $widget = new VoucherFormWidget($quoteTransfer);
+        $widget = new CheckoutVoucherFormWidget($quoteTransfer);
 
         $this->parameters = $widget->getParameters();
     }
@@ -42,6 +42,6 @@ class CheckoutVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements Ch
      */
     public static function getTemplate(): string
     {
-        return '@DiscountWidget/views/checkout-summary-dicount-voucher-form/checkout-summary-dicount-voucher-form.twig';
+        return CheckoutVoucherFormWidget::getTemplate();
     }
 }

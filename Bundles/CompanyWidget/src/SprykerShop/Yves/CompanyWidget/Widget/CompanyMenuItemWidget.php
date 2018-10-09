@@ -21,8 +21,7 @@ class CompanyMenuItemWidget extends AbstractWidget
             ->getCustomerClient()
             ->getCustomer();
 
-        $this
-            ->addParameter('isVisible', $this->isVisible($customerTransfer))
+        $this->addParameter('isVisible', $this->isVisible($customerTransfer))
             ->addParameter('companyName', $this->getCompanyName($customerTransfer));
     }
 

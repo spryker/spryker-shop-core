@@ -11,8 +11,11 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductBundleWidget\ProductBundleItemsWidgetPluginInterface;
+use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleCartItemsListWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleCartItemsListWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */
 class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements ProductBundleItemsWidgetPluginInterface
@@ -25,7 +28,9 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public function initialize(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('bundleItems', $this->getBundleItems($itemTransfer, $quoteTransfer));
+        $widget = new ProductBundleCartItemsListWidget($itemTransfer, $quoteTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -33,7 +38,7 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return ProductBundleCartItemsListWidget::getTemplate();
     }
 
     /**

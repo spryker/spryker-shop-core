@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\DisplayCartItemNoteWidget instead.
+ * @deprecated Use molecule('note-list', 'CartNoteWidget') instead.
  */
 interface CartNoteQuoteItemNoteWidgetPluginInterface extends WidgetPluginInterface
 {

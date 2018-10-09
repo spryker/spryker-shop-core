@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -25,13 +25,12 @@ class AddToMultiCartWidget extends AbstractWidget
         $this->addParameter('carts', $this->getQuoteCollection())
             ->addParameter('disabled', $disabled)
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
+
+        /** @deprecated Use global widgets instead. */
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -40,10 +39,6 @@ class AddToMultiCartWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

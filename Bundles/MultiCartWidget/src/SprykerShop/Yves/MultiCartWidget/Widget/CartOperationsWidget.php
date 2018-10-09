@@ -24,14 +24,11 @@ class CartOperationsWidget extends AbstractWidget
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
             ->addParameter('isDeleteCartAllowed', $this->isDeleteCartAllowed());
 
-//        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
+        /** @deprecated Use global widgets instead. */
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -40,10 +37,6 @@ class CartOperationsWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

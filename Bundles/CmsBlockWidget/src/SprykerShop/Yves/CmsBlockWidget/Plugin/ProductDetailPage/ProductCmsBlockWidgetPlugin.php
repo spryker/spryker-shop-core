@@ -9,11 +9,10 @@ namespace SprykerShop\Yves\CmsBlockWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\CmsBlockWidget\Widget\ProductWithCmsBlockWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\CmsBlockWidget\ProductCmsBlockWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Widget\ProductWithCmsBlockWidget instead.
+ * @deprecated Use molecule('product-cms-block', 'CmsBlockWidget') instead.
  */
 class ProductCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements ProductCmsBlockWidgetPluginInterface
 {
@@ -24,9 +23,7 @@ class ProductCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $widget = new ProductWithCmsBlockWidget($productViewTransfer);
-
-        $this->parameters = $widget->getParameters();
+        $this->addParameter('product', $productViewTransfer);
     }
 
     /**
@@ -42,6 +39,6 @@ class ProductCmsBlockWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public static function getTemplate(): string
     {
-        return ProductWithCmsBlockWidget::getTemplate();
+        return '@CmsBlockWidget/views/product-with-cms-block/product-with-cms-block.twig';
     }
 }

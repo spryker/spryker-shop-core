@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\DiscountSummaryWidget instead.
+ * @deprecated Use molecule('cart-discount-summary', 'DiscountWidget') instead.
  */
 interface DiscountSummaryWidgetPluginInterface extends WidgetPluginInterface
 {
