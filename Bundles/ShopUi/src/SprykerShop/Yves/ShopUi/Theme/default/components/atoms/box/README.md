@@ -1,3 +1,3 @@
 # box (atom)
 
-Create a simple parent container.
+Creates a simple parent container with border by default.

@@ -1,3 +1,3 @@
 # textarea (atom)
 
-Create a simple texarea element - a control that allows the user to input text over multiple rows.
+Implements basic styles for textarea element, like spacing, borders and so on.

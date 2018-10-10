@@ -1,3 +1,3 @@
 # list (atom)
 
-Create a simple unordered list.
+Creates a simple unordered list.

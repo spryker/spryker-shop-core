@@ -1,3 +1,3 @@
 # form (molecule)
 
-A form is a collection of form-associated elements such as input fields, select menus, radio buttons, submit buttons, etc that enable users to provide data to a website.
+Wraps symfony form to render form elements in specific way, consists from title, list of form elements, submit and cancel buttons.

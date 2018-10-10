@@ -1,3 +1,3 @@
 # node (atom)
 
-Create a simple unordered list item element.
+Creates a simple unordered list item element.

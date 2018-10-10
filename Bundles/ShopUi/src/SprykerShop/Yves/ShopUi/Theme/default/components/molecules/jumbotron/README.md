@@ -1,3 +1,3 @@
 # jumbotron (molecule)
 
-Display banner with image and short description.
+Displays banner with image and short description.

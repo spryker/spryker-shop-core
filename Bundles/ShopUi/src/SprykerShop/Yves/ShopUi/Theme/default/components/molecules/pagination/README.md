@@ -1,3 +1,3 @@
 # pagination (molecule)
 
-Create a customizable pagination.
+Creates a customizable pagination.

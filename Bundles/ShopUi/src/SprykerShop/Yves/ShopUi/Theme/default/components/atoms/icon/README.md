@@ -1,3 +1,3 @@
 # icon (atom)
 
-Create a simple icon element.
+Creates a simple icon element based on the sprite.

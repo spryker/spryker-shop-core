@@ -1,3 +1,3 @@
 # form-input-default-value-disabler (molecule)
 
-Сheck the default values of form elements before submiting.
+Disables form fields before submit if they have data-default-value attribute.

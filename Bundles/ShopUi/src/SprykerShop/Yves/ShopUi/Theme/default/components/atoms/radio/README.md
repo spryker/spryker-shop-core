@@ -1,3 +1,3 @@
 # radio (atom)
 
-Create a simple radio button element that allows the user to select one option from a range of options.
+Creates a radio button element that allows the user to select one option from a range of options with not native browser design.

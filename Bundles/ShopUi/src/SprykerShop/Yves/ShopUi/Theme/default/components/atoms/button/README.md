@@ -1,3 +1,3 @@
 # button (atom)
 
-Create a simple, clickable button element.
+Creates a simple, clickable button element.

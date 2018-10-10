@@ -1,3 +1,3 @@
 # thumbnail (atom)
 
-Create a simple image element.
+Creates a simple image element.

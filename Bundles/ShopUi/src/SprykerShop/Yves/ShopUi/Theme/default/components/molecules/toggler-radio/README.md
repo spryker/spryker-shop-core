@@ -1,3 +1,3 @@
 # toggler-radio (molecule)
 
-Initiate functionality to add specific class to some element from array of DOM-elements and remove if from the rest of elements if radio-button is selected.
+Initiates functionality to add specific class to some element from array of DOM-elements and remove if from the rest of elements if radio-button is selected.

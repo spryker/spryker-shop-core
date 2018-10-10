@@ -1,3 +1,3 @@
 # ajax-provider (molecule)
 
-Component that retrieves server data for specific elements.
+Implements possibility to perform ajax request to specified url with some url params and handle response.
