@@ -35,7 +35,7 @@ class QuickOrderPageToQuickOrderClientBridge implements QuickOrderPageToQuickOrd
      */
     public function expandProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        return $this->quickOrderClient->expandProductConcreteTransfer($productConcreteTransfer);
+        return $this->quickOrderClient->expandProductConcrete($productConcreteTransfer);
     }
 
     /**
