@@ -40,7 +40,6 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        // TODO: This widget is providing 2 templates to use, but it's not obvious which templates it's compatible with. We need to clarify this.
         return '@BusinessOnBehalfWidget/views/business-on-behalf-status/business-on-behalf-status.twig';
     }
 

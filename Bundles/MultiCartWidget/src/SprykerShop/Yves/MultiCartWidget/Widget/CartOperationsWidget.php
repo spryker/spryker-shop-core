@@ -41,7 +41,6 @@ class CartOperationsWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        // TODO: this template might need to be refactored
         return '@MultiCartWidget/views/cart-operations/cart-operations.twig';
     }
 
