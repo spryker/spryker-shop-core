@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CompanyWidget\Widget;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
@@ -18,7 +17,8 @@ use Symfony\Component\Form\AbstractType;
  */
 class CompanyBusinessUnitAddressWidget extends AbstractWidget
 {
-    protected const NAME = 'CompanyBusinessUnitAddressWidget';
+    protected const PREFIX_KEY_CUSTOMER_ADDRESS = 'c_';
+    protected const PREFIX_KEY_COMPANY_BUSINESS_UNIT_ADDRESS = 'bu_';
 
     /**
      * @param \Symfony\Component\Form\AbstractType $formType
@@ -27,8 +27,8 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     {
         $this->addParameter('formType', $formType)
             ->addParameter('isApplicable', $this->getIsApplicable())
-            ->addParameter('customerAddresses', $this->getCustomerAddresses())
-            ->addParameter('businessUnitAddresses', $this->findCompanyBusinessUnitAddresses());
+            ->addParameter('customerAddresses', $this->encodeAddressesToJson($this->getCustomerAddresses()))
+            ->addParameter('businessUnitAddresses', $this->encodeAddressesToJson($this->findCompanyBusinessUnitAddresses()));
     }
 
     /**
@@ -36,7 +36,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'CompanyBusinessUnitAddressWidget';
     }
 
     /**
@@ -56,7 +56,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
             return false;
         }
 
-        if ($this->findCompanyBusinessUnitAddresses()->count() === 0) {
+        if (empty($this->findCompanyBusinessUnitAddresses())) {
             return false;
         }
 
@@ -64,26 +64,53 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
+     * @param array $addresses
+     *
+     * @return string|null
+     */
+    protected function encodeAddressesToJson(array $addresses): ?string
+    {
+        $jsonEncodedAddresses = json_encode($addresses);
+
+        return ($jsonEncodedAddresses !== false)
+            ? $jsonEncodedAddresses
+            : null;
+    }
+
+    /**
      * @return array
      */
     protected function getCustomerAddresses(): array
     {
-        return $this->getCustomer()
-            ->getAddresses()
-            ->toArray();
+        $customerAddresses = $this->getCustomer()
+            ->getAddresses();
+
+        $customerAddressesArray = [];
+        foreach ($customerAddresses->getAddresses() as $addressTransfer) {
+            $customerAddressKey = static::PREFIX_KEY_CUSTOMER_ADDRESS . $addressTransfer->getFkCustomer();
+            $customerAddressesArray[$customerAddressKey] = $addressTransfer->toArray();
+        }
+
+        return $customerAddressesArray;
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
+     * @return array Indexes are company business unit prefix + company business unit address key
      */
-    protected function findCompanyBusinessUnitAddresses(): ArrayObject
+    protected function findCompanyBusinessUnitAddresses(): array
     {
         $companyBusinessUnit = $this->findCompanyBusinessUnit();
-        if ($companyBusinessUnit !== null) {
-            return $companyBusinessUnit->getAddressCollection()->getCompanyUnitAddresses();
+        if ($companyBusinessUnit === null) {
+            return [];
         }
 
-        return new ArrayObject();
+        $companyBusinessUnitAddressesArray = [];
+        foreach ($companyBusinessUnit->getAddressCollection()->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
+            $companyBusinessUnitAddressesKey = static::PREFIX_KEY_COMPANY_BUSINESS_UNIT_ADDRESS . $companyUnitAddressTransfer->getKey();
+            $companyBusinessUnitAddressesArray[$companyBusinessUnitAddressesKey] = $companyUnitAddressTransfer->toArray();
+        }
+
+        return $companyBusinessUnitAddressesArray;
     }
 
     /**
