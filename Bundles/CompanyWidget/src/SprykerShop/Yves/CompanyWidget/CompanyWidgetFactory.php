@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CompanyWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCompanyUnitAddressClientInterface;
 use SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface;
 
 class CompanyWidgetFactory extends AbstractFactory
@@ -18,5 +19,13 @@ class CompanyWidgetFactory extends AbstractFactory
     public function getCustomerClient(): CompanyWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(CompanyWidgetDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCompanyUnitAddressClientInterface
+     */
+    public function getCompanyUnitAddressClient(): CompanyWidgetToCompanyUnitAddressClientInterface
+    {
+        return $this->getProvidedDependency(CompanyWidgetDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT_ADDRESS);
     }
 }

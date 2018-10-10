@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\CompanyWidget\Widget;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -24,10 +26,16 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      */
     public function __construct(string $formType)
     {
+        $companyUnitAddressCollectionTransfer = $this->findCompanyBusinessUnitAddresses();
+
+        $mappedCompanyUnitAddressCollectionArray = $this->mapCompanyBusinessUnitAddressesToAssociativeArray(
+            $companyUnitAddressCollectionTransfer
+        );
+
         $this->addParameter('formType', $formType)
-            ->addParameter('isApplicable', $this->isApplicable())
+            ->addParameter('isApplicable', $this->isApplicable($companyUnitAddressCollectionTransfer))
             ->addParameter('customerAddresses', $this->encodeAddressesToJson($this->getCustomerAddresses()))
-            ->addParameter('businessUnitAddresses', $this->encodeAddressesToJson($this->findCompanyBusinessUnitAddresses()));
+            ->addParameter('businessUnitAddresses', $this->encodeAddressesToJson($mappedCompanyUnitAddressCollectionArray));
     }
 
     /**
@@ -47,15 +55,17 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+     *
      * @return bool
      */
-    public function isApplicable(): bool
+    public function isApplicable(CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer): bool
     {
         if ($this->getCustomer()->getCompanyUserTransfer() === null) {
             return false;
         }
 
-        if (empty($this->findCompanyBusinessUnitAddresses())) {
+        if (empty($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses())) {
             return false;
         }
 
@@ -63,17 +73,59 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
-     * @param array $addresses
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
      *
-     * @return string|null
+     * @return array Indexes are company business unit prefix + company business unit address key
      */
-    protected function encodeAddressesToJson(array $addresses): ?string
-    {
-        $jsonEncodedAddresses = json_encode($addresses);
+    protected function mapCompanyBusinessUnitAddressesToAssociativeArray(
+        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+    ): array {
+        $companyBusinessUnitAddresses = $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses();
+        if (empty($companyBusinessUnitAddresses)) {
+            return [];
+        }
 
-        return ($jsonEncodedAddresses !== false)
-            ? $jsonEncodedAddresses
-            : null;
+        $companyBusinessUnitAddressesArray = [];
+        foreach ($companyBusinessUnitAddresses as $companyUnitAddressTransfer) {
+            $companyBusinessUnitAddressesKey = static::PREFIX_KEY_COMPANY_BUSINESS_UNIT_ADDRESS . $companyUnitAddressTransfer->getKey();
+            $companyBusinessUnitAddressesArray[$companyBusinessUnitAddressesKey] = $companyUnitAddressTransfer->toArray();
+        }
+
+        return $companyBusinessUnitAddressesArray;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    protected function findCompanyBusinessUnitAddresses(): CompanyUnitAddressCollectionTransfer
+    {
+        $companyBusinessUnit = $this->findCompanyBusinessUnit();
+        if ($companyBusinessUnit === null) {
+            return new CompanyUnitAddressCollectionTransfer();
+        }
+
+        $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
+            ->setIdCompanyBusinessUnit($companyBusinessUnit->getIdCompanyBusinessUnit())
+            ->setIdCompany($companyBusinessUnit->getFkCompany());
+
+        return $this->getFactory()
+            ->getCompanyUnitAddressClient()
+            ->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    protected function findCompanyBusinessUnit(): ?CompanyBusinessUnitTransfer
+    {
+        $customerTransfer = $this->getCustomer();
+
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+        if ($companyUserTransfer !== null) {
+            return $companyUserTransfer->getCompanyBusinessUnit();
+        }
+
+        return null;
     }
 
     /**
@@ -94,45 +146,6 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
-     * @return array Indexes are company business unit prefix + company business unit address key
-     */
-    protected function findCompanyBusinessUnitAddresses(): array
-    {
-        $companyBusinessUnit = $this->findCompanyBusinessUnit();
-        if ($companyBusinessUnit === null) {
-            return [];
-        }
-
-        $companyBusinessUnitAddressCollection = $companyBusinessUnit->getAddressCollection();
-        if ($companyBusinessUnitAddressCollection === null) {
-            return [];
-        }
-
-        $companyBusinessUnitAddressesArray = [];
-        foreach ($companyBusinessUnitAddressCollection->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
-            $companyBusinessUnitAddressesKey = static::PREFIX_KEY_COMPANY_BUSINESS_UNIT_ADDRESS . $companyUnitAddressTransfer->getKey();
-            $companyBusinessUnitAddressesArray[$companyBusinessUnitAddressesKey] = $companyUnitAddressTransfer->toArray();
-        }
-
-        return $companyBusinessUnitAddressesArray;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
-     */
-    protected function findCompanyBusinessUnit(): ?CompanyBusinessUnitTransfer
-    {
-        $customerTransfer = $this->getCustomer();
-
-        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
-        if ($companyUserTransfer !== null) {
-            return $companyUserTransfer->getCompanyBusinessUnit();
-        }
-
-        return null;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function getCustomer(): CustomerTransfer
@@ -140,5 +153,19 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         return $this->getFactory()
             ->getCustomerClient()
             ->getCustomer();
+    }
+
+    /**
+     * @param array $addresses
+     *
+     * @return string|null
+     */
+    protected function encodeAddressesToJson(array $addresses): ?string
+    {
+        $jsonEncodedAddresses = json_encode($addresses);
+
+        return ($jsonEncodedAddresses !== false)
+            ? $jsonEncodedAddresses
+            : null;
     }
 }
