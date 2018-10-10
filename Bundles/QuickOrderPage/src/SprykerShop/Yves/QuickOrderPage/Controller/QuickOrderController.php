@@ -234,7 +234,7 @@ class QuickOrderController extends AbstractController
 
         $productConcreteTransfer = $this->getFactory()
             ->getQuickOrderClient()
-            ->expandProductConcreteTransfer($productConcreteTransfer);
+            ->expandProductConcrete($productConcreteTransfer);
 
         return $productConcreteTransfer;
     }
@@ -269,7 +269,7 @@ class QuickOrderController extends AbstractController
 
         return $this->getFactory()
             ->getQuickOrderClient()
-            ->getCurrentProductPriceTransfer($itemTransfer);
+            ->getCurrentProductPrice($itemTransfer);
     }
 
     /**

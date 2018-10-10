@@ -20,14 +20,14 @@ interface QuickOrderPageToQuickOrderClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expandProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function getCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
+    public function getCurrentProductPrice(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
 
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer

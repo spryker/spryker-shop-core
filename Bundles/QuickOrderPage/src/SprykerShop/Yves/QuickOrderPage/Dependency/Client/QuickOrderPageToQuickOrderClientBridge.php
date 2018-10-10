@@ -33,7 +33,7 @@ class QuickOrderPageToQuickOrderClientBridge implements QuickOrderPageToQuickOrd
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expandProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->quickOrderClient->expandProductConcrete($productConcreteTransfer);
     }
@@ -43,9 +43,9 @@ class QuickOrderPageToQuickOrderClientBridge implements QuickOrderPageToQuickOrd
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function getCurrentProductPriceTransfer(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
+    public function getCurrentProductPrice(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
     {
-        return $this->quickOrderClient->getCurrentProductPriceTransfer($itemTransfer);
+        return $this->quickOrderClient->getCurrentProductPrice($itemTransfer);
     }
 
     /**
