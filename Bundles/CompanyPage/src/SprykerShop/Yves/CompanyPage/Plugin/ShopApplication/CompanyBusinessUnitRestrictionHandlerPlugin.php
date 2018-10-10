@@ -22,10 +22,10 @@ class CompanyBusinessUnitRestrictionHandlerPlugin extends AbstractPlugin impleme
     /**
      * @see \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController::REQUEST_PARAM_ID
      */
-    protected const REQUEST_PARAM_BUSINESS_UNIT_ID = 'id';
+    protected const REQUEST_PARAM_COMPANY_BUSINESS_UNIT_ID = 'id';
 
     protected const GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED = 'company_page.company_business_unit_restricted_message';
-    protected const DENIED_UNLESS_GRANTED_ACTIONS = [
+    protected const DENIED_ACTIONS = [
         'updateAction',
         'deleteAction',
         'confirmDeleteAction',
@@ -33,6 +33,8 @@ class CompanyBusinessUnitRestrictionHandlerPlugin extends AbstractPlugin impleme
 
     /**
      * {@inheritdoc}
+     * - Verifies if customer could perform an action with company business unit.
+     * - Throws an exception with predefined message if customer have no permissions for such company business unit.
      *
      * @api
      *
@@ -43,6 +45,7 @@ class CompanyBusinessUnitRestrictionHandlerPlugin extends AbstractPlugin impleme
     public function handle(FilterControllerEvent $event): void
     {
         $eventController = $event->getController();
+
         if (!is_array($eventController)) {
             return;
         }
@@ -50,7 +53,7 @@ class CompanyBusinessUnitRestrictionHandlerPlugin extends AbstractPlugin impleme
         [$controllerInstance, $actionName] = $eventController;
 
         if (!($controllerInstance instanceof BusinessUnitController) ||
-            !in_array($actionName, self::DENIED_UNLESS_GRANTED_ACTIONS)
+            !in_array($actionName, self::DENIED_ACTIONS)
         ) {
             return;
         }
@@ -62,7 +65,7 @@ class CompanyBusinessUnitRestrictionHandlerPlugin extends AbstractPlugin impleme
             return;
         }
 
-        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_BUSINESS_UNIT_ID);
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_COMPANY_BUSINESS_UNIT_ID);
 
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);

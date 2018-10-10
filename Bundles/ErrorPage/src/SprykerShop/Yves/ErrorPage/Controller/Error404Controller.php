@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Error404Controller extends AbstractController
 {
+    protected const REQUEST_PARAM_EXCEPTION = 'exception';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -38,7 +40,7 @@ class Error404Controller extends AbstractController
             return '';
         }
 
-        $exception = $request->query->get('exception');
+        $exception = $request->query->get(self::REQUEST_PARAM_EXCEPTION);
         if ($exception instanceof FlattenException) {
             return $exception->getMessage();
         }
