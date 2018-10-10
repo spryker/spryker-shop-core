@@ -17,7 +17,7 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 class DetailController extends AbstractController
 {
     public const PARAM_ATTRIBUTE = 'attributes';
-    protected const GLOSSARY_KEY_PRODUCT_RESTRICTED = 'product.access.denied';
+    protected const GLOSSARY_KEY_PRODUCT_ACCESS_DENIED = 'product.access.denied';
 
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
@@ -30,7 +30,7 @@ class DetailController extends AbstractController
     public function indexAction(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers)
     {
         if ($this->areProductsRestricted($productSetDataStorageTransfer, $productViewTransfers)) {
-            throw new ProductSetAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_RESTRICTED);
+            throw new ProductSetAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
         }
 
         $data = [

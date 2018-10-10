@@ -25,7 +25,7 @@ class ProductController extends AbstractController
 
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
-    protected const GLOSSARY_KEY_PRODUCT_RESTRICTED = 'product.access.denied';
+    protected const GLOSSARY_KEY_PRODUCT_ACCESS_DENIED = 'product.access.denied';
 
     /**
      * @param array $productData
@@ -55,7 +55,7 @@ class ProductController extends AbstractController
     protected function executeDetailAction(array $productData, Request $request): array
     {
         if (!empty($productData['id_product_abstract']) && $this->isProductAbstractRestricted($productData['id_product_abstract'])) {
-            throw new ProductAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_RESTRICTED);
+            throw new ProductAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
         }
 
         $productViewTransfer = $this->getFactory()
