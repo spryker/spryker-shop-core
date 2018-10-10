@@ -135,7 +135,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[]
      */
     public function getQuickOrderItemTransferExpanderPlugins(): array
     {

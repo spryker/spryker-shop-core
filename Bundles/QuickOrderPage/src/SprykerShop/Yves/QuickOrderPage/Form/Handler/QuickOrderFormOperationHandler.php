@@ -38,7 +38,7 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     protected $quoteClient;
 
     /**
-     * @var \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
+     * @var \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[]
      */
     protected $quickOrderItemTransferExpanderPlugins;
 
@@ -47,7 +47,7 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface $zedRequestClient
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[] $quickOrderItemTransferExpanderPlugins
+     * @param \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[] $quickOrderItemTransferExpanderPlugins
      */
     public function __construct(
         QuickOrderPageToCartClientInterface $cartClient,
@@ -159,7 +159,7 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     protected function expandItemTransfer(ItemTransfer $itemTransfer): ItemTransfer
     {
         foreach ($this->quickOrderItemTransferExpanderPlugins as $quickOrderItemTransferExpanderPlugin) {
-            $itemTransfer = $quickOrderItemTransferExpanderPlugin->expandItemTransfer($itemTransfer);
+            $itemTransfer = $quickOrderItemTransferExpanderPlugin->expandItem($itemTransfer);
         }
 
         return $itemTransfer;

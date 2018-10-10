@@ -189,7 +189,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface[]
+     * @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[]
      */
     protected function getQuickOrderItemTransferExpanderPlugins(): array
     {
