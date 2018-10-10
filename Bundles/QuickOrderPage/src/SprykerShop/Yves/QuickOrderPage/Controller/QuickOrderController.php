@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
-use Generated\Shared\Transfer\CurrentProductConcretePriceTransfer;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
@@ -253,44 +253,36 @@ class QuickOrderController extends AbstractController
             );
         }
 
-        $currentProductConcretePriceTransfer = $this->executeProductPriceAction($request);
+        $currentProductPriceTransfer = $this->executeProductPriceAction($request);
 
-        return $this->jsonResponse($currentProductConcretePriceTransfer->toArray(true, true));
+        return $this->jsonResponse($currentProductPriceTransfer->toArray(true, true));
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    protected function executeProductPriceAction(Request $request): CurrentProductConcretePriceTransfer
+    protected function executeProductPriceAction(Request $request): CurrentProductPriceTransfer
     {
-        $currentProductConcretePriceTransfer = $this->createCurrentProductConcretePriceTransfer($request);
+        $itemTransfer = $this->createItemTransfer($request);
 
         return $this->getFactory()
             ->getQuickOrderClient()
-            ->getProductConcreteSumPrice($currentProductConcretePriceTransfer);
+            ->getCurrentProductPriceTransfer($itemTransfer);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\CurrentProductConcretePriceTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createCurrentProductConcretePriceTransfer(Request $request): CurrentProductConcretePriceTransfer
+    protected function createItemTransfer(Request $request): ItemTransfer
     {
-        $currentProductPriceTransfer = (new CurrentProductPriceTransfer())->setQuantity(
-            $request->query->getInt(static::PARAM_QUANTITY, 0)
-        );
-        $currentProductConcretePriceTransfer = (new CurrentProductConcretePriceTransfer())
-            ->setIdProductConcrete(
-                $request->query->getInt(static::PARAM_ID_PRODUCT)
-            )
-            ->setIdProductAbstract(
-                $request->query->getInt(static::PARAM_ID_PRODUCT_ABSTRACT)
-            );
-
-        return $currentProductConcretePriceTransfer->setCurrentProductPrice($currentProductPriceTransfer);
+        return (new ItemTransfer())
+            ->setQuantity($request->query->getInt(static::PARAM_QUANTITY, 0))
+            ->setId($request->query->getInt(static::PARAM_ID_PRODUCT))
+            ->setIdProductAbstract($request->query->getInt(static::PARAM_ID_PRODUCT_ABSTRACT));
     }
 
     /**
