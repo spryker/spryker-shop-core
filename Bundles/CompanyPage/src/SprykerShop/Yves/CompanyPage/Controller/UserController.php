@@ -29,6 +29,7 @@ class UserController extends AbstractCompanyController
 
     protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
     protected const SUCCESS_MESSAGE_COMPANY_USER_CREATE = 'company.account.company_user.create.successful';
+    protected const SUCCESS_MESSAGE_COMPANY_USER_UPDATE = 'company.account.company_user.update.successful';
 
     protected const ERROR_MESSAGE_DELETE_COMPANY_USER = 'company.account.company_user.delete.error';
     protected const ERROR_MESSAGE_DELETE_YOURSELF = 'company.account.company_user.delete.error.delete_yourself';
@@ -179,6 +180,8 @@ class UserController extends AbstractCompanyController
             $companyUserResponseTransfer = $this->updateCompanyUser($companyUserForm->getData());
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_UPDATE);
+
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
             }
 

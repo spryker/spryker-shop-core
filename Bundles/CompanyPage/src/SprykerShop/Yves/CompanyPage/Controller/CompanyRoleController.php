@@ -24,6 +24,7 @@ class CompanyRoleController extends AbstractCompanyController
 
     protected const SUCCESS_MESSAGE_COMPANY_ROLE_DELETE = 'company.account.company_role.delete.successful';
     protected const SUCCESS_MESSAGE_COMPANY_ROLE_CREATE = 'company.account.company_role.create.successful';
+    protected const SUCCESS_MESSAGE_COMPANY_ROLE_UPDATE = 'company.account.company_role.update.successful';
     protected const PARAMETER_ID_COMPANY_ROLE = 'id';
     protected const ERROR_MESSAGE_DEFAULT_COMPANY_ROLE_DELETE = 'company.account.company_role.delete.error.default_role';
 
@@ -264,6 +265,7 @@ class CompanyRoleController extends AbstractCompanyController
 
         if ($companyRoleForm->isSubmitted() && $companyRoleForm->isValid()) {
             $this->updateCompanyRole($companyRoleForm->getData());
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_ROLE_UPDATE);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
         }
