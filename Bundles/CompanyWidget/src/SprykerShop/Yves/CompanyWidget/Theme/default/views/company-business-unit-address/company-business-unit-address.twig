@@ -1,0 +1,19 @@
+{% extends template('widget') %}
+
+{% define data = {
+    formType: _widget.formType,
+    isApplicable: _widget.isApplicable,
+    customerAddresses: _widget.customerAddresses,
+    businessUnitAddresses: _widget.businessUnitAddresses
+} %}
+
+{% block template %}
+    <div>
+        <label>
+            <input type="checkbox">
+            {{ 'page.checkout.address.different_delivery_address' | trans }}
+        </label>
+    </div>
+
+    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]">
+{% endblock %}

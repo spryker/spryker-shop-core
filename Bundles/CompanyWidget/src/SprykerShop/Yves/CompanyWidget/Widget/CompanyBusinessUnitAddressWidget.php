@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CompanyWidget\Widget;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
-use Symfony\Component\Form\AbstractType;
 
 /**
  * @method \SprykerShop\Yves\CompanyWidget\CompanyWidgetFactory getFactory()
@@ -21,12 +20,12 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     protected const PREFIX_KEY_COMPANY_BUSINESS_UNIT_ADDRESS = 'bu_';
 
     /**
-     * @param \Symfony\Component\Form\AbstractType $formType
+     * @param string $formType
      */
-    public function __construct(AbstractType $formType)
+    public function __construct(string $formType)
     {
         $this->addParameter('formType', $formType)
-            ->addParameter('isApplicable', $this->getIsApplicable())
+            ->addParameter('isApplicable', $this->isApplicable())
             ->addParameter('customerAddresses', $this->encodeAddressesToJson($this->getCustomerAddresses()))
             ->addParameter('businessUnitAddresses', $this->encodeAddressesToJson($this->findCompanyBusinessUnitAddresses()));
     }
@@ -44,13 +43,13 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@CompanyWidget/views/address/address.twig';
+        return '@CompanyWidget/views/company-business-unit-address/company-business-unit-address.twig';
     }
 
     /**
      * @return bool
      */
-    public function getIsApplicable(): bool
+    public function isApplicable(): bool
     {
         if ($this->getCustomer()->getCompanyUserTransfer() === null) {
             return false;
@@ -104,8 +103,13 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
             return [];
         }
 
+        $companyBusinessUnitAddressCollection = $companyBusinessUnit->getAddressCollection();
+        if ($companyBusinessUnitAddressCollection === null) {
+            return [];
+        }
+
         $companyBusinessUnitAddressesArray = [];
-        foreach ($companyBusinessUnit->getAddressCollection()->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
+        foreach ($companyBusinessUnitAddressCollection->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
             $companyBusinessUnitAddressesKey = static::PREFIX_KEY_COMPANY_BUSINESS_UNIT_ADDRESS . $companyUnitAddressTransfer->getKey();
             $companyBusinessUnitAddressesArray[$companyBusinessUnitAddressesKey] = $companyUnitAddressTransfer->toArray();
         }
