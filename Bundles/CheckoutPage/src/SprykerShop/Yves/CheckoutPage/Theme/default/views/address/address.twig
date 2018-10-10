@@ -35,20 +35,26 @@
             {% if hasShippingAddresses %}
                 <div class="form__field col col--sm-12">
                     <ul class="list spacing-y">
-                        {% for address in existingShippingAddresses %}
-                            <li class="list__item spacing-y">
-                                {{
-                                    form_row(address, {
-                                        component: molecule('toggler-radio'),
-                                        attributes: {
-                                            'target-selector': '.js-address__shipping',
-                                            'class-to-toggle': 'is-hidden',
-                                            'add-class-when-checked': not loop.last
-                                        }
-                                    })
-                                }}
-                            </li>
-                        {% endfor %}
+                        {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['Shipping']) %}
+
+                        {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
+                            {% widget 'CompanyBusinessUnitAddressWidget' args ['Shipping'] only %}{% endwidget %}
+                        {% else %}
+                            {% for address in existingShippingAddresses %}
+                                <li class="list__item spacing-y">
+                                    {{
+                                        form_row(address, {
+                                            component: molecule('toggler-radio'),
+                                            attributes: {
+                                                'target-selector': '.js-address__shipping',
+                                                'class-to-toggle': 'is-hidden',
+                                                'add-class-when-checked': not loop.last
+                                            }
+                                        })
+                                    }}
+                                </li>
+                            {% endfor %}
+                        {% endif %}
                     </ul>
                 </div>
             {% endif %}
@@ -123,20 +129,26 @@
                     {% if hasBillingAddresses %}
                         <div class="form__field col col--sm-12">
                             <ul class="list spacing-y">
-                                {% for address in existingBillingAddresses %}
-                                    <li class="list__item spacing-y">
-                                        {{
-                                            form_row(address, {
-                                                component: molecule('toggler-radio'),
-                                                attributes: {
-                                                    'target-selector': '.js-address__billing',
-                                                    'class-to-toggle': 'is-hidden',
-                                                    'add-class-when-checked': not loop.last
-                                                }
-                                            })
-                                        }}
-                                    </li>
-                                {% endfor %}
+                                {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['Billing']) %}
+
+                                {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
+                                    {% widget 'CompanyBusinessUnitAddressWidget' args ['Billing'] only %}{% endwidget %}
+                                {% else %}
+                                    {% for address in existingBillingAddresses %}
+                                        <li class="list__item spacing-y">
+                                            {{
+                                                form_row(address, {
+                                                    component: molecule('toggler-radio'),
+                                                    attributes: {
+                                                        'target-selector': '.js-address__billing',
+                                                        'class-to-toggle': 'is-hidden',
+                                                        'add-class-when-checked': not loop.last
+                                                    }
+                                                })
+                                            }}
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
                             </ul>
                         </div>
                     {% endif %}
