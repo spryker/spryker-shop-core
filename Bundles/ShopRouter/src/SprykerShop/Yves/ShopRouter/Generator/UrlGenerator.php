@@ -20,7 +20,6 @@ class UrlGenerator extends SymfonyUrlGenerator
 {
     public const HOME = 'home';
     public const ERROR_PATH = '/error/404';
-    protected const ROUTE_NOT_FOUND_URL = '';
 
     /**
      * @var \Pimple
@@ -46,10 +45,6 @@ class UrlGenerator extends SymfonyUrlGenerator
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         $route = $this->routes->get($name);
-
-        if ($route === null) {
-            return static::ROUTE_NOT_FOUND_URL;
-        }
         $compiledRoute = $route->compile();
         $parameters = $this->convertParameters($parameters, $route);
 

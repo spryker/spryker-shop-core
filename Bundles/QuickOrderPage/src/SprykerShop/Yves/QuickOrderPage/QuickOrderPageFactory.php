@@ -110,7 +110,7 @@ class QuickOrderPageFactory extends AbstractFactory
 
     /**
      * Returns a list of widget plugin class names that implement
-     * Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
      * @return string[]
      */
