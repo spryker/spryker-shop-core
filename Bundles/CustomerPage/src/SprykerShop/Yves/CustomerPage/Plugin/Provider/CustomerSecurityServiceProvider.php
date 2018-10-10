@@ -87,9 +87,13 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function setSecurityAccessRules(Application &$app)
     {
+        $customerSecuredPattern = $this->getFactory()
+            ->getCustomerAccessPermissionClient()
+            ->getCustomerSecuredPatternForUnauthenticatedCustomerAccess();
+
         $app['security.access_rules'] = [
             [
-                Config::get(CustomerConstants::CUSTOMER_SECURED_PATTERN),
+                $customerSecuredPattern,
                 self::ROLE_USER,
             ],
             [
