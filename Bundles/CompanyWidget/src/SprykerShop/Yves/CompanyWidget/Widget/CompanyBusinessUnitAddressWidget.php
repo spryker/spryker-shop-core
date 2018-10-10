@@ -28,14 +28,12 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     {
         $companyUnitAddressCollectionTransfer = $this->findCompanyBusinessUnitAddresses();
 
-        $mappedCompanyUnitAddressCollectionArray = $this->mapCompanyBusinessUnitAddressesToAssociativeArray(
-            $companyUnitAddressCollectionTransfer
-        );
-
         $this->addParameter('formType', $formType)
             ->addParameter('isApplicable', $this->isApplicable($companyUnitAddressCollectionTransfer))
             ->addParameter('customerAddresses', $this->encodeAddressesToJson($this->getCustomerAddresses()))
-            ->addParameter('businessUnitAddresses', $this->encodeAddressesToJson($mappedCompanyUnitAddressCollectionArray));
+            ->addParameter('businessUnitAddresses', $this->encodeAddressesToJson(
+                $this->mapCompanyBusinessUnitAddressesToAssociativeArray($companyUnitAddressCollectionTransfer)
+            ));
     }
 
     /**
