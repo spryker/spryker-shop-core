@@ -10,9 +10,6 @@ namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
-use Generated\Shared\Transfer\QuickOrderItemTransfer;
-
 interface QuickOrderPageToQuickOrderClientInterface
 {
     /**
@@ -27,14 +24,7 @@ interface QuickOrderPageToQuickOrderClientInterface
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function getCurrentProductPrice(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
-
-    /**
-     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer
-     */
-    public function validateQuantityRestrictions(QuickOrderItemTransfer $quickOrderItemTransfer): ProductQuantityValidationResponseTransfer;
+    public function getCurrentProductPrice(ItemTransfer $itemTransfer): CurrentProductPriceTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers

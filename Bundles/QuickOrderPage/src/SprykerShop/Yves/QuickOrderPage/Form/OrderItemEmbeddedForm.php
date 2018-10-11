@@ -52,8 +52,8 @@ class OrderItemEmbeddedForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => QuickOrderItemTransfer::class,
             'constraints' => [
-                new QtyFieldConstraint(),
-                new QuantityRestrictionsConstraint($this->getFactory()->getQuickOrderClient()),
+                $this->getFactory()->createQtyFieldConstraint(),
+                $this->getFactory()->createQuantityRestrictionsConstraint()
             ],
         ]);
     }

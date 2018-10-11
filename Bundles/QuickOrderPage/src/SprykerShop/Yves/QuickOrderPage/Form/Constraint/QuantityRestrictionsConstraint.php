@@ -13,25 +13,10 @@ use Symfony\Component\Validator\Constraint;
 class QuantityRestrictionsConstraint extends Constraint
 {
     /**
-     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface
-     */
-    protected $quickOrderClient;
-
-    /**
-     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface $quickOrderClient
      * @param mixed $options
      */
-    public function __construct(QuickOrderPageToQuickOrderClientInterface $quickOrderClient, $options = null)
+    public function __construct($options = null)
     {
         parent::__construct($options);
-        $this->quickOrderClient = $quickOrderClient;
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface
-     */
-    public function getQuickOrderClient(): QuickOrderPageToQuickOrderClientInterface
-    {
-        return $this->quickOrderClient;
     }
 }

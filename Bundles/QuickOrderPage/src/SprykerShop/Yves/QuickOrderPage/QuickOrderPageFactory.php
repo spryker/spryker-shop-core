@@ -13,6 +13,8 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClient
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Form\Constraint\QtyFieldConstraint;
+use SprykerShop\Yves\QuickOrderPage\Form\Constraint\QuantityRestrictionsConstraint;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProviderInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
@@ -156,5 +158,21 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getQuickOrderFormAdditionalDataColumnProviderPlugins(): array
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER);
+    }
+
+    /**
+     * @return QtyFieldConstraint
+     */
+    public function createQtyFieldConstraint()
+    {
+        return new QtyFieldConstraint();
+    }
+
+    /**
+     * @return QuantityRestrictionsConstraint
+     */
+    public function createQuantityRestrictionsConstraint()
+    {
+        return new QuantityRestrictionsConstraint();
     }
 }
