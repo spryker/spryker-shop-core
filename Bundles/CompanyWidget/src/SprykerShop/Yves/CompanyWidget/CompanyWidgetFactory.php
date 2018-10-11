@@ -20,12 +20,4 @@ class CompanyWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CompanyWidgetDependencyProvider::CLIENT_CUSTOMER);
     }
-
-    /**
-     * @return \SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCompanyUnitAddressClientInterface
-     */
-    public function getCompanyUnitAddressClient(): CompanyWidgetToCompanyUnitAddressClientInterface
-    {
-        return $this->getProvidedDependency(CompanyWidgetDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT_ADDRESS);
-    }
 }

@@ -9,13 +9,11 @@ namespace SprykerShop\Yves\CompanyWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCompanyUnitAddressClientBridge;
 use SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientBridge;
 
 class CompanyWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    public const CLIENT_COMPANY_BUSINESS_UNIT_ADDRESS = 'CLIENT_COMPANY_BUSINESS_UNIT_ADDRESS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -25,7 +23,6 @@ class CompanyWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->provideCustomerClient($container);
-        $container = $this->addCompanyBusinessUnitAddress($container);
 
         return $container;
     }
@@ -39,22 +36,6 @@ class CompanyWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new CompanyWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addCompanyBusinessUnitAddress(Container $container): Container
-    {
-        $container[static::CLIENT_COMPANY_BUSINESS_UNIT_ADDRESS] = function (Container $container) {
-            return new CompanyWidgetToCompanyUnitAddressClientBridge(
-                $container->getLocator()->companyUnitAddress()->client()
-            );
         };
 
         return $container;
