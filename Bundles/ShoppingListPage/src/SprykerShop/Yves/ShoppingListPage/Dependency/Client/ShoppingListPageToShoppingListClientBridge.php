@@ -9,13 +9,14 @@ namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
 
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -67,11 +68,21 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
+    public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->shoppingListClient->getShoppingListPermissionGroup();
+        return $this->shoppingListClient->updateShoppingListSharedEntities($shoppingListTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
+     */
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
+    {
+        return $this->shoppingListClient->getShoppingListPermissionGroups();
     }
 
     /**
@@ -180,5 +191,15 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
     public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
         return $this->shoppingListClient->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer
+    {
+        return $this->shoppingListClient->dismissShoppingListSharing($shoppingListDismissRequest);
     }
 }
