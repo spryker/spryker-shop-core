@@ -126,7 +126,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
 
         $companyBusinessUnitAddressesArray = [];
         foreach ($companyBusinessUnitAddresses as $companyUnitAddressTransfer) {
-            $companyBusinessUnitAddressesKey = static::PREFIX_KEY_COMPANY_BUSINESS_UNIT_ADDRESS . $companyUnitAddressTransfer->getKey();
+            $companyBusinessUnitAddressesKey = static::PREFIX_KEY_COMPANY_BUSINESS_UNIT_ADDRESS . $companyUnitAddressTransfer->getFkCompanyBusinessUnit();
             $companyBusinessUnitAddressesArray[$companyBusinessUnitAddressesKey] = $companyUnitAddressTransfer->toArray();
         }
 
