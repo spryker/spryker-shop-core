@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CompanyWidget\Widget;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -30,9 +29,11 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
 
         $this->addParameter('formType', $formType)
             ->addParameter('isApplicable', $this->isApplicable($companyUnitAddressCollectionTransfer))
-            ->addParameter('customerAddresses', $this->encodeAddressesToJson($this->getCustomerAddresses()))
-            ->addParameter('businessUnitAddresses', $this->encodeAddressesToJson(
-                $this->mapCompanyBusinessUnitAddressesToAssociativeArray($companyUnitAddressCollectionTransfer)
+            ->addParameter('addresses', $this->encodeAddressesToJson(
+                array_merge(
+                    $this->getCustomerAddressesAssociativeArray(),
+                    $this->mapCompanyBusinessUnitAddressesToAssociativeArray($companyUnitAddressCollectionTransfer)
+                )
             ));
     }
 
@@ -59,7 +60,11 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      */
     public function isApplicable(CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer): bool
     {
-        if ($this->getCustomer()->getCompanyUserTransfer() === null) {
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if ($customerTransfer->getCompanyUserTransfer() === null) {
             return false;
         }
 
@@ -71,9 +76,28 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
+     * @return array Indexes are customer address prefix + customer id
+     */
+    protected function getCustomerAddressesAssociativeArray(): array
+    {
+        $customerAddresses = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer()
+            ->getAddresses();
+
+        $customerAddressesArray = [];
+        foreach ($customerAddresses->getAddresses() as $addressTransfer) {
+            $customerAddressKey = static::PREFIX_KEY_CUSTOMER_ADDRESS . $addressTransfer->getFkCustomer();
+            $customerAddressesArray[$customerAddressKey] = $addressTransfer->toArray();
+        }
+
+        return $customerAddressesArray;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
      *
-     * @return array Indexes are company business unit prefix + company business unit address key
+     * @return array Indexes are company business unit address prefix + address key
      */
     protected function mapCompanyBusinessUnitAddressesToAssociativeArray(
         CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
@@ -116,7 +140,9 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      */
     protected function findCompanyBusinessUnit(): ?CompanyBusinessUnitTransfer
     {
-        $customerTransfer = $this->getCustomer();
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
 
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
         if ($companyUserTransfer !== null) {
@@ -124,33 +150,6 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         }
 
         return null;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getCustomerAddresses(): array
-    {
-        $customerAddresses = $this->getCustomer()
-            ->getAddresses();
-
-        $customerAddressesArray = [];
-        foreach ($customerAddresses->getAddresses() as $addressTransfer) {
-            $customerAddressKey = static::PREFIX_KEY_CUSTOMER_ADDRESS . $addressTransfer->getFkCustomer();
-            $customerAddressesArray[$customerAddressKey] = $addressTransfer->toArray();
-        }
-
-        return $customerAddressesArray;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function getCustomer(): CustomerTransfer
-    {
-        return $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
     }
 
     /**

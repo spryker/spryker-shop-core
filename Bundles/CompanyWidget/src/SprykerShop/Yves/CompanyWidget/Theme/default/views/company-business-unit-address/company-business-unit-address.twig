@@ -3,11 +3,12 @@
 {% define data = {
     formType: _widget.formType,
     isApplicable: _widget.isApplicable,
-    customerAddresses: _widget.customerAddresses,
-    businessUnitAddresses: _widget.businessUnitAddresses
+    addresses: _widget.addresses
 } %}
 
 {% block template %}
+    {{ data.addresses }}
+
     <div>
         <button>{{ 'page.checkout.address.use_selected_address' | trans }}</button>
         <label>
