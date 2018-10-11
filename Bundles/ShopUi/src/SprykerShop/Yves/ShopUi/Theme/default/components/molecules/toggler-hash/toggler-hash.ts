@@ -8,7 +8,7 @@ export default class TogglerHash extends Component {
         this.targets = <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
     }
 
-    protected readyCallback(): void {
+    readyCallback(): void {
         this.checkHash();
         this.mapEvents();
     }

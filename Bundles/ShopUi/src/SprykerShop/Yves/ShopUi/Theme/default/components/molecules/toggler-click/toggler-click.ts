@@ -10,7 +10,7 @@ export default class TogglerClick extends Component {
         this.targets = <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
     }
 
-    protected readyCallback(): void {
+    readyCallback(): void {
         this.mapEvents();
     }
 
