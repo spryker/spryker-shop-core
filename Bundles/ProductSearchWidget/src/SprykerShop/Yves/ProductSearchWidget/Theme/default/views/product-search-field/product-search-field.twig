@@ -12,17 +12,16 @@
     {% include molecule('autocomplete-form') with {
         data: {
             id: data.index,
-            placeholder: 'quick-order.input.placeholder',
-            value: data.value
+            name: data.skuInputName,
+            value: data.value,
+            suggestionsUrl: '/product-search/concrete',
+            placeholder: 'quick-order.input.placeholder'
         },
         attributes: {
-            'suggestion-url': '/product-search/concrete',
-            'hidden-input-name': data.skuInputName,
-            'hidden-id-input-name': data.idProductInputName,
-            'value-data-attribute': 'data-value',
+            'suggested-item-selector': '.products-list__item',
+            'query-string': 'limit=' ~ data.searchResultsLimit ~ '&searchString',
+            'value-attribute-name': 'data-id-product',
             'min-letters': 1,
-            'item-selector': '.products-list__item',
-            'query-param-name': 'limit=' ~ data.searchResultsLimit ~ '&searchString'
         }
     } only %}
 {% endblock %}

@@ -1,13 +1,10 @@
-@mixin quick-order-page-quick-order-form($name: '.quick-order-form') {
+@mixin quick-order-form($name: '.quick-order-form') {
     #{$name} {
         position: relative;
+        z-index: $setting-zi-element-floating;
 
-        &__list {
+        &__rows {
             width: 100%;
-        }
-
-        * {
-            z-index: initial;
         }
 
         @content;

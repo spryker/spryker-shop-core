@@ -82,8 +82,26 @@ class QuickOrderController extends AbstractController
         return [
             'itemsForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
-            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
+            'additionalColumns' => $this->mapQuickOrderFormAdditionalDataColumnProviderPluginsToArray(),
         ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function mapQuickOrderFormAdditionalDataColumnProviderPluginsToArray()
+    {
+        $additionalColumns = [];
+
+        foreach ($this->getQuickOrderFormAdditionalDataColumnProviderPlugins() as $additionalColumn)
+        {
+            $additionalColumns[] = [
+                'fieldName' => $additionalColumn->getFieldName(),
+                'title' => $additionalColumn->getColumnTitle(),
+            ];
+        }
+
+        return $additionalColumns;
     }
 
     /**
@@ -116,7 +134,7 @@ class QuickOrderController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
-            '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig'
+            '@QuickOrderPage/views/quick-order-rows-async/quick-order-rows-async.twig'
         );
     }
 
@@ -148,7 +166,7 @@ class QuickOrderController extends AbstractController
 
         return [
             'form' => $quickOrderForm->createView(),
-            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
+            'additionalColumns' => $this->mapQuickOrderFormAdditionalDataColumnProviderPluginsToArray(),
             'productConcretesData' => $this->getProductConcretesData($orderItems),
         ];
     }
@@ -169,7 +187,7 @@ class QuickOrderController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
-            '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig'
+            '@QuickOrderPage/views/quick-order-rows-async/quick-order-rows-async.twig'
         );
     }
 
@@ -203,7 +221,7 @@ class QuickOrderController extends AbstractController
 
         return [
             'form' => $quickOrderForm->createView(),
-            'additionalDataColumnProviderPlugins' => $this->getQuickOrderFormAdditionalDataColumnProviderPlugins(),
+            'additionalColumns' => $this->mapQuickOrderFormAdditionalDataColumnProviderPluginsToArray(),
             'productConcretesData' => $this->getProductConcretesData($orderItems),
         ];
     }
@@ -211,13 +229,18 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\JsonResponse
      */
     public function productAdditionalDataAction(Request $request)
     {
         $productConcreteTransfer = $this->executeProductAdditionalDataAction($request);
 
-        return $this->jsonResponse($productConcreteTransfer->toArray(true, true));
+        // return $this->jsonResponse($productConcreteTransfer->toArray(true, true));
+        return $this->view(
+            $productConcreteTransfer->toArray(true, true),
+            $this->getFactory()->getQuickOrderPageWidgetPlugins(),
+            '@QuickOrderPage/views/quick-order-row-async/quick-order-row-async.twig'
+        );
     }
 
     /**

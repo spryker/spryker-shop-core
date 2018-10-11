@@ -2,35 +2,45 @@ import Component from '../../../models/component';
 import AjaxProvider from '../../../components/molecules/ajax-provider/ajax-provider';
 import debounce from 'lodash-es/debounce';
 
+export enum Events {
+    FETCHING = 'fetching',
+    FETCHED = 'fetched',
+    CHANGE = 'change',
+    SET = 'set',
+    UNSET = 'unset'
+}
+
 export default class AutocompleteForm extends Component {
     ajaxProvider: AjaxProvider
-    inputElement: HTMLInputElement;
-    hiddenInputElement: HTMLInputElement;
+    textInput: HTMLInputElement;
+    valueInput: HTMLInputElement;
     suggestionsContainer: HTMLElement;
     cleanButton: HTMLButtonElement;
-    productsLoadedEvent: CustomEvent;
 
-    protected readyCallback(): void {
-        this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}__provider`);
-        this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}__container`);
-        this.inputElement = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
-        this.hiddenInputElement = <HTMLInputElement>document.querySelector(`input[name="${this.hiddenInputName}"]`);
+    readyCallback(): void {
+        this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
+        this.textInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__text-input`);
+        this.valueInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__value-input`);
+        this.suggestionsContainer = <HTMLElement>this.querySelector(`.${this.jsName}__suggestions`);
         this.cleanButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__clean-button`);
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.createCustomEvent();
-        this.inputElement.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
-        this.inputElement.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
-        this.inputElement.addEventListener('focus', () => this.onFocus());
-        if (this.showCleanButton) {
-            this.cleanButton.addEventListener('click', () => this.onCleanButtonClick());
+        this.textInput.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
+        this.textInput.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
+        this.textInput.addEventListener('focus', () => this.onFocus());
+
+        if (!this.cleanButton) {
+            return;
         }
+
+        this.cleanButton.addEventListener('click', () => this.onCleanButtonClick());
     }
 
     protected onCleanButtonClick(): void {
-        this.cleanFields();
+        this.clean();
+        this.dispatchCustomEvent(Events.UNSET);
     }
 
     protected onBlur(): void {
@@ -38,19 +48,27 @@ export default class AutocompleteForm extends Component {
     }
 
     protected onFocus(): void {
-        if (this.inputValue.length >= this.minLetters) {
-            this.showSuggestions();
+        if (this.inputValue.length < this.minLetters) {
             return;
         }
+
+        this.showSuggestions();
     }
 
     protected onInput(): void {
-        if (this.inputValue.length >= this.minLetters) {
+        this.dispatchCustomEvent(Events.CHANGE);
+
+        if (this.inputText.length >= this.minLetters) {
             this.loadSuggestions();
             return;
         }
-        this.setInputs('', this.inputValue);
+
         this.hideSuggestions();
+
+        if (!!this.inputValue) {
+            this.inputValue = '';
+            this.dispatchCustomEvent(Events.UNSET);
+        }
     }
 
     protected showSuggestions(): void {
@@ -62,71 +80,73 @@ export default class AutocompleteForm extends Component {
     }
 
     async loadSuggestions(): Promise<void> {
-        this.showSuggestions();
-        this.ajaxProvider.queryParams.set(this.queryParamName, this.inputValue);
+        this.dispatchCustomEvent(Events.FETCHING);
 
+        this.showSuggestions();
+        this.ajaxProvider.queryParams.set(this.queryString, this.inputText);
         await this.ajaxProvider.fetch();
         this.mapItemEvents();
 
-        this.dispatchEvent(<CustomEvent>this.productsLoadedEvent);
+        this.dispatchCustomEvent(Events.FETCHED);
     }
 
     protected mapItemEvents(): void {
         const self = this;
-        const items = Array.from(this.suggestionsContainer.querySelectorAll(this.itemSelector));
+        const items = Array.from(this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector));
         items.forEach((item: HTMLElement) => item.addEventListener('click', (e: Event) => self.onItemClick(e)));
     }
 
     protected onItemClick(e: Event): void {
-        const dataTarget = <HTMLElement>e.target;
-        const textTarget = <HTMLElement>e.srcElement;
-        const data = dataTarget.getAttribute(this.valueDataAttribute);
-        const text = textTarget.textContent.trim();
+        const textTargetElement = <HTMLElement>e.srcElement;
+        const valueTargetElement = <HTMLElement>e.target;
 
-        this.setInputs(data, text);
+        this.inputText = textTargetElement.textContent.trim();
+        this.inputValue = valueTargetElement.getAttribute(this.valueAttributeName);
+
+        this.dispatchCustomEvent(Events.SET, {
+            text: this.inputText,
+            value: this.inputValue
+        });
     }
 
-    private createCustomEvent(): void {
-        this.productsLoadedEvent = <CustomEvent>new CustomEvent("products-loaded-event");
+    clean(): void {
+        this.inputText = '';
+        this.inputValue = '';
     }
 
-    setInputs(data: string, text: string): void {
-        this.inputElement.value = text;
-        this.hiddenInputElement.value = data;
+    get inputText(): string {
+        return this.textInput.value.trim();
     }
 
-    cleanFields(): void {
-        this.setInputs('', '');
-    }
-
-    get minLetters(): number {
-        return Number(this.getAttribute('min-letters'));
+    set inputText(value: string) {
+        this.textInput.value = value;
     }
 
     get inputValue(): string {
-        return this.inputElement.value.trim();
+        return this.valueInput.value;
     }
 
-    get queryParamName(): string {
-        return this.getAttribute('query-param-name');
+    set inputValue(value: string) {
+        this.valueInput.value = value;
     }
 
-    get valueDataAttribute(): string {
-        return this.getAttribute('value-data-attribute');
+    get queryString(): string {
+        return this.getAttribute('query-string');
     }
 
-    get itemSelector(): string {
-        return this.getAttribute('item-selector');
+    get valueAttributeName(): string {
+        return this.getAttribute('value-attribute-name');
     }
 
-    get hiddenInputName(): string {
-        return this.getAttribute('hidden-input-name');
+    get suggestedItemSelector(): string {
+        return this.getAttribute('suggested-item-selector');
     }
 
     get debounceDelay(): number {
         return Number(this.getAttribute('debounce-delay'));
     }
-    get showCleanButton(): boolean {
-        return this.hasAttribute('show-clean-button');
+
+    get minLetters(): number {
+        return Number(this.getAttribute('min-letters'));
     }
 }
