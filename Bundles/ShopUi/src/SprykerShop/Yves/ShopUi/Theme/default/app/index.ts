@@ -2,25 +2,15 @@ import Candidate from './candidate';
 import { LogLevel, debug, log, info, error, config as setLogConfig } from './logger';
 import { candidates } from './registry';
 import { get as config, set as setConfig, defaultConfig, Config } from './config';
-
-function fireComponentReadyEvent(): void {
-    const readyEvent = new CustomEvent(config().events.ready);
-    document.dispatchEvent(readyEvent);
-}
-
-function fireApplicationBootstrapCompletedEvent(): void {
-    const bootstrapEvent = new CustomEvent(config().events.bootstrap);
-    document.dispatchEvent(bootstrapEvent);
-}
-
-function fireApplicationErrorEvent(err: Error): void {
-    const errorEvent = new CustomEvent(config().events.error, { detail: err });
-    document.dispatchEvent(errorEvent);
-}
+import Component from '../models/component';
 
 function onDOMContentLoaded(): void {
     debug('DOM loaded');
     mountOnBootstrap();
+}
+
+function onComponentsReady(): void {
+    log('components mounted and ready');
 }
 
 function onApplicationBootstrapCompleted(): void {
@@ -31,28 +21,40 @@ function onApplicationError(e: CustomEvent): void {
     error('application error ->', e.detail);
 }
 
-async function mountCandidates(): Promise<void[]> {
-    return Promise.all(candidates().map((candidate: Candidate) => candidate.mount()));
+function dispatchCustomEvent(name: string, detail: any = {}): void {
+    const event = new CustomEvent(name, { detail });
+    document.dispatchEvent(event);
+}
+
+async function mountCandidates(): Promise<void> {
+    const promises = candidates().map((candidate: Candidate) => candidate.mount());
+    const componentSet = await Promise.all(promises);
+
+    componentSet.map((components: Component[]) =>
+        components
+            .filter((component: Component) => !component.isMounted)
+            .map((component: Component) => {
+                component.readyCallback();
+                component.markAsMounted();
+            }));
 }
 
 async function mountOnBootstrap(): Promise<void> {
     try {
         await mountCandidates();
-        fireComponentReadyEvent();
-        fireApplicationBootstrapCompletedEvent();
+        dispatchCustomEvent(config().events.ready);
+        dispatchCustomEvent(config().events.bootstrap);
     } catch (err) {
-        fireApplicationErrorEvent(err);
-        error('bootstrap aborted');
+        dispatchCustomEvent(config().events.error, err);
     }
 }
 
 export async function mount(): Promise<void> {
     try {
         await mountCandidates();
-        log('components mounted and ready');
-        fireComponentReadyEvent();
+        dispatchCustomEvent(config().events.ready);
     } catch (err) {
-        fireApplicationErrorEvent(err);
+        dispatchCustomEvent(config().events.error, err);
     }
 }
 
@@ -66,6 +68,7 @@ export function bootstrap(appConfig: Config = defaultConfig): void {
     setup(appConfig);
 
     document.addEventListener('DOMContentLoaded', () => onDOMContentLoaded(), { once: true });
+    document.addEventListener(config().events.ready, () => onComponentsReady());
     document.addEventListener(config().events.bootstrap, () => onApplicationBootstrapCompleted(), { once: true });
     document.addEventListener(config().events.error, (e: CustomEvent) => onApplicationError(e));
 }
