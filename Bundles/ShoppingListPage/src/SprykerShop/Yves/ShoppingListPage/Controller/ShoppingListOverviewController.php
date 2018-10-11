@@ -41,7 +41,11 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     {
         $viewData = $this->executeIndexAction($request);
 
-        return $this->view($viewData, [], '@ShoppingListPage/views/shopping-list-overview/shopping-list-overview.twig');
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getShoppingListOverviewWidgetPlugins(),
+            '@ShoppingListPage/views/shopping-list-overview/shopping-list-overview.twig'
+        );
     }
 
     /**
@@ -165,35 +169,6 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
             static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
         ]);
-    }
-
-    /**
-     * @deprecated Use \SprykerShop\Yves\ShoppingListPage\Controller\ShoppingListDeleteController::deleteAction() instead
-     *
-     * @param int $idShoppingList
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function deleteAction(int $idShoppingList): RedirectResponse
-    {
-        $shoppingListTransfer = new ShoppingListTransfer();
-        $shoppingListTransfer
-            ->setIdShoppingList($idShoppingList)
-            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
-
-        $shoppingListResponseTransfer = $this->getFactory()
-            ->getShoppingListClient()
-            ->removeShoppingList($shoppingListTransfer);
-
-        if (!$shoppingListResponseTransfer->getIsSuccess()) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
-
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
-        }
-
-        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS);
-
-        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
     }
 
     /**

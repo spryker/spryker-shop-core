@@ -1,6 +1,6 @@
 # PriceWidget Module
 
-This module provides price mode switcher widget.
+This module provides functionality for price mode switcher.
 
 ## Installation
 

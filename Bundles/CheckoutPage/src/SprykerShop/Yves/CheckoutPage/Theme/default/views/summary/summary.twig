@@ -129,7 +129,7 @@
                 data: {
                     form: data.forms.summary,
                     submit: {
-                        enable: true,
+                        enable: can('SeeOrderPlaceSubmitPermissionPlugin'),
                         text: 'checkout.step.place.order' | trans
                     },
                     cancel: {

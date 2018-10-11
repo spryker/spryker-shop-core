@@ -13,11 +13,15 @@
 
 {% block body %}
     <p>
-        {% include molecule('price') with {
-            data: {
-                amount: data.amount | money,
-                originalAmount: data.originalAmount is empty ? null : data.originalAmount | money
-            }
-        } only %}
+        {% if can('SeePricePermissionPlugin') %}
+            {% include molecule('price') with {
+                data: {
+                    amount: data.amount | money,
+                    originalAmount: data.originalAmount is empty ? null : data.originalAmount | money
+                }
+            } only %}
+        {% else %}
+            {{ 'customer.access.cannot_see_price' | trans }}
+        {% endif %}
     </p>
 {% endblock %}
