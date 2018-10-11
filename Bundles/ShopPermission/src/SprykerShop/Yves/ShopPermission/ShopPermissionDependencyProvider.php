@@ -14,6 +14,7 @@ use SprykerShop\Yves\ShopPermission\Dependency\Client\ShopPermissionToPermission
 class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PERMISSION_TWIG_FUNCTION_PLUGINS = 'PERMISSION_TWIG_FUNCTION_PLUGINS';
+    public const PERMISSION_TWIG_EXTENSION_PLUGINS = 'PERMISSION_TWIG_EXTENSION_PLUGINS';
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
 
     /**
@@ -26,6 +27,7 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
         $container = $this->addPermissionClient($container);
         $container = $this->addPermissionTwigFunctionPlugins($container);
+        $container = $this->addPermissionTwigExtensionPlugins($container);
 
         return $container;
     }
@@ -62,6 +64,28 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
      */
     protected function getPermissionTwigFunctionPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPermissionTwigExtensionPlugins(Container $container)
+    {
+        $container[static::PERMISSION_TWIG_EXTENSION_PLUGINS] = function (Container $container) {
+            return $this->getPermissionTwigExtensionPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Yves\Twig\Plugin\AbstractTwigExtensionPlugin[]
+     */
+    protected function getPermissionTwigExtensionPlugins()
     {
         return [];
     }
