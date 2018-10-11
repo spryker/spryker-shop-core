@@ -12,12 +12,14 @@
   },
   "require-dev": {
     "spryker-shop/product-set-detail-page": "*",
+    "spryker-shop/product-set-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {
     "spryker-shop/product-set-detail-page": "If you want to use CmsProductSetContentWidgetPlugin.",
+    "spryker-shop/product-set-widget": "If you want to use components from module ProductSetWidget or ProductSetWidgetPlugin.",
     "spryker/twig": "If you want to use CmsProductSetContentWidgetPlugin."
   },
   "autoload": {

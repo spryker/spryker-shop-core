@@ -30,13 +30,17 @@
     "spryker/util-validate": "^1.0.0"
   },
   "require-dev": {
+    "spryker-shop/cart-note-widget": "*",
     "spryker-shop/checkout-widget": "*",
+    "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/cart-note-widget": "If you want to use components from module CartNoteWidget or CartNoteQuoteItemNoteWidgetPlugin.",
     "spryker-shop/checkout-widget": "ADD SUGGEST DESCRIPTION",
+    "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or SummaryProductPackagingUnitWidgetPlugin.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

@@ -18,12 +18,20 @@
     "spryker/zed-request": "^3.4.0"
   },
   "require-dev": {
+    "spryker-shop/discount-widget": "*",
+    "spryker-shop/multi-cart-widget": "*",
+    "spryker-shop/product-option-widget": "*",
+    "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/discount-widget": "If you want to use components from module DiscountWidget or DiscountSummaryWidgetPlugin",
+    "spryker-shop/multi-cart-widget": "If you want to use components from module MultiCartWidget or CartOperationsWidgetPlugin",
     "spryker/permission": "If you want to use permissions plugins",
+    "spryker-shop/product-option-widget": "If you want to use components from module ProductOptionWidget or CartItemProductOptionWidgetPlugin",
+    "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or CartProductPackagingUnitWidgetPlugin",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

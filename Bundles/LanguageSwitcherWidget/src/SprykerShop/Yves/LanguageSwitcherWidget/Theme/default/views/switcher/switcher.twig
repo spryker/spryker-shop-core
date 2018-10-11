@@ -8,7 +8,6 @@
     {% if data.languages is not empty %}
         <form method="GET" action="">
             {% embed atom('select') with {
-                _widget: _widget,
                 modifiers: ['naked'],
                 attributes: {
                     'onchange': 'this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);'

@@ -38,7 +38,7 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getName(): string
     {
-        return ProductBundleCartItemsListWidget::getTemplate();
+        return static::NAME;
     }
 
     /**
@@ -46,7 +46,7 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate(): string
     {
-        return '@ProductBundleWidget/views/cart-bundle-items-list/cart-bundle-items-list.twig';
+        return ProductBundleCartItemsListWidget::getTemplate();
     }
 
     /**

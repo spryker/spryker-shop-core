@@ -68,9 +68,11 @@
         {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }} {# @deprecated Use ProductDetailPageReviewWidget instead. #}
     {% endwidget %}
 
-    {% widget 'ProductGroupWidget' args [data.product.idProductAbstract] only %}
-    {% elsewidget 'ProductGroupWidgetPlugin' args [data.product.idProductAbstract] only %} {# @deprecated Use ProductGroupWidget instead. #}
-    {% endwidget %}
+    {% block product_group_widget %}
+        {% widget 'ProductGroupWidget' args [data.product.idProductAbstract] only %}
+        {% elsewidget 'ProductGroupWidgetPlugin' args [data.product.idProductAbstract] only %} {# @deprecated Use ProductGroupWidget instead. #}
+        {% endwidget %}
+    {% endblock %}
 
     {% embed molecule('variant-configurator', 'ProductDetailPage') with {
         data: {

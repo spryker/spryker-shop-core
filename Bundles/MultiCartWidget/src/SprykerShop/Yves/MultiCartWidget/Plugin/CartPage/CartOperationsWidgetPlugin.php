@@ -34,6 +34,10 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getName()
@@ -42,6 +46,10 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getTemplate()
