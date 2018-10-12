@@ -3,11 +3,15 @@
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                label: 'customer.account' | trans,
-            },{
-                label: 'customer.account.shopping_list' | trans,
-            }]
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.shopping_list' | trans,
+                }
+            ]
         }
     } only %}
 {% endblock %}
