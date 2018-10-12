@@ -15,9 +15,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class CompanyBusinessUnitAddressWidget extends AbstractWidget
 {
-    protected const PREFIX_KEY_CUSTOMER_ADDRESS = 'c_';
-    protected const PREFIX_KEY_COMPANY_BUSINESS_UNIT_ADDRESS = 'bu_';
-
     /**
      * @param string $formType
      */
@@ -25,12 +22,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     {
         $this->addParameter('formType', $formType)
             ->addParameter('isApplicable', $this->isApplicable())
-            ->addParameter('addresses', $this->encodeAddressesToJson(
-                array_merge(
-                    $this->getCustomerAddressesAssociativeArray(),
-                    $this->getCompanyBusinessUnitAddressesAssociativeArray()
-                )
-            ));
+            ->addParameter('addresses', $this->findAddressesJson($formType));
     }
 
     /**
@@ -62,7 +54,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
             return false;
         }
 
-        if (empty($this->getCompanyBusinessUnitAddressesAssociativeArray())) {
+        if (empty($this->getCompanyBusinessUnitAddresses()->getCompanyUnitAddresses())) {
             return false;
         }
 
@@ -70,27 +62,34 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
-     * @return array Indexes are customer address prefix + customer id
+     * @param string $formType
+     *
+     * @return string|null
      */
-    protected function getCustomerAddressesAssociativeArray(): array
+    protected function findAddressesJson(string $formType): ?string
     {
+        $dataProvider = $this->getFactory()
+            ->createCompanyBusinessUnitAddressWidgetDataProvider();
+
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
             ->getCustomer();
 
-        $customerAddressesArray = [];
-        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {
-            $customerAddressKey = static::PREFIX_KEY_CUSTOMER_ADDRESS . $addressTransfer->getFkCustomer();
-            $customerAddressesArray[$customerAddressKey] = $addressTransfer->toArray();
-        }
+        $customerAddressesArray = $dataProvider->getCustomerAddresses($customerTransfer->getAddresses(), $formType);
 
-        return $customerAddressesArray;
+        $companyBusinessUnitAddressesArray = $dataProvider->getCompanyBusinessUnitAddresses(
+            $this->getCompanyBusinessUnitAddresses(),
+            $formType,
+            $customerTransfer
+        );
+
+        return $this->encodeAddressesToJson(array_merge($customerAddressesArray, $companyBusinessUnitAddressesArray));
     }
 
     /**
-     * @return array Indexes are company business unit address prefix + address key
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
-    protected function getCompanyBusinessUnitAddressesAssociativeArray(): array
+    protected function getCompanyBusinessUnitAddresses(): CompanyUnitAddressCollectionTransfer
     {
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
@@ -98,39 +97,11 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
 
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
         if ($companyUserTransfer === null) {
-            return [];
+            return new CompanyUnitAddressCollectionTransfer();
         }
 
-        $companyBusinessUnit = $companyUserTransfer->getCompanyBusinessUnit();
-
-        $companyBusinessUnitAddressCollection = $companyBusinessUnit->getAddressCollection();
-        if ($companyBusinessUnitAddressCollection === null) {
-            return [];
-        }
-
-        return $this->mapCompanyBusinessUnitAddressesToAssociativeArray($companyBusinessUnitAddressCollection);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
-     *
-     * @return array Indexes are company business unit address prefix + address key
-     */
-    protected function mapCompanyBusinessUnitAddressesToAssociativeArray(
-        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
-    ): array {
-        $companyBusinessUnitAddresses = $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses();
-        if (empty($companyBusinessUnitAddresses)) {
-            return [];
-        }
-
-        $companyBusinessUnitAddressesArray = [];
-        foreach ($companyBusinessUnitAddresses as $companyUnitAddressTransfer) {
-            $companyBusinessUnitAddressesKey = static::PREFIX_KEY_COMPANY_BUSINESS_UNIT_ADDRESS . $companyUnitAddressTransfer->getFkCompanyBusinessUnit();
-            $companyBusinessUnitAddressesArray[$companyBusinessUnitAddressesKey] = $companyUnitAddressTransfer->toArray();
-        }
-
-        return $companyBusinessUnitAddressesArray;
+        return $companyUserTransfer->getCompanyBusinessUnit()
+            ->getAddressCollection();
     }
 
     /**
@@ -140,7 +111,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      */
     protected function encodeAddressesToJson(array $addresses): ?string
     {
-        $jsonEncodedAddresses = json_encode($addresses);
+        $jsonEncodedAddresses = json_encode($addresses, JSON_PRETTY_PRINT);
 
         return ($jsonEncodedAddresses !== false)
             ? $jsonEncodedAddresses
