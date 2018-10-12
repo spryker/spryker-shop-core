@@ -7,15 +7,36 @@
 } %}
 
 {% block template %}
-    {{ data.addresses }}
+    {#<pre>{{ dump(data.addresses) }}</pre>#}
+
+    {#{% embed atom('select') with {#}
+        {#modifiers: ['expand'],#}
+        {#data: {#}
+            {#options: data.quantityOptions#}
+        {#},#}
+        {#attributes: {#}
+            {#name: 'quantity'#}
+        {#}#}
+    {#} only %}#}
+        {#{% block selectClass %}js-volume-price__quantity{% endblock %}#}
+    {#{% endembed %}     #}
 
     <div>
-        <button>{{ 'page.checkout.address.use_selected_address' | trans }}</button>
+        <button class="button spacing-bottom">
+            {{ 'page.checkout.address.use_selected_address' | trans }}
+        </button>
+        <br>
         <label>
-            <input type="checkbox">
+            <input type="checkbox" class="js-from-clear__{{ data.formType }}-toggler">
             {{ 'page.checkout.address.different_delivery_address' | trans }}
         </label>
+        {% include molecule('form-clear') with {
+            attributes: {
+                'form-selector': '.js-form-clear__' ~ data.formType ~ '-form',
+                'input-selector': '.js-from-clear__' ~ data.formType ~ '-toggler'
+            }
+        } only %}
     </div>
 
-    <input type="hidden" name="addressesForm[address_type][id_customer_address]">
+    <input type="hidden" name="{{ data.formType }}[id_customer_address]">
 {% endblock %}
