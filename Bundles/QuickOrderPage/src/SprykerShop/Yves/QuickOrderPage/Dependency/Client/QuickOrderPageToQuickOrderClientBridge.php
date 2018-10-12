@@ -35,14 +35,4 @@ class QuickOrderPageToQuickOrderClientBridge implements QuickOrderPageToQuickOrd
     {
         return $this->quickOrderClient->expandProductConcrete($productConcreteTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    public function getCurrentProductPrice(ItemTransfer $itemTransfer): CurrentProductPriceTransfer
-    {
-        return $this->quickOrderClient->getCurrentProductPrice($itemTransfer);
-    }
 }

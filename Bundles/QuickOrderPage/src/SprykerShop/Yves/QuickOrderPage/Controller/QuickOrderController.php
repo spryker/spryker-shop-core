@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
+use Spryker\Client\PriceProductStorage\PriceProductStorageClient;
 use Spryker\Client\ProductStorage\ProductStorageClient;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -269,9 +270,11 @@ class QuickOrderController extends AbstractController
     {
         $itemTransfer = $this->createItemTransfer($request);
 
-        return $this->getFactory()
-            ->getQuickOrderClient()
-            ->getCurrentProductPrice($itemTransfer);
+        // TODO inject properly
+        $priceProductStorageClient = new PriceProductStorageClient();
+
+        return $priceProductStorageClient
+            ->getResolvedCurrentProductPriceTransfer($itemTransfer);
     }
 
     /**
