@@ -17,10 +17,10 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
-class CompanyBusinessUnitRestrictionHandlerPlugin extends AbstractPlugin implements FilterControllerEventHandlerPluginInterface
+class CompanyBusinessUnitRestrictionFilterControllerEventHandlerPlugin extends AbstractPlugin implements FilterControllerEventHandlerPluginInterface
 {
     /**
-     * @see \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController::REQUEST_PARAM_ID
+     * @uses \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController::REQUEST_PARAM_ID
      */
     protected const REQUEST_PARAM_COMPANY_BUSINESS_UNIT_ID = 'id';
 
@@ -34,7 +34,7 @@ class CompanyBusinessUnitRestrictionHandlerPlugin extends AbstractPlugin impleme
     /**
      * {@inheritdoc}
      * - Verifies if customer could perform an action with company business unit.
-     * - Throws an exception with predefined message if customer have no permissions for such company business unit.
+     * - Throws an exception with predefined message if customer has no permissions for such company business unit.
      *
      * @api
      *
@@ -44,10 +44,36 @@ class CompanyBusinessUnitRestrictionHandlerPlugin extends AbstractPlugin impleme
      */
     public function handle(FilterControllerEvent $event): void
     {
+        if (!$this->isEventShouldBeHandled($event)) {
+            return;
+        }
+
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if ($customerTransfer && $customerTransfer->getCompanyUserTransfer()) {
+            $request = $event->getRequest();
+            $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_COMPANY_BUSINESS_UNIT_ID);
+            $companyBusinessUnitTransfer = $this->getCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
+
+            if ($companyBusinessUnitTransfer->getFkCompany() === $customerTransfer->getCompanyUserTransfer()->getFkCompany()) {
+                return;
+            }
+        }
+
+        throw new CustomerAccessDeniedException(static::GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     *
+     * @return bool
+     */
+    protected function isEventShouldBeHandled(FilterControllerEvent $event): bool
+    {
         $eventController = $event->getController();
 
         if (!is_array($eventController)) {
-            return;
+            return false;
         }
 
         [$controllerInstance, $actionName] = $eventController;
@@ -55,27 +81,23 @@ class CompanyBusinessUnitRestrictionHandlerPlugin extends AbstractPlugin impleme
         if (!($controllerInstance instanceof BusinessUnitController) ||
             !in_array($actionName, self::DENIED_ACTIONS)
         ) {
-            return;
+            return false;
         }
 
-        $request = $event->getRequest();
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        return true;
+    }
 
-        if (empty($customerTransfer)) {
-            return;
-        }
-
-        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_COMPANY_BUSINESS_UNIT_ID);
-
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    protected function getCompanyBusinessUnitTransfer(int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer
+    {
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
-        $companyBusinessUnitTransfer = $this->getFactory()->getCompanyBusinessUnitClient()
+
+        return $this->getFactory()->getCompanyBusinessUnitClient()
             ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
-
-        if ($companyBusinessUnitTransfer->getFkCompany() === $customerTransfer->getCompanyUserTransfer()->getFkCompany()) {
-            return;
-        }
-
-        throw new CustomerAccessDeniedException(static::GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED);
     }
 }
