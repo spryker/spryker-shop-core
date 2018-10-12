@@ -10,7 +10,9 @@ namespace SprykerShop\Yves\QuickOrderPage\Controller;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
+use Spryker\Client\ProductStorage\ProductStorageClient;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
@@ -393,8 +395,21 @@ class QuickOrderController extends AbstractController
      */
     protected function getProductConcretesData(array $quickOrderItemTransfers): array
     {
-        return $this->getFactory()
-            ->getQuickOrderClient()
-            ->findProductConcretesByQuickOrderItemTransfers($quickOrderItemTransfers);
+        // TODO: inject properly
+        $productStorageClient = new ProductStorageClient();
+
+        $productIds = array_map(function(QuickOrderItemTransfer $quickOrderItemTransfer) {
+            return $quickOrderItemTransfer->getIdProductConcrete();
+        }, $quickOrderItemTransfers);
+
+        $productConcreteStorageTransfers = $productStorageClient
+            ->getProductConcreteStorageTransfers($productIds);
+
+        $mappedProductConcreteStorageTransfers = [];
+        foreach ($productConcreteStorageTransfers as $productConcreteStorageTransfer) {
+            $mappedProductConcreteStorageTransfers[$productConcreteStorageTransfer->getIdProductConcrete()] = $productConcreteStorageTransfer;
+        }
+
+        return $mappedProductConcreteStorageTransfers;
     }
 }

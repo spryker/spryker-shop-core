@@ -25,11 +25,4 @@ interface QuickOrderPageToQuickOrderClientInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function getCurrentProductPrice(ItemTransfer $itemTransfer): CurrentProductPriceTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
-     */
-    public function findProductConcretesByQuickOrderItemTransfers(array $quickOrderItemTransfers): array;
 }
