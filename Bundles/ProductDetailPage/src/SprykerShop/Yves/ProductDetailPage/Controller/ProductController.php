@@ -62,6 +62,10 @@ class ProductController extends AbstractController
             ->getProductStorageClient()
             ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request));
 
+        if ($productViewTransfer->getIdProductConcrete() && $this->isProductConcreteRestricted($productViewTransfer->getIdProductConcrete())) {
+            throw new ProductAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
+        }
+
         return [
             'product' => $productViewTransfer,
             'productUrl' => $this->getProductUrl($productViewTransfer),
@@ -78,6 +82,18 @@ class ProductController extends AbstractController
         return $this->getFactory()
             ->getProductStorageClient()
             ->isProductAbstractRestricted($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    protected function isProductConcreteRestricted(int $idProductConcrete): bool
+    {
+        return $this->getFactory()
+            ->getProductStorageClient()
+            ->isProductConcreteRestricted($idProductConcrete);
     }
 
     /**
