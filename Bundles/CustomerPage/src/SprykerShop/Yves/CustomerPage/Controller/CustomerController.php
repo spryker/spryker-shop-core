@@ -115,7 +115,7 @@ class CustomerController extends AbstractCustomerController
         }
 
         $orderListTransfer = $this->createOrderListTransfer($customerTransfer);
-        $orderList = $this->getFactory()->getSalesClient()->getPaginatedOrder($orderListTransfer);
+        $orderList = $this->getFactory()->getSalesClient()->getPaginatedCustomerOrdersOverview($orderListTransfer);
 
         return [
             'customer' => $customerTransfer,
