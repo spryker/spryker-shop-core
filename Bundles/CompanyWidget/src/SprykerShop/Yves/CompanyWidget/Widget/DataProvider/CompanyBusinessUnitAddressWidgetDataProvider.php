@@ -58,7 +58,7 @@ class CompanyBusinessUnitAddressWidgetDataProvider
                 $formType
             );
 
-            $addressFullNameKey = sprintf('%s[%s]', $formType, static::FIELD_ADDRESS_FULL_ADDRESS);
+            $addressFullNameKey = $this->addFormTypePrefix(static::FIELD_ADDRESS_FULL_ADDRESS, $formType);
             $addressFields[$addressFullNameKey] = $this->getFullAddress(
                 $addressTransfer->toArray()
             );
@@ -95,7 +95,7 @@ class CompanyBusinessUnitAddressWidgetDataProvider
 
             $preparedAddressFields = $this->prepareAddressFields($addressFields, $formType);
 
-            $addressFullNameKey = sprintf('%s[%s]', $formType, static::FIELD_ADDRESS_FULL_ADDRESS);
+            $addressFullNameKey = $this->addFormTypePrefix(static::FIELD_ADDRESS_FULL_ADDRESS, $formType);
             $preparedAddressFields[$addressFullNameKey] = $this->getFullAddress($addressFields);
 
             $companyBusinessUnitAddressesArray[] = $preparedAddressFields;
@@ -132,11 +132,22 @@ class CompanyBusinessUnitAddressWidgetDataProvider
 
         foreach ($fields as $key => $value) {
             if (in_array($key, static::FIELDS_ADDRESSES_FORM, true)) {
-                $preparedFormFields[sprintf('%s[%s]', $formType, $key)] = $value;
+                $preparedFormFields[$this->addFormTypePrefix($key, $formType)] = $value;
             }
         }
 
         return $preparedFormFields;
+    }
+
+    /**
+     * @param string $addressField
+     * @param string $formType
+     *
+     * @return string
+     */
+    protected function addFormTypePrefix(string $addressField, string $formType): string
+    {
+        return sprintf('addressesForm[%s][%s]', $formType, $addressField);
     }
 
     /**
