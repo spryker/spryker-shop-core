@@ -4,7 +4,7 @@ import AjaxProvider from '../ajax-provider/ajax-provider';
 export default class AjaxLoader extends Component {
     protected providers: AjaxProvider[]
 
-    protected readyCallback(): void {
+    readyCallback(): void {
         this.providers = <AjaxProvider[]>Array.from(document.querySelectorAll(this.providerSelector));
         this.mapEvents();
     }

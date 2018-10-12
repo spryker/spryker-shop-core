@@ -10,7 +10,7 @@ export default class CustomerReorder extends Component {
         this.trigger = <HTMLElement>this.querySelector(`.${this.jsName}__trigger`);
     }
 
-    protected readyCallback(): void {
+    readyCallback(): void {
         this.mapEvents();
     }
 

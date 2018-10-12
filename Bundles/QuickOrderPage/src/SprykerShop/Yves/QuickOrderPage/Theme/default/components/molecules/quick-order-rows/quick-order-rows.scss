@@ -1,0 +1,17 @@
+@mixin quick-order-rows($name: '.quick-order-rows') {
+    #{$name} {
+        width: 100%;
+
+        &__row {
+            &:not(:last-child) {
+                border-bottom: 1px solid $setting-color-lighter;
+            }
+
+            &--head {
+                @include helper-font-weight(bold);
+            }
+        }
+
+        @content;
+    }
+}

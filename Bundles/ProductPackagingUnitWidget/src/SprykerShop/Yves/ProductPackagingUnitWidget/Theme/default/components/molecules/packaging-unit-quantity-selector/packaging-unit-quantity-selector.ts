@@ -51,7 +51,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     muError: boolean;
     puError: boolean;
 
-    protected readyCallback(event?: Event): void {
+    readyCallback(event?: Event): void {
         this.qtyInSalesUnitInput = <HTMLInputElement>document.querySelector('#sales-unit-quantity');
         this.qtyInBaseUnitInput = <HTMLInputElement>document.querySelector('#base-unit-quantity');
         this.measurementUnitInput = <HTMLSelectElement>document.querySelector('.select-measurement-unit');

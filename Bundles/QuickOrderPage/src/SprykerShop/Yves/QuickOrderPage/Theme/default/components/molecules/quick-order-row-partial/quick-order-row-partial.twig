@@ -1,0 +1,60 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quick-order-row-partial',
+    tag: 'quick-order-row-partial'
+} %}
+
+{% define data = {
+    quantityField: null,
+    quantity: null,
+    price: null,
+    additionalColumns: []
+} %}
+
+{% block body %}
+    <div class="grid grid--justify grid--middle">
+        <div class="col col--sm-6">
+            {% for additionalColumn in data.additionalColumns %}
+                <div class="col col--expand spacing spacing--inner">
+                    {% block additionalColumn %}
+                        {{ additionalColumn.fieldName }}
+                    {% endblock %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="col col--sm-3 spacing spacing--inner">
+            {% block quantity %}
+                {% if data.quantityField is not empty %}
+                    {{ form_widget(data.quantityField, {
+                        required: true,
+                        label: false,
+                        attr: {
+                            class: config.jsName ~ '__quantity',
+                            min: data.min | default(),
+                            max: data.max | default(),
+                            step: data.step | default()
+                        }
+                    }) }}
+                {% else %}
+                    <input
+                        {% if data.quantity is empty %}disabled{% endif %}
+                        {% if data.quantity is not empty %}value="{{data.quantity}}"{% endif %}
+                        type="number"
+                        class="input input--expand {{config.jsName}}__quantity" />
+                {% endif %}
+            {% endblock %}
+        </div>
+
+        <div class="col col--sm-3 spacing spacing--inner">
+            {% block price %}
+                {% include molecule('price') with {
+                    data: {
+                        amount: data.price is empty ? null : data.price | money
+                    }
+                } only %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

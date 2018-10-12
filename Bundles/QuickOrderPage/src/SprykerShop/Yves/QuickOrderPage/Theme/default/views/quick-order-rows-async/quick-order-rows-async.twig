@@ -1,0 +1,17 @@
+{% extends model('template') %}
+
+{% define data = {
+    form: _view.form,
+    productConcretesData: _view.productConcretesData,
+    additionalColumns: _view.additionalColumns
+} %}
+
+{% block template %}
+    {% include molecule('quick-order-rows', 'QuickOrderPage') with {
+        data: {
+            rows: data.form.items,
+            productConcretesData: data.productConcretesData,
+            additionalColumns: data.additionalColumns
+        }
+    } only %}
+{% endblock %}

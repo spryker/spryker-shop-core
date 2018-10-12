@@ -1,44 +1,46 @@
+import Component from '../models/component';
 import { CustomElementImporter, CustomElementContructor } from './registry';
 import { debug } from '../app/logger';
 
 export default class Candidate {
     protected readonly tagName: string
-    protected readonly customeElementImporter: CustomElementImporter
+    protected readonly customElementImporter: CustomElementImporter
 
-    constructor(tagName: string, customeElementImporter: CustomElementImporter) {
+    constructor(tagName: string, customElementImporter: CustomElementImporter) {
         this.tagName = tagName;
-        this.customeElementImporter = customeElementImporter;
+        this.customElementImporter = customElementImporter;
     }
 
-    async mount(): Promise<void> {
-        if (this.isMounted) {
-            return;
-        }
-
-        const tagCount = this.tagCount;
-
-        if (tagCount === 0) {
-            return;
-        }
-
-        debug('mounting', tagCount, this.tagName);
-
+    async mount(): Promise<Component[]> {
         try {
-            const customElementModule = await this.customeElementImporter();
+            const elements = this.getElements();
+
+            if (elements.length === 0) {
+                return [];
+            }
+
+            if (this.isDefined) {
+                return <Component[]>elements;
+            }
+
+            debug('mounting', elements.length, this.tagName);
+            const customElementModule = await this.customElementImporter();
             const customElementConstructor = <CustomElementContructor>customElementModule.default;
             customElements.define(this.tagName, customElementConstructor);
-            return customElements.whenDefined(this.tagName);
+            await customElements.whenDefined(this.tagName);
+
+            return <Component[]>elements;
         } catch (err) {
             throw new Error(`${this.tagName} failed to mount\n${err.message}`);
         }
     }
 
-    get isMounted(): boolean {
-        const constructor = document.createElement(this.tagName).constructor;
-        return constructor !== HTMLElement && constructor !== HTMLUnknownElement;
+    protected getElements(): HTMLElement[] {
+        return <HTMLElement[]>Array.from(document.getElementsByTagName(this.tagName));
     }
 
-    get tagCount(): number {
-        return document.getElementsByTagName(this.tagName).length;
+    protected get isDefined(): boolean {
+        const constructor = document.createElement(this.tagName).constructor;
+        return constructor !== HTMLElement && constructor !== HTMLUnknownElement;
     }
 }

@@ -1,0 +1,18 @@
+{% extends model('template') %}
+
+{% define data = {
+
+} %}
+
+{% block template %}
+    {% embed molecule('quick-order-row-partial', 'QuickOrderPage') with {
+        data: {
+            quantity: 12,
+            price: 33
+        }
+    } only %}
+        {% block component %}
+            {{block('body')}}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

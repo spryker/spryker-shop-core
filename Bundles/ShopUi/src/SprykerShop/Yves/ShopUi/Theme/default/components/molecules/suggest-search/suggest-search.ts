@@ -35,7 +35,7 @@ export default class SuggestSearch extends Component {
         this.activeItemIndex = 0;
     }
 
-    protected readyCallback(): void {
+    readyCallback(): void {
         this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}__ajax-provider`);
         this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}__container`);
         this.searchInput = <HTMLInputElement> document.querySelector(this.searchInputSelector);

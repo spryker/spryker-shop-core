@@ -3,17 +3,27 @@ import { get as config } from '../app/config';
 export default abstract class Component extends HTMLElement {
     readonly name: string
     readonly jsName: string
+    private isComponentMounted: boolean
 
     constructor() {
         super();
         this.name = this.tagName.toLowerCase();
         this.jsName = `js-${this.name}`;
-
-        document.addEventListener(config().events.ready, () => this.readyCallback(), {
-            capture: false,
-            once: true
-        });
+        this.isComponentMounted = false;
     }
 
-    protected abstract readyCallback(): void
+    protected dispatchCustomEvent(name: string, detail: any = {}): void {
+        const customEvent = new CustomEvent(name, { detail });
+        this.dispatchEvent(customEvent);
+    }
+
+    markAsMounted(): void {
+        this.isComponentMounted = true;
+    }
+
+    abstract readyCallback(): void
+
+    get isMounted(): boolean {
+        return this.isComponentMounted;
+    }
 }
