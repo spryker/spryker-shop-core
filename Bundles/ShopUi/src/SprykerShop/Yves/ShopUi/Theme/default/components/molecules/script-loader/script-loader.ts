@@ -1,62 +1,69 @@
 import Component from '../../../models/component';
+import { debug } from '../../../app/logger';
 
-const EVENT_LOADED = 'loaded';
+const EVENT_SCRIPT_LOAD = 'scriptload';
+const defaultIgnoredAttributes = [
+    'class',
+    'data-qa'
+];
 
 export default class ScriptLoader extends Component {
-    readonly scriptSource: string
-    readonly ignoredAttributes: string[]
-
-    constructor() { 
-        super();
-
-        this.ignoredAttributes = [
-            'class',
-            'data-qa'
-        ];
-    }
+    head: HTMLHeadElement
+    script: HTMLScriptElement
 
     protected readyCallback(): void {
+        this.script = <HTMLScriptElement>document.querySelector(`script[src="${this.src}"]`);
+
+        if (!!this.script) {
+            this.mapEvents();
+            debug(`${this.name}: "${this.src}" is already in the DOM`);
+            return;
+        }
+
+        this.head = <HTMLHeadElement>document.querySelector('head');
+        this.script = <HTMLScriptElement>document.createElement('script');
+
+        this.mapEvents();
+        this.setScriptAttributes();
         this.appendScriptTag();
     }
 
-    protected mapEvents(script) {
-        script.addEventListener('load', (event: Event) => {
-            this.fireEvent(EVENT_LOADED);
+    protected mapEvents(): void {
+        this.script.addEventListener('load', (event: Event) => this.onScriptLoad(event), { once: true });
+    }
+
+    protected onScriptLoad(event: Event): void {
+        this.dispatchCustomEvent(EVENT_SCRIPT_LOAD);
+    }
+
+    protected setScriptAttributes(): void {
+        Array.prototype.forEach.call(this.attributes, (attribute: Attr) => {
+            if (!this.isAttributeIgnored(attribute.name)) {
+                this.script.setAttribute(attribute.name, attribute.value);
+            }
         });
     }
 
     protected appendScriptTag(): void {
-        const head = document.querySelector('head');
-        const script = this.createScriptTag();
-
-        head.appendChild(script);
-    }
-
-    protected createScriptTag(): HTMLElement {
-        let script = document.createElement('script');
-        this.mapEvents(script);
-
-        return this.setScriptAttributes(script);
-    }
-
-    protected fireEvent(name: string): void {
-        const event = new CustomEvent(name);
-        this.dispatchEvent(event);
-    }
-
-    protected setScriptAttributes(script: HTMLElement): HTMLElement {
-        const attributes = this.attributes;
-
-        Array.prototype.forEach.call(attributes, (attribute) => {
-            if (!this.isAttributeIgnored(attribute.name)) {
-                script.setAttribute(attribute.name, attribute.value);
-            }
-        });
-
-        return script;
+        this.head.appendChild(this.script);
+        debug(`${this.name}: "${this.src}" added to the DOM`);
     }
 
     protected isAttributeIgnored(attributeName: string): boolean {
-        return this.ignoredAttributes.indexOf(attributeName) != -1;
+        return this.ignoredAttributes.indexOf(attributeName) !== -1;
+    }
+
+    get ignoredAttributes(): string[] {
+        return [
+            ...defaultIgnoredAttributes
+        ]
+    }
+
+    get isScriptAlreadyInDOM(): boolean {
+        return !!document.querySelector(`script[src="${this.src}"]`);
+    }
+
+    get src(): string {
+        return this.getAttribute('src');
     }
 }
