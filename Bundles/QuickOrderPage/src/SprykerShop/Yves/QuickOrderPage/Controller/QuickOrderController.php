@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
@@ -291,25 +292,25 @@ class QuickOrderController extends AbstractController
      */
     protected function executeProductPriceAction(Request $request): CurrentProductPriceTransfer
     {
-        $itemTransfer = $this->createItemTransfer($request);
+        $priceProductFilterTransfer = $this->createPriceProductFilterTransfer($request);
 
         // TODO inject properly
         $priceProductStorageClient = new PriceProductStorageClient();
 
         return $priceProductStorageClient
-            ->getResolvedCurrentProductPriceTransfer($itemTransfer);
+            ->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function createItemTransfer(Request $request): ItemTransfer
+    protected function createPriceProductFilterTransfer(Request $request): PriceProductFilterTransfer
     {
-        return (new ItemTransfer())
+        return (new PriceProductFilterTransfer())
             ->setQuantity($request->query->getInt(static::PARAM_QUANTITY, 0))
-            ->setId($request->query->getInt(static::PARAM_ID_PRODUCT))
+            ->setIdProduct($request->query->getInt(static::PARAM_ID_PRODUCT))
             ->setIdProductAbstract($request->query->getInt(static::PARAM_ID_PRODUCT_ABSTRACT));
     }
 
