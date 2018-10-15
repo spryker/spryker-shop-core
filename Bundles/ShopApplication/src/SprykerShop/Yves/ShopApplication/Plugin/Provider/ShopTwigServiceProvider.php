@@ -14,14 +14,11 @@ use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
-use SprykerShop\Yves\ShopApplication\Plugin\ShopApplicationTwigExtensionPlugin;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig_Environment;
 use Twig_Loader_Chain;
 use Twig_Loader_Filesystem;
-use Twig_SimpleFilter;
-use Twig_SimpleFunction;
 
 /**
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
@@ -143,7 +140,7 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
                     $twig->addGlobal($name, $value);
                 }
 
-                $twig->addExtension($this->getFactory()->createTwigExtensionPlugin());
+                $twig->addExtension($this->getFactory()->createShopApplicationTwigExtensionPlugin());
 
                 return $twig;
             })

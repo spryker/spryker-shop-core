@@ -176,7 +176,7 @@ class ShopApplicationFactory extends AbstractFactory
     /**
      * @return \Twig\Extension\ExtensionInterface|\Spryker\Yves\Twig\Plugin\AbstractTwigExtensionPlugin
      */
-    public function createTwigExtensionPlugin(): ExtensionInterface
+    public function createShopApplicationTwigExtensionPlugin(): ExtensionInterface
     {
         return new ShopApplicationTwigExtensionPlugin();
     }

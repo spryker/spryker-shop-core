@@ -49,7 +49,7 @@ class ShopApplicationTwigExtensionPlugin extends AbstractTwigExtensionPlugin
     }
 
     /**
-     * @return TwigFilter[]
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters(): array
     {
