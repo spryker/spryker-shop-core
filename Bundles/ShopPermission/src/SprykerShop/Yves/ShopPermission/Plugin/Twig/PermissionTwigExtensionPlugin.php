@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ShopPermission\Plugin\Twig;
 
-use Spryker\Yves\Twig\Plugin\AbstractTwigExtensionPlugin;
+use SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin;
 use Twig\TwigFunction;
 
 /**

@@ -83,7 +83,7 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\Twig\Plugin\AbstractTwigExtensionPlugin[]
+     * @return \SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin[]
      */
     protected function getPermissionTwigExtensionPlugins()
     {

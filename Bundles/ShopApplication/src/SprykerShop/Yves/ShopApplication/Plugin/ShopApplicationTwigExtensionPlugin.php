@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ShopApplication\Plugin;
 
-use Spryker\Yves\Twig\Plugin\AbstractTwigExtensionPlugin;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
