@@ -87,7 +87,7 @@
             </div>
 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                {{ widget('ShoppingListQuickOrderWidgetPlugin') }}
+                {{ widget('QuickOrderPageAddItemsToShoppingListWidgetPlugin') }}
             {% endif %}
         {% endblock %}
     {% endembed %}

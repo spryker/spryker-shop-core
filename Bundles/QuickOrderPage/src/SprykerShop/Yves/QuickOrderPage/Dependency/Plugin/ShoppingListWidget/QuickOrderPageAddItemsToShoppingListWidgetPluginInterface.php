@@ -7,9 +7,9 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Plugin\ShoppingListWidget;
 
-interface ShoppingListWidgetPluginInterface
+interface QuickOrderPageAddItemsToShoppingListWidgetPluginInterface
 {
-    public const NAME = 'ShoppingListQuickOrderWidgetPlugin';
+    public const NAME = 'QuickOrderPageAddItemsToShoppingListWidgetPlugin';
 
     /**
      * @api
