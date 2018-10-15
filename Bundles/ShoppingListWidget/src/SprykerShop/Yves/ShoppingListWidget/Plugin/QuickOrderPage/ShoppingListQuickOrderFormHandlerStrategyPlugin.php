@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\ShoppingListWidget\Plugin\QuickOrderPage;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormHandlerStrategyPluginInterface;
 use Symfony\Component\Form\FormInterface;
@@ -59,13 +59,16 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     {
         /** @var \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer */
         $quickOrderTransfer = $quickOrderForm->getData();
-        $shoppingListAddItemsRequestTransfer = (new ShoppingListAddItemsRequestTransfer())
-            ->setCustomer($this->getFactory()->getCustomerClient()->getCustomer())
+        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setCustomerReference($customer->getCustomerReference())
+            ->setIdCompanyUser($customer->getCompanyUserTransfer()->getIdCompanyUser())
             ->setItems($this->mapShoppingListItems($quickOrderTransfer->getItems()))
-            ->setShoppingListId((int)$request->get(self::ID_SHOPPING_LIST));
+            ->setIdShoppingList((int)$request->get(self::ID_SHOPPING_LIST));
         $shoppingListResponseTransfer = $this->getFactory()
                     ->getShoppingListClient()
-                    ->addItems($shoppingListAddItemsRequestTransfer);
+                    ->addItems($shoppingListTransfer);
         if (!$shoppingListResponseTransfer->getIsSuccess()) {
             return null;
         }
