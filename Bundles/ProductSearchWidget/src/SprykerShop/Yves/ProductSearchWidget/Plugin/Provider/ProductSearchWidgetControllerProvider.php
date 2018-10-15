@@ -13,7 +13,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    protected const ROUTE_PRODUCT_CONCRETE_SEARCH = 'product-search/concrete';
+    protected const ROUTE_PRODUCT_CONCRETE_SEARCH = 'product-search/product-concrete-search';
 
     /**
      * @var string
@@ -41,7 +41,7 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
      */
     protected function defineControllers(Application $app): void
     {
-        $this->createController('{productSearch}/suggest-product-concrete', static::ROUTE_PRODUCT_CONCRETE_SEARCH, 'ProductSearchWidget', 'ProductConcreteSearch', 'index')
+        $this->createController('{productSearch}/product-concrete-search', static::ROUTE_PRODUCT_CONCRETE_SEARCH, 'ProductSearchWidget', 'ProductConcreteSearch', 'index')
             ->assert('productSearch', $this->allowedLocalesPattern . 'product-search|product-search')
             ->value('productSearch', 'product-search');
     }
