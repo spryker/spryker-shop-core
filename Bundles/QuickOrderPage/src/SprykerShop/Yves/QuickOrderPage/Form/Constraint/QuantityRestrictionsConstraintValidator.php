@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuickOrderPage\Form\Constraint;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use InvalidArgumentException;
 use Spryker\Client\ProductQuantityStorage\ProductQuantityStorageClient;
 use SprykerShop\Yves\QuickOrderPage\Form\OrderItemEmbeddedForm;
@@ -41,8 +42,8 @@ class QuantityRestrictionsConstraintValidator extends ConstraintValidator
         // TODO: make this plugin, remove direct usage
         $productQuantityValidationTransfer = (new ProductQuantityStorageClient())
             ->validateProductQuantity(
-                (new ItemTransfer())
-                    ->setId($quickOrderItemTransfer->getIdProductConcrete())
+                (new ProductViewTransfer())
+                    ->setIdProductConcrete($quickOrderItemTransfer->getIdProductConcrete())
                     ->setQuantity($quickOrderItemTransfer->getQty())
             );
 
