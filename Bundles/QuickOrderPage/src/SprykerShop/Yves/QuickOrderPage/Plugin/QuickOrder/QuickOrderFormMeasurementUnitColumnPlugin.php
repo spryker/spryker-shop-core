@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\Plugin\QuickOrderFormAdditionalDataColumn;
+namespace SprykerShop\Yves\QuickOrderPage\Plugin\QuickOrder;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormAdditionalDataColumnProviderPluginInterface;
+use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface;
 
-class QuickOrderPageMeasurementUnitColumnProviderPlugin extends AbstractPlugin implements QuickOrderFormAdditionalDataColumnProviderPluginInterface
+class QuickOrderFormMeasurementUnitColumnPlugin extends AbstractPlugin implements QuickOrderFormColumnPluginInterface
 {
     protected const COLUMN_TITLE = 'quick-order.input-label.measurement_unit';
     protected const FIELD_NAME = 'measurementUnit';

@@ -15,7 +15,7 @@ interface QuickOrderFormHandlerStrategyPluginInterface
 {
     /**
      * Specification:
-     *  - Checks if this plugin is applicable for provided form.
+     * - Checks if this QuickOrderForm handler strategy is applicable for the provided form and request data.
      *
      * @api
      *
@@ -28,8 +28,8 @@ interface QuickOrderFormHandlerStrategyPluginInterface
 
     /**
      * Specification:
-     *  - Handle quick order form submit.
-     *  - Returns redirect to response.
+     * - Handles quick order form.
+     * - Returns redirect response or null.
      *
      * @api
      *

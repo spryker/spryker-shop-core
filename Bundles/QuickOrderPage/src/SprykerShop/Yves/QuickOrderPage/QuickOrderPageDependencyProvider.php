@@ -25,7 +25,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY = 'PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY';
-    public const PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER = 'PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER';
+    public const PLUGINS_QUICK_ORDER_FORM_COLUMN = 'PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -170,8 +170,8 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderFormAdditionalDataColumnProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER] = function () {
-            return $this->getQuickOrderFormAdditionalDataColumnProviderPlugins();
+        $container[static::PLUGINS_QUICK_ORDER_FORM_COLUMN] = function () {
+            return $this->getQuickOrderFormColumnPlugins();
         };
 
         return $container;
@@ -205,9 +205,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormAdditionalDataColumnProviderPluginInterface[]
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[]
      */
-    protected function getQuickOrderFormAdditionalDataColumnProviderPlugins(): array
+    protected function getQuickOrderFormColumnPlugins(): array
     {
         return [];
     }

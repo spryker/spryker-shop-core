@@ -88,40 +88,26 @@ class QuickOrderController extends AbstractController
         return [
             'itemsForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
-            'additionalColumns' => $this->mapQuickOrderFormAdditionalDataColumnProviderPluginsToArray(),
+            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
         ];
     }
 
     /**
      * @return array
      */
-    protected function mapQuickOrderFormAdditionalDataColumnProviderPluginsToArray()
+    protected function mapAdditionalQuickOrderFormColumnPluginsToArray()
     {
         $additionalColumns = [];
 
-        foreach ($this->getQuickOrderFormAdditionalDataColumnProviderPlugins() as $additionalColumn)
+        foreach ($this->getFactory()->getQuickOrderFormColumnPlugins() as $additionalColumnPlugin)
         {
             $additionalColumns[] = [
-                'fieldName' => $additionalColumn->getFieldName(),
-                'title' => $additionalColumn->getColumnTitle(),
+                'title' => $additionalColumnPlugin->getColumnTitle(),
+                'fieldName' => $additionalColumnPlugin->getFieldName(),
             ];
         }
 
         return $additionalColumns;
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormAdditionalDataColumnProviderPluginInterface[]
-     */
-    protected function getQuickOrderFormAdditionalDataColumnProviderPlugins()
-    {
-        $quickOrderFormAdditionalDataColumnProviderPluginCollection = [];
-
-        foreach ($this->getFactory()->getQuickOrderFormAdditionalDataColumnProviderPlugins() as $quickOrderFormAdditionalDataColumnProviderPlugin) {
-            $quickOrderFormAdditionalDataColumnProviderPluginCollection[$quickOrderFormAdditionalDataColumnProviderPlugin->getFieldName()] = $quickOrderFormAdditionalDataColumnProviderPlugin;
-        }
-
-        return $quickOrderFormAdditionalDataColumnProviderPluginCollection;
     }
 
     /**
@@ -172,7 +158,7 @@ class QuickOrderController extends AbstractController
 
         return [
             'form' => $quickOrderForm->createView(),
-            'additionalColumns' => $this->mapQuickOrderFormAdditionalDataColumnProviderPluginsToArray(),
+            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
             'productConcretesData' => $this->getProductConcretesData($orderItems),
         ];
     }
@@ -227,7 +213,7 @@ class QuickOrderController extends AbstractController
 
         return [
             'form' => $quickOrderForm->createView(),
-            'additionalColumns' => $this->mapQuickOrderFormAdditionalDataColumnProviderPluginsToArray(),
+            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
             'productConcretesData' => $this->getProductConcretesData($orderItems),
         ];
     }

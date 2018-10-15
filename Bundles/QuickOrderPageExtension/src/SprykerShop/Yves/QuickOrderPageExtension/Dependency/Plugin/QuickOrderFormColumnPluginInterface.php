@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin;
 
-interface QuickOrderFormAdditionalDataColumnProviderPluginInterface
+interface QuickOrderFormColumnPluginInterface
 {
     /**
      * Specification:
-     * - Returns column title to be used at Quick Order Page.
+     * - Returns column title to be displayed.
      *
      * @api
      *
@@ -21,7 +21,7 @@ interface QuickOrderFormAdditionalDataColumnProviderPluginInterface
 
     /**
      * Specification:
-     * - Returns string to be used as a field name and ID at Quick Order Page.
+     * - Returns name to be used as a field name and ID.
      *
      * @api
      *
