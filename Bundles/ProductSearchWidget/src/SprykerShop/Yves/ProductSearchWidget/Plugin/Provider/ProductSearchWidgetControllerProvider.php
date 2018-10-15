@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductSearchWidget\Plugin\Provider;
 
 use Silex\Application;
+use SprykerShop\Yves\ProductSearchWidget\Controller\ProductConcreteSearchController;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvider
@@ -32,13 +33,15 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
     }
 
     /**
+     * @uses ProductConcreteSearchController::indexAction()
+     *
      * @param \Silex\Application $app
      *
      * @return void
      */
     protected function defineControllers(Application $app): void
     {
-        $this->createController('{productSearch}/concrete', static::ROUTE_PRODUCT_CONCRETE_SEARCH, 'ProductSearchWidget', 'ProductConcreteSearch', 'index')
+        $this->createController('{productSearch}/suggest-product-concrete', static::ROUTE_PRODUCT_CONCRETE_SEARCH, 'ProductSearchWidget', 'ProductConcreteSearch', 'index')
             ->assert('productSearch', $this->allowedLocalesPattern . 'product-search|product-search')
             ->value('productSearch', 'product-search');
     }

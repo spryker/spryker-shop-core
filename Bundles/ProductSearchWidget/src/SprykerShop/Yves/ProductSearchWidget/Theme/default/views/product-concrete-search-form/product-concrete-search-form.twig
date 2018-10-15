@@ -2,24 +2,23 @@
 
 {% define data = {
     index: _widget.index,
-    skuInputName: _widget.skuInputName,
-    idProductInputName: _widget.idProductInputName,
-    searchResultsLimit: _widget.searchResultsLimit,
-    value: _widget.inputValue | default
+    searchFieldName: _widget.searchFieldName,
+    searchFieldValue: _widget.searchFieldValue | default,
+    searchResultLimit: _widget.searchResultLimit
 } %}
 
 {% block body %}
     {% include molecule('autocomplete-form') with {
         data: {
             id: data.index,
-            name: data.skuInputName,
-            value: data.value,
-            suggestionsUrl: '/product-search/concrete',
+            name: data.searchFieldName,
+            value: data.searchFieldValue,
+            suggestionsUrl: '/product-search/suggest-product-concrete',
             placeholder: 'quick-order.input.placeholder'
         },
         attributes: {
             'suggested-item-selector': '.products-list__item',
-            'query-string': 'limit=' ~ data.searchResultsLimit ~ '&searchString',
+            'query-string': 'limit=' ~ data.searchResultLimit ~ '&searchString',
             'value-attribute-name': 'data-id-product',
             'min-letters': 1,
         }

@@ -18,6 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductConcreteSearchController extends AbstractController
 {
+    /**
+     * @uses ProductConcretePageSearchResultFormatterPlugin::NAME
+     */
+    protected const PRODUCT_CONCRETE_PAGE_SEARCH_RESULT_FORMATTER_PLUGIN_NAME = 'ProductConcretePageSearchResultFormatter';
+
     protected const PARAM_SEARCH_STRING = 'searchString';
     protected const PARAM_LIMIT = 'limit';
 
@@ -28,15 +33,28 @@ class ProductConcreteSearchController extends AbstractController
      */
     public function indexAction(Request $request): View
     {
-        $products = $this->getFactory()->getProductPageSearchClient()->searchProductConcretesByFullText(
-            $this->createProductConcreteCriteriaFilterTransfer($request)
-        );
+        $productConcreteCriteriaFilterTransfer = $this->createProductConcreteCriteriaFilterTransfer($request);
+        $products = $this->searchProducts($productConcreteCriteriaFilterTransfer);
 
         return $this->view(
-            $products[ProductConcretePageSearchResultFormatterPlugin::NAME] ?? [],
+            $products,
             [],
             '@ProductSearchWidget/views/product-search-results/product-search-results.twig'
         );
+    }
+
+    /**
+     * @param ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
+     *
+     * @return array
+     */
+    protected function searchProducts(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array
+    {
+        $formattedProducts = $this->getFactory()
+            ->getProductPageSearchClient()
+            ->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
+
+        return $formattedProducts[static::PRODUCT_CONCRETE_PAGE_SEARCH_RESULT_FORMATTER_PLUGIN_NAME] ?: [];
     }
 
     /**

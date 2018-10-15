@@ -17,20 +17,18 @@ class QuickOrderPageProductSearchWidgetPlugin extends AbstractWidgetPlugin imple
 {
     /**
      * @param string $index
-     * @param string $skuInputName
-     * @param string $idProductInputName
-     * @param string|null $inputValue
-     * @param int|null $searchResultsLimit
+     * @param string $searchFieldName
+     * @param string|null $searchFieldValue
+     * @param int|null $searchResultLimit
      *
      * @return void
      */
-    public function initialize(string $index, string $skuInputName, string $idProductInputName, ?string $inputValue, ?int $searchResultsLimit = null): void
+    public function initialize(string $index, string $searchFieldName, ?string $searchFieldValue, ?int $searchResultLimit = null): void
     {
         $this->addParameter('index', $index)
-            ->addParameter('skuInputName', $skuInputName)
-            ->addParameter('idProductInputName', $idProductInputName)
-            ->addParameter('inputValue', $inputValue)
-            ->addParameter('searchResultsLimit', $searchResultsLimit ?: $this->getConfig()->getSearchResultsDefaultLimit());
+            ->addParameter('searchFieldName', $searchFieldName)
+            ->addParameter('searchFieldValue', $searchFieldValue)
+            ->addParameter('searchResultLimit', $searchResultLimit ?: $this->getConfig()->getSearchResultLimit());
     }
 
     /**
@@ -54,6 +52,6 @@ class QuickOrderPageProductSearchWidgetPlugin extends AbstractWidgetPlugin imple
      */
     public static function getTemplate(): string
     {
-        return '@ProductSearchWidget/views/product-search-field/product-search-field.twig';
+        return '@ProductSearchWidget/views/product-concrete-search-form/product-concrete-search-form.twig';
     }
 }
