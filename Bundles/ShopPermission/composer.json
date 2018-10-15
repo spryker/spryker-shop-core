@@ -12,11 +12,13 @@
     "spryker/code-sniffer": "*",
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*",
-    "spryker/twig": "^3.0.0"
+    "spryker/twig": "^3.0.0",
+    "spryker-shop/shop-application": "*"
   },
   "suggest": {
     "spryker/twig": ">3.0.0 If you want to use the permission plugin for Twig",
-    "spryker/silex": ">2.0.0 If you want to use the permission plugin for Twig"
+    "spryker/silex": ">2.0.0 If you want to use the permission plugin for Twig",
+    "spryker-shop/shop-application": ">1.0.0 If you want to use the permission plugin for Twig"
   },
   "autoload": {
     "psr-4": {
