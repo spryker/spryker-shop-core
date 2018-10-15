@@ -66,13 +66,13 @@ class QuickOrderPageAddItemsToShoppingListWidgetPlugin extends AbstractWidgetPlu
      */
     protected function addIsVisibleParameter(): void
     {
-        $this->addParameter(static::PARAM_IS_VISIBLE, $this->isShoppingListWidgetVisible());
+        $this->addParameter(static::PARAM_IS_VISIBLE, $this->isVisible());
     }
 
     /**
      * @return bool
      */
-    protected function isShoppingListWidgetVisible(): bool
+    protected function isVisible(): bool
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 

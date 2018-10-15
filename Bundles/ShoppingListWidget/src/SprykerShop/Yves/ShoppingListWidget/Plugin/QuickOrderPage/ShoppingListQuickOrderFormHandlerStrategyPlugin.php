@@ -40,7 +40,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
      */
     public function isApplicable(FormInterface $quickOrderForm, Request $request): bool
     {
-        return $quickOrderForm->isSubmitted() && $request->get('addToShoppingList') !== null;
+        return $request->get('addToShoppingList') !== null;
     }
 
     /**
