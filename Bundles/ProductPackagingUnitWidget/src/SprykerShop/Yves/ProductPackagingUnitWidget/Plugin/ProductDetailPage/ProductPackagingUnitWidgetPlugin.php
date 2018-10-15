@@ -106,7 +106,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
             ->addParameter('productPackagingUnit', $productConcretePackagingStorageTransfer)
             ->addParameter('isAddToCartDisabled', $isAddToCartDisabled)
             ->addParameter('isAmountBlockEnabled', $isAmountBlockEnabled)
-            ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
+            ->addParameter('productQuantity', $productQuantityStorageTransfer)
             ->addParameter('jsonScheme', $this->prepareJsonData(
                 $isAmountBlockEnabled,
                 $isAddToCartDisabled,

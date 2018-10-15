@@ -66,7 +66,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
             ->addParameter('idBaseUnit', $idBaseUnit)
             ->addParameter('salesUnits', $salesUnits)
             ->addParameter('isAddToCartDisabled', $isAddToCartDisabled)
-            ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
+            ->addParameter('productQuantity', $productQuantityStorageTransfer)
             ->addParameter(
                 'jsonScheme',
                 $this->prepareJsonData(
