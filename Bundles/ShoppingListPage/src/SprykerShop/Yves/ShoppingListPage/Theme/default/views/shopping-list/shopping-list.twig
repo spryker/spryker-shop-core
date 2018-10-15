@@ -16,7 +16,7 @@
     title: _view.shoppingListOverview.shoppingList.name,
     shoppingList: _view.shoppingListOverview.shoppingList,
     shoppingListCollection: _view.shoppingListOverview.shoppingLists,
-    shoppingListItems: _view.shoppingListItems
+    shoppingListItems: _view.shoppingListItems,
 } %}
 
 {% block customerNavigation %}
@@ -73,6 +73,7 @@
                         }
                     } only %}
                 </div>
+
             </form>
         {% else %}
             {{ 'customer.account.shopping_list.empty' | trans }}
