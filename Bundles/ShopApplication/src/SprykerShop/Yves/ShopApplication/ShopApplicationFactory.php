@@ -14,12 +14,14 @@ use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
 use Spryker\Yves\Kernel\Widget\WidgetFactory as LegacyWidgetFactory;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
+use SprykerShop\Yves\ShopApplication\Plugin\ShopApplicationTwigExtensionPlugin;
 use SprykerShop\Yves\ShopApplication\Twig\RoutingHelper;
 use SprykerShop\Yves\ShopApplication\Twig\TwigRenderer;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTokenParser;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetFactory;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagService;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagServiceInterface;
+use Twig\Extension\ExtensionInterface;
 use Twig_TokenParserInterface;
 
 class ShopApplicationFactory extends AbstractFactory
@@ -169,5 +171,13 @@ class ShopApplicationFactory extends AbstractFactory
             $this->getGlobalWidgetCollection(),
             $this->createWidgetFactory()
         );
+    }
+
+    /**
+     * @return \Twig\Extension\ExtensionInterface|\SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin
+     */
+    public function createShopApplicationTwigExtensionPlugin(): ExtensionInterface
+    {
+        return new ShopApplicationTwigExtensionPlugin();
     }
 }
