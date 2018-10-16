@@ -19,8 +19,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Twig_Environment;
 use Twig_Loader_Chain;
 use Twig_Loader_Filesystem;
-use Twig_SimpleFilter;
-use Twig_SimpleFunction;
 
 /**
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
@@ -142,70 +140,10 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
                     $twig->addGlobal($name, $value);
                 }
 
-                $this->registerWidgetTwigFilter($twig);
-                $this->registerTwigFunctionCan($twig);
+                $twig->addExtension($this->getFactory()->createShopApplicationTwigExtensionPlugin());
 
                 return $twig;
             })
         );
-    }
-
-    /**
-     * @param \Twig_Environment $twig
-     *
-     * @return void
-     */
-    protected function registerTwigFunctionCan(Twig_Environment $twig)
-    {
-        $canFunction = new Twig_SimpleFunction('can', [
-            $this,
-            'can',
-        ], [
-            'needs_context' => false,
-            'needs_environment' => false,
-        ]);
-
-        $twig->addFunction($canFunction->getName(), $canFunction);
-    }
-
-    /**
-     * @param string $permissionKey
-     * @param string|int|mixed|null $context
-     *
-     * @return bool
-     */
-    public function can($permissionKey, $context = null)
-    {
-        return true;
-    }
-
-    /**
-     * @param \Twig_Environment $twig
-     *
-     * @return void
-     */
-    protected function registerWidgetTwigFilter(Twig_Environment $twig)
-    {
-        foreach ($this->getTwigFilters() as $filter) {
-            $twig->addFilter($filter->getName(), $filter);
-        }
-    }
-
-    /**
-     * @return \Twig_SimpleFilter[]
-     */
-    protected function getTwigFilters()
-    {
-        return [
-            new Twig_SimpleFilter('floor', function ($value) {
-                return floor($value);
-            }),
-            new Twig_SimpleFilter('ceil', function ($value) {
-                return ceil($value);
-            }),
-            new Twig_SimpleFilter('int', function ($value) {
-                return (int)$value;
-            }),
-        ];
     }
 }
