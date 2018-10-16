@@ -98,7 +98,7 @@ class BusinessUnitController extends AbstractCompanyController
         }
 
         if ($companyBusinessUnitForm->isValid()) {
-            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitCreate($companyBusinessUnitForm->getData());
+            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitSave($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
                 $this->applySuccessMessage($companyBusinessUnitResponseTransfer);
@@ -171,7 +171,7 @@ class BusinessUnitController extends AbstractCompanyController
         }
 
         if ($companyBusinessUnitForm->isValid()) {
-            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
+            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitSave($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
                 $this->applySuccessMessage($companyBusinessUnitResponseTransfer);
@@ -354,29 +354,18 @@ class BusinessUnitController extends AbstractCompanyController
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    protected function companyBusinessUnitCreate(array $data): CompanyBusinessUnitResponseTransfer
+    protected function companyBusinessUnitSave(array $data): CompanyBusinessUnitResponseTransfer
     {
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->fromArray($data, true);
 
-        return $this->getFactory()
-            ->getCompanyBusinessUnitClient()
-            ->createCompanyBusinessUnit($companyBusinessUnitTransfer);
-    }
+        $companyBusinessUnitClient = $this->getFactory()->getCompanyBusinessUnitClient();
 
-    /**
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
-     */
-    protected function companyBusinessUnitUpdate(array $data): CompanyBusinessUnitResponseTransfer
-    {
-        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-        $companyBusinessUnitTransfer->fromArray($data, true);
+        if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()) {
+            return $companyBusinessUnitClient->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
+        }
 
-        return $this->getFactory()
-            ->getCompanyBusinessUnitClient()
-            ->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
+        return $companyBusinessUnitClient->createCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 
     /**
