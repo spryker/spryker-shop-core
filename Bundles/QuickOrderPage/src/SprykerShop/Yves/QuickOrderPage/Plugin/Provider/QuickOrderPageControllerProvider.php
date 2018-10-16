@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuickOrderPage\Plugin\Provider;
 
 use Silex\Application;
+use SprykerShop\Yves\QuickOrderPage\Controller\QuickOrderController;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
@@ -69,6 +70,8 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses QuickOrderController::productAdditionalDataAction()
+     *
      * @return $this
      */
     protected function addQuickOrderProductAdditionalDataRoute(): AbstractYvesControllerProvider
