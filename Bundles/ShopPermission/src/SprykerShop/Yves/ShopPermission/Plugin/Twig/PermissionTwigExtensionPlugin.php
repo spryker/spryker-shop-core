@@ -7,32 +7,35 @@
 
 namespace SprykerShop\Yves\ShopPermission\Plugin\Twig;
 
-use Silex\Application;
-use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
-use Twig_SimpleFunction;
+use SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin;
+use Twig\TwigFunction;
 
 /**
- * @deprecated Please use PermissionTwigExtensionPlugin instead.
- *
  * @method \SprykerShop\Yves\ShopPermission\ShopPermissionFactory getFactory()
  */
-class PermissionTwigFunctionPlugin extends AbstractPlugin implements TwigFunctionPluginInterface
+class PermissionTwigExtensionPlugin extends AbstractTwigExtensionPlugin
 {
     /**
-     * @example for a twig template
+     * @return string
+     */
+    public function getName(): string
+    {
+        return get_class($this);
+    }
+
+    /**
+     * @example for a twig template:
+     *
      * {{if can('permission.allow.product.price') }}
      *      {% productAbstract.price %}
      * {{ endif }}
      *
-     * @param \Silex\Application $application
-     *
      * @return array
      */
-    public function getFunctions(Application $application)
+    public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('can', [
+            new TwigFunction('can', [
                 $this,
                 'can',
             ], [
