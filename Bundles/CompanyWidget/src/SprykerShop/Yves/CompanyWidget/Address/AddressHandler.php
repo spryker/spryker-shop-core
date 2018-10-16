@@ -78,9 +78,7 @@ class AddressHandler implements AddressHandlerInterface
 
         $customerAddressesArray = [];
         foreach ($customerAddresses->getAddresses() as $addressTransfer) {
-            $addressFields = $this->prepareAddressData($addressTransfer->toArray(), $formType);
-
-            $customerAddressesArray[] = $addressFields;
+            $customerAddressesArray[] = $this->prepareAddressData($addressTransfer->toArray(), $formType);
         }
 
         return $customerAddressesArray;
