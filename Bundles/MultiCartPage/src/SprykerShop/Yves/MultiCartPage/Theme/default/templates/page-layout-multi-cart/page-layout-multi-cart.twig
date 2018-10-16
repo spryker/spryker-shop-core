@@ -14,7 +14,8 @@
     {% include molecule('breadcrumb') with {
         data: {
             steps: [{
-                label: 'customer.account' | trans
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
             }]
         }
     } only %}
