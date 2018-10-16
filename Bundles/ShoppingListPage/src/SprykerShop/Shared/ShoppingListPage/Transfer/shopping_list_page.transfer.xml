@@ -7,6 +7,24 @@
         <property name="quantity" type="int" />
         <property name="idShoppingListItem" type="int" />
         <property name="shoppingListItem" type="ShoppingListItem" />
+        <property name="name" type="string" />
+        <property name="sku" type="string" />
+        <property name="url" type="string" />
+        <property name="price" type="int"/>
+        <property name="prices" type="array"/>
+        <property name="attributes" type="array" />
+    </transfer>
+
+    <transfer name="ShoppingList">
+        <property name="idShoppingList" type="int" />
+        <property name="idCompanyUser" type="int" />
+        <property name="createdAt" type="string" />
+        <property name="numberOfItems" type="int" />
+        <property name="owner" type="string" />
+    </transfer>
+
+    <transfer name="ShoppingListItem">
+        <property name="idShoppingListItem" type="int" />
     </transfer>
 
 </transfers>
