@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CompanyWidget\Widget;
 
-use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -22,7 +21,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     {
         $this->addParameter('formType', $formType)
             ->addParameter('isApplicable', $this->isApplicable())
-            ->addParameter('addresses', $this->findAddressesJson($formType));
+            ->addParameter('addresses', $this->findAvailableAddressesJson($formType));
     }
 
     /**
@@ -46,19 +45,10 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      */
     public function isApplicable(): bool
     {
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
+        $dataProvider = $this->getFactory()
+            ->createAddressHandler();
 
-        if ($customerTransfer->getCompanyUserTransfer() === null) {
-            return false;
-        }
-
-        if (empty($this->getCompanyBusinessUnitAddresses()->getCompanyUnitAddresses())) {
-            return false;
-        }
-
-        return true;
+        return ($dataProvider->getCompanyBusinessUnitAddresses()->count() > 0);
     }
 
     /**
@@ -66,42 +56,20 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      *
      * @return string|null
      */
-    protected function findAddressesJson(string $formType): ?string
+    protected function findAvailableAddressesJson(string $formType): ?string
     {
         $dataProvider = $this->getFactory()
-            ->createCompanyBusinessUnitAddressWidgetDataProvider();
+            ->createAddressHandler();
 
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
+        $customerAddressesArray = $dataProvider->getCustomerAddressesArray($formType);
+        $companyBusinessUnitAddressesArray = $dataProvider->getCompanyBusinessUnitAddressesArray($formType);
 
-        $customerAddressesArray = $dataProvider->getCustomerAddresses($customerTransfer->getAddresses(), $formType);
-
-        $companyBusinessUnitAddressesArray = $dataProvider->getCompanyBusinessUnitAddresses(
-            $this->getCompanyBusinessUnitAddresses(),
-            $formType,
-            $customerTransfer
+        return $this->encodeAddressesToJson(
+            array_merge(
+                $customerAddressesArray,
+                $companyBusinessUnitAddressesArray
+            )
         );
-
-        return $this->encodeAddressesToJson(array_merge($customerAddressesArray, $companyBusinessUnitAddressesArray));
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
-     */
-    protected function getCompanyBusinessUnitAddresses(): CompanyUnitAddressCollectionTransfer
-    {
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
-        if ($companyUserTransfer === null) {
-            return new CompanyUnitAddressCollectionTransfer();
-        }
-
-        return $companyUserTransfer->getCompanyBusinessUnit()
-            ->getAddressCollection();
     }
 
     /**
