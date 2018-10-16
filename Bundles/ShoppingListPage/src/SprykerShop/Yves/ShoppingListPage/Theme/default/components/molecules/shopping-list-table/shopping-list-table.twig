@@ -59,6 +59,7 @@
                             {% endif %}
                         {% endfor %}
                         {{ widget('ShoppingListItemNoteWidgetPlugin', item.shoppingListItem) }}
+                        {{ widget('ShoppingListItemProductOptionWidgetPlugin', item.shoppingListItem) }}
                     </ul>
                 </td>
                 <td nowrap="nowrap" class="{{ config.name }}__cell text-center">
