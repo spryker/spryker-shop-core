@@ -80,12 +80,12 @@ class CompanyUserFormDataProvider
      */
     public function getOptions(int $idCompany): array
     {
-        $companyRoleCollection = $this->getCompanyRoleCollectionByIdCompany($idCompany);
+        $companyRoleCollectionTransfer = $this->getCompanyRoleCollectionByIdCompany($idCompany);
 
         return [
             CompanyUserForm::OPTION_BUSINESS_UNIT_CHOICES => $this->getAvailableBusinessUnits($idCompany),
-            CompanyUserForm::OPTION_COMPANY_ROLE_CHOICES => $this->getAvailableCompanyRoleIds($companyRoleCollection),
-            CompanyUserForm::OPTION_DEFAULT_COMPANY_ROLE_IDS => $this->getDefaultCompanyRoleIds($companyRoleCollection),
+            CompanyUserForm::OPTION_COMPANY_ROLE_CHOICES => $this->getAvailableCompanyRoleIds($companyRoleCollectionTransfer),
+            CompanyUserForm::OPTION_DEFAULT_COMPANY_ROLE_IDS => $this->getDefaultCompanyRoleIds($companyRoleCollectionTransfer),
         ];
     }
 
