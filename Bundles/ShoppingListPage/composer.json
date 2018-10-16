@@ -6,9 +6,9 @@
   "require": {
     "php": ">=7.1",
     "spryker-shop/cart-to-shopping-list-widget": "^0.4.0",
-    "spryker-shop/shop-application": "^1.0.0",
+    "spryker-shop/shop-application": "^1.2.0",
     "spryker-shop/shop-ui": "^1.0.0",
-    "spryker-shop/shopping-list-page-extension": "^1.0.0",
+    "spryker-shop/shopping-list-page-extension": "^1.1.0",
     "spryker/application": "^3.8.0",
     "spryker/company-business-unit": "^1.5.0 || ^2.4.0",
     "spryker/company-user": "^1.5.0 || ^2.1.0",
