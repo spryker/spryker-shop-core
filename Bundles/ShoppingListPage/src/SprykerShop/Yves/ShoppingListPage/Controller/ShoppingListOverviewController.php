@@ -110,7 +110,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected function executeUpdateAction(int $idShoppingList, Request $request)
     {
         $shoppingListFormDataProvider = $this->getFactory()->createShoppingListFormDataProvider();
-        $shoppingListTransfer = $shoppingListFormDataProvider->getData($idShoppingList);
+        $shoppingListTransfer = $shoppingListFormDataProvider->getData($idShoppingList, $request->request->all());
         $shoppingListForm = $this->getFactory()
             ->getShoppingListUpdateForm($shoppingListTransfer)
             ->handleRequest($request);

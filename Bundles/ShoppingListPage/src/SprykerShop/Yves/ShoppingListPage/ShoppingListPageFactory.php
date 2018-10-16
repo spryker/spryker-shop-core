@@ -75,7 +75,11 @@ class ShoppingListPageFactory extends AbstractFactory
      */
     public function createShoppingListFormDataProvider(): ShoppingListFormDataProvider
     {
-        return new ShoppingListFormDataProvider($this->getShoppingListClient(), $this->getCustomerClient());
+        return new ShoppingListFormDataProvider(
+            $this->getShoppingListClient(),
+            $this->getCustomerClient(),
+            $this->getShoppingListFormDataProviderMapperPlugins()
+        );
     }
 
     /**
@@ -217,6 +221,14 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getShoppingListViewWidgetPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_VIEW_WIDGETS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[]
+     */
+    public function getShoppingListFormDataProviderMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_FORM_DATA_PROVIDER_MAPPERS);
     }
 
     /**
