@@ -9,11 +9,11 @@
     "spryker/permission": "^1.0.0"
   },
   "require-dev": {
+    "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*",
-    "spryker/twig": "^3.0.0",
-    "spryker-shop/shop-application": "*"
+    "spryker/twig": "^3.0.0"
   },
   "suggest": {
     "spryker/twig": ">3.0.0 If you want to use the permission plugin for Twig",
