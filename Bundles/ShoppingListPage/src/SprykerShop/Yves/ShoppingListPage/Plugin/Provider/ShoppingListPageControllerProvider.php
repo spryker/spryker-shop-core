@@ -15,6 +15,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_SHOPPING_LIST = 'shopping-list';
     public const ROUTE_SHOPPING_LIST_UPDATE = 'shopping-list/update';
     public const ROUTE_SHOPPING_LIST_DELETE_CONFIRM = 'shopping-list/delete/confirm';
+    public const ROUTE_SHOPPING_LIST_DELETE_CONFIRM_OVERVIEW = 'shopping-list/delete/confirm-overview';
     public const ROUTE_SHOPPING_LIST_DELETE = 'shopping-list/delete';
     public const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
     public const ROUTE_SHOPPING_LIST_CLEAR = 'shopping-list/clear';
@@ -38,6 +39,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
             ->addShoppingListUpdateRoute()
             ->addShoppingListDeleteRoute()
             ->addShoppingListDeleteConfirmRoute()
+            ->addShoppingListDeleteConfirmOverviewRoute()
             ->addShoppingListAddToCartRoute()
             ->addShoppingListDetailsRoute()
             ->addShoppingListRemoveItemRoute()
@@ -81,6 +83,19 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     protected function addShoppingListDeleteRoute(): self
     {
         $this->createGetController('/{shoppingList}/delete/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DELETE, 'ShoppingListPage', 'ShoppingListDelete', 'delete')
+            ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
+            ->value('shoppingList', 'shopping-list')
+            ->assert('idShoppingList', '\d+');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addShoppingListDeleteConfirmOverviewRoute(): self
+    {
+        $this->createController('/{shoppingList}/delete/{idShoppingList}/confirm-overview', static::ROUTE_SHOPPING_LIST_DELETE_CONFIRM_OVERVIEW, 'ShoppingListPage', 'ShoppingListDelete', 'deleteConfirmOverview')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idShoppingList', '\d+');

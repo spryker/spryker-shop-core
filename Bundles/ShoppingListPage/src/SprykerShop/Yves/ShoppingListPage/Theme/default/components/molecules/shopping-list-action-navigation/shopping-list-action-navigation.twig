@@ -22,6 +22,6 @@
     {{ widget('ShoppingListDismissWidgetPlugin', data.shoppingList) }}
 
     {% if data.hasWritePermission %}
-        <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/delete/confirm', { idShoppingList: data.idShoppingList }) }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
+        <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/delete/confirm-overview', { idShoppingList: data.idShoppingList }) }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
     {% endif %}
 {% endblock %}
