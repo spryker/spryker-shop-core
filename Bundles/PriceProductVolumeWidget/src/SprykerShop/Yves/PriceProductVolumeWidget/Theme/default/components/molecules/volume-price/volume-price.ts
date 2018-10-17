@@ -7,7 +7,7 @@ export default class VolumePrice extends Component {
     highLightedClass: string;
     currentQuantityValue: Number;
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         this.productPriceElement = <HTMLElement>this.querySelector(`.${this.jsName}__price`);
         this.volumePricesData = <Object[]>JSON.parse(this.dataset.json).reverse();
         this.quantityElement = <HTMLFormElement>document.querySelector(`.${this.jsName}__quantity`);

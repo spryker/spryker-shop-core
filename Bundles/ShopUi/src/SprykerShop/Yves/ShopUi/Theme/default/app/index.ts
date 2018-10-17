@@ -34,7 +34,7 @@ async function mountCandidates(): Promise<void> {
         components
             .filter((component: Component) => !component.isMounted)
             .map((component: Component) => {
-                component.readyCallback();
+                component.mountCallback();
                 component.markAsMounted();
             }));
 }
