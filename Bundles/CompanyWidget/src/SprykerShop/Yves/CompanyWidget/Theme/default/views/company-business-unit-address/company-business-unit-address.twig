@@ -3,35 +3,32 @@
 {% define data = {
     formType: _widget.formType,
     isApplicable: _widget.isApplicable,
-    addresses: _widget.addresses
+    addresses: _widget.addresses,
+    fullAddresses: _widget.fullAddresses
 } %}
-
-{% set addressOptions = [] %}
-
-{% for address in data.addresses %}
-    {% set addressOptions = addressOptions | merge([{
-        value: address['addressesForm[' ~ data.formType ~ '][full_address]'],
-        label: address['addressesForm[' ~ data.formType ~ '][full_address]']
-    }]) %}
-{% endfor %}
-
 
 {% block template %}
     <pre>{{ dump(data.addresses) }}</pre>
-
     {% embed atom('select') with {
-        data: {
-            options: addressOptions
+        class: 'spacing-bottom',
+        attributes: {
+            name: 'checkout-full-addresses'
+        },
+        embed: {
+            addressOptions: data.fullAddresses,
+            formType: data.formType
         }
     } only %}
-        {% block selectClass %}js-form-toggler{% endblock %}
+        {% block selectClass %}js-form-toggler js-from-select-address__{{ embed.formType }}{% endblock %}
+        {% block options %}
+            <option value="" selected disabled="disabled">Default address pre-selected</option>
+            {% for address in embed.addressOptions %}
+                <option value="{{ address['addressesForm[' ~ embed.formType ~ '][full_address]'] }}" data-address-key="addressesForm[{{ embed.formType }}][full_address]">
+                    {{ address['addressesForm[' ~ embed.formType ~ '][full_address]'] }}
+                </option>
+            {% endfor %}
+        {% endblock %}
     {% endembed %}
-
-    <select name="" id="" class="js-form-toggler js-from-select-address__{{ data.formType }}">
-        <option value="" selected disabled="disabled">select address</option>
-        <option value="Mr test test, test 1 12, 12345 Berlin">Mr test test, test 1 12, 12345 Berlin</option>
-        <option value="Mr Spencor Hopkin, test 1 12, 12345 Berlin">Mr Spencor Hopkin, test 1 12, 12345 Berlin</option>
-    </select>
 
     <div>
         <button type="button" class="button spacing-bottom js-from-add-new-address__{{ data.formType }}" disabled="disabled">
@@ -42,10 +39,14 @@
                 'form-selector': '.js-form-hundler__' ~ data.formType,
                 'trigger-selector': '.js-from-add-new-address__' ~ data.formType,
                 'data-selector': '.js-from-select-address__' ~ data.formType,
+                'ignore-selector': '.js-form-toggler',
+                'hidden-input': '.js-form-hidden-input__' ~ data.formType,
                 'addresses': data.addresses
             }
         } only %}
+    </div>
 
+    <div>
         <label>
             <input type="checkbox" class="js-from-clear__{{ data.formType }}-toggler js-form-toggler">
             {{ 'page.checkout.address.different_delivery_address' | trans }}
@@ -59,5 +60,5 @@
         } only %}
     </div>
 
-    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]">
+    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" class="js-form-hidden-input__{{ data.formType }}">
 {% endblock %}

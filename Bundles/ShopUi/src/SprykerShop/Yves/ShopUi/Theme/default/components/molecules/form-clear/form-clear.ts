@@ -5,6 +5,7 @@ export default class FormClear extends Component {
     inputs: HTMLElement[];
     elements: HTMLElement[];
     ignoreElements: HTMLElement[];
+    filterElements: HTMLElement[];
     formFieldsReadonlyUpdate: CustomEvent;
 
     protected readyCallback(): void {
@@ -12,6 +13,8 @@ export default class FormClear extends Component {
         this.form = <HTMLElement>document.querySelector(this.formSelector);
         this.elements = <HTMLElement[]>Array.from(this.form.querySelectorAll('select, input[type="text"], input[type="radio"], input[type="checkbox"]'));
         this.ignoreElements = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.ignoreSelector));
+        this.filterElements = this.elements.filter((el) => !this.ignoreElements.includes(el));
+
         this.mapEvents();
     }
 
@@ -21,7 +24,7 @@ export default class FormClear extends Component {
         this.inputs.forEach((input: HTMLElement) => {
             input.addEventListener('change', () => {
                 const isChecked = (<HTMLInputElement>input).checked;
-                if(isChecked) this.clearFormValues(this.elements);
+                if(isChecked) this.clearFormValues(this.filterElements);
             });
         });
     }
@@ -34,9 +37,8 @@ export default class FormClear extends Component {
         for (let i = 0; i < formElements.length; i++) {
             const tagName = formElements[i].tagName.toUpperCase();
             const inputType = formElements[i].type;
-            const ignoreSelector = formElements[i] !== this.ignoreElements[i];
 
-            if (tagName == "INPUT" && ignoreSelector) {
+            if (tagName == "INPUT") {
                 if (inputType == "text") {
                     formElements[i].value = '';
                 }
@@ -44,6 +46,7 @@ export default class FormClear extends Component {
                     formElements[i].checked = false;
                 }
             }
+
             if (tagName == "SELECT") {
                 formElements[i].selectedIndex = 0;
             }
