@@ -48,6 +48,7 @@ class AddressHandler implements AddressHandlerInterface
 
     protected const FIELD_ADDRESS_FULL_ADDRESS = 'full_address';
     protected const FIELD_ADDRESS_DEFAULT = 'default';
+    protected const FIELD_ADDRESS_OPTION_GROUP = 'option_group';
 
     protected const FIELD_VALUE_COMPANY_BUSINESS_UNIT_SALUTATION = 'Mr';
     protected const FIELD_VALUE_COMPANY_BUSINESS_UNIT_FIRST_NAME = '';
@@ -59,6 +60,10 @@ class AddressHandler implements AddressHandlerInterface
     protected const KEY_ID_CUSTOMER_ADDRESS = 'addressesForm[%s][' . self::FIELD_ID_CUSTOMER_ADDRESS . ']';
     protected const KEY_FULL_ADDRESS = 'addressesForm[%s][' . self::FIELD_ADDRESS_FULL_ADDRESS . ']';
     protected const KEY_ADDRESS_DEFAULT = 'addressesForm[%s][' . self::FIELD_ADDRESS_DEFAULT . ']';
+    protected const KEY_ADDRESS_OPTION_GROUP = 'addressesForm[%s][' . self::FIELD_ADDRESS_OPTION_GROUP . ']';
+
+    protected const GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP = 'page.checkout.address.option_group.customer';
+    protected const GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP = 'page.checkout.address.option_group.company_business_unit';
 
     /**
      * @var \SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface
@@ -155,21 +160,32 @@ class AddressHandler implements AddressHandlerInterface
         $companyBusinessUnitAddresses = $this->getCompanyBusinessUnitAddressesArray($formType);
 
         return array_merge(
-            $this->getFullAddressesFromArray($customerAddresses, $formType),
-            $this->getFullAddressesFromArray($companyBusinessUnitAddresses, $formType)
+            $this->getFullAddressesFromArray(
+                $customerAddresses,
+                $formType,
+                static::GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP
+            ),
+            $this->getFullAddressesFromArray(
+                $companyBusinessUnitAddresses,
+                $formType,
+                static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP
+            )
         );
     }
 
     /**
      * @param array $addressesArray
      * @param string $formType
+     * @param string $addressOptionGroup
      *
      * @return array
      */
-    protected function getFullAddressesFromArray(array $addressesArray, string $formType): array
+    protected function getFullAddressesFromArray(array $addressesArray, string $formType, string $addressOptionGroup): array
     {
         $fullAddressKey = sprintf(static::KEY_FULL_ADDRESS, $formType);
         $idCustomerAddressKey = sprintf(static::KEY_ID_CUSTOMER_ADDRESS, $formType);
+        $addressOptionGroupKey = sprintf(static::KEY_ADDRESS_OPTION_GROUP, $formType);
+        $defaultAddressKey = sprintf(static::KEY_ADDRESS_DEFAULT, $formType);
 
         $fullAddresses = [];
         foreach ($addressesArray as $addressItem) {
@@ -180,6 +196,9 @@ class AddressHandler implements AddressHandlerInterface
             if (isset($addressItem[$idCustomerAddressKey])) {
                 $fullAddressItem[$idCustomerAddressKey] = $addressItem[$fullAddressKey];
             }
+
+            $fullAddressItem[$addressOptionGroupKey] = $addressOptionGroup;
+            $fullAddressItem[$defaultAddressKey] = $addressItem[$defaultAddressKey];
 
             $fullAddresses[] = $fullAddressItem;
         }
