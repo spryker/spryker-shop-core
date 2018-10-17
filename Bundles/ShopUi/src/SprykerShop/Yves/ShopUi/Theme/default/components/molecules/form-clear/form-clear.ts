@@ -1,51 +1,66 @@
 import Component from '../../../models/component';
 
 export default class FormClear extends Component {
-    forms: HTMLElement[];
+    form: HTMLElement;
     inputs: HTMLElement[];
+    elements: HTMLElement[];
+    ignoreElements: HTMLElement[];
+    formFieldsReadonlyUpdate: CustomEvent;
 
     protected readyCallback(): void {
-        console.log(this);
-        this.forms = <HTMLElement[]>Array.from(document.querySelectorAll(this.formSelector));
-        this.inputs = <HTMLElement[]>Array.from(document.querySelectorAll(this.inputSelector));
+        this.inputs = <HTMLElement[]>Array.from(document.querySelectorAll(this.triggerSelector));
+        this.form = <HTMLElement>document.querySelector(this.formSelector);
+        this.elements = <HTMLElement[]>Array.from(this.form.querySelectorAll('select, input[type="text"], input[type="radio"], input[type="checkbox"]'));
+        this.ignoreElements = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.ignoreSelector));
         this.mapEvents();
     }
 
     protected mapEvents(): void {
+        this.createCustomEvents();
+
         this.inputs.forEach((input: HTMLElement) => {
-            input.addEventListener('change', () => this.onFormClearClick());
+            input.addEventListener('change', () => {
+                const isChecked = (<HTMLInputElement>input).checked;
+                if(isChecked) this.clearFormValues(this.elements);
+            });
         });
     }
 
-    protected onFormClearClick(): void {
-        console.log(11);
-        const form = <HTMLElement>event.currentTarget;
-        this.clearFormValues(form);
+    private createCustomEvents(): void {
+        this.formFieldsReadonlyUpdate = <CustomEvent>new CustomEvent('form-fields-readonly-update');
     }
 
-    private clearFormValues(form: HTMLElement) {
+    protected clearFormValues(formElements): void {
+        for (let i = 0; i < formElements.length; i++) {
+            const tagName = formElements[i].tagName.toUpperCase();
+            const inputType = formElements[i].type;
+            const ignoreSelector = formElements[i] !== this.ignoreElements[i];
 
-        // const inputs = <HTMLInputElement[]>Array.from(form.querySelectorAll(this.inputSelector));
-        //
-        // inputs.forEach((input: HTMLInputElement) => {
-        //     const defaultValue = input.getAttribute(this.defaultValueAttribute);
-        //
-        //     if (defaultValue === input.value) {
-        //         input.setAttribute('disabled', 'disabled');
-        //         return;
-        //     }
-        //
-        //     input.removeAttribute('disabled');
-        // });
-        //
-        // form.submit();
+            if (tagName == "INPUT" && ignoreSelector) {
+                if (inputType == "text") {
+                    formElements[i].value = '';
+                }
+                if (inputType == "checkbox" || inputType == "radio") {
+                    formElements[i].checked = false;
+                }
+            }
+            if (tagName == "SELECT") {
+                formElements[i].selectedIndex = 0;
+            }
+        }
+
+        this.dispatchEvent(this.formFieldsReadonlyUpdate);
     }
 
     get formSelector(): string {
         return this.getAttribute('form-selector');
     }
 
-    get inputSelector(): string {
-        return this.getAttribute('input-selector');
+    get triggerSelector(): string {
+        return this.getAttribute('trigger-selector');
+    }
+
+    get ignoreSelector(): string {
+        return this.getAttribute('ignore-selector');
     }
 }

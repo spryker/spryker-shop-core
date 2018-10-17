@@ -6,37 +6,58 @@
     addresses: _widget.addresses
 } %}
 
-{% block template %}
-    {#<pre>{{ dump(data.addresses) }}</pre>#}
+{% set addressOptions = [] %}
 
-    {#{% embed atom('select') with {#}
-        {#modifiers: ['expand'],#}
-        {#data: {#}
-            {#options: data.quantityOptions#}
-        {#},#}
-        {#attributes: {#}
-            {#name: 'quantity'#}
-        {#}#}
-    {#} only %}#}
-        {#{% block selectClass %}js-volume-price__quantity{% endblock %}#}
-    {#{% endembed %}     #}
+{% for address in data.addresses %}
+    {% set addressOptions = addressOptions | merge([{
+        value: address['addressesForm[' ~ data.formType ~ '][full_address]'],
+        label: address['addressesForm[' ~ data.formType ~ '][full_address]']
+    }]) %}
+{% endfor %}
+
+
+{% block template %}
+    <pre>{{ dump(data.addresses) }}</pre>
+
+    {% embed atom('select') with {
+        data: {
+            options: addressOptions
+        }
+    } only %}
+        {% block selectClass %}js-form-toggler{% endblock %}
+    {% endembed %}
+
+    <select name="" id="" class="js-form-toggler js-from-select-address__{{ data.formType }}">
+        <option value="" selected disabled="disabled">select address</option>
+        <option value="Mr test test, test 1 12, 12345 Berlin">Mr test test, test 1 12, 12345 Berlin</option>
+        <option value="Mr Spencor Hopkin, test 1 12, 12345 Berlin">Mr Spencor Hopkin, test 1 12, 12345 Berlin</option>
+    </select>
 
     <div>
-        <button class="button spacing-bottom">
+        <button type="button" class="button spacing-bottom js-from-add-new-address__{{ data.formType }}" disabled="disabled">
             {{ 'page.checkout.address.use_selected_address' | trans }}
         </button>
-        <br>
+        {% include molecule('company-business-unit-address-hundler', 'CompanyWidget') with {
+            attributes: {
+                'form-selector': '.js-form-hundler__' ~ data.formType,
+                'trigger-selector': '.js-from-add-new-address__' ~ data.formType,
+                'data-selector': '.js-from-select-address__' ~ data.formType,
+                'addresses': data.addresses
+            }
+        } only %}
+
         <label>
-            <input type="checkbox" class="js-from-clear__{{ data.formType }}-toggler">
+            <input type="checkbox" class="js-from-clear__{{ data.formType }}-toggler js-form-toggler">
             {{ 'page.checkout.address.different_delivery_address' | trans }}
         </label>
         {% include molecule('form-clear') with {
             attributes: {
                 'form-selector': '.js-form-clear__' ~ data.formType ~ '-form',
-                'input-selector': '.js-from-clear__' ~ data.formType ~ '-toggler'
+                'trigger-selector': '.js-from-clear__' ~ data.formType ~ '-toggler',
+                'ignore-selector': '.js-form-toggler'
             }
         } only %}
     </div>
 
-    <input type="hidden" name="{{ data.formType }}[id_customer_address]">
+    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]">
 {% endblock %}
