@@ -13,7 +13,9 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
+use Spryker\Client\Locale\LocaleClient;
 use Spryker\Client\PriceProductStorage\PriceProductStorageClient;
+use Spryker\Client\ProductResourceAliasStorage\ProductResourceAliasStorageClient;
 use Spryker\Client\ProductStorage\ProductStorageClient;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -225,11 +227,39 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
+        $quantity = $request->get('quantity') ?: 1;
+
+        // TODO: inject properly
+        $productResourceAliasStorageClient = new ProductResourceAliasStorageClient();
+        $localeClient = new LocaleClient();
+        $idProduct = (int)$productResourceAliasStorageClient->getProductConcreteStorageDataBySku(
+            $request->query->get('sku'),
+            $localeClient->getCurrentLocale()
+        )['id'];
+
+        $productStorageClient = new ProductStorageClient();
+        $idProductAbstract = $productStorageClient->getProductConcreteStorageTransfers([$idProduct])[0]->getIdProductAbstract();
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setQuantity($quantity)
+            ->setIdProduct($idProduct)
+            ->setIdProductAbstract($idProductAbstract);
+
+        // TODO inject properly
+        $priceProductStorageClient = new PriceProductStorageClient();
+
+        $result = $priceProductStorageClient
+            ->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer);
+
         $productConcreteTransfer = $this->executeProductAdditionalDataAction($request);
 
-        // return $this->jsonResponse($productConcreteTransfer->toArray(true, true));
+        $viewData = [
+            'quantity' => $quantity,
+            'price' => $result->getSumPrice()
+        ];
+
         return $this->view(
-            $productConcreteTransfer->toArray(true, true),
+            $viewData,
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
             '@QuickOrderPage/views/quick-order-row-async/quick-order-row-async.twig'
         );
@@ -242,10 +272,16 @@ class QuickOrderController extends AbstractController
      */
     protected function executeProductAdditionalDataAction(Request $request): ProductConcreteTransfer
     {
+        // TODO: inject properly
+        $productResourceAliasStorageClient = new ProductResourceAliasStorageClient();
+        $localeClient = new LocaleClient();
+        $idProduct = (int)$productResourceAliasStorageClient->getProductConcreteStorageDataBySku(
+            $request->query->get('sku'),
+            $localeClient->getCurrentLocale()
+        )['id'];
+
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setIdProductConcrete(
-            $request->query->getInt(static::PARAM_ID_PRODUCT)
-        );
+        $productConcreteTransfer->setIdProductConcrete($idProduct);
 
         $productConcreteTransfer = $this->getFactory()
             ->getQuickOrderClient()

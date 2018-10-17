@@ -1,14 +1,15 @@
 {% extends model('template') %}
 
 {% define data = {
-
+    quantity: _view.quantity,
+    price: _view.price,
 } %}
 
 {% block template %}
     {% embed molecule('quick-order-row-partial', 'QuickOrderPage') with {
         data: {
-            quantity: 12,
-            price: 33
+            quantity: data.quantity,
+            price: data.price
         }
     } only %}
         {% block component %}

@@ -39,9 +39,9 @@ export default class QuickOrderRow extends Component {
         this.reloadField(this.autocompleteInput.inputValue, quantity);
     }
 
-    async reloadField(productId: string = '', quantity: number = null) {
-        if (!!productId) {
-            this.ajaxProvider.queryParams.set('id-product', productId);
+    async reloadField(sku: string = '', quantity: number = null) {
+        if (!!sku) {
+            this.ajaxProvider.queryParams.set('sku', sku);
         }
 
         if (!!quantity) {
