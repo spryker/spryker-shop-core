@@ -1,0 +1,20 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'availability-product'
+} %}
+
+{% define data = {
+    idProductConcrete: null,
+    isAvailable: false
+} %}
+
+{% block component %}
+    {% if data.idProductConcrete is not empty and not data.isAvailable %}
+        {{parent()}}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <p class="text-alert">{{ "product.detail.out_of_stock" | trans }}</p>
+{% endblock %}

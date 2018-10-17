@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    idQuote: _widget.cart.idQuote,
+} %}
+
+{% block body %}
+    <li class="menu__item">
+        <a href="{{ path('multi-cart/clear', {idQuote: data.idQuote}) }}" class="button clear">
+            {{ "multi_cart_widget.cart.action.clear" | trans }}
+        </a>
+    </li>
+{% endblock %}

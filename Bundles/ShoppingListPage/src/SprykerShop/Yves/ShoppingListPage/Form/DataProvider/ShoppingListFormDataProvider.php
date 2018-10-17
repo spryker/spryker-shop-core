@@ -24,21 +24,32 @@ class ShoppingListFormDataProvider
     protected $customerClient;
 
     /**
+     * @var \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[]
+     */
+    protected $shoppingListFormDataProviderMapperPlugins;
+
+    /**
      * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface $shoppingListClient
      * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[] $shoppingListFormDataProviderMapperPlugins
      */
-    public function __construct(ShoppingListPageToShoppingListClientInterface $shoppingListClient, ShoppingListPageToCustomerClientInterface $customerClient)
-    {
+    public function __construct(
+        ShoppingListPageToShoppingListClientInterface $shoppingListClient,
+        ShoppingListPageToCustomerClientInterface $customerClient,
+        array $shoppingListFormDataProviderMapperPlugins
+    ) {
         $this->shoppingListClient = $shoppingListClient;
         $this->customerClient = $customerClient;
+        $this->shoppingListFormDataProviderMapperPlugins = $shoppingListFormDataProviderMapperPlugins;
     }
 
     /**
      * @param int $idShoppingList
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function getData(int $idShoppingList): ShoppingListTransfer
+    public function getData(int $idShoppingList, array $params): ShoppingListTransfer
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
@@ -47,6 +58,12 @@ class ShoppingListFormDataProvider
             ->setIdShoppingList($idShoppingList)
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
-        return $this->shoppingListClient->getShoppingList($shoppingListTransfer);
+        $shoppingListTransfer = $this->shoppingListClient->getShoppingList($shoppingListTransfer);
+
+        foreach ($this->shoppingListFormDataProviderMapperPlugins as $shoppingListFormDataProviderMapperPlugin) {
+            $shoppingListTransfer = $shoppingListFormDataProviderMapperPlugin->map($shoppingListTransfer, $params);
+        }
+
+        return $shoppingListTransfer;
     }
 }

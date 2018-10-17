@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CartPage\Dependency\Plugin\SalesOrderThresholdWidget;
 use ArrayObject;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\SalesOrderThresholdWidget\Widget\SalesOrderThresholdWidget instead.
+ */
 interface SalesOrderThresholdWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'SalesOrderThresholdWidgetPlugin';

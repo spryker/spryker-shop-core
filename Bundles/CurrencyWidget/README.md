@@ -1,6 +1,6 @@
 # CurrencyWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module provides change currency widget.
 
 ## Installation
 

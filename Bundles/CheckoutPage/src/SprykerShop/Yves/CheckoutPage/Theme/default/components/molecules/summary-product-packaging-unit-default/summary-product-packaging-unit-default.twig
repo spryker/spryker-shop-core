@@ -1,0 +1,24 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'summary-product-packaging-unit-default',
+    tag: 'div'
+} %}
+
+{% define data = {
+    name: required,
+    quantity: required,
+    price: required,
+    quantitySalesUnit: required
+} %}
+
+{% block body %}
+    {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+    {% set salesUnitSummary = '' %}
+    {% if salesUnitName %}
+        {% set salesUnitSummary = data.quantitySalesUnit.value / data.quantitySalesUnit.precision ~ ' ' ~ salesUnitName | trans %}
+    {% endif %}
+
+    <strong class="float-right">{{data.price}}</strong>
+    {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(= {{ salesUnitSummary }}){% endif %}
+{% endblock body %}

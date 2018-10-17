@@ -19,15 +19,15 @@
         </tr>
     </thead>
     <tbody>
-        {% for key, shoppingListItem in data.shoppingListItems %}
+        {% for key, shoppingListItem in data.shoppingListItems %}}
             {% set product = data.shoppingListItemProducts[shoppingListItem.idShoppingListItem] %}
             {% set isProductAvailable = product.available is defined and product.available and product.price is defined and product.price is not null %}
-            {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', product.sku) %}
+            {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [product.sku]) %}
+            {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued ?? widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', product.sku) %} {# @deprecated Use ProductDiscontinuedWidget instead of ProductDiscontinuedWidgetPlugin. #}
+            {% if isDiscontinued is not null %}
                 {% set isProductAvailable = not isDiscontinued and isProductAvailable %}
             {% endif %}
             <tr class="{{ config.name }}__row {{ not isProductAvailable ? config.name ~ '__row--disable' : ''}}">
-                <td class="{{ config.name }}__cell">&nbsp;</td>
                 <td class="{{ config.name }}__cell text-center">
                     {% if product.images is defined and product.images is not empty and product.images.0.externalUrlSmall is not empty %}
                         {% include atom('thumbnail') with {
@@ -40,7 +40,7 @@
                         } only %}
                     {% endif %}
                 </td>
-                <td class="{{ config.name }}__cell">
+                <td class="{{ config.name }}__cell" colspan="2">
                     {% if product.name is not empty %}
                         <a href="{% if product.url is not empty %}{{ product.url }}{% endif %}">{{ product.name }}</a>
                     {% endif %}
@@ -52,13 +52,6 @@
                     {% for attribute in product.superAttributesDefinition %}
                         {% if product.attributes[attribute] is defined %}
                             {{ ('product.attribute.'~attribute) | trans }}: {{ product.attributes[attribute] }} <br>
-                        {% endif %}
-                    {% endfor %}
-                    {% for subForm in data.form.items[key].children  %}
-                        {% if not subForm.rendered %}
-                            {% if subForm.vars.template_path is defined %}
-                                {% include subForm.vars.template_path with {'form': subForm} %}
-                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 </td>
@@ -81,14 +74,14 @@
                     {% if isProductAvailable %}
                         {{ 'customer.account.shopping_list.available' | trans }}
                     {% else %}
-                        {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                            {{ widget('ProductDiscontinuedWidgetPlugin', product.sku) }}
-                        {% else %}
+                        {% widget 'ProductDiscontinuedWidget' args [product.sku] only %}
+                        {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [product.sku] only %} {# @deprecated Use ProductDiscontinuedWidget instead. #}
+                        {% nowidget %}
                             {{ 'customer.account.shopping_list.not_available' | trans }}
-                        {% endif %}
+                        {% endwidget %}
                     {% endif %}
                 </td>
-                <td class="{{ config.name }}__cell">
+                <td class="{{ config.name }}__cell text-center">
                     <a class="button button--alert" href="{{ path('shopping-list/remove-item', {
                         idShoppingList: data.idShoppingList, idShoppingListItem: shoppingListItem.idShoppingListItem
                     }) }}">
@@ -96,8 +89,22 @@
                     </a>
                 </td>
             </tr>
-            {% if can('WriteShoppingListPermissionPlugin', data.idShoppingList) and widgetExists('ProductAlternativeWidgetPlugin') %}
-                {{ widget('ProductAlternativeWidgetPlugin', product, data.shoppingList) }}
+            <tr>
+                <td></td>
+                <td colspan="5">
+                    {% for subForm in data.form.items[key].children  %}
+                        {% if not subForm.rendered %}
+                            {% if subForm.vars.template_path is defined %}
+                                {% include subForm.vars.template_path with {'form': subForm, 'rowClass': config.name ~ '__options-row'} %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% if can('WriteShoppingListPermissionPlugin', data.idShoppingList) %}
+                {% widget 'ShoppingListProductAlternativeWidget' args [product, data.shoppingList] only %}
+                {% elsewidget 'ProductAlternativeWidgetPlugin' args [product, data.shoppingList] only %} {# @deprecated Use ShoppingListProductAlternativeWidget instead. #}
+                {% endwidget %}
             {% endif %}
         {% endfor %}
         <tr class="{{ config.name }}__row">

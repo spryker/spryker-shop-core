@@ -9,7 +9,11 @@ namespace SprykerShop\Yves\MultiCartWidget\Plugin\CustomerPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\MultiCartMenuItemWidget\MultiCartMenuItemWidgetPluginInterface;
+use SprykerShop\Yves\MultiCartWidget\Widget\MultiCartMenuItemWidget;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\MultiCartMenuItemWidget instead.
+ */
 class MultiCartMenuItemWidgetPlugin extends AbstractWidgetPlugin implements MultiCartMenuItemWidgetPluginInterface
 {
     protected const PAGE_KEY_MULTI_CART = 'multiCart';
@@ -26,8 +30,9 @@ class MultiCartMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Mult
      */
     public function initialize(string $activePage): void
     {
-        $this->activePage = $activePage;
-        $this->addParameter('isActivePage', $this->isMultiCartPageActive());
+        $widget = new MultiCartMenuItemWidget($activePage);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -51,14 +56,6 @@ class MultiCartMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Mult
      */
     public static function getTemplate(): string
     {
-        return '@MultiCartWidget/views/cart-list-menu-item/cart-list-menu-item.twig';
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isMultiCartPageActive(): bool
-    {
-        return $this->activePage === static::PAGE_KEY_MULTI_CART;
+        return MultiCartMenuItemWidget::getTemplate();
     }
 }

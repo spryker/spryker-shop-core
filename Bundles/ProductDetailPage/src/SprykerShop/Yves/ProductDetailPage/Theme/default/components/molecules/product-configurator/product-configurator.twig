@@ -24,13 +24,17 @@
     }]) %}
 {% endfor %}
 
-{% if widgetExists('AvailabilityWidgetPlugin') %}
+{% if widgetExists('AvailabilityWidgetPlugin') %} {# @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead of AvailabilityWidgetPlugin. #}
     {% set isAvailable = widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product) %}
+    {% set isDisabled = not isAvailable or isDisabled %}
+{% else %}
+    {% set isAvailable = data.product.idProductConcrete and data.product.available %}
     {% set isDisabled = not isAvailable or isDisabled %}
 {% endif %}
 
-{% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-    {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', sku) %}
+{% set productDiscontinuedNoteWidget = findWidget('ProductDiscontinuedNoteWidget', [sku]) %}
+{% set isDiscontinued = productDiscontinuedNoteWidget.isDiscontinued ?? widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', sku) %} {# @deprecated Use productDiscontinuedNoteWidget instead of ProductDiscontinuedWidgetPlugin. #}
+{% if isDiscontinued is not null %}
     {% set isDisabled = isDiscontinued or isDisabled %}
     {% set isProductAvailable = not isDiscontinued %}
 {% endif %}
@@ -42,14 +46,33 @@
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
     <hr />
-    {% if widgetExists('PriceProductVolumeWidgetPlugin') %}
-        {{ widget('PriceProductVolumeWidgetPlugin', data.product) }}
-    {% else %}
-        {{ widget('PriceWidgetPlugin', data.product) }}
-    {% endif %}
+    {% widget 'ProductPriceVolumeWidget' args [data.product] only %}
+    {% elsewidget 'PriceProductVolumeWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductPriceVolumeWidget instead. #}
+    {% nowidget %}
+        {% if widgetExists('PriceWidgetPlugin') %}
+            {{ widget('PriceWidgetPlugin', data.product) }}  {# @deprecated Use molecule('price') instead. #}
+        {% else %}
+            <p>
+                {% include molecule('price') with {
+                    data: {
+                        amount: data.product.price | money,
+                        originalAmount: data.product.prices.ORIGINAL | default
+                    }
+                } only %}
+            </p>
+        {% endif %}
+    {% endwidget %}
 
-    {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }}
-    {{ widget('ProductGroupWidgetPlugin', data.product.idProductAbstract) }}
+    {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] use view('pdp-review-rating', 'ProductReviewWidget') only %}
+    {% nowidget %}
+        {{ widgetBlock('ProductReviewWidgetPlugin', 'rating', data.product.idProductAbstract) }} {# @deprecated Use ProductDetailPageReviewWidget instead. #}
+    {% endwidget %}
+
+    {% block product_group_widget %}
+        {% widget 'ProductGroupWidget' args [data.product.idProductAbstract] only %}
+        {% elsewidget 'ProductGroupWidgetPlugin' args [data.product.idProductAbstract] only %} {# @deprecated Use ProductGroupWidget instead. #}
+        {% endwidget %}
+    {% endblock %}
 
     {% embed molecule('variant-configurator', 'ProductDetailPage') with {
         data: {
@@ -62,60 +85,94 @@
     {% endembed %}
 
     <hr />
-    <form method="POST" action="{{ path("cart/add", {"sku": sku}) }}">
-        {{ widget('ProductOptionWidgetPlugin', data.product) }}
+    <form method="POST" class="{{ config.jsName }}__form" action="{{ path("cart/add", {"sku": sku}) }}">
+        {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}
+        {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionConfiguratorWidget instead. #}
+        {% endwidget %}
 
-        {% if widgetExists('ProductPackagingUnitWidgetPlugin') %}
-            {{ widget('ProductPackagingUnitWidgetPlugin', data.product, isDisabled, options) }}
-        {% elseif widgetExists('ProductMeasurementUnitWidgetPlugin') %}
-            {{ widget('ProductMeasurementUnitWidgetPlugin', data.product, isDisabled, options) }}
-        {% else %}
-            <div class="grid grid--bottom grid--justify">
-                <div class="col col--sm-5">
-                    <label>
-                        {{'cart.item_quantity' | trans}}
-                        {% include atom('select') with {
-                            modifiers: ['expand'],
-                            data: {
-                                options: options
-                            },
-                            attributes: {
-                                name: 'quantity',
-                                disabled: isDisabled
-                            }
-                        } only %}
-                    </label>
-                </div>
+        {% if can('SeeAddToCartPermissionPlugin') %}
+            {% widget 'ProductPackagingUnitWidget' args [data.product, isDisabled, options] only %}
+            {% elsewidget 'ProductPackagingUnitWidgetPlugin' args [data.product, isDisabled, options] only %} {# @deprecated Use ProductPackagingUnitWidget instead. #}
+            {% elsewidget 'ProductMeasurementUnitWidgetPlugin' args [data.product, isDisabled, options] only %}
+            {% elsewidget 'ProductMeasurementUnitWidgetPlugin' args [data.product, isDisabled, options] only %} {# @deprecated Use ManageProductMeasurementUnitWidget instead. #}
+            {% nowidget %}
+                <div class="grid grid--bottom grid--justify">
+                    <div class="col col--sm-5">
+                        <label>
+                            {{'cart.item_quantity' | trans}}
+                            {% include atom('select') with {
+                                modifiers: ['expand'],
+                                data: {
+                                    options: options
+                                },
+                                attributes: {
+                                    name: 'quantity',
+                                    disabled: isDisabled
+                                }
+                            } only %}
+                        </label>
+                    </div>
 
-                <div class="col col--sm-6">
-                    <button type="submit" class="button button--success button--expand" {{ isDisabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}>
-                        {% include atom('icon') with {
-                            data: {
-                                name: 'cart-plus'
-                            }
-                        } only %}
-                        {{ 'page.detail.add-to-cart' | trans }}
-                    </button>
+                    <div class="col col--sm-6">
+                        <button type="submit" class="button button--success button--expand" {{ isDisabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}>
+                            {% include atom('icon') with {
+                                data: {
+                                    name: 'cart-plus'
+                                }
+                            } only %}
+                            {{ 'page.detail.add-to-cart' | trans }}
+                        </button>
+                    </div>
                 </div>
-            </div>
+            {% endwidget %}
         {% endif %}
 
-        {{ widget('MultiCartWidgetPlugin', data.product, isDisabled) }}
-        {{ widget('AvailabilityWidgetPlugin', data.product) }}
+        {% widget 'AddToMultiCartWidget' args [isDisabled] only %}
+        {% elsewidget 'MultiCartWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
+        {% endwidget %}
+
+        {% if widgetExists('AvailabilityWidgetPlugin') %}
+            {{ widget('AvailabilityWidgetPlugin', data.product) }} {# @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead. #}
+        {% else %}
+            {% include molecule('availability-product', 'AvailabilityWidget') ignore missing with {
+                data: {
+                    idProductConcrete: data.product.idProductConcrete,
+                    isAvailable: data.product.available
+                }
+            } only %}
+        {% endif %}
     </form>
 
-    {% if widgetExists('ShoppingListWidgetPlugin') and isProductAvailable %}
-        <hr />
-        {{ widget('ShoppingListWidgetPlugin', sku, isDisabled) }}
+    {% if can('SeeShoppingListPermissionPlugin') and isProductAvailable %}
+        {% widget 'AddToShoppingListWidget' args [sku, isDisabled] only %}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
+        {% elsewidget 'ShoppingListWidgetPlugin' args [sku, isDisabled] only %} {# @deprecated Use AddToShoppingListWidget instead. #}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
+        {% endwidget %}
     {% endif %}
 
-    {% if widgetExists('WishlistWidgetPlugin') and isProductAvailable %}
-        <hr />
-        {{ widget('WishlistWidgetPlugin', data.product) }}
+    {% if can('SeeWishlistPermissionPlugin') and isProductAvailable %}
+        {% if widgetExists('WishlistWidgetPlugin') %}
+            <hr />
+            {{ widget('WishlistWidgetPlugin', data.product) }} {# @deprecated Use molecule('wishlist-selector', 'WishlistWidget') instead. #}
+        {% else %}
+            {% include molecule('wishlist-selector-for-pdp', 'WishlistWidget') ignore missing with {
+                data: {
+                    sku: data.product.sku,
+                    idProductConcrete: data.product.idProductConcrete | default
+                }
+            } only %}
+        {% endif %}
     {% endif %}
 
-    {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-        {{ widget('ProductDiscontinuedWidgetPlugin', sku) }}
-    {% endif %}
+    {% widget 'ProductDiscontinuedNoteWidget' args [sku] only %}
+    {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [sku] only %} {# @deprecated Use ProductDiscontinuedNoteWidget instead. #}
+    {% endwidget %}
 
 {% endblock %}
