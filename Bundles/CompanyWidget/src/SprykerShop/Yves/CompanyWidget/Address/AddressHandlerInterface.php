@@ -29,4 +29,11 @@ interface AddressHandlerInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
      */
     public function getCompanyBusinessUnitAddresses(): ArrayObject;
+
+    /**
+     * @param string $formType
+     *
+     * @return array
+     */
+    public function getAvailableFullAddresses(string $formType): array;
 }

@@ -134,6 +134,40 @@ class AddressHandler implements AddressHandlerInterface
     }
 
     /**
+     * @param string $formType
+     *
+     * @return array
+     */
+    public function getAvailableFullAddresses(string $formType): array
+    {
+        $customerAddresses = $this->getCustomerAddressesArray($formType);
+        $companyBusinessUnitAddresses = $this->getCompanyBusinessUnitAddressesArray($formType);
+
+        return array_merge(
+            $this->getFullAddressesFromArray($customerAddresses),
+            $this->getFullAddressesFromArray($companyBusinessUnitAddresses)
+        );
+    }
+
+    /**
+     * @param array $addressesArray
+     *
+     * @return array
+     */
+    protected function getFullAddressesFromArray(array $addressesArray): array
+    {
+        $fullAddresses = [];
+        foreach ($addressesArray as $addressItem) {
+            $fullAddresses[] = [
+                static::FIELD_ADDRESS_FULL_ADDRESS => $this->getFullAddress($addressItem),
+                static::FIELD_ID_CUSTOMER_ADDRESS => $addressItem[static::FIELD_ID_CUSTOMER_ADDRESS] ?? null,
+            ];
+        }
+
+        return $fullAddresses;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      * @param string $formType

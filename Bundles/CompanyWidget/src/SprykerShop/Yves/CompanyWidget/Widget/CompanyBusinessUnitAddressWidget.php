@@ -21,7 +21,8 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     {
         $this->addParameter('formType', $formType)
             ->addParameter('isApplicable', $this->isApplicable())
-            ->addParameter('addresses', $this->findAvailableAddressesJson($formType));
+            ->addParameter('addresses', $this->findAvailableAddressesJson($formType))
+            ->addParameter('fullAddresses', $this->getAvailableFullAddresses($formType));
     }
 
     /**
@@ -54,15 +55,27 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     /**
      * @param string $formType
      *
+     * @return array
+     */
+    protected function getAvailableFullAddresses(string $formType): array
+    {
+        return $this->getFactory()
+            ->createAddressHandler()
+            ->getAvailableFullAddresses($formType);
+    }
+
+    /**
+     * @param string $formType
+     *
      * @return string|null
      */
     protected function findAvailableAddressesJson(string $formType): ?string
     {
-        $dataProvider = $this->getFactory()
+        $addressHandler = $this->getFactory()
             ->createAddressHandler();
 
-        $customerAddressesArray = $dataProvider->getCustomerAddressesArray($formType);
-        $companyBusinessUnitAddressesArray = $dataProvider->getCompanyBusinessUnitAddressesArray($formType);
+        $customerAddressesArray = $addressHandler->getCustomerAddressesArray($formType);
+        $companyBusinessUnitAddressesArray = $addressHandler->getCompanyBusinessUnitAddressesArray($formType);
 
         return $this->encodeAddressesToJson(
             array_merge(
