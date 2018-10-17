@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CompanyWidget\Widget;
 
-use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -15,6 +14,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class CompanyBusinessUnitAddressWidget extends AbstractWidget
 {
+    protected const KEY_ADDRESS_DEFAULT = 'addressesForm[%s][default]';
+
     /**
      * @param string $formType
      */
@@ -22,7 +23,8 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     {
         $this->addParameter('formType', $formType)
             ->addParameter('isApplicable', $this->isApplicable())
-            ->addParameter('addresses', $this->findAddressesJson($formType));
+            ->addParameter('addresses', $this->findAvailableAddressesJson($formType))
+            ->addParameter('fullAddresses', $this->getAvailableFullAddresses($formType));
     }
 
     /**
@@ -46,19 +48,22 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      */
     public function isApplicable(): bool
     {
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
+        $dataProvider = $this->getFactory()
+            ->createAddressHandler();
 
-        if ($customerTransfer->getCompanyUserTransfer() === null) {
-            return false;
-        }
+        return ($dataProvider->getCompanyBusinessUnitAddresses()->count() > 0);
+    }
 
-        if (empty($this->getCompanyBusinessUnitAddresses()->getCompanyUnitAddresses())) {
-            return false;
-        }
-
-        return true;
+    /**
+     * @param string $formType
+     *
+     * @return array
+     */
+    protected function getAvailableFullAddresses(string $formType): array
+    {
+        return $this->getFactory()
+            ->createAddressHandler()
+            ->getAvailableFullAddresses($formType);
     }
 
     /**
@@ -66,42 +71,70 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      *
      * @return string|null
      */
-    protected function findAddressesJson(string $formType): ?string
+    protected function findAvailableAddressesJson(string $formType): ?string
     {
-        $dataProvider = $this->getFactory()
-            ->createCompanyBusinessUnitAddressWidgetDataProvider();
+        $addressHandler = $this->getFactory()
+            ->createAddressHandler();
 
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
+        $customerAddressesArray = $addressHandler->getCustomerAddressesArray($formType);
+        $companyBusinessUnitAddressesArray = $addressHandler->getCompanyBusinessUnitAddressesArray($formType);
 
-        $customerAddressesArray = $dataProvider->getCustomerAddresses($customerTransfer->getAddresses(), $formType);
+        $defaultCustomerAddressIndexes = $this->getDefaultAddressIndexes($customerAddressesArray, $formType);
+        $defaultCompanyBusinessUnitAddressIndexes = $this->getDefaultAddressIndexes($companyBusinessUnitAddressesArray, $formType);
 
-        $companyBusinessUnitAddressesArray = $dataProvider->getCompanyBusinessUnitAddresses(
-            $this->getCompanyBusinessUnitAddresses(),
-            $formType,
-            $customerTransfer
+        if ((count($defaultCustomerAddressIndexes) > 0 && count($defaultCompanyBusinessUnitAddressIndexes) > 0)
+            || (count($defaultCustomerAddressIndexes) === 0 && count($defaultCompanyBusinessUnitAddressIndexes) === 0)
+        ) {
+            $companyBusinessUnitAddressesArray = $this->resetAddressesDefaultValues(
+                $companyBusinessUnitAddressesArray,
+                $defaultCompanyBusinessUnitAddressIndexes,
+                $formType
+            );
+        }
+
+        return $this->encodeAddressesToJson(
+            array_merge(
+                $customerAddressesArray,
+                $companyBusinessUnitAddressesArray
+            )
         );
-
-        return $this->encodeAddressesToJson(array_merge($customerAddressesArray, $companyBusinessUnitAddressesArray));
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     * @param array $addressesArray
+     * @param int[] $addressIndexes
+     * @param string $formType
+     *
+     * @return array
      */
-    protected function getCompanyBusinessUnitAddresses(): CompanyUnitAddressCollectionTransfer
+    protected function resetAddressesDefaultValues(array $addressesArray, array $addressIndexes, string $formType): array
     {
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
-        if ($companyUserTransfer === null) {
-            return new CompanyUnitAddressCollectionTransfer();
+        foreach ($addressIndexes as $addressIndex) {
+            $addressesArray[$addressIndex][sprintf(static::KEY_ADDRESS_DEFAULT, $formType)] = false;
         }
 
-        return $companyUserTransfer->getCompanyBusinessUnit()
-            ->getAddressCollection();
+        return $addressesArray;
+    }
+
+    /**
+     * @param array $addressesArray
+     * @param string $formType
+     *
+     * @return int[]
+     */
+    protected function getDefaultAddressIndexes(array $addressesArray, string $formType): array
+    {
+        $index = 0;
+        $defaultAddressIndexes = [];
+        foreach ($addressesArray as $addressItem) {
+            if ($addressItem[sprintf(static::KEY_ADDRESS_DEFAULT, $formType)] === true) {
+                $defaultAddressIndexes[] = $index;
+            }
+
+            $index++;
+        }
+
+        return $defaultAddressIndexes;
     }
 
     /**
