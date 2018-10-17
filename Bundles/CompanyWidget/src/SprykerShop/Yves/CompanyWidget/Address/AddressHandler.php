@@ -174,7 +174,7 @@ class AddressHandler implements AddressHandlerInterface
         $fullAddresses = [];
         foreach ($addressesArray as $addressItem) {
             $fullAddressItem = [
-                static::FIELD_ADDRESS_FULL_ADDRESS => $addressItem[$fullAddressKey],
+                $fullAddressKey => $addressItem[$fullAddressKey],
             ];
 
             if (isset($addressItem[$idCustomerAddressKey])) {
