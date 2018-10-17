@@ -1,11 +1,12 @@
 {
   "name": "spryker-shop/product-barcode-widget",
+  "type": "library",
   "description": "ProductBarcodeWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/kernel": "^3.16.0",
+    "spryker/kernel": "^3.24.0",
     "spryker/product-barcode": "^1.0.0"
   },
   "require-dev": {

@@ -10,9 +10,12 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductLabelWidge
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductLabelWidget\Widget\ProductAbstractLabelWidget instead.
+ */
 interface ProductLabelWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'ProductAbstractLabelWidgetPlugin';
+    public const NAME = 'ProductAbstractLabelWidgetPlugin';
 
     /**
      * @api

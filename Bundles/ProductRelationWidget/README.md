@@ -1,6 +1,6 @@
 # ProductRelationWidget Module
 
-This module contains the product relation widget and its components.
+This module provides list of similar products on the product detail page. On the cart page it provides upselling products.
 
 ## Installation
 

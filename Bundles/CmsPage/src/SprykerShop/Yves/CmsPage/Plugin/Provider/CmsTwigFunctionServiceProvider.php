@@ -18,7 +18,7 @@ use Twig_SimpleFunction;
  */
 class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const CMS_PREFIX_KEY = 'generated.cms';
+    public const CMS_PREFIX_KEY = 'generated.cms';
 
     /**
      * @param \Silex\Application $app

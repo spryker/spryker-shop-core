@@ -1,6 +1,17 @@
-{% extends template('cart-note-display', 'CartNoteWidget') %}
+{% extends template('widget') %}
 
 {% define data = {
     label: 'cart_note.checkout_page.quote_note',
     note: _widget.quote.cartNote
 } %}
+
+{% block body %}
+    {% if data.note is not empty %}
+        {% include molecule('note-list', 'CartNoteWidget') with {
+            data: {
+                label: data.label,
+                note: data.note
+            }
+        } only %}
+    {% endif %}
+{% endblock %}

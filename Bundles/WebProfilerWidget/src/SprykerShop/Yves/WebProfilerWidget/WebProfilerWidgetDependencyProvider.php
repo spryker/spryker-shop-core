@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Container;
 
 class WebProfilerWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGINS_WEB_PROFILER = 'PLUGINS_WEB_PROFILER';
+    public const PLUGINS_WEB_PROFILER = 'PLUGINS_WEB_PROFILER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

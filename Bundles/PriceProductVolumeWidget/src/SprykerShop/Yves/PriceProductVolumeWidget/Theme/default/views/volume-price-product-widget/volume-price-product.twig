@@ -7,7 +7,7 @@
 } %}
 
 {% block body %}
-    {% set jsonVolumeProductPrices = data.amount is not null ? [{"price": data.amount|money, "count": 1}] : [] %}
+    {% set jsonVolumeProductPrices = [{"price": data.amount|money, "count": 1}] %}
 
     {% if data.volumeProductPrices.volumePrices is defined and data.volumeProductPrices.volumePrices is not empty %}
         {% include molecule('volume-price-table', 'PriceProductVolumeWidget') with {
@@ -22,17 +22,19 @@
             ) %}
         {% endfor %}
     {% endif %}
-    {% if data.amount is not null %}
+
+    {% if can('SeePricePermissionPlugin') %}
         {% include molecule('volume-price', 'PriceProductVolumeWidget') with {
             attributes: {
                 'data-json': jsonVolumeProductPrices|json_encode()
             },
             data: {
-                amount: data.amount | money,
+                amount: data.amount,
                 originalAmount: data.originalAmount
             }
         } only %}
     {% else %}
-        N/A
+        {{ 'customer.access.cannot_see_price' | trans }}
     {% endif %}
+
 {% endblock %}
