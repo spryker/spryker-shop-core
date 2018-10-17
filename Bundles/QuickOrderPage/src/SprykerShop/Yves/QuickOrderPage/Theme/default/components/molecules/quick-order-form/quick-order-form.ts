@@ -10,7 +10,7 @@ export default class QuickOrderForm extends Component {
     addRowAjaxProvider: AjaxProvider
     removeRowAjaxProvider: AjaxProvider
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         this.form = <HTMLFormElement>this.querySelector(`.${this.jsName}__form`);
         this.rows = <HTMLElement>this.querySelector(`.${this.jsName}__rows`);
         this.addRowTrigger = <HTMLElement>this.querySelector(`.${this.jsName}__add-row-trigger`);

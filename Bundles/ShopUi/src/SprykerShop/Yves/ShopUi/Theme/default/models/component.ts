@@ -21,7 +21,11 @@ export default abstract class Component extends HTMLElement {
         this.isComponentMounted = true;
     }
 
-    abstract readyCallback(): void
+    mountCallback(): void {
+        this.readyCallback();
+    }
+
+    protected abstract readyCallback(): void
 
     get isMounted(): boolean {
         return this.isComponentMounted;

@@ -17,7 +17,7 @@ export default class AutocompleteForm extends Component {
     suggestionsContainer: HTMLElement;
     cleanButton: HTMLButtonElement;
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
         this.textInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__text-input`);
         this.valueInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__value-input`);

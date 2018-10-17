@@ -10,7 +10,7 @@ export default class TogglerCheckbox extends Component {
         this.targets = <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
     }
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         this.toggle();
         this.fireToggleEvent();
         this.mapEvents();

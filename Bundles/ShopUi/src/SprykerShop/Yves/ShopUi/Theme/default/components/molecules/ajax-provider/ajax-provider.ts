@@ -16,7 +16,7 @@ export default class AjaxProvider extends Component {
         this.xhr = new XMLHttpRequest();
     }
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         if (this.fetchOnLoad) {
             this.fetch();
         }

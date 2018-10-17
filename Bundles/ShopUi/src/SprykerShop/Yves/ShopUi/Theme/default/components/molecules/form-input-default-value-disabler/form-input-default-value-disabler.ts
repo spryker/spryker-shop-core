@@ -4,7 +4,7 @@ export default class FormInputDefaultValueDisabler extends Component {
     forms: HTMLFormElement[]
     inputs: HTMLInputElement[]
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         this.forms = <HTMLFormElement[]>Array.from(document.querySelectorAll(this.formSelector));
         this.mapEvents();
     }
