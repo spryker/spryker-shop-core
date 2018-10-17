@@ -56,21 +56,9 @@ class ShoppingListDeleteController extends AbstractShoppingListController
      */
     public function deleteConfirmAction(Request $request): View
     {
-        $data = $this->executeDeleteConfirmAction($request);
+        $response = $this->executeDeleteConfirmAction($request);
 
-        return $this->view($data, [], '@ShoppingListPage/views/shopping-list-delete/shopping-list-edit-delete.twig');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Yves\Kernel\View\View
-     */
-    public function deleteConfirmOverviewAction(Request $request): View
-    {
-        $data = $this->executeDeleteConfirmAction($request);
-
-        return $this->view($data, [], '@ShoppingListPage/views/shopping-list-delete/shopping-list-overview-delete.twig');
+        return $this->view($response, [], '@ShoppingListPage/views/shopping-list-overview-delete/shopping-list-overview-delete.twig');
     }
 
     /**
