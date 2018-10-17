@@ -304,6 +304,7 @@ class ShareShoppingListDataProvider
     protected function getCompanyUserCollection(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
     {
         $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
+            ->setIsActive(true)
             ->setIdCompany($customerTransfer->requireCompanyUserTransfer()->getCompanyUserTransfer()->getFkCompany());
 
         return $this->companyUserClient->getCompanyUserCollection($companyUserCriteriaFilterTransfer);

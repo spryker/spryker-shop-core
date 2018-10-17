@@ -157,6 +157,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     {
         $companyUserCriteriaFilterTransfer = new CompanyUserCriteriaFilterTransfer();
         $companyUserCriteriaFilterTransfer->setIdCompany($companyBusinessUnitTransfer->getFkCompany());
+        $companyUserCriteriaFilterTransfer->setIsActive(true);
         $companyUserCollectionTransfer = $this->companyUserClient->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
 
         $businessUnitCompanyUserList = [];
