@@ -28,6 +28,9 @@ class AddressHandler implements AddressHandlerInterface
     protected const FIELD_PHONE = 'phone';
     protected const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
 
+    protected const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
+    protected const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
+
     protected const FIELDS_ADDRESS_DATA = [
         self::FIELD_SALUTATION,
         self::FIELD_FIRST_NAME,
@@ -44,10 +47,18 @@ class AddressHandler implements AddressHandlerInterface
     ];
 
     protected const FIELD_ADDRESS_FULL_ADDRESS = 'full_address';
+    protected const FIELD_ADDRESS_DEFAULT = 'default';
 
     protected const FIELD_VALUE_COMPANY_BUSINESS_UNIT_SALUTATION = 'Mr';
     protected const FIELD_VALUE_COMPANY_BUSINESS_UNIT_FIRST_NAME = '';
     protected const FIELD_VALUE_COMPANY_BUSINESS_UNIT_LAST_NAME = '';
+
+    protected const FORM_TYPE_OPTION_BILLING_ADDRESS = 'billingAddress';
+    protected const FORM_TYPE_OPTION_SHIPPING_ADDRESS = 'shippingAddress';
+
+    protected const KEY_ID_CUSTOMER_ADDRESS = 'addressesForm[%s][' . self::FIELD_ID_CUSTOMER_ADDRESS . ']';
+    protected const KEY_FULL_ADDRESS = 'addressesForm[%s][' . self::FIELD_ADDRESS_FULL_ADDRESS . ']';
+    protected const KEY_ADDRESS_DEFAULT = 'addressesForm[%s][' . self::FIELD_ADDRESS_DEFAULT . ']';
 
     /**
      * @var \SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface
@@ -144,24 +155,33 @@ class AddressHandler implements AddressHandlerInterface
         $companyBusinessUnitAddresses = $this->getCompanyBusinessUnitAddressesArray($formType);
 
         return array_merge(
-            $this->getFullAddressesFromArray($customerAddresses),
-            $this->getFullAddressesFromArray($companyBusinessUnitAddresses)
+            $this->getFullAddressesFromArray($customerAddresses, $formType),
+            $this->getFullAddressesFromArray($companyBusinessUnitAddresses, $formType)
         );
     }
 
     /**
      * @param array $addressesArray
+     * @param string $formType
      *
      * @return array
      */
-    protected function getFullAddressesFromArray(array $addressesArray): array
+    protected function getFullAddressesFromArray(array $addressesArray, string $formType): array
     {
+        $fullAddressKey = sprintf(static::KEY_FULL_ADDRESS, $formType);
+        $idCustomerAddressKey = sprintf(static::KEY_ID_CUSTOMER_ADDRESS, $formType);
+
         $fullAddresses = [];
         foreach ($addressesArray as $addressItem) {
-            $fullAddresses[] = [
-                static::FIELD_ADDRESS_FULL_ADDRESS => $this->getFullAddress($addressItem),
-                static::FIELD_ID_CUSTOMER_ADDRESS => $addressItem[static::FIELD_ID_CUSTOMER_ADDRESS] ?? null,
+            $fullAddressItem = [
+                static::FIELD_ADDRESS_FULL_ADDRESS => $addressItem[$fullAddressKey],
             ];
+
+            if (isset($addressItem[$idCustomerAddressKey])) {
+                $fullAddressItem[$idCustomerAddressKey] = $addressItem[$fullAddressKey];
+            }
+
+            $fullAddresses[] = $fullAddressItem;
         }
 
         return $fullAddresses;
@@ -240,20 +260,63 @@ class AddressHandler implements AddressHandlerInterface
      */
     protected function prepareAddressData(array $addressData, string $formType): array
     {
-        $preparedFormFields = [];
+        $preparedAddressData = [];
 
         foreach ($addressData as $key => $value) {
             if (in_array($key, static::FIELDS_ADDRESS_DATA, true)) {
-                $preparedFormFields[$this->addFormTypePrefixToAddressFieldName($key, $formType)] = $value;
+                $preparedAddressData[$this->addFormTypePrefixToAddressFieldName($key, $formType)] = $value;
             }
         }
 
+        $preparedAddressData = $this->addFullAddressValue($addressData, $preparedAddressData, $formType);
+        $preparedAddressData = $this->addDefaultAddressValue($addressData, $preparedAddressData, $formType);
+
+        ksort($preparedAddressData);
+
+        return $preparedAddressData;
+    }
+
+    /**
+     * @param array $addressData
+     * @param array $preparedAddressData
+     * @param string $formType
+     *
+     * @return array
+     */
+    protected function addDefaultAddressValue(array $addressData, array $preparedAddressData, string $formType): array
+    {
+        $defaultAddressKey = sprintf(static::KEY_ADDRESS_DEFAULT, $formType);
+
+        if ($formType === static::FORM_TYPE_OPTION_BILLING_ADDRESS && isset($addressData[static::FIELD_IS_DEFAULT_BILLING])) {
+            $preparedAddressData[$defaultAddressKey] = $addressData[static::FIELD_IS_DEFAULT_BILLING] === true;
+
+            return $preparedAddressData;
+        }
+
+        if ($formType === static::FORM_TYPE_OPTION_SHIPPING_ADDRESS && isset($addressData[static::FIELD_IS_DEFAULT_SHIPPING])) {
+            $preparedAddressData[$defaultAddressKey] = $addressData[static::FIELD_IS_DEFAULT_SHIPPING] === true;
+
+            return $preparedAddressData;
+        }
+
+        $preparedAddressData[$defaultAddressKey] = false;
+
+        return $preparedAddressData;
+    }
+
+    /**
+     * @param array $addressData
+     * @param array $preparedAddressData
+     * @param string $formType
+     *
+     * @return array
+     */
+    protected function addFullAddressValue(array $addressData, array $preparedAddressData, string $formType): array
+    {
         $addressFullNameKey = $this->addFormTypePrefixToAddressFieldName(static::FIELD_ADDRESS_FULL_ADDRESS, $formType);
-        $preparedFormFields[$addressFullNameKey] = $this->getFullAddress($addressData);
+        $preparedAddressData[$addressFullNameKey] = $this->getFullAddress($addressData);
 
-        ksort($preparedFormFields);
-
-        return $preparedFormFields;
+        return $preparedAddressData;
     }
 
     /**
