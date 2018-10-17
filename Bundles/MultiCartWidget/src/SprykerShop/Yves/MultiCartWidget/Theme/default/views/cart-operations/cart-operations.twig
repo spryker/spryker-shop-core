@@ -20,9 +20,9 @@
 
 {% block body %}
     {% if data.isMultiCartAllowed is not empty %}
-        {% if widgetExists('SharedCartOperationsWidgetPlugin') %}
-            {{ widget('SharedCartOperationsWidgetPlugin', data.cart) }}
-        {% else %}
+        {% widget 'SharedCartOperationsWidget' args [data.cart] only %}
+        {% elsewidget 'SharedCartOperationsWidgetPlugin' args [data.cart] only %} {# @deprecated Use SharedCartOperationsWidget instead. #}
+        {% nowidget %}
             <ul class="menu menu--inline">
                 <li class="menu__item">
                     <a href="{{ path('multi-cart/update', {idQuote: data.cart.idQuote}) }}" class="button update">
@@ -54,6 +54,6 @@
                 </li>
                 {% endif %}
             </ul>
-        {% endif %}
+        {% endwidget %}
     {% endif %}
 {% endblock %}

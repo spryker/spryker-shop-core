@@ -8,12 +8,13 @@
 namespace SprykerShop\Yves\SalesOrderThresholdWidget\Plugin\CartPage;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ExpenseTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\SalesOrderThresholdWidget\SalesOrderThresholdWidgetPluginInterface;
-use SprykerShop\Yves\SalesOrderThresholdWidget\SalesOrderThresholdWidgetConfig;
+use SprykerShop\Yves\SalesOrderThresholdWidget\Widget\SalesOrderThresholdWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\SalesOrderThresholdWidget\Widget\SalesOrderThresholdWidget instead.
+ *
  * @method \SprykerShop\Yves\SalesOrderThresholdWidget\SalesOrderThresholdWidgetFactory getFactory()
  */
 class SalesOrderThresholdWidgetPlugin extends AbstractWidgetPlugin implements SalesOrderThresholdWidgetPluginInterface
@@ -27,7 +28,9 @@ class SalesOrderThresholdWidgetPlugin extends AbstractWidgetPlugin implements Sa
      */
     public function initialize(ArrayObject $expenseTransfers): void
     {
-        $this->addParameter('expenses', $this->filterSalesOrderThresholdExpenses($expenseTransfers));
+        $widget = new SalesOrderThresholdWidget($expenseTransfers);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -51,20 +54,6 @@ class SalesOrderThresholdWidgetPlugin extends AbstractWidgetPlugin implements Sa
      */
     public static function getTemplate(): string
     {
-        return '@SalesOrderThresholdWidget/views/sales-order-threshold-cart-expenses/sales-order-threshold-cart-expenses.twig';
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
-     *
-     * @return \ArrayObject
-     */
-    protected function filterSalesOrderThresholdExpenses(ArrayObject $expenseTransfers): ArrayObject
-    {
-        $filteredResult = array_filter($expenseTransfers->getArrayCopy(), function (ExpenseTransfer $expenseTransfer) {
-            return $expenseTransfer->getType() === SalesOrderThresholdWidgetConfig::THRESHOLD_EXPENSE_TYPE;
-        });
-
-        return new ArrayObject($filteredResult);
+        return SalesOrderThresholdWidget::getTemplate();
     }
 }

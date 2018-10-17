@@ -1,6 +1,6 @@
 # CmsBlockWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module provides CMS content blocks "top", "middle", "bottom" showing on PDP and catalog page.
 
 ## Installation
 

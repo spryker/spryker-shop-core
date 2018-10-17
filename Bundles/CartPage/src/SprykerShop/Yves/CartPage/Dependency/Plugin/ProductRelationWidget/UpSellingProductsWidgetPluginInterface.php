@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CartPage\Dependency\Plugin\ProductRelationWidget;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget instead.
+ */
 interface UpSellingProductsWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'UpSellingProductsWidgetPlugin';

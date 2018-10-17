@@ -1,0 +1,22 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isOnBehalf: _widget.isOnBehalf,
+    companyName: _widget.companyName,
+    companyBusinessUnitName: _widget.companyBusinessUnitName,
+    isVisible: _widget.isVisible
+} %}
+
+{% block template %}
+    {% if data.isVisible %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if data.isOnBehalf and data.companyName is not empty and data.companyBusinessUnitName is not empty %}
+        <a href="{{ path('company/user/select') }}">{{ data.companyName }} / {{ data.companyBusinessUnitName }}</a>
+    {% else %}
+        <a href="{{ path('company/user/select') }}">{{ 'business_on_behalf_widget.no_selected_company' | trans }}</a>
+    {% endif %}
+{% endblock %}

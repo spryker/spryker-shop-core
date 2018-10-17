@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\CheckoutPage\Dependency\Plugin\ProductPackagingUnit;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('summary-product-packaging-unit', 'ProductPackagingUnitWidget') instead.
+ */
 interface SummaryProductPackagingUnitWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'SummaryProductPackagingUnitWidgetPlugin';
