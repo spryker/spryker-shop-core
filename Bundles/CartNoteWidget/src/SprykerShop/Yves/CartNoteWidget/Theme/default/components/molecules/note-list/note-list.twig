@@ -1,0 +1,19 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'note-list',
+} %}
+
+{% define data = {
+    label: null,
+    note: required
+} %}
+
+{% block body %}
+    <ul>
+        {% if data.label %}
+            <li><small>{{ data.label | trans }}:</small></li>
+        {% endif %}
+        <li>{{ data.note | escape | nl2br }}</li>
+    </ul>
+{% endblock %}

@@ -8,9 +8,12 @@
 namespace SprykerShop\Yves\BusinessOnBehalfWidget\Plugin\CustomerPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\BusinessOnBehalfWidget\Widget\BusinessOnBehalfStatusWidget;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\BusinessOnBehalfWidget\MenuItemBusinessOnBehalfWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\BusinessOnBehalfWidget\Widget\BusinessOnBehalfStatusWidget instead.
+ *
  * @method \SprykerShop\Yves\BusinessOnBehalfWidget\BusinessOnBehalfWidgetFactory getFactory()
  */
 class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implements MenuItemBusinessOnBehalfWidgetPluginInterface
@@ -20,7 +23,9 @@ class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implemen
      */
     public function initialize(): void
     {
-        $this->addParameter('isVisible', $this->isVisible());
+        $widget = new BusinessOnBehalfStatusWidget();
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -47,19 +52,5 @@ class MenuItemBusinessOnBehalfWidgetPlugin extends AbstractWidgetPlugin implemen
     public static function getTemplate()
     {
         return '@BusinessOnBehalfWidget/views/customer-page/change-company-user.twig';
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isVisible(): bool
-    {
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if (!$customer || !$customer->getIsOnBehalf()) {
-            return false;
-        }
-
-        return true;
     }
 }

@@ -9,8 +9,11 @@ namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductDetailPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReviewWidget\ProductReviewWidgetPluginInterface;
+use SprykerShop\Yves\ProductReviewWidget\Widget\ProductDetailPageReviewWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductDetailPageReviewWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
 class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductReviewWidgetPluginInterface
@@ -22,10 +25,9 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public function initialize(int $idProductAbstract): void
     {
-        $this
-            ->addParameter('idProductAbstract', $idProductAbstract)
-            ->addParameter('productReviewStorageTransfer', $this->findProductAbstractReview($idProductAbstract))
-            ->addParameter('maximumRating', $this->getMaximumRating());
+        $widget = new ProductDetailPageReviewWidget($idProductAbstract);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -41,28 +43,6 @@ class ProductReviewWidgetPlugin extends AbstractWidgetPlugin implements ProductR
      */
     public static function getTemplate(): string
     {
-        return '@ProductReviewWidget/views/pdp-review/pdp-review.twig';
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer
-     */
-    protected function findProductAbstractReview($idProductAbstract)
-    {
-        return $this->getFactory()
-            ->getProductReviewStorageClient()
-            ->findProductAbstractReview($idProductAbstract);
-    }
-
-    /**
-     * @return int
-     */
-    protected function getMaximumRating()
-    {
-        return $this->getFactory()
-            ->getProductReviewClient()
-            ->getMaximumRating();
+        return ProductDetailPageReviewWidget::getTemplate();
     }
 }

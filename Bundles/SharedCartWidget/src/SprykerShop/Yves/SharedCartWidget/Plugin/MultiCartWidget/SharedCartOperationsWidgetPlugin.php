@@ -7,15 +7,15 @@
 
 namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartWidget;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
-use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCartOperationsWidgetPluginInterface;
+use SprykerShop\Yves\SharedCartWidget\Widget\SharedCartOperationsWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartOperationsWidget instead.
+ *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
 class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements SharedCartOperationsWidgetPluginInterface
@@ -29,67 +29,9 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        $this
-            ->addParameter('cart', $quoteTransfer)
-            ->addParameter('actions', $this->getCartActions($quoteTransfer))
-            ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer, $customerTransfer))
-            ->addParameter('isSharedCartAllowed', $this->isSharedCartAllowed($customerTransfer));
-    }
+        $widget = new SharedCartOperationsWidget($quoteTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function getCartActions(QuoteTransfer $quoteTransfer): array
-    {
-        $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
-        $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote()) || $writeAllowed;
-
-        return [
-            'view' => $viewAllowed,
-            'update' => $writeAllowed,
-            'set_default' => $viewAllowed && !$quoteTransfer->getIsDefault(),
-            'duplicate' => $writeAllowed,
-            'clear' => $writeAllowed,
-            'delete' => $writeAllowed && $this->isDeleteCartAllowed($quoteTransfer),
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
-    {
-        return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isSharedCartAllowed(CustomerTransfer $customerTransfer): bool
-    {
-        if ($customerTransfer->getCompanyUserTransfer()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
-     *
-     * @return bool
-     */
-    protected function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer): bool
-    {
-        return $this->getFactory()->getSharedCartClient()->isQuoteDeletable($currentQuoteTransfer);
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -115,6 +57,6 @@ class SharedCartOperationsWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public static function getTemplate()
     {
-        return '@SharedCartWidget/views/shared-cart-operations/shared-cart-operations.twig';
+        return SharedCartOperationsWidget::getTemplate();
     }
 }
