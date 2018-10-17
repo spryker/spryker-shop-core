@@ -35,12 +35,12 @@
     <div class="grid grid--justify grid--middle">
         <div class="col col--sm-5 spacing spacing--inner">
             {% block search %}
-                {{ widget(
-                    'QuickOrderPageProductSearchWidgetPlugin',
+                {% widget 'ProductConcreteSearchWidget' args [
                     'ajax-provider' ~ data.index,
                     data.autocomplete.fullName ~ '[sku]',
                     data.autocomplete.inputValue
-                ) }}
+                ] only %}
+                {% endwidget %}
 
                 {{ form_widget(data.autocomplete.sku) }}
                 {{ form_widget(data.autocomplete.idProductConcrete) }}

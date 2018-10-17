@@ -5,25 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductSearchWidget\Plugin\QuickOrderPage;
+namespace SprykerShop\Yves\ProductSearchWidget\Widget;
 
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Plugin\ProductSearchWidget\QuickOrderPageProductSearchWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\ProductSearchWidget\ProductSearchWidgetConfig getConfig()
  */
-class QuickOrderPageProductSearchWidgetPlugin extends AbstractWidgetPlugin implements QuickOrderPageProductSearchWidgetPluginInterface
+class ProductConcreteSearchWidget extends AbstractWidget
 {
+    protected const NAME = 'ProductConcreteSearchWidget';
+
     /**
      * @param string $index
      * @param string $searchFieldName
      * @param string|null $searchFieldValue
      * @param int|null $searchResultLimit
-     *
-     * @return void
      */
-    public function initialize(string $index, string $searchFieldName, ?string $searchFieldValue, ?int $searchResultLimit = null): void
+    public function __construct(string $index, string $searchFieldName, ?string $searchFieldValue, ?int $searchResultLimit = null)
     {
         $this->addParameter('index', $index)
             ->addParameter('searchFieldName', $searchFieldName)
@@ -52,6 +51,6 @@ class QuickOrderPageProductSearchWidgetPlugin extends AbstractWidgetPlugin imple
      */
     public static function getTemplate(): string
     {
-        return '@ProductSearchWidget/views/product-concrete-search-form/product-concrete-search-form.twig';
+        return '@ProductSearchWidget/views/product-concrete-search/product-concrete-search-form.twig';
     }
 }
