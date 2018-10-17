@@ -7,6 +7,7 @@
 
 {% define data = {
     options: [],
+    optgroups: [],
     isGrouped: false
 } %}
 
@@ -15,14 +16,29 @@
 {% block body %}
     <select class="{{config.name}}__select {% block selectClass %}{% endblock %}" {% block selectAttributes %}{{component.renderAttributes(attributes)}}{% endblock %}>
         {% block options %}
-            {% for option in data.options %}
-                {% set isSelected = option.selected | default(false) %}
-                {% set isDisabled = option.disabled | default(false) %}
+            {% if not isGrouped %}
+                {% for option in data.options %}
+                    {% set isSelected = option.selected | default(false) %}
+                    {% set isDisabled = option.disabled | default(false) %}
 
-                <option value="{{option.value}}" {% if isSelected %}selected{% endif %} {% if isDisabled %}disabled{% endif %}>
-                    {{option.label}}
-                </option>
-            {% endfor %}
+                    <option value="{{option.value}}" {% if isSelected %}selected{% endif %} {% if isDisabled %}disabled{% endif %}>
+                        {{option.label}}
+                    </option>
+                {% endfor %}
+            {% else %}
+                {% for optgroup in data.optgroups %}
+                    <optgroup label="">
+                        {% for option in data.options %}
+                            {% set isSelected = option.selected | default(false) %}
+                            {% set isDisabled = option.disabled | default(false) %}
+
+                            <option value="{{option.value}}" {% if isSelected %}selected{% endif %} {% if isDisabled %}disabled{% endif %}>
+                                {{option.label}}
+                            </option>
+                        {% endfor %}
+                    </optgroup>
+                {% endfor %}
+            {% endif %}
         {% endblock %}
     </select>
     {% include atom('icon') with {

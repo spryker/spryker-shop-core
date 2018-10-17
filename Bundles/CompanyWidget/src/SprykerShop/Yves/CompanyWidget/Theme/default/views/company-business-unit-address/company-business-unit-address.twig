@@ -8,11 +8,14 @@
 } %}
 
 {% block template %}
-    <pre>{{ dump(data.addresses) }}</pre>
+    <pre>{{ dump(data.fullAddresses) }}</pre>
     {% embed atom('select') with {
         class: 'spacing-bottom',
         attributes: {
             name: 'checkout-full-addresses'
+        },
+        data: {
+            isGrouped: true
         },
         embed: {
             addressOptions: data.fullAddresses,
@@ -22,9 +25,9 @@
         {% block selectClass %}js-form-toggler js-from-select-address__{{ embed.formType }}{% endblock %}
         {% block options %}
             <option value="" selected disabled="disabled">Default address pre-selected</option>
-            {% for address in embed.addressOptions %}
-                <option value="{{ address['addressesForm[' ~ embed.formType ~ '][full_address]'] }}" data-address-key="addressesForm[{{ embed.formType }}][full_address]">
-                    {{ address['addressesForm[' ~ embed.formType ~ '][full_address]'] }}
+            {% for option in embed.addressOptions %}
+                <option value="{{ option['addressesForm[' ~ embed.formType ~ '][full_address]'] }}" data-address-key="addressesForm[{{ embed.formType }}][full_address]">
+                    {{ option['addressesForm[' ~ embed.formType ~ '][full_address]'] }}
                 </option>
             {% endfor %}
         {% endblock %}
