@@ -14,7 +14,7 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageCli
 
 class CartItemsAvailabilityMapper implements CartItemsMapperInterface
 {
-    const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
+    public const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
      * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface

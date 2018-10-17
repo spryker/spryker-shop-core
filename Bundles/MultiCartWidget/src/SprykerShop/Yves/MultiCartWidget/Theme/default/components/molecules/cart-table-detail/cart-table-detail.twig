@@ -17,15 +17,15 @@
     <td>{{ cart.name }}</td>
     <td>
         {% if cart.items is not empty %}
-            {% if widgetExists('ProductBundleCartItemsWidgetPlugin') %}
-                {{ widget('ProductBundleCartItemsWidgetPlugin', data.cart) }}
-            {% else %}
-            <ul>
-                {% for item in cart.items %}
-                    <li>{{ item.name }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
+            {% widget 'ProductBundleMultiCartItemsListWidget' args [data.cart] only %}
+            {% elsewidget 'ProductBundleCartItemsWidgetPlugin' args [data.cart] only %} {# @deprecated Use ProductBundleMultiCartItemsListWidget instead. #}
+            {% nowidget %}
+                <ul>
+                    {% for item in cart.items %}
+                        <li>{{ item.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% endwidget %}
         {% else %}
             N/A
         {% endif %}
@@ -56,7 +56,7 @@
                 {% endif %}
                 {% if data.actions.delete %}
                     <li class="menu__item">
-                        <a href="{{ path('multi-cart/delete', {idQuote: data.cart.idQuote}) }}" onclick="return confirm('{{ 'multi_cart_widget.cart.remove.confirm' | trans }}')">
+                        <a href="{{ path('multi-cart/confirm-delete', {idQuote: data.cart.idQuote}) }}">
                             {{ "multi_cart_widget.cart.action.delete" | trans }}
                         </a>
                     </li>

@@ -20,7 +20,9 @@
             }
         } only %}
             {% block slide %}
-                {{ widget('ProductWidgetPlugin', slide) }}
+                {% widget 'ProductAlternativeWidget' args [slide] only %}
+                {% elsewidget 'ProductWidgetPlugin' args [slide] only %} {# @deprecated Use ProductAlternativeWidget instead. #}
+                {% endwidget %}
             {% endblock %}
         {% endembed %}
 
@@ -35,7 +37,9 @@
             }
         } only %}
             {% block slide %}
-                {{ widget('ProductWidgetPlugin', slide) }}
+                {% widget 'ProductAlternativeWidget' args [slide] only %}
+                {% elsewidget 'ProductWidgetPlugin' args [slide] only %} {# @deprecated Use ProductAlternativeWidget instead. #}
+                {% endwidget %}
             {% endblock %}
         {% endembed %}
         </div>

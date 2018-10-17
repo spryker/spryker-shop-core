@@ -11,30 +11,24 @@
 } %}
 
 {% block breadcrumbs %}
-    {{ widget('CheckoutBreadcrumbWidgetPlugin', data.cart) }}
+    {% widget 'CheckoutBreadcrumbWidget' args [data.cart] only %}
+    {% elsewidget 'CheckoutBreadcrumbWidgetPlugin' args [data.cart] only %} {# @deprecated Use CheckoutBreadcrumbWidget instead. #}
+    {% endwidget %}
 {% endblock %}
 
 {% block title %}
-    {% if widgetExists('CartOperationsWidgetPlugin') %}
-        {% set cartOperation = widget('CartOperationsWidgetPlugin', data.cart) | trim %}
-
-        {% if cartOperation is not empty %}
-            {{ cartOperation | raw }}
+    {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-title', 'MultiCartWidget') only %}
+    {% nowidget %}
+        {% if widgetExists('CartOperationsWidgetPlugin') %}
+            {{ widgetBlock('CartOperationsWidgetPlugin', 'title', data.cart) }} {# @deprecated Use CartOperationsWidget instead. #}
         {% else %}
             {{ parent() }}
         {% endif %}
-    {% else %}
-        {{ parent() }}
-    {% endif %}
+    {% endwidget %}
 {% endblock %}
 
 {% block content %}
-    {% if widgetExists('CartToShoppingListWidgetPlugin') and data.cart.idQuote is not empty and data.cart.items is not empty %}
-        <div class="box">
-            {{ widget('CartToShoppingListWidgetPlugin', data.cart.idQuote) }}
-        </div>
-    {% endif %}
-
+    {% set canEditCart = can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
@@ -49,6 +43,15 @@
     {% else %}
         <div class="grid">
             <div class="col col--sm-12 col--xl-8">
+                {% if data.cart.priceMode is not empty %}
+                    <div class="box">
+                        {% include molecule('price-mode') with {
+                            data: {
+                                priceMode: data.cart.priceMode
+                            }
+                        } only %}
+                    </div>
+                {% endif %}
                 {% for cartItem in data.cartItems %}
                     {% include molecule('cart-item', 'CartPage') with {
                         class: 'box',
@@ -60,18 +63,42 @@
                     } only %}
                 {% endfor %}
 
-                {{ widget('DiscountPromotionItemListWidgetPlugin', data.cart, data.request) }}
+                {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
+                {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
+                {% endwidget %}
+
+                {% if canEditCart and data.cart.idQuote is not empty %}
+                    {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-actions', 'MultiCartWidget') only %}
+                    {% nowidget %}
+                        {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }} {# @deprecated Use CartOperationsWidget instead. #}
+                    {% endwidget %}
+                {% endif %}
             </div>
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    {% if widgetExists('CartNoteQuoteWidgetPlugin') %}
-                        {{ widget('CartNoteQuoteWidgetPlugin', data.cart) }}
-                        <hr />
+                    {% widget 'CartNoteFormWidget' args [data.cart] only %}
+                    {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
+                    {% endwidget %}
+
+                    {% if not is_granted('ROLE_USER') or canEditCart %}
+                        {% widget 'DiscountVoucherFormWidget' only %}
+                            {% block body %}
+                                {{ parent() }}
+                                <hr />
+                            {% endblock %}
+                        {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use VoucherFormWidget instead. #}
+                            {% block body %}
+                                {{ parent() }}
+                                <hr />
+                            {% endblock %}
+                        {% endwidget %}
                     {% endif %}
 
-                    {% if not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
-                        {{ widget('DiscountVoucherFormWidgetPlugin') }}
+                    {% if canEditCart and data.cart.idQuote is not empty %}
+                        {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
+                        {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
+                        {% endwidget %}
                         <hr />
                     {% endif %}
 
@@ -86,8 +113,9 @@
         </div>
     {% endif %}
 
-    {{ widget('UpSellingProductsWidgetPlugin', data.cart) }}
-    {{ widget('MultiCartListWidgetPlugin', data.cart) }}
+    {% widget 'UpSellingProductsWidget' args [data.cart] only %}
+    {% elsewidget 'UpSellingProductsWidgetPlugin' args [data.cart] only %} {# @deprecated Use UpSellingProductsWidget instead. #}
+    {% endwidget %}
 {% endblock %}
 
 {% block footer %}{% endblock %}

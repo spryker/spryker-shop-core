@@ -70,4 +70,9 @@ interface MultiCartPageToMultiCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function clearQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @return bool
+     */
+    public function isQuoteDeletable(): bool;
 }

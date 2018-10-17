@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-note-toggler',
+    tag: 'shopping-list-note-toggler',
+} %}
+
+{% define data = {
+    shoppingListItemNoteForm: required
+} %}
+
+{% set shoppingListItemNoteClass = '' %}
+
+{% block body %}
+    <div class="spacing-x spacing-x--small spacing-bottom spacing-bottom--big">
+        {% if not data.shoppingListItemNoteForm.vars.data.note %}
+            {% set shoppingListItemNoteClass = 'is-hidden' %}
+            <button type="button" class="link {{ config.jsName }}__button">
+                {{ 'shopping_list.item_note.add' | trans }}
+            </button>
+        {% endif %}
+        <div class="{{ config.jsName }}__wrapper grid {{ shoppingListItemNoteClass }}">
+            <div class="col col--sm-8">
+                {{ form_row(data.shoppingListItemNoteForm.note, {
+                    label: 'shopping_list.item_note' | trans,
+                    attr: {
+                        class: config.jsName ~ '__note-textarea',
+                        placeholder: ' '
+                    }})
+                }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

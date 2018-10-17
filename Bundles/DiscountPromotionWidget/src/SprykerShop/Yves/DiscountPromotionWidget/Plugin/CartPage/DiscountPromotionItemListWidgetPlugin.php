@@ -7,18 +7,18 @@
 
 namespace SprykerShop\Yves\DiscountPromotionWidget\Plugin\CartPage;
 
-use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\DiscountPromotionWidget\DiscountPromotionItemListWidgetPluginInterface;
+use SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \SprykerShop\Yves\DiscountPromotionWidget\DiscountPromotionWidgetFactory getFactory()
+ * @deprecated Use \SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget instead.
  */
 class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin implements DiscountPromotionItemListWidgetPluginInterface
 {
-    const PARAM_VARIANT_ATTRIBUTES = 'attributes';
+    public const PARAM_VARIANT_ATTRIBUTES = 'attributes';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -28,9 +28,9 @@ class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin impleme
      */
     public function initialize(QuoteTransfer $quoteTransfer, Request $request): void
     {
-        $this
-            ->addParameter('cart', $quoteTransfer)
-            ->addParameter('promotionProducts', $this->getPromotionProducts($quoteTransfer, $request));
+        $widget = new CartDiscountPromotionProductListWidget($quoteTransfer, $request);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -46,65 +46,6 @@ class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin impleme
      */
     public static function getTemplate(): string
     {
-        return '@DiscountPromotionWidget/views/cart-discount-promotion-products-list/cart-discount-promotion-products-list.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function getPromotionProducts(QuoteTransfer $quoteTransfer, Request $request): array
-    {
-        $promotionProducts = [];
-        foreach ($quoteTransfer->getPromotionItems() as $promotionItemTransfer) {
-            $promotionItemTransfer->requireAbstractSku();
-
-            $productStorageData = $this->getFactory()
-                ->getProductStorageClient()
-                ->findProductAbstractStorageData($promotionItemTransfer->getIdProductAbstract(), $this->getLocale());
-
-            if (!$productStorageData) {
-                continue;
-            }
-
-            $productViewTransfer = $this->getFactory()
-                ->getProductStorageClient()
-                ->mapProductStorageData(
-                    $productStorageData,
-                    $this->getLocale(),
-                    $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku())
-                );
-
-            $productViewTransfer->setPromotionItem($promotionItemTransfer);
-
-            $promotionProducts[$this->createPromotionProductBucketIdentifier($promotionItemTransfer)] = $productViewTransfer;
-        }
-
-        return $promotionProducts;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $abstractSku
-     *
-     * @return array
-     */
-    protected function getSelectedAttributes(Request $request, $abstractSku)
-    {
-        $selectedAttributes = $request->query->get(static::PARAM_VARIANT_ATTRIBUTES, []);
-
-        return isset($selectedAttributes[$abstractSku]) ? array_filter($selectedAttributes[$abstractSku]) : [];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
-     *
-     * @return string
-     */
-    protected function createPromotionProductBucketIdentifier(PromotionItemTransfer $promotionItemTransfer)
-    {
-        return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();
+        return CartDiscountPromotionProductListWidget::getTemplate();
     }
 }

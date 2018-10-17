@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\ProductWidget\Plugin\CmsContentWidget;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CmsContentWidgetProductConnector\Dependency\Plugin\ProductWidget\ProductGroupWidgetPluginInterface;
+use SprykerShop\Yves\ProductWidget\Widget\CmsProductGroupWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\CmsProductGroupWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */
 class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGroupWidgetPluginInterface
@@ -23,9 +26,11 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addWidgets($this->getFactory()->getCmsContentWidgetProductGroupWidgetPlugins());
+        $widget = new CmsProductGroupWidget($productViewTransfer);
+
+        $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getCmsContentWidgetProductGroupWidgetPlugins());
     }
 
     /**
@@ -41,6 +46,6 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public static function getTemplate(): string
     {
-        return '@ProductWidget/views/cms-product-group/cms-product-group.twig';
+        return CmsProductGroupWidget::getTemplate();
     }
 }

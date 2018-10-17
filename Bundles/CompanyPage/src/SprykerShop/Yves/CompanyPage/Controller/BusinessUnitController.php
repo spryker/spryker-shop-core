@@ -11,44 +11,37 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
 class BusinessUnitController extends AbstractCompanyController
 {
-    public const BUSINESS_UNIT_LIST_SORT_FIELD = 'id_company_business_unit';
-    public const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+    protected const BUSINESS_UNIT_LIST_SORT_FIELD = 'id_company_business_unit';
+    protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+    protected const REQUEST_PARAM_ID = 'id';
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        $viewData = $this->executeIndexAction($request);
+        $viewData = $this->executeIndexAction();
 
         return $this->view($viewData, [], '@CompanyPage/views/business-unit/business-unit.twig');
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array
      */
-    protected function executeIndexAction(Request $request): array
+    protected function executeIndexAction(): array
     {
-        $businessUnitCollectionTransfer = $this->createBusinessUnitCriteriaFilterTransfer($request);
-        $businessUnitCollectionTransfer = $this->getFactory()
-            ->getCompanyBusinessUnitClient()
-            ->getCompanyBusinessUnitCollection($businessUnitCollectionTransfer);
-
         return [
-            'pagination' => $businessUnitCollectionTransfer->getPagination(),
-            'businessUnitCollection' => $businessUnitCollectionTransfer->getCompanyBusinessUnits(),
+            'businessUnitsTree' => $this->getFactory()->createCompanyBusinessUnitTreeBuilder()->getCustomerCompanyBusinessUnitTree(),
         ];
     }
 
@@ -91,19 +84,33 @@ class BusinessUnitController extends AbstractCompanyController
             ->createCompanyPageFormFactory()
             ->createBusinessUnitFormDataProvider();
 
+        $companyUserTransfer = $this->findCurrentCompanyUserTransfer();
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
+        $dataProviderOptions = $dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit);
+
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getBusinessUnitForm()
+            ->getBusinessUnitForm($dataProviderOptions)
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
-            $companyBusinessUnitForm->setData($dataProvider->getData($this->getCompanyUser()));
-        } elseif ($companyBusinessUnitForm->isValid()) {
-            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
+            $companyBusinessUnitForm->setData($dataProvider->getData($this->findCurrentCompanyUserTransfer()));
+        }
+
+        if ($companyBusinessUnitForm->isValid()) {
+            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitSave($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+                $this->applySuccessMessage($companyBusinessUnitResponseTransfer);
             }
+
+            if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+                $this->applyErrorMessage($companyBusinessUnitResponseTransfer);
+            }
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                'id' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getIdCompanyBusinessUnit(),
+            ]);
         }
 
         return [
@@ -130,6 +137,8 @@ class BusinessUnitController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeUpdateAction(Request $request)
@@ -138,49 +147,126 @@ class BusinessUnitController extends AbstractCompanyController
             ->createCompanyPageFormFactory()
             ->createBusinessUnitFormDataProvider();
 
+        $companyUserTransfer = $this->findCurrentCompanyUserTransfer();
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
+        $dataProviderOptions = $dataProvider->getOptions($companyUserTransfer, $idCompanyBusinessUnit);
+
         $companyBusinessUnitForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getBusinessUnitForm()
+            ->getBusinessUnitForm($dataProviderOptions)
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
-            $companyBusinessUnitId = $request->query->getInt('id');
-            $companyBusinessUnitForm->setData(
-                $dataProvider->getData(
-                    $this->getCompanyUser(),
-                    $companyBusinessUnitId
-                )
-            );
-        } elseif ($companyBusinessUnitForm->isValid()) {
-            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitUpdate($companyBusinessUnitForm->getData());
+            $data = $dataProvider->getData($this->findCurrentCompanyUserTransfer(), $idCompanyBusinessUnit);
+
+            $companyBusinessUnitTransfer = $this->getFactory()
+                ->getCompanyBusinessUnitClient()
+                ->getCompanyBusinessUnitById((new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($idCompanyBusinessUnit));
+
+            if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitTransfer->getFkCompany())) {
+                throw new NotFoundHttpException();
+            }
+
+            $companyBusinessUnitForm->setData($data);
+        }
+
+        if ($companyBusinessUnitForm->isValid()) {
+            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitSave($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+                $this->applySuccessMessage($companyBusinessUnitResponseTransfer);
             }
+
+            if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+                $this->applyErrorMessage($companyBusinessUnitResponseTransfer);
+            }
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                'id' => $idCompanyBusinessUnit,
+            ]);
         }
 
         return [
             'form' => $companyBusinessUnitForm->createView(),
+            'addresses' => $dataProviderOptions[CompanyBusinessUnitForm::FIELD_COMPANY_UNIT_ADDRESSES],
         ];
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
-        $companyBusinessUnitId = $request->query->getInt('id');
+        $companyBusinessUnitId = $request->query->getInt(static::REQUEST_PARAM_ID);
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($companyBusinessUnitId);
+
+        $companyBusinessUnitTransfer = $this->getFactory()
+            ->getCompanyBusinessUnitClient()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
 
         $companyBusinessUnitResponseTransfer = $this->getFactory()
             ->getCompanyBusinessUnitClient()
             ->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
-        $this->processResponseMessages($companyBusinessUnitResponseTransfer);
+
+        if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+            $this->applySuccessMessage($companyBusinessUnitResponseTransfer);
+        }
+
+        if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+            $this->applyErrorMessage($companyBusinessUnitResponseTransfer);
+        }
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmDeleteAction(Request $request)
+    {
+        $viewData = $this->executeConfirmDeleteAction($request);
+
+        return $this->view(
+            $viewData,
+            [],
+            '@CompanyPage/views/business-unit-delete-confirmation-page/business-unit-delete-confirmation-page.twig'
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return array
+     */
+    protected function executeConfirmDeleteAction(Request $request): array
+    {
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
+        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
+        $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
+
+        $companyBusinessUnitTransfer = $this->getFactory()
+            ->getCompanyBusinessUnitClient()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
+        return [
+            'companyBusinessUnit' => $companyBusinessUnitTransfer,
+        ];
     }
 
     /**
@@ -192,7 +278,7 @@ class BusinessUnitController extends AbstractCompanyController
     {
         $criteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
 
-        $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
+        $criteriaFilterTransfer->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
 
         $filterTransfer = $this->createFilterTransfer(self::BUSINESS_UNIT_LIST_SORT_FIELD);
         $criteriaFilterTransfer->setFilter($filterTransfer);
@@ -206,16 +292,22 @@ class BusinessUnitController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     protected function getCompanyBusinessUnitDetailsResponseData(Request $request): array
     {
-        $idCompanyBusinessUnit = $request->query->getInt('id');
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
 
         $companyBusinessUnitTransfer = $this->getFactory()->getCompanyBusinessUnitClient()
             ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
 
         $criteriaFilterTransfer = $this->createCompanyUnitAddressCriteriaFilterTransfer($request);
         $criteriaFilterTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
@@ -246,7 +338,7 @@ class BusinessUnitController extends AbstractCompanyController
         Request $request
     ): CompanyUnitAddressCriteriaFilterTransfer {
         $criteriaFilterTransfer = new CompanyUnitAddressCriteriaFilterTransfer();
-        $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
+        $criteriaFilterTransfer->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
 
         $filterTransfer = $this->createFilterTransfer(self::COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD);
         $criteriaFilterTransfer->setFilter($filterTransfer);
@@ -262,13 +354,45 @@ class BusinessUnitController extends AbstractCompanyController
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    protected function companyBusinessUnitUpdate(array $data): CompanyBusinessUnitResponseTransfer
+    protected function companyBusinessUnitSave(array $data): CompanyBusinessUnitResponseTransfer
     {
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->fromArray($data, true);
 
-        return $this->getFactory()
-            ->getCompanyBusinessUnitClient()
-            ->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
+        $companyBusinessUnitClient = $this->getFactory()->getCompanyBusinessUnitClient();
+
+        if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()) {
+            return $companyBusinessUnitClient->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
+        }
+
+        return $companyBusinessUnitClient->createCompanyBusinessUnit($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
+     *
+     * @return void
+     */
+    protected function applyErrorMessage(CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer): void
+    {
+        foreach ($companyBusinessUnitResponseTransfer->getMessages() as $message) {
+            $this->addTranslatedErrorMessage($message->getText(), [
+                '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+            ]);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
+     *
+     * @return void
+     */
+    protected function applySuccessMessage(CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer): void
+    {
+        foreach ($companyBusinessUnitResponseTransfer->getMessages() as $message) {
+            $this->addTranslatedSuccessMessage($message->getText(), [
+                '%unit%' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getName(),
+            ]);
+        }
     }
 }

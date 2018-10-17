@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin\WishlistWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\WishlistWidget\Widget\WishlistMenuItemWidget instead.
+ */
 interface WishlistMenuItemWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'WishlistMenuItemWidgetPlugin';

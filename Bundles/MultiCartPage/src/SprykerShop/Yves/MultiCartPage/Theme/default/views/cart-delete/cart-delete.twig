@@ -1,0 +1,52 @@
+{% extends template('page-layout-multi-cart', 'MultiCartPage') %}
+
+{% define data = {
+    cart: _view.cart | default([]),
+    cartName: _view.cart.name | default,
+    cartIdQuote: _view.cart.idQuote | default,
+    cartShareDetails: _view.cart.shareDetails | default
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
+            },{
+                label: 'page.multi_cart.shopping_cart.list.title' | trans,
+                url: url('multi-cart'),
+            },{
+                label: 'multi_cart_page.cart_delete_confirmation.warning' | trans
+            }]
+        }
+    } only %}
+{% endblock %}
+
+{% block customerContent %}
+    <div class="box">
+        <h5>{{ "multi_cart_page.cart_delete_confirmation.warning" | trans }}</h5>
+        <hr />
+        {{ "multi_cart_page.cart_delete_confirmation.trying_to_delete" | trans }}: <strong>{{ data.cartName }}</strong>
+        <br/><br/>
+
+        {% widget 'CartDeleteCompanyUsersListWidget' args [data.cart] only %}
+        {% elsewidget 'CartDeleteCompanyUsersListWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartDeleteCompanyUsersListWidget instead. #}
+        {% endwidget %}
+
+        <div class="form__actions">
+            <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
+                {% include atom('icon') with {
+                    modifiers: ['small'],
+                    data: {
+                        name: 'chevron-left'
+                    }
+                } only %}
+                {{ "general.back.button" | trans }}
+            </a>
+            <a href="{{ url('multi-cart/delete', { 'idQuote' : data.cartIdQuote }) }}" class="button button--alert">
+                {{ "multi_cart_page.cart_delete_confirmation.delete" | trans }}
+            </a>
+        </div>
+    </div>
+{% endblock %}

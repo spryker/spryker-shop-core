@@ -14,14 +14,22 @@
         <div class="col col--sm-12 col--md-6">
             <div class="box">
                 <h5>{{ 'global.payment_providers' | trans }}</h5>
-                {{ widgetGlobal('NavigationWidgetPlugin', 'PAYMENT_PROVIDERS', 'navigation-providers-payment') }}
+                {% widget 'NavigationWidget' args ['PAYMENT_PROVIDERS', 'navigation-providers-payment'] %}
+                {% nowidget %}
+                    {# @deprecated Kept for BC reasons, will be removed in next major. #}
+                    {{ widgetGlobal('NavigationWidgetPlugin', 'PAYMENT_PROVIDERS', 'navigation-providers-payment') }}
+                {% endwidget %}
             </div>
         </div>
 
         <div class="col col--sm-12 col--md-6">
             <div class="box">
                 <h5>{{ 'global.shipment_providers' | trans }}</h5>
-                {{ widgetGlobal('NavigationWidgetPlugin', 'SHIPMENT_PROVIDERS', 'navigation-providers-shipment') }}
+                {% widget 'NavigationWidget' args ['SHIPMENT_PROVIDERS', 'navigation-providers-shipment'] %}
+                {% nowidget %}
+                    {# @deprecated Kept for BC reasons, will be removed in next major. #}
+                    {{ widgetGlobal('NavigationWidgetPlugin', 'SHIPMENT_PROVIDERS', 'navigation-providers-shipment') }}
+                {% endwidget %}
             </div>
         </div>
     </div>
@@ -29,7 +37,11 @@
     <div class="box">
         <div class="grid">
             <div class="col col--sm-12 col--md-6 col--lg-6">
-                {{ widgetGlobal('NavigationWidgetPlugin', 'FOOTER_NAVIGATION', 'navigation-footer') }}
+                {% widget 'NavigationWidget' args ['FOOTER_NAVIGATION', 'navigation-footer'] %}
+                {% nowidget %}
+                    {# @deprecated Kept for BC reasons, will be removed in next major. #}
+                    {{ widgetGlobal('NavigationWidgetPlugin', 'FOOTER_NAVIGATION', 'navigation-footer') }}
+                {% endwidget %}
             </div>
 
             <ul class="col col--sm-12 col--md-6 col--lg-3">
@@ -37,16 +49,24 @@
                 <li>+49 (0)30 2084983 50</li>
                 <li><a href="mailto:info@spryker.com">info@spryker.com</a></li>
             </ul>
-            
+
             <div class="col col--lg-3 is-hidden-sm-md">
                 <h5>{{ 'global.social' | trans }}</h5>
-                {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', 'navigation-social') }}
+                {% widget 'NavigationWidget' args ['SOCIAL_LINKS', 'navigation-social'] %}
+                {% nowidget %}
+                    {# @deprecated Kept for BC reasons, will be removed in next major. #}
+                    {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', 'navigation-social') }}
+                {% endwidget %}
             </div>
         </div>
     </div>
 
     <div class="box is-hidden-lg-xl">
         <h5>{{ 'global.social' | trans }}</h5>
-        {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', 'navigation-social') }}
+        {% widget 'NavigationWidget' args ['SOCIAL_LINKS', 'navigation-social'] %}
+        {% nowidget %}
+            {# @deprecated Kept for BC reasons, will be removed in next major. #}
+            {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', 'navigation-social') }}
+        {% endwidget %}
     </div>
 {% endblock %}

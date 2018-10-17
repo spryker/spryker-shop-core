@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/checkout-page",
+  "type": "library",
   "description": "CheckoutPage module",
   "license": "proprietary",
   "require": {
@@ -16,7 +17,7 @@
     "spryker/customer": "^7.4.0",
     "spryker/glossary": "^3.3.0",
     "spryker/glossary-storage": "^1.0.0",
-    "spryker/kernel": "^3.16.0",
+    "spryker/kernel": "^3.24.0",
     "spryker/messenger": "^3.1.0",
     "spryker/money": "^2.4.0",
     "spryker/permission-extension": "^1.0.0",
@@ -29,13 +30,17 @@
     "spryker/util-validate": "^1.0.0"
   },
   "require-dev": {
+    "spryker-shop/cart-note-widget": "*",
     "spryker-shop/checkout-widget": "*",
+    "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/cart-note-widget": "If you want to use components from module CartNoteWidget or CartNoteQuoteItemNoteWidgetPlugin.",
     "spryker-shop/checkout-widget": "ADD SUGGEST DESCRIPTION",
+    "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or SummaryProductPackagingUnitWidgetPlugin.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
