@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\CartPage\Dependency\Plugin\DiscountWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\VoucherFormWidget instead
+ */
 interface DiscountVoucherFormWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'DiscountVoucherFormWidgetPlugin';

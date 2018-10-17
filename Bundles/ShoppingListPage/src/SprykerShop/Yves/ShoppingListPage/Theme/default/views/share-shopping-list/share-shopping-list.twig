@@ -30,7 +30,9 @@
 {% endblock %}
 
 {% block customerNavigation %}
-    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.idShoppingList) }}
+    {% widget 'CustomerNavigationWidget' args ['shoppingList', data.idShoppingList] only %}
+    {% elsewidget 'CustomerNavigationWidgetPlugin' args ['shoppingList', data.idShoppingList] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
+    {% endwidget %}
 {% endblock %}
 
 {% block customerContent %}

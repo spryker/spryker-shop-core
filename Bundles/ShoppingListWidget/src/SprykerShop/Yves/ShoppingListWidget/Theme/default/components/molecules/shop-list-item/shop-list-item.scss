@@ -27,11 +27,11 @@
         }
 
         &__access {
-            font-size: map_get($setting-font-size, 'small');
+            font-size: map-get($setting-font-size, 'small');
             color: $setting-color-darker;
 
             &--full {
-                color: map_get($setting-color-actions, 'success');
+                color: map-get($setting-color-actions, 'success');
             }
         }
 

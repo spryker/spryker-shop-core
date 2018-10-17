@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\AvailabilityWidget\AvailabilityWidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead.
+ */
 class AvailabilityWidgetPlugin extends AbstractWidgetPlugin implements AvailabilityWidgetPluginInterface
 {
     /**

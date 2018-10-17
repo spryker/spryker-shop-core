@@ -8,10 +8,11 @@
 namespace SprykerShop\Yves\CurrencyWidget\Plugin\ShopUi;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\CurrencyWidget\Widget\CurrencyWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\CurrencyWidget\CurrencyWidgetPluginInterface;
 
 /**
- * @method \SprykerShop\Yves\CurrencyWidget\CurrencyWidgetFactory getFactory()
+ * @deprecated Use \SprykerShop\Yves\CurrencyWidget\Widget\CurrencyWidget instead.
  */
 class CurrencyWidgetPlugin extends AbstractWidgetPlugin implements CurrencyWidgetPluginInterface
 {
@@ -20,8 +21,9 @@ class CurrencyWidgetPlugin extends AbstractWidgetPlugin implements CurrencyWidge
      */
     public function initialize(): void
     {
-        $this->addParameter('currencies', $this->getCurrencies())
-            ->addParameter('currentCurrency', $this->getCurrentCurrency());
+        $widget = new CurrencyWidget();
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -41,35 +43,6 @@ class CurrencyWidgetPlugin extends AbstractWidgetPlugin implements CurrencyWidge
      */
     public static function getTemplate(): string
     {
-        return '@CurrencyWidget/views/currency-switcher/currency-switcher.twig';
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
-     */
-    protected function getCurrencies()
-    {
-        $currencyClient = $this->getFactory()->getCurrencyClient();
-        $availableCurrencyCodes = $this->getFactory()->getStore()->getCurrencyIsoCodes();
-
-        $currencies = [];
-        foreach ($availableCurrencyCodes as $currency) {
-            $currencies[$currency] = $currencyClient->fromIsoCode($currency);
-        }
-
-        return $currencies;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCurrentCurrency()
-    {
-        $currentCurrencyIsoCode = $this->getFactory()->getCurrencyClient()->getCurrent()->getCode();
-
-        if (!$currentCurrencyIsoCode) {
-            return $this->getFactory()->getStore()->getCurrencyIsoCode();
-        }
-        return $currentCurrencyIsoCode;
+        return CurrencyWidget::getTemplate();
     }
 }

@@ -14,9 +14,11 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\View\View;
+use SprykerShop\Yves\CompanyPage\Form\CompanyUserForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -101,14 +103,12 @@ class UserController extends AbstractCompanyController
         $companyUserForm = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->getCompanyUserForm(
-                $dataProvider->getOptions(
-                    $this->getCompanyUser()->getFkCompany()
-                )
+                $dataProvider->getOptions($this->findCurrentCompanyUserTransfer()->getFkCompany())
             )
             ->handleRequest($request);
 
         if ($companyUserForm->isSubmitted() === false) {
-            $companyUserForm->setData($dataProvider->getData($this->getCompanyUser()->getFkCompany()));
+            $companyUserForm->setData($dataProvider->getData($this->findCurrentCompanyUserTransfer()->getFkCompany()));
         }
 
         if ($companyUserForm->isValid()) {
@@ -145,6 +145,8 @@ class UserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeUpdateAction(Request $request)
@@ -157,19 +159,20 @@ class UserController extends AbstractCompanyController
             ->createCompanyPageFormFactory()
             ->getCompanyUserForm(
                 $dataProvider->getOptions(
-                    $this->getCompanyUser()->getFkCompany()
+                    $this->findCurrentCompanyUserTransfer()->getFkCompany()
                 )
             )
             ->handleRequest($request);
 
         if ($companyUserForm->isSubmitted() === false) {
             $idCompanyUser = $request->query->getInt('id');
-            $companyUserForm->setData(
-                $dataProvider->getData(
-                    $this->getCompanyUser()->getFkCompany(),
-                    $idCompanyUser
-                )
-            );
+            $data = $dataProvider->getData($this->findCurrentCompanyUserTransfer()->getFkCompany(), $idCompanyUser);
+
+            if (!$this->isCurrentCustomerRelatedToCompany($data[CompanyUserForm::FIELD_FK_COMPANY])) {
+                throw new NotFoundHttpException();
+            }
+
+            $companyUserForm->setData($data);
         }
 
         if ($companyUserForm->isValid()) {
@@ -190,6 +193,8 @@ class UserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
@@ -203,6 +208,14 @@ class UserController extends AbstractCompanyController
             $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_YOURSELF);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->getCompanyUserById($companyUserTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyUserTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
         }
 
         $companyUserResponseTransfer = $this->getFactory()
@@ -235,6 +248,8 @@ class UserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     protected function executeConfirmDeleteAction(Request $request): array
@@ -249,6 +264,10 @@ class UserController extends AbstractCompanyController
             ->getCompanyUserClient()
             ->getCompanyUserById($companyUserTransfer);
 
+        if (!$this->isCurrentCustomerRelatedToCompany($companyUserTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
+
         $companyUserTransfer->requireCustomer();
         $customerTransfer = $companyUserTransfer->getCustomer();
 
@@ -259,22 +278,6 @@ class UserController extends AbstractCompanyController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    protected function findCurrentCompanyUserTransfer(): ?CompanyUserTransfer
-    {
-        $currentCustomerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        if (!$currentCustomerTransfer) {
-            return null;
-        }
-
-        return $currentCustomerTransfer->getCompanyUserTransfer();
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer
@@ -282,7 +285,7 @@ class UserController extends AbstractCompanyController
     protected function createCompanyUserCriteriaFilterTransfer(Request $request): CompanyUserCriteriaFilterTransfer
     {
         $criteriaFilterTransfer = new CompanyUserCriteriaFilterTransfer();
-        $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
+        $criteriaFilterTransfer->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
 
         $filterTransfer = $this->createFilterTransfer(self::COMPANY_USER_LIST_SORT_FIELD);
         $criteriaFilterTransfer->setFilter($filterTransfer);
