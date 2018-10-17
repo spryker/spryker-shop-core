@@ -14,6 +14,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class CompanyBusinessUnitAddressWidget extends AbstractWidget
 {
+    protected const KEY_ADDRESS_DEFAULT = 'addressesForm[%s][default]';
+
     /**
      * @param string $formType
      */
@@ -77,12 +79,62 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         $customerAddressesArray = $addressHandler->getCustomerAddressesArray($formType);
         $companyBusinessUnitAddressesArray = $addressHandler->getCompanyBusinessUnitAddressesArray($formType);
 
+        $defaultCustomerAddressIndexes = $this->getDefaultAddressIndexes($customerAddressesArray, $formType);
+        $defaultCompanyBusinessUnitAddressIndexes = $this->getDefaultAddressIndexes($companyBusinessUnitAddressesArray, $formType);
+
+        if ((count($defaultCustomerAddressIndexes) > 0 && count($defaultCompanyBusinessUnitAddressIndexes) > 0)
+            || (count($defaultCustomerAddressIndexes) === 0 && count($defaultCompanyBusinessUnitAddressIndexes) === 0)
+        ) {
+            $companyBusinessUnitAddressesArray = $this->resetAddressesDefaultValues(
+                $companyBusinessUnitAddressesArray,
+                $defaultCompanyBusinessUnitAddressIndexes,
+                $formType
+            );
+        }
+
         return $this->encodeAddressesToJson(
             array_merge(
                 $customerAddressesArray,
                 $companyBusinessUnitAddressesArray
             )
         );
+    }
+
+    /**
+     * @param array $addressesArray
+     * @param int[] $addressIndexes
+     * @param string $formType
+     *
+     * @return array
+     */
+    protected function resetAddressesDefaultValues(array $addressesArray, array $addressIndexes, string $formType): array
+    {
+        foreach ($addressIndexes as $addressIndex) {
+            $addressesArray[$addressIndex][sprintf(static::KEY_ADDRESS_DEFAULT, $formType)] = false;
+        }
+
+        return $addressesArray;
+    }
+
+    /**
+     * @param array $addressesArray
+     * @param string $formType
+     *
+     * @return int[]
+     */
+    protected function getDefaultAddressIndexes(array $addressesArray, string $formType): array
+    {
+        $index = 0;
+        $defaultAddressIndexes = [];
+        foreach ($addressesArray as $addressItem) {
+            if ($addressItem[sprintf(static::KEY_ADDRESS_DEFAULT, $formType)] === true) {
+                $defaultAddressIndexes[] = $index;
+            }
+
+            $index++;
+        }
+
+        return $defaultAddressIndexes;
     }
 
     /**
