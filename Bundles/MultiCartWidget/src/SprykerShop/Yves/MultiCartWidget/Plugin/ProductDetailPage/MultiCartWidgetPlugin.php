@@ -10,9 +10,12 @@ namespace SprykerShop\Yves\MultiCartWidget\Plugin\ProductDetailPage;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\MultiCartWidget\Widget\AddToMultiCartWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\MultiCartWidget\MultiCartWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\AddToMultiCartWidget instead.
+ *
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
 class MultiCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWidgetPluginInterface
@@ -27,11 +30,11 @@ class MultiCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWid
      */
     public function initialize(ProductViewTransfer $productViewTransfer, $disabled): void
     {
-        $this
-            ->addWidgets($this->getFactory()->getViewExtendWidgetPlugins())
-            ->addParameter('carts', $this->getQuoteCollection())
-            ->addParameter('disabled', $disabled)
-            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
+        $widget = new AddToMultiCartWidget($disabled);
+
+        $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 
     /**
@@ -55,39 +58,6 @@ class MultiCartWidgetPlugin extends AbstractWidgetPlugin implements MultiCartWid
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/views/add-to-multi-cart/add-to-multi-cart.twig';
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer[]
-     */
-    protected function getQuoteCollection(): array
-    {
-        $quoteCollectionTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->getQuoteCollection();
-
-        $quoteTransferCollection = [];
-        $defaultQuoteTransfer = $this->getFactory()->getMultiCartClient()->getDefaultCart();
-        if ($this->can('WriteSharedCartPermissionPlugin', $defaultQuoteTransfer->getIdQuote())) {
-            $quoteTransferCollection[] = $defaultQuoteTransfer;
-        }
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if (!$quoteTransfer->getIsDefault() && $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote())) {
-                $quoteTransferCollection[] = $quoteTransfer;
-            }
-        }
-
-        return $quoteTransferCollection;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isMultiCartAllowed(): bool
-    {
-        return $this->getFactory()
-            ->getMultiCartClient()
-            ->isMultiCartAllowed();
+        return AddToMultiCartWidget::getTemplate();
     }
 }

@@ -8,5 +8,7 @@
 } %}
 
 {% block customerNavigation %}
-    {{ widgetGlobal('CustomerNavigationWidgetPlugin', data.activePage, data.activeWishlistId) }}
+    {% widget 'CustomerNavigationWidget' args [data.activePage, data.activeWishlistId] only %}
+    {% elsewidget 'CustomerNavigationWidgetPlugin' args [data.activePage, data.activeWishlistId] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
+    {% endwidget %}
 {% endblock %}

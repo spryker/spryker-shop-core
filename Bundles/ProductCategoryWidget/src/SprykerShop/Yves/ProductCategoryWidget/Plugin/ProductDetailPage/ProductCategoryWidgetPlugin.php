@@ -9,9 +9,12 @@ namespace SprykerShop\Yves\ProductCategoryWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductCategoryWidget\Widget\ProductBreadcrumbsWithCategoriesWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductCategoryWidget\ProductCategoryWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductCategoryWidget\Widget\ProductBreadcrumbsWithCategoriesWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductCategoryWidget\ProductCategoryWidgetFactory getFactory()
  */
 class ProductCategoryWidgetPlugin extends AbstractWidgetPlugin implements ProductCategoryWidgetPluginInterface
@@ -29,7 +32,7 @@ class ProductCategoryWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public static function getTemplate(): string
     {
-        return '@ProductCategoryWidget/views/product-detail-page-breadcrumb/product-detail-page-breadcrumb.twig';
+        return ProductBreadcrumbsWithCategoriesWidget::getTemplate();
     }
 
     /**
@@ -39,21 +42,8 @@ class ProductCategoryWidgetPlugin extends AbstractWidgetPlugin implements Produc
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter('product', $productViewTransfer)
-            ->addParameter('categories', $this->getCategories($productViewTransfer));
-    }
+        $widget = new ProductBreadcrumbsWithCategoriesWidget($productViewTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductCategoryStorageTransfer[]
-     */
-    protected function getCategories(ProductViewTransfer $productViewTransfer)
-    {
-        $productAbstractCategoryStorageTransfer = $this->getFactory()
-            ->getProductCategoryStorageClient()
-            ->findProductAbstractCategory($productViewTransfer->getIdProductAbstract(), $this->getLocale());
-
-        return $productAbstractCategoryStorageTransfer->getCategories();
+        $this->parameters = $widget->getParameters();
     }
 }

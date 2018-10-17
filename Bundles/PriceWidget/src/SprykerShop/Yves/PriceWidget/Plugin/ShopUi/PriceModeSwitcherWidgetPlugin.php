@@ -8,9 +8,12 @@
 namespace SprykerShop\Yves\PriceWidget\Plugin\ShopUi;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\PriceWidget\Widget\PriceModeSwitcherWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\PriceWidget\PriceModeSwitcherWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\PriceWidget\Widget\PriceModeSwitcherWidget instead.
+ *
  * @method \SprykerShop\Yves\PriceWidget\PriceWidgetFactory getFactory()
  */
 class PriceModeSwitcherWidgetPlugin extends AbstractWidgetPlugin implements PriceModeSwitcherWidgetPluginInterface
@@ -20,9 +23,9 @@ class PriceModeSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Pric
      */
     public function initialize(): void
     {
-        $this
-            ->addParameter('priceModes', $this->getFactory()->getPriceClient()->getPriceModes())
-            ->addParameter('currentPriceMode', $this->getFactory()->getPriceClient()->getCurrentPriceMode());
+        $widget = new PriceModeSwitcherWidget();
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -38,6 +41,6 @@ class PriceModeSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Pric
      */
     public static function getTemplate(): string
     {
-        return '@PriceWidget/views/price-switch/price-switch.twig';
+        return PriceModeSwitcherWidget::getTemplate();
     }
 }

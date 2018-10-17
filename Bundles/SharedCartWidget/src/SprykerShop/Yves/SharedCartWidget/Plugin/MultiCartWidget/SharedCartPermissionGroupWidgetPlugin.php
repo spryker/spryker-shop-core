@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartWidget;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCartPermissionGroupWidgetPluginInterface;
+use SprykerShop\Yves\SharedCartWidget\Widget\SharedCartPermissionGroupWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartPermissionGroupWidget instead.
+ *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
 class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implements SharedCartPermissionGroupWidgetPluginInterface
@@ -23,21 +26,9 @@ class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin impleme
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this
-            ->addParameter('cart', $quoteTransfer)
-            ->addParameter('accessType', $this->getAccessType($quoteTransfer));
-    }
+        $widget = new SharedCartPermissionGroupWidget($quoteTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return string|null
-     */
-    protected function getAccessType(QuoteTransfer $quoteTransfer): ?string
-    {
-        return $this->getFactory()
-            ->getSharedCartClient()
-            ->getQuoteAccessLevel($quoteTransfer);
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -61,6 +52,6 @@ class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin impleme
      */
     public static function getTemplate(): string
     {
-        return '@SharedCartWidget/views/shared-cart-permission/shared-cart-permission.twig';
+        return SharedCartPermissionGroupWidget::getTemplate();
     }
 }

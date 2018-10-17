@@ -1,6 +1,6 @@
 # ProductCategoryWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module provides product categories breadcrumbs on the product detail page. 
 
 ## Installation
 

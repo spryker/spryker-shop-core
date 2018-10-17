@@ -12,6 +12,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\DiscountWidget\DiscountSummaryWidgetPluginInterface;
 
 /**
+ * @deprecated Use molecule('cart-discount-summary', 'DiscountWidget') instead.
+ *
  * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
  */
 class DiscountSummaryWidgetPlugin extends AbstractWidgetPlugin implements DiscountSummaryWidgetPluginInterface
