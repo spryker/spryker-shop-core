@@ -40,7 +40,7 @@ class Error404Controller extends AbstractController
             return '';
         }
 
-        $exception = $request->query->get(self::REQUEST_PARAM_EXCEPTION);
+        $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
         if ($exception instanceof FlattenException) {
             return $exception->getMessage();
         }

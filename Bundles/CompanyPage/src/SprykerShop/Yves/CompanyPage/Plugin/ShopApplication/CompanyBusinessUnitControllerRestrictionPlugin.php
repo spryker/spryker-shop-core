@@ -17,24 +17,30 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
-class CompanyBusinessUnitRestrictionFilterControllerEventHandlerPlugin extends AbstractPlugin implements FilterControllerEventHandlerPluginInterface
+class CompanyBusinessUnitControllerRestrictionPlugin extends AbstractPlugin implements FilterControllerEventHandlerPluginInterface
 {
     /**
      * @uses \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController::REQUEST_PARAM_ID
      */
     protected const REQUEST_PARAM_COMPANY_BUSINESS_UNIT_ID = 'id';
 
-    protected const GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED = 'company_page.company_business_unit_restricted_message';
+    /**
+     * @uses \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController::updateAction()
+     * @uses \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController::deleteAction()
+     * @uses \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController::confirmDeleteAction()
+     */
     protected const DENIED_ACTIONS = [
         'updateAction',
         'deleteAction',
         'confirmDeleteAction',
     ];
 
+    protected const GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED = 'company_page.company_business_unit_restricted_message';
+
     /**
      * {@inheritdoc}
-     * - Verifies if customer could perform an action with company business unit.
-     * - Throws an exception with predefined message if customer has no permissions for such company business unit.
+     * - Verifies if customer could perform an action from BusinessUnitController with company business unit.
+     * - Throws exception if customer has no permissions for such company business unit.
      *
      * @api
      *
@@ -78,9 +84,11 @@ class CompanyBusinessUnitRestrictionFilterControllerEventHandlerPlugin extends A
 
         [$controllerInstance, $actionName] = $eventController;
 
-        if (!($controllerInstance instanceof BusinessUnitController) ||
-            !in_array($actionName, self::DENIED_ACTIONS)
-        ) {
+        if (!$controllerInstance instanceof BusinessUnitController) {
+            return false;
+        }
+
+        if (!in_array($actionName, static::DENIED_ACTIONS)) {
             return false;
         }
 
@@ -94,10 +102,9 @@ class CompanyBusinessUnitRestrictionFilterControllerEventHandlerPlugin extends A
      */
     protected function getCompanyBusinessUnitTransfer(int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer
     {
-        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-        $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
-
         return $this->getFactory()->getCompanyBusinessUnitClient()
-            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+            ->getCompanyBusinessUnitById(
+                (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
+            );
     }
 }
