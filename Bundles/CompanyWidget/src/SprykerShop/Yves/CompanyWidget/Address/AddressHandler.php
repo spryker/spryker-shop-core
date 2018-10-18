@@ -27,11 +27,12 @@ class AddressHandler implements AddressHandlerInterface
     protected const FIELD_ISO2_CODE = 'iso2_code';
     protected const FIELD_PHONE = 'phone';
     protected const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
+    protected const FIELD_COMPANY_BUSINESS_UNIT_NAME = 'name';
 
     protected const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
     protected const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
 
-    protected const FIELDS_ADDRESS_DATA = [
+    protected const FIELDS_ALLOWED_ADDRESS = [
         self::FIELD_SALUTATION,
         self::FIELD_FIRST_NAME,
         self::FIELD_LAST_NAME,
@@ -44,15 +45,12 @@ class AddressHandler implements AddressHandlerInterface
         self::FIELD_ISO2_CODE,
         self::FIELD_PHONE,
         self::FIELD_ID_CUSTOMER_ADDRESS,
+        self::FIELD_COMPANY_BUSINESS_UNIT_NAME,
     ];
 
     protected const FIELD_ADDRESS_FULL_ADDRESS = 'full_address';
     protected const FIELD_ADDRESS_DEFAULT = 'default';
     protected const FIELD_ADDRESS_OPTION_GROUP = 'option_group';
-
-    protected const FIELD_VALUE_COMPANY_BUSINESS_UNIT_SALUTATION = 'Mr';
-    protected const FIELD_VALUE_COMPANY_BUSINESS_UNIT_FIRST_NAME = '';
-    protected const FIELD_VALUE_COMPANY_BUSINESS_UNIT_LAST_NAME = '';
 
     protected const FORM_TYPE_OPTION_BILLING_ADDRESS = 'billingAddress';
     protected const FORM_TYPE_OPTION_SHIPPING_ADDRESS = 'shippingAddress';
@@ -226,7 +224,10 @@ class AddressHandler implements AddressHandlerInterface
     ): array {
         $companyUnitAddressArray = $companyUnitAddressTransfer->toArray();
 
-        $companyUnitAddressArray = $this->expandAddressListItemWithPersonalInfo($companyUnitAddressArray);
+        $companyUnitAddressArray = $this->expandAddressListItemWithCompanyBusinessUnitName(
+            $companyUnitAddressArray,
+            $companyBusinessUnitTransfer
+        );
         $companyUnitAddressArray = $this->expandAddressListItemWithCompanyName(
             $companyUnitAddressArray,
             $companyBusinessUnitTransfer->getCompany()
@@ -265,15 +266,16 @@ class AddressHandler implements AddressHandlerInterface
 
     /**
      * @param array $addressData
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return array
      */
-    protected function expandAddressListItemWithPersonalInfo(array $addressData): array
-    {
+    protected function expandAddressListItemWithCompanyBusinessUnitName(
+        array $addressData,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): array {
         return array_merge($addressData, [
-            static::FIELD_SALUTATION => static::FIELD_VALUE_COMPANY_BUSINESS_UNIT_SALUTATION,
-            static::FIELD_FIRST_NAME => static::FIELD_VALUE_COMPANY_BUSINESS_UNIT_FIRST_NAME,
-            static::FIELD_LAST_NAME => static::FIELD_VALUE_COMPANY_BUSINESS_UNIT_LAST_NAME,
+            static::FIELD_COMPANY_BUSINESS_UNIT_NAME => $companyBusinessUnitTransfer->getName(),
         ]);
     }
 
@@ -288,7 +290,7 @@ class AddressHandler implements AddressHandlerInterface
         $preparedAddressData = [];
 
         foreach ($addressData as $key => $value) {
-            if (in_array($key, static::FIELDS_ADDRESS_DATA, true)) {
+            if (in_array($key, static::FIELDS_ALLOWED_ADDRESS, true)) {
                 $preparedAddressData[$this->addFormTypePrefix($key, $formType)] = $value;
             }
         }
@@ -409,7 +411,14 @@ class AddressHandler implements AddressHandlerInterface
     protected function addFullAddressValue(array $addressData, array $preparedAddressData, string $formType): array
     {
         $addressFullNameKey = $this->addFormTypePrefix(static::FIELD_ADDRESS_FULL_ADDRESS, $formType);
-        $preparedAddressData[$addressFullNameKey] = $this->getFullAddress($addressData);
+
+        if (isset($addressData[static::FIELD_COMPANY_BUSINESS_UNIT_NAME])) {
+            $preparedAddressData[$addressFullNameKey] = $this->getCompanyBusinessUnitFullAddress($addressData);
+
+            return $preparedAddressData;
+        }
+
+        $preparedAddressData[$addressFullNameKey] = $this->getCustomerFullAddress($addressData);
 
         return $preparedAddressData;
     }
@@ -419,13 +428,30 @@ class AddressHandler implements AddressHandlerInterface
      *
      * @return string
      */
-    protected function getFullAddress(array $addressFormData): string
+    protected function getCustomerFullAddress(array $addressFormData): string
     {
         return sprintf(
             '%s %s %s, %s %s, %s %s',
             $addressFormData[static::FIELD_SALUTATION],
             $addressFormData[static::FIELD_FIRST_NAME],
             $addressFormData[static::FIELD_LAST_NAME],
+            $addressFormData[static::FIELD_ADDRESS_1],
+            $addressFormData[static::FIELD_ADDRESS_2],
+            $addressFormData[static::FIELD_ZIP_CODE],
+            $addressFormData[static::FIELD_CITY]
+        );
+    }
+
+    /**
+     * @param array $addressFormData
+     *
+     * @return string
+     */
+    protected function getCompanyBusinessUnitFullAddress(array $addressFormData): string
+    {
+        return sprintf(
+            '%s, %s %s, %s %s',
+            $addressFormData[static::FIELD_COMPANY_BUSINESS_UNIT_NAME],
             $addressFormData[static::FIELD_ADDRESS_1],
             $addressFormData[static::FIELD_ADDRESS_2],
             $addressFormData[static::FIELD_ZIP_CODE],
