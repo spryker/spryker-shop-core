@@ -16,9 +16,6 @@ use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormHandlerStrategyPluginInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
@@ -33,14 +30,13 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
     protected const PARAM_ADD_TO_SHOPPING_LIST = 'addToShoppingList';
 
-
     /**
      * {@inheritdoc}
      * - Returns true if "add to shopping list" button was pressed.
      *
      * @api
      *
-     * @param QuickOrderTransfer $quickOrderTransfer
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      * @param array $params
      *
      * @return bool
@@ -58,17 +54,17 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
      *
      * @api
      *
-     * @param QuickOrderTransfer $quickOrderTransfer
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      * @param array $params
      *
-     * @return RouteTransfer|null
+     * @return \Generated\Shared\Transfer\RouteTransfer|null
      */
     public function execute(QuickOrderTransfer $quickOrderTransfer, array $params): ?RouteTransfer
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $this->assertCustomerTransfer($customerTransfer);
 
-        $shoppingListTransfer = $this->mapShoppingListTransfer($customerTransfer, $quickOrderTransfer,  $params);
+        $shoppingListTransfer = $this->mapShoppingListTransfer($customerTransfer, $quickOrderTransfer, $params);
         $shoppingListResponseTransfer = $this->getFactory()
                     ->getShoppingListClient()
                     ->addItems($shoppingListTransfer);
@@ -81,9 +77,9 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     }
 
     /**
-     * @param ShoppingListResponseTransfer $shoppingListResponseTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
      *
-     * @return RouteTransfer
+     * @return \Generated\Shared\Transfer\RouteTransfer
      */
     protected function createRedirectRoute(ShoppingListResponseTransfer $shoppingListResponseTransfer): RouteTransfer
     {
@@ -97,7 +93,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
@@ -111,11 +107,11 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
-     * @param QuickOrderTransfer $quickOrderTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      * @param array $params
      *
-     * @return ShoppingListTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     protected function mapShoppingListTransfer(
         CustomerTransfer $customerTransfer,

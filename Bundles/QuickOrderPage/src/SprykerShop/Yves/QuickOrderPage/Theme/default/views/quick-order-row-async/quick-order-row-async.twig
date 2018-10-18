@@ -3,13 +3,17 @@
 {% define data = {
     quantity: _view.quantity,
     price: _view.price,
+    additionalColumns: _view.additionalColumns,
+    product: _view.product,
 } %}
 
 {% block template %}
     {% embed molecule('quick-order-row-partial', 'QuickOrderPage') with {
         data: {
             quantity: data.quantity,
-            price: data.price
+            price: data.price,
+            additionalColumns: data.additionalColumns,
+            product: data.product
         }
     } only %}
         {% block component %}

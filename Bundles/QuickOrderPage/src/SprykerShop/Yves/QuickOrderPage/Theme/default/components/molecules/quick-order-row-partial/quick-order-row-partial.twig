@@ -6,6 +6,7 @@
 } %}
 
 {% define data = {
+    product: null,
     quantityField: null,
     quantity: null,
     price: null,
@@ -18,7 +19,9 @@
             {% for additionalColumn in data.additionalColumns %}
                 <div class="col col--expand spacing spacing--inner">
                     {% block additionalColumn %}
-                        {{ additionalColumn.fieldName }}
+                        {% if data.product and data.product[additionalColumn.fieldName] is defined  %}
+                            {{ data.product[additionalColumn.fieldName] |trans }}
+                        {% endif %}
                     {% endblock %}
                 </div>
             {% endfor %}

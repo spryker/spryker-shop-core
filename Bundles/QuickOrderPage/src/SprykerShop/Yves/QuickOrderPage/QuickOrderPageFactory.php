@@ -161,7 +161,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return QtyFieldConstraint
+     * @return \SprykerShop\Yves\QuickOrderPage\Form\Constraint\QtyFieldConstraint
      */
     public function createQtyFieldConstraint()
     {
@@ -169,7 +169,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return QuantityRestrictionsConstraint
+     * @return \SprykerShop\Yves\QuickOrderPage\Form\Constraint\QuantityRestrictionsConstraint
      */
     public function createQuantityRestrictionsConstraint()
     {
