@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-ui": "^1.6.0",
-    "spryker/kernel": "^3.19.0",
+    "spryker/kernel": "^3.24.0",
     "spryker/multi-cart": "^1.0.0"
   },
   "require-dev": {
@@ -14,6 +14,7 @@
     "spryker-shop/customer-page": "*",
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/quick-order-page": "*",
+    "spryker-shop/shared-cart-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
@@ -22,6 +23,7 @@
     "spryker-shop/cart-page": "Widget plugins are available for this module.",
     "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
     "spryker-shop/quick-order-page": "If you want to use quick order page widget",
+    "spryker-shop/shared-cart-widget": "If you want to use components from module SharedCartWidget or SharedCartAddSeparateProductWidgetPlugin.",
     "spryker/permission": "If you want to use permissions plugins",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },

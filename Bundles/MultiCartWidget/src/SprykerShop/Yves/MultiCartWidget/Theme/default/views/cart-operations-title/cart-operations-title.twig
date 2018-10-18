@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    name: _widget.cart.name,
+} %}
+
+{% block body %}
+    <h3>{{ data.name }}</h3>
+{% endblock %}

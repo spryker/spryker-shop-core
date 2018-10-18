@@ -10,9 +10,12 @@ namespace SprykerShop\Yves\ProductReviewWidget\Plugin\CatalogPage;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CatalogPage\Dependency\Plugin\ProductReviewWidget\ProductRatingFilterWidgetPluginInterface;
+use SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
 class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements ProductRatingFilterWidgetPluginInterface
@@ -25,10 +28,9 @@ class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public function initialize(RangeSearchResultTransfer $rangeSearchResultTransfer, Request $request): void
     {
-        $this
-            ->addParameter('filter', $rangeSearchResultTransfer)
-            ->addParameter('filterValue', $this->getFilterValue($rangeSearchResultTransfer, $request))
-            ->addParameter('maximumRating', $this->getMaximumRating());
+        $widget = new ProductRatingFilterWidget($rangeSearchResultTransfer, $request);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -44,29 +46,6 @@ class ProductRatingFilterWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public static function getTemplate(): string
     {
-        return '@ProductReviewWidget/views/catalog-rating-filter/catalog-rating-filter.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeSearchResultTransfer
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return float|null
-     */
-    protected function getFilterValue(RangeSearchResultTransfer $rangeSearchResultTransfer, Request $request)
-    {
-        return $request->query->has($rangeSearchResultTransfer->getConfig()->getParameterName()) ?
-            $rangeSearchResultTransfer->getActiveMin() :
-            null;
-    }
-
-    /**
-     * @return int
-     */
-    protected function getMaximumRating()
-    {
-        return $this->getFactory()
-            ->getProductReviewClient()
-            ->getMaximumRating();
+        return ProductRatingFilterWidget::getTemplate();
     }
 }

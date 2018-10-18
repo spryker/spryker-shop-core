@@ -1,13 +1,14 @@
-# BarcodeWidget Module
+# ProductBarcodeWidget Module
+
 [![Build Status](https://travis-ci.org/spryker-shop/barcode-widget.svg)](https://travis-ci.org/spryker-shop/barcode-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/barcode-widget/badge.svg)](https://coveralls.io/github/spryker-shop/barcode-widget)
 
-Widget that generates Barcode by Product SKU
+Widget that generates Barcode by Product SKU.
 
 ## Installation
 
 ```
-composer require spryker-shop/barcode-widget
+composer require spryker-shop/product-barcode-widget
 ```
 
 ## Documentation

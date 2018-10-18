@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductAlternativeWidget\Widget\ShoppingListProductAlternativeWidget instead.
+ */
 interface ProductAlternativeWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ProductAlternativeWidgetPlugin';

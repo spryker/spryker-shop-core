@@ -10,10 +10,12 @@ namespace SprykerShop\Yves\CartNoteWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\CartNoteWidget\Widget\CartItemNoteFormWidget;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\CartNoteWidget\CartNoteQuoteItemWidgetPluginInterface;
-use Symfony\Component\Form\FormInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\CartItemNoteFormWidget instead.
+ *
  * @method \SprykerShop\Yves\CartNoteWidget\CartNoteWidgetFactory getFactory()
  */
 class CartNoteQuoteItemWidgetPlugin extends AbstractWidgetPlugin implements CartNoteQuoteItemWidgetPluginInterface
@@ -26,8 +28,9 @@ class CartNoteQuoteItemWidgetPlugin extends AbstractWidgetPlugin implements Cart
      */
     public function initialize(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('cartNoteForm', $this->getCartNoteForm($itemTransfer)->createView())
-            ->addParameter('cart', $quoteTransfer);
+        $widget = new CartItemNoteFormWidget($itemTransfer, $quoteTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -51,20 +54,6 @@ class CartNoteQuoteItemWidgetPlugin extends AbstractWidgetPlugin implements Cart
      */
     public static function getTemplate()
     {
-        return '@CartNoteWidget/views/cart-item-note-form/cart-item-note-form.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function getCartNoteForm(ItemTransfer $itemTransfer): FormInterface
-    {
-        $cartNoteForm = $this->getFactory()
-            ->getCartNoteQuoteItemForm()
-            ->setData($itemTransfer);
-
-        return $cartNoteForm;
+        return CartItemNoteFormWidget::getTemplate();
     }
 }

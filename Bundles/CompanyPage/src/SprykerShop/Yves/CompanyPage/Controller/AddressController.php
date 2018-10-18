@@ -11,8 +11,10 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use SprykerShop\Yves\CompanyPage\Form\CompanyUnitAddressForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -96,7 +98,7 @@ class AddressController extends AbstractCompanyController
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
         if ($addressForm->isSubmitted() === false) {
-            $addressForm->setData($dataProvider->getData($this->getCompanyUser()));
+            $addressForm->setData($dataProvider->getData($this->findCurrentCompanyUserTransfer()));
         }
 
         if ($addressForm->isValid()) {
@@ -145,6 +147,8 @@ class AddressController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeUpdateAction(Request $request)
@@ -164,7 +168,13 @@ class AddressController extends AbstractCompanyController
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
         if ($addressForm->isSubmitted() === false) {
-            $addressForm->setData($dataProvider->getData($this->getCompanyUser(), $idCompanyUnitAddress));
+            $data = $dataProvider->getData($this->findCurrentCompanyUserTransfer(), $idCompanyUnitAddress);
+
+            if (!$this->isCurrentCustomerRelatedToCompany($data[CompanyUnitAddressForm::FIELD_FK_COMPANY])) {
+                throw new NotFoundHttpException();
+            }
+
+            $addressForm->setData($data);
         }
 
         if ($addressForm->isValid()) {
@@ -198,6 +208,8 @@ class AddressController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
@@ -206,6 +218,14 @@ class AddressController extends AbstractCompanyController
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
         $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
+
+        $companyUnitAddressTransfer = $this->getFactory()
+            ->getCompanyUnitAddressClient()
+            ->getCompanyUnitAddressById($companyUnitAddressTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyUnitAddressTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
 
         $this->getFactory()->getCompanyUnitAddressClient()->deleteCompanyUnitAddress($companyUnitAddressTransfer);
 
@@ -223,6 +243,8 @@ class AddressController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function confirmDeleteAction(Request $request)
@@ -238,6 +260,10 @@ class AddressController extends AbstractCompanyController
         $companyUnitAddressTransfer = $this->getFactory()
             ->getCompanyUnitAddressClient()
             ->getCompanyUnitAddressById($companyUnitAddressTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyUnitAddressTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
 
         return $this->view([
             'companyUnitAddress' => $companyUnitAddressTransfer,
@@ -255,7 +281,7 @@ class AddressController extends AbstractCompanyController
         Request $request
     ): CompanyUnitAddressCriteriaFilterTransfer {
         $criteriaFilterTransfer = new CompanyUnitAddressCriteriaFilterTransfer();
-        $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
+        $criteriaFilterTransfer->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
 
         $filterTransfer = $this->createFilterTransfer(static::COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD);
         $criteriaFilterTransfer->setFilter($filterTransfer);

@@ -8,9 +8,12 @@
 namespace SprykerShop\Yves\AgentWidget\Plugin\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\AgentWidget\AgentWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget instead.
+ *
  * @method \SprykerShop\Yves\AgentWidget\AgentWidgetFactory getFactory()
  */
 class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPluginInterface
@@ -20,12 +23,9 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
      */
     public function initialize(): void
     {
-        $isLoggedIn = $this->getFactory()->getAgentClient()->isLoggedIn();
+        $widget = new AgentControlBarWidget();
 
-        $this
-            ->addParameter('isLoggedIn', $isLoggedIn)
-            ->addParameter('agent', $isLoggedIn ? $this->getFactory()->getAgentClient()->getAgent() : null)
-            ->addParameter('customer', $this->getFactory()->getCustomerClient()->getCustomer());
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -49,6 +49,6 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
      */
     public static function getTemplate()
     {
-        return '@AgentWidget/views/agent-widget/agent-widget.twig';
+        return AgentControlBarWidget::getTemplate();
     }
 }

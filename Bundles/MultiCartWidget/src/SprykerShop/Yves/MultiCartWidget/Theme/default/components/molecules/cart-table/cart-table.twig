@@ -32,16 +32,16 @@
         </thead>
         <tbody>
         {% for cart in data.carts %}
-            {% if widgetExists('SharedCartDetailsWidgetPlugin') %}
-                {{ widget('SharedCartDetailsWidgetPlugin', cart, data.actions, data.widgets) }}
-            {% else %}
+            {% widget 'SharedCartDetailsWidget' args [cart, data.actions, data.widgets] only %}
+            {% elsewidget 'SharedCartDetailsWidgetPlugin' args [cart, data.actions, data.widgets] only %} {# @deprecated Use SharedCartDetailsWidget instead. #}
+            {% nowidget %}
                 {% include molecule('cart-table-detail', 'MultiCartWidget') with {
                     data: {
                         cart: cart,
                         actions: data.actions
                     }
                 } only %}
-            {% endif %}
+            {% endwidget %}
         {% endfor %}
         </tbody>
     </table>

@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\MultiCartPage\Dependency\Plugin\SharedCartWidget;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteCompanyUsersListWidget instead.
+ */
 interface CartDeleteCompanyUsersListWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'CartDeleteCompanyUsersListWidgetPlugin';
