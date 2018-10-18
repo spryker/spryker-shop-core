@@ -23,18 +23,13 @@ class AddressProvider implements AddressProviderInterface
     protected const FIELD_DEFAULT = 'default';
     protected const FIELD_OPTION_GROUP = 'option_group';
     protected const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
+    protected const FIELD_ADDRESS_HASH = 'address_hash';
 
     protected const FORM_TYPE_OPTION_BILLING_ADDRESS = 'billingAddress';
     protected const FORM_TYPE_OPTION_SHIPPING_ADDRESS = 'shippingAddress';
 
     protected const GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP = 'page.checkout.address.option_group.customer';
     protected const GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP = 'page.checkout.address.option_group.company_business_unit';
-
-    protected const FIELDS_FULL_ADDRESS = [
-        self::FIELD_DEFAULT,
-        self::FIELD_OPTION_GROUP,
-        self::FIELD_ID_CUSTOMER_ADDRESS,
-    ];
 
     /**
      * @var \SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface
@@ -139,9 +134,12 @@ class AddressProvider implements AddressProviderInterface
      */
     protected function prepareAddressListItemData(array $addressData, string $formType): array
     {
+        $preparedAddressData = [
+            static::FIELD_ADDRESS_HASH => $this->getAddressHash($addressData),
+        ];
         $preparedAddressData = array_merge(
             $addressData,
-            $this->addDefaultAddressValue($addressData, [], $formType)
+            $this->addDefaultAddressValue($addressData, $preparedAddressData, $formType)
         );
 
         ksort($preparedAddressData);
@@ -202,7 +200,7 @@ class AddressProvider implements AddressProviderInterface
     {
         $fullAddresses = [];
         foreach ($addressesArray as $addressItem) {
-            $fullAddressItem = $addressItem;
+            $fullAddressItem = [];
 
             if (isset($addressItem[static::FIELD_ID_CUSTOMER_ADDRESS])) {
                 $fullAddressItem[static::FIELD_ID_CUSTOMER_ADDRESS] = $addressItem[static::FIELD_ID_CUSTOMER_ADDRESS];
@@ -210,6 +208,7 @@ class AddressProvider implements AddressProviderInterface
 
             $fullAddressItem[static::FIELD_OPTION_GROUP] = $addressOptionGroup;
             $fullAddressItem[static::FIELD_DEFAULT] = $addressItem[static::FIELD_DEFAULT];
+            $fullAddressItem[static::FIELD_ADDRESS_HASH] = $addressItem[static::FIELD_ADDRESS_HASH];
 
             $fullAddresses[] = $fullAddressItem;
         }
@@ -367,6 +366,16 @@ class AddressProvider implements AddressProviderInterface
         }
 
         return $addressesArray;
+    }
+
+    /**
+     * @param array $addressData
+     *
+     * @return string
+     */
+    protected function getAddressHash(array $addressData): string
+    {
+        return crc32(json_encode($addressData));
     }
 
     /**
