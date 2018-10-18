@@ -7,33 +7,24 @@
 
 namespace SprykerShop\Yves\CompanyWidget\Address;
 
-use ArrayObject;
-
 interface AddressHandlerInterface
 {
     /**
+     * @return bool
+     */
+    public function isApplicable(): bool;
+
+    /**
      * @param string $formType
      *
-     * @return array
+     * @return string|null
      */
-    public function getCustomerAddressesArray(string $formType): array;
+    public function getCombinedAddressesListJson(string $formType): ?string;
 
     /**
      * @param string $formType
      *
      * @return array
      */
-    public function getCompanyBusinessUnitAddressesArray(string $formType): array;
-
-    /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
-     */
-    public function getCompanyBusinessUnitAddresses(): ArrayObject;
-
-    /**
-     * @param string $formType
-     *
-     * @return array
-     */
-    public function getAvailableFullAddresses(string $formType): array;
+    public function getAvailableFullAddressesList(string $formType): array;
 }

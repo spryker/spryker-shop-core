@@ -79,11 +79,92 @@ class AddressHandler implements AddressHandlerInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isApplicable(): bool
+    {
+        return ($this->getCompanyBusinessUnitAddresses()->count() > 0);
+    }
+
+    /**
+     * @param string $formType
+     *
+     * @return string|null
+     */
+    public function getCombinedAddressesListJson(string $formType): ?string
+    {
+        $customerAddressesArray = $this->getCustomerAddressesArray($formType);
+        $companyBusinessUnitAddressesArray = $this->getCompanyBusinessUnitAddressesArray($formType);
+
+        $defaultCustomerAddressIndexes = $this->getDefaultAddressIndexes($customerAddressesArray, $formType);
+        $defaultCompanyBusinessUnitAddressIndexes = $this->getDefaultAddressIndexes($companyBusinessUnitAddressesArray, $formType);
+
+        if ((count($defaultCustomerAddressIndexes) > 0 && count($defaultCompanyBusinessUnitAddressIndexes) > 0)
+            || (count($defaultCustomerAddressIndexes) === 0 && count($defaultCompanyBusinessUnitAddressIndexes) === 0)
+        ) {
+            $companyBusinessUnitAddressesArray = $this->resetAddressesDefaultValues(
+                $companyBusinessUnitAddressesArray,
+                $defaultCompanyBusinessUnitAddressIndexes,
+                $formType
+            );
+        }
+
+        return $this->encodeAddressesToJson(
+            array_merge(
+                $customerAddressesArray,
+                $companyBusinessUnitAddressesArray
+            )
+        );
+    }
+
+    /**
      * @param string $formType
      *
      * @return array
      */
-    public function getCustomerAddressesArray(string $formType): array
+    public function getAvailableFullAddressesList(string $formType): array
+    {
+        $customerAddresses = $this->getCustomerAddressesArray($formType);
+        $companyBusinessUnitAddresses = $this->getCompanyBusinessUnitAddressesArray($formType);
+
+        return array_merge(
+            $this->getFullAddressesFromArray(
+                $customerAddresses,
+                $formType,
+                static::GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP
+            ),
+            $this->getFullAddressesFromArray(
+                $companyBusinessUnitAddresses,
+                $formType,
+                static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP
+            )
+        );
+    }
+
+    /**
+     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
+     */
+    protected function getCompanyBusinessUnitAddresses(): ArrayObject
+    {
+        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit();
+        if ($companyBusinessUnitTransfer === null) {
+            return new ArrayObject();
+        }
+
+        $companyBusinessUnitAddressCollection = $companyBusinessUnitTransfer->getAddressCollection();
+        if ($companyBusinessUnitAddressCollection === null) {
+            return new ArrayObject();
+        }
+
+        return $companyBusinessUnitAddressCollection->getCompanyUnitAddresses();
+    }
+
+    /**
+     * @param string $formType
+     *
+     * @return array
+     */
+    protected function getCustomerAddressesArray(string $formType): array
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
@@ -105,7 +186,7 @@ class AddressHandler implements AddressHandlerInterface
      *
      * @return array
      */
-    public function getCompanyBusinessUnitAddressesArray(string $formType): array
+    protected function getCompanyBusinessUnitAddressesArray(string $formType): array
     {
         $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit();
         if ($companyBusinessUnitTransfer === null) {
@@ -129,81 +210,6 @@ class AddressHandler implements AddressHandlerInterface
         }
 
         return $companyBusinessUnitAddressesArray;
-    }
-
-    /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
-     */
-    public function getCompanyBusinessUnitAddresses(): ArrayObject
-    {
-        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit();
-        if ($companyBusinessUnitTransfer === null) {
-            return new ArrayObject();
-        }
-
-        $companyBusinessUnitAddressCollection = $companyBusinessUnitTransfer->getAddressCollection();
-        if ($companyBusinessUnitAddressCollection === null) {
-            return new ArrayObject();
-        }
-
-        return $companyBusinessUnitAddressCollection->getCompanyUnitAddresses();
-    }
-
-    /**
-     * @param string $formType
-     *
-     * @return array
-     */
-    public function getAvailableFullAddresses(string $formType): array
-    {
-        $customerAddresses = $this->getCustomerAddressesArray($formType);
-        $companyBusinessUnitAddresses = $this->getCompanyBusinessUnitAddressesArray($formType);
-
-        return array_merge(
-            $this->getFullAddressesFromArray(
-                $customerAddresses,
-                $formType,
-                static::GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP
-            ),
-            $this->getFullAddressesFromArray(
-                $companyBusinessUnitAddresses,
-                $formType,
-                static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP
-            )
-        );
-    }
-
-    /**
-     * @param array $addressesArray
-     * @param string $formType
-     * @param string $addressOptionGroup
-     *
-     * @return array
-     */
-    protected function getFullAddressesFromArray(array $addressesArray, string $formType, string $addressOptionGroup): array
-    {
-        $fullAddressKey = sprintf(static::KEY_FULL_ADDRESS, $formType);
-        $idCustomerAddressKey = sprintf(static::KEY_ID_CUSTOMER_ADDRESS, $formType);
-        $addressOptionGroupKey = sprintf(static::KEY_ADDRESS_OPTION_GROUP, $formType);
-        $defaultAddressKey = sprintf(static::KEY_ADDRESS_DEFAULT, $formType);
-
-        $fullAddresses = [];
-        foreach ($addressesArray as $addressItem) {
-            $fullAddressItem = [
-                $fullAddressKey => $addressItem[$fullAddressKey],
-            ];
-
-            if (isset($addressItem[$idCustomerAddressKey])) {
-                $fullAddressItem[$idCustomerAddressKey] = $addressItem[$fullAddressKey];
-            }
-
-            $fullAddressItem[$addressOptionGroupKey] = $addressOptionGroup;
-            $fullAddressItem[$defaultAddressKey] = $addressItem[$defaultAddressKey];
-
-            $fullAddresses[] = $fullAddressItem;
-        }
-
-        return $fullAddresses;
     }
 
     /**
@@ -283,7 +289,7 @@ class AddressHandler implements AddressHandlerInterface
 
         foreach ($addressData as $key => $value) {
             if (in_array($key, static::FIELDS_ADDRESS_DATA, true)) {
-                $preparedAddressData[$this->addFormTypePrefixToAddressFieldName($key, $formType)] = $value;
+                $preparedAddressData[$this->addFormTypePrefix($key, $formType)] = $value;
             }
         }
 
@@ -293,6 +299,43 @@ class AddressHandler implements AddressHandlerInterface
         ksort($preparedAddressData);
 
         return $preparedAddressData;
+    }
+
+    /**
+     * @param array $addressesArray
+     * @param string $formType
+     *
+     * @return int[]
+     */
+    protected function getDefaultAddressIndexes(array $addressesArray, string $formType): array
+    {
+        $index = 0;
+        $defaultAddressIndexes = [];
+        foreach ($addressesArray as $addressItem) {
+            if ($addressItem[sprintf(static::KEY_ADDRESS_DEFAULT, $formType)] === true) {
+                $defaultAddressIndexes[] = $index;
+            }
+
+            $index++;
+        }
+
+        return $defaultAddressIndexes;
+    }
+
+    /**
+     * @param array $addressesArray
+     * @param int[] $addressIndexes
+     * @param string $formType
+     *
+     * @return array
+     */
+    protected function resetAddressesDefaultValues(array $addressesArray, array $addressIndexes, string $formType): array
+    {
+        foreach ($addressIndexes as $addressIndex) {
+            $addressesArray[$addressIndex][sprintf(static::KEY_ADDRESS_DEFAULT, $formType)] = false;
+        }
+
+        return $addressesArray;
     }
 
     /**
@@ -324,6 +367,39 @@ class AddressHandler implements AddressHandlerInterface
     }
 
     /**
+     * @param array $addressesArray
+     * @param string $formType
+     * @param string $addressOptionGroup
+     *
+     * @return array
+     */
+    protected function getFullAddressesFromArray(array $addressesArray, string $formType, string $addressOptionGroup): array
+    {
+        $fullAddressKey = sprintf(static::KEY_FULL_ADDRESS, $formType);
+        $idCustomerAddressKey = sprintf(static::KEY_ID_CUSTOMER_ADDRESS, $formType);
+        $addressOptionGroupKey = sprintf(static::KEY_ADDRESS_OPTION_GROUP, $formType);
+        $defaultAddressKey = sprintf(static::KEY_ADDRESS_DEFAULT, $formType);
+
+        $fullAddresses = [];
+        foreach ($addressesArray as $addressItem) {
+            $fullAddressItem = [
+                $fullAddressKey => $addressItem[$fullAddressKey],
+            ];
+
+            if (isset($addressItem[$idCustomerAddressKey])) {
+                $fullAddressItem[$idCustomerAddressKey] = $addressItem[$fullAddressKey];
+            }
+
+            $fullAddressItem[$addressOptionGroupKey] = $addressOptionGroup;
+            $fullAddressItem[$defaultAddressKey] = $addressItem[$defaultAddressKey];
+
+            $fullAddresses[] = $fullAddressItem;
+        }
+
+        return $fullAddresses;
+    }
+
+    /**
      * @param array $addressData
      * @param array $preparedAddressData
      * @param string $formType
@@ -332,21 +408,10 @@ class AddressHandler implements AddressHandlerInterface
      */
     protected function addFullAddressValue(array $addressData, array $preparedAddressData, string $formType): array
     {
-        $addressFullNameKey = $this->addFormTypePrefixToAddressFieldName(static::FIELD_ADDRESS_FULL_ADDRESS, $formType);
+        $addressFullNameKey = $this->addFormTypePrefix(static::FIELD_ADDRESS_FULL_ADDRESS, $formType);
         $preparedAddressData[$addressFullNameKey] = $this->getFullAddress($addressData);
 
         return $preparedAddressData;
-    }
-
-    /**
-     * @param string $fieldName
-     * @param string $formType
-     *
-     * @return string
-     */
-    protected function addFormTypePrefixToAddressFieldName(string $fieldName, string $formType): string
-    {
-        return sprintf('addressesForm[%s][%s]', $formType, $fieldName);
     }
 
     /**
@@ -366,5 +431,30 @@ class AddressHandler implements AddressHandlerInterface
             $addressFormData[static::FIELD_ZIP_CODE],
             $addressFormData[static::FIELD_CITY]
         );
+    }
+
+    /**
+     * @param string $fieldName
+     * @param string $formType
+     *
+     * @return string
+     */
+    protected function addFormTypePrefix(string $fieldName, string $formType): string
+    {
+        return sprintf('addressesForm[%s][%s]', $formType, $fieldName);
+    }
+
+    /**
+     * @param array $addresses
+     *
+     * @return string|null
+     */
+    protected function encodeAddressesToJson(array $addresses): ?string
+    {
+        $jsonEncodedAddresses = json_encode($addresses, JSON_PRETTY_PRINT);
+
+        return ($jsonEncodedAddresses !== false)
+            ? $jsonEncodedAddresses
+            : null;
     }
 }
