@@ -8,7 +8,6 @@
 } %}
 
 {% block template %}
-    <pre>{{ dump(data.fullAddresses) }}</pre>
     {% embed atom('select') with {
         class: 'spacing-bottom',
         attributes: {
@@ -22,13 +21,36 @@
             formType: data.formType
         }
     } only %}
-        {% block selectClass %}js-form-toggler js-from-select-address__{{ embed.formType }}{% endblock %}
+        {% block selectClass %}js-form-ignore-element js-from-select-address__{{ embed.formType }}{% endblock %}
         {% block options %}
-            <option value="" selected disabled="disabled">Default address pre-selected</option>
+            {% set addressGroups = [] %}
+            {% set isDefault = false %}
             {% for option in embed.addressOptions %}
-                <option value="{{ option['addressesForm[' ~ embed.formType ~ '][full_address]'] }}" data-address-key="addressesForm[{{ embed.formType }}][full_address]">
-                    {{ option['addressesForm[' ~ embed.formType ~ '][full_address]'] }}
-                </option>
+                {% set currentOption = option['addressesForm[' ~ embed.formType ~ '][option_group]'] %}
+                {% if (currentOption not in addressGroups) %}
+                    {% set addressGroups = addressGroups | merge([currentOption]) %}
+                {% endif %}
+                {% if option['addressesForm[' ~ embed.formType ~ '][default]'] == true %}
+                    {% set isDefault = true %}
+                {% endif %}
+            {% endfor %}
+
+            {% if not isDefault %}
+                <option value="" selected disabled="disabled">{{ 'page.checkout.address.address_select' | trans }}</option>
+            {% endif %}
+
+            {% for addressGroupsItem in addressGroups %}
+                <optgroup label="{{ addressGroupsItem | trans }}">
+                {% for option in embed.addressOptions %}
+                    {% set isSelected = option['addressesForm[' ~ embed.formType ~ '][default]'] | default(false) %}
+
+                    {% if (option['addressesForm[' ~ embed.formType ~ '][option_group]']) == addressGroupsItem %}
+                        <option value="{{ option['addressesForm[' ~ embed.formType ~ '][full_address]'] }}" {% if isSelected %}selected{% endif %} data-address-key="addressesForm[{{ embed.formType }}][full_address]">
+                            {{ option['addressesForm[' ~ embed.formType ~ '][full_address]'] }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+                </optgroup>
             {% endfor %}
         {% endblock %}
     {% endembed %}
@@ -42,8 +64,9 @@
                 'form-selector': '.js-form-hundler__' ~ data.formType,
                 'trigger-selector': '.js-from-add-new-address__' ~ data.formType,
                 'data-selector': '.js-from-select-address__' ~ data.formType,
-                'ignore-selector': '.js-form-toggler',
-                'hidden-input': '.js-form-hidden-input__' ~ data.formType,
+                'ignore-selector': '.js-form-ignore-element',
+                'customer-id-selector': '.js-form-customer-id__' ~ data.formType,
+                'default-address-selector': '.js-form-default-address__' ~ data.formType,
                 'addresses': data.addresses
             }
         } only %}
@@ -51,17 +74,18 @@
 
     <div>
         <label>
-            <input type="checkbox" class="js-from-clear__{{ data.formType }}-toggler js-form-toggler">
+            <input type="checkbox" class="js-from-clear__{{ data.formType }}-toggler js-form-ignore-element">
             {{ 'page.checkout.address.different_delivery_address' | trans }}
         </label>
         {% include molecule('form-clear') with {
             attributes: {
                 'form-selector': '.js-form-clear__' ~ data.formType ~ '-form',
                 'trigger-selector': '.js-from-clear__' ~ data.formType ~ '-toggler',
-                'ignore-selector': '.js-form-toggler'
+                'ignore-selector': '.js-form-ignore-element'
             }
         } only %}
     </div>
 
-    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" class="js-form-hidden-input__{{ data.formType }}">
+    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" class="js-form-customer-id__{{ data.formType }}">
+    <input type="hidden" name="addressesForm[{{ data.formType }}][default]" class="js-form-ignore-element js-form-default-address__{{ data.formType }}">
 {% endblock %}

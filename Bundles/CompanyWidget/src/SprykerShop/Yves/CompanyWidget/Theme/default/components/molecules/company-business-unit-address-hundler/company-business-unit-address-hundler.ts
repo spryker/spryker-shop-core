@@ -12,6 +12,7 @@ export default class CompanyBusinessUnitAddressHundler extends Component {
     addressesSelects: HTMLSelectElement[];
     currentAddress: any;
     hiddenCustomerIdInput: HTMLInputElement;
+    hiddenDefaultAddressInput: HTMLInputElement;
 
     protected readyCallback(): void {
         this.form = <HTMLElement>document.querySelector(this.formSelector);
@@ -21,19 +22,21 @@ export default class CompanyBusinessUnitAddressHundler extends Component {
         this.ignoreElements = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.ignoreSelector));
         this.filterElements = this.elements.filter((el) => !this.ignoreElements.includes(el));
         this.formClearReadonly = <FormClear>this.form.querySelector('.js-form-clear');
-        this.hiddenCustomerIdInput = <HTMLInputElement>this.form.querySelector(this.hiddenInput);
+        this.hiddenCustomerIdInput = <HTMLInputElement>this.form.querySelector(this.customerIdSelector);
+        this.hiddenDefaultAddressInput = <HTMLInputElement>this.form.querySelector(this.defaultAddressSelector);
 
         this.initAddressesData();
         this.mapEvents();
+        this.fillDefaultAddress();
     }
 
     protected mapEvents(): void {
         this.formClearReadonly.addEventListener('form-fields-readonly-update', () => this.removeFormFieldsReadonly());
 
         this.buttons.forEach((triggerElement) => {
-            triggerElement.addEventListener('click', (event: Event) => {
+            triggerElement.addEventListener('click', () => {
                 this.fillFormWithNewAddress();
-                this.setFormFieldsReadonly(event);
+                this.setFormFieldsReadonly();
             });
         });
 
@@ -44,7 +47,7 @@ export default class CompanyBusinessUnitAddressHundler extends Component {
         });
     }
 
-    private setFormFieldsReadonly(event: Event): void {
+    private setFormFieldsReadonly(): void {
         event.preventDefault();
 
         this.filterElements.forEach((formElement: HTMLFormElement) => {
@@ -83,6 +86,7 @@ export default class CompanyBusinessUnitAddressHundler extends Component {
             id: selectElement.options[selectElement.selectedIndex].getAttribute('data-address-key'),
             label: selectElement.value
         }
+
         this.buttons.forEach((triggerElement) => {
             triggerElement.disabled = false;
         });
@@ -93,22 +97,52 @@ export default class CompanyBusinessUnitAddressHundler extends Component {
             return el[this.currentAddress.id] == this.currentAddress.label;
         })[0];
 
+        const hiddenCustomerIdInputName = this.hiddenCustomerIdInput.getAttribute('name');
+
+        if(!(hiddenCustomerIdInputName in currentAddressList)) {
+            this.hiddenCustomerIdInput.value = '';
+        }
+
         for(let key in currentAddressList) {
             const formElement = this.form.querySelector(`[name="${key}"]`);
-            const hiddenCustomerIdInputName = this.hiddenCustomerIdInput.getAttribute('name');
-            console.log(hiddenCustomerIdInputName, key);
+            if(formElement !== null) {
+                (<HTMLFormElement>formElement).value = '';
 
-            if(currentAddressList[key] !== null && formElement) {
-                (<HTMLFormElement>formElement).value = currentAddressList[key];
-            }
-
-            if(key == hiddenCustomerIdInputName) {
-                this.hiddenCustomerIdInput.value = currentAddressList[key];
-                return;
-            } else {
-                this.hiddenCustomerIdInput.value = '';
+                if(currentAddressList[key] !== null) {
+                    (<HTMLFormElement>formElement).value = currentAddressList[key];
+                }
             }
         }
+    }
+
+    private fillDefaultAddress(): void {
+        const hiddenDefaultAddressInputName = this.hiddenDefaultAddressInput.getAttribute('name');
+
+        this.addressesDataObject.forEach(address => {
+            for(let key in address) {
+                if(address[hiddenDefaultAddressInputName] == true) {
+
+                    this.addressesSelects.forEach((selectElement: HTMLSelectElement) => {
+                        this.setCurrentAddress(selectElement);
+                    });
+
+                    this.fillFormWithNewAddress();
+                    this.setFormFieldsReadonly();
+
+                    return;
+                }
+
+                if(!address[hiddenDefaultAddressInputName] == true) {
+                    const formElement = this.form.querySelector(`[name="${key}"]`);
+
+                    if(formElement !== null) {
+                        (<HTMLFormElement>formElement).value = '';
+                    }
+
+                    return;
+                }
+            }
+        })
     }
 
     private initAddressesData(): void {
@@ -133,7 +167,11 @@ export default class CompanyBusinessUnitAddressHundler extends Component {
         return this.getAttribute('ignore-selector');
     }
 
-    get hiddenInput(): string {
-        return this.getAttribute('hidden-input');
+    get customerIdSelector(): string {
+        return this.getAttribute('customer-id-selector');
+    }
+
+    get defaultAddressSelector(): string {
+        return this.getAttribute('default-address-selector');
     }
 }
