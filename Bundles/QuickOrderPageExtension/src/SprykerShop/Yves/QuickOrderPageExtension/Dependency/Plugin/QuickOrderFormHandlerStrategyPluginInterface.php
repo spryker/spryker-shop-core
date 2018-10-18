@@ -7,9 +7,8 @@
 
 namespace SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin;
 
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Generated\Shared\Transfer\QuickOrderTransfer;
+use Generated\Shared\Transfer\RouteTransfer;
 
 interface QuickOrderFormHandlerStrategyPluginInterface
 {
@@ -19,12 +18,12 @@ interface QuickOrderFormHandlerStrategyPluginInterface
      *
      * @api
      *
-     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param QuickOrderTransfer $quickOrderTransfer
+     * @param array $params
      *
      * @return bool
      */
-    public function isApplicable(FormInterface $quickOrderForm, Request $request): bool;
+    public function isApplicable(QuickOrderTransfer $quickOrderTransfer, array $params): bool;
 
     /**
      * Specification:
@@ -33,10 +32,10 @@ interface QuickOrderFormHandlerStrategyPluginInterface
      *
      * @api
      *
-     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param QuickOrderTransfer $quickOrderTransfer
+     * @param array $params
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+     * @return RouteTransfer|null
      */
-    public function execute(FormInterface $quickOrderForm, Request $request): ?RedirectResponse;
+    public function execute(QuickOrderTransfer $quickOrderTransfer, array $params): ?RouteTransfer;
 }

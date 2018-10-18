@@ -34,7 +34,8 @@
                             class: config.jsName ~ '__quantity',
                             min: data.min | default(),
                             max: data.max | default(),
-                            step: data.step | default()
+                            step: data.step | default(),
+                            disabled: data.quantity is empty
                         }
                     }) }}
                 {% else %}

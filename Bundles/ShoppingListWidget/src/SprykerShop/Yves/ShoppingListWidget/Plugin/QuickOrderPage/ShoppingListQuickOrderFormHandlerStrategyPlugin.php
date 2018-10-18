@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\ShoppingListWidget\Plugin\QuickOrderPage;
 
 use ArrayObject;
+use Generated\Shared\Transfer\QuickOrderTransfer;
+use Generated\Shared\Transfer\RouteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -25,58 +27,71 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
      * @see \SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS
      */
     protected const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
-    protected const ID_SHOPPING_LIST = 'idShoppingList';
+
+    /**
+     * @uses TODO
+     */
+    protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+
+    /**
+     * @uses TODO
+     */
+    protected const PARAM_ADD_TO_SHOPPING_LIST = 'addToShoppingList';
+
 
     /**
      * {@inheritdoc}
-     *  - Returns true is add to shopping list button was used .
+     * - Returns true if "add to shopping list" button was pressed.
      *
      * @api
      *
-     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param QuickOrderTransfer $quickOrderTransfer
+     * @param array $params
      *
      * @return bool
      */
-    public function isApplicable(FormInterface $quickOrderForm, Request $request): bool
+    public function isApplicable(QuickOrderTransfer $quickOrderTransfer, array $params): bool
     {
-        return $request->get('addToShoppingList') !== null;
+        return !empty($params[static::PARAM_ADD_TO_SHOPPING_LIST]);
     }
 
     /**
      * {@inheritdoc}
-     *  - Adds products to shopping list.
-     *  - Returns true if all items were successfully added.
+     * - Adds products to shopping list.
+     * - Returns with a route if all items were successfully added.
+     * - Returns null in case of error.
      *
      * @api
      *
-     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param QuickOrderTransfer $quickOrderTransfer
+     * @param array $params
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+     * @return RouteTransfer|null
      */
-    public function execute(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
+    public function execute(QuickOrderTransfer $quickOrderTransfer, array $params): ?RouteTransfer
     {
-        /** @var \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer */
-        $quickOrderTransfer = $quickOrderForm->getData();
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         $shoppingListTransfer = (new ShoppingListTransfer())
             ->setCustomerReference($customer->getCustomerReference())
             ->setIdCompanyUser($customer->getCompanyUserTransfer()->getIdCompanyUser())
-            ->setItems($this->mapShoppingListItems($quickOrderTransfer->getItems()))
-            ->setIdShoppingList((int)$request->get(self::ID_SHOPPING_LIST));
+            ->setIdShoppingList((int)$params[static::PARAM_ID_SHOPPING_LIST])
+            ->setItems(
+                $this->mapShoppingListItems($quickOrderTransfer->getItems())
+            );
+
         $shoppingListResponseTransfer = $this->getFactory()
                     ->getShoppingListClient()
                     ->addItems($shoppingListTransfer);
+
         if (!$shoppingListResponseTransfer->getIsSuccess()) {
             return null;
         }
 
-        return $this->getFactory()
-            ->createRedirectResponse(
-                static::ROUTE_SHOPPING_LIST_DETAILS,
-                [self::ID_SHOPPING_LIST => $shoppingListResponseTransfer->getShoppingList()->getIdShoppingList()]
+        return (new RouteTransfer())
+            ->setRoute(static::ROUTE_SHOPPING_LIST_DETAILS)
+            ->setParameters(
+                [self::PARAM_ID_SHOPPING_LIST => $shoppingListResponseTransfer->getShoppingList()->getIdShoppingList()]
             );
     }
 
@@ -92,6 +107,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
             if (!$itemTransfer->getSku()) {
                 continue;
             }
+
             $shoppingListItems->append((new ShoppingListItemTransfer())
                 ->setSku($itemTransfer->getSku())
                 ->setQuantity($itemTransfer->getQty()));

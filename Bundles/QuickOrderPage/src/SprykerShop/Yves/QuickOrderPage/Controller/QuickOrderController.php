@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
@@ -403,14 +402,20 @@ class QuickOrderController extends AbstractController
      */
     protected function executeQuickOrderFormHandlerStrategyPlugin(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
     {
+        $routeTransfer = null;
         foreach ($this->getFactory()->getQuickOrderFormHandlerStrategyPlugins() as $quickOrderFormHandlerStrategyPlugin) {
-            if (!$quickOrderFormHandlerStrategyPlugin->isApplicable($quickOrderForm, $request)) {
+            if (!$quickOrderFormHandlerStrategyPlugin->isApplicable($quickOrderForm->getData(), $request->attributes->all())) {
                 continue;
             }
-            return $quickOrderFormHandlerStrategyPlugin->execute($quickOrderForm, $request);
+            $routeTransfer = $quickOrderFormHandlerStrategyPlugin->execute($quickOrderForm->getData(), $request->attributes->all());
+            break;
         }
 
-        return null;
+        if ($routeTransfer === null) {
+            return null;
+        }
+
+        return new RedirectResponse($this->getApplication()->path($routeTransfer->getRoute(), $routeTransfer->getParameters()));
     }
 
     /**
