@@ -83,7 +83,7 @@ class AddressHandler implements AddressHandlerInterface
      */
     public function isApplicable(): bool
     {
-        return ($this->getCompanyBusinessUnitAddresses()->count() > 0);
+        return ($this->getStoredCompanyBusinessUnitAddresses()->count() > 0);
     }
 
     /**
@@ -96,13 +96,13 @@ class AddressHandler implements AddressHandlerInterface
         $customerAddressesArray = $this->getCustomerAddressesList($formType);
         $companyBusinessUnitAddressesArray = $this->getCompanyBusinessUnitAddressesList($formType);
 
-        $defaultCustomerAddressIndexes = $this->getDefaultAddressIndexes($customerAddressesArray, $formType);
-        $defaultCompanyBusinessUnitAddressIndexes = $this->getDefaultAddressIndexes($companyBusinessUnitAddressesArray, $formType);
+        $defaultCustomerAddressIndexes = $this->getAddressListDefaultItemIndexes($customerAddressesArray, $formType);
+        $defaultCompanyBusinessUnitAddressIndexes = $this->getAddressListDefaultItemIndexes($companyBusinessUnitAddressesArray, $formType);
 
         if ((count($defaultCustomerAddressIndexes) > 0 && count($defaultCompanyBusinessUnitAddressIndexes) > 0)
             || (count($defaultCustomerAddressIndexes) === 0 && count($defaultCompanyBusinessUnitAddressIndexes) === 0)
         ) {
-            $companyBusinessUnitAddressesArray = $this->resetAddressesDefaultValues(
+            $companyBusinessUnitAddressesArray = $this->resetAddressListDefaultItemValues(
                 $companyBusinessUnitAddressesArray,
                 $defaultCompanyBusinessUnitAddressIndexes,
                 $formType
@@ -142,24 +142,6 @@ class AddressHandler implements AddressHandlerInterface
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
-     */
-    protected function getCompanyBusinessUnitAddresses(): ArrayObject
-    {
-        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit();
-        if ($companyBusinessUnitTransfer === null) {
-            return new ArrayObject();
-        }
-
-        $companyBusinessUnitAddressCollection = $companyBusinessUnitTransfer->getAddressCollection();
-        if ($companyBusinessUnitAddressCollection === null) {
-            return new ArrayObject();
-        }
-
-        return $companyBusinessUnitAddressCollection->getCompanyUnitAddresses();
-    }
-
-    /**
      * @param string $formType
      *
      * @return array
@@ -175,7 +157,7 @@ class AddressHandler implements AddressHandlerInterface
 
         $customerAddressesArray = [];
         foreach ($customerAddresses->getAddresses() as $addressTransfer) {
-            $customerAddressesArray[] = $this->prepareAddressData($addressTransfer->toArray(), $formType);
+            $customerAddressesArray[] = $this->prepareAddressListItemData($addressTransfer->toArray(), $formType);
         }
 
         return $customerAddressesArray;
@@ -193,14 +175,14 @@ class AddressHandler implements AddressHandlerInterface
             return [];
         }
 
-        $companyBusinessUnitAddresses = $this->getCompanyBusinessUnitAddresses();
+        $companyBusinessUnitAddresses = $this->getStoredCompanyBusinessUnitAddresses();
         if ($companyBusinessUnitAddresses->count() === 0) {
             return [];
         }
 
         $companyBusinessUnitAddressesArray = [];
         foreach ($companyBusinessUnitAddresses as $companyUnitAddressTransfer) {
-            $companyUnitAddressArray = $this->prepareCompanyBusinessUnitAddressData(
+            $companyUnitAddressArray = $this->prepareCompanyBusinessUnitAddressListItem(
                 $companyUnitAddressTransfer,
                 $companyBusinessUnitTransfer,
                 $formType
@@ -213,26 +195,44 @@ class AddressHandler implements AddressHandlerInterface
     }
 
     /**
+     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
+     */
+    protected function getStoredCompanyBusinessUnitAddresses(): ArrayObject
+    {
+        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit();
+        if ($companyBusinessUnitTransfer === null) {
+            return new ArrayObject();
+        }
+
+        $companyBusinessUnitAddressCollection = $companyBusinessUnitTransfer->getAddressCollection();
+        if ($companyBusinessUnitAddressCollection === null) {
+            return new ArrayObject();
+        }
+
+        return $companyBusinessUnitAddressCollection->getCompanyUnitAddresses();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      * @param string $formType
      *
      * @return array
      */
-    protected function prepareCompanyBusinessUnitAddressData(
+    protected function prepareCompanyBusinessUnitAddressListItem(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         string $formType
     ): array {
         $companyUnitAddressArray = $companyUnitAddressTransfer->toArray();
 
-        $companyUnitAddressArray = $this->expandAddressDataWithPersonalInfo($companyUnitAddressArray);
-        $companyUnitAddressArray = $this->expandAddressDataWithCompanyName(
+        $companyUnitAddressArray = $this->expandAddressListItemWithPersonalInfo($companyUnitAddressArray);
+        $companyUnitAddressArray = $this->expandAddressListItemWithCompanyName(
             $companyUnitAddressArray,
             $companyBusinessUnitTransfer->getCompany()
         );
 
-        return $this->prepareAddressData($companyUnitAddressArray, $formType);
+        return $this->prepareAddressListItemData($companyUnitAddressArray, $formType);
     }
 
     /**
@@ -256,7 +256,7 @@ class AddressHandler implements AddressHandlerInterface
      *
      * @return array
      */
-    protected function expandAddressDataWithCompanyName(array $addressesFormData, CompanyTransfer $companyTransfer): array
+    protected function expandAddressListItemWithCompanyName(array $addressesFormData, CompanyTransfer $companyTransfer): array
     {
         return array_merge($addressesFormData, [
             static::FIELD_COMPANY => $companyTransfer->getName(),
@@ -268,7 +268,7 @@ class AddressHandler implements AddressHandlerInterface
      *
      * @return array
      */
-    protected function expandAddressDataWithPersonalInfo(array $addressData): array
+    protected function expandAddressListItemWithPersonalInfo(array $addressData): array
     {
         return array_merge($addressData, [
             static::FIELD_SALUTATION => static::FIELD_VALUE_COMPANY_BUSINESS_UNIT_SALUTATION,
@@ -283,7 +283,7 @@ class AddressHandler implements AddressHandlerInterface
      *
      * @return array
      */
-    protected function prepareAddressData(array $addressData, string $formType): array
+    protected function prepareAddressListItemData(array $addressData, string $formType): array
     {
         $preparedAddressData = [];
 
@@ -307,7 +307,7 @@ class AddressHandler implements AddressHandlerInterface
      *
      * @return int[]
      */
-    protected function getDefaultAddressIndexes(array $addressesArray, string $formType): array
+    protected function getAddressListDefaultItemIndexes(array $addressesArray, string $formType): array
     {
         $index = 0;
         $defaultAddressIndexes = [];
@@ -329,7 +329,7 @@ class AddressHandler implements AddressHandlerInterface
      *
      * @return array
      */
-    protected function resetAddressesDefaultValues(array $addressesArray, array $addressIndexes, string $formType): array
+    protected function resetAddressListDefaultItemValues(array $addressesArray, array $addressIndexes, string $formType): array
     {
         foreach ($addressIndexes as $addressIndex) {
             $addressesArray[$addressIndex][sprintf(static::KEY_ADDRESS_DEFAULT, $formType)] = false;

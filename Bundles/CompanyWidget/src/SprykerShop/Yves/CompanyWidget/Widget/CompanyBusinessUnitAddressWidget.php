@@ -14,8 +14,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class CompanyBusinessUnitAddressWidget extends AbstractWidget
 {
-    protected const KEY_ADDRESS_DEFAULT = 'addressesForm[%s][default]';
-
     /**
      * @param string $formType
      */
