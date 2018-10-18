@@ -19,13 +19,13 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      */
     public function __construct(string $formType)
     {
-        $addressHandler = $this->getFactory()
-            ->createAddressHandler();
+        $addressProvider = $this->getFactory()
+            ->createAddressProvider();
 
         $this->addParameter('formType', $formType)
-            ->addParameter('isApplicable', $addressHandler->isApplicable())
-            ->addParameter('addresses', $addressHandler->getCombinedAddressesListJson($formType))
-            ->addParameter('fullAddresses', $addressHandler->getCombinedFullAddressesList($formType));
+            ->addParameter('isApplicable', $addressProvider->isApplicable())
+            ->addParameter('addresses', $addressProvider->getCombinedAddressesListJson($formType))
+            ->addParameter('fullAddresses', $addressProvider->getCombinedFullAddressesList($formType));
     }
 
     /**

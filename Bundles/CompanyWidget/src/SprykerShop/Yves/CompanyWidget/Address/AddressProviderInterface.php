@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyWidget\Address;
 
-interface AddressHandlerInterface
+interface AddressProviderInterface
 {
     /**
      * @return bool
