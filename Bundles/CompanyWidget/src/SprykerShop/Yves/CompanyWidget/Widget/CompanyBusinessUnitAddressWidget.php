@@ -27,7 +27,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         $this->addParameter('formType', $formType)
             ->addParameter('isApplicable', $addressHandler->isApplicable())
             ->addParameter('addresses', $addressHandler->getCombinedAddressesListJson($formType))
-            ->addParameter('fullAddresses', $addressHandler->getAvailableFullAddressesList($formType));
+            ->addParameter('fullAddresses', $addressHandler->getCombinedFullAddressesList($formType));
     }
 
     /**

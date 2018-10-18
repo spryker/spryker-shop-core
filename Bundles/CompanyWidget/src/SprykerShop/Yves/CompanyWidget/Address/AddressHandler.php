@@ -93,8 +93,8 @@ class AddressHandler implements AddressHandlerInterface
      */
     public function getCombinedAddressesListJson(string $formType): ?string
     {
-        $customerAddressesArray = $this->getCustomerAddressesArray($formType);
-        $companyBusinessUnitAddressesArray = $this->getCompanyBusinessUnitAddressesArray($formType);
+        $customerAddressesArray = $this->getCustomerAddressesList($formType);
+        $companyBusinessUnitAddressesArray = $this->getCompanyBusinessUnitAddressesList($formType);
 
         $defaultCustomerAddressIndexes = $this->getDefaultAddressIndexes($customerAddressesArray, $formType);
         $defaultCompanyBusinessUnitAddressIndexes = $this->getDefaultAddressIndexes($companyBusinessUnitAddressesArray, $formType);
@@ -122,18 +122,18 @@ class AddressHandler implements AddressHandlerInterface
      *
      * @return array
      */
-    public function getAvailableFullAddressesList(string $formType): array
+    public function getCombinedFullAddressesList(string $formType): array
     {
-        $customerAddresses = $this->getCustomerAddressesArray($formType);
-        $companyBusinessUnitAddresses = $this->getCompanyBusinessUnitAddressesArray($formType);
+        $customerAddresses = $this->getCustomerAddressesList($formType);
+        $companyBusinessUnitAddresses = $this->getCompanyBusinessUnitAddressesList($formType);
 
         return array_merge(
-            $this->getFullAddressesFromArray(
+            $this->getFullAddressesFromList(
                 $customerAddresses,
                 $formType,
                 static::GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP
             ),
-            $this->getFullAddressesFromArray(
+            $this->getFullAddressesFromList(
                 $companyBusinessUnitAddresses,
                 $formType,
                 static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP
@@ -164,7 +164,7 @@ class AddressHandler implements AddressHandlerInterface
      *
      * @return array
      */
-    protected function getCustomerAddressesArray(string $formType): array
+    protected function getCustomerAddressesList(string $formType): array
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
@@ -186,7 +186,7 @@ class AddressHandler implements AddressHandlerInterface
      *
      * @return array
      */
-    protected function getCompanyBusinessUnitAddressesArray(string $formType): array
+    protected function getCompanyBusinessUnitAddressesList(string $formType): array
     {
         $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit();
         if ($companyBusinessUnitTransfer === null) {
@@ -373,7 +373,7 @@ class AddressHandler implements AddressHandlerInterface
      *
      * @return array
      */
-    protected function getFullAddressesFromArray(array $addressesArray, string $formType, string $addressOptionGroup): array
+    protected function getFullAddressesFromList(array $addressesArray, string $formType, string $addressOptionGroup): array
     {
         $fullAddressKey = sprintf(static::KEY_FULL_ADDRESS, $formType);
         $idCustomerAddressKey = sprintf(static::KEY_ID_CUSTOMER_ADDRESS, $formType);

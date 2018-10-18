@@ -26,5 +26,5 @@ interface AddressHandlerInterface
      *
      * @return array
      */
-    public function getAvailableFullAddressesList(string $formType): array;
+    public function getCombinedFullAddressesList(string $formType): array;
 }
