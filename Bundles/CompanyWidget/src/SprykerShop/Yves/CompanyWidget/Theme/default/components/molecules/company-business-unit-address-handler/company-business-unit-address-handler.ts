@@ -31,87 +31,77 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     protected mapEvents(): void {
-        this.formClearReadonly.addEventListener('form-fields-readonly-update', () => this.removeFormFieldsReadonly());
+        this.formClearReadonly.addEventListener('form-fields-readonly-update', () => this.toggleFormFieldsReadonly(false));
+        this.buttons.forEach((triggerElement: HTMLButtonElement) => this.onClick(triggerElement));
+        this.addressesSelects.forEach((selectElement: HTMLSelectElement) => this.onChange(selectElement));
+    }
 
-        this.buttons.forEach((triggerElement) => {
-            triggerElement.addEventListener('click', () => {
-                this.fillFormWithNewAddress();
-                this.setFormFieldsReadonly();
-            });
-        });
-
-        this.addressesSelects.forEach((selectElement: HTMLSelectElement) => {
-            selectElement.addEventListener('change', () => {
-                this.setCurrentAddress(selectElement);
-            });
+    protected onClick(triggerElement): void {
+        triggerElement.addEventListener('click', () => {
+            this.fillFormWithNewAddress();
+            this.toggleFormFieldsReadonly();
         });
     }
 
-    private setFormFieldsReadonly(): void {
-        event.preventDefault();
-
-        this.filterElements.forEach((formElement: HTMLFormElement) => {
-            const select = formElement.tagName.toUpperCase() == 'SELECT';
-
-            if(select) {
-                const options = formElement.querySelectorAll('option');
-
-                for (let i = 0; i < options.length; i++) {
-                    if(!options[i].selected) options[i].disabled = true;
-                }
-            }
-
-            formElement.readOnly = true;
+    protected onChange(selectElement): void {
+        selectElement.addEventListener('change', () => {
+            this.setCurrentAddress(selectElement);
         });
     }
 
-    private removeFormFieldsReadonly(): void {
+    private toggleFormFieldsReadonly(handler = true): void {
         this.filterElements.forEach((formElement: HTMLFormElement) => {
-            const select = formElement.tagName.toUpperCase() == 'SELECT';
+            const isSelect = formElement.tagName.toUpperCase() == 'SELECT';
 
-            if(select) {
+            if(isSelect) {
                 const options = formElement.querySelectorAll('option');
 
                 for (let i = 0; i < options.length; i++) {
-                    options[i].disabled = false;
+                    if(!options[i].selected && handler) {
+                        options[i].disabled = true;
+                    } else {
+                        options[i].disabled = false;
+                    }
                 }
+
+                return;
             }
 
-            formElement.readOnly = false;
+            if(handler) {
+                formElement.readOnly = true;
+            } else {
+                formElement.readOnly = false;
+            }
         });
     }
 
     private setCurrentAddress(selectElement): void {
         this.currentAddress = selectElement.options[selectElement.selectedIndex].getAttribute('data-address-key');
-
-        this.buttons.forEach((triggerElement) => {
-            triggerElement.disabled = false;
-        });
     }
 
     private fillFormWithNewAddress(): void {
-        const currentAddressList = this.addressesDataObject.filter((el) => {
-            console.log(el.address_hash, this.currentAddress);
-            return el.address_hash == this.currentAddress;
+        const currentAddressList = this.addressesDataObject.filter((element) => {
+            return element.address_hash == this.currentAddress;
         })[0];
-
         const hiddenCustomerIdInputName = this.hiddenCustomerIdInput.getAttribute('data-key');
 
-
-        if(!(hiddenCustomerIdInputName in currentAddressList)) {
+        if(currentAddressList && !(hiddenCustomerIdInputName in currentAddressList)) {
             this.hiddenCustomerIdInput.value = '';
         }
 
-        this.filterElements.forEach((el) => {
-            (<HTMLFormElement>el).value = '';
+        this.filterElements.forEach((element) => {
+            const isSelect = element.tagName.toUpperCase() == "SELECT";
 
-            if (el.tagName.toUpperCase() == "SELECT") {
-                (<HTMLFormElement>el).selectedIndex = 0;
+            (<HTMLFormElement>element).value = '';
+
+            if (isSelect) {
+                (<HTMLFormElement>element).selectedIndex = 0;
             }
         });
 
         for(let key in currentAddressList) {
             const formElement = this.form.querySelector(`[data-key="${key}"]`);
+
             if(formElement !== null && currentAddressList[key] !== null) {
                 (<HTMLFormElement>formElement).value = currentAddressList[key];
             }
@@ -130,7 +120,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
                     });
 
                     this.fillFormWithNewAddress();
-                    this.setFormFieldsReadonly();
+                    this.toggleFormFieldsReadonly();
 
                     return;
                 }

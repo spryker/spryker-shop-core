@@ -21,7 +21,7 @@
             formType: data.formType
         }
     } only %}
-        {% block selectClass %}js-form-ignore-element js-from-select-address__{{ embed.formType }}{% endblock %}
+        {% block selectClass %}js-form-clear__ignore-element js-from-select-address__{{ embed.formType }}{% endblock %}
         {% block options %}
             {% set addressGroups = [] %}
             {% set isDefault = false %}
@@ -67,7 +67,7 @@
     {% endembed %}
 
     <div>
-        <button type="button" class="button spacing-bottom js-from-add-new-address__{{ data.formType }}" disabled="disabled">
+        <button type="button" class="button spacing-bottom js-from-add-new-address__{{ data.formType }}">
             {{ 'page.checkout.address.use_selected_address' | trans }}
         </button>
         {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
@@ -75,7 +75,7 @@
                 'form-selector': '.js-form-handler__' ~ data.formType,
                 'trigger-selector': '.js-from-add-new-address__' ~ data.formType,
                 'data-selector': '.js-from-select-address__' ~ data.formType,
-                'ignore-selector': '.js-form-ignore-element',
+                'ignore-selector': '.js-form-clear__ignore-element',
                 'customer-id-selector': '.js-form-customer-id__' ~ data.formType,
                 'default-address-selector': '.js-form-default-address__' ~ data.formType,
                 'addresses': data.addresses
@@ -85,18 +85,18 @@
 
     <div>
         <label>
-            <input type="checkbox" class="js-from-clear__{{ data.formType }}-toggler js-form-ignore-element">
+            <input type="checkbox" class="js-from-clear__{{ data.formType }}-toggler js-form-clear__ignore-element">
             {{ 'page.checkout.address.different_delivery_address' | trans }}
         </label>
         {% include molecule('form-clear') with {
             attributes: {
                 'form-selector': '.js-form-clear__' ~ data.formType ~ '-form',
                 'trigger-selector': '.js-from-clear__' ~ data.formType ~ '-toggler',
-                'ignore-selector': '.js-form-ignore-element'
+                'ignore-selector': '.js-form-clear__ignore-element'
             }
         } only %}
     </div>
 
     <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" data-key="id_customer_address" class="js-form-customer-id__{{ data.formType }}">
-    <input type="hidden" name="default" class="js-form-ignore-element js-form-default-address__{{ data.formType }}">
+    <input type="hidden" name="default" class="js-form-clear__ignore-element js-form-default-address__{{ data.formType }}">
 {% endblock %}
