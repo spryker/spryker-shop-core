@@ -7,37 +7,40 @@
 
 {% define data = {
     options: [],
-    optgroups: [],
     isGrouped: false
 } %}
 
 {% block attributes %}{% endblock %}
 
+{% block option %}
+    {% set isSelected = option.selected | default(false) %}
+    {% set isDisabled = option.disabled | default(false) %}
+
+    <option value="{{option.value}}" {% if isSelected %}selected{% endif %} {% if isDisabled %}disabled{% endif %}>
+        {{option.label}}
+    </option>
+{% endblock %}
+
+
 {% block body %}
     <select class="{{config.name}}__select {% block selectClass %}{% endblock %}" {% block selectAttributes %}{{component.renderAttributes(attributes)}}{% endblock %}>
-        {% block options %}
-            {% if not isGrouped %}
+        {% if not data.isGrouped %}
+            {% block options %}
                 {% for option in data.options %}
-                    {% set isSelected = option.selected | default(false) %}
-                    {% set isDisabled = option.disabled | default(false) %}
-
-                    <option value="{{option.value}}" {% if isSelected %}selected{% endif %} {% if isDisabled %}disabled{% endif %}>
-                        {{option.label}}
-                    </option>
+                    {{ block('option') }}
                 {% endfor %}
-            {% else %}
-                {% for option in data.options %}
-                    <optgroup label="{{option.optgroupLabel}}">
-                        {% set isSelected = option.selected | default(false) %}
-                        {% set isDisabled = option.disabled | default(false) %}
-
-                        <option value="{{option.value}}" {% if isSelected %}selected{% endif %} {% if isDisabled %}disabled{% endif %}>
-                            {{option.label}}
-                        </option>
+            {% endblock %}
+        {% else %}
+            {% block optionsGroup %}
+                {% for optionGroup in data.options %}
+                    <optgroup label="{{optionGroup.label}}">
+                        {% for option in optionGroup %}
+                            {{ block('option') }}
+                        {% endfor %}
                     </optgroup>
                 {% endfor %}
-            {% endif %}
-        {% endblock %}
+            {% endblock %}
+        {% endif %}
     </select>
     {% include atom('icon') with {
         class: config.name ~ '__caret',

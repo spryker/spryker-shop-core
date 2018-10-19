@@ -22,7 +22,7 @@
         }
     } only %}
         {% block selectClass %}js-form-clear__ignore-element js-from-select-address__{{ embed.formType }}{% endblock %}
-        {% block options %}
+        {% block optionsGroup %}
             {% set addressGroups = [] %}
             {% set isDefault = false %}
 
@@ -42,25 +42,29 @@
 
             {% for addressGroupsItem in addressGroups %}
                 <optgroup label="{{ addressGroupsItem | trans }}">
-                {% for option in embed.addressOptions %}
-                    {% set isSelected = option.default | default(false) %}
-                    {% set fullName = '%s %s %s %s, %s %s, %s %s' | format(
-                        option.salutation | default(''),
-                        option.first_name | default(''),
-                        option.last_name | default(''),
-                        option.company_business_unit_name | default(''),
-                        option.address1,
-                        option.address2,
-                        option.zip_code,
-                        option.city)
-                    %}
+                    {% for option in embed.addressOptions %}
+                        {% set isSelected = option.default | default(false) %}
+                        {% set company_business_unit_name_modified = '' %}
+                        {% if option.company_business_unit_name is defined %}
+                            {% set company_business_unit_name_modified = ', ' ~ option.company_business_unit_name %}
+                        {% endif %}
+                        {% set fullName = '%s %s %s%s, %s %s, %s %s' | format(
+                            option.salutation,
+                            option.first_name,
+                            option.last_name,
+                            company_business_unit_name_modified,
+                            option.address1,
+                            option.address2,
+                            option.zip_code,
+                            option.city)
+                        %}
 
-                    {% if (option.option_group) == addressGroupsItem %}
-                        <option value="{{ fullName }}" {% if isSelected %}selected{% endif %} data-address-key="{{ option.address_hash }}">
-                            {{ fullName }}
-                        </option>
-                    {% endif %}
-                {% endfor %}
+                        {% if (option.option_group) == addressGroupsItem %}
+                            <option value="{{ fullName }}" {% if isSelected %}selected{% endif %} data-address-key="{{ option.address_hash }}">
+                                {{ fullName }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
                 </optgroup>
             {% endfor %}
         {% endblock %}
