@@ -7,12 +7,12 @@
 
 namespace SprykerShop\Yves\CompanyWidget\Address;
 
-interface AddressHandlerInterface
+interface AddressProviderInterface
 {
     /**
      * @return bool
      */
-    public function isApplicable(): bool;
+    public function companyBusinessUnitAddressesExists(): bool;
 
     /**
      * @param string $formType
@@ -26,5 +26,5 @@ interface AddressHandlerInterface
      *
      * @return array
      */
-    public function getCombinedFullAddressesList(string $formType): array;
+    public function getCombinedComparableAddressesList(string $formType): array;
 }

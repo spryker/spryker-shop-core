@@ -8,18 +8,18 @@
 namespace SprykerShop\Yves\CompanyWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CompanyWidget\Address\AddressHandler;
-use SprykerShop\Yves\CompanyWidget\Address\AddressHandlerInterface;
+use SprykerShop\Yves\CompanyWidget\Address\AddressProvider;
+use SprykerShop\Yves\CompanyWidget\Address\AddressProviderInterface;
 use SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface;
 
 class CompanyWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\CompanyWidget\Address\AddressHandlerInterface
+     * @return \SprykerShop\Yves\CompanyWidget\Address\AddressProviderInterface
      */
-    public function createAddressHandler(): AddressHandlerInterface
+    public function createAddressProvider(): AddressProviderInterface
     {
-        return new AddressHandler(
+        return new AddressProvider(
             $this->getCustomerClient()
         );
     }

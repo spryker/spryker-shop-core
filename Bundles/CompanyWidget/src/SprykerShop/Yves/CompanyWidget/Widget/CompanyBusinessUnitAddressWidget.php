@@ -19,13 +19,13 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
      */
     public function __construct(string $formType)
     {
-        $addressHandler = $this->getFactory()
-            ->createAddressHandler();
+        $addressProvider = $this->getFactory()
+            ->createAddressProvider();
 
         $this->addParameter('formType', $formType)
-            ->addParameter('isApplicable', $addressHandler->isApplicable())
-            ->addParameter('addresses', $addressHandler->getCombinedAddressesListJson($formType))
-            ->addParameter('fullAddresses', $addressHandler->getCombinedFullAddressesList($formType));
+            ->addParameter('isApplicable', $this->isApplicable())
+            ->addParameter('addresses', $addressProvider->getCombinedAddressesListJson($formType))
+            ->addParameter('comparableAddresses', $addressProvider->getCombinedComparableAddressesList($formType));
     }
 
     /**
@@ -42,5 +42,15 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@CompanyWidget/views/company-business-unit-address/company-business-unit-address.twig';
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isApplicable(): bool
+    {
+        return $this->getFactory()
+            ->createAddressProvider()
+            ->companyBusinessUnitAddressesExists();
     }
 }
