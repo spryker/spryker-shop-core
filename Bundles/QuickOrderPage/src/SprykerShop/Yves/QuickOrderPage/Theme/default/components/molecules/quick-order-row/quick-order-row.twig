@@ -33,12 +33,17 @@
     } only %}
 
     <div class="grid grid--justify grid--middle">
+        {% set inputResult = form_widget(data.autocomplete.sku) %}
+        <pre>{{ dump(inputResult) }}</pre>
         <div class="col col--sm-5 spacing spacing--inner">
+            <pre>{{ dump(data.autocomplete.fullName ~ '[sku]') }}</pre>
+            <pre>{{ dump(data.autocomplete.inputValue) }}</pre>
+            <pre>{{ dump(form_widget(data.autocomplete.sku)) }}</pre>
             {% block search %}
                 {% widget 'ProductConcreteSearchWidget' args [
                     'ajax-provider' ~ data.index,
                     data.autocomplete.fullName ~ '[sku]',
-                    data.autocomplete.inputValue
+                    data.autocomplete.inputValue,
                 ] only %}
                 {% endwidget %}
 

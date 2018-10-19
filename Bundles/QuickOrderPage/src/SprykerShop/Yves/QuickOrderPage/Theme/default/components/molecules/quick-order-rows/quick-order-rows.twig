@@ -14,6 +14,7 @@
     <div class="grid grid--justify grid--middle {{config.name}}__row {{config.name}}__row--head">
         <div class="col col--sm-5 spacing spacing--inner">
             {{ 'quick-order.input-label.sku.name' | trans }}
+            <pre>{{ dump(data.rows[0].sku) }}</pre>
         </div>
 
         <div class="col col--sm-6">
@@ -43,7 +44,6 @@
 
     {% for row in data.rows %}
         {% set productConcreteData = data.productConcretesData[row.id_product_concrete.vars.value] ?? null %}
-
         {% embed molecule('quick-order-row', 'QuickOrderPage') with {
             class: config.name ~ '__row',
             data: {
