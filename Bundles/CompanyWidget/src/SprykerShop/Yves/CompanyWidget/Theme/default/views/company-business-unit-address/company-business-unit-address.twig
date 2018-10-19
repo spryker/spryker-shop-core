@@ -4,7 +4,7 @@
     formType: _widget.formType,
     isApplicable: _widget.isApplicable,
     addresses: _widget.addresses,
-    fullAddresses: _widget.fullAddresses
+    comparableAddresses: _widget.comparableAddresses
 } %}
 
 {% block template %}
@@ -18,7 +18,7 @@
             isGrouped: true
         },
         embed: {
-            addressOptions: data.fullAddresses,
+            addressOptions: data.comparableAddresses,
             formType: data.formType
         }
     } only %}
