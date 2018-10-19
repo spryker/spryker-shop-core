@@ -33,7 +33,7 @@
             {% set hasShippingAddresses = existingShippingAddresses is not empty %}
             {% set hasBusinessUnitAddress = false %}
 
-            <div class="js-form-hundler__shippingAddress js-form-clear__shippingAddress-form">
+            <div class="js-form-handler__shippingAddress js-form-clear__shippingAddress-form">
                 {% if hasShippingAddresses %}
                     <div class="form__field col col--sm-12">
                         <ul class="list spacing-y">
@@ -102,7 +102,7 @@
                 }) }}
             </div>
 
-            <div class="js-form-hundler__billingAddress js-form-clear__billingAddress-form">
+            <div class="js-form-handler__billingAddress js-form-clear__billingAddress-form">
                 {% embed molecule('form') with {
                     class: 'is-hidden spacing-top spacing-top--big js-address__billing-same-as-shipping',
                     data: {

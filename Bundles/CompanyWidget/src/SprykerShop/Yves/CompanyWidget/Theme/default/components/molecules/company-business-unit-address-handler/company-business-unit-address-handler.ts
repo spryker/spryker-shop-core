@@ -1,7 +1,7 @@
 import Component from 'ShopUi/models/component';
 import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
-export default class CompanyBusinessUnitAddressHundler extends Component {
+export default class CompanyBusinessUnitAddressHandler extends Component {
     buttons: HTMLButtonElement[];
     form: HTMLElement;
     elements: HTMLElement[];
@@ -103,14 +103,18 @@ export default class CompanyBusinessUnitAddressHundler extends Component {
             this.hiddenCustomerIdInput.value = '';
         }
 
+        this.filterElements.forEach((el) => {
+            (<HTMLFormElement>el).value = '';
+
+            if (el.tagName == "SELECT") {
+                (<HTMLFormElement>el).selectedIndex = 0;
+            }
+        });
+
         for(let key in currentAddressList) {
             const formElement = this.form.querySelector(`[name="${key}"]`);
-            if(formElement !== null) {
-                (<HTMLFormElement>formElement).value = '';
-
-                if(currentAddressList[key] !== null) {
-                    (<HTMLFormElement>formElement).value = currentAddressList[key];
-                }
+            if(formElement !== null && currentAddressList[key] !== null) {
+                (<HTMLFormElement>formElement).value = currentAddressList[key];
             }
         }
     }
@@ -128,16 +132,6 @@ export default class CompanyBusinessUnitAddressHundler extends Component {
 
                     this.fillFormWithNewAddress();
                     this.setFormFieldsReadonly();
-
-                    return;
-                }
-
-                if(!address[hiddenDefaultAddressInputName] == true) {
-                    const formElement = this.form.querySelector(`[name="${key}"]`);
-
-                    if(formElement !== null) {
-                        (<HTMLFormElement>formElement).value = '';
-                    }
 
                     return;
                 }

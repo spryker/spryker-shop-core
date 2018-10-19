@@ -8,6 +8,7 @@
 } %}
 
 {% block template %}
+    <pre>{{ data.addresses }}</pre>
     {% embed atom('select') with {
         class: 'spacing-bottom',
         attributes: {
@@ -59,9 +60,9 @@
         <button type="button" class="button spacing-bottom js-from-add-new-address__{{ data.formType }}" disabled="disabled">
             {{ 'page.checkout.address.use_selected_address' | trans }}
         </button>
-        {% include molecule('company-business-unit-address-hundler', 'CompanyWidget') with {
+        {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
             attributes: {
-                'form-selector': '.js-form-hundler__' ~ data.formType,
+                'form-selector': '.js-form-handler__' ~ data.formType,
                 'trigger-selector': '.js-from-add-new-address__' ~ data.formType,
                 'data-selector': '.js-from-select-address__' ~ data.formType,
                 'ignore-selector': '.js-form-ignore-element',
