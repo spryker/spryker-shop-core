@@ -200,7 +200,7 @@ class AddressProvider implements AddressProviderInterface
     {
         $comparableAddressesList = [];
         foreach ($addressesList as $addressItem) {
-            $comparableAddressListItem = [];
+            $comparableAddressListItem = $addressItem;
 
             if (isset($addressItem[static::FIELD_ID_CUSTOMER_ADDRESS])) {
                 $comparableAddressListItem[static::FIELD_ID_CUSTOMER_ADDRESS] = $addressItem[static::FIELD_ID_CUSTOMER_ADDRESS];
