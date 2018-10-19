@@ -9,8 +9,6 @@ namespace SprykerShop\Yves\QuickOrderPage\Form;
 
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\QuickOrderPage\Form\Constraint\QtyFieldConstraint;
-use SprykerShop\Yves\QuickOrderPage\Form\Constraint\QuantityRestrictionsConstraint;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -53,7 +51,7 @@ class OrderItemEmbeddedForm extends AbstractType
             'data_class' => QuickOrderItemTransfer::class,
             'constraints' => [
                 $this->getFactory()->createQtyFieldConstraint(),
-                $this->getFactory()->createQuantityRestrictionsConstraint()
+                $this->getFactory()->createQuantityRestrictionsConstraint(),
             ],
         ]);
     }

@@ -18,7 +18,7 @@ interface QuickOrderFormHandlerStrategyPluginInterface
      *
      * @api
      *
-     * @param QuickOrderTransfer $quickOrderTransfer
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      * @param array $params
      *
      * @return bool
@@ -32,10 +32,10 @@ interface QuickOrderFormHandlerStrategyPluginInterface
      *
      * @api
      *
-     * @param QuickOrderTransfer $quickOrderTransfer
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      * @param array $params
      *
-     * @return RouteTransfer|null
+     * @return \Generated\Shared\Transfer\RouteTransfer|null
      */
     public function execute(QuickOrderTransfer $quickOrderTransfer, array $params): ?RouteTransfer;
 }

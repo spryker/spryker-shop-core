@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductSearchWidget\Controller;
 
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
-use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\ResultFormatter\ProductConcretePageSearchResultFormatterPlugin;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,7 +43,7 @@ class ProductConcreteSearchController extends AbstractController
     }
 
     /**
-     * @param ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
      * @return array
      */

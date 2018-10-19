@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductSearchWidget\Plugin\Provider;
 
 use Silex\Application;
-use SprykerShop\Yves\ProductSearchWidget\Controller\ProductConcreteSearchController;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvider
