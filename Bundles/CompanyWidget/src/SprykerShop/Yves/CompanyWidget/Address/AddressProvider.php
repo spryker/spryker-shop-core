@@ -47,7 +47,7 @@ class AddressProvider implements AddressProviderInterface
     /**
      * @return bool
      */
-    public function isApplicable(): bool
+    public function companyBusinessUnitAddressesExists(): bool
     {
         return ($this->getCompanyBusinessUnitAddressCollection()->count() > 0);
     }
@@ -71,7 +71,7 @@ class AddressProvider implements AddressProviderInterface
         if ((count($defaultCustomerAddressIndexes) > 0 && count($defaultCompanyBusinessUnitAddressIndexes) > 0)
             || (count($defaultCustomerAddressIndexes) === 0 && count($defaultCompanyBusinessUnitAddressIndexes) === 0)
         ) {
-            $companyBusinessUnitAddressesList = $this->resetAddressListDefaultItemValues(
+            $companyBusinessUnitAddressesList = $this->resetListItemsDefaultStatus(
                 $companyBusinessUnitAddressesList,
                 $defaultCompanyBusinessUnitAddressIndexes
             );
@@ -127,24 +127,24 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
-     * @param array $addressData
+     * @param array $addressListItem
      * @param string $formType
      *
      * @return array
      */
-    protected function prepareAddressListItemData(array $addressData, string $formType): array
+    protected function prepareAddressListItemData(array $addressListItem, string $formType): array
     {
-        $preparedAddressData = [
-            static::FIELD_ADDRESS_HASH => $this->getAddressHash($addressData),
+        $preparedAddressListItem = [
+            static::FIELD_ADDRESS_HASH => $this->getAddressHash($addressListItem),
         ];
-        $preparedAddressData = array_merge(
-            $addressData,
-            $this->addDefaultAddressValue($addressData, $preparedAddressData, $formType)
+        $preparedAddressListItem = array_merge(
+            $addressListItem,
+            $this->addDefaultAddressValue($addressListItem, $preparedAddressListItem, $formType)
         );
 
-        ksort($preparedAddressData);
+        ksort($preparedAddressListItem);
 
-        return $preparedAddressData;
+        return $preparedAddressListItem;
     }
 
     /**
@@ -185,35 +185,35 @@ class AddressProvider implements AddressProviderInterface
         $companyBusinessUnitAddressesList = $this->prepareCompanyBusinessUnitAddressList($companyBusinessUnitAddressesList, $formType);
 
         return array_merge(
-            $this->getFullAddressesFromList($customerAddressesList, static::GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP),
-            $this->getFullAddressesFromList($companyBusinessUnitAddressesList, static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP)
+            $this->getFullAddressesList($customerAddressesList, static::GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP),
+            $this->getFullAddressesList($companyBusinessUnitAddressesList, static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP)
         );
     }
 
     /**
-     * @param array $addressesArray
+     * @param array $addressesList
      * @param string $addressOptionGroup
      *
      * @return array
      */
-    protected function getFullAddressesFromList(array $addressesArray, string $addressOptionGroup): array
+    protected function getFullAddressesList(array $addressesList, string $addressOptionGroup): array
     {
-        $fullAddresses = [];
-        foreach ($addressesArray as $addressItem) {
-            $fullAddressItem = [];
+        $fullAddressesList = [];
+        foreach ($addressesList as $addressItem) {
+            $fullAddressListItem = [];
 
             if (isset($addressItem[static::FIELD_ID_CUSTOMER_ADDRESS])) {
-                $fullAddressItem[static::FIELD_ID_CUSTOMER_ADDRESS] = $addressItem[static::FIELD_ID_CUSTOMER_ADDRESS];
+                $fullAddressListItem[static::FIELD_ID_CUSTOMER_ADDRESS] = $addressItem[static::FIELD_ID_CUSTOMER_ADDRESS];
             }
 
-            $fullAddressItem[static::FIELD_OPTION_GROUP] = $addressOptionGroup;
-            $fullAddressItem[static::FIELD_DEFAULT] = $addressItem[static::FIELD_DEFAULT];
-            $fullAddressItem[static::FIELD_ADDRESS_HASH] = $addressItem[static::FIELD_ADDRESS_HASH];
+            $fullAddressListItem[static::FIELD_OPTION_GROUP] = $addressOptionGroup;
+            $fullAddressListItem[static::FIELD_DEFAULT] = $addressItem[static::FIELD_DEFAULT];
+            $fullAddressListItem[static::FIELD_ADDRESS_HASH] = $addressItem[static::FIELD_ADDRESS_HASH];
 
-            $fullAddresses[] = $fullAddressItem;
+            $fullAddressesList[] = $fullAddressListItem;
         }
 
-        return $fullAddresses;
+        return $fullAddressesList;
     }
 
     /**
@@ -280,69 +280,69 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
-     * @param array $addressesFormData
+     * @param array $addressesListItem
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return array
      */
-    protected function expandAddressListItemWithCompanyName(array $addressesFormData, CompanyTransfer $companyTransfer): array
+    protected function expandAddressListItemWithCompanyName(array $addressesListItem, CompanyTransfer $companyTransfer): array
     {
-        return array_merge($addressesFormData, [
+        return array_merge($addressesListItem, [
             static::FIELD_COMPANY => $companyTransfer->getName(),
         ]);
     }
 
     /**
-     * @param array $addressData
+     * @param array $addressListItem
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return array
      */
     protected function expandAddressListItemWithCompanyBusinessUnitName(
-        array $addressData,
+        array $addressListItem,
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): array {
-        return array_merge($addressData, [
+        return array_merge($addressListItem, [
             static::FIELD_COMPANY_BUSINESS_UNIT_NAME => $companyBusinessUnitTransfer->getName(),
         ]);
     }
 
     /**
-     * @param array $addressData
-     * @param array $preparedAddressData
+     * @param array $addressListItem
+     * @param array $preparedAddressListItem
      * @param string $formType
      *
      * @return array
      */
-    protected function addDefaultAddressValue(array $addressData, array $preparedAddressData, string $formType): array
+    protected function addDefaultAddressValue(array $addressListItem, array $preparedAddressListItem, string $formType): array
     {
-        if ($formType === static::FORM_TYPE_OPTION_BILLING_ADDRESS && isset($addressData[static::FIELD_IS_DEFAULT_BILLING])) {
-            $preparedAddressData[static::FIELD_DEFAULT] = $addressData[static::FIELD_IS_DEFAULT_BILLING] === true;
+        if ($formType === static::FORM_TYPE_OPTION_BILLING_ADDRESS && isset($addressListItem[static::FIELD_IS_DEFAULT_BILLING])) {
+            $preparedAddressListItem[static::FIELD_DEFAULT] = $addressListItem[static::FIELD_IS_DEFAULT_BILLING] === true;
 
-            return $preparedAddressData;
+            return $preparedAddressListItem;
         }
 
-        if ($formType === static::FORM_TYPE_OPTION_SHIPPING_ADDRESS && isset($addressData[static::FIELD_IS_DEFAULT_SHIPPING])) {
-            $preparedAddressData[static::FIELD_DEFAULT] = $addressData[static::FIELD_IS_DEFAULT_SHIPPING] === true;
+        if ($formType === static::FORM_TYPE_OPTION_SHIPPING_ADDRESS && isset($addressListItem[static::FIELD_IS_DEFAULT_SHIPPING])) {
+            $preparedAddressListItem[static::FIELD_DEFAULT] = $addressListItem[static::FIELD_IS_DEFAULT_SHIPPING] === true;
 
-            return $preparedAddressData;
+            return $preparedAddressListItem;
         }
 
-        $preparedAddressData[static::FIELD_DEFAULT] = false;
+        $preparedAddressListItem[static::FIELD_DEFAULT] = false;
 
-        return $preparedAddressData;
+        return $preparedAddressListItem;
     }
 
     /**
-     * @param array $addressesArray
+     * @param array $addressesList
      *
      * @return int[]
      */
-    protected function getAddressListDefaultItemIndexes(array $addressesArray): array
+    protected function getAddressListDefaultItemIndexes(array $addressesList): array
     {
         $index = 0;
         $defaultAddressIndexes = [];
-        foreach ($addressesArray as $addressItem) {
+        foreach ($addressesList as $addressItem) {
             if ($addressItem[static::FIELD_DEFAULT] === true) {
                 $defaultAddressIndexes[] = $index;
             }
@@ -354,38 +354,38 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
-     * @param array $addressesArray
+     * @param array $addressesList
      * @param int[] $addressIndexes
      *
      * @return array
      */
-    protected function resetAddressListDefaultItemValues(array $addressesArray, array $addressIndexes): array
+    protected function resetListItemsDefaultStatus(array $addressesList, array $addressIndexes): array
     {
         foreach ($addressIndexes as $addressIndex) {
-            $addressesArray[$addressIndex][static::FIELD_DEFAULT] = false;
+            $addressesList[$addressIndex][static::FIELD_DEFAULT] = false;
         }
 
-        return $addressesArray;
+        return $addressesList;
     }
 
     /**
-     * @param array $addressData
+     * @param array $addressListItem
      *
      * @return string
      */
-    protected function getAddressHash(array $addressData): string
+    protected function getAddressHash(array $addressListItem): string
     {
-        return crc32(json_encode($addressData));
+        return crc32(json_encode($addressListItem));
     }
 
     /**
-     * @param array $addresses
+     * @param array $addressesList
      *
      * @return string|null
      */
-    protected function encodeAddressesToJson(array $addresses): ?string
+    protected function encodeAddressesToJson(array $addressesList): ?string
     {
-        $jsonEncodedAddresses = json_encode($addresses, JSON_PRETTY_PRINT);
+        $jsonEncodedAddresses = json_encode($addressesList, JSON_PRETTY_PRINT);
 
         return ($jsonEncodedAddresses !== false)
             ? $jsonEncodedAddresses

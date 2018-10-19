@@ -12,7 +12,7 @@ interface AddressProviderInterface
     /**
      * @return bool
      */
-    public function isApplicable(): bool;
+    public function companyBusinessUnitAddressesExists(): bool;
 
     /**
      * @param string $formType
