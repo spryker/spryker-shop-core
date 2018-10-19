@@ -26,5 +26,5 @@ interface AddressProviderInterface
      *
      * @return array
      */
-    public function getCombinedFullAddressesList(string $formType): array;
+    public function getCombinedComparableAddressesList(string $formType): array;
 }

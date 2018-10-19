@@ -176,7 +176,7 @@ class AddressProvider implements AddressProviderInterface
      *
      * @return array
      */
-    public function getCombinedFullAddressesList(string $formType): array
+    public function getCombinedComparableAddressesList(string $formType): array
     {
         $customerAddressesList = $this->getCustomerAddressesList();
         $companyBusinessUnitAddressesList = $this->getCompanyBusinessUnitAddressesList();
@@ -185,8 +185,8 @@ class AddressProvider implements AddressProviderInterface
         $companyBusinessUnitAddressesList = $this->prepareCompanyBusinessUnitAddressList($companyBusinessUnitAddressesList, $formType);
 
         return array_merge(
-            $this->getFullAddressesList($customerAddressesList, static::GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP),
-            $this->getFullAddressesList($companyBusinessUnitAddressesList, static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP)
+            $this->getComparableAddressesList($customerAddressesList, static::GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP),
+            $this->getComparableAddressesList($companyBusinessUnitAddressesList, static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP)
         );
     }
 
@@ -196,24 +196,24 @@ class AddressProvider implements AddressProviderInterface
      *
      * @return array
      */
-    protected function getFullAddressesList(array $addressesList, string $addressOptionGroup): array
+    protected function getComparableAddressesList(array $addressesList, string $addressOptionGroup): array
     {
-        $fullAddressesList = [];
+        $comparableAddressesList = [];
         foreach ($addressesList as $addressItem) {
-            $fullAddressListItem = [];
+            $comparableAddressListItem = [];
 
             if (isset($addressItem[static::FIELD_ID_CUSTOMER_ADDRESS])) {
-                $fullAddressListItem[static::FIELD_ID_CUSTOMER_ADDRESS] = $addressItem[static::FIELD_ID_CUSTOMER_ADDRESS];
+                $comparableAddressListItem[static::FIELD_ID_CUSTOMER_ADDRESS] = $addressItem[static::FIELD_ID_CUSTOMER_ADDRESS];
             }
 
-            $fullAddressListItem[static::FIELD_OPTION_GROUP] = $addressOptionGroup;
-            $fullAddressListItem[static::FIELD_DEFAULT] = $addressItem[static::FIELD_DEFAULT];
-            $fullAddressListItem[static::FIELD_ADDRESS_HASH] = $addressItem[static::FIELD_ADDRESS_HASH];
+            $comparableAddressListItem[static::FIELD_OPTION_GROUP] = $addressOptionGroup;
+            $comparableAddressListItem[static::FIELD_DEFAULT] = $addressItem[static::FIELD_DEFAULT];
+            $comparableAddressListItem[static::FIELD_ADDRESS_HASH] = $addressItem[static::FIELD_ADDRESS_HASH];
 
-            $fullAddressesList[] = $fullAddressListItem;
+            $comparableAddressesList[] = $comparableAddressListItem;
         }
 
-        return $fullAddressesList;
+        return $comparableAddressesList;
     }
 
     /**
