@@ -40,7 +40,7 @@
                             {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress']) %}
 
                             {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
-                                {% widget 'CompanyBusinessUnitAddressWidget' args ['shippingAddress'] only %}{% endwidget %}
+                                {% widget companyBusinessUnitAddressWidget %}{% endwidget %}
                             {% else %}
                                 {% set hasBusinessUnitAddress = true %}
 
@@ -63,7 +63,7 @@
                     </div>
                 {% endif %}
 
-                {% include molecule('form') with {
+                {% embed molecule('form') with {
                     class: 'js-address__shipping' ~ (hasBusinessUnitAddress ? ' is-hidden ' : ''),
                     data: {
                         form: embed.forms.shipping,
@@ -88,6 +88,17 @@
                         }
                     }
                 } only %}
+                    {% block field %}
+                        {{ form_row(field, {
+                        attr: {
+                                'data-key': field.vars.name
+                            },
+                        rowAttr: {
+                                class: config.name ~ '__field ' ~ fieldLayoutClass
+                            }
+                        }) }}
+                    {% endblock %}
+                {% endembed %}
 
             </div>
 
@@ -129,6 +140,16 @@
                         }
                     }
                 } only %}
+                    {% block field %}
+                        {{ form_row(field, {
+                            attr: {
+                                'data-key': field.vars.name
+                            },
+                            rowAttr: {
+                                class: config.name ~ '__field ' ~ fieldLayoutClass
+                            }
+                        }) }}
+                    {% endblock %}
                     {% block fields %}
                         {% set existingBillingAddresses = data.form.id_customer_address | default %}
                         {% set hasBillingAddresses = existingBillingAddresses is not empty %}
@@ -141,7 +162,7 @@
                                     {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
                                         {% set hasBillingAddresses = false %}
 
-                                        {% widget 'CompanyBusinessUnitAddressWidget' args ['billingAddress'] only %}{% endwidget %}
+                                        {% widget companyBusinessUnitAddressWidget %}{% endwidget %}
                                     {% else %}
                                         {% set hasBillingAddresses = true %}
 

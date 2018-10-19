@@ -82,10 +82,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     private setCurrentAddress(selectElement): void {
-        this.currentAddress = {
-            id: selectElement.options[selectElement.selectedIndex].getAttribute('data-address-key'),
-            label: selectElement.value
-        }
+        this.currentAddress = selectElement.options[selectElement.selectedIndex].getAttribute('data-address-key');
 
         this.buttons.forEach((triggerElement) => {
             triggerElement.disabled = false;
@@ -94,10 +91,12 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
 
     private fillFormWithNewAddress(): void {
         const currentAddressList = this.addressesDataObject.filter((el) => {
-            return el[this.currentAddress.id] == this.currentAddress.label;
+            console.log(el.address_hash, this.currentAddress);
+            return el.address_hash == this.currentAddress;
         })[0];
 
-        const hiddenCustomerIdInputName = this.hiddenCustomerIdInput.getAttribute('name');
+        const hiddenCustomerIdInputName = this.hiddenCustomerIdInput.getAttribute('data-key');
+
 
         if(!(hiddenCustomerIdInputName in currentAddressList)) {
             this.hiddenCustomerIdInput.value = '';
@@ -106,7 +105,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.filterElements.forEach((el) => {
             (<HTMLFormElement>el).value = '';
 
-            if (el.tagName == "SELECT") {
+            if (el.tagName.toUpperCase() == "SELECT") {
                 (<HTMLFormElement>el).selectedIndex = 0;
             }
         });

@@ -8,7 +8,6 @@
 } %}
 
 {% block template %}
-    <pre>{{ dump(data.comparableAddresses) }}</pre>
     {% embed atom('select') with {
         class: 'spacing-bottom',
         attributes: {
@@ -26,6 +25,7 @@
         {% block options %}
             {% set addressGroups = [] %}
             {% set isDefault = false %}
+
             {% for option in embed.addressOptions %}
                 {% set currentOption = option.option_group %}
                 {% if (currentOption not in addressGroups) %}
@@ -44,10 +44,20 @@
                 <optgroup label="{{ addressGroupsItem | trans }}">
                 {% for option in embed.addressOptions %}
                     {% set isSelected = option.default | default(false) %}
+                    {% set fullName = '%s %s %s %s, %s %s, %s %s' | format(
+                        option.salutation | default(''),
+                        option.first_name | default(''),
+                        option.last_name | default(''),
+                        option.company_business_unit_name | default(''),
+                        option.address1,
+                        option.address2,
+                        option.zip_code,
+                        option.city)
+                    %}
 
                     {% if (option.option_group) == addressGroupsItem %}
-                        <option value="" {% if isSelected %}selected{% endif %} data-address-key="full_address">
-                            sdcsdf
+                        <option value="{{ fullName }}" {% if isSelected %}selected{% endif %} data-address-key="{{ option.address_hash }}">
+                            {{ fullName }}
                         </option>
                     {% endif %}
                 {% endfor %}
@@ -87,6 +97,6 @@
         } only %}
     </div>
 
-    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" class="js-form-customer-id__{{ data.formType }}">
-    <input type="hidden" name="addressesForm[{{ data.formType }}][default]" class="js-form-ignore-element js-form-default-address__{{ data.formType }}">
+    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" data-key="id_customer_address" class="js-form-customer-id__{{ data.formType }}">
+    <input type="hidden" name="default" class="js-form-ignore-element js-form-default-address__{{ data.formType }}">
 {% endblock %}
