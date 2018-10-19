@@ -14,8 +14,8 @@ use SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClie
 
 class AddressProvider implements AddressProviderInterface
 {
-    protected const FIELD_COMPANY = 'company';
-    protected const FIELD_COMPANY_BUSINESS_UNIT_NAME = 'name';
+    protected const FIELD_COMPANY_NAME = 'company_name';
+    protected const FIELD_COMPANY_BUSINESS_UNIT_NAME = 'company_business_unit_name';
 
     protected const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
     protected const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
@@ -217,7 +217,7 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\AddressTransfer[]
      */
     protected function getCustomerAddressesList(): array
     {
@@ -262,7 +262,7 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
      */
     protected function getCompanyBusinessUnitAddressesList(): array
     {
@@ -288,7 +288,7 @@ class AddressProvider implements AddressProviderInterface
     protected function expandAddressListItemWithCompanyName(array $addressesListItem, CompanyTransfer $companyTransfer): array
     {
         return array_merge($addressesListItem, [
-            static::FIELD_COMPANY => $companyTransfer->getName(),
+            static::FIELD_COMPANY_NAME => $companyTransfer->getName(),
         ]);
     }
 
