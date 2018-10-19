@@ -25,14 +25,6 @@
     <textarea {{ block('widget_attributes') }}>{% if value is not empty %}{{ value }}{% endif %}</textarea>
 {%- endblock textarea_widget -%}
 
-{%- block choice_widget_expanded -%}
-    <ul class="list spacing-y spacing-y--small" {{ block('widget_container_attributes') }}>
-        {%- for child in form %}
-            <li class="list__item spacing-y spacing-y--small">{{- form_widget(child) -}}</li>
-        {% endfor -%}
-    </ul>
-{%- endblock choice_widget_expanded -%}
-
 {%- block choice_widget_collapsed -%}
     {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
         {% set required = false %}
