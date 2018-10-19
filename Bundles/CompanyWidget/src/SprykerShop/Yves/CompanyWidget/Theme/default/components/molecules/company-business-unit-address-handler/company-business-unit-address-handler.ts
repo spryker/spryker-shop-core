@@ -112,7 +112,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         });
 
         for(let key in currentAddressList) {
-            const formElement = this.form.querySelector(`[name="${key}"]`);
+            const formElement = this.form.querySelector(`[data-key="${key}"]`);
             if(formElement !== null && currentAddressList[key] !== null) {
                 (<HTMLFormElement>formElement).value = currentAddressList[key];
             }

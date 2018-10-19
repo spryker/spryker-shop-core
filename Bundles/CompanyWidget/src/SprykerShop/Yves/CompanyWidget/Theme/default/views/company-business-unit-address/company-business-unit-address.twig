@@ -8,7 +8,7 @@
 } %}
 
 {% block template %}
-    <pre>{{ data.addresses }}</pre>
+    <pre>{{ dump(data.comparableAddresses) }}</pre>
     {% embed atom('select') with {
         class: 'spacing-bottom',
         attributes: {
@@ -27,11 +27,11 @@
             {% set addressGroups = [] %}
             {% set isDefault = false %}
             {% for option in embed.addressOptions %}
-                {% set currentOption = option['addressesForm[' ~ embed.formType ~ '][option_group]'] %}
+                {% set currentOption = option.option_group %}
                 {% if (currentOption not in addressGroups) %}
                     {% set addressGroups = addressGroups | merge([currentOption]) %}
                 {% endif %}
-                {% if option['addressesForm[' ~ embed.formType ~ '][default]'] == true %}
+                {% if option.default == true %}
                     {% set isDefault = true %}
                 {% endif %}
             {% endfor %}
@@ -43,11 +43,11 @@
             {% for addressGroupsItem in addressGroups %}
                 <optgroup label="{{ addressGroupsItem | trans }}">
                 {% for option in embed.addressOptions %}
-                    {% set isSelected = option['addressesForm[' ~ embed.formType ~ '][default]'] | default(false) %}
+                    {% set isSelected = option.default | default(false) %}
 
-                    {% if (option['addressesForm[' ~ embed.formType ~ '][option_group]']) == addressGroupsItem %}
-                        <option value="{{ option['addressesForm[' ~ embed.formType ~ '][full_address]'] }}" {% if isSelected %}selected{% endif %} data-address-key="addressesForm[{{ embed.formType }}][full_address]">
-                            {{ option['addressesForm[' ~ embed.formType ~ '][full_address]'] }}
+                    {% if (option.option_group) == addressGroupsItem %}
+                        <option value="" {% if isSelected %}selected{% endif %} data-address-key="full_address">
+                            sdcsdf
                         </option>
                     {% endif %}
                 {% endfor %}
