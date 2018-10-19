@@ -14,20 +14,21 @@
     <div class="grid grid--justify grid--middle {{config.name}}__row {{config.name}}__row--head">
         <div class="col col--sm-5 spacing spacing--inner">
             {{ 'quick-order.input-label.sku.name' | trans }}
-            <pre>{{ dump(data.rows[0].sku) }}</pre>
         </div>
 
         <div class="col col--sm-6">
             <div class="grid grid--justify grid--middle">
-                <div class="col col--sm-6">
-                    {% for additionalColumn in data.additionalColumns %}
-                        <div class="col col--expand spacing spacing--inner">
-                            {% block additionalColumn %}
-                                {{ additionalColumn.title | trans }}
-                            {% endblock %}
-                        </div>
-                    {% endfor %}
-                </div>
+                {% if data.additionalColumns is not empty %}
+                    <div class="col col--sm-6">
+                        {% for additionalColumn in data.additionalColumns %}
+                            <div class="col col--expand spacing spacing--inner">
+                                {% block additionalColumn %}
+                                    {{ additionalColumn.title | trans }}
+                                {% endblock %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
 
                 <div class="col col--sm-3 spacing spacing--inner">
                     {{ 'quick-order.input-label.qty' | trans }}
@@ -49,6 +50,7 @@
             data: {
                 index: loop.index0,
                 quantityField: row.qty,
+                skuField: row.sku,
                 additionalColumns: data.additionalColumns,
 
                 autocomplete: {
