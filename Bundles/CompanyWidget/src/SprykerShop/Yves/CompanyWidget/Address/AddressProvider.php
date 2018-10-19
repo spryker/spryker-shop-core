@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CompanyWidget\Address;
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface;
 
 class AddressProvider implements AddressProviderInterface
@@ -19,6 +20,10 @@ class AddressProvider implements AddressProviderInterface
 
     protected const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
     protected const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
+
+    protected const FIELD_SALUTATION = 'salutation';
+    protected const FIELD_FIRST_NAME = 'first_name';
+    protected const FIELD_LAST_NAME = 'last_name';
 
     protected const FIELD_DEFAULT = 'default';
     protected const FIELD_OPTION_GROUP = 'option_group';
@@ -86,6 +91,25 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
+     * @param string $formType
+     *
+     * @return array
+     */
+    public function getCombinedComparableAddressesList(string $formType): array
+    {
+        $customerAddressesList = $this->getCustomerAddressesList();
+        $companyBusinessUnitAddressesList = $this->getCompanyBusinessUnitAddressesList();
+
+        $customerAddressesList = $this->prepareCustomerAddressesList($customerAddressesList, $formType);
+        $companyBusinessUnitAddressesList = $this->prepareCompanyBusinessUnitAddressList($companyBusinessUnitAddressesList, $formType);
+
+        return array_merge(
+            $this->getComparableAddressesList($customerAddressesList, static::GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP),
+            $this->getComparableAddressesList($companyBusinessUnitAddressesList, static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP)
+        );
+    }
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesList
      * @param string $formType
      *
@@ -109,6 +133,8 @@ class AddressProvider implements AddressProviderInterface
      */
     protected function prepareCompanyBusinessUnitAddressList(array $companyBusinessUnitAddressesList, string $formType): array
     {
+        $customerTransfer = $this->customerClient->getCustomer();
+
         $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit();
         if ($companyBusinessUnitTransfer === null) {
             return [];
@@ -118,6 +144,7 @@ class AddressProvider implements AddressProviderInterface
         foreach ($companyBusinessUnitAddressesList as $companyBusinessUnitAddressesListItem) {
             $preparedCompanyBusinessUnitAddressesList[] = $this->prepareCompanyBusinessUnitAddressListItem(
                 $companyBusinessUnitAddressesListItem->toArray(),
+                $customerTransfer,
                 $companyBusinessUnitTransfer,
                 $formType
             );
@@ -149,6 +176,7 @@ class AddressProvider implements AddressProviderInterface
 
     /**
      * @param array $companyUnitAddressListItem
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      * @param string $formType
      *
@@ -156,9 +184,14 @@ class AddressProvider implements AddressProviderInterface
      */
     protected function prepareCompanyBusinessUnitAddressListItem(
         array $companyUnitAddressListItem,
+        CustomerTransfer $customerTransfer,
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         string $formType
     ): array {
+        $companyUnitAddressListItem = $this->expandAddressListItemWithCustomerPersonalData(
+            $companyUnitAddressListItem,
+            $customerTransfer
+        );
         $companyUnitAddressListItem = $this->expandAddressListItemWithCompanyBusinessUnitName(
             $companyUnitAddressListItem,
             $companyBusinessUnitTransfer
@@ -172,22 +205,20 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
-     * @param string $formType
+     * @param array $addressListItem
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return array
      */
-    public function getCombinedComparableAddressesList(string $formType): array
-    {
-        $customerAddressesList = $this->getCustomerAddressesList();
-        $companyBusinessUnitAddressesList = $this->getCompanyBusinessUnitAddressesList();
+    protected function expandAddressListItemWithCustomerPersonalData(
+        array $addressListItem,
+        CustomerTransfer $customerTransfer
+    ): array {
+        $addressListItem[static::FIELD_SALUTATION] = $customerTransfer->getSalutation();
+        $addressListItem[static::FIELD_FIRST_NAME] = $customerTransfer->getFirstName();
+        $addressListItem[static::FIELD_LAST_NAME] = $customerTransfer->getLastName();
 
-        $customerAddressesList = $this->prepareCustomerAddressesList($customerAddressesList, $formType);
-        $companyBusinessUnitAddressesList = $this->prepareCompanyBusinessUnitAddressList($companyBusinessUnitAddressesList, $formType);
-
-        return array_merge(
-            $this->getComparableAddressesList($customerAddressesList, static::GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP),
-            $this->getComparableAddressesList($companyBusinessUnitAddressesList, static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP)
-        );
+        return $addressListItem;
     }
 
     /**
