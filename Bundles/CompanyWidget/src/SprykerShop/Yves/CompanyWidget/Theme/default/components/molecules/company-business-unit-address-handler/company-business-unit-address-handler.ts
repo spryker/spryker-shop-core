@@ -71,7 +71,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         }
     }
 
-    protected onChange(selectElement: HTMLElement): void {
+    protected onChange(selectElement: HTMLSelectElement): void {
         this.setCurrentAddress(selectElement);
     }
 
@@ -95,7 +95,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         });
     }
 
-    protected setCurrentAddress(selectElement): void {
+    protected setCurrentAddress(selectElement: HTMLSelectElement): void {
         this.currentAddress = selectElement.options[selectElement.selectedIndex].getAttribute('data-address-key');
     }
 

@@ -29,7 +29,7 @@ export default class FormClear extends Component {
         });
     }
 
-    protected onChange(input): void {
+    protected onChange(input: HTMLElement): void {
         const isChecked = (<HTMLInputElement>input).checked;
         if(isChecked) {
             this.clearFormValues();
