@@ -22,24 +22,25 @@ export default class FormClear extends Component {
 
     protected mapEvents(): void {
         this.createCustomEvents();
-        this.triggers.forEach((input) => this.onChange(input));
-    }
-
-    protected onChange(input): void {
-        input.addEventListener('change', () => {
-            const isChecked = (<HTMLInputElement>input).checked;
-            if(isChecked) {
-                this.clearFormValues();
-            }
+        this.triggers.forEach((input) => {
+            input.addEventListener('change', () => {
+                this.onChange(input);
+            });
         });
     }
 
-    public clearFormValues(): void {
+    protected onChange(input): void {
+        const isChecked = (<HTMLInputElement>input).checked;
+        if(isChecked) {
+            this.clearFormValues();
+        }
+    }
+
+    clearFormValues(): void {
         this.filterElements.forEach((element: HTMLFormElement) => {
-            const tagName = element.tagName.toUpperCase();
             const inputType = element.type;
 
-            if (tagName == "INPUT") {
+            if (this.getTagName(element) == "INPUT") {
                 if (inputType == "text") {
                     element.value = '';
                 }
@@ -48,12 +49,16 @@ export default class FormClear extends Component {
                 }
             }
 
-            if (tagName == "SELECT") {
+            if (this.getTagName(element) == "SELECT") {
                 element.selectedIndex = 0;
             }
         });
 
         this.dispatchEvent(this.formFieldsReadonlyUpdate);
+    }
+
+    getTagName(element: HTMLElement): string {
+        return element.tagName.toUpperCase();
     }
 
     protected createCustomEvents(): void {

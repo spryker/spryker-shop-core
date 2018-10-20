@@ -8,6 +8,7 @@
 } %}
 
 {% block template %}
+    <pre>{{ dump(data.addresses) }}</pre>
     {% embed atom('select') with {
         class: 'spacing-bottom',
         attributes: {

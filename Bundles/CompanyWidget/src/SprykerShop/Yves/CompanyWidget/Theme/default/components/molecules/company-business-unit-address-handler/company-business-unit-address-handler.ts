@@ -1,14 +1,32 @@
 import Component from 'ShopUi/models/component';
 import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
+interface AddressJSON {
+    address1: string,
+    address2: string,
+    address3: string,
+    address_hash: string,
+    city: string,
+    company: string,
+    customer_id: number,
+    default: boolean,
+    first_name: string,
+    id_customer_address: number,
+    iso2_code: string,
+    last_name: string,
+    phone: string,
+    salutation: string,
+    zip_code: number
+}
+
 export default class CompanyBusinessUnitAddressHandler extends Component {
     triggers: HTMLElement[];
     form: HTMLElement;
     targets: HTMLElement[];
     ignoreElements: HTMLElement[];
     filterElements: HTMLElement[];
-    formClearReadonly: FormClear;
-    addressesDataObject: Object[];
+    formClear: FormClear;
+    addressesDataObject: AddressJSON[];
     addressesSelects: HTMLSelectElement[];
     currentAddress: String;
     hiddenCustomerIdInput: HTMLInputElement;
@@ -23,7 +41,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.targets = <HTMLElement[]>Array.from(this.form.querySelectorAll(formElements));
         this.ignoreElements = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.ignoreSelector));
         this.filterElements = this.targets.filter((element) => !this.ignoreElements.includes(element));
-        this.formClearReadonly = <FormClear>this.form.querySelector('.js-form-clear');
+        this.formClear = <FormClear>this.form.querySelector('.js-form-clear');
         this.hiddenCustomerIdInput = <HTMLInputElement>this.form.querySelector(this.customeridSelector);
         this.hiddenDefaultAddressInput = <HTMLInputElement>this.form.querySelector(this.defaultAddressSelector);
 
@@ -33,27 +51,33 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     protected mapEvents(): void {
-        this.formClearReadonly.addEventListener('form-fields-readonly-update', () => this.toggleFormFieldsReadonly(false));
-        this.triggers.forEach((triggerElement) => this.onClick(triggerElement));
-        this.addressesSelects.forEach((selectElement) => this.onChange(selectElement));
+        this.formClear.addEventListener('form-fields-readonly-update', () => this.toggleFormFieldsReadonly(false));
+        this.triggers.forEach((triggerElement) => {
+            triggerElement.addEventListener('click', () => {
+                this.onClick(triggerElement);
+            });
+        });
+        this.addressesSelects.forEach((selectElement) => {
+            selectElement.addEventListener('change', () => {
+                this.onChange(selectElement);
+            });
+        });
     }
 
-    protected onClick(triggerElement): void {
-        triggerElement.addEventListener('click', () => {
-            this.fillFormWithNewAddress();
+    protected onClick(triggerElement: HTMLElement): void {
+        this.fillFormWithNewAddress();
+        if(this.currentAddress) {
             this.toggleFormFieldsReadonly();
-        });
+        }
     }
 
-    protected onChange(selectElement): void {
-        selectElement.addEventListener('change', () => {
-            this.setCurrentAddress(selectElement);
-        });
+    protected onChange(selectElement: HTMLElement): void {
+        this.setCurrentAddress(selectElement);
     }
 
-    public toggleFormFieldsReadonly(isEnabled = true): void {
+    toggleFormFieldsReadonly(isEnabled: boolean = true): void {
         this.filterElements.forEach((formElement: HTMLFormElement) => {
-            const isSelect = formElement.tagName.toUpperCase() == 'SELECT';
+            const isSelect = this.formClear.getTagName(formElement) == 'SELECT';
 
             if(isSelect) {
                 const options = Array.from(formElement.querySelectorAll('option'));
@@ -85,8 +109,8 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
             this.hiddenCustomerIdInput.value = '';
         }
 
-        this.deleteFromFormField();
-        this.fillFormField(currentAddressList);
+        this.clearFormFields();
+        this.fillFormFields(currentAddressList);
     }
 
     protected fillDefaultAddress(): void {
@@ -109,9 +133,9 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         });
     }
 
-    public deleteFromFormField(): void {
+    clearFormFields(): void {
         this.filterElements.forEach((element) => {
-            const isSelect = element.tagName.toUpperCase() == "SELECT";
+            const isSelect = this.formClear.getTagName(element) == "SELECT";
 
             (<HTMLFormElement>element).value = '';
 
@@ -121,12 +145,12 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         });
     }
 
-    public fillFormField(dataList): void {
-        for(let key in dataList) {
+    fillFormFields(address: object): void {
+        for(let key in address) {
             const formElement = this.form.querySelector(`[data-key="${key}"]`);
 
-            if(formElement !== null && dataList[key] !== null) {
-                (<HTMLFormElement>formElement).value = dataList[key];
+            if(formElement !== null && address[key] !== null) {
+                (<HTMLFormElement>formElement).value = address[key];
             }
         }
     }

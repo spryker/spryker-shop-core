@@ -32,8 +32,8 @@
             {% endblock %}
         {% else %}
             {% block optionsGroup %}
-                {% for optionGroup in data.options %}
-                    <optgroup label="{{optionGroup.label}}">
+                {% for label, optionGroup in data.options %}
+                    <optgroup label="{{label}}">
                         {% for option in optionGroup %}
                             {{ block('option') }}
                         {% endfor %}
