@@ -12,7 +12,7 @@
 {% block body %}
     {% if (data.products|length) %}
         {% for product in data.products %}
-            <li class="list__item spacing-y spacing-y--inner {{ config.name }}__item" data-value="{{ product.sku }}" data-id-product="{{ product.fkProduct }}" data-id-product-abstract="{{ product.fkProductAbstract }}">
+            <li class="list__item spacing-y spacing-y--inner {{ config.name }}__item" data-value="{{ product.sku }}">
                 {{ product.name }} ({{ product.sku }})
             </li>
         {% endfor %}

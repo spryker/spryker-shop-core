@@ -28,7 +28,6 @@ interface QuickOrderFormHandlerStrategyPluginInterface
     /**
      * Specification:
      * - Handles quick order form.
-     * - Returns redirect response or null.
      *
      * @api
      *
