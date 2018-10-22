@@ -4,7 +4,8 @@
     form: _view.companyUserForm,
 
     title: 'company.account.company_user' | trans,
-    activePage: 'users'
+    activePage: 'users',
+    currentBreadcrumb: 'Users'
 } %}
 
 {% block breadcrumbs %}
@@ -14,6 +15,10 @@
                 {
                     label: 'company.account.page-title' | trans,
                     url: url('company/overview'),
+                },
+                {
+                    label: data.title,
+                    url: url('company/user')
                 },
                 {
                     label: 'company.account.company_user.add' | trans,

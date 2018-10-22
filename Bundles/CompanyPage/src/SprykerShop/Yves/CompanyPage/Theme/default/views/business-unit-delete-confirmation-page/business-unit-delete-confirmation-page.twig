@@ -3,8 +3,29 @@
 {% define data = {
     title: 'company.account.address.delete_confimation_page' | trans,
     activePage: 'business-unit',
-    companyBusinessUnit: _view.companyBusinessUnit
+    companyBusinessUnit: _view.companyBusinessUnit,
+    currentBreadcrumb: 'Business Units'
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview')
+                },
+                {
+                    label: data.currentBreadcrumb | trans,
+                    url: url('company/company-role')
+                },
+                {
+                    label: 'company.account.business_unit.delete.confirmation.warning' | trans
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
 
 {% block companyContent %}
     <div class="box">

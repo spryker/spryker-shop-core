@@ -4,8 +4,29 @@
     idCompanyUser: _view.idCompanyUser,
     companyUserName: _view.customer.firstName ~ ' ' ~ _view.customer.lastName,
     title: 'company.account.company_user' | trans,
-    activePage: 'users'
+    activePage: 'users',
+    currentBreadcurmb: 'Users'
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview')
+                },
+                {
+                    label: data.currentBreadcrumb | trans,
+                    url: url('company/user')
+                },
+                {
+                    label: 'company.account.company_user.delete.confirmation.warning' | trans
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
 
 {% block companyContent %}
     <div class="box">

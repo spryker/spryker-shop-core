@@ -5,8 +5,29 @@
     roleName: _view.role.name,
     assignedUsers: _view.role.companyUserCollection.companyUsers,
     title: 'company.account.company_role' | trans,
-    activePage: 'role'
+    activePage: 'role',
+    breadcrumbPage: 'Roles'
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview')
+                },
+                {
+                    label: data.currentBreadcrumb | trans,
+                    url: url('company/company-role')
+                },
+                {
+                    label: 'company.account.company_role.delete.confirmation.warning' | trans
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
 
 {% block companyContent %}
     <div class="box">

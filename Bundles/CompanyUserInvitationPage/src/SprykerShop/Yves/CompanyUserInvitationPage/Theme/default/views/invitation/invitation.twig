@@ -7,6 +7,7 @@
     title: 'company.user.invitation.title.plural' | trans,
     formAction: url('company/user-invitation'),
     activePage: 'users',
+    currentBreadcrumb: 'Users',
     pagination: {
         parameters: {},
         currentPage: _view.pagination.page,
@@ -15,6 +16,26 @@
         showAlwaysFirstAndLast: true
     }
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview')
+                },
+                {
+                    label: data.currentBreadcrumb | trans,
+                    url: url('company/user')
+                },
+                {
+                    label: data.title
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
 
 {% block companyContent %}
 
