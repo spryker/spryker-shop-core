@@ -13,7 +13,6 @@ export default abstract class Component extends HTMLElement {
     }
 
     protected dispatchCustomEvent(name: string, detail: any = {}): void {
-        debugger;
         const customEvent = new CustomEvent(name, { detail });
         this.dispatchEvent(customEvent);
     }

@@ -37,10 +37,11 @@
     <div class="grid grid--justify grid--middle">
         <div class="col col--sm-5 spacing spacing--inner">
             {% block search %}
+                {% set inputValue = (data.skuField.vars.value | length > 1) ? data.skuField.vars.value : data.autocomplete.inputValue %}
                 {% widget 'ProductConcreteSearchWidget' args [
                     'ajax-provider' ~ data.index,
                     data.autocomplete.fullName ~ '[sku]',
-                    data.skuField.vars.value,
+                    inputValue,
                 ] only %}
                 {% endwidget %}
 

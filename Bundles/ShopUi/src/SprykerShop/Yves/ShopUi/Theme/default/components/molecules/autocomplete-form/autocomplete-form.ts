@@ -81,14 +81,11 @@ export default class AutocompleteForm extends Component {
 
     async loadSuggestions(): Promise<void> {
         this.dispatchCustomEvent(Events.FETCHING);
-        debugger
         this.showSuggestions();
         this.ajaxProvider.queryParams.set(this.queryString, this.inputText);
         await this.ajaxProvider.fetch();
         this.mapItemEvents();
-
         this.dispatchCustomEvent(Events.FETCHED);
-        debugger
     }
 
     protected mapItemEvents(): void {
