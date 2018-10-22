@@ -33,4 +33,12 @@ class QuickOrderPageToQuoteClientBridge implements QuickOrderPageToQuoteClientIn
     {
         $this->quoteClient->setQuote($quoteTransfer);
     }
+
+    /**
+     * @return void
+     */
+    public function clearQuote()
+    {
+        $this->quoteClient->clearQuote();
+    }
 }

@@ -142,7 +142,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
 
             $shoppingListItems->append((new ShoppingListItemTransfer())
                 ->setSku($itemTransfer->getSku())
-                ->setQuantity($itemTransfer->getQty()));
+                ->setQuantity($itemTransfer->getQuantity()));
         }
 
         return $shoppingListItems;

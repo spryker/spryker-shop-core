@@ -5,17 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\Model;
+namespace SprykerShop\Yves\QuickOrderPage\TextOrder;
 
 interface TextOrderParserInterface
 {
     /**
-     * @return $this
-     */
-    public function parse(): self;
-
-    /**
+     * @param string $textOrder
+     *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
-    public function getParsedTextOrderItems(): array;
+    public function parse(string $textOrder): array;
 }

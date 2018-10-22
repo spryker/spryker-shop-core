@@ -6,7 +6,7 @@
 
 {% define data = {
     rows: required,
-    productConcretesData: [],
+    products: [],
     additionalColumns: []
 } %}
 
@@ -44,20 +44,19 @@
     </div>
 
     {% for row in data.rows %}
-        {% set productConcreteData = data.productConcretesData[row.id_product_concrete.vars.value] ?? null %}
+        {% set product = data.products[row.sku.vars.value] ?? null %}
         {% embed molecule('quick-order-row', 'QuickOrderPage') with {
             class: config.name ~ '__row',
             data: {
                 index: loop.index0,
-                quantityField: row.qty,
+                quantityField: row.quantity,
                 skuField: row.sku,
                 additionalColumns: data.additionalColumns,
 
                 autocomplete: {
                     sku: row.sku,
-                    idProductConcrete: row.id_product_concrete,
                     fullName: row.vars.full_name,
-                    inputValue: productConcreteData is null ? null : productConcreteData.name ~ ' (' ~ productConcreteData.sku ~ ')',
+                    inputValue: product is null ? null : product.name ~ ' (' ~ product.sku ~ ')',
                 }
             },
             embed: {

@@ -12,7 +12,6 @@
 
     autocomplete: {
         sku: required,
-        idProductConcrete: required,
         fullName: required,
         inputValue: null
     }
@@ -44,10 +43,6 @@
                     inputValue,
                 ] only %}
                 {% endwidget %}
-
-                {{ form_widget(data.autocomplete.sku) }}
-                {{ form_widget(data.autocomplete.idProductConcrete) }}
-                {# {{ form_widget(data.autocomplete.idProductAbstract) }} #}
             {% endblock %}
         </div>
 

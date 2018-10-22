@@ -7,13 +7,11 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
-use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
-use Spryker\Client\PriceProductStorage\PriceProductStorageClient;
-use Spryker\Client\ProductStorage\ProductStorageClient;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
@@ -22,7 +20,6 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
@@ -68,12 +65,10 @@ class QuickOrderController extends AbstractController
             ->getTextOrderForm()
             ->handleRequest($request);
 
-        $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
-        $quickOrder = $this->getQuickOrderTransfer($textOrderParsedItems);
-
+        $quickOrderTransfer = $this->handleTextOrderForm($textOrderForm);
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrder)
+            ->getQuickOrderForm($quickOrderTransfer)
             ->handleRequest($request);
 
         if ($quickOrderForm->isSubmitted() && $quickOrderForm->isValid()) {
@@ -84,11 +79,97 @@ class QuickOrderController extends AbstractController
             }
         }
 
+        /** @var \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer */
+        $quickOrderTransfer = $quickOrderForm->getData();
+        $products = $this->getProductsForQuickOrderTransfer($quickOrderTransfer);
+
+        $quickOrderTransfer = $this->applyQuickOrderItemFilterPluginsOnQuickOrder($quickOrderTransfer, $products);
+        $quickOrderTransfer = $this->setSumPriceForQuickOrderTransfer($quickOrderTransfer);
+
+        $quickOrderForm = $this->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getQuickOrderForm($quickOrderTransfer);
+
         return [
-            'itemsForm' => $quickOrderForm->createView(),
+            'quickOrderForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
+            'products' => $products,
         ];
+    }
+
+    /**
+     * @param QuickOrderTransfer $quickOrderTransfer
+     * @param ProductConcreteTransfer[] $products
+     *
+     * @return QuickOrderTransfer
+     */
+    protected function applyQuickOrderItemFilterPluginsOnQuickOrder(QuickOrderTransfer $quickOrderTransfer, array $products): QuickOrderTransfer
+    {
+        $quickOrderItems = [];
+        foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
+            $quickOrderItems[] = $this->applyQuickOrderItemFilterPluginsOnQuickOrderItem($quickOrderItemTransfer, $products[$quickOrderItemTransfer->getSku()] ?? null);
+        }
+        $quickOrderTransfer->setItems(new ArrayObject($quickOrderItems));
+
+        return $quickOrderTransfer;
+    }
+
+    /**
+     * @param QuickOrderItemTransfer $quickOrderItemTransfer
+     * @param ProductConcreteTransfer $product
+     *
+     * @return QuickOrderItemTransfer
+     */
+    protected function applyQuickOrderItemFilterPluginsOnQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer, ?ProductConcreteTransfer $product): QuickOrderItemTransfer
+    {
+        if (empty($quickOrderItemTransfer->getSku())) {
+            return $quickOrderItemTransfer;
+        }
+
+        foreach ($this->getFactory()->getQuickOrderItemFilterPlugins() as $quickOrderItemFilterPlugin) {
+            $quickOrderItemTransfer = $quickOrderItemFilterPlugin->filterItem($quickOrderItemTransfer, $product);
+        }
+
+        return $quickOrderItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function getProductsForQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): array
+    {
+        $productConcreteStorageTransfers = $this->getProductConcretesStorageTransfers($quickOrderTransfer->getItems()->getArrayCopy());
+        $products = [];
+        foreach ($productConcreteStorageTransfers as $productConcreteStorageTransfer) {
+            $product = (new ProductConcreteTransfer())
+                ->setIdProductConcrete($productConcreteStorageTransfer["id_product_concrete"]);
+
+            $products[$productConcreteStorageTransfer["sku"]] = $this->getFactory()
+                ->getQuickOrderClient()
+                ->expandProductConcrete($product);
+        }
+
+        return $products;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     */
+    protected function setSumPriceForQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer */
+        foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
+            $quickOrderItemTransfer->setSumPrice(
+                $this->getSumPriceForQuickOrderItem($quickOrderItemTransfer)
+            );
+        }
+
+        return $quickOrderTransfer;
     }
 
     /**
@@ -97,7 +178,6 @@ class QuickOrderController extends AbstractController
     protected function mapAdditionalQuickOrderFormColumnPluginsToArray()
     {
         $additionalColumns = [];
-
         foreach ($this->getFactory()->getQuickOrderFormColumnPlugins() as $additionalColumnPlugin) {
             $additionalColumns[] = [
                 'title' => $additionalColumnPlugin->getColumnTitle(),
@@ -138,26 +218,21 @@ class QuickOrderController extends AbstractController
         $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
         $formDataItems = $formData['items'] ?? [];
 
-        $dataProvider = $this->getFactory()
+        $quickOrderFormDataProvider = $this->getFactory()
             ->createQuickOrderFormDataProvider();
 
-        $orderItems = $dataProvider->getOrderItemsFromFormData($formDataItems);
-        $quickOrder = $this->getQuickOrderTransfer($orderItems);
-
-        $emptyProductsNumber = $this->getFactory()
-            ->getBundleConfig()
-            ->getProductRowsNumber();
-
-        $dataProvider->appendEmptyOrderItems($quickOrder, $emptyProductsNumber);
+        $quickOrderItems = $quickOrderFormDataProvider->mapFormDataToQuickOrderItems($formDataItems);
+        $quickOrderTransfer = $this->getQuickOrderTransfer($quickOrderItems);
+        $quickOrderFormDataProvider->appendEmptyQuickOrderItems($quickOrderTransfer);
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrder);
+            ->getQuickOrderForm($quickOrderTransfer);
 
         return [
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
-            'productConcretesData' => $this->getProductConcretesData($orderItems),
+            'products' => $this->getProductConcretesStorageTransfers($quickOrderItems),
         ];
     }
 
@@ -199,11 +274,11 @@ class QuickOrderController extends AbstractController
         }
         unset($formDataItems[$rowIndex]);
 
-        $orderItems = $this->getFactory()
+        $quickOrderItems = $this->getFactory()
             ->createQuickOrderFormDataProvider()
-            ->getOrderItemsFromFormData($formDataItems);
+            ->mapFormDataToQuickOrderItems($formDataItems);
 
-        $quickOrder = $this->getQuickOrderTransfer($orderItems);
+        $quickOrder = $this->getQuickOrderTransfer($quickOrderItems);
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
@@ -212,7 +287,7 @@ class QuickOrderController extends AbstractController
         return [
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
-            'productConcretesData' => $this->getProductConcretesData($orderItems),
+            'products' => $this->getProductConcretesStorageTransfers($quickOrderItems),
         ];
     }
 
@@ -226,14 +301,21 @@ class QuickOrderController extends AbstractController
         $quantity = $request->get('quantity') ?: 1;
         $sku = $request->query->get('sku');
 
+        $quickOrderItemTransfer = (new QuickOrderItemTransfer())
+            ->setQuantity($quantity)
+            ->setSku($sku);
+
         $idProduct = $this->getIdProductBySku($sku);
         $idProductAbstract = $this->getIdProductAbstractByIdProduct($idProduct);
 
-        $sumPrice = $this->getSumPriceForQuantity($quantity, $idProduct, $idProductAbstract);
         $productConcreteTransfer = $this->executeProductAdditionalDataAction($idProduct);
+        foreach ($this->getFactory()->getQuickOrderItemFilterPlugins() as $quickOrderItemFilterPlugin) {
+            $quickOrderItemTransfer = $quickOrderItemFilterPlugin->filterItem($quickOrderItemTransfer, $productConcreteTransfer);
+        }
+        $sumPrice = $this->getSumPriceForQuantity($quickOrderItemTransfer->getQuantity(), $idProduct, $idProductAbstract);
 
         $viewData = [
-            'quantity' => $quantity,
+            'quantity' => $quickOrderItemTransfer->getQuantity(),
             'price' => $sumPrice,
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
             'product' => $productConcreteTransfer,
@@ -253,9 +335,9 @@ class QuickOrderController extends AbstractController
      */
     protected function getIdProductBySku(string $sku): int
     {
-        // TODO
-        $productStorageClient = new ProductStorageClient();
-        $productConcreteData = $productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale('sku', $sku);
+        $productConcreteData = $this->getFactory()
+            ->getProductStorageClient()
+            ->findProductConcreteStorageDataByMappingForCurrentLocale('sku', $sku);
 
         return $productConcreteData['id_product_concrete'];
     }
@@ -267,10 +349,31 @@ class QuickOrderController extends AbstractController
      */
     protected function getIdProductAbstractByIdProduct(int $idProduct): int
     {
-        // TODO
-        $productStorageClient = new ProductStorageClient();
+        $productConcreteStorageTransfers = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductConcreteStorageTransfers([$idProduct]);
 
-        return $productStorageClient->getProductConcreteStorageTransfers([$idProduct])[0]->getIdProductAbstract();
+        return $productConcreteStorageTransfers[0]->getIdProductAbstract();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     *
+     * @return int
+     */
+    protected function getSumPriceForQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): int
+    {
+        if (empty($quickOrderItemTransfer->getSku()) || empty($quickOrderItemTransfer->getQuantity())) {
+            return 0;
+        }
+
+        $idProduct = $this->getIdProductBySku($quickOrderItemTransfer->getSku());
+
+        return $this->getSumPriceForQuantity(
+            (int)$quickOrderItemTransfer->getQuantity(),
+            $idProduct,
+            $this->getIdProductAbstractByIdProduct($idProduct)
+        );
     }
 
     /**
@@ -282,15 +385,13 @@ class QuickOrderController extends AbstractController
      */
     protected function getSumPriceForQuantity(int $quantity, int $idProduct, int $idProductAbstract): int
     {
-        // TODO
-        $priceProductStorageClient = new PriceProductStorageClient();
-
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setQuantity($quantity)
             ->setIdProduct($idProduct)
             ->setIdProductAbstract($idProductAbstract);
 
-        return $priceProductStorageClient
+        return $this->getFactory()
+            ->getPriceProductStorageClient()
             ->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer)
             ->getSumPrice();
     }
@@ -315,41 +416,6 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function productPriceAction(Request $request)
-    {
-        if (!$request->query->getInt(static::PARAM_ID_PRODUCT) || !$request->query->getInt(static::PARAM_ID_PRODUCT_ABSTRACT)) {
-            return $this->jsonResponse(
-                (new CurrentProductPriceTransfer())->toArray(true, true),
-                Response::HTTP_BAD_REQUEST
-            );
-        }
-
-        $currentProductPriceTransfer = $this->executeProductPriceAction($request);
-
-        return $this->jsonResponse($currentProductPriceTransfer->toArray(true, true));
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    protected function executeProductPriceAction(Request $request): CurrentProductPriceTransfer
-    {
-        $priceProductFilterTransfer = $this->createPriceProductFilterTransfer($request);
-
-        // TODO inject properly
-        $priceProductStorageClient = new PriceProductStorageClient();
-
-        return $priceProductStorageClient
-            ->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     protected function createPriceProductFilterTransfer(Request $request): PriceProductFilterTransfer
@@ -363,21 +429,22 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $textOrderForm
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    protected function handleTextOrderForm(FormInterface $textOrderForm): array
+    protected function handleTextOrderForm(FormInterface $textOrderForm): QuickOrderTransfer
     {
+        $quickOrderItems = [];
         if ($textOrderForm->isSubmitted() && $textOrderForm->isValid()) {
             $data = $textOrderForm->getData();
 
-            $textOrderParser = $this->getFactory()
-                ->createTextOrderParser($data[TextOrderForm::FIELD_TEXT_ORDER])
-                ->parse();
-
-            return $textOrderParser->getParsedTextOrderItems();
+            $quickOrderItems = $this->getFactory()
+                ->createTextOrderParser()
+                ->parse($data[TextOrderForm::FIELD_TEXT_ORDER]);
         }
 
-        return [];
+        $quickOrderTransfer = $this->getQuickOrderTransfer($quickOrderItems);
+
+        return $quickOrderTransfer;
     }
 
     /**
@@ -405,7 +472,7 @@ class QuickOrderController extends AbstractController
         if ($request->get(QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER) !== null) {
             $result = $this->getFactory()
                 ->createFormOperationHandler()
-                ->createOrder($quickOrder);
+                ->addToEmptyCart($quickOrder);
 
             if (!$result) {
                 return null;
@@ -448,19 +515,9 @@ class QuickOrderController extends AbstractController
      */
     protected function getQuickOrderTransfer(array $orderItems = []): QuickOrderTransfer
     {
-        $dataProvider = $this->getFactory()
-            ->createQuickOrderFormDataProvider();
-
-        $quickOrderTransfer = $dataProvider->getQuickOrderTransfer($orderItems);
-        if ($quickOrderTransfer->getItems()->count() === 0) {
-            $emptyProductsNumber = $this->getFactory()
-                ->getBundleConfig()
-                ->getProductRowsNumber();
-
-            $dataProvider->appendEmptyOrderItems($quickOrderTransfer, $emptyProductsNumber);
-        }
-
-        return $quickOrderTransfer;
+        return $this->getFactory()
+            ->createQuickOrderFormDataProvider()
+            ->getQuickOrderTransfer($orderItems);
     }
 
     /**
@@ -468,23 +525,20 @@ class QuickOrderController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
      */
-    protected function getProductConcretesData(array $quickOrderItemTransfers): array
+    protected function getProductConcretesStorageTransfers(array $quickOrderItemTransfers): array
     {
-        // TODO: inject properly
-        $productStorageClient = new ProductStorageClient();
-
-        $productIds = array_map(function (QuickOrderItemTransfer $quickOrderItemTransfer) {
-            return $quickOrderItemTransfer->getIdProductConcrete();
+        $skus = array_map(function (QuickOrderItemTransfer $quickOrderItemTransfer) {
+            return $quickOrderItemTransfer->getSku();
         }, $quickOrderItemTransfers);
+        $skus = array_filter($skus);
 
-        $productConcreteStorageTransfers = $productStorageClient
-            ->getProductConcreteStorageTransfers($productIds);
-
-        $mappedProductConcreteStorageTransfers = [];
-        foreach ($productConcreteStorageTransfers as $productConcreteStorageTransfer) {
-            $mappedProductConcreteStorageTransfers[$productConcreteStorageTransfer->getIdProductConcrete()] = $productConcreteStorageTransfer;
+        $productConcreteStorageTransfers = [];
+        foreach ($skus as $sku) {
+            $productConcreteStorageTransfers[$sku] = $this->getFactory()
+                ->getProductStorageClient()
+                ->findProductConcreteStorageDataByMappingForCurrentLocale('sku', $sku);
         }
 
-        return $mappedProductConcreteStorageTransfers;
+        return $productConcreteStorageTransfers;
     }
 }

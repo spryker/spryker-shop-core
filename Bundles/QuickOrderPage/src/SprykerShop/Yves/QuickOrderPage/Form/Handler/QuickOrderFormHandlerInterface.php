@@ -9,19 +9,19 @@ namespace SprykerShop\Yves\QuickOrderPage\Form\Handler;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 
-interface QuickOrderFormOperationHandlerInterface
+interface QuickOrderFormHandlerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return bool
      */
-    public function addToCart(QuickOrderTransfer $quickOrder): bool;
+    public function addToCart(QuickOrderTransfer $quickOrderTransfer): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return bool
      */
-    public function createOrder(QuickOrderTransfer $quickOrder): bool;
+    public function addToEmptyCart(QuickOrderTransfer $quickOrderTransfer): bool;
 }

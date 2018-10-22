@@ -9,13 +9,12 @@ namespace SprykerShop\Yves\QuickOrderPage\Form\Handler;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerInterface
+class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
 {
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface
@@ -40,27 +39,57 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     /**
      * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[]
      */
-    protected $quickOrderItemTransferExpanderPlugins;
+    protected $itemExpanderPlugins;
 
     /**
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface $zedRequestClient
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[] $quickOrderItemTransferExpanderPlugins
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[] $itemExpanderPlugins
      */
     public function __construct(
         QuickOrderPageToCartClientInterface $cartClient,
         QuickOrderPageToQuoteClientInterface $quoteClient,
         QuickOrderPageToZedRequestClientInterface $zedRequestClient,
         Request $request,
-        array $quickOrderItemTransferExpanderPlugins
+        array $itemExpanderPlugins
     ) {
         $this->cartClient = $cartClient;
         $this->zedRequestClient = $zedRequestClient;
         $this->request = $request;
         $this->quoteClient = $quoteClient;
-        $this->quickOrderItemTransferExpanderPlugins = $quickOrderItemTransferExpanderPlugins;
+        $this->itemExpanderPlugins = $itemExpanderPlugins;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return bool
+     */
+    public function addToCart(QuickOrderTransfer $quickOrderTransfer): bool
+    {
+        if (!$this->hasItems($quickOrderTransfer)) {
+            return false;
+        }
+
+        return $this->addItemsToCart($quickOrderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return bool
+     */
+    public function addToEmptyCart(QuickOrderTransfer $quickOrderTransfer): bool
+    {
+        if (!$this->hasItems($quickOrderTransfer)) {
+            return false;
+        }
+
+        $this->quoteClient->clearQuote();
+
+        return $this->addToCart($quickOrderTransfer);
     }
 
     /**
@@ -68,50 +97,30 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
      *
      * @return bool
      */
-    public function addToCart(QuickOrderTransfer $quickOrder): bool
+    protected function hasItems(QuickOrderTransfer $quickOrder): bool
     {
-        $itemTransfers = $this->getItemTransfers($quickOrder);
-
-        if ($itemTransfers) {
-            return $this->addItemsToCart($itemTransfers);
-        }
-
-        return false;
+        return (bool)$quickOrder->getItems()->count();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return bool
      */
-    public function createOrder(QuickOrderTransfer $quickOrder): bool
+    protected function addItemsToCart(QuickOrderTransfer $quickOrderTransfer): bool
     {
-        $itemTransfers = $this->getItemTransfers($quickOrder);
-
-        if ($itemTransfers) {
-            $this->clearQuote();
-
-            return $this->addItemsToCart($itemTransfers);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return bool
-     */
-    protected function addItemsToCart(array $itemTransfers): bool
-    {
-        foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer = $this->expandItemTransfer($itemTransfer);
+        $itemTransfers = $this->mapToItemTransfers($quickOrderTransfer);
+        foreach ($itemTransfers as $key => $itemTransfer) {
+            $itemTransfers[$key] = $this->expandItemTransfer($itemTransfer);
         }
 
         $this->cartClient->addItems($itemTransfers, $this->request->request->all());
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
 
-        return !(count($this->zedRequestClient->getLastResponseErrorMessages()) > 0);
+        $errorMessageCount = count($this->zedRequestClient->getLastResponseErrorMessages());
+        $isSuccess = (bool)($errorMessageCount < 1);
+
+        return $isSuccess;
     }
 
     /**
@@ -119,36 +128,32 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getItemTransfers(QuickOrderTransfer $quickOrder): array
+    protected function mapToItemTransfers(QuickOrderTransfer $quickOrder): array
     {
+        /** @var \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers */
         $itemTransfers = [];
         $quickOrderItemTransfers = $quickOrder->getItems();
-
         foreach ($quickOrderItemTransfers as $quickOrderItemTransfer) {
-            if ($quickOrderItemTransfer->getSku() && $quickOrderItemTransfer->getQty()) {
-                if (isset($itemTransfers[$quickOrderItemTransfer->getSku()])) {
-                    $itemTransfer = $itemTransfers[$quickOrderItemTransfer->getSku()];
-                    $itemTransfer->setQuantity($itemTransfer->getQuantity() + $quickOrderItemTransfer->getQty());
-                    continue;
-                }
-
-                $itemTransfer = (new ItemTransfer())
-                    ->setSku($quickOrderItemTransfer->getSku())
-                    ->setQuantity($quickOrderItemTransfer->getQty());
-
-                $itemTransfers[$itemTransfer->getSku()] = $itemTransfer;
+            $sku = $quickOrderItemTransfer->getSku();
+            if (!$sku) {
+                continue;
             }
+
+            $quantity = $quickOrderItemTransfer->getQuantity();
+            if (!$quantity) {
+                continue;
+            }
+
+            if (!isset($itemTransfers[$sku])) {
+                $itemTransfers[$sku] = (new ItemTransfer())
+                    ->setSku($quickOrderItemTransfer->getSku())
+                    ->setQuantity(0);
+            }
+
+            $itemTransfers[$sku]->setQuantity($quantity + $itemTransfers[$sku]->getQuantity());
         }
 
         return array_values($itemTransfers);
-    }
-
-    /**
-     * @return void
-     */
-    protected function clearQuote(): void
-    {
-        $this->quoteClient->setQuote(new QuoteTransfer());
     }
 
     /**
@@ -158,8 +163,8 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
      */
     protected function expandItemTransfer(ItemTransfer $itemTransfer): ItemTransfer
     {
-        foreach ($this->quickOrderItemTransferExpanderPlugins as $quickOrderItemTransferExpanderPlugin) {
-            $itemTransfer = $quickOrderItemTransferExpanderPlugin->expandItem($itemTransfer);
+        foreach ($this->itemExpanderPlugins as $itemExpanderPlugin) {
+            $itemTransfer = $itemExpanderPlugin->expandItem($itemTransfer);
         }
 
         return $itemTransfer;

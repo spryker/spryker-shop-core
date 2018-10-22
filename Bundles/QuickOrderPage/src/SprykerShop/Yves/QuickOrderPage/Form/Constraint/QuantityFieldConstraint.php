@@ -9,12 +9,9 @@ namespace SprykerShop\Yves\QuickOrderPage\Form\Constraint;
 
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
-class QtyFieldConstraint extends SymfonyConstraint
+class QuantityFieldConstraint extends SymfonyConstraint
 {
-    /**
-     * @var string
-     */
-    public $message = 'quick-order.errors.quantity-required';
+    protected const MESSAGE = 'quick-order.errors.quantity-required';
 
     /**
      * @return string|array One or more constant values
@@ -22,5 +19,10 @@ class QtyFieldConstraint extends SymfonyConstraint
     public function getTargets()
     {
         return static::CLASS_CONSTRAINT;
+    }
+
+    public function getMessage(): string
+    {
+        return static::MESSAGE;
     }
 }

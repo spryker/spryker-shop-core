@@ -2,11 +2,12 @@
 
 {% define data = {
     forms: {
-        items: _view.itemsForm,
-        textOrder: _view.textOrderForm
+        quickOrderForm: _view.quickOrderForm,
+        textOrderForm: _view.textOrderForm
     },
 
     additionalColumns: _view.additionalColumns,
+    products: _view.products,
     title: 'quick-order.page-title' | trans
 } %}
 
@@ -16,7 +17,7 @@
             {% include molecule('quick-order-form', 'QuickOrderPage') with {
                 class: 'box',
                 data: {
-                    form: data.forms.items,
+                    form: data.forms.quickOrderForm,
                     additionalColumns: data.additionalColumns
                 }
             } only %}
@@ -27,7 +28,7 @@
                 <p>{{ 'quick-order.paste-order.description' | trans }}</p>
                 {% include molecule('form') with {
                     data: {
-                        form: data.forms.textOrder,
+                        form: data.forms.textOrderForm,
                         submit: {
                             enable: true,
                             text: 'quick-order.paste-order.button.verify' | trans
