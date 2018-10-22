@@ -50,9 +50,9 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
      *
-     * @return void
+     * @return QuickOrderTransfer
      */
-    public function appendEmptyQuickOrderItems(QuickOrderTransfer $quickOrder): void
+    public function appendEmptyQuickOrderItems(QuickOrderTransfer $quickOrder): QuickOrderTransfer
     {
         $itemsNumber = $this->config->getDefaultDisplayedRowCount();
 
@@ -60,14 +60,16 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
         for ($i = 0; $i < $itemsNumber; $i++) {
             $quickOrderItemCollection->append(new QuickOrderItemTransfer());
         }
+
+        return $quickOrder;
     }
 
     /**
      * @param array $formDataItems
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function mapFormDataToQuickOrderItems(array $formDataItems): array
+    public function mapFormDataToQuickOrderItems(array $formDataItems): QuickOrderTransfer
     {
         $quickOrderItems = [];
         foreach ($formDataItems as $formDataItem) {
@@ -76,6 +78,6 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
                 ->setQuantity(isset($formDataItem[QuickOrderItemEmbeddedForm::FIELD_QUANTITY]) ? (int)$formDataItem[QuickOrderItemEmbeddedForm::FIELD_QUANTITY] : null);
         }
 
-        return $quickOrderItems;
+        return $this->getQuickOrderTransfer($quickOrderItems);
     }
 }

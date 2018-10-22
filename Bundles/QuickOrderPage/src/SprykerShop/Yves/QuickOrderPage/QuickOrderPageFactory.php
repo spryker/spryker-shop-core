@@ -23,6 +23,11 @@ use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormHandler;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormHandlerInterface;
+use SprykerShop\Yves\QuickOrderPage\PluginExecutor\QuickOrderItemPluginExecutor;
+use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolver;
+use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolverInterface;
+use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolver;
+use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParserInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -220,5 +225,36 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createNotBlankConstraint(): NotBlank
     {
         return new NotBlank();
+    }
+
+    /**
+     * @return QuickOrderItemPluginExecutor
+     */
+    public function createQuickOrderItemPluginExecutor(): QuickOrderItemPluginExecutor
+    {
+        return new QuickOrderItemPluginExecutor(
+            $this->getQuickOrderItemFilterPlugins()
+        );
+    }
+
+    /**
+     * @return ProductResolverInterface
+     */
+    public function createProductResolver(): ProductResolverInterface
+    {
+        return new ProductResolver(
+            $this->getProductStorageClient()
+        );
+    }
+
+    /**
+     * @return PriceResolverInterface
+     */
+    public function createPriceResolver(): PriceResolverInterface
+    {
+        return new PriceResolver(
+            $this->createProductResolver(),
+            $this->getPriceProductStorageClient()
+        );
     }
 }

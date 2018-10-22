@@ -21,14 +21,14 @@ interface QuickOrderFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
      *
-     * @return void
+     * @return QuickOrderTransfer
      */
-    public function appendEmptyQuickOrderItems(QuickOrderTransfer $quickOrder): void;
+    public function appendEmptyQuickOrderItems(QuickOrderTransfer $quickOrder): QuickOrderTransfer;
 
     /**
      * @param array $formDataItems
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function mapFormDataToQuickOrderItems(array $formDataItems): array;
+    public function mapFormDataToQuickOrderItems(array $formDataItems): QuickOrderTransfer;
 }
