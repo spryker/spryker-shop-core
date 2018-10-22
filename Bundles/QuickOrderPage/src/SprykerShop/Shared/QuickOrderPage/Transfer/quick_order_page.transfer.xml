@@ -14,12 +14,5 @@
     </transfer>
 
     <transfer name="ProductConcrete" >
-        <property name="productQuantity" type="ProductQuantity" />
-    </transfer>
-
-    <transfer name="ProductQuantity">
-        <property name="quantityMin" type="int" />
-        <property name="quantityMax" type="int" />
-        <property name="quantityInterval" type="int" />
     </transfer>
 </transfers>

@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToPriceProductStorageClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
@@ -38,14 +39,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class QuickOrderPageFactory extends AbstractFactory
 {
-    /**
-     * @return \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig
-     */
-    public function getBundleConfig(): QuickOrderPageConfig
-    {
-        return $this->getConfig();
-    }
-
     /**
      * @return \SprykerShop\Yves\QuickOrderPage\Form\FormFactory
      */
@@ -189,6 +182,14 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getQuickOrderItemFilterPlugins(): array
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_ITEM_FILTER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface
+     */
+    public function getProductQuantityStorageClient(): QuickOrderPageToProductQuantityStorageClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRODUCT_QUANTITY_STORAGE);
     }
 
     /**

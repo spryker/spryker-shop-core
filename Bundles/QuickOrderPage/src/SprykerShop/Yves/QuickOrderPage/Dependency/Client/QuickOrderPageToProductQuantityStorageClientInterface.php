@@ -7,10 +7,13 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
-interface QuickOrderPageToQuoteClientInterface
+interface QuickOrderPageToProductQuantityStorageClientInterface
 {
     /**
-     * @return void
+     * @param int $idProduct
+     * @param int $quantity
+     *
+     * @return int
      */
-    public function clearQuote();
+    public function getNearestQuantity(int $idProduct, int $quantity): int;
 }

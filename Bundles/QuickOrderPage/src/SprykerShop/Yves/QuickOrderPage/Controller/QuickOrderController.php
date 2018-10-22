@@ -112,8 +112,8 @@ class QuickOrderController extends AbstractController
             ->createProductResolver()
             ->getProductsByQuickOrder($quickOrderTransfer);
 
-        foreach ($products as $sku => $product) {
-            $products[$sku] = $this->getFactory()
+        foreach ($products as $product) {
+            $products[$product->getSku()] = $this->getFactory()
                 ->getQuickOrderClient()
                 ->expandProductConcrete($product);
         }

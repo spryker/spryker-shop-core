@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuickOrderFormProcessResponseTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
-use Generated\Shared\Transfer\RouteTransfer;
 
 interface QuickOrderFormHandlerStrategyPluginInterface
 {

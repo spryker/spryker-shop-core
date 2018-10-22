@@ -51,7 +51,6 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
      * {@inheritdoc}
      * - Adds products to shopping list.
      * - Returns with a route if all items were successfully added.
-     * - Returns null in case of error.
      *
      * @api
      *
@@ -97,7 +96,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
 
         return $quickOrderFormProcessResponseTransfer;
     }
-    
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
      *

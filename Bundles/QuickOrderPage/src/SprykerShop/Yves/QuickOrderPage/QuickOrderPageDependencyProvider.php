@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToPriceProductStorageClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientBridge;
@@ -23,6 +24,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_QUICK_ORDER = 'CLIENT_QUICK_ORDER';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
@@ -51,6 +53,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuickOrderItemFilterPlugins($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductStorageClient($container);
+        $container = $this->addProductQuantityStorageClient($container);
 
         return $container;
     }
@@ -122,6 +125,20 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_PRICE_PRODUCT_STORAGE] = function (Container $container) {
             return new QuickOrderPageToPriceProductStorageClientBridge($container->getLocator()->priceProductStorage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductQuantityStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRODUCT_QUANTITY_STORAGE] = function (Container $container) {
+            return new QuickOrderPageToProductQuantityStorageClientBridge($container->getLocator()->productQuantityStorage()->client());
         };
 
         return $container;

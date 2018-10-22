@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface;
 
+/**
+ * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
+ */
 class ProductQuantityFilterPlugin extends AbstractPlugin implements QuickOrderItemFilterPluginInterface
 {
     /**
@@ -27,31 +30,17 @@ class ProductQuantityFilterPlugin extends AbstractPlugin implements QuickOrderIt
      */
     public function filterItem(QuickOrderItemTransfer $quickOrderItemTransfer, ProductConcreteTransfer $productConcreteTransfer): QuickOrderItemTransfer
     {
-        $productQuantityTransfer = $productConcreteTransfer->getProductQuantity();
-        if (!$productQuantityTransfer) {
+        if (!$quickOrderItemTransfer->getSku()) {
             return $quickOrderItemTransfer;
         }
 
-        $quantity = (int)$quickOrderItemTransfer->getQuantity();
-        $min = $productQuantityTransfer->getQuantityMin();
-        $max = $productQuantityTransfer->getQuantityMax();
-        $interval = $productQuantityTransfer->getQuantityInterval();
-
-        if ($quantity < $min) {
-            $quickOrderItemTransfer->setQuantity($quantity);
-
-            return $quickOrderItemTransfer;
-        }
-
-        if ($max && $quantity > $max) {
-            $quantity = $max;
-        }
-
-        if ($interval && ($quantity - $min) % $interval !== 0) {
-            $quantity = round(($quantity - $min) / $interval) * $interval + $min;
-        }
-
-        $quickOrderItemTransfer->setQuantity($quantity);
+        $idProduct = $this->getFactory()
+            ->createProductResolver()
+            ->getIdProductBySku($quickOrderItemTransfer->getSku());
+        $nearestQuantity = $this->getFactory()
+            ->getProductQuantityStorageClient()
+            ->getNearestQuantity($idProduct, (int)$quickOrderItemTransfer->getQuantity());
+        $quickOrderItemTransfer->setQuantity($nearestQuantity);
 
         return $quickOrderItemTransfer;
     }

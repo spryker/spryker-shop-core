@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\PluginExecutor;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
@@ -38,7 +39,7 @@ class QuickOrderItemPluginExecutor implements QuickOrderItemPluginExecutorInterf
         foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
             $quickOrderItems[] = $this->applyQuickOrderItemFilterPluginsOnQuickOrderItem($quickOrderItemTransfer, $products[$quickOrderItemTransfer->getSku()] ?? null);
         }
-        $quickOrderTransfer->setItems(new \ArrayObject($quickOrderItems));
+        $quickOrderTransfer->setItems(new ArrayObject($quickOrderItems));
 
         return $quickOrderTransfer;
     }
