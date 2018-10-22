@@ -367,19 +367,20 @@ class QuickOrderController extends AbstractController
      */
     protected function executeQuickOrderFormHandlerStrategyPlugin(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
     {
-        $routeTransfer = null;
+        $response = null;
         foreach ($this->getFactory()->getQuickOrderFormHandlerStrategyPlugins() as $quickOrderFormHandlerStrategyPlugin) {
             if (!$quickOrderFormHandlerStrategyPlugin->isApplicable($quickOrderForm->getData(), $request->attributes->all())) {
                 continue;
             }
-            $routeTransfer = $quickOrderFormHandlerStrategyPlugin->execute($quickOrderForm->getData(), $request->attributes->all());
+            $response = $quickOrderFormHandlerStrategyPlugin->execute($quickOrderForm->getData(), $request->attributes->all());
             break;
         }
 
-        if ($routeTransfer === null) {
+        if ($response === null) {
             return null;
         }
 
-        return new RedirectResponse($this->getApplication()->path($routeTransfer->getRoute(), $routeTransfer->getParameters()));
+        $route = $response->getRoute();
+        return new RedirectResponse($this->getApplication()->path($route->getRoute(), $route->getParameters()));
     }
 }

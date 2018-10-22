@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\QuickOrderFormProcessResponseTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
 
@@ -34,7 +35,7 @@ interface QuickOrderFormHandlerStrategyPluginInterface
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      * @param array $params
      *
-     * @return \Generated\Shared\Transfer\RouteTransfer|null
+     * @return \Generated\Shared\Transfer\QuickOrderFormProcessResponseTransfer
      */
-    public function execute(QuickOrderTransfer $quickOrderTransfer, array $params): ?RouteTransfer;
+    public function execute(QuickOrderTransfer $quickOrderTransfer, array $params): QuickOrderFormProcessResponseTransfer;
 }

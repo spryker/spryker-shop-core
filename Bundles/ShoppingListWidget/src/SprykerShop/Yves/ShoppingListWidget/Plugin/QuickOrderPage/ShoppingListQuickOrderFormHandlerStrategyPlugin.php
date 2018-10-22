@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ShoppingListWidget\Plugin\QuickOrderPage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuickOrderFormProcessResponseTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
@@ -57,9 +58,9 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      * @param array $params
      *
-     * @return \Generated\Shared\Transfer\RouteTransfer|null
+     * @return \Generated\Shared\Transfer\QuickOrderFormProcessResponseTransfer
      */
-    public function execute(QuickOrderTransfer $quickOrderTransfer, array $params): ?RouteTransfer
+    public function execute(QuickOrderTransfer $quickOrderTransfer, array $params): QuickOrderFormProcessResponseTransfer
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $this->assertCustomerTransfer($customerTransfer);
@@ -69,13 +70,34 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
                     ->getShoppingListClient()
                     ->addItems($shoppingListTransfer);
 
-        if (!$shoppingListResponseTransfer->getIsSuccess()) {
-            return null;
-        }
-
-        return $this->createRedirectRoute($shoppingListResponseTransfer);
+        return $this->mapShoppingListResponseToQuickOrderFormProcessResponse(
+            $shoppingListResponseTransfer,
+            new QuickOrderFormProcessResponseTransfer()
+        );
     }
 
+    /**
+     * @param ShoppingListResponseTransfer $shoppingListResponseTransfer
+     * @param QuickOrderFormProcessResponseTransfer $quickOrderFormProcessResponseTransfer
+     *
+     * @return QuickOrderFormProcessResponseTransfer
+     */
+    protected function mapShoppingListResponseToQuickOrderFormProcessResponse(
+        ShoppingListResponseTransfer $shoppingListResponseTransfer,
+        QuickOrderFormProcessResponseTransfer $quickOrderFormProcessResponseTransfer
+    ): QuickOrderFormProcessResponseTransfer {
+        $quickOrderFormProcessResponseTransfer->fromArray($shoppingListResponseTransfer->toArray(), true);
+
+        if (!$shoppingListResponseTransfer->getIsSuccess()) {
+            return $quickOrderFormProcessResponseTransfer;
+        }
+
+        $route = $this->createRedirectRoute($shoppingListResponseTransfer);
+        $quickOrderFormProcessResponseTransfer->setRoute($route);
+
+        return $quickOrderFormProcessResponseTransfer;
+    }
+    
     /**
      * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
      *
