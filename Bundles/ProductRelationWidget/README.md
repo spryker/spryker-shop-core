@@ -1,6 +1,6 @@
 # ProductRelationWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module provides list of similar products on the product detail page. On the cart page it provides upselling products.
 
 ## Installation
 

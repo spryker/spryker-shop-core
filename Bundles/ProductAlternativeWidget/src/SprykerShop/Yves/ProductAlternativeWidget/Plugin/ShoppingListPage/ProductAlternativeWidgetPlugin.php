@@ -10,9 +10,12 @@ namespace SprykerShop\Yves\ProductAlternativeWidget\Plugin\ShoppingListPage;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductAlternativeWidget\Widget\ShoppingListProductAlternativeWidget;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductAlternativeWidget\Widget\ShoppingListProductAlternativeWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeWidgetFactory getFactory()
  */
 class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements ProductAlternativeWidgetPluginInterface
@@ -25,10 +28,9 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public function initialize(ProductViewTransfer $productViewTransfer, ShoppingListTransfer $shoppingListTransfer): void
     {
-        $this
-            ->addParameter('item', $productViewTransfer)
-            ->addParameter('shoppingList', $shoppingListTransfer)
-            ->addParameter('products', $this->findAlternativesProducts($productViewTransfer));
+        $widget = new ShoppingListProductAlternativeWidget($productViewTransfer, $shoppingListTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -52,21 +54,6 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate(): string
     {
-        return '@ProductAlternativeWidget/views/shopping-list-product-alternative/shopping-list-product-alternative.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function findAlternativesProducts(ProductViewTransfer $productViewTransfer): array
-    {
-        if (!$this->getFactory()->getProductAlternativeStorageClient()->isAlternativeProductApplicable($productViewTransfer)) {
-            return [];
-        }
-
-        return $this->getFactory()->getProductAlternativeStorageClient()
-            ->getConcreteAlternativeProducts($productViewTransfer, $this->getLocale());
+        return ShoppingListProductAlternativeWidget::getTemplate();
     }
 }

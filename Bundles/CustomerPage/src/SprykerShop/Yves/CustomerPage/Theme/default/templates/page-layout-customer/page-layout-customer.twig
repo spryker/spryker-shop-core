@@ -18,7 +18,9 @@
     <div class="grid">
         <div class="col col--sm-12 col--md-3">
             {% block customerNavigation %}
-                {{ widgetGlobal('CustomerNavigationWidgetPlugin', data.activePage) }}
+                {% widget 'CustomerNavigationWidget' args [data.activePage] only %}
+                {% elsewidget 'CustomerNavigationWidgetPlugin' args [data.activePage] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
+                {% endwidget %}
             {% endblock %}
         </div>
 

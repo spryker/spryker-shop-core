@@ -66,12 +66,21 @@
         <span class="float-right">{{ data.prices.storeCurrency | money }}</span>
         {{ 'checkout.step.summary.shipping' | trans }} (<strong>{{ data.shipmentMethod }}</strong>)
     </li>
-    {% if widgetExists('SalesOrderThresholdWidgetPlugin') %}
-        {{block('separator')}}
-        <li>
-            {{ widget('SalesOrderThresholdWidgetPlugin', data.expenses) }}
-        </li>
-    {% endif %}
+    {% widget 'SalesOrderThresholdWidget' args [data.expenses] only %}
+        {% block body %}
+            {{block('separator')}}
+            <li>
+                {{ parent() }}
+            </li>
+        {% endblock %}
+    {% elsewidget 'SalesOrderThresholdWidgetPlugin' args [data.expenses] only %} {# @deprecated Use SalesOrderThresholdWidget instead. #}
+        {% block body %}
+            {{block('separator')}}
+            <li>
+                {{ parent() }}
+            </li>
+        {% endblock %}
+    {% endwidget %}
     {{block('separator')}}
     <li>
         {{ 'checkout.step.summary.tax' | trans }}

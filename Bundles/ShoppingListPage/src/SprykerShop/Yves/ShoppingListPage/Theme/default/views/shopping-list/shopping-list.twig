@@ -3,11 +3,15 @@
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                label: 'customer.account' | trans,
-            },{
-                label: 'customer.account.shopping_list' | trans,
-            }]
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.shopping_list' | trans,
+                }
+            ]
         }
     } only %}
 {% endblock %}
@@ -16,11 +20,13 @@
     title: _view.shoppingListOverview.shoppingList.name,
     shoppingList: _view.shoppingListOverview.shoppingList,
     shoppingListCollection: _view.shoppingListOverview.shoppingLists,
-    shoppingListItems: _view.shoppingListItems
+    shoppingListItems: _view.shoppingListItems,
 } %}
 
 {% block customerNavigation %}
-    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.shoppingList.idShoppingList) }}
+    {% widget 'CustomerNavigationWidget' args ['shoppingList', data.shoppingList.idShoppingList] only %}
+    {% elsewidget 'CustomerNavigationWidgetPlugin' args ['shoppingList', data.shoppingList.idShoppingList] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
+    {% endwidget %}
 {% endblock %}
 
 {% block customerContent %}
@@ -71,6 +77,7 @@
                         }
                     } only %}
                 </div>
+
             </form>
         {% else %}
             {{ 'customer.account.shopping_list.empty' | trans }}
