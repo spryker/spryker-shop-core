@@ -38,7 +38,7 @@ class QuickOrderItemPluginExecutor implements QuickOrderItemPluginExecutorInterf
         foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
             $quickOrderItems[] = $this->applyQuickOrderItemFilterPluginsOnQuickOrderItem($quickOrderItemTransfer, $products[$quickOrderItemTransfer->getSku()] ?? null);
         }
-        $quickOrderTransfer->setItems(new ArrayObject($quickOrderItems));
+        $quickOrderTransfer->setItems(new \ArrayObject($quickOrderItems));
 
         return $quickOrderTransfer;
     }
