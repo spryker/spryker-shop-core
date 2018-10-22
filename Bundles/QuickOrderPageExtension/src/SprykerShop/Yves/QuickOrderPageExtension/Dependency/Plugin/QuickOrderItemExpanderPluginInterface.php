@@ -14,7 +14,7 @@ interface QuickOrderItemExpanderPluginInterface
     /**
      * Specification:
      * - Expands provided ItemTransfer with additional data.
-     * - Executed before adding items into cart.
+     * - Executed before adding quick order items into cart.
      *
      * @api
      *

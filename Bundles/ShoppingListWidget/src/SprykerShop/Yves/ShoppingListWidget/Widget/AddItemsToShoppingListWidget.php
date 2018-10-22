@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShoppingListWidget\Plugin\QuickOrderPage;
+namespace SprykerShop\Yves\ShoppingListWidget\Widget;
 
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Plugin\ShoppingListWidget\QuickOrderPageAddItemsToShoppingListWidgetPluginInterface;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
  */
-class QuickOrderPageAddItemsToShoppingListWidgetPlugin extends AbstractWidgetPlugin implements QuickOrderPageAddItemsToShoppingListWidgetPluginInterface
+class AddItemsToShoppingListWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
+    protected const NAME = 'AddItemsToShoppingListWidget';
     protected const PARAM_IS_VISIBLE = 'isVisible';
     protected const PARAM_SHOPPING_LIST_OPTIONS = 'shoppingListOptions';
     protected const PARAM_SHOPPING_LIST_OPTION_VALUE = 'value';
@@ -28,10 +28,8 @@ class QuickOrderPageAddItemsToShoppingListWidgetPlugin extends AbstractWidgetPlu
      * - Only visible when logged in customer has a company user.
      * - Displays available shopping lists.
      * - Displays "add the shopping list" button.
-     *
-     * @return void
      */
-    public function initialize(): void
+    public function __construct()
     {
         $this->addIsVisibleParameter();
         $this->addShoppingListOptionsParameter();
@@ -58,7 +56,7 @@ class QuickOrderPageAddItemsToShoppingListWidgetPlugin extends AbstractWidgetPlu
      */
     public static function getTemplate(): string
     {
-        return '@ShoppingListWidget/views/shopping-list-quick-order/shopping-list-quick-order.twig';
+        return '@ShoppingListWidget/views/shopping-list-add-items/shopping-list-add-items.twig';
     }
 
     /**
