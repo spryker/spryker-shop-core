@@ -17,4 +17,9 @@ interface QuickOrderPageToQuoteClientInterface
      * @return void
      */
     public function setQuote(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @return void
+     */
+    public function clearQuote();
 }

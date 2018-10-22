@@ -8,15 +8,15 @@
 namespace SprykerShop\Yves\QuickOrderPage\Form\Constraint;
 
 use InvalidArgumentException;
-use SprykerShop\Yves\QuickOrderPage\Form\OrderItemEmbeddedForm;
+use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderItemEmbeddedForm;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class QtyFieldConstraintValidator extends ConstraintValidator
+class QuantityFieldConstraintValidator extends ConstraintValidator
 {
     /**
      * @param mixed $orderItemTransfer The value that should be validated
-     * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\QtyFieldConstraint $constraint The constraint for the validation
+     * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\QuantityFieldConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
      *
@@ -24,19 +24,25 @@ class QtyFieldConstraintValidator extends ConstraintValidator
      */
     public function validate($orderItemTransfer, Constraint $constraint): void
     {
-        if (!$constraint instanceof QtyFieldConstraint) {
+        if (!$constraint instanceof QuantityFieldConstraint) {
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
-                QtyFieldConstraint::class,
+                QuantityFieldConstraint::class,
                 get_class($constraint)
             ));
         }
 
-        if ($orderItemTransfer->getSku() && (!$orderItemTransfer->getQty() || $orderItemTransfer->getQty() < 1)) {
-            $this->context
-                ->buildViolation($constraint->message)
-                ->atPath(OrderItemEmbeddedForm::FIELD_QTY)
-                ->addViolation();
+        if (!$orderItemTransfer->getSku()) {
+            return;
         }
+
+        if ($orderItemTransfer->getQuantity() > 0) {
+            return;
+        }
+
+        $this->context
+            ->buildViolation($constraint->getMessage())
+            ->atPath(QuickOrderItemEmbeddedForm::FIELD_QUANTITY)
+            ->addViolation();
     }
 }

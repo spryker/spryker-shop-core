@@ -12,19 +12,15 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
  */
-class OrderItemEmbeddedForm extends AbstractType
+class QuickOrderItemEmbeddedForm extends AbstractType
 {
     public const FIELD_SKU = 'sku';
-    public const FIELD_SKU_LABEL = 'quick-order.input-label.sku';
-    public const FIELD_QTY = 'qty';
-    public const FIELD_QTY_LABEL = 'quick-order.input-label.qty';
-    public const FIELD_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    public const FIELD_QUANTITY = 'quantity';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -36,8 +32,7 @@ class OrderItemEmbeddedForm extends AbstractType
     {
         $this
             ->addSku($builder)
-            ->addQty($builder)
-            ->addIdProductConcrete($builder);
+            ->addQuantity($builder);
     }
 
     /**
@@ -51,7 +46,6 @@ class OrderItemEmbeddedForm extends AbstractType
             'data_class' => QuickOrderItemTransfer::class,
             'constraints' => [
                 $this->getFactory()->createQtyFieldConstraint(),
-                $this->getFactory()->createQuantityRestrictionsConstraint(),
             ],
         ]);
     }
@@ -61,43 +55,37 @@ class OrderItemEmbeddedForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSku(FormBuilderInterface $builder): FormTypeInterface
+    protected function addSku(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::FIELD_SKU, HiddenType::class, [
+            ->add(
+                static::FIELD_SKU,
+                HiddenType::class,
+                [
+                    'required' => false,
+                    'label' => false,
+                ]
+            );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addQuantity(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_QUANTITY,
+            IntegerType::class,
+            [
                 'required' => false,
                 'label' => false,
-            ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addQty(FormBuilderInterface $builder): FormTypeInterface
-    {
-        $builder->add(static::FIELD_QTY, IntegerType::class, [
-            'required' => false,
-            'label' => false,
-            'attr' => ['min' => 1],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdProductConcrete(FormBuilderInterface $builder): FormTypeInterface
-    {
-        $builder->add(static::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class, [
-            'required' => false,
-        ]);
+                'attr' => ['min' => 1],
+            ]
+        );
 
         return $this;
     }

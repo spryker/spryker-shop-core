@@ -9,10 +9,8 @@ namespace SprykerShop\Yves\QuickOrderPage\Form;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -20,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class QuickOrderForm extends AbstractType
 {
-    public const FIELD_ITEMS = 'items';
+    protected const FIELD_ITEMS = 'items';
 
     public const SUBMIT_BUTTON_ADD_TO_CART = 'addToCart';
     public const SUBMIT_BUTTON_CREATE_ORDER = 'createOrder';
@@ -54,20 +52,24 @@ class QuickOrderForm extends AbstractType
      *
      * @return $this
      */
-    protected function addItemsCollection(FormBuilderInterface $builder): FormTypeInterface
+    protected function addItemsCollection(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ITEMS, CollectionType::class, [
-            'entry_type' => OrderItemEmbeddedForm::class,
-            'allow_add' => true,
-            'allow_delete' => true,
-            'label' => false,
-            'entry_options' => [
+        $builder->add(
+            static::FIELD_ITEMS,
+            CollectionType::class,
+            [
+                'entry_type' => QuickOrderItemEmbeddedForm::class,
+                'allow_add' => true,
+                'allow_delete' => true,
                 'label' => false,
-            ],
-            'constraints' => [
-                    new ItemsFieldConstraint(),
+                'entry_options' => [
+                    'label' => false,
                 ],
-            ]);
+                'constraints' => [
+                        $this->getFactory()->createItemsFieldConstraint(),
+                ],
+            ]
+        );
 
         return $this;
     }

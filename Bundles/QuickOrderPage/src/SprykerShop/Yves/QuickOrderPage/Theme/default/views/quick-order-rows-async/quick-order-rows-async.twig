@@ -2,7 +2,7 @@
 
 {% define data = {
     form: _view.form,
-    productConcretesData: _view.productConcretesData,
+    products: _view.products,
     additionalColumns: _view.additionalColumns
 } %}
 
@@ -10,7 +10,7 @@
     {% include molecule('quick-order-rows', 'QuickOrderPage') with {
         data: {
             rows: data.form.items,
-            productConcretesData: data.productConcretesData,
+            products: data.products,
             additionalColumns: data.additionalColumns
         }
     } only %}

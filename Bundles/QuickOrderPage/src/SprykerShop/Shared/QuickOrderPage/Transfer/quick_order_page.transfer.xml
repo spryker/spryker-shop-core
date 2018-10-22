@@ -9,8 +9,17 @@
 
     <transfer name="QuickOrderItem">
         <property name="sku" type="string" />
-        <property name="qty" type="int" />
-        <property name="idProductConcrete" type="int" />
+        <property name="quantity" type="int" />
+        <property name="sumPrice" type="int" />
     </transfer>
 
+    <transfer name="ProductConcrete" >
+        <property name="productQuantity" type="ProductQuantity" />
+    </transfer>
+
+    <transfer name="ProductQuantity">
+        <property name="quantityMin" type="int" />
+        <property name="quantityMax" type="int" />
+        <property name="quantityInterval" type="int" />
+    </transfer>
 </transfers>
