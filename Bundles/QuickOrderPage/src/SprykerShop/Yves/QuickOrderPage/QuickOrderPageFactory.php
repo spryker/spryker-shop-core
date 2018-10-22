@@ -228,7 +228,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return QuickOrderItemPluginExecutor
+     * @return \SprykerShop\Yves\QuickOrderPage\PluginExecutor\QuickOrderItemPluginExecutor
      */
     public function createQuickOrderItemPluginExecutor(): QuickOrderItemPluginExecutor
     {
@@ -238,7 +238,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductResolverInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface
      */
     public function createProductResolver(): ProductResolverInterface
     {
@@ -248,7 +248,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return PriceResolverInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolverInterface
      */
     public function createPriceResolver(): PriceResolverInterface
     {

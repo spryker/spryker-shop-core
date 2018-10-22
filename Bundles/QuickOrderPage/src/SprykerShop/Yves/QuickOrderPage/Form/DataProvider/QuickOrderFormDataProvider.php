@@ -50,7 +50,7 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
      *
-     * @return QuickOrderTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
     public function appendEmptyQuickOrderItems(QuickOrderTransfer $quickOrder): QuickOrderTransfer
     {

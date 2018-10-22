@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\QuickOrderPage\ProductResolver;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -17,7 +22,7 @@ interface ProductResolverInterface
     /**
      * @param string $sku
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductBySku(string $sku): ProductConcreteTransfer;
 
@@ -31,7 +36,7 @@ interface ProductResolverInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
-     * @return ProductConcreteTransfer[] Keys are product SKUs
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[] Keys are product SKUs
      */
     public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array;
 }

@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: karolygerner
- * Date: 22.October.2018
- * Time: 14:05
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\QuickOrderPage\ProductResolver;
@@ -20,12 +19,12 @@ class ProductResolver implements ProductResolverInterface
     protected const SKU = 'sku';
 
     /**
-     * @var QuickOrderPageToProductStorageClientInterface
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface
      */
     protected $productStorageClient;
 
     /**
-     * @param QuickOrderPageToProductStorageClientInterface $productStorageClient
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface $productStorageClient
      */
     public function __construct(QuickOrderPageToProductStorageClientInterface $productStorageClient)
     {
@@ -48,7 +47,7 @@ class ProductResolver implements ProductResolverInterface
     /**
      * @param string $sku
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductBySku(string $sku): ProductConcreteTransfer
     {
@@ -75,7 +74,7 @@ class ProductResolver implements ProductResolverInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
-     * @return ProductConcreteTransfer[] Keys are product SKUs
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[] Keys are product SKUs
      */
     public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array
     {

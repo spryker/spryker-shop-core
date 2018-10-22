@@ -1,13 +1,13 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: karolygerner
- * Date: 22.October.2018
- * Time: 14:05
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\QuickOrderPage\PriceResolver;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
@@ -17,18 +17,18 @@ use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
 class PriceResolver implements PriceResolverInterface
 {
     /**
-     * @var ProductResolverInterface
+     * @var \SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface
      */
     protected $productResolver;
 
     /**
-     * @var QuickOrderPageToPriceProductStorageClientInterface
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToPriceProductStorageClientInterface
      */
     protected $priceProductStorageClient;
 
     /**
-     * @param ProductResolverInterface $productResolver
-     * @param QuickOrderPageToPriceProductStorageClientInterface $priceProductStorageClient
+     * @param \SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface $productResolver
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToPriceProductStorageClientInterface $priceProductStorageClient
      */
     public function __construct(ProductResolverInterface $productResolver, QuickOrderPageToPriceProductStorageClientInterface $priceProductStorageClient)
     {
@@ -48,14 +48,13 @@ class PriceResolver implements PriceResolverInterface
             $items[] = $this->setSumPriceForQuickOrderItemTransfer($quickOrderItemTransfer);
         }
 
-        return $quickOrderTransfer->setItems(new \ArrayObject($items));
+        return $quickOrderTransfer->setItems(new ArrayObject($items));
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      *
-     * @return QuickOrderItemTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
     public function setSumPriceForQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {

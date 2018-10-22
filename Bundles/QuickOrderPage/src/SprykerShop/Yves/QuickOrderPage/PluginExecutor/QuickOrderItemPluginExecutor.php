@@ -1,28 +1,25 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: karolygerner
- * Date: 22.October.2018
- * Time: 11:27
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\QuickOrderPage\PluginExecutor;
 
-
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
-use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface;
 
 class QuickOrderItemPluginExecutor implements QuickOrderItemPluginExecutorInterface
 {
     /**
-     * @var QuickOrderItemFilterPluginInterface[]
+     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface[]
      */
     protected $quickOrderItemFilterPlugins;
 
     /**
-     * @param QuickOrderItemFilterPluginInterface[] $quickOrderItemFilterPlugins
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface[] $quickOrderItemFilterPlugins
      */
     public function __construct(array $quickOrderItemFilterPlugins)
     {
@@ -30,10 +27,10 @@ class QuickOrderItemPluginExecutor implements QuickOrderItemPluginExecutorInterf
     }
 
     /**
-     * @param QuickOrderTransfer $quickOrderTransfer
-     * @param ProductConcreteTransfer[] $products
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $products
      *
-     * @return QuickOrderTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
     public function applyQuickOrderItemFilterPluginsOnQuickOrder(QuickOrderTransfer $quickOrderTransfer, array $products): QuickOrderTransfer
     {
@@ -41,16 +38,16 @@ class QuickOrderItemPluginExecutor implements QuickOrderItemPluginExecutorInterf
         foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
             $quickOrderItems[] = $this->applyQuickOrderItemFilterPluginsOnQuickOrderItem($quickOrderItemTransfer, $products[$quickOrderItemTransfer->getSku()] ?? null);
         }
-        $quickOrderTransfer->setItems(new \ArrayObject($quickOrderItems));
+        $quickOrderTransfer->setItems(new ArrayObject($quickOrderItems));
 
         return $quickOrderTransfer;
     }
 
     /**
-     * @param QuickOrderItemTransfer $quickOrderItemTransfer
-     * @param ProductConcreteTransfer|null $product
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $product
      *
-     * @return QuickOrderItemTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
     public function applyQuickOrderItemFilterPluginsOnQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer, ?ProductConcreteTransfer $product): QuickOrderItemTransfer
     {
