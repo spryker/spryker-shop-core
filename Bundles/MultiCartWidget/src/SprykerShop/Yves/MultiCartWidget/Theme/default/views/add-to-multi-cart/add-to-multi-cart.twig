@@ -8,8 +8,8 @@
 
 {% block body %}
     {% if data.isMultiCartAllowed %}
-        <div class="grid grid--right">
-            <div class="col col--sm-6 col--right">
+        <div class="grid grid--right grid--justify">
+            <div class="col col--sm-6 col--md-5 col--right">
             {% if data.carts %}
                 {% include molecule('add-to-cart-selector', 'MultiCartWidget') with {
                     data: {
