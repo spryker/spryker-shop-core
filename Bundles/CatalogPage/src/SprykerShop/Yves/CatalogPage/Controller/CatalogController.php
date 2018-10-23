@@ -185,7 +185,7 @@ class CatalogController extends AbstractController
 
         $categoryFilters = [];
         $categoryFiltersData = $productCategoryFilters->getFilterData();
-        foreach($categoryFiltersData['filters'] as $filterData){
+        foreach ($categoryFiltersData['filters'] as $filterData) {
             $categoryFilters[$filterData['key']] = $filterData['isActive'];
         }
 
