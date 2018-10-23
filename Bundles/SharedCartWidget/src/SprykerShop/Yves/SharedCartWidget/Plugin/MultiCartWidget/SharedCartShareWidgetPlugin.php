@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartWidget;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCartShareWidgetPluginInterface;
+use SprykerShop\Yves\SharedCartWidget\Widget\SharedCartShareWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartShareWidget instead.
+ *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
 class SharedCartShareWidgetPlugin extends AbstractWidgetPlugin implements SharedCartShareWidgetPluginInterface
@@ -23,20 +26,9 @@ class SharedCartShareWidgetPlugin extends AbstractWidgetPlugin implements Shared
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this
-            ->addParameter('cart', $quoteTransfer)
-            ->addParameter('isQuoteOwner', $this->isQuoteOwner($quoteTransfer));
-    }
+        $widget = new SharedCartShareWidget($quoteTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer)
-    {
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-        return strcmp($customer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -62,6 +54,6 @@ class SharedCartShareWidgetPlugin extends AbstractWidgetPlugin implements Shared
      */
     public static function getTemplate()
     {
-        return '@SharedCartWidget/views/shared-cart-share/shared-cart-share.twig';
+        return SharedCartShareWidget::getTemplate();
     }
 }

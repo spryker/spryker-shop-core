@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/home-page",
+  "type": "library",
   "description": "HomePage module",
   "license": "proprietary",
   "require": {

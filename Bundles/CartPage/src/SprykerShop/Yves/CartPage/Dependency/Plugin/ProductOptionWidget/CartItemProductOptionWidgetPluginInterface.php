@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CartPage\Dependency\Plugin\ProductOptionWidget;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('product-options', 'ProductOptionWidget') instead.
+ */
 interface CartItemProductOptionWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'CartItemProductOptionWidgetPlugin';

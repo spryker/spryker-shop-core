@@ -1,11 +1,12 @@
 {
   "name": "spryker-shop/product-widget",
+  "type": "library",
   "description": "ProductWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/kernel": "^3.16.0"
+    "spryker/kernel": "^3.24.0"
   },
   "require-dev": {
     "spryker-shop/catalog-page": "*",

@@ -15,6 +15,7 @@
     {% endif %}
 
     {% embed productTemplate with {
+        _widget: _widget,
         productTemplate: productTemplate,
         class: class,
         data: {
@@ -27,12 +28,16 @@
         }
     } only %}
         {% block labels %}
-            {{ widget('ProductLabelWidgetPlugin', _widget.product.id_product_labels) }}
+            {% widget 'ProductConcreteLabelWidget' args [_widget.product.id_product_labels] only %}
+            {% elsewidget 'ProductLabelWidgetPlugin' args [_widget.product.id_product_labels] only %} {# @deprecated Use ProductConcreteLabelWidget instead. #}
+            {% endwidget %}
         {% endblock %}
 
         {% block rating %}
             {% if _widget.product.rating is defined %}
-                {{ widget('ProductReviewWidgetPlugin', _widget.product.rating) }}
+                {% widget 'ProductReviewDisplayWidget' args [_widget.product.rating] only %}
+                {% elsewidget 'ProductReviewWidgetPlugin' args [_widget.product.rating] only %} {# @deprecated Use ProductReviewDisplayWidget instead. #}
+                {% endwidget %}
             {% endif %}
         {% endblock %}
     {% endembed %}

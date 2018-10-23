@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductDiscontinue
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget instead.
+ */
 interface ProductDiscontinuedWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ProductDiscontinuedWidgetPlugin';
