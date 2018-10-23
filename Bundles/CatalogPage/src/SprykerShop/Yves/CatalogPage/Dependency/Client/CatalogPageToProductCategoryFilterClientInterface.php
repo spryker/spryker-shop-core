@@ -15,7 +15,7 @@ interface CatalogPageToProductCategoryFilterClientInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */
-    public function updateFacetsByCategory(array $facets, array $productCategoryFilters);
+    public function updateFacetsByCategory(array $facets, array $productCategoryFilters): array;
 
     /**
      * @param array $facets
