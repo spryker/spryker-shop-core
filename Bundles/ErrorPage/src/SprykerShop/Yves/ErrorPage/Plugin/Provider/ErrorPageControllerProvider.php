@@ -29,6 +29,8 @@ class ErrorPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\ErrorPage\Controller\Error404Controller::indexAction()
+     *
      * @return $this
      */
     protected function addError404Route(): self
@@ -39,6 +41,8 @@ class ErrorPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\ErrorPage\Controller\Error403Controller::indexAction()
+     *
      * @return $this
      */
     protected function addError403Route(): self

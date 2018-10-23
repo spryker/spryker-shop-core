@@ -48,23 +48,15 @@ class ProductController extends AbstractController
      * @param array $productData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \SprykerShop\Yves\ProductDetailPage\Exception\ProductAccessDeniedException
-     *
      * @return array
      */
     protected function executeDetailAction(array $productData, Request $request): array
     {
-        if (!empty($productData['id_product_abstract']) && $this->isProductAbstractRestricted($productData['id_product_abstract'])) {
-            throw new ProductAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
-        }
-
         $productViewTransfer = $this->getFactory()
             ->getProductStorageClient()
             ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request));
 
-        if ($productViewTransfer->getIdProductConcrete() && $this->isProductConcreteRestricted($productViewTransfer->getIdProductConcrete())) {
-            throw new ProductAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
-        }
+        $this->assertProductRestrictions($productViewTransfer);
 
         return [
             'product' => $productViewTransfer,
@@ -73,27 +65,58 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return bool
+     * @return void
      */
-    protected function isProductAbstractRestricted(int $idProductAbstract): bool
+    protected function assertProductRestrictions(ProductViewTransfer $productViewTransfer): void
     {
-        return $this->getFactory()
-            ->getProductStorageClient()
-            ->isProductAbstractRestricted($idProductAbstract);
+        $this->assertProductAbstractRestrictions($productViewTransfer);
+        $this->assertProductConcreteRestrictions($productViewTransfer);
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return bool
+     * @throws \SprykerShop\Yves\ProductDetailPage\Exception\ProductAccessDeniedException
+     *
+     * @return void
      */
-    protected function isProductConcreteRestricted(int $idProductConcrete): bool
+    protected function assertProductAbstractRestrictions(ProductViewTransfer $productViewTransfer): void
     {
-        return $this->getFactory()
+        if (empty($productViewTransfer->getIdProductAbstract())) {
+            return;
+        }
+
+        $poductAbstractRestricted = $this->getFactory()
             ->getProductStorageClient()
-            ->isProductConcreteRestricted($idProductConcrete);
+            ->isProductAbstractRestricted($productViewTransfer->getIdProductAbstract());
+
+        if ($poductAbstractRestricted) {
+            throw new ProductAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @throws \SprykerShop\Yves\ProductDetailPage\Exception\ProductAccessDeniedException
+     *
+     * @return void
+     */
+    protected function assertProductConcreteRestrictions(ProductViewTransfer $productViewTransfer): void
+    {
+        if (empty($productViewTransfer->getIdProductConcrete())) {
+            return;
+        }
+
+        $productConcreteRestricted = $this->getFactory()
+            ->getProductStorageClient()
+            ->isProductConcreteRestricted($productViewTransfer->getIdProductConcrete());
+
+        if ($productConcreteRestricted) {
+            throw new ProductAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
+        }
     }
 
     /**

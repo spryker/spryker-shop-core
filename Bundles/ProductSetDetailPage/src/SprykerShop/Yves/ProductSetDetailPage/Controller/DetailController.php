@@ -23,15 +23,11 @@ class DetailController extends AbstractController
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
      *
-     * @throws \SprykerShop\Yves\ProductSetDetailPage\Exception\ProductSetAccessDeniedException
-     *
      * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers)
     {
-        if ($this->areProductsRestricted($productSetDataStorageTransfer, $productViewTransfers)) {
-            throw new ProductSetAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
-        }
+        $this->assertProductRestrictions($productSetDataStorageTransfer, $productViewTransfers);
 
         $data = [
             'productSet' => $productSetDataStorageTransfer,
@@ -49,11 +45,15 @@ class DetailController extends AbstractController
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      * @param array $productViewTransfers
      *
-     * @return bool
+     * @throws \SprykerShop\Yves\ProductSetDetailPage\Exception\ProductSetAccessDeniedException
+     *
+     * @return void
      */
-    protected function areProductsRestricted(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers): bool
+    protected function assertProductRestrictions(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers): void
     {
-        return !empty($productSetDataStorageTransfer->getProductAbstractIds()) &&
-            empty($productViewTransfers);
+        if (!empty($productSetDataStorageTransfer->getProductAbstractIds()) &&
+            empty($productViewTransfers)) {
+            throw new ProductSetAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
+        }
     }
 }
