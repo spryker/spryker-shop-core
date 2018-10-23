@@ -10,6 +10,14 @@ namespace SprykerShop\Yves\CatalogPage\Dependency\Client;
 interface CatalogPageToProductCategoryFilterClientInterface
 {
     /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer[] $facets
+     * @param array $productCategoryFilters
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     */
+    public function updateFacetsByCategory(array $facets, array $productCategoryFilters);
+
+    /**
      * @param array $facets
      * @param int $idCategory
      * @param string $localeName
