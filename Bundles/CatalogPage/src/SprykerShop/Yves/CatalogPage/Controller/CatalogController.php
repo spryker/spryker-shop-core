@@ -183,11 +183,16 @@ class CatalogController extends AbstractController
             return $searchResults;
         }
 
+        $categoryFilters = [];
+        $categoryFiltersData = $productCategoryFilters->getFilterData();
+        foreach($categoryFiltersData['filters'] as $filterData){
+            $categoryFilters[$filterData['key']] = $filterData['isActive'];
+        }
+
         $searchResults[FacetResultFormatterPlugin::NAME] = $this->getFactory()->getProductCategoryFilterClient()
-            ->updateCategoryFacets(
+            ->updateFacetsByCategory(
                 $searchResults[FacetResultFormatterPlugin::NAME],
-                $idCategory,
-                $this->getLocale()
+                $categoryFilters
             );
 
         return $searchResults;
