@@ -4,7 +4,7 @@
     title: 'company.account.address.delete_confimation_page' | trans,
     activePage: 'business-unit',
     companyBusinessUnit: _view.companyBusinessUnit,
-    currentBreadcrumb: 'Business Units'
+    currentBreadcrumb: 'company.account.business_unit' | trans
 } %}
 
 {% block breadcrumbs %}
@@ -16,7 +16,7 @@
                     url: url('company/overview')
                 },
                 {
-                    label: data.currentBreadcrumb | trans,
+                    label: data.currentBreadcrumb,
                     url: url('company/company-role')
                 },
                 {

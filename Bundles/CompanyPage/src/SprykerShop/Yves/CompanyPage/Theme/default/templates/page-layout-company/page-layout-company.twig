@@ -1,8 +1,8 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    activePage: 'Overview',
-    currentBreadcrumb: 'Overview'
+    activePage: 'overview',
+    currentBreadcrumb: 'customer.account.overview' | trans
 } %}
 
 {% block breadcrumbs %}
@@ -14,7 +14,7 @@
                     url: url('company/overview')
                 },
                 {
-                    label: data.currentBreadcrumb | trans
+                    label: data.currentBreadcrumb
                 }
             ]
         }

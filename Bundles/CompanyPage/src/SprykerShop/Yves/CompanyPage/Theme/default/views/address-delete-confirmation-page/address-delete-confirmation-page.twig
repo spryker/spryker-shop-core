@@ -3,7 +3,7 @@
 {% define data = {
     title: 'company.account.address.delete_confimation_page' | trans,
     activePage: 'business-unit',
-    currentBreadcrumb: 'Business Units',
+    currentBreadcrumb: 'company.account.business_unit' | trans,
     companyUnitAddress: _view.companyUnitAddress,
     companyBusinessUnits: _view.companyUnitAddress.companyBusinessUnitCollection.companyBusinessUnits|default([]),
     idCompanyBusinessUnit: _view.idCompanyBusinessUnit,
@@ -19,7 +19,7 @@
                     url: url('company/overview')
                 },
                 {
-                    label: data.currentBreadcrumb | trans,
+                    label: data.currentBreadcrumb,
                     url: url('company/business-unit')
                 },
                 {

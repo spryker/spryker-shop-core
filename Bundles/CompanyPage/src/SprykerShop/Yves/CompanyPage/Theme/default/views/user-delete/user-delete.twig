@@ -5,7 +5,7 @@
     companyUserName: _view.customer.firstName ~ ' ' ~ _view.customer.lastName,
     title: 'company.account.company_user' | trans,
     activePage: 'users',
-    currentBreadcurmb: 'Users'
+    currentBreadcurmb: 'company.account.company_user' | trans
 } %}
 
 {% block breadcrumbs %}
@@ -17,7 +17,7 @@
                     url: url('company/overview')
                 },
                 {
-                    label: data.currentBreadcrumb | trans,
+                    label: data.currentBreadcrumb,
                     url: url('company/user')
                 },
                 {
