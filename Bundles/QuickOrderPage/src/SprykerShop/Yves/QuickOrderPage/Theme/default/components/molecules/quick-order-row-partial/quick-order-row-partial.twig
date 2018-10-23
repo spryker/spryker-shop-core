@@ -31,17 +31,25 @@
 
         <div class="col col--sm-3 spacing spacing--inner">
             {% block quantity %}
-                {{ form_widget(data.quantityField, {
-                    required: true,
-                    label: false,
-                    attr: {
-                        class: config.jsName ~ '__quantity',
-                        min: data.min | default(),
-                        max: data.max | default(),
-                        step: data.step | default(),
-                        disabled: data.quantity is empty
-                    }
-                }) }}
+                {% if data.quantityField is not null %}
+                    {{ form_widget(data.quantityField, {
+                        required: true,
+                        label: false,
+                        attr: {
+                            class: config.jsName ~ '__quantity',
+                            min: data.min | default(),
+                            max: data.max | default(),
+                            step: data.step | default(),
+                            disabled: data.quantity is empty
+                        }
+                    }) }}
+                {% else %}
+                    <input
+                        {% if data.quantity is empty %}disabled{% endif %}
+                        {% if data.quantity is not empty %}value="{{data.quantity}}"{% endif %}
+                        type="number"
+                        class="input input--expand {{config.jsName}}__quantity" />
+                {% endif %}
             {% endblock %}
         </div>
 
