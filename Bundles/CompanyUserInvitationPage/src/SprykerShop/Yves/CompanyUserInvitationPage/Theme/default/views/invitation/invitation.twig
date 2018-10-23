@@ -7,7 +7,6 @@
     title: 'company.user.invitation.title.plural' | trans,
     formAction: url('company/user-invitation'),
     activePage: 'users',
-    currentBreadcrumb: 'company.account.company_user' | trans,
     pagination: {
         parameters: {},
         currentPage: _view.pagination.page,
@@ -26,7 +25,7 @@
                     url: url('company/overview')
                 },
                 {
-                    label: data.currentBreadcrumb,
+                    label: 'company.account.company_user' | trans,
                     url: url('company/user')
                 },
                 {

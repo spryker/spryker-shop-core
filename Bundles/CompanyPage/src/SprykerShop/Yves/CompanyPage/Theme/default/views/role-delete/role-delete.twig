@@ -5,8 +5,7 @@
     roleName: _view.role.name,
     assignedUsers: _view.role.companyUserCollection.companyUsers,
     title: 'company.account.company_role' | trans,
-    activePage: 'role',
-    breadcrumbPage: 'company.account.company_role' | trans
+    activePage: 'role'
 } %}
 
 {% block breadcrumbs %}
@@ -18,7 +17,7 @@
                     url: url('company/overview')
                 },
                 {
-                    label: data.currentBreadcrumb,
+                    label: 'company.account.company_role' | trans,
                     url: url('company/company-role')
                 },
                 {
