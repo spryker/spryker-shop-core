@@ -51,9 +51,14 @@ class DetailController extends AbstractController
      */
     protected function assertProductRestrictions(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers): void
     {
-        if (!empty($productSetDataStorageTransfer->getProductAbstractIds()) &&
-            empty($productViewTransfers)) {
-            throw new ProductSetAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
+        if (empty($productSetDataStorageTransfer->getProductAbstractIds())) {
+            return;
         }
+
+        if (!empty($productViewTransfers)) {
+            return;
+        }
+
+        throw new ProductSetAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
     }
 }
