@@ -39,7 +39,7 @@ class CompanyBusinessUnitControllerRestrictionPlugin extends AbstractPlugin impl
 
     /**
      * {@inheritdoc}
-     * - Verifies if customer could perform an action from BusinessUnitController with company business unit.
+     * - Verifies if customer could perform a BusinessUnitController "denied action" for a given business unit.
      * - Throws exception if customer has no permissions for such company business unit.
      *
      * @api
