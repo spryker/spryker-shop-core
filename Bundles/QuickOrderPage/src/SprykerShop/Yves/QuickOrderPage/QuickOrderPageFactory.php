@@ -56,6 +56,7 @@ class QuickOrderPageFactory extends AbstractFactory
             $this->getCartClient(),
             $this->getQuoteClient(),
             $this->getZedRequestClient(),
+            $this->createProductResolver(),
             $this->getRequest(),
             $this->getQuickOrderItemTransferExpanderPlugins()
         );

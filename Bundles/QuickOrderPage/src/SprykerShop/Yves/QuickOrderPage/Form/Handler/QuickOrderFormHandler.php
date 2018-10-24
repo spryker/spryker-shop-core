@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
+use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
@@ -37,6 +38,11 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     protected $quoteClient;
 
     /**
+     * @var \SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface
+     */
+    protected $productResolver;
+
+    /**
      * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[]
      */
     protected $itemExpanderPlugins;
@@ -45,6 +51,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface $zedRequestClient
+     * @param \SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface $productResolver
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[] $itemExpanderPlugins
      */
@@ -52,13 +59,15 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
         QuickOrderPageToCartClientInterface $cartClient,
         QuickOrderPageToQuoteClientInterface $quoteClient,
         QuickOrderPageToZedRequestClientInterface $zedRequestClient,
+        ProductResolverInterface $productResolver,
         Request $request,
         array $itemExpanderPlugins
     ) {
         $this->cartClient = $cartClient;
-        $this->zedRequestClient = $zedRequestClient;
-        $this->request = $request;
         $this->quoteClient = $quoteClient;
+        $this->zedRequestClient = $zedRequestClient;
+        $this->productResolver = $productResolver;
+        $this->request = $request;
         $this->itemExpanderPlugins = $itemExpanderPlugins;
     }
 
@@ -118,9 +127,8 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
 
         $errorMessageCount = count($this->zedRequestClient->getLastResponseErrorMessages());
-        $isSuccess = (bool)($errorMessageCount < 1);
 
-        return $isSuccess;
+        return $errorMessageCount < 1;
     }
 
     /**
@@ -163,6 +171,8 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
      */
     protected function expandItemTransfer(ItemTransfer $itemTransfer): ItemTransfer
     {
+        $itemTransfer = $this->productResolver->expandItemTransferWithProductIds($itemTransfer);
+
         foreach ($this->itemExpanderPlugins as $itemExpanderPlugin) {
             $itemTransfer = $itemExpanderPlugin->expandItem($itemTransfer);
         }
