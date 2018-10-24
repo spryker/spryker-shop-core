@@ -39,6 +39,8 @@ class ErrorPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses Error403Controller::indexAction()
+     *
      * @return $this
      */
     protected function addError403Route(): self
