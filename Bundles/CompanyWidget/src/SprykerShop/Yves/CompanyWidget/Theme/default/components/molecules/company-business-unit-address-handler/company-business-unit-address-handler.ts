@@ -1,24 +1,6 @@
 import Component from 'ShopUi/models/component';
 import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
-interface AddressJSON {
-    address1: string,
-    address2: string,
-    address3: string,
-    address_hash: string,
-    city: string,
-    company: string,
-    customer_id: number,
-    default: boolean,
-    first_name: string,
-    id_customer_address: number,
-    iso2_code: string,
-    last_name: string,
-    phone: string,
-    salutation: string,
-    zip_code: number
-}
-
 export default class CompanyBusinessUnitAddressHandler extends Component {
     triggers: HTMLElement[];
     form: HTMLElement;
@@ -26,7 +8,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     ignoreElements: HTMLElement[];
     filterElements: HTMLElement[];
     formClear: FormClear;
-    addressesDataObject: AddressJSON[];
+    addressesDataObject: any;
     addressesSelects: HTMLSelectElement[];
     currentAddress: String;
     hiddenCustomerIdInput: HTMLInputElement;
@@ -42,7 +24,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.ignoreElements = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.ignoreSelector));
         this.filterElements = this.targets.filter((element) => !this.ignoreElements.includes(element));
         this.formClear = <FormClear>this.form.querySelector('.js-form-clear');
-        this.hiddenCustomerIdInput = <HTMLInputElement>this.form.querySelector(this.customeridSelector);
+        this.hiddenCustomerIdInput = <HTMLInputElement>this.form.querySelector(this.customerSelector);
         this.hiddenDefaultAddressInput = <HTMLInputElement>this.form.querySelector(this.defaultAddressSelector);
 
         this.initAddressesData();
@@ -176,8 +158,8 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         return this.getAttribute('ignore-selector');
     }
 
-    get customeridSelector(): string {
-        return this.getAttribute('customer-id-selector');
+    get customerSelector(): string {
+        return this.getAttribute('customer-selector');
     }
 
     get defaultAddressSelector(): string {
