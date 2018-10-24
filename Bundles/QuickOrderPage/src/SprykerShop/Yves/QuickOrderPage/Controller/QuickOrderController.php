@@ -285,11 +285,15 @@ class QuickOrderController extends AbstractController
             ->createPriceResolver()
             ->setSumPriceForQuickOrderItemTransfer($quickOrderItemTransfer);
 
+        $form = $this->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getQuickOrderItemEmbeddedForm($quickOrderItemTransfer);
+
         $viewData = [
-            'quantity' => $quickOrderItemTransfer->getQuantity(),
             'price' => $quickOrderItemTransfer->getSumPrice(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
             'product' => $product,
+            'form' => $form->createView(),
         ];
 
         return $this->view(

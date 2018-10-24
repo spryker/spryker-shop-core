@@ -21,6 +21,9 @@ class QuantityFieldConstraint extends SymfonyConstraint
         return static::CLASS_CONSTRAINT;
     }
 
+    /**
+     * @return string
+     */
     public function getMessage(): string
     {
         return static::MESSAGE;

@@ -1,23 +1,25 @@
 {% extends model('template') %}
 
 {% define data = {
-    quantity: _view.quantity,
     price: _view.price,
     additionalColumns: _view.additionalColumns,
     product: _view.product,
+    form: _view.form,
+    index: 0
 } %}
 
 {% block template %}
     {% embed molecule('quick-order-row-partial', 'QuickOrderPage') with {
         data: {
-            quantity: data.quantity,
+            quantityField: data.form ? data.form.quantity : null,
+            customQuantityFieldName: 'quick_order_form[items][' ~ data.index ~ '][quantity]',
             price: data.price,
             additionalColumns: data.additionalColumns,
-            product: data.product
+            product: data.product,
         }
     } only %}
         {% block component %}
-            {{block('body')}}
+            {{ block('body') }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

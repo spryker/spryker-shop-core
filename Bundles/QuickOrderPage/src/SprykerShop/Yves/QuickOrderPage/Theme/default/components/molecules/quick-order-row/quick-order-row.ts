@@ -41,6 +41,7 @@ export default class QuickOrderRow extends Component {
     async reloadField(sku: string = '', quantity: number = null) {
         if (!!sku) {
             this.ajaxProvider.queryParams.set('sku', sku);
+            this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class').split('-').pop().trim());
         }
 
         if (!!quantity) {
