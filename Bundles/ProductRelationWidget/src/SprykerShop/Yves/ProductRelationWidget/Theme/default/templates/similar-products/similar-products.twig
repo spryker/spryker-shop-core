@@ -18,7 +18,9 @@
             }
         } only %}
             {% block slide %}
-                {{ widget('ProductWidgetPlugin', slide) }}
+                {% widget 'PdpProductRelationWidget' args [slide] only %}
+                {% elsewidget 'ProductWidgetPlugin' args [slide] only %} {# @deprecated Use PdpProductRelationWidget instead. #}
+                {% endwidget %}
             {% endblock %}
         {% endembed %}
 
@@ -33,7 +35,9 @@
             }
         } only %}
             {% block slide %}
-                {{ widget('ProductWidgetPlugin', slide) }}
+                {% widget 'PdpProductRelationWidget' args [slide] only %}
+                {% elsewidget 'ProductWidgetPlugin' args [slide] only %} {# @deprecated Use PdpProductRelationWidget instead. #}
+                {% endwidget %}
             {% endblock %}
         {% endembed %}
     {% endif %}

@@ -11,21 +11,27 @@
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                label: 'customer.account' | trans,
-            },{
-                label: 'customer.account.shopping_list' | trans,
-            },{
-                label: 'customer.account.shopping_list.overview.edit' | trans,
-            },{
-                label: 'customer.account.shopping_list.overview.warning' | trans,
-            }]
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.shopping_list' | trans,
+                    url: url('shopping-list')
+                },
+                {
+                    label: 'customer.account.shopping_list.overview.warning' | trans,
+                }
+            ]
         }
     } only %}
 {% endblock %}
 
 {% block customerNavigation %}
-    {{ widgetGlobal('CustomerNavigationWidgetPlugin', 'shoppingList', data.shoppingList.idShoppingList) }}
+    {% widget 'CustomerNavigationWidget' args ['shoppingList', data.shoppingList.idShoppingList] only %}
+    {% elsewidget 'CustomerNavigationWidgetPlugin' args ['shoppingList', data.shoppingList.idShoppingList] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
+    {% endwidget %}
 {% endblock %}
 
 {% block customerContent %}

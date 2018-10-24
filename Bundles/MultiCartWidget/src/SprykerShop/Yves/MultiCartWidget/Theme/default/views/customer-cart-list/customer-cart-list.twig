@@ -9,7 +9,9 @@
 
 {% block body %}
     {% if data.isMultiCartAllowed is not empty %}
-        {{ widget('SharedCartShareWidgetPlugin', data.cart) }}
+        {% widget 'SharedCartShareWidget' args [data.cart] only %}
+        {% elsewidget 'SharedCartShareWidgetPlugin' args [data.cart] only %} {# @deprecated Use SharedCartShareWidget instead. #}
+        {% endwidget %}
         <div class="box">
             <h3 class="float-left">{{ 'multi_cart_widget.cart.list' | trans }}</h3>
             <span class="float-right">

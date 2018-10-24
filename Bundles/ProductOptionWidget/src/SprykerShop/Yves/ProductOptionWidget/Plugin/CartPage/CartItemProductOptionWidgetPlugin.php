@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductOptionWidget\CartItemProductOptionWidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('product-options', 'ProductOptionWidget') instead.
+ */
 class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements CartItemProductOptionWidgetPluginInterface
 {
     /**

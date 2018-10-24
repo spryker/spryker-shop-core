@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductGroupWidge
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \Yves\ExampleProductColorGroupWidget\Widget\ExampleProductColorSelectorWidget instead.
+ */
 interface ProductGroupWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ProductGroupWidgetPlugin';

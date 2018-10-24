@@ -9,23 +9,16 @@ namespace SprykerShop\Yves\ShoppingListWidget\Plugin\CustomerPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\ShoppingListWidget\ShoppingListMenuItemWidgetPluginInterface;
+use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListMenuItemWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListMenuItemWidget instead.
+ *
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
  */
 class ShoppingListMenuItemWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListMenuItemWidgetPluginInterface
 {
     protected const PAGE_KEY_SHOPPING_LIST = 'shoppingList';
-
-    /**
-     * @var string
-     */
-    protected $activePage;
-
-    /**
-     * @var int
-     */
-    protected $activeShoppingListId;
 
     /**
      * @param string $activePage
@@ -35,12 +28,9 @@ class ShoppingListMenuItemWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public function initialize(string $activePage, ?int $activeEntityId = null): void
     {
-        $this->activePage = $activePage;
-        $this->activeShoppingListId = $activeEntityId;
+        $widget = new ShoppingListMenuItemWidget($activePage, $activeEntityId);
 
-        $this->addActivePageParameter();
-        $this->addShoppingListCollectionParameter();
-        $this->addActiveShoppingListIdParameter();
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -66,50 +56,6 @@ class ShoppingListMenuItemWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public static function getTemplate()
     {
-        return '@ShoppingListWidget/views/shopping-list-menu-item/shopping-list-menu-item.twig';
-    }
-
-    /**
-     * @return void
-     */
-    protected function addActivePageParameter(): void
-    {
-        $this->addParameter('isActivePage', $this->isShoppingListPageActive());
-    }
-
-    /**
-     * @return void
-     */
-    protected function addShoppingListCollectionParameter(): void
-    {
-        $this->addParameter('shoppingListCollection', $this->isShoppingListPageActive() ? $this->getCustomerShoppingListCollection() : []);
-    }
-
-    /**
-     * @return void
-     */
-    protected function addActiveShoppingListIdParameter(): void
-    {
-        $this->addParameter('activeShoppingListId', $this->isShoppingListPageActive() ? $this->activeShoppingListId : []);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isShoppingListPageActive(): bool
-    {
-        return $this->activePage === static::PAGE_KEY_SHOPPING_LIST;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer[]
-     */
-    protected function getCustomerShoppingListCollection(): array
-    {
-        $customerShoppingListCollectionTransfer = $this->getFactory()
-            ->getShoppingListClient()
-            ->getCustomerShoppingListCollection();
-
-        return (array)$customerShoppingListCollectionTransfer->getShoppingLists();
+        return ShoppingListMenuItemWidget::getTemplate();
     }
 }

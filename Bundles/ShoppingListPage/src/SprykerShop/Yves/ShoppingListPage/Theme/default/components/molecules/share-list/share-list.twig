@@ -27,10 +27,16 @@
                 {% for key, unit in data.shareUnits %}
                     {% if unit.idShoppingListPermissionGroup is not null %}
                         {% block shareListItem %}
+                            {% if unit.companyUser is defined %}
+                                {% set user = unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName ~ ' (' ~ unit.companyUser.companyBusinessUnit.name ~ ')' %}
+                            {% else %}
+                                {% set user = unit.companyBusinessUnit.name %}
+                            {% endif %}
+
                             <li class="spacing-y spacing-y--inner">
                                 {% include molecule('share-list-item', 'ShoppingListPage') with {
                                     data: {
-                                        name: unit.companyUser is defined ? (unit.companyUser.customer.firstName ~ ' ' ~ unit.companyUser.customer.lastName) : unit.companyBusinessUnit.name,
+                                        name: user,
                                         shareForm: data.shareForm[key]
                                     }
                                 } only %}

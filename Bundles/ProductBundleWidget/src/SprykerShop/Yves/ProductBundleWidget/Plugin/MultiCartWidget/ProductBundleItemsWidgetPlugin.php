@@ -7,13 +7,14 @@
 
 namespace SprykerShop\Yves\ProductBundleWidget\Plugin\MultiCartWidget;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\ProductBundleWidget\ProductBundleItemsWidgetPluginInterface;
+use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemsMultiCartItemsListWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemsMultiCartItemsListWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */
 class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements ProductBundleItemsWidgetPluginInterface
@@ -26,48 +27,9 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public function initialize(QuoteTransfer $quoteTransfer, ?int $itemDisplayLimit = null): void
     {
-        $items = $this->transformCartItems($quoteTransfer->getItems(), $quoteTransfer);
-        if (!$itemDisplayLimit) {
-            $itemDisplayLimit = count($items);
-        }
-        $this->addParameter('items', $items)
-            ->addParameter('itemDisplayLimit', $itemDisplayLimit);
-    }
+        $widget = new ProductBundleItemsMultiCartItemsListWidget($quoteTransfer, $itemDisplayLimit);
 
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    public function transformCartItems(ArrayObject $cartItems, QuoteTransfer $quoteTransfer): array
-    {
-        $transformedCartItems = [];
-
-        $groupedItems = $this->getGroupedItems($cartItems, $quoteTransfer);
-        foreach ($groupedItems as $groupedItem) {
-            if ($groupedItem instanceof ItemTransfer) {
-                $transformedCartItems[] = $groupedItem;
-                continue;
-            }
-
-            $transformedCartItems[] = $groupedItem['bundleProduct'];
-        }
-
-        return $transformedCartItems;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function getGroupedItems(ArrayObject $cartItems, QuoteTransfer $quoteTransfer): array
-    {
-        return $this->getFactory()
-            ->getProductBundleClient()
-            ->getGroupedBundleItems($cartItems, $quoteTransfer->getBundleItems());
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -93,6 +55,6 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate()
     {
-        return '@ProductBundleWidget/views/multi-cart-items-list/multi-cart-items-list.twig';
+        return ProductBundleItemsMultiCartItemsListWidget::getTemplate();
     }
 }

@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductMeasurementUnitWidget\QuantitySalesUnitWidgetPluginInterface;
+use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\CartProductMeasurementUnitQuantitySelectorWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\CartProductMeasurementUnitQuantitySelectorWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductMeasurementUnitWidget\ProductMeasurementUnitWidgetFactory getFactory()
  */
 class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements QuantitySalesUnitWidgetPluginInterface
@@ -23,37 +26,9 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
      */
     public function initialize(ItemTransfer $itemTransfer): void
     {
-        $this
-            ->addParameter('itemTransfer', $itemTransfer)
-            ->addParameter('isBaseUnit', $this->isBaseUnit($itemTransfer));
-    }
+        $widget = new CartProductMeasurementUnitQuantitySelectorWidget($itemTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    protected function isBaseUnit(ItemTransfer $itemTransfer): bool
-    {
-        $quantitySalesUnitTransfer = $itemTransfer->getQuantitySalesUnit();
-
-        if ($quantitySalesUnitTransfer !== null) {
-            $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
-                ->getProductMeasurementUnitStorageClient()
-                ->findProductConcreteMeasurementUnitStorage($itemTransfer->getId());
-
-            if ($productConcreteMeasurementUnitStorageTransfer !== null) {
-                $baseUnitTransfer = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit();
-
-                if ($baseUnitTransfer->getIdProductMeasurementUnit() === $quantitySalesUnitTransfer->getProductMeasurementUnit()->getIdProductMeasurementUnit()) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        return true;
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -77,6 +52,6 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
      */
     public static function getTemplate()
     {
-        return '@ProductMeasurementUnitWidget/views/cart-product-measurement-unit-quantity-selector/cart-product-measurement-unit-quantity-selector.twig';
+        return CartProductMeasurementUnitQuantitySelectorWidget::getTemplate();
     }
 }

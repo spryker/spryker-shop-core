@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartPermissionGroupWidget instead.
+ */
 interface SharedCartPermissionGroupWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'SharedCartPermissionGroupWidgetPlugin';
