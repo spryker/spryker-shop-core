@@ -107,9 +107,6 @@ class UserController extends AbstractCompanyController
         );
         $companyUserForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getCompanyUserForm(
-                $dataProvider->getOptions($this->findCurrentCompanyUserTransfer()->getFkCompany())
-            )
             ->getCompanyUserForm($companyUserFormOptions)
             ->handleRequest($request);
 
