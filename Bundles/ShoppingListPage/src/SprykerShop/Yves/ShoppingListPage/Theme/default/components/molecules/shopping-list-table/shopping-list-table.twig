@@ -55,7 +55,7 @@
                         {% for attribute in item.superAttributesDefinition %}
                             {% if item.attributes[attribute] is defined %}
                                 <li class="list__item">
-                                    <strong>{{ ('product.attribute.' ~ attribute) | trans }}</strong>: {{ item.attributes[attribute] }}
+                                    {{ ('product.attribute.' ~ attribute) | trans }}: {{ item.attributes[attribute] }}
                                 </li>
                             {% endif %}
                         {% endfor %}
