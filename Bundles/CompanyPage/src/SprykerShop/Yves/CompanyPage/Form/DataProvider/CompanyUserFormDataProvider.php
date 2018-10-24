@@ -85,7 +85,7 @@ class CompanyUserFormDataProvider
         return [
             CompanyUserForm::OPTION_BUSINESS_UNIT_CHOICES => $this->getAvailableBusinessUnits($idCompany),
             CompanyUserForm::OPTION_COMPANY_ROLE_CHOICES => $this->getAvailableCompanyRoleIds($companyRoleCollectionTransfer),
-            CompanyUserForm::OPTION_DEFAULT_COMPANY_ROLE_IDS => $this->getDefaultCompanyRoleIds($companyRoleCollectionTransfer),
+            CompanyUserForm::OPTION_DEFAULT_COMPANY_ROLE_ID => $this->findDefaultCompanyRoleId($companyRoleCollectionTransfer),
         ];
     }
 
@@ -99,7 +99,7 @@ class CompanyUserFormDataProvider
     {
         return [
             CompanyUserForm::FIELD_FK_COMPANY => $idCompany,
-            CompanyUserForm::FIELD_COMPANY_ROLE_COLLECTION => $this->getDefaultCompanyRolesArray($options),
+            CompanyUserForm::FIELD_COMPANY_ROLE_COLLECTION => $this->getCompanyRoleCollection($options),
         ];
     }
 
@@ -108,38 +108,36 @@ class CompanyUserFormDataProvider
      *
      * @return array
      */
-    protected function getDefaultCompanyRolesArray(array $options): array
+    protected function getCompanyRoleCollection(array $options): array
     {
-        $defaultCompanyRoleIds = $options[CompanyUserForm::OPTION_DEFAULT_COMPANY_ROLE_IDS] ?: [];
-        $companyRolesArray = [];
+        $companyRoleCollection = [];
 
-        foreach ($defaultCompanyRoleIds as $defaultCompanyRoleId) {
-            $companyRolesArray[] = [
+        $defaultCompanyRoleId = $options[CompanyUserForm::OPTION_DEFAULT_COMPANY_ROLE_ID] ?? null;
+        if ($defaultCompanyRoleId !== null) {
+            $companyRoleCollection[] = [
                 static::KEY_ID_COMPANY_ROLE => $defaultCompanyRoleId,
             ];
         }
 
         return [
-            static::KEY_ROLES => $companyRolesArray,
+            static::KEY_ROLES => $companyRoleCollection,
         ];
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
      *
-     * @return int[]
+     * @return int|null
      */
-    protected function getDefaultCompanyRoleIds(CompanyRoleCollectionTransfer $companyRoleCollectionTransfer): array
+    protected function findDefaultCompanyRoleId(CompanyRoleCollectionTransfer $companyRoleCollectionTransfer): ?int
     {
-        $defaultCompanyRoleIds = [];
-
         foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
             if ($companyRoleTransfer->getIsDefault()) {
-                $defaultCompanyRoleIds[] = $companyRoleTransfer->getIdCompanyRole();
+                return $companyRoleTransfer->getIdCompanyRole();
             }
         }
 
-        return $defaultCompanyRoleIds;
+        return null;
     }
 
     /**
