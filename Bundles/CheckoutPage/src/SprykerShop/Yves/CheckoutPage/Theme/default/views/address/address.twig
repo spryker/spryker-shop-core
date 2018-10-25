@@ -31,7 +31,7 @@
         {% block fields %}
             {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address | default %}
             {% set hasShippingAddresses = existingShippingAddresses is not empty %}
-            {% set hideShippingAddressForm = existingShippingAddresses is empty %}
+            {% set hideShippingAddressForm = existingShippingAddresses is not empty %}
             {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
             {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
                 {% set hasShippingAddresses = true %}
