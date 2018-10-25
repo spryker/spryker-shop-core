@@ -2,7 +2,8 @@
 
 {% define data = {
     index: _widget.index,
-    searchFieldName: _widget.searchFieldName,
+    skuFieldName: _widget.skuFieldName,
+    skuFieldValue: _widget.skuFieldValue | default,
     searchFieldValue: _widget.searchFieldValue | default,
     searchResultLimit: _widget.searchResultLimit
 } %}
@@ -11,7 +12,8 @@
     {% include molecule('autocomplete-form') with {
         data: {
             id: data.index,
-            name: data.searchFieldName,
+            name: data.skuFieldName,
+            hiddenValue: data.skuFieldValue,
             value: data.searchFieldValue,
             suggestionsUrl: '/product-search/product-concrete-search',
             placeholder: 'quick-order.input.placeholder'

@@ -201,6 +201,7 @@ class QuickOrderController extends AbstractController
             ->getQuickOrderForm($quickOrderTransfer);
 
         $products = $this->getProductsByQuickOrder($quickOrderTransfer);
+
         return [
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
@@ -255,6 +256,7 @@ class QuickOrderController extends AbstractController
             ->getQuickOrderForm($quickOrderTransfer);
 
         $products = $this->getProductsByQuickOrder($quickOrderTransfer);
+
         return [
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
@@ -386,6 +388,7 @@ class QuickOrderController extends AbstractController
         }
 
         $route = $response->getRoute();
+
         return new RedirectResponse($this->getApplication()->path($route->getRoute(), $route->getParameters()));
     }
 }
