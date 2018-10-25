@@ -55,6 +55,7 @@ class DetailController extends AbstractController
             return;
         }
 
+        // Abstract IDs are available, but there are no concretes
         if (!empty($productViewTransfers)) {
             return;
         }
