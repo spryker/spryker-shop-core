@@ -13,7 +13,6 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     currentAddress: String;
     hiddenCustomerIdInput: HTMLInputElement;
     hiddenDefaultAddressInput: HTMLInputElement;
-    customAddressTriggerInput: HTMLFormElement;
 
     protected readyCallback(): void {
         const formElements = 'select, input[type="text"], input[type="radio"], input[type="checkbox"]';
@@ -25,9 +24,8 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.ignoreElements = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.ignoreSelector));
         this.filterElements = this.targets.filter((element) => !this.ignoreElements.includes(element));
         this.formClear = <FormClear>this.form.querySelector('.js-form-clear');
-        this.hiddenCustomerIdInput = <HTMLInputElement>this.form.querySelector(this.customerAddressIdSelector);
+        this.hiddenCustomerIdInput = <HTMLInputElement>this.form.querySelector(this.customerSelector);
         this.hiddenDefaultAddressInput = <HTMLInputElement>this.form.querySelector(this.defaultAddressSelector);
-        this.customAddressTriggerInput = <HTMLFormElement>this.form.querySelector(this.customAddressTrigger);
 
         this.initAddressesData();
         this.mapEvents();
@@ -35,22 +33,28 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     protected mapEvents(): void {
-        this.formClear.addEventListener('form-fields-clear-after', () => this.toggleFormFieldsReadonly(false));
+        this.formClear.addEventListener('form-fields-readonly-update', () => this.toggleFormFieldsReadonly(false));
         this.triggers.forEach((triggerElement) => {
             triggerElement.addEventListener('click', () => {
-                this.addressesSelects.forEach((selectElement) => {
-                    this.setCurrentAddress(selectElement);
-                });
                 this.onClick(triggerElement);
+            });
+        });
+        this.addressesSelects.forEach((selectElement) => {
+            selectElement.addEventListener('change', () => {
+                this.onChange(selectElement);
             });
         });
     }
 
     protected onClick(triggerElement: HTMLElement): void {
-        if (this.currentAddress) {
-            this.fillFormWithNewAddress();
+        this.fillFormWithNewAddress();
+        if(this.currentAddress) {
             this.toggleFormFieldsReadonly();
         }
+    }
+
+    protected onChange(selectElement: HTMLSelectElement): void {
+        this.setCurrentAddress(selectElement);
     }
 
     toggleFormFieldsReadonly(isEnabled: boolean = true): void {
@@ -74,51 +78,60 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     protected setCurrentAddress(selectElement: HTMLSelectElement): void {
-        this.currentAddress = selectElement.options[selectElement.selectedIndex].getAttribute('value');
+        this.currentAddress = selectElement.options[selectElement.selectedIndex].getAttribute('data-address-key');
     }
 
     protected fillFormWithNewAddress(): void {
-        const currentAddressList = this.addressesDataObject[this.currentAddress.toString()];
-        this.hiddenDefaultAddressInput.value = this.currentAddress.toString();
+        const currentAddressList = this.addressesDataObject.filter((element) => {
+            return element['address_hash'] == this.currentAddress;
+        })[0];
+        const hiddenCustomerIdInputName = this.hiddenCustomerIdInput.getAttribute('data-key');
+
+        if(currentAddressList && !(hiddenCustomerIdInputName in currentAddressList)) {
+            this.hiddenCustomerIdInput.value = '';
+        }
 
         this.clearFormFields();
         this.fillFormFields(currentAddressList);
-        this.clearFormField(this.customAddressTriggerInput);
     }
 
     protected fillDefaultAddress(): void {
-        const hiddenDefaultAddressInputName = this.hiddenDefaultAddressInput.getAttribute('value');
-        if (hiddenDefaultAddressInputName) {
-            this.currentAddress = hiddenDefaultAddressInputName;
-            this.fillFormWithNewAddress();
-            this.toggleFormFieldsReadonly();
-        }
+        const hiddenDefaultAddressInputName = this.hiddenDefaultAddressInput.getAttribute('name');
+
+        this.addressesDataObject.forEach(address => {
+            for(let key in address) {
+                if(address[hiddenDefaultAddressInputName]) {
+
+                    this.addressesSelects.forEach((selectElement: HTMLSelectElement) => {
+                        this.setCurrentAddress(selectElement);
+                    });
+
+                    this.fillFormWithNewAddress();
+                    this.toggleFormFieldsReadonly();
+
+                    return;
+                }
+            }
+        });
     }
 
     clearFormFields(): void {
         this.filterElements.forEach((element) => {
-            this.clearFormField(<HTMLFormElement>element);
+            const isSelect = this.formClear.getTagName(element) == "SELECT";
+
+            (<HTMLFormElement>element).value = '';
+
+            if (isSelect) {
+                (<HTMLFormElement>element).selectedIndex = 0;
+            }
         });
-    }
-
-    clearFormField(element: HTMLFormElement): void {
-        if (element.type == "checkbox") {
-            element.checked = false;
-            return;
-        }
-
-        if (this.formClear.getTagName(element) == "SELECT") {
-            element.selectedIndex = 0;
-        }
-
-        element.value = '';
     }
 
     fillFormFields(address: object): void {
         for(let key in address) {
             const formElement = this.form.querySelector(`[data-key="${key}"]`);
 
-            if(formElement !== null) {
+            if(formElement !== null && address[key] !== null) {
                 (<HTMLFormElement>formElement).value = address[key];
             }
         }
@@ -145,15 +158,11 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         return this.getAttribute('ignore-selector');
     }
 
-    get customerAddressIdSelector(): string {
-        return this.getAttribute('customer-address-id-selector');
+    get customerSelector(): string {
+        return this.getAttribute('customer-selector');
     }
 
     get defaultAddressSelector(): string {
         return this.getAttribute('default-address-selector');
-    }
-
-    get customAddressTrigger(): string {
-        return this.getAttribute('custom-address-trigger');
     }
 }
