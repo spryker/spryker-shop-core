@@ -7,6 +7,7 @@
 {% define data = {
     rows: required,
     products: [],
+    prices: [],
     additionalColumns: []
 } %}
 
@@ -52,6 +53,8 @@
                 quantityField: row.quantity,
                 skuField: row.sku,
                 additionalColumns: data.additionalColumns,
+                product: product,
+                price: product is null ? null : data.prices[product.sku] | default(),
 
                 autocomplete: {
                     skuFieldName: row.vars.full_name,
