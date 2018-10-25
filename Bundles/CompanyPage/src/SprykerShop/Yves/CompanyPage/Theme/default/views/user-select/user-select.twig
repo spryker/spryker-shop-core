@@ -2,7 +2,7 @@
 
 {% define data = {
     form: _view.form,
-    title: 'company_user.change_company_user' | trans,
+    title: 'company_user.select_business_unit' | trans,
     activePage: 'change-company-user'
 } %}
 
@@ -10,7 +10,7 @@
     <div class="box">
         {% include molecule('form') with {
             data: {
-                title: 'company_user.change_company_user' | trans,
+                title: 'company_user.select_business_unit' | trans,
                 form: data.form,
                 options: {
                     action: url('company/user/select')

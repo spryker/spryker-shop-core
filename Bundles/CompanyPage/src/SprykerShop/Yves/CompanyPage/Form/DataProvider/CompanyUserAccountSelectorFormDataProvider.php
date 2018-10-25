@@ -15,7 +15,7 @@ use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountSelectorForm;
 class CompanyUserAccountSelectorFormDataProvider
 {
     protected const FORMAT_COMPANY_USER_DISPLAY = '%s / %s';
-    protected const GLOSSARY_KEY_NO_COMPANY = 'company_user.no_company';
+    protected const GLOSSARY_KEY_NO_BUSINESS_UNIT = 'company_user.no_business_unit';
 
     /**
      * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface
@@ -76,7 +76,7 @@ class CompanyUserAccountSelectorFormDataProvider
             $companies[$key] = $companyUser->getIdCompanyUser();
         }
 
-        return [static::GLOSSARY_KEY_NO_COMPANY => ''] + $companies;
+        return [static::GLOSSARY_KEY_NO_BUSINESS_UNIT => ''] + $companies;
     }
 
     /**
