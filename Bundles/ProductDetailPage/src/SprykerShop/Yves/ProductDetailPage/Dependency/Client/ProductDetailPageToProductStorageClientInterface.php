@@ -24,4 +24,11 @@ interface ProductDetailPageToProductStorageClientInterface
      * @return bool
      */
     public function isProductAbstractRestricted(int $idProductAbstract): bool;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isProductConcreteRestricted(int $idProductConcrete): bool;
 }
