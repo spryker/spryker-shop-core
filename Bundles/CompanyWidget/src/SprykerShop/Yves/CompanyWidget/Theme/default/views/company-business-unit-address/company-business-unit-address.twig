@@ -1,0 +1,106 @@
+{% extends template('widget') %}
+
+{% define data = {
+    formType: _widget.formType,
+    isApplicable: _widget.isApplicable,
+    addresses: _widget.addresses,
+    comparableAddresses: _widget.comparableAddresses
+} %}
+
+{% block template %}
+    {% embed atom('select') with {
+        class: 'spacing-bottom',
+        attributes: {
+            name: 'checkout-full-addresses'
+        },
+        data: {
+            isGrouped: true
+        },
+        embed: {
+            addressOptions: data.comparableAddresses,
+            formType: data.formType
+        }
+    } only %}
+        {% block selectClass %}js-form-clear__ignore-element js-from-select-address__{{ embed.formType }}{% endblock %}
+        {% block optionsGroup %}
+            {% set addressGroups = [] %}
+            {% set isDefault = false %}
+
+            {% for option in embed.addressOptions %}
+                {% set currentOption = option.option_group %}
+                {% if (currentOption not in addressGroups) %}
+                    {% set addressGroups = addressGroups | merge([currentOption]) %}
+                {% endif %}
+                {% if option.default == true %}
+                    {% set isDefault = true %}
+                {% endif %}
+            {% endfor %}
+
+            {% if not isDefault %}
+                <option value="" selected disabled="disabled">{{ 'page.checkout.address.address_select' | trans }}</option>
+            {% endif %}
+
+            {% for addressGroupsItem in addressGroups %}
+                <optgroup label="{{ addressGroupsItem | trans }}">
+                    {% for option in embed.addressOptions %}
+                        {% set isSelected = option.default | default(false) %}
+                        {% set company_business_unit_name_modified = '' %}
+                        {% if option.company_business_unit_name is defined %}
+                            {% set company_business_unit_name_modified = ', ' ~ option.company_business_unit_name %}
+                        {% endif %}
+                        {% set fullName = '%s %s %s%s, %s %s, %s %s' | format(
+                            option.salutation,
+                            option.first_name,
+                            option.last_name,
+                            company_business_unit_name_modified,
+                            option.address1,
+                            option.address2,
+                            option.zip_code,
+                            option.city)
+                        %}
+
+                        {% if (option.option_group) == addressGroupsItem %}
+                            <option value="{{ fullName }}" {% if isSelected %}selected{% endif %} data-address-key="{{ option.address_hash }}">
+                                {{ fullName }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </optgroup>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+
+    <div>
+        <button type="button" class="button spacing-bottom js-from-add-new-address__{{ data.formType }}">
+            {{ 'page.checkout.address.use_selected_address' | trans }}
+        </button>
+        {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
+            attributes: {
+                'form-selector': '.js-form-handler__' ~ data.formType,
+                'trigger-selector': '.js-from-add-new-address__' ~ data.formType,
+                'data-selector': '.js-from-select-address__' ~ data.formType,
+                'ignore-selector': '.js-form-clear__ignore-element',
+                'customer-selector': '.js-form-customer-id__' ~ data.formType,
+                'default-address-selector': '.js-form-default-address__' ~ data.formType,
+                'addresses': data.addresses
+            }
+        } only %}
+    </div>
+
+    <div>
+        <label>
+            <input type="checkbox" class="js-from-clear__{{ data.formType }}-toggler js-form-clear__ignore-element">
+            {{ 'page.checkout.address.different_delivery_address' | trans }}
+        </label>
+        {% include molecule('form-clear') with {
+            attributes: {
+                'form-selector': '.js-form-clear__' ~ data.formType ~ '-form',
+                'trigger-selector': '.js-from-clear__' ~ data.formType ~ '-toggler',
+                'ignore-selector': '.js-form-clear__ignore-element'
+            }
+        } only %}
+    </div>
+
+    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" data-key="id_customer_address" class="js-form-customer-id__{{ data.formType }}">
+    <input type="hidden" name="default" class="js-form-clear__ignore-element js-form-default-address__{{ data.formType }}">
+{% endblock %}
