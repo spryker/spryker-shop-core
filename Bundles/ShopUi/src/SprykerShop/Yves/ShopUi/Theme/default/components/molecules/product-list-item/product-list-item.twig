@@ -1,7 +1,7 @@
 {% extends molecule('product-card') %}
 
 {% define config = {
-    name: 'product-list-item' 
+    name: 'product-list-item'
 } %}
 
 {% block body %}
@@ -49,7 +49,7 @@
 
                 {% block price %}
                     <div>
-                        {% if can('SeePricePermissionPlugin') %}
+                        {% if can('SeePricePermissionPlugin') and data.price %}
                             {% include molecule('price') with {
                                 data: {
                                     amount: data.price | money,
@@ -62,7 +62,7 @@
                     </div>
                 {% endblock %}
             </div>
-            
+
             {% block actionsContainer %}
                 <div class="col col--sm-3 col--xl-2 col--bottom">
                     {% block actions %}

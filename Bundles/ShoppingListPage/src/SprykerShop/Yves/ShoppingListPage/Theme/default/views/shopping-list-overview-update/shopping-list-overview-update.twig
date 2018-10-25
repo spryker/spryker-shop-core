@@ -11,13 +11,19 @@
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                label: 'customer.account' | trans,
-            },{
-                label: 'customer.account.shopping_list' | trans,
-            },{
-                label: 'customer.account.shopping_list.overview.edit' | trans,
-            }]
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'customer.account.shopping_list' | trans,
+                    url: url('shopping-list')
+                },
+                {
+                    label: 'customer.account.shopping_list.overview.edit' | trans,
+                }
+            ]
         }
     } only %}
 {% endblock %}
