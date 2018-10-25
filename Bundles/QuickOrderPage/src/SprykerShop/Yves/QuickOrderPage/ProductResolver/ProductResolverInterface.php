@@ -16,9 +16,9 @@ interface ProductResolverInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return int|null
      */
-    public function getIdProductBySku(string $sku): int;
+    public function getIdProductBySku(string $sku): ?int;
 
     /**
      * @param string $sku

@@ -38,14 +38,14 @@ class ProductResolver implements ProductResolverInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return int|null
      */
-    public function getIdProductBySku(string $sku): int
+    public function getIdProductBySku(string $sku): ?int
     {
         $productConcreteData = $this->productStorageClient
             ->findProductConcreteStorageDataByMappingForCurrentLocale(static::MAPPING_TYPE_SKU, $sku);
 
-        return $productConcreteData[static::ID_PRODUCT_CONCRETE];
+        return $productConcreteData[static::ID_PRODUCT_CONCRETE] ?? null;
     }
 
     /**
@@ -87,16 +87,19 @@ class ProductResolver implements ProductResolverInterface
         }, $quickOrderTransfer->getItems()->getArrayCopy());
 
         $productConcreteTransfers = [];
-        foreach ($skus as $sku) {
+        foreach ($skus as $index => $sku) {
             if (empty($sku)) {
                 continue;
             }
 
             $productConcreteTransfer = $this->findProductConcreteBySku($sku);
 
-            if ($productConcreteTransfer !== null) {
-                $productConcreteTransfers[] = $productConcreteTransfer;
+            if ($productConcreteTransfer === null) {
+                unset($quickOrderTransfer->getItems()[$index]);
+                continue;
             }
+
+            $productConcreteTransfers[] = $productConcreteTransfer;
         }
 
         return $productConcreteTransfers;
