@@ -131,8 +131,8 @@ class ProductResolver implements ProductResolverInterface
             return null;
         }
 
-        $productCncreteTransfer = (new ProductConcreteTransfer())->fromArray($productConcreteStorageData, true);
+        $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productConcreteStorageData, true);
 
-        return $productCncreteTransfer->setFkProductAbstract($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT]);
+        return $productConcreteTransfer->setFkProductAbstract($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT]);
     }
 }

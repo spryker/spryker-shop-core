@@ -77,8 +77,6 @@ class QuickOrderController extends AbstractController
             }
         }
 
-//        dump($quickOrderForm->getErrors(true)); die;
-
         /** @var \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer */
         $quickOrderTransfer = $quickOrderForm->getData();
         $products = $this->getProductsByQuickOrder($quickOrderTransfer);
