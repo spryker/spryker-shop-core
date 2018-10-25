@@ -74,7 +74,7 @@
                 </optgroup>
             {% endif %}
 
-            {% if embed.customerAddresses is not empty %}
+            {% if embed.companyBusinessUnitAddresses is not empty %}
                 <optgroup label="{{ 'page.checkout.address.option_group.company_business_unit' | trans }}">
                     {% for address in embed.companyBusinessUnitAddresses %}
                         {{ block('option') }}
@@ -105,7 +105,12 @@
     <div>
         <label>
             <input type="checkbox" name="customAddress[{{ data.formType }}]" {% if data.isCustomAddress %}checked{% endif %} class="js-from-clear__{{ data.formType }}-toggler js-form-clear__ignore-element" value="1">
-            {{ 'page.checkout.address.different_delivery_address' | trans }}
+            {% if data.formType == 'shippingAddress' %}
+                {{ 'page.checkout.address.different_delivery_address' | trans }}
+            {% endif %}
+            {% if data.formType == 'billingAddress' %}
+                {{ 'page.checkout.address.different_billing_address' | trans }}
+            {% endif %}
         </label>
         {% include molecule('form-clear') with {
             attributes: {
