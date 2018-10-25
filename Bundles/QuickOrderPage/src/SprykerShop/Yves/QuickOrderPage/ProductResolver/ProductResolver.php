@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuickOrderPage\ProductResolver;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
@@ -19,6 +20,7 @@ class ProductResolver implements ProductResolverInterface
     protected const ID_PRODUCT_CONCRETE = 'id_product_concrete';
     protected const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     protected const SKU = 'sku';
+    protected const NAME = 'name';
 
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface
@@ -132,7 +134,10 @@ class ProductResolver implements ProductResolverInterface
         }
 
         $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productConcreteStorageData, true);
+        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())->setName($productConcreteStorageData[static::NAME]);
 
-        return $productConcreteTransfer->setFkProductAbstract($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT]);
+        return $productConcreteTransfer
+            ->setFkProductAbstract($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT])
+            ->addLocalizedAttributes($localizedAttributesTransfer);
     }
 }

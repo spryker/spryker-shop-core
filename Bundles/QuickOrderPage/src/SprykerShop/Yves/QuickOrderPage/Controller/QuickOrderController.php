@@ -108,17 +108,18 @@ class QuickOrderController extends AbstractController
      */
     protected function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array
     {
+        $resultingProducts = [];
         $products = $this->getFactory()
             ->createProductResolver()
             ->getProductsByQuickOrder($quickOrderTransfer);
 
         foreach ($products as $product) {
-            $products[$product->getSku()] = $this->getFactory()
+            $resultingProducts[$product->getSku()] = $this->getFactory()
                 ->getQuickOrderClient()
                 ->expandProductConcrete($product);
         }
 
-        return $products;
+        return $resultingProducts;
     }
 
     /**

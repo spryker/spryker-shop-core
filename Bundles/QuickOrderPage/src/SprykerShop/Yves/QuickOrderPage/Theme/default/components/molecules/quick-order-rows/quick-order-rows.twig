@@ -56,7 +56,7 @@
                 autocomplete: {
                     sku: row.sku,
                     fullName: row.vars.full_name,
-                    inputValue: product is null ? null : product.name ~ ' (' ~ product.sku ~ ')',
+                    inputValue: product is null ? null : product.localizedAttributes.getArrayCopy()[0].name ~ ' (' ~ product.sku ~ ')',
                 }
             },
             embed: {
