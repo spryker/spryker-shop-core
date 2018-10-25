@@ -8,33 +8,16 @@
 namespace SprykerShop\Yves\CompanyWidget\Address;
 
 use ArrayObject;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface;
 
 class AddressProvider implements AddressProviderInterface
 {
-    protected const FIELD_COMPANY_NAME = 'company_name';
-    protected const FIELD_COMPANY_BUSINESS_UNIT_NAME = 'company_business_unit_name';
-
-    protected const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
-    protected const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
-
-    protected const FIELD_SALUTATION = 'salutation';
-    protected const FIELD_FIRST_NAME = 'first_name';
-    protected const FIELD_LAST_NAME = 'last_name';
-
-    protected const FIELD_DEFAULT = 'default';
-    protected const FIELD_OPTION_GROUP = 'option_group';
-    protected const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
-    protected const FIELD_ADDRESS_HASH = 'address_hash';
-
-    protected const FORM_TYPE_OPTION_BILLING_ADDRESS = 'billingAddress';
-    protected const FORM_TYPE_OPTION_SHIPPING_ADDRESS = 'shippingAddress';
-
-    protected const GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP = 'page.checkout.address.option_group.customer';
-    protected const GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP = 'page.checkout.address.option_group.company_business_unit';
+    protected const COMPANY_BUSINESS_UNIT_ADDRESS_KEY_PATTERN = 'company_business_unit_address_%s';
+    protected const CUSTOMER_ADDRESS_KEY_PATTERN = 'customer_address_%s';
 
     /**
      * @var \SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface
@@ -54,232 +37,97 @@ class AddressProvider implements AddressProviderInterface
      */
     public function companyBusinessUnitAddressesExists(): bool
     {
-        return ($this->getCompanyBusinessUnitAddressCollection()->count() > 0);
-    }
-
-    /**
-     * @param string $formType
-     *
-     * @return string|null
-     */
-    public function getCombinedAddressesListJson(string $formType): ?string
-    {
-        $customerAddressesList = $this->getCustomerAddressesList();
-        $companyBusinessUnitAddressesList = $this->getCompanyBusinessUnitAddressesList();
-
-        $customerAddressesList = $this->prepareCustomerAddressesList($customerAddressesList, $formType);
-        $companyBusinessUnitAddressesList = $this->prepareCompanyBusinessUnitAddressList($companyBusinessUnitAddressesList, $formType);
-
-        $defaultCustomerAddressIndexes = $this->getAddressListDefaultItemIndexes($customerAddressesList);
-        $defaultCompanyBusinessUnitAddressIndexes = $this->getAddressListDefaultItemIndexes($companyBusinessUnitAddressesList);
-
-        if ((count($defaultCustomerAddressIndexes) > 0 && count($defaultCompanyBusinessUnitAddressIndexes) > 0)
-            || (count($defaultCustomerAddressIndexes) === 0 && count($defaultCompanyBusinessUnitAddressIndexes) === 0)
-        ) {
-            $companyBusinessUnitAddressesList = $this->resetListItemsDefaultStatus(
-                $companyBusinessUnitAddressesList,
-                $defaultCompanyBusinessUnitAddressIndexes
-            );
-        }
-
-        return $this->encodeAddressesToJson(
-            array_merge(
-                $customerAddressesList,
-                $companyBusinessUnitAddressesList
-            )
-        );
-    }
-
-    /**
-     * @param string $formType
-     *
-     * @return array
-     */
-    public function getCombinedComparableAddressesList(string $formType): array
-    {
-        $customerAddressesList = $this->getCustomerAddressesList();
-        $companyBusinessUnitAddressesList = $this->getCompanyBusinessUnitAddressesList();
-
-        $customerAddressesList = $this->prepareCustomerAddressesList($customerAddressesList, $formType);
-        $companyBusinessUnitAddressesList = $this->prepareCompanyBusinessUnitAddressList($companyBusinessUnitAddressesList, $formType);
-
-        return array_merge(
-            $this->getComparableAddressesList($customerAddressesList, static::GLOSSARY_KEY_CUSTOMER_ADDRESS_OPTION_GROUP),
-            $this->getComparableAddressesList($companyBusinessUnitAddressesList, static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_ADDRESS_OPTION_GROUP)
-        );
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesList
-     * @param string $formType
-     *
-     * @return array
-     */
-    protected function prepareCustomerAddressesList(array $customerAddressesList, string $formType): array
-    {
-        $preparedCustomerAddressesList = [];
-        foreach ($customerAddressesList as $customerAddressListItem) {
-            $preparedCustomerAddressesList[] = $this->prepareAddressListItemData($customerAddressListItem->toArray(), $formType);
-        }
-
-        return $preparedCustomerAddressesList;
-    }
-
-    /**
-     * @param array $companyBusinessUnitAddressesList
-     * @param string $formType
-     *
-     * @return array
-     */
-    protected function prepareCompanyBusinessUnitAddressList(array $companyBusinessUnitAddressesList, string $formType): array
-    {
         $customerTransfer = $this->customerClient->getCustomer();
 
-        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit();
-        if ($companyBusinessUnitTransfer === null) {
-            return [];
-        }
-
-        $preparedCompanyBusinessUnitAddressesList = [];
-        foreach ($companyBusinessUnitAddressesList as $companyBusinessUnitAddressesListItem) {
-            $preparedCompanyBusinessUnitAddressesList[] = $this->prepareCompanyBusinessUnitAddressListItem(
-                $companyBusinessUnitAddressesListItem->toArray(),
-                $customerTransfer,
-                $companyBusinessUnitTransfer,
-                $formType
-            );
-        }
-
-        return $preparedCompanyBusinessUnitAddressesList;
-    }
-
-    /**
-     * @param array $addressListItem
-     * @param string $formType
-     *
-     * @return array
-     */
-    protected function prepareAddressListItemData(array $addressListItem, string $formType): array
-    {
-        $preparedAddressListItem = [
-            static::FIELD_ADDRESS_HASH => $this->getAddressHash($addressListItem),
-        ];
-        $preparedAddressListItem = array_merge(
-            $addressListItem,
-            $this->addDefaultAddressValue($addressListItem, $preparedAddressListItem, $formType)
-        );
-
-        ksort($preparedAddressListItem);
-
-        return $preparedAddressListItem;
-    }
-
-    /**
-     * @param array $companyUnitAddressListItem
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     * @param string $formType
-     *
-     * @return array
-     */
-    protected function prepareCompanyBusinessUnitAddressListItem(
-        array $companyUnitAddressListItem,
-        CustomerTransfer $customerTransfer,
-        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
-        string $formType
-    ): array {
-        $companyUnitAddressListItem = $this->expandAddressListItemWithCustomerPersonalData(
-            $companyUnitAddressListItem,
-            $customerTransfer
-        );
-        $companyUnitAddressListItem = $this->expandAddressListItemWithCompanyBusinessUnitName(
-            $companyUnitAddressListItem,
-            $companyBusinessUnitTransfer
-        );
-        $companyUnitAddressListItem = $this->expandAddressListItemWithCompanyName(
-            $companyUnitAddressListItem,
-            $companyBusinessUnitTransfer->getCompany()
-        );
-
-        return $this->prepareAddressListItemData($companyUnitAddressListItem, $formType);
-    }
-
-    /**
-     * @param array $addressListItem
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return array
-     */
-    protected function expandAddressListItemWithCustomerPersonalData(
-        array $addressListItem,
-        CustomerTransfer $customerTransfer
-    ): array {
-        $addressListItem[static::FIELD_SALUTATION] = $customerTransfer->getSalutation();
-        $addressListItem[static::FIELD_FIRST_NAME] = $customerTransfer->getFirstName();
-        $addressListItem[static::FIELD_LAST_NAME] = $customerTransfer->getLastName();
-
-        return $addressListItem;
-    }
-
-    /**
-     * @param array $addressesList
-     * @param string $addressOptionGroup
-     *
-     * @return array
-     */
-    protected function getComparableAddressesList(array $addressesList, string $addressOptionGroup): array
-    {
-        $comparableAddressesList = [];
-        foreach ($addressesList as $addressItem) {
-            $comparableAddressListItem = $addressItem;
-
-            if (isset($addressItem[static::FIELD_ID_CUSTOMER_ADDRESS])) {
-                $comparableAddressListItem[static::FIELD_ID_CUSTOMER_ADDRESS] = $addressItem[static::FIELD_ID_CUSTOMER_ADDRESS];
-            }
-
-            $comparableAddressListItem[static::FIELD_OPTION_GROUP] = $addressOptionGroup;
-            $comparableAddressListItem[static::FIELD_DEFAULT] = $addressItem[static::FIELD_DEFAULT];
-            $comparableAddressListItem[static::FIELD_ADDRESS_HASH] = $addressItem[static::FIELD_ADDRESS_HASH];
-
-            $comparableAddressesList[] = $comparableAddressListItem;
-        }
-
-        return $comparableAddressesList;
+        return $customerTransfer->getCompanyUserTransfer() && ($this->getCompanyBusinessUnitAddressCollection($customerTransfer)->count() > 0);
     }
 
     /**
      * @return \Generated\Shared\Transfer\AddressTransfer[]
      */
-    protected function getCustomerAddressesList(): array
+    public function getIndexedCustomerAddressList(): array
+    {
+        $customerAddressTransferList = $this->getCustomerAddressList();
+        foreach ($customerAddressTransferList as $addressTransfer) {
+            $addressTransfer->setKey($this->getCustomerAddressKey($addressTransfer->getIdCustomerAddress()));
+        }
+
+        return $customerAddressTransferList->getArrayCopy();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\AddressTransfer[]
+     */
+    public function getIndexedCompanyBusinessUnitAddressList(): array
+    {
+        $customerTransfer = $this->customerClient->getCustomer();
+        $companyBusinessUnitAddressTransferList = $this->getCompanyBusinessUnitAddressCollection($customerTransfer);
+        $addressTransferList = [];
+        foreach ($companyBusinessUnitAddressTransferList as $addressTransfer) {
+            $addressTransferList[] = $this->mapCompanyBusinessUnitAddressToAddress($addressTransfer, $customerTransfer);
+        }
+
+        return $addressTransferList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function mapCompanyBusinessUnitAddressToAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
+    {
+        $addressTransfer = (new AddressTransfer())
+            ->fromArray($companyUnitAddressTransfer->modifiedToArray(), true);
+        $addressTransfer->setLastName($customerTransfer->getLastName())
+            ->setFirstName($customerTransfer->getFirstName())
+            ->setSalutation($customerTransfer->getSalutation())
+            ->setKey($this->getBusinessUnitAddressKey($companyUnitAddressTransfer->getIdCompanyUnitAddress()));
+        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit($customerTransfer);
+        if ($companyBusinessUnitTransfer) {
+            $addressTransfer->setCompany(
+                $companyBusinessUnitTransfer->getCompany()->getName()
+            );
+        }
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @return \ArrayObject|\Generated\Shared\Transfer\AddressTransfer[]
+     */
+    protected function getCustomerAddressList(): ArrayObject
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
         return $customerTransfer->getAddresses()
-            ->getAddresses()
-            ->getArrayCopy();
+            ->getAddresses();
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
      */
-    protected function findCompanyBusinessUnit(): ?CompanyBusinessUnitTransfer
+    protected function findCompanyBusinessUnit(CustomerTransfer $customerTransfer): ?CompanyBusinessUnitTransfer
     {
-        $customerTransfer = $this->customerClient->getCustomer();
-
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
-        if ($companyUserTransfer !== null) {
-            return $companyUserTransfer->getCompanyBusinessUnit();
+        if ($companyUserTransfer === null) {
+            return null;
         }
 
-        return null;
+        return $companyUserTransfer->getCompanyBusinessUnit();
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
      * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
      */
-    protected function getCompanyBusinessUnitAddressCollection(): ArrayObject
+    protected function getCompanyBusinessUnitAddressCollection(CustomerTransfer $customerTransfer): ArrayObject
     {
-        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit();
+        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit($customerTransfer);
         if ($companyBusinessUnitTransfer === null) {
             return new ArrayObject();
         }
@@ -293,133 +141,22 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
-     */
-    protected function getCompanyBusinessUnitAddressesList(): array
-    {
-        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit();
-        if ($companyBusinessUnitTransfer === null) {
-            return [];
-        }
-
-        $companyBusinessUnitAddresses = $this->getCompanyBusinessUnitAddressCollection();
-        if ($companyBusinessUnitAddresses->count() === 0) {
-            return [];
-        }
-
-        return $companyBusinessUnitAddresses->getArrayCopy();
-    }
-
-    /**
-     * @param array $addressesListItem
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return array
-     */
-    protected function expandAddressListItemWithCompanyName(array $addressesListItem, CompanyTransfer $companyTransfer): array
-    {
-        return array_merge($addressesListItem, [
-            static::FIELD_COMPANY_NAME => $companyTransfer->getName(),
-        ]);
-    }
-
-    /**
-     * @param array $addressListItem
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return array
-     */
-    protected function expandAddressListItemWithCompanyBusinessUnitName(
-        array $addressListItem,
-        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): array {
-        return array_merge($addressListItem, [
-            static::FIELD_COMPANY_BUSINESS_UNIT_NAME => $companyBusinessUnitTransfer->getName(),
-        ]);
-    }
-
-    /**
-     * @param array $addressListItem
-     * @param array $preparedAddressListItem
-     * @param string $formType
-     *
-     * @return array
-     */
-    protected function addDefaultAddressValue(array $addressListItem, array $preparedAddressListItem, string $formType): array
-    {
-        if ($formType === static::FORM_TYPE_OPTION_BILLING_ADDRESS && isset($addressListItem[static::FIELD_IS_DEFAULT_BILLING])) {
-            $preparedAddressListItem[static::FIELD_DEFAULT] = $addressListItem[static::FIELD_IS_DEFAULT_BILLING] === true;
-
-            return $preparedAddressListItem;
-        }
-
-        if ($formType === static::FORM_TYPE_OPTION_SHIPPING_ADDRESS && isset($addressListItem[static::FIELD_IS_DEFAULT_SHIPPING])) {
-            $preparedAddressListItem[static::FIELD_DEFAULT] = $addressListItem[static::FIELD_IS_DEFAULT_SHIPPING] === true;
-
-            return $preparedAddressListItem;
-        }
-
-        $preparedAddressListItem[static::FIELD_DEFAULT] = false;
-
-        return $preparedAddressListItem;
-    }
-
-    /**
-     * @param array $addressesList
-     *
-     * @return int[]
-     */
-    protected function getAddressListDefaultItemIndexes(array $addressesList): array
-    {
-        $index = 0;
-        $defaultAddressIndexes = [];
-        foreach ($addressesList as $addressItem) {
-            if ($addressItem[static::FIELD_DEFAULT] === true) {
-                $defaultAddressIndexes[] = $index;
-            }
-
-            $index++;
-        }
-
-        return $defaultAddressIndexes;
-    }
-
-    /**
-     * @param array $addressesList
-     * @param int[] $addressIndexes
-     *
-     * @return array
-     */
-    protected function resetListItemsDefaultStatus(array $addressesList, array $addressIndexes): array
-    {
-        foreach ($addressIndexes as $addressIndex) {
-            $addressesList[$addressIndex][static::FIELD_DEFAULT] = false;
-        }
-
-        return $addressesList;
-    }
-
-    /**
-     * @param array $addressListItem
+     * @param int $idCustomerAddress
      *
      * @return string
      */
-    protected function getAddressHash(array $addressListItem): string
+    protected function getCustomerAddressKey(int $idCustomerAddress): string
     {
-        return crc32(json_encode($addressListItem));
+        return sprintf(static::CUSTOMER_ADDRESS_KEY_PATTERN, $idCustomerAddress);
     }
 
     /**
-     * @param array $addressesList
+     * @param int $idCompanyUnitAddress
      *
-     * @return string|null
+     * @return string
      */
-    protected function encodeAddressesToJson(array $addressesList): ?string
+    protected function getBusinessUnitAddressKey(int $idCompanyUnitAddress): string
     {
-        $jsonEncodedAddresses = json_encode($addressesList, JSON_PRETTY_PRINT);
-
-        return ($jsonEncodedAddresses !== false)
-            ? $jsonEncodedAddresses
-            : null;
+        return sprintf(static::COMPANY_BUSINESS_UNIT_ADDRESS_KEY_PATTERN, $idCompanyUnitAddress);
     }
 }

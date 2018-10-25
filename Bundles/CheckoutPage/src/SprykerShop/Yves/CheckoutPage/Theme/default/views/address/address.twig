@@ -31,19 +31,23 @@
         {% block fields %}
             {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address | default %}
             {% set hasShippingAddresses = existingShippingAddresses is not empty %}
-            {% set hasBusinessUnitAddress = false %}
+            {% set hideShippingAddressForm = existingShippingAddresses is empty %}
+            {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
+            {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
+                {% set hasShippingAddresses = true %}
+                {% set hideShippingAddressForm = false %}
+            {% endif %}
 
             <div class="js-form-handler__shippingAddress js-form-clear__shippingAddress-form">
                 {% if hasShippingAddresses %}
                     <div class="form__field col col--sm-12">
                         <ul class="list spacing-y">
-                            {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress']) %}
-
                             {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
                                 {% widget companyBusinessUnitAddressWidget %}{% endwidget %}
+                                {% for address in existingShippingAddresses %}
+                                    {% do address.setRendered %}
+                                {% endfor %}
                             {% else %}
-                                {% set hasBusinessUnitAddress = true %}
-
                                 {% for address in existingShippingAddresses %}
                                     <li class="list__item spacing-y">
                                         {{
@@ -64,13 +68,12 @@
                 {% endif %}
 
                 {% embed molecule('form') with {
-                    class: 'js-address__shipping' ~ (hasBusinessUnitAddress ? ' is-hidden ' : ''),
+                    class: 'js-address__shipping' ~ (hideShippingAddressForm ? ' is-hidden ' : ''),
                     data: {
                         form: embed.forms.shipping,
                         enableStart: false,
                         enableEnd: false,
                         layout: {
-                            id_customer_address: 'col col--sm-12' ~ (hasBusinessUnitAddress ? '' : ' is-hidden'),
                             salutation: 'col col--sm-12 col--lg-2',
                             first_name: 'col col--sm-12 col--lg-5',
                             last_name: 'col col--sm-12 col--lg-5',
@@ -122,7 +125,6 @@
                         enableStart: false,
                         enableEnd: false,
                         layout: {
-                            id_customer_address: 'col col--sm-12' ~ (hasBusinessUnitAddress ? '' : ' is-hidden'),
                             salutation: 'col col--sm-12 col--lg-2',
                             first_name: 'col col--sm-12 col--lg-5',
                             last_name: 'col col--sm-12 col--lg-5',
@@ -153,19 +155,20 @@
                     {% block fields %}
                         {% set existingBillingAddresses = data.form.id_customer_address | default %}
                         {% set hasBillingAddresses = existingBillingAddresses is not empty %}
+                        {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress', data.form.vars.data]) %}
+                        {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
+                            {% set hasBillingAddresses = true %}
+                        {% endif %}
 
                         {% if hasBillingAddresses %}
                             <div class="form__field col col--sm-12">
                                 <ul class="list spacing-y">
-                                    {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress']) %}
-
                                     {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
-                                        {% set hasBillingAddresses = false %}
-
                                         {% widget companyBusinessUnitAddressWidget %}{% endwidget %}
+                                        {% for address in existingBillingAddresses %}
+                                            {% do address.setRendered %}
+                                        {% endfor %}
                                     {% else %}
-                                        {% set hasBillingAddresses = true %}
-
                                         {% for address in existingBillingAddresses %}
                                             <li class="list__item spacing-y">
                                                 {{

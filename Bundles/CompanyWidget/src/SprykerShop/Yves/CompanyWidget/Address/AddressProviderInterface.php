@@ -15,16 +15,12 @@ interface AddressProviderInterface
     public function companyBusinessUnitAddressesExists(): bool;
 
     /**
-     * @param string $formType
-     *
-     * @return string|null
+     * @return \Generated\Shared\Transfer\AddressTransfer[]
      */
-    public function getCombinedAddressesListJson(string $formType): ?string;
+    public function getIndexedCustomerAddressList(): array;
 
     /**
-     * @param string $formType
-     *
-     * @return array
+     * @return \Generated\Shared\Transfer\AddressTransfer[]
      */
-    public function getCombinedComparableAddressesList(string $formType): array;
+    public function getIndexedCompanyBusinessUnitAddressList(): array;
 }

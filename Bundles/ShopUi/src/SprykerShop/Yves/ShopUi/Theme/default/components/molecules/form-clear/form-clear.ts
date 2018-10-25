@@ -6,10 +6,10 @@ export default class FormClear extends Component {
     targets: HTMLElement[];
     ignoreElements: HTMLElement[];
     filterElements: HTMLElement[];
-    formFieldsReadonlyUpdate: CustomEvent;
+    formFieldsClearAfter: CustomEvent;
 
     protected readyCallback(): void {
-        const formElements = 'select, input[type="text"], input[type="radio"], input[type="checkbox"]';
+        const formElements = 'select, input[type="text"], input[type="hidden"], input[type="radio"], input[type="checkbox"]';
 
         this.triggers = <HTMLElement[]>Array.from(document.querySelectorAll(this.triggerSelector));
         this.form = <HTMLElement>document.querySelector(this.formSelector);
@@ -31,7 +31,7 @@ export default class FormClear extends Component {
 
     protected onChange(input: HTMLElement): void {
         const isChecked = (<HTMLInputElement>input).checked;
-        if(isChecked) {
+        if (isChecked) {
             this.clearFormValues();
         }
     }
@@ -41,7 +41,7 @@ export default class FormClear extends Component {
             const inputType = element.type;
 
             if (this.getTagName(element) == "INPUT") {
-                if (inputType == "text") {
+                if (inputType == "text" || inputType == "hidden") {
                     element.value = '';
                 }
                 if (inputType == "checkbox" || inputType == "radio") {
@@ -54,7 +54,7 @@ export default class FormClear extends Component {
             }
         });
 
-        this.dispatchEvent(this.formFieldsReadonlyUpdate);
+        this.dispatchEvent(this.formFieldsClearAfter);
     }
 
     getTagName(element: HTMLElement): string {
@@ -62,7 +62,7 @@ export default class FormClear extends Component {
     }
 
     protected createCustomEvents(): void {
-        this.formFieldsReadonlyUpdate = <CustomEvent>new CustomEvent('form-fields-readonly-update');
+        this.formFieldsClearAfter = <CustomEvent>new CustomEvent('form-fields-clear-after');
     }
 
     get formSelector(): string {
