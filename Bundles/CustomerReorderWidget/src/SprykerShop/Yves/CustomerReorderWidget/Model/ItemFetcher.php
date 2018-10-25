@@ -143,13 +143,13 @@ class ItemFetcher implements ItemFetcherInterface
      */
     protected function addInfoMessage(ItemTransfer $itemTransfer): void
     {
-        $this->messengerClient->addInfoMessage(
-            $this->glossaryStorageClient->translate(
-                static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED,
-                $this->store->getCurrentLocale(),
-                [static::MESSAGE_PARAM_SKU => $itemTransfer->getSku()]
-            )
+        $translatedMessage = $this->glossaryStorageClient->translate(
+            static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED,
+            $this->store->getCurrentLocale(),
+            [static::MESSAGE_PARAM_SKU => $itemTransfer->getSku()]
         );
+
+        $this->messengerClient->addInfoMessage($translatedMessage);
     }
 
     /**
