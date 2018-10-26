@@ -9,9 +9,12 @@ namespace SprykerShop\Yves\ProductAlternativeWidget\Plugin\ProductDetailPage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductAlternativeWidget\Widget\ProductAlternativeListWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductAlternativeWidget\Widget\ProductAlternativeListWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeWidgetFactory getFactory()
  */
 class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements ProductAlternativeWidgetPluginInterface
@@ -23,8 +26,11 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter('products', $this->findAlternativesProducts($productViewTransfer))
-            ->addWidgets($this->getFactory()->getProductDetailPageProductAlternativeWidgetPlugins());
+        $widget = new ProductAlternativeListWidget($productViewTransfer);
+
+        $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getProductDetailPageProductAlternativeWidgetPlugins());
     }
 
     /**
@@ -48,21 +54,6 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
      */
     public static function getTemplate(): string
     {
-        return '@ProductAlternativeWidget/views/product-alternative-list/product-alternative-list.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function findAlternativesProducts(ProductViewTransfer $productViewTransfer): array
-    {
-        if (!$this->getFactory()->getProductAlternativeStorageClient()->isAlternativeProductApplicable($productViewTransfer)) {
-            return [];
-        }
-
-        return $this->getFactory()->getProductAlternativeStorageClient()
-            ->getAlternativeProducts($productViewTransfer, $this->getLocale());
+        return ProductAlternativeListWidget::getTemplate();
     }
 }

@@ -7,11 +7,13 @@
 
 namespace SprykerShop\Yves\ShoppingListWidget\Plugin\ShopUi;
 
-use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListNavigationMenuWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\ShoppingListWidget\ShoppingListWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListNavigationMenuWidget instead.
+ *
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
  */
 class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListWidgetPluginInterface
@@ -21,7 +23,9 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
      */
     public function initialize(): void
     {
-        $this->addShoppingListCollectionParameter();
+        $widget = new ShoppingListNavigationMenuWidget();
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -31,7 +35,7 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
      */
     public static function getTemplate()
     {
-        return '@ShoppingListWidget/views/shopping-list-shop-list/shopping-list-shop-list.twig';
+        return ShoppingListNavigationMenuWidget::getTemplate();
     }
 
     /**
@@ -42,23 +46,5 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
     public static function getName()
     {
         return static::NAME;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
-     */
-    protected function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
-    {
-        return $this->getFactory()
-            ->getShoppingListSessionClient()
-            ->getCustomerShoppingListCollection();
-    }
-
-    /**
-     * @return void
-     */
-    protected function addShoppingListCollectionParameter(): void
-    {
-        $this->addParameter('shoppingListCollection', $this->getCustomerShoppingListCollection());
     }
 }

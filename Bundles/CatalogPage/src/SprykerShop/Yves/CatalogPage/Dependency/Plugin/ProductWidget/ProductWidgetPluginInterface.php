@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\CatalogPage\Dependency\Plugin\ProductWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\CatalogPageProductWidget instead.
+ */
 interface ProductWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ProductWidgetPlugin';

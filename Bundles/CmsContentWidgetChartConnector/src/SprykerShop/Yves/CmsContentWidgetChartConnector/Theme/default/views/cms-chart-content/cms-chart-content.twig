@@ -6,6 +6,10 @@
 } %}
 {% block body %}
     {% if data.chartPluginName is not empty %}
-        {{ widget('ChartWidgetPlugin', data.chartPluginName, data.dataIdentifier) }}
+        {% if widgetExists('ChartWidgetPlugin') %}
+            {{ widget('ChartWidgetPlugin', data.chartPluginName, data.dataIdentifier) }} {# @deprecated Use "chart()" function instead. #}
+        {% else %}
+            {{ chart(data.chartPluginName, data.dataIdentifier) }}
+        {% endif %}
     {% endif %}
 {% endblock %}
