@@ -38,23 +38,28 @@ export default class FormClear extends Component {
 
     clearFormValues(): void {
         this.filterElements.forEach((element: HTMLFormElement) => {
-            const inputType = element.type;
-
-            if (this.getTagName(element) == "INPUT") {
-                if (inputType == "text" || inputType == "hidden") {
-                    element.value = '';
-                }
-                if (inputType == "checkbox" || inputType == "radio") {
-                    element.checked = false;
-                }
-            }
-
-            if (this.getTagName(element) == "SELECT") {
-                element.selectedIndex = 0;
-            }
+            this.clearFormField(element);
         });
 
         this.dispatchEvent(this.formFieldsClearAfter);
+    }
+
+    clearFormField(element: HTMLFormElement): void {
+        const inputType = element.type;
+        const tagName = this.getTagName(element);
+
+        if (tagName == "INPUT") {
+            if (inputType == "text" || inputType == "hidden") {
+                element.value = '';
+            }
+            if (inputType == "checkbox" || inputType == "radio") {
+                element.checked = false;
+            }
+        }
+
+        if (tagName == "SELECT") {
+            element.selectedIndex = 0;
+        }
     }
 
     getTagName(element: HTMLElement): string {

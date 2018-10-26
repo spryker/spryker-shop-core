@@ -35,7 +35,10 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     protected mapEvents(): void {
-        this.formClear.addEventListener('form-fields-clear-after', () => this.toggleFormFieldsReadonly(false));
+        this.formClear.addEventListener('form-fields-clear-after', () => {
+            this.toggleFormFieldsReadonly(false);
+            this.toggleReadonlyForCustomAddressTrigger();
+        });
         this.triggers.forEach((triggerElement) => {
             triggerElement.addEventListener('click', () => {
                 this.addressesSelects.forEach((selectElement) => {
@@ -50,27 +53,32 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         if (this.currentAddress) {
             this.fillFormWithNewAddress();
             this.toggleFormFieldsReadonly();
+            this.toggleReadonlyForCustomAddressTrigger();
         }
     }
 
     toggleFormFieldsReadonly(isEnabled: boolean = true): void {
         this.filterElements.forEach((formElement: HTMLFormElement) => {
-            const isSelect = this.formClear.getTagName(formElement) == 'SELECT';
-
-            if(isSelect) {
-                const options = Array.from(formElement.querySelectorAll('option'));
-
-                options.forEach((element) => {
-                    if(!element.selected) {
-                        element.disabled = isEnabled;
-                    }
-                });
-
-                return;
-            }
-
-            formElement.readOnly = isEnabled;
+            this.toggleFormFieldReadOnly(formElement, isEnabled);
         });
+    }
+
+    toggleFormFieldReadOnly(formElement: HTMLFormElement, isEnabled: boolean = true): void {
+        const isSelect = this.formClear.getTagName(formElement) == 'SELECT';
+
+        if (isSelect) {
+            const options = Array.from(formElement.querySelectorAll('option'));
+
+            options.forEach((element) => {
+                if (!element.selected) {
+                    element.disabled = isEnabled;
+                }
+            });
+
+            return;
+        }
+
+        formElement.readOnly = isEnabled;
     }
 
     protected setCurrentAddress(selectElement: HTMLSelectElement): void {
@@ -93,6 +101,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
             this.fillFormWithNewAddress();
             this.toggleFormFieldsReadonly();
         }
+        this.toggleReadonlyForCustomAddressTrigger();
     }
 
     clearFormFields(): void {
@@ -102,25 +111,24 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     clearFormField(element: HTMLFormElement): void {
-        if (element.type == "checkbox") {
-            element.checked = false;
-            return;
-        }
-
-        if (this.formClear.getTagName(element) == "SELECT") {
-            element.selectedIndex = 0;
-        }
-
-        element.value = '';
+        this.formClear.clearFormField(element);
     }
 
     fillFormFields(address: object): void {
-        for(let key in address) {
+        for (let key in address) {
             const formElement = this.form.querySelector(`[data-key="${key}"]`);
 
-            if(formElement !== null) {
+            if (formElement !== null) {
                 (<HTMLFormElement>formElement).value = address[key];
             }
+        }
+    }
+
+    protected toggleReadonlyForCustomAddressTrigger() {
+        if (this.customAddressTriggerInput.checked) {
+            this.customAddressTriggerInput.disabled = true;
+        } else {
+            this.customAddressTriggerInput.disabled = false;
         }
     }
 
