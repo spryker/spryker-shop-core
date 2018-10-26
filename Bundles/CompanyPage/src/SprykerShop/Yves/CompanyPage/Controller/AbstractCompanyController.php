@@ -29,7 +29,7 @@ abstract class AbstractCompanyController extends AbstractController
      */
     protected function isCompanyActive(): bool
     {
-        $companyUser = $this->getCompanyUser();
+        $companyUser = $this->findCurrentCompanyUserTransfer();
 
         if ($companyUser === null) {
             return false;
@@ -44,9 +44,19 @@ abstract class AbstractCompanyController extends AbstractController
     }
 
     /**
+     * @deprecated Use \SprykerShop\Yves\CompanyPage\Controller\AbstractCompanyController::findCurrentCompanyUserTransfer instead.
+     *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     protected function getCompanyUser(): ?CompanyUserTransfer
+    {
+        return $this->findCurrentCompanyUserTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    protected function findCurrentCompanyUserTransfer(): ?CompanyUserTransfer
     {
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
@@ -144,5 +154,17 @@ abstract class AbstractCompanyController extends AbstractController
         $message = $this->getTranslatedMessage($key, $this->getLocale(), $params);
 
         $this->addErrorMessage($message);
+    }
+
+    /**
+     * @param int $idCompany
+     *
+     * @return bool
+     */
+    protected function isCurrentCustomerRelatedToCompany(int $idCompany): bool
+    {
+        $companyUserTransfer = $this->findCurrentCompanyUserTransfer();
+
+        return ($companyUserTransfer !== null && $companyUserTransfer->getFkCompany() === $idCompany);
     }
 }

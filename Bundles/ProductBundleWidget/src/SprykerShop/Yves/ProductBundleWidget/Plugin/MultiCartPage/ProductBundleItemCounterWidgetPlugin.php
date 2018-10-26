@@ -7,13 +7,14 @@
 
 namespace SprykerShop\Yves\ProductBundleWidget\Plugin\MultiCartPage;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\ProductBundleItemCounterWidget\ProductBundleItemCounterWidgetPluginInterface;
+use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemCounterWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemCounterWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */
 class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implements ProductBundleItemCounterWidgetPluginInterface
@@ -29,44 +30,9 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implemen
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('items', $this->transformCartItems($quoteTransfer->getItems(), $quoteTransfer))
-            ->addParameter('cart', $quoteTransfer);
-    }
+        $widget = new ProductBundleItemCounterWidget($quoteTransfer);
 
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    public function transformCartItems(ArrayObject $cartItems, QuoteTransfer $quoteTransfer): array
-    {
-        $transformedCartItems = [];
-
-        $groupedItems = $this->getGroupedItems($cartItems, $quoteTransfer);
-        foreach ($groupedItems as $groupedItem) {
-            if ($groupedItem instanceof ItemTransfer) {
-                $transformedCartItems[] = $groupedItem;
-                continue;
-            }
-
-            $transformedCartItems[] = $groupedItem['bundleProduct'];
-        }
-
-        return $transformedCartItems;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function getGroupedItems(ArrayObject $cartItems, QuoteTransfer $quoteTransfer): array
-    {
-        return $this->getFactory()
-            ->getProductBundleClient()
-            ->getGroupedBundleItems($cartItems, $quoteTransfer->getBundleItems());
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -90,6 +56,6 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implemen
      */
     public static function getTemplate()
     {
-        return '@ProductBundleWidget/views/multi-cart-list-items-counter/multi-cart-list-items-counter.twig';
+        return ProductBundleItemCounterWidget::getTemplate();
     }
 }

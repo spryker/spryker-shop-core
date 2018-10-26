@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PermissionTransfer;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -80,12 +81,22 @@ class CompanyRolePermissionController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function configureAction(Request $request)
     {
         $idCompanyRole = $request->query->getInt('id-company-role');
         $idPermission = $request->query->getInt('id-permission');
+
+        $companyRoleTransfer = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->getCompanyRoleById((new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole));
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
 
         $form = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -126,12 +137,22 @@ class CompanyRolePermissionController extends AbstractCompanyController
      * @param int $idCompanyRole
      * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $permissions
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return void
      */
     protected function saveCompanyRolePermissions(int $idCompanyRole, $permissions): void
     {
         $companyRoleTransfer = new CompanyRoleTransfer();
         $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
+
+        $companyRoleTransfer = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->getCompanyRoleById($companyRoleTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
 
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
         $permissionCollectionTransfer->setPermissions($permissions);

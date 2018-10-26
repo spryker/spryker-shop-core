@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -120,7 +121,7 @@ class CompanyRoleUserController extends AbstractCompanyController
             ->getCompanyUserClient()
             ->getCompanyUserCollection(
                 (new CompanyUserCriteriaFilterTransfer())
-                    ->setIdCompany($this->getCompanyUser()->getFkCompany())
+                    ->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany())
             )
             ->getCompanyUsers();
 
@@ -152,10 +153,20 @@ class CompanyRoleUserController extends AbstractCompanyController
      * @param int $idCompanyUser
      * @param \ArrayObject $companyRoles
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return void
      */
     protected function saveCompanyUser(int $idCompanyUser, ArrayObject $companyRoles): void
     {
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->getCompanyUserById((new CompanyUserTransfer())->setIdCompanyUser($idCompanyUser));
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyUserTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
+
         $companyRoleCollection = (new CompanyRoleCollectionTransfer())
             ->setRoles($companyRoles);
 

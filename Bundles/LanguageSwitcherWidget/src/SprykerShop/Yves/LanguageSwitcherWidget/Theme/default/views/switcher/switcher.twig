@@ -1,7 +1,8 @@
 {% extends template('widget') %}
 
 {% define data = {
-    languages: _widget.languages
+    languages: _widget.languages,
+    currentLanguage: _widget.currentLanguage
 } %}
 
 {% block body %}
@@ -13,14 +14,15 @@
                     'onchange': 'this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);'
                 },
                 embed: {
-                    languages: data.languages
+                    languages: data.languages,
+                    currentLanguage: data.currentLanguage
                 }
             } only %}
                 {% block options %}
                     {% for language, url in embed.languages %}
                         <option
                             value="{{ app.request.getSchemeAndHttpHost() }}{{ url }}"
-                            {{ (language == _widget.currentLanguage) ? 'selected' : ''}}>
+                            {{ (language == embed.currentLanguage) ? 'selected' : ''}}>
                                 {{ language }}
                         </option>
                     {% endfor %}

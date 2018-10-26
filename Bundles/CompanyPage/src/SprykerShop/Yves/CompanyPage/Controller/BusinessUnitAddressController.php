@@ -58,7 +58,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
         if ($addressForm->isSubmitted() === false) {
             $addressForm->setData(
                 $dataProvider->getData(
-                    $this->getCompanyUser(),
+                    $this->findCurrentCompanyUserTransfer(),
                     null,
                     $idCompanyBusinessUnit
                 )

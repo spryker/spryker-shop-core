@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\ProductRelationWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductRelationWidget\UpSellingProductsWidgetPluginInterface;
+use SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductRelationWidget\ProductRelationWidgetFactory getFactory()
  */
 class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSellingProductsWidgetPluginInterface
@@ -23,10 +26,11 @@ class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSe
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this
-            ->addParameter('quote', $quoteTransfer)
-            ->addParameter('productCollection', $this->findUpSellingProducts($quoteTransfer))
-            ->addWidgets($this->getFactory()->getCartPageUpSellingProductsWidgetPlugins());
+        $widget = new UpSellingProductsWidget($quoteTransfer);
+
+        $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getCartPageUpSellingProductsWidgetPlugins());
     }
 
     /**
@@ -42,18 +46,6 @@ class UpSellingProductsWidgetPlugin extends AbstractWidgetPlugin implements UpSe
      */
     public static function getTemplate(): string
     {
-        return '@ProductRelationWidget/views/cart-similar-products-carousel/cart-similar-products-carousel.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function findUpSellingProducts(QuoteTransfer $quoteTransfer)
-    {
-        return $this->getFactory()
-            ->getProductRelationStorageClient()
-            ->findUpSellingProducts($quoteTransfer, $this->getLocale());
+        return UpSellingProductsWidget::getTemplate();
     }
 }

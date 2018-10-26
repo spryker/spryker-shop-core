@@ -9,8 +9,11 @@ namespace SprykerShop\Yves\CartToShoppingListWidget\Plugin\CartPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\CartToShoppingListWidget\CartToShoppingListWidgetPluginInterface;
+use SprykerShop\Yves\CartToShoppingListWidget\Widget\CreateShoppingListFromCartWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\CartToShoppingListWidget\Widget\CreateShoppingListFromCartWidget instead.
+ *
  * @method \SprykerShop\Yves\CartToShoppingListWidget\CartToShoppingListWidgetFactory getFactory()
  */
 class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin implements CartToShoppingListWidgetPluginInterface
@@ -22,22 +25,9 @@ class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin implements Car
      */
     public function initialize(int $idQuote): void
     {
-        $this->addParameter('form', $this->getFactory()->getCartFromShoppingListForm($idQuote)->createView());
-        $this->addParameter('isVisible', $this->isVisible());
-    }
+        $widget = new CreateShoppingListFromCartWidget($idQuote);
 
-    /**
-     * @return bool
-     */
-    protected function isVisible(): bool
-    {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if (!($customerTransfer && $customerTransfer->getCompanyUserTransfer())) {
-            return false;
-        }
-
-        return true;
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -53,6 +43,6 @@ class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin implements Car
      */
     public static function getTemplate(): string
     {
-        return '@CartToShoppingListWidget/views/create-shopping-list-from-cart/create-shopping-list-from-cart.twig';
+        return CreateShoppingListFromCartWidget::getTemplate();
     }
 }
