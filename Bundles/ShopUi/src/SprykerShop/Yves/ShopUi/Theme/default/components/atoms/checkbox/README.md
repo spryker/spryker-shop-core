@@ -1,6 +1,6 @@
 # checkbox (atom)
 
-Creates a simple checkbox element with not native design.
+Creates a simple checkbox element with non-native design.
 
 ## Code sample 
 
@@ -12,7 +12,7 @@ Creates a simple checkbox element with not native design.
          checked: true
      },
      data: {
-         label: label
+         label: 'label'
      }
  } only %}
  ```

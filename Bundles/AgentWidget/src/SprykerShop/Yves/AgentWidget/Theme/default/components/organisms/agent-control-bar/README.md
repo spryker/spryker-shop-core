@@ -1,3 +1,3 @@
 # agent-control-bar (molecule)
 
-Displays a grid with automoplete form for user selection and list of users with logout link.
+Displays a grid with autocomplete form for user selection as well as a list of users with logout link.
