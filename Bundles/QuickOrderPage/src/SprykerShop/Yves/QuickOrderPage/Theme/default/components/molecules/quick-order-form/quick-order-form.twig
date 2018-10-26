@@ -7,6 +7,7 @@
 
 {% define data = {
     form: required,
+    products: [],
     additionalColumns: []
 } %}
 
@@ -37,6 +38,7 @@
     {% embed molecule('form') with {
         data: {
             form: data.form,
+            products: data.products,
             options: {
                 attr: {
                     class: config.jsName ~ '__form'
@@ -54,6 +56,7 @@
                 {% include molecule('quick-order-rows', 'QuickOrderPage') with {
                     data: {
                         rows: data.form.items,
+                        products: data.products,
                         additionalColumns: embed.additionalColumns
                     }
                 } only %}

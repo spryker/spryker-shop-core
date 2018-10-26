@@ -37,6 +37,11 @@ class ProductQuantityFilterPlugin extends AbstractPlugin implements QuickOrderIt
         $idProduct = $this->getFactory()
             ->createProductResolver()
             ->getIdProductBySku($quickOrderItemTransfer->getSku());
+
+        if (!$idProduct) {
+            return $quickOrderItemTransfer;
+        }
+
         $nearestQuantity = $this->getFactory()
             ->getProductQuantityStorageClient()
             ->getNearestQuantity($idProduct, (int)$quickOrderItemTransfer->getQuantity());

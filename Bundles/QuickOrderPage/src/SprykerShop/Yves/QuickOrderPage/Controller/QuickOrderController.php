@@ -108,17 +108,18 @@ class QuickOrderController extends AbstractController
      */
     protected function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array
     {
+        $resultingProducts = [];
         $products = $this->getFactory()
             ->createProductResolver()
             ->getProductsByQuickOrder($quickOrderTransfer);
 
         foreach ($products as $product) {
-            $products[$product->getSku()] = $this->getFactory()
+            $resultingProducts[$product->getSku()] = $this->getFactory()
                 ->getQuickOrderClient()
                 ->expandProductConcrete($product);
         }
 
-        return $products;
+        return $resultingProducts;
     }
 
     /**
@@ -200,10 +201,13 @@ class QuickOrderController extends AbstractController
             ->getQuickOrderForm($quickOrderTransfer);
 
         $products = $this->getProductsByQuickOrder($quickOrderTransfer);
+        $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
+
         return [
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
             'products' => $products,
+            'prices' => $prices,
         ];
     }
 
@@ -254,10 +258,13 @@ class QuickOrderController extends AbstractController
             ->getQuickOrderForm($quickOrderTransfer);
 
         $products = $this->getProductsByQuickOrder($quickOrderTransfer);
+        $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
+
         return [
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
             'products' => $products,
+            'prices' => $prices,
         ];
     }
 
@@ -385,6 +392,30 @@ class QuickOrderController extends AbstractController
         }
 
         $route = $response->getRoute();
+
         return new RedirectResponse($this->getApplication()->path($route->getRoute(), $route->getParameters()));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return int[]
+     */
+    protected function getProductPricesFromQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): array
+    {
+        $prices = [];
+        $quickOrderTransfer = $this->getFactory()
+            ->createPriceResolver()
+            ->setSumPriceForQuickOrderTransfer($quickOrderTransfer);
+
+        foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
+            $sku = $quickOrderItemTransfer->getSku();
+
+            if (!empty($sku)) {
+                $prices[$sku] = $quickOrderItemTransfer->getSumPrice();
+            }
+        }
+
+        return $prices;
     }
 }

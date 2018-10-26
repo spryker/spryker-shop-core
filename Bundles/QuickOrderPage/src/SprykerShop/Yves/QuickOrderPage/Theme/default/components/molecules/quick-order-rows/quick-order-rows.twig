@@ -7,6 +7,7 @@
 {% define data = {
     rows: required,
     products: [],
+    prices: [],
     additionalColumns: []
 } %}
 
@@ -52,11 +53,13 @@
                 quantityField: row.quantity,
                 skuField: row.sku,
                 additionalColumns: data.additionalColumns,
+                product: product,
+                price: product is null ? null : data.prices[product.sku] | default(),
 
                 autocomplete: {
-                    sku: row.sku,
-                    fullName: row.vars.full_name,
-                    inputValue: product is null ? null : product.name ~ ' (' ~ product.sku ~ ')',
+                    skuFieldName: row.vars.full_name,
+                    skuFieldValue: product is null ? null : product.sku,
+                    searchFieldValue: product is null ? null : product.localizedAttributes.getArrayCopy()[0].name ~ ' (' ~ product.sku ~ ')'
                 }
             },
             embed: {

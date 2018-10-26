@@ -9,6 +9,7 @@
     id: required,
     name: 'query',
     value: '',
+    hiddenValue: '',
     suggestionsUrl: required,
     placeholder: 'autocomplete.placeholder',
     showCleanButton: false
@@ -55,7 +56,8 @@
 
                 <input {% if data.name is not empty %}name="{{data.name}}"{% endif %}
                        type="hidden"
-                       class="{{ config.jsName }}__value-input" />
+                       class="{{ config.jsName }}__value-input"
+                       value="{{ data.hiddenValue }}"/>
             </div>
 
             {% if data.showCleanButton %}

@@ -3,7 +3,8 @@
 {% define data = {
     form: _view.form,
     products: _view.products,
-    additionalColumns: _view.additionalColumns
+    additionalColumns: _view.additionalColumns,
+    prices: _view.prices
 } %}
 
 {% block template %}
@@ -11,7 +12,8 @@
         data: {
             rows: data.form.items,
             products: data.products,
-            additionalColumns: data.additionalColumns
+            additionalColumns: data.additionalColumns,
+            prices: data.prices
         }
     } only %}
 {% endblock %}

@@ -18,14 +18,16 @@ class ProductConcreteSearchWidget extends AbstractWidget
 
     /**
      * @param string $index
-     * @param string $searchFieldName
-     * @param string|null $searchFieldValue
+     * @param string $skuFieldName
+     * @param null|string $skuFieldValue
+     * @param null|string $searchFieldValue
      * @param int|null $searchResultLimit
      */
-    public function __construct(string $index, string $searchFieldName, ?string $searchFieldValue, ?int $searchResultLimit = null)
+    public function __construct(string $index, string $skuFieldName, ?string $skuFieldValue, ?string $searchFieldValue, ?int $searchResultLimit = null)
     {
         $this->addParameter('index', $index)
-            ->addParameter('searchFieldName', $searchFieldName)
+            ->addParameter('skuFieldName', $skuFieldName)
+            ->addParameter('skuFieldValue', $skuFieldValue)
             ->addParameter('searchFieldValue', $searchFieldValue)
             ->addParameter('searchResultLimit', $searchResultLimit ?: $this->getConfig()->getSearchResultLimit());
     }

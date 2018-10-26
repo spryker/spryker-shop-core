@@ -76,10 +76,10 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     }
 
     /**
-     * @param ShoppingListResponseTransfer $shoppingListResponseTransfer
-     * @param QuickOrderFormProcessResponseTransfer $quickOrderFormProcessResponseTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer
+     * @param \Generated\Shared\Transfer\QuickOrderFormProcessResponseTransfer $quickOrderFormProcessResponseTransfer
      *
-     * @return QuickOrderFormProcessResponseTransfer
+     * @return \Generated\Shared\Transfer\QuickOrderFormProcessResponseTransfer
      */
     protected function mapShoppingListResponseToQuickOrderFormProcessResponse(
         ShoppingListResponseTransfer $shoppingListResponseTransfer,
