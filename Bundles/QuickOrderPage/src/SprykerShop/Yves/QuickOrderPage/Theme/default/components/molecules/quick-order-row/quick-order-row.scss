@@ -7,7 +7,7 @@
 
         &__error,
         &-partial__error {
-            @include helper-effect-transition(all);
+            @include helper-effect-transition(transform);
             position: absolute;
             left: 0.5rem;
             top: 100%;
@@ -17,12 +17,10 @@
             box-shadow: 0 0 10px rgba(0,0,0, 0.5);
             color: $setting-color-alt;
             z-index: $setting-zi-notification-area;
-            visibility: hidden;
             transform-origin: center top;
             transform: scale(0);
 
             &--show {
-                visibility: visible;
                 transform: scale(1);
             }
         }

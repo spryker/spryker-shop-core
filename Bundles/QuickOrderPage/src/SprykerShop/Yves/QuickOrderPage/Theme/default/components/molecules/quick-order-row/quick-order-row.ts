@@ -57,8 +57,8 @@ export default class QuickOrderRow extends Component {
     protected toggleErrorMessage(isShow: boolean): void {
         if (isShow)  {
             const errorMessageClass = this.errorMessage.classList[0] + '--show';
-            this.errorMessage.classList.add(errorMessageClass);
 
+            setTimeout(() => this.errorMessage.classList.add(errorMessageClass), 0);
             setTimeout(() => this.errorMessage.classList.remove(errorMessageClass), 5000);
         }
     }
