@@ -7,7 +7,8 @@
 
 {% define data = {
     idShoppingList: required,
-    hasWritePermission: required
+    hasWritePermission: required,
+    shoppingList: required
 } %}
 
 {% block body %}
@@ -17,6 +18,8 @@
     {% endif %}
 
     <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/print', { idShoppingList: data.idShoppingList }) }}" target="_blank">{{ 'customer.account.shopping_list.overview.print' | trans }}</a>
+
+    {{ widget('ShoppingListDismissWidgetPlugin', data.shoppingList) }}
 
     {% if data.hasWritePermission %}
         <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/delete/confirm', { idShoppingList: data.idShoppingList }) }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>

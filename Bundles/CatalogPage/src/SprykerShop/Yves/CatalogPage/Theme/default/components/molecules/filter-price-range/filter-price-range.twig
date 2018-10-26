@@ -10,5 +10,10 @@
     max: (data.max | default(0)) | moneyRaw | ceil,
     activeMax: (data.activeMax | default(0)) | moneyRaw | ceil
 }) %}
+{% block body %}
+    {% if can('SeePricePermissionPlugin') %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
 
 

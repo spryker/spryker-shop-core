@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin\ProductPackagingUnit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget') instead.
+ */
 interface OrderDetailProductPackagingUnitWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'OrderDetailProductPackagingUnitWidgetPlugin';

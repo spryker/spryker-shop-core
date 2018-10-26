@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\MultiCartPage\Dependency\Plugin\CartListPermissionGro
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\CartListPermissionGroupWidget instead.
+ */
 interface CartListPermissionGroupWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'CartListPermissionGroupWidgetPlugin';
