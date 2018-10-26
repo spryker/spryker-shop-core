@@ -80,10 +80,10 @@ class AddressProvider implements AddressProviderInterface
     {
         $addressTransfer = (new AddressTransfer())
             ->fromArray($companyUnitAddressTransfer->modifiedToArray(), true);
-        $addressTransfer->setLastName($customerTransfer->getLastName())
-            ->setFirstName($customerTransfer->getFirstName())
-            ->setSalutation($customerTransfer->getSalutation())
-            ->setKey($this->getBusinessUnitAddressKey($companyUnitAddressTransfer->getIdCompanyUnitAddress()));
+
+        $addressTransfer = $this->setAddressCustomerAttributes($addressTransfer, $customerTransfer);
+        $addressTransfer->setKey($this->getBusinessUnitAddressKey($companyUnitAddressTransfer->getIdCompanyUnitAddress()));
+
         $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit($customerTransfer);
         if ($companyBusinessUnitTransfer) {
             $addressTransfer->setCompany(
@@ -158,5 +158,20 @@ class AddressProvider implements AddressProviderInterface
     protected function getBusinessUnitAddressKey(int $idCompanyUnitAddress): string
     {
         return sprintf(static::COMPANY_BUSINESS_UNIT_ADDRESS_KEY_PATTERN, $idCompanyUnitAddress);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function setAddressCustomerAttributes(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
+    {
+        $addressTransfer = $addressTransfer->setLastName($customerTransfer->getLastName())
+            ->setFirstName($customerTransfer->getFirstName())
+            ->setSalutation($customerTransfer->getSalutation());
+
+        return $addressTransfer;
     }
 }
