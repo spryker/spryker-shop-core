@@ -8,6 +8,7 @@
 {% define data = {
     form: required,
     products: [],
+    prices: [],
     additionalColumns: []
 } %}
 
@@ -39,6 +40,7 @@
         data: {
             form: data.form,
             products: data.products,
+            prices: data.prices,
             options: {
                 attr: {
                     class: config.jsName ~ '__form'
@@ -57,6 +59,7 @@
                     data: {
                         rows: data.form.items,
                         products: data.products,
+                        prices: data.prices,
                         additionalColumns: embed.additionalColumns
                     }
                 } only %}

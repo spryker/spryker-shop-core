@@ -93,11 +93,14 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormFactory()
             ->getQuickOrderForm($quickOrderTransfer);
 
+        $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
+
         return [
             'quickOrderForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
             'products' => $products,
+            'prices' => $prices,
         ];
     }
 
