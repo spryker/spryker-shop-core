@@ -12,12 +12,12 @@
 
 {% block template %}
     {% set defaultAddressKey = null %}
-    {% if data.currentAddressId or not data.formAddressTransfer.firstName %}
+    {% if not data.isCustomAddress and (data.currentAddressId or not data.formAddressTransfer.firstName) %}
         {% for address in data.customerAddresses %}
-            {% if data.formType == 'shippingAddress' and address.isDefaultShipping %}
+            {% if not data.currentAddressId and data.formType == 'shippingAddress' and address.isDefaultShipping %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
-            {% if data.formType == 'billingAddress' and address.isDefaultBilling %}
+            {% if not data.currentAddressId and data.formType == 'billingAddress' and address.isDefaultBilling %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
             {% if data.currentAddressId == address.idCustomerAddress %}
