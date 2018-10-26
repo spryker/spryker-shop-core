@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToLocaleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface;
@@ -42,29 +42,29 @@ class ItemFetcher implements ItemFetcherInterface
     protected $glossaryStorageClient;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToLocaleClientInterface
      */
-    protected $store;
+    protected $localeClient;
 
     /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface $productStorageClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientInterface $messengerClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToGlossaryStorageClientInterface $glossaryStorageClient
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToLocaleClientInterface $localeClient
      */
     public function __construct(
         CustomerReorderWidgetToProductBundleClientInterface $productBundleClient,
         CustomerReorderWidgetToProductStorageClientInterface $productStorageClient,
         CustomerReorderWidgetToMessengerClientInterface $messengerClient,
         CustomerReorderWidgetToGlossaryStorageClientInterface $glossaryStorageClient,
-        Store $store
+        CustomerReorderWidgetToLocaleClientInterface $localeClient
     ) {
         $this->productBundleClient = $productBundleClient;
         $this->productStorageClient = $productStorageClient;
         $this->messengerClient = $messengerClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
-        $this->store = $store;
+        $this->localeClient = $localeClient;
     }
 
     /**
@@ -145,7 +145,7 @@ class ItemFetcher implements ItemFetcherInterface
     {
         $translatedMessage = $this->glossaryStorageClient->translate(
             static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED,
-            $this->store->getCurrentLocale(),
+            $this->localeClient->getCurrentLocale(),
             [static::MESSAGE_PARAM_SKU => $itemTransfer->getSku()]
         );
 

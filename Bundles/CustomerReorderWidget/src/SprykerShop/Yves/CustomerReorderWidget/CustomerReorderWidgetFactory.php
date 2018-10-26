@@ -7,12 +7,12 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCustomerClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToLocaleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface;
@@ -79,16 +79,16 @@ class CustomerReorderWidgetFactory extends AbstractFactory
             $this->getProductStorageClient(),
             $this->getMessengerClient(),
             $this->getGlossaryStorageClient(),
-            $this->getStore()
+            $this->getLocaleClient()
         );
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToLocaleClientInterface
      */
-    public function getStore(): Store
+    public function getLocaleClient(): CustomerReorderWidgetToLocaleClientInterface
     {
-        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::STORE);
+        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_LOCALE);
     }
 
     /**
