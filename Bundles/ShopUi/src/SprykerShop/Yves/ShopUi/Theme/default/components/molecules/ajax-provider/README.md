@@ -1,3 +1,3 @@
 # ajax-provider (molecule)
 
-Implements possibility to perform ajax request to specified url with some url params and handle response.
+Enables performing an ajax request to a specified url with some URL parameters and handling the response.

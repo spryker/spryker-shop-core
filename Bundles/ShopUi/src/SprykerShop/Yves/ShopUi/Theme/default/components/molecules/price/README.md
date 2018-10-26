@@ -1,3 +1,3 @@
 # price (molecule)
 
-Displays a price of the product with icon and also show original price in case of discount.
+Displays the product price with icon and also shows original price in case of discount.

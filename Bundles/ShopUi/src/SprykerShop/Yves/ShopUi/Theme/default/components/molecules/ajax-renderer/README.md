@@ -1,3 +1,3 @@
 # ajax-renderer (molecule)
 
-Renders HTML recieved from related ajax-provider component into specified DOM-element.
+Renders HTML received from the related ajax-provider component into a specific DOM-element.

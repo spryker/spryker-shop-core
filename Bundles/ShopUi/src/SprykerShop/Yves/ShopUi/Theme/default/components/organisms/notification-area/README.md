@@ -1,3 +1,3 @@
 # notification-area (organism)
 
-Displays global messages in the top of the screen.
+Displays global messages at the top of the screen.
