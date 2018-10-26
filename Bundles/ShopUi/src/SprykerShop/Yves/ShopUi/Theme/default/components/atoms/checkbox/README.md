@@ -3,6 +3,7 @@
 Creates a simple checkbox element with not native design.
 
 ## Code sample 
+
 ```
 {% include atom('checkbox') with {
      attributes: {
