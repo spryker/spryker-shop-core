@@ -14,9 +14,9 @@
 } %}
 
 {% block body %}
-    <div class="grid grid--justify grid--middle">
+    <div class="grid grid--justify">
         {% if data.additionalColumns is not empty %}
-            <div class="col col--sm-6">
+            <div class="col col--sm-3">
                 {% for additionalColumn in data.additionalColumns %}
                     <div class="col col--expand spacing spacing--inner">
                         {% block additionalColumn %}
@@ -29,7 +29,7 @@
             </div>
         {% endif %}
 
-        <div class="col col--sm-3 spacing spacing--inner">
+        <div class="col col--sm-5 spacing spacing--inner {{ config.name }}__holder-quantity">
             {% block quantity %}
                 {% set options = {
                     required: true,
@@ -48,10 +48,14 @@
                 {% endif %}
 
                 {{ form_widget(data.quantityField, options) }}
+
+                <span class="{{ config.name }}__error">
+                    {{ 'quick-order.input-quantity.message.error' | trans }}
+                </span>
             {% endblock %}
         </div>
 
-        <div class="col col--sm-3 spacing spacing--inner">
+        <div class="col col--sm-4 spacing spacing--inner">
             {% block price %}
                 {% include molecule('price') with {
                     data: {
