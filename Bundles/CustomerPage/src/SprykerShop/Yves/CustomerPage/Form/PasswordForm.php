@@ -11,7 +11,11 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
+ */
 class PasswordForm extends AbstractType
 {
     public const FIELD_NEW_PASSWORD = 'new_password';
@@ -59,6 +63,11 @@ class PasswordForm extends AbstractType
                 'label' => 'customer.password.confirm.new_password',
                 'attr' => ['autocomplete' => 'off'],
             ],
+            'constraints' => new Length([
+                'min' => $this->getFactory()
+                    ->getCustomerPageConfig()
+                    ->getCustomerPasswordMinLength(),
+            ]),
         ]);
 
         return $this;
