@@ -71,7 +71,9 @@ class RestorePasswordForm extends AbstractType
             'second_options' => [
                 'label' => 'forms.confirm-password',
             ],
-            'constraints' => $this->createNotBlankConstraint(),
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+            ],
         ]);
 
         return $this;
