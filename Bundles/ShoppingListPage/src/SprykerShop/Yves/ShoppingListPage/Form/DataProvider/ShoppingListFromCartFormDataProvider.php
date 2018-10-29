@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\ShoppingListPage\Form\DataProvider;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerShop\Yves\CartToShoppingListWidget\Form\ShoppingListFromCartForm;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 
 class ShoppingListFromCartFormDataProvider
@@ -18,6 +17,11 @@ class ShoppingListFromCartFormDataProvider
     use PermissionAwareTrait;
 
     protected const GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ADD_NEW = 'cart.add-to-shopping-list.form.add_new';
+
+    /**
+     * @uses ShoppingListFromCartForm::OPTION_SHOPPING_LISTS
+     */
+    protected const OPTION_SHOPPING_LISTS = 'OPTION_SHOPPING_LISTS';
 
     /**
      * @var \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface
@@ -49,7 +53,7 @@ class ShoppingListFromCartFormDataProvider
     {
         return [
             'data_class' => ShoppingListFromCartRequestTransfer::class,
-            ShoppingListFromCartForm::OPTION_SHOPPING_LISTS => $this->getShoppingListCollection(),
+            static::OPTION_SHOPPING_LISTS => $this->getShoppingListCollection(),
         ];
     }
 
