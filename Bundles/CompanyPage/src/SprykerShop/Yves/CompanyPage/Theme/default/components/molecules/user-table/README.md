@@ -1,6 +1,6 @@
 # user-table (molecule)
 
-Displays user table.
+Displays user table, with actions (edit, disable, enable, delete) if it actions enabled.
 
 ## Code sample
 
@@ -10,8 +10,8 @@ Displays user table.
         users: users,
         currentCompanyUserId: currentCompanyUserId,
         actions: {
-            update: false,
-            delete: false
+            update: true,
+            delete: true
         }
     }
 } only %}

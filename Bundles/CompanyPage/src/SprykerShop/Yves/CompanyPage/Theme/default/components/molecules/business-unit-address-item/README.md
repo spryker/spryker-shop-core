@@ -1,6 +1,6 @@
 # business-unit-address-item (molecule)
 
-Displays address with edit and delete links.
+Displays address, where you can edit or delete address.
 
 ## Code sample
 

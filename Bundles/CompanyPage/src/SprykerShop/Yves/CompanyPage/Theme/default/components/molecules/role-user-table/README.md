@@ -1,6 +1,6 @@
 # role-user-table (molecule)
 
-Displays users role table.
+Displays users role table, with actions (unassign, assign) if it actions enabled.
 
 ## Code sample
 

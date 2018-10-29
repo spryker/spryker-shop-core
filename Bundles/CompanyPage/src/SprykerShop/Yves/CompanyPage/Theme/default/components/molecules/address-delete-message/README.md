@@ -1,6 +1,6 @@
 # address-delete-message (molecule)
 
-Displays message, when you want to delete address from business unit.
+Displays message, when you want to delete address from business unit, where you can confirm delete address or cancel delete address.
 
 ## Code sample
 
