@@ -14,5 +14,5 @@ interface CustomerReorderWidgetToCustomerClientInterface
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getCustomer(): CustomerTransfer;
+    public function getCustomer();
 }

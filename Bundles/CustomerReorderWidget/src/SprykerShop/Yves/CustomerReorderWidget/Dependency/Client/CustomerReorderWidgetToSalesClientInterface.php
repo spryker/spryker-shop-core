@@ -16,5 +16,5 @@ interface CustomerReorderWidgetToSalesClientInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderDetails(OrderTransfer $orderTransfer): OrderTransfer;
+    public function getOrderDetails(OrderTransfer $orderTransfer);
 }

@@ -16,5 +16,5 @@ interface CustomerReorderWidgetToAvailabilityStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
      */
-    public function getProductAvailabilityByIdProductAbstract(int $idProductAbstract): ?StorageAvailabilityTransfer;
+    public function getProductAvailabilityByIdProductAbstract($idProductAbstract);
 }
