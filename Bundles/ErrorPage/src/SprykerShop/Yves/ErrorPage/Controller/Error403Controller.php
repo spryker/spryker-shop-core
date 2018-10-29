@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Error403Controller extends AbstractController
 {
+    protected const REQUEST_PARAM_EXCEPTION = 'exception';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -33,7 +35,7 @@ class Error403Controller extends AbstractController
      */
     protected function getErrorMessage(Request $request)
     {
-        $exception = $request->query->get('exception');
+        $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
 
         if ($exception instanceof FlattenException) {
             return $exception->getMessage();
