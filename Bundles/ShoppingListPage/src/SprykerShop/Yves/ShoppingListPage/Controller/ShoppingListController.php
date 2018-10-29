@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
-use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -149,7 +148,7 @@ class ShoppingListController extends AbstractShoppingListController
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART);
 
-        return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
+        return $this->redirectResponseInternal($this->getFactory()->getConfig()->getCartRedirectUrl());
     }
 
     /**

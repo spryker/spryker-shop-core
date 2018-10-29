@@ -5,7 +5,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/cart-to-shopping-list-widget": "^0.4.0",
     "spryker-shop/shop-application": "^1.2.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker-shop/shopping-list-page-extension": "^1.1.0",
@@ -26,7 +25,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/customer-page": "ADD SUGGEST DESCRIPTION",
+    "spryker-shop/customer-page": "Use this module when you want to show shopping lists on a customer page",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

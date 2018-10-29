@@ -1,4 +1,4 @@
-namespace: WishlistPage
+namespace: ShoppingListPage
 actor: Tester
 paths:
     tests: tests
