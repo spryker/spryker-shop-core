@@ -9,6 +9,10 @@ namespace SprykerShop\Yves\CartPage\Controller;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
+use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
+use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
+use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +22,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CartController extends AbstractController
 {
+    use PermissionAwareTrait;
+
+    public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+
     public const PARAM_ITEMS = 'items';
 
     /**
@@ -79,6 +87,12 @@ class CartController extends AbstractController
      */
     public function addAction($sku, $quantity, array $optionValueIds, Request $request)
     {
+        if (!$this->canAddCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $itemTransfer = new ItemTransfer();
         $itemTransfer
             ->setSku($sku)
@@ -105,6 +119,12 @@ class CartController extends AbstractController
      */
     public function removeAction($sku, $groupKey = null)
     {
+        if (!$this->canRemoveCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $this->getFactory()
             ->getCartClient()
             ->removeItem($sku, $groupKey);
@@ -125,6 +145,12 @@ class CartController extends AbstractController
      */
     public function changeAction($sku, $quantity, $groupKey = null)
     {
+        if (!$this->canChangeCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $this->getFactory()
             ->getCartClient()
             ->changeItemQuantity($sku, $groupKey, $quantity);
@@ -143,6 +169,12 @@ class CartController extends AbstractController
      */
     public function addItemsAction(Request $request)
     {
+        if (!$this->canAddCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $items = (array)$request->request->get(self::PARAM_ITEMS);
         $itemTransfers = $this->mapItems($items);
 
@@ -169,6 +201,12 @@ class CartController extends AbstractController
      */
     public function updateAction($sku, $quantity, array $selectedAttributes, array $preselectedAttributes, $groupKey = null, array $optionValueIds = [])
     {
+        if (!$this->canChangeCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $quoteTransfer = $this->getFactory()
             ->getCartClient()
             ->getQuote();
@@ -235,5 +273,55 @@ class CartController extends AbstractController
 
             $itemTransfer->addProductOption($productOptionTransfer);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canAddCartItem(): bool
+    {
+        return $this->canPerformCartItemAction(AddCartItemPermissionPlugin::KEY);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canChangeCartItem(): bool
+    {
+        return $this->canPerformCartItemAction(ChangeCartItemPermissionPlugin::KEY);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canRemoveCartItem(): bool
+    {
+        return $this->canPerformCartItemAction(RemoveCartItemPermissionPlugin::KEY);
+    }
+
+    /**
+     * @param string $permissionPluginKey
+     *
+     * @return bool
+     */
+    protected function canPerformCartItemAction(string $permissionPluginKey): bool
+    {
+        $quoteTransfer = $this->getFactory()
+            ->getCartClient()
+            ->getQuote();
+
+        if ($quoteTransfer->getCustomer() === null) {
+            return true;
+        }
+
+        if ($quoteTransfer->getCustomer()->getCompanyUserTransfer() === null) {
+            return true;
+        }
+
+        if ($this->can($permissionPluginKey)) {
+            return true;
+        }
+
+        return false;
     }
 }

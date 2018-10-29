@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductMeasuremen
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\ManageProductMeasurementUnitWidget instead.
+ */
 interface ProductMeasurementUnitWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ProductMeasurementUnitWidgetPlugin';

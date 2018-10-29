@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\PriceWidget;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('price') instead.
+ */
 interface PriceWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'PriceWidgetPlugin';

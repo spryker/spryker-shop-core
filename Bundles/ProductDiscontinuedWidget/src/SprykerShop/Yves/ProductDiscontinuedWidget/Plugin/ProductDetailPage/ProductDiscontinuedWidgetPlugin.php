@@ -9,8 +9,11 @@ namespace SprykerShop\Yves\ProductDiscontinuedWidget\Plugin\ProductDetailPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductDiscontinuedWidget\ProductDiscontinuedWidgetPluginInterface;
+use SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedNoteWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedNoteWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductDiscontinuedWidget\ProductDiscontinuedWidgetFactory getFactory()
  */
 class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements ProductDiscontinuedWidgetPluginInterface
@@ -22,12 +25,9 @@ class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public function initialize(string $sku): void
     {
-        $this->addParameter(
-            'discontinuedProduct',
-            $this->getFactory()
-                ->getProductDiscontinuedStorageClient()
-                ->findProductDiscontinuedStorage($sku, $this->getLocale())
-        );
+        $widget = new ProductDiscontinuedNoteWidget($sku);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -51,6 +51,6 @@ class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements Pr
      */
     public static function getTemplate(): string
     {
-        return '@ProductDiscontinuedWidget/views/product-discontinued-note/product-discontinued-note.twig';
+        return ProductDiscontinuedNoteWidget::getTemplate();
     }
 }

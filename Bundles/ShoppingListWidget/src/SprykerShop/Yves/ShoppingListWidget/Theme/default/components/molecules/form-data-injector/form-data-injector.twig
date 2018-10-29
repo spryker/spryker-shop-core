@@ -1,0 +1,11 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'form-data-injector',
+    tag: 'form-data-injector'
+} %}
+
+{% define attributes = {
+    'destination-form-selector': required,
+    'fields-selector': required
+} %}

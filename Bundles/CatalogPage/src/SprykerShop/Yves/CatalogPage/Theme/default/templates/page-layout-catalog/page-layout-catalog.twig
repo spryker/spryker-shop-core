@@ -113,7 +113,9 @@
 
                 <div class="grid grid--stretch">
                     {% for product in data.products %}
-                        {{ widget('ProductWidgetPlugin', product, data.viewMode) }}
+                        {% widget 'CatalogPageProductWidget' args [product, data.viewMode] only %}
+                        {% elsewidget 'ProductWidgetPlugin' args [product, data.viewMode] only %} {# @deprecated Use CatalogPageProductWidget instead. #}
+                        {% endwidget %}
                     {% endfor %}
                 </div>
 

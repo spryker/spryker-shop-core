@@ -1,6 +1,6 @@
 # DiscountWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module provides discount information: discounts summary and voucher or discount form on the cart page. 
 
 ## Installation
 

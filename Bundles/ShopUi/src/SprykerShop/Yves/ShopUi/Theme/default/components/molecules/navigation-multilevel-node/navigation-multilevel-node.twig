@@ -23,15 +23,15 @@
 {% endblock %}
 
 {% block url %}
-    <a href="{{ data.node.url }}">{{ data.node.title }}</a>
+    <a class="link {{ data.node.cssClass }}" href="{{ data.node.url }}">{{ data.node.title }}</a>
 {% endblock %}
 
 {% block link %}
-    <a href="{{ data.node.url }}">{{ data.node.title }}</a>
+    <a class="link {{ data.node.cssClass }}" href="{{ data.node.url }}">{{ data.node.title }}</a>
 {% endblock %}
 
 {% block externalUrl %}
-    <a href="{{ data.node.url }}" target="_blank">{{ data.node.title }}</a>
+    <a class="link {{ data.node.cssClass }}" href="{{ data.node.url }}" target="_blank">{{ data.node.title }}</a>
 {% endblock %}
 
 {% block other %}

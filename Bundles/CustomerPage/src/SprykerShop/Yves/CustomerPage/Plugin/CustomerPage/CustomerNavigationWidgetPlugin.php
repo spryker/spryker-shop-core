@@ -9,8 +9,11 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\CustomerPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Plugin\CustomerPage\CustomerNavigationWidgetPluginInterface;
+use SprykerShop\Yves\CustomerPage\Widget\CustomerNavigationWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\CustomerPage\Widget\CustomerNavigationWidget instead.
+ *
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class CustomerNavigationWidgetPlugin extends AbstractWidgetPlugin implements CustomerNavigationWidgetPluginInterface
@@ -23,9 +26,11 @@ class CustomerNavigationWidgetPlugin extends AbstractWidgetPlugin implements Cus
      */
     public function initialize(string $activePage, ?int $activeEntityId = null): void
     {
-        $this->addParameter('activePage', $activePage)
-            ->addParameter('activeEntityId', $activeEntityId)
-            ->addWidgets($this->getFactory()->getCustomerMenuItemWidgetPlugins());
+        $widget = new CustomerNavigationWidget($activePage, $activeEntityId);
+
+        $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getCustomerMenuItemWidgetPlugins());
     }
 
     /**
@@ -51,6 +56,6 @@ class CustomerNavigationWidgetPlugin extends AbstractWidgetPlugin implements Cus
      */
     public static function getTemplate()
     {
-        return '@CustomerPage/views/customer-navigation/customer-navigation.twig';
+        return CustomerNavigationWidget::getTemplate();
     }
 }

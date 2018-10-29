@@ -9,5 +9,7 @@
 } %}
 
 {% block body %}
-    {{ widget('ProductRatingFilterWidgetPlugin', data.filter, app.request) }}
+    {% widget 'ProductRatingFilterWidget' args [data.filter, app.request] only %}
+    {% elsewidget 'ProductRatingFilterWidgetPlugin' args [data.filter, app.request] only %} {# @deprecated Use ProductRatingFilterWidget instead. #}
+    {% endwidget %}
 {% endblock %}
