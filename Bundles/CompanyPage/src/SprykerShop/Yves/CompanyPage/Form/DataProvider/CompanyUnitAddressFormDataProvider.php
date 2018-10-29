@@ -7,8 +7,10 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUnitAddressForm;
@@ -28,13 +30,21 @@ class CompanyUnitAddressFormDataProvider
     protected $store;
 
     /**
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
+     */
+    protected $businessUnitClient;
+
+    /**
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface $store
      */
     public function __construct(
+        CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient,
         CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient,
         CompanyPageToKernelStoreInterface $store
     ) {
+        $this->businessUnitClient = $businessUnitClient;
         $this->companyUnitAddressClient = $companyUnitAddressClient;
         $this->store = $store;
     }
@@ -59,6 +69,8 @@ class CompanyUnitAddressFormDataProvider
         if ($addressTransfer !== null) {
             if ($idCompanyBusinessUnit !== null) {
                 $addressTransfer->setFkCompanyBusinessUnit($idCompanyBusinessUnit);
+                $addressTransfer = $this->setDefaultBillingAddress($addressTransfer);
+                $addressTransfer = $this->setDefaultShippingAddress($addressTransfer);
             }
 
             return $addressTransfer->modifiedToArray();
@@ -116,5 +128,51 @@ class CompanyUnitAddressFormDataProvider
         }
 
         return $countries;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     */
+    protected function setDefaultBillingAddress(CompanyUnitAddressTransfer $addressTransfer): CompanyUnitAddressTransfer
+    {
+        $businessUnit = $this->getBusinessUnit($addressTransfer->getFkCompanyBusinessUnit());
+
+        if ($businessUnit->getDefaultBillingAddress() === $addressTransfer->getIdCompanyUnitAddress()) {
+            $addressTransfer->setIsDefaultBilling(true);
+        }
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     */
+    protected function setDefaultShippingAddress(CompanyUnitAddressTransfer $addressTransfer): CompanyUnitAddressTransfer
+    {
+        $businessUnit = $this->getBusinessUnit($addressTransfer->getFkCompanyBusinessUnit());
+
+        if ($businessUnit->getDefaultShippingAddress() === $addressTransfer->getIdCompanyUnitAddress()) {
+            $addressTransfer->setIsDefaultShipping(true);
+        }
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    protected function getBusinessUnit(int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer
+    {
+        $businessUnit = new CompanyBusinessUnitTransfer();
+        $businessUnit->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
+        $businessUnit = $this->businessUnitClient->getCompanyBusinessUnitById($businessUnit);
+
+        return $businessUnit;
     }
 }
