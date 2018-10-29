@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\CompanyPage\Controller;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitAddressForm;
+use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 class BusinessUnitAddressController extends AbstractCompanyController
