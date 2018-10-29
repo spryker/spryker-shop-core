@@ -80,7 +80,7 @@ class RestorePasswordForm extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
-    protected function createNotBlankConstraint()
+    protected function createNotBlankConstraint(): NotBlank
     {
         return new NotBlank();
     }
