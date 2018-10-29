@@ -7,12 +7,11 @@
 
 namespace SprykerShop\Yves\ErrorPage\Controller;
 
-use Spryker\Shared\Config\Environment;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 
-class Error404Controller extends AbstractController
+class Error403Controller extends AbstractController
 {
     protected const REQUEST_PARAM_EXCEPTION = 'exception';
 
@@ -36,11 +35,8 @@ class Error404Controller extends AbstractController
      */
     protected function getErrorMessage(Request $request)
     {
-        if (!Environment::isDevelopment()) {
-            return '';
-        }
-
         $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
+
         if ($exception instanceof FlattenException) {
             return $exception->getMessage();
         }
