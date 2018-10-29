@@ -1,1 +1,8 @@
-{% extends _widget.template %}
+{% extends template('widget') %}
+
+{% define data = {
+    idProductAbstract: _widget.idProductAbstract | default,
+    items: _widget.productGroupItems | default([])
+} %}
+
+

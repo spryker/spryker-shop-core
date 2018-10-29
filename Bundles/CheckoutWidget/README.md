@@ -1,6 +1,6 @@
 # CheckoutWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module provides breadcrumbs widget for the cart page.
 
 ## Installation
 

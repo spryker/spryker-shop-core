@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\MultiCartWidget\Plugin\CartPage;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\MultiCartWidget\CartOperationsWidgetPluginInterface;
+use SprykerShop\Yves\MultiCartWidget\Widget\CartOperationsWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\CartOperationsWidget instead.
+ *
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
 class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOperationsWidgetPluginInterface
@@ -23,11 +26,11 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this
-            ->addParameter('cart', $quoteTransfer)
-            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
-            ->addParameter('isDeleteCartAllowed', $this->isDeleteCartAllowed())
-            ->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
+        $widget = new CartOperationsWidget($quoteTransfer);
+
+        $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
     }
 
     /**
@@ -51,29 +54,6 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/views/cart-operations/cart-operations.twig';
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isMultiCartAllowed(): bool
-    {
-        return $this->getFactory()
-            ->getMultiCartClient()
-            ->isMultiCartAllowed();
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isDeleteCartAllowed(): bool
-    {
-        $numberOfQuotes = count($this->getFactory()
-            ->getMultiCartClient()
-            ->getQuoteCollection()
-            ->getQuotes());
-
-        return $numberOfQuotes > 1;
+        return CartOperationsWidget::getTemplate();
     }
 }

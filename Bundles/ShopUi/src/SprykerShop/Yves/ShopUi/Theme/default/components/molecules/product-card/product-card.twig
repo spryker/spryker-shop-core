@@ -16,11 +16,15 @@
 
 {% block content %}
     {% block labels %}
-        {{ widget('ProductAbstractLabelWidgetPlugin', data.abstractId) }}
+        {% widget 'ProductAbstractLabelWidget' args [data.abstractId] only %}
+        {% elsewidget 'ProductAbstractLabelWidgetPlugin' args [data.abstractId] only %} {# @deprecated Use ProductAbstractLabelWidget instead. #}
+        {% endwidget %}
     {% endblock %}
 
     {% block groups %}
-        {{ widget('ProductGroupWidgetPlugin', data.abstractId) }}
+        {% widget 'ProductGroupWidget' args [data.abstractId] only %}
+        {% elsewidget 'ProductGroupWidgetPlugin' args [data.abstractId] only %} {# @deprecated Use ProductGroupWidget instead. #}
+        {% endwidget %}
     {% endblock %}
 
     {% block name %}
@@ -28,12 +32,14 @@
     {% endblock %}
 
     {% block rating %}
-        {{ widget('ProductAbstractReviewWidgetPlugin', data.abstractId) }}
+        {% widget 'DisplayProductAbstractReviewWidget' args [data.abstractId] only %}
+        {% elsewidget 'ProductAbstractReviewWidgetPlugin' args [data.abstractId] only %} {# @deprecated Use DisplayProductAbstractReviewWidget instead. #}
+        {% endwidget %}
     {% endblock %}
 
     {% block price %}
         <p>
-            {% if can('SeePricePermissionPlugin') %}
+            {% if can('SeePricePermissionPlugin') and data.price %}
                 {% include molecule('price') with {
                     data: {
                         amount: data.price | money,

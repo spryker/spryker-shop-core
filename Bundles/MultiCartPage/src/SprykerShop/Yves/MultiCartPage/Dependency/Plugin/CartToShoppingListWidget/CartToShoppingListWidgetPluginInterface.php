@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\MultiCartPage\Dependency\Plugin\CartToShoppingListWid
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('cart-to-shopping-list', 'ShoppingListWidget') instead.
+ */
 interface CartToShoppingListWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'CartToShoppingListWidgetPlugin';

@@ -1,6 +1,6 @@
 # ProductImageWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module provides image slider (carousel) on the product detail page.
 
 ## Installation
 

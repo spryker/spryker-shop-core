@@ -9,9 +9,12 @@ namespace SprykerShop\Yves\MultiCartWidget\Plugin\QuickOrderPage;
 
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\MultiCartWidget\Widget\QuickOrderPageWidget;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Plugin\MultiCartWidget\MultiCartListWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\QuickOrderPageWidget instead.
+ *
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
 class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCartListWidgetPluginInterface
@@ -23,9 +26,9 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
      */
     public function initialize(): void
     {
-        $this
-            ->addParameter('carts', $this->getQuoteList())
-            ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
+        $widget = new QuickOrderPageWidget();
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -51,39 +54,6 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
      */
     public static function getTemplate()
     {
-        return '@MultiCartWidget/views/quick-order-page/quick-order-page.twig';
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer[]
-     */
-    protected function getQuoteList(): array
-    {
-        $quoteCollectionTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->getQuoteCollection();
-
-        $quoteTransferCollection = [];
-        $defaultQuoteTransfer = $this->getFactory()->getMultiCartClient()->getDefaultCart();
-        if ($this->can('WriteSharedCartPermissionPlugin', $defaultQuoteTransfer->getIdQuote())) {
-            $quoteTransferCollection[] = $defaultQuoteTransfer;
-        }
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if (!$quoteTransfer->getIsDefault() && $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote())) {
-                $quoteTransferCollection[] = $quoteTransfer;
-            }
-        }
-
-        return $quoteTransferCollection;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isMultiCartAllowed(): bool
-    {
-        return $this->getFactory()
-            ->getMultiCartClient()
-            ->isMultiCartAllowed();
+        return QuickOrderPageWidget::getTemplate();
     }
 }
