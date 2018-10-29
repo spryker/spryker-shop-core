@@ -41,9 +41,9 @@ class CartPageToZedRequestClientBridge implements CartPageToZedRequestClientInte
     /**
      * @return void
      */
-    public function addAllResponseMessagesToMessenger(): void
+    public function addResponseMessagesToMessenger(): void
     {
-        $this->zedRequestClient->addAllResponseMessagesToMessenger();
+        $this->zedRequestClient->addResponseMessagesToMessenger();
     }
 
     /**

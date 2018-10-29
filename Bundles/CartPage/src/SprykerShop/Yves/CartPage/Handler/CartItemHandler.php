@@ -84,7 +84,7 @@ class CartItemHandler implements CartItemHandlerInterface
         $this->addProductOptions($optionValueIds, $itemTransfer);
 
         $this->cartClient->addItem($itemTransfer);
-        $this->zedRequestClient->addAllResponseMessagesToMessenger();
+        $this->zedRequestClient->addResponseMessagesToMessenger();
 
         if (count($this->zedRequestClient->getResponsesErrorMessages()) === 0) {
             $this->cartClient->removeItem($currentItemSku, $groupKey);

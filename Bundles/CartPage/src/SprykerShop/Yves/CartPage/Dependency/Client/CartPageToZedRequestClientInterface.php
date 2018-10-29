@@ -22,7 +22,7 @@ interface CartPageToZedRequestClientInterface
     /**
      * @return void
      */
-    public function addAllResponseMessagesToMessenger(): void;
+    public function addResponseMessagesToMessenger(): void;
 
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
