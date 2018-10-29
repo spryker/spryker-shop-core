@@ -16,6 +16,9 @@ class ShoppingListPageConfig extends AbstractBundleConfig
     public const MIN_QUANTITY_RANGE = 1;
 
     /**
+     * Specification:
+     * - Returns the cart redirect url.
+     *
      * @return string
      */
     public function getCartRedirectUrl(): string
@@ -24,6 +27,9 @@ class ShoppingListPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the minimum quantity range.
+     *
      * @return int
      */
     public function getMinimumQuantityRange(): int
