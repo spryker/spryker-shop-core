@@ -97,7 +97,7 @@ class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerIn
     protected function addItemsToCart(array $itemTransfers): bool
     {
         $this->cartClient->addItems($itemTransfers, $this->request->request->all());
-        $this->zedRequestClient->addAllResponseMessagesToMessenger();
+        $this->zedRequestClient->addResponseMessagesToMessenger();
 
         return !(count($this->zedRequestClient->getResponsesErrorMessages()) > 0);
     }
