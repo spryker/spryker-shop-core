@@ -31,20 +31,34 @@
                         idProductConcrete: product.idProductConcrete,
                         promotionDiscount: {
                             id: product.promotionItem.discount.discountPromotion.idDiscountPromotion,
-                            maxQuantity: product.promotionItem.maxQuantity
+                            maxQuantity: product.promotionItem.maxQuantity,
+                            description: product.promotionItem.discount.description
                         }
                     }
                 } only %}
+                    {% block sku %}
+                        <div class="text-secondary">
+                            {{ 'cart.item.sku' | trans }}
+                            {{ embed.sku }}
+                        </div>
+                    {% endblock %}
+
                     {% block content %}
                         {{parent()}}
 
+                        {% if embed.promotionDiscount.description is not empty %}
+                            <hr />
+                            <p>{{ embed.promotionDiscount.description }}</p>
+                        {% endif %}
+
                         <hr />
-                        {% include molecule('variant-configurator', 'DiscountPromotionWidget') with {
+                        {% include molecule('variant-configurator', 'ProductDetailPage') with {
                             data: {
                                 idProductAbstract: embed.idProductAbstract,
                                 superAttributes: embed.superAttributes,
                                 selectedAttributes: embed.selectedAttributes,
-                                availableAttributes: embed.availableAttributes
+                                availableAttributes: embed.availableAttributes,
+                                useExternalForm: true
                             }
                         } only %}
                         <hr />
