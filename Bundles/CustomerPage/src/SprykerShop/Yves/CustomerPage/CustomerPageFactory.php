@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CustomerPage;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
-use SprykerShop\Yves\CustomerPage\CustomerPageConfig as YvesCustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerAccessPermissionClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
@@ -286,13 +285,5 @@ class CustomerPageFactory extends AbstractFactory
     public function getAfterCustomerAuthenticationSuccessPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerPage\CustomerPageConfig
-     */
-    public function getCustomerPageConfig(): YvesCustomerPageConfig
-    {
-        return $this->getConfig();
     }
 }
