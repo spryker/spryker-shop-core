@@ -74,7 +74,11 @@ class ShoppingListController extends AbstractShoppingListController
             ->getShoppingListOverviewWithoutProductDetails($shoppingListOverviewRequest);
 
         if ($shoppingListOverviewResponseTransfer->getIsSuccess() !== true) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
+            $errorMessages = $this->getFactory()->getZedRequestClient()->getLastResponseErrorMessages();
+            foreach ($errorMessages as $errorMessageTransfer) {
+                $this->addErrorMessage($errorMessageTransfer->getValue());
+            }
+
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
