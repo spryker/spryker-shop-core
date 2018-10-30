@@ -61,6 +61,8 @@ class BusinessUnitAddressController extends AbstractCompanyController
      */
     protected function executeCreateAction(Request $request)
     {
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_COMPANY_BUSINESS_UNIT_ID);
+
         $dataProvider = $this
             ->getFactory()
             ->createCompanyPageFormFactory()
@@ -71,18 +73,6 @@ class BusinessUnitAddressController extends AbstractCompanyController
             ->createCompanyPageFormFactory()
             ->getCompanyBusinessUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
-
-        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_COMPANY_BUSINESS_UNIT_ID);
-
-        if ($addressForm->isSubmitted() === false) {
-            $addressForm->setData(
-                $dataProvider->getData(
-                    $this->findCurrentCompanyUserTransfer(),
-                    null,
-                    $idCompanyBusinessUnit
-                )
-            );
-        }
 
         if ($addressForm->isValid()) {
             $data = $addressForm->getData();
@@ -102,6 +92,14 @@ class BusinessUnitAddressController extends AbstractCompanyController
                 ]);
             }
         }
+
+        $addressForm->setData(
+            $dataProvider->getData(
+                $this->findCurrentCompanyUserTransfer(),
+                null,
+                $idCompanyBusinessUnit
+            )
+        );
 
         return [
             'form' => $addressForm->createView(),
@@ -132,19 +130,19 @@ class BusinessUnitAddressController extends AbstractCompanyController
             ->getCompanyBusinessUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
-        if ($addressForm->isSubmitted() === false) {
-            $data = $dataProvider->getData($this->findCurrentCompanyUserTransfer(), $idCompanyUnitAddress, $idCompanyBusinessUnit);
+        $data = $dataProvider->getData($this->findCurrentCompanyUserTransfer(), $idCompanyUnitAddress, $idCompanyBusinessUnit);
 
-            if (!$this->isCurrentCustomerRelatedToCompany($data[CompanyBusinessUnitAddressForm::FIELD_FK_COMPANY])) {
-                throw new NotFoundHttpException();
-            }
-
-            $addressForm->setData($data);
+        if (!$this->isCurrentCustomerRelatedToCompany($data[CompanyBusinessUnitAddressForm::FIELD_FK_COMPANY])) {
+            throw new NotFoundHttpException();
         }
 
         if ($addressForm->isValid()) {
-            $data = $addressForm->getData();
-            $data[CompanyUnitAddressTransfer::COMPANY_BUSINESS_UNITS][CompanyBusinessUnitCollectionTransfer::COMPANY_BUSINESS_UNITS][][CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT] = $idCompanyBusinessUnit;
+            if (!$idCompanyBusinessUnit) {
+                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+            }
+
+            $data = array_merge($data, $addressForm->getData());
+
             $companyUnitAddressTransfer = $this->getFactory()
                 ->createCompanyBusinessAddressSaver()
                 ->saveAddress($data);
@@ -153,14 +151,12 @@ class BusinessUnitAddressController extends AbstractCompanyController
                 '%address%' => $companyUnitAddressTransfer->getAddress1(),
             ]);
 
-            if (empty($idCompanyBusinessUnit)) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
-            }
-
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
                 'id' => $idCompanyBusinessUnit,
             ]);
         }
+
+        $addressForm->setData($data);
 
         return [
             'form' => $addressForm->createView(),

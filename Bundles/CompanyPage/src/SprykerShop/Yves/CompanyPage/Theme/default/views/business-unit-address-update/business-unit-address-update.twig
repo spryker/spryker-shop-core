@@ -35,7 +35,10 @@
             data: {
                 form: data.form,
                 options: {
-                    action: url('company/business-unit/address/update', { idCompanyBusinessUnit: data.idCompanyBusinessUnit })
+                    action: url('company/business-unit/address/update', {
+                        id: data.idCompanyUnitAddress,
+                        idCompanyBusinessUnit: data.idCompanyBusinessUnit
+                    })
                 },
                 layout: {
                     address1: 'col col--sm-12 col--lg-10',
