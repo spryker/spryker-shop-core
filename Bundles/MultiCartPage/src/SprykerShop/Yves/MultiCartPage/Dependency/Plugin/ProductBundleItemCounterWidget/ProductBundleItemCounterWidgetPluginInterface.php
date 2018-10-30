@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\MultiCartPage\Dependency\Plugin\ProductBundleItemCoun
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemCounterWidget instead.
+ */
 interface ProductBundleItemCounterWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ProductBundleItemCounterWidgetPlugin';

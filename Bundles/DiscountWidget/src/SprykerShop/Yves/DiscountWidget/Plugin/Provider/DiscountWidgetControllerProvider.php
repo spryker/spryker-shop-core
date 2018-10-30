@@ -17,7 +17,7 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';
     public const CHECKOUT_VOUCHER_ADD = 'checkout-voucher-add';
 
-    public const SKU_PATTERN = '[a-zA-Z0-9-_]+';
+    public const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**
      * @param \Silex\Application $app

@@ -14,15 +14,18 @@ class ErrorPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_ERROR_404 = 'error/404';
     public const ROUTE_ERROR_404_PATH = '/error/404';
+    protected const ROUTE_ERROR_403 = 'error/403';
+    protected const ROUTE_ERROR_403_PATH = '/error/403';
 
     /**
      * @param \Silex\Application $app
      *
      * @return void
      */
-    protected function defineControllers(Application $app)
+    protected function defineControllers(Application $app): void
     {
-        $this->addError404Route();
+        $this->addError404Route()
+            ->addError403Route();
     }
 
     /**
@@ -31,6 +34,18 @@ class ErrorPageControllerProvider extends AbstractYvesControllerProvider
     protected function addError404Route(): self
     {
         $this->createController(self::ROUTE_ERROR_404_PATH, self::ROUTE_ERROR_404, 'ErrorPage', 'Error404');
+
+        return $this;
+    }
+
+    /**
+     * @uses Error403Controller::indexAction()
+     *
+     * @return $this
+     */
+    protected function addError403Route(): self
+    {
+        $this->createController(self::ROUTE_ERROR_403_PATH, self::ROUTE_ERROR_403, 'ErrorPage', 'Error403');
 
         return $this;
     }

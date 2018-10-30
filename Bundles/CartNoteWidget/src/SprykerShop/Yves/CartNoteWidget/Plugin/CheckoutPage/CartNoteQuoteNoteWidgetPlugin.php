@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\CartNoteWidget\CartNoteQuoteNoteWidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('note-list', 'CartNoteWidget') instead.
+ */
 class CartNoteQuoteNoteWidgetPlugin extends AbstractWidgetPlugin implements CartNoteQuoteNoteWidgetPluginInterface
 {
     /**

@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RestorePasswordForm extends AbstractType
 {
@@ -70,8 +71,19 @@ class RestorePasswordForm extends AbstractType
             'second_options' => [
                 'label' => 'forms.confirm-password',
             ],
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+            ],
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank();
     }
 }

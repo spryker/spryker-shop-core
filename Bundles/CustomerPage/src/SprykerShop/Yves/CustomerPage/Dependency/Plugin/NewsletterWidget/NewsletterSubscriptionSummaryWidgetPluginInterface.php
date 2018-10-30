@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin\NewsletterWidget;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\NewsletterWidget\Widget\NewsletterSubscriptionSummaryWidget instead.
+ */
 interface NewsletterSubscriptionSummaryWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'NewsletterSubscriptionSummaryWidgetPlugin';

@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductOptionWidg
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionConfiguratorWidget instead.
+ */
 interface ProductOptionWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ProductOptionWidgetPlugin';

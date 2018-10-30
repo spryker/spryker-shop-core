@@ -8,7 +8,7 @@
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/business-on-behalf": "^1.0.0",
     "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.24.0"
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",

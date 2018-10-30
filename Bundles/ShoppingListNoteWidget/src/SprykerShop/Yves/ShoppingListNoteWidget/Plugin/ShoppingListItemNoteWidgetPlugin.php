@@ -9,8 +9,12 @@ namespace SprykerShop\Yves\ShoppingListNoteWidget\Plugin;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ShoppingListNoteWidget\Widget\ShoppingListItemNoteWidget;
 use SprykerShop\Yves\ShoppingListPage\Plugin\ShoppingListItemNoteWidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ShoppingListNoteWidget\Widget\ShoppingListItemNoteWidget instead.
+ */
 class ShoppingListItemNoteWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemNoteWidgetPluginInterface
 {
     /**
@@ -20,7 +24,9 @@ class ShoppingListItemNoteWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public function initialize(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
-        $this->addParameter('note', $shoppingListItemTransfer->getShoppingListItemNote()->getNote());
+        $widget = new ShoppingListItemNoteWidget($shoppingListItemTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -32,7 +38,7 @@ class ShoppingListItemNoteWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public static function getTemplate(): string
     {
-        return '@ShoppingListNoteWidget/views/shopping-list-item-note/shopping-list-item-note.twig';
+        return ShoppingListItemNoteWidget::getTemplate();
     }
 
     /**

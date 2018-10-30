@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\AgentWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget instead.
+ */
 interface AgentWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'AgentWidgetPlugin';
