@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\StorageAvailabilityTransfer;
-
 interface CustomerReorderWidgetToAvailabilityStorageClientInterface
 {
     /**

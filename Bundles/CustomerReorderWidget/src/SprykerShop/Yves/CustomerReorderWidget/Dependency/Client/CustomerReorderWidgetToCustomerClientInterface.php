@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 interface CustomerReorderWidgetToCustomerClientInterface
 {
     /**

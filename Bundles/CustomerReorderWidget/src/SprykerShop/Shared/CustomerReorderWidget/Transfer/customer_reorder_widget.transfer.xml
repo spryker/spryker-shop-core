@@ -4,8 +4,12 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Item">
+        <property name="id" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="isOrdered" type="bool" />
+        <property name="idProductAbstract" type="int" />
     </transfer>
 
     <transfer name="ProductOption">
@@ -14,7 +18,9 @@
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int" />
+        <property name="fkCustomer" type="int" />
         <property name="items" type="Item[]"  singular="item" />
+        <property name="orderReference" type="string" />
     </transfer>
 
     <transfer name="Quote">
@@ -22,5 +28,17 @@
         <property name="bundleItems" type="Item[]" singular="bundleItem" />
     </transfer>
 
-</transfers>
+    <transfer name="Customer">
+        <property name="idCustomer" type="int" />
+    </transfer>
 
+    <transfer name="CartChange">
+        <property name="quote" type="Quote" />
+        <property name="items" type="Item[]" singular="item" />
+    </transfer>
+
+    <transfer name="StorageAvailability">
+        <property name="concreteProductAvailableItems" type="array" singular="concreteProductAvailableItem"/>
+    </transfer>
+
+</transfers>
