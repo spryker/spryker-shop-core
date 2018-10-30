@@ -49,8 +49,13 @@ class ShoppingListTransferMapper implements ShoppingListTransferMapperInterface
             if (!$requestFormData[ShoppingListTransfer::ITEMS] || !$requestFormData[ShoppingListTransfer::ITEMS][$itemKey]) {
                 continue;
             }
-            $productOptionValueIds = $this->filterProductOptionValueIds($requestFormData, $itemKey);
-            $shoppingListItems[] = $this->populateProductOptionsPerShoppingListItem($shoppingListItemTransfer, $productOptionValueIds);
+
+            if ($this->hasProductOptions($requestFormData, $itemKey)) {
+                $productOptionValueIds = $this->filterProductOptionValueIds($requestFormData, $itemKey);
+                $shoppingListItemTransfer = $this->populateProductOptionsPerShoppingListItem($shoppingListItemTransfer, $productOptionValueIds);
+            }
+
+            $shoppingListItems[] = $shoppingListItemTransfer;
         }
 
         return $shoppingListTransfer->setItems(new ArrayObject($shoppingListItems));
@@ -65,6 +70,17 @@ class ShoppingListTransferMapper implements ShoppingListTransferMapperInterface
     protected function filterProductOptionValueIds(array $requestFormData, string $itemKey): array
     {
         return array_filter($requestFormData[ShoppingListTransfer::ITEMS][$itemKey][static::PRODUCT_OPTIONS_FIELD_NAME]);
+    }
+
+    /**
+     * @param array $requestFormData
+     * @param string $itemKey
+     *
+     * @return bool
+     */
+    protected function hasProductOptions(array $requestFormData, string $itemKey): bool
+    {
+        return !empty($requestFormData[ShoppingListTransfer::ITEMS][$itemKey][static::PRODUCT_OPTIONS_FIELD_NAME]);
     }
 
     /**
