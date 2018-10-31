@@ -1,1 +1,3 @@
-@include shop-ui-input();
+@include helper-import(atom, input) {
+    @include shop-ui-input();
+}
