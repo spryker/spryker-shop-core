@@ -1,6 +1,6 @@
 # suggestion-product (molecule)
 
-Short display of the item card with image, name and price in the search dropdown menu.
+Short display of the item card with image, name, and price in the search drop-down menu.
 
 ## Code sample
 

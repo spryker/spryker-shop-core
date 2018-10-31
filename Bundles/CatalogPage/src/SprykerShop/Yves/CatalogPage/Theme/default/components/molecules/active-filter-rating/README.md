@@ -1,6 +1,6 @@
 # active-filter-rating (molecule)
 
-Displays a selected filter, which shows number of chosen rating.
+Displays a selected filter, which shows a number of the rating chosen.
 
 ## Code sample
 
