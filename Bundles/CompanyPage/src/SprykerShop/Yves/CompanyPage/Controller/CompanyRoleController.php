@@ -360,7 +360,7 @@ class CompanyRoleController extends AbstractCompanyController
             ->getPermissionCollection();
 
         $companyRoleTransfer->setPermissionCollection($companyRolePermissionCollection);
-        
+
         $this->getFactory()
             ->getCompanyRoleClient()
             ->updateCompanyRole($companyRoleTransfer);
