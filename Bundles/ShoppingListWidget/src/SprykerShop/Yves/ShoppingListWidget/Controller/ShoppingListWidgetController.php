@@ -58,6 +58,10 @@ class ShoppingListWidgetController extends AbstractController
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED);
         }
 
+        if (!$shoppingListItemTransfer->getFkShoppingList()) {
+            return $this->redirectResponseInternal(ShoppingListWidgetConfig::SHOPPING_LISTS_REDIRECT_URL);
+        }
+
         return $this->redirectResponseInternal(ShoppingListWidgetConfig::SHOPPING_LIST_REDIRECT_URL, [
             'idShoppingList' => $shoppingListItemTransfer->getFkShoppingList(),
         ]);
