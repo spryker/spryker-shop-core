@@ -12,7 +12,8 @@
 
 {% set canProceedToCheckout = data.cart.items is not empty
     and data.isQuoteValid
-    and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)) %}
+    and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote))
+%}
 
 {% block body %}
     <h6 class="text-secondary float-right">{{ app['cart.quantity'] }} {{ 'item' | trans }}</h6>
