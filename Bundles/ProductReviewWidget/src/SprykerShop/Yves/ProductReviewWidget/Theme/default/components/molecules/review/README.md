@@ -1,6 +1,6 @@
 # review (molecule)
 
-Displays text review, which include title, rating, date and description.
+Displays text of review, which include title, rating, date, and description.
 
 ## Code sample
 
