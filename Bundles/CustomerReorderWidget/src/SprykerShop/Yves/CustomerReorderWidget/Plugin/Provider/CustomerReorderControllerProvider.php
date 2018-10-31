@@ -34,10 +34,10 @@ class CustomerReorderControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addReorderRoute()
     {
-        $this->createController('/{customer}/order/{idOrder}/reorder', static::ROUTE_CART_ORDER_REPEAT, 'CustomerReorderWidget', 'Order', 'reorder')
+        $this->createController('/{customer}/order/{idSalesOrder}/reorder', static::ROUTE_CART_ORDER_REPEAT, 'CustomerReorderWidget', 'Order', 'reorder')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
             ->value('customer', 'customer')
-            ->assert('idOrder', static::PATTERN_ID);
+            ->assert('idSalesOrder', static::PATTERN_ID);
 
         return $this;
     }
