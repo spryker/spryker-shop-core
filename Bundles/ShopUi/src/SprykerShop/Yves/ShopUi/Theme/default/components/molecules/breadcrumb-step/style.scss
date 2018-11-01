@@ -1,1 +1,3 @@
-@include shop-ui-breadcrumb-step();
+@include helper-import(molecule, breadcrumb-step) {
+    @include shop-ui-breadcrumb-step;
+}

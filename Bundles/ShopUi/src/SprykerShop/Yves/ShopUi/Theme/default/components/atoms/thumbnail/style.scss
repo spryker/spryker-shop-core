@@ -1,1 +1,3 @@
-@include shop-ui-thumbnail;
+@include helper-import(atom, thumbnail) {
+    @include shop-ui-thumbnail;
+}

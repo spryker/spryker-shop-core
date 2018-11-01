@@ -24,12 +24,18 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     {
         $addressProvider = $this->getFactory()
             ->createAddressProvider();
-        $customerAddresses = $addressProvider->getIndexedCustomerAddressList();
-        $companyBusinessUnitAddresses = $addressProvider->getIndexedCompanyBusinessUnitAddressList();
 
         $this->addFormTypeParameter($formType);
         $this->addFormAddressTransferParameter($formAddressTransfer);
         $this->addIsApplicableParameter($addressProvider);
+
+        if (!$addressProvider->companyBusinessUnitAddressesExists()) {
+            return;
+        }
+
+        $customerAddresses = $addressProvider->getIndexedCustomerAddressList();
+        $companyBusinessUnitAddresses = $addressProvider->getIndexedCompanyBusinessUnitAddressList();
+
         $this->addAddressesParameter($customerAddresses, $companyBusinessUnitAddresses);
         $this->addCustomerAddressesParameter($customerAddresses);
         $this->addCompanyBusinessUnitAddressesParameter($companyBusinessUnitAddresses);

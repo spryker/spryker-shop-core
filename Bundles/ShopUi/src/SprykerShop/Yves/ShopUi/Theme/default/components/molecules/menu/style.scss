@@ -1,1 +1,3 @@
-@include shop-ui-menu();
+@include helper-import(molecule, menu) {
+    @include shop-ui-menu;
+}

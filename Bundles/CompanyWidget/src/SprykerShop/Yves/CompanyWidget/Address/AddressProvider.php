@@ -39,6 +39,10 @@ class AddressProvider implements AddressProviderInterface
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
+        if (!$customerTransfer) {
+            return false;
+        }
+
         return $customerTransfer->getCompanyUserTransfer() && ($this->getCompanyBusinessUnitAddressCollection($customerTransfer)->count() > 0);
     }
 
@@ -76,8 +80,10 @@ class AddressProvider implements AddressProviderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function mapCompanyBusinessUnitAddressToAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
-    {
+    protected function mapCompanyBusinessUnitAddressToAddress(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer,
+        CustomerTransfer $customerTransfer
+    ): AddressTransfer {
         $addressTransfer = (new AddressTransfer())
             ->fromArray($companyUnitAddressTransfer->modifiedToArray(), true);
 
@@ -166,8 +172,10 @@ class AddressProvider implements AddressProviderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function setAddressCustomerAttributes(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
-    {
+    protected function setAddressCustomerAttributes(
+        AddressTransfer $addressTransfer,
+        CustomerTransfer $customerTransfer
+    ): AddressTransfer {
         $addressTransfer = $addressTransfer->setLastName($customerTransfer->getLastName())
             ->setFirstName($customerTransfer->getFirstName())
             ->setSalutation($customerTransfer->getSalutation());
