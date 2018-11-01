@@ -1,1 +1,3 @@
-@include shop-ui-jumbotron();
+@include helper-import(molecule, jumbotron) {
+    @include shop-ui-jumbotron;
+}

@@ -1,1 +1,3 @@
-@include shop-ui-suggest-search;
+@include helper-import(molecule, suggest-search) {
+    @include shop-ui-suggest-search;
+}
