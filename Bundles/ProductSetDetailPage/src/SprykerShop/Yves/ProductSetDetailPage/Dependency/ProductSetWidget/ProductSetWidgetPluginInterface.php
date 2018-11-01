@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductSetDetailPage\Dependency\ProductSetWidget;
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('product-set', 'ProductSetWidget') instead.
+ */
 interface ProductSetWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ProductSetWidgetPlugin';

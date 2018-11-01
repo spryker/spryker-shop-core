@@ -10,16 +10,6 @@ namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
 interface ShoppingListPageToProductStorageClientInterface
 {
     /**
-     * @deprecated Use findProductConcreteStorageData($idProductConcrete, $localeName): ?array
-     *
-     * @param int $idProductConcrete
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function getProductConcreteStorageData($idProductConcrete, $localeName);
-
-    /**
      * @param int $idProductConcrete
      * @param string $localeName
      *

@@ -23,6 +23,17 @@ class CatalogPageToProductCategoryFilterClientBridge implements CatalogPageToPro
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer[] $facets
+     * @param array $productCategoryFilters
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     */
+    public function updateFacetsByCategory(array $facets, array $productCategoryFilters): array
+    {
+        return $this->productCategoryFilterClient->updateFacetsByCategory($facets, $productCategoryFilters);
+    }
+
+    /**
      * @param array $facets
      * @param int $idCategory
      * @param string $localeName

@@ -32,10 +32,5 @@ class ShareShoppingListRequiredIdConstraintValidator extends ConstraintValidator
         if (!$constraint instanceof ShareShoppingListRequiredIdConstraint) {
             throw new UnexpectedTypeException($constraint, ShareShoppingListRequiredIdConstraint::class);
         }
-
-        if (!($value->getIdCompanyBusinessUnit() xor $value->getIdCompanyUser())) {
-            $this->context->buildViolation(self::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_ERROR_ONE_ID_REQUIRED)
-                ->addViolation();
-        }
     }
 }

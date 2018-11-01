@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductImageWidge
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('simple-carousel') instead.
+ */
 interface ProductImageWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ProductImageWidgetPlugin';

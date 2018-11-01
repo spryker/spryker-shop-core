@@ -64,11 +64,13 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PAYMENT_METHOD_HANDLER = SprykerCheckoutDependencyProvider::PAYMENT_METHOD_HANDLER; // constant value must be BC because of dependency injector
     public const PAYMENT_SUB_FORMS = SprykerCheckoutDependencyProvider::PAYMENT_SUB_FORMS;  // constant value must be BC because of dependency injector
+
     public const CUSTOMER_STEP_SUB_FORMS = 'CUSTOMER_STEP_SUB_FORMS';
     public const ADDRESS_STEP_SUB_FORMS = 'ADDRESS_STEP_SUB_FORMS';
     public const ADDRESS_STEP_FORM_DATA_PROVIDER = 'ADDRESS_STEP_FORM_DATA_PROVIDER';
 
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    public const PLUGIN_SUB_FORM_FILTERS = 'PLUGIN_SUB_FORM_FILTERS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -93,6 +95,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addSubFormPluginCollection($container);
         $container = $this->addPaymentMethodHandlerPluginCollection($container);
+        $container = $this->addSubFormFilterPlugins($container);
         $container = $this->addCustomerStepHandlerPlugin($container);
         $container = $this->addShipmentHandlerPluginCollection($container);
         $container = $this->addShipmentFormDataProviderPlugin($container);
@@ -615,5 +618,27 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSubFormFilterPlugins(Container $container)
+    {
+        $container[static::PLUGIN_SUB_FORM_FILTERS] = function () {
+            return $this->getSubFormFilterPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
+     */
+    protected function getSubFormFilterPlugins()
+    {
+        return [];
     }
 }

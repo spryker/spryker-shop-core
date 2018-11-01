@@ -23,13 +23,18 @@
         {% endfor %}
     {% endif %}
 
-    {% include molecule('volume-price', 'PriceProductVolumeWidget') with {
-        attributes: {
-            'data-json': jsonVolumeProductPrices|json_encode()
-        },
-        data: {
-            amount: data.amount | money,
-            originalAmount: data.originalAmount
-        }
-    } only %}
+    {% if can('SeePricePermissionPlugin') %}
+        {% include molecule('volume-price', 'PriceProductVolumeWidget') with {
+            attributes: {
+                'data-json': jsonVolumeProductPrices|json_encode()
+            },
+            data: {
+                amount: data.amount,
+                originalAmount: data.originalAmount
+            }
+        } only %}
+    {% else %}
+        {{ 'customer.access.cannot_see_price' | trans }}
+    {% endif %}
+
 {% endblock %}

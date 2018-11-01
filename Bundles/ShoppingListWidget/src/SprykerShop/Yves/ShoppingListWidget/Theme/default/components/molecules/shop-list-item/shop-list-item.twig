@@ -9,7 +9,6 @@
 } %}
 
 {% block body %}
-
     {% set hasWriteAccess =  can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
 
     <div class="spacing-bottom spacing-bottom--small">
@@ -18,7 +17,6 @@
         </a>
         <span class="{{ config.name }}__owner">({{ data.shoppingList.owner }})</span>
     </div>
-
     <div class="spacing-bottom spacing-bottom--small">
         <span class="{{ config.name }}__items-count">
             {{ data.shoppingList.numberOfItems }}
@@ -32,5 +30,4 @@
             {% endif %}
         </span>
     </div>
-
 {% endblock %}

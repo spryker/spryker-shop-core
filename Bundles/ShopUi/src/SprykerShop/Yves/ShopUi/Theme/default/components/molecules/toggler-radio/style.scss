@@ -1,1 +1,3 @@
-@include shop-ui-toggler-radio;
+@include helper-import(molecule, toggler-radio) {
+    @include shop-ui-toggler-radio;
+}

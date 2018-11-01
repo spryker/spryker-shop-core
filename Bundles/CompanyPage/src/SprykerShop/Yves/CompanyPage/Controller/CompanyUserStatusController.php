@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -86,12 +87,22 @@ class CompanyUserStatusController extends AbstractCompanyController
     /**
      * @param int $idCompanyUser
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     protected function enableCompanyUser(int $idCompanyUser): CompanyUserResponseTransfer
     {
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
+
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->getCompanyUserById($companyUserTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyUserTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
 
         return $this->getFactory()
             ->getCompanyUserClient()
@@ -101,12 +112,22 @@ class CompanyUserStatusController extends AbstractCompanyController
     /**
      * @param int $idCompanyUser
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     protected function disableCompanyUser(int $idCompanyUser): CompanyUserResponseTransfer
     {
         $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($idCompanyUser);
+
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->getCompanyUserById($companyUserTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyUserTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
 
         return $this->getFactory()
             ->getCompanyUserClient()
@@ -129,21 +150,5 @@ class CompanyUserStatusController extends AbstractCompanyController
         }
 
         return false;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    protected function findCurrentCompanyUserTransfer(): ?CompanyUserTransfer
-    {
-        $currentCustomerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        if (!$currentCustomerTransfer) {
-            return null;
-        }
-
-        return $currentCustomerTransfer->getCompanyUserTransfer();
     }
 }

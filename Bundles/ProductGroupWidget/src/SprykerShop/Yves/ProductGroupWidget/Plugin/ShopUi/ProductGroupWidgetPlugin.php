@@ -8,9 +8,12 @@
 namespace SprykerShop\Yves\ProductGroupWidget\Plugin\ShopUi;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\ProductGroupWidget\ProductGroupWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductGroupWidget\ProductGroupWidgetFactory getFactory()
  */
 class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGroupWidgetPluginInterface
@@ -23,10 +26,10 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public function initialize($idProductAbstract, $template): void
     {
-        $this
-            ->addParameter('productGroupItems', $this->getProductGroups($idProductAbstract))
-            ->addParameter('idProductAbstract', $idProductAbstract)
-            ->addParameter('template', $template);
+        $widget = new ProductGroupWidget($idProductAbstract);
+
+        $this->parameters = $widget->getParameters();
+        $this->addParameter('template', $template);
     }
 
     /**
@@ -46,27 +49,6 @@ class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGr
      */
     public static function getTemplate(): string
     {
-        return '@ProductGroupWidget/views/product-group/product-group.twig';
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function getProductGroups($idProductAbstract)
-    {
-        $productGroup = $this->getFactory()->getProductGroupStorageClient()->findProductGroupItemsByIdProductAbstract($idProductAbstract);
-        $productViewTransfers = [];
-        foreach ($productGroup->getGroupProductAbstractIds() as $idProductAbstract) {
-            $productData = $this->getFactory()->getProductStorageClient()->findProductAbstractStorageData($idProductAbstract, $this->getLocale());
-            if (!$productData) {
-                continue;
-            }
-
-            $productViewTransfers[] = $this->getFactory()->getProductStorageClient()->mapProductStorageData($productData, $this->getLocale());
-        }
-
-        return $productViewTransfers;
+        return '@ProductGroupWidget/views/product-group-deprecated/product-group-deprecated.twig';
     }
 }

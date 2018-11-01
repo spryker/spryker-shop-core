@@ -1,0 +1,41 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-product-option-list'
+} %}
+
+{% define data = {
+    options: required
+} %}
+
+{% block body %}
+    <ul class="grid spacing-x spacing-x--small spacing-bottom spacing-bottom--big">
+    {% for child in data.options %}
+        <li class="{{ config.name }}__item col col--sm-6 col--lg-4">
+            <strong>{{ form_label(child) }}:</strong>
+
+            {% embed atom('select') with {
+                modifiers: ['expand'],
+                attributes: {
+                    name: child.vars.full_name,
+                },
+                embed: {
+                    options: child.vars.choices
+                }
+            } only %}
+                {% block options %}
+                    <option value="">{{ 'product.product_options_select' | trans }}</option>
+                    {% for option in embed.options %}
+                        <option value="{{option.data.getIdProductOptionValue}}" {% if option.data.getIsSelected %} selected {% endif %}>
+                            {{ option.data.getValue | trans }} {{ option.data.getPrice | money }}
+                        </option>
+                    {% endfor %}
+                {% endblock %}
+            {% endembed %}
+
+            {{ form_errors(child) }}
+            {% do child.setRendered %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

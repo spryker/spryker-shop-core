@@ -21,9 +21,9 @@ class CompanyController extends AbstractCompanyController
      */
     public function indexAction(Request $request)
     {
-        $companyUserTransfer = $this->getCompanyUser();
+        $companyUserTransfer = $this->findCurrentCompanyUserTransfer();
         $data = [
-            'company' => $this->getCompanyUser()->getCompanyBusinessUnit()->getCompany(),
+            'company' => $this->findCurrentCompanyUserTransfer()->getCompanyBusinessUnit()->getCompany(),
         ];
 
         if ($this->getFactory()->createCompanyUserValidator()->hasBusinessUnit($companyUserTransfer)) {
