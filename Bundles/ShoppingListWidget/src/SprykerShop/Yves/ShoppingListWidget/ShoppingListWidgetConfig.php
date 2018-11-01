@@ -22,11 +22,6 @@ class ShoppingListWidgetConfig extends AbstractBundleConfig
     public const SHOPPING_LIST_REDIRECT_URL = 'shopping-list/details';
 
     /**
-     * @see \SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST
-     */
-    public const SHOPPING_LISTS_REDIRECT_URL = 'shopping-list';
-
-    /**
      * @return string
      */
     public function getShoppingListDefaultName(): string
