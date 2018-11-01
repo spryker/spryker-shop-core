@@ -44,7 +44,7 @@
                             }
                         } only %}
                             {% block body %}
-                                {% if embed.order is defined %}
+                                {% if embed.order is not empty %}
                                     <td>{{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, embed.concreteItem) }}</td>
                                 {% endif %}
                                 {{ parent() }}
