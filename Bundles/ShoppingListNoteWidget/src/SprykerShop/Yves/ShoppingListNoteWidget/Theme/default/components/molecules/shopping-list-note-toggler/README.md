@@ -1,6 +1,6 @@
 # shopping-list-note-toggler (molecule)
 
-Displays a list of form rows in which includes SKU and quontity fields.
+Displays a simple link which on click toggle text area field.
 
 ## Code sample 
 
