@@ -32,16 +32,24 @@
                     {% if widgetExists('OrderDetailProductPackagingUnitWidgetPlugin') %}
                         {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item, data.currencyIsoCode) }} {# @deprecated Use molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget') instead. #}
                     {% else %}
-                        {% include [
-                            molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget'),
-                            molecule('order-detail-product-packaging-unit-default', 'CustomerPage'),
-                        ] ignore missing with {
+                        {% embed molecule('order-detail-product-packaging-unit-default', 'CustomerPage') with {
                             data: {
                                 concreteItem: item,
                                 currencyIsoCode: data.currencyIsoCode,
                                 concreteItemDefault: concreteItem
+                            },
+                            embed: {
+                                order: data.order,
+                                concreteItem: concreteItem
                             }
                         } only %}
+                            {% block body %}
+                                {% if embed.order is defined %}
+                                    <td>{{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, embed.concreteItem) }}</td>
+                                {% endif %}
+                                {{ parent() }}
+                            {% endblock %}
+                        {% endembed %}
                     {% endif %}
                 {% endblock %}
 

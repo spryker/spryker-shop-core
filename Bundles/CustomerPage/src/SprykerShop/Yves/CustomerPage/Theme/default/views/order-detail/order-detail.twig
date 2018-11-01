@@ -29,9 +29,7 @@
         {% embed molecule('order-detail-table', 'CustomerPage') with {
             data: {
                 items: data.orderItems,
-                currencyIsoCode: data.order.currencyIsoCode
-            },
-            embed: {
+                currencyIsoCode: data.order.currencyIsoCode,
                 order: data.order
             }
         } only %}
@@ -45,13 +43,6 @@
             {% endblock %}
             {% block detailRow %}
                 <td></td>
-                {{parent()}}
-            {% endblock %}
-
-            {% block row %}
-                <td>
-                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, concreteItem) }}
-                </td>
                 {{parent()}}
             {% endblock %}
         {% endembed %}
