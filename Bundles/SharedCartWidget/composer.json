@@ -1,12 +1,13 @@
 {
   "name": "spryker-shop/shared-cart-widget",
+  "type": "library",
   "description": "SharedCartWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/customer": "^7.0.0",
-    "spryker/kernel": "^3.19.0",
+    "spryker/kernel": "^3.24.0",
     "spryker/multi-cart": "^1.3.0",
     "spryker/shared-cart": "^1.2.0"
   },

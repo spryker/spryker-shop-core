@@ -11,17 +11,31 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
+use Spryker\Yves\Kernel\View\View;
+use SprykerShop\Yves\CompanyPage\Form\CompanyUserForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
 class UserController extends AbstractCompanyController
 {
+    use PermissionAwareTrait;
+
     public const COMPANY_USER_LIST_SORT_FIELD = 'id_company_user';
 
-    protected const SUCCESS_MESSAGE_DELETED = 'company.account.company_user.delete.successful';
+    protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
+    protected const SUCCESS_MESSAGE_COMPANY_USER_CREATE = 'company.account.company_user.create.successful';
+    protected const SUCCESS_MESSAGE_COMPANY_USER_UPDATE = 'company.account.company_user.update.successful';
+
+    protected const ERROR_MESSAGE_DELETE_COMPANY_USER = 'company.account.company_user.delete.error';
+    protected const ERROR_MESSAGE_DELETE_YOURSELF = 'company.account.company_user.delete.error.delete_yourself';
+    protected const ERROR_MESSAGE_COMPANY_USER_ASSIGN_EMPTY_ROLES = 'company.account.company_user.assign_roles.empty_roles.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -51,6 +65,7 @@ class UserController extends AbstractCompanyController
         return [
             'pagination' => $companyUserCollectionTransfer->getPagination(),
             'companyUserCollection' => $companyUserCollectionTransfer->getCompanyUsers(),
+            'currentCompanyUser' => $this->findCurrentCompanyUserTransfer(),
         ];
     }
 
@@ -73,29 +88,42 @@ class UserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeCreateAction(Request $request)
     {
+        if (!$this->can(AddCompanyUserPermissionPlugin::KEY)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $dataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->createCompanyUserFormDataProvider();
 
+        $companyUserFormOptions = $dataProvider->getOptions(
+            $this->findCurrentCompanyUserTransfer()->getFkCompany()
+        );
         $companyUserForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getCompanyUserForm(
-                $dataProvider->getOptions(
-                    $this->getCompanyUser()->getFkCompany()
-                )
-            )
+            ->getCompanyUserForm($companyUserFormOptions)
             ->handleRequest($request);
 
         if ($companyUserForm->isSubmitted() === false) {
-            $companyUserForm->setData($dataProvider->getData($this->getCompanyUser()->getFkCompany()));
-        } elseif ($companyUserForm->isValid()) {
+            $companyUserForm->setData($dataProvider->getData(
+                $this->findCurrentCompanyUserTransfer()->getFkCompany(),
+                null,
+                $companyUserFormOptions
+            ));
+        }
+
+        if ($companyUserForm->isValid()) {
             $companyUserResponseTransfer = $this->createCompanyUser($companyUserForm->getData());
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_CREATE);
+
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
             }
 
@@ -126,6 +154,8 @@ class UserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeUpdateAction(Request $request)
@@ -138,23 +168,28 @@ class UserController extends AbstractCompanyController
             ->createCompanyPageFormFactory()
             ->getCompanyUserForm(
                 $dataProvider->getOptions(
-                    $this->getCompanyUser()->getFkCompany()
+                    $this->findCurrentCompanyUserTransfer()->getFkCompany()
                 )
             )
             ->handleRequest($request);
 
         if ($companyUserForm->isSubmitted() === false) {
             $idCompanyUser = $request->query->getInt('id');
-            $companyUserForm->setData(
-                $dataProvider->getData(
-                    $this->getCompanyUser()->getFkCompany(),
-                    $idCompanyUser
-                )
-            );
-        } elseif ($companyUserForm->isValid()) {
+            $data = $dataProvider->getData($this->findCurrentCompanyUserTransfer()->getFkCompany(), $idCompanyUser);
+
+            if (!$this->isCurrentCustomerRelatedToCompany($data[CompanyUserForm::FIELD_FK_COMPANY])) {
+                throw new NotFoundHttpException();
+            }
+
+            $companyUserForm->setData($data);
+        }
+
+        if ($companyUserForm->isValid()) {
             $companyUserResponseTransfer = $this->updateCompanyUser($companyUserForm->getData());
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_UPDATE);
+
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
             }
 
@@ -169,18 +204,88 @@ class UserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
         $idCompanyUser = $request->query->getInt('id');
-        $companyUserTransfer = new CompanyUserTransfer();
-        $companyUserTransfer->setIdCompanyUser($idCompanyUser);
-        $this->getFactory()->getCompanyUserClient()->deleteCompanyUser($companyUserTransfer);
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($idCompanyUser);
 
-        $this->addSuccessMessage(static::SUCCESS_MESSAGE_DELETED);
+        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
+        if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_YOURSELF);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->getCompanyUserById($companyUserTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyUserTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
+
+        $companyUserResponseTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->deleteCompanyUser($companyUserTransfer);
+
+        if ($companyUserResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_DELETE);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_COMPANY_USER);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function confirmDeleteAction(Request $request): View
+    {
+        $viewData = $this->executeConfirmDeleteAction($request);
+
+        return $this->view($viewData, [], '@CompanyPage/views/user-delete/user-delete.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return array
+     */
+    protected function executeConfirmDeleteAction(Request $request): array
+    {
+        $idCompanyUser = $request->query->getInt('id');
+
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($idCompanyUser);
+
+        $companyUserTransfer->requireIdCompanyUser();
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->getCompanyUserById($companyUserTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyUserTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
+
+        $companyUserTransfer->requireCustomer();
+        $customerTransfer = $companyUserTransfer->getCustomer();
+
+        return [
+            'idCompanyUser' => $idCompanyUser,
+            'customer' => $customerTransfer,
+        ];
     }
 
     /**
@@ -191,7 +296,7 @@ class UserController extends AbstractCompanyController
     protected function createCompanyUserCriteriaFilterTransfer(Request $request): CompanyUserCriteriaFilterTransfer
     {
         $criteriaFilterTransfer = new CompanyUserCriteriaFilterTransfer();
-        $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
+        $criteriaFilterTransfer->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
 
         $filterTransfer = $this->createFilterTransfer(self::COMPANY_USER_LIST_SORT_FIELD);
         $criteriaFilterTransfer->setFilter($filterTransfer);

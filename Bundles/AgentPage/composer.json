@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/agent-page",
+  "type": "library",
   "description": "AgentPage module",
   "license": "proprietary",
   "require": {

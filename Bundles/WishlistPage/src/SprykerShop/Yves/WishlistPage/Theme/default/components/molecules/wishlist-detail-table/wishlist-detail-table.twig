@@ -24,8 +24,9 @@
             <tbody>
             {% for item in data.wishlistItems %}
                 {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
-                {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                    {% set isDiscontinued = widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %}
+                {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [item.sku]) %}
+                {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued ?? widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %} {# @deprecated Use ProductDiscontinuedWidget instead of ProductDiscontinuedWidgetPlugin. #}
+                {% if isDiscontinued is not null %}
                     {% set isItemAvailable = not isDiscontinued and isItemAvailable %}
                 {% endif %}
                 <tr>
@@ -69,11 +70,11 @@
                         {% if isItemAvailable %}
                             {{ 'customer.account.wishlist.available' | trans }}
                         {% else %}
-                            {% if widgetExists('ProductDiscontinuedWidgetPlugin') %}
-                                {{ widget('ProductDiscontinuedWidgetPlugin', item.sku) }}
-                            {% else %}
+                            {% widget 'ProductDiscontinuedWidget' args [item.sku] use view('wishlist-product-discontinued', 'ProductDiscontinuedWidget') only %}
+                            {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [item.sku] use view('wishlist-product-discontinued', 'ProductDiscontinuedWidget') only %} {# @deprecated Use ProductDiscontinuedWidget instead. #}
+                            {% nowidget %}
                                 {{ 'customer.account.wishlist.not_available' | trans }}
-                            {% endif %}
+                            {% endwidget %}
                         {% endif %}
                     </td>
                     <td>
@@ -111,9 +112,9 @@
                         </ul>
                     </td>
                 </tr>
-                {% if widgetExists('ProductAlternativeWidgetPlugin') %}
-                    {{ widget('ProductAlternativeWidgetPlugin', item, data.wishlistName) }}
-                {% endif %}
+                {% widget 'WishlistProductAlternativeWidget' args [item, data.wishlistName] only %}
+                {% elsewidget 'ProductAlternativeWidgetPlugin' args [item, data.wishlistName] only %} {# @deprecated Use WishlistProductAlternativeWidget instead. #}
+                {% endwidget %}
             {% endfor %}
             </tbody>
         </table>

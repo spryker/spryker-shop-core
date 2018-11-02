@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\AvailabilityWidge
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead.
+ */
 interface AvailabilityWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'AvailabilityWidgetPlugin';

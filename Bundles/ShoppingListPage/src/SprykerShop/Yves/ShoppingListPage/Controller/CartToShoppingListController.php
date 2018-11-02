@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
-use SprykerShop\Yves\CartToShoppingListWidget\CartToShoppingListWidgetConfig;
+use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 class CartToShoppingListController extends AbstractShoppingListController
@@ -50,8 +50,7 @@ class CartToShoppingListController extends AbstractShoppingListController
                 ->createShoppingListFromCart($cartToShoppingListForm);
 
             $this->addSuccessMessage(static::GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS);
-
-            return $this->redirectResponseInternal(CartToShoppingListWidgetConfig::SHOPPING_LIST_REDIRECT_URL, [
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $shoppingListTransfer->getIdShoppingList(),
             ]);
         }

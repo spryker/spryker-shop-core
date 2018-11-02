@@ -1,10 +1,11 @@
 {
   "name": "spryker-shop/shop-ui",
+  "type": "library",
   "description": "ShopUi module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.16.0",
+    "spryker/kernel": "^3.24.0",
     "spryker/twig": "^3.3.1"
   },
   "require-dev": {

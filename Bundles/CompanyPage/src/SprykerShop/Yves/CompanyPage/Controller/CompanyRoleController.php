@@ -12,13 +12,22 @@ use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use SprykerShop\Yves\CompanyPage\Form\CompanyRoleForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CompanyRoleController extends AbstractCompanyController
 {
     public const COMPANY_ROLE_SORT_FIELD = 'id_company_role';
+
+    protected const SUCCESS_MESSAGE_COMPANY_ROLE_DELETE = 'company.account.company_role.delete.successful';
+    protected const SUCCESS_MESSAGE_COMPANY_ROLE_CREATE = 'company.account.company_role.create.successful';
+    protected const SUCCESS_MESSAGE_COMPANY_ROLE_UPDATE = 'company.account.company_role.update.successful';
+    protected const PARAMETER_ID_COMPANY_ROLE = 'id';
+    protected const ERROR_MESSAGE_DEFAULT_COMPANY_ROLE_DELETE = 'company.account.company_role.delete.error.default_role';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -65,6 +74,8 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     protected function executeDetailsAction(Request $request): array
@@ -76,6 +87,10 @@ class CompanyRoleController extends AbstractCompanyController
             ->getCompanyRoleClient()
             ->getCompanyRoleById($companyRoleTransfer);
 
+        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
+
         $companyRolePermissions = $this->getFactory()
             ->getCompanyRoleClient()
             ->findCompanyRolePermissions($companyRoleTransfer);
@@ -86,11 +101,14 @@ class CompanyRoleController extends AbstractCompanyController
             'companyRole' => $companyRoleTransfer,
             'permissions' => $companyRolePermissions->getPermissions(),
             'companyUserCollection' => $companyUserCollection->getCompanyUsers(),
+            'currentCompanyUser' => $this->findCurrentCompanyUserTransfer(),
         ];
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -100,10 +118,84 @@ class CompanyRoleController extends AbstractCompanyController
         $companyRoleTransfer = new CompanyRoleTransfer();
         $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
 
+        $companyRoleTransfer = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->getCompanyRoleById($companyRoleTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
+
         $companyRoleResponseTransfer = $this->getFactory()->getCompanyRoleClient()->deleteCompanyRole($companyRoleTransfer);
+
+        if ($companyRoleResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_ROLE_DELETE);
+        }
+
         $this->processResponseMessages($companyRoleResponseTransfer);
 
         return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmDeleteAction(Request $request)
+    {
+        $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
+
+        $companyRoleTransfer = (new CompanyRoleTransfer())
+            ->setIdCompanyRole($idCompanyRole);
+
+        $companyRoleTransfer = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->getCompanyRoleById($companyRoleTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
+
+        if ($companyRoleTransfer->getIsDefault()) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_DEFAULT_COMPANY_ROLE_DELETE);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+        }
+
+        return $this->executeConfirmDeleteAction($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    protected function executeConfirmDeleteAction(Request $request)
+    {
+        $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
+
+        $companyRoleTransfer = (new CompanyRoleTransfer())
+            ->setIdCompanyRole($idCompanyRole);
+
+        $companyRoleTransfer = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->getCompanyRoleById($companyRoleTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
+
+        $viewData = [
+            'idCompanyRole' => $idCompanyRole,
+            'role' => $companyRoleTransfer,
+        ];
+
+        return $this->view($viewData, [], '@CompanyPage/views/role-delete/role-delete.twig');
     }
 
     /**
@@ -140,13 +232,15 @@ class CompanyRoleController extends AbstractCompanyController
             ->handleRequest($request);
 
         if ($companyRoleForm->isSubmitted() === false) {
-            $idCompany = $this->getCompanyUser()->getFkCompany();
+            $idCompany = $this->findCurrentCompanyUserTransfer()->getFkCompany();
             $companyRoleForm->setData($dataProvider->getData($idCompany));
         }
 
         if ($companyRoleForm->isSubmitted() && $companyRoleForm->isValid()) {
             $companyRoleResponseTransfer = $this->createCompanyRole($companyRoleForm->getData());
             if ($companyRoleResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_ROLE_CREATE);
+
                 return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
             }
 
@@ -177,6 +271,8 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeUpdateAction(Request $request)
@@ -191,20 +287,29 @@ class CompanyRoleController extends AbstractCompanyController
             ->getCompanyRoleForm()
             ->handleRequest($request);
 
+        $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
+
         if ($companyRoleForm->isSubmitted() === false) {
-            $idCompanyRole = $request->query->getInt('id');
-            $idCompany = $this->getCompanyUser()->getFkCompany();
-            $companyRoleForm->setData($dataProvider->getData($idCompany, $idCompanyRole));
+            $idCompany = $this->findCurrentCompanyUserTransfer()->getFkCompany();
+            $data = $dataProvider->getData($idCompany, $idCompanyRole);
+
+            if (!$this->isCurrentCustomerRelatedToCompany($data[CompanyRoleForm::FIELD_FK_COMPANY])) {
+                throw new NotFoundHttpException();
+            }
+            $companyRoleForm->setData($data);
         }
 
         if ($companyRoleForm->isSubmitted() && $companyRoleForm->isValid()) {
             $this->updateCompanyRole($companyRoleForm->getData());
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_ROLE_UPDATE);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
         }
 
         return [
             'companyRoleForm' => $companyRoleForm->createView(),
+            'idCompanyRole' => $idCompanyRole,
+            'permissions' => $this->getSelectablePermissionsList($idCompanyRole)->getPermissions(),
         ];
     }
 
@@ -217,7 +322,7 @@ class CompanyRoleController extends AbstractCompanyController
     {
         $criteriaFilterTransfer = new CompanyRoleCriteriaFilterTransfer();
 
-        $criteriaFilterTransfer->setIdCompany($this->getCompanyUser()->getFkCompany());
+        $criteriaFilterTransfer->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
         $criteriaFilterTransfer->setPagination($this->createPaginationTransfer($request));
         $criteriaFilterTransfer->setFilter($this->createFilterTransfer(static::COMPANY_ROLE_SORT_FIELD));
 
@@ -275,5 +380,20 @@ class CompanyRoleController extends AbstractCompanyController
         }
 
         return $companyUserCollection;
+    }
+
+    /**
+     * @param int $idCompanyRole
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    protected function getSelectablePermissionsList(int $idCompanyRole): PermissionCollectionTransfer
+    {
+        $companyRoleTransfer = (new CompanyRoleTransfer())
+            ->setIdCompanyRole($idCompanyRole);
+
+        return $this->getFactory()
+            ->getCompanyRoleClient()
+            ->findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
     }
 }

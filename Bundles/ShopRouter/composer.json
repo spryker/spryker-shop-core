@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/shop-router",
+  "type": "library",
   "description": "ShopRouter module",
   "license": "proprietary",
   "require": {

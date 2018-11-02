@@ -14,6 +14,8 @@ use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandler;
 use SprykerShop\Yves\ShoppingListPage\Business\AddToCartHandlerInterface;
 use SprykerShop\Yves\ShoppingListPage\Business\CreateFromCartHandler;
 use SprykerShop\Yves\ShoppingListPage\Business\CreateFromCartHandlerInterface;
+use SprykerShop\Yves\ShoppingListPage\Business\SharedShoppingListReader;
+use SprykerShop\Yves\ShoppingListPage\Business\SharedShoppingListReaderInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
@@ -73,7 +75,11 @@ class ShoppingListPageFactory extends AbstractFactory
      */
     public function createShoppingListFormDataProvider(): ShoppingListFormDataProvider
     {
-        return new ShoppingListFormDataProvider($this->getShoppingListClient(), $this->getCustomerClient());
+        return new ShoppingListFormDataProvider(
+            $this->getShoppingListClient(),
+            $this->getCustomerClient(),
+            $this->getShoppingListFormDataProviderMapperPlugins()
+        );
     }
 
     /**
@@ -90,6 +96,14 @@ class ShoppingListPageFactory extends AbstractFactory
     public function createAddToCartHandler(): AddToCartHandlerInterface
     {
         return new AddToCartHandler($this->getShoppingListClient(), $this->getCustomerClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Business\SharedShoppingListReaderInterface
+     */
+    public function createSharedShoppingListReader(): SharedShoppingListReaderInterface
+    {
+        return new SharedShoppingListReader($this->getCompanyUserClient(), $this->getCompanyBusinessUnitClient());
     }
 
     /**
@@ -125,6 +139,14 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListItemFormExpanderPluginInterface[]
+     */
+    public function getShoppingListItemFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS);
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig
      */
     public function getBundleConfig(): ShoppingListPageConfig
@@ -133,17 +155,17 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @param int $idShoppingList
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getShareShoppingListForm(int $idShoppingList): FormInterface
+    public function getShareShoppingListForm(ShoppingListTransfer $shoppingListTransfer): FormInterface
     {
         $shareShoppingListFormDataProvider = $this->createShareShoppingListFormDataProvider();
 
         return $this->getFormFactory()->create(
             ShareShoppingListForm::class,
-            $shareShoppingListFormDataProvider->getData($idShoppingList),
+            $shareShoppingListFormDataProvider->getData($shoppingListTransfer),
             $shareShoppingListFormDataProvider->getOptions()
         );
     }
@@ -202,6 +224,14 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[]
+     */
+    public function getShoppingListFormDataProviderMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_FORM_DATA_PROVIDER_MAPPERS);
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFromCartFormDataProvider
      */
     public function createCartFromShoppingListFormDataProvider(): ShoppingListFromCartFormDataProvider
@@ -234,5 +264,21 @@ class ShoppingListPageFactory extends AbstractFactory
     public function createCreateFromCartHandler(): CreateFromCartHandlerInterface
     {
         return new CreateFromCartHandler($this->getShoppingListClient(), $this->getCustomerClient());
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getShoppingListEditWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_EDIT_WIDGETS);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getShoppingListOverviewWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_OVERVIEW_WIDGETS);
     }
 }
