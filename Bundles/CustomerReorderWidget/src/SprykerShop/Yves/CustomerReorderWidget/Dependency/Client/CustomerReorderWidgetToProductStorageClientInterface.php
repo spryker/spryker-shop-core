@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
-interface CustomerReorderWidgetToCustomerClientInterface
+interface CustomerReorderWidgetToProductStorageClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @param int $idProductConcrete
+     *
+     * @return bool
      */
-    public function getCustomer();
+    public function isProductConcreteRestricted(int $idProductConcrete): bool;
 }
