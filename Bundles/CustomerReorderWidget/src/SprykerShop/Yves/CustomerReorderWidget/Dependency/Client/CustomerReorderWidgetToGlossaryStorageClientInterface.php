@@ -7,10 +7,14 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
-interface CustomerReorderWidgetToCustomerClientInterface
+interface CustomerReorderWidgetToGlossaryStorageClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @param string $key
+     * @param string $localeName
+     * @param array $parameters
+     *
+     * @return string
      */
-    public function getCustomer();
+    public function translate($key, $localeName, array $parameters = []);
 }
