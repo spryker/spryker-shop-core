@@ -1,6 +1,5 @@
 # form-data-injector (molecule)
 
-Displays a link which on click add shopping cart to shopping list.
 
 ## Code sample 
 
