@@ -33,8 +33,8 @@
                         {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item, data.currencyIsoCode) }} {# @deprecated Use molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget') instead. #}
                     {% else %}
                         {% embed [
-                                molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget'),
-                                molecule('order-detail-product-packaging-unit-default', 'CustomerPage'),
+                            molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget'),
+                            molecule('order-detail-product-packaging-unit-default', 'CustomerPage'),
                         ] ignore missing with {
                             data: {
                                 concreteItem: item,
