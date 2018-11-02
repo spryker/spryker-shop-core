@@ -7,25 +7,64 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
-use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToLocaleClientInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface;
 
 class ItemFetcher implements ItemFetcherInterface
 {
+    protected const MESSAGE_PARAM_SKU = '%sku%';
+    protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'reorder.info.restricted-product.removed';
+
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface
      */
     protected $productBundleClient;
 
     /**
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface
+     */
+    protected $productStorageClient;
+
+    /**
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientInterface
+     */
+    protected $messengerClient;
+
+    /**
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToGlossaryStorageClientInterface
+     */
+    protected $glossaryStorageClient;
+
+    /**
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToLocaleClientInterface
+     */
+    protected $localeClient;
+
+    /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface $productStorageClient
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientInterface $messengerClient
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToGlossaryStorageClientInterface $glossaryStorageClient
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToLocaleClientInterface $localeClient
      */
     public function __construct(
-        CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
+        CustomerReorderWidgetToProductBundleClientInterface $productBundleClient,
+        CustomerReorderWidgetToProductStorageClientInterface $productStorageClient,
+        CustomerReorderWidgetToMessengerClientInterface $messengerClient,
+        CustomerReorderWidgetToGlossaryStorageClientInterface $glossaryStorageClient,
+        CustomerReorderWidgetToLocaleClientInterface $localeClient
     ) {
         $this->productBundleClient = $productBundleClient;
+        $this->productStorageClient = $productStorageClient;
+        $this->messengerClient = $messengerClient;
+        $this->glossaryStorageClient = $glossaryStorageClient;
+        $this->localeClient = $localeClient;
     }
 
     /**
@@ -61,64 +100,82 @@ class ItemFetcher implements ItemFetcherInterface
      */
     protected function getOrderItemsTransfer(OrderTransfer $orderTransfer): array
     {
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setItems($orderTransfer->getItems());
-        $quoteTransfer->setBundleItems($orderTransfer->getBundleItems());
-        $items = $this->productBundleClient
-            ->getItemsWithBundlesItems($quoteTransfer);
+        $itemTransfers = $this->productBundleClient
+            ->getItemsWithBundlesItems(
+                (new QuoteTransfer())
+                    ->setItems($orderTransfer->getItems())
+                    ->setBundleItems($orderTransfer->getBundleItems())
+            );
 
-        return $this->cleanUpItems($items);
+        return $this->cleanUpItems($itemTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function cleanUpItems(array $items): array
+    protected function cleanUpItems(array $itemTransfers): array
     {
         $cleanItems = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($this->productStorageClient->isProductConcreteRestricted($itemTransfer->getId())) {
+                $this->addInfoMessage($itemTransfer);
 
-        foreach ($items as $item) {
-            $idSaleOrderItem = $item->getIdSalesOrderItem();
-            $item->setIdSalesOrderItem(null);
-            $item->setIsOrdered(false);
-            $cleanProductOptions = $this->cleanUpProductOptions($item->getProductOptions());
-            $item->setProductOptions($cleanProductOptions);
+                continue;
+            }
 
-            $cleanItems[$idSaleOrderItem] = $item;
+            $idSaleOrderItem = $itemTransfer->getIdSalesOrderItem();
+            $itemTransfer->setIdSalesOrderItem(null);
+            $itemTransfer->setIsOrdered(false);
+            $itemTransfer = $this->cleanUpProductOptions($itemTransfer);
+
+            $cleanItems[$idSaleOrderItem] = $itemTransfer;
         }
 
         return $cleanItems;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptions
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return void
      */
-    protected function cleanUpProductOptions(ArrayObject $productOptions): ArrayObject
+    protected function addInfoMessage(ItemTransfer $itemTransfer): void
     {
-        $cleanProductOptions = [];
+        $translatedMessage = $this->glossaryStorageClient->translate(
+            static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED,
+            $this->localeClient->getCurrentLocale(),
+            [static::MESSAGE_PARAM_SKU => $itemTransfer->getSku()]
+        );
 
-        foreach ($productOptions as $productOption) {
-            $productOption->setIsOrdered(false);
-            $cleanProductOptions[] = $productOption;
-        }
-
-        return new ArrayObject($cleanProductOptions);
+        $this->messengerClient->addInfoMessage($translatedMessage);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function cleanUpProductOptions(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $productOptionTransfer->setIsOrdered(false);
+        }
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param int[] $idOrderItems
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function filterById(array $items, array $idOrderItems): array
+    protected function filterById(array $itemTransfers, array $idOrderItems): array
     {
         $allowed_keys = array_flip($idOrderItems);
-        $filteredItems = array_intersect_key($items, $allowed_keys);
+        $filteredItems = array_intersect_key($itemTransfers, $allowed_keys);
 
         return $filteredItems;
     }

@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
-interface CustomerReorderWidgetToCustomerClientInterface
+interface CustomerReorderWidgetToLocaleClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return string
      */
-    public function getCustomer();
+    public function getCurrentLocale();
 }

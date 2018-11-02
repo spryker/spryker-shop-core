@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
-interface CustomerReorderWidgetToCustomerClientInterface
+interface CustomerReorderWidgetToMessengerClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @param string $message
+     *
+     * @return void
      */
-    public function getCustomer();
+    public function addInfoMessage($message);
 }
