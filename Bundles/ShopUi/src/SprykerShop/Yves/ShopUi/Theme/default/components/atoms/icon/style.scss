@@ -1,1 +1,3 @@
-@include shop-ui-icon();
+@include helper-import(atom, icon) {
+    @include shop-ui-icon();
+}

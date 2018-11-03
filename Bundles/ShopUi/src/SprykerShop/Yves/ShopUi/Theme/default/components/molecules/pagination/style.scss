@@ -1,1 +1,3 @@
-@include shop-ui-pagination();
+@include helper-import(molecule, pagination) {
+    @include shop-ui-pagination;
+}
