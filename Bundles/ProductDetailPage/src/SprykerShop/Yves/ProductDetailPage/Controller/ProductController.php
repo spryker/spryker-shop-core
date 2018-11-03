@@ -9,9 +9,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Controller;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Shared\Storage\StorageConstants;
+use SprykerShop\Yves\ProductDetailPage\Exception\ProductAccessDeniedException;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Client\Product\ProductClientInterface getClient()
@@ -24,6 +24,8 @@ class ProductController extends AbstractController
     public const PARAM_ATTRIBUTE = 'attribute';
 
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
+
+    protected const GLOSSARY_KEY_PRODUCT_ACCESS_DENIED = 'product.access.denied';
 
     /**
      * @param array $productData
@@ -46,19 +48,15 @@ class ProductController extends AbstractController
      * @param array $productData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array
      */
     protected function executeDetailAction(array $productData, Request $request): array
     {
-        if (!empty($productData['id_product_abstract']) && $this->isProductAbstractRestricted($productData['id_product_abstract'])) {
-            throw new NotFoundHttpException();
-        }
-
         $productViewTransfer = $this->getFactory()
             ->getProductStorageClient()
             ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request));
+
+        $this->assertProductRestrictions($productViewTransfer);
 
         return [
             'product' => $productViewTransfer,
@@ -67,15 +65,58 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return bool
+     * @return void
      */
-    protected function isProductAbstractRestricted(int $idProductAbstract): bool
+    protected function assertProductRestrictions(ProductViewTransfer $productViewTransfer): void
     {
-        return $this->getFactory()
+        $this->assertProductAbstractRestrictions($productViewTransfer);
+        $this->assertProductConcreteRestrictions($productViewTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @throws \SprykerShop\Yves\ProductDetailPage\Exception\ProductAccessDeniedException
+     *
+     * @return void
+     */
+    protected function assertProductAbstractRestrictions(ProductViewTransfer $productViewTransfer): void
+    {
+        if (empty($productViewTransfer->getIdProductAbstract())) {
+            return;
+        }
+
+        $poductAbstractRestricted = $this->getFactory()
             ->getProductStorageClient()
-            ->isProductAbstractRestricted($idProductAbstract);
+            ->isProductAbstractRestricted($productViewTransfer->getIdProductAbstract());
+
+        if ($poductAbstractRestricted) {
+            throw new ProductAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @throws \SprykerShop\Yves\ProductDetailPage\Exception\ProductAccessDeniedException
+     *
+     * @return void
+     */
+    protected function assertProductConcreteRestrictions(ProductViewTransfer $productViewTransfer): void
+    {
+        if (empty($productViewTransfer->getIdProductConcrete())) {
+            return;
+        }
+
+        $productConcreteRestricted = $this->getFactory()
+            ->getProductStorageClient()
+            ->isProductConcreteRestricted($productViewTransfer->getIdProductConcrete());
+
+        if ($productConcreteRestricted) {
+            throw new ProductAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
+        }
     }
 
     /**

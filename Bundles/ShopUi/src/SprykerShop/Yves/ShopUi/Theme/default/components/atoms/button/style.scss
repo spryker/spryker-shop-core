@@ -1,1 +1,3 @@
-@include shop-ui-button;
+@include helper-import(atom, button) {
+    @include shop-ui-button;
+}

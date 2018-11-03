@@ -1,7 +1,11 @@
 @mixin company-page-address-delete-message($name: '.address-delete-message') {
     #{$name} {
+        &__delete-title {
+            color: map-get($setting-color-actions, alert);
+        }
+
         &__delete-message {
-            color: map-get($setting-color-actions, 'alert');
+            @include helper-font-weight(bold);
         }
 
         &__address {
