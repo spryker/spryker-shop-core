@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CustomerPageConfig extends AbstractBundleConfig
 {
-    protected const MIN_LENGTH_CUSTOMER_PASSWORD = 8;
+    protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
     /**
      * @return string
