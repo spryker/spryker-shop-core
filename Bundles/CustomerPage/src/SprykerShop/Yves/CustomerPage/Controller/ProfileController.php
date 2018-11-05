@@ -60,10 +60,12 @@ class ProfileController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_PROFILE);
         }
 
+        $passwordFormDataProvider = $this->getFactory()->createCustomerFormFactory()->createPasswordFormDataProvider();
+
         $passwordForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->getPasswordForm()
+            ->getPasswordForm($passwordFormDataProvider->getOptions())
             ->handleRequest($request);
 
         if ($passwordForm->isSubmitted() && $passwordForm->isValid() && $this->processPasswordUpdate($passwordForm->getData()) === true) {
