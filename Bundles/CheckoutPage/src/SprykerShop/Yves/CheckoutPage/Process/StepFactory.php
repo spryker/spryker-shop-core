@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process;
 
+use Spryker\Shared\Checkout\CheckoutConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
 use Spryker\Yves\StepEngine\Process\StepCollection;
@@ -202,7 +203,7 @@ class StepFactory extends AbstractFactory
             CheckoutPageControllerProvider::CHECKOUT_PLACE_ORDER,
             HomePageControllerProvider::ROUTE_HOME,
             [
-                'general fail' => CartControllerProvider::ROUTE_CART,
+                CheckoutConstants::CHECKOUT_GENERAL_FAIL_ERROR_CODE => CartControllerProvider::ROUTE_CART,
                 'payment failed' => CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
                 'shipment failed' => CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
             ]
