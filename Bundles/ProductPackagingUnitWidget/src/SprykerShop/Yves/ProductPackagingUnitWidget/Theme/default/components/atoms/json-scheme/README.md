@@ -1,6 +1,6 @@
-# json-scheme (molecule)
+# json-scheme (atom)
 
-
+Renders a json data as attribute into html tag.
 
 ## Code sample 
 
