@@ -76,6 +76,12 @@
                     </tr>
                 {% else %}
                     {% if concreteItem.productOptions is not empty %}
+                        <tr>
+                            <td></td>
+                            <td colspan="5">
+                                <small>{{ 'checkout.summary.item.option.description' | trans }}</small>
+                            </td>
+                        </tr>
                         {% for productOption in concreteItem.productOptions %}
                             <tr>
                                 {% block detailRow %}
@@ -103,17 +109,19 @@
                         </td>
                     </tr>
                 {% else %}
-                    <tr>
-                        <td></td>
-                        <td colspan="5">
-                            {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                                data: {
-                                    label: 'cart_note.customer_page.item_note',
-                                    note: concreteItem.cartNote
-                                }
-                            } only %}
-                        </td>
-                    </tr>
+                    {% if concreteItem.cartNote is not empty %}
+                        <tr>
+                            <td></td>
+                            <td colspan="5">
+                                {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                    data: {
+                                        label: 'cart_note.customer_page.item_note',
+                                        note: concreteItem.cartNote
+                                    }
+                                } only %}
+                            </td>
+                        </tr>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </tbody>
