@@ -203,7 +203,7 @@ class StepFactory extends AbstractFactory
             CheckoutPageControllerProvider::CHECKOUT_PLACE_ORDER,
             HomePageControllerProvider::ROUTE_HOME,
             [
-                CheckoutConstants::CHECKOUT_GENERAL_FAIL_ERROR_CODE => CartControllerProvider::ROUTE_CART,
+                399 => CartControllerProvider::ROUTE_CART,
                 'payment failed' => CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
                 'shipment failed' => CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
             ]
