@@ -15,6 +15,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomerCheckoutForm extends AbstractType
 {
     public const SUB_FORM_CUSTOMER = 'customer';
+    public const OPTIONS_SUB_FORM_CUSTOMER = [
+        'data_class' => CustomerTransfer::class,
+        'property_path' => 'customer',
+    ];
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -34,6 +38,14 @@ class CustomerCheckoutForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::SUB_FORM_CUSTOMER, $options[static::SUB_FORM_CUSTOMER], ['data_class' => CustomerTransfer::class, 'property_path' => 'customer']);
+        $subform = $options[static::SUB_FORM_CUSTOMER];
+
+        if ($subform instanceof FormBuilderInterface) {
+            $builder->add($subform);
+
+            return;
+        }
+
+        $builder->add(static::SUB_FORM_CUSTOMER, $subform, static::OPTIONS_SUB_FORM_CUSTOMER);
     }
 }

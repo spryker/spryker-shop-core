@@ -46,13 +46,33 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param array $formOptions
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getRegisterForm(array $formOptions = [])
+    public function getRegisterForm()
     {
-        return $this->getFormFactory()->create(RegisterForm::class, null, $formOptions);
+        return $this->getFormFactory()->create(
+            RegisterForm::class,
+            null,
+            $this->createRegisterFormDataProvider()->getOptions()
+        );
+    }
+
+    /**
+     * @param string $name
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    public function getRegisterFormNamedBuilder(string $name, array $options = [])
+    {
+        $defaultOptions = $this->createRegisterFormDataProvider()->getOptions();
+
+        return $this->getFormFactory()->createNamedBuilder(
+            $name,
+            RegisterForm::class,
+            null,
+            array_merge($defaultOptions, $options)
+        );
     }
 
     /**

@@ -71,7 +71,7 @@ class AuthController extends AbstractCustomerController
         $registerForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->getRegisterForm($registerFormDataProvider->getOptions());
+            ->getRegisterForm();
 
         return [
             'loginForm' => $loginForm->createView(),

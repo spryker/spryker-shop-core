@@ -50,7 +50,7 @@ class RegisterController extends AbstractCustomerController
         $registerForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->getRegisterForm($registerFormDataProvider->getOptions())
+            ->getRegisterForm()
             ->handleRequest($request);
 
         if ($registerForm->isSubmitted() && $registerForm->isValid()) {
