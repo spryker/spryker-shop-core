@@ -81,7 +81,7 @@
                     {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
                     {% endwidget %}
 
-                    {% if not is_granted('ROLE_USER') or canEditCart %}
+                    {% if (not is_granted('ROLE_USER') or canEditCart) and can('SeePricePermissionPlugin') %}
                         {% widget 'DiscountVoucherFormWidget' only %}
                             {% block body %}
                                 {{ parent() }}
