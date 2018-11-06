@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageFactory getFactory()
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
  */
 class PaymentForm extends AbstractType
 {

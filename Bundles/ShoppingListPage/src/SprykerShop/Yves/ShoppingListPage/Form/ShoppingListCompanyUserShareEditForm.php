@@ -14,6 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
+ */
 class ShoppingListCompanyUserShareEditForm extends AbstractType
 {
     protected const FIELD_ID_SHOPPING_LIST_COMPANY_USER = 'idShoppingListCompanyUser';

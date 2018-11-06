@@ -16,6 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
+ */
 class ShoppingListFromCartForm extends AbstractType
 {
     public const FIELD_NEW_SHOPPING_LIST_NAME_INPUT = 'newShoppingListName';
