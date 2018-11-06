@@ -1,6 +1,6 @@
 # summary-product-packaging-unit (molecule)
 
-
+Displays a product summary price on checkout summary step.
 
 ## Code sample 
 

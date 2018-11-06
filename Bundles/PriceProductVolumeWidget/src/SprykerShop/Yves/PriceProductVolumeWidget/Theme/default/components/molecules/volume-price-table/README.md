@@ -1,6 +1,6 @@
 # volume-price-table (molecule)
 
-
+Displays a product price range table.
 
 ## Code sample 
 
