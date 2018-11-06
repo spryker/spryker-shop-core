@@ -29,6 +29,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_FAILED = 'customer.account.shopping_list.items.added_to_cart.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART = 'customer.account.shopping_list.items.added_to_cart';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_SHARE_SHOPPING_LIST_SUCCESSFUL = 'customer.account.shopping_list.share.share_shopping_list_successful';
+    protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_FAILED = 'customer.account.shopping_list.clear.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS = 'customer.account.shopping_list.clear.success';
 
@@ -111,8 +112,17 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     {
         $shoppingListFormDataProvider = $this->getFactory()->createShoppingListFormDataProvider();
         $shoppingListTransfer = $shoppingListFormDataProvider->getData($idShoppingList, $request->request->all());
+
+        if (!$shoppingListTransfer->getIdShoppingList()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
+
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+        }
+
         $shoppingListForm = $this->getFactory()
-            ->getShoppingListUpdateForm($shoppingListTransfer)
+            ->getShoppingListUpdateForm(
+                $shoppingListTransfer
+            )
             ->handleRequest($request);
 
         if ($shoppingListForm->isSubmitted() && $shoppingListForm->isValid()) {
@@ -157,8 +167,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             ->clearShoppingList($shoppingListTransfer);
 
         if (!$shoppingListResponseTransfer->getIsSuccess()) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_FAILED);
-
+            $this->handleResponseErrors($shoppingListResponseTransfer);
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
                 static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
             ]);
@@ -244,6 +253,15 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             }
 
             $this->addErrorMessage($shoppingListShareResponseTransfer->getError());
+        }
+
+        $shippingListTransferCollection = $this->getCustomerShoppingListCollection();
+        $shoppingListTransfer = $this->getShoppingListById($idShoppingList, $shippingListTransferCollection);
+
+        if (!$shoppingListTransfer->getIdShoppingList()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
+
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
         return [

@@ -1,6 +1,6 @@
 # HeartbeatPage Module
 
-{{ADD DESCRIPTION HERE}}
+Heartbeat provides basic health checks and reporting tools for system availability.
 
 ## Installation
 
