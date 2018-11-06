@@ -119,7 +119,7 @@
                             {% block actions %}
                                 {% set isDisabled = not embed.product.idProductConcrete or not embed.product.available %}
 
-                                {% if can('SeeAddToCartPermissionPlugin') %}<a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expandjs-product-set__add-to-cart" {% if isDisabled %}disabled{% endif %}>
+                                {% if can('SeeAddToCartPermissionPlugin') %}<a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand js-product-set__add-to-cart" {% if isDisabled %}disabled{% endif %}>
                                     {% include atom('icon') with {
                                         data: {
                                             name: 'cart-plus'
