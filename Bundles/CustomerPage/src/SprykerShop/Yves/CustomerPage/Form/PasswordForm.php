@@ -17,13 +17,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
  */
 class PasswordForm extends AbstractType
 {
     public const FIELD_NEW_PASSWORD = 'new_password';
     public const FIELD_PASSWORD = 'password';
-
-    public const OPTION_MIN_LENGTH_CUSTOMER_PASSWORD = 'OPTION_MIN_LENGTH_CUSTOMER_PASSWORD';
 
     /**
      * @return string
@@ -44,16 +43,6 @@ class PasswordForm extends AbstractType
         $this
             ->addPasswordField($builder)
             ->addNewPasswordField($builder, $options);
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setRequired(static::OPTION_MIN_LENGTH_CUSTOMER_PASSWORD);
     }
 
     /**
@@ -81,7 +70,7 @@ class PasswordForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Length([
-                    'min' => $options[static::OPTION_MIN_LENGTH_CUSTOMER_PASSWORD],
+                    'min' => $this->getConfig()->getCustomerPasswordMinLength(),
                 ]),
             ],
         ]);
