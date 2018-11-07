@@ -14,6 +14,10 @@
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
     </transfer>
 
+    <transfer name="ProductMeasurementSalesUnit">
+
+    </transfer>
+
     <transfer name="ProductOption">
         <property name="isOrdered" type="bool" />
     </transfer>
