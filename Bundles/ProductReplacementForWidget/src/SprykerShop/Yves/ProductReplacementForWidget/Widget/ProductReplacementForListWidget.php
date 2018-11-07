@@ -78,8 +78,7 @@ class ProductReplacementForListWidget extends AbstractWidget
             return null;
         }
 
-        $attributeMapTransfer = new AttributeMapStorageTransfer();
-        $productConcreteStorageData[ProductReplacementForWidgetConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = $attributeMapTransfer->toArray();
+        $productConcreteStorageData[ProductReplacementForWidgetConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = [];
 
         return $this->getFactory()
             ->getProductStorageClient()
