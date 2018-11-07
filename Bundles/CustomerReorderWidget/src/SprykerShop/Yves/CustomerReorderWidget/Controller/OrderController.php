@@ -67,9 +67,17 @@ class OrderController extends AbstractController
         $idSalesOrder = $request->request->getInt(static::PARAM_ID_ORDER);
         $items = (array)$request->request->get(static::PARAM_ITEMS);
 
-        $orderTransfer = $this->getFactory()
-            ->createOrderReader()
-            ->getOrderTransfer($idSalesOrder);
+        $orderReader = $this->getFactory()
+            ->createOrderReader();
+
+        $orderTransfer = $orderReader->getOrderTransfer($idSalesOrder);
+        if ($orderReader->hasIncompatibleItems($orderTransfer)) {
+            $this->getFactory()
+                ->getMessengerClient()
+                ->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNABLE_TO_REORDER_ITEMS);
+
+            return $this->getFailureRedirect();
+        }
 
         $this->getFactory()
             ->createCartFiller()
