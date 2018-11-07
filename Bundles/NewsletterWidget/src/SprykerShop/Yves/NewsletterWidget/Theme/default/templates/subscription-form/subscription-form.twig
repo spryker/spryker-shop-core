@@ -1,0 +1,44 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: required,
+    text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.',
+
+    events: {
+        success: false,
+        error: false
+    }
+} %}
+
+{% block body %}
+    {%  block content %}
+    <div class="grid grid--middle grid--justify">
+        <div class="col col--sm-12 col--lg-7">
+            <p>{{data.text}}</p>
+        </div>
+
+        {% include molecule('form') with {
+            class: 'col col--sm-12 col--lg-4',
+            modifiers: ['inline'],
+            data: {
+                form: data.form,
+                submit: {
+                    enable: true,
+                    text: 'newsletter.form.subscribe' | trans
+                },
+                options: {
+                    action: url('newsletter/subscribe')
+                }
+            }
+        } only %}
+    </div>
+    {% endblock %}
+
+    {%  block message %}
+    {% if data.events.success is not empty %}
+        <p class="text-big text-success">{{data.events.success | trans}}</p>
+    {% elseif data.events.error is not empty %}
+        <p class="text-big text-alert">{{data.events.error | trans}}</p>
+    {% endif %}
+    {% endblock %}
+{% endblock %}

@@ -7,7 +7,7 @@
 
 {% block body %}
     <div class="box">
-        {{ render(path('newsletter/subscribe')) }}
+        {%  widget 'NewsletterSubscriptionFooterWidget' %}{% endwidget %}
     </div>
 
     <div class="grid">

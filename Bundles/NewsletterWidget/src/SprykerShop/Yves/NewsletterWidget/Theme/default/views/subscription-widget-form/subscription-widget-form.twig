@@ -1,0 +1,9 @@
+{% extends template('subscription-form', 'NewsletterWidget') %}
+
+{% define data = {
+    form: _widget.newsletterSubscriptionForm,
+} %}
+
+{% block body %}
+    {%  block content %}{{ parent() }}{% endblock %}
+{% endblock %}
