@@ -16,10 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OrderController extends AbstractController
 {
+    protected const GLOSSARY_KEY_ERROR_MESSAGE_UNABLE_TO_REORDER_ITEMS = 'customer.order.reorder.error.unable_to_reorder_items';
+
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
     protected const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
+    protected const ROUTE_FAILURE_REDIRECT = 'customer/order';
 
     protected const PARAM_ITEMS = 'items';
     protected const PARAM_ID_ORDER = 'id';
@@ -31,9 +34,17 @@ class OrderController extends AbstractController
      */
     public function reorderAction(int $idSalesOrder): RedirectResponse
     {
-        $orderTransfer = $this->getFactory()
-            ->createOrderReader()
-            ->getOrderTransfer($idSalesOrder);
+        $orderReader = $this->getFactory()
+            ->createOrderReader();
+
+        $orderTransfer = $orderReader->getOrderTransfer($idSalesOrder);
+        if ($orderReader->hasIncompatibleItems($orderTransfer)) {
+            $this->getFactory()
+                ->getMessengerClient()
+                ->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNABLE_TO_REORDER_ITEMS);
+
+            return $this->getFailureRedirect();
+        }
 
         $this->getFactory()
             ->createCartFiller()
@@ -77,5 +88,13 @@ class OrderController extends AbstractController
     protected function getSuccessRedirect(): RedirectResponse
     {
         return $this->redirectResponseInternal(static::ROUTE_SUCCESSFUL_REDIRECT);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function getFailureRedirect(): RedirectResponse
+    {
+        return $this->redirectResponseInternal(static::ROUTE_FAILURE_REDIRECT);
     }
 }

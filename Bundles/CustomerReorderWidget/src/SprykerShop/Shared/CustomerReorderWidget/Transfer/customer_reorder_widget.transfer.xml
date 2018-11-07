@@ -10,6 +10,8 @@
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
         <property name="isOrdered" type="bool" />
         <property name="idProductAbstract" type="int" />
+        <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit" />
+        <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
     </transfer>
 
     <transfer name="ProductOption">
