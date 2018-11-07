@@ -1,6 +1,6 @@
 # customer-list (molecule)
 
-Renders a list of customers with first name, last name and email.
+Renders a list of customers with their first name, last name, and email.
 
 ## Code sample
 

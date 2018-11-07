@@ -1,6 +1,6 @@
 # menu (molecule)
 
-Styles for main navigation list.
+Styles for the main navigation list.
 
 ## Code sample
 

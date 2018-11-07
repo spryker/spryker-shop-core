@@ -1,6 +1,6 @@
 # icon-sprite (atom)
 
-Creates a sprite with collection of svg icons that can be used via icon component with a specific icon name.
+Creates a sprite with the collection of svg icons that can be used via the icon component with a specific icon name.
 
 ## Code sample
 

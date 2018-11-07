@@ -1,6 +1,6 @@
 # business-unit-delete-message (molecule)
 
-Displays message, when you want to delete business unit, where you can confirm delete business unit or cancel.
+Displays a message that allows you to confirm whether you want to delete the business unit or not.
 
 ## Code sample
 

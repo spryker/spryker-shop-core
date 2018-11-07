@@ -1,6 +1,6 @@
 # toggler-hash (molecule)
 
-Initiates functionality to add/remove class to some array of DOM-elements if browser address input field consisit or donesn't consisit same hash as in component.
+Initiates functionality to add/remove class to/from some array of DOM-elements if browser address input field consist or doesn't consist same hash as in component.
 
 ## Code sample
 

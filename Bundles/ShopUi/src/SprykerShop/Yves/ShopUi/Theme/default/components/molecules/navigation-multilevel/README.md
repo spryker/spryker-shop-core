@@ -1,6 +1,6 @@
 # navigation-multilevel (molecule)
 
-Creates a list of navigation items which makes it possible to render items recursively.
+Creates a list of navigation items, which makes it possible to render items recursively.
 
 ## Code sample
 

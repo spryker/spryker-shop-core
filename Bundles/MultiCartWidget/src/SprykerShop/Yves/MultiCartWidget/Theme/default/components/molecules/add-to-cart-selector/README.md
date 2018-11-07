@@ -1,6 +1,6 @@
 # add-to-cart-selector (molecule)
 
-Displays add to cart selector with options.
+Displays a drop-down with list of shopping carts.
 
 ## Code sample
 

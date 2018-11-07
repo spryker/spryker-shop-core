@@ -1,6 +1,6 @@
 # business-unit-table (molecule)
 
-Displays detail business unit table, with actions (view, edit, delete).
+Displays a business unit details as table with action links (view, edit, delete).
 
 ## Code sample
 

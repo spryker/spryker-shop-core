@@ -1,6 +1,6 @@
 # user-share-list (molecule)
 
-Displays user share list in my account, where you can change access.
+Displays a share list of user, which you can share shopping cart with certain rights.
 
 ## Code sample
 

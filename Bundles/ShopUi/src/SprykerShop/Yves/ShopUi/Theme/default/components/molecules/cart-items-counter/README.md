@@ -1,6 +1,6 @@
 # cart-items-counter (molecule)
 
-Displays number of items in product cart.
+Displays the number of items in a product cart.
 
 ## Code sample
 

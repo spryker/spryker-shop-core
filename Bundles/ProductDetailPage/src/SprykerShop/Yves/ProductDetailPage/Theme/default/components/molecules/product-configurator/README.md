@@ -1,6 +1,6 @@
 # product-configurator (molecule)
 
-Shows block with most of important product information and provide ability to configure product using variant-configurator component. Also has quantity dropdown and add to cart buttton.  
+Shows a block with the most important product information and provides ability to configure product using the variant-configurator component. Also has the quantity drop-down and the add to cart button.
 
 ## Code sample 
 

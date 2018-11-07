@@ -1,6 +1,6 @@
 # permission-table (molecule)
 
-Displays table roles permission, with actions (configure, unassign, assign) if it actions enabled.
+Displays a roles permission as table with action links (configure, unassign, assign).
 
 ## Code sample
 

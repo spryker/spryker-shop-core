@@ -1,6 +1,6 @@
 # active-filter-multi-select (molecule)
 
-Displays a list of all the filters selected from one category as links.
+Displays a list of all the filters selected from one category as a links.
 
 ## Code sample
 

@@ -1,6 +1,6 @@
 # product-carousel (molecule)
 
-Creates carousel with product images using simple-carousel component, also shows product labels.
+Creates a carousel with product images using the simple-carousel component; also shows the product labels.
 
 ## Code sample 
 
