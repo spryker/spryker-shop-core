@@ -17,10 +17,12 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class RegisterForm extends AbstractType
 {
     public const FIELD_SALUTATION = 'salutation';
@@ -33,24 +35,12 @@ class RegisterForm extends AbstractType
 
     public const BLOCK_PREFIX = 'registerForm';
 
-    public const OPTION_MIN_LENGTH_CUSTOMER_PASSWORD = 'OPTION_MIN_LENGTH_CUSTOMER_PASSWORD';
-
     /**
      * @return string
      */
     public function getBlockPrefix()
     {
         return static::BLOCK_PREFIX;
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setRequired(static::OPTION_MIN_LENGTH_CUSTOMER_PASSWORD);
     }
 
     /**
@@ -175,7 +165,7 @@ class RegisterForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Length([
-                    'min' => $options[static::OPTION_MIN_LENGTH_CUSTOMER_PASSWORD],
+                    'min' => $this->getConfig()->getCustomerPasswordMinLength(),
                 ]),
             ],
         ]);
