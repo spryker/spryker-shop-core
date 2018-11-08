@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegisterForm extends AbstractType
@@ -31,6 +33,8 @@ class RegisterForm extends AbstractType
 
     public const BLOCK_PREFIX = 'registerForm';
 
+    public const OPTION_MIN_LENGTH_CUSTOMER_PASSWORD = 'OPTION_MIN_LENGTH_CUSTOMER_PASSWORD';
+
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**
@@ -39,6 +43,16 @@ class RegisterForm extends AbstractType
     public function getBlockPrefix()
     {
         return static::BLOCK_PREFIX;
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired(static::OPTION_MIN_LENGTH_CUSTOMER_PASSWORD);
     }
 
     /**
@@ -54,7 +68,7 @@ class RegisterForm extends AbstractType
             ->addFirstNameField($builder)
             ->addLastNameField($builder)
             ->addEmailField($builder)
-            ->addPasswordField($builder)
+            ->addPasswordField($builder, $options)
             ->addAcceptTermsField($builder)
             ->addIsGuestField($builder);
     }
@@ -140,10 +154,11 @@ class RegisterForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addPasswordField(FormBuilderInterface $builder)
+    protected function addPasswordField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_PASSWORD, RepeatedType::class, [
             'first_name' => 'pass',
@@ -160,6 +175,9 @@ class RegisterForm extends AbstractType
                 'attr' => ['autocomplete' => 'off'],
             ],
             'constraints' => [
+                new Length([
+                    'min' => $options[static::OPTION_MIN_LENGTH_CUSTOMER_PASSWORD],
+                ]),
                 $this->createNotBlankConstraint(),
             ],
         ]);
