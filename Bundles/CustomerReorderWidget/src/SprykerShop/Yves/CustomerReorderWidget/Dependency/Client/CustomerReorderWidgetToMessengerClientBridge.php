@@ -31,4 +31,14 @@ class CustomerReorderWidgetToMessengerClientBridge implements CustomerReorderWid
     {
         $this->messengerClient->addInfoMessage($message);
     }
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    public function addErrorMessage($message): void
+    {
+        $this->messengerClient->addErrorMessage($message);
+    }
 }
