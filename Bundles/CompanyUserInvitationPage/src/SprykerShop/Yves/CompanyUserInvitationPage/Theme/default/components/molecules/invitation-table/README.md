@@ -1,6 +1,6 @@
 # invitation-link (molecule)
 
-Displays innovation table, which contains information about people, with actions(send, resend, delete), if it actions enabled.
+Displays an invitation links as table, which contains a company users info, and action links (send, resend, delete).
 
 ## Code sample
 

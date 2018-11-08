@@ -1,6 +1,6 @@
 # invitation-link (molecule)
 
-Displays innovation link, which redirect to company/user-invitation page, where you can choose invitation file.
+Displays an innovation link, which redirects you to the company/user invitation page where you can choose an invitation file.
 
 ## Code sample
 

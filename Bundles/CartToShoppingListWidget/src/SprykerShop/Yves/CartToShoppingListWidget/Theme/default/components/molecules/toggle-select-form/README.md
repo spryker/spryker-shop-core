@@ -1,6 +1,6 @@
 # toggle-select-form (molecule)
 
-Toggle class for specified DOM-elements on target change event.
+The toggle-class for the specified DOM-elements on the target change event.
 
 ## Code sample
 

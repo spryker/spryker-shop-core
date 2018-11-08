@@ -1,6 +1,6 @@
 # cart-quantity-input (molecule)
 
-Displays product quantity input which allows to set maximum quantity and "read only" state for this input, as well as "submit" button.
+Displays the product quantity input that allows setting the maximum quantity and the "read-only" state for this input, as well as the "submit" button.
 
 ## Code sample
 

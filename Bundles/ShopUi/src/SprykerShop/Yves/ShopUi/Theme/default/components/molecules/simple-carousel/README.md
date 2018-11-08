@@ -1,6 +1,6 @@
 # simple-carousel (molecule)
 
-Creates carousel from array of items, generates left and right arrows as well as optional dots control.
+Creates a carousel from an array of items, generates the left and right arrows as well as the optional dots control.
 
 ## Code sapmle
 

@@ -1,6 +1,6 @@
 # checkbox (atom)
 
-Creates a simple checkbox element with non-native design.
+Creates a simple checkbox element with the non-native design.
 
 ## Code sample 
 

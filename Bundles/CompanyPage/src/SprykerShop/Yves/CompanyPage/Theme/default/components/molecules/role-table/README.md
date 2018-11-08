@@ -1,6 +1,6 @@
 # role-table (molecule)
 
-Displays table roles, with actions (view, update, delete) if it actions enabled.
+Displays a company roles as table with action links (view, update, delete).
 
 ## Code sample
 

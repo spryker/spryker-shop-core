@@ -1,6 +1,6 @@
 # order-summary (molecule)
 
-Displays customer list order summary.
+Displays a summary of customer order as a subtotal, shipment, discount, and grand total.
 
 ## Code sample
 

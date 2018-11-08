@@ -1,6 +1,6 @@
 # business-unit-chart-item (molecule)
 
-Displays business unit chart item link.
+Displays a business unit chart item link.
 
 ## Code sample
 

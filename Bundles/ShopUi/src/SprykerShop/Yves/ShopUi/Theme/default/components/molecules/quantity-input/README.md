@@ -1,6 +1,6 @@
 # quantity-input (molecule)
 
-Displays a product quantity field with label and an optional update button (used to submit the quantity and update the parent view).
+Displays a product quantity field with the label and the optionally update button for this field.
 
 ## Code sample
 

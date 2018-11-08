@@ -1,6 +1,6 @@
 # jumbotron (molecule)
 
-Displays banner with image and short description.
+Displays a banner with an image and a short description.
 
 ## Code sample
 

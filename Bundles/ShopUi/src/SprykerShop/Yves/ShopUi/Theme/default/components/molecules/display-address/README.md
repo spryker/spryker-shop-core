@@ -1,6 +1,6 @@
 # display-address (molecule)
 
-Displays customer shipping/billing address.
+Displays a customer shipping/billing address.
 
 ## Code sample
 

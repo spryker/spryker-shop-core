@@ -1,6 +1,6 @@
 # variant-configurator (molecule)
 
-Shows a list  of variant dropdowns optionally wrapped with form tag.
+Shows a list of the variant drop-downs optionally wrapped with the form tag.
 
 ## Code sample 
 

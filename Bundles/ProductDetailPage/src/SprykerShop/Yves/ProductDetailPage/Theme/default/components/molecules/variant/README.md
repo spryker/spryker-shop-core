@@ -1,6 +1,6 @@
 # variant (molecule)
 
-Shows dropdown with product variantes as options in it. Reloads page when option is changed. 
+Shows a drop-down with product variants as options in it. Reloads a page when the option is changed.
 
 ## Code sample 
 

@@ -1,6 +1,6 @@
 # navigation-list (molecule)
 
-Creates a list of link or test items.
+Creates a list of links or text items.
 
 ## Code sample
 

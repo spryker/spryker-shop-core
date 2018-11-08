@@ -1,6 +1,6 @@
 # business-unit-address-item (molecule)
 
-Displays address, where you can edit or delete address.
+Displays an assign addresses, and unassigned addresses on business unit page, which you can edit or delete.
 
 ## Code sample
 

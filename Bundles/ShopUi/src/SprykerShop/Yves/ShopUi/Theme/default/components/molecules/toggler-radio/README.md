@@ -1,6 +1,6 @@
 # toggler-radio (molecule)
 
-Creates a radio button which toggles classes for the related containers: when radio button of a specific container is selected, adds a class to it, at the same time removing the class from other radio button containers of the same radio button group.
+Initiates functionality to add a specific class to some element from an array of DOM-elements and remove it from the rest of the elements if a radio-button is selected.
 
 ## Code sample
 
