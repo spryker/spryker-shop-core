@@ -22,6 +22,8 @@ class WishlistFormType extends AbstractType
     protected const GLOSSARY_KEY_NAME_VALIDATION_ERROR = 'wishlist.validation.error.name.wrong_format';
     protected const WISH_LIST_NAME_VALIDATION_REGEX = '/^[ A-Za-z0-9_-]+$/';
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -56,7 +58,7 @@ class WishlistFormType extends AbstractType
             'label' => 'Name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
                 new Regex(
                     [
                         'pattern' => static::WISH_LIST_NAME_VALIDATION_REGEX,
@@ -68,5 +70,13 @@ class WishlistFormType extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }

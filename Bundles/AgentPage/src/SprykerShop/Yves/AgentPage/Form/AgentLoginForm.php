@@ -21,6 +21,9 @@ class AgentLoginForm extends AbstractType
     public const FIELD_EMAIL = 'email';
     public const FIELD_PASSWORD = 'password';
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
+
     /**
      * @return string
      */
@@ -54,8 +57,8 @@ class AgentLoginForm extends AbstractType
         $builder->add(self::FIELD_EMAIL, EmailType::class, [
             'label' => 'agent.login.email',
             'constraints' => [
-                new NotBlank(),
-                new Email(),
+                $this->createNotBlankConstraint(),
+                $this->createEmailConstraint(),
             ],
             'mapped' => false,
         ]);
@@ -72,11 +75,27 @@ class AgentLoginForm extends AbstractType
     {
         $builder->add(self::FIELD_PASSWORD, PasswordType::class, [
             'label' => 'agent.login.password',
-            'constraints' => new NotBlank(),
+            'constraints' => $this->createNotBlankConstraint(),
             'mapped' => false,
             'attr' => ['autocomplete' => 'off'],
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Email
+     */
+    protected function createEmailConstraint(): Email
+    {
+        return new Email(['message' => static::VALIDATION_EMAIL_MESSAGE]);
     }
 }

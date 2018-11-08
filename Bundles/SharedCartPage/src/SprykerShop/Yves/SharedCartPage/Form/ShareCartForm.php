@@ -9,10 +9,12 @@ namespace SprykerShop\Yves\SharedCartPage\Form;
 
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ShareCartForm extends AbstractType
 {
@@ -32,6 +34,8 @@ class ShareCartForm extends AbstractType
     public const OPTION_CUSTOMERS = 'OPTION_CUSTOMERS';
     public const FIELD_SHARE_DETAILS = 'shareDetails';
     public const OPTION_PERMISSION_GROUPS = 'OPTION_PERMISSION_GROUPS';
+
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**
      * @return string
@@ -85,6 +89,30 @@ class ShareCartForm extends AbstractType
      * @return $this
      */
     protected function addShareDetailsField(FormBuilderInterface $builder, array $options): self
+    {
+        $builder->add(static::FIELD_COMPANY_USER_ID, ChoiceType::class, [
+            'choices' => array_flip($options[static::OPTION_CUSTOMERS]),
+            'choices_as_values' => true,
+            'expanded' => false,
+            'required' => true,
+            'placeholder' => 'shared_cart.form.select_customer',
+            'constraints' => [
+                new NotBlank(),
+            ],
+            'label' => 'shared_cart.form.customer',
+            'invalid_message' => static::VALIDATION_NOT_BLANK_MESSAGE,
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addQuotePermissionGroupIdQuoteIdField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SHARE_DETAILS, CollectionType::class, [
             'entry_type' => ShareCartCompanyUserShareEditForm::class,
