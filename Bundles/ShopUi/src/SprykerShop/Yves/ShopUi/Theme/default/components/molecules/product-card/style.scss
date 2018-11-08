@@ -1,1 +1,3 @@
-@include shop-ui-product-card;
+@include helper-import(molecule, product-card) {
+    @include shop-ui-product-card;
+}

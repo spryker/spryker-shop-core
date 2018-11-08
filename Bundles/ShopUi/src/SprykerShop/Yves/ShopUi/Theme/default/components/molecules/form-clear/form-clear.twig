@@ -1,0 +1,14 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'form-clear',
+    tag: 'form-clear'
+} %}
+
+{% define attributes = {
+    'form-selector': required,
+    'trigger-selector': required,
+    'ignore-selector': ''
+} %}
+
+{% block class %}{{ parent() }} {{ config.jsName }}{% endblock %}

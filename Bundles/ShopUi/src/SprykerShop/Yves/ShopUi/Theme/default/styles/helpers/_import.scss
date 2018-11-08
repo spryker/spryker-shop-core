@@ -1,0 +1,13 @@
+@mixin helper-import($keywords...) {
+    $isBlacklisted: false;
+
+    @each $keyword in $keywords {
+        @if index($setting-import-blacklist, $keyword) != null {
+            $isBlacklisted: true;
+        }
+    }
+
+    @if not $isBlacklisted {
+        @content;
+    }
+}

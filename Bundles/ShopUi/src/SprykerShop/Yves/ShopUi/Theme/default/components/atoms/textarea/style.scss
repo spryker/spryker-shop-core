@@ -1,1 +1,3 @@
-@include shop-ui-textarea();
+@include helper-import(atom, textarea) {
+    @include shop-ui-textarea();
+}
