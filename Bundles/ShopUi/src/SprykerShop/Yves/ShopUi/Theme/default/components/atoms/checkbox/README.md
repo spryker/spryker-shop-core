@@ -15,4 +15,4 @@ Creates a simple checkbox element with non-native design.
          label: 'label'
      }
  } only %}
- ```
+```

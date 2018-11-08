@@ -1,6 +1,6 @@
 # product-card (molecule)
 
-Creates a block with product information: product labels, list of product group icons, product name, product rating and product price.
+Creates a block with detailed product information: product labels, list of product group icons, product name, product rating and product price. Designed to be displayed mostly in grid layouts.
 
 ## Code sample
 
