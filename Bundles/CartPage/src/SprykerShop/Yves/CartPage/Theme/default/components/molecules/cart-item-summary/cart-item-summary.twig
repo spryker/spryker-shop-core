@@ -14,12 +14,12 @@
 {% block class %}{{ parent() }} list{% endblock %}
 
 {% block body %}
-    {% if can('SeePricePermissionPlugin') %}
-        <li class="list__item spacing-y">
+    <li class="list__item spacing-y">
+        {% if can('SeePricePermissionPlugin') %}
             {{ 'cart.item.item_price' | trans }}
             <span class="float-right">{{ data.unitPrice }}</span>
-        </li>
-    {% endif %}
+        {% endif %}
+    </li>
 
     {% if data.cartItem.productOptions | length > 0 %}
         <li class="list__item text-small">
@@ -35,13 +35,14 @@
         </li>
     {% endif %}
 
-    {% if can('SeePricePermissionPlugin') %}
-        <li class="list__item spacing-y">
+
+    <li class="list__item spacing-y">
+        {% if can('SeePricePermissionPlugin') %}
             <strong>{{ 'cart.item.item_total' | trans }}</strong>
             <strong class="float-right">{{ data.subtotalPrice }}</strong>
-        </li>
-    {% else %}
-        <li>{{ 'customer.access.cannot_see_price' | trans }}</li>
-    {% endif %}
+        {% else %}
+            {{ 'customer.access.cannot_see_price' | trans }}
+        {% endif %}
+    </li>
 
 {% endblock %}
