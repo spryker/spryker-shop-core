@@ -28,6 +28,7 @@ class CheckoutAddressForm extends AddressForm
 
         $resolver->setDefaults([
             static::OPTION_ADDRESS_CHOICES => [],
+            'allow_extra_fields' => true,
         ]);
 
         $resolver->setRequired(static::OPTION_VALIDATION_GROUP);

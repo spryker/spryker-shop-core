@@ -11,7 +11,12 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
+use SprykerShop\Yves\CustomerPage\Form\DataProvider\PasswordFormDataProvider;
+use SprykerShop\Yves\CustomerPage\Form\DataProvider\RegisterFormDataProvider;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class FormFactory extends AbstractFactory
 {
     /**
@@ -41,11 +46,13 @@ class FormFactory extends AbstractFactory
     }
 
     /**
+     * @param array $formOptions
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getRegisterForm()
+    public function getRegisterForm(array $formOptions = [])
     {
-        return $this->getFormFactory()->create(RegisterForm::class);
+        return $this->getFormFactory()->create(RegisterForm::class, null, $formOptions);
     }
 
     /**
@@ -81,11 +88,29 @@ class FormFactory extends AbstractFactory
     }
 
     /**
+     * @param array $formOptions
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getPasswordForm()
+    public function getPasswordForm(array $formOptions = [])
     {
-        return $this->getFormFactory()->create(PasswordForm::class);
+        return $this->getFormFactory()->create(PasswordForm::class, null, $formOptions);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Form\DataProvider\PasswordFormDataProvider
+     */
+    public function createPasswordFormDataProvider()
+    {
+        return new PasswordFormDataProvider($this->getConfig());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Form\DataProvider\RegisterFormDataProvider
+     */
+    public function createRegisterFormDataProvider()
+    {
+        return new RegisterFormDataProvider($this->getConfig());
     }
 
     /**
