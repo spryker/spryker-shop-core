@@ -15,7 +15,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 
 class CartFiller implements CartFillerInterface
 {
-    public const PARAM_ORDER_REFERENCE = 'orderReference';
+    protected const PARAM_ORDER_REFERENCE = 'orderReference';
 
     /**
      * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface

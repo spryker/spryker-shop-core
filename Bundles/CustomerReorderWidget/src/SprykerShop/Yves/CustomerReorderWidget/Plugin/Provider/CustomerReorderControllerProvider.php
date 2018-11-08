@@ -12,9 +12,9 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class CustomerReorderControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';
-    public const ROUTE_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
-    public const PATTERN_ID = '\d+';
+    protected const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';
+    protected const ROUTE_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
+    protected const PATTERN_ID = '\d+';
 
     /**
      * @param \Silex\Application $app
@@ -28,22 +28,26 @@ class CustomerReorderControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\CustomerReorderWidget\Controller\OrderController::reorderAction()
+     *
      * @return $this
      */
-    protected function addReorderRoute(): self
+    protected function addReorderRoute()
     {
-        $this->createController('/{customer}/order/{idOrder}/reorder', static::ROUTE_CART_ORDER_REPEAT, 'CustomerReorderWidget', 'Order', 'reorder')
+        $this->createController('/{customer}/order/{idSalesOrder}/reorder', static::ROUTE_CART_ORDER_REPEAT, 'CustomerReorderWidget', 'Order', 'reorder')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
             ->value('customer', 'customer')
-            ->assert('idOrder', static::PATTERN_ID);
+            ->assert('idSalesOrder', static::PATTERN_ID);
 
         return $this;
     }
 
     /**
+     * @uses \SprykerShop\Yves\CustomerReorderWidget\Controller\OrderController::reorderItemsAction()
+     *
      * @return $this
      */
-    protected function addReorderItemsRoute(): self
+    protected function addReorderItemsRoute()
     {
         $this->createController('/{customer}/order/reorder-items', static::ROUTE_CART_ORDER_ITEMS_REPEAT, 'CustomerReorderWidget', 'Order', 'reorderItems')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')

@@ -43,4 +43,14 @@ class ProductDetailPageToProductStorageClientBridge implements ProductDetailPage
     {
         return $this->productStorageClient->isProductAbstractRestricted($idProductAbstract);
     }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isProductConcreteRestricted(int $idProductConcrete): bool
+    {
+        return $this->productStorageClient->isProductConcreteRestricted($idProductConcrete);
+    }
 }

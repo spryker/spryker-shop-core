@@ -16,24 +16,24 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OrderController extends AbstractController
 {
-    public const PARAM_ITEMS = 'items';
-    public const PARAM_ID_ORDER = 'id';
     /**
-     * Route for redirect after success.
-     * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
-    public const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
+    protected const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
+
+    protected const PARAM_ITEMS = 'items';
+    protected const PARAM_ID_ORDER = 'id';
 
     /**
-     * @param int $idOrder
+     * @param int $idSalesOrder
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function reorderAction(int $idOrder): RedirectResponse
+    public function reorderAction(int $idSalesOrder): RedirectResponse
     {
         $orderTransfer = $this->getFactory()
             ->createOrderReader()
-            ->getOrderTransfer($idOrder);
+            ->getOrderTransfer($idSalesOrder);
 
         $this->getFactory()
             ->createCartFiller()
