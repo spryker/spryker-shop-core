@@ -15,7 +15,7 @@
     </transfer>
 
     <transfer name="ProductMeasurementSalesUnit">
-
+        <property name="idProductMeasurementSalesUnit" type="int" />
     </transfer>
 
     <transfer name="ProductOption">
