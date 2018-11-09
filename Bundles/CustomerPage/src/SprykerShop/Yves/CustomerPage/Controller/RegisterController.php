@@ -45,12 +45,10 @@ class RegisterController extends AbstractCustomerController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW);
         }
 
-        $registerFormDataProvider = $this->getFactory()->createCustomerFormFactory()->createRegisterFormDataProvider();
-
         $registerForm = $this
             ->getFactory()
             ->createCustomerFormFactory()
-            ->getRegisterForm($registerFormDataProvider->getOptions())
+            ->getRegisterForm()
             ->handleRequest($request);
 
         if ($registerForm->isSubmitted() && $registerForm->isValid()) {

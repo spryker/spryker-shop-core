@@ -17,6 +17,10 @@ class ForgottenPasswordForm extends AbstractType
 {
     public const FIELD_EMAIL = 'email';
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
+    protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
+
     /**
      * @return string
      */
@@ -47,11 +51,27 @@ class ForgottenPasswordForm extends AbstractType
             'label' => 'customer.forgotten_password.email',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
-                new Email(),
+                $this->createNotBlankConstraint(),
+                $this->createEmailConstraint(),
             ],
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    public function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Email
+     */
+    public function createEmailConstraint(): Email
+    {
+        return new Email(['message' => static::VALIDATION_EMAIL_MESSAGE]);
     }
 }
