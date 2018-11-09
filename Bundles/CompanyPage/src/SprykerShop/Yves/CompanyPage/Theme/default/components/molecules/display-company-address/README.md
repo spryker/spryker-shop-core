@@ -1,6 +1,6 @@
 # display-company-address (molecule)
 
-Displays a company address details.
+Displays company address details.
 
 ## Code sample
 

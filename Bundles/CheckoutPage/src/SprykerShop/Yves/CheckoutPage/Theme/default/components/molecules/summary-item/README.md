@@ -1,6 +1,6 @@
 # summary-item (molecule)
 
-Displays list of products on checkout summary step, which includes the name, quantity, options and price.
+Displays a list of products on checkout summary step, which includes name, quantity, options and price.
 
 ## Code sample 
 

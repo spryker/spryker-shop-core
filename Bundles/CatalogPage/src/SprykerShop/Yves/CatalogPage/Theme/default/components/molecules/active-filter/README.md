@@ -1,6 +1,6 @@
 # active-filter (molecule)
 
-Displays a selected filter as a link, filter disables after clicking on link.
+Displays a selected filter as a link, filter gets disabled after clicking the link.
 
 ## Code sample
 
