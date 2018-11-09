@@ -74,6 +74,16 @@ class BusinessUnitAddressController extends AbstractCompanyController
             ->getCompanyBusinessUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
+        if ($addressForm->isSubmitted() === false) {
+            $addressForm->setData(
+                $dataProvider->getData(
+                    $this->findCurrentCompanyUserTransfer(),
+                    null,
+                    $idCompanyBusinessUnit
+                )
+            );
+        }
+
         if ($addressForm->isValid()) {
             $data = $addressForm->getData();
             $data[CompanyUnitAddressTransfer::COMPANY_BUSINESS_UNITS][CompanyBusinessUnitCollectionTransfer::COMPANY_BUSINESS_UNITS][][CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT] = $idCompanyBusinessUnit;
@@ -92,14 +102,6 @@ class BusinessUnitAddressController extends AbstractCompanyController
                 ]);
             }
         }
-
-        $addressForm->setData(
-            $dataProvider->getData(
-                $this->findCurrentCompanyUserTransfer(),
-                null,
-                $idCompanyBusinessUnit
-            )
-        );
 
         return [
             'form' => $addressForm->createView(),
@@ -155,8 +157,9 @@ class BusinessUnitAddressController extends AbstractCompanyController
                 'id' => $idCompanyBusinessUnit,
             ]);
         }
-
-        $addressForm->setData($data);
+        if ($addressForm->isSubmitted() === false) {
+            $addressForm->setData($data);
+        }
 
         return [
             'form' => $addressForm->createView(),
