@@ -35,6 +35,18 @@ class CmsContentWidgetProductConnectorToProductStorageClientBridge implements Cm
     }
 
     /**
+     * @param array $data
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function mapAbstractProductStorageData(array $data, $localeName, array $selectedAttributes = [])
+    {
+        return $this->productStorageClient->mapAbstractProductStorageData($data, $localeName, $selectedAttributes);
+    }
+
+    /**
      * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
      *
      * @param int $idProductAbstract
