@@ -41,6 +41,13 @@ interface SharedCartPageToSharedCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
+    public function dismissSharedCart(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
     public function updateQuotePermissions(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer;
 
     /**

@@ -11,7 +11,9 @@
 } %}
 
 {% block breadcrumbs %}
-    {{ widget('ProductCategoryWidgetPlugin', data.product, app.locale) }}
+    {% widget 'ProductBreadcrumbsWithCategoriesWidget' args [data.product] only %}
+    {% elsewidget 'ProductCategoryWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductBreadcrumbsWithCategoriesWidget instead. #}
+    {% endwidget %}
 {% endblock %}
 
 {% block title %}
