@@ -61,7 +61,7 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
     {
         return $this->getFactory()
             ->getProductStorageClient()
-            ->mapAbstractProductStorageData($productData, $this->getLocale());
+            ->mapProductAbstractStorageData($productData, $this->getLocale());
     }
 
     /**

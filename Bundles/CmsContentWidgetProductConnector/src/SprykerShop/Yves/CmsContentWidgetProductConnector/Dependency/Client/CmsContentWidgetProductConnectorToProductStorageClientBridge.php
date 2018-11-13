@@ -41,9 +41,9 @@ class CmsContentWidgetProductConnectorToProductStorageClientBridge implements Cm
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapAbstractProductStorageData(array $data, $localeName, array $selectedAttributes = [])
+    public function mapProductAbstractStorageData(array $data, $localeName, array $selectedAttributes = [])
     {
-        return $this->productStorageClient->mapAbstractProductStorageData($data, $localeName, $selectedAttributes);
+        return $this->productStorageClient->mapProductAbstractStorageData($data, $localeName, $selectedAttributes);
     }
 
     /**

@@ -25,7 +25,7 @@ interface CmsContentWidgetProductConnectorToProductStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapAbstractProductStorageData(array $data, $localeName, array $selectedAttributes = []);
+    public function mapProductAbstractStorageData(array $data, $localeName, array $selectedAttributes = []);
 
     /**
      * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
