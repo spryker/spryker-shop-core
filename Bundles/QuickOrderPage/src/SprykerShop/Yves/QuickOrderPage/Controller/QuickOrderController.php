@@ -280,6 +280,7 @@ class QuickOrderController extends AbstractController
     {
         $quantity = $request->get('quantity') ?: 1;
         $sku = $request->query->get('sku');
+        $index = $request->query->get('index');
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())
             ->setQuantity($quantity)
@@ -304,6 +305,7 @@ class QuickOrderController extends AbstractController
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
             'product' => $product,
             'form' => $form->createView(),
+            'index' => $index,
         ];
 
         return $this->view(
