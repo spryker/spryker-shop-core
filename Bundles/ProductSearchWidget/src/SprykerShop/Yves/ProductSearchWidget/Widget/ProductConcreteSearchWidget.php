@@ -19,8 +19,8 @@ class ProductConcreteSearchWidget extends AbstractWidget
     /**
      * @param string $index
      * @param string $skuFieldName
-     * @param null|string $skuFieldValue
-     * @param null|string $searchFieldValue
+     * @param string|null $skuFieldValue
+     * @param string|null $searchFieldValue
      * @param int|null $searchResultLimit
      */
     public function __construct(string $index, string $skuFieldName, ?string $skuFieldValue, ?string $searchFieldValue, ?int $searchResultLimit = null)
