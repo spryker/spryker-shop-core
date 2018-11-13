@@ -76,7 +76,9 @@
                 </div>
 
                 <div class="col col--sm-12 col--md-2">
-                    {{ widget('MultiCartListWidgetPlugin') }}
+                    {% widget 'QuickOrderPageWidget' only %}
+                    {% elsewidget 'MultiCartListWidgetPlugin' only %} {# @deprecated Use QuickOrderPageWidget instead. #}
+                    {% endwidget %}
                 </div>
 
                 <div class="col col--sm-12 col--md-3">

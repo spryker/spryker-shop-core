@@ -1,1 +1,3 @@
-@include shop-ui-notification-area;
+@include helper-import(organism, notification-area) {
+    @include shop-ui-notification-area;
+}

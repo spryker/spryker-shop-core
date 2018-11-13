@@ -1,6 +1,6 @@
 # ProductLabelWidget Module
 
-{{ADD DESCRIPTION HERE}}
+This module provides showing product label components like flags or tags on the product detail page and catalog page.
 
 ## Installation
 

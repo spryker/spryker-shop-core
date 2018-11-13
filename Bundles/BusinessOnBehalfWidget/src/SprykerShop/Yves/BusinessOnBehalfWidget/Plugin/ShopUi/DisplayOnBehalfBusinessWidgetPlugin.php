@@ -8,9 +8,12 @@
 namespace SprykerShop\Yves\BusinessOnBehalfWidget\Plugin\ShopUi;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\BusinessOnBehalfWidget\Widget\BusinessOnBehalfStatusWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\BusinessOnBehalfWidget\DisplayOnBehalfBusinessWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\BusinessOnBehalfWidget\Widget\BusinessOnBehalfStatusWidget instead.
+ *
  * @method \SprykerShop\Yves\BusinessOnBehalfWidget\BusinessOnBehalfWidgetFactory getFactory()
  */
 class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implements DisplayOnBehalfBusinessWidgetPluginInterface
@@ -20,10 +23,9 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
      */
     public function initialize(): void
     {
-        $this->addParameter('isOnBehalf', $this->isOnBehalf())
-            ->addParameter('companyName', $this->getCompanyName())
-            ->addParameter('companyBusinessUnitName', $this->getCompanyBusinessUnitName())
-            ->addParameter('isVisible', $this->isVisible());
+        $widget = new BusinessOnBehalfStatusWidget();
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -49,68 +51,6 @@ class DisplayOnBehalfBusinessWidgetPlugin extends AbstractWidgetPlugin implement
      */
     public static function getTemplate(): string
     {
-        return '@BusinessOnBehalfWidget/views/shop-ui/company-user-context-text.twig';
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isOnBehalf(): bool
-    {
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if (!$customer || !$customer->getIsOnBehalf()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCompanyName(): string
-    {
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if (!$customer
-            || !$customer->getCompanyUserTransfer()
-            || !$customer->getCompanyUserTransfer()->getCompany()
-        ) {
-            return '';
-        }
-
-        return $customer->getCompanyUserTransfer()->getCompany()->getName();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCompanyBusinessUnitName(): string
-    {
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if (!$customer
-            || !$customer->getCompanyUserTransfer()
-            || !$customer->getCompanyUserTransfer()->getCompanyBusinessUnit()
-        ) {
-            return '';
-        }
-
-        return $customer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getName();
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isVisible(): bool
-    {
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if (!$customer || !$customer->getIsOnBehalf()) {
-            return false;
-        }
-
-        return true;
+        return BusinessOnBehalfStatusWidget::getTemplate();
     }
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormProviderNameInterface;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,6 +29,8 @@ class PaymentForm extends AbstractType
     public const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
     public const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
     public const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
+
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**
      * @return string
@@ -85,7 +88,7 @@ class PaymentForm extends AbstractType
                 'placeholder' => false,
                 'property_path' => self::PAYMENT_SELECTION_PROPERTY_PATH,
                 'constraints' => [
-                    new NotBlank(),
+                    $this->createNotBlankConstraint(),
                 ],
             ]
         );
@@ -124,7 +127,11 @@ class PaymentForm extends AbstractType
     {
         $paymentMethodSubForms = [];
 
-        foreach ($this->getFactory()->getPaymentMethodSubForms() as $paymentMethodSubFormPlugin) {
+        $availablePaymentMethodSubFormPlugins = $this->getFactory()->getPaymentMethodSubForms();
+
+        $filteredPaymentMethodSubFormPlugins = $this->filterPaymentMethodSubFormPlugins($availablePaymentMethodSubFormPlugins);
+
+        foreach ($filteredPaymentMethodSubFormPlugins as $paymentMethodSubFormPlugin) {
             $paymentMethodSubForms[] = $this->createSubForm($paymentMethodSubFormPlugin);
         }
 
@@ -188,5 +195,25 @@ class PaymentForm extends AbstractType
         ]);
 
         $resolver->setRequired(SubFormInterface::OPTIONS_FIELD_NAME);
+    }
+
+    /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $availablePaymentMethodSubFormPlugins
+     *
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
+     */
+    protected function filterPaymentMethodSubFormPlugins(SubFormPluginCollection $availablePaymentMethodSubFormPlugins)
+    {
+        return $this->getFactory()
+            ->createSubFormFilter()
+            ->filterFormsCollection($availablePaymentMethodSubFormPlugins);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }

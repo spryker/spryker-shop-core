@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CustomerPage;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerAccessPermissionClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
@@ -25,6 +26,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class CustomerPageFactory extends AbstractFactory
 {
     /**
@@ -201,6 +205,14 @@ class CustomerPageFactory extends AbstractFactory
     public function getCustomerClient(): CustomerPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerAccessPermissionClientInterface
+     */
+    public function getCustomerAccessPermissionClient(): CustomerPageToCustomerAccessPermissionClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_CUSTOMER_ACCESS_PERMISSION);
     }
 
     /**

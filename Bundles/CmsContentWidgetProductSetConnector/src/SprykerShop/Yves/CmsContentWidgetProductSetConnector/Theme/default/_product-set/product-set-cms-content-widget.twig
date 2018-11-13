@@ -1,9 +1,33 @@
 {% if productSetList is defined %}
     {% for productSet in productSetList %}
-        {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.productViews) }}
+        {% if productSet.productViews is not empty %}
+            {% if widgetExists('ProductSetWidgetPlugin') %}
+                {{ widget('ProductSetWidgetPlugin', productSet.productSet, productSet.productViews) }} {# @deprecated Use organism('product-set', 'ProductSetWidget') instead. #}
+            {% else %}
+                {% include organism('product-set-cms-content', 'ProductSetWidget') ignore missing with {
+                    data: {
+                        products: productSet.productViews,
+                        name: productSet.productSet.name,
+                        description: productSet.productSet.description,
+                        images: productSet.productSet.imageSets.0.images | default([])
+                    }
+                } only %}
+            {% endif %}
+        {% endif %}
     {% endfor %}
 {% endif %}
 
-{% if productSet is defined %}
-    {{ widget('ProductSetWidgetPlugin', productSet, productViews) }}
+{% if productSet is defined and productViews is not empty %}
+    {% if widgetExists('ProductSetWidgetPlugin') %}
+        {{ widget('ProductSetWidgetPlugin', productSet, productViews) }} {# @deprecated Use organism('product-set', 'ProductSetWidget') instead. #}
+    {% else %}
+        {% include organism('product-set-cms-content', 'ProductSetWidget') ignore missing with {
+            data: {
+                products: productViews,
+                name: productSet.name,
+                description: productSet.description,
+                images: productSet.imageSets.0.images | default([])
+            }
+        } only %}
+    {% endif %}
 {% endif %}

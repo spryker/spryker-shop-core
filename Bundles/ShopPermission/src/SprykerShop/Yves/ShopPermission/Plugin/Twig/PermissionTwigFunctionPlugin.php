@@ -13,6 +13,8 @@ use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
 use Twig_SimpleFunction;
 
 /**
+ * @deprecated Please use PermissionTwigExtensionPlugin instead.
+ *
  * @method \SprykerShop\Yves\ShopPermission\ShopPermissionFactory getFactory()
  */
 class PermissionTwigFunctionPlugin extends AbstractPlugin implements TwigFunctionPluginInterface

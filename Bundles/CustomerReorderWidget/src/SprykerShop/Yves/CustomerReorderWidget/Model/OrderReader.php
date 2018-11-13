@@ -51,6 +51,22 @@ class OrderReader implements OrderReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function hasIncompatibleItems(OrderTransfer $orderTransfer): bool
+    {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getQuantitySalesUnit() || $itemTransfer->getAmountSalesUnit()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

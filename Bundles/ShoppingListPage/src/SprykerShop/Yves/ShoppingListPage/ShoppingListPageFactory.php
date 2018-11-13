@@ -22,6 +22,7 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustom
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShareShoppingListDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProvider;
@@ -46,6 +47,14 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getCustomerClient(): ShoppingListPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): ShoppingListPageToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
     /**
@@ -75,7 +84,11 @@ class ShoppingListPageFactory extends AbstractFactory
      */
     public function createShoppingListFormDataProvider(): ShoppingListFormDataProvider
     {
-        return new ShoppingListFormDataProvider($this->getShoppingListClient(), $this->getCustomerClient());
+        return new ShoppingListFormDataProvider(
+            $this->getShoppingListClient(),
+            $this->getCustomerClient(),
+            $this->getShoppingListFormDataProviderMapperPlugins()
+        );
     }
 
     /**
@@ -220,6 +233,14 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[]
+     */
+    public function getShoppingListFormDataProviderMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_FORM_DATA_PROVIDER_MAPPERS);
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFromCartFormDataProvider
      */
     public function createCartFromShoppingListFormDataProvider(): ShoppingListFromCartFormDataProvider
@@ -260,5 +281,13 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getShoppingListEditWidgetPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_EDIT_WIDGETS);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getShoppingListOverviewWidgetPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_OVERVIEW_WIDGETS);
     }
 }

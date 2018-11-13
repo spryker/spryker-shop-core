@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\WishlistWidget\WishlistWidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('wishlist-selector', 'WishlistWidget') instead.
+ */
 class WishlistWidgetPlugin extends AbstractWidgetPlugin implements WishlistWidgetPluginInterface
 {
     /**

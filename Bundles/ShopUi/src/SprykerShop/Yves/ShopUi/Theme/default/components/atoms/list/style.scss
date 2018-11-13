@@ -1,1 +1,3 @@
-@include shop-ui-list;
+@include helper-import(atom, list) {
+    @include shop-ui-list;
+}

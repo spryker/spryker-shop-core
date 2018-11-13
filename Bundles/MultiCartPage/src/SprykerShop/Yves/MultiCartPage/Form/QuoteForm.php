@@ -20,6 +20,8 @@ class QuoteForm extends AbstractType
 
     public const FIELD_NAME = 'name';
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @return string
      */
@@ -60,9 +62,17 @@ class QuoteForm extends AbstractType
     {
         $builder->add(self::FIELD_NAME, TextType::class, [
             'label' => 'multi_cart.form.quote.name',
-            'constraints' => new NotBlank(),
+            'constraints' => $this->createNotBlankConstraint(),
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }

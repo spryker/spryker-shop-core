@@ -1,1 +1,3 @@
-@include shop-ui-badge;
+@include helper-import(atom, badge) {
+    @include shop-ui-badge;
+}
