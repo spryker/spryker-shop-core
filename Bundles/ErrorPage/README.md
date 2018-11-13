@@ -1,6 +1,6 @@
 # ErrorPage Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the error pages for different HTTP codes.
 
 ## Installation
 

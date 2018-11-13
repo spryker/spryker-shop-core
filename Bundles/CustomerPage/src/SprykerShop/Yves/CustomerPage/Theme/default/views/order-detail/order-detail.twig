@@ -29,9 +29,7 @@
         {% embed molecule('order-detail-table', 'CustomerPage') with {
             data: {
                 items: data.orderItems,
-                currencyIsoCode: data.order.currencyIsoCode
-            },
-            embed: {
+                currencyIsoCode: data.order.currencyIsoCode,
                 order: data.order
             }
         } only %}
@@ -45,13 +43,6 @@
             {% endblock %}
             {% block detailRow %}
                 <td></td>
-                {{parent()}}
-            {% endblock %}
-
-            {% block row %}
-                <td>
-                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, concreteItem) }}
-                </td>
                 {{parent()}}
             {% endblock %}
         {% endembed %}
@@ -84,7 +75,23 @@
         } only %}
     </div>
 
-    {{ widget('CartNoteOrderNoteWidgetPlugin', data.order) }}
+    {% if widgetExists('CartNoteOrderNoteWidgetPlugin') %}
+        {% if data.order.cartNote is not empty %}
+            <div class="box">
+                {{ widget('CartNoteOrderNoteWidgetPlugin', data.order) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+            </div>
+        {% endif %}
+    {% elseif data.order.cartNote is not empty %}
+        <div class="box">
+            {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                data: {
+                    label: 'cart_note.customer_page.order_note',
+                    note: data.order.cartNote
+                }
+            } only %}
+        </div>
+    {% endif %}
+
     {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }}
     {{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }}
 {% endblock %}

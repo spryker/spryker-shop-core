@@ -14,6 +14,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_SHOPPING_LIST = 'shopping-list';
     public const ROUTE_SHOPPING_LIST_UPDATE = 'shopping-list/update';
+    public const ROUTE_SHOPPING_LIST_DELETE_CONFIRM = 'shopping-list/delete/confirm';
     public const ROUTE_SHOPPING_LIST_DELETE = 'shopping-list/delete';
     public const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
     public const ROUTE_SHOPPING_LIST_CLEAR = 'shopping-list/clear';
@@ -23,6 +24,8 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_SHOPPING_LIST_SHARE = 'shopping-list/share';
     public const ROUTE_SHOPPING_LIST_PRINT = 'shopping-list/print';
     public const ROUTE_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-exist-cart';
+    public const ROUTE_SHOPPING_LIST_DISMISS = 'shopping-list/dismiss';
+    public const ROUTE_SHOPPING_LIST_DISMISS_CONFIRM = 'shopping-list/dismiss-confirm';
 
     /**
      * @param \Silex\Application $app
@@ -34,6 +37,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
         $this->addShoppingListRoute()
             ->addShoppingListUpdateRoute()
             ->addShoppingListDeleteRoute()
+            ->addShoppingListDeleteConfirmRoute()
             ->addShoppingListAddToCartRoute()
             ->addShoppingListDetailsRoute()
             ->addShoppingListRemoveItemRoute()
@@ -41,7 +45,9 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
             ->addShoppingListShareRoute()
             ->addShoppingListPrintRoute()
             ->addCreateShoppingListFromCartRoute()
-            ->addShoppingListClearRoute();
+            ->addShoppingListClearRoute()
+            ->addShoppingListDismissRoute()
+            ->addShoppingListDismissConfirmRoute();
     }
 
     /**
@@ -74,7 +80,20 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addShoppingListDeleteRoute(): self
     {
-        $this->createGetController('/{shoppingList}/delete/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DELETE, 'ShoppingListPage', 'ShoppingListOverview', 'delete')
+        $this->createGetController('/{shoppingList}/delete/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DELETE, 'ShoppingListPage', 'ShoppingListDelete', 'delete')
+            ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
+            ->value('shoppingList', 'shopping-list')
+            ->assert('idShoppingList', '\d+');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addShoppingListDeleteConfirmRoute(): self
+    {
+        $this->createController('/{shoppingList}/delete/{idShoppingList}/confirm', static::ROUTE_SHOPPING_LIST_DELETE_CONFIRM, 'ShoppingListPage', 'ShoppingListDelete', 'deleteConfirm')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idShoppingList', '\d+');
@@ -181,6 +200,32 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('idQuote', '\d+');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addShoppingListDismissRoute(): self
+    {
+        $this->createController('/{shoppingList}/dismiss/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DISMISS, 'ShoppingListPage', 'ShoppingListDismiss', 'Dismiss')
+            ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
+            ->value('shoppingList', 'shopping-list')
+            ->assert('idShoppingList', '\d+');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addShoppingListDismissConfirmRoute(): self
+    {
+        $this->createController('/{shoppingList}/dismiss-confirm/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DISMISS_CONFIRM, 'ShoppingListPage', 'ShoppingListDismiss', 'DismissConfirm')
+            ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
+            ->value('shoppingList', 'shopping-list')
+            ->assert('idShoppingList', '\d+');
 
         return $this;
     }

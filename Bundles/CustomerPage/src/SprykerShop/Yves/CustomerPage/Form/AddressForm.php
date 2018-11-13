@@ -38,6 +38,11 @@ class AddressForm extends AbstractType
 
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    protected const VALIDATION_ADDRESS_NUMBER_MESSAGE = 'validation.address_number';
+    protected const VALIDATION_ZIP_CODE_MESSAGE = 'validation.zip_code';
+    protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
+
     /**
      * @return string
      */
@@ -68,17 +73,17 @@ class AddressForm extends AbstractType
             ->addSalutationField($builder, $options)
             ->addFirstNameField($builder, $options)
             ->addLastNameField($builder, $options)
-            ->addCompanyField($builder, $options)
+            ->addCompanyField($builder)
             ->addAddress1Field($builder, $options)
             ->addAddress2Field($builder, $options)
-            ->addAddress3Field($builder, $options)
+            ->addAddress3Field($builder)
             ->addZipCodeField($builder, $options)
             ->addCityField($builder, $options)
             ->addIso2CodeField($builder, $options)
-            ->addPhoneField($builder, $options)
-            ->addIsDefaultShippingField($builder, $options)
-            ->addIsDefaultBillingField($builder, $options)
-            ->addIdCustomerAddressField($builder, $options);
+            ->addPhoneField($builder)
+            ->addIsDefaultShippingField($builder)
+            ->addIsDefaultBillingField($builder)
+            ->addIdCustomerAddressField($builder);
     }
 
     /**
@@ -149,11 +154,10 @@ class AddressForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $options)
+    protected function addCompanyField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_COMPANY, TextType::class, [
             'label' => 'customer.address.company',
@@ -205,11 +209,10 @@ class AddressForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addAddress3Field(FormBuilderInterface $builder, array $options)
+    protected function addAddress3Field(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ADDRESS_3, TextType::class, [
             'label' => 'customer.address.address3',
@@ -281,11 +284,10 @@ class AddressForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addPhoneField(FormBuilderInterface $builder, array $options)
+    protected function addPhoneField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_PHONE, TextType::class, [
             'label' => 'customer.address.phone',
@@ -297,11 +299,10 @@ class AddressForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addIsDefaultShippingField(FormBuilderInterface $builder, array $options)
+    protected function addIsDefaultShippingField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_IS_DEFAULT_SHIPPING, CheckboxType::class, [
             'label' => 'customer.address.is_default_shipping',
@@ -313,11 +314,10 @@ class AddressForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addIsDefaultBillingField(FormBuilderInterface $builder, array $options)
+    protected function addIsDefaultBillingField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_IS_DEFAULT_BILLING, CheckboxType::class, [
             'label' => 'customer.address.is_default_billing',
@@ -329,11 +329,10 @@ class AddressForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addIdCustomerAddressField(FormBuilderInterface $builder, array $options)
+    protected function addIdCustomerAddressField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ID_CUSTOMER_ADDRESS, HiddenType::class);
 
@@ -345,9 +344,9 @@ class AddressForm extends AbstractType
      *
      * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
-    protected function createNotBlankConstraint(array $options)
+    protected function createNotBlankConstraint(array $options): NotBlank
     {
-        return new NotBlank();
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 
     /**
@@ -362,7 +361,23 @@ class AddressForm extends AbstractType
         return new Length([
             'min' => 3,
             'groups' => $validationGroup,
-            'minMessage' => 'This field must be at least {{ limit }} characters long.',
+            'minMessage' => static::VALIDATION_MIN_LENGTH_MESSAGE,
+        ]);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createZipCodeConstraint(array $options)
+    {
+        $validationGroup = $this->getValidationGroup($options);
+
+        return new Regex([
+            'pattern' => '/^\d{5}$/',
+            'message' => static::VALIDATION_ZIP_CODE_MESSAGE,
+            'groups' => $validationGroup,
         ]);
     }
 
@@ -377,7 +392,7 @@ class AddressForm extends AbstractType
 
         return new Regex([
             'pattern' => '/^\d+[a-zA-Z]*$/',
-            'message' => 'This value is not valid (accepted format e.g.: 12c).',
+            'message' => static::VALIDATION_ADDRESS_NUMBER_MESSAGE,
             'groups' => $validationGroup,
         ]);
     }

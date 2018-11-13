@@ -8,12 +8,12 @@
 namespace SprykerShop\Yves\CheckoutWidget\Plugin\CartPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StepBreadcrumbsTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\CheckoutWidget\CheckoutBreadcrumbWidgetPluginInterface;
+use SprykerShop\Yves\CheckoutWidget\Widget\CheckoutBreadcrumbWidget;
 
 /**
- * @method \SprykerShop\Yves\CheckoutWidget\CheckoutWidgetFactory getFactory()
+ * @deprecated Use \SprykerShop\Yves\CheckoutWidget\Widget\CheckoutBreadcrumbWidget instead.
  */
 class CheckoutBreadcrumbWidgetPlugin extends AbstractWidgetPlugin implements CheckoutBreadcrumbWidgetPluginInterface
 {
@@ -24,7 +24,9 @@ class CheckoutBreadcrumbWidgetPlugin extends AbstractWidgetPlugin implements Che
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('stepBreadcrumbs', $this->getStepBreadcrumbs($quoteTransfer));
+        $widget = new CheckoutBreadcrumbWidget($quoteTransfer);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -40,18 +42,6 @@ class CheckoutBreadcrumbWidgetPlugin extends AbstractWidgetPlugin implements Che
      */
     public static function getTemplate(): string
     {
-        return '@CheckoutWidget/views/cart-checkout-breadcrumb/cart-checkout-breadcrumb.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\StepBreadcrumbsTransfer
-     */
-    protected function getStepBreadcrumbs(QuoteTransfer $quoteTransfer): StepBreadcrumbsTransfer
-    {
-        return $this->getFactory()
-            ->getCheckoutBreadcrumbPlugin()
-            ->generateStepBreadcrumbs($quoteTransfer);
+        return CheckoutBreadcrumbWidget::getTemplate();
     }
 }

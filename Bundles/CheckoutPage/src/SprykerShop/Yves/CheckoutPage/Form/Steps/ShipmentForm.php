@@ -22,6 +22,8 @@ class ShipmentForm extends AbstractType
     public const SHIPMENT_SELECTION = 'shipmentSelection';
     public const SHIPMENT_SELECTION_PROPERTY_PATH = self::SHIPMENT_PROPERTY_PATH . '.' . self::SHIPMENT_SELECTION;
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @return string
      */
@@ -67,11 +69,19 @@ class ShipmentForm extends AbstractType
             'property_path' => static::SHIPMENT_SELECTION_PROPERTY_PATH,
             'placeholder' => false,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
             'label' => false,
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }

@@ -26,6 +26,11 @@ class ShoppingListWidgetController extends AbstractController
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
 
     /**
+     * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST
+     */
+    protected const SHOPPING_LISTS_REDIRECT_URL = 'shopping-list';
+
+    /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return void
@@ -52,10 +57,14 @@ class ShoppingListWidgetController extends AbstractController
 
         $shoppingListItemTransfer = $this->getFactory()
             ->getShoppingListClient()
-            ->addItem($shoppingListItemTransfer);
+            ->addItem($shoppingListItemTransfer, $request->request->all());
 
         if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED);
+        }
+
+        if (!$shoppingListItemTransfer->getFkShoppingList()) {
+            return $this->redirectResponseInternal(static::SHOPPING_LISTS_REDIRECT_URL);
         }
 
         return $this->redirectResponseInternal(ShoppingListWidgetConfig::SHOPPING_LIST_REDIRECT_URL, [

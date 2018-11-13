@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CmsContentWidgetProductConnector\Dependency\Plugin\Pr
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\CmsProductWidget instead.
+ */
 interface ProductWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ProductWidgetPlugin';

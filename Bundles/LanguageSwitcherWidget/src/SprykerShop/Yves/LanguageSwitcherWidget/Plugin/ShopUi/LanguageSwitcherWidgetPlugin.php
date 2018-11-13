@@ -7,12 +7,12 @@
 
 namespace SprykerShop\Yves\LanguageSwitcherWidget\Plugin\ShopUi;
 
-use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
 
 /**
- * @method \SprykerShop\Yves\LanguageSwitcherWidget\LanguageSwitcherWidgetFactory getFactory()
+ * @deprecated Use \SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget instead.
  */
 class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements LanguageSwitcherWidgetPluginInterface
 {
@@ -25,9 +25,9 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      */
     public function initialize(string $pathInfo, $queryString, string $requestUri): void
     {
-        $this
-            ->addParameter('languages', $this->getLanguages($pathInfo, $queryString, $requestUri))
-            ->addParameter('currentLanguage', $this->getCurrentLanguage());
+        $widget = new LanguageSwitcherWidget($pathInfo, $queryString, $pathInfo);
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -43,115 +43,6 @@ class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements Langu
      */
     public static function getTemplate(): string
     {
-        return '@LanguageSwitcherWidget/views/switcher/switcher.twig';
-    }
-
-    /**
-     * @param string $pathInfo
-     * @param string $queryString
-     * @param string $requestUri
-     *
-     * @return string[]
-     */
-    protected function getLanguages(string $pathInfo, $queryString, string $requestUri): array
-    {
-        $currentUrlStorage = $this->getFactory()
-            ->getUrlStorageClient()
-            ->findUrlStorageTransferByUrl($pathInfo);
-
-        $localeUrls = [];
-        if ($currentUrlStorage !== null && $currentUrlStorage->getLocaleUrls()->count() !== 0) {
-            $localeUrls = (array)$currentUrlStorage->getLocaleUrls();
-        }
-
-        $locales = $this->getFactory()
-            ->getStore()
-            ->getLocales();
-
-        if (!empty($localeUrls)) {
-            return $this->attachLocaleUrlsFromStorageToLanguages($locales, $localeUrls, $queryString);
-        }
-
-        return $this->attachLocaleUrlsToLanguages($locales, $requestUri);
-    }
-
-    /**
-     * @param array $locales
-     * @param array $localeUrls
-     * @param string $queryString
-     *
-     * @return array
-     */
-    protected function attachLocaleUrlsFromStorageToLanguages(
-        array $locales,
-        array $localeUrls,
-        $queryString
-    ): array {
-        $languages = [];
-        foreach ($locales as $locale) {
-            $language = $this->getLanguageFromLocale($locale);
-            foreach ($localeUrls as $localeUrl) {
-                if ($localeUrl[UrlStorageTransfer::LOCALE_NAME] === $locale) {
-                    $languages[$language] = $localeUrl[UrlStorageTransfer::URL] . '?' . $queryString;
-                    break;
-                }
-            }
-        }
-
-        return $languages;
-    }
-
-    /**
-     * @param array $locales
-     * @param string $requestUri
-     *
-     * @return array
-     */
-    protected function attachLocaleUrlsToLanguages(array $locales, string $requestUri): array
-    {
-        $currentUrl = $requestUri;
-        $languages = [];
-        foreach ($locales as $locale) {
-            $language = $this->getLanguageFromLocale($locale);
-            $languages[$language] = $this->replaceCurrentUrlLanguage($currentUrl, array_keys($locales), $language);
-        }
-
-        return $languages;
-    }
-
-    /**
-     * @param string $currentUrl
-     * @param array $languages
-     * @param string $replacementLanguage
-     *
-     * @return string
-     */
-    protected function replaceCurrentUrlLanguage($currentUrl, array $languages, $replacementLanguage)
-    {
-        if (preg_match('/\/(' . implode('|', $languages) . ')/', $currentUrl)) {
-            return preg_replace('/\/(' . implode('|', $languages) . ')/', '/' . $replacementLanguage, $currentUrl, 1);
-        }
-
-        return rtrim('/' . $replacementLanguage . $currentUrl, '/');
-    }
-
-    /**
-     * @param string $locale
-     *
-     * @return string
-     */
-    protected function getLanguageFromLocale($locale): string
-    {
-        return substr($locale, 0, strpos($locale, '_'));
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCurrentLanguage(): string
-    {
-        return $this->getFactory()
-            ->getStore()
-            ->getCurrentLanguage();
+        return LanguageSwitcherWidget::getTemplate();
     }
 }

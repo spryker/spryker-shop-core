@@ -18,6 +18,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class AbstractShoppingListController extends AbstractController
 {
+    protected const ROUTE_PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
@@ -64,8 +66,8 @@ class AbstractShoppingListController extends AbstractController
         $productViewTransfer->fromArray($productConcreteStorageData, true);
 
         $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
-        $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
         $productViewTransfer->setShoppingListItem($shoppingListItemTransfer);
+        $productViewTransfer->setIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
 
         foreach ($this->getFactory()->getShoppingListItemExpanderPlugins() as $productViewExpanderPlugin) {
             $productViewExpanderPlugin->expandProductViewTransfer(

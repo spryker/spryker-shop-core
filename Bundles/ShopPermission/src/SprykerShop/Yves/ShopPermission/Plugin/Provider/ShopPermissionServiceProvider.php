@@ -26,7 +26,10 @@ class ShopPermissionServiceProvider extends AbstractPlugin implements ServicePro
     {
         $app['twig'] = $app->share(
             $app->extend('twig', function (Twig_Environment $twig) use ($app) {
-                return $this->registerPermissionTwigFunction($twig, $app);
+                $twig = $this->registerPermissionTwigFunction($twig, $app);
+                $twig = $this->registerPermissionTwigExtensions($twig);
+
+                return $twig;
             })
         );
     }
@@ -59,6 +62,20 @@ class ShopPermissionServiceProvider extends AbstractPlugin implements ServicePro
         }
 
         return $functions;
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     *
+     * @return \Twig_Environment
+     */
+    protected function registerPermissionTwigExtensions(Twig_Environment $twig): Twig_Environment
+    {
+        foreach ($this->getFactory()->getPermissionTwigExtensionPlugins() as $extensionPlugin) {
+            $twig->addExtension($extensionPlugin);
+        }
+
+        return $twig;
     }
 
     /**

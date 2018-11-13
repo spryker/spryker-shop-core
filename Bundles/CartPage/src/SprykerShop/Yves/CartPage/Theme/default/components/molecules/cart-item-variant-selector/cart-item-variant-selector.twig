@@ -7,14 +7,17 @@
 
 {% define data = {
     cartItem: required,
+    canEditCart: required,
     cartItemAttributes: []
 } %}
 
 {% block component %}
     {% set isItemVariantReplaceAvailable = data.cartItemAttributes is not empty %}
 
-    {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
-        {% set isItemVariantReplaceAvailable = not widgetBlock('QuantitySalesUnitWidgetPlugin', 'hasSalesUnit', data.cartItem) and isItemVariantReplaceAvailable %}
+    {% set quantitySalesUnitWidget = findWidget('CartProductMeasurementUnitQuantitySelectorWidget', [data.cartItem]) %}
+    {% set hasSalesUnit = quantitySalesUnitWidget.hasSalesUnit ?? widgetBlock('QuantitySalesUnitWidgetPlugin', 'hasSalesUnit', data.cartItem) %} {# @deprecated Use CartProductMeasurementUnitQuantitySelectorWidget instead of QuantitySalesUnitWidgetPlugin. #}
+    {% if hasSalesUnit is null %}
+        {% set isItemVariantReplaceAvailable = not hasSalesUnit and isItemVariantReplaceAvailable %}
     {% endif %}
 
     {% if isItemVariantReplaceAvailable %}{{parent()}}{% endif %}
@@ -46,7 +49,8 @@
                             },
                             attributes: {
                                 name: 'preselectedAttributes[' ~ attributeName ~ ']',
-                                'onchange': 'this.form.submit();'
+                                'onchange': 'this.form.submit();',
+                                disabled: not data.canEditCart
                             }
                         } only %}
                     </label>
