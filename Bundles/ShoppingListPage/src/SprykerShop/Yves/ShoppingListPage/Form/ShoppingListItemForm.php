@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints\Range;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
  */
 class ShoppingListItemForm extends AbstractType
 {

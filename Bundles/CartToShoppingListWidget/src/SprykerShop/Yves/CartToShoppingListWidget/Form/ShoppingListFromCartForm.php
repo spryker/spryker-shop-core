@@ -16,6 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \SprykerShop\Yves\CartToShoppingListWidget\CartToShoppingListWidgetConfig getConfig()
+ */
 class ShoppingListFromCartForm extends AbstractType
 {
     protected const FIELD_ID_QUOTE = 'idQuote';
