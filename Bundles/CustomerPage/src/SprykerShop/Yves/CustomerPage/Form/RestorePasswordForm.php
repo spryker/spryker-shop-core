@@ -14,6 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class RestorePasswordForm extends AbstractType
 {
     public const FIELD_RESTORE_PASSWORD_KEY = 'restore_password_key';

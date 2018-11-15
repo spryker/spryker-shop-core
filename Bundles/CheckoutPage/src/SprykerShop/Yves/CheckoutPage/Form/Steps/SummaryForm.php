@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class SummaryForm extends AbstractType
 {
     /**
