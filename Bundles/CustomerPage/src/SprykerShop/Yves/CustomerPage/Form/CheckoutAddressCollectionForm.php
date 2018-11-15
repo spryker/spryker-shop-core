@@ -7,8 +7,10 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
+use Closure;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -23,12 +25,15 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
     public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
+    public const FIELD_SKIP_ADDRESS_SAVING = 'skipAddressSaving';
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
+
+    protected const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
 
     /**
      * @return string
@@ -74,7 +79,8 @@ class CheckoutAddressCollectionForm extends AbstractType
         $this
             ->addShippingAddressSubForm($builder, $options)
             ->addSameAsShipmentCheckbox($builder)
-            ->addBillingAddressSubForm($builder, $options);
+            ->addBillingAddressSubForm($builder, $options)
+            ->addSkipAddressSavingField($builder);
     }
 
     /**
@@ -153,5 +159,41 @@ class CheckoutAddressCollectionForm extends AbstractType
         $builder->add(self::FIELD_BILLING_ADDRESS, CheckoutAddressForm::class, $options);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addSkipAddressSavingField(FormBuilderInterface $builder): self
+    {
+        $builder->add(static::FIELD_SKIP_ADDRESS_SAVING, CheckboxType::class, [
+            'label' => static::GLOSSARY_KEY_SAVE_NEW_ADDRESS,
+        ]);
+
+        $callbackTransformer = new CallbackTransformer(
+            $this->getSkipAddressSavingInvertedValueCallbackTransformer(),
+            $this->getSkipAddressSavingInvertedValueCallbackTransformer()
+        );
+
+        $builder->get(static::FIELD_SKIP_ADDRESS_SAVING)
+            ->addModelTransformer($callbackTransformer);
+
+        return $this;
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getSkipAddressSavingInvertedValueCallbackTransformer(): Closure
+    {
+        return function (?bool $value) {
+            if ($value === null) {
+                return true;
+            }
+
+            return !$value;
+        };
     }
 }
