@@ -170,6 +170,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     {
         $builder->add(static::FIELD_SKIP_ADDRESS_SAVING, CheckboxType::class, [
             'label' => static::GLOSSARY_KEY_SAVE_NEW_ADDRESS,
+            'required' => false,
         ]);
 
         $callbackTransformer = new CallbackTransformer(
