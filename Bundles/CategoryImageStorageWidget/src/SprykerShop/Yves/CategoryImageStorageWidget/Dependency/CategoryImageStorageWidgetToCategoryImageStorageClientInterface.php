@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer;
 interface CategoryImageStorageWidgetToCategoryImageStorageClientInterface
 {
     /**
-     * Specification:
-     * - get category image set collection transfer object from storage for the specified category id and locale combination.
-     *
-     * @api
-     *
      * @param int $categoryId
      * @param string $localeName
      *

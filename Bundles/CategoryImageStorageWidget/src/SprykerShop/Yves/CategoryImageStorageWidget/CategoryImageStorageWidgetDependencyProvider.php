@@ -20,7 +20,7 @@ class CategoryImageStorageWidgetDependencyProvider extends AbstractBundleDepende
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addCategoryImageStorageClient($container);
 
@@ -32,7 +32,7 @@ class CategoryImageStorageWidgetDependencyProvider extends AbstractBundleDepende
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCategoryImageStorageClient(Container $container)
+    protected function addCategoryImageStorageClient(Container $container): Container
     {
         $container[static::CLIENT_CATEGORY_IMAGE_STORAGE] = function (Container $container) {
             return new CategoryImageStorageWidgetToCategoryImageStorageClientBridge(

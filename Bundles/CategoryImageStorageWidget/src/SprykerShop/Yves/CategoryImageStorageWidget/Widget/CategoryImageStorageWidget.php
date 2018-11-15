@@ -23,10 +23,10 @@ class CategoryImageStorageWidget extends AbstractWidget
     public const IMAGE_SIZE_SMALL = 'small';
     public const IMAGE_SIZE_LARGE = 'large';
 
-    protected static $imageStorageTransferToSizeMap = [
-        self::IMAGE_SIZE_SMALL => CategoryImageStorageTransfer::EXTERNAL_URL_SMALL,
-        self::IMAGE_SIZE_LARGE => CategoryImageStorageTransfer::EXTERNAL_URL_LARGE,
-    ];
+    /**
+     * @var array
+     */
+    protected $imageStorageTransferToSizeMap = [];
 
     /**
      * @param int $idCategory
@@ -40,6 +40,11 @@ class CategoryImageStorageWidget extends AbstractWidget
         string $imageSetName = self::DEFAULT_IMAGE_SET_NAME,
         string $imageSize = self::IMAGE_SIZE_SMALL
     ) {
+        $this->imageStorageTransferToSizeMap = [
+            static::IMAGE_SIZE_SMALL => CategoryImageStorageTransfer::EXTERNAL_URL_SMALL,
+            static::IMAGE_SIZE_LARGE => CategoryImageStorageTransfer::EXTERNAL_URL_LARGE,
+        ];
+
         $this->addParameter('categoryName', $categoryName)
             ->addParameter('imageUrl', $this->getCategoryImageUrl($idCategory, $imageSetName, $imageSize));
     }
@@ -142,6 +147,6 @@ class CategoryImageStorageWidget extends AbstractWidget
      */
     protected function getImageStorageTransferSizePropertyName(string $imageSize): string
     {
-        return static::$imageStorageTransferToSizeMap[$imageSize] ?? CategoryImageStorageTransfer::EXTERNAL_URL_SMALL;
+        return $this->imageStorageTransferToSizeMap[$imageSize] ?? CategoryImageStorageTransfer::EXTERNAL_URL_SMALL;
     }
 }

@@ -27,7 +27,10 @@ class CategoryImageStorageWidgetToCategoryImageStorageClientBridge implements Ca
     /**
      * {@inheritdoc}
      *
-     * @api
+     * @param int $categoryId
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer|null
      */
     public function getCategoryImageSetCollectionStorage(int $categoryId, string $localeName): ?CategoryImageSetCollectionStorageTransfer
     {
