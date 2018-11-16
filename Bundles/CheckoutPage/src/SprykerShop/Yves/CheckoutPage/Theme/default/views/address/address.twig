@@ -24,7 +24,8 @@
         embed: {
             forms: {
                 shipping: data.forms.shipping,
-                billing: data.forms.billing
+                billing: data.forms.billing,
+                skipAddressSaving: data.forms.address.skipAddressSaving
             }
         }
     } only %}
@@ -195,8 +196,19 @@
                 {% endembed %}
             </div>
         {% endblock %}
+
+        {% block actions %}
+            <div class="grid grid--middle grid--justify">
+                {% include molecule('save-new-address', 'CheckoutPage') with {
+                    class: 'col is-hidden',
+                    data: {
+                        form: embed.forms.skipAddressSaving
+                    }
+                } only %}
+                <div class="col">
+                    {{ parent() }}
+                </div>
+            </div>
+        {% endblock %}
     {% endembed %}
-
-    {{ form_row(data.forms.address.skipAddressSaving) }}
-
 {% endblock %}

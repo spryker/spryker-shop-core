@@ -1,0 +1,14 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'save-new-address',
+    tag: 'save-new-address'
+} %}
+
+{% define data = {
+    form: required
+} %}
+
+{% block body %}
+    {{ form_row(data.form) }}
+{% endblock %}
