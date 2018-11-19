@@ -166,7 +166,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSkipAddressSavingField(FormBuilderInterface $builder)
+    protected function addSkipAddressSavingField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_SKIP_ADDRESS_SAVING, CheckboxType::class, [
             'label' => static::GLOSSARY_KEY_SAVE_NEW_ADDRESS,
