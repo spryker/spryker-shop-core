@@ -36,9 +36,9 @@
                     label: false,
                     attr: {
                         class: config.jsName ~ '__quantity',
-                        min: data.product.productQuantity.quantityMin | default(),
+                        min: data.product.productQuantity.quantityMin | default(1),
                         max: data.product.productQuantity.quantityMax | default(),
-                        step: data.product.productQuantity.quantityInterval | default(),
+                        step: data.product.productQuantity.quantityInterval | default(1),
                         disabled: data.quantityField.vars.value is empty,
                     }
                 } %}
