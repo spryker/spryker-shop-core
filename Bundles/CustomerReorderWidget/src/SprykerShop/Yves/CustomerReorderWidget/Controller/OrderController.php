@@ -46,6 +46,11 @@ class OrderController extends AbstractController
             return $this->getFailureRedirect();
         }
 
+        // Check if there are enough items in stock to reorder, if not set max of stock
+        $this->getFactory()
+            ->createAvailableQuantitySetter()
+            ->setAvailableQuantity($orderTransfer);
+
         $this->getFactory()
             ->createCartFiller()
             ->fillFromOrder($orderTransfer);
