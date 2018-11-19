@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\OrderTransfer;
 class AvailableQuantitySetter implements AvailableQuantitySetterInterface
 {
     /**
-     * @var AvailabilityReaderInterface
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityReaderInterface
      */
     protected $availabilityReader;
 
     /**
-     * @param AvailabilityReaderInterface $availabilityReader
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityReaderInterface $availabilityReader
      */
     public function __construct(AvailabilityReaderInterface $availabilityReader)
     {

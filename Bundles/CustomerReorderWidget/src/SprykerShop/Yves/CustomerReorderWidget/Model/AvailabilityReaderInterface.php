@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 interface AvailabilityReaderInterface
 {
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
      */

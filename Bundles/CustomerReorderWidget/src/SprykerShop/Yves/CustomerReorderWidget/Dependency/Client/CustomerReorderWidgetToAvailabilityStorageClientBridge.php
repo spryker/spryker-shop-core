@@ -33,7 +33,7 @@ class CustomerReorderWidgetToAvailabilityStorageClientBridge implements Customer
     }
 
     /**
-     * @param $idProductAbstract
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
      */
