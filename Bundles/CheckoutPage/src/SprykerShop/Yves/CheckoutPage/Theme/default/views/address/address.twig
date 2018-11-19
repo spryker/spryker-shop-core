@@ -24,8 +24,7 @@
         embed: {
             forms: {
                 shipping: data.forms.shipping,
-                billing: data.forms.billing,
-                address: data.forms.address
+                billing: data.forms.billing
             }
         }
     } only %}
@@ -199,17 +198,15 @@
 
         {% block actions %}
             <div class="grid grid--middle grid--justify">
-                {% set isGuest = embed.forms.address.vars.value.customer.isGuest %}
-
-                {% if isGuest == false %}
-                    {% include molecule('save-new-address', 'CustomerPage') ignore missing with {
+                {% if data.form.vars.value.customer.isGuest %}
+                    {% do data.form.skipAddressSaving.setRendered %}
+                {% else %}
+                    {% include molecule('save-new-address', 'CustomerPage') with {
                         class: 'col is-hidden',
                         data: {
-                            form: embed.forms.address.skipAddressSaving
+                            form: data.form.skipAddressSaving
                         }
                     } only %}
-                {% else %}
-                    {% do embed.forms.address.skipAddressSaving.setRendered %}
                 {% endif %}
 
                 <div class="col">
