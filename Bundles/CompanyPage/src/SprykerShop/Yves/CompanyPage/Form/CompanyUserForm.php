@@ -39,8 +39,12 @@ class CompanyUserForm extends AbstractType
     public const OPTION_BUSINESS_UNIT_CHOICES = 'business_unit_choices';
     public const OPTION_COMPANY_ROLE_CHOICES = 'company_role_choices';
 
+    public const OPTION_DEFAULT_COMPANY_ROLE_ID = 'default_company_role_id';
+
     protected const KEY_ROLES = 'roles';
     protected const KEY_ID_COMPANY_ROLE = 'id_company_role';
+
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -51,6 +55,7 @@ class CompanyUserForm extends AbstractType
     {
         $resolver->setRequired(static::OPTION_BUSINESS_UNIT_CHOICES);
         $resolver->setRequired(static::OPTION_COMPANY_ROLE_CHOICES);
+        $resolver->setDefined(static::OPTION_DEFAULT_COMPANY_ROLE_ID);
     }
 
     /**
@@ -93,7 +98,7 @@ class CompanyUserForm extends AbstractType
         $builder->add(static::FIELD_FK_COMPANY, HiddenType::class, [
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -155,7 +160,7 @@ class CompanyUserForm extends AbstractType
             'required' => true,
             'choices' => array_flip($options[static::OPTION_BUSINESS_UNIT_CHOICES]),
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -179,7 +184,7 @@ class CompanyUserForm extends AbstractType
             'required' => true,
             'label' => 'address.salutation',
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -197,7 +202,7 @@ class CompanyUserForm extends AbstractType
             'label' => 'company.user.first_name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -215,7 +220,7 @@ class CompanyUserForm extends AbstractType
             'label' => 'company.user.last_name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -233,7 +238,7 @@ class CompanyUserForm extends AbstractType
             'label' => 'auth.email',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -355,5 +360,13 @@ class CompanyUserForm extends AbstractType
         ]);
 
         return $companyRoleCollectionConstraints;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }

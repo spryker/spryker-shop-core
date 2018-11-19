@@ -1,1 +1,3 @@
-@include shop-ui-select;
+@include helper-import(atom, select) {
+    @include shop-ui-select;
+}
