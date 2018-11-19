@@ -25,7 +25,7 @@
             forms: {
                 shipping: data.forms.shipping,
                 billing: data.forms.billing,
-                skipAddressSaving: data.forms.address.skipAddressSaving
+                address: data.forms.address
             }
         }
     } only %}
@@ -199,10 +199,10 @@
 
         {% block actions %}
             <div class="grid grid--middle grid--justify">
-                {% include molecule('save-new-address', 'CheckoutPage') with {
+                {% include molecule('save-new-address', 'CustomerPage') ignore missing with {
                     class: 'col is-hidden',
                     data: {
-                        form: embed.forms.skipAddressSaving
+                        form: embed.forms.address.skipAddressSaving
                     }
                 } only %}
                 <div class="col">
