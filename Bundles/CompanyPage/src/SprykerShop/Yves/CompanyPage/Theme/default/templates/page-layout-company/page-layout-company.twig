@@ -2,7 +2,7 @@
 
 {% define data = {
     activePage: 'overview',
-    currentBreadcrumb: 'customer.account.overview' | trans
+    currentBreadcrumb: 'customer.account.overview'
 } %}
 
 {% block breadcrumbs %}
@@ -14,7 +14,7 @@
                     url: url('company/overview')
                 },
                 {
-                    label: data.currentBreadcrumb
+                    label: data.currentBreadcrumb | trans
                 }
             ]
         }
