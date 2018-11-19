@@ -199,12 +199,19 @@
 
         {% block actions %}
             <div class="grid grid--middle grid--justify">
-                {% include molecule('save-new-address', 'CustomerPage') ignore missing with {
-                    class: 'col is-hidden',
-                    data: {
-                        form: embed.forms.address.skipAddressSaving
-                    }
-                } only %}
+                {% set isGuest = embed.forms.address.vars.value.customer.isGuest %}
+
+                {% if isGuest == false %}
+                    {% include molecule('save-new-address', 'CustomerPage') ignore missing with {
+                        class: 'col is-hidden',
+                        data: {
+                            form: embed.forms.address.skipAddressSaving
+                        }
+                    } only %}
+                {% else %}
+                    {% do embed.forms.address.skipAddressSaving.setRendered %}
+                {% endif %}
+
                 <div class="col">
                     {{ parent() }}
                 </div>
