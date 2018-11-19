@@ -28,7 +28,7 @@ class ShoppingListPageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns the minimum quantity range.
+     * - Returns the minimum range for quantity field.
      *
      * @return int
      */

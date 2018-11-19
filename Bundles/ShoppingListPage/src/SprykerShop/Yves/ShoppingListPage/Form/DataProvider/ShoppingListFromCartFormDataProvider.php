@@ -19,7 +19,7 @@ class ShoppingListFromCartFormDataProvider
     protected const GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ADD_NEW = 'cart.add-to-shopping-list.form.add_new';
 
     /**
-     * @uses ShoppingListFromCartForm::OPTION_SHOPPING_LISTS
+     * @uses \SprykerShop\Yves\ShoppingListPage\Form\ShoppingListFromCartForm::OPTION_SHOPPING_LISTS
      */
     protected const OPTION_SHOPPING_LISTS = 'OPTION_SHOPPING_LISTS';
 
