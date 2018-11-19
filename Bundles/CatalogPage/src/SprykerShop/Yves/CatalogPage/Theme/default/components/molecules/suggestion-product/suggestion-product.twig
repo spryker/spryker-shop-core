@@ -33,12 +33,17 @@
         <span class="col col--sm-9 spacing spacing--inner">
             {{ data.title }}
 
-            {% include molecule('price') with {
-                data: {
-                    amount: data.price | money,
-                    originalAmount: data.originalPrice is empty ? null : (data.originalPrice | money)
-                }
-            } only %}
+            {% if can('SeePricePermissionPlugin') %}
+                {% include molecule('price') with {
+                    data: {
+                        amount: data.price | money,
+                        originalAmount: data.originalPrice is empty ? null : (data.originalPrice | money)
+                    }
+                } only %}
+            {% else %}
+                <br/>
+                {{ 'customer.access.cannot_see_price' | trans }}
+            {% endif %}
         </span>
     </a>
 {% endblock %}

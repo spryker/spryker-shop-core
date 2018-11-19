@@ -1,1 +1,3 @@
-@include shop-ui-label;
+@include helper-import(atom, label) {
+    @include shop-ui-label;
+}

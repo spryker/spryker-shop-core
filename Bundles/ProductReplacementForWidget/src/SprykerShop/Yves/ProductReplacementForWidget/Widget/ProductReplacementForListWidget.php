@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductReplacementForWidget\Widget;
 
-use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetConfig;
@@ -77,7 +76,8 @@ class ProductReplacementForListWidget extends AbstractWidget
         if (empty($productConcreteStorageData)) {
             return null;
         }
-        $productConcreteStorageData[ProductReplacementForWidgetConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = new AttributeMapStorageTransfer();
+
+        $productConcreteStorageData[ProductReplacementForWidgetConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = [];
 
         return $this->getFactory()
             ->getProductStorageClient()

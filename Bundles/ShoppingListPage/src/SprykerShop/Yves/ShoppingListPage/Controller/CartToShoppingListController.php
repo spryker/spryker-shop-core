@@ -7,17 +7,13 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
+use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 class CartToShoppingListController extends AbstractShoppingListController
 {
     protected const GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS = 'shopping_list.cart.items_add.success';
     protected const GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_FAILED = 'shopping_list.cart.items_add.failed';
-
-    /**
-     * @uses CartToShoppingListWidgetConfig::SHOPPING_LIST_REDIRECT_URL
-     */
-    protected const SHOPPING_LIST_REDIRECT_URL = 'shopping-list/details';
 
     /**
      * @param int $idQuote
@@ -55,7 +51,7 @@ class CartToShoppingListController extends AbstractShoppingListController
 
             $this->addSuccessMessage(static::GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS);
 
-            return $this->redirectResponseInternal(static::SHOPPING_LIST_REDIRECT_URL, [
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $shoppingListTransfer->getIdShoppingList(),
             ]);
         }

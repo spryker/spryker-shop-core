@@ -354,6 +354,13 @@ class CompanyRoleController extends AbstractCompanyController
         $companyRoleTransfer = new CompanyRoleTransfer();
         $companyRoleTransfer->fromArray($data, true);
 
+        $companyRolePermissionCollection = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->getCompanyRoleById($companyRoleTransfer)
+            ->getPermissionCollection();
+
+        $companyRoleTransfer->setPermissionCollection($companyRolePermissionCollection);
+
         $this->getFactory()
             ->getCompanyRoleClient()
             ->updateCompanyRole($companyRoleTransfer);
