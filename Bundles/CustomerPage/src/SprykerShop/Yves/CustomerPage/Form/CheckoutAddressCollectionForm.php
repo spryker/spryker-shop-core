@@ -174,8 +174,8 @@ class CheckoutAddressCollectionForm extends AbstractType
         ]);
 
         $callbackTransformer = new CallbackTransformer(
-            $this->getSkipAddressSavingInvertedValueCallbackTransformer(),
-            $this->getSkipAddressSavingInvertedValueCallbackTransformer()
+            $this->getInvertedBooleanValueCallbackTransformer(),
+            $this->getInvertedBooleanValueCallbackTransformer()
         );
 
         $builder->get(static::FIELD_SKIP_ADDRESS_SAVING)
@@ -187,9 +187,9 @@ class CheckoutAddressCollectionForm extends AbstractType
     /**
      * @return \Closure
      */
-    protected function getSkipAddressSavingInvertedValueCallbackTransformer(): Closure
+    protected function getInvertedBooleanValueCallbackTransformer(): Closure
     {
-        return function (?bool $value) {
+        return function (?bool $value): bool {
             if ($value === null) {
                 return true;
             }
