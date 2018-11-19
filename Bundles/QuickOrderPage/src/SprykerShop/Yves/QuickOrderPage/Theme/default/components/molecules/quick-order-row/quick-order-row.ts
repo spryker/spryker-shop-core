@@ -36,8 +36,10 @@ export default class QuickOrderRow extends Component {
     }
 
     protected onQuantityChange(e: Event) {
-        const quantity = parseInt(this.quantityInput.value);
-        this.reloadField(this.autocompleteInput.inputValue, quantity);
+        const isSetMinimumValue = (this.quantityValue !== '' && Number(this.quantityValue) < this.quantityMin) ? true : false;
+
+        this.setMinimumValue(isSetMinimumValue);
+        this.reloadField(this.autocompleteInput.inputValue);
     }
 
     protected toggleErrorMessage(isShow: boolean): void {
@@ -63,23 +65,22 @@ export default class QuickOrderRow extends Component {
         return result;
     }
 
-    async reloadField(sku: string = '', quantity: number = null) {
-        const isSetMinimumValue = (this.quantityValue !== '' && Number(this.quantityValue) < this.quantityMin) ? true : false,
-              isShowErrorMessage = this.checkQuantityValidation();
+    async reloadField(sku: string = '') {
+        const isShowErrorMessage = this.checkQuantityValidation(),
+            quantityInputValue = parseInt(this.quantityValue);
 
         if (!!sku) {
             this.ajaxProvider.queryParams.set('sku', sku);
             this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class').split('-').pop().trim());
         }
 
-        if (!!quantity) {
-            this.ajaxProvider.queryParams.set('quantity', `${quantity}`);
+        if (!!quantityInputValue) {
+            this.ajaxProvider.queryParams.set('quantity', `${quantityInputValue}`);
         }
 
         await this.ajaxProvider.fetch();
         this.registerQuantityInput();
         this.toggleErrorMessage(isShowErrorMessage);
-        this.setMinimumValue(isSetMinimumValue);
         this.mapEvents();
     }
 
