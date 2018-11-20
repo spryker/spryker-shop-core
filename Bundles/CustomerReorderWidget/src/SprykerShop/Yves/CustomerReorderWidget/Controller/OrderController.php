@@ -85,6 +85,10 @@ class OrderController extends AbstractController
         }
 
         $this->getFactory()
+            ->createAvailableQuantitySetter()
+            ->setAvailableQuantity($orderTransfer);
+
+        $this->getFactory()
             ->createCartFiller()
             ->fillSelectedFromOrder($orderTransfer, $items);
 

@@ -7,21 +7,24 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface;
 
 class AvailableQuantitySetter implements AvailableQuantitySetterInterface
 {
     /**
-     * @var \SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityReaderInterface
+     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface
      */
-    protected $availabilityReader;
+    protected $availabilityStorageClient;
 
     /**
-     * @param \SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityReaderInterface $availabilityReader
+     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface $availabilityStorageClient
      */
-    public function __construct(AvailabilityReaderInterface $availabilityReader)
+    public function __construct(CustomerReorderWidgetToAvailabilityStorageClientInterface $availabilityStorageClient)
     {
-        $this->availabilityReader = $availabilityReader;
+        $this->availabilityStorageClient = $availabilityStorageClient;
     }
 
     /**
@@ -32,7 +35,7 @@ class AvailableQuantitySetter implements AvailableQuantitySetterInterface
     public function setAvailableQuantity(OrderTransfer $orderTransfer): OrderTransfer
     {
         foreach ($orderTransfer->getItems() as $item) {
-            $spyAvailabilityAbstractTransfer = $this->availabilityReader->getAvailabilityAbstractByItemTransfer($item);
+            $spyAvailabilityAbstractTransfer = $this->getAvailabilityAbstractByItemTransfer($item);
 
             foreach ($spyAvailabilityAbstractTransfer->getSpyAvailabilities() as $spyAvailability) {
                 if ($spyAvailability->getSku() !== $item->getSku()) {
@@ -56,5 +59,17 @@ class AvailableQuantitySetter implements AvailableQuantitySetterInterface
         }
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
+     */
+    protected function getAvailabilityAbstractByItemTransfer(ItemTransfer $itemTransfer): SpyAvailabilityAbstractEntityTransfer
+    {
+        $itemTransfer->requireIdProductAbstract();
+
+        return $this->availabilityStorageClient->getAvailabilityAbstract($itemTransfer->getIdProductAbstract());
     }
 }

@@ -66,16 +66,6 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityReaderInterface
-     */
-    public function createAvailabilityReader(): AvailabilityReaderInterface
-    {
-        return new AvailabilityReader(
-            $this->getAvailabilityStorageClient()
-        );
-    }
-
-    /**
      * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToZedRequestClientBridge
      */
     public function getZedRequestClient(): CustomerReorderWidgetToZedRequestClientInterface
@@ -103,7 +93,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     public function createAvailableQuantitySetter(): AvailableQuantitySetterInterface
     {
         return new AvailableQuantitySetter(
-            $this->createAvailabilityReader()
+            $this->getAvailabilityStorageClient()
         );
     }
 
