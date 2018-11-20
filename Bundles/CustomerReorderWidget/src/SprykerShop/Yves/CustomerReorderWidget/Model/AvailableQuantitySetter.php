@@ -41,7 +41,6 @@ class AvailableQuantitySetter implements AvailableQuantitySetterInterface
 
                 if ($spyAvailability->getIsNeverOutOfStock()) {
                     continue;
-
                 }
 
                 if ($spyAvailability->getQuantity() === 0) {
