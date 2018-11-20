@@ -7,8 +7,7 @@ export enum Events {
     FETCHED = 'fetched',
     CHANGE = 'change',
     SET = 'set',
-    UNSET = 'unset',
-    SELECT_ITEM = 'selectItem'
+    UNSET = 'unset'
 }
 
 export default class AutocompleteForm extends Component {
@@ -20,9 +19,7 @@ export default class AutocompleteForm extends Component {
     cleanButton: HTMLButtonElement;
     lastSelectedItem: HTMLElement;
     keyCodes: {
-        arrowUp: number,
-        arrowDown: number,
-        tab: number,
+        [key: string]: number;
     };
 
     protected readyCallback(): void {
@@ -109,7 +106,7 @@ export default class AutocompleteForm extends Component {
         const self = this;
         this.suggestionItems.forEach((item: HTMLElement) => {
             item.addEventListener('click', (e: Event) => self.onItemClick(e));
-            self.onItemHover(item);
+            item.addEventListener('mouseover', () => this.itemSelectHandler(item));
         });
     }
 
@@ -124,10 +121,6 @@ export default class AutocompleteForm extends Component {
             text: this.inputText,
             value: this.inputValue
         });
-    }
-
-    protected onItemHover(item: HTMLElement):void {
-        item.addEventListener('mouseover', () => this.itemSelectHandler(item));
     }
 
     protected itemSelectHandler(item): void {
@@ -157,7 +150,6 @@ export default class AutocompleteForm extends Component {
                 case this.keyCodes.tab:
                     event.preventDefault();
                     this.lastSelectedItem.click();
-                    this.dispatchCustomEvent(Events.SELECT_ITEM);
                     break;
             }
         }
