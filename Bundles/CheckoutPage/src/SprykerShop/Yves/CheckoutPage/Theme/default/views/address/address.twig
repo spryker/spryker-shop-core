@@ -198,16 +198,12 @@
 
         {% block actions %}
             <div class="grid grid--middle grid--justify">
-                {% if data.form.vars.value.customer.isGuest %}
-                    {% do data.form.skipAddressSaving.setRendered %}
-                {% else %}
-                    {% include molecule('save-new-address', 'CustomerPage') with {
-                        class: 'col is-hidden',
-                        data: {
-                            form: data.form.skipAddressSaving
-                        }
-                    } only %}
-                {% endif %}
+                {% include molecule('save-new-address', 'CustomerPage') with {
+                    class: 'col is-hidden',
+                    data: {
+                        form: data.form
+                    }
+                } only %}
 
                 <div class="col">
                     {{ parent() }}

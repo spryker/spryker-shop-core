@@ -10,5 +10,7 @@
 } %}
 
 {% block body %}
-    {{ form_row(data.form) }}
+    {% if data.form.skipAddressSaving is defined %}
+        {{ form_row(data.form.skipAddressSaving) }}
+    {% endif %}
 {% endblock %}
