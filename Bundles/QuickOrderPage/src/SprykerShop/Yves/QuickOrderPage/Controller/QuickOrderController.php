@@ -27,9 +27,6 @@ class QuickOrderController extends AbstractController
 {
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
-    public const PARAM_ID_PRODUCT = 'id-product';
-    public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    public const PARAM_QUANTITY = 'quantity';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
