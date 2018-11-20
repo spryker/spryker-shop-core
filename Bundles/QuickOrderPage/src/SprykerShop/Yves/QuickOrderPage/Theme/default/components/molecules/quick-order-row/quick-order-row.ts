@@ -24,7 +24,7 @@ export default class QuickOrderRow extends Component {
     protected mapEvents(): void {
         this.autocompleteInput.addEventListener(AutocompleteEvents.SET, (e: CustomEvent) => this.onAutocompleteSet(e));
         this.autocompleteInput.addEventListener(AutocompleteEvents.UNSET, (e: CustomEvent) => this.onAutocompleteUnset(e));
-        this.autocompleteInput.addEventListener(AutocompleteEvents.SELECTITEM, debounce(this.onAutocompleteSelectItem.bind(this), this.autocompleteInput.debounceDelay));
+        this.autocompleteInput.addEventListener(AutocompleteEvents.SELECT_ITEM, debounce(this.onAutocompleteSelectItem.bind(this), this.autocompleteInput.debounceDelay));
         this.quantityInput.addEventListener('input', debounce((e: Event) => this.onQuantityChange(e), this.autocompleteInput.debounceDelay));
     }
 

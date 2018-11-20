@@ -8,7 +8,7 @@ export enum Events {
     CHANGE = 'change',
     SET = 'set',
     UNSET = 'unset',
-    SELECTITEM = 'selectItem'
+    SELECT_ITEM = 'selectItem'
 }
 
 export default class AutocompleteForm extends Component {
@@ -19,6 +19,11 @@ export default class AutocompleteForm extends Component {
     suggestionItems: HTMLElement[];
     cleanButton: HTMLButtonElement;
     lastSelectedItem: HTMLElement;
+    keyCodes: {
+        arrowUp: number,
+        arrowDown: number,
+        tab: number,
+    };
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
@@ -26,6 +31,11 @@ export default class AutocompleteForm extends Component {
         this.valueInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__value-input`);
         this.suggestionsContainer = <HTMLElement>this.querySelector(`.${this.jsName}__suggestions`);
         this.cleanButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__clean-button`);
+        this.keyCodes = {
+            arrowUp: 38,
+            arrowDown: 40,
+            tab: 9,
+        };
         this.mapEvents();
     }
 
@@ -87,16 +97,16 @@ export default class AutocompleteForm extends Component {
         this.dispatchCustomEvent(Events.FETCHING);
         this.showSuggestions();
         this.ajaxProvider.queryParams.set(this.queryString, this.inputText);
+
         await this.ajaxProvider.fetch();
-        this.mapItemEvents();
+        this.suggestionItems = Array.from(this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector));
+        this.lastSelectedItem = this.suggestionItems[0];
+        this.mapSuggestionItemsEvents();
         this.dispatchCustomEvent(Events.FETCHED);
     }
 
-    protected mapItemEvents(): void {
+    protected mapSuggestionItemsEvents(): void {
         const self = this;
-        this.suggestionItems = Array.from(this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector));
-        this.lastSelectedItem = this.suggestionItems[0];
-
         this.suggestionItems.forEach((item: HTMLElement) => {
             item.addEventListener('click', (e: Event) => self.onItemClick(e));
             self.onItemHover(item);
@@ -117,37 +127,37 @@ export default class AutocompleteForm extends Component {
     }
 
     protected onItemHover(item: HTMLElement):void {
-        item.onmouseover = () => {
-            this.itemSelectHandler(item);
-        }
+        item.addEventListener('mouseover', () => this.itemSelectHandler(item));
     }
 
     protected itemSelectHandler(item): void {
-        this.lastSelectedItem.classList.remove(this.selectedInputSelector);
-        item.classList.add(this.selectedInputSelector);
+        this.lastSelectedItem.classList.remove(this.selectedInputClass);
+        item.classList.add(this.selectedInputClass);
         this.lastSelectedItem = item;
     }
 
     protected onKeyDown(event: KeyboardEvent): void {
-        if (this.inputText.length >= this.minLetters && this.suggestionItems.length) {
-            let elementIndex, item;
+        if (this.suggestionItems && this.suggestionItems.length) {
+            let elementIndex = this.suggestionItems.indexOf(this.lastSelectedItem),
+                lastSuggestionItem = this.suggestionItems.length - 1,
+                item;
             switch (event.keyCode) {
-                case 38:
+                case this.keyCodes.arrowUp:
                     event.preventDefault();
-                    elementIndex = this.suggestionItems.indexOf(this.lastSelectedItem) - 1;
-                    item = this.suggestionItems[elementIndex < 0 ? this.suggestionItems.length - 1 : elementIndex];
+                    elementIndex--;
+                    item = this.suggestionItems[elementIndex < 0 ? lastSuggestionItem : elementIndex];
                     this.itemSelectHandler(item);
                     break;
-                case 40:
+                case this.keyCodes.arrowDown:
                     event.preventDefault();
-                    elementIndex = this.suggestionItems.indexOf(this.lastSelectedItem) + 1;
-                    item = this.suggestionItems[elementIndex > this.suggestionItems.length - 1 ? 0 : elementIndex];
+                    elementIndex++;
+                    item = this.suggestionItems[elementIndex > lastSuggestionItem ? 0 : elementIndex];
                     this.itemSelectHandler(item);
                     break;
-                case 9:
+                case this.keyCodes.tab:
                     event.preventDefault();
                     this.lastSelectedItem.click();
-                    this.dispatchCustomEvent(Events.SELECTITEM);
+                    this.dispatchCustomEvent(Events.SELECT_ITEM);
                     break;
             }
         }
@@ -158,7 +168,7 @@ export default class AutocompleteForm extends Component {
         this.inputValue = '';
     }
 
-    get selectedInputSelector(): string {
+    get selectedInputClass(): string {
         return `${this.suggestedItemSelector}--selected`.substr(1);
     }
 
