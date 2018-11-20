@@ -19,10 +19,6 @@ export default class QuickOrderRow extends Component {
     protected registerQuantityInput(): void {
         this.quantityInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__quantity, .${this.jsName}-partial__quantity`);
         this.errorMessage = <HTMLElement>this.querySelector(`.${this.name}__error, .${this.name}-partial__error`);
-
-        if(this.quantityInput) {
-            this.quantityInputAttributes(this.quantityInput);
-        }
     }
 
     protected mapEvents(): void {
@@ -30,16 +26,6 @@ export default class QuickOrderRow extends Component {
         this.autocompleteInput.addEventListener(AutocompleteEvents.UNSET, (e: CustomEvent) => this.onAutocompleteUnset(e));
         this.autocompleteInput.addEventListener(AutocompleteEvents.SELECTITEM, debounce(this.onAutocompleteSelectItem.bind(this), this.autocompleteInput.debounceDelay));
         this.quantityInput.addEventListener('input', debounce((e: Event) => this.onQuantityChange(e), this.autocompleteInput.debounceDelay));
-    }
-
-    protected quantityInputAttributes(quantityInput: HTMLInputElement): void {
-        const max = quantityInput.getAttribute('max'),
-              min = quantityInput.getAttribute('min') || '1',
-              step = quantityInput.getAttribute('step') || '1';
-
-        quantityInput.setAttribute('max', max);
-        quantityInput.setAttribute('min', min);
-        quantityInput.setAttribute('step', step);
     }
 
     protected onAutocompleteSet(e: CustomEvent) {
@@ -55,52 +41,63 @@ export default class QuickOrderRow extends Component {
     }
 
     protected onQuantityChange(e: Event) {
-        const quantity = parseInt(this.quantityInput.value);
-        this.reloadField(this.autocompleteInput.inputValue, quantity);
+        const isSetMinimumValue = (this.quantityValue !== '' && Number(this.quantityValue) < this.quantityMin) ? true : false;
+
+        this.setMinimumValue(isSetMinimumValue);
+        this.reloadField(this.autocompleteInput.inputValue);
     }
 
     protected toggleErrorMessage(isShow: boolean): void {
         if (isShow)  {
             const errorMessageClass = this.errorMessage.classList[0] + '--show';
 
-            setTimeout(() => this.errorMessage.classList.add(errorMessageClass), 0);
+            this.errorMessage.classList.add(errorMessageClass);
             setTimeout(() => this.errorMessage.classList.remove(errorMessageClass), 5000);
         }
     }
 
-    protected setMinimumValue(isSet: boolean = false, minimumValue: string): void {
+    protected setMinimumValue(isSet: boolean = false): void {
         if(isSet) {
-            this.quantityInput.value = minimumValue;
+            this.quantityInput.value = String(this.quantityMin);
         }
     }
 
-    protected checkQuantityValidation(quantityValue: string, quantityMin: string, quantityMax: string): boolean {
-        const result = (quantityMax !== '' && quantityValue > quantityMax
-                        || quantityValue !== '' && quantityValue < quantityMin) ? true : false;
+    protected checkQuantityValidation(): boolean {
+        const quantityInputValue = Number(this.quantityValue);
+        const result = (this.quantityMax !== 0 && quantityInputValue > this.quantityMax
+                        || this.quantityValue !== '' && quantityInputValue < this.quantityMin) ? true : false;
 
         return result;
     }
 
-    async reloadField(sku: string = '', quantity: number = null) {
-        const quantityValue = this.quantityInput.value,
-              quantityMin = this.quantityInput.getAttribute('min'),
-              quantityMax = this.quantityInput.getAttribute('max'),
-              isSetMinimumValue = (quantityValue !== '' && quantityValue < quantityMin) ? true : false,
-              isShowErrorMessage = this.checkQuantityValidation(quantityValue, quantityMin, quantityMax);
+    async reloadField(sku: string = '') {
+        const isShowErrorMessage = this.checkQuantityValidation(),
+            quantityInputValue = parseInt(this.quantityValue);
 
         if (!!sku) {
             this.ajaxProvider.queryParams.set('sku', sku);
             this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class').split('-').pop().trim());
         }
 
-        if (!!quantity) {
-            this.ajaxProvider.queryParams.set('quantity', `${quantity}`);
+        if (!!quantityInputValue) {
+            this.ajaxProvider.queryParams.set('quantity', `${quantityInputValue}`);
         }
 
         await this.ajaxProvider.fetch();
         this.registerQuantityInput();
         this.toggleErrorMessage(isShowErrorMessage);
-        this.setMinimumValue(isSetMinimumValue, quantityMin);
         this.mapEvents();
+    }
+
+    get quantityValue(): string {
+        return this.quantityInput.value;
+    }
+
+    get quantityMin(): number {
+        return Number(this.quantityInput.getAttribute('min'));
+    }
+
+    get quantityMax(): number {
+        return Number(this.quantityInput.getAttribute('max'));
     }
 }
