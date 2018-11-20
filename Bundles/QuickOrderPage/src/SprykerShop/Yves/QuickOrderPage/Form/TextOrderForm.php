@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
+ * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig getConfig()
  */
 class TextOrderForm extends AbstractType
 {
