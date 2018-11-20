@@ -20,8 +20,6 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToZedRequestClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityChecker;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityCheckerInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityReader;
-use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityReaderInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailableQuantitySetter;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailableQuantitySetterInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\CartFiller;
