@@ -7,7 +7,8 @@ export enum Events {
     FETCHED = 'fetched',
     CHANGE = 'change',
     SET = 'set',
-    UNSET = 'unset'
+    UNSET = 'unset',
+    SELECTITEM = 'selectItem'
 }
 
 export default class AutocompleteForm extends Component {
@@ -15,7 +16,9 @@ export default class AutocompleteForm extends Component {
     textInput: HTMLInputElement;
     valueInput: HTMLInputElement;
     suggestionsContainer: HTMLElement;
+    suggestionItems: HTMLElement[];
     cleanButton: HTMLButtonElement;
+    lastSelectedItem: HTMLElement;
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
@@ -30,6 +33,7 @@ export default class AutocompleteForm extends Component {
         this.textInput.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
         this.textInput.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
         this.textInput.addEventListener('focus', () => this.onFocus());
+        this.textInput.addEventListener('keydown', this.onKeyDown.bind(this));
 
         if (!this.cleanButton) {
             return;
@@ -48,7 +52,7 @@ export default class AutocompleteForm extends Component {
     }
 
     protected onFocus(): void {
-        if (this.inputValue.length < this.minLetters) {
+        if (this.inputText.length < this.minLetters) {
             return;
         }
 
@@ -90,8 +94,13 @@ export default class AutocompleteForm extends Component {
 
     protected mapItemEvents(): void {
         const self = this;
-        const items = Array.from(this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector));
-        items.forEach((item: HTMLElement) => item.addEventListener('click', (e: Event) => self.onItemClick(e)));
+        this.suggestionItems = Array.from(this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector));
+        this.lastSelectedItem = this.suggestionItems[0];
+
+        this.suggestionItems.forEach((item: HTMLElement) => {
+            item.addEventListener('click', (e: Event) => self.onItemClick(e));
+            self.onItemHover(item);
+        });
     }
 
     protected onItemClick(e: Event): void {
@@ -107,9 +116,50 @@ export default class AutocompleteForm extends Component {
         });
     }
 
+    protected onItemHover(item: HTMLElement):void {
+        item.onmouseover = () => {
+            this.itemSelectHandler(item);
+        }
+    }
+
+    protected itemSelectHandler(item): void {
+        this.lastSelectedItem.classList.remove(this.selectedInputSelector);
+        item.classList.add(this.selectedInputSelector);
+        this.lastSelectedItem = item;
+    }
+
+    protected onKeyDown(event: KeyboardEvent): void {
+        if (this.inputText.length >= this.minLetters && this.suggestionItems.length) {
+            let elementIndex, item;
+            switch (event.keyCode) {
+                case 38:
+                    event.preventDefault();
+                    elementIndex = this.suggestionItems.indexOf(this.lastSelectedItem) - 1;
+                    item = this.suggestionItems[elementIndex < 0 ? this.suggestionItems.length - 1 : elementIndex];
+                    this.itemSelectHandler(item);
+                    break;
+                case 40:
+                    event.preventDefault();
+                    elementIndex = this.suggestionItems.indexOf(this.lastSelectedItem) + 1;
+                    item = this.suggestionItems[elementIndex > this.suggestionItems.length - 1 ? 0 : elementIndex];
+                    this.itemSelectHandler(item);
+                    break;
+                case 9:
+                    event.preventDefault();
+                    this.lastSelectedItem.click();
+                    this.dispatchCustomEvent(Events.SELECTITEM);
+                    break;
+            }
+        }
+    }
+
     clean(): void {
         this.inputText = '';
         this.inputValue = '';
+    }
+
+    get selectedInputSelector(): string {
+        return `${this.suggestedItemSelector}--selected`.substr(1);
     }
 
     get inputText(): string {

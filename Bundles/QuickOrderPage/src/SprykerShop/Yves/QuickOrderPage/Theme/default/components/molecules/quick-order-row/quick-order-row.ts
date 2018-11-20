@@ -28,6 +28,7 @@ export default class QuickOrderRow extends Component {
     protected mapEvents(): void {
         this.autocompleteInput.addEventListener(AutocompleteEvents.SET, (e: CustomEvent) => this.onAutocompleteSet(e));
         this.autocompleteInput.addEventListener(AutocompleteEvents.UNSET, (e: CustomEvent) => this.onAutocompleteUnset(e));
+        this.autocompleteInput.addEventListener(AutocompleteEvents.SELECTITEM, debounce(this.onAutocompleteSelectItem.bind(this), this.autocompleteInput.debounceDelay));
         this.quantityInput.addEventListener('input', debounce((e: Event) => this.onQuantityChange(e), this.autocompleteInput.debounceDelay));
     }
 
@@ -49,6 +50,10 @@ export default class QuickOrderRow extends Component {
         this.reloadField();
     }
 
+    protected onAutocompleteSelectItem() {
+        this.quantityInput.focus();
+    }
+
     protected onQuantityChange(e: Event) {
         const quantity = parseInt(this.quantityInput.value);
         this.reloadField(this.autocompleteInput.inputValue, quantity);
@@ -62,7 +67,7 @@ export default class QuickOrderRow extends Component {
             setTimeout(() => this.errorMessage.classList.remove(errorMessageClass), 5000);
         }
     }
-    
+
     protected setMinimumValue(isSet: boolean = false, minimumValue: string): void {
         if(isSet) {
             this.quantityInput.value = minimumValue;
