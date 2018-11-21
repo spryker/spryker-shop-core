@@ -217,6 +217,8 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string[]
      */
     public function getPrintShoppingListWidgetPlugins(): array
@@ -225,6 +227,8 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string[]
      */
     public function getShoppingListViewWidgetPlugins(): array
@@ -276,6 +280,8 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string[]
      */
     public function getShoppingListEditWidgetPlugins(): array
@@ -284,6 +290,8 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string[]
      */
     public function getShoppingListOverviewWidgetPlugins(): array
