@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\CatalogPage\Controller;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Shared\Storage\StorageConstants;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
+use SprykerShop\Shared\CatalogPage\Plugin\SeePricePermissionPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,10 +21,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CatalogController extends AbstractController
 {
+    use PermissionAwareTrait;
+
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
     public const URL_PARAM_VIEW_MODE = 'mode';
     public const URL_PARAM_REFERER_URL = 'referer-url';
+
+    protected const URL_PARAM_FILTER_BY_PRICE = 'price';
 
     /**
      * @param array $categoryNode
@@ -58,7 +64,7 @@ class CatalogController extends AbstractController
             ->getModuleConfig()
             ->isEmptyCategoryFilterValueVisible();
 
-        $parameters = $request->query->all();
+        $parameters = $this->getAllowedRequestParameters($request);
         $parameters[PageIndexMap::CATEGORY] = $idCategoryNode;
 
         $searchResults = $this
@@ -196,5 +202,40 @@ class CatalogController extends AbstractController
             );
 
         return $searchResults;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function getAllowedRequestParameters(Request $request): array
+    {
+        $parameters = $request->query->all();
+        $parameters = $this->reduceRestrictedParameters($parameters);
+
+        return $parameters;
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function reduceRestrictedParameters(array $parameters): array
+    {
+        if (!$this->canFilteringByPrices() && isset($parameters[static::URL_PARAM_FILTER_BY_PRICE])) {
+            unset($parameters[static::URL_PARAM_FILTER_BY_PRICE]);
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canFilteringByPrices(): bool
+    {
+        return $this->can(SeePricePermissionPlugin::KEY);
     }
 }
