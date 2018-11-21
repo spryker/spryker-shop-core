@@ -224,7 +224,7 @@ class CatalogController extends AbstractController
      */
     protected function reduceRestrictedParameters(array $parameters): array
     {
-        if (!$this->canFilteringByPrices() && isset($parameters[static::URL_PARAM_FILTER_BY_PRICE])) {
+        if (!$this->canFilterByPrices() && isset($parameters[static::URL_PARAM_FILTER_BY_PRICE])) {
             unset($parameters[static::URL_PARAM_FILTER_BY_PRICE]);
         }
 
@@ -234,7 +234,7 @@ class CatalogController extends AbstractController
     /**
      * @return bool
      */
-    protected function canFilteringByPrices(): bool
+    protected function canFilterByPrices(): bool
     {
         return $this->can(SeePricePermissionPlugin::KEY);
     }
