@@ -224,7 +224,7 @@ class CatalogController extends AbstractController
      */
     protected function reduceRestrictedParameters(array $parameters): array
     {
-        if (!$this->canFilterByPrices() && isset($parameters[static::URL_PARAM_FILTER_BY_PRICE])) {
+        if (isset($parameters[static::URL_PARAM_FILTER_BY_PRICE]) && !$this->canFilterByPrices()) {
             unset($parameters[static::URL_PARAM_FILTER_BY_PRICE]);
         }
 

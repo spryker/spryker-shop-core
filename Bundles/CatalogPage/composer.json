@@ -28,7 +28,7 @@
   },
   "suggest": {
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker/permission": "If you want to use permissions plugins"
+    "spryker/permission": "If you want to use permissions plugins."
   },
   "autoload": {
     "psr-4": {
