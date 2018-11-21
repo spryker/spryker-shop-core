@@ -10,6 +10,14 @@ export enum Events {
     UNSET = 'unset'
 }
 
+const keyCodes: {
+    [key: string]: number;
+} = {
+    arrowUp: 38,
+    arrowDown: 40,
+    tab: 9,
+};
+
 export default class AutocompleteForm extends Component {
     ajaxProvider: AjaxProvider
     textInput: HTMLInputElement;
@@ -18,9 +26,6 @@ export default class AutocompleteForm extends Component {
     suggestionItems: HTMLElement[];
     cleanButton: HTMLButtonElement;
     lastSelectedItem: HTMLElement;
-    keyCodes: {
-        [key: string]: number;
-    };
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
@@ -28,11 +33,6 @@ export default class AutocompleteForm extends Component {
         this.valueInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__value-input`);
         this.suggestionsContainer = <HTMLElement>this.querySelector(`.${this.jsName}__suggestions`);
         this.cleanButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__clean-button`);
-        this.keyCodes = {
-            arrowUp: 38,
-            arrowDown: 40,
-            tab: 9,
-        };
         this.mapEvents();
     }
 
@@ -40,7 +40,7 @@ export default class AutocompleteForm extends Component {
         this.textInput.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
         this.textInput.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
         this.textInput.addEventListener('focus', () => this.onFocus());
-        this.textInput.addEventListener('keydown', this.onKeyDown.bind(this));
+        this.textInput.addEventListener('keydown', (event) => this.onKeyDown(event));
 
         if (!this.cleanButton) {
             return;
@@ -106,7 +106,7 @@ export default class AutocompleteForm extends Component {
         const self = this;
         this.suggestionItems.forEach((item: HTMLElement) => {
             item.addEventListener('click', (e: Event) => self.onItemClick(e));
-            item.addEventListener('mouseover', () => this.itemSelectHandler(item));
+            item.addEventListener('mouseover', (e: Event) => this.onItemSelected(e.srcElement));
         });
     }
 
@@ -123,36 +123,51 @@ export default class AutocompleteForm extends Component {
         });
     }
 
-    protected itemSelectHandler(item): void {
+    protected onItemSelected(item): void {
         this.lastSelectedItem.classList.remove(this.selectedInputClass);
         item.classList.add(this.selectedInputClass);
         this.lastSelectedItem = item;
     }
 
     protected onKeyDown(event: KeyboardEvent): void {
-        if (this.suggestionItems && this.suggestionItems.length) {
-            let elementIndex = this.suggestionItems.indexOf(this.lastSelectedItem),
-                lastSuggestionItem = this.suggestionItems.length - 1,
-                item;
-            switch (event.keyCode) {
-                case this.keyCodes.arrowUp:
-                    event.preventDefault();
-                    elementIndex--;
-                    item = this.suggestionItems[elementIndex < 0 ? lastSuggestionItem : elementIndex];
-                    this.itemSelectHandler(item);
-                    break;
-                case this.keyCodes.arrowDown:
-                    event.preventDefault();
-                    elementIndex++;
-                    item = this.suggestionItems[elementIndex > lastSuggestionItem ? 0 : elementIndex];
-                    this.itemSelectHandler(item);
-                    break;
-                case this.keyCodes.tab:
-                    event.preventDefault();
-                    this.lastSelectedItem.click();
-                    break;
-            }
+        if (!this.suggestionItems && this.inputText.length < this.minLetters) {
+            return;
         }
+
+        switch (event.keyCode) {
+            case keyCodes.arrowUp:
+                event.preventDefault();
+                this.onKeyDownArrowUp();
+                break;
+            case keyCodes.arrowDown:
+                event.preventDefault();
+                this.onKeyDownArrowDown();
+                break;
+            case keyCodes.tab:
+                event.preventDefault();
+                this.onKeyDownTab();
+                break;
+        }
+    }
+
+    protected onKeyDownArrowUp(): void {
+        const elementIndex = this.suggestionItems.indexOf(this.lastSelectedItem) - 1;
+        const lastSuggestionItem = this.suggestionItems.length - 1;
+        const item = this.suggestionItems[elementIndex < 0 ? lastSuggestionItem : elementIndex];
+
+        this.onItemSelected(item);
+    }
+
+    protected onKeyDownArrowDown(): void {
+        const elementIndex = this.suggestionItems.indexOf(this.lastSelectedItem) + 1;
+        const lastSuggestionItem = this.suggestionItems.length - 1;
+        const item = this.suggestionItems[elementIndex > lastSuggestionItem ? 0 : elementIndex];
+
+        this.onItemSelected(item);
+    }
+
+    protected onKeyDownTab(): void {
+        this.lastSelectedItem.click();
     }
 
     clean(): void {
