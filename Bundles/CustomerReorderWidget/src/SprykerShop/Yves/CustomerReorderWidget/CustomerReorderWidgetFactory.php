@@ -20,8 +20,6 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToZedRequestClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityChecker;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityCheckerInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Model\AvailableQuantitySetter;
-use SprykerShop\Yves\CustomerReorderWidget\Model\AvailableQuantitySetterInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\CartFiller;
 use SprykerShop\Yves\CustomerReorderWidget\Model\CartFillerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcher;
@@ -38,7 +36,8 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     {
         return new CartFiller(
             $this->getCartClient(),
-            $this->createItemsFetcher()
+            $this->createItemsFetcher(),
+            $this->getAvailabilityStorageClient()
         );
     }
 
@@ -82,16 +81,6 @@ class CustomerReorderWidgetFactory extends AbstractFactory
             $this->getMessengerClient(),
             $this->getGlossaryStorageClient(),
             $this->getLocaleClient()
-        );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerReorderWidget\Model\AvailableQuantitySetterInterface
-     */
-    public function createAvailableQuantitySetter(): AvailableQuantitySetterInterface
-    {
-        return new AvailableQuantitySetter(
-            $this->getAvailabilityStorageClient()
         );
     }
 
