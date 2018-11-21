@@ -106,7 +106,7 @@ export default class AutocompleteForm extends Component {
         const self = this;
         this.suggestionItems.forEach((item: HTMLElement) => {
             item.addEventListener('click', (e: Event) => self.onItemClick(e));
-            item.addEventListener('mouseover', (e: Event) => this.onItemSelected(e.srcElement));
+            item.addEventListener('mouseover', (e: Event) => this.onItemSelected(e));
         });
     }
 
@@ -123,7 +123,12 @@ export default class AutocompleteForm extends Component {
         });
     }
 
-    protected onItemSelected(item): void {
+    protected onItemSelected(e: Event): void {
+        const item = <HTMLElement>e.srcElement;
+        this.changeSelectedItem(item);
+    }
+
+    protected changeSelectedItem(item: HTMLElement): void {
         this.lastSelectedItem.classList.remove(this.selectedInputClass);
         item.classList.add(this.selectedInputClass);
         this.lastSelectedItem = item;
@@ -151,19 +156,21 @@ export default class AutocompleteForm extends Component {
     }
 
     protected onKeyDownArrowUp(): void {
-        const elementIndex = this.suggestionItems.indexOf(this.lastSelectedItem) - 1;
-        const lastSuggestionItem = this.suggestionItems.length - 1;
-        const item = this.suggestionItems[elementIndex < 0 ? lastSuggestionItem : elementIndex];
+        const lastSelectedItemIndex = this.suggestionItems.indexOf(this.lastSelectedItem);
+        const elementIndex = lastSelectedItemIndex - 1;
+        const lastSuggestionItemIndex = this.suggestionItems.length - 1;
+        const item = this.suggestionItems[elementIndex < 0 ? lastSuggestionItemIndex : elementIndex];
 
-        this.onItemSelected(item);
+        this.changeSelectedItem(item);
     }
 
     protected onKeyDownArrowDown(): void {
-        const elementIndex = this.suggestionItems.indexOf(this.lastSelectedItem) + 1;
-        const lastSuggestionItem = this.suggestionItems.length - 1;
-        const item = this.suggestionItems[elementIndex > lastSuggestionItem ? 0 : elementIndex];
+        const lastSelectedItemIndex = this.suggestionItems.indexOf(this.lastSelectedItem);
+        const elementIndex = lastSelectedItemIndex + 1;
+        const lastSuggestionItemIndex = this.suggestionItems.length - 1;
+        const item = this.suggestionItems[elementIndex > lastSuggestionItemIndex ? 0 : elementIndex];
 
-        this.onItemSelected(item);
+        this.changeSelectedItem(item);
     }
 
     protected onKeyDownTab(): void {

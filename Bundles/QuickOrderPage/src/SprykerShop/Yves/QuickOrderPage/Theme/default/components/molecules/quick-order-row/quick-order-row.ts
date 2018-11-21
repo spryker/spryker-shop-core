@@ -41,7 +41,6 @@ export default class QuickOrderRow extends Component {
 
     protected onQuantityChange(e: Event) {
         const isSetMinimumValue = (this.quantityValue !== '' && Number(this.quantityValue) < this.quantityMin) ? true : false;
-        this.setMinimumValue(isSetMinimumValue);
         this.reloadField(this.autocompleteInput.inputValue);
     }
 
@@ -51,12 +50,6 @@ export default class QuickOrderRow extends Component {
 
             this.errorMessage.classList.add(errorMessageClass);
             setTimeout(() => this.errorMessage.classList.remove(errorMessageClass), 5000);
-        }
-    }
-
-    protected setMinimumValue(isSet: boolean = false): void {
-        if(isSet) {
-            this.quantityInput.value = String(this.quantityMin);
         }
     }
 
@@ -83,9 +76,9 @@ export default class QuickOrderRow extends Component {
 
         await this.ajaxProvider.fetch();
         this.registerQuantityInput();
-        this.toggleErrorMessage(isShowErrorMessage);
         this.mapQuantityInputChange();
         this.quantityInput.focus();
+        this.toggleErrorMessage(isShowErrorMessage);
     }
 
     get quantityValue(): string {
