@@ -24,10 +24,10 @@ export default class QuickOrderRow extends Component {
     protected mapEvents(): void {
         this.autocompleteInput.addEventListener(AutocompleteEvents.SET, (e: CustomEvent) => this.onAutocompleteSet(e));
         this.autocompleteInput.addEventListener(AutocompleteEvents.UNSET, (e: CustomEvent) => this.onAutocompleteUnset(e));
-        this.quantityInputEvent();
+        this.mapQuantityInputEvent();
     }
 
-    protected quantityInputEvent(): void {
+    protected mapQuantityInputEvent(): void {
         this.quantityInput.addEventListener('input', debounce((e: Event) => this.onQuantityChange(e), this.autocompleteInput.debounceDelay));
     }
 
@@ -84,7 +84,7 @@ export default class QuickOrderRow extends Component {
         await this.ajaxProvider.fetch();
         this.registerQuantityInput();
         this.toggleErrorMessage(isShowErrorMessage);
-        this.quantityInputEvent();
+        this.mapQuantityInputEvent();
         this.quantityInput.focus();
     }
 
