@@ -32,8 +32,8 @@ class CategoryImageStorageWidgetToCategoryImageStorageClientBridge implements Ca
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer|null
      */
-    public function getCategoryImageSetCollectionStorage(int $categoryId, string $localeName): ?CategoryImageSetCollectionStorageTransfer
+    public function findCategoryImageSetCollectionStorage(int $categoryId, string $localeName): ?CategoryImageSetCollectionStorageTransfer
     {
-        return $this->storageClient->getCategoryImageSetCollectionStorage($categoryId, $localeName);
+        return $this->storageClient->findCategoryImageSetCollectionStorage($categoryId, $localeName);
     }
 }

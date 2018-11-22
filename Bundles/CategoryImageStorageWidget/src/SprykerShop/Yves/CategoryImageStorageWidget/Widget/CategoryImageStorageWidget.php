@@ -93,7 +93,7 @@ class CategoryImageStorageWidget extends AbstractWidget
     {
         return $this->getFactory()
             ->getCategoryImageStorageClient()
-            ->getCategoryImageSetCollectionStorage($idCategory, $this->getLocale());
+            ->findCategoryImageSetCollectionStorage($idCategory, $this->getLocale());
     }
 
     /**
@@ -131,10 +131,10 @@ class CategoryImageStorageWidget extends AbstractWidget
      */
     protected function getImageUrlBySize(ArrayObject $imageSetImages, string $imageSize): string
     {
-        foreach ($imageSetImages as $imageSetImage) {
+        if (count($imageSetImages)) {
             $imageStorageTransferSizePropertyName = $this->getImageStorageTransferSizePropertyName($imageSize);
 
-            return $imageSetImage[$imageStorageTransferSizePropertyName];
+            return $imageSetImages[0][$imageStorageTransferSizePropertyName];
         }
 
         return static::DEFAULT_CATEGORY_IMAGE;
