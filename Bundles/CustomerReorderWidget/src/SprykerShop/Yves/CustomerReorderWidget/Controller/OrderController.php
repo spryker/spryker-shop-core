@@ -16,24 +16,35 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OrderController extends AbstractController
 {
-    public const PARAM_ITEMS = 'items';
-    public const PARAM_ID_ORDER = 'id';
-    /**
-     * Route for redirect after success.
-     * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
-     */
-    public const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
+    protected const GLOSSARY_KEY_ERROR_MESSAGE_UNABLE_TO_REORDER_ITEMS = 'customer.order.reorder.error.unable_to_reorder_items';
 
     /**
-     * @param int $idOrder
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     */
+    protected const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
+    protected const ROUTE_FAILURE_REDIRECT = 'customer/order';
+
+    protected const PARAM_ITEMS = 'items';
+    protected const PARAM_ID_ORDER = 'id';
+
+    /**
+     * @param int $idSalesOrder
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function reorderAction(int $idOrder): RedirectResponse
+    public function reorderAction(int $idSalesOrder): RedirectResponse
     {
-        $orderTransfer = $this->getFactory()
-            ->createOrderReader()
-            ->getOrderTransfer($idOrder);
+        $orderReader = $this->getFactory()
+            ->createOrderReader();
+
+        $orderTransfer = $orderReader->getOrderTransfer($idSalesOrder);
+        if ($orderReader->hasIncompatibleItems($orderTransfer)) {
+            $this->getFactory()
+                ->getMessengerClient()
+                ->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNABLE_TO_REORDER_ITEMS);
+
+            return $this->getFailureRedirect();
+        }
 
         $this->getFactory()
             ->createCartFiller()
@@ -56,9 +67,17 @@ class OrderController extends AbstractController
         $idSalesOrder = $request->request->getInt(static::PARAM_ID_ORDER);
         $items = (array)$request->request->get(static::PARAM_ITEMS);
 
-        $orderTransfer = $this->getFactory()
-            ->createOrderReader()
-            ->getOrderTransfer($idSalesOrder);
+        $orderReader = $this->getFactory()
+            ->createOrderReader();
+
+        $orderTransfer = $orderReader->getOrderTransfer($idSalesOrder);
+        if ($orderReader->hasIncompatibleItems($orderTransfer)) {
+            $this->getFactory()
+                ->getMessengerClient()
+                ->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNABLE_TO_REORDER_ITEMS);
+
+            return $this->getFailureRedirect();
+        }
 
         $this->getFactory()
             ->createCartFiller()
@@ -77,5 +96,13 @@ class OrderController extends AbstractController
     protected function getSuccessRedirect(): RedirectResponse
     {
         return $this->redirectResponseInternal(static::ROUTE_SUCCESSFUL_REDIRECT);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function getFailureRedirect(): RedirectResponse
+    {
+        return $this->redirectResponseInternal(static::ROUTE_FAILURE_REDIRECT);
     }
 }
