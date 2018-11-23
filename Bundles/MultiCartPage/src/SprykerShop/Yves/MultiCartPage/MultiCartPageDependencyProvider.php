@@ -10,12 +10,14 @@ namespace SprykerShop\Yves\MultiCartPage;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCartClientBridge;
+use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientBridge;
 
 class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
     public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
     public const PLUGINS_CART_DELETE_COMPANY_USERS_LIST_WIDGET = 'PLUGINS_CART_DELETE_COMPANY_USERS_LIST_WIDGET';
     public const PLUGIN_MULTI_CART_LIST_WIDGETS = 'PLUGIN_MULTI_CART_LIST_WIDGETS';
 
@@ -31,6 +33,7 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartClient($container);
         $container = $this->addCartDeleteCompanyUsersListWidgetPlugins($container);
         $container = $this->addMultiCartListWidgetPlugins($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -108,5 +111,19 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getMultiCartListWidgetPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+            return new MultiCartPageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
+        };
+
+        return $container;
     }
 }

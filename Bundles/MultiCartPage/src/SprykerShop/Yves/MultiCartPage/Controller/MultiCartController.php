@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MultiCartController extends AbstractController
 {
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
+    public const GLOSSARY_KEY_CART_WAS_DELETED = 'multi_cart_widget.cart.was-deleted-before';
     public const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
 
     /**
@@ -104,7 +105,13 @@ class MultiCartController extends AbstractController
 
                 return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
             }
-            $this->addErrorMessage(static::GLOSSARY_KEY_CART_UPDATED_ERROR);
+            $this->addErrorMessage(
+                $this->getTranslatedMessage(
+                    static::GLOSSARY_KEY_CART_UPDATED_ERROR,
+                    $this->getLocale(),
+                    ['%cart_name%' => $quoteTransfer->getName()]
+                )
+            );
 
             return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
         }
@@ -263,5 +270,19 @@ class MultiCartController extends AbstractController
         return [
             'cart' => $quoteTransfer,
         ];
+    }
+
+    /**
+     * @param string $key
+     * @param string $locale
+     * @param array $params
+     *
+     * @return string
+     */
+    protected function getTranslatedMessage(string $key, string $locale, array $params = []): string
+    {
+        return $this->getFactory()
+            ->getGlossaryStorageClient()
+            ->translate($key, $locale, $params);
     }
 }
