@@ -10,12 +10,22 @@ export enum Events {
     UNSET = 'unset'
 }
 
+const keyCodes: {
+    [key: string]: number;
+} = {
+    arrowUp: 38,
+    arrowDown: 40,
+    tab: 9,
+};
+
 export default class AutocompleteForm extends Component {
     ajaxProvider: AjaxProvider
     textInput: HTMLInputElement;
     valueInput: HTMLInputElement;
     suggestionsContainer: HTMLElement;
+    suggestionItems: HTMLElement[];
     cleanButton: HTMLButtonElement;
+    lastSelectedItem: HTMLElement;
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
@@ -30,6 +40,7 @@ export default class AutocompleteForm extends Component {
         this.textInput.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
         this.textInput.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
         this.textInput.addEventListener('focus', () => this.onFocus());
+        this.textInput.addEventListener('keydown', (event) => this.onKeyDown(event));
 
         if (!this.cleanButton) {
             return;
@@ -48,7 +59,7 @@ export default class AutocompleteForm extends Component {
     }
 
     protected onFocus(): void {
-        if (this.inputValue.length < this.minLetters) {
+        if (this.inputText.length < this.minLetters) {
             return;
         }
 
@@ -83,15 +94,20 @@ export default class AutocompleteForm extends Component {
         this.dispatchCustomEvent(Events.FETCHING);
         this.showSuggestions();
         this.ajaxProvider.queryParams.set(this.queryString, this.inputText);
+
         await this.ajaxProvider.fetch();
-        this.mapItemEvents();
+        this.suggestionItems = Array.from(this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector));
+        this.lastSelectedItem = this.suggestionItems[0];
+        this.mapSuggestionItemsEvents();
         this.dispatchCustomEvent(Events.FETCHED);
     }
 
-    protected mapItemEvents(): void {
+    protected mapSuggestionItemsEvents(): void {
         const self = this;
-        const items = Array.from(this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector));
-        items.forEach((item: HTMLElement) => item.addEventListener('click', (e: Event) => self.onItemClick(e)));
+        this.suggestionItems.forEach((item: HTMLElement) => {
+            item.addEventListener('click', (e: Event) => self.onItemClick(e));
+            item.addEventListener('mouseover', (e: Event) => this.onItemSelected(e));
+        });
     }
 
     protected onItemClick(e: Event): void {
@@ -107,9 +123,67 @@ export default class AutocompleteForm extends Component {
         });
     }
 
+    protected onItemSelected(e: Event): void {
+        const item = <HTMLElement>e.srcElement;
+        this.changeSelectedItem(item);
+    }
+
+    protected changeSelectedItem(item: HTMLElement): void {
+        this.lastSelectedItem.classList.remove(this.selectedInputClass);
+        item.classList.add(this.selectedInputClass);
+        this.lastSelectedItem = item;
+    }
+
+    protected onKeyDown(event: KeyboardEvent): void {
+        if (!this.suggestionItems && this.inputText.length < this.minLetters) {
+            return;
+        }
+
+        switch (event.keyCode) {
+            case keyCodes.arrowUp:
+                event.preventDefault();
+                this.onKeyDownArrowUp();
+                break;
+            case keyCodes.arrowDown:
+                event.preventDefault();
+                this.onKeyDownArrowDown();
+                break;
+            case keyCodes.tab:
+                event.preventDefault();
+                this.onKeyDownTab();
+                break;
+        }
+    }
+
+    protected onKeyDownArrowUp(): void {
+        const lastSelectedItemIndex = this.suggestionItems.indexOf(this.lastSelectedItem);
+        const elementIndex = lastSelectedItemIndex - 1;
+        const lastSuggestionItemIndex = this.suggestionItems.length - 1;
+        const item = this.suggestionItems[elementIndex < 0 ? lastSuggestionItemIndex : elementIndex];
+
+        this.changeSelectedItem(item);
+    }
+
+    protected onKeyDownArrowDown(): void {
+        const lastSelectedItemIndex = this.suggestionItems.indexOf(this.lastSelectedItem);
+        const elementIndex = lastSelectedItemIndex + 1;
+        const lastSuggestionItemIndex = this.suggestionItems.length - 1;
+        const item = this.suggestionItems[elementIndex > lastSuggestionItemIndex ? 0 : elementIndex];
+
+        this.changeSelectedItem(item);
+    }
+
+    protected onKeyDownTab(): void {
+        this.lastSelectedItem.click();
+    }
+
     clean(): void {
         this.inputText = '';
         this.inputValue = '';
+    }
+
+    get selectedInputClass(): string {
+        return `${this.suggestedItemSelector}--selected`.substr(1);
     }
 
     get inputText(): string {
