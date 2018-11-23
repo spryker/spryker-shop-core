@@ -25,7 +25,8 @@
                 display: none;
             }
 
-            &[disabled] {
+            &[disabled],
+            &--disabled {
                 background-color: $setting-color-lightest;
                 cursor: not-allowed;
             }

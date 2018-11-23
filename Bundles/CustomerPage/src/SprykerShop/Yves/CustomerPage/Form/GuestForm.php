@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
  */
 class GuestForm extends AbstractType
 {
@@ -32,6 +33,8 @@ class GuestForm extends AbstractType
     public const FIELD_ACCEPT_TERMS = 'accept_terms';
 
     public const BLOCK_PREFIX = 'guestForm';
+
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**
      * @return string
@@ -75,7 +78,7 @@ class GuestForm extends AbstractType
             'choices_as_values' => true,
             'label' => 'address.salutation',
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -92,7 +95,7 @@ class GuestForm extends AbstractType
         $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'customer.first_name',
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -109,7 +112,7 @@ class GuestForm extends AbstractType
         $builder->add(self::FIELD_LAST_NAME, TextType::class, [
             'label' => 'customer.last_name',
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -126,7 +129,7 @@ class GuestForm extends AbstractType
         $builder->add(self::FIELD_EMAIL, EmailType::class, [
             'label' => 'auth.email',
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
                 new Callback([
                     'callback' => function ($email, ExecutionContextInterface $context) {
                         $isEmailFormatValid = $this->getFactory()
@@ -171,7 +174,7 @@ class GuestForm extends AbstractType
             'label' => 'forms.accept_terms',
             'mapped' => false,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -193,5 +196,13 @@ class GuestForm extends AbstractType
                 return (bool)$isGuestSubmittedValue;
             }
         ));
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }

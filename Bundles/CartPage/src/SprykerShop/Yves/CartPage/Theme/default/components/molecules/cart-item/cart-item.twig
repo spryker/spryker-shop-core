@@ -36,12 +36,15 @@
                 {% include molecule('cart-item-variant-selector', 'CartPage') with {
                     data: {
                         cartItem: data.cartItem,
-                        cartItemAttributes: data.attributes
+                        cartItemAttributes: data.attributes,
+                        canEditCart: canEditCart
                     }
                 } only %}
             {% endif %}
 
-            {{ widget('ProductBundleItemsWidgetPlugin', data.cartItem, data.cart) }}
+            {% widget 'ProductBundleCartItemsListWidget' args [data.cartItem, data.cart] only %}
+            {% elsewidget 'ProductBundleItemsWidgetPlugin' args [data.cartItem, data.cart] only %} {# @deprecated Use ProductBundleCartItemsListWidget instead. #}
+            {% endwidget %}
 
             {% include molecule('cart-item-summary', 'CartPage') with {
                 data: {
@@ -54,19 +57,35 @@
         </div>
 
         <div class="col col--sm-12 col--lg-4">
-            {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }}
+            {% if widgetExists('CartProductPackagingUnitWidgetPlugin') %}
+                {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }} {# @deprecated Use molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') instead. #}
+            {% elseif data.cartItem.quantitySalesUnit is not empty and data.cartItem.amountSalesUnit is not empty %}
+                {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') ignore missing with {
+                    data: {
+                        amount: data.cartItem.amount,
+                        quantity: data.cartItem.quantity,
+                        quantitySalesUnit: data.cartItem.quantitySalesUnit,
+                        quantityConversion: data.cartItem.quantitySalesUnit.conversion,
+                        quantityProductMeasurementUnit: data.cartItem.quantitySalesUnit.productMeasurementUnit,
+                        amountSalesUnit: data.cartItem.amountSalesUnit,
+                        amountConversion: data.cartItem.amountSalesUnit.conversion,
+                        amountProductMeasurementUnit: data.cartItem.amountSalesUnit.productMeasurementUnit,
+                        amountValue: data.cartItem.amountSalesUnit.value
+                    }
+                } only %}
+            {% endif %}
 
             {% if data.cartItem.amountSalesUnit is empty %}
                 {% if canEditCart %}
-                    {% if widgetExists('QuantitySalesUnitWidgetPlugin') %}
-                        {{ widget('QuantitySalesUnitWidgetPlugin', data.cartItem) }}
-                    {% else %}
+                    {% widget 'CartProductMeasurementUnitQuantitySelectorWidget' args [data.cartItem] only %}
+                    {% elsewidget 'QuantitySalesUnitWidgetPlugin' args [data.cartItem] only %} {# @deprecated Use CartProductMeasurementUnitQuantitySelectorWidget instead. #}
+                    {% nowidget %}
                         {% include molecule('cart-quantity-input', 'CartPage') with {
                             data: {
                                 cartItem: data.cartItem
                             }
                         } only %}
-                    {% endif %}
+                    {% endwidget %}
                 {% else %}
                     {{ 'cart.item_quantity' | trans }}:
                     <strong>{{ data.cartItem.quantity }}</strong>
@@ -79,7 +98,9 @@
                 </a>
             {% endif %}
 
-            {{ widget('CartNoteQuoteItemWidgetPlugin', data.cartItem, data.cart) }}
+            {% widget 'CartItemNoteFormWidget' args [data.cartItem, data.cart] only %}
+            {% elsewidget 'CartNoteQuoteItemWidgetPlugin' args [data.cartItem, data.cart] only %} {# @deprecated Use CartItemNoteFormWidget instead. #}
+            {% endwidget %}
         </div>
     </div>
 {% endblock %}

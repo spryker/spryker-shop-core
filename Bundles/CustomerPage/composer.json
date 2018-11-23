@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/customer-page",
+  "type": "library",
   "description": "CustomerPage module",
   "license": "proprietary",
   "require": {
@@ -9,16 +10,20 @@
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/application": "^3.8.0",
     "spryker/customer": "^7.4.0",
-    "spryker/kernel": "^3.16.0",
+    "spryker/customer-access-permission": "^1.0.0",
+    "spryker/kernel": "^3.25.0",
     "spryker/product-bundle": "^4.1.0",
     "spryker/quote": "^1.0.0 || ^2.1.0",
-    "spryker/sales": "^8.5.0",
+    "spryker/sales": "^8.15.0",
     "spryker/step-engine": "^3.1.0",
     "spryker/symfony": "^3.1.0",
     "spryker/util-validate": "^1.0.0"
   },
   "require-dev": {
+    "spryker-shop/business-on-behalf-widget": "*",
+    "spryker-shop/cart-note-widget": "*",
     "spryker-shop/home-page": "*",
+    "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/messenger": "*",
@@ -27,7 +32,10 @@
     "spryker/twig": "*"
   },
   "suggest": {
+    "spryker-shop/business-on-behalf-widget": "If you want to use BusinessOnBehalfWidget or MenuItemBusinessOnBehalfWidgetPlugin.",
+    "spryker-shop/cart-note-widget": "If you want to use components from module CartNoteWidget or CartNoteOrderNoteWidgetPlugin.",
     "spryker-shop/home-page": "Widget plugins are available for this module.",
+    "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or OrderDetailProductPackagingUnitWidgetPlugin.",
     "spryker/config": "Use this module when using plugins that need Config dependencies.",
     "spryker/messenger": "Use this module when using plugins that need Messenger dependencies.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",

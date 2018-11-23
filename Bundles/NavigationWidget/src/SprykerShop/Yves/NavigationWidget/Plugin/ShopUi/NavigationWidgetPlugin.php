@@ -8,18 +8,16 @@
 namespace SprykerShop\Yves\NavigationWidget\Plugin\ShopUi;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
+use SprykerShop\Yves\NavigationWidget\Widget\NavigationWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\NavigationWidget\NavigationWidgetPluginInterface;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\NavigationWidget\Widget\NavigationWidget instead.
+ *
  * @method \SprykerShop\Yves\NavigationWidget\NavigationWidgetFactory getFactory()
  */
 class NavigationWidgetPlugin extends AbstractWidgetPlugin implements NavigationWidgetPluginInterface
 {
-    /**
-     * @var array
-     */
-    protected static $buffer = [];
-
     /**
      * @param string $navigationKey
      * @param string $template
@@ -28,8 +26,9 @@ class NavigationWidgetPlugin extends AbstractWidgetPlugin implements NavigationW
      */
     public function initialize($navigationKey, $template): void
     {
-        $this->addParameter('navigationTree', $this->getNavigation($navigationKey))
-            ->addParameter('template', $template);
+        $navigationWidget = new NavigationWidget($navigationKey, $template);
+
+        $this->parameters = $navigationWidget->getParameters();
     }
 
     /**
@@ -49,30 +48,6 @@ class NavigationWidgetPlugin extends AbstractWidgetPlugin implements NavigationW
      */
     public static function getTemplate(): string
     {
-        return '@NavigationWidget/views/navigation/navigation.twig';
-    }
-
-    /**
-     * @param string $navigationKey
-     *
-     * @return \Generated\Shared\Transfer\NavigationStorageTransfer|null
-     */
-    public function getNavigation($navigationKey)
-    {
-        $key = $navigationKey . '-' . $this->getLocale();
-
-        if (!isset(static::$buffer[$key])) {
-            $navigationStorageTransfer = $this->getFactory()->getNavigationStorageClient()->findNavigationTreeByKey($navigationKey, $this->getLocale());
-
-            static::$buffer[$key] = $navigationStorageTransfer;
-        }
-
-        $navigationStorageTransfer = static::$buffer[$key];
-
-        if (!$navigationStorageTransfer || !$navigationStorageTransfer->getIsActive()) {
-            return null;
-        }
-
-        return $navigationStorageTransfer;
+        return NavigationWidget::getTemplate();
     }
 }

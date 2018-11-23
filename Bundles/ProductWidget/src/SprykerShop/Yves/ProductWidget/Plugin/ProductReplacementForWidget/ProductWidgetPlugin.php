@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\ProductWidget\Plugin\ProductReplacementForWidget;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductReplacementForWidget\Dependency\Plugin\ProductWidget\ProductWidgetPluginInterface;
+use SprykerShop\Yves\ProductWidget\Widget\PdpProductReplacementForListWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\PdpProductReplacementForListWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */
 class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetPluginInterface
@@ -23,9 +26,11 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addWidgets($this->getFactory()->getProductReplacementForWidgetPlugins());
+        $widget = new PdpProductReplacementForListWidget($productViewTransfer);
+
+        $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getProductReplacementForWidgetPlugins());
     }
 
     /**
@@ -41,6 +46,6 @@ class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetP
      */
     public static function getTemplate(): string
     {
-        return '@ProductWidget/views/pdp-product/pdp-product.twig';
+        return PdpProductReplacementForListWidget::getTemplate();
     }
 }

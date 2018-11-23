@@ -1,6 +1,6 @@
 # ShoppingListPage Module
 
-The module provides shopping list management functionality.
+The module provides Shopping List management functionality.
 
 ## Installation
 

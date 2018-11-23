@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductAlternativ
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductAlternativeWidget\Widget\ProductAlternativeListWidget instead.
+ */
 interface ProductAlternativeWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ProductAlternativeWidgetPlugin';

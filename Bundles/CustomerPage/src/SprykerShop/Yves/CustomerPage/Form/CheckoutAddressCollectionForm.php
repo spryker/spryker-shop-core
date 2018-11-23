@@ -15,6 +15,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class CheckoutAddressCollectionForm extends AbstractType
 {
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
@@ -84,7 +87,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     {
         $options = [
             'data_class' => AddressTransfer::class,
-            'required' => false,
+            'required' => true,
             'validation_groups' => function (FormInterface $form) {
                 if (!$form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) || !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()) {
                     return [self::GROUP_SHIPPING_ADDRESS];
@@ -141,7 +144,7 @@ class CheckoutAddressCollectionForm extends AbstractType
 
                 return false;
             },
-            'required' => false,
+            'required' => true,
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => self::GROUP_BILLING_ADDRESS,
             CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[self::OPTION_ADDRESS_CHOICES],
             CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[self::OPTION_COUNTRY_CHOICES],

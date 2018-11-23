@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/calculation-page",
+  "type": "library",
   "description": "CalculationPage module",
   "license": "proprietary",
   "require": {

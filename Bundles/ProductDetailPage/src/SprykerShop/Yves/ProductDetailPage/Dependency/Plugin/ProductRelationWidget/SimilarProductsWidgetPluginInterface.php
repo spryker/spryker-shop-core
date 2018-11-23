@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductRelationWi
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget instead.
+ */
 interface SimilarProductsWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'SimilarProductsWidgetPlugin';

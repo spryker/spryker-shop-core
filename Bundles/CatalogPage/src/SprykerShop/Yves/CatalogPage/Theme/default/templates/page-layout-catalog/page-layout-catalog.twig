@@ -29,14 +29,13 @@
     {% if categoryPatrentNodes is not empty %}
         {{ self.renderBreadcrumbSteps(categoryPatrentNodes | first, false, filterPath) }}
 
-        {% if not isLastLeaf %}
-            {% include molecule('breadcrumb-step') with {
-                data: {
-                    url: categoryUrl,
-                    label: categoryLabel
-                }
-            } only %}
-        {% endif %}
+        {% include molecule('breadcrumb-step') with {
+            data: {
+                url: categoryUrl,
+                label: categoryLabel,
+                withChevron: not isLastLeaf
+            }
+        } only %}
     {% endif %}
 {% endmacro %}
 
@@ -113,7 +112,9 @@
 
                 <div class="grid grid--stretch">
                     {% for product in data.products %}
-                        {{ widget('ProductWidgetPlugin', product, data.viewMode) }}
+                        {% widget 'CatalogPageProductWidget' args [product, data.viewMode] only %}
+                        {% elsewidget 'ProductWidgetPlugin' args [product, data.viewMode] only %} {# @deprecated Use CatalogPageProductWidget instead. #}
+                        {% endwidget %}
                     {% endfor %}
                 </div>
 

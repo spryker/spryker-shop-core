@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class FormFactory extends AbstractFactory
 {
     /**

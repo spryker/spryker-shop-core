@@ -24,6 +24,12 @@ class ShoppingListWidgetController extends AbstractController
     public const PARAM_QUANTITY = 'quantity';
     public const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS = 'customer.account.shopping_list.add_item.success';
+
+    /**
+     * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST
+     */
+    protected const SHOPPING_LISTS_REDIRECT_URL = 'shopping-list';
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -52,10 +58,17 @@ class ShoppingListWidgetController extends AbstractController
 
         $shoppingListItemTransfer = $this->getFactory()
             ->getShoppingListClient()
-            ->addItem($shoppingListItemTransfer);
+            ->addItem($shoppingListItemTransfer, $request->request->all());
 
         if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED);
+            return $this->redirectResponseInternal(static::SHOPPING_LISTS_REDIRECT_URL);
+        }
+
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS);
+
+        if (!$shoppingListItemTransfer->getFkShoppingList()) {
+            return $this->redirectResponseInternal(static::SHOPPING_LISTS_REDIRECT_URL);
         }
 
         return $this->redirectResponseInternal(ShoppingListWidgetConfig::SHOPPING_LIST_REDIRECT_URL, [

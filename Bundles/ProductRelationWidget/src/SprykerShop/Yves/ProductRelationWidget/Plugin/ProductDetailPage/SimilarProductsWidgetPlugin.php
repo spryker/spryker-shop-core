@@ -10,8 +10,11 @@ namespace SprykerShop\Yves\ProductRelationWidget\Plugin\ProductDetailPage;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductRelationWidget\SimilarProductsWidgetPluginInterface;
+use SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget instead.
+ *
  * @method \SprykerShop\Yves\ProductRelationWidget\ProductRelationWidgetFactory getFactory()
  */
 class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements SimilarProductsWidgetPluginInterface
@@ -23,10 +26,11 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $this
-            ->addParameter('product', $productViewTransfer)
-            ->addParameter('productCollection', $this->findRelatedProducts($productViewTransfer))
-            ->addWidgets($this->getFactory()->getProductDetailPageSimilarProductsWidgetPlugins());
+        $widget = new SimilarProductsWidget($productViewTransfer);
+
+        $this->parameters = $widget->getParameters();
+
+        $this->addWidgets($this->getFactory()->getProductDetailPageSimilarProductsWidgetPlugins());
     }
 
     /**
@@ -42,18 +46,6 @@ class SimilarProductsWidgetPlugin extends AbstractWidgetPlugin implements Simila
      */
     public static function getTemplate(): string
     {
-        return '@ProductRelationWidget/views/pdp-similar-products-carousel/pdp-similar-products-carousel.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function findRelatedProducts(ProductViewTransfer $productViewTransfer)
-    {
-        return $this->getFactory()
-            ->getProductRelationStorageClient()
-            ->findRelatedProducts($productViewTransfer->getIdProductAbstract(), $this->getLocale());
+        return SimilarProductsWidget::getTemplate();
     }
 }
