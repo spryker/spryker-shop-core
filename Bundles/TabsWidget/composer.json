@@ -1,25 +1,21 @@
 {
   "name": "spryker-shop/tabs-widget",
+  "type": "library",
   "description": "TabsWidget module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.23.1",
-    "spryker-shop/tabs-widget-extension": "^1.0.0"
+    "php": ">=7.1",
+    "spryker-shop/tabs-widget-extension": "^1.0.0",
+    "spryker/kernel": "^3.23.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "suggest": {
-  },
+  "suggest": [],
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

@@ -1,8 +1,10 @@
 {
   "name": "spryker-shop/tabs-widget-extension",
+  "type": "library",
   "description": "TabsWidgetExtension module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -11,11 +13,6 @@
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
