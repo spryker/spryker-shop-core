@@ -35,6 +35,10 @@ class RegisterForm extends AbstractType
 
     public const BLOCK_PREFIX = 'registerForm';
 
+    public const OPTION_MIN_LENGTH_CUSTOMER_PASSWORD = 'OPTION_MIN_LENGTH_CUSTOMER_PASSWORD';
+
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @return string
      */
@@ -79,7 +83,7 @@ class RegisterForm extends AbstractType
             'required' => true,
             'label' => 'address.salutation',
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -97,7 +101,7 @@ class RegisterForm extends AbstractType
             'label' => 'customer.first_name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -115,7 +119,7 @@ class RegisterForm extends AbstractType
             'label' => 'customer.last_name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -133,7 +137,7 @@ class RegisterForm extends AbstractType
             'label' => 'auth.email',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -163,10 +167,10 @@ class RegisterForm extends AbstractType
                 'attr' => ['autocomplete' => 'off'],
             ],
             'constraints' => [
-                new NotBlank(),
                 new Length([
                     'min' => $this->getConfig()->getCustomerPasswordMinLength(),
                 ]),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -185,7 +189,7 @@ class RegisterForm extends AbstractType
             'mapped' => false,
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -223,5 +227,13 @@ class RegisterForm extends AbstractType
                 return (bool)$isGuestSubmittedValue;
             }
         ));
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }

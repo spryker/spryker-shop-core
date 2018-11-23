@@ -16,10 +16,13 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageFactory getFactory()
+ * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig getConfig()
  */
 class CompanyUserInvitationForm extends AbstractType
 {
     public const FIELD_INVITATIONS_LIST = 'invitations_list';
+
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**
      * @return string
@@ -41,7 +44,7 @@ class CompanyUserInvitationForm extends AbstractType
             'label' => 'company.user.invitation.file',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
                 new Callback([
                     'callback' => function ($uploadedFile, ExecutionContextInterface $context) {
                         if ($uploadedFile && !$this->getFactory()->createImportFileValidator()->isValidImportFile($uploadedFile)) {
@@ -51,5 +54,13 @@ class CompanyUserInvitationForm extends AbstractType
                 ]),
             ],
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }
