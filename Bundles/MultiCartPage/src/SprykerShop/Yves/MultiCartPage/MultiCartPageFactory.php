@@ -89,4 +89,5 @@ class MultiCartPageFactory extends AbstractFactory
     public function getGlossaryStorageClient(): MultiCartPageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
-    }}
+    }
+}
