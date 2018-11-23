@@ -89,6 +89,14 @@ class MultiCartController extends AbstractController
      */
     protected function executeUpdateAction(int $idQuote, Request $request)
     {
+        $quoteTransfer = $this->getFactory()->getMultiCartClient()->findQuoteById($idQuote);
+
+        if (!$quoteTransfer) {
+            $this->addInfoMessage(static::GLOSSARY_KEY_CART_WAS_DELETED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $quoteForm = $this->getFactory()
             ->getQuoteForm($idQuote)
             ->handleRequest($request);
