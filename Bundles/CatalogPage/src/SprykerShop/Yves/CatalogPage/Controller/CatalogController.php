@@ -11,7 +11,7 @@ use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerShop\Shared\CatalogPage\Plugin\SeePricePermissionPlugin;
+use SprykerShop\Shared\CatalogPage\Plugin\AccessPricePermissionPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -236,6 +236,6 @@ class CatalogController extends AbstractController
      */
     protected function canFilterByPrices(): bool
     {
-        return $this->can(SeePricePermissionPlugin::KEY);
+        return $this->can(AccessPricePermissionPlugin::KEY);
     }
 }
