@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MultiCartController extends AbstractController
 {
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
-    public const GLOSSARY_KEY_CART_WAS_DELETED = 'multi_cart_widget.cart.was-deleted-before';
+    public const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -89,14 +89,6 @@ class MultiCartController extends AbstractController
      */
     protected function executeUpdateAction(int $idQuote, Request $request)
     {
-        $quoteTransfer = $this->getFactory()->getMultiCartClient()->findQuoteById($idQuote);
-
-        if (!$quoteTransfer) {
-            $this->addInfoMessage(static::GLOSSARY_KEY_CART_WAS_DELETED);
-
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
-        }
-
         $quoteForm = $this->getFactory()
             ->getQuoteForm($idQuote)
             ->handleRequest($request);
@@ -112,6 +104,9 @@ class MultiCartController extends AbstractController
 
                 return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
             }
+            $this->addErrorMessage(static::GLOSSARY_KEY_CART_UPDATED_ERROR);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
         }
 
         return [
