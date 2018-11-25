@@ -22,11 +22,11 @@
                 }
             } only %}
                 {% block url %}
-                    <a href="{{ data.node.url }}">{{ data.node.title }}</a>
+                    <a href="{{ data.node.url }}" class="{{ data.node.cssClass }}">{{ data.node.title }}</a>
                 {% endblock %}
 
                 {% block externalUrl %}
-                    <a href="{{ data.node.url }}" target="_blank">{{ data.node.title }}</a>
+                    <a href="{{ data.node.url }}" class="{{ data.node.cssClass }}" target="_blank">{{ data.node.title }}</a>
                 {% endblock %}
 
                 {% block other %}

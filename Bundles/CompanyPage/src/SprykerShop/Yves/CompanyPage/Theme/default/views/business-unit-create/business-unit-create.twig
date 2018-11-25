@@ -10,11 +10,17 @@
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                    label: 'company.account' | trans,
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview')
                 },
                 {
                     label: 'company.account.business_unit' | trans,
+                    url: url('company/business-unit')
+                },
+                {
+                    label: 'company.account.business_unit.add' | trans,
                 }
             ]}
     } only %}
