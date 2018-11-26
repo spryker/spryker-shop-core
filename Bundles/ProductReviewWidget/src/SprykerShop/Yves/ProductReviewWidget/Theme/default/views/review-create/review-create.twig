@@ -1,20 +1,13 @@
-{% extends template('widget') %}
+{% extends template('product-review-add', 'ProductReviewWidget') %}
 
 {% define data = {
     form: _view.form,
-    showSuccessMessage: _view.showSuccess
+    showSuccessMessage: _view.showSuccess,
+    idProductAbstract: _view.idProductAbstract
 } %}
 
 {% block body %}
-    {% if data.showSuccessMessage %}
-        <div class="box box--success">
-            {{ 'product_review.submit.success' | trans }}
-        </div>
-    {% endif %}
-
-    {% include molecule('new-review-form', 'ProductReviewWidget') with {
-        data: {
-            form: data.form
-        }
-    } only %}
+    {% block contennt %}
+        {{ parent() }}
+    {% endblock %}
 {% endblock %}

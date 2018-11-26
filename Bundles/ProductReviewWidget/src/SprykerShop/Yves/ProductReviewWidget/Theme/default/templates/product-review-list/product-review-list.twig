@@ -1,0 +1,23 @@
+{% extends template('widget') %}
+
+{% define data = {
+    reviews: required,
+    summary: required,
+    ratingMaxValue: required,
+    hasCustomer: required,
+    pagination: required
+} %}
+
+{% block body %}
+    {% block content %}
+        {% include organism('review-summary', 'ProductReviewWidget') with {
+            data: {
+                reviews: data.reviews,
+                summary: data.summary,
+                ratingMaxValue: data.ratingMaxValue,
+                hasCustomer: data.hasCustomer,
+                pagination: data.pagination
+            }
+        } only %}
+    {% endblock %}
+{% endblock %}

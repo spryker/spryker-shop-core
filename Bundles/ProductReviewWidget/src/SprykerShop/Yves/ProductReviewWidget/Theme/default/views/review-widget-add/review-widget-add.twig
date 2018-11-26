@@ -1,0 +1,11 @@
+{% extends template('product-review-add', 'ProductReviewWidget') %}
+
+ {% define data = {
+     form: _widget.form,
+     showSuccessMessage: false,
+     idProductAbstract: _widget.idProductAbstract
+ } %}
+
+ {% block body %}
+     {%  block content %}{{ parent() }}{% endblock %}
+ {% endblock %}

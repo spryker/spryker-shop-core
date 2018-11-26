@@ -6,7 +6,8 @@
 } %}
 
 {% define data = {
-    form: required
+    form: required,
+    action: required
 } %}
 
 {% block body %}
@@ -16,7 +17,7 @@
             title: 'product_review.submit.add_a_review' | trans,
             form: data.form,
             options: {
-                action: '#review'
+                action: data.action
             },
             layout: {
                 'nickname': 'col col--sm-12 col--lg-4',

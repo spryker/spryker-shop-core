@@ -7,11 +7,6 @@
 
 namespace SprykerShop\Yves\NewsletterWidget\Controller;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
-use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
-use Generated\Shared\Transfer\NewsletterTypeTransfer;
-use Spryker\Shared\Newsletter\NewsletterConstants;
 use SprykerShop\Yves\NewsletterWidget\Form\NewsletterSubscriptionForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,28 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SubscriptionController extends AbstractController
 {
+    protected const MESSAGE_SUBSCRIPTION_SUCCESS = 'newsletter.subscription.success';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function subscribeAction(Request $request)
     {
-        $viewData = $this->executeSubscribeAction($request);
-
-        return $this->view($viewData, [], '@NewsletterWidget/views/subscription-form/subscription-form.twig');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function executeSubscribeAction(Request $request): array
-    {
-        $success = false;
-        $error = false;
-
         $subscriptionForm = $this
             ->getFactory()
             ->getNewsletterSubscriptionForm();
@@ -55,55 +37,36 @@ class SubscriptionController extends AbstractController
 
         $subscriptionForm->handleRequest($request);
 
-        if ($subscriptionForm->isSubmitted() && $subscriptionForm->isValid()) {
-            $customerTransfer = (new CustomerTransfer())
-                ->setEmail($subscriptionForm->get(NewsletterSubscriptionForm::FIELD_SUBSCRIBE)->getData());
+        if ($subscriptionForm->isSubmitted()) {
+            $redirectUrl = $this->getFactory()
+                ->createUrlGenerator()
+                ->getMainPageUrlWithLocale($this->getLocale());
 
-            $request = $this->createNewsletterSubscriptionRequest($customerTransfer);
-            $subscriptionResponse = $this->getFactory()
-                ->getNewsletterClient()
-                ->subscribeWithDoubleOptIn($request);
+            if (!$subscriptionForm->isValid()) {
+                foreach ($subscriptionForm->getErrors(true) as $errorObject) {
+                    $this->addErrorMessage($errorObject->getMessage());
+                }
 
-            $subscriptionResult = current($subscriptionResponse->getSubscriptionResults());
-
-            if ($subscriptionResult->getIsSuccess()) {
-                $subscriptionForm = $this
-                    ->getFactory()
-                    ->getNewsletterSubscriptionForm();
-                $success = 'newsletter.subscription.success';
+                return $this->redirectResponseInternal($redirectUrl);
             }
+
+            $emailValue = $subscriptionForm
+                ->get(NewsletterSubscriptionForm::FIELD_SUBSCRIBE)
+                ->getData();
+            $subscriptionResult = $this->getFactory()
+                ->createSubscriber()
+                ->subscribe($emailValue);
 
             if (!$subscriptionResult->getIsSuccess()) {
                 $error = $subscriptionResult->getErrorMessage();
+                $this->addErrorMessage($error);
+
+                return $this->redirectResponseInternal($redirectUrl);
             }
+
+            $this->addSuccessMessage(static::MESSAGE_SUBSCRIPTION_SUCCESS);
+
+            return $this->redirectResponseInternal($redirectUrl);
         }
-
-        return [
-            'newsletterSubscriptionForm' => $subscriptionForm->createView(),
-            'error' => $error,
-            'success' => $success,
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param string|null $subscriberKey
-     *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer
-     */
-    protected function createNewsletterSubscriptionRequest(CustomerTransfer $customerTransfer, $subscriberKey = null)
-    {
-        $subscriptionRequest = new NewsletterSubscriptionRequestTransfer();
-
-        $subscriber = new NewsletterSubscriberTransfer();
-        $subscriber->setFkCustomer($customerTransfer->getIdCustomer());
-        $subscriber->setEmail($customerTransfer->getEmail());
-        $subscriber->setSubscriberKey($subscriberKey);
-
-        $subscriptionRequest->setNewsletterSubscriber($subscriber);
-        $subscriptionRequest->addSubscriptionType((new NewsletterTypeTransfer())
-                ->setName(NewsletterConstants::DEFAULT_NEWSLETTER_TYPE));
-
-        return $subscriptionRequest;
     }
 }

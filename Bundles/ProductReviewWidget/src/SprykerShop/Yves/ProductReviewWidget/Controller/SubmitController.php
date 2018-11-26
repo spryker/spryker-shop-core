@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\ProductReviewWidget\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Storage\StorageConstants;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,45 +20,41 @@ use Symfony\Component\HttpFoundation\Request;
 class SubmitController extends AbstractController
 {
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INACTIVE;
+    protected const ERROR_MESSAGE_NO_CUSTOMER = 'Only customers can use this feature. Please log in.';
+    protected const SUCCESS_MESSAGE = 'Review was submitted';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
-        $viewData = $this->executeIndexAction($request);
-
-        return $this->view($viewData, [], '@ProductReviewWidget/views/review-create/review-create.twig');
+        return $this->executeIndexAction($request);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeIndexAction(Request $request): array
+    protected function executeIndexAction(Request $request): RedirectResponse
     {
-        $parentRequest = $this->getParentRequest();
         $idProductAbstract = $request->attributes->get('idProductAbstract');
+        $abstractProductData = $this->getFactory()
+            ->getProductStorageClient()
+            ->findProductAbstractStorageData(
+                $idProductAbstract,
+                $this->getLocale()
+            );
 
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
         $productReviewForm = $this->getFactory()
             ->createProductReviewForm($idProductAbstract)
-            ->handleRequest($parentRequest);
-        $isFormEmpty = !$productReviewForm->isSubmitted();
-        $isReviewPosted = $this->processProductReviewForm($productReviewForm, $customer);
+            ->handleRequest($request);
+        $this->processProductReviewForm($productReviewForm, $customer);
 
-        if ($isReviewPosted) {
-            $productReviewForm = $this->getFactory()->createProductReviewForm($idProductAbstract);
-        }
-
-        return [
-            'hideForm' => $isFormEmpty || $isReviewPosted,
-            'form' => $productReviewForm->createView(),
-            'showSuccess' => $isReviewPosted,
-        ];
+        return $this->redirectResponseInternal($abstractProductData['url']);
     }
 
     /**
@@ -76,10 +72,16 @@ class SubmitController extends AbstractController
         $customerReference = $customer === null ? null : $customer->getCustomerReference();
 
         if ($customerReference === null) {
-            $form->addError(new FormError('Only customers can use this feature. Please log in.'));
+            $this->addErrorMessage(static::ERROR_MESSAGE_NO_CUSTOMER);
+
+            return false;
         }
 
         if (!$form->isValid()) {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addErrorMessage($error->getMessage());
+            }
+
             return false;
         }
 
@@ -90,10 +92,12 @@ class SubmitController extends AbstractController
         );
 
         if ($productReviewResponseTransfer->getIsSuccess()) {
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE);
+
             return true;
         }
 
-        $form->addError(new FormError($productReviewResponseTransfer->getErrors()[0]->getMessage()));
+        $this->addErrorMessage($productReviewResponseTransfer->getErrors()[0]->getMessage());
 
         return false;
     }

@@ -51,9 +51,9 @@
 
     {% if is_granted('ROLE_USER') %}
         <div class="is-hidden js-review__new-review-form-target">
-            {{ render(path('product-review/submit', {'idProductAbstract': data.idProductAbstract})) }}
+            {% widget 'ProductReviewAddWidget' args [data.idProductAbstract] only %}{% endwidget %}
         </div>
     {% endif %}
 
-    {{ render(path('product-review/index', {'idProductAbstract': data.idProductAbstract})) }}
+    {% widget 'ProductReviewListWidget' args [data.idProductAbstract] %}{% endwidget %}
 {% endblock %}

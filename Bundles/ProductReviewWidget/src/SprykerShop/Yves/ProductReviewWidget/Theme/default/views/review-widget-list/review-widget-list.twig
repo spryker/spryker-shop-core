@@ -1,0 +1,21 @@
+{% extends template('product-review-list', 'ProductReviewWidget') %}
+
+ {% define data = {
+     reviews: _widget.productReviews,
+     summary: _widget.summary,
+     ratingMaxValue: _widget.maximumRating,
+     hasCustomer: _widget.hasCustomer,
+
+     pagination: {
+         parameters: app.request.query.all(),
+         currentPage: _widget.pagination.currentPage,
+         paginationPath: app.request.getPathInfo(),
+         maxPage: _widget.pagination.maxPage,
+         showAlwaysFirstAndLast: true,
+         anchor: 'product-reviews'
+     }
+ } %}
+
+ {% block body %}
+     {%  block content %}{{ parent() }}{% endblock %}
+ {% endblock %}

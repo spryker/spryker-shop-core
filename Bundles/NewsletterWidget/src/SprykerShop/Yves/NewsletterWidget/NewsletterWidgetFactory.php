@@ -11,6 +11,10 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\NewsletterWidget\Dependency\Client\NewsletterWidgetToNewsletterClientInterface;
 use SprykerShop\Yves\NewsletterWidget\Form\NewsletterSubscriptionForm;
+use SprykerShop\Yves\NewsletterWidget\Subscriber\Subscriber;
+use SprykerShop\Yves\NewsletterWidget\Subscriber\SubscriberInterface;
+use SprykerShop\Yves\NewsletterWidget\UrlGenerator\UrlGenerator;
+use SprykerShop\Yves\NewsletterWidget\UrlGenerator\UrlGeneratorInterface;
 
 class NewsletterWidgetFactory extends AbstractFactory
 {
@@ -36,5 +40,21 @@ class NewsletterWidgetFactory extends AbstractFactory
     public function getFormFactory()
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\NewsletterWidget\UrlGenerator\UrlGeneratorInterface
+     */
+    public function createUrlGenerator(): UrlGeneratorInterface
+    {
+        return new UrlGenerator();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\NewsletterWidget\Subscriber\SubscriberInterface
+     */
+    public function createSubscriber(): SubscriberInterface
+    {
+        return new Subscriber($this->getNewsletterClient());
     }
 }
