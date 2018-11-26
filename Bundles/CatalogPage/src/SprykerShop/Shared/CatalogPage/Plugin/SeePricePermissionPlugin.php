@@ -12,7 +12,7 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterfa
 /**
  * For Client PermissionDependencyProvider::getPermissionPlugins() registration
  */
-class AccessPricePermissionPlugin implements PermissionPluginInterface
+class SeePricePermissionPlugin implements PermissionPluginInterface
 {
     public const KEY = 'SeePricePermissionPlugin';
 
