@@ -19,7 +19,7 @@ class MultiCartController extends AbstractController
 {
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
     public const GLOSSARY_KEY_CART_WAS_DELETED = 'multi_cart_widget.cart.was-deleted-before';
-    public const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
+    protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
