@@ -91,6 +91,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 
         $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
         $this->unsetVoucherCode($voucherCode, $voucherDiscounts);
+        $this->unsetNotAppliedVoucherCode($voucherCode, $quoteTransfer);
 
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
 
@@ -105,6 +106,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
     {
         $quoteTransfer = $this->quoteClient->getQuote();
         $quoteTransfer->setVoucherDiscounts(new ArrayObject());
+        $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
 
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
 
@@ -127,6 +129,27 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
         }
 
         return false;
+    }
+
+    /**
+     * @deprecated This is temporary function that we use to fix discount removing (see CC-1622) and we will
+     * delete it in the next module clean-up iteration (approx. August 2019).
+     *
+     * @param string $voucherCode
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function unsetNotAppliedVoucherCode($voucherCode, QuoteTransfer $quoteTransfer)
+    {
+        $usedNotAppliedVoucherCodeResultList = array_filter(
+            $quoteTransfer->getUsedNotAppliedVoucherCodes(),
+            function ($usedNotAppliedVoucherCode) use ($voucherCode) {
+                return $usedNotAppliedVoucherCode != $voucherCode;
+            }
+        );
+
+        $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedVoucherCodeResultList);
     }
 
     /**
