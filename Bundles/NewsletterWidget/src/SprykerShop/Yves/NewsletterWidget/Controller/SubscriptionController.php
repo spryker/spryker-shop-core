@@ -63,7 +63,7 @@ class SubscriptionController extends AbstractController
 
         if (!$subscriptionResult) {
             $this->addErrorMessage(static::MESSAGE_SUBSCRIPTION_ERROR);
-            
+
             return $this->redirectResponseInternal($redirectUrl);
         }
 
