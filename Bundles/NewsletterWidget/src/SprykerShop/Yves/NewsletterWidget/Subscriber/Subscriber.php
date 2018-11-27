@@ -58,7 +58,7 @@ class Subscriber implements SubscriberInterface
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer
      */
-    protected function createNewsletterSubscriptionRequest(CustomerTransfer $customerTransfer, $subscriberKey = null): NewsletterSubscriptionRequestTransfer
+    protected function createNewsletterSubscriptionRequest(CustomerTransfer $customerTransfer, ?string $subscriberKey = null): NewsletterSubscriptionRequestTransfer
     {
         $subscriptionRequest = new NewsletterSubscriptionRequestTransfer();
 
