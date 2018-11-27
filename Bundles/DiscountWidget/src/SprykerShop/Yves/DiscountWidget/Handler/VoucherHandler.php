@@ -132,15 +132,14 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
     }
 
     /**
-     * @deprecated This is temporary function that we use to fix discount removing (see CC-1622) and we will
-     * delete it in the next module clean-up iteration (approx. August 2019).
+     * @deprecated
      *
      * @param string $voucherCode
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    protected function unsetNotAppliedVoucherCode($voucherCode, QuoteTransfer $quoteTransfer)
+    protected function unsetNotAppliedVoucherCode(string $voucherCode, QuoteTransfer $quoteTransfer): void
     {
         $usedNotAppliedVoucherCodeResultList = array_filter(
             $quoteTransfer->getUsedNotAppliedVoucherCodes(),
