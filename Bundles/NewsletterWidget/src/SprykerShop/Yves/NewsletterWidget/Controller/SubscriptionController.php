@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SubscriptionController extends AbstractController
 {
     protected const MESSAGE_SUBSCRIPTION_SUCCESS = 'newsletter.subscription.success';
+    protected const MESSAGE_SUBSCRIPTION_ERROR = 'newsletter.subscription.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -59,6 +60,12 @@ class SubscriptionController extends AbstractController
         $subscriptionResult = $this->getFactory()
             ->createSubscriber()
             ->subscribe($emailValue);
+
+        if (!$subscriptionResult) {
+            $this->addErrorMessage(static::MESSAGE_SUBSCRIPTION_ERROR);
+            
+            return $this->redirectResponseInternal($redirectUrl);
+        }
 
         if (!$subscriptionResult->getIsSuccess()) {
             $error = $subscriptionResult->getErrorMessage();
