@@ -16,6 +16,7 @@ const keyCodes: {
     arrowUp: 38,
     arrowDown: 40,
     tab: 9,
+    enter: 13
 };
 
 export default class AutocompleteForm extends Component {
@@ -149,6 +150,7 @@ export default class AutocompleteForm extends Component {
                 this.onKeyDownArrowDown();
                 break;
             case keyCodes.tab:
+            case keyCodes.enter:
                 event.preventDefault();
                 this.onKeyDownTab();
                 break;

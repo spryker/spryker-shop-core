@@ -76,6 +76,10 @@ export default class QuickOrderRow extends Component {
         this.registerQuantityInput();
         this.mapQuantityInputChange();
         this.toggleErrorMessage(isShowErrorMessage);
+
+        if(!!sku) {
+            this.quantityInput.focus();
+        }
     }
 
     get quantityValue(): string {
