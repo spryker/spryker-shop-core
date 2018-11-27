@@ -42,7 +42,7 @@ class DismissController extends AbstractController
             ->setIdCompanyUser($this->getFactory()->getCustomerClient()->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
         $quoteResponseTransfer = $this->getFactory()
             ->getSharedCartClient()
-            ->removeShareCart($shareCartRequestTransfer);
+            ->dismissSharedCart($shareCartRequestTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::KEY_GLOSSARY_SHARED_CART_PAGE_DISMISS_SUCCESS);
