@@ -65,10 +65,8 @@ export default class QuickOrderRow extends Component {
         const isShowErrorMessage = this.checkQuantityValidation(),
             quantityInputValue = parseInt(this.quantityValue);
 
-        if (!!sku) {
-            this.ajaxProvider.queryParams.set('sku', sku);
-            this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class').split('-').pop().trim());
-        }
+        this.ajaxProvider.queryParams.set('sku', sku);
+        this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class').split('-').pop().trim());
 
         if (!!quantityInputValue) {
             this.ajaxProvider.queryParams.set('quantity', `${quantityInputValue}`);
@@ -77,7 +75,6 @@ export default class QuickOrderRow extends Component {
         await this.ajaxProvider.fetch();
         this.registerQuantityInput();
         this.mapQuantityInputChange();
-        this.quantityInput.focus();
         this.toggleErrorMessage(isShowErrorMessage);
     }
 
