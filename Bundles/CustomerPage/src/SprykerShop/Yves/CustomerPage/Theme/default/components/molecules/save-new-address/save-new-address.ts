@@ -3,54 +3,127 @@ import Component from 'ShopUi/models/component';
 export default class SaveNewAddress extends Component {
     customerShippingAddresses: HTMLInputElement[];
     customerBillingAddresses: HTMLInputElement[];
-    billingSameAsShipping: HTMLInputElement;
-    saveNewAddress: HTMLInputElement;
-    addNewShippingAddress: HTMLInputElement;
-    addNewBillingAddress: HTMLInputElement;
+    saveNewAddressToggler: HTMLInputElement;
+    sameAsShippingToggler: HTMLInputElement;
+
+    sameIsShippingChecked: boolean;
+    newShippingAddressChecked: boolean = false;
+    newBillingAddressChecked: boolean = false;
+    readonly hiddenClass: string = 'is-hidden';
 
     protected readyCallback(): void {
-        this.customerShippingAddresses = <HTMLInputElement[]>Array.from(document.querySelectorAll('[name="addressesForm[shippingAddress][id_customer_address]"]'));
-        this.customerBillingAddresses = <HTMLInputElement[]>Array.from(document.querySelectorAll('[name="addressesForm[billingAddress][id_customer_address]"]'));
-        this.billingSameAsShipping = <HTMLInputElement>document.querySelector('[name="addressesForm[billingSameAsShipping]"]');
-        this.saveNewAddress = <HTMLInputElement>document.querySelector('[name="addressesForm[skipAddressSaving]"]');
-        this.addNewShippingAddress = this.customerShippingAddresses[this.customerShippingAddresses.length - 1];
-        this.addNewBillingAddress = this.customerBillingAddresses[this.customerBillingAddresses.length - 1];
-
-        if(!this.customerBillingAddresses.length && !this.customerBillingAddresses.length) {
-            this.showSaveNewAddress();
-        } else {
-            this.toggleSaveNewAddress();
-            this.mapEvents();
+        if (this.shippingAddressToglerSelector) {
+            this.customerShippingAddresses = <HTMLInputElement[]>Array.from(document.querySelectorAll(this.shippingAddressToglerSelector));
+            this.customerBillingAddresses = <HTMLInputElement[]>Array.from(document.querySelectorAll(this.billingAddressToglerSelector));
         }
+
+        this.saveNewAddressToggler = <HTMLInputElement>document.querySelector(this.saveAddressTogglerSelector);
+        this.sameAsShippingToggler = <HTMLInputElement>document.querySelector(this.billingSameAsShippingAddressToglerSelector);
+        this.sameIsShippingChecked = this.sameAsShippingToggler.checked;
+
+        this.hasCustomerAddresses();
     }
 
-    protected mapEvents(): void {
-        this.customerShippingAddresses.forEach((input: HTMLInputElement) => {
-            input.addEventListener('change', () => this.toggleSaveNewAddress());
+    protected hasCustomerAddresses(): void {
+        if(!this.customerShippingAddresses) {
+            this.showSaveNewAddress();
+            return;
+        }
+
+        this.mapTogglers(this.customerShippingAddresses);
+        this.mapSameAsShippingTogglerEvent();
+    }
+
+    protected mapTogglers(togglersList: HTMLInputElement[]): void {
+        this.customerShippingAddresses.forEach((toggler: HTMLInputElement) => {
+            this.mapShippingTogglerEvent(toggler);
         });
 
-        this.customerBillingAddresses.forEach((input: HTMLInputElement) => {
-            input.addEventListener('change', () => this.toggleSaveNewAddress());
+        this.customerBillingAddresses.forEach((toggler: HTMLInputElement) => {
+            this.mapBillingTogglerEvent(toggler);
         });
+    }
 
-        this.billingSameAsShipping.addEventListener('change', () => this.toggleSaveNewAddress());
+    protected mapShippingTogglerEvent(toggler: HTMLInputElement): void {
+        toggler.addEventListener('change', (e: Event) => {
+            this.newShippingAddressChecked = this.onAddressTogglerChange(e);
+            this.toggleSaveNewAddress();
+        });
+    }
+
+    protected mapBillingTogglerEvent(toggler: HTMLInputElement): void {
+        toggler.addEventListener('change', (e: Event) => {
+            this.newBillingAddressChecked = this.onAddressTogglerChange(e);
+            this.toggleSaveNewAddress();
+        });
+    }
+
+    protected mapSameAsShippingTogglerEvent(): void {
+        this.sameAsShippingToggler.addEventListener('change', (e: Event) => {
+            this.onSameAsShippingTogglerChange(e);
+            this.toggleSaveNewAddress();
+        });
+    }
+
+    protected onAddressTogglerChange(e: Event): boolean {
+        const toggler = <HTMLInputElement>e.srcElement;
+
+        return this.checkSaveNewAddress(toggler);
+    }
+
+    protected onSameAsShippingTogglerChange(e: Event): boolean {
+        const toggler = <HTMLInputElement>e.srcElement;
+        if(toggler.checked) {
+            this.sameIsShippingChecked = true;
+            return
+        }
+        this.sameIsShippingChecked = false;
+    }
+
+    protected checkSaveNewAddress(toggler: HTMLInputElement): boolean {
+        if(!this.togglerHasAddClassAttribute(toggler) && toggler.checked) {
+            return true;
+        }
+
+        return false;
     }
 
     protected toggleSaveNewAddress(): void {
-        if(this.addNewShippingAddress.checked || (this.addNewBillingAddress.checked && !this.billingSameAsShipping.checked)) {
+        if(this.newShippingAddressChecked || (this.newBillingAddressChecked && !this.sameIsShippingChecked)) {
             this.showSaveNewAddress();
-        } else {
-            this.hideSaveNewAddress();
+            return;
         }
+
+        this.hideSaveNewAddress();
     }
 
     protected hideSaveNewAddress(): void {
-        this.classList.add('is-hidden');
-        this.saveNewAddress.disabled = true;
+        this.classList.add(this.hiddenClass);
+        this.saveNewAddressToggler.disabled = true;
     }
 
     protected showSaveNewAddress(): void {
-        this.classList.remove('is-hidden');
-        this.saveNewAddress.disabled = false;
+        this.classList.remove(this.hiddenClass);
+        this.saveNewAddressToggler.disabled = false;
+    }
+
+    protected togglerHasAddClassAttribute(toggler: HTMLInputElement): boolean {
+        return toggler.hasAttribute('add-class-when-checked');
+    }
+
+    get shippingAddressToglerSelector(): string {
+        return this.getAttribute('shipping-address-toggler');
+    }
+
+    get billingAddressToglerSelector(): string {
+        return this.getAttribute('billing-address-toggler');
+    }
+
+    get billingSameAsShippingAddressToglerSelector(): string {
+        return this.getAttribute('billing-same-as-shipping-toggler');
+    }
+
+    get saveAddressTogglerSelector(): string {
+        return this.getAttribute('save-address-toggler');
     }
 }

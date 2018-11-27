@@ -201,14 +201,31 @@
                 {% if data.form.vars.value.customer.isGuest %}
                     {% do data.form.skipAddressSaving.setRendered %}
                 {% else %}
+                    {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address | default %}
+                    {% set hasShippingAddresses = existingShippingAddresses is not empty %}
+                    {% if hasShippingAddresses %}
+                        {% set existingShippingAddressRadioName = '[name="' ~ existingShippingAddresses.vars.full_name ~ '"]' %}
+                    {% endif %}
+
+                    {% set existingBillingAddressRadioName = embed.forms.billing.id_customer_address | default %}
+                    {% set hasBillingAddresses = existingBillingAddressRadioName is not empty %}
+                    {% if hasBillingAddresses %}
+                        {% set existingBillingAddressRadioName = '[name="' ~ existingBillingAddressRadioName.vars.full_name ~ '"]' %}
+                    {% endif %}
+
                     {% include molecule('save-new-address', 'CustomerPage') with {
                         class: 'col is-hidden',
                         data: {
                             form: data.form.skipAddressSaving
+                        },
+                        attributes: {
+                            'shipping-address-toggler': existingShippingAddressRadioName | default(''),
+                            'billing-address-toggler': existingBillingAddressRadioName | default(''),
+                            'billing-same-as-shipping-toggler': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
+                            'save-address-toggler': '[name="' ~ data.form.skipAddressSaving.vars.full_name ~ '"]' | default('')
                         }
                     } only %}
                 {% endif %}
-
                 <div class="col">
                     {{ parent() }}
                 </div>
