@@ -216,7 +216,7 @@
                     {% include molecule('save-new-address', 'CustomerPage') with {
                         class: 'col is-hidden',
                         data: {
-                            form: data.form.skipAddressSaving
+                            form: data.form
                         },
                         attributes: {
                             'shipping-address-toggler': existingShippingAddressRadioName | default(''),

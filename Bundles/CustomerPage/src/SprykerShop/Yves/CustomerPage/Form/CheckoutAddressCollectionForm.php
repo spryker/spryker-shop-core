@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class CheckoutAddressCollectionForm extends AbstractType
 {
@@ -168,6 +169,14 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function addSkipAddressSavingField(FormBuilderInterface $builder): self
     {
+        $isLoggedIn = $this->getFactory()
+            ->getCustomerClient()
+            ->isLoggedIn();
+
+        if (!$isLoggedIn) {
+            return $this;
+        }
+
         $builder->add(static::FIELD_SKIP_ADDRESS_SAVING, CheckboxType::class, [
             'label' => static::GLOSSARY_KEY_SAVE_NEW_ADDRESS,
             'required' => false,
