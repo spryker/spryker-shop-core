@@ -37,36 +37,38 @@ class SubscriptionController extends AbstractController
 
         $subscriptionForm->handleRequest($request);
 
-        if ($subscriptionForm->isSubmitted()) {
-            $redirectUrl = $this->getFactory()
-                ->createUrlGenerator()
-                ->getMainPageUrlWithLocale($this->getLocale());
+        if (!$subscriptionForm->isSubmitted()) {
+            return $this->redirectResponseExternal('/');
+        }
 
-            if (!$subscriptionForm->isValid()) {
-                foreach ($subscriptionForm->getErrors(true) as $errorObject) {
-                    $this->addErrorMessage($errorObject->getMessage());
-                }
+        $redirectUrl = $this->getFactory()
+            ->createUrlGenerator()
+            ->getMainPageUrlWithLocale($this->getLocale());
 
-                return $this->redirectResponseInternal($redirectUrl);
+        if (!$subscriptionForm->isValid()) {
+            foreach ($subscriptionForm->getErrors(true) as $errorObject) {
+                $this->addErrorMessage($errorObject->getMessage());
             }
-
-            $emailValue = $subscriptionForm
-                ->get(NewsletterSubscriptionForm::FIELD_SUBSCRIBE)
-                ->getData();
-            $subscriptionResult = $this->getFactory()
-                ->createSubscriber()
-                ->subscribe($emailValue);
-
-            if (!$subscriptionResult->getIsSuccess()) {
-                $error = $subscriptionResult->getErrorMessage();
-                $this->addErrorMessage($error);
-
-                return $this->redirectResponseInternal($redirectUrl);
-            }
-
-            $this->addSuccessMessage(static::MESSAGE_SUBSCRIPTION_SUCCESS);
 
             return $this->redirectResponseInternal($redirectUrl);
         }
+
+        $emailValue = $subscriptionForm
+            ->get(NewsletterSubscriptionForm::FIELD_SUBSCRIBE)
+            ->getData();
+        $subscriptionResult = $this->getFactory()
+            ->createSubscriber()
+            ->subscribe($emailValue);
+
+        if (!$subscriptionResult->getIsSuccess()) {
+            $error = $subscriptionResult->getErrorMessage();
+            $this->addErrorMessage($error);
+
+            return $this->redirectResponseInternal($redirectUrl);
+        }
+
+        $this->addSuccessMessage(static::MESSAGE_SUBSCRIPTION_SUCCESS);
+
+        return $this->redirectResponseInternal($redirectUrl);
     }
 }

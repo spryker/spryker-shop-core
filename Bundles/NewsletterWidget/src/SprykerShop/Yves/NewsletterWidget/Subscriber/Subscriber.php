@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\NewsletterWidget\Subscriber;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Spryker\Shared\Newsletter\NewsletterConstants;
 use SprykerShop\Yves\NewsletterWidget\Dependency\Client\NewsletterWidgetToNewsletterClientInterface;
@@ -32,9 +33,9 @@ class Subscriber implements SubscriberInterface
     /**
      * @param string $email
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer|null
      */
-    public function subscribe(string $email)
+    public function subscribe(string $email): ?NewsletterSubscriptionResultTransfer
     {
         $customerTransfer = (new CustomerTransfer())
             ->setEmail($email);
@@ -43,7 +44,12 @@ class Subscriber implements SubscriberInterface
         $subscriptionResponse = $this->newsletterClient
             ->subscribeWithDoubleOptIn($request);
 
-        return current($subscriptionResponse->getSubscriptionResults());
+        $newsLetterSubscriptionResultTransfer = current($subscriptionResponse->getSubscriptionResults());
+        if ($newsLetterSubscriptionResultTransfer === false) {
+            return null;
+        }
+
+        return $newsLetterSubscriptionResultTransfer;
     }
 
     /**
@@ -52,7 +58,7 @@ class Subscriber implements SubscriberInterface
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer
      */
-    protected function createNewsletterSubscriptionRequest(CustomerTransfer $customerTransfer, $subscriberKey = null)
+    protected function createNewsletterSubscriptionRequest(CustomerTransfer $customerTransfer, $subscriberKey = null): NewsletterSubscriptionRequestTransfer
     {
         $subscriptionRequest = new NewsletterSubscriptionRequestTransfer();
 

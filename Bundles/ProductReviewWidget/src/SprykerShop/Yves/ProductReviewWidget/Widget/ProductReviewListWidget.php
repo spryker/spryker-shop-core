@@ -37,7 +37,7 @@ class ProductReviewListWidget extends AbstractWidget
      */
     public function __construct(int $idProductAbstract)
     {
-        $parentRequest = $this->getParentRequest();
+        $parentRequest = $this->getCurrentRequest();
         $productReviews = $this->findProductReviews($idProductAbstract, $parentRequest);
 
         $this->addParameter('hasCustomer', $this->hasCustomer());
@@ -77,15 +77,13 @@ class ProductReviewListWidget extends AbstractWidget
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function getParentRequest(): Request
+    protected function getCurrentRequest(): Request
     {
         /**
          * @var \Symfony\Component\HttpFoundation\RequestStack $requestStack
          */
         $requestStack = $this->getApplication()['request_stack'];
-        if ($requestStack->getParentRequest()) {
-            return $requestStack->getParentRequest();
-        }
+
         return $requestStack->getCurrentRequest();
     }
 }

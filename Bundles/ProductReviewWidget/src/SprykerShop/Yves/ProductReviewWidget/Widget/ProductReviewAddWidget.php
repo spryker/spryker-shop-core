@@ -51,7 +51,7 @@ class ProductReviewAddWidget extends AbstractWidget
      */
     protected function getProductReviewForm(int $idProductAbstract): FormInterface
     {
-        $parentRequest = $this->getParentRequest();
+        $parentRequest = $this->getCurrentRequest();
         return $this->getFactory()
             ->createProductReviewForm($idProductAbstract)
             ->handleRequest($parentRequest);
@@ -60,15 +60,13 @@ class ProductReviewAddWidget extends AbstractWidget
     /**
      * @return \Symfony\Component\HttpFoundation\Request|null
      */
-    protected function getParentRequest(): Request
+    protected function getCurrentRequest(): Request
     {
         /**
          * @var \Symfony\Component\HttpFoundation\RequestStack $requestStack
          */
         $requestStack = $this->getApplication()['request_stack'];
-        if ($requestStack->getParentRequest()) {
-            return $requestStack->getParentRequest();
-        }
+
         return $requestStack->getCurrentRequest();
     }
 }

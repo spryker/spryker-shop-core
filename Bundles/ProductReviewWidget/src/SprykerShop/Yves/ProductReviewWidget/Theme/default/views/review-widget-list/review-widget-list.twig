@@ -1,4 +1,4 @@
-{% extends template('product-review-list', 'ProductReviewWidget') %}
+{% extends template('widget') %}
 
  {% define data = {
      reviews: _widget.productReviews,
@@ -17,5 +17,15 @@
  } %}
 
  {% block body %}
-     {%  block content %}{{ parent() }}{% endblock %}
+     {%  block content %}
+         {% include organism('review-summary', 'ProductReviewWidget') with {
+             data: {
+                 reviews: data.reviews,
+                 summary: data.summary,
+                 ratingMaxValue: data.ratingMaxValue,
+                 hasCustomer: data.hasCustomer,
+                 pagination: data.pagination
+             }
+         } only %}
+     {% endblock %}
  {% endblock %}

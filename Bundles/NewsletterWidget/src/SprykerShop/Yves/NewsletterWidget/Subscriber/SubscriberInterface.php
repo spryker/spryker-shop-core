@@ -7,12 +7,14 @@
 
 namespace SprykerShop\Yves\NewsletterWidget\Subscriber;
 
+use Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer;
+
 interface SubscriberInterface
 {
     /**
      * @param string $email
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer|null
      */
-    public function subscribe(string $email);
+    public function subscribe(string $email): ?NewsletterSubscriptionResultTransfer;
 }
