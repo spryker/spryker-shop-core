@@ -37,13 +37,13 @@ class SubscriptionController extends AbstractController
 
         $subscriptionForm->handleRequest($request);
 
-        if (!$subscriptionForm->isSubmitted()) {
-            return $this->redirectResponseExternal('/');
-        }
-
         $redirectUrl = $this->getFactory()
             ->createUrlGenerator()
             ->getMainPageUrlWithLocale($this->getLocale());
+
+        if (!$subscriptionForm->isSubmitted()) {
+            return $this->redirectResponseInternal($redirectUrl);
+        }
 
         if (!$subscriptionForm->isValid()) {
             foreach ($subscriptionForm->getErrors(true) as $errorObject) {
