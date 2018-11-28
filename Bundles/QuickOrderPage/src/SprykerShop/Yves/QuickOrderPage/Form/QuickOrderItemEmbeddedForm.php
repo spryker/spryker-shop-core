@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
+ * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig getConfig()
  */
 class QuickOrderItemEmbeddedForm extends AbstractType
 {

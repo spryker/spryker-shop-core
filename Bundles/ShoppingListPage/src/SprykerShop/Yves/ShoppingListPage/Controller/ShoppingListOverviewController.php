@@ -32,6 +32,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_FAILED = 'customer.account.shopping_list.clear.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS = 'customer.account.shopping_list.clear.success';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_OVERVIEW_CREATE_SUCCESSFUL = 'customer.account.shopping_list.overview.create.success';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -67,6 +68,8 @@ class ShoppingListOverviewController extends AbstractShoppingListController
                 ->createShoppingList($this->getShoppingListTransfer($shoppingListForm));
 
             if ($shoppingListResponseTransfer->getIsSuccess()) {
+                $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_OVERVIEW_CREATE_SUCCESSFUL);
+
                 $shoppingListForm = $this->getFactory()
                     ->getShoppingListForm();
             }
