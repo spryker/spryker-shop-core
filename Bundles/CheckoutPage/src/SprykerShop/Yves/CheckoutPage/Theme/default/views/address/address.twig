@@ -56,7 +56,7 @@
                                                 attributes: {
                                                     'target-selector': '.js-address__shipping',
                                                     'class-to-toggle': 'is-hidden',
-                                                    'add-class-when-checked': not loop.last
+                                                    'show-save-new-address': loop.last
                                                 }
                                             })
                                         }}
@@ -177,7 +177,7 @@
                                                         attributes: {
                                                             'target-selector': '.js-address__billing',
                                                             'class-to-toggle': 'is-hidden',
-                                                            'add-class-when-checked': not loop.last
+                                                            'show-save-new-address': loop.last
                                                         }
                                                     })
                                                 }}
@@ -219,10 +219,10 @@
                             form: data.form
                         },
                         attributes: {
-                            'shipping-address-toggler': existingShippingAddressRadioName | default(''),
-                            'billing-address-toggler': existingBillingAddressRadioName | default(''),
-                            'billing-same-as-shipping-toggler': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
-                            'save-address-toggler': '[name="' ~ data.form.skipAddressSaving.vars.full_name ~ '"]' | default('')
+                            'shipping-address-toggler-selector': existingShippingAddressRadioName | default(''),
+                            'billing-address-toggler-selector': existingBillingAddressRadioName | default(''),
+                            'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
+                            'save-address-toggler-selector': '[name="' ~ data.form.skipAddressSaving.vars.full_name ~ '"]' | default('')
                         }
                     } only %}
                 {% endif %}
