@@ -39,7 +39,8 @@
                         min: data.product.productQuantity.quantityMin | default(1),
                         max: data.product.productQuantity.quantityMax | default(),
                         step: data.product.productQuantity.quantityInterval | default(1),
-                        disabled: data.quantityField.vars.value is empty,
+                        disabled: data.product is empty or data.quantityField.vars.value is empty,
+                        value: data.product is empty ? null : data.quantityField.vars.value
                     }
                 } %}
 
