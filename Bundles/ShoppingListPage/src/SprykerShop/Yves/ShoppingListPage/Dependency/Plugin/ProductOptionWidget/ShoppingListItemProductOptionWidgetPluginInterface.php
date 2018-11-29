@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductOptionWidge
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') instead.
+ */
 interface ShoppingListItemProductOptionWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'ShoppingListItemProductOptionWidgetPlugin';
