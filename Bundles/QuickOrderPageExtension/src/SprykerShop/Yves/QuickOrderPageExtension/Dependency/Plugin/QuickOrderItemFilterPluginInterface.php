@@ -14,7 +14,7 @@ interface QuickOrderItemFilterPluginInterface
 {
     /**
      * Specification:
-     * - Filters provided quick order item transfer object data using the provided product concrete transfer data.
+     * - Adjusts provided quick order item transfer data using the provided product concrete transfer data without generating warnings.
      *
      * @api
      *

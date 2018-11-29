@@ -11,7 +11,7 @@ interface QuickOrderFormColumnPluginInterface
 {
     /**
      * Specification:
-     * - Returns column title to be displayed.
+     * - Returns glossary key for column title to be displayed.
      *
      * @api
      *
