@@ -198,9 +198,7 @@
 
         {% block actions %}
             <div class="grid grid--middle grid--justify">
-                {% if data.form.vars.value.customer.isGuest %}
-                    {% do data.form.skipAddressSaving.setRendered %}
-                {% else %}
+                {% if data.form.skipAddressSaving is defined %}
                     {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address | default %}
                     {% set hasShippingAddresses = existingShippingAddresses is not empty %}
                     {% if hasShippingAddresses %}
