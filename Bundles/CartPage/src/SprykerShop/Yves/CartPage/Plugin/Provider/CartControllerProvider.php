@@ -20,7 +20,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_CART_UPDATE = 'cart/update';
     public const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
     public const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
-    public const SKU_PATTERN = '[a-zA-Z0-9-_]+';
+    public const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**
      * @param \Silex\Application $app

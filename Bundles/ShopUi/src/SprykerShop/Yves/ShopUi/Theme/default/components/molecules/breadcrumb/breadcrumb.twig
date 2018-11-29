@@ -14,7 +14,7 @@
     {% if data.startWithHome %}
         {% include molecule('breadcrumb-step') with {
             data: {
-                url: '/',
+                url: path('home'),
                 label: 'global.home' | trans
             }
         } only %}

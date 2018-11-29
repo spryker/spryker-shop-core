@@ -58,6 +58,14 @@ class WishlistOverviewController extends AbstractController
                 return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_OVERVIEW);
             }
 
+            if (!$wishlistResponseTransfer->getIsSuccess()) {
+                foreach ($wishlistResponseTransfer->getErrors() as $error) {
+                    $this->addErrorMessage($error);
+                }
+
+                return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_OVERVIEW);
+            }
+
             $this->handleResponseErrors($wishlistResponseTransfer, $wishlistForm);
         }
 

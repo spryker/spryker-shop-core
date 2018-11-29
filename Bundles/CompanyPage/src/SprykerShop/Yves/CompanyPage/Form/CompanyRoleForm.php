@@ -21,6 +21,8 @@ class CompanyRoleForm extends AbstractType
     public const FIELD_IS_DEFAULT = 'is_default';
     public const FIELD_FK_COMPANY = 'fk_company';
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @return string
      */
@@ -68,7 +70,7 @@ class CompanyRoleForm extends AbstractType
             'label' => 'company.account.company_role.name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -85,7 +87,7 @@ class CompanyRoleForm extends AbstractType
         $builder->add(static::FIELD_FK_COMPANY, HiddenType::class, [
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -105,5 +107,13 @@ class CompanyRoleForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }
