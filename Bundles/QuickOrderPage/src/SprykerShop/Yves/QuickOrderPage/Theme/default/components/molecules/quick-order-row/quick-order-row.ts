@@ -1,5 +1,5 @@
 import Component from 'ShopUi/models/component';
-import AutocompleteForm, { Events as AutocompleteEvents } from 'ShopUi/components/molecules/autocomplete-form/autocomplete-form';
+import AutocompleteForm, {Events as AutocompleteEvents} from 'ShopUi/components/molecules/autocomplete-form/autocomplete-form';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 import debounce from 'lodash-es/debounce';
 
@@ -8,6 +8,7 @@ export default class QuickOrderRow extends Component {
     autocompleteInput: AutocompleteForm;
     quantityInput: HTMLInputElement;
     errorMessage: HTMLElement;
+    initialQuantityCheckPassed: Boolean;
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
@@ -44,7 +45,7 @@ export default class QuickOrderRow extends Component {
     }
 
     protected toggleErrorMessage(isShow: boolean): void {
-        if (isShow)  {
+        if (isShow) {
             const errorMessageClass = this.errorMessage.classList[0] + '--show';
 
             this.errorMessage.classList.add(errorMessageClass);
@@ -54,14 +55,18 @@ export default class QuickOrderRow extends Component {
 
     protected checkQuantityValidation(): boolean {
         const quantityInputValue = Number(this.quantityValue);
-        const result = (this.quantityMax !== 0 && quantityInputValue > this.quantityMax
-                        || this.quantityValue !== '' && quantityInputValue < this.quantityMin
-                        || this.quantityStep > 1 && (quantityInputValue - this.quantityMin) % this.quantityStep !== 0) ? true : false;
+
+        const result = this.initialQuantityCheckPassed && quantityInputValue === 0
+            || this.quantityMax !== 0 && quantityInputValue > this.quantityMax
+            || this.quantityValue !== '' && quantityInputValue < this.quantityMin
+            || this.quantityStep > 1 && (quantityInputValue - this.quantityMin) % this.quantityStep !== 0;
+
+        if (!this.initialQuantityCheckPassed) {
+            this.initialQuantityCheckPassed = true;
+        }
 
         return result;
     }
-
-
 
     async reloadField(sku: string = '') {
         const isShowErrorMessage = this.checkQuantityValidation(),
@@ -79,7 +84,7 @@ export default class QuickOrderRow extends Component {
         this.mapQuantityInputChange();
         this.toggleErrorMessage(isShowErrorMessage);
 
-        if(!!sku) {
+        if (!!sku) {
             this.quantityInput.focus();
         }
     }
