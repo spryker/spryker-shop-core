@@ -40,7 +40,6 @@ export default class QuickOrderRow extends Component {
     }
 
     protected onQuantityChange(e: Event) {
-        const isSetMinimumValue = (this.quantityValue !== '' && Number(this.quantityValue) < this.quantityMin) ? true : false;
         this.reloadField(this.autocompleteInput.inputValue);
     }
 
@@ -56,10 +55,13 @@ export default class QuickOrderRow extends Component {
     protected checkQuantityValidation(): boolean {
         const quantityInputValue = Number(this.quantityValue);
         const result = (this.quantityMax !== 0 && quantityInputValue > this.quantityMax
-                        || this.quantityValue !== '' && quantityInputValue < this.quantityMin) ? true : false;
+                        || this.quantityValue !== '' && quantityInputValue < this.quantityMin
+                        || this.quantityStep > 1 && (quantityInputValue - this.quantityMin) % this.quantityStep !== 0) ? true : false;
 
         return result;
     }
+
+
 
     async reloadField(sku: string = '') {
         const isShowErrorMessage = this.checkQuantityValidation(),
@@ -92,5 +94,9 @@ export default class QuickOrderRow extends Component {
 
     get quantityMax(): number {
         return Number(this.quantityInput.getAttribute('max'));
+    }
+
+    get quantityStep(): number {
+        return Number(this.quantityInput.getAttribute('step'));
     }
 }
