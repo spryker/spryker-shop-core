@@ -44,7 +44,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
      */
     public function isApplicable(QuickOrderTransfer $quickOrderTransfer, array $params): bool
     {
-        return !empty($params[static::PARAM_ADD_TO_SHOPPING_LIST]);
+        return isset($params[static::PARAM_ADD_TO_SHOPPING_LIST]);
     }
 
     /**
