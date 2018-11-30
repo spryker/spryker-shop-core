@@ -382,10 +382,10 @@ class QuickOrderController extends AbstractController
     {
         $response = null;
         foreach ($this->getFactory()->getQuickOrderFormHandlerStrategyPlugins() as $quickOrderFormHandlerStrategyPlugin) {
-            if (!$quickOrderFormHandlerStrategyPlugin->isApplicable($quickOrderForm->getData(), $request->attributes->all())) {
+            if (!$quickOrderFormHandlerStrategyPlugin->isApplicable($quickOrderForm->getData(), $request->request->all())) {
                 continue;
             }
-            $response = $quickOrderFormHandlerStrategyPlugin->execute($quickOrderForm->getData(), $request->attributes->all());
+            $response = $quickOrderFormHandlerStrategyPlugin->execute($quickOrderForm->getData(), $request->request->all());
             break;
         }
 
