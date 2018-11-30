@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\MultiCartPage\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -19,6 +20,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class MultiCartController extends AbstractController
 {
+    use PermissionAwareTrait;
+
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
     /**
@@ -96,6 +99,10 @@ class MultiCartController extends AbstractController
      */
     protected function executeUpdateAction(int $idQuote, Request $request)
     {
+        if (!$this->can('WriteSharedCartPermissionPlugin', $idQuote)) {
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         $quoteForm = $this->getFactory()
             ->getQuoteForm($idQuote)
             ->handleRequest($request);
@@ -111,15 +118,14 @@ class MultiCartController extends AbstractController
 
                 return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
             }
-            $this->addErrorMessage(
-                $this->getTranslatedMessage(
-                    static::GLOSSARY_KEY_CART_UPDATED_ERROR,
-                    $this->getLocale(),
-                    ['%cart_name%' => $quoteTransfer->getName()]
-                )
-            );
 
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+            if (!$quoteResponseTransfer->getIsSuccessful() ||
+                $idQuote !== $quoteResponseTransfer->getQuoteTransfer()->getIdQuote()
+            ) {
+                $this->addErrorMessage(static::GLOSSARY_KEY_CART_UPDATED_ERROR);
+
+                return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+            }
         }
 
         return [
@@ -272,19 +278,5 @@ class MultiCartController extends AbstractController
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param string $key
-     * @param string $locale
-     * @param array $params
-     *
-     * @return string
-     */
-    protected function getTranslatedMessage(string $key, string $locale, array $params = []): string
-    {
-        return $this->getFactory()
-            ->getGlossaryStorageClient()
-            ->translate($key, $locale, $params);
     }
 }

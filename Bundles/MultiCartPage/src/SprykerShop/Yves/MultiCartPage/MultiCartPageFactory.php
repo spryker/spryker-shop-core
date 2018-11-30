@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\MultiCartPage;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCartClientInterface;
-use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientInterface;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProvider;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProviderInterface;
@@ -81,13 +80,5 @@ class MultiCartPageFactory extends AbstractFactory
     public function getMultiCartListWidgetPlugins(): array
     {
         return $this->getProvidedDependency(MultiCartPageDependencyProvider::PLUGIN_MULTI_CART_LIST_WIDGETS);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToGlossaryStorageClientInterface
-     */
-    public function getGlossaryStorageClient(): MultiCartPageToGlossaryStorageClientInterface
-    {
-        return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }
