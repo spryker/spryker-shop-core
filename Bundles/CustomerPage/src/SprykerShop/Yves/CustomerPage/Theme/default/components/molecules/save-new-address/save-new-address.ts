@@ -10,6 +10,10 @@ export default class SaveNewAddress extends Component {
     newBillingAddressChecked: boolean = false;
     readonly hideClass: string = 'is-hidden';
 
+    constructor() {
+        super();
+    }
+
     protected readyCallback(): void {
         if (this.shippingAddressToglerSelector) {
             this.customerShippingAddresses = <HTMLInputElement[]>Array.from(document.querySelectorAll(this.shippingAddressToglerSelector));
@@ -28,11 +32,11 @@ export default class SaveNewAddress extends Component {
             return;
         }
 
-        this.mapTogglers(this.customerShippingAddresses);
+        this.mapTogglers();
         this.mapSameAsShippingTogglerEvent();
     }
 
-    protected mapTogglers(togglersList: HTMLInputElement[]): void {
+    protected mapTogglers(): void {
         this.customerShippingAddresses.forEach((toggler: HTMLInputElement) => {
             this.mapShippingTogglerEvent(toggler);
         });

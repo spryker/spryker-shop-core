@@ -198,31 +198,45 @@
 
         {% block actions %}
             <div class="grid grid--middle grid--justify">
+                {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address | default %}
+                {% set hasShippingAddresses = existingShippingAddresses is not empty %}
+
+                {% set existingBillingAddressRadioName = embed.forms.billing.id_customer_address | default %}
+                {% set hasBillingAddresses = existingBillingAddressRadioName is not empty %}
+
                 {% if data.form.skipAddressSaving is defined %}
-                    {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address | default %}
-                    {% set hasShippingAddresses = existingShippingAddresses is not empty %}
-                    {% if hasShippingAddresses %}
+                    {% if hasShippingAddresses and hasBillingAddresses %}
                         {% set existingShippingAddressRadioName = '[name="' ~ existingShippingAddresses.vars.full_name ~ '"]' %}
-                    {% endif %}
-
-                    {% set existingBillingAddressRadioName = embed.forms.billing.id_customer_address | default %}
-                    {% set hasBillingAddresses = existingBillingAddressRadioName is not empty %}
-                    {% if hasBillingAddresses %}
                         {% set existingBillingAddressRadioName = '[name="' ~ existingBillingAddressRadioName.vars.full_name ~ '"]' %}
-                    {% endif %}
 
-                    {% include molecule('save-new-address', 'CustomerPage') with {
-                        class: 'col is-hidden',
-                        data: {
-                            form: data.form
-                        },
-                        attributes: {
-                            'shipping-address-toggler-selector': existingShippingAddressRadioName | default(''),
-                            'billing-address-toggler-selector': existingBillingAddressRadioName | default(''),
-                            'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
-                            'save-address-toggler-selector': '[name="' ~ data.form.skipAddressSaving.vars.full_name ~ '"]' | default('')
-                        }
-                    } only %}
+                        {% include molecule('save-new-address', 'CustomerPage') with {
+                            class: 'col is-hidden',
+                            data: {
+                                form: data.form
+                            },
+                            attributes: {
+                                'shipping-address-toggler-selector': existingShippingAddressRadioName | default(''),
+                                'billing-address-toggler-selector': existingBillingAddressRadioName | default(''),
+                                'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
+                                'save-address-toggler-selector': '[name="' ~ data.form.skipAddressSaving.vars.full_name ~ '"]' | default('')
+                            }
+                        } only %}
+                    {% else %}
+                        {% include molecule('save-new-business-unit-address', 'CustomerPage') with {
+                            class: 'col is-hidden',
+                            data: {
+                                form: data.form
+                            },
+                            attributes: {
+                                'shipping-address-toggler-selector': '.js-from-clear__shippingAddress-toggler' | default(''),
+                                'billing-address-toggler-selector': '.js-from-clear__billingAddress-toggler' | default(''),
+                                'shipping-selected-address-button-selector': '.js-from-add-new-address__shippingAddress' | default(''),
+                                'billing-selected-address-button-selector': '.js-from-add-new-address__billingAddress' | default(''),
+                                'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
+                                'save-address-toggler-selector': '[name="' ~ data.form.skipAddressSaving.vars.full_name ~ '"]' | default('')
+                            }
+                        } only %}
+                    {% endif %}
                 {% endif %}
                 <div class="col">
                     {{ parent() }}
