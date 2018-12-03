@@ -24,6 +24,7 @@ class ShoppingListItemForm extends AbstractType
     protected const FIELD_QUANTITY = 'quantity';
 
     protected const MAX_QUANTITY_RANGE = 2147483647; // 32 bit integer
+    protected const MIN_QUANTITY_RANGE = 1;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -62,7 +63,7 @@ class ShoppingListItemForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Range([
-                    'min' => $this->getFactory()->getConfig()->getMinimumQuantityRange(),
+                    'min' => static::MIN_QUANTITY_RANGE,
                     'max' => static::MAX_QUANTITY_RANGE,
                 ]),
             ],

@@ -13,6 +13,10 @@ class ShoppingListPageConfig extends AbstractBundleConfig
 {
     public const DEFAULT_NAME = 'My shopping list';
     public const CART_REDIRECT_URL = 'cart';
+
+    /**
+     * @deprecated since 0.5.9 and will be removed in next major release.
+     */
     public const MIN_QUANTITY_RANGE = 1;
 
     /**
@@ -27,6 +31,8 @@ class ShoppingListPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated since 0.5.9 and will be removed in next major release.
+     *
      * Specification:
      * - Returns the minimum range for quantity field.
      *

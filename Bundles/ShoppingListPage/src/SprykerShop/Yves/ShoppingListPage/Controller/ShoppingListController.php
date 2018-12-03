@@ -155,7 +155,7 @@ class ShoppingListController extends AbstractShoppingListController
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART);
 
-        return $this->redirectResponseInternal($this->getFactory()->getConfig()->getCartRedirectUrl());
+        return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
     }
 
     /**
