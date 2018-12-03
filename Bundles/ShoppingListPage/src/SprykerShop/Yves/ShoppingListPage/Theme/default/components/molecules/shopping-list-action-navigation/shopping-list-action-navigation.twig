@@ -19,7 +19,9 @@
 
     <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/print', { idShoppingList: data.idShoppingList }) }}" target="_blank">{{ 'customer.account.shopping_list.overview.print' | trans }}</a>
 
-    {{ widget('ShoppingListDismissWidgetPlugin', data.shoppingList) }}
+    {% widget 'ShoppingListDismissWidget' args [data.shoppingList] only %}
+    {% elsewidget 'ShoppingListDismissWidgetPlugin' args [data.shoppingList] only %} {# @deprecated Use ShoppingListDismissWidget instead. #}
+    {% endwidget %}
 
     {% if data.hasWritePermission %}
         <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/delete/confirm', { idShoppingList: data.idShoppingList }) }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
