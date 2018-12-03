@@ -139,12 +139,13 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
         QuickOrderTransfer $quickOrderTransfer,
         array $params
     ): ShoppingListTransfer {
+        $idShoppingList = isset($params[static::PARAM_ID_SHOPPING_LIST]) ? (int)$params[static::PARAM_ID_SHOPPING_LIST] : null;
         $shoppingListItems = $this->mapShoppingListItems($quickOrderTransfer->getItems());
 
         return (new ShoppingListTransfer())
             ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
-            ->setIdShoppingList((int)$params[static::PARAM_ID_SHOPPING_LIST])
+            ->setIdShoppingList($idShoppingList)
             ->setItems($shoppingListItems);
     }
 
