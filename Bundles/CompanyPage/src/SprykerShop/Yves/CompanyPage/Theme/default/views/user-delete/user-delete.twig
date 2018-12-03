@@ -7,6 +7,26 @@
     activePage: 'users'
 } %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview')
+                },
+                {
+                    label: 'company.account.company_user' | trans,
+                    url: url('company/user')
+                },
+                {
+                    label: 'company.account.company_user.delete.confirmation.warning' | trans
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
 {% block companyContent %}
     <div class="box">
         <h5>{{ "company.account.company_user.delete.confirmation.warning" | trans }}</h5>
