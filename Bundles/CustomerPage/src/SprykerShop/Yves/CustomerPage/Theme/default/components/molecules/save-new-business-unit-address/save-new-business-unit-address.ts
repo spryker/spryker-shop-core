@@ -1,5 +1,4 @@
 import SaveNewAddress from '../save-new-address/save-new-address';
-import {log} from "ShopUi/app/logger";
 
 export default class SaveNewBusinessUnitAddress extends SaveNewAddress {
     shippingDifferentDeliveryAddressCheckbox: HTMLInputElement;

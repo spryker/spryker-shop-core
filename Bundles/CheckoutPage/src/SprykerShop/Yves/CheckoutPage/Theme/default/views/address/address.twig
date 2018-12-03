@@ -201,13 +201,14 @@
                 {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address | default %}
                 {% set hasShippingAddresses = existingShippingAddresses is not empty %}
 
-                {% set existingBillingAddressRadioName = embed.forms.billing.id_customer_address | default %}
-                {% set hasBillingAddresses = existingBillingAddressRadioName is not empty %}
+                {% set existingBillingAddresses = embed.forms.billing.id_customer_address | default %}
+                {% set hasBillingAddresses = existingBillingAddresses is not empty %}
+                {% set isCustomer = hasShippingAddresses and hasBillingAddresses %}
 
                 {% if data.form.skipAddressSaving is defined %}
-                    {% if hasShippingAddresses and hasBillingAddresses %}
+                    {% if isCustomer %}
                         {% set existingShippingAddressRadioName = '[name="' ~ existingShippingAddresses.vars.full_name ~ '"]' %}
-                        {% set existingBillingAddressRadioName = '[name="' ~ existingBillingAddressRadioName.vars.full_name ~ '"]' %}
+                        {% set existingBillingAddressRadioName = '[name="' ~ existingBillingAddresses.vars.full_name ~ '"]' %}
 
                         {% include molecule('save-new-address', 'CustomerPage') with {
                             class: 'col is-hidden',
