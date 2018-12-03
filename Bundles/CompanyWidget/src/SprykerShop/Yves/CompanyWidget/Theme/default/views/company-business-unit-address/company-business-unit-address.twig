@@ -104,7 +104,7 @@
 
     <div>
         <label>
-            <input type="checkbox" name="customAddress[{{ data.formType }}]" {% if data.isCustomAddress %}checked{% endif %} class="js-from-clear__{{ data.formType }}-toggler js-form-clear__ignore-element" value="1" show-save-new-address>
+            <input type="checkbox" name="customAddress[{{ data.formType }}]" {% if data.isCustomAddress %}checked{% endif %} class="js-from-clear__{{ data.formType }}-toggler js-form-clear__ignore-element" value="1" data-show-save-new-address>
             {% if data.formType == 'shippingAddress' %}
                 {{ 'page.checkout.address.different_delivery_address' | trans }}
             {% endif %}

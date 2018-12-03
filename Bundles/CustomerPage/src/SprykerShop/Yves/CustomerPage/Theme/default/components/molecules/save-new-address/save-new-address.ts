@@ -71,7 +71,7 @@ export default class SaveNewAddress extends Component {
     }
 
     protected hasShowSaveNewAddressAttribute(toggler: HTMLInputElement): boolean {
-        return toggler.hasAttribute('show-save-new-address');
+        return toggler.hasAttribute('data-show-save-new-address');
     }
 
     public toggleSaveNewAddress(): void {
