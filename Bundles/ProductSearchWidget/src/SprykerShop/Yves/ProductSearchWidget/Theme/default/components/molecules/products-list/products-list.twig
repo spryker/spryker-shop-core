@@ -10,7 +10,7 @@
 } %}
 
 {% block body %}
-    {% if (data.products|length) %}
+    {% if data.products is not empty %}
         {% for product in data.products %}
             {% set selectedItem = loop.first ? config.name ~ '__item--selected' : '' %}
             <li class="list__item spacing-y spacing-y--inner {{ config.name }}__item {{ selectedItem }}" data-value="{{ product.sku }}">

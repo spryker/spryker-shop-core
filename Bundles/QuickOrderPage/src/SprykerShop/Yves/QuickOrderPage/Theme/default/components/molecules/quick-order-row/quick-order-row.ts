@@ -53,7 +53,7 @@ export default class QuickOrderRow extends Component {
         }
     }
 
-    protected checkQuantityValidation(): boolean {
+    protected isQuantityValid(): boolean {
         const quantityInputValue = Number(this.quantityValue);
 
         const result = this.initialQuantityCheckPassed && quantityInputValue === 0
@@ -69,7 +69,7 @@ export default class QuickOrderRow extends Component {
     }
 
     async reloadField(sku: string = '') {
-        const isShowErrorMessage = this.checkQuantityValidation(),
+        const isShowErrorMessage = this.isQuantityValid(),
             quantityInputValue = parseInt(this.quantityValue);
 
         this.ajaxProvider.queryParams.set('sku', sku);

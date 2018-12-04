@@ -1,4 +1,4 @@
-@mixin quick-order-page-quick-order-row($name: '.quick-order-row') {
+@mixin quick-order-page-quick-order-row-partial($name: '.quick-order-row') {
     #{$name} {
         &__holder-quantity {
             position: relative;
