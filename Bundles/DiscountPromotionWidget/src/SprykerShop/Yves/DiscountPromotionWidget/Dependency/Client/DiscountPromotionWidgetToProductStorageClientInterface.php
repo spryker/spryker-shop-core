@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\DiscountPromotionWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 interface DiscountPromotionWidgetToProductStorageClientInterface
 {
     /**
@@ -26,6 +28,15 @@ interface DiscountPromotionWidgetToProductStorageClientInterface
      * @return array|null
      */
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findMappedProductAbstractStorageData(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 
     /**
      * @param array $data
