@@ -119,13 +119,9 @@ class MultiCartController extends AbstractController
                 return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
             }
 
-            if (!$quoteResponseTransfer->getIsSuccessful() ||
-                $idQuote !== $quoteResponseTransfer->getQuoteTransfer()->getIdQuote()
-            ) {
-                $this->addErrorMessage(static::GLOSSARY_KEY_CART_UPDATED_ERROR);
+            $this->addErrorMessage(static::GLOSSARY_KEY_CART_UPDATED_ERROR);
 
-                return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
-            }
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
         }
 
         return [
