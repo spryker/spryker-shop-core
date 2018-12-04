@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin\CustomerPage;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\CustomerPage\Widget\CustomerNavigationWidget instead.
+ */
 interface CustomerNavigationWidgetPluginInterface
 {
     public const NAME = 'CustomerNavigationWidgetPlugin';

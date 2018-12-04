@@ -13,7 +13,7 @@
 {% set type = data.node.nodeType %}
 {% set isActive = data.node.isActive %}
 {% set isValidFrom = data.node.validFrom is empty or data.node.validFrom | date('Ymd') <= today %}
-{% set isValidTo = data.node.validFrom is empty or data.node.validFrom | date('Ymd') <= today %}
+{% set isValidTo = data.node.validTo is empty or data.node.validTo | date('Ymd') >= today %}
 {% set isActiveAndValid = isActive and isValidFrom and isValidTo %}
 
 {% block component %}
