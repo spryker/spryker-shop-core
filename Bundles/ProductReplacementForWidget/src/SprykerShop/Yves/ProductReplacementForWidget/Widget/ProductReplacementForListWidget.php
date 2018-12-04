@@ -70,17 +70,6 @@ class ProductReplacementForListWidget extends AbstractWidget
      */
     protected function getProductViewTransfer(int $idProduct): ?ProductViewTransfer
     {
-        $productConcreteStorageData = $this->getFactory()
-            ->getProductStorageClient()
-            ->findProductConcreteStorageData($idProduct, $this->getLocale());
-        if (empty($productConcreteStorageData)) {
-            return null;
-        }
-
-        $productConcreteStorageData[ProductReplacementForWidgetConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = [];
-
-        return $this->getFactory()
-            ->getProductStorageClient()
-            ->mapProductStorageData($productConcreteStorageData, $this->getLocale());
+        return $this->getFactory()->getProductStorageClient()->findMappedProductConcreteStorageData($idProduct, $this->getLocale());
     }
 }
