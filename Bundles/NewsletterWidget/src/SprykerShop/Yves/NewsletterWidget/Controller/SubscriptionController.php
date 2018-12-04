@@ -25,7 +25,7 @@ class SubscriptionController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function subscribeAction(Request $request)
     {
@@ -43,7 +43,13 @@ class SubscriptionController extends AbstractController
         $subscriptionForm->handleRequest($request);
 
         if (!$subscriptionForm->isSubmitted()) {
-            return $this->redirectResponseExternal($redirectUrl);
+            return $this->view(
+                [
+                    'newsletterSubscriptionForm' => $subscriptionForm->createView(),
+                ],
+                [],
+                '@NewsletterWidget/views/subscription-form/subscription-form.twig'
+            );
         }
 
         if (!$subscriptionForm->isValid()) {

@@ -25,7 +25,7 @@ class NewsletterSubscriptionWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'NewsletterSubscriptionFooterWidget';
+        return 'NewsletterSubscriptionWidget';
     }
 
     /**
@@ -33,7 +33,7 @@ class NewsletterSubscriptionWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@NewsletterWidget/templates/subscription-form/subscription-form.twig';
+        return '@NewsletterWidget/views/subscription-widget-form/subscription-widget-form.twig';
     }
 
     /**
