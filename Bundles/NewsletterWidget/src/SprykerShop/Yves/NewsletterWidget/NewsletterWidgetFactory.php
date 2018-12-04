@@ -11,10 +11,8 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\NewsletterWidget\Dependency\Client\NewsletterWidgetToNewsletterClientInterface;
 use SprykerShop\Yves\NewsletterWidget\Form\NewsletterSubscriptionForm;
-use SprykerShop\Yves\NewsletterWidget\Subscriber\Subscriber;
-use SprykerShop\Yves\NewsletterWidget\Subscriber\SubscriberInterface;
-use SprykerShop\Yves\NewsletterWidget\UrlGenerator\UrlGenerator;
-use SprykerShop\Yves\NewsletterWidget\UrlGenerator\UrlGeneratorInterface;
+use SprykerShop\Yves\NewsletterWidget\Handler\DoubleOptInSubscriptionRequestHandler;
+use SprykerShop\Yves\NewsletterWidget\Handler\SubscriptionRequestHandlerInterface;
 
 class NewsletterWidgetFactory extends AbstractFactory
 {
@@ -43,18 +41,10 @@ class NewsletterWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\NewsletterWidget\UrlGenerator\UrlGeneratorInterface
+     * @return \SprykerShop\Yves\NewsletterWidget\Subscriber\SubscriptionRequestHandlerInterface
      */
-    public function createUrlGenerator(): UrlGeneratorInterface
+    public function createDoubleOptInSubscriptionRequestHandler(): SubscriptionRequestHandlerInterface
     {
-        return new UrlGenerator();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\NewsletterWidget\Subscriber\SubscriberInterface
-     */
-    public function createSubscriber(): SubscriberInterface
-    {
-        return new Subscriber($this->getNewsletterClient());
+        return new DoubleOptInSubscriptionRequestHandler($this->getNewsletterClient());
     }
 }

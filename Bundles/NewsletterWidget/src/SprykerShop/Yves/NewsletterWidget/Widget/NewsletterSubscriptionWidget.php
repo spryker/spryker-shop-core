@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormView;
 /**
  * @method \SprykerShop\Yves\NewsletterWidget\NewsletterWidgetFactory getFactory()
  */
-class NewsletterSubscriptionFooterWidget extends AbstractWidget
+class NewsletterSubscriptionWidget extends AbstractWidget
 {
     public function __construct()
     {
@@ -33,7 +33,7 @@ class NewsletterSubscriptionFooterWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@NewsletterWidget/views/subscription-widget-form/subscription-widget-form.twig';
+        return '@NewsletterWidget/templates/subscription-form/subscription-form.twig';
     }
 
     /**

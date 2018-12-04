@@ -7,7 +7,11 @@
 
 {% block body %}
     <div class="box">
-        {%  widget 'NewsletterSubscriptionFooterWidget' only %}{% endwidget %}
+        {% widget 'NewsletterSubscriptionFooterWidget' only %}
+        {% nowidget %}
+            {# @deprecated Kept for BC reasons, will be removed in next major. #}
+            {{ widgetGlobal('NavigationWidgetPlugin', 'NEWSLETTER_SUBSCRIPTION_FORM', 'newsletter-subscription-form') }}
+        {% endwidget %}
     </div>
 
     <div class="grid">

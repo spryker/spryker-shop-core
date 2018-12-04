@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\NewsletterWidget\Subscriber;
+namespace SprykerShop\Yves\NewsletterWidget\Handler;
 
 use Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer;
 
-interface SubscriberInterface
+interface SubscriptionRequestHandlerInterface
 {
     /**
      * @param string $email

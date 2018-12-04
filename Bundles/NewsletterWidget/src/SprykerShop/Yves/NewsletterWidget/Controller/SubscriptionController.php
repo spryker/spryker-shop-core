@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\NewsletterWidget\Controller;
 
+use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use SprykerShop\Yves\NewsletterWidget\Form\NewsletterSubscriptionForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,8 @@ class SubscriptionController extends AbstractController
 {
     protected const MESSAGE_SUBSCRIPTION_SUCCESS = 'newsletter.subscription.success';
     protected const MESSAGE_SUBSCRIPTION_ERROR = 'newsletter.subscription.error';
+
+    protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,6 +34,7 @@ class SubscriptionController extends AbstractController
             ->getNewsletterSubscriptionForm();
 
         $parentRequest = $this->getApplication()['request_stack']->getParentRequest();
+        $redirectUrl = $this->getRefererUrl($request);
 
         if ($parentRequest !== null) {
             $request = $parentRequest;
@@ -38,12 +42,8 @@ class SubscriptionController extends AbstractController
 
         $subscriptionForm->handleRequest($request);
 
-        $redirectUrl = $this->getFactory()
-            ->createUrlGenerator()
-            ->getMainPageUrlWithLocale($this->getLocale());
-
         if (!$subscriptionForm->isSubmitted()) {
-            return $this->redirectResponseInternal($redirectUrl);
+            return $this->redirectResponseExternal($redirectUrl);
         }
 
         if (!$subscriptionForm->isValid()) {
@@ -51,31 +51,45 @@ class SubscriptionController extends AbstractController
                 $this->addErrorMessage($errorObject->getMessage());
             }
 
-            return $this->redirectResponseInternal($redirectUrl);
+            return $this->redirectResponseExternal($redirectUrl);
         }
 
         $emailValue = $subscriptionForm
             ->get(NewsletterSubscriptionForm::FIELD_SUBSCRIBE)
             ->getData();
         $subscriptionResult = $this->getFactory()
-            ->createSubscriber()
+            ->createDoubleOptInSubscriptionRequestHandler()
             ->subscribe($emailValue);
 
         if (!$subscriptionResult) {
             $this->addErrorMessage(static::MESSAGE_SUBSCRIPTION_ERROR);
 
-            return $this->redirectResponseInternal($redirectUrl);
+            return $this->redirectResponseExternal($redirectUrl);
         }
 
         if (!$subscriptionResult->getIsSuccess()) {
             $error = $subscriptionResult->getErrorMessage();
             $this->addErrorMessage($error);
 
-            return $this->redirectResponseInternal($redirectUrl);
+            return $this->redirectResponseExternal($redirectUrl);
         }
 
         $this->addSuccessMessage(static::MESSAGE_SUBSCRIPTION_SUCCESS);
 
-        return $this->redirectResponseInternal($redirectUrl);
+        return $this->redirectResponseExternal($redirectUrl);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|string
+     */
+    protected function getRefererUrl(Request $request)
+    {
+        if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
+            return $request->headers->get(static::REQUEST_HEADER_REFERER);
+        }
+
+        return CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW;
     }
 }

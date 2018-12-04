@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\NewsletterWidget\Subscriber;
+namespace SprykerShop\Yves\NewsletterWidget\Handler;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Spryker\Shared\Newsletter\NewsletterConstants;
 use SprykerShop\Yves\NewsletterWidget\Dependency\Client\NewsletterWidgetToNewsletterClientInterface;
 
-class Subscriber implements SubscriberInterface
+class DoubleOptInSubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
 {
     /**
      * @var \SprykerShop\Yves\NewsletterWidget\Dependency\Client\NewsletterWidgetToNewsletterClientInterface

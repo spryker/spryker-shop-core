@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Storage\StorageConstants;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,6 +22,8 @@ class SubmitController extends AbstractController
     protected const ERROR_MESSAGE_NO_CUSTOMER = 'Only customers can use this feature. Please log in.';
     protected const SUCCESS_MESSAGE = 'Review was submitted';
 
+    protected const REQUEST_HEADER_REFERER = 'referer';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -30,31 +31,14 @@ class SubmitController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        return $this->executeIndexAction($request);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function executeIndexAction(Request $request): RedirectResponse
-    {
         $idProductAbstract = $request->attributes->get('idProductAbstract');
-        $abstractProductData = $this->getFactory()
-            ->getProductStorageClient()
-            ->findProductAbstractStorageData(
-                $idProductAbstract,
-                $this->getLocale()
-            );
-
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
         $productReviewForm = $this->getFactory()
             ->createProductReviewForm($idProductAbstract)
             ->handleRequest($request);
         $this->processProductReviewForm($productReviewForm, $customer);
 
-        return $this->redirectResponseInternal($abstractProductData['url']);
+        return $this->redirectResponseExternal($this->getRefererUrl($request, $idProductAbstract));
     }
 
     /**
@@ -87,8 +71,8 @@ class SubmitController extends AbstractController
 
         $productReviewResponseTransfer = $this->getFactory()->getProductReviewClient()->submitCustomerReview(
             $this->getProductReviewFormData($form)
-                    ->setCustomerReference($customerReference)
-                    ->setLocaleName($this->getLocale())
+                ->setCustomerReference($customerReference)
+                ->setLocaleName($this->getLocale())
         );
 
         if ($productReviewResponseTransfer->getIsSuccess()) {
@@ -118,5 +102,25 @@ class SubmitController extends AbstractController
     protected function getParentRequest()
     {
         return $this->getApplication()['request_stack']->getParentRequest();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $idProductAbstract
+     *
+     * @return array|string
+     */
+    protected function getRefererUrl(Request $request, int $idProductAbstract)
+    {
+        if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
+            return $request->headers->get(static::REQUEST_HEADER_REFERER);
+        }
+        $abstractProductData = $this->getFactory()
+            ->getProductStorageClient()
+            ->findProductAbstractStorageData(
+                $idProductAbstract,
+                $this->getLocale()
+            );
+        return $abstractProductData['url'];
     }
 }
