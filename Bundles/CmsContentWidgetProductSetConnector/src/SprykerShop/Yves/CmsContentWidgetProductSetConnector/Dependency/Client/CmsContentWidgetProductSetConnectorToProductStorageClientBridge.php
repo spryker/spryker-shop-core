@@ -57,4 +57,16 @@ class CmsContentWidgetProductSetConnectorToProductStorageClientBridge implements
     {
         return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
     }
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findMappedProductAbstractStorageData(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    {
+        return $this->productStorageClient->findMappedProductAbstractStorageData($idProductConcrete, $localeName, $selectedAttributes);
+    }
 }
