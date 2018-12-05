@@ -74,7 +74,7 @@ class CategoryImageStorageWidget extends AbstractWidget
      */
     protected function getCategoryImageUrl(int $idCategory, string $imageSetName, string $imageSize): string
     {
-        $categoryImageSetCollectionTransfer = $this->getCategoryImageSetCollectionTransfer($idCategory);
+        $categoryImageSetCollectionTransfer = $this->findCategoryImageSetCollectionTransfer($idCategory);
         if ($categoryImageSetCollectionTransfer === null) {
             return static::DEFAULT_CATEGORY_IMAGE;
         }
@@ -89,7 +89,7 @@ class CategoryImageStorageWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer|null
      */
-    protected function getCategoryImageSetCollectionTransfer(int $idCategory): ?CategoryImageSetCollectionStorageTransfer
+    protected function findCategoryImageSetCollectionTransfer(int $idCategory): ?CategoryImageSetCollectionStorageTransfer
     {
         return $this->getFactory()
             ->getCategoryImageStorageClient()
@@ -102,7 +102,7 @@ class CategoryImageStorageWidget extends AbstractWidget
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryImageStorageTransfer[]
      */
-    protected function getImageSetImages($imageSetStorageCollection, string $imageSetName)
+    protected function getImageSetImages($imageSetStorageCollection, string $imageSetName): ArrayObject
     {
         foreach ($imageSetStorageCollection as $categoryImageSetStorageTransfer) {
             if ($categoryImageSetStorageTransfer->getName() !== $imageSetName) {
