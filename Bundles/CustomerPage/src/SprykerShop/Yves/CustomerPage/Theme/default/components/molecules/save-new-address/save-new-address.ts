@@ -51,6 +51,9 @@ export default class SaveNewAddress extends Component {
             this.newShippingAddressChecked = this.onAddressTogglerChange(e);
             this.toggleSaveNewAddress();
         });
+
+        this.newShippingAddressChecked = this.hasSaveNewAddress(toggler);
+        this.toggleSaveNewAddress();
     }
 
     protected mapBillingTogglerEvent(toggler: HTMLInputElement): void {
@@ -58,6 +61,9 @@ export default class SaveNewAddress extends Component {
             this.newBillingAddressChecked = this.onAddressTogglerChange(e);
             this.toggleSaveNewAddress();
         });
+
+        this.newBillingAddressChecked = this.hasSaveNewAddress(toggler);
+        this.toggleSaveNewAddress();
     }
 
     protected mapSameAsShippingTogglerEvent(): void {
