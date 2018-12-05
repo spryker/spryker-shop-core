@@ -28,6 +28,15 @@ interface ProductGroupWidgetToProductStorageClientInterface
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
 
     /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findMappedProductAbstractStorageData(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
+
+    /**
      * @param array $data
      * @param string $localeName
      * @param array $selectedAttributes
