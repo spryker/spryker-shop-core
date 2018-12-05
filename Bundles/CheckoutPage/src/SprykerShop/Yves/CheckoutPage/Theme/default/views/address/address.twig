@@ -7,13 +7,11 @@
         billing: _view.addressesForm.billingAddress
     },
 
-    title: 'checkout.step.address.title' | trans
+    title: 'checkout.step.address.title' | trans,
+    hasCompanyUnitAddresses: _view.addressesForm.vars.hasCompanyUnitAddresses
 } %}
 
 {% block content %}
-
-    {{ dump( _view.addressesForm.vars.hasCompanyUnitAddresses) }}
-
     {% embed molecule('form') with {
         class: 'box',
         data: {
@@ -201,14 +199,8 @@
 
         {% block actions %}
             <div class="grid grid--middle grid--justify">
-                {% set companyBusinessUnit = data.form.vars.data.customer.companyUserTransfer.companyBusinessUnit | default(null) %}
-
-                {% if companyBusinessUnit is not null %}
-                    {% set hasCompanyUnitAddresses = companyBusinessUnit.addressCollection.companyUnitAddresses is not empty %}
-                {% endif %}
-
                 {% if data.form.skipAddressSaving is defined %}
-                    {% if hasCompanyUnitAddresses %}
+                    {% if data.form.vars.hasCompanyUnitAddresses %}
                         {% include molecule('save-new-business-unit-address', 'CustomerPage') with {
                             class: 'col is-hidden',
                             data: {
@@ -224,7 +216,7 @@
                             }
                         } only %}
                     {% else %}
-                        {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address | default %}
+                        {% set existingShippingAddresses = embed.forms.shipping.id_customer_address | default %}
                         {% set existingBillingAddresses = embed.forms.billing.id_customer_address | default %}
 
                         {% if existingShippingAddresses is not empty %}
