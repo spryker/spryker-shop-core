@@ -8,9 +8,12 @@
 namespace SprykerShop\Yves\MultiCartPage\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -19,7 +22,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class MultiCartController extends AbstractController
 {
+    use PermissionAwareTrait;
+
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
+    public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+    public const MESSAGE_CART_CLEAR_SUCCESS = 'multi_cart_page.cart_clear.success';
 
     /**
      * @deprecated Will be removed without replacement.
@@ -100,6 +107,13 @@ class MultiCartController extends AbstractController
             ->handleRequest($request);
 
         $quoteTransfer = $quoteForm->getData();
+
+        if ($quoteTransfer === null || !$this->checkAccessToCart($quoteTransfer)) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         if ($quoteForm->isSubmitted() && $quoteForm->isValid()) {
             $quoteResponseTransfer = $this->getFactory()
                 ->getMultiCartClient()
@@ -141,7 +155,23 @@ class MultiCartController extends AbstractController
      */
     public function duplicateAction(int $idQuote)
     {
+        return $this->executeDuplicateAction($idQuote);
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeDuplicateAction(int $idQuote): RedirectResponse
+    {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
+
+        if (!$this->checkAccessToCart($quoteTransfer)) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
 
         $idNewQuote = $this->getFactory()
             ->getMultiCartClient()
@@ -149,9 +179,9 @@ class MultiCartController extends AbstractController
             ->getQuoteTransfer()
             ->getIdQuote();
 
-        return $this->redirectResponseInternal(
-            MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE,
-            [MultiCartPageControllerProvider::PARAM_ID_QUOTE => $idNewQuote]
+        return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE, [
+                MultiCartPageControllerProvider::PARAM_ID_QUOTE => $idNewQuote,
+            ]
         );
     }
 
@@ -162,14 +192,30 @@ class MultiCartController extends AbstractController
      */
     public function clearAction(int $idQuote)
     {
+        return $this->executeClearAction($idQuote);
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeClearAction(int $idQuote): RedirectResponse
+    {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
+
+        if (!$this->checkAccessToCart($quoteTransfer)) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
 
         $quoteResponseTransfer = $this->getFactory()
             ->getMultiCartClient()
             ->clearQuote($quoteTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage('multi_cart_page.cart_clear.success');
+            $this->addSuccessMessage(static::MESSAGE_CART_CLEAR_SUCCESS);
         }
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -182,7 +228,23 @@ class MultiCartController extends AbstractController
      */
     public function deleteAction(int $idQuote)
     {
+        return $this->executeDeleteAction($idQuote);
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeDeleteAction(int $idQuote): RedirectResponse
+    {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
+
+        if (!$this->checkAccessToCart($quoteTransfer)) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
 
         $this->getFactory()->getMultiCartClient()->deleteQuote($quoteTransfer);
 
@@ -220,27 +282,39 @@ class MultiCartController extends AbstractController
     /**
      * @param int $idQuote
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function confirmDeleteAction(int $idQuote)
     {
-        $viewData = $this->executeConfirmDeleteAction($idQuote);
+        $response = $this->executeConfirmDeleteAction($idQuote);
+
+        if (!is_array($response)) {
+            return $response;
+        }
 
         $widgetPlugins = $this->getFactory()
             ->getCartDeleteCompanyUsersListWidgetPlugins();
 
-        return $this->view($viewData, $widgetPlugins, '@MultiCartPage/views/cart-delete/cart-delete.twig');
+        return $this->view($response, $widgetPlugins, '@MultiCartPage/views/cart-delete/cart-delete.twig');
     }
 
     /**
      * @param int $idQuote
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeConfirmDeleteAction(int $idQuote): array
+    protected function executeConfirmDeleteAction(int $idQuote)
     {
+        $quoteTransfer = $this->findQuoteOrFail($idQuote);
+
+        if (!$this->checkAccessToCart($quoteTransfer)) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         return [
-            'cart' => $this->findQuoteOrFail($idQuote),
+            'cart' => $quoteTransfer,
         ];
     }
 
@@ -262,5 +336,18 @@ class MultiCartController extends AbstractController
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function checkAccessToCart(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->can(
+            WriteSharedCartPermissionPlugin::KEY,
+            $quoteTransfer->getIdQuote()
+        );
     }
 }
