@@ -58,7 +58,7 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
         foreach ($quoteTransfer->getPromotionItems() as $promotionItemTransfer) {
             $promotionItemTransfer->requireAbstractSku();
 
-            $productViewTransfer = $this->getFactory()->getProductStorageClient()->findMappedProductAbstractStorageData(
+            $productViewTransfer = $this->getFactory()->getProductStorageClient()->findProductAbstractViewTransfer(
                 $promotionItemTransfer->getIdProductAbstract(),
                 $this->getLocale(),
                 $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku())

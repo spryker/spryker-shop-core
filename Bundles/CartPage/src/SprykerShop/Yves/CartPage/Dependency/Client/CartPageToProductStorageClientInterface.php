@@ -7,18 +7,10 @@
 
 namespace SprykerShop\Yves\CartPage\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 interface CartPageToProductStorageClientInterface
 {
-    /**
-     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
-     *
-     * @param int $idProductAbstract
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName);
-
     /**
      * @param int $idProductAbstract
      * @param string $localeName
@@ -34,14 +26,5 @@ interface CartPageToProductStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findMappedProductAbstractStorageData(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
-
-    /**
-     * @param array $data
-     * @param string $localeName
-     * @param array $selectedAttributes
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
+    public function findProductAbstractViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 }

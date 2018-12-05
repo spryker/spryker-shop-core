@@ -25,50 +25,14 @@ class DiscountPromotionWidgetToProductStorageClientBridge implements DiscountPro
     }
 
     /**
-     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
-     *
-     * @param int $idProductAbstract
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName)
-    {
-        return $this->productStorageClient->getProductAbstractStorageData($idProductAbstract, $localeName);
-    }
-
-    /**
-     * @param array $data
-     * @param string $localeName
-     * @param array $selectedAttributes
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
-    {
-        return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param string $localeName
-     *
-     * @return array|null
-     */
-    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
-    {
-        return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
-    }
-
-    /**
      * @param int $idProductConcrete
      * @param string $localeName
      * @param array $selectedAttributes
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findMappedProductAbstractStorageData(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    public function findProductAbstractViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
     {
-        return $this->productStorageClient->findMappedProductAbstractStorageData($idProductConcrete, $localeName, $selectedAttributes);
+        return $this->productStorageClient->findProductAbstractViewTransfer($idProductConcrete, $localeName, $selectedAttributes);
     }
 }
