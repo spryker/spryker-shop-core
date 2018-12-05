@@ -26,7 +26,8 @@
             forms: {
                 shipping: data.forms.shipping,
                 billing: data.forms.billing
-            }
+            },
+            hasCompanyUnitAddresses: data.hasCompanyUnitAddresses
         }
     } only %}
         {% block fields %}
@@ -200,7 +201,7 @@
         {% block actions %}
             <div class="grid grid--middle grid--justify">
                 {% if data.form.skipAddressSaving is defined %}
-                    {% if data.form.vars.hasCompanyUnitAddresses %}
+                    {% if embed.hasCompanyUnitAddresses %}
                         {% include molecule('save-new-business-unit-address', 'CustomerPage') with {
                             class: 'col is-hidden',
                             data: {
