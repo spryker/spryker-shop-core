@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 interface ProductGroupWidgetToProductStorageClientInterface
 {
     /**
-     * @param int $idProductConcrete
+     * @param int $idProductAbstract
      * @param string $localeName
      * @param array $selectedAttributes
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findProductAbstractViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
+    public function findProductAbstractViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 }

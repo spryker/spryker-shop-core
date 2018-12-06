@@ -36,14 +36,14 @@ class CartPageToProductStorageClientBridge implements CartPageToProductStorageCl
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProductAbstract
      * @param string $localeName
      * @param array $selectedAttributes
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function findProductAbstractViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    public function findProductAbstractViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
     {
-        return $this->productStorageClient->findProductAbstractViewTransfer($idProductConcrete, $localeName, $selectedAttributes);
+        return $this->productStorageClient->findProductAbstractViewTransfer($idProductAbstract, $localeName, $selectedAttributes);
     }
 }

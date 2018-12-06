@@ -70,6 +70,8 @@ class ProductReplacementForListWidget extends AbstractWidget
      */
     protected function getProductViewTransfer(int $idProduct): ?ProductViewTransfer
     {
-        return $this->getFactory()->getProductStorageClient()->findProductConcreteViewTransfer($idProduct, $this->getLocale());
+        return $this->getFactory()
+            ->getProductStorageClient()
+            ->findProductConcreteViewTransfer($idProduct, $this->getLocale());
     }
 }

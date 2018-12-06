@@ -125,8 +125,8 @@ class CartItemHandler implements CartItemHandlerInterface
             $selectedAttributes
         );
 
-        if (!$productViewTransfer) {
-            $productViewTransfer = new ProductViewTransfer();
+        if ($productViewTransfer === null) {
+            return new ProductViewTransfer();
         }
 
         return $productViewTransfer;
