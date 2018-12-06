@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\ProductSearchWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductPageSearchClientBridge;
+use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientBridge;
 
 class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_PRODUCT_PAGE_SEARCH = 'CLIENT_PRODUCT_PAGE_SEARCH';
+    public const CLIENT_CATALOG = 'CLIENT_CATALOG';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -23,7 +23,7 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addProductPageSearchClient($container);
+        $container = $this->addCatalogClient($container);
 
         return $container;
     }
@@ -33,11 +33,11 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductPageSearchClient(Container $container): Container
+    protected function addCatalogClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_PAGE_SEARCH] = function (Container $container) {
-            return new ProductSearchWidgetToProductPageSearchClientBridge(
-                $container->getLocator()->productPageSearch()->client()
+        $container[static::CLIENT_CATALOG] = function (Container $container) {
+            return new ProductSearchWidgetToCatalogClientBridge(
+                $container->getLocator()->catalog()->client()
             );
         };
 

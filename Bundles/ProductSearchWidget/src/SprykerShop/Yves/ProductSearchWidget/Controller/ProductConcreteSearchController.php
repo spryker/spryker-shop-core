@@ -18,9 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductConcreteSearchController extends AbstractController
 {
     /**
-     * @uses ProductConcretePageSearchResultFormatterPlugin::NAME
+     * @uses ProductConcreteCatalogSearchResultFormatterPlugin::NAME
      */
-    protected const PRODUCT_CONCRETE_PAGE_SEARCH_RESULT_FORMATTER_PLUGIN_NAME = 'ProductConcretePageSearchResultFormatter';
+    protected const PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_NAME = 'ProductConcreteCatalogSearchResultFormatterPlugin';
 
     protected const PARAM_SEARCH_STRING = 'searchString';
     protected const PARAM_LIMIT = 'limit';
@@ -50,10 +50,10 @@ class ProductConcreteSearchController extends AbstractController
     protected function searchProducts(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array
     {
         $formattedProducts = $this->getFactory()
-            ->getProductPageSearchClient()
+            ->getCatalogClient()
             ->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
 
-        return $formattedProducts[static::PRODUCT_CONCRETE_PAGE_SEARCH_RESULT_FORMATTER_PLUGIN_NAME] ?: [];
+        return $formattedProducts[static::PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_NAME] ?? [];
     }
 
     /**

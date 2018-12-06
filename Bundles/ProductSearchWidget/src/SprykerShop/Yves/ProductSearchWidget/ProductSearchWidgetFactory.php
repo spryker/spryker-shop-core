@@ -8,15 +8,15 @@
 namespace SprykerShop\Yves\ProductSearchWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductPageSearchClientInterface;
+use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
 
 class ProductSearchWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductPageSearchClientInterface
+     * @return \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface
      */
-    public function getProductPageSearchClient(): ProductSearchWidgetToProductPageSearchClientInterface
+    public function getCatalogClient(): ProductSearchWidgetToCatalogClientInterface
     {
-        return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_PRODUCT_PAGE_SEARCH);
+        return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_CATALOG);
     }
 }

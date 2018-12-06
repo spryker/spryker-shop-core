@@ -9,12 +9,12 @@ namespace SprykerShop\Yves\ProductSearchWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 
-interface ProductSearchWidgetToProductPageSearchClientInterface
+interface ProductSearchWidgetToCatalogClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
-     * @return array
+     * @return array|\Elastica\ResultSet
      */
-    public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array;
+    public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer);
 }
