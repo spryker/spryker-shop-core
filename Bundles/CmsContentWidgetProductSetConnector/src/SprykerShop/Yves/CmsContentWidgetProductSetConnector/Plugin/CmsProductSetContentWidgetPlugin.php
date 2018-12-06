@@ -98,7 +98,7 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
                     $this->getSelectedAttributes($context, $idProductAbstract)
                 );
 
-            if (!$productViewTransfer) {
+            if ($productViewTransfer === null) {
                 continue;
             }
 

@@ -83,7 +83,7 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
                 $this->getSelectedAttributes($application, $idProductAbstract)
             );
 
-            if (!$productViewTransfer) {
+            if ($productViewTransfer === null) {
                 continue;
             }
 

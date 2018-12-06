@@ -64,7 +64,7 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
                 $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku())
             );
 
-            if (!$productViewTransfer) {
+            if ($productViewTransfer === null) {
                 continue;
             }
 
