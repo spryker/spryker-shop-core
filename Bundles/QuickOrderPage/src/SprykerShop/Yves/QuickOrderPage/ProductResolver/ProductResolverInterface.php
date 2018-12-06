@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\QuickOrderPage\ProductResolver;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\QuickOrderTransfer;
 
 interface ProductResolverInterface
 {
@@ -33,13 +32,6 @@ interface ProductResolverInterface
      * @return int
      */
     public function getIdProductAbstractByIdProduct(int $idProduct): int;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[] Keys are product SKUs
-     */
-    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer

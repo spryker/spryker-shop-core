@@ -58,7 +58,7 @@ class PriceResolver implements PriceResolverInterface
      */
     public function setSumPriceForQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        if (empty($quickOrderItemTransfer->getSku()) || empty($quickOrderItemTransfer->getQuantity())) {
+        if (!$quickOrderItemTransfer->getSku() || !$quickOrderItemTransfer->getQuantity()) {
             return $quickOrderItemTransfer;
         }
 

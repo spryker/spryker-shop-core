@@ -10,8 +10,6 @@ namespace SprykerShop\Yves\QuickOrderPage\ProductResolver;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\QuickOrderItemTransfer;
-use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface;
 
 class ProductResolver implements ProductResolverInterface
@@ -73,36 +71,6 @@ class ProductResolver implements ProductResolverInterface
             ->getProductConcreteStorageTransfers([$idProduct]);
 
         return $productConcreteStorageTransfers[0]->getIdProductAbstract();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[] Keys are product SKUs
-     */
-    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array
-    {
-        $skus = array_map(function (QuickOrderItemTransfer $quickOrderItemTransfer) {
-            return $quickOrderItemTransfer->getSku();
-        }, $quickOrderTransfer->getItems()->getArrayCopy());
-
-        $productConcreteTransfers = [];
-        foreach ($skus as $index => $sku) {
-            if (empty($sku)) {
-                continue;
-            }
-
-            $productConcreteTransfer = $this->findProductConcreteBySku($sku);
-
-            if ($productConcreteTransfer === null) {
-                unset($quickOrderTransfer->getItems()[$index]);
-                continue;
-            }
-
-            $productConcreteTransfers[] = $productConcreteTransfer;
-        }
-
-        return $productConcreteTransfers;
     }
 
     /**

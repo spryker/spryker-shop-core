@@ -108,20 +108,15 @@ class QuickOrderController extends AbstractController
      */
     protected function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array
     {
-        $resultingProducts = [];
-        $products = $this->getFactory()
-            ->createProductResolver()
+        $productConcreteTransfers = $this->getFactory()
+            ->getQuickOrderClient()
             ->getProductsByQuickOrder($quickOrderTransfer);
 
-        $products = $this->getFactory()
+        $productConcreteTransfers = $this->getFactory()
             ->getQuickOrderClient()
-            ->expandProductConcreteTransfers($products);
+            ->expandProductConcreteTransfers($productConcreteTransfers);
 
-        foreach ($products as $product) {
-            $resultingProducts[$product->getSku()] = $product;
-        }
-
-        return $resultingProducts;
+        return $this->indexProductsBySku($productConcreteTransfers);
     }
 
     /**
@@ -131,19 +126,19 @@ class QuickOrderController extends AbstractController
      */
     protected function getProductByQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): ?ProductConcreteTransfer
     {
-        if (empty($quickOrderItemTransfer->getSku())) {
+        if (!$quickOrderItemTransfer->getSku()) {
             return null;
         }
 
-        $product = $this->getFactory()
+        $productConcreteTransfer = $this->getFactory()
             ->createProductResolver()
             ->getProductBySku($quickOrderItemTransfer->getSku());
 
-        [$product] = $this->getFactory()
+        [$productConcreteTransfer] = $this->getFactory()
             ->getQuickOrderClient()
-            ->expandProductConcreteTransfers([$product]);
+            ->expandProductConcreteTransfers([$productConcreteTransfer]);
 
-        return $product;
+        return $productConcreteTransfer;
     }
 
     /**
@@ -415,11 +410,27 @@ class QuickOrderController extends AbstractController
         foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
             $sku = $quickOrderItemTransfer->getSku();
 
-            if (!empty($sku)) {
+            if ($sku !== null) {
                 $prices[$sku] = $quickOrderItemTransfer->getSumPrice();
             }
         }
 
         return $prices;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return array
+     */
+    protected function indexProductsBySku(array $productConcreteTransfers): array
+    {
+        $products = [];
+
+        foreach ($productConcreteTransfers as $product) {
+            $products[$product->getSku()] = $product;
+        }
+
+        return $products;
     }
 }

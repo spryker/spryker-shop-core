@@ -7,10 +7,17 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\QuickOrderTransfer;
 
 interface QuickOrderPageToQuickOrderClientInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array;
+
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
