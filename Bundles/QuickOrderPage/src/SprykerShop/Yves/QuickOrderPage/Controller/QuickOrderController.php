@@ -113,10 +113,12 @@ class QuickOrderController extends AbstractController
             ->createProductResolver()
             ->getProductsByQuickOrder($quickOrderTransfer);
 
+        $products = $this->getFactory()
+            ->getQuickOrderClient()
+            ->expandProductConcreteTransfers($products);
+
         foreach ($products as $product) {
-            $resultingProducts[$product->getSku()] = $this->getFactory()
-                ->getQuickOrderClient()
-                ->expandProductConcrete($product);
+            $resultingProducts[$product->getSku()] = $product;
         }
 
         return $resultingProducts;
@@ -137,9 +139,9 @@ class QuickOrderController extends AbstractController
             ->createProductResolver()
             ->getProductBySku($quickOrderItemTransfer->getSku());
 
-        $product = $this->getFactory()
+        [$product] = $this->getFactory()
             ->getQuickOrderClient()
-            ->expandProductConcrete($product);
+            ->expandProductConcreteTransfers([$product]);
 
         return $product;
     }

@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 interface QuickOrderPageToQuickOrderClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expandProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function expandProductConcreteTransfers(array $productConcreteTransfers): array;
 }
