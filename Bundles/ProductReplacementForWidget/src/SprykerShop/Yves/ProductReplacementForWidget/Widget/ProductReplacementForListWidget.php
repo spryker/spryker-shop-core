@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductReplacementForWidget\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
-use SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetConfig;
 
 /**
  * @method \SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetFactory getFactory()
