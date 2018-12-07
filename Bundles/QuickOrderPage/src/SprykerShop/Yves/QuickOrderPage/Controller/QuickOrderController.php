@@ -95,7 +95,7 @@ class QuickOrderController extends AbstractController
             'quickOrderForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
-            'products' => $products,
+            'products' => $this->transformProductsViewData($products),
             'prices' => $prices,
         ];
     }
@@ -103,7 +103,7 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array
      */
     protected function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array
     {
@@ -149,7 +149,7 @@ class QuickOrderController extends AbstractController
         foreach ($this->getFactory()->getQuickOrderFormColumnPlugins() as $additionalColumnPlugin) {
             $additionalColumns[] = [
                 'title' => $additionalColumnPlugin->getColumnTitle(),
-                'fieldName' => $additionalColumnPlugin->getFieldName(),
+                'dataPath' => $additionalColumnPlugin->getDataPath(),
             ];
         }
 
@@ -202,7 +202,7 @@ class QuickOrderController extends AbstractController
         return [
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
-            'products' => $products,
+            'products' => $this->transformProductsViewData($products),
             'prices' => $prices,
         ];
     }
@@ -259,7 +259,7 @@ class QuickOrderController extends AbstractController
         return [
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
-            'products' => $products,
+            'products' => $this->transformProductsViewData($products),
             'prices' => $prices,
         ];
     }
@@ -296,7 +296,7 @@ class QuickOrderController extends AbstractController
         $viewData = [
             'price' => $quickOrderItemTransfer->getSumPrice(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
-            'product' => $product,
+            'product' => $this->transformProductsViewData([$product])[$sku],
             'form' => $form->createView(),
             'index' => $index,
         ];
@@ -431,5 +431,17 @@ class QuickOrderController extends AbstractController
         }
 
         return $products;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return array
+     */
+    protected function transformProductsViewData(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createViewDataTransformer()
+            ->transformProductData($productConcreteTransfers, $this->getFactory()->getQuickOrderFormColumnPlugins());
     }
 }

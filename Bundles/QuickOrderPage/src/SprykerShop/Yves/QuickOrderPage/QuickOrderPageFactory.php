@@ -31,6 +31,8 @@ use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolver;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParserInterface;
+use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformer;
+use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -258,5 +260,13 @@ class QuickOrderPageFactory extends AbstractFactory
             $this->createProductResolver(),
             $this->getPriceProductStorageClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformerInterface
+     */
+    public function createViewDataTransformer(): ViewDataTransformerInterface
+    {
+        return new ViewDataTransformer();
     }
 }

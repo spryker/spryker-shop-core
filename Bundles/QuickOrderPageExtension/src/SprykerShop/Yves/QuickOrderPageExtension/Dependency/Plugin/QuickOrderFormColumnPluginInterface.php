@@ -21,11 +21,11 @@ interface QuickOrderFormColumnPluginInterface
 
     /**
      * Specification:
-     * - Returns name to be used as a field name and ID.
+     * - Returns string separated by dots to be used as a property path.
      *
      * @api
      *
      * @return string
      */
-    public function getFieldName(): string;
+    public function getDataPath(): string;
 }

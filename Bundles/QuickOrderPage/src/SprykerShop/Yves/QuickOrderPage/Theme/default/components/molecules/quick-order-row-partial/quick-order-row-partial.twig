@@ -20,8 +20,8 @@
                 {% for additionalColumn in data.additionalColumns %}
                     <div class="col col--expand spacing spacing--inner">
                         {% block additionalColumn %}
-                            {% if data.product and data.product[additionalColumn.fieldName] is defined %}
-                                {{ data.product[additionalColumn.fieldName] | trans }}
+                            {% if data.product and data.product.columns[additionalColumn.dataPath] is defined %}
+                                {{ data.product.columns[additionalColumn.dataPath] | trans }}
                             {% endif %}
                         {% endblock %}
                     </div>
