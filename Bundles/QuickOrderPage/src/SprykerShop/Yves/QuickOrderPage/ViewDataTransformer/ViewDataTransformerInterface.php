@@ -11,9 +11,9 @@ interface ViewDataTransformerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[] $additionalColumnPlugins
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[] $quickOrderFormColumnPlugins
      *
      * @return array
      */
-    public function transformProductData(array $productConcreteTransfers, array $additionalColumnPlugins): array;
+    public function transformProductData(array $productConcreteTransfers, array $quickOrderFormColumnPlugins): array;
 }

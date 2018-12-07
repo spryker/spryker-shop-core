@@ -17,18 +17,18 @@ class ViewDataTransformer implements ViewDataTransformerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[] $additionalColumnPlugins
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[] $quickOrderFormColumnPlugins
      *
      * @return array
      */
-    public function transformProductData(array $productConcreteTransfers, array $additionalColumnPlugins): array
+    public function transformProductData(array $productConcreteTransfers, array $quickOrderFormColumnPlugins): array
     {
         $products = [];
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
             $sku = $productConcreteTransfer->getSku();
             $products[$sku] = $productConcreteTransfer->toArray(true, true);
-            $products[$sku][static::KEY_COLUMNS] = $this->flattenColumns($productConcreteTransfer, $additionalColumnPlugins);
+            $products[$sku][static::KEY_COLUMNS] = $this->flattenColumns($productConcreteTransfer, $quickOrderFormColumnPlugins);
         }
 
         return $products;
@@ -36,15 +36,15 @@ class ViewDataTransformer implements ViewDataTransformerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[] $additionalColumnPlugins
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[] $quickOrderFormColumnPlugins
      *
      * @return array
      */
-    protected function flattenColumns(ProductConcreteTransfer $productConcreteTransfer, array $additionalColumnPlugins)
+    protected function flattenColumns(ProductConcreteTransfer $productConcreteTransfer, array $quickOrderFormColumnPlugins)
     {
         $columns = [];
 
-        foreach ($additionalColumnPlugins as $additionalColumnPlugin) {
+        foreach ($quickOrderFormColumnPlugins as $additionalColumnPlugin) {
             $path = $additionalColumnPlugin->getDataPath();
             $columns[$path] = $this->getDataByPath($productConcreteTransfer, $path);
         }
