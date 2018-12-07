@@ -46,22 +46,24 @@ class QuickOrderItemPluginExecutor implements QuickOrderItemPluginExecutorInterf
 
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $product
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    public function applyQuickOrderItemFilterPluginsOnQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer, ?ProductConcreteTransfer $product): QuickOrderItemTransfer
-    {
-        if (empty($quickOrderItemTransfer->getSku())) {
+    public function applyQuickOrderItemFilterPluginsOnQuickOrderItem(
+        QuickOrderItemTransfer $quickOrderItemTransfer,
+        ?ProductConcreteTransfer $productConcreteTransfer
+    ): QuickOrderItemTransfer {
+        if (!$quickOrderItemTransfer->getSku()) {
             return $quickOrderItemTransfer;
         }
 
-        if (empty($product)) {
+        if (!$productConcreteTransfer) {
             return $quickOrderItemTransfer;
         }
 
         foreach ($this->quickOrderItemFilterPlugins as $quickOrderItemFilterPlugin) {
-            $quickOrderItemTransfer = $quickOrderItemFilterPlugin->filterItem($quickOrderItemTransfer, $product);
+            $quickOrderItemTransfer = $quickOrderItemFilterPlugin->filterItem($quickOrderItemTransfer, $productConcreteTransfer);
         }
 
         return $quickOrderItemTransfer;

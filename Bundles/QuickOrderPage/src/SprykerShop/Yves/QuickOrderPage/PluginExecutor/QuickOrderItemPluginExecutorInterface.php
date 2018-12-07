@@ -23,9 +23,9 @@ interface QuickOrderItemPluginExecutorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $product
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    public function applyQuickOrderItemFilterPluginsOnQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer, ?ProductConcreteTransfer $product): QuickOrderItemTransfer;
+    public function applyQuickOrderItemFilterPluginsOnQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer, ?ProductConcreteTransfer $productConcreteTransfer): QuickOrderItemTransfer;
 }

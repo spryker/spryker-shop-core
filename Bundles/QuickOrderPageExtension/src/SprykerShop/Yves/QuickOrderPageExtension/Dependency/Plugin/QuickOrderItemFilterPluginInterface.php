@@ -23,5 +23,8 @@ interface QuickOrderItemFilterPluginInterface
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    public function filterItem(QuickOrderItemTransfer $quickOrderItemTransfer, ProductConcreteTransfer $productConcreteTransfer): QuickOrderItemTransfer;
+    public function filterItem(
+        QuickOrderItemTransfer $quickOrderItemTransfer,
+        ProductConcreteTransfer $productConcreteTransfer
+    ): QuickOrderItemTransfer;
 }
