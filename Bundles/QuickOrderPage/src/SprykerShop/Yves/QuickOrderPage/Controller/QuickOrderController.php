@@ -271,12 +271,12 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quantity = $request->get('quantity') ?: 1;
+        $quantity = $request->get('quantity');
         $sku = $request->query->get('sku');
         $index = $request->query->get('index');
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())
-            ->setQuantity($quantity)
+            ->setQuantity($quantity ?: 1)
             ->setSku($sku);
 
         $product = $this->getProductByQuickOrderItem($quickOrderItemTransfer);
@@ -293,12 +293,15 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormFactory()
             ->getQuickOrderItemEmbeddedForm($quickOrderItemTransfer);
 
+        $product = $this->transformProductsViewData([$product])[$sku];
+
         $viewData = [
             'price' => $quickOrderItemTransfer->getSumPrice(),
             'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
-            'product' => $this->transformProductsViewData([$product])[$sku],
+            'product' => $product,
             'form' => $form->createView(),
             'index' => $index,
+            'isQuantityAdjusted' => $this->getIsQuantityAdjusted($quantity, $quickOrderItemTransfer->getQuantity()),
         ];
 
         return $this->view(
@@ -443,5 +446,16 @@ class QuickOrderController extends AbstractController
         return $this->getFactory()
             ->createViewDataTransformer()
             ->transformProductData($productConcreteTransfers, $this->getFactory()->getQuickOrderFormColumnPlugins());
+    }
+
+    /**
+     * @param mixed $before
+     * @param mixed $after
+     *
+     * @return bool
+     */
+    protected function getIsQuantityAdjusted($before, $after): bool
+    {
+        return $before !== null && (int)$before !== (int)$after;
     }
 }
