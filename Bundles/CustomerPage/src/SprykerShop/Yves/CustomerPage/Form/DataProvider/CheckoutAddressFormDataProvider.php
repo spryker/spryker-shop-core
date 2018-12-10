@@ -18,7 +18,7 @@ use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
 class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider implements StepEngineFormDataProviderInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
+     * @var \Generated\Shared\Transfer\CustomerTransfer|null
      */
     protected $customerTransfer;
 
