@@ -9,6 +9,7 @@ export default class QuickOrderRow extends Component {
     quantityInput: HTMLInputElement;
     errorMessage: HTMLElement;
     timer: number;
+    timeout: number = 3000;
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
@@ -45,11 +46,14 @@ export default class QuickOrderRow extends Component {
     }
 
     protected hideErrorMessage(): void {
+        const errorMessageClass = `${this.name}__error--show`;
+        const errorPartialMessageClass = `${this.name}-partial__error--show`;
+
         if (!this.errorMessage) {
             return;
         }
 
-        this.errorMessage.classList.remove(this.errorMessage.classList[0] + '--show');
+        this.errorMessage.classList.remove(errorMessageClass, errorPartialMessageClass);
     }
 
     async reloadField(sku: string = '') {
@@ -67,7 +71,7 @@ export default class QuickOrderRow extends Component {
         this.registerQuantityInput();
         this.mapQuantityInputChange();
 
-        this.timer = setTimeout(() => this.hideErrorMessage(), 3000);
+        this.timer = setTimeout(() => this.hideErrorMessage(), this.timeout);
 
         if (!!sku) {
             this.quantityInput.focus();
