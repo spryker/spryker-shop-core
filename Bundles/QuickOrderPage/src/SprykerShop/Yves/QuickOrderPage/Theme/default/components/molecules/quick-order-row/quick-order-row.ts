@@ -3,12 +3,16 @@ import AutocompleteForm, {Events as AutocompleteEvents} from 'ShopUi/components/
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 import debounce from 'lodash-es/debounce';
 
+const ERROR_MESSAGE_CLASS = 'quick-order-row__error--show';
+const ERROR_PARTIAL_MESSAGE_CLASS = 'quick-order-row-partial__error--show';
+
 export default class QuickOrderRow extends Component {
     ajaxProvider: AjaxProvider;
     autocompleteInput: AutocompleteForm;
     quantityInput: HTMLInputElement;
     errorMessage: HTMLElement;
-    initialQuantityCheckPassed: Boolean;
+    timer: number;
+    timeout: number = 3000;
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
@@ -23,54 +27,38 @@ export default class QuickOrderRow extends Component {
     }
 
     protected mapEvents(): void {
-        this.autocompleteInput.addEventListener(AutocompleteEvents.SET, (e: CustomEvent) => this.onAutocompleteSet(e));
-        this.autocompleteInput.addEventListener(AutocompleteEvents.UNSET, (e: CustomEvent) => this.onAutocompleteUnset(e));
+        this.autocompleteInput.addEventListener(AutocompleteEvents.SET, () => this.onAutocompleteSet());
+        this.autocompleteInput.addEventListener(AutocompleteEvents.UNSET, () => this.onAutocompleteUnset());
         this.mapQuantityInputChange();
     }
 
     protected mapQuantityInputChange(): void {
-        this.quantityInput.addEventListener('input', debounce((e: Event) => this.onQuantityChange(e), this.autocompleteInput.debounceDelay));
+        this.quantityInput.addEventListener('input', debounce(() => this.onQuantityChange(), this.autocompleteInput.debounceDelay));
     }
 
-    protected onAutocompleteSet(e: CustomEvent) {
+    protected onAutocompleteSet(): void {
         this.reloadField(this.autocompleteInput.inputValue);
     }
 
-    protected onAutocompleteUnset(e: CustomEvent) {
+    protected onAutocompleteUnset(): void {
         this.reloadField();
     }
 
-    protected onQuantityChange(e: Event) {
+    protected onQuantityChange(): void {
         this.reloadField(this.autocompleteInput.inputValue);
     }
 
-    protected toggleErrorMessage(isShow: boolean): void {
-        if (isShow) {
-            const errorMessageClass = this.errorMessage.classList[0] + '--show';
-
-            this.errorMessage.classList.add(errorMessageClass);
-            setTimeout(() => this.errorMessage.classList.remove(errorMessageClass), 5000);
-        }
-    }
-
-    protected isQuantityValid(): boolean {
-        const quantityInputValue = Number(this.quantityValue);
-
-        const result = this.initialQuantityCheckPassed && quantityInputValue === 0
-            || this.quantityMax !== 0 && quantityInputValue > this.quantityMax
-            || this.quantityValue !== '' && quantityInputValue < this.quantityMin
-            || this.quantityStep > 1 && (quantityInputValue - this.quantityMin) % this.quantityStep !== 0;
-
-        if (!this.initialQuantityCheckPassed) {
-            this.initialQuantityCheckPassed = true;
+    protected hideErrorMessage(): void {
+        if (!this.errorMessage) {
+            return;
         }
 
-        return result;
+        this.errorMessage.classList.remove(ERROR_MESSAGE_CLASS, ERROR_PARTIAL_MESSAGE_CLASS);
     }
 
     async reloadField(sku: string = '') {
-        const isShowErrorMessage = this.isQuantityValid(),
-            quantityInputValue = parseInt(this.quantityValue);
+        clearTimeout(this.timer);
+        const quantityInputValue = parseInt(this.quantityValue);
 
         this.ajaxProvider.queryParams.set('sku', sku);
         this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class').split('-').pop().trim());
@@ -82,7 +70,8 @@ export default class QuickOrderRow extends Component {
         await this.ajaxProvider.fetch();
         this.registerQuantityInput();
         this.mapQuantityInputChange();
-        this.toggleErrorMessage(isShowErrorMessage);
+
+        this.timer = setTimeout(() => this.hideErrorMessage(), this.timeout);
 
         if (!!sku) {
             this.quantityInput.focus();
@@ -91,17 +80,5 @@ export default class QuickOrderRow extends Component {
 
     get quantityValue(): string {
         return this.quantityInput.value;
-    }
-
-    get quantityMin(): number {
-        return Number(this.quantityInput.getAttribute('min'));
-    }
-
-    get quantityMax(): number {
-        return Number(this.quantityInput.getAttribute('max'));
-    }
-
-    get quantityStep(): number {
-        return Number(this.quantityInput.getAttribute('step'));
     }
 }
