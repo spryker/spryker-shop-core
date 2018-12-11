@@ -202,20 +202,18 @@
             <div class="grid grid--middle grid--justify">
                 {% if data.form.isAddressSavingSkipped is defined %}
                     {% if embed.hasCompanyUnitAddresses %}
-                        {% include molecule('save-new-business-unit-address', 'CustomerPage') with {
-                            class: 'col is-hidden',
-                            data: {
-                                form: data.form
-                            },
-                            attributes: {
-                                'shipping-address-toggler-selector': '.js-from-clear__shippingAddress-toggler' | default(''),
-                                'billing-address-toggler-selector': '.js-from-clear__billingAddress-toggler' | default(''),
-                                'shipping-selected-address-button-selector': '.js-from-add-new-address__shippingAddress' | default(''),
-                                'billing-selected-address-button-selector': '.js-from-add-new-address__billingAddress' | default(''),
-                                'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
-                                'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]' | default('')
-                            }
-                        } only %}
+                        {% set skipCompanyBusinessUnitAddressSavingWidget = findWidget('skipCompanyBusinessUnitAddressSavingWidget', ['templateAttributes': {
+                            'shipping-address-toggler-selector': '.js-from-clear__shippingAddress-toggler' | default(''),
+                            'billing-address-toggler-selector': '.js-from-clear__billingAddress-toggler' | default(''),
+                            'shipping-selected-address-button-selector': '.js-from-add-new-address__shippingAddress' | default(''),
+                            'billing-selected-address-button-selector': '.js-from-add-new-address__billingAddress' | default(''),
+                            'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
+                            'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]' | default('')
+                        }]) %}
+
+                        {% if skipCompanyBusinessUnitAddressSavingWidget and skipCompanyBusinessUnitAddressSavingWidget.isApplicable %}
+                            {% widget skipCompanyBusinessUnitAddressSavingWidget %}{% endwidget %}
+                        {% endif %}
                     {% else %}
                         {% set existingShippingAddresses = embed.forms.shipping.id_customer_address | default %}
                         {% set existingBillingAddresses = embed.forms.billing.id_customer_address | default %}

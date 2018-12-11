@@ -1,0 +1,15 @@
+{% extends template('widget') %}
+
+{% define data = {
+    attributes: _widget.attributes
+} %}
+
+{% block template %}
+    {% include molecule('save-new-business-unit-address', 'CustomerPage') with {
+        class: 'col is-hidden',
+        data: {
+            form: data.form
+        },
+        attributes: data.attributes
+    } only %}
+{% endblock %}
