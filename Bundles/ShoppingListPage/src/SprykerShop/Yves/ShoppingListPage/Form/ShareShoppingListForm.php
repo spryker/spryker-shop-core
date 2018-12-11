@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
  */
 class ShareShoppingListForm extends AbstractType
 {

@@ -14,6 +14,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class LoginForm extends AbstractType
 {
     public const FORM_NAME = 'loginForm';

@@ -19,6 +19,9 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class AddressForm extends AbstractType
 {
     public const FIELD_SALUTATION = 'salutation';
@@ -35,7 +38,6 @@ class AddressForm extends AbstractType
     public const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
     public const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
     public const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
-    public const FIELD_FK_CUSTOMER = 'fk_customer';
 
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
@@ -84,8 +86,7 @@ class AddressForm extends AbstractType
             ->addPhoneField($builder)
             ->addIsDefaultShippingField($builder)
             ->addIsDefaultBillingField($builder)
-            ->addIdCustomerAddressField($builder)
-            ->addFkCustomerField($builder);
+            ->addIdCustomerAddressField($builder);
     }
 
     /**
@@ -337,18 +338,6 @@ class AddressForm extends AbstractType
     protected function addIdCustomerAddressField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ID_CUSTOMER_ADDRESS, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addFkCustomerField(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_FK_CUSTOMER, HiddenType::class);
 
         return $this;
     }
