@@ -17,7 +17,7 @@
 } %}
 
 {% block body %}
-    {% if data.form.skipAddressSaving is defined %}
-        {{ form_row(data.form.skipAddressSaving) }}
+    {% if data.form.isAddressSavingSkipped is defined %}
+        {{ form_row(data.form.isAddressSavingSkipped) }}
     {% endif %}
 {% endblock %}

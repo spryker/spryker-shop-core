@@ -200,7 +200,7 @@
 
         {% block actions %}
             <div class="grid grid--middle grid--justify">
-                {% if data.form.skipAddressSaving is defined %}
+                {% if data.form.isAddressSavingSkipped is defined %}
                     {% if embed.hasCompanyUnitAddresses %}
                         {% include molecule('save-new-business-unit-address', 'CustomerPage') with {
                             class: 'col is-hidden',
@@ -213,7 +213,7 @@
                                 'shipping-selected-address-button-selector': '.js-from-add-new-address__shippingAddress' | default(''),
                                 'billing-selected-address-button-selector': '.js-from-add-new-address__billingAddress' | default(''),
                                 'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
-                                'save-address-toggler-selector': '[name="' ~ data.form.skipAddressSaving.vars.full_name ~ '"]' | default('')
+                                'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]' | default('')
                             }
                         } only %}
                     {% else %}
@@ -237,7 +237,7 @@
                                 'shipping-address-toggler-selector': existingShippingAddressRadioName | default(''),
                                 'billing-address-toggler-selector': existingBillingAddressRadioName | default(''),
                                 'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
-                                'save-address-toggler-selector': '[name="' ~ data.form.skipAddressSaving.vars.full_name ~ '"]' | default('')
+                                'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]' | default('')
                             }
                         } only %}
                     {% endif %}

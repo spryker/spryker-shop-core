@@ -27,7 +27,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
     public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
-    public const FIELD_SKIP_ADDRESS_SAVING = 'skipAddressSaving';
+    public const FIELD_IS_ADDRESS_SAVING_SKIPPED = 'isAddressSavingSkipped';
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
@@ -86,7 +86,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             ->addShippingAddressSubForm($builder, $options)
             ->addSameAsShipmentCheckbox($builder)
             ->addBillingAddressSubForm($builder, $options)
-            ->addSkipAddressSavingField($builder);
+            ->addIsAddressSavingSkippedField($builder);
     }
 
     /**
@@ -187,7 +187,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSkipAddressSavingField(FormBuilderInterface $builder): self
+    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder): self
     {
         $isLoggedIn = $this->getFactory()
             ->getCustomerClient()
@@ -197,7 +197,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             return $this;
         }
 
-        $builder->add(static::FIELD_SKIP_ADDRESS_SAVING, CheckboxType::class, [
+        $builder->add(static::FIELD_IS_ADDRESS_SAVING_SKIPPED, CheckboxType::class, [
             'label' => static::GLOSSARY_KEY_SAVE_NEW_ADDRESS,
             'required' => false,
         ]);
@@ -207,7 +207,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             $this->getInvertedBooleanValueCallbackTransformer()
         );
 
-        $builder->get(static::FIELD_SKIP_ADDRESS_SAVING)
+        $builder->get(static::FIELD_IS_ADDRESS_SAVING_SKIPPED)
             ->addModelTransformer($callbackTransformer);
 
         return $this;
