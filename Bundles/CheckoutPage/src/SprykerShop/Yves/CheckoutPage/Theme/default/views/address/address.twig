@@ -199,7 +199,7 @@
         {% block actions %}
             <div class="grid grid--middle grid--justify">
                 {% if data.form.isAddressSavingSkipped is defined %}
-                    {% set skipCompanyBusinessUnitAddressSavingWidget = findWidget('skipCompanyBusinessUnitAddressSavingWidget', {
+                    {% set skipCompanyBusinessUnitAddressSavingWidget = findWidget('SkipCompanyBusinessUnitAddressSavingWidget', {
                         'shipping-address-toggler-selector': '.js-from-clear__shippingAddress-toggler' | default(''),
                         'billing-address-toggler-selector': '.js-from-clear__billingAddress-toggler' | default(''),
                         'shipping-selected-address-button-selector': '.js-from-add-new-address__shippingAddress' | default(''),
