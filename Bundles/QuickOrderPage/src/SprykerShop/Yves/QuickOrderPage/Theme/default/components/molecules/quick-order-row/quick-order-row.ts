@@ -3,6 +3,9 @@ import AutocompleteForm, {Events as AutocompleteEvents} from 'ShopUi/components/
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 import debounce from 'lodash-es/debounce';
 
+const ERROR_MESSAGE_CLASS = 'quick-order-row__error--show';
+const ERROR_PARTIAL_MESSAGE_CLASS = 'quick-order-row-partial__error--show';
+
 export default class QuickOrderRow extends Component {
     ajaxProvider: AjaxProvider;
     autocompleteInput: AutocompleteForm;
@@ -46,14 +49,11 @@ export default class QuickOrderRow extends Component {
     }
 
     protected hideErrorMessage(): void {
-        const errorMessageClass = `${this.name}__error--show`;
-        const errorPartialMessageClass = `${this.name}-partial__error--show`;
-
         if (!this.errorMessage) {
             return;
         }
 
-        this.errorMessage.classList.remove(errorMessageClass, errorPartialMessageClass);
+        this.errorMessage.classList.remove(ERROR_MESSAGE_CLASS, ERROR_PARTIAL_MESSAGE_CLASS);
     }
 
     async reloadField(sku: string = '') {
