@@ -1,15 +1,22 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    activePage: 'overview'
+    activePage: 'overview',
+    currentBreadcrumb: 'customer.account.overview'
 } %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                label: 'company.account.page-title' | trans
-            }]
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview')
+                },
+                {
+                    label: data.currentBreadcrumb | trans
+                }
+            ]
         }
     } only %}
 {% endblock %}
