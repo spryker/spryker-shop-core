@@ -15,11 +15,6 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
     protected const ROUTE_PRODUCT_CONCRETE_SEARCH = 'product-search/product-concrete-search';
 
     /**
-     * @var string
-     */
-    protected $allowedLocalesPattern;
-
-    /**
      * {@inheritdoc}
      *
      * @param bool|null $sslEnabled

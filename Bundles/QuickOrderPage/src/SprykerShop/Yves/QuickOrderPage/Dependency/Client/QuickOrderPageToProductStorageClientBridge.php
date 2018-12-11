@@ -28,7 +28,7 @@ class QuickOrderPageToProductStorageClientBridge implements QuickOrderPageToProd
      *
      * @return array|null
      */
-    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier)
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array
     {
         return $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale($mappingType, $identifier);
     }

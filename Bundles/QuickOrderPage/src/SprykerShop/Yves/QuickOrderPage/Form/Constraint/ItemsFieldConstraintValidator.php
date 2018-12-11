@@ -48,7 +48,7 @@ class ItemsFieldConstraintValidator extends ConstraintValidator
      *
      * @return bool
      */
-    protected function hasSku(array $orderItemTransfers)
+    protected function hasSku(array $orderItemTransfers): bool
     {
         foreach ($orderItemTransfers as $orderItemTransfer) {
             if ($orderItemTransfer->getSku()) {
