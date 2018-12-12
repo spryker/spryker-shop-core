@@ -84,9 +84,9 @@ class PriceResolver implements PriceResolverInterface
      * @param int $idProduct
      * @param int $idProductAbstract
      *
-     * @return int
+     * @return int|null
      */
-    protected function getSumPriceForQuantity(int $quantity, int $idProduct, int $idProductAbstract): int
+    protected function getSumPriceForQuantity(int $quantity, int $idProduct, int $idProductAbstract): ?int
     {
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setQuantity($quantity)
