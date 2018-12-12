@@ -199,14 +199,14 @@
         {% block actions %}
             <div class="grid grid--middle grid--justify">
                 {% if data.form.isAddressSavingSkipped is defined %}
-                    {% set skipCompanyBusinessUnitAddressSavingWidget = findWidget('SkipCompanyBusinessUnitAddressSavingWidget', {
+                    {% set skipCompanyBusinessUnitAddressSavingWidget = findWidget('SkipCompanyBusinessUnitAddressSavingWidget', [{
                         'shipping-address-toggler-selector': '.js-from-clear__shippingAddress-toggler' | default(''),
                         'billing-address-toggler-selector': '.js-from-clear__billingAddress-toggler' | default(''),
                         'shipping-selected-address-button-selector': '.js-from-add-new-address__shippingAddress' | default(''),
                         'billing-selected-address-button-selector': '.js-from-add-new-address__billingAddress' | default(''),
                         'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
                         'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]' | default('')
-                    }) %}
+                    }]) %}
 
                     {% if skipCompanyBusinessUnitAddressSavingWidget and skipCompanyBusinessUnitAddressSavingWidget.isApplicable %}
                         {% widget skipCompanyBusinessUnitAddressSavingWidget %}{% endwidget %}

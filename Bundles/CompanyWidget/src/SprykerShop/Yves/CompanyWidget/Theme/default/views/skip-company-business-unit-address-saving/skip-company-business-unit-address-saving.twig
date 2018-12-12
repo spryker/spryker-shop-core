@@ -1,7 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
-    attributes: _widget.attributes
+    templateAttributes: _widget.templateAttributes
 } %}
 
 {% block template %}
@@ -10,6 +10,6 @@
         data: {
             form: data.form
         },
-        attributes: data.attributes
+        attributes: data.templateAttributes
     } only %}
 {% endblock %}
