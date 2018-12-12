@@ -26,6 +26,11 @@ class ViewDataTransformer implements ViewDataTransformerInterface
         $products = [];
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            if ($productConcreteTransfer === null) {
+                $products[] = null;
+                continue;
+            }
+
             $sku = $productConcreteTransfer->getSku();
             $products[$sku] = $productConcreteTransfer->toArray(true, true);
             $products[$sku][static::KEY_COLUMNS] = $this->flattenColumns($productConcreteTransfer, $quickOrderFormColumnPlugins);

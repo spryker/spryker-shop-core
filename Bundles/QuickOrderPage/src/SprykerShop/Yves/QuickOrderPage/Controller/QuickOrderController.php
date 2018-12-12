@@ -293,7 +293,7 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormFactory()
             ->getQuickOrderItemEmbeddedForm($quickOrderItemTransfer);
 
-        $product = $this->transformProductsViewData([$product])[$sku];
+        $product = $this->transformProductsViewData([$product])[$sku] ?? null;
 
         $viewData = [
             'price' => $quickOrderItemTransfer->getSumPrice(),
