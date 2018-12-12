@@ -52,6 +52,10 @@
 {% endblock %}
 
 {% block form %}
+    <div class="col col--sm-12 spacing spacing--inner">
+        {% widget 'FullTextSearchTabsWidget' args [data.searchString, 'FullTextSearchProductsTab'] only %}{% endwidget %}
+    </div>
+
     {{parent()}}
     {% if data.searchString is not empty %}
         <input type="hidden" name="q" value="{{ data.searchString }}" />

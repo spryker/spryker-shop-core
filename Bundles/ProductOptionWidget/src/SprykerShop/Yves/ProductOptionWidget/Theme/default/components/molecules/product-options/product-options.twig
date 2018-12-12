@@ -19,7 +19,10 @@
         {% for option in data.options %}
             <li class="list__item">
                 {{ option.value | trans }}
-                <span class="float-right">{{ option.unitPrice | money }}</span>
+
+                {% if can('SeePricePermissionPlugin') %}
+                    <span class="float-right">{{ option.unitPrice | money }}</span>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
