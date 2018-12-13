@@ -13,12 +13,18 @@ use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvid
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 
 /**
  * @method \SprykerShop\Yves\MultiCartPage\MultiCartPageFactory getFactory()
  */
 class MultiCartController extends AbstractController
 {
+    use PermissionAwareTrait;
+
+    public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
     /**
@@ -162,6 +168,12 @@ class MultiCartController extends AbstractController
      */
     public function clearAction(int $idQuote)
     {
+        if (!$this->canRemoveCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
         $quoteResponseTransfer = $this->getFactory()
@@ -262,5 +274,39 @@ class MultiCartController extends AbstractController
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canRemoveCartItem(): bool
+    {
+        return $this->canPerformCartItemAction(RemoveCartItemPermissionPlugin::KEY);
+    }
+
+    /**
+     * @param string $permissionPluginKey
+     *
+     * @return bool
+     */
+    protected function canPerformCartItemAction(string $permissionPluginKey): bool
+    {
+        $quoteTransfer = $this->getFactory()
+            ->getCartClient()
+            ->getQuote();
+
+        if ($quoteTransfer->getCustomer() === null) {
+            return true;
+        }
+
+        if ($quoteTransfer->getCustomer()->getCompanyUserTransfer() === null) {
+            return true;
+        }
+
+        if ($this->can($permissionPluginKey)) {
+            return true;
+        }
+
+        return false;
     }
 }
