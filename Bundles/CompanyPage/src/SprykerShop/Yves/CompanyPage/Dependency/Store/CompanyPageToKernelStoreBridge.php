@@ -37,4 +37,12 @@ class CompanyPageToKernelStoreBridge implements CompanyPageToKernelStoreInterfac
     {
         return $this->store->getCurrentLocale();
     }
+
+    /**
+     * @return string[]
+     */
+    public function getCurrencyIsoCodes()
+    {
+        return $this->store->getCurrencyIsoCodes();
+    }
 }

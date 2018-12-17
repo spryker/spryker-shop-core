@@ -110,6 +110,7 @@ class CompanyRolePermissionConfigurationType extends AbstractType
         $fieldTypes = [
             ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT => NumberType::class,
             ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_STRING => TextType::class,
+            ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_MULTI_CURRENCY => MultiCurrencyType::class,
         ];
 
         if (!isset($fieldTypes[$fieldType])) {
