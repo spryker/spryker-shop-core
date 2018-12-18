@@ -16,7 +16,7 @@ use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClien
 
 class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 {
-    public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
 
     /**
      * @var \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface
