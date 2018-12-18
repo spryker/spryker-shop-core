@@ -8,13 +8,13 @@
 namespace SprykerShop\Yves\MultiCartPage\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
+use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
-use Spryker\Yves\Kernel\PermissionAwareTrait;
 
 /**
  * @method \SprykerShop\Yves\MultiCartPage\MultiCartPageFactory getFactory()
