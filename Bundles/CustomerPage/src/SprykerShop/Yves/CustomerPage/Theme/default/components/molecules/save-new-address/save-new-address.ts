@@ -1,8 +1,8 @@
 import Component from 'ShopUi/models/component';
 
 export default class SaveNewAddress extends Component {
-    customerShippingAddresses: HTMLInputElement[];
-    customerBillingAddresses: HTMLInputElement[];
+    customerShippingAddresses: HTMLSelectElement;
+    customerBillingAddresses: HTMLSelectElement;
     saveNewAddressToggler: HTMLInputElement;
     sameAsShippingToggler: HTMLInputElement;
 
@@ -10,14 +10,10 @@ export default class SaveNewAddress extends Component {
     newBillingAddressChecked: boolean = false;
     readonly hideClass: string = 'is-hidden';
 
-    constructor() {
-        super();
-    }
-
     protected readyCallback(): void {
-        if (this.shippingAddressToglerSelector) {
-            this.customerShippingAddresses = <HTMLInputElement[]>Array.from(document.querySelectorAll(this.shippingAddressToglerSelector));
-            this.customerBillingAddresses = <HTMLInputElement[]>Array.from(document.querySelectorAll(this.billingAddressToglerSelector));
+        if(this.shippingAddressToglerSelector && this.billingAddressToglerSelector) {
+            this.customerShippingAddresses = <HTMLSelectElement>document.querySelector(this.shippingAddressToglerSelector);
+            this.customerBillingAddresses = <HTMLSelectElement>document.querySelector(this.billingAddressToglerSelector);
         }
 
         this.saveNewAddressToggler = <HTMLInputElement>document.querySelector(this.saveAddressTogglerSelector);
@@ -32,37 +28,32 @@ export default class SaveNewAddress extends Component {
             return;
         }
 
-        this.mapTogglers();
+        this.mapEvents();
         this.mapSameAsShippingTogglerEvent();
     }
 
-    protected mapTogglers(): void {
-        this.customerShippingAddresses.forEach((toggler: HTMLInputElement) => {
-            this.mapShippingTogglerEvent(toggler);
-        });
-
-        this.customerBillingAddresses.forEach((toggler: HTMLInputElement) => {
-            this.mapBillingTogglerEvent(toggler);
-        });
+    protected mapEvents(): void {
+        this.mapShippingTogglerEvent();
+        this.mapBillingTogglerEvent();
     }
 
-    protected mapShippingTogglerEvent(toggler: HTMLInputElement): void {
-        toggler.addEventListener('change', (e: Event) => {
+    protected mapShippingTogglerEvent(): void {
+        this.customerShippingAddresses.addEventListener('change', (e: Event) => {
             this.newShippingAddressChecked = this.onAddressTogglerChange(e);
             this.toggleSaveNewAddress();
         });
 
-        this.newShippingAddressChecked = this.hasSaveNewAddress(toggler);
+        this.newShippingAddressChecked = this.selectedSaveNewAddressOption(this.customerShippingAddresses);
         this.toggleSaveNewAddress();
     }
 
-    protected mapBillingTogglerEvent(toggler: HTMLInputElement): void {
-        toggler.addEventListener('change', (e: Event) => {
+    protected mapBillingTogglerEvent(): void {
+        this.customerBillingAddresses.addEventListener('change', (e: Event) => {
             this.newBillingAddressChecked = this.onAddressTogglerChange(e);
             this.toggleSaveNewAddress();
         });
 
-        this.newBillingAddressChecked = this.hasSaveNewAddress(toggler);
+        this.newBillingAddressChecked = this.selectedSaveNewAddressOption(this.customerBillingAddresses);
         this.toggleSaveNewAddress();
     }
 
@@ -71,13 +62,13 @@ export default class SaveNewAddress extends Component {
     }
 
     protected onAddressTogglerChange(e: Event): boolean {
-        const toggler = <HTMLInputElement>e.srcElement;
+        const toggler = <HTMLSelectElement>e.srcElement;
 
-        return this.hasSaveNewAddress(toggler);
+        return this.selectedSaveNewAddressOption(toggler);
     }
 
-    protected hasShowSaveNewAddressAttribute(toggler: HTMLInputElement): boolean {
-        return toggler.hasAttribute('data-show-save-new-address');
+    protected selectedSaveNewAddressOption(toggler: HTMLSelectElement): boolean {
+        return !toggler.options[toggler.selectedIndex].value;
     }
 
     public toggleSaveNewAddress(): void {
@@ -87,10 +78,6 @@ export default class SaveNewAddress extends Component {
         }
 
         this.hideSaveNewAddress();
-    }
-
-    public hasSaveNewAddress(toggler: HTMLInputElement): boolean {
-        return (this.hasShowSaveNewAddressAttribute(toggler) && toggler.checked);
     }
 
     public hideSaveNewAddress(): void {
