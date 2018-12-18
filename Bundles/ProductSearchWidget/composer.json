@@ -1,15 +1,15 @@
 {
   "name": "spryker-shop/product-search-widget",
+  "type": "library",
   "description": "ProductSearchWidget module",
   "license": "proprietary",
   "require": {
     "php": "7.1",
+    "spryker/catalog": "^5.5.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/product-page-search": "^2.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker-shop/quick-order-page": "*",
     "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",

@@ -16,7 +16,7 @@ class ViewDataTransformer implements ViewDataTransformerInterface
     protected const PATH_DELIMITER = '.';
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[]|null[] $productConcreteTransfers
      * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[] $quickOrderFormColumnPlugins
      *
      * @return array

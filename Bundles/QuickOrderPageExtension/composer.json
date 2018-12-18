@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/quick-order-page-extension",
+  "type": "library",
   "description": "QuickOrderPageExtension module",
   "license": "proprietary",
   "require": {
@@ -7,7 +8,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/symfony": "*",
     "spryker/testify": "*"
   },
   "suggest": {
