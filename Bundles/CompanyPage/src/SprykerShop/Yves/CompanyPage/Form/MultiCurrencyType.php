@@ -45,7 +45,7 @@ class MultiCurrencyType extends AbstractType
 
                 $form->add($currencyIsoCode, NumberType::class, [
                     'data' => $data,
-                    'attr' => ['placeholder' => 'permission.name.PlaceOrderPermissionPlugin.cent_amount'],
+                    'attr' => ['placeholder' => 'company_page.multi_currency_type.name.cent_amount'],
                     'label' => strtoupper($currencyIsoCode),
                 ]);
             }
