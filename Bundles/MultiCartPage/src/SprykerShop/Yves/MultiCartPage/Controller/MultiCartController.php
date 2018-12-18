@@ -23,7 +23,7 @@ class MultiCartController extends AbstractController
 {
     use PermissionAwareTrait;
 
-    public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+    protected const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
