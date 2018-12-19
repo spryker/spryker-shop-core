@@ -122,4 +122,9 @@ interface CustomerPageToCustomerClientInterface
      * @return void
      */
     public function markCustomerAsDirty();
+
+    /**
+     * @return string
+     */
+    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string;
 }

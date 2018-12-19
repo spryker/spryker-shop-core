@@ -186,4 +186,12 @@ class CustomerPageToCustomerClientBridge implements CustomerPageToCustomerClient
     {
         $this->customerClient->markCustomerAsDirty();
     }
+
+    /**
+     * @return string
+     */
+    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string
+    {
+        return $this->customerClient->getCustomerSecuredPatternForUnauthenticatedCustomerAccess();
+    }
 }
