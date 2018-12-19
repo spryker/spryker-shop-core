@@ -10,9 +10,10 @@ namespace SprykerShop\Yves\CompanyPage\Form;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
+/**
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
+ */
 class MultiCurrencyType extends AbstractType
 {
     protected const FIELD_MULTI_CURRENCY = 'multi_currency';
@@ -33,22 +34,38 @@ class MultiCurrencyType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $form = $event->getForm();
-            /** @var \Generated\Shared\Transfer\PermissionTransfer $PermissionTransfer */
-            $permissionTransfer = $event->getForm()->getParent()->getData();
-            $permissionTransferConfiguration = $permissionTransfer->getConfiguration();
-            $currencyIsoCodes = $this->getFactory()->getStore()->getCurrencyIsoCodes();
+        $this->addAmountPerCurrencyFields($builder);
+    }
 
-            foreach ($currencyIsoCodes as $currencyIsoCode) {
-                $data = $permissionTransferConfiguration[static::FIELD_MULTI_CURRENCY][$currencyIsoCode] ?? null;
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addAmountPerCurrencyFields(FormBuilderInterface $builder): self
+    {
+        $currencyIsoCodes = $this->getFactory()->getStore()->getCurrencyIsoCodes();
 
-                $form->add($currencyIsoCode, NumberType::class, [
-                    'data' => $data,
-                    'attr' => ['placeholder' => 'company_page.multi_currency_type.name.cent_amount'],
-                    'label' => strtoupper($currencyIsoCode),
-                ]);
-            }
-        });
+        foreach ($currencyIsoCodes as $currencyIsoCode) {
+            $this->addAmountPerCurrencyField($builder, $currencyIsoCode);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $currencyIsoCode
+     *
+     * @return $this
+     */
+    protected function addAmountPerCurrencyField(FormBuilderInterface $builder, string $currencyIsoCode): self
+    {
+        $builder->add($currencyIsoCode, NumberType::class, [
+            'attr' => ['placeholder' => 'company_page.multi_currency_type.name.cent_amount'],
+            'label' => strtoupper($currencyIsoCode),
+        ]);
+
+        return $this;
     }
 }
