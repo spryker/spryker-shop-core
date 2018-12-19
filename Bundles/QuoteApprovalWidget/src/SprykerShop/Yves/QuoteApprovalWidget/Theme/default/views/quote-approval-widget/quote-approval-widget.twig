@@ -1,0 +1,28 @@
+{% extends template('widget') %}
+
+{% define data = {
+    quoteTransfer: _widget.quoteTransfer,
+    quoteApprovalRequest: _widget.quoteApprovalRequest,
+} %}
+
+{% block body %}
+    {% if data.quoteApprovalRequest is not null %}
+        <p>
+            Quote owner name:
+            {{ data.quoteTransfer.customer.firstName }} {{ data.quoteTransfer.customer.lastName }}
+        </p>
+
+        <p>
+            Date of requesting for approve:
+            {{ data.quoteApprovalRequest.createdAt | date}}
+        </p>
+
+        <a href="{{ path('quote-approval-approve', {'idQuoteApproval': data.quoteApprovalRequest.idQuoteApproval}) }}" class="button button--success">
+            {{ 'Approve' | trans }}
+        </a>
+
+        <a href="{{ path('quote-approval-decline', {'idQuoteApproval': data.quoteApprovalRequest.idQuoteApproval}) }}" class="button button--alert">
+            {{ 'Decline' | trans }}
+        </a>
+    {% endif %}
+{% endblock %}
