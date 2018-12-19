@@ -227,7 +227,7 @@ class CatalogController extends AbstractController
      */
     protected function reduceRestrictedParameters(array $parameters): array
     {
-        if ($this->canFilterAndSortByPrices()) {
+        if ($this->can('SeePricePermissionPlugin')) {
             return $parameters;
         }
 
@@ -249,21 +249,13 @@ class CatalogController extends AbstractController
      */
     protected function reduceRestrictedSortingOptions(array $searchResults): array
     {
-        if (!$this->canFilterAndSortByPrices() && ($searchResults[static::URL_PARAM_SORTING])) {
+        if (!$this->can('SeePricePermissionPlugin') && isset($searchResults[static::URL_PARAM_SORTING])) {
             $sortParamNames = $searchResults[static::URL_PARAM_SORTING]->getSortParamNames();
             $grantedSortParamNames = array_diff($sortParamNames, static::PRICE_SORTING_DIRECTIONS);
             $searchResults[static::URL_PARAM_SORTING]->setSortParamNames($grantedSortParamNames);
         }
 
         return $searchResults;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function canFilterAndSortByPrices(): bool
-    {
-        return $this->can('SeePricePermissionPlugin');
     }
 
     /**
