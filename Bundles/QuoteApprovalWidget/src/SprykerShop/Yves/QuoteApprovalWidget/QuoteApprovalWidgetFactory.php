@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteApprovalWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface;
+use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
 
 class QuoteApprovalWidgetFactory extends AbstractFactory
@@ -19,6 +20,14 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
     public function getCustomerClient(): QuoteApprovalWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): QuoteApprovalWidgetToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
     /**

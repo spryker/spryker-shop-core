@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Controller;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -47,7 +48,7 @@ class QuoteApprovalController extends AbstractController
             return $this->redirectBack($request);
         }
 
-        $this->addSuccessMessage('quote_approval_widget.cart.success_approve_message');
+        $this->addTranslatedSuccessMessage($quoteApprovalResponseTransfer->getMessage());
 
         return $this->redirectBack($request);
     }
@@ -80,7 +81,7 @@ class QuoteApprovalController extends AbstractController
             return $this->redirectBack($request);
         }
 
-        $this->addSuccessMessage('quote_approval_widget.cart.success_decline_message');
+        $this->addTranslatedSuccessMessage($quoteApprovalResponseTransfer->getMessage());
 
         return $this->redirectBack($request);
     }
@@ -113,7 +114,7 @@ class QuoteApprovalController extends AbstractController
             return $this->redirectBack($request);
         }
 
-        $this->addSuccessMessage('quote_approval_widget.cart.success_cancel_message');
+        $this->addTranslatedSuccessMessage($quoteApprovalResponseTransfer->getMessage());
 
         return $this->redirectBack($request);
     }
@@ -128,5 +129,31 @@ class QuoteApprovalController extends AbstractController
         $referer = $request->headers->get(static::REFERER_PARAM);
 
         return $this->redirectResponseExternal($referer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
+     * @return void
+     */
+    protected function addTranslatedSuccessMessage(MessageTransfer $messageTransfer): void
+    {
+        $message = $this->getTranslatedMessage($messageTransfer->getValue(), $this->getLocale(), $messageTransfer->getParameters());
+
+        $this->addSuccessMessage($message);
+    }
+
+    /**
+     * @param string $key
+     * @param string $locale
+     * @param array $params
+     *
+     * @return string
+     */
+    protected function getTranslatedMessage(string $key, string $locale, array $params = []): string
+    {
+        return $this->getFactory()
+            ->getGlossaryStorageClient()
+            ->translate($key, $locale, $params);
     }
 }

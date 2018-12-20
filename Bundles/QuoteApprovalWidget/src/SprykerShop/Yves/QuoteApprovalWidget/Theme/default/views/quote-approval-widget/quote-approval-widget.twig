@@ -34,7 +34,7 @@
                         </a>
                     {% endif %}
                 {% else %}
-                    <p>Status: {{ quoteApproval.status }}</p>
+                    <p>{{ 'quote_approval_widget.cart.status' | trans }}: {{ 'quote_approval_widget.cart.status.' ~ quoteApproval.status | trans}}</p>
                 {% endif %}
             </div>
         {% endfor %}
