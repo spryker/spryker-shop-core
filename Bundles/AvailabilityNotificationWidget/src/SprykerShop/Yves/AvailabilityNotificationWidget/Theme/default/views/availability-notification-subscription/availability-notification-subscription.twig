@@ -1,0 +1,15 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isSubscribed: _widget.isSubscribed,
+    product: _widget.product
+} %}
+
+{% block body %}
+    {% if data.isSubscribed %}
+        {{ 'customer.availability_notification.unsubscribe' | trans }}
+        {#<a href="{{ url('notification-availability/unsubscribe') }}" class="float-right">{{ 'customer.availability_notification.unsubscribe' | trans }}</a>#}
+    {% else %}
+        <a href="{{ url('notification-availability/subscribe', {'sku': data.product.sku}) }}" class="float-right">{{ 'customer.availability_notification.subscribe' | trans }}</a>
+    {% endif %}
+{% endblock %}
