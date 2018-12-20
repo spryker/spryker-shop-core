@@ -25,7 +25,7 @@ export default class AjaxProvider extends Component {
     async fetch<T = string>(data?: any): Promise<T> {
         debug(this.method, this.url, 'fetching...');
         this.isFetchingRequest = true;
-        this.fireEvent(EVENT_FETCHING);
+        this.dispatchCustomEvent(EVENT_FETCHING);
 
         return new Promise<T>((resolve, reject) => {
             this.xhr.open(this.method, this.url);
@@ -38,48 +38,43 @@ export default class AjaxProvider extends Component {
     }
 
     protected onRequestLoad(resolve: Function, reject: Function, loadEvent: Event): void {
-        debug(this.method, this.xhr.status, this.url);
         this.isFetchingRequest = false;
-        this.fireEvent(EVENT_FETCHED);
+        this.dispatchCustomEvent(EVENT_FETCHED);
 
-        if (this.xhr.status === 200) {
-            return resolve(this.xhr.response);
+        if (this.xhr.status !== 200) {
+            reject(new Error(`${this.method} ${this.xhr.status} ${this.url} server error`));
+            return;
         }
 
-        const message = `${this.method} ${this.xhr.status} ${this.url} server error`;
-        return reject(new Error(message));
+        debug(this.method, this.xhr.status, this.url);
+        resolve(this.xhr.response);
     }
 
     protected onRequestError(reject: Function, errorEvent: Event): void {
-        const message = `${this.method} ${this.url} request error`;
-        error(message);
         this.isFetchingRequest = false;
-        this.fireEvent(EVENT_FETCHED);
-        reject(new Error(message));
+        this.dispatchCustomEvent(EVENT_FETCHED);
+        reject(new Error(`${this.method} ${this.url} request error`));
     }
 
     protected onRequestAbort(reject: Function, abortEvent: Event): void {
-        const message = `${this.method} ${this.url} request aborted`;
-        error(message);
         this.isFetchingRequest = false;
-        this.fireEvent(EVENT_FETCHED);
-        reject(new Error(message));
-    }
-
-    protected fireEvent(name: string): void {
-        const event = new CustomEvent(name);
-        this.dispatchEvent(event);
+        this.dispatchCustomEvent(EVENT_FETCHED);
+        reject(new Error(`${this.method} ${this.url} request aborted`));
     }
 
     get url(): string {
         const url = this.getAttribute('url');
+
         if (this.queryParams.size === 0) {
             return url;
         }
+
         const queryStringParams = [];
+
         this.queryParams.forEach((value: String, key: String) => {
             queryStringParams.push(`${key}=${value}`);
         });
+
         return url + '?' + queryStringParams.join('&');
     }
 

@@ -10,7 +10,7 @@ export default class ToggleSelectForm extends Component {
         this.targets = <HTMLElement[]>Array.from(document.getElementsByClassName(this.target));
     }
 
-    readyCallback(): void {
+    protected readyCallback(): void {
         this.toggle();
         this.mapEvents();
     }
