@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuoteApprovalWidget\Controller;
 
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
-use Spryker\Client\Customer\CustomerClient;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,25 +27,27 @@ class QuoteApprovalController extends AbstractController
      */
     public function approveAction(Request $request, int $idQuoteApproval)
     {
-        //todo: add check that customer can do this;
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        $customer = (new CustomerClient())->getCustomer();
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+            return $this->redirectBack($request);
+        }
 
         $quoteApprovalRequestTransfer = (new QuoteApprovalRequestTransfer())
             ->setIdQuoteApproval($idQuoteApproval)
-            ->setFkCompanyUser($customer->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setFkCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         $quoteApprovalResponseTransfer = $this->getFactory()
             ->getQuoteApprovalClient()
             ->approveQuote($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage('Can not update');//todo: translation
+            $this->addErrorMessage('quote_approval_widget.cart.error_approve_message');
 
             return $this->redirectBack($request);
         }
 
-        $this->addSuccessMessage('Updated');//todo: translation
+        $this->addSuccessMessage('quote_approval_widget.cart.success_approve_message');
 
         return $this->redirectBack($request);
     }
@@ -59,7 +60,60 @@ class QuoteApprovalController extends AbstractController
      */
     public function declineAction(Request $request, int $idQuoteApproval)
     {
-        //todo: implement
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+            return $this->redirectBack($request);
+        }
+
+        $quoteApprovalRequestTransfer = (new QuoteApprovalRequestTransfer())
+            ->setIdQuoteApproval($idQuoteApproval)
+            ->setFkCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+
+        $quoteApprovalResponseTransfer = $this->getFactory()
+            ->getQuoteApprovalClient()
+            ->declineQuote($quoteApprovalRequestTransfer);
+
+        if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
+            $this->addErrorMessage('quote_approval_widget.cart.error_decline_message');
+
+            return $this->redirectBack($request);
+        }
+
+        $this->addSuccessMessage('quote_approval_widget.cart.success_decline_message');
+
+        return $this->redirectBack($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $idQuoteApproval
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function cancelAction(Request $request, int $idQuoteApproval)
+    {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+            return $this->redirectBack($request);
+        }
+
+        $quoteApprovalRequestTransfer = (new QuoteApprovalRequestTransfer())
+            ->setIdQuoteApproval($idQuoteApproval)
+            ->setFkCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+
+        $quoteApprovalResponseTransfer = $this->getFactory()
+            ->getQuoteApprovalClient()
+            ->cancelQuote($quoteApprovalRequestTransfer);
+
+        if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
+            $this->addErrorMessage('quote_approval_widget.cart.error_cancel_message');
+
+            return $this->redirectBack($request);
+        }
+
+        $this->addSuccessMessage('quote_approval_widget.cart.success_cancel_message');
 
         return $this->redirectBack($request);
     }

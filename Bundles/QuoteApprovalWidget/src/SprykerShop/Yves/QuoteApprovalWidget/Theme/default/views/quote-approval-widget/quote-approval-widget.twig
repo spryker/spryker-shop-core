@@ -2,27 +2,41 @@
 
 {% define data = {
     quoteTransfer: _widget.quoteTransfer,
-    quoteApprovalRequest: _widget.quoteApprovalRequest,
+    quoteApprovalCollection: _widget.quoteApprovalCollection,
+    waitingStatus: _widget.waitingStatus,
 } %}
 
 {% block body %}
-    {% if data.quoteApprovalRequest is not null %}
-        <p>
-            Quote owner name:
-            {{ data.quoteTransfer.customer.firstName }} {{ data.quoteTransfer.customer.lastName }}
-        </p>
+    {% if data.quoteApprovalCollection.quoteApprovals is not null %}
+        {% for quoteApproval in data.quoteApprovalCollection.quoteApprovals %}
+            <div class="box">
+                <p>
+                    {{ 'quote_approval_widget.cart.quote_owner_name' | trans }}:
+                    {{ data.quoteTransfer.customer.firstName }} {{ data.quoteTransfer.customer.lastName }}
+                </p>
 
-        <p>
-            Date of requesting for approve:
-            {{ data.quoteApprovalRequest.createdAt | date}}
-        </p>
+                <p>
+                    {{ 'quote_approval_widget.cart.request_date' | trans }}:
+                    {{ quoteApproval.createdAt | date }}
+                </p>
+                {% if quoteApproval.status == data.waitingStatus %}
+                    {% if can('ApproveQuotePermissionPlugin', data.quoteTransfer) %}
+                        <a href="{{ path('quote-approval-approve', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--success">
+                            {{ 'quote_approval_widget.cart.approve' | trans }}
+                        </a>
 
-        <a href="{{ path('quote-approval-approve', {'idQuoteApproval': data.quoteApprovalRequest.idQuoteApproval}) }}" class="button button--success">
-            {{ 'Approve' | trans }}
-        </a>
-
-        <a href="{{ path('quote-approval-decline', {'idQuoteApproval': data.quoteApprovalRequest.idQuoteApproval}) }}" class="button button--alert">
-            {{ 'Decline' | trans }}
-        </a>
+                        <a href="{{ path('quote-approval-decline', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--alert">
+                            {{ 'quote_approval_widget.cart.decline' | trans }}
+                        </a>
+                    {% else %}
+                        <a href="{{ path('quote-approval-cancel', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--alert">
+                            {{ 'quote_approval_widget.cart.cancel' | trans }}
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <p>Status: {{ quoteApproval.status }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
     {% endif %}
 {% endblock %}
