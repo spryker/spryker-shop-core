@@ -14,6 +14,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     hiddenCustomerIdInput: HTMLInputElement;
     hiddenDefaultAddressInput: HTMLInputElement;
     customAddressTriggerInput: HTMLFormElement;
+    resetSelectEvent: CustomEvent;
 
     protected readyCallback(): void {
         const formElements = 'select, input[type="text"], input[type="radio"], input[type="checkbox"]';
@@ -35,18 +36,26 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     protected mapEvents(): void {
-        this.formClear.addEventListener('form-fields-clear-after', () => {
+        this.formClear.addEventListener('form-fields-clear-after', (e) => {
             this.toggleFormFieldsReadonly(false);
             this.toggleReadonlyForCustomAddressTrigger();
+            this.resetAddressesSelect();
         });
+
         this.triggers.forEach((triggerElement) => {
             triggerElement.addEventListener('click', () => {
                 this.addressesSelects.forEach((selectElement) => {
                     this.setCurrentAddress(selectElement);
+                    this.initResetSelectEvent(selectElement);
                 });
                 this.onClick(triggerElement);
             });
         });
+    }
+
+    protected initResetSelectEvent(selectElement: HTMLSelectElement): void {
+        this.resetSelectEvent = new CustomEvent('reset-select');
+        this.resetSelectEvent.initEvent('change', true, true);
     }
 
     protected onClick(triggerElement: HTMLElement): void {
@@ -122,6 +131,18 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
                 (<HTMLFormElement>formElement).value = address[key];
             }
         }
+    }
+
+    resetAddressesSelect(): void {
+        const addressSelect = <HTMLSelectElement>this.form.querySelector(this.dataSelector);
+        const addressSelectOptions = <HTMLOptionElement[]>Array.from(addressSelect.options);
+
+        addressSelectOptions.forEach((item, index) => {
+            if(!item.value.length) {
+                addressSelect.selectedIndex = index;
+                addressSelect.dispatchEvent(this.resetSelectEvent);
+            }
+        });
     }
 
     protected toggleReadonlyForCustomAddressTrigger() {
