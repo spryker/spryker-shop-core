@@ -13,32 +13,13 @@
 } %}
 
 {% block content %}
-    <div class="grid">
-        <div class="col col--sm-12 col--md-9">
-            {% include molecule('quick-order-form', 'QuickOrderPage') with {
-                class: 'box',
-                data: {
-                    form: data.forms.quickOrderForm,
-                    products: data.products,
-                    prices: data.prices,
-                    additionalColumns: data.additionalColumns
-                }
-            } only %}
-        </div>
-        <div class="col col--sm-12 col--md-3">
-            <div class="box">
-                <h5>{{ 'quick-order.paste-order.title' | trans }}</h5>
-                <p>{{ 'quick-order.paste-order.description' | trans }}</p>
-                {% include molecule('form') with {
-                    data: {
-                        form: data.forms.textOrderForm,
-                        submit: {
-                            enable: true,
-                            text: 'quick-order.paste-order.button.verify' | trans
-                        }
-                    }
-                } only %}
-            </div>
-        </div>
-    </div>
+    {% include molecule('quick-order-form', 'QuickOrderPage') with {
+        data: {
+            form: data.forms.quickOrderForm,
+            products: data.products,
+            prices: data.prices,
+            additionalColumns: data.additionalColumns,
+            textOrderForm: data.forms.textOrderForm
+        }
+    } only %}
 {% endblock %}

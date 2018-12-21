@@ -1,0 +1,23 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quick-order-text-order-form',
+} %}
+
+{% define data = {
+    textOrderForm: required
+} %}
+
+{% block body %}
+    <h5>{{ 'quick-order.paste-order.title' | trans }}</h5>
+    <p>{{ 'quick-order.paste-order.description' | trans }}</p>
+    {% include molecule('form') with {
+        data: {
+            form: data.textOrderForm,
+            submit: {
+                enable: true,
+                text: 'quick-order.paste-order.button.verify' | trans
+            }
+        }
+    } only %}
+{% endblock %}

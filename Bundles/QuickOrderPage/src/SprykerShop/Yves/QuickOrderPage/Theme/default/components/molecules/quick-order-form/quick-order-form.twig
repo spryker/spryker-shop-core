@@ -9,7 +9,8 @@
     form: required,
     products: [],
     prices: [],
-    additionalColumns: []
+    additionalColumns: [],
+    textOrderForm: required
 } %}
 
 {% block body %}
@@ -45,7 +46,8 @@
                 attr: {
                     class: config.jsName ~ '__form'
                 }
-            }
+            },
+            textOrderForm: data.textOrderForm
         },
         embed: {
             name: config.name,
@@ -54,15 +56,32 @@
         }
     } only %}
         {% block fields %}
-            <div class="{{embed.name}}__rows {{embed.jsName}}__rows">
-                {% include molecule('quick-order-rows', 'QuickOrderPage') with {
-                    data: {
-                        rows: data.form.items,
-                        products: data.products,
-                        prices: data.prices,
-                        additionalColumns: embed.additionalColumns
-                    }
-                } only %}
+            <div class="{{ config.name }}__field col col--sm-12 col--md-9">
+                <div class="box">
+                    <div class="{{embed.name}}__rows {{embed.jsName}}__rows">
+                        {% include molecule('quick-order-rows', 'QuickOrderPage') with {
+                            data: {
+                                rows: data.form.items,
+                                products: data.products,
+                                prices: data.prices,
+                                additionalColumns: embed.additionalColumns
+                            }
+                        } only %}
+                    </div>
+                </div>
+            </div>
+            <div class="{{ config.name }}__field col col--top col--sm-12 col--md-3">
+                <div class="box">
+                    {% include molecule('quick-order-text-order-form', 'QuickOrderPage') with {
+                        data: {
+                            textOrderForm: data.textOrderForm,
+                        }
+                    } only %}
+
+                    <hr />
+
+                    {% include molecule('quick-order-file-upload', 'QuickOrderPage') %} {# FILE UPLOADER COMPONENT #}
+                </div>
             </div>
         {% endblock %}
 
