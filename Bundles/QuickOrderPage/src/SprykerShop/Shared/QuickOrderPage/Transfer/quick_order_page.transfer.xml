@@ -13,6 +13,8 @@
         <property name="sumPrice" type="int" />
     </transfer>
 
-    <transfer name="ProductConcrete" >
+    <transfer name="ProductConcrete">
+        <property name="fkProductAbstract" type="int" />
+        <property name="sku" type="string" />
     </transfer>
 </transfers>

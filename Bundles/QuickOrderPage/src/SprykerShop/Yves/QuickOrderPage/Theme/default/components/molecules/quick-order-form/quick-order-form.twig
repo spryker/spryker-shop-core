@@ -82,15 +82,19 @@
                 </div>
 
                 <div class="col col--sm-12 col--md-3">
-                    <button type="submit" name="addToCart" class="button button--expand button--success js-add-to-cart-button">
-                        {{ 'page.detail.add-to-cart' | trans }}
-                    </button>
+                    {% if can('SeeAddToCartPermissionPlugin') %}
+                        <button type="submit" name="addToCart" class="button button--expand button--success js-add-to-cart-button">
+                            {{ 'page.detail.add-to-cart' | trans }}
+                        </button>
+                    {% endif %}
                 </div>
 
                 <div class="col col--sm-12 col--md-3">
-                    <button type="submit" name="createOrder" class="button button--expand button--success">
-                        {{ 'quick-order.button.create-order' | trans }}
-                    </button>
+                    {% if can('SeeAddToCartPermissionPlugin') %}
+                        <button type="submit" name="createOrder" class="button button--expand button--success">
+                            {{ 'quick-order.button.create-order' | trans }}
+                        </button>
+                    {% endif %}
                 </div>
             </div>
 
