@@ -11,7 +11,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToAvailabilityNotificationClientInterface;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToCustomerClientInterface;
-use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilityNotificationSubscriptionForm;
+use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilitySubscriptionForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -20,9 +20,9 @@ class AvailabilityNotificationWidgetFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getAvailabilityNotificationSubscriptionForm(): FormInterface
+    public function getAvailabilitySubscriptionForm(): FormInterface
     {
-        return $this->getFormFactory()->create(AvailabilityNotificationSubscriptionForm::class);
+        return $this->getFormFactory()->create(AvailabilitySubscriptionForm::class);
     }
 
     /**

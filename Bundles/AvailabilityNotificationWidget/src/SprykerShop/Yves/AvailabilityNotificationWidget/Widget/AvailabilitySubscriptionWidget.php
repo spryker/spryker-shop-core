@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Widget;
 
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\AvailabilityNotificationWidget\AvailabilityNotificationWidgetFactory getFactory()
  */
-class AvailabilityNotificationSubscriptionWidget extends AbstractWidget
+class AvailabilitySubscriptionWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productConcreteTransfer
@@ -27,7 +27,7 @@ class AvailabilityNotificationSubscriptionWidget extends AbstractWidget
         $this->addParameter('isSubscribed', $this->getIsSubscribed($productConcreteTransfer, $customerTransfer));
         $this->addParameter('product', $productConcreteTransfer);
 
-//        $this->addParameter('form', $this->getFactory()->getAvailabilityNotificationSubscriptionForm()->createView());
+//        $this->addParameter('form', $this->getFactory()->getAvailabilitySubscriptionForm()->createView());
     }
 
     /**
@@ -35,7 +35,7 @@ class AvailabilityNotificationSubscriptionWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'AvailabilityNotificationSubscriptionWidget';
+        return 'AvailabilitySubscriptionWidget';
     }
 
     /**
@@ -43,7 +43,7 @@ class AvailabilityNotificationSubscriptionWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@AvailabilityNotificationWidget/views/availability-notification-subscription/availability-notification-subscription.twig';
+        return '@AvailabilityNotificationWidget/views/availability-subscription/availability-subscription.twig';
     }
 
     /**
@@ -58,7 +58,7 @@ class AvailabilityNotificationSubscriptionWidget extends AbstractWidget
             return false;
         }
 
-        $subscriptionTransfer = (new AvailabilityNotificationSubscriptionTransfer())
+        $subscriptionTransfer = (new AvailabilitySubscriptionTransfer())
             ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setEmail($customerTransfer->getEmail())
             ->setSku($productConcreteTransfer->getSku());

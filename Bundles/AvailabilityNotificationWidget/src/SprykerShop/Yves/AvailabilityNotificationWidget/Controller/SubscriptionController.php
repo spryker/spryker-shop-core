@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Controller;
 
-use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +47,7 @@ class SubscriptionController extends AbstractController
             return;
         }
 
-        $availabilityNotificationSubscriptionTransfer = (new AvailabilityNotificationSubscriptionTransfer())
+        $availabilityNotificationSubscriptionTransfer = (new AvailabilitySubscriptionTransfer())
             ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setEmail($customerTransfer->getEmail())
             ->setSku($request->get('sku'));
@@ -70,7 +70,7 @@ class SubscriptionController extends AbstractController
 
         $subscriptionForm = $this
             ->getFactory()
-            ->getAvailabilityNotificationSubscriptionForm();
+            ->getAvailabilitySubscriptionForm();
 
         $parentRequest = $this->getApplication()['request_stack']->getParentRequest();
 
@@ -82,11 +82,11 @@ class SubscriptionController extends AbstractController
 
         if ($subscriptionForm->isSubmitted() && $subscriptionForm->isValid()) {
 //            $customerTransfer = (new CustomerTransfer())
-//                ->setEmail($subscriptionForm->get(AvailabilityNotificationSubscriptionForm::FIELD_EMAIL)->getData());
+//                ->setEmail($subscriptionForm->get(AvailabilitySubscriptionForm::FIELD_EMAIL)->getData());
             $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
             $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
             $sku = $request->query->get('sku');
-            $availabilityNotificationSubscriptionTransfer = (new AvailabilityNotificationSubscriptionTransfer())
+            $availabilityNotificationSubscriptionTransfer = (new AvailabilitySubscriptionTransfer())
                 ->setCustomerReference($customerTransfer->getCustomerReference())
                 ->setEmail($customerTransfer->getEmail())
                 ->setSku()
@@ -99,7 +99,7 @@ class SubscriptionController extends AbstractController
             if ($subscriptionResponse->getIsSuccess()) {
                 $subscriptionForm = $this
                     ->getFactory()
-                    ->getAvailabilityNotificationSubscriptionForm();
+                    ->getAvailabilitySubscriptionForm();
             }
 
             if (!$subscriptionResponse->getIsSuccess()) {

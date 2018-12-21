@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class AvailabilityNotificationSubscriptionForm extends AbstractType
+class AvailabilitySubscriptionForm extends AbstractType
 {
     public const FIELD_EMAIL = 'email';
     public const FORM_ID = 'availability_subscription';
@@ -62,7 +62,7 @@ class AvailabilityNotificationSubscriptionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addEmailField(FormBuilderInterface $builder)
+    protected function addEmailField(FormBuilderInterface $builder): self
     {
         $builder->add(self::FIELD_EMAIL, EmailType::class, [
             'label' => 'customer.availability_notification.subscribe',
