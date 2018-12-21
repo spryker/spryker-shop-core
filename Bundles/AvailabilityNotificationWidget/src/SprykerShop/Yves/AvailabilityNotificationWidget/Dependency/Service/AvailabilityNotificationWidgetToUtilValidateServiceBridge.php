@@ -27,7 +27,7 @@ class AvailabilityNotificationWidgetToUtilValidateServiceBridge implements Avail
      *
      * @return bool
      */
-    public function isEmailFormatValid($email)
+    public function isEmailFormatValid($email): bool
     {
         return $this->utilValidateService->isEmailFormatValid($email);
     }

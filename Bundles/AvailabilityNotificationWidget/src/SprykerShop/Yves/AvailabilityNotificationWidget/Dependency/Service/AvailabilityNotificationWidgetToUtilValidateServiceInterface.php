@@ -14,5 +14,5 @@ interface AvailabilityNotificationWidgetToUtilValidateServiceInterface
      *
      * @return bool
      */
-    public function isEmailFormatValid($email);
+    public function isEmailFormatValid($email): bool;
 }
