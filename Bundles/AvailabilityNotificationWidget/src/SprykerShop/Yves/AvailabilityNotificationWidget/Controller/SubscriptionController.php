@@ -23,8 +23,9 @@ class SubscriptionController extends AbstractController
      */
     public function subscribeAction(Request $request)
     {
-        if ($request->getMethod() === Request::METHOD_POST){
+        if ($request->getMethod() === Request::METHOD_POST) {
             $this->executeSubscribeAction($request);
+
             return $this->redirectResponseExternal($request->headers->get('referer'));
         }
 
@@ -41,7 +42,7 @@ class SubscriptionController extends AbstractController
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if($customerTransfer === null){
+        if ($customerTransfer === null) {
             return;
         }
 
@@ -57,6 +58,7 @@ class SubscriptionController extends AbstractController
 
     /**
      * @TODO Create functionality for nonauth user CC-1772
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array

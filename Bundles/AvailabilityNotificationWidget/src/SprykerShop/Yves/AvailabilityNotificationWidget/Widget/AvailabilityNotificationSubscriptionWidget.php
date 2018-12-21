@@ -54,7 +54,7 @@ class AvailabilityNotificationSubscriptionWidget extends AbstractWidget
      */
     protected function getIsSubscribed(ProductViewTransfer $productConcreteTransfer, ?CustomerTransfer $customerTransfer): bool
     {
-        if($customerTransfer === null){
+        if ($customerTransfer === null) {
             return false;
         }
 
