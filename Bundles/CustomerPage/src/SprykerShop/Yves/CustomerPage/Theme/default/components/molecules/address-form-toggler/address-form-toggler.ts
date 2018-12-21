@@ -2,11 +2,11 @@ import Component from 'ShopUi/models/component';
 
 export default class AddressFormToggler extends Component {
     toggler: HTMLSelectElement;
-    form: HTMLElement;
+    form: HTMLFormElement;
 
     protected readyCallback(): void {
         this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
-        this.form = <HTMLElement>document.querySelector(this.targetSelector);
+        this.form = <HTMLFormElement>document.querySelector(this.targetSelector);
 
         this.mapEvents();
     }
