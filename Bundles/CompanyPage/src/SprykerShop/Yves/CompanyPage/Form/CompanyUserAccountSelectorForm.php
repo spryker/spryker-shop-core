@@ -63,6 +63,7 @@ class CompanyUserAccountSelectorForm extends AbstractType
     protected function addCompanyUserAccountChoice(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_COMPANY_USER_ACCOUNT_CHOICE, ChoiceType::class, [
+            'label' => 'company_user.company_choice',
             'choices' => $options[static::OPTION_COMPANY_USER_ACCOUNT_CHOICES],
         ]);
 

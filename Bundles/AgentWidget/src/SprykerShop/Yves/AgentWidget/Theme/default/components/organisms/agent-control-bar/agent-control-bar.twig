@@ -43,7 +43,7 @@
                     {{ 'agent.control_bar.username' | trans({
                         '%username%': "#{data.agent.firstName} #{data.agent.lastName}"
                     }) }}
-                    <a href="{{ path('agent/logout') }}" class="button">{{ 'agent.control_bar.logout' | trans }}</a>
+                    <a href="{{ path('agent_logout') }}" class="button">{{ 'agent.control_bar.logout' | trans }}</a>
                 </div>
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <div class="spacing-top spacing-top--big">

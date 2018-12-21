@@ -16,6 +16,26 @@
     }
 } %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview')
+                },
+                {
+                    label: 'company.account.company_user' | trans,
+                    url: url('company/user')
+                },
+                {
+                    label: data.title
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
 {% block companyContent %}
 
     <div class="box">
