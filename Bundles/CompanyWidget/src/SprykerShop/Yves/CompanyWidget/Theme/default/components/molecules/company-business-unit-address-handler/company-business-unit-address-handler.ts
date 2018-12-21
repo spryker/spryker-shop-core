@@ -38,7 +38,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     protected mapEvents(): void {
-        this.formClear.addEventListener('form-fields-clear-after', (e) => {
+        this.formClear.addEventListener('form-fields-clear-after', () => {
             this.toggleFormFieldsReadonly(false);
             this.toggleReadonlyForCustomAddressTrigger();
             this.resetAddressesSelect();
