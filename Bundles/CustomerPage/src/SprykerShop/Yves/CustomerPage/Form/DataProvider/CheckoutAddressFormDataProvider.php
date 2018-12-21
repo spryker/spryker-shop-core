@@ -18,7 +18,7 @@ use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
 class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider implements StepEngineFormDataProviderInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer|null
+     * @var \Generated\Shared\Transfer\CustomerTransfer
      */
     protected $customerTransfer;
 
@@ -60,7 +60,6 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         return [
             CheckoutAddressCollectionForm::OPTION_ADDRESS_CHOICES => $this->getAddressChoices(),
             CheckoutAddressCollectionForm::OPTION_COUNTRY_CHOICES => $this->getAvailableCountries(),
-            CheckoutAddressCollectionForm::OPTION_HAS_COMPANY_UNIT_ADDRESSES => $this->hasCompanyUnitAddresses(),
         ];
     }
 
@@ -142,27 +141,5 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         }
 
         return $choices;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function hasCompanyUnitAddresses(): bool
-    {
-        if (!$this->customerTransfer) {
-            return false;
-        }
-
-        $companyUserTransfer = $this->customerTransfer->getCompanyUserTransfer();
-        if (!$companyUserTransfer) {
-            return false;
-        }
-
-        $addressCollection = $companyUserTransfer->getCompanyBusinessUnit()->getAddressCollection();
-        if (!$addressCollection) {
-            return false;
-        }
-
-        return $addressCollection->getCompanyUnitAddresses()->count() > 0;
     }
 }

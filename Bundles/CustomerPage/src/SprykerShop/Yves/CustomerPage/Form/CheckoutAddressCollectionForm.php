@@ -14,7 +14,6 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 
@@ -27,11 +26,10 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
     public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
-    public const FIELD_SKIP_ADDRESS_SAVING = 'skipAddressSaving';
+    public const FIELD_IS_ADDRESS_SAVING_SKIPPED = 'isAddressSavingSkipped';
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
-    public const OPTION_HAS_COMPANY_UNIT_ADDRESSES = 'hasCompanyUnitAddresses';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
@@ -67,10 +65,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             self::OPTION_ADDRESS_CHOICES => [],
         ]);
 
-        $resolver->setDefined([
-            static::OPTION_ADDRESS_CHOICES,
-            static::OPTION_HAS_COMPANY_UNIT_ADDRESSES,
-        ]);
+        $resolver->setDefined(self::OPTION_ADDRESS_CHOICES);
         $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
     }
 
@@ -86,22 +81,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             ->addShippingAddressSubForm($builder, $options)
             ->addSameAsShipmentCheckbox($builder)
             ->addBillingAddressSubForm($builder, $options)
-            ->addSkipAddressSavingField($builder);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     *
-     * @return void
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        parent::buildView($view, $form, $options);
-        $view->vars = array_merge($view->vars, [
-            static::OPTION_HAS_COMPANY_UNIT_ADDRESSES => $options[static::OPTION_HAS_COMPANY_UNIT_ADDRESSES],
-        ]);
+            ->addIsAddressSavingSkippedField($builder);
     }
 
     /**
@@ -187,7 +167,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSkipAddressSavingField(FormBuilderInterface $builder): self
+    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder): self
     {
         $isLoggedIn = $this->getFactory()
             ->getCustomerClient()
@@ -197,7 +177,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             return $this;
         }
 
-        $builder->add(static::FIELD_SKIP_ADDRESS_SAVING, CheckboxType::class, [
+        $builder->add(static::FIELD_IS_ADDRESS_SAVING_SKIPPED, CheckboxType::class, [
             'label' => static::GLOSSARY_KEY_SAVE_NEW_ADDRESS,
             'required' => false,
         ]);
@@ -207,7 +187,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             $this->getInvertedBooleanValueCallbackTransformer()
         );
 
-        $builder->get(static::FIELD_SKIP_ADDRESS_SAVING)
+        $builder->get(static::FIELD_IS_ADDRESS_SAVING_SKIPPED)
             ->addModelTransformer($callbackTransformer);
 
         return $this;
