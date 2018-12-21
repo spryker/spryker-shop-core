@@ -37,7 +37,7 @@ class AvailabilityNotificationWidgetDependencyProvider extends AbstractBundleDep
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addAvailabilityNotificationClient(Container $container)
+    protected function addAvailabilityNotificationClient(Container $container): Container
     {
         $container[static::CLIENT_AVAILABILITY_NOTIFICATION] = function (Container $container) {
             return new AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge($container->getLocator()->availabilityNotification()->client());
@@ -51,7 +51,7 @@ class AvailabilityNotificationWidgetDependencyProvider extends AbstractBundleDep
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCustomerClient(Container $container)
+    protected function addCustomerClient(Container $container): Container
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new AvailabilityNotificationWidgetToCustomerClientBridge($container->getLocator()->customer()->client());

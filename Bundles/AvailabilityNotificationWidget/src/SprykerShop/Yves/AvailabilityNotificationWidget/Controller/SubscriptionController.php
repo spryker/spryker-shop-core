@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\AvailabilityNotificationWidget\Controller;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,7 +22,7 @@ class SubscriptionController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function subscribeAction(Request $request)
+    public function subscribeAction(Request $request): RedirectResponse
     {
         if ($request->getMethod() === Request::METHOD_POST) {
             $this->executeSubscribeAction($request);
