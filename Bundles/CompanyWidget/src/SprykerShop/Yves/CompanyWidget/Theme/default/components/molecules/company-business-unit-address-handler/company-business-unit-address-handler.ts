@@ -3,7 +3,7 @@ import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
 export default class CompanyBusinessUnitAddressHandler extends Component {
     triggers: HTMLElement[];
-    form: HTMLElement;
+    form: HTMLFormElement;
     targets: HTMLElement[];
     ignoreElements: HTMLElement[];
     filterElements: HTMLElement[];
@@ -16,10 +16,12 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     customAddressTriggerInput: HTMLFormElement;
     resetSelectEvent: CustomEvent;
 
+    readonly resetSelectEventName: string = 'reset-select';
+
     protected readyCallback(): void {
         const formElements = 'select, input[type="text"], input[type="radio"], input[type="checkbox"]';
 
-        this.form = <HTMLElement>document.querySelector(this.formSelector);
+        this.form = <HTMLFormElement>document.querySelector(this.formSelector);
         this.triggers = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.triggerSelector));
         this.addressesSelects = <HTMLSelectElement[]>Array.from(this.form.querySelectorAll(this.dataSelector));
         this.targets = <HTMLElement[]>Array.from(this.form.querySelectorAll(formElements));
@@ -46,15 +48,15 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
             triggerElement.addEventListener('click', () => {
                 this.addressesSelects.forEach((selectElement) => {
                     this.setCurrentAddress(selectElement);
-                    this.initResetSelectEvent(selectElement);
+                    this.initResetSelectEvent();
                 });
                 this.onClick(triggerElement);
             });
         });
     }
 
-    protected initResetSelectEvent(selectElement: HTMLSelectElement): void {
-        this.resetSelectEvent = new CustomEvent('reset-select');
+    protected initResetSelectEvent(): void {
+        this.resetSelectEvent = new CustomEvent(this.resetSelectEventName);
         this.resetSelectEvent.initEvent('change', true, true);
     }
 
@@ -137,10 +139,11 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         const addressSelect = <HTMLSelectElement>this.form.querySelector(this.dataSelector);
         const addressSelectOptions = <HTMLOptionElement[]>Array.from(addressSelect.options);
 
-        addressSelectOptions.forEach((item, index) => {
-            if(!item.value.length) {
+        addressSelectOptions.some((item, index) => {
+            if(item.value.length) {
                 addressSelect.selectedIndex = index;
                 addressSelect.dispatchEvent(this.resetSelectEvent);
+                return true;
             }
         });
     }

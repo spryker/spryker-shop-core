@@ -38,36 +38,36 @@ export default class SaveNewAddress extends Component {
     }
 
     protected mapShippingTogglerEvent(): void {
-        this.customerShippingAddresses.addEventListener('change', (e: Event) => {
-            this.newShippingAddressChecked = this.onAddressTogglerChange(e);
+        this.customerShippingAddresses.addEventListener('change', (event: Event) => {
+            this.newShippingAddressChecked = this.onAddressTogglerChange(event);
             this.toggleSaveNewAddress();
         });
 
-        this.newShippingAddressChecked = this.selectedSaveNewAddressOption(this.customerShippingAddresses);
+        this.newShippingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerShippingAddresses);
         this.toggleSaveNewAddress();
     }
 
     protected mapBillingTogglerEvent(): void {
-        this.customerBillingAddresses.addEventListener('change', (e: Event) => {
-            this.newBillingAddressChecked = this.onAddressTogglerChange(e);
+        this.customerBillingAddresses.addEventListener('change', (event: Event) => {
+            this.newBillingAddressChecked = this.onAddressTogglerChange(event);
             this.toggleSaveNewAddress();
         });
 
-        this.newBillingAddressChecked = this.selectedSaveNewAddressOption(this.customerBillingAddresses);
+        this.newBillingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerBillingAddresses);
         this.toggleSaveNewAddress();
     }
 
     protected mapSameAsShippingTogglerEvent(): void {
-        this.sameAsShippingToggler.addEventListener('change', (e: Event) => this.toggleSaveNewAddress());
+        this.sameAsShippingToggler.addEventListener('change', () => this.toggleSaveNewAddress());
     }
 
-    protected onAddressTogglerChange(e: Event): boolean {
-        const toggler = <HTMLSelectElement>e.srcElement;
+    protected onAddressTogglerChange(event: Event): boolean {
+        const toggler = <HTMLSelectElement>event.srcElement;
 
-        return this.selectedSaveNewAddressOption(toggler);
+        return this.isSaveNewAddressOptionSelected(toggler);
     }
 
-    protected selectedSaveNewAddressOption(toggler: HTMLSelectElement): boolean {
+    protected isSaveNewAddressOptionSelected(toggler: HTMLSelectElement): boolean {
         return !toggler.options[toggler.selectedIndex].value;
     }
 
