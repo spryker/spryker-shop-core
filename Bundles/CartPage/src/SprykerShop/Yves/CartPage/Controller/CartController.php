@@ -16,6 +16,7 @@ use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use SprykerShop\Yves\QuickOrderCompactWidget\Form\QuickOrderCompactForm;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
@@ -25,6 +26,10 @@ class CartController extends AbstractController
     use PermissionAwareTrait;
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+
+    public const MESSAGE_QUICK_ADD_TO_CART_INCORRECT_INPUT_DATA = 'cart.quick_add_to_cart.incorrect_input_data';
+
+    public const MESSAGE_QUICK_ADD_TO_CART_ADDED_TO_CART = 'cart.quick_add_to_cart.added_to_cart,';
 
     public const PARAM_ITEMS = 'items';
 
@@ -235,6 +240,47 @@ class CartController extends AbstractController
                 ->createCartItemsAttributeProvider()
                 ->formatUpdateActionResponse($sku, $selectedAttributes)
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function quickAddAction(Request $request)
+    {
+        if (!$this->canAddCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
+        $form = $this->getFactory()->getQuickOrderCompactForm()->handleRequest($request);
+
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_QUICK_ADD_TO_CART_INCORRECT_INPUT_DATA);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
+        $sku = $form->getData()[QuickOrderCompactForm::FIELD_SKU];
+        $quantity = $form->getData()[QuickOrderCompactForm::FIELD_QUANTITY];
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer
+            ->setSku($sku)
+            ->setQuantity($quantity);
+
+        $this->getFactory()
+            ->getCartClient()
+            ->addItem($itemTransfer, $request->request->all());
+
+        $this->getFactory()
+                ->getZedRequestClient()
+                ->addFlashMessagesFromLastZedRequest();
+
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
 
     /**

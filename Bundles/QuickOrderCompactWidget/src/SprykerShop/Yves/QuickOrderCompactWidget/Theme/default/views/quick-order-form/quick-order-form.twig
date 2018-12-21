@@ -1,0 +1,51 @@
+{% extends template('widget') %}
+
+{% define data = {
+    title: _widget.title,
+    form: _widget.form,
+    submitUrl: _widget.submitUrl,
+    submitButtonTitle: _widget.submitButtonTitle,
+} %}
+
+{% block body %}
+    <div>
+    {% embed molecule('form') with {
+        data: {
+            title: data.title,
+            form: data.form,
+            options: {
+                action: url(data.submitUrl),
+            },
+            submitButtonTitle: data.submitButtonTitle
+        }
+    } only %}
+        {% block fields %}
+            {% do data.form.sku.setRendered %}
+
+            <div class="form__field col col--sm-12">
+                {% widget 'ProductConcreteSearchWidget' args [
+                    'ajax-provider' ~ data.form.sku.vars.name,
+                    data.form.sku.vars.full_name,
+                    '',
+                    ''
+                ] only %}
+                {% endwidget %}
+            </div>
+
+            <div class="form__field col col--sm-12">
+                {{ form_widget(data.form.children.quantity, {
+                    'attr': {'placeholder': 'cart.quick_add_to_cart.quantity' | trans }}
+                ) }}
+            </div>
+        {% endblock %}
+
+        {% block actions %}
+            <div class="col col--sm-12 col--md-12">
+                <button type="submit" class="button button--expand button--success">
+                    {{ data.submitButtonTitle }}
+                </button>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

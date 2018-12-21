@@ -102,6 +102,13 @@
                         <hr />
                     {% endif %}
 
+                    {% widget 'QuickOrderCompactWidget' args [
+                        'cart.quick_add_to_cart' | trans,
+                        'cart.quick_add_to_cart.submit' | trans,
+                        'cart/quick-add'
+                    ] only %}
+                    {% endwidget %}
+
                     {% if can('SeePricePermissionPlugin') %}
                         {% include molecule('cart-summary', 'CartPage') with {
                             data: {

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CartPage;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
@@ -17,6 +18,9 @@ use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use SprykerShop\Yves\QuickOrderCompactWidget\Form\QuickOrderCompactForm;
 
 class CartPageFactory extends AbstractFactory
 {
@@ -164,5 +168,21 @@ class CartPageFactory extends AbstractFactory
     public function createCartItemsAvailabilityMapper()
     {
         return new CartItemsAvailabilityMapper($this->getAvailabilityStorageClient());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuickOrderCompactForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(QuickOrderCompactForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormFactoryInterface
+     */
+    public function getFormFactory(): FormFactoryInterface
+    {
+        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
 }
