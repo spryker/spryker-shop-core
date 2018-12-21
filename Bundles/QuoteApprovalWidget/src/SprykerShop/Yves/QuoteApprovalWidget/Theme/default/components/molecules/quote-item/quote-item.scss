@@ -1,0 +1,15 @@
+@mixin quote-approval-widget-quote-item($name: '.quote-item') {
+    #{$name} {
+        &__value {
+            &--declined {
+                color: map-get($setting-color-actions, 'alert');
+            }
+
+            &--approved {
+                color: map-get($setting-color-actions, 'success');
+            }
+        }
+
+        @content;
+    }
+}

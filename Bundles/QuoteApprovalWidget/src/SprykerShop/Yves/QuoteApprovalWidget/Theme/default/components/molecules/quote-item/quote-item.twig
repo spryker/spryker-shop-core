@@ -1,0 +1,19 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-item',
+    tag: 'p'
+} %}
+
+{% define data = {
+    title: required,
+    value: required,
+    colorModifier: null
+} %}
+
+{% block body %}
+    <strong>{{ data.title | trans }}</strong>:
+    <span class="{{ config.name }}__value {{ data.colorModifier ? config.name ~ '__value--' ~ data.colorModifier : '' }}">
+        {{ data.value }}
+    </span>
+{% endblock %}
