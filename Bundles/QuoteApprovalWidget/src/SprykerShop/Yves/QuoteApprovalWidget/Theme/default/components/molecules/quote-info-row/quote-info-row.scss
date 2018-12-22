@@ -1,4 +1,4 @@
-@mixin quote-approval-widget-quote-item($name: '.quote-item') {
+@mixin quote-approval-widget-quote-info-row($name: '.quote-info-row') {
     #{$name} {
         &__value {
             &--declined {

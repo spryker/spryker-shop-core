@@ -10,14 +10,14 @@
     {% if data.quoteApprovalCollection.quoteApprovals is not null %}
         {% for quoteApproval in data.quoteApprovalCollection.quoteApprovals %}
             <div>
-                {% include molecule('quote-item', 'QuoteApprovalWidget') with {
+                {% include molecule('quote-info-row', 'QuoteApprovalWidget') with {
                     data: {
                         title: 'quote_approval_widget.cart.quote_owner_name' | trans,
                         value: data.quoteTransfer.customer.firstName ~ ' ' ~ data.quoteTransfer.customer.lastName,
                     }
                 } only %}
 
-                {% include molecule('quote-item', 'QuoteApprovalWidget') with {
+                {% include molecule('quote-info-row', 'QuoteApprovalWidget') with {
                     data: {
                         title: 'quote_approval_widget.cart.request_date' | trans,
                         value: quoteApproval.createdAt | date,
@@ -48,7 +48,7 @@
                 {% else %}
                     {% set quoteStatus = 'quote_approval_widget.cart.status.' ~ quoteApproval.status %}
 
-                    {% include molecule('quote-item', 'QuoteApprovalWidget') with {
+                    {% include molecule('quote-info-row', 'QuoteApprovalWidget') with {
                         data: {
                             title: 'quote_approval_widget.cart.status' | trans,
                             value: quoteStatus | trans,
