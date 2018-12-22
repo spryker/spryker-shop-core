@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\AvailabilityNotificationWidget\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
@@ -17,6 +18,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class AvailabilitySubscriptionForm extends AbstractType
 {
     public const FIELD_EMAIL = 'email';
+    public const FIELD_SKU = 'sku';
+
     public const FORM_ID = 'availability_subscription';
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
@@ -55,6 +58,7 @@ class AvailabilitySubscriptionForm extends AbstractType
         $builder->setAction('#' . self::FORM_ID);
 
         $this->addEmailField($builder);
+        $this->addSkuField($builder);
     }
 
     /**
@@ -65,11 +69,28 @@ class AvailabilitySubscriptionForm extends AbstractType
     protected function addEmailField(FormBuilderInterface $builder): self
     {
         $builder->add(self::FIELD_EMAIL, EmailType::class, [
-            'label' => 'customer.availability_notification.subscribe',
+            'label' => 'availability_notification.notify_me',
             'required' => true,
             'constraints' => [
                 new NotBlank(),
                 new Email(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addSkuField(FormBuilderInterface $builder): self
+    {
+        $builder->add(self::FIELD_SKU, HiddenType::class, [
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
             ],
         ]);
 

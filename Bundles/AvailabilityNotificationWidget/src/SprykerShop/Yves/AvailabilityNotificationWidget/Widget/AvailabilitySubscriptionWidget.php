@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilitySubscriptionForm;
 
 /**
  * @method \SprykerShop\Yves\AvailabilityNotificationWidget\AvailabilityNotificationWidgetFactory getFactory()
@@ -27,7 +28,17 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
         $this->addParameter('isSubscribed', $this->getIsSubscribed($productConcreteTransfer, $customerTransfer));
         $this->addParameter('product', $productConcreteTransfer);
 
-//        $this->addParameter('form', $this->getFactory()->getAvailabilitySubscriptionForm()->createView());
+        $form = $this->getFactory()->getAvailabilitySubscriptionForm();
+
+        $data = [AvailabilitySubscriptionForm::FIELD_SKU => $productConcreteTransfer->getSku()];
+
+        if ($customerTransfer !== null) {
+            $data[AvailabilitySubscriptionForm::FIELD_EMAIL] = $customerTransfer->getEmail();
+        }
+
+        $form->setData($data);
+
+        $this->addParameter('form', $form->createView());
     }
 
     /**

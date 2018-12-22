@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Controller;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilitySubscriptionForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,13 +25,8 @@ class SubscriptionController extends AbstractController
      */
     public function subscribeAction(Request $request): RedirectResponse
     {
-        if ($request->getMethod() === Request::METHOD_POST) {
-            $this->executeSubscribeAction($request);
+        $this->executeSubscribeAction($request);
 
-            return $this->redirectResponseExternal($request->headers->get('referer'));
-        }
-
-        $this->executeCustomerSubscribeAction($request);
         return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 
@@ -39,77 +35,31 @@ class SubscriptionController extends AbstractController
      *
      * @return void
      */
-    protected function executeCustomerSubscribeAction(Request $request): void
+    protected function executeSubscribeAction(Request $request): void
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if ($customerTransfer === null) {
-            return;
-        }
-
-        $availabilityNotificationSubscriptionTransfer = (new AvailabilitySubscriptionTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setEmail($customerTransfer->getEmail())
-            ->setSku($request->get('sku'));
-
-        $this->getFactory()
-            ->getAvailabilityNotificationClient()
-            ->subscribe($availabilityNotificationSubscriptionTransfer);
-    }
-
-    /**
-     * @TODO Create functionality for nonauth user CC-1772
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function executeSubscribeAction(Request $request): array
-    {
-        $error = false;
-
         $subscriptionForm = $this
             ->getFactory()
             ->getAvailabilitySubscriptionForm();
 
-        $parentRequest = $this->getApplication()['request_stack']->getParentRequest();
-
-        if ($parentRequest !== null) {
-            $request = $parentRequest;
-        }
-
         $subscriptionForm->handleRequest($request);
 
         if ($subscriptionForm->isSubmitted() && $subscriptionForm->isValid()) {
-//            $customerTransfer = (new CustomerTransfer())
-//                ->setEmail($subscriptionForm->get(AvailabilitySubscriptionForm::FIELD_EMAIL)->getData());
             $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-            $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
-            $sku = $request->query->get('sku');
+
+            if ($customerTransfer === null) {
+                return;
+            }
+
+            $formData = $subscriptionForm->getData();
+
             $availabilityNotificationSubscriptionTransfer = (new AvailabilitySubscriptionTransfer())
                 ->setCustomerReference($customerTransfer->getCustomerReference())
-                ->setEmail($customerTransfer->getEmail())
-                ->setSku()
-                ->setStore($storeTransfer);
+                ->setEmail($formData[AvailabilitySubscriptionForm::FIELD_EMAIL])
+                ->setSku($formData[AvailabilitySubscriptionForm::FIELD_SKU]);
 
-            $subscriptionResponse = $this->getFactory()
+            $this->getFactory()
                 ->getAvailabilityNotificationClient()
                 ->subscribe($availabilityNotificationSubscriptionTransfer);
-
-            if ($subscriptionResponse->getIsSuccess()) {
-                $subscriptionForm = $this
-                    ->getFactory()
-                    ->getAvailabilitySubscriptionForm();
-            }
-
-            if (!$subscriptionResponse->getIsSuccess()) {
-                $error = $subscriptionResponse->getErrorMessage();
-            }
         }
-
-        return [
-            'availabilityNotificationSubscriptionForm' => $subscriptionForm->createView(),
-            'error' => $error,
-        ];
     }
 }

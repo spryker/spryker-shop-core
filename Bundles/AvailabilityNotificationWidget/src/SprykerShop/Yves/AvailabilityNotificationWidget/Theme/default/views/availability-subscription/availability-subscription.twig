@@ -2,14 +2,26 @@
 
 {% define data = {
     isSubscribed: _widget.isSubscribed,
-    product: _widget.product
+    product: _widget.product,
+    form: _widget.form
 } %}
 
 {% block body %}
     {% if data.isSubscribed %}
-        {{ 'customer.availability_notification.unsubscribe' | trans }}
-        {#<a href="{{ url('notification-availability/unsubscribe') }}" class="float-right">{{ 'customer.availability_notification.unsubscribe' | trans }}</a>#}
+        {{ 'availability_notification.do_not_notify_me' | trans }}
     {% else %}
-        <a href="{{ url('notification-availability/subscribe', {'sku': data.product.sku}) }}" class="float-right">{{ 'customer.availability_notification.subscribe' | trans }}</a>
+        {% include molecule('form') with {
+            modifiers: ['inline'],
+            data: {
+                form: data.form,
+                options: {
+                    action: url('notification-availability/subscribe')
+                },
+                submit: {
+                    enable: true,
+                    text: '>'
+                }
+            }
+        } only %}
     {% endif %}
 {% endblock %}
