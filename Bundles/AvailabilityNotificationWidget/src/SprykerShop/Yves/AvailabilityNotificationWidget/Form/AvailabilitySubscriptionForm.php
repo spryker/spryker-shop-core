@@ -28,7 +28,7 @@ class AvailabilitySubscriptionForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'availabilityNotificationSubscriptionForm';
     }
@@ -38,7 +38,7 @@ class AvailabilitySubscriptionForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => [
@@ -53,7 +53,7 @@ class AvailabilitySubscriptionForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->setAction('#' . self::FORM_ID);
 

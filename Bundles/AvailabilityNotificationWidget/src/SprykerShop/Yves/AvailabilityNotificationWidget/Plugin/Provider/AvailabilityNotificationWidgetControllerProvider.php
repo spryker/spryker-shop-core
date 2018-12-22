@@ -19,7 +19,7 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
      *
      * @return void
      */
-    protected function defineControllers(Application $app)
+    protected function defineControllers(Application $app): void
     {
         $this->addAvailabilityNotificationSubscribeRoute();
     }

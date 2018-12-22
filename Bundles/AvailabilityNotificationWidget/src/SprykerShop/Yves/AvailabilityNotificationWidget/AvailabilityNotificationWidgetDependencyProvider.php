@@ -22,7 +22,7 @@ class AvailabilityNotificationWidgetDependencyProvider extends AbstractBundleDep
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         parent::provideDependencies($container);
 
