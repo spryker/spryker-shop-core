@@ -8,12 +8,12 @@
 {% define data = {
     title: required,
     value: required,
-    colorModifier: null
+    status: null
 } %}
 
 {% block body %}
     <strong>{{ data.title | trans }}</strong>:
-    <span class="{{ config.name }}__value {{ data.colorModifier ? config.name ~ '__value--' ~ data.colorModifier : '' }}">
+    <span class="{{ config.name }}__value {{ data.status ? config.name ~ '__value--' ~ data.status : '' }}">
         {{ data.value }}
     </span>
 {% endblock %}
