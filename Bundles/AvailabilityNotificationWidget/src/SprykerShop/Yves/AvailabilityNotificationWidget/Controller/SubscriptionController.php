@@ -52,14 +52,14 @@ class SubscriptionController extends AbstractController
 
             $formData = $subscriptionForm->getData();
 
-            $availabilityNotificationSubscriptionTransfer = (new AvailabilitySubscriptionTransfer())
+            $availabilitySubscriptionTransfer = (new AvailabilitySubscriptionTransfer())
                 ->setCustomerReference($customerTransfer->getCustomerReference())
                 ->setEmail($formData[AvailabilitySubscriptionForm::FIELD_EMAIL])
                 ->setSku($formData[AvailabilitySubscriptionForm::FIELD_SKU]);
 
             $this->getFactory()
                 ->getAvailabilityNotificationClient()
-                ->subscribe($availabilityNotificationSubscriptionTransfer);
+                ->subscribe($availabilitySubscriptionTransfer);
         }
     }
 }

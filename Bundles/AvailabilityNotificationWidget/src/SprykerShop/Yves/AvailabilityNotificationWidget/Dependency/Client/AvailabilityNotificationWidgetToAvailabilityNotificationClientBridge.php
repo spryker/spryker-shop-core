@@ -26,32 +26,32 @@ class AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge imple
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function subscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function subscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        return $this->availabilityNotificationClient->subscribe($availabilityNotificationSubscriptionTransfer);
+        return $this->availabilityNotificationClient->subscribe($availabilitySubscriptionTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        return $this->availabilityNotificationClient->unsubscribe($availabilityNotificationSubscriptionTransfer);
+        return $this->availabilityNotificationClient->unsubscribe($availabilitySubscriptionTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function checkSubscription(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function checkSubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
-        return $this->availabilityNotificationClient->checkSubscription($availabilityNotificationSubscriptionTransfer);
+        return $this->availabilityNotificationClient->checkSubscription($availabilitySubscriptionTransfer);
     }
 }
