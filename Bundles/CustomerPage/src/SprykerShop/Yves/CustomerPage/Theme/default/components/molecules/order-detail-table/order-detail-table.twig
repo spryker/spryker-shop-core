@@ -32,7 +32,7 @@
                     {% if widgetExists('OrderDetailProductPackagingUnitWidgetPlugin') %}
                         {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item, data.currencyIsoCode) }} {# @deprecated Use molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget') instead. #}
                     {% else %}
-                        {% include [
+                        {% embed [
                             molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget'),
                             molecule('order-detail-product-packaging-unit-default', 'CustomerPage'),
                         ] ignore missing with {
@@ -40,8 +40,19 @@
                                 concreteItem: item,
                                 currencyIsoCode: data.currencyIsoCode,
                                 concreteItemDefault: concreteItem
+                            },
+                            embed: {
+                                order: data.order,
+                                concreteItem: concreteItem
                             }
                         } only %}
+                            {% block body %}
+                                {% if embed.order is not empty %}
+                                    <td>{{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, embed.concreteItem) }}</td>
+                                {% endif %}
+                                {{ parent() }}
+                            {% endblock %}
+                        {% endembed %}
                     {% endif %}
                 {% endblock %}
 
@@ -65,6 +76,12 @@
                     </tr>
                 {% else %}
                     {% if concreteItem.productOptions is not empty %}
+                        <tr>
+                            <td></td>
+                            <td colspan="5">
+                                <small>{{ 'checkout.summary.item.option.description' | trans }}</small>
+                            </td>
+                        </tr>
                         {% for productOption in concreteItem.productOptions %}
                             <tr>
                                 {% block detailRow %}
@@ -92,17 +109,19 @@
                         </td>
                     </tr>
                 {% else %}
-                    <tr>
-                        <td></td>
-                        <td colspan="5">
-                            {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                                data: {
-                                    label: 'cart_note.customer_page.item_note',
-                                    note: concreteItem.cartNote
-                                }
-                            } only %}
-                        </td>
-                    </tr>
+                    {% if concreteItem.cartNote is not empty %}
+                        <tr>
+                            <td></td>
+                            <td colspan="5">
+                                {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                    data: {
+                                        label: 'cart_note.customer_page.item_note',
+                                        note: concreteItem.cartNote
+                                    }
+                                } only %}
+                            </td>
+                        </tr>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </tbody>

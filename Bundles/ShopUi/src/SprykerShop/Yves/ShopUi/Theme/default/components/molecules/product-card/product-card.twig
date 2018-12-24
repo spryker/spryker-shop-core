@@ -10,7 +10,7 @@
     abstractId: required,
     url: required,
     imageUrl: required,
-    price: required,
+    price: null,
     originalPrice: null
 } %}
 
@@ -30,6 +30,8 @@
     {% block name %}
         <strong>{{data.name}}</strong>
     {% endblock %}
+
+    {% block sku %}{% endblock %}
 
     {% block rating %}
         {% widget 'DisplayProductAbstractReviewWidget' args [data.abstractId] only %}

@@ -12,13 +12,4 @@ namespace SprykerShop\Shared\QuickOrderPage;
  */
 interface QuickOrderPageConstants
 {
-    /**
-     * Deprecated: Move to Config instead.
-     */
-    public const ALLOWED_SEPARATORS = 'ALLOWED_SEPARATORS';
-
-    /**
-     * Deprecated: Move to Config instead.
-     */
-    public const PRODUCT_ROWS_NUMBER = 'PRODUCT_ROWS_NUMBER';
 }
