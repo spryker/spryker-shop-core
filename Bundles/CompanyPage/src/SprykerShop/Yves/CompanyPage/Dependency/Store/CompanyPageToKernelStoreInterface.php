@@ -20,4 +20,9 @@ interface CompanyPageToKernelStoreInterface
      * @return string
      */
     public function getCurrentLocale();
+
+    /**
+     * @return string[]
+     */
+    public function getCurrencyIsoCodes();
 }
