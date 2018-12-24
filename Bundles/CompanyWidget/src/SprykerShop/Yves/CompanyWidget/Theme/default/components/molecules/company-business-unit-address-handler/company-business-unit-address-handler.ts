@@ -140,7 +140,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         const addressSelectOptions = <HTMLOptionElement[]>Array.from(addressSelect.options);
 
         addressSelectOptions.some((item, index) => {
-            if(item.value.length) {
+            if(!item.value.length) {
                 addressSelect.selectedIndex = index;
                 addressSelect.dispatchEvent(this.resetSelectEvent);
                 return true;
