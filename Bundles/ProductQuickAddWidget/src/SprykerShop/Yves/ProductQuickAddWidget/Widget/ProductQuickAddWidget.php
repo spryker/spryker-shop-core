@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderCompactWidget\Widget;
+namespace SprykerShop\Yves\ProductQuickAddWidget\Widget;
 
 use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method \SprykerShop\Yves\QuickOrderCompactWidget\ProductSearchWidgetConfig getConfig()
+ * @method \SprykerShop\Yves\ProductQuickAddWidget\ProductSearchWidgetConfig getConfig()
  */
-class QuickOrderCompactWidget extends AbstractWidget implements WidgetInterface
+class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
 {
-    protected const NAME = 'QuickOrderCompactWidget';
+    protected const NAME = 'ProductQuickAddWidget';
 
     /**
      *
@@ -26,12 +26,12 @@ class QuickOrderCompactWidget extends AbstractWidget implements WidgetInterface
      */
     public function __construct(string $title, string $submitButtonTitle, string $submitUrl)
     {
-        $quickOrderCompactForm = $this->getQuickOrderCompactForm();
+        $productQuickAddForm = $this->getProductQuickAddForm();
 
         $this->addParameter('title', $title)
             ->addParameter('submitButtonTitle', $submitButtonTitle)
             ->addParameter('submitUrl', $submitUrl)
-            ->addParameter('form', $quickOrderCompactForm->createView());
+            ->addParameter('form', $productQuickAddForm->createView());
     }
 
     /**
@@ -55,14 +55,14 @@ class QuickOrderCompactWidget extends AbstractWidget implements WidgetInterface
      */
     public static function getTemplate(): string
     {
-        return '@QuickOrderCompactWidget/views/quick-order-form/quick-order-form.twig';
+        return '@ProductQuickAddWidget/views/quick-order-form/product-quick-add-form.twig';
     }
 
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getQuickOrderCompactForm(): FormInterface
+    protected function getProductQuickAddForm(): FormInterface
     {
-        return $this->getFactory()->getQuickOrderCompactForm();
+        return $this->getFactory()->getProductQuickAddForm();
     }
 }

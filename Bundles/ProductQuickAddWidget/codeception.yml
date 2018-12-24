@@ -1,4 +1,4 @@
-namespace: QuickOrderCompactWidget
+namespace: ProductQuickAddWidget
 actor: Tester
 paths:
     tests: tests

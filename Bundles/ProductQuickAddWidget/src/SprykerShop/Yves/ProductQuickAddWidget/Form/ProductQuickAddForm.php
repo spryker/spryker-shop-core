@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderCompactWidget\Form;
+namespace SprykerShop\Yves\ProductQuickAddWidget\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -15,11 +15,11 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * @method \SprykerShop\Yves\QuickOrderCompactWidget\QuickOrderCompactWidgetConfig getConfig()
+ * @method \SprykerShop\Yves\ProductQuickAddWidget\ProductQuickAddWidgetConfig getConfig()
  */
-class QuickOrderCompactForm extends AbstractType
+class ProductQuickAddForm extends AbstractType
 {
-    public const FORM_NAME = 'quickOrderCompactForm';
+    public const FORM_NAME = 'productQuickAddForm';
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
     public const  CART_QUICK_ADD_TO_CART_ = 'cart.quick_add_to_cart.volume_price';
@@ -47,9 +47,9 @@ class QuickOrderCompactForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this
+     * @return \SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm $this
      */
-    protected function addSku(FormBuilderInterface $builder): self
+    protected function addSku(FormBuilderInterface $builder): ProductQuickAddForm
     {
         $builder->add(
             static::FIELD_SKU,
@@ -69,9 +69,9 @@ class QuickOrderCompactForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this
+     * @return \SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm $this
      */
-    protected function addQuantity(FormBuilderInterface $builder): self
+    protected function addQuantity(FormBuilderInterface $builder): ProductQuickAddForm
     {
         $builder->add(
             static::FIELD_QUANTITY,

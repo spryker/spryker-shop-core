@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderCompactWidget;
+namespace SprykerShop\Yves\ProductQuickAddWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
-class QuickOrderCompactWidgetConfig extends AbstractBundleConfig
+class ProductQuickAddWidgetConfig extends AbstractBundleConfig
 {
 }

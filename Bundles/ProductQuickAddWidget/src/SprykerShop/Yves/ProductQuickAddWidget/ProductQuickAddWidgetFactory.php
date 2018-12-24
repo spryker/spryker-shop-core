@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderCompactWidget;
+namespace SprykerShop\Yves\ProductQuickAddWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\QuickOrderCompactWidget\Form\QuickOrderCompactForm;
+use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
-class QuickOrderCompactWidgetFactory extends AbstractFactory
+class ProductQuickAddWidgetFactory extends AbstractFactory
 {
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getQuickOrderCompactForm(): FormInterface
+    public function getProductQuickAddForm(): FormInterface
     {
-        return $this->getFormFactory()->create(QuickOrderCompactForm::class);
+        return $this->getFormFactory()->create(ProductQuickAddForm::class);
     }
 
     /**

@@ -16,7 +16,7 @@ use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerShop\Yves\QuickOrderCompactWidget\Form\QuickOrderCompactForm;
+use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
