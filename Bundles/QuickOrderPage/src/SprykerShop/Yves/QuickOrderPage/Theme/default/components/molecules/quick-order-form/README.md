@@ -1,13 +1,16 @@
 # quick-order-form (molecule)
 
-Displays a form with several rows in which includes SKU and quontity fields. Orders with multiple SKUs can be entered manually, also user can add/remove rows.
+Displays a form with several rows in which includes autocomplete products searching, measuring unit, quantity, and price. Also user can add/remove rows, add products to the cart or directly create new order.
 
 ## Code sample 
 
 ```
 {% include molecule('quick-order-form', 'QuickOrderPage') with {
     data: {
-        form: data.forms.items
+        form: data.forms.quickOrderForm,
+        products: data.products,
+        prices: data.prices,
+        additionalColumns: data.additionalColumns
     }
 } only %}
 ```
