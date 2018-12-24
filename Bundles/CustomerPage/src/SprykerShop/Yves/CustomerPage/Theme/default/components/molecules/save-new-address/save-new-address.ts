@@ -29,7 +29,7 @@ export default class SaveNewAddress extends Component {
         }
 
         this.mapEvents();
-        this.ifNewAddressOptionSelectedByDefault();
+        this.initSaveNewAddressState();
     }
 
     protected mapEvents(): void {
@@ -48,7 +48,7 @@ export default class SaveNewAddress extends Component {
         this.toggleSaveNewAddress();
     }
 
-    protected ifNewAddressOptionSelectedByDefault(): void {
+    protected initSaveNewAddressState(): void {
         this.newShippingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerShippingAddresses);
         this.newBillingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerBillingAddresses);
         this.toggleSaveNewAddress();
