@@ -38,25 +38,27 @@
 {%- endblock -%}
 
 {% block actions %}
-    {% if _widget.isSharingAllowed and _widget.accessType == 'OWNER_ACCESS' %}
-        <li class="menu__item">
-            <a href="{{ url('shared-cart/share', {idQuote: _widget.cart.idQuote}) }}" title="{{ 'shared_cart_widget.cart.share' | trans }}">
-                {{ 'shared_cart_widget.cart.share' | trans }}
-            </a>
-        </li>
-    {% endif %}
-    {% if _widget.accessType != 'OWNER_ACCESS' %}
-        <li class="menu__item">
-            <a href="{{ url('shared-cart/dismiss-confirm', {idQuote: _widget.cart.idQuote}) }}" title="{{ 'shared_cart_widget.cart.dismiss' | trans }}">
-                {{ 'shared_cart_widget.cart.dismiss' | trans }}
-            </a>
-        </li>
-    {% endif %}
-    {% if _widget.isQuoteDeletable and can('WriteSharedCartPermissionPlugin', _widget.cart.idQuote) %}
+    {% if not data.cart.isLocked %}
+        {% if _widget.isSharingAllowed and _widget.accessType == 'OWNER_ACCESS' %}
             <li class="menu__item">
-                <a href="{{ url('multi-cart/confirm-delete', {idQuote: _widget.cart.idQuote}) }}">
-                    {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
+                <a href="{{ url('shared-cart/share', {idQuote: _widget.cart.idQuote}) }}" title="{{ 'shared_cart_widget.cart.share' | trans }}">
+                    {{ 'shared_cart_widget.cart.share' | trans }}
                 </a>
             </li>
+        {% endif %}
+        {% if _widget.accessType != 'OWNER_ACCESS' %}
+            <li class="menu__item">
+                <a href="{{ url('shared-cart/dismiss-confirm', {idQuote: _widget.cart.idQuote}) }}" title="{{ 'shared_cart_widget.cart.dismiss' | trans }}">
+                    {{ 'shared_cart_widget.cart.dismiss' | trans }}
+                </a>
+            </li>
+        {% endif %}
+        {% if _widget.isQuoteDeletable and can('WriteSharedCartPermissionPlugin', _widget.cart.idQuote) %}
+                <li class="menu__item">
+                    <a href="{{ url('multi-cart/confirm-delete', {idQuote: _widget.cart.idQuote}) }}">
+                        {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
+                    </a>
+                </li>
+        {% endif %}
     {% endif %}
 {% endblock %}
