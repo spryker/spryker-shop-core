@@ -42,7 +42,8 @@ class SharedCartOperationsWidget extends AbstractWidget
      */
     protected function getCartActions(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): array
     {
-        $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
+        $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote())
+            && !$quoteTransfer->getIsLocked();
         $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote()) || $writeAllowed;
 
         return [

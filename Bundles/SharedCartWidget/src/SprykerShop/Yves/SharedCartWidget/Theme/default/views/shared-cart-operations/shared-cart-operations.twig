@@ -47,7 +47,7 @@
                 </a>
             </li>
         {% endif %}
-        {% if not data.cart.isLocked and data.isQuoteOwner and data.isSharedCartAllowed %}
+        {% if data.isQuoteOwner and data.isSharedCartAllowed %}
             <ul class="menu menu--inline">
                 <li class="menu__item">
                     <a class="button" href="{{ path('shared-cart/share', {idQuote: data.cart.idQuote}) }}" title="{{ 'shared_cart_widget.cart.share' | trans }}">{{ 'shared_cart_widget.cart.share' | trans }}</a>

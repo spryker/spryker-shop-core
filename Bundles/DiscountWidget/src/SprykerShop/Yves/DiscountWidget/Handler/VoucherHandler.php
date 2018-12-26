@@ -16,7 +16,7 @@ use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClien
 
 class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 {
-    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
     /**
      * @var \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface
@@ -53,7 +53,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
         $quoteTransfer = $this->quoteClient->getQuote();
 
         if ($quoteTransfer->getIsLocked()) {
-            return $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+            return $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
         }
 
         $voucherDiscount = new DiscountTransfer();
