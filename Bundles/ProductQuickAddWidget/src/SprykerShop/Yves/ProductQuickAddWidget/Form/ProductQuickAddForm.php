@@ -46,7 +46,7 @@ class ProductQuickAddForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm
+     * @return $this
      */
     protected function addSku(FormBuilderInterface $builder)
     {
@@ -68,7 +68,7 @@ class ProductQuickAddForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm
+     * @return $this
      */
     protected function addQuantity(FormBuilderInterface $builder)
     {
@@ -90,8 +90,6 @@ class ProductQuickAddForm extends AbstractType
     }
 
     /**
-     * @param array $options
-     *
      * @return \Symfony\Component\Validator\Constraints\Length
      */
     protected function createMinLengthConstraint(): Length
@@ -104,8 +102,6 @@ class ProductQuickAddForm extends AbstractType
     }
 
     /**
-     * @param array $options
-     *
      * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
     protected function createNotBlankConstraint(): NotBlank
