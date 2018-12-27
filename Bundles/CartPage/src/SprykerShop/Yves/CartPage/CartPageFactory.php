@@ -18,9 +18,9 @@ use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
+use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
 
 class CartPageFactory extends AbstractFactory
 {

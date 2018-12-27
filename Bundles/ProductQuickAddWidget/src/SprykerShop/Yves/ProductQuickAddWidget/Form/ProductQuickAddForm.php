@@ -46,9 +46,9 @@ class ProductQuickAddForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm $this
+     * @return $this $this
      */
-    protected function addSku(FormBuilderInterface $builder): ProductQuickAddForm
+    protected function addSku(FormBuilderInterface $builder): self
     {
         $builder->add(
             static::FIELD_SKU,
@@ -68,9 +68,9 @@ class ProductQuickAddForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm $this
+     * @return $this $this
      */
-    protected function addQuantity(FormBuilderInterface $builder): ProductQuickAddForm
+    protected function addQuantity(FormBuilderInterface $builder): self
     {
         $builder->add(
             static::FIELD_QUANTITY,

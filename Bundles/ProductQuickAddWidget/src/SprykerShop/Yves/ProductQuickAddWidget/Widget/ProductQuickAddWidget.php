@@ -19,7 +19,6 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
     protected const NAME = 'ProductQuickAddWidget';
 
     /**
-     *
      * @param string $title
      * @param string $submitButtonTitle
      * @param string $submitUrl
