@@ -255,7 +255,7 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
-        $form = $this->getFactory()->getQuickOrderCompactForm()->handleRequest($request);
+        $form = $this->getFactory()->getProductQuickAddForm()->handleRequest($request);
 
 
         if (!$form->isSubmitted() || !$form->isValid()) {
@@ -264,8 +264,8 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
-        $sku = $form->getData()[QuickOrderCompactForm::FIELD_SKU];
-        $quantity = $form->getData()[QuickOrderCompactForm::FIELD_QUANTITY];
+        $sku = $form->getData()[ProductQuickAddForm::FIELD_SKU];
+        $quantity = $form->getData()[ProductQuickAddForm::FIELD_QUANTITY];
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer

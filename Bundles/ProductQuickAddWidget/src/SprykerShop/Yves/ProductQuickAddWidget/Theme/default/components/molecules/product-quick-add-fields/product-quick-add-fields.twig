@@ -1,0 +1,37 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'product-quick-add-fields',
+    tag: 'div'
+} %}
+
+{% define data = {
+    form: null
+} %}
+
+{% block body %}
+    {% do data.form.sku.setRendered %}
+
+    <div class="form__field col col--sm-12">
+        {% widget 'ProductConcreteSearchWidget' args [
+            'ajax-provider' ~ config.name,
+            data.form.sku.vars.full_name,
+            '',
+            ''
+        ] only %}
+        {% endwidget %}
+    </div>
+
+    <div class="form__field col col--sm-12">
+        {{ form_widget(data.form.children.quantity, {
+            attr: {
+                class: config.jsName ~ '__quantity',
+                min: 1,
+                max: null,
+                step: 1,
+                placeholder: 'cart.quick_add_to_cart.quantity' | trans
+            }}
+        ) }}
+    </div>
+
+{% endblock %}

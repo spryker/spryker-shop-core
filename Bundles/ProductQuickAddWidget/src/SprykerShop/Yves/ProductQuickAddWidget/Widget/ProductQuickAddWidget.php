@@ -55,7 +55,7 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
      */
     public static function getTemplate(): string
     {
-        return '@ProductQuickAddWidget/views/quick-order-form/product-quick-add-form.twig';
+        return '@ProductQuickAddWidget/views/product-quick-add-form/product-quick-add-form.twig';
     }
 
     /**

@@ -20,7 +20,7 @@ use SprykerShop\Yves\CartPage\Model\CartItemReader;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use SprykerShop\Yves\QuickOrderCompactWidget\Form\QuickOrderCompactForm;
+use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
 
 class CartPageFactory extends AbstractFactory
 {
@@ -173,9 +173,9 @@ class CartPageFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getQuickOrderCompactForm(): FormInterface
+    public function getProductQuickAddForm(): FormInterface
     {
-        return $this->getFormFactory()->create(QuickOrderCompactForm::class);
+        return $this->getFormFactory()->create(ProductQuickAddForm::class);
     }
 
     /**
