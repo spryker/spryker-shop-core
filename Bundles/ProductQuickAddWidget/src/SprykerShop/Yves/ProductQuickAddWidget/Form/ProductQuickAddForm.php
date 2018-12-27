@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductQuickAddForm extends AbstractType
 {
-    public const FORM_NAME = 'productQuickAddForm';
+    private const FORM_NAME = 'productQuickAddForm';
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
 
@@ -46,9 +46,9 @@ class ProductQuickAddForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this $this
+     * @return ProductQuickAddForm $this
      */
-    protected function addSku(FormBuilderInterface $builder): self
+    protected function addSku(FormBuilderInterface $builder): ProductQuickAddForm
     {
         $builder->add(
             static::FIELD_SKU,
@@ -68,9 +68,9 @@ class ProductQuickAddForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this $this
+     * @return ProductQuickAddForm $this
      */
-    protected function addQuantity(FormBuilderInterface $builder): self
+    protected function addQuantity(FormBuilderInterface $builder): ProductQuickAddForm
     {
         $builder->add(
             static::FIELD_QUANTITY,
