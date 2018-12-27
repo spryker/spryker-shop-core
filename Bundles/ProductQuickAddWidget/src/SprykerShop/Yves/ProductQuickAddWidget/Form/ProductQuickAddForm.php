@@ -22,7 +22,6 @@ class ProductQuickAddForm extends AbstractType
     public const FORM_NAME = 'productQuickAddForm';
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
-    public const  CART_QUICK_ADD_TO_CART_ = 'cart.quick_add_to_cart.volume_price';
 
     /**
      * @return string
@@ -55,12 +54,12 @@ class ProductQuickAddForm extends AbstractType
             static::FIELD_SKU,
             HiddenType::class,
             [
-                    'required' => true,
-                    'label' => false,
-                    'constraints' => [
-                        $this->createNotBlankConstraint(),
-                    ],
-                ]
+                'required' => true,
+                'label' => false,
+                'constraints' => [
+                    $this->createNotBlankConstraint(),
+                ],
+            ]
         );
 
         return $this;
@@ -93,22 +92,24 @@ class ProductQuickAddForm extends AbstractType
     /**
      * @param array $options
      *
-     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     * @return \Symfony\Component\Validator\Constraints\Length
      */
-    protected function createNotBlankConstraint(): NotBlank
+    protected function createMinLengthConstraint(): Length
     {
-        return new NotBlank();
+        return new Length(
+            [
+                'min' => 1,
+            ]
+        );
     }
 
     /**
      * @param array $options
      *
-     * @return \Symfony\Component\Validator\Constraints\Length
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
-    protected function createMinLengthConstraint(): Length
+    protected function createNotBlankConstraint(): NotBlank
     {
-        return new Length([
-            'min' => 1,
-        ]);
+        return new NotBlank();
     }
 }

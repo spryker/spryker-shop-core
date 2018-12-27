@@ -29,8 +29,6 @@ class CartController extends AbstractController
 
     public const MESSAGE_QUICK_ADD_TO_CART_INCORRECT_INPUT_DATA = 'cart.quick_add_to_cart.incorrect_input_data';
 
-    public const MESSAGE_QUICK_ADD_TO_CART_ADDED_TO_CART = 'cart.quick_add_to_cart.added_to_cart,';
-
     public const PARAM_ITEMS = 'items';
 
     /**
@@ -247,7 +245,7 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function quickAddAction(Request $request)
+    public function quickAddAction(Request $request): RedirectResponse
     {
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
@@ -256,7 +254,6 @@ class CartController extends AbstractController
         }
 
         $form = $this->getFactory()->getProductQuickAddForm()->handleRequest($request);
-
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addErrorMessage(static::MESSAGE_QUICK_ADD_TO_CART_INCORRECT_INPUT_DATA);
@@ -277,8 +274,8 @@ class CartController extends AbstractController
             ->addItem($itemTransfer, $request->request->all());
 
         $this->getFactory()
-                ->getZedRequestClient()
-                ->addFlashMessagesFromLastZedRequest();
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
