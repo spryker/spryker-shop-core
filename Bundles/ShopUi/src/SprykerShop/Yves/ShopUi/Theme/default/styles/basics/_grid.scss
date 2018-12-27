@@ -6,73 +6,6 @@
         margin: auto;
     }
 
-    .grid {
-        @include helper-ui-clearfix;
-        clear: both;
-        display: flex;
-        flex-flow: row wrap;
-        align-items: flex-start;
-        justify-content: flex-start;
-
-        &--top {
-            align-items: flex-start;
-        }
-
-        &--bottom {
-            align-items: flex-end;
-        }
-
-        &--left {
-            justify-content: flex-start;
-        }
-
-        &--right {
-            justify-content: flex-end;
-        }
-
-        &--center {
-            justify-content: center;
-        }
-
-        &--middle {
-            align-items: center;
-        }
-
-        &--justify {
-            justify-content: space-between;
-
-            & .col {
-                margin-left: auto;
-                margin-right: auto;
-
-                &:first-child {
-                    margin-left: 0;
-                }
-
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
-        }
-
-        &--nowrap {
-            flex-wrap: nowrap;
-        }
-
-        &--stretch {
-            align-items: stretch;
-
-            & .col {
-                margin-top: 0;
-                margin-bottom: 0;
-            }
-        }
-
-        &.container {
-            max-width: $setting-grid-max-width;
-        }
-    }
-
     .col {
         @include helper-ui-clearfix;
         float: left;
@@ -125,6 +58,73 @@
             align-self: center;
             margin-top: auto;
             margin-bottom: auto;
+        }
+    }
+
+    .grid {
+        @include helper-ui-clearfix;
+        clear: both;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        &--top {
+            align-items: flex-start;
+        }
+
+        &--bottom {
+            align-items: flex-end;
+        }
+
+        &--left {
+            justify-content: flex-start;
+        }
+
+        &--right {
+            justify-content: flex-end;
+        }
+
+        &--center {
+            justify-content: center;
+        }
+
+        &--middle {
+            align-items: center;
+        }
+
+        &--stretch {
+            align-items: stretch;
+
+            & .col {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
+
+        &--justify {
+            justify-content: space-between;
+
+            & .col {
+                margin-left: auto;
+                margin-right: auto;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        &--nowrap {
+            flex-wrap: nowrap;
+        }
+
+        &.container {
+            max-width: $setting-grid-max-width;
         }
     }
 }

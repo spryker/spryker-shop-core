@@ -85,7 +85,7 @@
                             {{parent()}}
                             {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
                                 {% if embed.item.cartNote is not empty %}
-                                    {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+                                    {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }}  @deprecated Use molecule('note-list', 'CartNoteWidget') instead.
                                 {% endif %}
                             {% elseif embed.item.cartNote is not empty %}
                                 {% include molecule('note-list', 'CartNoteWidget') ignore missing with {

@@ -26,14 +26,14 @@
         }
 
         &--bullet &__item {
-            &:before {
+            &::before {
                 content: '•';
                 margin-right: 0.25rem;
             }
         }
 
         &--plus &__item {
-            &:before {
+            &::before {
                 content: '+';
                 margin-right: 0.25rem;
             }
