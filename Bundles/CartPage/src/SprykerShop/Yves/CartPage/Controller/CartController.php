@@ -97,7 +97,7 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
-        return $this->executeAddAction($sku, $quantity, $optionValueIds, $request);
+        return $this->executeAddAction($sku, $quantity, $request, $optionValueIds);
     }
 
     /**
@@ -250,18 +250,18 @@ class CartController extends AbstractController
         $sku = $form->getData()[ProductQuickAddForm::FIELD_SKU];
         $quantity = $form->getData()[ProductQuickAddForm::FIELD_QUANTITY];
 
-        return $this->executeAddAction($sku, $quantity, [], $request);
+        return $this->executeAddAction($sku, $quantity, $request, []);
     }
 
     /**
      * @param string $sku
      * @param int $quantity
-     * @param array $optionValueIds
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $optionValueIds
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executeAddAction(string $sku, int $quantity, array $optionValueIds = [], Request $request): RedirectResponse
+    public function executeAddAction(string $sku, int $quantity, Request $request, array $optionValueIds = []): RedirectResponse
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer
