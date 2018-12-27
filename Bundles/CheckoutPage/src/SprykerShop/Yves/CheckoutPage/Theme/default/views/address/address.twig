@@ -148,9 +148,11 @@
                     {% block fields %}
                         {% set existingBillingAddresses = data.form.id_customer_address | default %}
                         {% set hasBillingAddresses = data.form.id_customer_address is defined %}
+                        {% set hideBillingAddressForm = data.form.id_customer_address is defined %}
                         {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress', data.form.vars.data]) %}
                         {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
                             {% set hasBillingAddresses = true %}
+                            {% set hideBillingAddressForm = false %}
                         {% endif %}
 
                         {% if hasBillingAddresses %}
@@ -174,7 +176,7 @@
                             </div>
                         {% endif %}
 
-                        <div class="js-address__billing">
+                        <div class="js-address__billing {{ hideBillingAddressForm ? ' is-hidden ' : '' }}">
                             {{parent()}}
                         </div>
                     {% endblock %}
