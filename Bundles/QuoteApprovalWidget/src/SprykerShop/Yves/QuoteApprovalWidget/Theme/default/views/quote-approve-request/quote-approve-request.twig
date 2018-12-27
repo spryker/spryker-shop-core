@@ -1,0 +1,20 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.form,
+    formOptions: {
+        action: url('quote-approval/request/send')
+    }
+} %}
+{% block body %}
+
+    {{ form_start(data.form, data.formOptions) }}
+        {{ form_widget(data.form.idApprover) }}
+        <button type="submit" class="button">
+            {{ 'sumbit' | trans }}
+        </button>
+    {{ form_errors(data.form) }}
+    {{ form_end(data.form) }}
+
+{% endblock %}
+
