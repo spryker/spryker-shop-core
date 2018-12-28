@@ -5,6 +5,7 @@
         padding: calc(.25rem + 1px) calc(.5rem + 1px);
         background-color: $setting-color-main;
         border: none;
+        border-radius: 0;
         color: $setting-color-white;
         text-align: center;
         cursor: pointer;
@@ -12,6 +13,13 @@
         &:hover,
         &:focus {
             background-color: helper-color-dark($setting-color-main);
+            text-decoration: none;
+        }
+
+        &:active {
+            color: $setting-color-white;
+            background-color: map-get($setting-color-actions, alert);
+            border-color: map-get($setting-color-actions, alert);
             text-decoration: none;
         }
 
@@ -69,6 +77,12 @@
         &:hover,
         &:focus {
             background-color: helper-color-light($setting-color-action);
+        }
+
+        &:active {
+            color: map-get($setting-color-actions, alert);
+            background-color: $setting-color-white;
+            border-color: map-get($setting-color-actions, alert);
         }
     }
 
