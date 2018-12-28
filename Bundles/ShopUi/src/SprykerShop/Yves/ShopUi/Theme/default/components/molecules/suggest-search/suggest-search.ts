@@ -213,10 +213,16 @@ export default class SuggestSearch extends Component {
         this.ajaxProvider.setAttribute('url', `${baseSuggestUrl}${paramsString}`);
     }
 
+    /**
+     * Shows the search suggestion
+     */
     showSugestions(): void {
         this.suggestionsContainer.classList.remove('is-hidden');
     }
 
+    /**
+     * Performs hiding of the search suggestion
+     */
     hideSugestions(): void {
         this.suggestionsContainer.classList.add('is-hidden');
     }
@@ -228,6 +234,10 @@ export default class SuggestSearch extends Component {
         this.searchInput.classList.add(`${this.name}__input--transparent`);
     }
 
+    /**
+     * Performs setting of the search suggestion
+     * @param value Optional data sets instead the search suggestion
+     */
     updateHintInput(value?: string): void {
         let hintValue = value ? value : this.hint;
         const inputValue = this.searchInput.value;
@@ -246,18 +256,30 @@ export default class SuggestSearch extends Component {
         this.currentSearchValue = suggestQuery;
     }
 
+    /**
+     * Gets a time delay for the keyup and blur events
+     */
     get debounceDelay(): number {
         return Number(this.getAttribute('debounce-delay'));
     }
 
+    /**
+     * Gets a time delay for the keydown event
+     */
     get throttleDelay(): number {
         return Number(this.getAttribute('throttle-delay'));
     }
 
+    /**
+     * Gets a minimun number of letters in search field for start to send a request to a server
+     */
     get lettersTrashold(): number {
         return Number(this.getAttribute('letters-trashold'));
     }
 
+    /**
+     * Gets a querySelector of the search input field
+     */
     get searchInputSelector(): string {
         return <string> this.getAttribute('input-selector');
     }

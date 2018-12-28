@@ -46,6 +46,10 @@ export default class QuickOrderForm extends Component {
         this.removeRow(rowIndex);
     }
 
+    /**
+     * Performs an ajax request to the server and render responce on a page.
+     * @template viod Type of argument returned by the successful promise
+     */
     async addRow(): Promise<void> {
         const data = this.getFormData();
         const response = await this.addRowAjaxProvider.fetch(data);
@@ -56,6 +60,11 @@ export default class QuickOrderForm extends Component {
         this.mapRemoveRowTriggersEvents();
     }
 
+    /**
+     * Performs an ajax request to the server and render responce on a page.
+     * @template viod Type of argument returned by the successful promise
+     * @param rowIndex string index of row for removing
+     */
     async removeRow(rowIndex: string): Promise<void> {
         const data = this.getFormData({
             'row-index': rowIndex
@@ -68,6 +77,12 @@ export default class QuickOrderForm extends Component {
         this.mapRemoveRowTriggersEvents();
     }
 
+    /**
+     * Gets an instanse of the FormData
+     * @template FormData type of data returned by the function
+     * @param appendData optional data object for extending the returned data
+     * @returns A data instance of the FormData type
+     */
     getFormData(appendData?: object): FormData {
         const data = new FormData(this.form);
 

@@ -23,6 +23,9 @@ export default class TogglerClick extends Component {
         this.toggle();
     }
 
+    /**
+     * Perfoms toggling of the class names
+     */
     toggle(): void {
         this.targets.forEach((target: HTMLElement) => {
             const addClass = !target.classList.contains(this.classToToggle);
@@ -30,14 +33,23 @@ export default class TogglerClick extends Component {
         });
     }
 
+    /**
+     * Gets a querySelector of the trigger element
+     */
     get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
     }
 
+    /**
+     * Gets a querySelector of the target element
+     */
     get targetSelector(): string {
         return this.getAttribute('target-selector');
     }
 
+    /**
+     * Gets a class name for toggle action
+     */
     get classToToggle(): string {
         return this.getAttribute('class-to-toggle');
     }

@@ -28,6 +28,10 @@ export default class RatingSelector extends Component {
         this.updateRating(newValue);
     }
 
+    /**
+     * Toggles the disable attribute on the input element
+     * @param value number for checking set the attribue or remove it from the input element
+     */
     checkInput(value: number): void {
         if (!this.disableIfEmptyValue) {
             return;
@@ -41,6 +45,11 @@ export default class RatingSelector extends Component {
         this.input.removeAttribute('disabled');
     }
 
+
+    /**
+     * Performs setting the value attibute and toogle special class name
+     * @param value number for setting the atribute
+     */
     updateRating(value: number): void {
         this.input.setAttribute('value', `${value}`);
 
@@ -56,14 +65,23 @@ export default class RatingSelector extends Component {
         });
     }
 
+    /**
+     * Gets an input value
+     */
     get value(): number {
         return parseFloat(this.input.value);
     }
 
+    /**
+     * Gets if an eleme nt is readonly
+     */
     get readOnly(): boolean {
         return this.hasAttribute('readonly');
     }
 
+    /**
+     * Gets if an element has an epmty value
+     */
     get disableIfEmptyValue(): boolean {
         return this.hasAttribute('disable-if-empty-value');
     }

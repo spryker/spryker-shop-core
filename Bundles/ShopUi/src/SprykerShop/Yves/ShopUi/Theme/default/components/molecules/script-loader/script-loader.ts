@@ -7,6 +7,9 @@ const defaultIgnoredAttributes = [
     'data-qa'
 ];
 
+/**
+ * @event scriptload Event emitted when a script is loaded
+ */
 export default class ScriptLoader extends Component {
     head: HTMLHeadElement
     script: HTMLScriptElement
@@ -53,16 +56,25 @@ export default class ScriptLoader extends Component {
         return this.ignoredAttributes.indexOf(attributeName) !== -1;
     }
 
+    /**
+     * Gets array of the attributes names
+     */
     get ignoredAttributes(): string[] {
         return [
             ...defaultIgnoredAttributes
         ]
     }
 
+    /**
+     * Gets if the script is already exist in DOM
+     */
     get isScriptAlreadyInDOM(): boolean {
         return !!document.querySelector(`script[src="${this.src}"]`);
     }
 
+    /**
+     * Gets the url endpoint used to load the script
+     */
     get src(): string {
         return this.getAttribute('src');
     }

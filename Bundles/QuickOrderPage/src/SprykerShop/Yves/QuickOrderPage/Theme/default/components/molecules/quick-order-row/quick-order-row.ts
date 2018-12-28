@@ -56,6 +56,10 @@ export default class QuickOrderRow extends Component {
         this.errorMessage.classList.remove(ERROR_MESSAGE_CLASS, ERROR_PARTIAL_MESSAGE_CLASS);
     }
 
+    /**
+     * Performs settings for the ajaxProvider and send an ajax request to the server.
+     * @param sku string value to setting of ajaxProvider
+     */
     async reloadField(sku: string = '') {
         clearTimeout(this.timer);
         const quantityInputValue = parseInt(this.quantityValue);
@@ -78,6 +82,9 @@ export default class QuickOrderRow extends Component {
         }
     }
 
+    /**
+     * Gets a quantity value
+     */
     get quantityValue(): string {
         return this.quantityInput.value;
     }

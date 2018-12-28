@@ -13,6 +13,9 @@ export default class MiniCartRadio extends Component {
         this.onclick = () => window.location.href = this.locationUrl;
     }
 
+    /**
+     * Gets lacation url from checked radio
+     */
     get locationUrl(): string {
         return this.radio.dataset.href;
     }

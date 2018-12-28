@@ -68,6 +68,9 @@ export default class SimpleCarousel extends Component {
         this.updateCurrentDot();
     }
 
+    /**
+     * Performs index setting of the previous slide
+     */
     loadPrevViewIndex(): void {
         this.viewCurrentIndex = this.viewCurrentIndex - 1;
 
@@ -76,6 +79,9 @@ export default class SimpleCarousel extends Component {
         }
     }
 
+    /**
+     * Performs index setting of the next slide
+     */
     loadNextViewIndex(): void {
         this.viewCurrentIndex = this.viewCurrentIndex + 1;
 
@@ -84,6 +90,10 @@ export default class SimpleCarousel extends Component {
         }
     }
 
+    /**
+     * Performs index setting of the active slide
+     * @param dot HTMLElement for reading index of the active slide
+     */
     loadViewIndexFromDot(dot: HTMLElement): void {
         this.viewCurrentIndex = this.dots.indexOf(dot);
 
@@ -92,6 +102,9 @@ export default class SimpleCarousel extends Component {
         }
     }
 
+    /**
+     * Performs sliding of slider items
+     */
     slide(): void {
         let slidesToSlide = this.slidesToScroll * this.viewCurrentIndex;
 
@@ -103,6 +116,9 @@ export default class SimpleCarousel extends Component {
         this.slider.style.transform = `translateX(${offset}%)`;
     }
 
+    /**
+     * Performs toggling the active class and modifier on the current dot
+     */
     updateCurrentDot(): void {
         if (this.dots.length === 0) {
             return;
@@ -119,10 +135,16 @@ export default class SimpleCarousel extends Component {
             .add(this.dotCurrentModifier);
     }
 
+    /**
+     * Gets a number of slides which will showing at the same time
+     */
     get slidesToShow(): number {
         return parseInt(this.getAttribute('slides-to-show') || '0');
     }
 
+    /**
+     * Gets a number of slides which will to scroll by one iteration
+     */
     get slidesToScroll(): number {
         return parseInt(this.getAttribute('slides-to-scroll') || '0');
     }

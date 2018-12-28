@@ -13,7 +13,6 @@ export default class MeasurementQuantitySelector extends Component {
     currentValue: Number;
     translations: any;
 
-
     protected readyCallback(event?: Event): void {
         this.qtyInSalesUnitInput = <HTMLInputElement>document.querySelector('#sales-unit-quantity');
         this.qtyInBaseUnitInput = <HTMLInputElement>document.querySelector('#base-unit-quantity');

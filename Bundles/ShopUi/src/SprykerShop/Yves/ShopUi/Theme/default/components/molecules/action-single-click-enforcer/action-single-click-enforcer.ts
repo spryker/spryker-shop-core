@@ -30,6 +30,9 @@ export default class ActionSingleClickEnforcer extends Component {
         targetElement.setAttribute('disabled', 'disabled');
     }
 
+    /**
+     * Gets a querySelector name of the target element
+     */
     get targetSelector(): string {
         return this.getAttribute('target-selector') || '';
     }

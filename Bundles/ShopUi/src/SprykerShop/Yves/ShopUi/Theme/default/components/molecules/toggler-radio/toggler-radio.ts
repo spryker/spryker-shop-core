@@ -13,12 +13,18 @@ export default class TogglerRadio extends TogglerCheckbox {
         this.toggleAll();
     }
 
+    /**
+     * Performs toggling of the all toggler elements
+     */
     toggleAll(): void {
         this.togglers.forEach((toggler: TogglerRadio) => {
             toggler.toggle(toggler.addClass);
         });
     }
 
+    /**
+     * Gets a group name
+     */
     get groupName(): string {
         return this.getAttribute('group-name');
     }

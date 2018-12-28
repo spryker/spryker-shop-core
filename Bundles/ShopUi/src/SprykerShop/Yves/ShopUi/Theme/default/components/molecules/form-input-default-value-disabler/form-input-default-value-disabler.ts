@@ -21,6 +21,10 @@ export default class FormInputDefaultValueDisabler extends Component {
         this.disableInputsWithDefaultValues(form);
     }
 
+    /**
+     * Performs toggling of the disable attribute and sbmit the form
+     * @param form HTMLFormElement for submit event
+     */
     disableInputsWithDefaultValues(form: HTMLFormElement) {
         const inputs = <HTMLInputElement[]>Array.from(form.querySelectorAll(this.inputSelector));
 
@@ -38,14 +42,23 @@ export default class FormInputDefaultValueDisabler extends Component {
         form.submit();
     }
 
+    /**
+     * Gets a querySelector name of the form element
+     */
     get formSelector(): string {
         return this.getAttribute('form-selector');
     }
 
+    /**
+     * Gets a querySelector name of the input element
+     */
     get inputSelector(): string {
         return this.getAttribute('input-selector');
     }
 
+    /**
+     * Gets a name of the default value attribute
+     */
     get defaultValueAttribute(): string {
         return this.getAttribute('default-value-attribute');
     }

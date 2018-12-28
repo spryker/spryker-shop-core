@@ -19,6 +19,13 @@ const keyCodes: {
     enter: 13
 };
 
+/**
+ * @event fetching Event emitted when an ajax request is sent to the server
+ * @event fetched Event emitted when an ajax request is closed
+ * @event change Event emitted when the search filed is changing
+ * @event set Event emitted when an element of autocomplete suggestion is selected
+ * @event unset Event emitted when an element of autocomplete suggestion is removed
+ */
 export default class AutocompleteForm extends Component {
     ajaxProvider: AjaxProvider
     textInput: HTMLInputElement;

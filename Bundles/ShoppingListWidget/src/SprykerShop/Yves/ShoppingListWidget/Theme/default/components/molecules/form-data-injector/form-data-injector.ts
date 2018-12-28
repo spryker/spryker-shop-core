@@ -27,6 +27,9 @@ export default class FormDataInjector extends Component {
         this.destinationForm.querySelector('[type="submit"]').setAttribute('disabled', 'disabled');
     }
 
+    /**
+     * Performs injection of a data to the form fileds
+     */
     public injectData(): void {
         this.fieldsToInject.forEach((field: HTMLFormElement) => this.addField(field));
     }
@@ -41,10 +44,16 @@ export default class FormDataInjector extends Component {
         this.destinationForm.appendChild(insertField);
     }
 
+    /**
+     * Gets a querySelector name of a destination form
+     */
     get destinationFormSelector(): string {
         return this.getAttribute('destination-form-selector');
     }
 
+    /**
+     * Gets a querySelector name of a filed element
+     */
     get fieldsSelector(): string {
         return this.getAttribute('fields-selector');
     }
