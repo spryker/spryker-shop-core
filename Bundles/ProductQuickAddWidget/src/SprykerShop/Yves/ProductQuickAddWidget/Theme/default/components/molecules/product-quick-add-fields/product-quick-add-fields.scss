@@ -1,7 +1,0 @@
-@mixin product-quick-add-fields($name: '.product-quick-add-fields') {
-    #{$name} {
-        width: 100%;
-
-        @content;
-    }
-}

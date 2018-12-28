@@ -1,12 +1,11 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'product-quick-add-fields',
-    tag: 'div'
+    name: 'product-quick-add-fields'
 } %}
 
 {% define data = {
-    form: null
+    form: required
 } %}
 
 {% block body %}
@@ -16,8 +15,6 @@
         {% widget 'ProductConcreteSearchWidget' args [
             'ajax-provider' ~ config.name,
             data.form.sku.vars.full_name,
-            '',
-            ''
         ] only %}
         {% endwidget %}
     </div>
@@ -27,7 +24,6 @@
             attr: {
                 class: config.jsName ~ '__quantity',
                 min: 1,
-                max: null,
                 step: 1,
                 placeholder: 'cart.quick_add_to_cart.quantity' | trans
             }}

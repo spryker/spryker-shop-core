@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductQuickAddForm extends AbstractType
 {
-    private const FORM_NAME = 'productQuickAddForm';
+    protected const FORM_NAME = 'productQuickAddForm';
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
 
@@ -50,17 +50,11 @@ class ProductQuickAddForm extends AbstractType
      */
     protected function addSku(FormBuilderInterface $builder)
     {
-        $builder->add(
-            static::FIELD_SKU,
-            HiddenType::class,
-            [
-                'required' => true,
-                'label' => false,
-                'constraints' => [
-                    $this->createNotBlankConstraint(),
-                ],
-            ]
-        );
+        $builder->add(static::FIELD_SKU, HiddenType::class, [
+            'required' => true,
+            'label' => false,
+            'constraints' => [$this->createNotBlankConstraint()],
+        ]);
 
         return $this;
     }
@@ -72,10 +66,7 @@ class ProductQuickAddForm extends AbstractType
      */
     protected function addQuantity(FormBuilderInterface $builder)
     {
-        $builder->add(
-            static::FIELD_QUANTITY,
-            IntegerType::class,
-            [
+        $builder->add(static::FIELD_QUANTITY, IntegerType::class, [
                 'required' => true,
                 'label' => false,
                 'attr' => ['min' => 1],
@@ -83,8 +74,7 @@ class ProductQuickAddForm extends AbstractType
                     $this->createNotBlankConstraint(),
                     $this->createMinLengthConstraint(),
                 ],
-            ]
-        );
+            ]);
 
         return $this;
     }
@@ -94,11 +84,7 @@ class ProductQuickAddForm extends AbstractType
      */
     protected function createMinLengthConstraint(): Length
     {
-        return new Length(
-            [
-                'min' => 1,
-            ]
-        );
+        return new Length(['min' => 1]);
     }
 
     /**

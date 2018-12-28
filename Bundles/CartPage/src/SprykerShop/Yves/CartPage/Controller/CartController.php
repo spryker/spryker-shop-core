@@ -264,8 +264,7 @@ class CartController extends AbstractController
     public function executeAddAction(string $sku, int $quantity, Request $request, array $optionValueIds = []): RedirectResponse
     {
         $itemTransfer = new ItemTransfer();
-        $itemTransfer
-            ->setSku($sku)
+        $itemTransfer->setSku($sku)
             ->setQuantity($quantity);
 
         if (!empty($optionValueIds)) {

@@ -8,8 +8,7 @@
 } %}
 
 {% define config = {
-    name: 'quick-order-form',
-    tag: 'div',
+    name: 'quick-order-form'
 } %}
 
 {% block body %}
@@ -19,14 +18,14 @@
                 title: data.title,
                 form: data.form,
                 options: {
-                    action: url(data.submitUrl),
+                    action: data.submitUrl,
                 },
                 submitButtonTitle: data.submitButtonTitle
             }
         } only %}
             {% block fields %}
                 {% include molecule('product-quick-add-fields', 'ProductQuickAddWidget') with {
-                    class: "full-width",
+                    class: "col col--sm-12",
                     data: {
                         form: data.form
                     }
@@ -34,11 +33,11 @@
             {% endblock %}
 
             {% block actions %}
-                    <button type="submit" class="button button--expand button--success">
-                        {{ data.submitButtonTitle }}
-                    </button>
+                <button type="submit" class="button button--expand button--success">
+                    {{ data.submitButtonTitle }}
+                </button>
             {% endblock %}
         {% endembed %}
     </div>
-    <hr>
+    <hr/>
 {% endblock %}
