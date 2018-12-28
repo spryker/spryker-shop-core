@@ -21,6 +21,7 @@ class ProductQuickAddForm extends AbstractType
 {
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
+    
     protected const FORM_NAME = 'productQuickAddForm';
 
     /**
@@ -53,7 +54,9 @@ class ProductQuickAddForm extends AbstractType
         $builder->add(static::FIELD_SKU, HiddenType::class, [
             'required' => true,
             'label' => false,
-            'constraints' => [$this->createNotBlankConstraint()],
+            'constraints' => [
+                $this->createNotBlankConstraint()
+            ],
         ]);
 
         return $this;
