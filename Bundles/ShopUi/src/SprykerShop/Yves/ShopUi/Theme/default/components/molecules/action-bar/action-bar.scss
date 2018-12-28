@@ -1,0 +1,56 @@
+@mixin shop-ui-action-bar($name: '.action-bar') {
+    #{$name} {
+        margin: 1rem 0;
+
+        @include helper-breakpoint(md) {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &--first {
+            margin-top: 0;
+        }
+
+        &--big {
+            margin-top: 3rem;
+        }
+
+        &--small {
+            margin: 1rem 0 0.5rem;
+        }
+
+        &--narrow {
+            @include helper-breakpoint(md) {
+                max-width: 43.75rem;
+            }
+
+            @include helper-breakpoint(xl) {
+                max-width: 31.25rem;
+            }
+        }
+
+        &__actions {
+            @include helper-breakpoint(md) {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        &__action {
+            width: 100%;
+            margin-top: 0.5rem;
+
+            @include helper-breakpoint(md) {
+                width: auto;
+                margin: 0 0 0 0.5rem;
+            }
+        }
+
+        &__icon {
+            display: block;
+            width: 0.8125rem;
+            height: 0.8125rem;
+            margin-right: 0.625rem;
+        }
+    }
+}
