@@ -239,7 +239,9 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
-        $form = $this->getFactory()->getProductQuickAddForm()->handleRequest($request);
+        $form = $this->getFactory()
+            ->getProductQuickAddForm()
+            ->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addErrorMessage(static::MESSAGE_QUICK_ADD_TO_CART_INCORRECT_INPUT_DATA);
