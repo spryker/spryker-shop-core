@@ -157,13 +157,13 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplicationPlugins(Container $container): Container
     {
-        $container->set(static::PLUGIN_APPLICATION, function (Container $container): array {
+        $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
             return $this->getApplicationPlugins();
         });
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface[]
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
     protected function getApplicationPlugins(): array
     {

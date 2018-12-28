@@ -78,17 +78,17 @@ abstract class YvesBootstrap
      */
     protected function setupApplication(): void
     {
-        foreach ($this->getApplicationExtensions() as $applicationExtension) {
-            $this->sprykerApplication->registerApplicationExtension($applicationExtension);
+        foreach ($this->getApplicationPlugins() as $applicationExtension) {
+            $this->sprykerApplication->registerApplicationPlugin($applicationExtension);
         }
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationExtensionInterface[]
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
-    protected function getApplicationExtensions(): array
+    protected function getApplicationPlugins(): array
     {
-        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGIN_APPLICATION);
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGINS_APPLICATION);
     }
 
     /**
