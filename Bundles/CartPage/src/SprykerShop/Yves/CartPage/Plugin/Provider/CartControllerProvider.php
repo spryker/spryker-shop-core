@@ -67,7 +67,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCartQuickAddRoute(): self
+    protected function addCartQuickAddRoute()
     {
         $this->createPostController('/{cart}/quick-add', static::ROUTE_CART_QUICK_ADD, 'CartPage', 'Cart', 'quickAdd')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
