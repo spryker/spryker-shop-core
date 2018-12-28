@@ -1,0 +1,37 @@
+@mixin shop-ui-title($name: '.title') {
+    #{$name} {
+        @each $name, $value in $setting-font-weight {
+            &--#{$name} {
+                font-weight: $value;
+            }
+        }
+
+        @each $name, $value in $setting-color-actions {
+            &--#{$name} {
+                color: $value;
+            }
+        }
+
+        &--uppercase {
+            text-transform: uppercase;
+        }
+
+        &--with-border {
+            border-bottom: 0.0625rem solid $setting-color-lighter;
+            margin: 0.5rem 0;
+        }
+
+        &--link {
+            color: $setting-color-main;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        @content;
+    }
+}
+
+@include shop-ui-title();
