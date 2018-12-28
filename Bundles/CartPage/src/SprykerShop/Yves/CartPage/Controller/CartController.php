@@ -28,9 +28,9 @@ class CartController extends AbstractController
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
-    public const MESSAGE_QUICK_ADD_TO_CART_INCORRECT_INPUT_DATA = 'cart.quick_add_to_cart.incorrect_input_data';
-
     public const PARAM_ITEMS = 'items';
+
+    protected const MESSAGE_QUICK_ADD_TO_CART_INCORRECT_INPUT_DATA = 'cart.quick_add_to_cart.incorrect_input_data';
 
     /**
      * @param array|null $selectedAttributes
