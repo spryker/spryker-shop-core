@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
@@ -68,18 +69,28 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        $customerTransfer = $this->customerClient->getCustomer();
-
         $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
+
+        if($shippingAddressTransfer === null) {
+            return $quoteTransfer;
+        }
+
+        $customerTransfer = $this->customerClient->getCustomer();
         $billingAddressTransfer = $quoteTransfer->getBillingAddress();
 
-        if ($shippingAddressTransfer !== null && $shippingAddressTransfer->getIdCustomerAddress() !== null) {
+        if ($shippingAddressTransfer->getIdCustomerAddress() !== null) {
             $shippingAddressTransfer = $this->hydrateCustomerAddress(
                 $shippingAddressTransfer,
                 $customerTransfer
             );
 
+            // todo: get rid it before release
             $quoteTransfer->setShippingAddress($shippingAddressTransfer);
+        }
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $shippingAddressTransfer->setIsDefaultShipping(true);
+            $itemTransfer->setShipment($this->createShipmentTransfer($shippingAddressTransfer));
         }
 
         if ($quoteTransfer->getBillingSameAsShipping() === true) {
@@ -105,10 +116,19 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
+        // todo: Please move this logic in a new method and call it here like `\SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep::isShipmentSet`
+        // todo: Split Delivery. Get rid of it, before release
         if ($quoteTransfer->getShippingAddress() === null || $quoteTransfer->getBillingAddress() === null) {
             return false;
         }
 
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getShippingAddress() === null) {
+                return false;
+            }
+        }
+
+        // todo: Split Delivery check multiple addresses flag in case billing address is the same as Shipping address
         $shippingIsEmpty = $this->isAddressEmpty($quoteTransfer->getShippingAddress());
         $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
 
@@ -186,5 +206,16 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
         return !$this->requireInput($dataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function createShipmentTransfer(AddressTransfer $addressTransfer): ShipmentTransfer
+    {
+        return (new ShipmentTransfer())
+            ->setShippingAddress($addressTransfer);
     }
 }

@@ -18,5 +18,5 @@ interface ShipmentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer);
+    public function addShipmentToItems(Request $request, QuoteTransfer $quoteTransfer);
 }

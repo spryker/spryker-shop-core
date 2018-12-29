@@ -6,7 +6,7 @@
     cartItems: _view.cartItems,
     shippingAddress: _view.quoteTransfer.shippingAddress,
     billingAddress: _view.quoteTransfer.billingAddress,
-    shipmentMethod: _view.quoteTransfer.shipment.method.name,
+    shipmentMethod: _view.quoteTransfer.items[0].shipment.method.name,
     paymentMethod: _view.quoteTransfer.payment.paymentMethod,
 
     forms: {
@@ -14,14 +14,14 @@
     },
 
     overview: {
-        shipmentMethod: _view.quoteTransfer.shipment.method.name,
+        shipmentMethod: _view.quoteTransfer.items[0].shipment.method.name,
         expenses: _view.quoteTransfer.expenses,
         voucherDiscounts: _view.quoteTransfer.voucherDiscounts,
         cartRuleDiscounts: _view.quoteTransfer.cartRuleDiscounts,
 
         prices: {
             subTotal: _view.quoteTransfer.totals.subtotal,
-            storeCurrency: _view.quoteTransfer.shipment.method.storeCurrencyPrice,
+            storeCurrency: _view.quoteTransfer.items[0].shipment.method.storeCurrencyPrice,
             grandTotal: _view.quoteTransfer.totals.grandtotal,
             tax: _view.quoteTransfer.totals.taxtotal.amount,
             discountTotal: _view.quoteTransfer.totals.discounttotal | default

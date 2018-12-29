@@ -77,11 +77,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        if (!$this->isShipmentSet($quoteTransfer)) {
-            return false;
-        }
-
-        return true;
+        return $this->isShipmentSet($quoteTransfer);
     }
 
     /**
@@ -89,15 +85,15 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      *
      * @return bool
      */
-    protected function isShipmentSet(QuoteTransfer $quoteTransfer)
+    protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
     {
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                return true;
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     /**
