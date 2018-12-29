@@ -117,16 +117,16 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function getBillingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
-        $billingAddressTransfer = new AddressTransfer();
+        $addressTransfer = new AddressTransfer();
         if ($this->hasQuoteBillingAddress($quoteTransfer)) {
-            $billingAddressTransfer = $quoteTransfer->getBillingAddress();
+            $addressTransfer = $quoteTransfer->getBillingAddress();
         }
 
         if ($this->customerTransfer !== null) {
-            $billingAddressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultBillingAddress());
+            $addressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultBillingAddress());
         }
 
-        return $billingAddressTransfer;
+        return $addressTransfer;
     }
 
     /**
