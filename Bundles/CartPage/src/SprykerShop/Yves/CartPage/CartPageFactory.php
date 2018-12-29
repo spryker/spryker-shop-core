@@ -7,20 +7,16 @@
 
 namespace SprykerShop\Yves\CartPage;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
-use SprykerShop\Yves\CartPage\Form\ProductQuickAddForm;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 
 class CartPageFactory extends AbstractFactory
 {
@@ -168,21 +164,5 @@ class CartPageFactory extends AbstractFactory
     public function createCartItemsAvailabilityMapper()
     {
         return new CartItemsAvailabilityMapper($this->getAvailabilityStorageClient());
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getProductQuickAddForm(): FormInterface
-    {
-        return $this->getFormFactory()->create(ProductQuickAddForm::class);
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormFactoryInterface
-     */
-    public function getFormFactory(): FormFactoryInterface
-    {
-        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
 }
