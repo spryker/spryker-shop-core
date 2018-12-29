@@ -1,6 +1,6 @@
 # active-filter-single-select (molecule)
 
-Displays a selected filter from one category as a link.
+Displays a selected filter from a category as a link.
 
 ## Code sample
 

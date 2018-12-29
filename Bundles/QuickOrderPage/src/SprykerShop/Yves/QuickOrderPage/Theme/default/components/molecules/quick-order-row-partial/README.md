@@ -1,6 +1,6 @@
 # quick-order-row-partial (molecule)
 
-Displays a form row in which includes autocomplete products searching, measuring unit, quantity, price, and remove button.
+Displays a form row which includes autocomplete products search, measuring unit, quantity, price and remove button.
 
 ## Code sample 
 

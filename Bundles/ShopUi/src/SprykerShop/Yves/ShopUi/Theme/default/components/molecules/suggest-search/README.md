@@ -1,6 +1,6 @@
 # suggest-search (molecule)
 
-Implements search suggestions functionality for a search input, creates an empty container for search suggestion results, uses ajax-provider and ajax-loader.
+Implements autocomplete functionality for search input; creates an empty container for search suggestion results; uses ajax-provider and ajax-loader.
 
 ## Code sample
 

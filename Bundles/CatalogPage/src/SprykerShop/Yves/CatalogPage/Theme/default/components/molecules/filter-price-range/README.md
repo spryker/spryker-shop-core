@@ -1,6 +1,6 @@
 # filter-price-range (molecule)
 
-Allows to filter the products by price range with minimum and maximum price manually.
+Allows to filter products by the price range with minimum and maximum prices manually.
 
 ## Code sample
 

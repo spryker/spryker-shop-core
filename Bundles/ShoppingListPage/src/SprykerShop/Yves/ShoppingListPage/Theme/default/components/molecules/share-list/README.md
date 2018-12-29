@@ -1,6 +1,6 @@
 # share-list (molecule)
 
-Displays a list of business units that you can share your shopping list.
+Displays a list of business units with which a shopping list can be shared.
 
 ## Code sample 
 

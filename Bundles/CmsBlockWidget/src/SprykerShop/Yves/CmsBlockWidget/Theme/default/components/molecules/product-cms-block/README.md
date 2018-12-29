@@ -1,6 +1,6 @@
 # product-cms-block (molecule)
 
-Shows CMS-block content.
+Shows a CMS-block content.
 
 ## Code sample
 

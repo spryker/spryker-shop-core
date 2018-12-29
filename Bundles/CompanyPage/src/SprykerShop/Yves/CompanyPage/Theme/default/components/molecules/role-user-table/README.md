@@ -1,6 +1,6 @@
 # role-user-table (molecule)
 
-Displays a company user roles as table with action links (unassign, assign).
+Displays company user roles as a table with action links (unassign, assign).
 
 ## Code sample
 

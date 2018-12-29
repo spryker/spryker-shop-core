@@ -1,6 +1,6 @@
 # label-group (molecule)
 
-Displays list of labels (with text and icon or only with text).
+Displays a list of labels (with text and icon or only with text).
 
 ## Code sample
 

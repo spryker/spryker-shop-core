@@ -1,6 +1,6 @@
 # flag (molecule)
 
-Displays label with short text and icon.
+Displays a label with short text and icon.
 
 ## Code sample
 

@@ -1,6 +1,6 @@
 # spelling-suggestion (molecule)
 
-Displays the revised suggested query if the value was entered incorrectly in the search field.
+Displays a suggested query if a value was entered incorrectly in the search field.
 
 ## Code sample
 

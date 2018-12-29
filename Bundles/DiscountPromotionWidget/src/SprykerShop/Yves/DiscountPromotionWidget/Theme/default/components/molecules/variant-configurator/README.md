@@ -1,6 +1,6 @@
 # variant-configurator (molecule)
 
-Displays a list of product variants as select element and if variants is already selected - as static list with reset button.
+Displays a list of product variants as select elements and if a variant is already selected - as a static list with reset button.
 
 ## Code sample 
 

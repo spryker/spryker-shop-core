@@ -1,6 +1,6 @@
 # outside-widgets (molecule)
 
-Create a container for widgets.
+Creates a container for widgets.
 
 ## Code sample
 

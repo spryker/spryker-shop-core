@@ -1,6 +1,6 @@
 # company-navigation (molecule)
 
-Displays sub-page company navigation links.
+Displays the company navigation links sub-page.
 
 ## Code sample
 

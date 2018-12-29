@@ -1,6 +1,6 @@
 # mini-cart-radio (molecule)
 
-Displays as a switcher for list of shopping carts, which sets an active cart for checkout.
+Represents a switcher for a list of shopping carts, which sets one of the carts active for checkout.
 
 ## Code sample
 

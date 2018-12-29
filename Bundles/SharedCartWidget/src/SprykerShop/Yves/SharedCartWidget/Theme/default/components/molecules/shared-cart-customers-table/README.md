@@ -1,6 +1,6 @@
 # shared-cart-customers-table (molecule)
 
-Displays a shared carts as table, which you can unshare fron another castomers or business units.
+Displays a list of shared carts as a table, which can be used to cancel sharing for particular users or business units.
 
 ## Code sample
 

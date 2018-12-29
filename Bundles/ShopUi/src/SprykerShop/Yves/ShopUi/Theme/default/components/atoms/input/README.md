@@ -1,6 +1,6 @@
 # input (atom)
 
-Creates a simple input element - a control that allows the user to input data.
+Creates a simple input element - a control that allows users to input data.
 
 ## Code sample
 

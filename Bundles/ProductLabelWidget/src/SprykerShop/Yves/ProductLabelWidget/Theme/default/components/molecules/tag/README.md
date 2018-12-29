@@ -1,6 +1,6 @@
 # tag (molecule)
 
-Displays label with short text.
+Displays a label with short text.
 
 ## Code sample
 

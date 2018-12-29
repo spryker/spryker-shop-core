@@ -1,6 +1,6 @@
 # tooltip-message (molecule)
 
-Used to specify extra information about something when the user moves the mouse pointer over an element.
+Provides functionality to add additional information (a hint) about something a user hovers their mouse over.
 
 ## Code sample
 

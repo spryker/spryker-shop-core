@@ -1,6 +1,6 @@
 # sales-order-threshold-expense (molecule)
 
-Displays a threshold expense name and price if order sum less than acceptable and the soft threshold is present.
+Displays threshold name and price if an order total price does not reach it while the soft threshold option is enabled.
 
 ## Code sample
 

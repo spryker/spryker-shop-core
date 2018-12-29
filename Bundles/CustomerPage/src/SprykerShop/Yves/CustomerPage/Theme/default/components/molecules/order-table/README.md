@@ -1,6 +1,6 @@
 # order-table (molecule)
 
-Displays a customer orders as table, which includes order id, order date, total, and action links (view order, reorder).
+Displays customer orders as a table, which includes order id, order date, total, and action links (view order, reorder).
 
 ## Code sample
 

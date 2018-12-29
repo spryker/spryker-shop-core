@@ -1,6 +1,6 @@
 # active-filter-enumeration (molecule)
 
-Displays a list of all the filters selected from one category in form of links.
+Displays a list of all the filters selected from a category in the form of links.
 
 ## Code sample
 

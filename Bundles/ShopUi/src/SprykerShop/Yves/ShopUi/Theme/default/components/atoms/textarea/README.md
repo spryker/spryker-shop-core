@@ -1,6 +1,6 @@
 # textarea (atom)
 
-Implements basic styles for the textarea element, like spacing, borders and so on.
+Implements basic styles for the text area element, like spacing, borders and so on.
 
 ## Code sample
 

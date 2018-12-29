@@ -1,6 +1,6 @@
 # user-table (molecule)
 
-Displays a company user details as table with action links (edit, disable, enable, delete).
+Displays company user details as a table with action links(edit, disable, enable, delete).
 
 ## Code sample
 

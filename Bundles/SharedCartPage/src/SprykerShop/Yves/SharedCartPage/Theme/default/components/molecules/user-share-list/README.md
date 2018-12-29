@@ -1,6 +1,6 @@
 # user-share-list (molecule)
 
-Displays a share list of user, which you can share shopping cart with certain rights.
+Displays a list of users with which a chosen shopping cart can be shared, granting certain access rights.
 
 ## Code sample
 

@@ -1,6 +1,6 @@
 # new-review-form (molecule)
 
-Displays rating indicated by stars (usually 1–5), the highest number of stars indicating the best quality etc.
+Displays rating represented by stars (usually 1–5), the highest number of stars indicating the best quality etc.
 
 ## Code sample
 

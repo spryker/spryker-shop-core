@@ -1,6 +1,6 @@
 # toggler-checkbox (molecule)
 
-Creates a checkbox that adds/removes a class to/from some DOM-elements specified by the selector on check/uncheck.
+Creates a checkbox that adds/removes a class to/from the DOM-elements specified by the selector on check/uncheck.
 
 ## Code sample
 

@@ -1,6 +1,6 @@
 # form-clear (molecule)
 
-Clears form fields values via custom event is fired (clicks specific button e.g.).
+Clears form field values when a custom event is triggered (e.g. clicks a certain button).
 
 ## Code sample
 

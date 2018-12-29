@@ -1,6 +1,6 @@
 # shopping-list-table (molecule)
 
-Displays a list of product in shopping list as table which includes product name, price, quantity, availability, and action link.
+Displays a list of products in shopping list as a table which includes product name, price, quantity, availability, and action links.
 
 ## Code sample 
 

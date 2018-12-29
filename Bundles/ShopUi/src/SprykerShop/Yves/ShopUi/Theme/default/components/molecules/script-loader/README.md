@@ -1,6 +1,6 @@
 # script-loader (molecule)
 
-Provides an async loading scripts to the DOM.
+Provides async loading scripts to the DOM.
 
 ## Code sample
 

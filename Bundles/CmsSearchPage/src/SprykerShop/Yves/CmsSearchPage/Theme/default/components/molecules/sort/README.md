@@ -1,6 +1,6 @@
 # sort (molecule)
 
-The sorting section allows you to sort by name, as well as display an amount of sort results.
+The sorting section allows sorting by name, as well as displays the quantity of sort results.
 
 ## Code sample
 

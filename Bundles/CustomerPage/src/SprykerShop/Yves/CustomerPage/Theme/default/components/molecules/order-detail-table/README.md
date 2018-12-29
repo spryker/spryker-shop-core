@@ -1,6 +1,6 @@
 # order-detail-table (molecule)
 
-Displays a customer order details as table, which includes products sku, product name, price, quantity, and item total.
+Displays customer order details as a table, which includes product SKU, name, price, quantity, and item total.
 
 ## Code sample
 

@@ -1,6 +1,6 @@
 # customer-navigation (molecule)
 
-Displays sub-page customer navigation links.
+Displays the customer navigation links sub-page.
 
 ## Code sample
 

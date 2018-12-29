@@ -1,6 +1,6 @@
 # review-average-display (molecule)
 
-Displays an average rating based on 5-option voting. The average rating calculator takes a number of votes for each option (1 - 5 stars) and gives you the mean rating.
+Displays average rating based on a 5-option voting. Average rating calculation is based on the number of votes for each option (1 - 5 stars).
 
 ## Code sample
 

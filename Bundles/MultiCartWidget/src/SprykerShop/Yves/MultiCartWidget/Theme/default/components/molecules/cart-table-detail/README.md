@@ -1,6 +1,6 @@
 # cart-table-detail (molecule)
 
-Displays a shopping cart details as a table row.
+Displays shopping cart details as a table row.
 
 ## Code sample
 

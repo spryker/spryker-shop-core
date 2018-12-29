@@ -1,6 +1,6 @@
 # quote-table (molecule)
 
-Displays table with list of shopping carts with short description.
+Displays a table with a list of shopping carts and their descriptions.
 
 ## Code sample
 

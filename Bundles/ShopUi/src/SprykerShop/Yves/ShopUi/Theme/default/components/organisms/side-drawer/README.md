@@ -1,6 +1,6 @@
 # side-drawer (organism)
 
-Displays side-drawer for mobile devices that duplicates top and main navigation.
+Displays a side navigation bar that duplicates top and main navigation bar when accessing from a mobile device.
 
 ## Code sample
 

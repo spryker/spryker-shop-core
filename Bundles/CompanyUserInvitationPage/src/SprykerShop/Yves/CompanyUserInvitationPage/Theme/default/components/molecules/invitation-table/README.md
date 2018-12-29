@@ -1,6 +1,6 @@
 # invitation-link (molecule)
 
-Displays an invitation links as table, which contains a company users info, and action links (send, resend, delete).
+Displays invitation links as a table, which contains company users info, and action links (send, resend, delete).
 
 ## Code sample
 

@@ -1,6 +1,6 @@
 # packaging-unit-cart (molecule)
 
-Displays a product quantity and amount on checkout cart step.
+Displays product quantity and amount on checkout cart step.
 
 ## Code sample 
 

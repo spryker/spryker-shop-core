@@ -1,6 +1,6 @@
 # shopping-list-action-navigation (molecule)
 
-Displays a list of navigation actions which includes edit, share, print, and delete links.
+Displays a list of navigation actions which includes edit, share, print and delete links.
 
 ## Code sample 
 
