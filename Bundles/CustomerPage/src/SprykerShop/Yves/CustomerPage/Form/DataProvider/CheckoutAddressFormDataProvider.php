@@ -81,7 +81,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected function getShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
         $addressTransfer = new AddressTransfer();
-        if ($this->hasQuoteShippingAddress($quoteTransfer)) {
+        if ($this->isShippingAddressInQuote($quoteTransfer)) {
             $addressTransfer = $quoteTransfer->getShippingAddress();
         }
 
@@ -97,7 +97,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      *
      * @return bool
      */
-    protected function hasQuoteShippingAddress(QuoteTransfer $quoteTransfer): bool
+    protected function isShippingAddressInQuote(QuoteTransfer $quoteTransfer): bool
     {
         if ($quoteTransfer->getShippingAddress() === null) {
             return false;
@@ -118,7 +118,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected function getBillingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
         $addressTransfer = new AddressTransfer();
-        if ($this->hasQuoteBillingAddress($quoteTransfer)) {
+        if ($this->isBillingAddressInQuote($quoteTransfer)) {
             $addressTransfer = $quoteTransfer->getBillingAddress();
         }
 
@@ -134,7 +134,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      *
      * @return bool
      */
-    protected function hasQuoteBillingAddress(QuoteTransfer $quoteTransfer): bool
+    protected function isBillingAddressInQuote(QuoteTransfer $quoteTransfer): bool
     {
         if ($quoteTransfer->getBillingAddress() === null) {
             return false;
