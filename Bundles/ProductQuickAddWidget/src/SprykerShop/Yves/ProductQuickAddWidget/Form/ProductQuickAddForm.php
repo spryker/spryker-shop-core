@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CartPage\Form;
+namespace SprykerShop\Yves\ProductQuickAddWidget\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -21,15 +21,17 @@ class ProductQuickAddForm extends AbstractType
 {
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
+    public const FIELD_REDIRECT_ROUTE_NAME = 'redirect-route-name';
+    public const FIELD_ADDITIONAL_REDIRECT_PARAMETERS = 'additional-redirect-parameters';
 
     protected const FORM_NAME = 'productQuickAddForm';
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getBlockPrefix(): string
+    public function getBlockPrefix(): ?string
     {
-        return static::FORM_NAME;
+        return null;
     }
 
     /**
@@ -41,7 +43,9 @@ class ProductQuickAddForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addQuantity($builder)
-            ->addSku($builder);
+            ->addSku($builder)
+            ->addRedirectRouteName($builder)
+            ->addAdditionalRedirectParameters($builder);
     }
 
     /**
@@ -52,6 +56,24 @@ class ProductQuickAddForm extends AbstractType
     protected function addSku(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_SKU, HiddenType::class, [
+            'required' => true,
+            'label' => false,
+            'constraints' => [
+                $this->createNotBlankConstraint()
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addRedirectRouteName(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_REDIRECT_ROUTE_NAME, HiddenType::class, [
             'required' => true,
             'label' => false,
             'constraints' => [
@@ -78,6 +100,21 @@ class ProductQuickAddForm extends AbstractType
                     $this->createMinLengthConstraint(),
                 ],
             ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addAdditionalRedirectParameters(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ADDITIONAL_REDIRECT_PARAMETERS, HiddenType::class, [
+            'required' => false,
+            'label' => false,
+        ]);
 
         return $this;
     }

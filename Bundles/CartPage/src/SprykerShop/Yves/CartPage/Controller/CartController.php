@@ -13,7 +13,6 @@ use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
-use SprykerShop\Yves\CartPage\Form\ProductQuickAddForm;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,8 +28,6 @@ class CartController extends AbstractController
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
     public const PARAM_ITEMS = 'items';
-
-    protected const MESSAGE_QUICK_ADD_TO_CART_INCORRECT_INPUT_DATA = 'cart.quick_add_to_cart.incorrect_input_data';
 
     /**
      * @param array|null $selectedAttributes
@@ -78,7 +75,6 @@ class CartController extends AbstractController
             'cartItems' => $cartItems,
             'attributes' => $itemAttributesBySku,
             'isQuoteValid' => $validateQuoteResponseTransfer->getIsSuccessful(),
-            'quickAddFormClass' => ProductQuickAddForm::class
         ];
     }
 
@@ -98,7 +94,22 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
-        return $this->executeAddAction($sku, $quantity, $request, $optionValueIds);
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer
+            ->setSku($sku)
+            ->setQuantity($quantity);
+
+        $this->addProductOptions($optionValueIds, $itemTransfer);
+
+        $this->getFactory()
+            ->getCartClient()
+            ->addItem($itemTransfer, $request->request->all());
+
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
+
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
 
     /**
@@ -225,64 +236,6 @@ class CartController extends AbstractController
                 ->createCartItemsAttributeProvider()
                 ->formatUpdateActionResponse($sku, $selectedAttributes)
         );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function quickAddAction(Request $request): RedirectResponse
-    {
-        if (!$this->canAddCartItem()) {
-            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
-
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
-        }
-
-        $form = $this->getFactory()
-            ->getProductQuickAddForm()
-            ->handleRequest($request);
-
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->addErrorMessage(static::MESSAGE_QUICK_ADD_TO_CART_INCORRECT_INPUT_DATA);
-
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
-        }
-
-        $sku = $form->getData()[ProductQuickAddForm::FIELD_SKU];
-        $quantity = $form->getData()[ProductQuickAddForm::FIELD_QUANTITY];
-
-        return $this->executeAddAction($sku, $quantity, $request, []);
-    }
-
-    /**
-     * @param string $sku
-     * @param int $quantity
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $optionValueIds
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function executeAddAction(string $sku, int $quantity, Request $request, array $optionValueIds = []): RedirectResponse
-    {
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($sku)
-            ->setQuantity($quantity);
-
-        if (!empty($optionValueIds)) {
-            $this->addProductOptions($optionValueIds, $itemTransfer);
-        }
-
-        $this->getFactory()
-            ->getCartClient()
-            ->addItem($itemTransfer, $request->request->all());
-
-        $this->getFactory()
-            ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
-
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
 
     /**

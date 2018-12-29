@@ -10,9 +10,11 @@ namespace SprykerShop\Yves\ProductQuickAddWidget\Widget;
 use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Form\FormInterface;
+use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
 
 /**
- * @method \SprykerShop\Yves\ProductQuickAddWidget\ProductSearchWidgetConfig getConfig()
+ * @method \SprykerShop\Yves\ProductQuickAddWidget\ProductQuickAddWidgetConfig getConfig()
+ * @method \SprykerShop\Yves\ProductQuickAddWidget\ProductQuickAddWidgetFactory getFactory()
  */
 class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
 {
@@ -22,11 +24,22 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
      * @param string $title
      * @param string $submitButtonTitle
      * @param string $submitUrl
-     * @param string $formClass
+     * @param string $redirectRouteName
+     * @param array $additionalRedirectData
      */
-    public function __construct(string $title, string $submitButtonTitle, string $submitUrl, $formClass)
-    {
-        $productQuickAddForm = $this->createFormByClass($formClass);
+    public function __construct(
+        string $title,
+        string $submitButtonTitle,
+        string $submitUrl,
+        string $redirectRouteName,
+        array $additionalRedirectData = []
+    ) {
+        $productQuickAddForm = $this->getProductQuickAddForm();
+
+        $preparedAdditionalRedirectData = base64_encode(json_encode($additionalRedirectData));
+
+        $productQuickAddForm->get(ProductQuickAddForm::FIELD_REDIRECT_ROUTE_NAME)->setData($redirectRouteName);
+        $productQuickAddForm->get(ProductQuickAddForm::FIELD_ADDITIONAL_REDIRECT_PARAMETERS)->setData($preparedAdditionalRedirectData);
 
         $this->addParameter('title', $title)
             ->addParameter('submitButtonTitle', $submitButtonTitle)
@@ -59,14 +72,10 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
     }
 
     /**
-     * @param string $className
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createFormByClass(string $className): FormInterface
+    protected function getProductQuickAddForm(): FormInterface
     {
-        return $this->getFactory()
-            ->getFormFactory()
-            ->create($className);
+        return $this->getFactory()->getProductQuickAddForm();
     }
 }
