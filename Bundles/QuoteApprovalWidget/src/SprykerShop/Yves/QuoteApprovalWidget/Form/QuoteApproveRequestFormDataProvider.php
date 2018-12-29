@@ -69,6 +69,6 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
      */
     public function getData(QuoteTransfer $quoteTransfer): QuoteApproveRequestTransfer
     {
-        return (new QuoteApproveRequestTransfer())->setIdQuote($quoteTransfer->getIdQuote());
+        return (new QuoteApproveRequestTransfer())->setQuote($quoteTransfer);
     }
 }

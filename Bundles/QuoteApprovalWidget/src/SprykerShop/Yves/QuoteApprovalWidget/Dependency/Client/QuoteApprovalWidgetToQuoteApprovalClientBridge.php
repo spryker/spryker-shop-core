@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWidgetToQuoteApprovalClientInterface
 {
     /**
-     * @var \SprykerShop\Client\QuoteApproval\QuoteApprovalClientInterface
+     * @var \Spryker\Client\QuoteApproval\QuoteApprovalClientInterface
      */
     protected $quoteApprovalClient;
 

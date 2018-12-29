@@ -9,4 +9,8 @@ namespace SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client;
 
 interface QuoteApprovalWidgetToCustomerClientInterface
 {
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomer();
 }

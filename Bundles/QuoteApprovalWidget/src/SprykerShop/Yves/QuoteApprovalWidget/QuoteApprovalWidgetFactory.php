@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\QuoteApprovalWidget;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestForm;
@@ -71,5 +72,13 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
     public function getQuoteClient(): QuoteApprovalWidgetToQuoteClientInterface
     {
         return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface
+     */
+    public function getCustomerClient(): QuoteApprovalWidgetToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::CLIENT_CUSTOMER);
     }
 }

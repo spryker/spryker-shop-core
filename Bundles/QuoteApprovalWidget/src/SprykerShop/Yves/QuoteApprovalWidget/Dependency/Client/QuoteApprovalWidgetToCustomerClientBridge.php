@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client;
 class QuoteApprovalWidgetToCustomerClientBridge implements QuoteApprovalWidgetToCustomerClientInterface
 {
     /**
-     * @var \SprykerShop\Client\Customer\CustomerClientInterface
+     * @var \Spryker\Client\Customer\CustomerClientInterface
      */
     protected $customerClient;
 
@@ -20,5 +20,13 @@ class QuoteApprovalWidgetToCustomerClientBridge implements QuoteApprovalWidgetTo
     public function __construct($customerClient)
     {
         $this->customerClient = $customerClient;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomer()
+    {
+        return $this->customerClient->getCustomer();
     }
 }

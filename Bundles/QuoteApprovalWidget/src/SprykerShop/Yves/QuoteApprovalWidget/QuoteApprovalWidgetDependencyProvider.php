@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteApprovalWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientBridge;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientBridge;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteClientBridge;
 
@@ -27,6 +28,7 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = $this->addQuoteApprovalClient($container);
         $container = $this->addQuoteClient($container);
+        $container = $this->addCustomerClient($container);
 
         return $container;
     }
@@ -54,6 +56,20 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::CLIENT_QUOTE] = function (Container $container) {
             return new QuoteApprovalWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerClient($container): Container
+    {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+            return new QuoteApprovalWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;
