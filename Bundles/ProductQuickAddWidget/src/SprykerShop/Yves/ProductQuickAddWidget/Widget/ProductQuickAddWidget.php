@@ -22,10 +22,11 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
      * @param string $title
      * @param string $submitButtonTitle
      * @param string $submitUrl
+     * @param string $formClass
      */
-    public function __construct(string $title, string $submitButtonTitle, string $submitUrl)
+    public function __construct(string $title, string $submitButtonTitle, string $submitUrl, $formClass)
     {
-        $productQuickAddForm = $this->getProductQuickAddForm();
+        $productQuickAddForm = $this->createFormByClass($formClass);
 
         $this->addParameter('title', $title)
             ->addParameter('submitButtonTitle', $submitButtonTitle)
@@ -58,10 +59,14 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
     }
 
     /**
+     * @param string $className
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getProductQuickAddForm(): FormInterface
+    protected function createFormByClass(string $className): FormInterface
     {
-        return $this->getFactory()->getProductQuickAddForm();
+        return $this->getFactory()
+            ->getFormFactory()
+            ->create($className);
     }
 }

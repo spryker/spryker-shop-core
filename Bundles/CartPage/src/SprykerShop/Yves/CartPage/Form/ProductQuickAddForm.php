@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductQuickAddWidget\Form;
+namespace SprykerShop\Yves\CartPage\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -21,7 +21,7 @@ class ProductQuickAddForm extends AbstractType
 {
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
-    
+
     protected const FORM_NAME = 'productQuickAddForm';
 
     /**

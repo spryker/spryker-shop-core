@@ -6,6 +6,7 @@
     isQuoteValid: _view.isQuoteValid,
     attributes: _view.attributes,
     request: app.request,
+    quickAddFormClass: _view.quickAddFormClass,
 
     title: 'cart.cart' | trans
 } %}
@@ -105,7 +106,8 @@
                     {% widget 'ProductQuickAddWidget' args [
                         'cart.quick_add_to_cart' | trans,
                         'cart.quick_add_to_cart.submit' | trans,
-                        path('cart/quick-add')
+                        path('cart/quick-add'),
+                        data.quickAddFormClass
                     ] only %}
                     {% endwidget %}
 

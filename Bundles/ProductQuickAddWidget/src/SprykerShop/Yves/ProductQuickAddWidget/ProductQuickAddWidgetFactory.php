@@ -16,14 +16,6 @@ use Symfony\Component\Form\FormInterface;
 class ProductQuickAddWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getProductQuickAddForm(): FormInterface
-    {
-        return $this->getFormFactory()->create(ProductQuickAddForm::class);
-    }
-
-    /**
      * @return \Symfony\Component\Form\FormFactoryInterface
      */
     public function getFormFactory(): FormFactoryInterface
