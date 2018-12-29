@@ -3,16 +3,16 @@
 {% define data = {
     title: _widget.title,
     form: _widget.form,
-    submitUrl: _widget.submitUrl,
+    submitUrl: 'product-quick-add',
     submitButtonTitle: _widget.submitButtonTitle,
 } %}
 
 {% define config = {
-    name: 'quick-order-form'
+    name: 'product-quick-add-form'
 } %}
 
 {% block body %}
-    <div>
+    <div id="{{ config.name ~ '-wrapper' }}">
         {% embed molecule('form') with {
             data: {
                 title: data.title,

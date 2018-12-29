@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormInterface;
 use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
 
 /**
- * @method \SprykerShop\Yves\ProductQuickAddWidget\ProductQuickAddWidgetConfig getConfig()
  * @method \SprykerShop\Yves\ProductQuickAddWidget\ProductQuickAddWidgetFactory getFactory()
  */
 class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
@@ -23,27 +22,24 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
     /**
      * @param string $title
      * @param string $submitButtonTitle
-     * @param string $submitUrl
      * @param string $redirectRouteName
      * @param array $additionalRedirectData
      */
     public function __construct(
         string $title,
         string $submitButtonTitle,
-        string $submitUrl,
         string $redirectRouteName,
         array $additionalRedirectData = []
     ) {
         $productQuickAddForm = $this->getProductQuickAddForm();
 
-        $preparedAdditionalRedirectData = base64_encode(json_encode($additionalRedirectData));
+        $preparedAdditionalRedirectData = $this->encodeAdditionalData($additionalRedirectData);
 
         $productQuickAddForm->get(ProductQuickAddForm::FIELD_REDIRECT_ROUTE_NAME)->setData($redirectRouteName);
         $productQuickAddForm->get(ProductQuickAddForm::FIELD_ADDITIONAL_REDIRECT_PARAMETERS)->setData($preparedAdditionalRedirectData);
 
         $this->addParameter('title', $title)
             ->addParameter('submitButtonTitle', $submitButtonTitle)
-            ->addParameter('submitUrl', $submitUrl)
             ->addParameter('form', $productQuickAddForm->createView());
     }
 
@@ -77,5 +73,19 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
     protected function getProductQuickAddForm(): FormInterface
     {
         return $this->getFactory()->getProductQuickAddForm();
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return string
+     */
+    protected function encodeAdditionalData(array $data): string
+    {
+        $utilEncodingService = $this->getFactory()->getUtilEncodingService();
+
+        return base64_encode(
+            $utilEncodingService->encodeJson($data)
+        );
     }
 }

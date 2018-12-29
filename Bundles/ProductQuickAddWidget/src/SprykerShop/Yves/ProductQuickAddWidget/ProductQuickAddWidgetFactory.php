@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ProductQuickAddWidget;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
+use SprykerShop\Yves\ProductQuickAddWidget\Dependency\Service\ProductQuickAddWidgetToUtilEncodingServiceInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -29,5 +30,13 @@ class ProductQuickAddWidgetFactory extends AbstractFactory
     public function getFormFactory(): FormFactoryInterface
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductQuickAddWidget\Dependency\Service\ProductQuickAddWidgetToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ProductQuickAddWidgetToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ProductQuickAddWidgetDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
