@@ -80,7 +80,7 @@
                                 <input type="hidden" value="{{ embed.sku }}" name="groupKey">
                                 <input type="hidden" value="{{ embed.promotionDiscount.id }}" name="idDiscountPromotion">
 
-                                <button type="submit" class="button button--success button--expand" {{ disabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
+                                <button type="submit" class="button button--success button--expand" data-single-click {{ disabled ? 'disabled' : '' }}>
                                     {% include atom('icon') with {
                                         data: {
                                             name: 'cart-plus'

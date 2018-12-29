@@ -17,14 +17,14 @@
         <div class="col col--sm-5">
             <label>
                 {{ 'catalog.filter.rangeFrom'|trans }}
-                <input class="input input--expand js-form-input-default-value-disabler__catalog-input"
+                <input class="input input--expand"
                        type="number"
                        name="{{ data.parameter }}[min]"
                        value="{{ data.activeMin }}"
                        required="required"
                        min="{{ data.min }}"
                        max="{{ data.max }}"
-                       data-default-value="{{ data.min }}"
+                       data-default-value-input="{{ data.min }}"
                 />
             </label>
         </div>
@@ -32,14 +32,14 @@
         <div class="col col--sm-5">
             <label>
                 {{ 'catalog.filter.rangeTo'|trans }}
-                <input class="input input--expand js-form-input-default-value-disabler__catalog-input"
+                <input class="input input--expand"
                        type="number"
                        name="{{ data.parameter }}[max]"
                        value="{{ data.activeMax }}"
                        required="required"
                        min="{{ data.min }}"
                        max="{{ data.max }}"
-                       data-default-value="{{ data.max }}"
+                       data-default-value-input="{{ data.max }}"
                 />
             </label>
         </div>

@@ -68,6 +68,21 @@
         {% endblock %}
     </div>
 
+    {% block globalComponents %}
+        {% include molecule('action-single-click-enforcer') with {
+            attributes: {
+                'target-selector': '[data-single-click]'
+            }
+        } only %}
+
+        {% include molecule('form-input-default-value-disabler') with {
+            attributes: {
+                'form-selector': '[data-default-value-form]',
+                'input-selector': '[data-default-value-input]'
+            }
+        } only %}
+    {% endblock %}
+
     {% block icons %}
         {% include atom('icon-sprite') only %}
     {% endblock %}
