@@ -16,5 +16,5 @@ interface ProductQuickAddWidgetToUtilEncodingServiceInterface
      *
      * @return string|null
      */
-    public function encodeJson(array $value, $options = null, $depth = null): ?string;
+    public function encodeJson(array $value, $options = null, $depth = null);
 }
