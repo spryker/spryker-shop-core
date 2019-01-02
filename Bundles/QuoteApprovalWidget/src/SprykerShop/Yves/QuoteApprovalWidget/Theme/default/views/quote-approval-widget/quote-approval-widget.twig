@@ -9,33 +9,54 @@
 {% block body %}
     {% if data.quoteApprovalCollection.quoteApprovals is not null %}
         {% for quoteApproval in data.quoteApprovalCollection.quoteApprovals %}
-            <div class="box">
-                <p>
-                    {{ 'quote_approval_widget.cart.quote_owner_name' | trans }}:
-                    {{ data.quoteTransfer.customer.firstName }} {{ data.quoteTransfer.customer.lastName }}
-                </p>
+            <div>
+                {% include molecule('quote-info-row', 'QuoteApprovalWidget') with {
+                    data: {
+                        title: 'quote_approval_widget.cart.quote_owner_name' | trans,
+                        value: data.quoteTransfer.customer.firstName ~ ' ' ~ data.quoteTransfer.customer.lastName,
+                    }
+                } only %}
 
-                <p>
-                    {{ 'quote_approval_widget.cart.request_date' | trans }}:
-                    {{ quoteApproval.createdAt | date }}
-                </p>
+                {% include molecule('quote-info-row', 'QuoteApprovalWidget') with {
+                    data: {
+                        title: 'quote_approval_widget.cart.request_date' | trans,
+                        value: quoteApproval.createdAt | date,
+                    }
+                } only %}
+
                 {% if quoteApproval.status == data.waitingStatus %}
-                    {% if can('ApproveQuotePermissionPlugin', data.quoteTransfer) %}
-                        <a href="{{ path('quote-approval-approve', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--success">
-                            {{ 'quote_approval_widget.cart.approve' | trans }}
-                        </a>
-
-                        <a href="{{ path('quote-approval-decline', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--alert">
-                            {{ 'quote_approval_widget.cart.decline' | trans }}
-                        </a>
-                    {% else %}
-                        <a href="{{ path('quote-approval-cancel', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--alert">
-                            {{ 'quote_approval_widget.cart.cancel' | trans }}
-                        </a>
-                    {% endif %}
+                    <div class="grid grid--right">
+                        {% if can('ApproveQuotePermissionPlugin', data.quoteTransfer) %}
+                            <div class="col">
+                                <a href="{{ path('quote-approval-decline', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--alert">
+                                    {{ 'quote_approval_widget.cart.decline' | trans }}
+                                </a>
+                            </div>
+                            <div class="col spacing-left">
+                                <a href="{{ path('quote-approval-approve', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--success">
+                                    {{ 'quote_approval_widget.cart.approve' | trans }}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col">
+                                <a href="{{ path('quote-approval-cancel', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--alert">
+                                    {{ 'quote_approval_widget.cart.cancel' | trans }}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
                 {% else %}
-                    <p>{{ 'quote_approval_widget.cart.status' | trans }}: {{ 'quote_approval_widget.cart.status.' ~ quoteApproval.status | trans}}</p>
+                    {% set quoteStatus = 'quote_approval_widget.cart.status.' ~ quoteApproval.status %}
+
+                    {% include molecule('quote-info-row', 'QuoteApprovalWidget') with {
+                        data: {
+                            title: 'quote_approval_widget.cart.status' | trans,
+                            value: quoteStatus | trans,
+                            status: quoteApproval.status | lower
+                        }
+                    } only %}
                 {% endif %}
+                <hr />
             </div>
         {% endfor %}
     {% endif %}
