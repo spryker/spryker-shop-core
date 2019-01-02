@@ -19,14 +19,17 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteApprovalController extends AbstractController
 {
     protected const REFERER_PARAM = 'referer';
+    protected const MESSAGE_QUOTE_APPROVAL_APPROVE_ERROR = 'quote_approval_widget.cart.error_approve_message';
+    protected const MESSAGE_QUOTE_APPROVAL_DECLINE_ERROR = 'quote_approval_widget.cart.error_decline_message';
+    protected const MESSAGE_QUOTE_APPROVAL_CANCEL_ERROR = 'quote_approval_widget.cart.error_cancel_message';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $idQuoteApproval
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function approveAction(Request $request, int $idQuoteApproval)
+    public function approveAction(Request $request, int $idQuoteApproval): RedirectResponse
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
@@ -43,7 +46,7 @@ class QuoteApprovalController extends AbstractController
             ->approveQuote($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage('quote_approval_widget.cart.error_approve_message');
+            $this->addErrorMessage(static::MESSAGE_QUOTE_APPROVAL_APPROVE_ERROR);
 
             return $this->redirectBack($request);
         }
@@ -57,9 +60,9 @@ class QuoteApprovalController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $idQuoteApproval
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function declineAction(Request $request, int $idQuoteApproval)
+    public function declineAction(Request $request, int $idQuoteApproval): RedirectResponse
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
@@ -76,7 +79,7 @@ class QuoteApprovalController extends AbstractController
             ->declineQuote($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage('quote_approval_widget.cart.error_decline_message');
+            $this->addErrorMessage(static::MESSAGE_QUOTE_APPROVAL_DECLINE_ERROR);
 
             return $this->redirectBack($request);
         }
@@ -90,9 +93,9 @@ class QuoteApprovalController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $idQuoteApproval
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function cancelAction(Request $request, int $idQuoteApproval)
+    public function cancelAction(Request $request, int $idQuoteApproval): RedirectResponse
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
@@ -109,7 +112,7 @@ class QuoteApprovalController extends AbstractController
             ->cancelQuote($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage('quote_approval_widget.cart.error_cancel_message');
+            $this->addErrorMessage(static::MESSAGE_QUOTE_APPROVAL_CANCEL_ERROR);
 
             return $this->redirectBack($request);
         }
