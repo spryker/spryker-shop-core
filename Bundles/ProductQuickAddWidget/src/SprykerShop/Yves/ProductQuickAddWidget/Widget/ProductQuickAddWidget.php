@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\ProductQuickAddWidget\Widget;
 
 use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
-use Symfony\Component\Form\FormInterface;
 use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductQuickAddWidget\ProductQuickAddWidgetFactory getFactory()

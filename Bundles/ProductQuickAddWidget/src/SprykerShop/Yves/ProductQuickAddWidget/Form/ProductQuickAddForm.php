@@ -27,7 +27,7 @@ class ProductQuickAddForm extends AbstractType
     protected const FORM_NAME = 'productQuickAddForm';
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getBlockPrefix(): ?string
     {
@@ -59,7 +59,7 @@ class ProductQuickAddForm extends AbstractType
             'required' => true,
             'label' => false,
             'constraints' => [
-                $this->createNotBlankConstraint()
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -77,7 +77,7 @@ class ProductQuickAddForm extends AbstractType
             'required' => true,
             'label' => false,
             'constraints' => [
-                $this->createNotBlankConstraint()
+                $this->createNotBlankConstraint(),
             ],
         ]);
 

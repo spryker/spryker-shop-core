@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductQuickAddWidget\Plugin\Provider;
 
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
-use Symfony\Component\HttpFoundation\Request;
 
 class ProductQuickAddWidgetControllerProvider extends AbstractYvesControllerProvider
 {

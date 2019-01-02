@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\ProductQuickAddWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
 use SprykerShop\Yves\ProductQuickAddWidget\Dependency\Service\ProductQuickAddWidgetToUtilEncodingServiceInterface;
+use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
