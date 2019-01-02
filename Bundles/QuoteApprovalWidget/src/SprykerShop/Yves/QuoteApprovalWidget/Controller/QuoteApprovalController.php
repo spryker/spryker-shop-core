@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteApprovalController extends AbstractController
 {
-    protected const REFERER_PARAM = 'referer';
+    protected const PARAM_REFERER = 'referer';
     protected const MESSAGE_QUOTE_APPROVAL_APPROVE_ERROR = 'quote_approval_widget.cart.error_approve_message';
     protected const MESSAGE_QUOTE_APPROVAL_DECLINE_ERROR = 'quote_approval_widget.cart.error_decline_message';
     protected const MESSAGE_QUOTE_APPROVAL_CANCEL_ERROR = 'quote_approval_widget.cart.error_cancel_message';
@@ -129,7 +129,7 @@ class QuoteApprovalController extends AbstractController
      */
     protected function redirectBack(Request $request): RedirectResponse
     {
-        $referer = $request->headers->get(static::REFERER_PARAM);
+        $referer = $request->headers->get(static::PARAM_REFERER);
 
         return $this->redirectResponseExternal($referer);
     }
