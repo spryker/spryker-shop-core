@@ -128,4 +128,12 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     {
         return $this->cartClient->validateQuote();
     }
+
+    /**
+     * @return bool
+     */
+    public function isQuoteEditable(): bool
+    {
+        return $this->cartClient->isQuoteEditable();
+    }
 }

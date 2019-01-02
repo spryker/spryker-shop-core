@@ -85,4 +85,9 @@ interface CartPageToCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(): QuoteResponseTransfer;
+
+    /**
+     * @return bool
+     */
+    public function isQuoteEditable(): bool;
 }
