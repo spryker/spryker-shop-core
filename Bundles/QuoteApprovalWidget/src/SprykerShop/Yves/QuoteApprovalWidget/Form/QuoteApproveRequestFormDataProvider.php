@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteApprovalWidget\Form;
 
 use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
 
 class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormDataProviderInterface
@@ -19,11 +20,20 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     protected $quoteApprovalClient;
 
     /**
-     * @param \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface $quoteApprovalClient
+     * @var \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface
      */
-    public function __construct(QuoteApprovalWidgetToQuoteApprovalClientInterface $quoteApprovalClient)
-    {
+    protected $customerClient;
+
+    /**
+     * @param \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface $quoteApprovalClient
+     * @param \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface $customerClient
+     */
+    public function __construct(
+        QuoteApprovalWidgetToQuoteApprovalClientInterface $quoteApprovalClient,
+        QuoteApprovalWidgetToCustomerClientInterface $customerClient
+    ) {
         $this->quoteApprovalClient = $quoteApprovalClient;
+        $this->customerClient = $customerClient;
     }
 
     /**
@@ -69,6 +79,8 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
      */
     public function getData(QuoteTransfer $quoteTransfer): QuoteApproveRequestTransfer
     {
-        return (new QuoteApproveRequestTransfer())->setQuote($quoteTransfer);
+        return (new QuoteApproveRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setCustomer($this->customerClient->getCustomer());
     }
 }

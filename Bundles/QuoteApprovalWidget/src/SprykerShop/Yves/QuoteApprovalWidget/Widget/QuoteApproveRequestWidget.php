@@ -15,9 +15,20 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteApproveRequestWidget extends AbstractWidget
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $this->addParameter('form', $this->getFactory()->createQuoteApproveRequestForm($quoteTransfer)->createView());
+        $form = $this->getFactory()->createQuoteApproveRequestForm($quoteTransfer);
+
+        $quoteApprovalStatus = $this->getFactory()
+            ->createQuoteApprovalStatusCalculator()
+            ->calculateQuoteStatus($quoteTransfer);
+
+        $this->addParameter('form', $form->createView());
+        $this->addParameter('quote', $form->getData()->getQuote());
+        $this->addParameter('quoteApprovalStatus', $quoteApprovalStatus);
     }
 
     /**

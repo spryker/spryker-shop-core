@@ -2,6 +2,8 @@
 
 {% define data = {
     form: _widget.form,
+    quote: _widget.quote,
+    quoteApprovalStatus: _widget.quoteApprovalStatus,
     formOptions: {
         action: url('quote-approval/request/send')
     }
@@ -15,6 +17,15 @@
         </button>
     {{ form_errors(data.form) }}
     {{ form_end(data.form) }}
+
+    {% for approval in data.quote.approvals %}
+        {% set customer = approval.approver.customer %}
+
+        {{ approval.status }}
+        {{ approval.createdAt | date }}
+        {{ customer.firstName }}
+        {{ customer.lastName }}
+    {% endfor %}
 
 {% endblock %}
 

@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\QuoteApprovalWidget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
+use Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface;
@@ -41,6 +43,14 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface
+     */
+    public function createQuoteApprovalStatusCalculator(): QuoteApprovalStatusCalculatorInterface
+    {
+        return new QuoteApprovalStatusCalculator();
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormFactory
      */
     public function getFormFactory(): FormFactory
@@ -54,7 +64,8 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
     public function createQuoteApproveRequestFormDataProvider(): QuoteApproveRequestFormDataProviderInterface
     {
         return new QuoteApproveRequestFormDataProvider(
-            $this->getQuoteApprovalClient()
+            $this->getQuoteApprovalClient(),
+            $this->getCustomerClient()
         );
     }
 
