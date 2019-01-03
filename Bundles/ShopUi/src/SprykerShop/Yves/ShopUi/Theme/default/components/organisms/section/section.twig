@@ -1,0 +1,24 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'section',
+    tag: 'section'
+} %}
+
+{% define data = {
+    title: false,
+    innerClass: '',
+    titleClass: ''
+} %}
+
+{% block body %}
+    <div class="{{ config.name }}__inner {{ data.innerClass }}">
+        {% if data.title %}
+            <h2 {% if data.titleClass is not empty %} class="{{ data.titleClass }}" {% endif %}">
+                {{ data.title }}
+            </h2>
+        {% endif %}
+
+        {% block inner %}{% endblock %}
+    </div>
+{% endblock %}
