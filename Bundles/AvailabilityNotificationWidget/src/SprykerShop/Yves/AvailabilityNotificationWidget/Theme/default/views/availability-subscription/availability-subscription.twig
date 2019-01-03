@@ -1,0 +1,27 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isSubscribed: _widget.isSubscribed,
+    product: _widget.product,
+    form: _widget.form
+} %}
+
+{% block body %}
+    {% if data.isSubscribed %}
+        {{ 'availability_notification.do_not_notify_me' | trans }}
+    {% else %}
+        {% include molecule('form') with {
+            modifiers: ['inline'],
+            data: {
+                form: data.form,
+                options: {
+                    action: url('notification-availability/subscribe')
+                },
+                submit: {
+                    enable: true,
+                    text: '>'
+                }
+            }
+        } only %}
+    {% endif %}
+{% endblock %}
