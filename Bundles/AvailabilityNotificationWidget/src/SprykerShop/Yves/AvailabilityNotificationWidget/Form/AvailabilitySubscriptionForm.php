@@ -8,11 +8,13 @@
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AvailabilitySubscriptionForm extends AbstractType
@@ -74,6 +76,7 @@ class AvailabilitySubscriptionForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Email(),
+                new Length(['min' => 1, 'max' => 255]),
             ],
         ]);
 
@@ -91,6 +94,8 @@ class AvailabilitySubscriptionForm extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
+                new SkuRegex(),
+                new Length(['min' => 1, 'max' => 255]),
             ],
         ]);
 
