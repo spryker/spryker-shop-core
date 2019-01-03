@@ -1,5 +1,12 @@
 @mixin shop-ui-title($name: '.title') {
     #{$name} {
+        @each $i in (1, 2, 3, 4, 5, 6) {
+            &--h#{$i} {
+                @include helper-font-size($i);
+                @include helper-font-line-height($i);
+            }
+        }
+
         @each $name, $value in $setting-font-weight {
             &--#{$name} {
                 font-weight: $value;
