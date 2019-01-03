@@ -24,7 +24,7 @@ class AvailabilityNotificationWidgetDependencyProvider extends AbstractBundleDep
      */
     public function provideDependencies(Container $container): Container
     {
-        parent::provideDependencies($container);
+        $container = parent::provideDependencies($container);
 
         $container = $this->addAvailabilityNotificationClient($container);
         $container = $this->addCustomerClient($container);
