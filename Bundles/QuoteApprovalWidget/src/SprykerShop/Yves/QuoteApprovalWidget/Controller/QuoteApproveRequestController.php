@@ -32,8 +32,13 @@ class QuoteApproveRequestController extends AbstractController
         $quoteApproveRequestForm->handleRequest($request);
 
         if ($quoteApproveRequestForm->isSubmitted() && $quoteApproveRequestForm->isValid()) {
-            $this->getFactory()->getQuoteApprovalClient()->sendApproveRequest($quoteApproveRequestForm->getData());
+            $quoteResponseTransfer = $this->getFactory()->getQuoteApprovalClient()->sendApproveRequest($quoteApproveRequestForm->getData());
+
+            if ($quoteResponseTransfer->getIsSuccessful()) {
+                $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
+            }
         }
+
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
 }
