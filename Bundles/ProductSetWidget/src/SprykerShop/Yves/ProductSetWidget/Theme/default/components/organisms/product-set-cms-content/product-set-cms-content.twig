@@ -127,7 +127,14 @@
                                 {% set isDisabled = not embed.product.idProductConcrete or not embed.product.available %}
 
                                 {% if isDisabled %}
-                                    <button type="button" class="button button--expand" disabled>{{ 'page.detail.add-to-cart' | trans }}</button>
+                                    <button type="button" class="button button--expand" disabled>
+                                        {% include atom('icon') with {
+                                            data: {
+                                                name: 'cart-plus'
+                                            }
+                                        } only %}
+                                        {{ 'page.detail.add-to-cart' | trans }}
+                                    </button>
                                 {% else %}
                                     <a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand" data-single-click>
                                         {% include atom('icon') with {
