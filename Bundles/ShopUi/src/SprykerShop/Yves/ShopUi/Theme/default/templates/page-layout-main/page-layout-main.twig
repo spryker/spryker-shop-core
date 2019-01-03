@@ -68,6 +68,14 @@
         {% endblock %}
     </div>
 
+    {% block globalComponents %}
+        {% include molecule('form-submitter') with {
+            attributes: {
+                'trigger-selector': '[data-form-submitter]'
+            }
+        } only %}
+    {% endblock %}
+
     {% block icons %}
         {% include atom('icon-sprite') only %}
     {% endblock %}
