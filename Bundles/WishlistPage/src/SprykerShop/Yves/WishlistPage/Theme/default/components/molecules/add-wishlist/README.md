@@ -1,6 +1,6 @@
 # add-wishlist (molecule)
 
-Displays a form to add a new wishlist which includes text field, and submit button. 
+Displays a form to add a new wishlist which includes a text field, and a submit button.
 
 ## Code sample 
 

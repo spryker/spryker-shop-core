@@ -1,6 +1,6 @@
 # shop-list-item (molecule)
 
-Displays a drop-down at top navigation menu with list of shopping lists which includes shopping list name, customer name, number of products in list, and access.
+At top navigation menu, displays a drop-down list with shopping lists which includes shopping list name, customer name, number of products and access rights.
 
 ## Code sample 
 

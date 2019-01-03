@@ -1,6 +1,6 @@
 # wishlist-selector-for-pdp (molecule)
 
-Displays a form with two fields (drop-down and button), which on click on the button will add the product to the wishlist, selected from the drop-down.
+Displays a form with two fields (drop-down list and button); clicking the button next to a product, adds the product to wishlist.
 
 ## Code sample 
 

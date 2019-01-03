@@ -1,6 +1,6 @@
 # cart-to-shopping-list (molecule)
 
-Displays a link which on click add shopping cart to shopping list.
+Displays a link which adds a shopping cart to a shopping list when clicked on.
 
 ## Code sample 
 
