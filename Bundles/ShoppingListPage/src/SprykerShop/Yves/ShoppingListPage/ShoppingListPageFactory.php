@@ -23,6 +23,7 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiC
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShareShoppingListDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProvider;
@@ -35,7 +36,6 @@ use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListFromCartForm;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListUpdateForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
-use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceInterface;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()

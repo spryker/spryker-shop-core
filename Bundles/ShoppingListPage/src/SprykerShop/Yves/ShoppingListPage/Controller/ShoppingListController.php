@@ -271,7 +271,7 @@ class ShoppingListController extends AbstractShoppingListController
     }
 
     /**
-     * @param ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -287,7 +287,7 @@ class ShoppingListController extends AbstractShoppingListController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return int|null
      */
@@ -308,7 +308,7 @@ class ShoppingListController extends AbstractShoppingListController
     }
 
     /**
-     * @param string  $sku
+     * @param string $sku
      * @param int $quantity
      * @param int $idShoppingList
      * @param \Symfony\Component\HttpFoundation\Reques $request
