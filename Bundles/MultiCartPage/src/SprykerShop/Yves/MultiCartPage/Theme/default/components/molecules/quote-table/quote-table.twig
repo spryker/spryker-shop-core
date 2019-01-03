@@ -31,6 +31,9 @@
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.num_of_products' | trans }}</th>
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.prices' | trans }}</th>
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.total' | trans }}</th>
+                {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
+                    <th>{{ 'quote_approval_widget.cart.status' | trans }}</th>
+                {% endif %}
                 {% if showActions %}
                     <th>{{ 'page.multi_cart.shopping_cart.list.label.actions' | trans }}</th>
                 {% endif %}
@@ -80,6 +83,11 @@
                         {% endif %}
                     </td>
                     <td>{{ quote.totals.subtotal | default(0) | money }}</td>
+                    {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
+                        <td>
+                            {{ widgetGlobal('QuoteApprovalStatusWidget', quote) }}
+                        </td>
+                    {% endif %}
                     {% if showActions %}
                         <td>
                             <ul class="menu menu--inline">

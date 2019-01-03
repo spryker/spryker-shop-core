@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteApprovalStatusWidget;
+namespace SprykerShop\Yves\QuoteApprovalWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\QuoteApprovalStatusWidget\Dependency\Client\QuoteApprovalStatusWidgetToQuoteApprovalClientBridge;
+use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientBridge;
 
-class QuoteApprovalStatusWidgetDependencyProvider extends AbstractBundleDependencyProvider
+class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_QUOTE_APPROVAL = 'CLIENT_QUOTE_APPROVAL';
 
@@ -36,7 +36,7 @@ class QuoteApprovalStatusWidgetDependencyProvider extends AbstractBundleDependen
     protected function addQuoteApprovalClient(Container $container): Container
     {
         $container[static::CLIENT_QUOTE_APPROVAL] = function (Container $container) {
-            return new QuoteApprovalStatusWidgetToQuoteApprovalClientBridge(
+            return new QuoteApprovalWidgetToQuoteApprovalClientBridge(
                 $container->getLocator()->quoteApproval()->client()
             );
         };

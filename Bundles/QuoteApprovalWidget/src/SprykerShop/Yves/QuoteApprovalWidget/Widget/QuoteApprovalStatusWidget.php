@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteApprovalStatusWidget\Widget;
+namespace SprykerShop\Yves\QuoteApprovalWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @method \SprykerShop\Yves\QuoteApprovalStatusWidget\QuoteApprovalStatusWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetFactory getFactory()
  */
 class QuoteApprovalStatusWidget extends AbstractWidget
 {
@@ -36,7 +36,7 @@ class QuoteApprovalStatusWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@QuoteApprovalStatusWidget/views/quote-approval-status-widget/quote-approval-status-widget.twig';
+        return '@QuoteApprovalWidget/views/quote-approval-status-widget/quote-approval-status-widget.twig';
     }
 
     /**

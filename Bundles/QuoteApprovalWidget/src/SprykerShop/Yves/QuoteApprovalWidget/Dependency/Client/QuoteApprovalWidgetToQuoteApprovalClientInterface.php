@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteApprovalStatusWidget\Dependency\Client;
+namespace SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteApprovalStatusWidgetToQuoteApprovalClientInterface
+interface QuoteApprovalWidgetToQuoteApprovalClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return null|string
+     * @return string|null
      */
     public function getQuoteStatus(QuoteTransfer $quoteTransfer): ?string; //Todo: update return type according to latest changes in PS-4362.
 }

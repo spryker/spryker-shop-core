@@ -1,0 +1,12 @@
+{% extends template('widget') %}
+
+{% define data = {
+    quoteApprovalStatus: _widget.quoteApprovalStatus
+} %}
+
+{% block body %}
+    {% if data.quoteApprovalStatus is not null %}
+        {% set quoteApprovalStatus = 'quote_approval_widget.cart.status.' ~ data.quoteApprovalStatus %}
+        {{ quoteApprovalStatus | trans }}
+    {% endif %}
+{% endblock %}
