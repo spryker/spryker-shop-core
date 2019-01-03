@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-product-quick-add'
+} %}
+
+{% define data = {
+    activeShoppingListId: required
+} %}
+
+{% block body %}
+    {% widget 'ProductQuickAddWidget' args [
+        'customer.account.shopping_list.quick_add' | trans,
+        'customer.account.shopping_list.quick_add.submit' | trans,
+        'shopping-list/quick-add-item',
+        {
+            'idShoppingList': data.activeShoppingListId
+        }
+    ] only %}
+    {% endwidget %}
+{% endblock %}

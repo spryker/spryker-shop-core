@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Plugin\Provider;
 
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use Symfony\Component\HttpFoundation\Request;
 
 class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
 {
@@ -26,6 +27,9 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-exist-cart';
     public const ROUTE_SHOPPING_LIST_DISMISS = 'shopping-list/dismiss';
     public const ROUTE_SHOPPING_LIST_DISMISS_CONFIRM = 'shopping-list/dismiss-confirm';
+    public const ROUTE_SHOPPING_LIST_QUICK_ADD_ITEM = 'shopping-list/quick-add-item';
+
+    public const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**
      * @param \Silex\Application $app
@@ -47,7 +51,8 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
             ->addCreateShoppingListFromCartRoute()
             ->addShoppingListClearRoute()
             ->addShoppingListDismissRoute()
-            ->addShoppingListDismissConfirmRoute();
+            ->addShoppingListDismissConfirmRoute()
+            ->addShoppingListQuickAddItemRoute();
     }
 
     /**
@@ -228,5 +233,34 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
             ->assert('idShoppingList', '\d+');
 
         return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addShoppingListQuickAddItemRoute()
+    {
+        $this->createController('/{shoppingList}/quick-add-item/{sku}', static::ROUTE_SHOPPING_LIST_QUICK_ADD_ITEM, 'ShoppingListPage', 'ShoppingList', 'quickAddToShoppingList')
+            ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
+            ->value('shoppingList', 'shopping-list')
+            ->assert('sku', static::SKU_PATTERN)
+            ->convert('quantity', [$this, 'getQuantityFromRequest']);
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $unusedParameter
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return int
+     */
+    public function getQuantityFromRequest($unusedParameter, Request $request): int
+    {
+        if ($request->isMethod('POST')) {
+            return $request->request->getInt('quantity', 1);
+        }
+
+        return $request->query->getInt('quantity', 1);
     }
 }

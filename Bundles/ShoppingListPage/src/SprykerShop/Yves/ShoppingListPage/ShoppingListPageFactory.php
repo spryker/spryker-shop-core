@@ -35,6 +35,7 @@ use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListFromCartForm;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListUpdateForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceInterface;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
@@ -297,5 +298,13 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getShoppingListOverviewWidgetPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_OVERVIEW_WIDGETS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ShoppingListPageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
