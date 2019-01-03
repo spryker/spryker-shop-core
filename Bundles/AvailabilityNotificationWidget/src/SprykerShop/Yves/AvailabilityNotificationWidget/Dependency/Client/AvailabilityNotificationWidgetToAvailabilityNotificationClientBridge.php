@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
@@ -50,7 +51,7 @@ class AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge imple
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer
      */
-    public function checkExistence(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer
+    public function checkExistence(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionExistenceTransfer
     {
         return $this->availabilityNotificationClient->checkExistence($availabilitySubscriptionTransfer);
     }
