@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Controller;
 
+use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -37,6 +38,29 @@ class QuoteApproveRequestController extends AbstractController
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
             }
+        }
+
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+    }
+
+    /**
+     * @param int $idQuoteApproval
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function cancelQuoteApprovalRequestAction(int $idQuoteApproval): RedirectResponse
+    {
+        $quoteApprovalCancelRequestTransfer = new QuoteApprovalCancelRequestTransfer();
+        $quoteApprovalCancelRequestTransfer->setIdQuoteApproval($idQuoteApproval)
+            ->setQuote($this->getFactory()->getQuoteClient()->getQuote())
+            ->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+
+        $quoteResponseTransfer = $this->getFactory()
+            ->getQuoteApprovalClient()
+            ->cancelApprovalRequest($quoteApprovalCancelRequestTransfer);
+
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);

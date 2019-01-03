@@ -13,6 +13,9 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 class QuoteApprovalWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_QUOTE_APPROVAL_REUQEST_SEND = 'quote-approval/request/send';
+    public const ROUTE_QUOTE_APPROVAL_REUQEST_CANCEL = 'quote-approval/request/cancel';
+
+    protected const PATTERN_ID = '\d+';
 
     /**
      * @param \Silex\Application $app
@@ -29,9 +32,12 @@ class QuoteApprovalWidgetControllerProvider extends AbstractYvesControllerProvid
      */
     protected function addSendApproveRequestRoute(): self
     {
-        $this->createController('/{quote-approval}/request/send', static::ROUTE_QUOTE_APPROVAL_REUQEST_SEND, 'QuoteApprovalWidget', 'QuoteApproveRequest', 'sendQuoteApproveRequest')
-            ->assert('quote-approval', $this->getAllowedLocalesPattern() . 'quote-approval|quote-approval')
-            ->value('quote-approval', 'quote-approval');
+        $this->createController('/quote-approval/request/send', static::ROUTE_QUOTE_APPROVAL_REUQEST_SEND, 'QuoteApprovalWidget', 'QuoteApproveRequest', 'sendQuoteApproveRequest')
+            ->method('POST');
+
+        $this->createController('/quote-approval/request/{idQuoteApproval}/cancel', static::ROUTE_QUOTE_APPROVAL_REUQEST_CANCEL, 'QuoteApprovalWidget', 'QuoteApproveRequest', 'cancelQuoteApprovalRequest')
+            ->assert('idQuoteApproval', static::PATTERN_ID)
+            ->method('GET');
 
         return $this;
     }

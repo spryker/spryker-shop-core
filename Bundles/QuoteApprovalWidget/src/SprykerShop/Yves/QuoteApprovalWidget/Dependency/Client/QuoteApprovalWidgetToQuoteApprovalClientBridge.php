@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
 use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -36,6 +37,17 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
         QuoteApproveRequestTransfer $quoteApproveRequestTransfer
     ): QuoteResponseTransfer {
         return $this->quoteApprovalClient->sendApproveRequest($quoteApproveRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function cancelApprovalRequest(
+        QuoteApprovalCancelRequestTransfer $quoteApprovalCancelRequestTransfer
+    ): QuoteResponseTransfer {
+        return $this->quoteApprovalClient->cancelApprovalRequest($quoteApprovalCancelRequestTransfer);
     }
 
     /**

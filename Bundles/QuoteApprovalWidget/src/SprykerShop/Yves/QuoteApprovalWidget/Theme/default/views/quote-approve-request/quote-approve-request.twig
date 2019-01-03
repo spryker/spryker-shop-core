@@ -5,7 +5,7 @@
     quote: _widget.quote,
     quoteApprovalStatus: _widget.quoteApprovalStatus,
     formOptions: {
-        action: url('quote-approval/request/send')
+        action: path('quote-approval/request/send')
     }
 } %}
 {% block body %}
@@ -25,6 +25,8 @@
         {{ approval.createdAt | date }}
         {{ customer.firstName }}
         {{ customer.lastName }}
+
+        <a href="{{ path('quote-approval/request/cancel', {'idQuoteApproval': approval.idQuoteApproval }) }}">Cancel Request</a>
     {% endfor %}
 
 {% endblock %}
