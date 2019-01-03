@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class AvailabilityNotificationWidgetToStoreClientBridge implements AvailabilityNotificationWidgetToStoreClientInterface
 {
     /**
@@ -27,7 +25,7 @@ class AvailabilityNotificationWidgetToStoreClientBridge implements AvailabilityN
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer
+    public function getCurrentStore()
     {
         return $this->storeClient->getCurrentStore();
     }

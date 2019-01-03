@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 class AvailabilityNotificationWidgetToCustomerClientBridge implements AvailabilityNotificationWidgetToCustomerClientInterface
 {
     /**
@@ -27,7 +25,7 @@ class AvailabilityNotificationWidgetToCustomerClientBridge implements Availabili
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer(): ?CustomerTransfer
+    public function getCustomer()
     {
         return $this->customerClient->getCustomer();
     }

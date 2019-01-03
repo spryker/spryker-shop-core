@@ -44,7 +44,7 @@ class AvailabilitySubscriptionForm extends AbstractType
     {
         $resolver->setDefaults([
             'attr' => [
-                'id' => self::FORM_ID,
+                'id' => static::FORM_ID,
             ],
         ]);
     }
@@ -57,7 +57,7 @@ class AvailabilitySubscriptionForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->setAction('#' . self::FORM_ID);
+        $builder->setAction('#' . static::FORM_ID);
 
         $this->addEmailField($builder);
         $this->addSkuField($builder);
@@ -70,7 +70,7 @@ class AvailabilitySubscriptionForm extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_EMAIL, EmailType::class, [
+        $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'availability_notification.notify_me',
             'required' => true,
             'constraints' => [
@@ -90,7 +90,7 @@ class AvailabilitySubscriptionForm extends AbstractType
      */
     protected function addSkuField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_SKU, HiddenType::class, [
+        $builder->add(static::FIELD_SKU, HiddenType::class, [
             'required' => true,
             'constraints' => [
                 new NotBlank(),

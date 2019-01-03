@@ -7,12 +7,10 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 interface AvailabilityNotificationWidgetToCustomerClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer(): ?CustomerTransfer;
+    public function getCustomer();
 }

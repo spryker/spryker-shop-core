@@ -43,23 +43,25 @@ class SubscriptionController extends AbstractController
 
         $subscriptionForm->handleRequest($request);
 
-        if ($subscriptionForm->isSubmitted() && $subscriptionForm->isValid()) {
-            $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-            if ($customerTransfer === null) {
-                return;
-            }
-
-            $formData = $subscriptionForm->getData();
-
-            $availabilitySubscriptionTransfer = (new AvailabilitySubscriptionTransfer())
-                ->setCustomerReference($customerTransfer->getCustomerReference())
-                ->setEmail($formData[AvailabilitySubscriptionForm::FIELD_EMAIL])
-                ->setSku($formData[AvailabilitySubscriptionForm::FIELD_SKU]);
-
-            $this->getFactory()
-                ->getAvailabilityNotificationClient()
-                ->subscribe($availabilitySubscriptionTransfer);
+        if ($subscriptionForm->isSubmitted() === false || $subscriptionForm->isValid() === false) {
+            return;
         }
+
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if ($customerTransfer === null) {
+            return;
+        }
+
+        $formData = $subscriptionForm->getData();
+
+        $availabilitySubscriptionTransfer = (new AvailabilitySubscriptionTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setEmail($formData[AvailabilitySubscriptionForm::FIELD_EMAIL])
+            ->setSku($formData[AvailabilitySubscriptionForm::FIELD_SKU]);
+
+        $this->getFactory()
+            ->getAvailabilityNotificationClient()
+            ->subscribe($availabilitySubscriptionTransfer);
     }
 }

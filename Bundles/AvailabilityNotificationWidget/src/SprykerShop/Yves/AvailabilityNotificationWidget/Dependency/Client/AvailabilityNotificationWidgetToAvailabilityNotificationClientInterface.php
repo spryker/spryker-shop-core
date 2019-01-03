@@ -29,7 +29,7 @@ interface AvailabilityNotificationWidgetToAvailabilityNotificationClientInterfac
     /**
      * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer
      */
-    public function checkSubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer;
+    public function checkExistence(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): \Generated\Shared\Transfer\AvailabilitySubscriptionExistenceTransfer;
 }

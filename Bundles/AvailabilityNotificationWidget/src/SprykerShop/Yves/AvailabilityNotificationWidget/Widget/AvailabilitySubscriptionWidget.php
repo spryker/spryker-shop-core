@@ -74,10 +74,9 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
             ->setEmail($customerTransfer->getEmail())
             ->setSku($productConcreteTransfer->getSku());
 
-        $subscriptionResponseTransfer = $this->getFactory()
+        return $this->getFactory()
             ->getAvailabilityNotificationClient()
-            ->checkSubscription($subscriptionTransfer);
-
-        return $subscriptionResponseTransfer->getIsSuccess();
+            ->checkExistence($subscriptionTransfer)
+            ->getIsExists();
     }
 }
