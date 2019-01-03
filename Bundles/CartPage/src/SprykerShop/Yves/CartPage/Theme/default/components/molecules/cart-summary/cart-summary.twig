@@ -20,6 +20,10 @@
     <h6>{{ 'cart.your-order' | trans }}</h6>
     <hr />
 
+    {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
+        {% widget 'QuoteApprovalStatusWidget' args [data.cart] only %}{% endwidget %}
+    {% endif %}
+
     {% if widgetExists('DiscountSummaryWidgetPlugin') %}
         <ul class="list spacing-y">
             {{ widget('DiscountSummaryWidgetPlugin', data.cart) }} {# @deprecated Use molecule('cart-discount-summary', 'DiscountWidget') instead. #}
