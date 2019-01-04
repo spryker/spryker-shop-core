@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteApprovalWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -26,6 +27,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
             ->createQuoteApprovalStatusCalculator()
             ->calculateQuoteStatus($quoteTransfer);
 
+        $this->addParameter('isVisible', $this->isVisible());
         $this->addParameter('form', $form->createView());
         $this->addParameter('quote', $form->getData()->getQuote());
         $this->addParameter('quoteApprovalStatus', $quoteApprovalStatus);
@@ -45,5 +47,15 @@ class QuoteApproveRequestWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@QuoteApprovalWidget/views/quote-approve-request/quote-approve-request.twig';
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isVisible(): bool
+    {
+        return $this->getFactory()->getPermissionClient()->findCustomerPermissionByKey(
+            PlaceOrderPermissionPlugin::KEY
+        ) !== null;
     }
 }

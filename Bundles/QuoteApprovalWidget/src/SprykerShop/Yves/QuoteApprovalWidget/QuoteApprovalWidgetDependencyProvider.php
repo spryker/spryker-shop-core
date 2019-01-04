@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\QuoteApprovalWidget;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientBridge;
+use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToPermissionClientBridge;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientBridge;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteClientBridge;
 
@@ -18,6 +19,7 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
     public const CLIENT_QUOTE_APPROVAL = 'CLIENT_QUOTE_APPROVAL';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -29,6 +31,7 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addQuoteApprovalClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addPermissionClient($container);
 
         return $container;
     }
@@ -70,6 +73,20 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new QuoteApprovalWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPermissionClient($container): Container
+    {
+        $container[static::CLIENT_PERMISSION] = function (Container $container) {
+            return new QuoteApprovalWidgetToPermissionClientBridge($container->getLocator()->permission()->client());
         };
 
         return $container;

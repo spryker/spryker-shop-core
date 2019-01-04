@@ -3,31 +3,34 @@
 {% define data = {
     form: _widget.form,
     quote: _widget.quote,
+    isVisible: _widget.isVisible,
     quoteApprovalStatus: _widget.quoteApprovalStatus,
     formOptions: {
         action: path('quote-approval/request/send')
     }
 } %}
 {% block body %}
+    {% if data.isVisible %}
+        {% if not data.quoteApprovalStatus %}
+            {{ form_start(data.form, data.formOptions) }}
+                {{ form_widget(data.form.idApprover) }}
+                <button type="submit" class="button">
+                    {{ 'sumbit' | trans }}
+                </button>
+            {{ form_errors(data.form) }}
+            {{ form_end(data.form) }}
+        {% endif %}
 
-    {{ form_start(data.form, data.formOptions) }}
-        {{ form_widget(data.form.idApprover) }}
-        <button type="submit" class="button">
-            {{ 'sumbit' | trans }}
-        </button>
-    {{ form_errors(data.form) }}
-    {{ form_end(data.form) }}
+        {% for approval in data.quote.approvals %}
+            {% set customer = approval.approver.customer %}
 
-    {% for approval in data.quote.approvals %}
-        {% set customer = approval.approver.customer %}
+            {{ approval.status }}
+            {{ approval.createdAt | date }}
+            {{ customer.firstName }}
+            {{ customer.lastName }}
 
-        {{ approval.status }}
-        {{ approval.createdAt | date }}
-        {{ customer.firstName }}
-        {{ customer.lastName }}
-
-        <a href="{{ path('quote-approval/request/cancel', {'idQuoteApproval': approval.idQuoteApproval }) }}">Cancel Request</a>
-    {% endfor %}
-
+            <a href="{{ path('quote-approval/request/cancel', {'idQuoteApproval': approval.idQuoteApproval }) }}">Cancel Request</a>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
