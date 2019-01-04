@@ -10,12 +10,14 @@
     }
 } %}
 {% block body %}
-    {% if data.isVisible %}
-        {% if not data.quoteApprovalStatus %}
+    {% if data.isVisible and data.form.idApprover.vars.choices | length %}
+        {% if data.quoteApprovalStatus == 'New' || data.quoteApprovalStatus == 'Declined'%}
+            All cart sharings will be removed after creation request.
+
             {{ form_start(data.form, data.formOptions) }}
                 {{ form_widget(data.form.idApprover) }}
                 <button type="submit" class="button">
-                    {{ 'sumbit' | trans }}
+                    {{ 'Send Request' | trans }}
                 </button>
             {{ form_errors(data.form) }}
             {{ form_end(data.form) }}
