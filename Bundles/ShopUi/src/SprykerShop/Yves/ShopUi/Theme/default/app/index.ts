@@ -33,12 +33,19 @@ function mountComponent(component: Component): void {
     component.markAsMounted();
 }
 
+function isComponent(element: Element): boolean {
+    // it needs to be changed into `instanceof` check once the following issue get solved:
+    // {@link https://github.com/webcomponents/custom-elements/issues/64}
+    const component: Component = <Component>element;
+    return !!component.name && !!component.jsName;
+}
+
 async function mountComponents(): Promise<void> {
     const promises: Promise<Element[]>[] = getCandidates().map((candidate: Candidate) => candidate.define());
     const elements: Element[][] = await Promise.all(promises);
 
     elements.forEach((elementSet: Element[]) => elementSet
-        .filter((element: Element) => (<Component>element).isComponent)
+        .filter((element: Element) => isComponent(element))
         .filter((component: Component) => !component.isMounted)
         .forEach((component: Component) => mountComponent(component))
     );

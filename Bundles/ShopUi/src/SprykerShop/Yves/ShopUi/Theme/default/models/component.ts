@@ -1,6 +1,6 @@
 /**
  * A Component is an extension of an HTMLElement.
- * It is used by Spryker to define its own components.
+ * It is used in Spryker Shop as base class for every components.
  */
 export default abstract class Component extends HTMLElement {
     private isComponentMounted: boolean
@@ -16,18 +16,12 @@ export default abstract class Component extends HTMLElement {
     readonly jsName: string
 
     /**
-     * Flag that indicated that this is a Spriker component
-     */
-    readonly isComponent: boolean
-
-    /**
      * Creates an instance of Component.
      */
     constructor() {
         super();
         this.name = this.tagName.toLowerCase();
         this.jsName = `js-${this.name}`;
-        this.isComponent = true;
         this.isComponentMounted = false;
     }
 
