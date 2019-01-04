@@ -5,13 +5,14 @@
     quote: _widget.quote,
     isVisible: _widget.isVisible,
     quoteApprovalStatus: _widget.quoteApprovalStatus,
+    canSendApprovalRequest: _widget.canSendApprovalRequest,
     formOptions: {
         action: path('quote-approval/request/send')
     }
 } %}
 {% block body %}
     {% if data.isVisible and data.form.idApprover.vars.choices | length %}
-        {% if data.quoteApprovalStatus == 'New' || data.quoteApprovalStatus == 'Declined'%}
+        {% if data.canSendApprovalRequest %}
             All cart sharings will be removed after creation request.
 
             {{ form_start(data.form, data.formOptions) }}
