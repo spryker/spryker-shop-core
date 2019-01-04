@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\CheckoutPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupsTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Store;
@@ -16,6 +18,7 @@ use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
@@ -83,11 +86,14 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
         return [
-            ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
+            ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP => $this->createAvailableMethodsByShipmentChoiceList($quoteTransfer),
+//            ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
         ];
     }
 
     /**
+     * @deprecated Use createAvailableMethodsByShipmentChoiceList() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
@@ -113,11 +119,49 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
+     * @return array
+     */
+    protected function createAvailableMethodsByShipmentChoiceList(QuoteTransfer $quoteTransfer)
+    {
+        $shipmentMethods = [];
+
+        $shipmentGroupsTransfer = $this->getAvailableMethodsByShipment($quoteTransfer);
+//        dump($shipmentGroupsTransfer); exit;
+        foreach ($shipmentGroupsTransfer->getGroups() as $key => $shipmentGroupTransfer) {
+            foreach ($shipmentGroupTransfer->getAvailableShipmentMethods()->getMethods() as $shipmentMethodTransfer) {
+                if (!isset($shipmentMethods[$key][$shipmentMethodTransfer->getCarrierName()])) {
+                    $shipmentMethods[$key][$shipmentMethodTransfer->getCarrierName()] = [];
+                }
+                $description = $this->getShipmentDescription(
+                    $shipmentMethodTransfer
+                );
+                $shipmentMethods[$key][$shipmentMethodTransfer->getCarrierName()][$description] = $shipmentMethodTransfer->getIdShipmentMethod();
+            }
+        }
+//        dump($shipmentMethods); exit;
+        return $shipmentMethods;
+    }
+
+    /**
+     * @deprecated Use getAvailableMethodsByShipment() instead
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     protected function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer)
     {
         return $this->shipmentClient->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
+     */
+    protected function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupsTransfer
+    {
+        return $this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer);
     }
 
     /**
