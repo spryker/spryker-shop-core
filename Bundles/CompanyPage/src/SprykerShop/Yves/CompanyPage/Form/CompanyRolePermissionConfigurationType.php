@@ -74,7 +74,7 @@ class CompanyRolePermissionConfigurationType extends AbstractType
      *
      * @return $this
      */
-    protected function addFieldsBySignature(FormBuilderInterface $builder, PermissionTransfer $permissionTransfer): self
+    protected function addFieldsBySignature(FormBuilderInterface $builder, PermissionTransfer $permissionTransfer)
     {
         foreach ($permissionTransfer->getConfigurationSignature() as $fieldName => $fieldType) {
             $this->addFieldBySignature($builder, $fieldName, $fieldType);

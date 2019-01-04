@@ -27,7 +27,7 @@ class ShoppingListWidgetControllerProvider extends AbstractYvesControllerProvide
     /**
      * @return $this
      */
-    protected function addAddItemRoute(): self
+    protected function addAddItemRoute()
     {
         $this->createController('/{shoppingList}/add-item', static::ROUTE_ADD_ITEM, 'ShoppingListWidget', 'ShoppingListWidget')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
