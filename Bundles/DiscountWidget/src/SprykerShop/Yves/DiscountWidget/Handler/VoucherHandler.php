@@ -97,6 +97,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 
         $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
         $this->unsetVoucherCode($voucherCode, $voucherDiscounts);
+        $this->unsetNotAppliedVoucherCode($voucherCode, $quoteTransfer);
 
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
 
@@ -111,6 +112,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
     {
         $quoteTransfer = $this->quoteClient->getQuote();
         $quoteTransfer->setVoucherDiscounts(new ArrayObject());
+        $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
 
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
 
@@ -133,6 +135,26 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
         }
 
         return false;
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param string $voucherCode
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function unsetNotAppliedVoucherCode(string $voucherCode, QuoteTransfer $quoteTransfer): void
+    {
+        $usedNotAppliedVoucherCodeResultList = array_filter(
+            $quoteTransfer->getUsedNotAppliedVoucherCodes(),
+            function ($usedNotAppliedVoucherCode) use ($voucherCode) {
+                return $usedNotAppliedVoucherCode != $voucherCode;
+            }
+        );
+
+        $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedVoucherCodeResultList);
     }
 
     /**
