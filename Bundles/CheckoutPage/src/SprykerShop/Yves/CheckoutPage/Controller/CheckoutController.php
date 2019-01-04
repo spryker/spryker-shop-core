@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -165,6 +166,13 @@ class CheckoutController extends AbstractController
      */
     public function placeOrderAction(Request $request)
     {
+
+        $quoteTransfer = new QuoteTransfer();
+        $shipmentGroups = $quoteTransfer->getShipmentGroups();
+        foreach ($shipmentGroups as $shipmentGroup) {
+            $shipmentGroup->getShipment()->getShippingAddress()->getIdSalesOrderAddress();
+        }
+
         $grandTotal = $this->getFactory()
             ->getQuoteClient()
             ->getQuote()

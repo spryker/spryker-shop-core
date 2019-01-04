@@ -8,6 +8,7 @@
     billingAddress: _view.quoteTransfer.billingAddress,
     shipmentMethod: _view.quoteTransfer.items[0].shipment.method.name,
     paymentMethod: _view.quoteTransfer.payment.paymentMethod,
+    shipmentGroups: _view.shipmentGroups,
 
     forms: {
         summary: _view.summaryForm
@@ -32,8 +33,102 @@
 } %}
 
 {% block content %}
+
+
+
+
+
+
+
+
+
     <div class="grid">
-        <div class="col col--sm-12 col--lg-4">
+        {{ dump(data.shipmentGroups) }}
+        {% for shipmentGroup in data.shipmentGroups %}
+            Shipment n°{{ loop.index }}
+            <hr/>
+
+
+
+
+
+
+
+            <div class="col col--sm-12 col--lg-4">
+                <div class="box">
+
+                    Products
+
+
+
+
+                    {% for item in shipmentGroup.items %}
+                        {% set item = item.bundleProduct is defined ? item.bundleProduct : item %}
+                        {% embed molecule('summary-item', 'CheckoutPage') with {
+                            data: {
+                                name: item.name,
+                                quantity: item.quantity,
+                                price: item.sumPrice | money,
+                                options: item.productOptions | default({}),
+                                bundleItems: item.bundleItems | default([]),
+                                quantitySalesUnit: item.quantitySalesUnit,
+                                amountSalesUnit: item.amountSalesUnit,
+                                amount: item.amount
+                            },
+                            embed: {
+                                isLast: not loop.last,
+                                item: item
+                            }
+                        } only %}
+                            {% block body %}
+                                {{parent()}}
+                                {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
+                                    {% if embed.item.cartNote is not empty %}
+                                        {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+                                    {% endif %}
+                                {% elseif embed.item.cartNote is not empty %}
+                                    {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                        data: {
+                                            label: 'cart_note.checkout_page.item_note',
+                                            note: embed.item.cartNote
+                                        }
+                                    } only %}
+                                {% endif %}
+                                {% if embed.isLast %}<hr/>{% endif %}
+                            {% endblock %}
+                        {% endembed %}
+                    {% endfor %}
+
+
+
+
+
+                </div>
+            </div>
+
+
+
+
+
+            {# start block #}
+                {# left part #}
+                {# right part #}
+            {# end block #}
+        {% endfor %}
+        {# payment part #}
+    </div>
+
+
+
+    ------>>>>>
+    <pre>
+        {% for shipmentGroup in data.shipmentGroups %}
+            {# dump(shipmentGroup) #}
+        {% endfor %}
+    </pre>
+    <<<---
+    <div class="grid">
+{#        <div class="col col--sm-12 col--lg-4">
             <div class="box">
                 <span class="float-right">{{ 'checkout.step.summary.with_method' | trans }} <strong>{{data.paymentMethod}}</strong></span>
                 <h6>{{ 'checkout.step.summary.payment' | trans }}</h6>
@@ -59,7 +154,7 @@
                     }
                 } only %}
             </div>
-        </div>
+        </div>#}
 
         <div class="col col--sm-12 col--lg-8">
             <div class="box">
