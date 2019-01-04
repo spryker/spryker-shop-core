@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CompanyPage\Form;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -17,6 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class MultiCurrencyType extends AbstractType
 {
     protected const FIELD_MULTI_CURRENCY = 'multi_currency';
+    protected const MIN_MONEY_INT = 0;
 
     /**
      * @return string
@@ -61,10 +63,17 @@ class MultiCurrencyType extends AbstractType
      */
     protected function addAmountPerCurrencyField(FormBuilderInterface $builder, string $currencyIsoCode): self
     {
-        $builder->add($currencyIsoCode, NumberType::class, [
+        $options = [
             'attr' => ['placeholder' => 'company_page.multi_currency_type.name.cent_amount'],
             'label' => strtoupper($currencyIsoCode),
-        ]);
+            'constraints' => [
+                new GreaterThanOrEqual([
+                    'value' => static::MIN_MONEY_INT,
+                ]),
+            ],
+        ];
+
+        $builder->add($currencyIsoCode, NumberType::class, $options);
 
         return $this;
     }
