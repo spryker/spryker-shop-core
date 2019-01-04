@@ -31,7 +31,7 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addQuoteApprovalRoute(): self
+    protected function addQuoteApprovalRoute()
     {
         $this->createController('/quote-approval/approve/{idQuoteApproval}', static::ROUTE_QUOTE_APPROVAL_APPROVE, 'QuoteApprovalWidget', 'QuoteApproval', 'approve')
             ->assert('idQuoteApproval', static::PATTERN_ID)
