@@ -238,7 +238,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListQuickAddItemRoute()
+    protected function addShoppingListQuickAddItemRoute(): AbstractYvesControllerProvider
     {
         $this->createController('/{shoppingList}/quick-add-item/{sku}', static::ROUTE_SHOPPING_LIST_QUICK_ADD_ITEM, 'ShoppingListPage', 'ShoppingList', 'quickAddToShoppingList')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
