@@ -11,7 +11,7 @@
 {% block body %}
     {% do data.form.sku.setRendered %}
 
-    <div class="form__field col col--sm-12 search-field">
+    <div class="col col--sm-12">
         {% widget 'ProductConcreteSearchWidget' args [
             'ajax-provider' ~ config.name,
             data.form.sku.vars.full_name,
@@ -19,7 +19,7 @@
         {% endwidget %}
     </div>
 
-    <div class="form__field col col--sm-12 quantity-field">
+    <div class="col col--sm-12 spacing-y">
         {{ form_widget(data.form.children.quantity, {
             attr: {
                 class: config.jsName ~ '__quantity',

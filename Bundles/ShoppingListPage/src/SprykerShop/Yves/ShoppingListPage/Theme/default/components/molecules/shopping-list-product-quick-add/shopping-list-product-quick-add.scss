@@ -1,58 +1,9 @@
 @mixin shopping-list-page-shopping-list-product-quick-add($name: '.shopping-list-product-quick-add') {
     #{$name} {
-        .form {
+
+        #product-quick-add-form-wrapper {
             padding: map-get($setting-spacing, 'default');
             background-color: $setting-color-lighter;
-
-            h5 {
-                display: inline-block;
-                width: 9%;
-                font-size: map-get($setting-font-size, 'default');
-                font-weight: map-get($setting-font-weight, 'bold');
-            }
-
-            form {
-                width: 90%;
-                display: inline-block;
-
-                .form__container {
-                    display: inline-block;
-                    width: 100%;
-
-                    .form__fields {
-                        width: 91%;
-                        display: inline-block;
-                        margin: 0;
-
-                        .product-quick-add-fields {
-                            float: none;
-                        }
-
-                        .form__field {
-                            padding-top: 0;
-                            padding-bottom: 0;
-                            padding-left: 0;
-                            padding-right: calc(.5rem + 1px);
-                            display: inline-block;
-                            float: none;
-                            min-width: 0;
-                        }
-
-                        .search-field {
-                            width: 72%;
-                        }
-
-                        .quantity-field {
-                            width: 27%;
-                        }
-                    }
-
-                    .form__actions {
-                        width: 8%;
-                        display: inline-block;
-                    }
-                }
-            }
         }
 
         @content;
