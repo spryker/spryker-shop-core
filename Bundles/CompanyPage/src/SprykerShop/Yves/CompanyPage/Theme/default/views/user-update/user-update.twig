@@ -16,6 +16,10 @@
                     url: url('company/overview'),
                 },
                 {
+                    label: data.title,
+                    url: url('company/user')
+                },
+                {
                     label: 'company.account.company_user.edit_information' | trans({
                         '%first_name%' : data.form.vars.value.first_name,
                         '%last_name%' : data.form.vars.value.last_name,

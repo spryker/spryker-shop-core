@@ -18,6 +18,10 @@
                     url: url('company/overview'),
                 },
                 {
+                    label: data.title,
+                    url: url('company/company-role')
+                },
+                {
                     label: 'company.account.company_role.edit_information' | trans({
                         '%role_name%' : data.form.vars.value.name,
                     }),
