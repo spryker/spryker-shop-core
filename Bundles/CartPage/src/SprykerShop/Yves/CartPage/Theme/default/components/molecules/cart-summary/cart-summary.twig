@@ -63,6 +63,8 @@
             {% endblock %}
         {% endwidget %}
 
+        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
+
         <li class="list__item spacing-y">
             {{ 'cart.price.subtotal' | trans }}
             <span class="float-right">{{ data.cart.totals.subtotal | money }}</span>
