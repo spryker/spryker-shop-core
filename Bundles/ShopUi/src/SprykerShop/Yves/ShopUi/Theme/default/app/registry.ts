@@ -1,27 +1,81 @@
 import Candidate from './candidate';
 
-interface HTMLElementContructor {
-    new(): HTMLElement
-}
-
-export type CustomElementContructor = HTMLElementContructor;
-
-export interface CustomElementImporter {
-    (): Promise<{ default: CustomElementContructor }>
-}
+/**
+ * Defines a registry for all the webcomponents potentially used inside the application.
+ *
+ * @module Registry
+ *
+ * @remarks
+ * Registry is used directly by the application to know which webcomponents are available and can be defined.
+ */
 
 const registry: Map<string, Candidate> = new Map();
 
+/**
+ * Defines the generic custom element contructor signature that must be exported by each webcomponent module.
+ */
+export interface CustomElementContructor {
+    new(): Element
+}
+
+/**
+ * Defines the generic custom element module signature that must be implemented by each webcomponent module.
+ */
+export interface CustomElementModule {
+    default: CustomElementContructor
+}
+
+/**
+ * Defines the generic custom element importer signature that must be implemented by each webcomponent importer function.
+ *
+ * @remarks
+ * This interface represents an incapsulation of webpack's import() function, as follows:
+ *
+ * ```
+ * () => import('./component-module')
+ * ```
+ */
+export interface CustomElementImporter {
+    (): Promise<CustomElementModule>
+}
+
+/**
+ * Registers a new webcomponent (or Spryker component) to the application registry.
+ *
+ * @param tagName HTML webcomponent tag name.
+ * @param customElementImporter Function used to import the webcomponent contructor.
+ * @returns A candidate is returned
+ */
 export default function register(tagName: string, customElementImporter: CustomElementImporter): Candidate {
     const candidate = new Candidate(tagName, customElementImporter);
     registry.set(tagName, candidate);
     return candidate;
 }
 
+/**
+ * Unregisters an existing webcomponent (or Spryker component) from the application registry.
+ *
+ * @param tagName HTML webcomponent tag name to be removed.
+ * @returns True if tagName was found and unregistration was successfull, false otherwise.
+ */
 export function unregister(tagName: string): boolean {
     return registry.delete(tagName);
 }
 
-export function candidates(): Candidate[] {
+/**
+ * Gets the list of registered webcomponents as a list of candidates.
+ *
+ * @returns A readonly list of candidates.
+ */
+export function get(): ReadonlyArray<Candidate> {
     return Array.from(registry.values());
+}
+
+/**
+ * Same as get().
+ *
+ * @deprecated Use get() instead.
+ */
+export function candidates(): ReadonlyArray<Candidate> {
+    return get();
 }
