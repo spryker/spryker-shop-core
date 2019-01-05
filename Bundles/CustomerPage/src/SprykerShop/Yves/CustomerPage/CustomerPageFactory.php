@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerAccessPermissionClientInterface;
@@ -285,5 +286,13 @@ class CustomerPageFactory extends AbstractFactory
     public function getAfterCustomerAuthenticationSuccessPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS);
+    }
+
+    /**
+     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
+     */
+    public function getShipmentService(): ShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_SHIPMENT);
     }
 }

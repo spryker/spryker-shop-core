@@ -6,124 +6,151 @@
 } %}
 
 {% define data = {
-    items: required,
-    currencyIsoCode: required
+    currencyIsoCode: required,
+    shipmentGroups: required
 } %}
 
 {% block body %}
-    <table class="table table--expand">
-        <thead>
-            <tr>
-                {% block headerRow %}
-                    <th>{{ 'customer.order.item_sku' | trans }}</th>
-                    <th>{{ 'customer.order.product_name' | trans }}</th>
-                    <th>{{ 'customer.order.item_price' | trans }}</th>
-                    <th>{{ 'customer.order.item_quantity' | trans }}</th>
-                    <th>{{ 'customer.order.item_sum' | trans }}</th>
-                {% endblock %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in data.items %}
-                {% set isBundle = item.bundleItems is defined %}
-                {% set concreteItem = item.bundleProduct | default(item) %}
+    {% for shipmentGroup in data.shipmentGroups %}
+        <h4>{{ 'customer.order.shipment' | trans }} #{{ loop.index }}</h4>
 
-                {% block row %}
-                    {% if widgetExists('OrderDetailProductPackagingUnitWidgetPlugin') %}
-                        {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item, data.currencyIsoCode) }} {# @deprecated Use molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget') instead. #}
-                    {% else %}
-                        {% embed [
-                            molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget'),
-                            molecule('order-detail-product-packaging-unit-default', 'CustomerPage'),
-                        ] ignore missing with {
-                            data: {
-                                concreteItem: item,
-                                currencyIsoCode: data.currencyIsoCode,
-                                concreteItemDefault: concreteItem
-                            },
-                            embed: {
-                                order: data.order,
-                                concreteItem: concreteItem
-                            }
-                        } only %}
-                            {% block body %}
-                                {% if embed.order is not empty %}
-                                    <td>{{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, embed.concreteItem) }}</td>
-                                {% endif %}
-                                {{ parent() }}
-                            {% endblock %}
-                        {% endembed %}
-                    {% endif %}
-                {% endblock %}
+        <h5>{{ 'customer.order.products' | trans }}</h5>
+        <div class="box">
+            <table class="table table--expand">
+                <thead>
+                <tr>
+                    {% block headerRow %}
+                        <th>{{ 'customer.order.item_sku' | trans }}</th>
+                        <th>{{ 'customer.order.product_name' | trans }}</th>
+                        <th>{{ 'customer.order.item_price' | trans }}</th>
+                        <th>{{ 'customer.order.item_quantity' | trans }}</th>
+                        <th>{{ 'customer.order.item_sum' | trans }}</th>
+                    {% endblock %}
+                </tr>
+                </thead>
+                <tbody>
 
-                {% if isBundle %}
-                    <tr>
-                        {% block bundleDetailRow %}
-                            <td colspan="5">
-                                {{ "customer.order.bundled_items" | trans }} <br />
-                                {% for bundledItem in item.bundleItems %}
-                                    - {{ bundledItem.quantity }} x {{ bundledItem.name }} <br />
-                                {% endfor %}
+                {% for item in shipmentGroup.items %}
+                    {% set isBundle = item.bundleItems is defined %}
+                    {% set concreteItem = item.bundleProduct | default(item) %}
 
-                                {% if concreteItem.productOptions is not empty %}
-                                    {{ "customer.order.options" | trans }} <br />
-                                    {% for productOption in concreteItem.productOptions %}
-                                        &nbsp; - {{ productOption.value | trans }} {{ productOption.sumPrice | money(true, data.currencyIsoCode) }}  <br />
-                                    {% endfor %}
-                                {% endif %}
-                            </td>
-                        {% endblock %}
-                    </tr>
-                {% else %}
-                    {% if concreteItem.productOptions is not empty %}
-                        <tr>
-                            <td></td>
-                            <td colspan="5">
-                                <small>{{ 'checkout.summary.item.option.description' | trans }}</small>
-                            </td>
-                        </tr>
-                        {% for productOption in concreteItem.productOptions %}
-                            <tr>
-                                {% block detailRow %}
-                                    <td>
-                                        &nbsp; + <small>{{ productOption.sku }}</small>
-                                    </td>
-                                    <td>
-                                        <small>{{ productOption.value | trans }}</small>
-                                    </td>
-                                    <td>
-                                        <small>{{ productOption.sumPrice | money(true, data.currencyIsoCode) }}</small>
-                                    </td>
-                                    <td colspan="2"></td>
+                    {% block row %}
+                        {% if widgetExists('OrderDetailProductPackagingUnitWidgetPlugin') %}
+                            {{ widget('OrderDetailProductPackagingUnitWidgetPlugin', item, data.currencyIsoCode) }} {# @deprecated Use molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget') instead. #}
+                        {% else %}
+                            {% embed [
+                                molecule('order-detail-product-packaging-unit', 'ProductPackagingUnitWidget'),
+                                molecule('order-detail-product-packaging-unit-default', 'CustomerPage'),
+                                ] ignore missing with {
+                                data: {
+                                    concreteItem: item,
+                                    currencyIsoCode: data.currencyIsoCode,
+                                    concreteItemDefault: concreteItem
+                                },
+                                embed: {
+                                    order: data.order,
+                                    concreteItem: concreteItem
+                                }
+                            } only %}
+                                {% block body %}
+                                    {% if embed.order is not empty %}
+                                        <td>{{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, embed.concreteItem) }}</td>
+                                    {% endif %}
+                                    {{ parent() }}
                                 {% endblock %}
-                            </tr>
-                        {% endfor %}
-                    {% endif %}
-                {% endif %}
+                            {% endembed %}
+                        {% endif %}
+                    {% endblock %}
 
-                {% if widgetExists('CartNoteOrderItemNoteWidgetPlugin') %}
-                    <tr>
-                        <td></td>
-                        <td colspan="5">
-                            {{ widget('CartNoteOrderItemNoteWidgetPlugin', concreteItem) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
-                        </td>
-                    </tr>
-                {% else %}
-                    {% if concreteItem.cartNote is not empty %}
+                    {% if isBundle %}
+                        <tr>
+                            {% block bundleDetailRow %}
+                                <td colspan="5">
+                                    {{ "customer.order.bundled_items" | trans }} <br/>
+                                    {% for bundledItem in item.bundleItems %}
+                                        - {{ bundledItem.quantity }} x {{ bundledItem.name }} <br/>
+                                    {% endfor %}
+
+                                    {% if concreteItem.productOptions is not empty %}
+                                        {{ "customer.order.options" | trans }} <br/>
+                                        {% for productOption in concreteItem.productOptions %}
+                                            &nbsp; - {{ productOption.value | trans }} {{ productOption.sumPrice | money(true, data.currencyIsoCode) }}
+                                            <br/>
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                            {% endblock %}
+                        </tr>
+                    {% else %}
+                        {% if concreteItem.productOptions is not empty %}
+                            <tr>
+                                <td></td>
+                                <td colspan="5">
+                                    <small>{{ 'checkout.summary.item.option.description' | trans }}</small>
+                                </td>
+                            </tr>
+                            {% for productOption in concreteItem.productOptions %}
+                                <tr>
+                                    {% block detailRow %}
+                                        <td>
+                                            &nbsp; +
+                                            <small>{{ productOption.sku }}</small>
+                                        </td>
+                                        <td>
+                                            <small>{{ productOption.value | trans }}</small>
+                                        </td>
+                                        <td>
+                                            <small>{{ productOption.sumPrice | money(true, data.currencyIsoCode) }}</small>
+                                        </td>
+                                        <td colspan="2"></td>
+                                    {% endblock %}
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    {% if widgetExists('CartNoteOrderItemNoteWidgetPlugin') %}
                         <tr>
                             <td></td>
                             <td colspan="5">
-                                {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                                    data: {
-                                        label: 'cart_note.customer_page.item_note',
-                                        note: concreteItem.cartNote
-                                    }
-                                } only %}
+                                {{ widget('CartNoteOrderItemNoteWidgetPlugin', concreteItem) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
                             </td>
                         </tr>
+                    {% else %}
+                        {% if concreteItem.cartNote is not empty %}
+                            <tr>
+                                <td></td>
+                                <td colspan="5">
+                                    {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                        data: {
+                                            label: 'cart_note.customer_page.item_note',
+                                            note: concreteItem.cartNote
+                                        }
+                                    } only %}
+                                </td>
+                            </tr>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="box">
+            <h5>{{ 'customer.order.shipping_address' | trans }}</h5>
+            {% include molecule('display-address') with {
+                data: {
+                    address: shipmentGroup.shipment.shippingAddress
+                }
+            } only %}
+        </div>
+        <div class="box">
+            <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
+            {{ shipmentGroup.shipment.expense.name | trans }}:
+            {{ shipmentGroup.shipment.expense.sumPrice | money(true, data.currencyIsoCode) }}
+        </div>
+        <div class="box">
+            <h5>{{ 'customer.order.requested_delivery_date' | trans }}</h5>
+            {{ shipmentGroup.shipment.requestedDeliveryDate }}
+        </div>
+    {% endfor %}
 {% endblock %}

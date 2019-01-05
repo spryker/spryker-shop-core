@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -63,9 +64,9 @@ class OrderController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
-    public function detailsAction(Request $request)
+    public function detailsAction(Request $request): View
     {
         $responseData = $this->getOrderDetailsResponseData($request->query->getInt('id'));
 
@@ -130,7 +131,7 @@ class OrderController extends AbstractCustomerController
      *
      * @return array
      */
-    protected function getOrderDetailsResponseData($idSalesOrder)
+    protected function getOrderDetailsResponseData($idSalesOrder): array
     {
         $customerTransfer = $this->getLoggedInCustomerTransfer();
 
@@ -150,16 +151,11 @@ class OrderController extends AbstractCustomerController
             ));
         }
 
-        $items = $this->getFactory()
-            ->getProductBundleClient()
-            ->getGroupedBundleItems(
-                $orderTransfer->getItems(),
-                $orderTransfer->getBundleItems()
-            );
+        $shipmentGroups = $this->getFactory()->getShipmentService()->groupItemsByShipment($orderTransfer->getItems());
 
         return [
             'order' => $orderTransfer,
-            'items' => $items,
+            'shipmentGroups' => $shipmentGroups,
         ];
     }
 }
