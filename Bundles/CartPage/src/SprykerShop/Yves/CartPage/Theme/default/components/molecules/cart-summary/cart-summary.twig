@@ -7,11 +7,12 @@
 
 {% define data = {
     cart: required,
-    isQuoteValid: required
+    isQuoteValid: required,
+    isQuoteEditable: required,
 } %}
 
 {% set canProceedToCheckout = data.cart.items is not empty
-    and data.isQuoteValid
+    and (data.isQuoteValid or not data.isQuoteEditable)
     and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote))
 %}
 
@@ -63,8 +64,6 @@
             {% endblock %}
         {% endwidget %}
 
-        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
-
         <li class="list__item spacing-y">
             {{ 'cart.price.subtotal' | trans }}
             <span class="float-right">{{ data.cart.totals.subtotal | money }}</span>
@@ -82,8 +81,7 @@
 
     {% if canProceedToCheckout %}
         <hr />
-        <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}>
-            {{ 'cart.checkout' | trans }}
-        </a>
+        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
+        {% widget 'ProcceedToCheckoutButtonWidget' args [data.cart] %}{% endwidget %}
     {% endif %}
 {% endblock %}
