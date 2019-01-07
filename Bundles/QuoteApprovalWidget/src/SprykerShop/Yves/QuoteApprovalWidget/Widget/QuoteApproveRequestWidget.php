@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Widget;
 
+use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
@@ -28,7 +29,10 @@ class QuoteApproveRequestWidget extends AbstractWidget
             ->createQuoteApprovalStatusCalculator()
             ->calculateQuoteStatus($quoteTransfer);
 
-        $this->addParameter('isVisible', $this->isVisible());
+        $limit = $this->getLimit($quoteTransfer->getCurrency()->getCode());
+
+        $this->addParameter('limit', $limit);
+        $this->addParameter('isVisible', $limit !== 0);
         $this->addParameter('canSendApprovalRequest', $this->canSendApprovalRequest($quoteApprovalStatus));
         $this->addParameter('form', $form->createView());
         $this->addParameter('quote', $form->getData()->getQuote());
@@ -66,8 +70,36 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function isVisible(): bool
     {
+        return $this->getPlaceOrderPermission() !== null;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionTransfer|null
+     */
+    protected function getPlaceOrderPermission(): ?PermissionTransfer
+    {
         return $this->getFactory()->getPermissionClient()->findCustomerPermissionByKey(
             PlaceOrderPermissionPlugin::KEY
-        ) !== null;
+        );
+    }
+
+    /**
+     * @param string $currencyCode
+     *
+     * @return int
+     */
+    protected function getLimit(string $currencyCode): int
+    {
+        $placeOrderPermission = $this->getPlaceOrderPermission();
+
+        if (!$placeOrderPermission) {
+            return 0;
+        }
+
+        $configuration = $placeOrderPermission
+            ->getConfiguration();
+
+
+        return $configuration[PlaceOrderPermissionPlugin::FIELD_MULTI_CURRENCY][$currencyCode] ?? 0;
     }
 }

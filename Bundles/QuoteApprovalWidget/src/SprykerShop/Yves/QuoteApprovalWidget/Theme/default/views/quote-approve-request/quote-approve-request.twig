@@ -3,6 +3,7 @@
 {% define data = {
     form: _widget.form,
     quote: _widget.quote,
+    limit: _widget.limit,
     isVisible: _widget.isVisible,
     quoteApprovalStatus: _widget.quoteApprovalStatus,
     canSendApprovalRequest: _widget.canSendApprovalRequest,
@@ -12,14 +13,19 @@
 } %}
 {% block body %}
     {% if data.isVisible and data.form.idApprover.vars.choices | length %}
-        {% if data.canSendApprovalRequest %}
-            All cart sharings will be removed after creation request.
+        <h2>{{ 'quote_approval_widget.title' | trans }}</h2>
 
+        {% if data.canSendApprovalRequest %}
+            {{ 'All cart sharings will be removed after creation request.'|trans }}
+
+            {{ 'quote_approval_widget.limit_text'|trans({'%amount%': data.limit ~ data.quote.currency.symbol}) }}
             {{ form_start(data.form, data.formOptions) }}
                 {{ form_widget(data.form.idApprover) }}
+
                 <button type="submit" class="button">
-                    {{ 'Send Request' | trans }}
+                    {{ 'quote_approval.request.send' | trans }}
                 </button>
+
             {{ form_errors(data.form) }}
             {{ form_end(data.form) }}
         {% endif %}
@@ -27,12 +33,25 @@
         {% for approval in data.quote.approvals %}
             {% set customer = approval.approver.customer %}
 
-            {{ approval.status }}
-            {{ approval.createdAt | date }}
-            {{ customer.firstName }}
-            {{ customer.lastName }}
+            <h3>{{ ('quote_approval_widget.cart.status.' ~ approval.status) | trans }}</h3>
 
-            <a href="{{ path('quote-approval/request/cancel', {'idQuoteApproval': approval.idQuoteApproval }) }}">Cancel Request</a>
+            {% if approval.status == 'Waiting' %}
+               {{ 'quote_approval.request.waiting_for_approval_from'|trans }}
+            {% elseif approval.status == 'Approved' %}
+                {{ 'quote_approval.request.approved_by'|trans }}
+            {% elseif approval.status == 'Declined' %}
+                {{ 'quote_approval.request.declined_by'|trans }}
+            {% endif %}
+
+            {{ customer.firstName }} {{ customer.lastName }}
+
+            {{ approval.updatedAt | date }}
+
+            {% if approval.status == 'Declined' or approval.status is null %}
+                <a class="button" href="{{ path('quote-approval/request/cancel', {'idQuoteApproval': approval.idQuoteApproval }) }}">
+                    {{ 'quote_approval.request.cancel'|trans }}
+                </a>
+            {% endif %}
         {% endfor %}
     {% endif %}
 {% endblock %}
