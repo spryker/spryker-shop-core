@@ -6,10 +6,9 @@
         }
 
         &__title {
-            font-weight: bold;
-
             &--row {
                 @include helper-font-size(default);
+                font-weight: bold;
             }
         }
     }
