@@ -248,12 +248,12 @@ class ShoppingListController extends AbstractShoppingListController
      * @param int $quantity
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function quickAddToShoppingListAction(string $sku, int $quantity, Request $request): RedirectResponse
     {
         $idShoppingList = $this->getShoppingListIdFromRequest($request);
-        if (empty($idShoppingList) && !is_numeric($idShoppingList)) {
+        if ($idShoppingList === null) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_QUICK_ADD_SHOPPING_LIST_ID_NOT_FOUND);
 
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);

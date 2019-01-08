@@ -29,7 +29,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_SHOPPING_LIST_DISMISS_CONFIRM = 'shopping-list/dismiss-confirm';
     public const ROUTE_SHOPPING_LIST_QUICK_ADD_ITEM = 'shopping-list/quick-add-item';
 
-    public const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
+    protected const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**
      * @param \Silex\Application $app
@@ -240,7 +240,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addShoppingListQuickAddItemRoute(): AbstractYvesControllerProvider
     {
-        $this->createController('/{shoppingList}/quick-add-item/{sku}', static::ROUTE_SHOPPING_LIST_QUICK_ADD_ITEM, 'ShoppingListPage', 'ShoppingList', 'quickAddToShoppingList')
+        $this->createGetController('/{shoppingList}/quick-add-item/{sku}', static::ROUTE_SHOPPING_LIST_QUICK_ADD_ITEM, 'ShoppingListPage', 'ShoppingList', 'quickAddToShoppingList')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
             ->value('shoppingList', 'shopping-list')
             ->assert('sku', static::SKU_PATTERN)
@@ -250,12 +250,12 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @param mixed $unusedParameter
+     * @param mixed $postRequestQuantityValue
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return int
      */
-    public function getQuantityFromRequest($unusedParameter, Request $request): int
+    public function getQuantityFromRequest($postRequestQuantityValue, Request $request): int
     {
         if ($request->isMethod('POST')) {
             return $request->request->getInt('quantity', 1);
