@@ -161,5 +161,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
                 return $permission;
             }
         }
+
+        return null;
     }
 }
