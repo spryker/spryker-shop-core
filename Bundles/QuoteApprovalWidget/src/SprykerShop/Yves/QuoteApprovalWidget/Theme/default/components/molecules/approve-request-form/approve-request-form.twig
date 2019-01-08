@@ -1,0 +1,31 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'approve-request-form',
+} %}
+
+{% define data = {
+    form: required,
+    formOptions: required,
+    quote: required,
+    limit: required,
+} %}
+
+{% block body %}
+    <p>
+        <b>{{ 'All cart sharings will be removed after creation request!' | trans }}</b>
+    </p>
+    <hr>
+    <p>
+        {{ 'quote_approval_widget.limit_text' | trans({'%amount%': data.limit / 100 ~ data.quote.currency.symbol}) }}
+    </p>
+    {{ form_start(data.form, data.formOptions) }}
+        {{ form_widget(data.form.idApprover) }}
+
+        <button type="submit" class="button button--expand button--success spacing-top">
+            {{ 'quote_approval.request.send' | trans }}
+        </button>
+
+        {{ form_errors(data.form) }}
+    {{ form_end(data.form) }}
+{% endblock %}

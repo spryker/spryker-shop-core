@@ -11,48 +11,46 @@
         action: path('quote-approval/request/send')
     }
 } %}
+
 {% block body %}
     {% if data.isVisible and data.form.idApprover.vars.choices | length %}
-        <h2>{{ 'quote_approval_widget.title' | trans }}</h2>
+        {% set approval = data.quote.approvals | length > 0 ? data.quote.approvals | last : null %}
+        {% set customer = approval ? approval.approver.customer : null %}
+
+        <div class="grid grid--justify grid--middle">
+            <div class="col">
+                <h6>{{ 'quote_approval_widget.title' | trans }}</h6>
+            </div>
+            <div class="col">
+                {% include molecule('approve-request-status', 'QuoteApprovalWidget') with {
+                    modifiers: [data.quoteApprovalStatus | lower],
+                    data: {
+                        quoteApprovalStatus: data.quoteApprovalStatus
+                    }
+                } only %}
+            </div>
+        </div>
 
         {% if data.canSendApprovalRequest %}
-            <b>{{ 'All cart sharings will be removed after creation request!'|trans }}</b>
-
-            {{ 'quote_approval_widget.limit_text'|trans({'%amount%': data.limit / 100 ~ data.quote.currency.symbol}) }}
-            {{ form_start(data.form, data.formOptions) }}
-                {{ form_widget(data.form.idApprover) }}
-
-                <button type="submit" class="button">
-                    {{ 'quote_approval.request.send' | trans }}
-                </button>
-
-            {{ form_errors(data.form) }}
-            {{ form_end(data.form) }}
+            {% include molecule('approve-request-form', 'QuoteApprovalWidget') with {
+                data: {
+                    form: data.form,
+                    formOptions: data.formOptions,
+                    quote: data.quote,
+                    limit: data.limit
+                }
+            } only %}
         {% endif %}
 
-        {% for approval in data.quote.approvals %}
-            {% set customer = approval.approver.customer %}
-
-            <h3>{{ ('quote_approval_widget.cart.status.' ~ approval.status) | trans }}</h3>
-
-            {% if approval.status == 'Waiting' %}
-               {{ 'quote_approval.request.waiting_for_approval_from'|trans }}
-            {% elseif approval.status == 'Approved' %}
-                {{ 'quote_approval.request.approved_by'|trans }}
-            {% elseif approval.status == 'Declined' %}
-                {{ 'quote_approval.request.declined_by'|trans }}
-            {% endif %}
-
-            {{ customer.firstName }} {{ customer.lastName }}
-
-            {{ approval.updatedAt | date }}
-
-            {% if approval.status == 'Waiting' %}
-                <a class="button" href="{{ path('quote-approval/request/cancel', {'idQuoteApproval': approval.idQuoteApproval }) }}">
-                    {{ 'quote_approval.request.cancel'|trans }}
-                </a>
-            {% endif %}
-        {% endfor %}
+        {% if approval %}
+            {% include molecule('approve-request-info', 'QuoteApprovalWidget') with {
+                data: {
+                    approval: approval,
+                    customer: customer,
+                    quoteApprovalStatus: data.quoteApprovalStatus
+                }
+            } only %}
+        {% endif %}
     {% endif %}
 {% endblock %}
 
