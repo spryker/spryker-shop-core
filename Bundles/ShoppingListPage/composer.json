@@ -10,7 +10,7 @@
     "spryker-shop/shopping-list-page-extension": "^1.1.0",
     "spryker/application": "^3.8.0",
     "spryker/company-business-unit": "^1.5.0 || ^2.4.0",
-    "spryker/company-user": "^1.5.0 || ^2.1.0",
+    "spryker/company-user": "^2.4.0",
     "spryker/customer": "^7.4.0",
     "spryker/kernel": "^3.24.0",
     "spryker/multi-cart": "^1.1.0",

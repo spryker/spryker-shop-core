@@ -15,11 +15,6 @@ class ShoppingListPageConfig extends AbstractBundleConfig
     public const CART_REDIRECT_URL = 'cart';
 
     /**
-     * @deprecated since 0.5.9 and will be removed in next major release.
-     */
-    public const MIN_QUANTITY_RANGE = 1;
-
-    /**
      * Specification:
      * - Returns the cart redirect url.
      *
@@ -28,18 +23,5 @@ class ShoppingListPageConfig extends AbstractBundleConfig
     public function getCartRedirectUrl(): string
     {
         return static::CART_REDIRECT_URL;
-    }
-
-    /**
-     * @deprecated since 0.5.9 and will be removed in next major release.
-     *
-     * Specification:
-     * - Returns the minimum range for quantity field.
-     *
-     * @return int
-     */
-    public function getMinimumQuantityRange(): int
-    {
-        return static::MIN_QUANTITY_RANGE;
     }
 }
