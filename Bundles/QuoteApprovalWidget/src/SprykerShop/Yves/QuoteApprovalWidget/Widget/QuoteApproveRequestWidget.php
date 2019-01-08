@@ -32,7 +32,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
         $limit = $this->getLimit($quoteTransfer->getCurrency()->getCode());
 
         $this->addParameter('limit', $limit);
-        $this->addParameter('isVisible', $limit !== 0);
+        $this->addParameter('isVisible', $this->isVisible($quoteTransfer));
         $this->addParameter('canSendApprovalRequest', $this->canSendApprovalRequest($quoteApprovalStatus));
         $this->addParameter('form', $form->createView());
         $this->addParameter('quote', $form->getData()->getQuote());
@@ -68,9 +68,13 @@ class QuoteApproveRequestWidget extends AbstractWidget
     /**
      * @return bool
      */
-    protected function isVisible(): bool
+    protected function isVisible(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getPlaceOrderPermission() !== null;
+        if($this->getPlaceOrderPermission() === null) {
+            return false;
+        }
+
+        return !$this->getFactory()->getPermissionClient()->can(PlaceOrderPermissionPlugin::KEY, $quoteTransfer);
     }
 
     /**

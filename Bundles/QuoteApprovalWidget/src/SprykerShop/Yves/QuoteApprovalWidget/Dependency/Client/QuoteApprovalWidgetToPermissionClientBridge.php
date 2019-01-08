@@ -33,4 +33,15 @@ class QuoteApprovalWidgetToPermissionClientBridge implements QuoteApprovalWidget
     {
         return $this->permissionClient->findCustomerPermissionByKey($permissionKey);
     }
+
+    /**
+     * @param string $permissionKey
+     * @param string|int|array|null $context
+     *
+     * @return bool
+     */
+    public function can($permissionKey, $context = null): bool
+    {
+        return $this->permissionClient->can($permissionKey, $context);
+    }
 }
