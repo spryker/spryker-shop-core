@@ -16,7 +16,7 @@
     </li>
     {% for expense in data.order.expenses %}
         <li>
-            {{ expense.name | trans }}:
+            {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %} {{ 'customer.order.shipment' | trans }} {% endif %} {{ expense.name | trans }}:
             {{ expense.sumPrice | money(true, data.order.currencyIsoCode) }}
         </li>
     {% endfor %}

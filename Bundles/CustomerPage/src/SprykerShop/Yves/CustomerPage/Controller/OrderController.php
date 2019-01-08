@@ -7,10 +7,13 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -151,11 +154,23 @@ class OrderController extends AbstractCustomerController
             ));
         }
 
-        $shipmentGroups = $this->getFactory()->getShipmentService()->groupItemsByShipment($orderTransfer->getItems());
+        if ($orderTransfer->getShippingAddress() === null) {
+            return [
+                'order' => $orderTransfer,
+                'shipmentGroups' => $this->getFactory()->getShipmentService()->groupItemsByShipment($orderTransfer->getItems()),
+            ];
+        }
+
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setShippingAddress($orderTransfer->getShippingAddress());
+
+        $shipmentGroupTransfer = (new ShipmentGroupTransfer())
+            ->setShipment($shipmentTransfer)
+            ->setItems($orderTransfer->getItems());
 
         return [
             'order' => $orderTransfer,
-            'shipmentGroups' => $shipmentGroups,
+            'shipmentGroups' => [$shipmentGroupTransfer],
         ];
     }
 }

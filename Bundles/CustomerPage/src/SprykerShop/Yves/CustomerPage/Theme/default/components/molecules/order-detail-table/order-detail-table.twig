@@ -143,14 +143,20 @@
                 }
             } only %}
         </div>
-        <div class="box">
-            <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
-            {{ shipmentGroup.shipment.expense.name | trans }}:
-            {{ shipmentGroup.shipment.expense.sumPrice | money(true, data.currencyIsoCode) }}
-        </div>
-        <div class="box">
-            <h5>{{ 'customer.order.requested_delivery_date' | trans }}</h5>
-            {{ shipmentGroup.shipment.requestedDeliveryDate }}
-        </div>
+
+        {% if shipmentGroup.shipment.expense is not empty %}
+            <div class="box">
+                <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
+                {{ shipmentGroup.shipment.expense.name | trans }}:
+                {{ shipmentGroup.shipment.expense.sumPrice | money(true, data.currencyIsoCode) }}
+            </div>
+        {% endif %}
+
+        {% if shipmentGroup.shipment.requestedDeliveryDate is not empty %}
+            <div class="box">
+                <h5>{{ 'customer.order.requested_delivery_date' | trans }}</h5>
+                {{ shipmentGroup.shipment.requestedDeliveryDate }}
+            </div>
+        {% endif %}
     {% endfor %}
 {% endblock %}
