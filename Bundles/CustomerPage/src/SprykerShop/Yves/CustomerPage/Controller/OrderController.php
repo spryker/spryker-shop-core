@@ -7,14 +7,12 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -67,9 +65,9 @@ class OrderController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function detailsAction(Request $request): View
+    public function detailsAction(Request $request)
     {
         $responseData = $this->getOrderDetailsResponseData($request->query->getInt('id'));
 
