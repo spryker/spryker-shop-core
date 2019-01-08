@@ -10,10 +10,24 @@ namespace SprykerShop\Yves\QuickOrderPage\Form\DataProvider;
 use ArrayObject;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
-use SprykerShop\Yves\QuickOrderPage\Form\OrderItemEmbeddedForm;
+use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderItemEmbeddedForm;
+use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 
 class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
 {
+    /**
+     * @var \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig
+     */
+    protected $config;
+
+    /**
+     * @param \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig $config
+     */
+    public function __construct(QuickOrderPageConfig $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param array $orderItems
      *
@@ -21,42 +35,49 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
      */
     public function getQuickOrderTransfer(array $orderItems = []): QuickOrderTransfer
     {
-        $quickOrder = new QuickOrderTransfer();
-        $orderItemCollection = new ArrayObject($orderItems);
-        $quickOrder->setItems($orderItemCollection);
+        $quickOrderTransfer = (new QuickOrderTransfer())
+            ->setItems(new ArrayObject($orderItems));
+
+        if (count($orderItems) > 0) {
+            return $quickOrderTransfer;
+        }
+
+        $this->appendEmptyQuickOrderItems($quickOrderTransfer);
+
+        return $quickOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     */
+    public function appendEmptyQuickOrderItems(QuickOrderTransfer $quickOrder): QuickOrderTransfer
+    {
+        $itemsNumber = $this->config->getDefaultDisplayedRowCount();
+
+        $quickOrderItemCollection = $quickOrder->getItems();
+        for ($i = 0; $i < $itemsNumber; $i++) {
+            $quickOrderItemCollection->append(new QuickOrderItemTransfer());
+        }
 
         return $quickOrder;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
-     * @param int $itemsNumber
-     *
-     * @return void
-     */
-    public function appendEmptyOrderItems(QuickOrderTransfer $quickOrder, int $itemsNumber): void
-    {
-        $orderItemCollection = $quickOrder->getItems();
-        for ($i = 0; $i < $itemsNumber; $i++) {
-            $orderItemCollection->append(new QuickOrderItemTransfer());
-        }
-    }
-
-    /**
      * @param array $formDataItems
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function getOrderItemsFromFormData(array $formDataItems): array
+    public function mapFormDataToQuickOrderItems(array $formDataItems): QuickOrderTransfer
     {
-        $orderItems = [];
-
-        foreach ($formDataItems as $item) {
-            $orderItems[] = (new QuickOrderItemTransfer())
-                ->setSku($item[OrderItemEmbeddedForm::FIELD_SKU])
-                ->setQty($item[OrderItemEmbeddedForm::FIELD_QTY] ? (int)$item[OrderItemEmbeddedForm::FIELD_QTY] : null);
+        $quickOrderItems = [];
+        foreach ($formDataItems as $formDataItem) {
+            $quickOrderItems[] = (new QuickOrderItemTransfer())
+                ->setSku($formDataItem[QuickOrderItemEmbeddedForm::FIELD_SKU] ?? null)
+                ->setQuantity(isset($formDataItem[QuickOrderItemEmbeddedForm::FIELD_QUANTITY]) ? (int)$formDataItem[QuickOrderItemEmbeddedForm::FIELD_QUANTITY] : null);
         }
 
-        return $orderItems;
+        return $this->getQuickOrderTransfer($quickOrderItems);
     }
 }

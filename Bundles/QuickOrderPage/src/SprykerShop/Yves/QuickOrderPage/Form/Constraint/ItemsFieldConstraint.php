@@ -11,8 +11,13 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ItemsFieldConstraint extends SymfonyConstraint
 {
+    protected const MESSAGE = 'quick-order.errors.items-required';
+
     /**
-     * @var string
+     * @return string
      */
-    public $message = 'quick-order.errors.items-required';
+    public function getMessage(): string
+    {
+        return static::MESSAGE;
+    }
 }
