@@ -1,0 +1,12 @@
+{% extends template('widget') %}
+
+{% define data = {
+    products: _view.data
+} %}
+
+{% block body %}
+    {% include molecule('products-list', 'ProductSearchWidget') with {
+        class: 'list',
+        data: data
+    } only %}
+{% endblock %}
