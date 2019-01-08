@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process;
 
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
 use Spryker\Yves\StepEngine\Process\StepCollection;
@@ -184,18 +185,10 @@ class StepFactory extends AbstractFactory
     {
         return new SummaryStep(
             $this->getProductBundleClient(),
-            $this->getShipmentClient(),
+            $this->getShipmentService(),
             CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
             HomePageControllerProvider::ROUTE_HOME
         );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
-     */
-    public function getShipmentClient(): CheckoutPageToShipmentClientInterface
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_SHIPMENT);
     }
 
     /**
@@ -317,5 +310,13 @@ class StepFactory extends AbstractFactory
     public function getGlossaryStorageClient(): CheckoutPageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
+     */
+    public function getShipmentService(): ShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
     }
 }

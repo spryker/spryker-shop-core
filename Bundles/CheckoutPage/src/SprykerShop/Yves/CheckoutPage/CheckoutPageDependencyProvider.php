@@ -47,6 +47,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
 
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
@@ -112,6 +113,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAddressStepSubForms($container);
         $container = $this->addAddressStepFormDataProvider($container);
         $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addShipmentService($container);
 
         return $container;
     }
@@ -640,5 +642,19 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSubFormFilterPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentService(Container $container): Container
+    {
+        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+            return $container->getLocator()->shipment()->service();
+        };
+
+        return $container;
     }
 }

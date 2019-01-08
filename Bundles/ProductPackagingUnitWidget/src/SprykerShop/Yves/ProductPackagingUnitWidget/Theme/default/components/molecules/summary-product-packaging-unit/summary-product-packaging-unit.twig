@@ -15,6 +15,14 @@
 } %}
 
 {% block body %}
+    <div class="col col--sm-12 col--lg-2">
+        {% include molecule('summary-image', 'CheckoutPage') with {
+            data: {
+                name: data.name | default(''),
+                image: data.images is empty ? null : (data.images | first)
+            }
+        } only %}
+    </div>
     {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
     {% set salesUnitSummary = '' %}
     {% if salesUnitName is not empty %}
@@ -23,7 +31,9 @@
     {% set amountPerQuantity = data.amount / data.quantity %}
 
     <strong class="float-right">{{data.price}}</strong>
-    {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
+    <strong>{{data.name}} {% if salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}</strong>
+    <br/>
+    {{ 'packaging_units.cart.quantity' | trans }}: {{data.quantity}}
     <br/>
     {% if data.amountSalesUnit is defined and data.amountSalesUnit is not empty %}
         {% set amountSalesUnitName = data.amountSalesUnit.productMeasurementUnit.name | default('') %}

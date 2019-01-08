@@ -10,10 +10,10 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 use \ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
@@ -24,26 +24,26 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $productBundleClient;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
+     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
      */
-    protected $shipmentClient;
+    protected $shipmentService;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
+     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param string $stepRoute
      * @param string $escapeRoute
      */
     public function __construct(
         CheckoutPageToProductBundleClientInterface $productBundleClient,
-        CheckoutPageToShipmentClientInterface $shipmentClient,
+        ShipmentServiceInterface $shipmentService,
         $stepRoute,
         $escapeRoute
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->productBundleClient = $productBundleClient;
-        $this->shipmentClient = $shipmentClient;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -94,13 +94,14 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function getTemplateVariables(AbstractTransfer $quoteTransfer)
     {
+
         return [
             'quoteTransfer' => $quoteTransfer,
             'cartItems' => $this->productBundleClient->getGroupedBundleItems(
                 $quoteTransfer->getItems(),
                 $quoteTransfer->getBundleItems()
             ),
-            'shipmentGroups' => $this->getShipmentGroups($quoteTransfer)
+            'shipmentGroups' => $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems())
         ];
     }
 
@@ -140,21 +141,9 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     protected function markCheckoutConfirmed(Request $request, QuoteTransfer $quoteTransfer)
     {
+        // $quoteTransfer->getPayments()[0]->getPaymentMethod()
         if ($request->isMethod('POST')) {
             $quoteTransfer->setCheckoutConfirmed(true);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
-     */
-    protected function getShipmentGroups(QuoteTransfer $quoteTransfer): ArrayObject
-    {
-        $itemCollectionTransfer = new ItemCollectionTransfer();
-        $itemCollectionTransfer->setItems($quoteTransfer->getItems());
-
-        return $this->shipmentClient->getShipmentGroups($itemCollectionTransfer);
     }
 }

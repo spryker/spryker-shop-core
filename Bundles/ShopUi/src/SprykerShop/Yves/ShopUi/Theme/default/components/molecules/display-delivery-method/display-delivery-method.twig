@@ -1,0 +1,22 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'display-delivery-method',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    method: required
+} %}
+
+{% block class %}
+    list
+{% endblock %}
+
+{% block body %}
+    <li class="list__item">{{ data.method.carrierName }}</li>
+    <li class="list__item">
+        {{ data.method.name }}
+        {{ data.method.storeCurrencyPrice | money(true, data.method.currencyIsoCode) }}
+    </li>
+{% endblock %}

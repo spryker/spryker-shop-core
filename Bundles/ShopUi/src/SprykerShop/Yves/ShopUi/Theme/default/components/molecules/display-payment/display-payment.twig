@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'display-payment',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    payment: required
+} %}
+
+{% block class %}
+    list
+{% endblock %}
+
+{% block body %}
+    <li>- payment -</li>
+{% endblock %}

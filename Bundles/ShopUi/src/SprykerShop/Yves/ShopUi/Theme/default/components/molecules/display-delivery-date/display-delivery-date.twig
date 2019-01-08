@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'display-delivery-date',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    date: required
+} %}
+
+{% block class %}
+    list
+{% endblock %}
+
+{% block body %}
+    <li class="list__item">{{ data.date }}</li>
+{% endblock %}
