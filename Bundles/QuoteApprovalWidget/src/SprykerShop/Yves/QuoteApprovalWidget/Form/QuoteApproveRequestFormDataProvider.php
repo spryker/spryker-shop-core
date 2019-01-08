@@ -145,7 +145,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     ): int {
         $configuration = $quoteApprovePermission->getConfiguration();
 
-        return $configuration[ApproveQuotePermissionPlugin::FIELD_MULTI_CURRENCY][$currencyCode];
+        return $configuration[ApproveQuotePermissionPlugin::FIELD_MULTI_CURRENCY][$currencyCode] ?? 0;
     }
 
     /**

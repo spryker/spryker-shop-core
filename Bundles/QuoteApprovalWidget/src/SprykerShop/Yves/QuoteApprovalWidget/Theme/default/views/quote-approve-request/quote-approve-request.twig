@@ -16,7 +16,7 @@
         <h2>{{ 'quote_approval_widget.title' | trans }}</h2>
 
         {% if data.canSendApprovalRequest %}
-            {{ 'All cart sharings will be removed after creation request.'|trans }}
+            <b>{{ 'All cart sharings will be removed after creation request!'|trans }}</b>
 
             {{ 'quote_approval_widget.limit_text'|trans({'%amount%': data.limit / 100 ~ data.quote.currency.symbol}) }}
             {{ form_start(data.form, data.formOptions) }}
