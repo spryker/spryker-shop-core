@@ -28,7 +28,7 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
         /**
-         * @var \Symfony\Component\Security\Core\User\UserInterface $user
+         * @var \SprykerShop\Yves\CustomerPage\Security\Customer $user
          */
         $user = $token->getUser();
         $this->setCustomerSession($user->getCustomerTransfer());
