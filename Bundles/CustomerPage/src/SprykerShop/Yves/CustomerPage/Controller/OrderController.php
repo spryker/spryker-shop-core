@@ -132,7 +132,7 @@ class OrderController extends AbstractCustomerController
      *
      * @return array
      */
-    protected function getOrderDetailsResponseData($idSalesOrder): array
+    protected function getOrderDetailsResponseData(int $idSalesOrder): array
     {
         $customerTransfer = $this->getLoggedInCustomerTransfer();
 
