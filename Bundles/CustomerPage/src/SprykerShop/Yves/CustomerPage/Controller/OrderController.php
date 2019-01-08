@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -130,7 +132,7 @@ class OrderController extends AbstractCustomerController
      *
      * @return array
      */
-    protected function getOrderDetailsResponseData($idSalesOrder)
+    protected function getOrderDetailsResponseData($idSalesOrder): array
     {
         $customerTransfer = $this->getLoggedInCustomerTransfer();
 
@@ -150,16 +152,23 @@ class OrderController extends AbstractCustomerController
             ));
         }
 
-        $items = $this->getFactory()
-            ->getProductBundleClient()
-            ->getGroupedBundleItems(
-                $orderTransfer->getItems(),
-                $orderTransfer->getBundleItems()
-            );
+        if ($orderTransfer->getShippingAddress() === null) {
+            return [
+                'order' => $orderTransfer,
+                'shipmentGroups' => $this->getFactory()->getShipmentService()->groupItemsByShipment($orderTransfer->getItems()),
+            ];
+        }
+
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setShippingAddress($orderTransfer->getShippingAddress());
+
+        $shipmentGroupTransfer = (new ShipmentGroupTransfer())
+            ->setShipment($shipmentTransfer)
+            ->setItems($orderTransfer->getItems());
 
         return [
             'order' => $orderTransfer,
-            'items' => $items,
+            'shipmentGroups' => [$shipmentGroupTransfer],
         ];
     }
 }

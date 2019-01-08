@@ -41,6 +41,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS';
     public const PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS';
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     public const PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS = 'PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS';
     public const PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
@@ -74,6 +75,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPreRegistrationCustomerTransferExpanderPlugins($container);
         $container = $this->addAfterLoginCustomerRedirectPlugins($container);
         $container = $this->addAfterCustomerAuthenticationSuccessPlugins($container);
+        $container = $this->addShipmentService($container);
 
         return $container;
     }
@@ -414,5 +416,19 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getAfterCustomerAuthenticationSuccessPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentService(Container $container): Container
+    {
+        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+            return $container->getLocator()->shipment()->service();
+        };
+
+        return $container;
     }
 }
