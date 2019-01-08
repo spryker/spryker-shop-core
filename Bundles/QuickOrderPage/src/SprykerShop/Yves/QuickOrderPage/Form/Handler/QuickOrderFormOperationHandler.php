@@ -15,7 +15,7 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClien
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class QuickOrderFormOperationHandler implements QuickOrderFormOperationHandlerInterface
+class QuickOrderFormOperationHandler
 {
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface
