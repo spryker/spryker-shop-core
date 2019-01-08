@@ -18,7 +18,7 @@
         {% if data.canSendApprovalRequest %}
             {{ 'All cart sharings will be removed after creation request.'|trans }}
 
-            {{ 'quote_approval_widget.limit_text'|trans({'%amount%': data.limit ~ data.quote.currency.symbol}) }}
+            {{ 'quote_approval_widget.limit_text'|trans({'%amount%': data.limit / 100 ~ data.quote.currency.symbol}) }}
             {{ form_start(data.form, data.formOptions) }}
                 {{ form_widget(data.form.idApprover) }}
 
