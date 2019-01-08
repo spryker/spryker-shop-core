@@ -47,7 +47,7 @@
 
             {{ approval.updatedAt | date }}
 
-            {% if approval.status == 'Declined' or approval.status is null %}
+            {% if approval.status == 'Waiting' %}
                 <a class="button" href="{{ path('quote-approval/request/cancel', {'idQuoteApproval': approval.idQuoteApproval }) }}">
                     {{ 'quote_approval.request.cancel'|trans }}
                 </a>
