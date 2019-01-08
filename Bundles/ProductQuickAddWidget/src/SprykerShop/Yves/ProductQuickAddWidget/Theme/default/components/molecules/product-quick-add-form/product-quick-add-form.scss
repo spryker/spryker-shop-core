@@ -1,0 +1,16 @@
+@mixin product-quick-add-widget-product-quick-add-form($name: '.product-quick-add-form') {
+    #{$name} {
+        &--row {
+            padding: map-get($setting-spacing, 'default');
+            background-color: $setting-color-lighter;
+        }
+
+        &__title {
+            font-weight: bold;
+
+            &--row {
+                @include helper-font-size(default);
+            }
+        }
+    }
+}
