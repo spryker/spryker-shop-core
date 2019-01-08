@@ -51,7 +51,7 @@
                     {% endif %}
                 {% endfor %}
 
-                <button type="submit" class="button float-right" data-single-click {% if isDisabled %}disabled{% endif %}>
+                <button type="submit" class="button float-right" data-init-single-click {% if isDisabled %}disabled{% endif %}>
                     {{ 'product.set.detail.add-all-to-cart' | trans }}
                 </button>
 
@@ -138,7 +138,7 @@
                                         {{ 'page.detail.add-to-cart' | trans }}
                                     </button>
                                 {% else %}
-                                    <a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand" data-single-click>
+                                    <a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand" data-init-single-click>
                                         {% include atom('icon') with {
                                             data: {
                                                 name: 'cart-plus'

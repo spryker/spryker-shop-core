@@ -71,13 +71,13 @@
     {% block globalComponents %}
         {% include molecule('action-single-click-enforcer') with {
             attributes: {
-                'target-selector': '[data-single-click]'
+                'target-selector': '[data-init-single-click]'
             }
         } only %}
 
         {% include molecule('form-input-default-value-disabler') with {
             attributes: {
-                'form-selector': '[data-default-value-form]',
+                'form-selector': '[data-init-default-value-form]',
                 'input-selector': '[data-default-value-disabler]'
             }
         } only %}
