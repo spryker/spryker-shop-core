@@ -47,6 +47,10 @@ $shop-ui-form-field-margin: 0.5rem;
             padding-right: 0;
         }
 
+        &--extend {
+            width: 100%;
+        }
+
         @content;
     }
 }
