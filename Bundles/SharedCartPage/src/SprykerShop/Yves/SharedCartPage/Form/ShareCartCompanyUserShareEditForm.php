@@ -52,7 +52,7 @@ class ShareCartCompanyUserShareEditForm extends AbstractType
      *
      * @return $this
      */
-    protected function addQuotePermissionGroupField(FormBuilderInterface $builder, array $options): self
+    protected function addQuotePermissionGroupField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_QUOTE_PERMISSION_GROUP, ChoiceType::class, [
             'choices' => $options[ShareCartForm::OPTION_PERMISSION_GROUPS],

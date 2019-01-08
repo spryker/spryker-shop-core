@@ -33,7 +33,7 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShareController(): self
+    protected function addShareController()
     {
         $this->createController('/{sharedCart}/share/{idQuote}', static::ROUTE_SHARED_CART_SHARE, 'SharedCartPage', 'Share', 'index')
             ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
@@ -45,7 +45,7 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addUnshareController(): self
+    protected function addUnshareController()
     {
         $this->createController('/{sharedCart}/unshare/{idQuote}/{idCompanyUser}/{idPermissionGroup}', static::ROUTE_SHARED_CART_UNSHARE, 'SharedCartPage', 'Unshare', 'index')
             ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
@@ -57,7 +57,7 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addDismissController(): self
+    protected function addDismissController()
     {
         $this->createController('/{sharedCart}/dismiss/{idQuote}', static::ROUTE_SHARED_CART_DISMISS, 'SharedCartPage', 'Dismiss', 'index')
             ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
@@ -69,7 +69,7 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addDismissConfirmController(): self
+    protected function addDismissConfirmController()
     {
         $this->createController('/{sharedCart}/dismiss-confirm/{idQuote}', static::ROUTE_SHARED_CART_DISMISS_CONFIRM, 'SharedCartPage', 'Dismiss', 'Confirm')
             ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
