@@ -60,7 +60,7 @@ class CompanyUserAccountSelectorForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyUserAccountChoice(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyUserAccountChoice(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_COMPANY_USER_ACCOUNT_CHOICE, ChoiceType::class, [
             'label' => 'company_user.company_choice',
@@ -76,7 +76,7 @@ class CompanyUserAccountSelectorForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIsDefaultCheckbox(FormBuilderInterface $builder, array $options): self
+    protected function addIsDefaultCheckbox(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_IS_DEFAULT, CheckboxType::class, [
             'label' => 'company_user.remember_choice',
