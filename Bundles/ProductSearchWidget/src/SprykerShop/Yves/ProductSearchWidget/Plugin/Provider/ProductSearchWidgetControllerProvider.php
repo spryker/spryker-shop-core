@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductSearchWidget\Plugin\Provider;
 
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use Symfony\Component\Routing\RouteCollection;
 
 class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvider
 {
