@@ -1,4 +1,3 @@
 parameters:
     ignoreErrors:
         - '#Parameter \#1 $idCustomerAddress of method .+AddressTransfer::setIdCustomerAddress\(\) expects int|null, string|null given#'
-        - '#Cannot call method getCustomerTransfer\(\) on object|string.#'
