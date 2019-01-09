@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
 
-use Generated\Shared\Transfer\ShipmentGroupsTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

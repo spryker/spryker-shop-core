@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupsTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
@@ -74,7 +73,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
             $itemTransfer->setShipment($shipment);
         }
         /** Move alsewhere */
-        $groups = $this->getShipmentGroups($quoteTransfer)->getGroups();
+        $groups = $this->getShipmentGroupCollectionTransfer($quoteTransfer)->getGroups();
         $quoteTransfer->setShipmentGroups($groups);
 
         return true;
@@ -151,13 +150,13 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    protected function getShipmentGroups(QuoteTransfer $quoteTransfer): ShipmentGroupsTransfer
+    protected function getShipmentGroupCollectionTransfer(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
         $itemCollectionTransfer = new ItemCollectionTransfer();
         $itemCollectionTransfer->setItems($quoteTransfer->getItems());
 
-        return $this->shipmentClient->getShipmentGroups($itemCollectionTransfer);
+        return $this->shipmentClient->getShipmentGroupCollectionTransfer($itemCollectionTransfer);
     }
 }

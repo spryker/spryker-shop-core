@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupsTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -156,9 +156,9 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    protected function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupsTransfer
+    protected function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
     {
         return $this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer);
     }

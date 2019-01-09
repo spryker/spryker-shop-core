@@ -25,4 +25,11 @@ interface CheckoutPageToShipmentClientInterface
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getShipmentGroupCollectionTransfer(ItemCollectionTransfer $itemCollectionTransfer): ShipmentGroupCollectionTransfer;
 }
