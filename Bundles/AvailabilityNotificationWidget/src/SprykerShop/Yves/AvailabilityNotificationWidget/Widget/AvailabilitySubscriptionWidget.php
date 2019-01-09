@@ -18,6 +18,8 @@ use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilitySubscriptio
  */
 class AvailabilitySubscriptionWidget extends AbstractWidget
 {
+    protected const SESSION_AVAILABILITY_NOTIFICATION_EMAIL = 'availabilityNotificationEmail';
+
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productConcreteTransfer
      */
@@ -39,6 +41,33 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
         $form->setData($data);
 
         $this->addParameter('form', $form->createView());
+
+        $unsubscribeForm = $this->getFactory()->getAvailabilityUnsubscribeForm();
+        $unsubscribeData = [AvailabilitySubscriptionForm::FIELD_SKU => $productConcreteTransfer->getSku()];
+        $email = $this->getEmailForUnsubscribeData($customerTransfer);
+
+        if ($email) {
+            $unsubscribeData[AvailabilitySubscriptionForm::FIELD_EMAIL] = $email;
+        }
+
+        $unsubscribeForm->setData($unsubscribeData);
+        $this->addParameter('unsubscribeForm', $unsubscribeForm->createView());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return string|null
+     */
+    protected function getEmailForUnsubscribeData(?CustomerTransfer $customerTransfer): ?string
+    {
+        if ($customerTransfer != null) {
+            return $customerTransfer->getEmail();
+        }
+
+        return $this->getFactory()
+            ->getSessionClient()
+            ->get(static::SESSION_AVAILABILITY_NOTIFICATION_EMAIL);
     }
 
     /**
@@ -65,18 +94,38 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
      */
     protected function getIsSubscribed(ProductViewTransfer $productConcreteTransfer, ?CustomerTransfer $customerTransfer): bool
     {
-        if ($customerTransfer === null) {
+        $subscriptionTransfer = $this->setSubscriptionTransfer($customerTransfer, $productConcreteTransfer);
+        if (!$subscriptionTransfer->getEmail()) {
             return false;
         }
-
-        $subscriptionTransfer = (new AvailabilitySubscriptionTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setEmail($customerTransfer->getEmail())
-            ->setSku($productConcreteTransfer->getSku());
 
         return $this->getFactory()
             ->getAvailabilityNotificationClient()
             ->checkExistence($subscriptionTransfer)
             ->getIsExists();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
+     */
+    protected function setSubscriptionTransfer(?CustomerTransfer $customerTransfer, ProductViewTransfer $productViewTransfer): AvailabilitySubscriptionTransfer
+    {
+        $subscriptionTransfer = (new AvailabilitySubscriptionTransfer())
+            ->setSku($productViewTransfer->getSku());
+        if (!$customerTransfer) {
+            $email = $this->getFactory()
+                ->getSessionClient()
+                ->get(static::SESSION_AVAILABILITY_NOTIFICATION_EMAIL);
+            $subscriptionTransfer->setEmail($email);
+            return $subscriptionTransfer;
+        }
+
+        $subscriptionTransfer->setEmail($customerTransfer->getEmail())
+            ->setCustomerReference($customerTransfer->getCustomerReference());
+
+        return $subscriptionTransfer;
     }
 }

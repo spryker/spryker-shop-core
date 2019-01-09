@@ -11,7 +11,9 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToAvailabilityNotificationClientInterface;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToCustomerClientInterface;
+use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToSessionClientInterface;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilitySubscriptionForm;
+use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilityUnsubscribeForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -23,6 +25,14 @@ class AvailabilityNotificationWidgetFactory extends AbstractFactory
     public function getAvailabilitySubscriptionForm(): FormInterface
     {
         return $this->getFormFactory()->create(AvailabilitySubscriptionForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAvailabilityUnsubscribeForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(AvailabilityUnsubscribeForm::class);
     }
 
     /**
@@ -47,5 +57,13 @@ class AvailabilityNotificationWidgetFactory extends AbstractFactory
     public function getCustomerClient(): AvailabilityNotificationWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationWidgetDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToSessionClientInterface
+     */
+    public function getSessionClient(): AvailabilityNotificationWidgetToSessionClientInterface
+    {
+        return $this->getProvidedDependency(AvailabilityNotificationWidgetDependencyProvider::CLIENT_SESSION);
     }
 }

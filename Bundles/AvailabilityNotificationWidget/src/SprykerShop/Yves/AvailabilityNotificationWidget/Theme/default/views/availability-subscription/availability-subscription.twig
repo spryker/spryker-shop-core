@@ -3,12 +3,25 @@
 {% define data = {
     isSubscribed: _widget.isSubscribed,
     product: _widget.product,
-    form: _widget.form
+    form: _widget.form,
+    unsubscribeForm: _widget.unsubscribeForm
 } %}
 
 {% block body %}
     {% if data.isSubscribed %}
-        {{ 'availability_notification.do_not_notify_me' | trans }}
+        {% include molecule('form') with {
+            modifiers: ['inline'],
+            data: {
+                form: data.unsubscribeForm,
+                options: {
+                    action: url('notification-availability/unsubscribe')
+                },
+                submit: {
+                    enable: true,
+                    text: 'availability_notification.do_not_notify_me' | trans
+                }
+            }
+        } only %}
     {% else %}
         {% include molecule('form') with {
             modifiers: ['inline'],
@@ -19,7 +32,7 @@
                 },
                 submit: {
                     enable: true,
-                    text: '>'
+                    text: 'availability_notification.notify_me' | trans
                 }
             }
         } only %}

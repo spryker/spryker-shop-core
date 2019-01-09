@@ -11,11 +11,13 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToCustomerClientBridge;
+use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToSessionClientBridge;
 
 class AvailabilityNotificationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_AVAILABILITY_NOTIFICATION = 'CLIENT_AVAILABILITY_NOTIFICATION';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -28,6 +30,23 @@ class AvailabilityNotificationWidgetDependencyProvider extends AbstractBundleDep
 
         $container = $this->addAvailabilityNotificationClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addSessionClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSessionClient(Container $container): Container
+    {
+        $container[static::CLIENT_SESSION] = function (Container $container) {
+            return new AvailabilityNotificationWidgetToSessionClientBridge(
+                $container->getLocator()->session()->client()
+            );
+        };
 
         return $container;
     }
