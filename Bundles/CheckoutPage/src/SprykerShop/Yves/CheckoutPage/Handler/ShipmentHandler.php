@@ -49,16 +49,19 @@ class ShipmentHandler implements ShipmentHandlerInterface
      */
     public function addShipmentToItems(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipmentTransfer = $itemTransfer->getShipment();
-            $shipmentTransfer->setShipmentSelection($quoteTransfer->getShipment()->getShipmentSelection());
-            $shipmentMethodTransfer = $this->getShipmentMethodById($shipmentMethodsTransfer, $itemTransfer);
-            $shipmentTransfer->setMethod($shipmentMethodTransfer);
-            $shipmentTransfer->setExpense(
-                $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode())
-            );
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer){
+            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+                $shipmentTransfer = $itemTransfer->getShipment();
+                $shipmentTransfer->setShipmentSelection($shipmentGroupTransfer->getShipment()->getShipmentSelection());
+                $shipmentMethodTransfer = $this->getShipmentMethodById(
+                    $shipmentGroupTransfer->getAvailableShipmentMethods(),
+                    $shipmentTransfer->getShipmentSelection()
+                );
+                $shipmentTransfer->setMethod($shipmentMethodTransfer);
+                $shipmentTransfer->setExpense(
+                    $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode())
+                );
+            }
         }
 
         return $quoteTransfer;
@@ -70,12 +73,14 @@ class ShipmentHandler implements ShipmentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function getShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, ItemTransfer $itemTransfer): ?ShipmentMethodTransfer
+    protected function getShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, $shipmentSelectionId): ?ShipmentMethodTransfer
     {
-        $idShipmentMethod = $itemTransfer->getShipment()->getShipmentSelection();
+        if($shipmentSelectionId === null){
+            return null;
+        }
 
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodsTransfer) {
-            if ($shipmentMethodsTransfer->getIdShipmentMethod() === $idShipmentMethod) {
+            if ($shipmentMethodsTransfer->getIdShipmentMethod() === $shipmentSelectionId) {
                 return $shipmentMethodsTransfer;
             }
         }

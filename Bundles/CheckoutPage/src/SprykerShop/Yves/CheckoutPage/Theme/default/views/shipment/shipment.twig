@@ -3,13 +3,14 @@
 {% define data = {
     backUrl: _view.previousStepUrl,
     forms: {
-        shipment: _view.shipmentForm
+        shipment: _view.shipmentCollectionForm
     },
 
     title: 'checkout.step.shipment.title' | trans
 } %}
 
 {% block content %}
+    {#{{ form(_view.shipmentCollectionForm) }}#}
     {% embed molecule('form') with {
         class: 'box',
         data: {
@@ -31,21 +32,48 @@
         }
     } only %}
         {% block fields %}
-            {% for name, choices in data.form.idShipmentMethod.vars.choices %}
-                <div class="form__field col col--sm-12">
-                    <h5>{{name}}</h5>
-                    <ul class="list spacing-y">
-                        {% for key, choice in choices %}
-                            <li class="list__item spacing-y">
-                                {{ form_row(data.form.idShipmentMethod[key], {
-                                    label: data.form.idShipmentMethod[key].vars.label,
-                                    required: false
-                                }) }}
-                            </li>
+            {% set shipmentGroupCollectionForm = data.form.shipmentGroups | default %}
+            {% for shipmentGroupForm in shipmentGroupCollectionForm %}
+                {#<h6 class="danger">Shipment group: items, shipment</h6>#}
+                <article class="grid grid--stretch grid--justify box col--sm-12">
+                    <div class="col col--sm-6">
+                        {% for item in shipmentGroupForm.vars.data.items %}
+                            {% include molecule('cart-image', 'CartPage') with {
+                                data: {
+                                    name: item.name | default(''),
+                                    image: item.images is empty ? null : (item.images | first)
+                                }
+                            } only %}
                         {% endfor %}
-                    </ul>
-                </div>
-                {% if not loop.last %}<div class="form__field col col--sm-12"><hr /></div>{% endif %}
+                    </div>
+                    <div class="col col--sm-6">
+                        {% for name, choices in shipmentGroupForm.shipment.shipmentSelection.vars.choices %}
+                            <div class="form__field col col--sm-12">
+                                <h5>{{ name }}</h5>
+                                <ul class="list spacing-y">
+                                    {% for key, choice in choices %}
+                                        <li class="list__item spacing-y">
+                                            {{ form_row(shipmentGroupForm.shipment.shipmentSelection[key], {
+                                                label: shipmentGroupForm.shipment.shipmentSelection[key].vars.label,
+                                                required: false
+                                            }) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% if not loop.last %}
+                                <div class="form__field col col--sm-12">
+                                    <hr/>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </article>
+                {% if not loop.last %}
+                    <div class="form__field col col--sm-12">
+                        <hr/>
+                    </div>
+                {% endif %}
             {% endfor %}
         {% endblock %}
     {% endembed %}

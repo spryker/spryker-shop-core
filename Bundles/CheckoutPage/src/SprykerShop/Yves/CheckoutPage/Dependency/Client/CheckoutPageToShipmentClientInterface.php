@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Dependency\Client;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutPageToShipmentClientInterface

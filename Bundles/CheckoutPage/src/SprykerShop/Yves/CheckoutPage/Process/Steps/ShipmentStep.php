@@ -7,8 +7,11 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupsTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
@@ -62,6 +65,18 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
+        /** This is stub, remove when address step is ready */
+        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
+            $shipment = new ShipmentTransfer();
+            $address = new AddressTransfer();
+            $address->setAddress1('address ' . $key);
+            $shipment->setShippingAddress($address);
+            $itemTransfer->setShipment($shipment);
+        }
+        /** Move alsewhere */
+        $groups = $this->getShipmentGroups($quoteTransfer)->getGroups();
+        $quoteTransfer->setShipmentGroups($groups);
+
         return true;
     }
 
@@ -96,15 +111,9 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
     {
-        $shipmentGroups = $this->getShipmentGroups($quoteTransfer)->getGroups();
-        foreach ($shipmentGroups as $shipmentGroupTransfer) {
-            if ($shipmentGroupTransfer->getShipment() === null || $shipmentGroupTransfer->getShipment()->getExpense() === null) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null) {
                 return false;
-            }
-            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-                if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null) {
-                    return false;
-                }
             }
         }
 
@@ -142,25 +151,13 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
-     */
-    public function getTemplateVariables(AbstractTransfer $quoteTransfer)
-    {
-        return [
-            'shippingGroupCollection' => $this->getShippingGroupCollection($quoteTransfer),
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\ShipmentGroupsTransfer
      */
     protected function getShipmentGroups(QuoteTransfer $quoteTransfer): ShipmentGroupsTransfer
     {
         $itemCollectionTransfer = new ItemCollectionTransfer();
         $itemCollectionTransfer->setItems($quoteTransfer->getItems());
-        return $this->shipmentClient->getShipmentGroups($itemCollectionTransfer);
 
+        return $this->shipmentClient->getShipmentGroups($itemCollectionTransfer);
     }
 }

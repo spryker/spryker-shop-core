@@ -87,7 +87,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     {
         return [
             ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP => $this->createAvailableMethodsByShipmentChoiceList($quoteTransfer),
-//            ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
         ];
     }
 
@@ -126,19 +125,19 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         $shipmentMethods = [];
 
         $shipmentGroupsTransfer = $this->getAvailableMethodsByShipment($quoteTransfer);
-//        dump($shipmentGroupsTransfer); exit;
-        foreach ($shipmentGroupsTransfer->getGroups() as $key => $shipmentGroupTransfer) {
+
+        foreach ($shipmentGroupsTransfer->getGroups() as $shipmentGroupTransfer) {
             foreach ($shipmentGroupTransfer->getAvailableShipmentMethods()->getMethods() as $shipmentMethodTransfer) {
-                if (!isset($shipmentMethods[$key][$shipmentMethodTransfer->getCarrierName()])) {
-                    $shipmentMethods[$key][$shipmentMethodTransfer->getCarrierName()] = [];
+                if (!isset($shipmentMethods[$shipmentGroupTransfer->getHash()][$shipmentMethodTransfer->getCarrierName()])) {
+                    $shipmentMethods[$shipmentGroupTransfer->getHash()][$shipmentMethodTransfer->getCarrierName()] = [];
                 }
                 $description = $this->getShipmentDescription(
                     $shipmentMethodTransfer
                 );
-                $shipmentMethods[$key][$shipmentMethodTransfer->getCarrierName()][$description] = $shipmentMethodTransfer->getIdShipmentMethod();
+                $shipmentMethods[$shipmentGroupTransfer->getHash()][$shipmentMethodTransfer->getCarrierName()][$description] = $shipmentMethodTransfer->getIdShipmentMethod();
             }
         }
-//        dump($shipmentMethods); exit;
+
         return $shipmentMethods;
     }
 
