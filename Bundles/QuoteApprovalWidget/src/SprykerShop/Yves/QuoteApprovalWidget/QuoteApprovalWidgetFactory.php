@@ -13,6 +13,7 @@ use Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorI
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface;
+use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToPermissionClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteClientInterface;
@@ -29,17 +30,18 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $localeName
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createQuoteApproveRequestForm(QuoteTransfer $quoteTransfer): FormInterface
+    public function createQuoteApproveRequestForm(QuoteTransfer $quoteTransfer, string $localeName): FormInterface
     {
         $formDataProvider = $this->createQuoteApproveRequestFormDataProvider();
 
         return $this->getFormFactory()->create(
             QuoteApproveRequestForm::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer)
+            $formDataProvider->getOptions($quoteTransfer, $localeName)
         );
     }
 
@@ -66,7 +68,8 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
     {
         return new QuoteApproveRequestFormDataProvider(
             $this->getQuoteApprovalClient(),
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
+            $this->getGlossaryStorageClient()
         );
     }
 
@@ -100,5 +103,13 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
     public function getPermissionClient(): QuoteApprovalWidgetToPermissionClientInterface
     {
         return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::CLIENT_PERMISSION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): QuoteApprovalWidgetToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

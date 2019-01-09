@@ -23,7 +23,10 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $form = $this->getFactory()->createQuoteApproveRequestForm($quoteTransfer);
+        $form = $this->getFactory()->createQuoteApproveRequestForm(
+            $quoteTransfer,
+            $this->getLocale()
+        );
 
         $quoteApprovalStatus = $this->getFactory()
             ->createQuoteApprovalStatusCalculator()
@@ -105,5 +108,13 @@ class QuoteApproveRequestWidget extends AbstractWidget
 
 
         return $configuration[PlaceOrderPermissionPlugin::FIELD_MULTI_CURRENCY][$currencyCode] ?? 0;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLocale(): string
+    {
+        return $this->getApplication()['locale'];
     }
 }

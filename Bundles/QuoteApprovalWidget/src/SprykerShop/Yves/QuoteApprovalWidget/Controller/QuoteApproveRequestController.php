@@ -27,7 +27,8 @@ class QuoteApproveRequestController extends AbstractController
     {
         $quoteApproveRequestForm = $this->getFactory()
             ->createQuoteApproveRequestForm(
-                $this->getFactory()->getQuoteClient()->getQuote()
+                $this->getFactory()->getQuoteClient()->getQuote(),
+                $this->getLocale()
             );
 
         $quoteApproveRequestForm->handleRequest($request);
