@@ -35,6 +35,10 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getName(): string
@@ -43,6 +47,10 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public static function getTemplate(): string
