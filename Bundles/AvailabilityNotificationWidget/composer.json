@@ -19,8 +19,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/product-detail-page": "if you want to use AvailabilityNotificationWidget",
-    "spryker/silex": "ADD SUGGEST DESCRIPTION"
+    "spryker-shop/product-detail-page": "if you want to use AvailabilityNotificationWidget"
   },
   "autoload": {
     "psr-4": {
