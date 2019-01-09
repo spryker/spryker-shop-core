@@ -64,7 +64,7 @@ class MultiCurrencyType extends AbstractType
     protected function addAmountPerCurrencyField(FormBuilderInterface $builder, string $currencyIsoCode): self
     {
         $options = [
-            'attr' => ['placeholder' => 'company_page.multi_currency_type.name.cent_amount'],
+            'attr' => ['placeholder' => 'company_page.multi_currency_type.name.cent_amount.' . $currencyIsoCode],
             'label' => strtoupper($currencyIsoCode),
             'constraints' => [
                 new GreaterThanOrEqual([
