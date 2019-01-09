@@ -8,9 +8,9 @@
 namespace SprykerShop\Yves\QuoteApprovalWidget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
-use Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculator;
+use Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface;
@@ -46,7 +46,7 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface
+     * @return \Spryker\Shared\QuoteApproval\StatusCalculator\QuoteApprovalStatusCalculatorInterface
      */
     public function createQuoteApprovalStatusCalculator(): QuoteApprovalStatusCalculatorInterface
     {

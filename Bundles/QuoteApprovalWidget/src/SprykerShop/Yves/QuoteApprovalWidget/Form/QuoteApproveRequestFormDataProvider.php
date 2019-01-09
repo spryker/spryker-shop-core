@@ -180,12 +180,12 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     /**
      * @param \Generated\Shared\Transfer\PermissionTransfer $quoteApprovePermission
      *
-     * @return mixed
+     * @return int|null
      */
     protected function getApproverLimitConfiguration(
         PermissionTransfer $quoteApprovePermission,
         string $currencyCode
-    ): ? int {
+    ): ?int {
         $configuration = $quoteApprovePermission->getConfiguration();
 
         return $configuration[ApproveQuotePermissionPlugin::FIELD_MULTI_CURRENCY][$currencyCode] ?? null;

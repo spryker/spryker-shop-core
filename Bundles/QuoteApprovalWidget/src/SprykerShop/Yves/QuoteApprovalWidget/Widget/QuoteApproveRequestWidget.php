@@ -73,7 +73,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function isVisible(QuoteTransfer $quoteTransfer): bool
     {
-        if($this->getPlaceOrderPermission() === null) {
+        if ($this->getPlaceOrderPermission() === null) {
             return false;
         }
 
@@ -105,7 +105,6 @@ class QuoteApproveRequestWidget extends AbstractWidget
 
         $configuration = $placeOrderPermission
             ->getConfiguration();
-
 
         return $configuration[PlaceOrderPermissionPlugin::FIELD_MULTI_CURRENCY][$currencyCode] ?? 0;
     }
