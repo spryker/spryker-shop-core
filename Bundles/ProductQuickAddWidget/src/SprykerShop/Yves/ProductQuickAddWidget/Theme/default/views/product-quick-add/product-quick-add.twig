@@ -1,0 +1,28 @@
+{% extends template('widget') %}
+
+{% define data = {
+    title: _widget.title,
+    form: _widget.form,
+    options: {
+        action: path('product-quick-add')
+    },
+    submitButtonTitle: _widget.submitButtonTitle,
+    vertical: false
+} %}
+
+{% block body %}
+    {% set formModifiers = data.vertical ? [] : ["row"] %}
+    {% include molecule('product-quick-add-form', 'ProductQuickAddWidget') with {
+        class: "grid grid--middle",
+        modifiers: formModifiers,
+        data: {
+            title: data.title,
+            form: data.form,
+            options: data.options,
+            submitButtonTitle: data.submitButtonTitle,
+            vertical: data.vertical
+        }
+    } only %}
+
+    <hr/>
+{% endblock %}

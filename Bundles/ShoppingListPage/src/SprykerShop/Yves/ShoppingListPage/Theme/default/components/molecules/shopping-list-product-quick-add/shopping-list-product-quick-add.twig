@@ -17,56 +17,5 @@
             'idShoppingList': data.activeShoppingListId
         }
     ] only %}
-        {% block title %}
-            <div class="col col--sm-12 col--md-2 text-center spacing-y--small">
-                {% if data.title is not empty %}
-                    <b>{{ data.title }}</b>
-                {% endif %}
-            </div>
-        {% endblock %}
-
-        {% block form %}
-            {% set options = {
-                action: path('product-quick-add'),
-                attr: {
-                    class: 'col col--sm-12 col--md-10'
-                }
-            } %}
-
-            {{ form_start(data.form, options) }}
-
-            {% block fields %}
-                {% do data.form.sku.setRendered %}
-
-                <div class="col col--sm-12 col--md-8">
-                    {% widget 'ProductConcreteSearchWidget' args [
-                        'ajax-provider' ~ config.name,
-                        data.form.sku.vars.full_name,
-                    ] only %}
-                    {% endwidget %}
-                </div>
-
-                <div class="col col--sm-12 col--md-3 spacing-x--inner">
-                    {{ form_widget(data.form.children.quantity, {
-                        attr: {
-                            min: 1,
-                            step: 1,
-                            placeholder: 'cart.quick_add_to_cart.quantity' | trans
-                        }}
-                    ) }}
-                </div>
-            {% endblock %}
-
-            {% block actions %}
-                <div class="col col--sm-12 col--md-1">
-                    <button type="submit" class="button button--expand button--success">
-                        {{ data.submitButtonTitle }}
-                    </button>
-                </div>
-            {% endblock %}
-
-            {{ form_end(data.form) }}
-
-        {% endblock %}
     {% endwidget %}
 {% endblock %}
