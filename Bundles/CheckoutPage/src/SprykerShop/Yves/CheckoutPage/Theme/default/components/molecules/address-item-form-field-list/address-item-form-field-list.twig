@@ -1,0 +1,83 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'address-item-form-field-list',
+    tag: 'div'
+} %}
+
+{% block body %}
+    <div class="grid grid--top grid--justify">
+        {% for item in data.items %}
+            {% set itemName = item.vars.data.name | default %}
+            {% set itemQuantity = item.vars.data.quantity | default %}
+            {% set imageUrl = item.vars.data.images is not empty ? item.vars.data.images[0].externalUrlSmall : '' %}
+            {% set formItemShippingAddressId = 'form-item-shipping-address-' ~ loop.index %}
+
+            <div class="col col--sm-3 spacing spacing--inner">
+                {% include atom('thumbnail') with {
+                    modifiers: ['small'],
+                    attributes: {
+                        alt: itemName,
+                        src: imageUrl,
+                        title: itemName
+                    }
+                } only %}
+            </div>
+            <div class="col col--sm-3 spacing spacing--inner">
+                <p><strong>{{ itemName }}</strong></p>
+                <p>{{ ('customer.order.item_quantity' | trans) ~ ' ' ~ itemQuantity }}</p>
+            </div>
+            <div class="col col--sm-6 spacing spacing--inner">
+                {{ form_widget(item.shippingAddress.id_customer_address) }}
+            </div>
+            <div class="col col--sm-12">
+                {% embed molecule('form') with {
+                    class: 'js-address__item-shipping is-hidden',
+                    data: {
+                        form: item.shippingAddress,
+                        enableStart: false,
+                        enableEnd: false,
+                        layout: {
+                            salutation: 'col col--sm-12 col--lg-2',
+                            first_name: 'col col--sm-12 col--lg-5',
+                            last_name: 'col col--sm-12 col--lg-5',
+                            address1: 'col col--sm-12 col--md-8 col--lg-10',
+                            address2: 'col col--sm-12 col--md-4 col--lg-2',
+                            zip_code: 'col col--sm-6 col--lg-4',
+                            city: 'col col--sm-6 col--lg-4',
+                            iso2_code: 'col col--sm-12 col--lg-4'
+                        },
+                        submit: {
+                            enable: true
+                        },
+                        cancel: {
+                            enable: false
+                        }
+                    },
+                    attributes: {
+                        id: formItemShippingAddressId
+                    }
+                } only %}
+                    {% block field %}
+                        {{ form_row(field, {
+                            attr: {
+                                'data-key': field.vars.name
+                            },
+                            rowAttr: {
+                                class: config.name ~ '__field ' ~ fieldLayoutClass
+                            }
+                        }) }}
+                    {% endblock %}
+                {% endembed %}
+
+                {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
+                    attributes: {
+                        'trigger-selector': '[name="' ~ item.shippingAddress.id_customer_address.vars.full_name ~ '"]' | default(''),
+                        'target-selector': '#' ~ formItemShippingAddressId,
+                        'class-to-toggle': 'is-hidden',
+                    }
+                } only %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

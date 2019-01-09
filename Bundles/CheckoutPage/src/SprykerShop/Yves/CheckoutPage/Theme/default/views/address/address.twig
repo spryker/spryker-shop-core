@@ -4,7 +4,8 @@
     forms: {
         address: _view.addressesForm,
         shipping: _view.addressesForm.shippingAddress,
-        billing: _view.addressesForm.billingAddress
+        billing: _view.addressesForm.billingAddress,
+        items: _view.addressesForm.items
     },
 
     title: 'checkout.step.address.title' | trans
@@ -19,12 +20,15 @@
             submit: {
                 enable: true,
                 text: 'checkout.step.shipment' | trans
-            }
+            },
+            existingShippingAddressSelectSelector: '[name="' ~ data.forms.shipping.id_customer_address.vars.full_name ~ '"]',
+            existingBillingAddressSelectSelector: '[name="' ~ data.forms.billing.id_customer_address.vars.full_name ~ '"]'
         },
         embed: {
             forms: {
                 shipping: data.forms.shipping,
-                billing: data.forms.billing
+                billing: data.forms.billing,
+                items: data.forms.items
             }
         }
     } only %}
@@ -98,7 +102,14 @@
                 {% endembed %}
             </div>
 
-            <div class="form__field col col--sm-12">
+            {% include molecule('address-item-form', 'CheckoutPage') with {
+                class: 'js-address__items-target col col--sm-12 is-hidden',
+                data: {
+                    form: embed.forms.items
+                }
+            } only %}
+
+            <div class="form__field col col--sm-12 js-address__billingSameAsShipping">
                 {{ form_row(data.form.billingSameAsShipping, {
                     component: molecule('toggler-checkbox'),
                     attributes: {
@@ -189,30 +200,37 @@
                 <div class="col">
                     {% if data.form.isAddressSavingSkipped is defined %}
                         {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
+                        {% set optionValueAddNewAddress = '' %}
+                        {% set optionValueDeliverToMultipleAddresses = '-1' %}
 
-                        {% if embed.forms.shipping.id_customer_address is defined %}
-                            {% set existingShippingAddressSelectSelector = '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' %}
-                            {% set existingBillingAddressSelectSelector = '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' %}
+                        {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
+                            attributes: {
+                                'trigger-selector': data.existingShippingAddressSelectSelector | default(''),
+                                'target-selector': '.js-address__items-target',
+                                'class-to-toggle': 'is-hidden',
+                                'trigger-option-to-target-map': {
+                                    (optionValueAddNewAddress): '.js-address__shipping',
+                                    (optionValueDeliverToMultipleAddresses): '.js-address__items-target'
+                                } | json_encode
+                            }
+                        } only %}
 
-                            {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
-                                attributes: {
-                                    'trigger-selector': existingShippingAddressSelectSelector | default(''),
-                                    'target-selector': '.js-address__shipping',
-                                    'class-to-toggle': 'is-hidden',
-                                }
-                            } only %}
+                        {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
+                            attributes: {
+                                'trigger-selector': data.existingBillingAddressSelectSelector | default(''),
+                                'target-selector': '.js-address__billing',
+                                'class-to-toggle': 'is-hidden',
+                            }
+                        } only %}
 
-                            {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
-                                attributes: {
-                                    'trigger-selector': existingBillingAddressSelectSelector | default(''),
-                                    'target-selector': '.js-address__billing',
-                                    'class-to-toggle': 'is-hidden',
-                                }
-                            } only %}
-                        {% else %}
-                            {% set existingShippingAddressSelectSelector = '.js-from-select-address__shippingAddress' %}
-                            {% set existingBillingAddressSelectSelector = '.js-from-select-address__billingAddress' %}
-                        {% endif %}
+                        {% include molecule('same-billing-toggler', 'CustomerPage') ignore missing with {
+                            attributes: {
+                                'trigger-selector': data.existingShippingAddressSelectSelector | default(''),
+                                'target-container-selector': '.js-address__billingSameAsShipping',
+                                'class-to-toggle': 'is-hidden',
+                                'toggle-option-value': optionValueDeliverToMultipleAddresses
+                            }
+                        } only %}
 
                         {% include molecule('save-new-address', 'CustomerPage') ignore missing with {
                             class: 'col is-hidden',
@@ -220,8 +238,8 @@
                                 form: data.form
                             },
                             attributes: {
-                                'shipping-address-toggler-selector': existingShippingAddressSelectSelector | default(''),
-                                'billing-address-toggler-selector': existingBillingAddressSelectSelector | default(''),
+                                'shipping-address-toggler-selector': data.existingShippingAddressSelectSelector | default(''),
+                                'billing-address-toggler-selector': data.existingBillingAddressSelectSelector | default(''),
                                 'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]' | default(''),
                                 'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]' | default('')
                             }

@@ -9,13 +9,16 @@ namespace SprykerShop\Yves\CustomerPage\Form;
 
 use Closure;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Blank;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
@@ -27,14 +30,19 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
     public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
     public const FIELD_IS_ADDRESS_SAVING_SKIPPED = 'isAddressSavingSkipped';
+    public const FIELD_ITEMS = 'items';
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
+    public const GROUP_BILLING_SAME_AS_SHIPPING = self::FIELD_BILLING_SAME_AS_SHIPPING;
+
+    public const VALIDATION_BILLING_SAME_AS_SHIPPING_MESSAGE = 'Billing address should be specified when shipping to multiple addresses.';
 
     protected const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
+    protected const GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES = 'customer.account.deliver_to_multiple_addresses';
 
     /**
      * @return string
@@ -79,6 +87,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     {
         $this
             ->addShippingAddressSubForm($builder, $options)
+            ->addItemShippingAddressSubForm($builder, $options)
             ->addSameAsShipmentCheckbox($builder)
             ->addBillingAddressSubForm($builder, $options)
             ->addIsAddressSavingSkippedField($builder);
@@ -96,14 +105,14 @@ class CheckoutAddressCollectionForm extends AbstractType
             'data_class' => AddressTransfer::class,
             'required' => true,
             'validation_groups' => function (FormInterface $form) {
-                if (!$form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) || !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()) {
+                if (!$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()) {
                     return [self::GROUP_SHIPPING_ADDRESS];
                 }
 
                 return false;
             },
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => self::GROUP_SHIPPING_ADDRESS,
-            CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[self::OPTION_ADDRESS_CHOICES],
+            CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $this->getSplitDeliveryAddressChoices($options),
             CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[self::OPTION_COUNTRY_CHOICES],
         ];
 
@@ -124,6 +133,26 @@ class CheckoutAddressCollectionForm extends AbstractType
             CheckboxType::class,
             [
                 'required' => false,
+                'constraints' => [
+                    $this->createBillingSameAsShippingConstraint(),
+                ],
+                'validation_groups' => function (FormInterface $form) {
+                    $shippingAddressForm = $form->getParent()
+                        ? $form->getParent()->get(static::FIELD_SHIPPING_ADDRESS)
+                        : null;
+
+                    if (!$shippingAddressForm) {
+                        return false;
+                    }
+
+                    if ($shippingAddressForm->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()
+                        == CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES
+                    ) {
+                        return static::GROUP_BILLING_SAME_AS_SHIPPING;
+                    }
+
+                    return false;
+                },
             ]
         );
 
@@ -205,5 +234,51 @@ class CheckoutAddressCollectionForm extends AbstractType
 
             return !$value;
         };
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addItemShippingAddressSubForm(FormBuilderInterface $builder, array $options): self
+    {
+        $builder->add(static::FIELD_ITEMS, CollectionType::class, [
+            'label' => false,
+            'entry_type' => CheckoutAddressItemForm::class,
+            'entry_options' => [
+                'data_class' => ItemTransfer::class,
+                'label' => false,
+                CheckoutAddressItemForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+                CheckoutAddressItemForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return string[]
+     */
+    protected function getSplitDeliveryAddressChoices(array $options): array
+    {
+        $addressChoices = $options[static::OPTION_ADDRESS_CHOICES];
+        $addressChoices[CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES] = static::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES;
+
+        return $addressChoices;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Blank
+     */
+    protected function createBillingSameAsShippingConstraint(): Blank
+    {
+        return new Blank([
+            'message' => static::VALIDATION_BILLING_SAME_AS_SHIPPING_MESSAGE,
+            'groups' => static::GROUP_BILLING_SAME_AS_SHIPPING,
+        ]);
     }
 }
