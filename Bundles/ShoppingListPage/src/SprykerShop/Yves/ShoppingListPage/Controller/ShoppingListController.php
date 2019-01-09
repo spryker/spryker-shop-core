@@ -37,7 +37,7 @@ class ShoppingListController extends AbstractShoppingListController
     protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS = 'customer.account.shopping_list.add_item.success';
-    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_QUICK_ADD_SHOPPING_LIST_ID_NOT_FOUND = 'customer.account.shopping_list.quick_add.shopping_list_id.not_found';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_SELECT_LIST = 'customer.account.shopping_list.items.added_to_cart.select_list';
 
     /**
      * @param int $idShoppingList
@@ -254,7 +254,7 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $idShoppingList = $this->getShoppingListIdFromRequest($request);
         if ($idShoppingList === null) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_QUICK_ADD_SHOPPING_LIST_ID_NOT_FOUND);
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_SELECT_LIST);
 
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
