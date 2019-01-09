@@ -11,11 +11,17 @@
 } %}
 
 {% block body %}
-    {% set fromModifiers = data.vertical ? [] : ["row"] %}
+    {% set formModifiers = data.vertical ? [] : ["row"] %}
     {% include molecule('product-quick-add-form', 'ProductQuickAddWidget') with {
         class: "grid grid--middle",
-        modifiers: fromModifiers,
-        data: data
+        modifiers: formModifiers,
+        data: {
+            title: data.title,
+            form: data.form,
+            options: data.options,
+            submitButtonTitle: data.submitButtonTitle,
+            vertical: data.vertical
+        }
     } only %}
 
     <hr/>
