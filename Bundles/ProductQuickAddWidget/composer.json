@@ -1,9 +1,12 @@
 {
   "name": "spryker-shop/product-quick-add-widget",
+  "type": "library",
   "description": "ProductQuickAddWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shop-application": "*",
+    "spryker/application": "*",
     "spryker/kernel": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker-shop/product-search-widget": "^1.0.0",
@@ -28,5 +31,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   }
 }
