@@ -79,7 +79,7 @@
                             } only %}
                         {% endif %}
                     </td>
-                    <td>{{ quote.totals.grandTotal | default(0) | money }}</td>
+                    <td>{{ quote.totals.grandTotal | default(0) | money(true, quote.currency.code) }}</td>
                     {% if showActions %}
                         <td>
                             <ul class="menu menu--inline">
