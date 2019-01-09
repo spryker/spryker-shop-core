@@ -28,20 +28,20 @@
                     <div class="grid grid--right">
                         {% if can('ApproveQuotePermissionPlugin', data.quoteTransfer) %}
                             <div class="col">
-                                <a href="{{ path('quote-approval-decline', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--alert">
-                                    {{ 'quote_approval_widget.cart.decline' | trans }}
-                                </a>
+                                <form method="POST" action="{{ path('quote-approval-decline', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                                    <button type="submit" class="button button--alert">{{ 'quote_approval_widget.cart.decline' | trans }}</button>
+                                </form>
                             </div>
                             <div class="col spacing-left">
-                                <a href="{{ path('quote-approval-approve', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--success">
-                                    {{ 'quote_approval_widget.cart.approve' | trans }}
-                                </a>
+                                <form method="POST" action="{{ path('quote-approval-approve', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                                    <button type="submit" class="button button--success">{{ 'quote_approval_widget.cart.approve' | trans }}</button>
+                                </form>
                             </div>
                         {% else %}
                             <div class="col">
-                                <a href="{{ path('quote-approval-cancel', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}" class="button button--alert">
-                                    {{ 'quote_approval_widget.cart.cancel' | trans }}
-                                </a>
+                                <form method="POST" action="{{ path('quote-approval-cancel', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                                    <button type="submit" class="button button--alert">{{ 'quote_approval_widget.cart.cancel' | trans }}</button>
+                                </form>
                             </div>
                         {% endif %}
                     </div>
