@@ -294,13 +294,13 @@ class ShoppingListController extends AbstractShoppingListController
     protected function getShoppingListIdFromRequest(Request $request): ?int
     {
         $additionalRequestParams = $this->getFactory()->getUtilEncodingService()->decodeJson(
-            base64_decode(
+            urldecode(
                 $request->get(self::PARAM_ADDITIONAL_REDIRECT_PARAMETERS)
             ),
             true
         );
 
-        if (array_key_exists(static::PARAM_ID_SHOPPING_LIST, $additionalRequestParams)) {
+        if (is_array($additionalRequestParams) && array_key_exists(static::PARAM_ID_SHOPPING_LIST, $additionalRequestParams)) {
             return (int)$additionalRequestParams[static::PARAM_ID_SHOPPING_LIST];
         }
 

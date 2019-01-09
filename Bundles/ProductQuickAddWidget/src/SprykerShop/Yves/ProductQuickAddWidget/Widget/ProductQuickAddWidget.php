@@ -23,12 +23,14 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
      * @param string $title
      * @param string $submitButtonTitle
      * @param string $redirectRouteName
+     * @param bool $isVerticalLayout
      * @param array $additionalRedirectData
      */
     public function __construct(
         string $title,
         string $submitButtonTitle,
         string $redirectRouteName,
+        bool $isVerticalLayout = false,
         array $additionalRedirectData = []
     ) {
         $productQuickAddForm = $this->getProductQuickAddForm();
@@ -40,7 +42,8 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
 
         $this->addParameter('title', $title)
             ->addParameter('submitButtonTitle', $submitButtonTitle)
-            ->addParameter('form', $productQuickAddForm->createView());
+            ->addParameter('form', $productQuickAddForm->createView())
+            ->addParameter('verticalLayout', $isVerticalLayout);
     }
 
     /**
@@ -84,7 +87,7 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
     {
         $utilEncodingService = $this->getFactory()->getUtilEncodingService();
 
-        return base64_encode(
+        return urlencode(
             $utilEncodingService->encodeJson($data)
         );
     }

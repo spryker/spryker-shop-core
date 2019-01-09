@@ -7,11 +7,11 @@
         action: path('product-quick-add')
     },
     submitButtonTitle: _widget.submitButtonTitle,
-    vertical: false
+    verticalLayout: _widget.verticalLayout
 } %}
 
 {% block body %}
-    {% set formModifiers = data.vertical ? [] : ["row"] %}
+    {% set formModifiers = data.verticalLayout ? [] : ["row"] %}
     {% include molecule('product-quick-add-form', 'ProductQuickAddWidget') with {
         class: "grid grid--middle",
         modifiers: formModifiers,
@@ -20,7 +20,7 @@
             form: data.form,
             options: data.options,
             submitButtonTitle: data.submitButtonTitle,
-            vertical: data.vertical
+            verticalLayout: data.verticalLayout
         }
     } only %}
 
