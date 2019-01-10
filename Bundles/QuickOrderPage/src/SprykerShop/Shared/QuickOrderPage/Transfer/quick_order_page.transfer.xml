@@ -11,6 +11,12 @@
         <property name="sku" type="string" />
         <property name="quantity" type="int" />
         <property name="sumPrice" type="int" />
+        <property name="errorMessage" type="string[]" />
+        <property name="productConcrete" type="ProductConcrete" />
+    </transfer>
+
+    <transfer name="QuickOrderFileUpload">
+        <property name="filePath" type="string" />
     </transfer>
 
     <transfer name="ProductConcrete">

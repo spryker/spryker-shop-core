@@ -120,6 +120,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     {
         $itemTransfers = $this->mapToItemTransfers($quickOrderTransfer);
         foreach ($itemTransfers as $key => $itemTransfer) {
+            $itemTransfer->setGroupKeyPrefix(uniqid('', true));
             $itemTransfers[$key] = $this->expandItemTransfer($itemTransfer);
         }
 

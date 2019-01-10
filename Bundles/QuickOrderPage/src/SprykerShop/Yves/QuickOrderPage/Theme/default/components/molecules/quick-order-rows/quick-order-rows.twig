@@ -12,6 +12,7 @@
 } %}
 
 {% block body %}
+
     <div class="grid grid--justify grid--middle {{config.name}}__row {{config.name}}__row--head">
         <div class="col col--sm-4 spacing spacing--inner">
             {{ 'quick-order.input-label.sku.name' | trans }}
@@ -52,6 +53,7 @@
                 index: loop.index0,
                 quantityField: row.quantity,
                 skuField: row.sku,
+                errorMessage: row.vars.value.errorMessage,
                 additionalColumns: data.additionalColumns,
                 product: product,
                 price: product is null ? null : data.prices[product.sku] | default(),
@@ -59,7 +61,7 @@
                 autocomplete: {
                     skuFieldName: row.vars.full_name,
                     skuFieldValue: product is null ? null : product.sku,
-                    searchFieldValue: product is null ? null : product.localizedAttributes[0].name ~ ' (' ~ product.sku ~ ')'
+                    searchFieldValue: product is null ? null : product.localizedAttributes[0] is defined ? product.localizedAttributes[0].name : '' ~ ' (' ~ product.sku ~ ')'
                 }
             },
             embed: {

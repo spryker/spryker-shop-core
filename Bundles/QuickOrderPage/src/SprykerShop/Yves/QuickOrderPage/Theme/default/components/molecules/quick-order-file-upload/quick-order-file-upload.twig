@@ -5,9 +5,34 @@
 } %}
 
 {% define data = {
-
+    uploadOrderForm: required
 } %}
 
 {% block body %}
-    {# UPLOAD FORM #}
+    <h5>{{ 'quick-order.file-upload-order.title' | trans }}</h5>
+    <p>{{ 'quick-order.file-upload-order.description' | trans }}</p>
+    {% include molecule('form') with {
+        data: {
+            form: data.uploadOrderForm,
+            enableStart: false,
+            enableEnd: false,
+            submit: {
+                enable: true,
+                text: 'quick-order.file-upload-order.button.verify' | trans
+            }
+        }
+    } only %}
+
+    {% if data.fileTemplatesUrls %}
+        <div class="col col--sm-12">
+            {% for fileTemplateExt in data.fileTemplatesUrls %}
+                <p>
+                    <a href="{{ path('quick-order/download-template', {'file-type': fileTemplateExt}) }}">
+                    {{ 'quick-order.file-upload-order.file-template-download-message' | trans({'%template%': fileTemplateExt})}}
+                    </a>
+                </p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
 {% endblock %}

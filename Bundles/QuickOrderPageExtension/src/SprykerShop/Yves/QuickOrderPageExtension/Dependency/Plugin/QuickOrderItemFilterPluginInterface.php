@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 
 interface QuickOrderItemFilterPluginInterface
@@ -19,12 +18,10 @@ interface QuickOrderItemFilterPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
     public function filterItem(
-        QuickOrderItemTransfer $quickOrderItemTransfer,
-        ProductConcreteTransfer $productConcreteTransfer
+        QuickOrderItemTransfer $quickOrderItemTransfer
     ): QuickOrderItemTransfer;
 }

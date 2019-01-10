@@ -16,9 +16,13 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductSto
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
+use SprykerShop\Yves\QuickOrderPage\FileOutputter\FileOutputter;
+use SprykerShop\Yves\QuickOrderPage\FileOutputter\FileOutputterInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\QuantityFieldConstraint;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderFormatConstraint;
+use SprykerShop\Yves\QuickOrderPage\Form\Constraint\UploadOrderFormatConstraint;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProviderInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
@@ -31,6 +35,10 @@ use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolver;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParserInterface;
+use SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadOrderParser;
+use SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadOrderParserInterface;
+use SprykerShop\Yves\QuickOrderPage\Validator\CsvValidator;
+use SprykerShop\Yves\QuickOrderPage\Validator\CsvValidatorInterface;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformer;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,6 +73,16 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\QuickOrderPage\FileOutputter\FileOutputterInterface
+     */
+    public function createFileOutputter(): FileOutputterInterface
+    {
+        return new FileOutputter(
+            $this->getQuickOrderFileTemplatePlugins()
+        );
+    }
+
+    /**
      * @return \SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProviderInterface
      */
     public function createQuickOrderFormDataProvider(): QuickOrderFormDataProviderInterface
@@ -78,6 +96,17 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createTextOrderParser(): TextOrderParserInterface
     {
         return new TextOrderParser($this->getConfig());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadOrderParserInterface
+     */
+    public function createUploadOrderParser(): UploadOrderParserInterface
+    {
+        return new UploadOrderParser(
+            $this->getConfig(),
+            $this->getUtilCsvService()
+        );
     }
 
     /**
@@ -188,11 +217,35 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[]
+     */
+    public function getQuickOrderFileProcessorPlugins(): array
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_FILE_PROCESSOR);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplatePluginInterface[]
+     */
+    public function getQuickOrderFileTemplatePlugins(): array
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_FILE_TEMPLATE);
+    }
+
+    /**
      * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface
      */
     public function getProductQuantityStorageClient(): QuickOrderPageToProductQuantityStorageClientInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_PRODUCT_QUANTITY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface
+     */
+    public function getUtilCsvService(): QuickOrderPageToUtilCsvServiceInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::SERVICE_UTIL_CSV);
     }
 
     /**
@@ -219,6 +272,19 @@ class QuickOrderPageFactory extends AbstractFactory
         return new TextOrderFormatConstraint(
             [
                 TextOrderFormatConstraint::OPTION_BUNDLE_CONFIG => $this->getConfig(),
+            ]
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Form\Constraint\UploadOrderFormatConstraint
+     */
+    public function createUploadOrderCorrectConstraint(): UploadOrderFormatConstraint
+    {
+        return new UploadOrderFormatConstraint(
+            [
+                UploadOrderFormatConstraint::OPTION_BUNDLE_CONFIG => $this->getConfig(),
+                UploadOrderFormatConstraint::OPTION_FILE_PROCESSOR_PLUGINS => $this->getQuickOrderFileProcessorPlugins(),
             ]
         );
     }
@@ -268,5 +334,13 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createViewDataTransformer(): ViewDataTransformerInterface
     {
         return new ViewDataTransformer();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Validator\CsvValidatorInterface
+     */
+    public function createCsvValidator(): CsvValidatorInterface
+    {
+        return new CsvValidator($this->getUtilCsvService());
     }
 }

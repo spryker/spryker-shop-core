@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Plugin\QuickOrderPage;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface;
@@ -24,11 +23,10 @@ class ProductQuantityFilterPlugin extends AbstractPlugin implements QuickOrderIt
      * @api
      *
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    public function filterItem(QuickOrderItemTransfer $quickOrderItemTransfer, ProductConcreteTransfer $productConcreteTransfer): QuickOrderItemTransfer
+    public function filterItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
         if (!$quickOrderItemTransfer->getSku()) {
             return $quickOrderItemTransfer;

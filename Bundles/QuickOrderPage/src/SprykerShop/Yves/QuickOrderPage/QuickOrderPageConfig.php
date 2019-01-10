@@ -13,6 +13,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
 {
     protected const TEXT_ORDER_ROW_SPLITTER_PATTERN = '/\r\n|\r|\n/';
     protected const TEXT_ORDER_SEPARATORS = [',', ';', ' '];
+    protected const UPLOAD_ORDER_ALLOWED_MIMETYPES = ['csv'];
+    protected const UPLOAD_ORDER_MAX_ALLOWED_LINES = 1000;
     protected const DEFAULT_DISPLAYED_ROW_COUNT = 8;
 
     /**
@@ -32,10 +34,26 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    public function getUploadOrderAllowedMimeTypes(): array
+    {
+        return static::UPLOAD_ORDER_ALLOWED_MIMETYPES;
+    }
+
+    /**
      * @return int
      */
     public function getDefaultDisplayedRowCount(): int
     {
         return static::DEFAULT_DISPLAYED_ROW_COUNT;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUploadOrderMaxAllowedLines(): int
+    {
+        return static::UPLOAD_ORDER_MAX_ALLOWED_LINES;
     }
 }

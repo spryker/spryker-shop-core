@@ -8,17 +8,16 @@
 namespace SprykerShop\Yves\QuickOrderPage\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig getConfig()
  */
-class TextOrderForm extends AbstractType
+class UploadOrderForm extends AbstractType
 {
-    public const FIELD_TEXT_ORDER = 'textOrder';
-    protected const FIELD_TEXT_ORDER_PLACEHOLDER = 'quick-order.paste-order.input-placeholder.copy-paste-order';
+    public const FIELD_FILE_UPLOAD_ORDER = 'fileUploadOrder';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -29,7 +28,7 @@ class TextOrderForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addTextOrderField($builder);
+            ->addFileUploadOrderField($builder);
     }
 
     /**
@@ -37,16 +36,15 @@ class TextOrderForm extends AbstractType
      *
      * @return $this
      */
-    protected function addTextOrderField(FormBuilderInterface $builder)
+    protected function addFileUploadOrderField(FormBuilderInterface $builder)
     {
         $builder->add(
-            static::FIELD_TEXT_ORDER,
-            TextareaType::class,
+            static::FIELD_FILE_UPLOAD_ORDER,
+            FileType::class,
             [
                 'label' => false,
-                'attr' => ['placeholder' => static::FIELD_TEXT_ORDER_PLACEHOLDER],
                 'constraints' => [
-                    $this->getFactory()->createTextOrderCorrectConstraint(),
+                    $this->getFactory()->createUploadOrderCorrectConstraint(),
                 ],
             ]
         );

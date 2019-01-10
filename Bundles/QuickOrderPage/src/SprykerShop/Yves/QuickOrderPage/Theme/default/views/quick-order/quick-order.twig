@@ -3,12 +3,14 @@
 {% define data = {
     forms: {
         quickOrderForm: _view.quickOrderForm,
-        textOrderForm: _view.textOrderForm
+        textOrderForm: _view.textOrderForm,
+        uploadOrderForm: _view.uploadOrderForm
     },
 
     additionalColumns: _view.additionalColumns,
     products: _view.products,
     prices: _view.prices,
+    fileTemplatesUrls: _view.fileTemplatesUrls,
     title: 'quick-order.page-title' | trans
 } %}
 
@@ -18,8 +20,10 @@
             form: data.forms.quickOrderForm,
             products: data.products,
             prices: data.prices,
+            fileTemplatesUrls: data.fileTemplatesUrls,
             additionalColumns: data.additionalColumns,
-            textOrderForm: data.forms.textOrderForm
+            textOrderForm: data.forms.textOrderForm,
+            uploadOrderForm: data.forms.uploadOrderForm
         }
     } only %}
 {% endblock %}

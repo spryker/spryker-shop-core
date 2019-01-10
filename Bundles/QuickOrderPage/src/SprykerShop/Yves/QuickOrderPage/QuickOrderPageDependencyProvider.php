@@ -17,6 +17,7 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductSto
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceBridge;
 
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -26,13 +27,16 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
     public const PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER';
-    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY = 'PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY';
     public const PLUGINS_QUICK_ORDER_FORM_COLUMN = 'PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER';
     public const PLUGINS_QUICK_ORDER_ITEM_FILTER = 'PLUGINS_QUICK_ORDER_ITEM_FILTER';
+    public const PLUGINS_QUICK_ORDER_FILE_PROCESSOR = 'PLUGINS_QUICK_ORDER_FILE_PROCESSOR';
+    public const PLUGINS_QUICK_ORDER_FILE_TEMPLATE = 'PLUGINS_QUICK_ORDER_FILE_TEMPLATE';
+    public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -47,6 +51,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuickOrderClient($container);
         $container = $this->addQuickOrderPageWidgetPlugins($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addQuickOrderUtilCsvService($container);
         $container = $this->addQuickOrderItemTransferExpanderPlugins($container);
         $container = $this->addQuickOrderFormHandlerStrategyPlugins($container);
         $container = $this->addQuickOrderFormAdditionalDataColumnProviderPlugins($container);
@@ -54,6 +59,8 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductStorageClient($container);
         $container = $this->addProductQuantityStorageClient($container);
+        $container = $this->addQuickOrderFileProcessorPlugins($container);
+        $container = $this->addQuickOrderFileTemplatePlugins($container);
 
         return $container;
     }
@@ -69,6 +76,22 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuickOrderUtilCsvService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_CSV] = function (Container $container) {
+            return new QuickOrderPageToUtilCsvServiceBridge(
+                $container->getLocator()->utilCsv()->service()
+            );
         };
 
         return $container;
@@ -245,6 +268,34 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuickOrderFileProcessorPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUICK_ORDER_FILE_PROCESSOR] = function () {
+            return $this->getQuickOrderFileProcessorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuickOrderFileTemplatePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUICK_ORDER_FILE_TEMPLATE] = function () {
+            return $this->getQuickOrderFileTemplatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * Returns a list of widget plugin class names that implement
      * Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
@@ -283,6 +334,22 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[]
      */
     protected function getQuickOrderFormColumnPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[]
+     */
+    protected function getQuickOrderFileProcessorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplatePluginInterface[]
+     */
+    protected function getQuickOrderFileTemplatePlugins(): array
     {
         return [];
     }
