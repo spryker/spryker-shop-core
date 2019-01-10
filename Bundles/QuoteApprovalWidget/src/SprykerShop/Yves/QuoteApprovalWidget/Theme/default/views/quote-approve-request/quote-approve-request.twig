@@ -31,6 +31,16 @@
             </div>
         </div>
 
+        {% if approval %}
+            {% include molecule('approve-request-info', 'QuoteApprovalWidget') with {
+                data: {
+                    approval: approval,
+                    customer: customer,
+                    quoteApprovalStatus: data.quoteApprovalStatus
+                }
+            } only %}
+        {% endif %}
+
         {% if data.canSendApprovalRequest %}
             {% include molecule('approve-request-form', 'QuoteApprovalWidget') with {
                 data: {
@@ -38,16 +48,6 @@
                     formOptions: data.formOptions,
                     quote: data.quote,
                     limit: data.limit
-                }
-            } only %}
-        {% endif %}
-
-        {% if approval %}
-            {% include molecule('approve-request-info', 'QuoteApprovalWidget') with {
-                data: {
-                    approval: approval,
-                    customer: customer,
-                    quoteApprovalStatus: data.quoteApprovalStatus
                 }
             } only %}
         {% endif %}
