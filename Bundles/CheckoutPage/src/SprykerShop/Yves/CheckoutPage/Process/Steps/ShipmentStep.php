@@ -77,8 +77,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
             $itemTransfer->setShipment($shipment);
         }
         /** @todo Move elsewhere */
-        $groups = $this->getShipmentGroupCollectionTransfer($quoteTransfer);
-        $quoteTransfer->setShipmentGroups($groups);
+        $quoteTransfer->setShipmentGroups($this->getShipmentGroupCollection($quoteTransfer));
 
         return true;
     }
@@ -154,9 +153,9 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     * @return ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    protected function getShipmentGroupCollectionTransfer(QuoteTransfer $quoteTransfer): ArrayObject
+    protected function getShipmentGroupCollection(QuoteTransfer $quoteTransfer): ArrayObject
     {
         return $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
     }

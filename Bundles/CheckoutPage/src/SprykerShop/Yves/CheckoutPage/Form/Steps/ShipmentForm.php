@@ -80,10 +80,10 @@ class ShipmentForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => ShipmentTransfer::class,
-        ]);
-
-        $resolver->setRequired(static::OPTION_SHIPMENT_METHODS);
+        $resolver
+            ->setDefaults([
+                'data_class' => ShipmentTransfer::class,
+            ])
+            ->setRequired(static::OPTION_SHIPMENT_METHODS);
     }
 }

@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
-use \ArrayObject;
+use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;

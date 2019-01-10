@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: aleksandr.kovalchuk
- * Date: 2019-01-02
- * Time: 15:10
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
@@ -26,16 +25,29 @@ class ShipmentCollectionForm extends AbstractType
     public const FIELD_SHIPMENT_COLLECTION_GROUP = 'shipmentGroups';
     public const OPTION_SHIPMENT_METHODS_BY_GROUP = 'shipmentMethodsByGroup';
 
+    /**
+     * @return string|null
+     */
     public function getBlockPrefix()
     {
         return static::BLOCK_PREFIX;
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addShipmentGroups($builder, $options);
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
     protected function addShipmentGroups(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SHIPMENT_COLLECTION_GROUP, CollectionType::class, [
@@ -51,12 +63,17 @@ class ShipmentCollectionForm extends AbstractType
         return $this;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => QuoteTransfer::class
-        ]);
-        $resolver->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP);
+        $resolver
+            ->setDefaults([
+                'data_class' => QuoteTransfer::class,
+            ])
+            ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP);
     }
-
 }

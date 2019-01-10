@@ -25,7 +25,7 @@ class ShipmentGroupForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'shipmentGroupForm';
     }
@@ -36,7 +36,7 @@ class ShipmentGroupForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addShipmentMethods($builder, $options);
     }
@@ -56,7 +56,7 @@ class ShipmentGroupForm extends AbstractType
             $shipmentGroupTransfer = $event->getData();
             $form = $event->getForm();
             $options = $form->getConfig()->getOptions();
-            if (null !== $shipmentGroupTransfer) {
+            if ($shipmentGroupTransfer instanceof ShipmentGroupTransfer) {
                 if (isset($options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupTransfer->getHash()])) {
                     $availableShipmentMethods = $options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupTransfer->getHash()];
                 }
@@ -67,13 +67,19 @@ class ShipmentGroupForm extends AbstractType
             }
         });
 
+        return $this;
+
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => ShipmentGroupTransfer::class,
-        ]);
-        $resolver->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP);
+        $resolver
+            ->setDefaults([
+                'data_class' => ShipmentGroupTransfer::class,
+            ])
+            ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP);
     }
 }
