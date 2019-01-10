@@ -59,7 +59,7 @@ class ShoppingListForm extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 1, 'max' => 255]),
+                new Length(['max' => 255]),
             ],
         ]);
     }
