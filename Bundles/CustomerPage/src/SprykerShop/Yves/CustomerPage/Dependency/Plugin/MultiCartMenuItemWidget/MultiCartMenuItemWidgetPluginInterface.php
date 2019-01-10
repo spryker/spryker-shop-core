@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin\MultiCartMenuItemWidge
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\MultiCartMenuItemWidget instead.
+ */
 interface MultiCartMenuItemWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'MultiCartMenuItemWidgetPlugin';

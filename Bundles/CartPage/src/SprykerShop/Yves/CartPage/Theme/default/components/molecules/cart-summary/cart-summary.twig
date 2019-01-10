@@ -20,12 +20,22 @@
     <h6>{{ 'cart.your-order' | trans }}</h6>
     <hr />
 
+    {% if widgetExists('DiscountSummaryWidgetPlugin') %}
+        <ul class="list spacing-y">
+            {{ widget('DiscountSummaryWidgetPlugin', data.cart) }} {# @deprecated Use molecule('cart-discount-summary', 'DiscountWidget') instead. #}
+        </ul>
+    {% else %}
+        {% include molecule('cart-discount-summary', 'DiscountWidget') ignore missing with {
+            class: 'list spacing-y',
+            data: {
+                voucherDiscounts: data.cart.voucherDiscounts,
+                ruleDiscounts: data.cart.cartRuleDiscounts,
+                discountTotal: data.cart.totals.discounttotal
+            }
+        } only %}
+    {% endif %}
+
     <ul class="list spacing-y">
-        {% if widgetExists('DiscountSummaryWidgetPlugin') %}
-            <li class="list__item spacing-y">
-                {{ widget('DiscountSummaryWidgetPlugin', data.cart) }}
-            </li>
-        {% endif %}
 
         {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
             <li class="list__item spacing-y">
@@ -36,6 +46,22 @@
                 <hr />
             </li>
         {% endif %}
+
+        {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
+            {% block body %}
+                <li class="list__item spacing-y">
+                    {{ parent() }}
+                </li>
+                <hr />
+            {% endblock %}
+        {% elsewidget 'SalesOrderThresholdWidgetPlugin' args [data.cart.expenses] only %} {# @deprecated Use SalesOrderThresholdWidget instead. #}
+            {% block body %}
+                <li class="list__item spacing-y">
+                    {{ parent() }}
+                </li>
+                <hr />
+            {% endblock %}
+        {% endwidget %}
 
         <li class="list__item spacing-y">
             {{ 'cart.price.subtotal' | trans }}

@@ -5,28 +5,30 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/cart-to-shopping-list-widget": "^0.4.0",
-    "spryker-shop/shop-application": "^1.0.0",
+    "spryker-shop/shop-application": "^1.2.0",
     "spryker-shop/shop-ui": "^1.0.0",
-    "spryker-shop/shopping-list-page-extension": "^1.0.0",
+    "spryker-shop/shopping-list-page-extension": "^1.1.0",
     "spryker/application": "^3.8.0",
-    "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
-    "spryker/company-user": "^1.0.0 || ^2.0.0",
+    "spryker/company-business-unit": "^1.5.0 || ^2.4.0",
+    "spryker/company-user": "^1.5.0 || ^2.1.0",
     "spryker/customer": "^7.4.0",
-    "spryker/kernel": "^3.16.0",
+    "spryker/kernel": "^3.24.0",
     "spryker/multi-cart": "^1.1.0",
     "spryker/product-storage": "^1.1.0",
-    "spryker/shopping-list": "^1.5.0",
-    "spryker/symfony": "^3.1.0"
+    "spryker/shopping-list": "^2.3.0",
+    "spryker/symfony": "^3.1.0",
+    "spryker/zed-request": "^3.4.0"
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",
+    "spryker-shop/product-option-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "ADD SUGGEST DESCRIPTION",
+    "spryker-shop/product-option-widget": "Use this module if you want to manage product options for shopping list items.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

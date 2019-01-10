@@ -42,9 +42,11 @@
                 {% endif %}
             {% endfor %}
 
-            <button type="submit" class="button float-right" {% if isDisabled %}disabled{% endif %}>
-                {{ 'product.set.detail.add-all-to-cart' | trans }}
-            </button>
+            {% if can('SeeAddToCartPermissionPlugin') %}
+                <button type="submit" class="button float-right" {% if isDisabled %}disabled{% endif %}>
+                    {{ 'product.set.detail.add-all-to-cart' | trans }}
+                </button>
+            {% endif %}
 
             {% block title %}
                 <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
@@ -117,15 +119,14 @@
                             {% block actions %}
                                 {% set isDisabled = not embed.product.idProductConcrete or not embed.product.available %}
 
-                                <a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand js-product-set__add-to-cart" {% if isDisabled %}disabled{% endif %}>
+                                {% if can('SeeAddToCartPermissionPlugin') %}<a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand js-product-set__add-to-cart" {% if isDisabled %}disabled{% endif %}>
                                     {% include atom('icon') with {
                                         data: {
                                             name: 'cart-plus'
                                         }
                                     } only %}
                                     {{ 'page.detail.add-to-cart' | trans }}
-                                </a>
-
+                                </a>{% endif %}
                             {% endblock %}
                         {% endembed %}
                     </div>

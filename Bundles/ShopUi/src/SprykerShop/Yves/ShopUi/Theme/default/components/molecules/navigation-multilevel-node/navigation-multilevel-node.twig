@@ -13,7 +13,7 @@
             {% set hasChildren = childNode.children | length > 0 %}
 
             {% include molecule('navigation-multilevel-node') with {
-                class: 'menu__item' ~ (hasChildren ? ' menu__item--has-children-list' : ''),
+                class: 'menu__item' ~ (hasChildren ? ' menu__item--has-children-list' : '') ~ (childNode.url ? '' : ' ' ~ childNode.cssClass),
                 data: {
                     node: childNode
                 }
@@ -23,15 +23,15 @@
 {% endblock %}
 
 {% block url %}
-    <a href="{{ data.node.url }}">{{ data.node.title }}</a>
+    <a class="link {{ data.node.cssClass }}" href="{{ data.node.url }}">{{ data.node.title }}</a>
 {% endblock %}
 
 {% block link %}
-    <a href="{{ data.node.url }}">{{ data.node.title }}</a>
+    <a class="link {{ data.node.cssClass }}" href="{{ data.node.url }}">{{ data.node.title }}</a>
 {% endblock %}
 
 {% block externalUrl %}
-    <a href="{{ data.node.url }}" target="_blank">{{ data.node.title }}</a>
+    <a class="link {{ data.node.cssClass }}" href="{{ data.node.url }}" target="_blank">{{ data.node.title }}</a>
 {% endblock %}
 
 {% block other %}

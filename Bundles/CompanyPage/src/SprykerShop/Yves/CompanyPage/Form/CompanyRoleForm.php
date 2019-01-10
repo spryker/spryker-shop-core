@@ -21,6 +21,8 @@ class CompanyRoleForm extends AbstractType
     public const FIELD_IS_DEFAULT = 'is_default';
     public const FIELD_FK_COMPANY = 'fk_company';
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @return string
      */
@@ -48,7 +50,7 @@ class CompanyRoleForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCompanyRoleField(FormBuilderInterface $builder): self
+    protected function addIdCompanyRoleField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_COMPANY_ROLE, HiddenType::class, [
             'required' => false,
@@ -62,13 +64,13 @@ class CompanyRoleForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder): self
+    protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'company.account.company_role.name',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -80,12 +82,12 @@ class CompanyRoleForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkCompanyField(FormBuilderInterface $builder): self
+    protected function addFkCompanyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_COMPANY, HiddenType::class, [
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -97,7 +99,7 @@ class CompanyRoleForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIsDefaultField(FormBuilderInterface $builder): self
+    protected function addIsDefaultField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_DEFAULT, CheckboxType::class, [
             'label' => 'company.account.company_role.is_default',
@@ -105,5 +107,13 @@ class CompanyRoleForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }

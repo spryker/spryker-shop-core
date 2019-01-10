@@ -23,12 +23,13 @@
         <thead>
             <tr class="active">
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.name' | trans }}</th>
-                {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
-                    {% if widgetBlock('CartListPermissionGroupWidgetPlugin', 'isSharingAllowed', data.quotes|first, isQuoteDeletable) %}
+                {% set cartListPermissionGroupWidget = findWidget('CartListPermissionGroupWidget', [data.quotes|first, isQuoteDeletable]) %}
+                {% set isSharingAllowed = cartListPermissionGroupWidget.isSharingAllowed ?? widget('CartListPermissionGroupWidgetPlugin', data.quotes|first, isQuoteDeletable) %} {# @deprecated Use CartListPermissionGroupWidget instead of CartListPermissionGroupWidgetPlugin. #}
+                {% if isSharingAllowed %}
                     <th>{{ 'page.multi_cart.shopping_cart.list.label.access' | trans }}</th>
-                    {% endif %}
                 {% endif %}
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.num_of_products' | trans }}</th>
+                <th>{{ 'page.multi_cart.shopping_cart.list.label.prices' | trans }}</th>
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.total' | trans }}</th>
                 {% if showActions %}
                     <th>{{ 'page.multi_cart.shopping_cart.list.label.actions' | trans }}</th>
@@ -38,6 +39,7 @@
         <tbody>
             {% for quote in data.quotes %}
                 {% set totals = quote.items | length %}
+                {% set isQuoteEditable = can('WriteSharedCartPermissionPlugin', quote.idQuote) %}
                 <tr>
                     <td>
                         {% if quote.isDefault %}
@@ -52,56 +54,76 @@
                         </a>
                         {% endif %}
                     </td>
-                    {{ widget('CartListPermissionGroupWidgetPlugin', quote, isQuoteDeletable) }}
+                    {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-show', 'SharedCartWidget') only %}
+                    {% elsewidget 'CartListPermissionGroupWidgetPlugin' args [quote, isQuoteDeletable] use view('multi-cart-permission-show', 'SharedCartWidget') only %} {# @deprecated Use CartListPermissionGroupWidget instead. #}
+                    {% endwidget %}
                     <td>
-                        {% if widgetExists('ProductBundleItemCounterWidgetPlugin') %}
-                            {{ widget('ProductBundleItemCounterWidgetPlugin', quote) }}
-                        {% else %}
+                        {% widget 'ProductBundleItemCounterWidget' args [quote] only %}
+                        {% elsewidget 'ProductBundleItemCounterWidgetPlugin' args [quote] only %} {# @deprecated Use ProductBundleItemCounterWidget instead. #}
+                        {% nowidget %}
                             {% set label = (totals == 1)
                                 ? 'page.multi_cart.shopping_cart.list.label.item'
                                 : 'page.multi_cart.shopping_cart.list.label.items'
                             %}
 
                             <span class="cart-items-quantity">{{ totals }} {{ label | trans }}</span>
+                        {% endwidget %}
+                    </td>
+                    <td>
+                        {% if quote.priceMode is not empty %}
+                            {% include molecule('price-mode') with {
+                                data: {
+                                    priceMode: quote.priceMode,
+                                    showIcon: false
+                                }
+                            } only %}
                         {% endif %}
                     </td>
-                    <td>{{ quote.totals.subtotal | default(0) | money }}</td>
+                    <td>{{ quote.totals.subtotal | default(0) | money(true, quote.currency.code) }}</td>
                     {% if showActions %}
                         <td>
-                            {% if can('WriteSharedCartPermissionPlugin', quote.idQuote) %}
                             <ul class="menu menu--inline">
-                                {% if data.actions.update %}
-                                    <li class="menu__item">
-                                        <a href="{{ url('multi-cart/update', {idQuote: quote.idQuote}) }}">
-                                            {{ 'page.multi_cart.shopping_cart.list.link.edit_name' | trans }}
-                                        </a>
-                                    </li>
+                                {% if isQuoteEditable %}
+                                    {% if data.actions.update %}
+                                        <li class="menu__item">
+                                            <a href="{{ url('multi-cart/update', {idQuote: quote.idQuote}) }}">
+                                                {{ 'page.multi_cart.shopping_cart.list.link.edit_name' | trans }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {% if data.actions.duplicate %}
+                                        <li class="menu__item">
+                                            <a href="{{ url('multi-cart/duplicate', {idQuote: quote.idQuote}) }}">
+                                                {{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
                                 {% endif %}
-                                {% if data.actions.duplicate %}
-                                    <li class="menu__item">
-                                        <a href="{{ url('multi-cart/duplicate', {idQuote: quote.idQuote}) }}">
-                                            {{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}
-                                        </a>
-                                    </li>
-                                {% endif %}
-                                {% if widgetExists('CartListPermissionGroupWidgetPlugin') %}
-                                    {{ widgetBlock('CartListPermissionGroupWidgetPlugin', 'actions', quote, isQuoteDeletable) }}
-                                {% else %}
-                                    {% if isQuoteDeletable %}
+
+                                {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-actions', 'SharedCartWidget') only %}
+                                {% elsewidget 'CartListPermissionGroupWidgetPlugin' args [quote, isQuoteDeletable] use view('multi-cart-permission-actions', 'SharedCartWidget') only %} {# @deprecated Use CartListPermissionGroupWidget instead. #}
+                                {% nowidget %}
+                                    {% if isQuoteEditable and isQuoteDeletable %}
                                         <li class="menu__item">
                                             <a href="{{ url('multi-cart/confirm-delete', {idQuote: quote.idQuote}) }}">
                                                 {{ 'page.multi_cart.shopping_cart.list.link.delete' | trans }}
                                             </a>
                                         </li>
                                     {% endif %}
-                                {% endif %}
-                                {% if widgetExists('CartToShoppingListWidgetPlugin') %}
+                                {% endwidget %}
+
+                                {% if isQuoteEditable and widgetExists('CartToShoppingListWidgetPlugin') %}
                                     <li class="menu__item">
-                                        {{ widget('CartToShoppingListWidgetPlugin', quote) }}
+                                        {{ widget('CartToShoppingListWidgetPlugin', quote) }} {# @deprecated Use molecule('cart-to-shopping-list', 'ShoppingListWidget') instead. #}
                                     </li>
+                                {% else %}
+                                    {% include molecule('cart-to-shopping-list', 'ShoppingListWidget') ignore missing with {
+                                        data: {
+                                            quote: quote
+                                        }
+                                    } only %}
                                 {% endif %}
                             </ul>
-                            {% endif %}
                         </td>
                     {% endif %}
                 </tr>

@@ -13,15 +13,20 @@
     },
 
     title: 'company.account.company_user' | trans,
-    activePage: 'users'
+    activePage: 'users',
+    currentBreadcrumb: 'company.account.company_user'
 } %}
 
 {% block companyContent %}
-    <div class="box text-right">
-        {% include molecule('invitation-link', 'CompanyUserInvitationPage') ignore missing %}
+    <div class="box grid grid--right">
+        {% include molecule('invitation-link', 'CompanyUserInvitationPage') ignore missing with {
+            class: 'col spacing-right'
+        } only %}
 
         {% if can('AddCompanyUserPermissionPlugin') %}
-            <a class="button" href="{{url('company/user/create')}}">{{ 'company.account.company_user.add' | trans }}</a>
+            <div class="col">
+                <a class="button" href="{{url('company/user/create')}}">{{ 'company.account.company_user.add' | trans }}</a>
+            </div>
         {%  endif %}
     </div>
 

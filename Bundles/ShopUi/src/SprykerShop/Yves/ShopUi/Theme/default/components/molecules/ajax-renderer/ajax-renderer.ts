@@ -1,5 +1,6 @@
 import Component from '../../../models/component';
 import AjaxProvider from '../ajax-provider/ajax-provider';
+import { mount } from 'ShopUi/app';
 
 export default class AjaxRenderer extends Component {
     protected provider: AjaxProvider
@@ -44,5 +45,9 @@ export default class AjaxRenderer extends Component {
 
     get renderIfResponseIsEmpty(): boolean {
         return this.hasAttribute('render-if-response-is-empty');
+    }
+
+    get mountAfterRender(): boolean {
+        return this.hasAttribute('mount-after-render');
     }
 }

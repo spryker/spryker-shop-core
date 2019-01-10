@@ -5,11 +5,12 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/quick-order-page-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/customer": "^7.4.0",
-    "spryker/kernel": "^3.16.0",
-    "spryker/shopping-list": "^1.0.0",
+    "spryker/kernel": "^3.24.0",
+    "spryker/shopping-list": "^2.5.0",
     "spryker/shopping-list-session": "^1.0.0",
     "spryker/symfony": "^3.1.0"
   },
@@ -24,10 +25,11 @@
   },
   "suggest": {
     "spryker-shop/customer-page": "Widget plugins are available for this module.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+    "spryker-shop/multi-cart-page": "If you want to use CartToShoppingListWidgetPlugin: ^1.0.0",
+    "spryker-shop/quick-order-page": "If you want to use ShoppingListQuickOrderPageWidgetPlugin: ^1.0.0",
     "spryker-shop/shopping-list-page": "Use this module if you want see shopping list pages",
     "spryker/product-detail-page": "To use ShoppingListWidget plugin, ShoppingListWidgetPluginInterface from product-detail-page v0.2.2 is needed",
-    "spryker-shop/multi-cart-page": "If you want to use CartToShoppingListWidgetPlugin: ^1.0.0"
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {
