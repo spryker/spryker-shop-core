@@ -15,5 +15,9 @@
         &--approved {
             @include status-color('success', 0.3);
         }
+
+        &--declined {
+            @include status-color('alert', 0.3);
+        }
     }
 }
