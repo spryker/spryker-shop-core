@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
@@ -19,6 +20,7 @@ use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientBridge;
 use Symfony\Component\HttpFoundation\Request;
+use \ArrayObject;
 
 class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
 {
@@ -33,9 +35,9 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $shipmentPlugins;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientBridge
+     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
      */
-    protected $shipmentClient;
+    protected $shipmentService;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
@@ -46,7 +48,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,
         StepHandlerPluginCollection $shipmentPlugins,
-        CheckoutPageToShipmentClientBridge $shipmentClient,
+        ShipmentServiceInterface $shipmentService,
         $stepRoute,
         $escapeRoute
     ) {
@@ -54,7 +56,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
 
         $this->calculationClient = $calculationClient;
         $this->shipmentPlugins = $shipmentPlugins;
-        $this->shipmentClient = $shipmentClient;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -64,6 +66,8 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
+        $quoteTransfer->requireShipmentGroups();
+
         /** This is stub, remove when address step is ready */
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
             $shipment = new ShipmentTransfer();
@@ -72,8 +76,8 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
             $shipment->setShippingAddress($address);
             $itemTransfer->setShipment($shipment);
         }
-        /** Move alsewhere */
-        $groups = $this->getShipmentGroupCollectionTransfer($quoteTransfer)->getGroups();
+        /** @todo Move elsewhere */
+        $groups = $this->getShipmentGroupCollectionTransfer($quoteTransfer);
         $quoteTransfer->setShipmentGroups($groups);
 
         return true;
@@ -152,11 +156,8 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    protected function getShipmentGroupCollectionTransfer(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
+    protected function getShipmentGroupCollectionTransfer(QuoteTransfer $quoteTransfer): ArrayObject
     {
-        $itemCollectionTransfer = new ItemCollectionTransfer();
-        $itemCollectionTransfer->setItems($quoteTransfer->getItems());
-
-        return $this->shipmentClient->getShipmentGroupCollectionTransfer($itemCollectionTransfer);
+        return $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
     }
 }

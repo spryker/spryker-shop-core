@@ -39,7 +39,6 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_CHECKOUT = 'CLIENT_CHECKOUT';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_CART = 'CLIENT_CART';
-    public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
     public const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
@@ -47,6 +46,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
 
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    public const SERVICE_SHIPMENT  = 'SHIPMENT_SERVICE';
 
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
@@ -84,7 +84,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCheckoutClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addCartClient($container);
-        $container = $this->addShipmentClient($container);
+        $container = $this->addShipmentService($container);
         $container = $this->addGlossaryClient($container);
         $container = $this->addPriceClient($container);
         $container = $this->addProductBundleClient($container);
@@ -233,10 +233,10 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addShipmentClient(Container $container): Container
+    protected function addShipmentService(Container $container): Container
     {
-        $container[self::CLIENT_SHIPMENT] = function (Container $container) {
-            return new CheckoutPageToShipmentClientBridge($container->getLocator()->shipment()->client());
+        $container[self::SERVICE_SHIPMENT] = function (Container $container) {
+            return $container->getLocator()->shipment()->service();
         };
 
         return $container;
