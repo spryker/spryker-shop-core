@@ -1,0 +1,7 @@
+{% extends template('widget') %}
+
+{% block body %}
+    <a class="button button--expand button--success" href="{{ url('quote-request/create-quote-request') }}">
+        {{ 'quote-request.request-for-quote' | trans }}
+    </a>
+{% endblock %}

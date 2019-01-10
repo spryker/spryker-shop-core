@@ -5,10 +5,17 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-ui": "^1.0.0"
+    "spryker-shop/shop-application": "*",
+    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/customer": "*",
+    "spryker/kernel": "*",
+    "spryker/quote": "*",
+    "spryker/quote-request": "*",
+    "spryker/symfony": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -25,5 +32,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/silex": "ADD SUGGEST DESCRIPTION"
   }
 }

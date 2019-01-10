@@ -84,4 +84,12 @@
             {{ 'cart.checkout' | trans }}
         </a>
     {% endif %}
+
+
+    {% widget 'CreateQuoteRequestWidget' only %}
+        {% block body %}
+            <hr />
+            {{ parent() }}
+        {% endblock %}
+    {% endwidget %}
 {% endblock %}
