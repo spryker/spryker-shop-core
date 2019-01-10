@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE = 'notification-availability/subscribe';
+    public const ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE = 'availability-notification/subscribe';
 
     /**
      * @param \Silex\Application $app
@@ -30,8 +30,8 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
     protected function addAvailabilityNotificationSubscribeRoute(): self
     {
         $this->createPostController('/{notificationAvailability}/subscribe', self::ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'subscribe')
-            ->assert('notificationAvailability', $this->getAllowedLocalesPattern() . 'notification-availability|notification-availability')
-            ->value('notificationAvailability', 'notification-availability');
+            ->assert('notificationAvailability', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
+            ->value('notificationAvailability', 'availability-notification');
 
         return $this;
     }

@@ -1,0 +1,13 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    title: 'availability_notification.successfully_unsubscribed'|trans,
+    activePage: 'availabilityNotification',
+    product:  _view.product
+} %}
+
+{% block content %}
+    <div class="box">
+        <p>{{ 'availability_notification.successfully_unsubscribed_text'|trans({'%name%': data.product.name})|raw }}</p>
+    </div>
+{% endblock %}
