@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SubscriptionController extends AbstractController
 {
+    public const GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED = 'availability_notification.subscribed';
+    public const GLOSSARY_KEY_SUCCESSFULLY_UNSUBSCRIBED = 'availability_notification.unsubscribed';
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -71,7 +73,7 @@ class SubscriptionController extends AbstractController
             ->unsubscribe($subscriptionTransfer);
         if ($responseTransfer->getIsSuccess()) {
             $this->removeAvailabilityNotificationEmailFromSession();
-            $this->addSuccessMessage('Successfully unsubscribed');
+            $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_UNSUBSCRIBED);
 
             return;
         }
@@ -111,7 +113,7 @@ class SubscriptionController extends AbstractController
             ->getAvailabilityNotificationClient()
             ->subscribe($availabilitySubscriptionTransfer);
         if ($responseTransfer->getIsSuccess()) {
-            $this->addSuccessMessage('Successfully subscribed');
+            $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED);
 
             return;
         }
