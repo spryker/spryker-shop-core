@@ -43,7 +43,7 @@ class QuoteApprovalController extends AbstractController
 
         $quoteApprovalResponseTransfer = $this->getFactory()
             ->getQuoteApprovalClient()
-            ->approveQuote($quoteApprovalRequestTransfer);
+            ->approveQuoteApproval($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessage(static::MESSAGE_QUOTE_APPROVAL_APPROVE_ERROR);
@@ -76,7 +76,7 @@ class QuoteApprovalController extends AbstractController
 
         $quoteApprovalResponseTransfer = $this->getFactory()
             ->getQuoteApprovalClient()
-            ->declineQuote($quoteApprovalRequestTransfer);
+            ->declineQuoteApproval($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessage(static::MESSAGE_QUOTE_APPROVAL_DECLINE_ERROR);
@@ -109,7 +109,7 @@ class QuoteApprovalController extends AbstractController
 
         $quoteApprovalResponseTransfer = $this->getFactory()
             ->getQuoteApprovalClient()
-            ->cancelQuote($quoteApprovalRequestTransfer);
+            ->cancelQuoteApproval($quoteApprovalRequestTransfer);
 
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessage(static::MESSAGE_QUOTE_APPROVAL_CANCEL_ERROR);

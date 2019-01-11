@@ -30,9 +30,9 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function approveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        return $this->quoteApprovalClient->approveQuote($quoteApprovalRequestTransfer);
+        return $this->quoteApprovalClient->approveQuoteApproval($quoteApprovalRequestTransfer);
     }
 
     /**
@@ -40,9 +40,9 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function declineQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        return $this->quoteApprovalClient->declineQuote($quoteApprovalRequestTransfer);
+        return $this->quoteApprovalClient->declineQuoteApproval($quoteApprovalRequestTransfer);
     }
 
     /**
@@ -50,8 +50,8 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    public function cancelQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    public function cancelQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        return $this->quoteApprovalClient->cancelQuote($quoteApprovalRequestTransfer);
+        return $this->quoteApprovalClient->cancelQuoteApproval($quoteApprovalRequestTransfer);
     }
 }
