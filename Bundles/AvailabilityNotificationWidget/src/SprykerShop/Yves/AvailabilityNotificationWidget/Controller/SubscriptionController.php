@@ -107,9 +107,16 @@ class SubscriptionController extends AbstractController
 
         $availabilitySubscriptionTransfer = $this->setAvailabilitySubscriptionTransferFromSubscriptionForm($customerTransfer, $formData);
 
-        $this->getFactory()
+        $responseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
             ->subscribe($availabilitySubscriptionTransfer);
+        if ($responseTransfer->getIsSuccess()) {
+            $this->addSuccessMessage('Successfully subscribed');
+
+            return;
+        }
+
+        $this->addErrorMessage($responseTransfer->getErrorMessage());
     }
 
     /**
@@ -132,6 +139,7 @@ class SubscriptionController extends AbstractController
     {
         $sessionClient = $this->getFactory()->getSessionClient();
         $sessionClient->set('availabilityNotificationEmail', null);
+        $sessionClient->save();
     }
 
     /**
