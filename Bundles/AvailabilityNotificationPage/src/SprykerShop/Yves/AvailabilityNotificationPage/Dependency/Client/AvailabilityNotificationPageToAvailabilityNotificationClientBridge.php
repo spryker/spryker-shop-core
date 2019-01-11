@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client;
+namespace SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
-class AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge implements AvailabilityNotificationWidgetToAvailabilityNotificationClientInterface
+class AvailabilityNotificationPageToAvailabilityNotificationClientBridge implements AvailabilityNotificationPageToAvailabilityNotificationClientInterface
 {
     /**
      * @var \Spryker\Client\AvailabilityNotification\AvailabilityNotificationClientInterface
@@ -28,23 +28,13 @@ class AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge imple
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
+     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionRequest
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
      */
-    public function subscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
+    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilityNotificationSubscriptionRequest): AvailabilitySubscriptionResponseTransfer
     {
-        return $this->availabilityNotificationClient->subscribe($availabilitySubscriptionTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
-     */
-    public function unsubscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
-    {
-        return $this->availabilityNotificationClient->unsubscribe($availabilitySubscriptionTransfer);
+        return $this->availabilityNotificationClient->unsubscribe($availabilityNotificationSubscriptionRequest);
     }
 
     /**
@@ -55,15 +45,5 @@ class AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge imple
     public function checkExistence(AvailabilitySubscriptionExistenceRequestTransfer $availabilitySubscriptionExistenceRequestTransfer): AvailabilitySubscriptionExistenceResponseTransfer
     {
         return $this->availabilityNotificationClient->checkExistence($availabilitySubscriptionExistenceRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
-     */
-    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
-    {
-        return $this->availabilityNotificationClient->findAvailabilityNotification($availabilitySubscriptionTransfer);
     }
 }
