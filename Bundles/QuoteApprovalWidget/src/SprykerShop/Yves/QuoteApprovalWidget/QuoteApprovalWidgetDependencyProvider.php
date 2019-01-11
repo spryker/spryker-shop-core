@@ -28,7 +28,7 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addQuoteApprovalClient($container);
         $container = $this->addQuoteClient($container);

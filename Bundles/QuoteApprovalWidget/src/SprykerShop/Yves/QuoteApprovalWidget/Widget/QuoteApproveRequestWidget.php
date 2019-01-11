@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestForm;
 
 /**
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetFactory getFactory()
@@ -23,18 +24,10 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $form = $this->getFactory()->createQuoteApproveRequestForm(
-            $quoteTransfer,
-            $this->getLocale()
-        );
+        $form = $this->createQuoteApprovalRequestForm($quoteTransfer);
+        $quoteApprovalStatus = $this->findQuoteApprovalStatusByQuote($quoteTransfer);
 
-        $quoteApprovalStatus = $this->getFactory()
-            ->createQuoteApprovalStatusCalculator()
-            ->calculateQuoteStatus($quoteTransfer);
-
-        $limit = $this->getLimit($quoteTransfer->getCurrency()->getCode());
-
-        $this->addParameter('limit', $limit);
+        $this->addParameter('limit', $this->getApproverLimitByCurrency($quoteTransfer->getCurrency()->getCode()));
         $this->addParameter('isVisible', $this->isVisible($quoteTransfer));
         $this->addParameter('canSendApprovalRequest', $this->canSendApprovalRequest($quoteApprovalStatus));
         $this->addParameter('form', $form->createView());
@@ -83,7 +76,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
     /**
      * @return \Generated\Shared\Transfer\PermissionTransfer|null
      */
-    protected function getPlaceOrderPermission(): ?PermissionTransfer
+    protected function findPlaceOrderPermission(): ?PermissionTransfer
     {
         return $this->getFactory()->getPermissionClient()->findCustomerPermissionByKey(
             PlaceOrderPermissionPlugin::KEY
@@ -95,7 +88,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
      *
      * @return int
      */
-    protected function getLimit(string $currencyCode): int
+    protected function getApproverLimitByCurrency(string $currencyCode): int
     {
         $placeOrderPermission = $this->getPlaceOrderPermission();
 
@@ -115,5 +108,26 @@ class QuoteApproveRequestWidget extends AbstractWidget
     protected function getLocale(): string
     {
         return $this->getApplication()['locale'];
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function findQuoteApprovalStatusByQuote(): ?string
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalStatusCalculator()
+            ->calculateQuoteStatus($quoteTransfer);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestForm
+     */
+    protected function createQuoteApprovalRequestForm(): QuoteApproveRequestForm
+    {
+        return $this->getFactory()->createQuoteApproveRequestForm(
+            $quoteTransfer,
+            $this->getLocale()
+        );
     }
 }

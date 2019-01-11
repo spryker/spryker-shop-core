@@ -27,18 +27,8 @@ class QuoteApprovalWidgetToQuoteClientBridge implements QuoteApprovalWidgetToQuo
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote(): QuoteTransfer
+    public function getQuote()
     {
         return $this->quoteClient->getQuote();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function setQuote(QuoteTransfer $quoteTransfer)
-    {
-        $this->quoteClient->setQuote($quoteTransfer);
     }
 }

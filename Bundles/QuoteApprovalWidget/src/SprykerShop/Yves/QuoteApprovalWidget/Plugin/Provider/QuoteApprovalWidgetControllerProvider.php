@@ -22,7 +22,7 @@ class QuoteApprovalWidgetControllerProvider extends AbstractYvesControllerProvid
      *
      * @return void
      */
-    protected function defineControllers(Application $app)
+    protected function defineControllers(Application $app): void
     {
         $this->addSendApproveRequestRoute();
     }
@@ -30,7 +30,7 @@ class QuoteApprovalWidgetControllerProvider extends AbstractYvesControllerProvid
     /**
      * @return $this
      */
-    protected function addSendApproveRequestRoute(): self
+    protected function addSendApproveRequestRoute()
     {
         $this->createController('/quote-approval/request/send', static::ROUTE_QUOTE_APPROVAL_REUQEST_SEND, 'QuoteApprovalWidget', 'QuoteApproveRequest', 'sendQuoteApproveRequest')
             ->method('POST');

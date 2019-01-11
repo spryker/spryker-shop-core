@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuoteApprovalWidget\Controller;
 
 use Generated\Shared\Transfer\QuoteApprovalCancelRequestTransfer;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteApproveRequestController extends AbstractController
 {
+    protected const ROUTE_CART = 'cart';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -34,14 +35,10 @@ class QuoteApproveRequestController extends AbstractController
         $quoteApproveRequestForm->handleRequest($request);
 
         if ($quoteApproveRequestForm->isSubmitted() && $quoteApproveRequestForm->isValid()) {
-            $quoteResponseTransfer = $this->getFactory()->getQuoteApprovalClient()->sendApproveRequest($quoteApproveRequestForm->getData());
-
-            if ($quoteResponseTransfer->getIsSuccessful()) {
-                $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
-            }
+            $$this->getFactory()->getQuoteApprovalClient()->sendApproveRequest($quoteApproveRequestForm->getData());
         }
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 
     /**
@@ -56,14 +53,10 @@ class QuoteApproveRequestController extends AbstractController
             ->setQuote($this->getFactory()->getQuoteClient()->getQuote())
             ->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
 
-        $quoteResponseTransfer = $this->getFactory()
+        $this->getFactory()
             ->getQuoteApprovalClient()
             ->cancelApprovalRequest($quoteApprovalCancelRequestTransfer);
 
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
-        }
-
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 }

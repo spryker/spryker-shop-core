@@ -38,6 +38,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     /**
      * @param \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface $quoteApprovalClient
      * @param \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface $glossaryStorageClient
      */
     public function __construct(
         QuoteApprovalWidgetToQuoteApprovalClientInterface $quoteApprovalClient,
@@ -135,7 +136,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
         CurrencyTransfer $currencyTransfer,
         string $localeName
     ) {
-        $approverLimit = $this->getApproverLimitInCents($companyUserTransfer, $currencyTransfer->getCode());
+        $approverLimit = $this->findApproverLimit($companyUserTransfer, $currencyTransfer->getCode());
 
         if ($approverLimit === null) {
             return $this->glossaryStorageClient->translate(
@@ -153,9 +154,9 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
      *
      * @return int|null
      */
-    protected function getApproverLimitInCents(CompanyUserTransfer $companyUserTransfer, string $currencyCode): ?int
+    protected function findApproverLimit(CompanyUserTransfer $companyUserTransfer, string $currencyCode): ?int
     {
-        $highestApproverPermissionLimitInCents = null;
+        $highestApproverPermissionLimit = null;
 
         foreach ($companyUserTransfer->getCompanyRoleCollection()->getRoles() as $companyRoleTransfer) {
             $quoteApprovePermissionTransfer = $this->findPermissionByKey($companyRoleTransfer->getPermissionCollection());
@@ -164,17 +165,17 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
                 continue;
             }
 
-            $approverPermissionLimitInCents = $this->getApproverLimitConfiguration(
+            $approverPermissionLimit = $this->getApproverLimitConfiguration(
                 $quoteApprovePermissionTransfer,
                 $currencyCode
             );
 
-            if ($approverPermissionLimitInCents > $highestApproverPermissionLimitInCents) {
-                $highestApproverPermissionLimitInCents = $approverPermissionLimitInCents;
+            if ($approverPermissionLimit > $highestApproverPermissionLimit) {
+                $highestApproverPermissionLimit = $approverPermissionLimit;
             }
         }
 
-        return $highestApproverPermissionLimitInCents;
+        return $highestApproverPermissionLimit;
     }
 
     /**
@@ -182,7 +183,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
      *
      * @return int|null
      */
-    protected function getApproverLimitConfiguration(
+    protected function findApproverLimitInPermissionConfiguration(
         PermissionTransfer $quoteApprovePermission,
         string $currencyCode
     ): ?int {
