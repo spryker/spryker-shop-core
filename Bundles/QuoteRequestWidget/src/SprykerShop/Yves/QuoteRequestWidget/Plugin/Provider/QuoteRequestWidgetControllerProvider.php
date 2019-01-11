@@ -21,13 +21,13 @@ class QuoteRequestWidgetControllerProvider extends AbstractYvesControllerProvide
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addAddItemRoute();
+        $this->addCreateRequestRoute();
     }
 
     /**
      * @return $this
      */
-    protected function addAddItemRoute(): self
+    protected function addCreateRequestRoute(): self
     {
         $this->createController('/{quoteRequest}/create-quote-request', static::ROUTE_CREATE_QUOTE_REQUEST, 'QuoteRequestWidget', 'QuoteRequestWidget')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')

@@ -8,8 +8,6 @@
 namespace SprykerShop\Yves\QuoteRequestWidget\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use SprykerShop\Yves\QuoteRequestWidget\QuoteRequestWidgetConfig;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,6 +16,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestWidget\QuoteRequestWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\QuoteRequestWidget\QuoteRequestWidgetConfig getConfig()
  */
 class QuoteRequestWidgetController extends AbstractController
 {
@@ -48,16 +47,9 @@ class QuoteRequestWidgetController extends AbstractController
             ->getQuoteClient()
             ->getQuote();
 
-        $quoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
-            ->setQuote($quoteTransfer)
-            ->setOriginalQuote($quoteTransfer);
-
-        $quoteRequestTransfer = (new QuoteRequestTransfer())
-            ->addQuoteRequestVersion($quoteRequestVersionTransfer);
-
         $quoteRequestTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->createQuoteRequest($quoteRequestTransfer);
+            ->createQuoteRequestFromQuote($quoteTransfer);
 
         return $this->redirectResponseInternal(QuoteRequestWidgetConfig::QUOTE_REQUEST_REDIRECT_URL, [
             'quoteRequestReference' => $quoteRequestTransfer->getQuoteRequestReference(),
