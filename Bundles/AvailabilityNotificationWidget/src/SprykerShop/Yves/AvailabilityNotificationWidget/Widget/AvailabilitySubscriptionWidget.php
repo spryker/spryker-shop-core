@@ -40,7 +40,7 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
 
         $form->setData($data);
 
-        $this->addParameter('form', $form->createView());
+        $this->addParameter('subscribeForm', $form->createView());
 
         $unsubscribeForm = $this->getFactory()->getAvailabilityUnsubscribeForm();
         $unsubscribeData = [AvailabilitySubscriptionForm::FIELD_SKU => $productConcreteTransfer->getSku()];

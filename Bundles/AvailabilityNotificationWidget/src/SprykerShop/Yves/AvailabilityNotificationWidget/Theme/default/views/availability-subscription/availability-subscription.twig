@@ -3,7 +3,7 @@
 {% define data = {
     isSubscribed: _widget.isSubscribed,
     product: _widget.product,
-    form: _widget.form,
+    subscribeForm: _widget.subscribeForm,
     unsubscribeForm: _widget.unsubscribeForm
 } %}
 
@@ -26,7 +26,7 @@
         {% include molecule('form') with {
             modifiers: ['inline'],
             data: {
-                form: data.form,
+                form: data.subscribeForm,
                 options: {
                     action: url('notification-availability/subscribe')
                 },
