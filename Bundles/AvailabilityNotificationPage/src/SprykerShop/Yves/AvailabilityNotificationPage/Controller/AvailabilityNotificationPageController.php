@@ -7,11 +7,9 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationPage\Controller;
 
-use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
-use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\ProductStorage\ProductStorageConfig;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\AvailabilityNotificationPage\Plugin\Provider\AvailabilityNotificationPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -52,6 +50,8 @@ class AvailabilityNotificationPageController extends AbstractController
             throw new NotFoundHttpException('Subscription doesn\'t exist');
         }
 
+        $locale = $availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription()->getLocale();
+
         $availabilitySubscriptionResponseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
             ->unsubscribe($availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription());
@@ -60,33 +60,27 @@ class AvailabilityNotificationPageController extends AbstractController
             throw new NotFoundHttpException($availabilitySubscriptionResponseTransfer->getErrorMessage());
         }
 
-        $productViewTransfer = $this->createProductViewTransfer($availabilitySubscriptionResponseTransfer);
+        $productAttributes = $this->getProductAttributes($availabilitySubscriptionResponseTransfer->getProduct(), $locale);
 
-        return ['product' => $productViewTransfer];
+        return ['productName' => $productAttributes['name'] ?? ''];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer $availabilitySubscriptionResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     * @return array
      */
-    protected function createProductViewTransfer(
-        AvailabilitySubscriptionResponseTransfer $availabilitySubscriptionResponseTransfer
-    ): ProductViewTransfer {
-        $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
+    protected function getProductAttributes(
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $localeTransfer
+    ): array {
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
+            if ($localizedAttributes->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
+                return $localizedAttributes->toArray();
+            }
+        }
 
-        $availabilitySubscriptionResponseTransfer->getProduct()->requireIdProductConcrete();
-
-        $idProductConcrete = $availabilitySubscriptionResponseTransfer->getProduct()->getIdProductConcrete();
-
-        $productStorageData = $this->getFactory()
-            ->getProductStorageClient()
-            ->findProductConcreteStorageData($idProductConcrete, $locale);
-
-        $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = (new AttributeMapStorageTransfer())->toArray();
-
-        return $this->getFactory()
-            ->getProductStorageClient()
-            ->mapProductStorageData($productStorageData, $locale);
+        return [];
     }
 }

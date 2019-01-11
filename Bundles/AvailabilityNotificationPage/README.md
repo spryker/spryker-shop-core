@@ -1,6 +1,6 @@
 # AvailabilityNotificationPage Module
 
-{{ADD DESCRIPTION HERE}}
+Provide availability unsubscription page
 
 ## Installation
 

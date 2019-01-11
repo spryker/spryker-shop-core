@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\AvailabilityNotificationPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToAvailabilityNotificationClientInterface;
 use SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToLocaleClientInterface;
-use SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToProductStorageClientInterface;
 
 class AvailabilityNotificationPageFactory extends AbstractFactory
 {
@@ -20,14 +19,6 @@ class AvailabilityNotificationPageFactory extends AbstractFactory
     public function getAvailabilityNotificationClient(): AvailabilityNotificationPageToAvailabilityNotificationClientInterface
     {
         return $this->getProvidedDependency(AvailabilityNotificationPageDependencyProvider::CLIENT_AVAILABILITY_NOTIFICATION);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToProductStorageClientInterface
-     */
-    public function getProductStorageClient(): AvailabilityNotificationPageToProductStorageClientInterface
-    {
-        return $this->getProvidedDependency(AvailabilityNotificationPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 
     /**
