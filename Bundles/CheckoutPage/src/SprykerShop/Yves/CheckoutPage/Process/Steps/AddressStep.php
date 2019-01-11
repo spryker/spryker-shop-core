@@ -14,6 +14,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
+use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 use Symfony\Component\HttpFoundation\Request;
 
 class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
@@ -27,6 +28,11 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
      */
     protected $calculationClient;
+
+    /**
+     * @var \Generated\Shared\Transfer\ShipmentTransfer[]
+     */
+    protected $existingShipments;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
@@ -69,42 +75,8 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
-
-        if($shippingAddressTransfer === null) {
-            return $quoteTransfer;
-        }
-
-        $customerTransfer = $this->customerClient->getCustomer();
-        $billingAddressTransfer = $quoteTransfer->getBillingAddress();
-
-        if ($shippingAddressTransfer->getIdCustomerAddress() !== null) {
-            $shippingAddressTransfer = $this->hydrateCustomerAddress(
-                $shippingAddressTransfer,
-                $customerTransfer
-            );
-
-            // todo: get rid it before release
-            $quoteTransfer->setShippingAddress($shippingAddressTransfer);
-        }
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shippingAddressTransfer->setIsDefaultShipping(true);
-            $itemTransfer->setShipment($this->createShipmentTransfer($shippingAddressTransfer));
-        }
-
-        if ($quoteTransfer->getBillingSameAsShipping() === true) {
-            $quoteTransfer->setBillingAddress(clone $quoteTransfer->getShippingAddress());
-        } elseif ($billingAddressTransfer !== null && $billingAddressTransfer->getIdCustomerAddress() !== null) {
-            $billingAddressTransfer = $this->hydrateCustomerAddress(
-                $billingAddressTransfer,
-                $customerTransfer
-            );
-
-            $quoteTransfer->setBillingAddress($billingAddressTransfer);
-        }
-        $quoteTransfer->getShippingAddress()->setIsDefaultShipping(true);
-        $quoteTransfer->getBillingAddress()->setIsDefaultBilling(true);
+        $this->setShippingAddresses($quoteTransfer);
+        $this->setBillingAddress($quoteTransfer);
 
         return $this->calculationClient->recalculate($quoteTransfer);
     }
@@ -116,19 +88,18 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        // todo: Please move this logic in a new method and call it here like `\SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep::isShipmentSet`
-        // todo: Split Delivery. Get rid of it, before release
-        if ($quoteTransfer->getShippingAddress() === null || $quoteTransfer->getBillingAddress() === null) {
+        if ($quoteTransfer->getBillingAddress() === null) {
             return false;
         }
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getShippingAddress() === null) {
-                return false;
-            }
+        if ($this->hasItemsWithEmptyShippingAddresses($quoteTransfer)) {
+            return false;
         }
 
-        // todo: Split Delivery check multiple addresses flag in case billing address is the same as Shipping address
+        if ($this->isSplitDelivery($quoteTransfer) && $quoteTransfer->getBillingSameAsShipping()) {
+            return false;
+        }
+
         $shippingIsEmpty = $this->isAddressEmpty($quoteTransfer->getShippingAddress());
         $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
 
@@ -213,9 +184,157 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function createShipmentTransfer(AddressTransfer $addressTransfer): ShipmentTransfer
+    protected function createShipment(AddressTransfer $addressTransfer): ShipmentTransfer
     {
         return (new ShipmentTransfer())
             ->setShippingAddress($addressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isSplitDelivery(AbstractTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getShippingAddress()->getIdCustomerAddress() === CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    private function setShippingAddresses(AbstractTransfer $quoteTransfer): void
+    {
+        $quoteShippingAddress = $this->prepareShippingAddress(
+            $quoteTransfer->getShippingAddress()
+        );
+        $quoteTransfer->setShippingAddress($quoteShippingAddress);
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemShippingAddress = $itemTransfer->getShipment()->getShippingAddress();
+            $itemTransfer->setShipment(
+                $this->getItemShipment($itemShippingAddress, $quoteShippingAddress)
+            );
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function setBillingAddress(AbstractTransfer $quoteTransfer): void
+    {
+        $billingAddressTransfer = $quoteTransfer->getBillingAddress();
+
+        if ($quoteTransfer->getBillingSameAsShipping() === true) {
+            $quoteTransfer->setBillingAddress(clone $quoteTransfer->getShippingAddress());
+        } elseif ($billingAddressTransfer !== null && $billingAddressTransfer->getIdCustomerAddress() !== null) {
+            $billingAddressTransfer = $this->hydrateCustomerAddress(
+                $billingAddressTransfer,
+                $this->getCustomer()
+            );
+
+            $quoteTransfer->setBillingAddress($billingAddressTransfer);
+        }
+        $quoteTransfer->getBillingAddress()->setIsDefaultBilling(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $itemShippingAddress
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $quoteShippingAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function getItemShipment(
+        AddressTransfer $itemShippingAddress,
+        ?AddressTransfer $quoteShippingAddressTransfer
+    ): ShipmentTransfer {
+        $shippingAddress = $this->prepareShippingAddress($itemShippingAddress)
+            ?? $quoteShippingAddressTransfer;
+        $addressKey = $this->getAddressTransferKey($shippingAddress);
+
+        if (isset($this->existingShipments[$addressKey])) {
+            return $this->existingShipments[$addressKey];
+        }
+
+        $shipmentTransfer = $this->createShipment($shippingAddress);
+        $this->existingShipments[$addressKey] = $shipmentTransfer;
+
+        return $shipmentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    protected function prepareShippingAddress(?AddressTransfer $shippingAddress): ?AddressTransfer
+    {
+        if ($this->isAddressEmpty($shippingAddress)) {
+            return null;
+        }
+
+        if ($shippingAddress->getIdCustomerAddress() !== null) {
+            $shippingAddress = $this->hydrateCustomerAddress(
+                $shippingAddress,
+                $this->getCustomer()
+            );
+        }
+
+        $shippingAddress->setIsDefaultShipping(true);
+
+        return $shippingAddress;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
+    {
+        return sprintf(
+            '%s %s %s %s %s %s %s %s %s %s',
+            $addressTransfer->getFkCustomer(),
+            $addressTransfer->getFirstName(),
+            $addressTransfer->getLastName(),
+            $addressTransfer->getAddress1(),
+            $addressTransfer->getAddress2(),
+            $addressTransfer->getAddress3(),
+            $addressTransfer->getZipCode(),
+            $addressTransfer->getCity(),
+            $addressTransfer->getFkCountry(),
+            $addressTransfer->getPhone()
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getCustomer(): ?CustomerTransfer
+    {
+        return $this->customerClient->getCustomer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasItemsWithEmptyShippingAddresses(AbstractTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null
+                || $itemTransfer->getShipment()->getShippingAddress() === null
+                || $this->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
