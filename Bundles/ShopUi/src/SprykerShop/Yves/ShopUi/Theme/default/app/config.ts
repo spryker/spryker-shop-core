@@ -12,6 +12,9 @@ let applicationConfig: Config;
 
 /**
  * Defines the structure of the application configuration object.
+ *
+ * @remarks
+ * events.ready is deprecated; please use events.mount instead.
  */
 export interface Config {
     readonly name: string
@@ -34,6 +37,9 @@ export interface Config {
 
 /**
  * Defines the default application configuration object.
+ *
+ * @remarks
+ * events.ready is deprecated; please use events.mount instead.
  */
 export const defaultConfig: Config = {
     name: __NAME__,

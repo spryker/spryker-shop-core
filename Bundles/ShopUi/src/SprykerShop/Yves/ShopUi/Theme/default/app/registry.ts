@@ -40,11 +40,11 @@ export interface CustomElementImporter {
 }
 
 /**
- * Registers a new webcomponent (or Spryker component) to the application registry.
+ * Registers a new custom element to the application registry.
  *
- * @param tagName HTML webcomponent tag name.
+ * @param tagName Custom element tag name.
  * @param customElementImporter Function used to import the webcomponent contructor.
- * @returns A candidate is returned
+ * @returns A candidate is returned.
  */
 export default function register(tagName: string, customElementImporter: CustomElementImporter): Candidate {
     const candidate = new Candidate(tagName, customElementImporter);
@@ -53,9 +53,9 @@ export default function register(tagName: string, customElementImporter: CustomE
 }
 
 /**
- * Unregisters an existing webcomponent (or Spryker component) from the application registry.
+ * Unregisters an existing custom element from the application registry.
  *
- * @param tagName HTML webcomponent tag name to be removed.
+ * @param tagName Custom element tag name to be removed.
  * @returns True if tagName was found and unregistration was successfull, false otherwise.
  */
 export function unregister(tagName: string): boolean {
@@ -63,7 +63,7 @@ export function unregister(tagName: string): boolean {
 }
 
 /**
- * Gets the list of registered webcomponents as a list of candidates.
+ * Gets the list of registered custom elements as a list of candidates.
  *
  * @returns A readonly list of candidates.
  */

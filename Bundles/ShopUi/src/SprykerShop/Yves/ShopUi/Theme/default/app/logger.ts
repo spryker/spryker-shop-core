@@ -44,7 +44,7 @@ export function config(logLevel: LogLevel, logPrefix: string): void {
 }
 
 /**
- * Debug logging function.
+ * Outputs a debug message to the console, but only with VERBOSE log level.
  * This is a wrapper around `console.debug`.
  *
  * @param args List of arguments to log.
@@ -54,7 +54,7 @@ export let debug: LogFunction = (...args: any[]): void => {
 }
 
 /**
- * Log logging function.
+ * Outputs a log message to the console, but only with VERBOSE and DEFAULT log levels.
  * This is a wrapper around `console.log`.
  *
  * @param args List of arguments to log.
@@ -64,7 +64,7 @@ export let log: LogFunction = (...args: any[]): void => {
 }
 
 /**
- * Info logging function.
+ * Outputs an info message to the console, but only with VERBOSE and DEFAULT log levels.
  * This is a wrapper around `console.info`.
  *
  * @param args List of arguments to log.
@@ -74,7 +74,7 @@ export let info: LogFunction = (...args: any[]): void => {
 }
 
 /**
- * Warn logging function.
+ * Outputs a warn message to the console, but only with VERBOSE and DEFAULT log levels.
  * This is a wrapper around `console.warn`.
  *
  * @param args List of arguments to log.
@@ -84,7 +84,7 @@ export let warn: LogFunction = (...args: any[]): void => {
 }
 
 /**
- * Error logging function.
+ * Outputs an error message to the console, with any given log level.
  * This is a wrapper around `console.error`.
  *
  * @param args List of arguments to log.

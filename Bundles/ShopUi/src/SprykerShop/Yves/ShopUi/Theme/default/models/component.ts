@@ -46,12 +46,10 @@ export default abstract class Component extends HTMLElement {
 
     /**
      * Invoked when DOM is loaded and every webcomponent in the page is defined.
-     * Use this method as initial point for your component.
      *
      * @remarks
-     * As this method is invoked only when every webcomponent in the page is defined,
-     * this allows the current component to safely query the DOM for other components and access their API.
-     * If no DOM query towards other webcomponents is needed, you can use connectedCallback() for a faster execution,
+     * Use this method as initial point for your component if you intend to query the DOM for other webcomponents.
+     * If this is not needed, you can use connectedCallback() intead for a faster execution,
      * as described by official documentation for Web Components:
      * {@link https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#Using_the_lifecycle_callbacks}
      */
