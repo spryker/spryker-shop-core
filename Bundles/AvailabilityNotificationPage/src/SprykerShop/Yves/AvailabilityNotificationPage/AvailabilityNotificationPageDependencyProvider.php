@@ -24,7 +24,7 @@ class AvailabilityNotificationPageDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addAvailabilityNotificationClient($container);
         $container = $this->addProductStorageClient($container);
@@ -38,7 +38,7 @@ class AvailabilityNotificationPageDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addAvailabilityNotificationClient(Container $container)
+    protected function addAvailabilityNotificationClient(Container $container): Container
     {
         $container[static::CLIENT_AVAILABILITY_NOTIFICATION] = function (Container $container) {
             return new AvailabilityNotificationPageToAvailabilityNotificationClientBridge($container->getLocator()->availabilityNotification()->client());
@@ -52,7 +52,7 @@ class AvailabilityNotificationPageDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductStorageClient(Container $container)
+    protected function addProductStorageClient(Container $container): Container
     {
         $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
             return new AvailabilityNotificationPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
@@ -66,7 +66,7 @@ class AvailabilityNotificationPageDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addLocaleClient(Container $container)
+    protected function addLocaleClient(Container $container): Container
     {
         $container[static::CLIENT_LOCALE] = function (Container $container) {
             return new AvailabilityNotificationPageToLocaleClientBridge($container->getLocator()->locale()->client());
