@@ -61,7 +61,7 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
      */
     protected function getEmailForUnsubscribeData(?CustomerTransfer $customerTransfer): ?string
     {
-        if ($customerTransfer != null) {
+        if ($customerTransfer !== null) {
             return $customerTransfer->getEmail();
         }
 
