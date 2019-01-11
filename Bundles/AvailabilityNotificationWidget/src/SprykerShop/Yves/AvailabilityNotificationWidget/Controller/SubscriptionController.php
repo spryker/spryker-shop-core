@@ -67,7 +67,7 @@ class SubscriptionController extends AbstractController
         $subscriptionTransfer = $this->setAvailabilitySubscriptionTransferFromUnsubscribeForm($formData);
         $subscriptionTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
-            ->findAvailabilityNotification($subscriptionTransfer);
+            ->findAvailabilitySubscription($subscriptionTransfer);
 
         $responseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()

@@ -62,8 +62,8 @@ class AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge imple
      *
      * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer|null
      */
-    public function findAvailabilityNotification(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
+    public function findAvailabilitySubscription(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): ?AvailabilitySubscriptionTransfer
     {
-        return $this->availabilityNotificationClient->findAvailabilityNotification($availabilitySubscriptionTransfer);
+        return $this->availabilityNotificationClient->findAvailabilitySubscription($availabilitySubscriptionTransfer);
     }
 }
