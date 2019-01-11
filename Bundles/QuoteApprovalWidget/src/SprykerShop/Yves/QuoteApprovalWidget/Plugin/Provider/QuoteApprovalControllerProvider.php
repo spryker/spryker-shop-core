@@ -25,20 +25,38 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $this->addQuoteApprovalRoute();
+        $this->addQuoteApprovalApproveRoute()
+            ->addQuoteApprovalDeclineRoute()
+            ->addQuoteApprovalCancelRoute();
     }
 
     /**
      * @return $this
      */
-    protected function addQuoteApprovalRoute()
+    protected function addQuoteApprovalApproveRoute()
     {
         $this->createPostController('/quote-approval/approve/{idQuoteApproval}', static::ROUTE_QUOTE_APPROVAL_APPROVE, 'QuoteApprovalWidget', 'QuoteApproval', 'approve')
             ->assert('idQuoteApproval', static::PATTERN_ID);
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addQuoteApprovalDeclineRoute()
+    {
         $this->createPostController('/quote-approval/decline/{idQuoteApproval}', static::ROUTE_QUOTE_APPROVAL_DECLINE, 'QuoteApprovalWidget', 'QuoteApproval', 'decline')
             ->assert('idQuoteApproval', static::PATTERN_ID);
 
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addQuoteApprovalCancelRoute()
+    {
         $this->createPostController('/quote-approval/cancel/{idQuoteApproval}', static::ROUTE_QUOTE_APPROVAL_CANCEL, 'QuoteApprovalWidget', 'QuoteApproval', 'cancel')
             ->assert('idQuoteApproval', static::PATTERN_ID);
 
