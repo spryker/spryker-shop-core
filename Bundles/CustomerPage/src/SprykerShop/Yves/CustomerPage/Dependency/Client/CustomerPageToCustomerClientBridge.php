@@ -190,8 +190,8 @@ class CustomerPageToCustomerClientBridge implements CustomerPageToCustomerClient
     /**
      * @return string
      */
-    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string
+    public function getCustomerSecuredPattern(): string
     {
-        return $this->customerClient->getCustomerSecuredPatternForUnauthenticatedCustomerAccess();
+        return $this->customerClient->getCustomerSecuredPattern();
     }
 }

@@ -89,7 +89,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
     {
         $customerSecuredPattern = $this->getFactory()
             ->getCustomerClient()
-            ->getCustomerSecuredPatternForUnauthenticatedCustomerAccess();
+            ->getCustomerSecuredPattern();
 
         $app['security.access_rules'] = [
             [
