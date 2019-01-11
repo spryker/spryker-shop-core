@@ -64,7 +64,16 @@
                         {% elsewidget 'ShoppingListItemNoteWidgetPlugin' args [item.shoppingListItem] only %} {# @deprecated Use ShoppingListItemNoteWidget instead. #}
                         {% endwidget %}
 
-                        {{ widget('ShoppingListItemProductOptionWidgetPlugin', item.shoppingListItem) }}
+                        {% if widgetExists('ShoppingListItemProductOptionWidgetPlugin') %}
+                            {{ widget('ShoppingListItemProductOptionWidgetPlugin', item.shoppingListItem) }} {# @deprecated Use molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') instead. #}
+                        {% else %}
+                            {% include molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') with {
+                                class: 'list list--expand',
+                                data: {
+                                    options: item.shoppingListItem.productOptions
+                                }
+                            } only %}
+                        {% endif %}
                     </ul>
                 </td>
                 <td nowrap="nowrap" class="{{ config.name }}__cell text-center">
