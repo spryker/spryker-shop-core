@@ -34,23 +34,17 @@ class FileOutputter implements FileOutputterInterface
      */
     public function outputFile(string $fileType)
     {
-
         foreach ($this->quickOrderFileTemplatePlugins as $fileTemplatePlugin) {
             if ($fileTemplatePlugin->isApplicable($fileType)) {
-                $fileName =  static::FILE_TEMPLATE_NAME . '.' . $fileTemplatePlugin->getFileExtension();
-                // Return a response with a specific content
+                $fileName = static::FILE_TEMPLATE_NAME . '.' . $fileTemplatePlugin->getFileExtension();
                 $response = new Response($fileTemplatePlugin->generateTemplate());
-                $response->headers->set('Content-Type', $fileTemplatePlugin->getTemplateMimeType());
-                // Create the disposition of the file
                 $disposition = $response->headers->makeDisposition(
                     ResponseHeaderBag::DISPOSITION_ATTACHMENT,
                     $fileName
                 );
-
-                // Set the content disposition
                 $response->headers->set('Content-Disposition', $disposition);
+                $response->headers->set('Content-Type', $fileTemplatePlugin->getTemplateMimeType());
 
-                // Dispatch request
                 return $response;
             }
         }

@@ -25,7 +25,7 @@ interface QuickOrderFileProcessorPluginInterface
 
     /**
      * Specification:
-     * - Return allowed mime types for current plugin.
+     * - Return allowed mime types of plugin.
      *
      * @api
      *

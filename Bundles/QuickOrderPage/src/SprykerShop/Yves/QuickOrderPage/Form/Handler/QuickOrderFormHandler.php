@@ -158,7 +158,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
                 ->setQuantity($quantity);
         }
 
-        return array_values($itemTransfers);
+        return $itemTransfers;
     }
 
     /**

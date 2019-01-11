@@ -74,7 +74,7 @@ class QuickOrderController extends AbstractController
             ->handleRequest($request);
 
         if ($quickOrderForm->isSubmitted() && $quickOrderForm->isValid()) {
-            $response = $this->handleQuickOrderForm($quickOrderForm, $request);
+            $response = $this->processQuickOrderForm($quickOrderForm, $request);
 
             if ($response !== null) {
                 return $response;
@@ -99,17 +99,17 @@ class QuickOrderController extends AbstractController
             ->getUploadOrderForm()
             ->handleRequest($request);
 
-        $handledQuickOrderItemsForm = $this->handleQuickOrderFormItems($request);
-        $handledUploadOrderForm = $this->handleUploadOrderFormItems($uploadOrderForm);
-        $handledTextOrderForm = $this->handleTextOrderFormItems($textOrderForm);
+        $handledQuickOrderItems = $this->handleQuickOrderForm($request);
+        $handledUploadOrderItems = $this->handleUploadOrderForm($uploadOrderForm);
+        $handledTextOrderItems = $this->handleTextOrderForm($textOrderForm);
 
         $quickOrderItems = array_merge(
-            $handledQuickOrderItemsForm,
-            $handledUploadOrderForm,
-            $handledTextOrderForm
+            $handledQuickOrderItems,
+            $handledUploadOrderItems,
+            $handledTextOrderItems
         );
 
-        if (count($handledUploadOrderForm) || count($handledTextOrderForm)) {
+        if (count($handledUploadOrderItems) || count($handledTextOrderItems)) {
             $quickOrderItems = $this->filterQuickOrderItems($quickOrderItems);
         }
 
@@ -449,7 +449,7 @@ class QuickOrderController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
-    protected function handleTextOrderFormItems(FormInterface $textOrderForm): array
+    protected function handleTextOrderForm(FormInterface $textOrderForm): array
     {
         $quickOrderItems = [];
         if ($textOrderForm->isSubmitted() && $textOrderForm->isValid()) {
@@ -470,7 +470,7 @@ class QuickOrderController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
-    protected function handleUploadOrderFormItems(FormInterface $uploadOrderForm): array
+    protected function handleUploadOrderForm(FormInterface $uploadOrderForm): array
     {
         $quickOrderItems = [];
         if ($uploadOrderForm->isSubmitted()) {
@@ -488,7 +488,7 @@ class QuickOrderController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
-    protected function handleQuickOrderFormItems($request): array
+    protected function handleQuickOrderForm($request): array
     {
         $quickOrderItems = [];
         $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
@@ -509,7 +509,7 @@ class QuickOrderController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
      */
-    protected function handleQuickOrderForm(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
+    protected function processQuickOrderForm(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
     {
         $quickOrder = $quickOrderForm->getData();
 

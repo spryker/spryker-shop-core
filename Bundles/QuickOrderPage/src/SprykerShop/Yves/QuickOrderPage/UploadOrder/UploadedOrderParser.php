@@ -8,10 +8,10 @@
 namespace SprykerShop\Yves\QuickOrderPage\UploadOrder;
 
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
+use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConfig as QuickOrderPageConfigShared;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
 use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConfig as QuickOrderPageConfigShared;
 
 class UploadedOrderParser implements UploadedOrderParserInterface
 {

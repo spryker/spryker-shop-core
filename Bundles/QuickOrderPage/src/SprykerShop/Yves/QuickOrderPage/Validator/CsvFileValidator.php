@@ -56,7 +56,7 @@ class CsvFileValidator implements CsvFileValidatorInterface
     {
         $uploadedOrder = $this->utilCsvService->readUploadedFile($file);
 
-        if(in_array(QuickOrderPageConfig::CSV_SKU_COLUMN_NAME, $uploadedOrder[0])
+        if (in_array(QuickOrderPageConfig::CSV_SKU_COLUMN_NAME, $uploadedOrder[0])
             && in_array(QuickOrderPageConfig::CSV_QTY_COLUMN_NAME, $uploadedOrder[0])) {
             return true;
         }
