@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Blank;
+use Symfony\Component\Validator\Constraints\IsFalse;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
@@ -272,11 +272,11 @@ class CheckoutAddressCollectionForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraints\Blank
+     * @return \Symfony\Component\Validator\Constraints\IsFalse
      */
-    protected function createBillingSameAsShippingConstraint(): Blank
+    protected function createBillingSameAsShippingConstraint(): IsFalse
     {
-        return new Blank([
+        return new IsFalse([
             'message' => static::VALIDATION_BILLING_SAME_AS_SHIPPING_MESSAGE,
             'groups' => static::GROUP_BILLING_SAME_AS_SHIPPING,
         ]);
