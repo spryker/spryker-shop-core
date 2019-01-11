@@ -46,7 +46,7 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
         $unsubscribeData = [AvailabilitySubscriptionForm::FIELD_SKU => $productConcreteTransfer->getSku()];
         $email = $this->getEmailForUnsubscribeData($customerTransfer);
 
-        if ($email) {
+        if ($email !== null) {
             $unsubscribeData[AvailabilitySubscriptionForm::FIELD_EMAIL] = $email;
         }
 
@@ -95,7 +95,7 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
     protected function getIsSubscribed(ProductViewTransfer $productConcreteTransfer, ?CustomerTransfer $customerTransfer): bool
     {
         $subscriptionTransfer = $this->setSubscriptionTransfer($customerTransfer, $productConcreteTransfer);
-        if (!$subscriptionTransfer->getEmail()) {
+        if ($subscriptionTransfer->getEmail() === null) {
             return false;
         }
 
@@ -115,7 +115,7 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
     {
         $subscriptionTransfer = (new AvailabilitySubscriptionTransfer())
             ->setSku($productViewTransfer->getSku());
-        if (!$customerTransfer) {
+        if ($customerTransfer === null) {
             $email = $this->getFactory()
                 ->getSessionClient()
                 ->get(static::SESSION_AVAILABILITY_NOTIFICATION_EMAIL);

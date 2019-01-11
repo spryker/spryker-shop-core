@@ -22,6 +22,7 @@ class SubscriptionController extends AbstractController
 {
     public const GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED = 'availability_notification.subscribed';
     public const GLOSSARY_KEY_SUCCESSFULLY_UNSUBSCRIBED = 'availability_notification.unsubscribed';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -71,7 +72,7 @@ class SubscriptionController extends AbstractController
         $responseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
             ->unsubscribe($subscriptionTransfer);
-        if ($responseTransfer->getIsSuccess()) {
+        if ($responseTransfer->getIsSuccess() === true) {
             $this->removeAvailabilityNotificationEmailFromSession();
             $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_UNSUBSCRIBED);
 
@@ -112,7 +113,7 @@ class SubscriptionController extends AbstractController
         $responseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
             ->subscribe($availabilitySubscriptionTransfer);
-        if ($responseTransfer->getIsSuccess()) {
+        if ($responseTransfer->getIsSuccess() === true) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED);
 
             return;
@@ -156,7 +157,7 @@ class SubscriptionController extends AbstractController
             ->setEmail($formData[AvailabilitySubscriptionForm::FIELD_EMAIL])
             ->setSku($formData[AvailabilitySubscriptionForm::FIELD_SKU]);
 
-        if (!$customerTransfer) {
+        if ($customerTransfer !== null) {
             return $availabilitySubscriptionTransfer;
         }
 
