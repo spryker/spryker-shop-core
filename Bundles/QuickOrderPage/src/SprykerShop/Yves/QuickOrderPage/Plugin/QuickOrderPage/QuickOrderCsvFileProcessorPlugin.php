@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuickOrderPage\Plugin\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConfig;
 use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -31,7 +32,7 @@ class QuickOrderCsvFileProcessorPlugin extends AbstractPlugin implements QuickOr
      */
     public function getAllowedMimeTypes(): array
     {
-        return ['text/csv'];
+        return [QuickOrderPageConfig::CSV_FILE_MIME_TYPE];
     }
 
     /**
@@ -41,7 +42,7 @@ class QuickOrderCsvFileProcessorPlugin extends AbstractPlugin implements QuickOr
      */
     public function isValidFormat(UploadedFile $file): bool
     {
-        return $this->getFactory()->createCsvValidator()->validateFormat($file);
+        return $this->getFactory()->createCsvFileValidator()->validateFormat($file);
     }
 
     /**
@@ -52,8 +53,8 @@ class QuickOrderCsvFileProcessorPlugin extends AbstractPlugin implements QuickOr
      */
     public function isValidAmountOfRows(UploadedFile $file, int $maxAllowedLines): bool
     {
-        $csvValidator = $this->getFactory()->createCsvValidator();
+        $csvFileValidator = $this->getFactory()->createCsvFileValidator();
 
-        return $csvValidator->validateAmountOfRows($file, $maxAllowedLines);
+        return $csvFileValidator->validateAmountOfRows($file, $maxAllowedLines);
     }
 }

@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin;
 interface QuickOrderFileTemplatePluginInterface
 {
     /**
+     * Specification:
+     * - Check if file applicable or not.
+     *
      * @api
      *
      * @param string $fileExtension
@@ -19,6 +22,9 @@ interface QuickOrderFileTemplatePluginInterface
     public function isApplicable(string $fileExtension): bool;
 
     /**
+     * Specification:
+     * - Return file extension.
+     *
      * @api
      *
      * @return string
@@ -26,6 +32,9 @@ interface QuickOrderFileTemplatePluginInterface
     public function getFileExtension(): string;
 
     /**
+     * Specification:
+     * - Return example template structure.
+     *
      * @api
      *
      * @return string
@@ -33,6 +42,9 @@ interface QuickOrderFileTemplatePluginInterface
     public function generateTemplate(): string;
 
     /**
+     * Specification:
+     * - Return template mime type.
+     *
      * @api
      *
      * @return string

@@ -18,14 +18,14 @@
             enableEnd: false,
             submit: {
                 enable: true,
-                text: 'quick-order.file-upload-order.button.verify' | trans
+                text: 'quick-order.file-upload-order.button.upload' | trans
             }
         }
     } only %}
 
-    {% if data.fileTemplatesUrls %}
+    {% if data.downloadFileTemplateUrls %}
         <div class="col col--sm-12">
-            {% for fileTemplateExt in data.fileTemplatesUrls %}
+            {% for fileTemplateExt in data.downloadFileTemplateUrls %}
                 <p>
                     <a href="{{ path('quick-order/download-template', {'file-type': fileTemplateExt}) }}">
                     {{ 'quick-order.file-upload-order.file-template-download-message' | trans({'%template%': fileTemplateExt})}}

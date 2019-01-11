@@ -7,8 +7,13 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\FileOutputter;
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
 class FileOutputter implements FileOutputterInterface
 {
+    protected const FILE_TEMPLATE_NAME = 'quick-order-template';
+
     /**
      * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplatePluginInterface[]
      */
@@ -25,21 +30,28 @@ class FileOutputter implements FileOutputterInterface
     /**
      * @param string $fileType
      *
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function outputFile(string $fileType): void
+    public function outputFile(string $fileType)
     {
+
         foreach ($this->quickOrderFileTemplatePlugins as $fileTemplatePlugin) {
             if ($fileTemplatePlugin->isApplicable($fileType)) {
-                $fileName = 'template.' . $fileTemplatePlugin->getFileExtension();
-                $fileContent = $fileTemplatePlugin->generateTemplate();
-                header('Content-Disposition: attachment; filename="' . $fileName . '"');
-                header('Content-Type: ' . $fileTemplatePlugin->getTemplateMimeType());
-                header('Content-Length: ' . strlen($fileContent));
-                header('Connection: close');
+                $fileName =  static::FILE_TEMPLATE_NAME . '.' . $fileTemplatePlugin->getFileExtension();
+                // Return a response with a specific content
+                $response = new Response($fileTemplatePlugin->generateTemplate());
+                $response->headers->set('Content-Type', $fileTemplatePlugin->getTemplateMimeType());
+                // Create the disposition of the file
+                $disposition = $response->headers->makeDisposition(
+                    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                    $fileName
+                );
 
-                echo $fileContent;
-                exit;
+                // Set the content disposition
+                $response->headers->set('Content-Disposition', $disposition);
+
+                // Dispatch request
+                return $response;
             }
         }
     }

@@ -14,9 +14,16 @@ interface QuickOrderPageToQuickOrderClientInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
+    public function addProductsToQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers

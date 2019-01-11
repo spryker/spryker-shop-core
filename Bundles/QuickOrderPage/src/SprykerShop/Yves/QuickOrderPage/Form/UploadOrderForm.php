@@ -27,8 +27,7 @@ class UploadOrderForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this
-            ->addFileUploadOrderField($builder);
+        $this->addFileUploadOrderField($builder);
     }
 
     /**

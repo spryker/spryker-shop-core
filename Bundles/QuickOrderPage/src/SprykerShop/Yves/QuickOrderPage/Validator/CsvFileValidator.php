@@ -11,7 +11,7 @@ use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConfig;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class CsvValidator implements CsvValidatorInterface
+class CsvFileValidator implements CsvFileValidatorInterface
 {
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface
@@ -36,7 +36,7 @@ class CsvValidator implements CsvValidatorInterface
     {
         $uploadedOrder = $this->utilCsvService->readUploadedFile($file);
 
-        if (count($uploadedOrder) == 1) {
+        if (count($uploadedOrder) === 1) {
             return false;
         }
 
@@ -57,7 +57,7 @@ class CsvValidator implements CsvValidatorInterface
         $uploadedOrder = $this->utilCsvService->readUploadedFile($file);
 
         if(in_array(QuickOrderPageConfig::CSV_SKU_COLUMN_NAME, $uploadedOrder[0])
-        && in_array(QuickOrderPageConfig::CSV_QTY_COLUMN_NAME, $uploadedOrder[0])) {
+            && in_array(QuickOrderPageConfig::CSV_QTY_COLUMN_NAME, $uploadedOrder[0])) {
             return true;
         }
 

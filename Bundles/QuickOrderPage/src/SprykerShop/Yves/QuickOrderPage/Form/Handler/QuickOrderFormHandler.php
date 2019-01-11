@@ -153,13 +153,9 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
                 continue;
             }
 
-            if (!isset($itemTransfers[$sku])) {
-                $itemTransfers[$sku] = (new ItemTransfer())
-                    ->setSku($quickOrderItemTransfer->getSku())
-                    ->setQuantity(0);
-            }
-
-            $itemTransfers[$sku]->setQuantity($quantity + $itemTransfers[$sku]->getQuantity());
+            $itemTransfers[] = (new ItemTransfer())
+                ->setSku($sku)
+                ->setQuantity($quantity);
         }
 
         return array_values($itemTransfers);

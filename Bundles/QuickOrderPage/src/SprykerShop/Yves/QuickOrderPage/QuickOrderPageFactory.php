@@ -35,10 +35,10 @@ use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolver;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParserInterface;
-use SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadOrderParser;
-use SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadOrderParserInterface;
-use SprykerShop\Yves\QuickOrderPage\Validator\CsvValidator;
-use SprykerShop\Yves\QuickOrderPage\Validator\CsvValidatorInterface;
+use SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadedOrderParser;
+use SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadedOrderParserInterface;
+use SprykerShop\Yves\QuickOrderPage\Validator\CsvFileValidator;
+use SprykerShop\Yves\QuickOrderPage\Validator\CsvFileValidatorInterface;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformer;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -99,11 +99,11 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadOrderParserInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadedOrderParserInterface
      */
-    public function createUploadOrderParser(): UploadOrderParserInterface
+    public function createUploadOrderParser(): UploadedOrderParserInterface
     {
-        return new UploadOrderParser(
+        return new UploadedOrderParser(
             $this->getConfig(),
             $this->getUtilCsvService()
         );
@@ -337,10 +337,10 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Validator\CsvValidatorInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\Validator\CsvFileValidatorInterface
      */
-    public function createCsvValidator(): CsvValidatorInterface
+    public function createCsvFileValidator(): CsvFileValidatorInterface
     {
-        return new CsvValidator($this->getUtilCsvService());
+        return new CsvFileValidator($this->getUtilCsvService());
     }
 }

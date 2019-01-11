@@ -12,11 +12,11 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class UploadOrderFormatConstraint extends SymfonyConstraint
 {
     public const OPTION_BUNDLE_CONFIG = 'config';
-    public const OPTION_FILE_PROCESSOR_PLUGINS = 'plugins';
+    public const OPTION_FILE_PROCESSOR_PLUGINS = 'quickOrderFileProcessorPlugins';
 
-    protected const MESSAGE_INVALID_MIME_TYPE = 'quick-order.upload-order.errors.upload-order-invalid-mime-type';
-    protected const MESSAGE_INVALID_AMOUNT_OF_ROWS = 'quick-order.upload-order.errors.upload-order-invalid-amount-of-rows';
-    protected const MESSAGE_INVALID_FORMAT = 'quick-order.upload-order.errors.upload-order-invalid-format';
+    protected const ERROR_MESSAGE_INVALID_MIME_TYPE = 'quick-order.upload-order.errors.upload-order-invalid-mime-type';
+    protected const ERROR_MESSAGE_INVALID_AMOUNT_OF_ROWS = 'quick-order.upload-order.errors.upload-order-invalid-amount-of-rows';
+    protected const ERROR_MESSAGE_INVALID_FORMAT = 'quick-order.upload-order.errors.upload-order-invalid-format';
 
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig
@@ -26,7 +26,7 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
     /**
      * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[]
      */
-    protected $plugins;
+    protected $quickOrderFileProcessorPlugins;
 
     /**
      * @return string[]
@@ -34,8 +34,8 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
     public function getAllowedMimeTypes(): array
     {
         $mimeTypes = [];
-        foreach ($this->plugins as $plugin) {
-            $mimeTypes = array_merge($mimeTypes, $plugin->getAllowedMimeTypes());
+        foreach ($this->quickOrderFileProcessorPlugins as $quickOrderFileProcessorPlugin) {
+            $mimeTypes = array_merge($mimeTypes, $quickOrderFileProcessorPlugin->getAllowedMimeTypes());
         }
 
         return $mimeTypes;
@@ -46,7 +46,7 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
      */
     public function getFileProcessorPlugins(): array
     {
-        return $this->plugins;
+        return $this->quickOrderFileProcessorPlugins;
     }
 
     /**
@@ -62,7 +62,7 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
      */
     public function getInvalidFormatMessage(): string
     {
-        return static::MESSAGE_INVALID_FORMAT;
+        return static::ERROR_MESSAGE_INVALID_FORMAT;
     }
 
     /**
@@ -70,7 +70,7 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
      */
     public function getInvalidMimeTypeMessage(): string
     {
-        return static::MESSAGE_INVALID_MIME_TYPE;
+        return static::ERROR_MESSAGE_INVALID_MIME_TYPE;
     }
 
     /**
@@ -78,6 +78,6 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
      */
     public function getInvalidAmountOfRowsMessage(): string
     {
-        return static::MESSAGE_INVALID_AMOUNT_OF_ROWS;
+        return static::ERROR_MESSAGE_INVALID_AMOUNT_OF_ROWS;
     }
 }

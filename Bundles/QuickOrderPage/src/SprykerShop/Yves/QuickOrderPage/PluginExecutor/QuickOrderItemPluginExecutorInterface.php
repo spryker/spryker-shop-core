@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\PluginExecutor;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 

@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\QuickOrderPage\UploadOrder;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-interface UploadOrderParserInterface
+interface UploadedOrderParserInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadOrder

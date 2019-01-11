@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Validator;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-interface CsvValidatorInterface
+interface CsvFileValidatorInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile

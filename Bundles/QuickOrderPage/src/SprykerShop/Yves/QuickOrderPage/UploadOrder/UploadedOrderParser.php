@@ -13,7 +13,7 @@ use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConfig as QuickOrderPageConfigShared;
 
-class UploadOrderParser implements UploadOrderParserInterface
+class UploadedOrderParser implements UploadedOrderParserInterface
 {
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface
@@ -49,30 +49,12 @@ class UploadOrderParser implements UploadOrderParserInterface
         $qtyKey = array_search(QuickOrderPageConfigShared::CSV_QTY_COLUMN_NAME, array_keys($csvHeader));
 
         $quickOrderItemTransfers = [];
-        $counter = 0;
+        unset($rows[0]);
         foreach ($rows as $row) {
-            if (++$counter == 1) {
-                continue;
-            }
-
-            $quickOrderItemTransfers = $this->addQuickOrderItemTransfer($quickOrderItemTransfers, $row[$skuKey], (int)$row[$qtyKey]);
+            $quickOrderItemTransfers[] = $this->createQuickOrderItemTransfer($row[$skuKey], (int)$row[$qtyKey]);
         }
 
         return array_values($quickOrderItemTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers
-     * @param string $sku
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
-     */
-    protected function addQuickOrderItemTransfer(array $quickOrderItemTransfers, string $sku, int $quantity): array
-    {
-        $quickOrderItemTransfers[] = $this->createQuickOrderItemTransfer($sku, $quantity);
-
-        return $quickOrderItemTransfers;
     }
 
     /**

@@ -53,7 +53,7 @@
                 index: loop.index0,
                 quantityField: row.quantity,
                 skuField: row.sku,
-                errorMessage: row.vars.value.errorMessage,
+                errorMessages: row.vars.value.errorMessages,
                 additionalColumns: data.additionalColumns,
                 product: product,
                 price: product is null ? null : data.prices[product.sku] | default(),

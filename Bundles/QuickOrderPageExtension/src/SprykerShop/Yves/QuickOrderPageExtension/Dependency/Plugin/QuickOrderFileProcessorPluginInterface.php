@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 interface QuickOrderFileProcessorPluginInterface
 {
     /**
+     * Specification:
+     * - Check if file applicable or not.
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
@@ -21,6 +24,9 @@ interface QuickOrderFileProcessorPluginInterface
     public function isApplicable(UploadedFile $file): bool;
 
     /**
+     * Specification:
+     * - Return allowed mime types for current plugin.
+     *
      * @api
      *
      * @return string[]
@@ -28,6 +34,9 @@ interface QuickOrderFileProcessorPluginInterface
     public function getAllowedMimeTypes();
 
     /**
+     * Specification:
+     * - Check if file format valid.
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
@@ -37,6 +46,9 @@ interface QuickOrderFileProcessorPluginInterface
     public function isValidFormat(UploadedFile $file): bool;
 
     /**
+     * Specification:
+     * - Check if amount of rows are valid.
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file

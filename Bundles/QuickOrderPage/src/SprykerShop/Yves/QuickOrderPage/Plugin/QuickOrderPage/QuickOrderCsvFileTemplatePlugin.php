@@ -31,7 +31,7 @@ class QuickOrderCsvFileTemplatePlugin extends AbstractPlugin implements QuickOrd
      */
     public function getFileExtension(): string
     {
-        return 'csv';
+        return QuickOrderPageConfig::CSV_FILE_EXTENSION;
     }
 
     /**
@@ -49,6 +49,6 @@ class QuickOrderCsvFileTemplatePlugin extends AbstractPlugin implements QuickOrd
      */
     public function getTemplateMimeType(): string
     {
-        return 'text/csv';
+        return QuickOrderPageConfig::CSV_FILE_MIME_TYPE;
     }
 }

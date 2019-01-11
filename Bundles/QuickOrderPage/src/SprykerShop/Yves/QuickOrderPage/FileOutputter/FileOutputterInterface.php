@@ -12,7 +12,7 @@ interface FileOutputterInterface
     /**
      * @param string $fileType
      *
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function outputFile(string $fileType): void;
+    public function outputFile(string $fileType);
 }
