@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutPage;
 
+use phpDocumentor\Reflection\Types\This;
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
@@ -154,7 +156,7 @@ class CheckoutPageFactory extends AbstractFactory
      */
     public function createShipmentHandler()
     {
-        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient());
+        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient(), $this->getShippingService());
     }
 
     /**
@@ -195,6 +197,11 @@ class CheckoutPageFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
+    }
+
+    public function getShippingService(): ShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**

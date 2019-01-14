@@ -66,13 +66,12 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        $quoteTransfer->requireShipmentGroups();
-
         /** This is stub, remove when address step is ready */
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
             $shipment = new ShipmentTransfer();
             $address = new AddressTransfer();
             $address->setAddress1('address ' . $key);
+            $address->setIso2Code('DE');
             $shipment->setShippingAddress($address);
             $itemTransfer->setShipment($shipment);
         }

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 
 interface CheckoutPageToShipmentClientInterface
 {
@@ -23,5 +24,5 @@ interface CheckoutPageToShipmentClientInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer);
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer;
 }

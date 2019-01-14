@@ -7,11 +7,14 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Handler;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
@@ -30,15 +33,25 @@ class ShipmentHandler implements ShipmentHandlerInterface
     protected $priceClient;
 
     /**
+     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
+     * ShipmentHandler constructor.
+     *
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface $priceClient
+     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
-        CheckoutPageToPriceClientInterface $priceClient
+        CheckoutPageToPriceClientInterface $priceClient,
+        ShipmentServiceInterface $shipmentService
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->priceClient = $priceClient;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -49,10 +62,15 @@ class ShipmentHandler implements ShipmentHandlerInterface
      */
     public function addShipmentToItems(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $quoteTransfer->setShipmentGroups($this->getShipmentGroupCollection($quoteTransfer));
+        $this->addAvailableShipmentMethods($quoteTransfer);
+
         foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer){
             foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
                 $shipmentTransfer = $itemTransfer->getShipment();
-                $shipmentTransfer->setShipmentSelection($shipmentGroupTransfer->getShipment()->getShipmentSelection());
+                $shipmentTransfer->setShipmentSelection(
+                    $shipmentGroupTransfer->getShipment()->getShipmentSelection()
+                );
                 $shipmentMethodTransfer = $this->getShipmentMethodById(
                     $shipmentGroupTransfer->getAvailableShipmentMethods(),
                     $shipmentTransfer->getShipmentSelection()
@@ -61,7 +79,26 @@ class ShipmentHandler implements ShipmentHandlerInterface
                 $shipmentTransfer->setExpense(
                     $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode())
                 );
+                $shipmentMethodTransfer->setFkShipmentCarrier($shipmentMethodTransfer->getFkShipmentCarrier());
             }
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function addAvailableShipmentMethods(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $shipmentGroupCollectionTransfer = $this->getAvailableShipmentMethodsByShipment($quoteTransfer);
+        $shipmentMethodsByHash = $this->mapShipmentMethodsByShipmentGroupHash($shipmentGroupCollectionTransfer);
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+            $shipmentGroupTransfer->setAvailableShipmentMethods(
+                $shipmentMethodsByHash[$shipmentGroupTransfer->getHash()]
+            );
         }
 
         return $quoteTransfer;
@@ -73,12 +110,8 @@ class ShipmentHandler implements ShipmentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function getShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, $shipmentSelectionId): ?ShipmentMethodTransfer
+    protected function getShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, int $shipmentSelectionId): ShipmentMethodTransfer
     {
-        if($shipmentSelectionId === null){
-            return null;
-        }
-
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodsTransfer) {
             if ($shipmentMethodsTransfer->getIdShipmentMethod() === $shipmentSelectionId) {
                 return $shipmentMethodsTransfer;
@@ -89,13 +122,42 @@ class ShipmentHandler implements ShipmentHandlerInterface
     }
 
     /**
+     * @param \ArrayObject $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    protected function getAvailableShipmentMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
+    {
+        return $this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     * @return ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    protected function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer)
+    protected function getShipmentGroupCollection(QuoteTransfer $quoteTransfer): ArrayObject
     {
-        return $this->shipmentClient->getAvailableMethods($quoteTransfer);
+        return $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer
+     *
+     * @return \ArrayObject
+     */
+    protected function mapShipmentMethodsByShipmentGroupHash(
+        ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer
+    ): ArrayObject {
+        $shipmentMethodsByShipmentGroupHash = new ArrayObject();
+        foreach ($shipmentGroupCollectionTransfer->getGroups() as $shipmentGroupTransfer) {
+            $shipmentGroupTransfer->requireAvailableShipmentMethods();
+            $shipmentGroupTransfer->requireHash();
+
+            $shipmentMethodsByShipmentGroupHash[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer->getAvailableShipmentMethods();
+        }
+
+        return $shipmentMethodsByShipmentGroupHash;
     }
 
     /**
@@ -104,7 +166,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, $priceMode)
+    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, $priceMode): ExpenseTransfer
     {
         $shipmentExpenseTransfer = $this->createExpenseTransfer();
         $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);

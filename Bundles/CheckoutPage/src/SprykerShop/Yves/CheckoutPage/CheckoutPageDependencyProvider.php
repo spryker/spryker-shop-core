@@ -39,6 +39,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_CHECKOUT = 'CLIENT_CHECKOUT';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
     public const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
@@ -84,7 +85,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCheckoutClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addCartClient($container);
-        $container = $this->addShipmentService($container);
+        $container = $this->addShipmentClient($container);
         $container = $this->addGlossaryClient($container);
         $container = $this->addPriceClient($container);
         $container = $this->addProductBundleClient($container);
@@ -92,6 +93,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addApplication($container);
         $container = $this->provideStore($container);
         $container = $this->addUtilValidateService($container);
+        $container = $this->addShipmentService($container);
 
         $container = $this->addSubFormPluginCollection($container);
         $container = $this->addPaymentMethodHandlerPluginCollection($container);
@@ -237,6 +239,20 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::SERVICE_SHIPMENT] = function (Container $container) {
             return $container->getLocator()->shipment()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShipmentClient(Container $container): Container
+    {
+        $container[self::CLIENT_SHIPMENT] = function (Container $container) {
+            return new CheckoutPageToShipmentClientBridge($container->getLocator()->shipment()->client());
         };
 
         return $container;
