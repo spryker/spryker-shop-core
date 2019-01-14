@@ -14,20 +14,14 @@
     metaDescription: _view.pageDescription | default,
     metaKeywords: _view.pageKeywords | default,
 
-    pagination: {
-        parameters: null,
-        currentPage: null,
-        paginationPath: null,
-        maxPage: null,
-        showAlwaysFirstAndLast: false
-    }
+    pagination: null
 } %}
 
-{% set categoryTemplate = molecule('category-card') %}
+{% set categoryTemplate = molecule('category-card', 'CatalogPage') %}
 {% set cardClass = 'col col--sm-12 col--md-6 col--lg-6 col--xl-4' %}
 
 {% if data.viewMode == 'list' %}
-    {% set categoryTemplate = molecule('category-list-item') %}
+    {% set categoryTemplate = molecule('category-list-item', 'CatalogPage') %}
     {% set cardClass = 'col col--sm-12' %}
 {% endif %}
 
@@ -49,27 +43,12 @@
                 {% block body %}
                     {% for filter in data.facets %}
                         {% set filterHasValues = filter.values is not defined or filter.values | length > 0 %}
-                        {% set filterIsVisible = filterHasValues and filter.name == 'category' %}
+                        {% set filterIsVisible = filter.name == 'category' %}
 
                         {% if filterHasValues and filterIsVisible %}
-                            <h6>{{ ('product.filter.' ~ filter.name | lower) | trans }}</h6>
-
-                            {% include [
-                                molecule('filter-' ~ filter.config.name, 'CatalogPage'),
-                                molecule('filter-' ~ filter.config.type, 'CatalogPage')
-                                ] ignore missing with {
-                                data: {
-                                    categories: data.categories,
-                                    filter: filter,
-                                    min: filter.min | default(0),
-                                    max: filter.max | default(0),
-                                    activeMin: filter.activeMin | default(0),
-                                    activeMax: filter.activeMax | default(0),
-                                    isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible
-                                }
-                            } only %}
-
-                            <hr />
+                            {% block filters %}
+                                {{ parent() }}
+                            {% endblock %}
                         {% endif %}
                     {% endfor %}
                 {% endblock %}
