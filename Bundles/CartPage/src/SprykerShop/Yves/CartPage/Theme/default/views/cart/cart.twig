@@ -102,14 +102,15 @@
                         <hr />
                     {% endif %}
 
-                    {% if canEditCart %}
-                        {% widget 'ProductQuickAddWidget' args [
-                            'cart.quick_add_to_cart' | trans,
-                            'cart.quick_add_to_cart.submit' | trans,
-                            'cart/add'
-                        ] only %}
-                        {% endwidget %}
-                    {% endif %}
+    {% if canEditCart %}
+                    {% widget 'ProductQuickAddWidget' args [
+                        'cart.quick_add_to_cart' | trans,
+                        'cart.quick_add_to_cart.submit' | trans,
+                        'cart/add',
+                        true
+                    ] only %}
+                    {% endwidget %}
+    {% endif %}
 
                     {% if can('SeePricePermissionPlugin') %}
                         {% include molecule('cart-summary', 'CartPage') with {
