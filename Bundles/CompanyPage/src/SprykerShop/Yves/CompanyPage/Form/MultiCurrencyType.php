@@ -19,6 +19,7 @@ class MultiCurrencyType extends AbstractType
 {
     protected const FIELD_MULTI_CURRENCY = 'multi_currency';
     protected const MIN_MONEY_INT = 0;
+    protected const KEY_SEPARATOR = '_';
 
     /**
      * @return string
@@ -73,7 +74,9 @@ class MultiCurrencyType extends AbstractType
             ],
         ];
 
-        $builder->add($currencyIsoCode, NumberType::class, $options);
+        $storeName = $this->getFactory()->getStore()->getStoreName();
+
+        $builder->add($storeName . static::KEY_SEPARATOR . $currencyIsoCode, NumberType::class, $options);
 
         return $this;
     }
