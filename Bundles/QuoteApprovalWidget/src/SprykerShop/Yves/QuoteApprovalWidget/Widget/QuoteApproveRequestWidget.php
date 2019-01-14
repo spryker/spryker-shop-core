@@ -100,7 +100,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
         $configuration = $placeOrderPermission
             ->getConfiguration();
 
-        return $configuration[PlaceOrderPermissionPlugin::FIELD_MULTI_CURRENCY][$currencyCode] ?? 0;
+        return $configuration[PlaceOrderPermissionPlugin::FIELD_STORE_MULTI_CURRENCY][$currencyCode] ?? 0;
     }
 
     /**

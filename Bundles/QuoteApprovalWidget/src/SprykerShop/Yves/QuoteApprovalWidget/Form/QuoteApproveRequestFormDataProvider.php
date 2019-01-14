@@ -189,7 +189,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     ): ?int {
         $configuration = $quoteApprovePermission->getConfiguration();
 
-        return $configuration[ApproveQuotePermissionPlugin::FIELD_MULTI_CURRENCY][$currencyCode] ?? null;
+        return $configuration[ApproveQuotePermissionPlugin::FIELD_STORE_MULTI_CURRENCY][$currencyCode] ?? null;
     }
 
     /**
