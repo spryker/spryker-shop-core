@@ -25,4 +25,9 @@ interface CompanyPageToKernelStoreInterface
      * @return string[]
      */
     public function getCurrencyIsoCodes();
+
+    /**
+     * @return string
+     */
+    public function getStoreName();
 }

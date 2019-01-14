@@ -17,16 +17,7 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
  */
 class MultiCurrencyType extends AbstractType
 {
-    protected const FIELD_MULTI_CURRENCY = 'multi_currency';
     protected const MIN_MONEY_INT = 0;
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return 'MultiCurrencyType';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
