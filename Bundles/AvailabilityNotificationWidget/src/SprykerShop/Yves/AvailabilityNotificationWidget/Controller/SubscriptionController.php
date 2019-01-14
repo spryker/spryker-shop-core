@@ -157,7 +157,7 @@ class SubscriptionController extends AbstractController
             ->setEmail($formData[AvailabilitySubscriptionForm::FIELD_EMAIL])
             ->setSku($formData[AvailabilitySubscriptionForm::FIELD_SKU]);
 
-        if ($customerTransfer !== null) {
+        if ($customerTransfer === null) {
             return $availabilitySubscriptionTransfer;
         }
 

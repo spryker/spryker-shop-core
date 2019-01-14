@@ -101,7 +101,7 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
         }
 
         $availabilitySubscriptionExistenceRequestTransfer = (new AvailabilitySubscriptionExistenceRequestTransfer())
-            ->setEmail($customerTransfer->getEmail())
+            ->setEmail($subscriptionTransfer->getEmail())
             ->setSku($productViewTransfer->getSku());
 
         $availabilitySubscriptionExistenceResponseTransfer = $this->getFactory()
