@@ -1,6 +1,6 @@
 # category-card (molecule)
 
-Used for a short display of article as a grid item, which may contain a title, an image, and a button.
+A card component specifically designed to display a single product category in a grid view. It may have title, image and link button.
 
 ## Code sample
 

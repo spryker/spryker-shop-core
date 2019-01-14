@@ -1,6 +1,6 @@
 # category-list-item (molecule)
 
-Used for a short display of article as a list item, which may contain a title, an image, and a button.
+A card-item component specifically designed to display a single product category in a list view. It may have title, image and link button.
 
 ## Code sample
 
