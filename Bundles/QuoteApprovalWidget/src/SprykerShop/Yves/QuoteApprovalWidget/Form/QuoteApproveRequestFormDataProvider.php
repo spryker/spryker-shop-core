@@ -165,7 +165,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
                 continue;
             }
 
-            $approverPermissionLimit = $this->getApproverLimitConfiguration(
+            $approverPermissionLimit = $this->findApproverLimitInPermissionConfiguration(
                 $quoteApprovePermissionTransfer,
                 $currencyCode
             );

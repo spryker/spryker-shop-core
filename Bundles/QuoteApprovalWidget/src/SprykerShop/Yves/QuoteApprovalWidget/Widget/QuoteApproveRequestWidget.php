@@ -13,6 +13,7 @@ use Spryker\Shared\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestForm;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetFactory getFactory()
@@ -66,11 +67,11 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function isVisible(QuoteTransfer $quoteTransfer): bool
     {
-        if ($this->getPlaceOrderPermission() === null) {
+        if ($this->findPlaceOrderPermission() === null) {
             return false;
         }
 
-        return !$this->getFactory()->getPermissionClient()->can(PlaceOrderPermissionPlugin::KEY, $quoteTransfer);
+        return $this->getFactory()->getPermissionClient()->can(PlaceOrderPermissionPlugin::KEY, $quoteTransfer);
     }
 
     /**
@@ -90,7 +91,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function getApproverLimitByCurrency(string $currencyCode): int
     {
-        $placeOrderPermission = $this->getPlaceOrderPermission();
+        $placeOrderPermission = $this->findPlaceOrderPermission();
 
         if (!$placeOrderPermission) {
             return 0;
@@ -111,9 +112,11 @@ class QuoteApproveRequestWidget extends AbstractWidget
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return null|string
      */
-    protected function findQuoteApprovalStatusByQuote(): ?string
+    protected function findQuoteApprovalStatusByQuote(QuoteTransfer $quoteTransfer): ?string
     {
         return $this->getFactory()
             ->createQuoteApprovalStatusCalculator()
@@ -121,9 +124,11 @@ class QuoteApproveRequestWidget extends AbstractWidget
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestForm
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createQuoteApprovalRequestForm(): QuoteApproveRequestForm
+    protected function createQuoteApprovalRequestForm(QuoteTransfer $quoteTransfer): FormInterface
     {
         return $this->getFactory()->createQuoteApproveRequestForm(
             $quoteTransfer,
