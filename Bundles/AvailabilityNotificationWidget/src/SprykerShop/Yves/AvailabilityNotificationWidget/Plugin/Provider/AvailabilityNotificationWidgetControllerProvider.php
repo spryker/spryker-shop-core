@@ -12,6 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesControllerProvider
 {
+    public const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'notification-availability/unsubscribe';
     public const ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE = 'availability-notification/subscribe';
 
     /**
@@ -21,7 +22,8 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addAvailabilityNotificationSubscribeRoute();
+        $this->addAvailabilityNotificationSubscribeRoute()
+            ->addAvailabilityNotificationUnsubscribeRoute();
     }
 
     /**
@@ -30,6 +32,18 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
     protected function addAvailabilityNotificationSubscribeRoute(): self
     {
         $this->createPostController('/{notificationAvailability}/subscribe', static::ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'subscribe')
+            ->assert('notificationAvailability', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
+            ->value('notificationAvailability', 'availability-notification');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addAvailabilityNotificationUnsubscribeRoute(): self
+    {
+        $this->createPostController('/{notificationAvailability}/unsubscribe', self::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'unsubscribe')
             ->assert('notificationAvailability', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
             ->value('notificationAvailability', 'availability-notification');
 

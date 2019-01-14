@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Widget;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
@@ -18,6 +19,8 @@ use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilitySubscriptio
  */
 class AvailabilitySubscriptionWidget extends AbstractWidget
 {
+    protected const SESSION_AVAILABILITY_NOTIFICATION_EMAIL = 'availabilityNotificationEmail';
+
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      */
@@ -38,7 +41,34 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
 
         $form->setData($data);
 
-        $this->addParameter('form', $form->createView());
+        $this->addParameter('subscribeForm', $form->createView());
+
+        $unsubscribeForm = $this->getFactory()->getAvailabilityUnsubscribeForm();
+        $unsubscribeData = [AvailabilitySubscriptionForm::FIELD_SKU => $productViewTransfer->getSku()];
+        $email = $this->getEmailForUnsubscribeData($customerTransfer);
+
+        if ($email !== null) {
+            $unsubscribeData[AvailabilitySubscriptionForm::FIELD_EMAIL] = $email;
+        }
+
+        $unsubscribeForm->setData($unsubscribeData);
+        $this->addParameter('unsubscribeForm', $unsubscribeForm->createView());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return string|null
+     */
+    protected function getEmailForUnsubscribeData(?CustomerTransfer $customerTransfer): ?string
+    {
+        if ($customerTransfer !== null) {
+            return $customerTransfer->getEmail();
+        }
+
+        return $this->getFactory()
+            ->getSessionClient()
+            ->get(static::SESSION_AVAILABILITY_NOTIFICATION_EMAIL);
     }
 
     /**
@@ -65,7 +95,8 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
      */
     protected function getIsSubscribed(ProductViewTransfer $productViewTransfer, ?CustomerTransfer $customerTransfer): bool
     {
-        if ($customerTransfer === null) {
+        $subscriptionTransfer = $this->setSubscriptionTransfer($customerTransfer, $productViewTransfer);
+        if ($subscriptionTransfer->getEmail() === null) {
             return false;
         }
 
@@ -78,5 +109,29 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
             ->checkExistence($availabilitySubscriptionExistenceRequestTransfer);
 
         return $availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription() !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
+     */
+    protected function setSubscriptionTransfer(?CustomerTransfer $customerTransfer, ProductViewTransfer $productViewTransfer): AvailabilitySubscriptionTransfer
+    {
+        $subscriptionTransfer = (new AvailabilitySubscriptionTransfer())
+            ->setSku($productViewTransfer->getSku());
+        if ($customerTransfer === null) {
+            $email = $this->getFactory()
+                ->getSessionClient()
+                ->get(static::SESSION_AVAILABILITY_NOTIFICATION_EMAIL);
+            $subscriptionTransfer->setEmail($email);
+            return $subscriptionTransfer;
+        }
+
+        $subscriptionTransfer->setEmail($customerTransfer->getEmail())
+            ->setCustomerReference($customerTransfer->getCustomerReference());
+
+        return $subscriptionTransfer;
     }
 }

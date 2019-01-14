@@ -8,7 +8,9 @@
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Controller;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilitySubscriptionForm;
+use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilityUnsubscribeForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SubscriptionController extends AbstractController
 {
+    public const GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED = 'availability_notification.subscribed';
+    public const GLOSSARY_KEY_SUCCESSFULLY_UNSUBSCRIBED = 'availability_notification.unsubscribed';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -28,6 +33,53 @@ class SubscriptionController extends AbstractController
         $this->executeSubscribeAction($request);
 
         return $this->redirectResponseExternal($request->headers->get('referer'));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function unsubscribeAction(Request $request): RedirectResponse
+    {
+        $this->executeUnsubscribeAction($request);
+
+        return $this->redirectResponseExternal($request->headers->get('referer'));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return void
+     */
+    protected function executeUnsubscribeAction(Request $request): void
+    {
+        $unsubscribeForm = $this->getFactory()
+            ->getAvailabilityUnsubscribeForm();
+        $unsubscribeForm->handleRequest($request);
+
+        if ($unsubscribeForm->isSubmitted() === false || $unsubscribeForm->isValid() === false) {
+            return;
+        }
+
+        $formData = $unsubscribeForm->getData();
+
+        $subscriptionTransfer = $this->setAvailabilitySubscriptionTransferFromUnsubscribeForm($formData);
+        $subscriptionTransfer = $this->getFactory()
+            ->getAvailabilityNotificationClient()
+            ->findAvailabilitySubscription($subscriptionTransfer);
+
+        $responseTransfer = $this->getFactory()
+            ->getAvailabilityNotificationClient()
+            ->unsubscribe($subscriptionTransfer);
+        if ($responseTransfer->getIsSuccess() === true) {
+            $this->removeAvailabilityNotificationEmailFromSession();
+            $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_UNSUBSCRIBED);
+
+            return;
+        }
+
+        $this->addErrorMessage($responseTransfer->getErrorMessage());
     }
 
     /**
@@ -48,20 +100,81 @@ class SubscriptionController extends AbstractController
         }
 
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $formData = $subscriptionForm->getData();
+
+        $email = $formData[AvailabilitySubscriptionForm::FIELD_EMAIL];
 
         if ($customerTransfer === null) {
+            $this->addAvailabilityNotificationEmailToSession($email);
+        }
+
+        $availabilitySubscriptionTransfer = $this->setAvailabilitySubscriptionTransferFromSubscriptionForm($customerTransfer, $formData);
+
+        $responseTransfer = $this->getFactory()
+            ->getAvailabilityNotificationClient()
+            ->subscribe($availabilitySubscriptionTransfer);
+        if ($responseTransfer->getIsSuccess() === true) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED);
+
             return;
         }
 
-        $formData = $subscriptionForm->getData();
+        $this->addErrorMessage($responseTransfer->getErrorMessage());
+    }
 
+    /**
+     * @param string $email
+     *
+     * @return void
+     */
+    protected function addAvailabilityNotificationEmailToSession(string $email): void
+    {
+        $sessionClient = $this->getFactory()->getSessionClient();
+        $sessionClient->set('availabilityNotificationEmail', $email);
+
+        $sessionClient->save();
+    }
+
+    /**
+     * @return void
+     */
+    protected function removeAvailabilityNotificationEmailFromSession(): void
+    {
+        $sessionClient = $this->getFactory()->getSessionClient();
+        $sessionClient->set('availabilityNotificationEmail', null);
+        $sessionClient->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param array $formData
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
+     */
+    protected function setAvailabilitySubscriptionTransferFromSubscriptionForm(?CustomerTransfer $customerTransfer, array $formData): AvailabilitySubscriptionTransfer
+    {
         $availabilitySubscriptionTransfer = (new AvailabilitySubscriptionTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setEmail($formData[AvailabilitySubscriptionForm::FIELD_EMAIL])
             ->setSku($formData[AvailabilitySubscriptionForm::FIELD_SKU]);
 
-        $this->getFactory()
-            ->getAvailabilityNotificationClient()
-            ->subscribe($availabilitySubscriptionTransfer);
+        if ($customerTransfer !== null) {
+            return $availabilitySubscriptionTransfer;
+        }
+
+        $availabilitySubscriptionTransfer->setCustomerReference($customerTransfer->getCustomerReference());
+
+        return $availabilitySubscriptionTransfer;
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
+     */
+    protected function setAvailabilitySubscriptionTransferFromUnsubscribeForm(array $formData): AvailabilitySubscriptionTransfer
+    {
+        return (new AvailabilitySubscriptionTransfer())
+            ->setEmail($formData[AvailabilityUnsubscribeForm::FIELD_EMAIL])
+            ->setSku($formData[AvailabilityUnsubscribeForm::FIELD_SKU]);
     }
 }
