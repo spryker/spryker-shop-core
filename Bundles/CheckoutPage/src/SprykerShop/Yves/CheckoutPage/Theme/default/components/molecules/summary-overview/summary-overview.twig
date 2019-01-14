@@ -6,7 +6,7 @@
 } %}
 
 {% define data = {
-    shipmentMethod: required,
+    shipmentData: required,
     expenses: [],
     voucherDiscounts: [],
     cartRuleDiscounts: [],
@@ -63,9 +63,16 @@
     {% endif %}
 
     <li>
-        <span class="float-right">{{ data.prices.storeCurrency | money }}</span>
-        {{ 'checkout.step.summary.shipping' | trans }} (<strong>{{ data.shipmentMethod }}</strong>)
+        <span class="float-right">{{ data.shipmentData.totalCosts | money  }}</span>
+        <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
+        {% for shipment in data.shipmentData.shipments %}
+            <div class="grid grid--justify">
+                <span class="col col--sm-10">{{ shipment.method.carrierName }} - {{ shipment.method.name }}</span>
+                <span class="col col--expand text-right">{{ shipment.method.storeCurrencyPrice | money }}</span>
+            </div>
+        {% endfor %}
     </li>
+
     {% widget 'SalesOrderThresholdWidget' args [data.expenses] only %}
         {% block body %}
             {{block('separator')}}

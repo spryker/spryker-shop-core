@@ -7,8 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
-use \ArrayObject;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -18,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
 {
+    public const KEY_TOTAL_COSTS = 'totalCosts';
+    public const KEY_SHIPMENTS = 'shipments';
+
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
      */
@@ -94,6 +96,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function getTemplateVariables(AbstractTransfer $quoteTransfer)
     {
+        $shipmentGroups = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
         return [
             'quoteTransfer' => $quoteTransfer,
@@ -101,7 +104,8 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
                 $quoteTransfer->getItems(),
                 $quoteTransfer->getBundleItems()
             ),
-            'shipmentGroups' => $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems())
+            'shipmentGroups' => $shipmentGroups,
+            'shipmentData' => $this->getShipmentData($shipmentGroups),
         ];
     }
 
@@ -141,9 +145,29 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     protected function markCheckoutConfirmed(Request $request, QuoteTransfer $quoteTransfer)
     {
-        // $quoteTransfer->getPayments()[0]->getPaymentMethod()
         if ($request->isMethod('POST')) {
             $quoteTransfer->setCheckoutConfirmed(true);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer[]|\ArrayObject $shipmentGroups
+     *
+     * @return array
+     */
+    protected function getShipmentData(ArrayObject $shipmentGroups): array
+    {
+        $shipments = [];
+        $totalCosts = 0;
+
+        foreach ($shipmentGroups as $shipmentGroup) {
+            $shipments[] = $shipmentGroup->getShipment();
+            $totalCosts += $shipmentGroup->getShipment()->getMethod()->getStoreCurrencyPrice();
+        }
+
+        return [
+            static::KEY_SHIPMENTS => $shipments,
+            static::KEY_TOTAL_COSTS => $totalCosts,
+        ];
     }
 }
