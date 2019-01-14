@@ -71,7 +71,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
             return false;
         }
 
-        return $this->getFactory()->getPermissionClient()->can(PlaceOrderPermissionPlugin::KEY, $quoteTransfer);
+        return !$this->getFactory()->getPermissionClient()->can(PlaceOrderPermissionPlugin::KEY, $quoteTransfer);
     }
 
     /**
