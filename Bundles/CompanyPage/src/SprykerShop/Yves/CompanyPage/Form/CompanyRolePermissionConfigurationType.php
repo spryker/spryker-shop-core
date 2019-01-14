@@ -115,7 +115,7 @@ class CompanyRolePermissionConfigurationType extends AbstractType
         $fieldTypes = [
             ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT => NumberType::class,
             ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_STRING => TextType::class,
-            ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_MULTI_CURRENCY => MultiCurrencyType::class,
+            ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_STORE_MULTI_CURRENCY => StoreMultiCurrencyType::class,
         ];
 
         if (!isset($fieldTypes[$fieldType])) {
@@ -133,7 +133,7 @@ class CompanyRolePermissionConfigurationType extends AbstractType
     protected function getSymfonyTypeOptionsByFieldType(string $fieldType): array
     {
         $fieldTypeOptions = [
-            ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_MULTI_CURRENCY => [
+            ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_STORE_MULTI_CURRENCY => [
                 'label' => 'company_page.multi_currency_type.label',
             ],
         ];
