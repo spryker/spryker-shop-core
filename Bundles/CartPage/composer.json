@@ -22,6 +22,7 @@
     "spryker-shop/multi-cart-widget": "*",
     "spryker-shop/product-option-widget": "*",
     "spryker-shop/product-packaging-unit-widget": "*",
+    "spryker-shop/product-quick-add-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
