@@ -14,9 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuoteApproveRequestForm extends AbstractType
 {
-    protected const FILED_APPROVER = 'idApprover';
-
     public const OPTION_APPROVERS_LIST = 'OPTION_APPROVERS_LIST';
+
+    protected const FILED_APPROVER = 'idApprover';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
