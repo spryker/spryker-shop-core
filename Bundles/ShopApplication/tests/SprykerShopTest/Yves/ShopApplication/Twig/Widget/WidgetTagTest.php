@@ -317,7 +317,7 @@ if (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("foo"))
 } elseif (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("bar")) {
     \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), ["param1" => "bar"]));
     \$context['app']['widget_tag_service']->closeWidgetContext();
-} elseif (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("baz", array(0 => "arg1"))) {
+} elseif (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("baz", [0 => "arg1"])) {
     \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget))));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
