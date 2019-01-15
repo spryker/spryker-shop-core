@@ -118,7 +118,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
             $customerTransfer->getLastName(),
             $this->getApproverLimitString(
                 $companyUserTransfer,
-                $quoteTransfer->getCurrency(),
+                $quoteTransfer,
                 $localeName
             )
         );
@@ -126,17 +126,17 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $localeName
      *
      * @return string
      */
     protected function getApproverLimitString(
         CompanyUserTransfer $companyUserTransfer,
-        CurrencyTransfer $currencyTransfer,
+        QuoteTransfer $quoteTransfer,
         string $localeName
     ) {
-        $approverLimit = $this->findApproverLimit($companyUserTransfer, $currencyTransfer->getCode());
+        $approverLimit = $this->findApproverLimit($companyUserTransfer, $quoteTransfer);
 
         if ($approverLimit === null) {
             return $this->glossaryStorageClient->translate(
@@ -145,17 +145,19 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
             );
         }
 
-        return $approverLimit . $currencyTransfer->getSymbol();
+        return ($approverLimit / 100) . $quoteTransfer->getCurrency()->getSymbol();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUser
-     * @param string $currencyCode
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int|null
      */
-    protected function findApproverLimit(CompanyUserTransfer $companyUserTransfer, string $currencyCode): ?int
-    {
+    protected function findApproverLimit(
+        CompanyUserTransfer $companyUserTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ?int {
         $highestApproverPermissionLimit = null;
 
         foreach ($companyUserTransfer->getCompanyRoleCollection()->getRoles() as $companyRoleTransfer) {
@@ -167,7 +169,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
 
             $approverPermissionLimit = $this->findApproverLimitInPermissionConfiguration(
                 $quoteApprovePermissionTransfer,
-                $currencyCode
+                $quoteTransfer
             );
 
             if ($approverPermissionLimit > $highestApproverPermissionLimit) {
@@ -180,16 +182,19 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
 
     /**
      * @param \Generated\Shared\Transfer\PermissionTransfer $quoteApprovePermission
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int|null
      */
     protected function findApproverLimitInPermissionConfiguration(
         PermissionTransfer $quoteApprovePermission,
-        string $currencyCode
+        QuoteTransfer $quoteTransfer
     ): ?int {
         $configuration = $quoteApprovePermission->getConfiguration();
+        $currencyCode = $quoteTransfer->getCurrency()->getCode();
+        $storeName = $quoteTransfer->getStore()->getName();
 
-        return $configuration[ApproveQuotePermissionPlugin::FIELD_STORE_MULTI_CURRENCY][$currencyCode] ?? null;
+        return $configuration[ApproveQuotePermissionPlugin::FIELD_STORE_MULTI_CURRENCY][$storeName][$currencyCode] ?? null;
     }
 
     /**

@@ -28,7 +28,11 @@ class QuoteApproveRequestWidget extends AbstractWidget
         $form = $this->createQuoteApprovalRequestForm($quoteTransfer);
         $quoteApprovalStatus = $this->findQuoteApprovalStatusByQuote($quoteTransfer);
 
-        $this->addParameter('limit', $this->getApproverLimitByCurrency($quoteTransfer->getCurrency()->getCode()));
+        $this->addParameter('limit', $this->getApproverLimitByCurrencyAndStore(
+            $quoteTransfer->getCurrency()->getCode(),
+            $quoteTransfer->getStore()->getName()
+        ));
+
         $this->addParameter('isVisible', $this->isVisible($quoteTransfer));
         $this->addParameter('canSendApprovalRequest', $this->canSendApprovalRequest($quoteApprovalStatus));
         $this->addParameter('form', $form->createView());
@@ -86,10 +90,11 @@ class QuoteApproveRequestWidget extends AbstractWidget
 
     /**
      * @param string $currencyCode
+     * @param string $storeName
      *
      * @return int
      */
-    protected function getApproverLimitByCurrency(string $currencyCode): int
+    protected function getApproverLimitByCurrencyAndStore(string $currencyCode, string $storeName): int
     {
         $placeOrderPermission = $this->findPlaceOrderPermission();
 
@@ -100,7 +105,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
         $configuration = $placeOrderPermission
             ->getConfiguration();
 
-        return $configuration[PlaceOrderPermissionPlugin::FIELD_STORE_MULTI_CURRENCY][$currencyCode] ?? 0;
+        return $configuration[PlaceOrderPermissionPlugin::FIELD_STORE_MULTI_CURRENCY][$storeName][$currencyCode] ?? 0;
     }
 
     /**
