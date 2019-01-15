@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class UploadOrderForm extends AbstractType
 {
     public const FIELD_FILE_UPLOAD_ORDER = 'fileUploadOrder';
+    public const SUBMIT_BUTTON_UPLOAD_ORDER = 'uploadOrder';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

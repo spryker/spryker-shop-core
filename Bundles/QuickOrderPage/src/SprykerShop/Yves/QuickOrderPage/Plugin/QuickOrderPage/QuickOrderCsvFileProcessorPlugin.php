@@ -42,7 +42,9 @@ class QuickOrderCsvFileProcessorPlugin extends AbstractPlugin implements QuickOr
      */
     public function isValidFormat(UploadedFile $file): bool
     {
-        return $this->getFactory()->createCsvFileValidator()->validateFormat($file);
+        return $this->getFactory()
+            ->createCsvFileValidator()
+            ->validateFormat($file);
     }
 
     /**
@@ -53,8 +55,20 @@ class QuickOrderCsvFileProcessorPlugin extends AbstractPlugin implements QuickOr
      */
     public function isValidAmountOfRows(UploadedFile $file, int $maxAllowedLines): bool
     {
-        $csvFileValidator = $this->getFactory()->createCsvFileValidator();
+        return $this->getFactory()
+            ->createCsvFileValidator()
+            ->validateAmountOfRows($file, $maxAllowedLines);
+    }
 
-        return $csvFileValidator->validateAmountOfRows($file, $maxAllowedLines);
+    /**
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     */
+    public function parseFile(UploadedFile $file): array
+    {
+        return $this->getFactory()
+            ->createCsvFileParser()
+            ->parse($file);
     }
 }

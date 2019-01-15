@@ -7,78 +7,36 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\UploadOrder;
 
-use Generated\Shared\Transfer\QuickOrderItemTransfer;
-use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConfig as QuickOrderPageConfigShared;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
-use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadedOrderParser implements UploadedOrderParserInterface
 {
     /**
-     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface
+     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[]
      */
-    protected $utilCsvService;
+    protected $quickOrderFileProcessorPlugins;
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[] $quickOrderFileProcessorPlugins
      */
-    protected $config;
-
-    /**
-     * @param \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig $config
-     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface $utilCsvService
-     */
-    public function __construct(QuickOrderPageConfig $config, QuickOrderPageToUtilCsvServiceInterface $utilCsvService)
+    public function __construct(array $quickOrderFileProcessorPlugins)
     {
-        $this->config = $config;
-        $this->utilCsvService = $utilCsvService;
+        $this->quickOrderFileProcessorPlugins = $quickOrderFileProcessorPlugins;
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadOrder
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
-    public function parse(UploadedFile $uploadOrder): array
+    public function parseFile(UploadedFile $file): array
     {
-        $rows = $this->getUploadOrderRows($uploadOrder);
-
-        $csvHeader = array_flip($rows[0]);
-        $skuKey = array_search(QuickOrderPageConfigShared::CSV_SKU_COLUMN_NAME, array_keys($csvHeader));
-        $qtyKey = array_search(QuickOrderPageConfigShared::CSV_QTY_COLUMN_NAME, array_keys($csvHeader));
-
-        $quickOrderItemTransfers = [];
-        unset($rows[0]);
-        foreach ($rows as $row) {
-            $quickOrderItemTransfers[] = $this->createQuickOrderItemTransfer($row[$skuKey], (int)$row[$qtyKey]);
+        foreach ($this->quickOrderFileProcessorPlugins as $quickOrderFileProcessorPlugin) {
+            if ($quickOrderFileProcessorPlugin->isApplicable($file)) {
+                return $quickOrderFileProcessorPlugin->parseFile($file);
+            }
         }
 
-        return array_values($quickOrderItemTransfers);
-    }
-
-    /**
-     * @param string $sku
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
-     */
-    protected function createQuickOrderItemTransfer(string $sku, int $quantity): QuickOrderItemTransfer
-    {
-        $quickOrderItemTransfer = (new QuickOrderItemTransfer())
-            ->setSku($sku)
-            ->setQuantity($quantity);
-
-        return $quickOrderItemTransfer;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadOrder
-     *
-     * @return array
-     */
-    protected function getUploadOrderRows(UploadedFile $uploadOrder): array
-    {
-        return $this->utilCsvService->readUploadedFile($uploadOrder);
+        return [];
     }
 }

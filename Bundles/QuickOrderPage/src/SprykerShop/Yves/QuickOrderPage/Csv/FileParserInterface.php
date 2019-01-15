@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\UploadOrder;
+namespace SprykerShop\Yves\QuickOrderPage\Csv;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-interface UploadedOrderParserInterface
+interface FileParserInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
-    public function parseFile(UploadedFile $file): array;
+    public function parse(UploadedFile $file): array;
 }

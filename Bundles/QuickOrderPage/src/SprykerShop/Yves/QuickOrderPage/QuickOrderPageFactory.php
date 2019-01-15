@@ -9,6 +9,12 @@ namespace SprykerShop\Yves\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
+use SprykerShop\Yves\QuickOrderPage\AdditionalColumnsGetter\AdditionalColumnsGetter;
+use SprykerShop\Yves\QuickOrderPage\AdditionalColumnsGetter\AdditionalColumnsGetterInterface;
+use SprykerShop\Yves\QuickOrderPage\Csv\FileParser;
+use SprykerShop\Yves\QuickOrderPage\Csv\FileParserInterface;
+use SprykerShop\Yves\QuickOrderPage\Csv\FileValidator;
+use SprykerShop\Yves\QuickOrderPage\Csv\FileValidatorInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToPriceProductStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface;
@@ -17,6 +23,8 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrder
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
+use SprykerShop\Yves\QuickOrderPage\DownloadFileTemplateUrlsGetter\DownloadFileTemplateUrlsGetter;
+use SprykerShop\Yves\QuickOrderPage\DownloadFileTemplateUrlsGetter\DownloadFileTemplateUrlsGetterInterface;
 use SprykerShop\Yves\QuickOrderPage\FileOutputter\FileOutputter;
 use SprykerShop\Yves\QuickOrderPage\FileOutputter\FileOutputterInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint;
@@ -37,8 +45,6 @@ use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParserInterface;
 use SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadedOrderParser;
 use SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadedOrderParserInterface;
-use SprykerShop\Yves\QuickOrderPage\Validator\CsvFileValidator;
-use SprykerShop\Yves\QuickOrderPage\Validator\CsvFileValidatorInterface;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformer;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,7 +110,16 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createUploadOrderParser(): UploadedOrderParserInterface
     {
         return new UploadedOrderParser(
-            $this->getConfig(),
+            $this->getQuickOrderFileProcessorPlugins()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Csv\FileParserInterface
+     */
+    public function createCsvFileParser(): FileParserInterface
+    {
+        return new FileParser(
             $this->getUtilCsvService()
         );
     }
@@ -337,10 +352,26 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Validator\CsvFileValidatorInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\Csv\FileValidatorInterface
      */
-    public function createCsvFileValidator(): CsvFileValidatorInterface
+    public function createCsvFileValidator(): FileValidatorInterface
     {
-        return new CsvFileValidator($this->getUtilCsvService());
+        return new FileValidator($this->getUtilCsvService());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\DownloadFileTemplateUrlsGetter\DownloadFileTemplateUrlsGetterInterface
+     */
+    public function createDownloadFileTemplateUrlsGetter(): DownloadFileTemplateUrlsGetterInterface
+    {
+        return new DownloadFileTemplateUrlsGetter($this->getQuickOrderFileTemplatePlugins());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\AdditionalColumnsGetter\AdditionalColumnsGetterInterface
+     */
+    public function createAdditionalColumnsGetter(): AdditionalColumnsGetterInterface
+    {
+        return new AdditionalColumnsGetter($this->getQuickOrderFormColumnPlugins());
     }
 }

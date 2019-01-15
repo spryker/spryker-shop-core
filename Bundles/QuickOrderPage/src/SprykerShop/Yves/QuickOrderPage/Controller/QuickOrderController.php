@@ -91,17 +91,15 @@ class QuickOrderController extends AbstractController
     {
         $textOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getTextOrderForm()
-            ->handleRequest($request);
+            ->getTextOrderForm();
 
         $uploadOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getUploadOrderForm()
-            ->handleRequest($request);
+            ->getUploadOrderForm();
 
         $handledQuickOrderItems = $this->handleQuickOrderForm($request);
-        $handledUploadOrderItems = $this->handleUploadOrderForm($uploadOrderForm);
-        $handledTextOrderItems = $this->handleTextOrderForm($textOrderForm);
+        $handledUploadOrderItems = $this->handleUploadOrderForm($request, $uploadOrderForm);
+        $handledTextOrderItems = $this->handleTextOrderForm($request, $textOrderForm);
 
         $quickOrderItems = array_merge(
             $handledQuickOrderItems,
@@ -113,11 +111,47 @@ class QuickOrderController extends AbstractController
             $quickOrderItems = $this->filterQuickOrderItems($quickOrderItems);
         }
 
+        $quickOrderTransfer = $this->getQuickOrderTransfer($quickOrderItems);
+        $quickOrderForm = $this->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getQuickOrderForm($quickOrderTransfer);
+
+        $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
+        $products = $this->getProductsFromQuickOrderItems($quickOrderTransfer);
+        $downloadFileTemplateUrls = $this->getFactory()
+            ->createDownloadFileTemplateUrlsGetter()
+            ->getDownloadFileTemplateUrls();
+
+        $additionalColumns = $this->getFactory()
+            ->createAdditionalColumnsGetter()
+            ->getAdditionalColumns();
+
+        return [
+            'quickOrderForm' => $quickOrderForm->createView(),
+            'textOrderForm' => $textOrderForm->createView(),
+            'uploadOrderForm' => $uploadOrderForm->createView(),
+            'additionalColumns' => $additionalColumns,
+            'products' => $this->transformProductsViewData($products),
+            'downloadFileTemplateUrls' => $downloadFileTemplateUrls,
+            'prices' => $prices,
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItems
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     */
+    protected function getQuickOrderTransfer(array $quickOrderItems): QuickOrderTransfer
+    {
         $quickOrderTransfer = $this->getFactory()
             ->createQuickOrderFormDataProvider()
             ->getQuickOrderTransfer($quickOrderItems);
 
-        $quickOrderTransfer = $this->addProductsToQuickOrder($quickOrderTransfer);
+        $quickOrderTransfer = $this->getFactory()
+            ->getQuickOrderClient()
+            ->addProductsToQuickOrder($quickOrderTransfer);
+
         $quickOrderTransfer = $this->getFactory()
             ->createQuickOrderItemPluginExecutor()
             ->applyQuickOrderItemFilterPluginsOnQuickOrder($quickOrderTransfer);
@@ -126,22 +160,7 @@ class QuickOrderController extends AbstractController
             ->createPriceResolver()
             ->setSumPriceForQuickOrderTransfer($quickOrderTransfer);
 
-        $quickOrderForm = $this->getFactory()
-            ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrderTransfer);
-
-        $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
-        $products = $this->getProductsFromQuickOrderItems($quickOrderTransfer);
-
-        return [
-            'quickOrderForm' => $quickOrderForm->createView(),
-            'textOrderForm' => $textOrderForm->createView(),
-            'uploadOrderForm' => $uploadOrderForm->createView(),
-            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
-            'products' => $this->transformProductsViewData($products),
-            'downloadFileTemplateUrls' => $this->getDownloadFileTemplateUrls(),
-            'prices' => $prices,
-        ];
+        return $quickOrderTransfer;
     }
 
     /**
@@ -186,19 +205,6 @@ class QuickOrderController extends AbstractController
     }
 
     /**
-     * @return string[]
-     */
-    protected function getDownloadFileTemplateUrls(): array
-    {
-        $downloadFileTemplateUrls = [];
-        foreach ($this->getFactory()->getQuickOrderFileTemplatePlugins() as $fileTemplatePlugin) {
-            $downloadFileTemplateUrls[$fileTemplatePlugin->getFileExtension()] = $fileTemplatePlugin->getFileExtension();
-        }
-
-        return $downloadFileTemplateUrls;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
@@ -213,40 +219,6 @@ class QuickOrderController extends AbstractController
         }
 
         return $concreteProductsTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuickOrderTransfer
-     */
-    protected function addProductsToQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
-    {
-        $quickOrderTransfer = $this->getFactory()
-            ->getQuickOrderClient()
-            ->addProductsToQuickOrder($quickOrderTransfer);
-
-        $quickOrderTransfer = $this->getFactory()
-             ->getQuickOrderClient()
-             ->validateQuickOrderTransfer($quickOrderTransfer);
-
-        foreach ($quickOrderTransfer->getItems() as $orderItemTransfer) {
-            if (!$orderItemTransfer->getErrorMessages()) {
-                continue;
-            }
-
-            if (!$orderItemTransfer->getProductConcrete()
-                || !$orderItemTransfer->getProductConcrete()->getIdProductConcrete()) {
-                continue;
-            }
-
-            $expandedProductConcrete = $this->getFactory()
-                ->getQuickOrderClient()
-                ->expandProductConcreteTransfers([$orderItemTransfer->getProductConcrete()]);
-            $orderItemTransfer->setProductConcrete($expandedProductConcrete[0]);
-        }
-
-        return $quickOrderTransfer;
     }
 
     /**
@@ -269,22 +241,6 @@ class QuickOrderController extends AbstractController
             ->expandProductConcreteTransfers([$productConcreteTransfer]);
 
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @return array
-     */
-    protected function mapAdditionalQuickOrderFormColumnPluginsToArray(): array
-    {
-        $additionalColumns = [];
-        foreach ($this->getFactory()->getQuickOrderFormColumnPlugins() as $additionalColumnPlugin) {
-            $additionalColumns[] = [
-                'title' => $additionalColumnPlugin->getColumnTitle(),
-                'dataPath' => $additionalColumnPlugin->getDataPath(),
-            ];
-        }
-
-        return $additionalColumns;
     }
 
     /**
@@ -327,13 +283,20 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormFactory()
             ->getQuickOrderForm($quickOrderTransfer);
 
-        $quickOrderTransfer = $this->addProductsToQuickOrder($quickOrderTransfer);
+        $quickOrderTransfer = $this->getFactory()
+            ->getQuickOrderClient()
+            ->addProductsToQuickOrder($quickOrderTransfer);
+
         $products = $this->getProductsFromQuickOrderItems($quickOrderTransfer);
         $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
 
+        $additionalColumns = $this->getFactory()
+            ->createAdditionalColumnsGetter()
+            ->getAdditionalColumns();
+
         return [
             'form' => $quickOrderForm->createView(),
-            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
+            'additionalColumns' => $additionalColumns,
             'products' => $this->transformProductsViewData($products),
             'prices' => $prices,
         ];
@@ -385,13 +348,20 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormFactory()
             ->getQuickOrderForm($quickOrderTransfer);
 
-        $quickOrderTransfer = $this->addProductsToQuickOrder($quickOrderTransfer);
+        $quickOrderTransfer = $this->getFactory()
+            ->getQuickOrderClient()
+            ->addProductsToQuickOrder($quickOrderTransfer);
+
         $products = $this->getProductsFromQuickOrderItems($quickOrderTransfer);
         $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
 
+        $additionalColumns = $this->getFactory()
+            ->createAdditionalColumnsGetter()
+            ->getAdditionalColumns();
+
         return [
             'form' => $quickOrderForm->createView(),
-            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
+            'additionalColumns' => $additionalColumns,
             'products' => $this->transformProductsViewData($products),
             'prices' => $prices,
         ];
@@ -413,6 +383,7 @@ class QuickOrderController extends AbstractController
             ->setSku($sku);
 
         $product = $this->getProductByQuickOrderItem($quickOrderItemTransfer);
+        $quickOrderItemTransfer->setProductConcrete($product);
 
         $quickOrderItemTransfer = $this->getFactory()
             ->createQuickOrderItemPluginExecutor()
@@ -428,9 +399,13 @@ class QuickOrderController extends AbstractController
 
         $product = $this->transformProductsViewData([$product])[$sku] ?? null;
 
+        $additionalColumns = $this->getFactory()
+            ->createAdditionalColumnsGetter()
+            ->getAdditionalColumns();
+
         $viewData = [
             'price' => $quickOrderItemTransfer->getSumPrice(),
-            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
+            'additionalColumns' => $additionalColumns,
             'product' => $product,
             'form' => $form->createView(),
             'index' => $index,
@@ -445,13 +420,19 @@ class QuickOrderController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $textOrderForm
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
-    protected function handleTextOrderForm(FormInterface $textOrderForm): array
+    protected function handleTextOrderForm(Request $request, FormInterface $textOrderForm): array
     {
         $quickOrderItems = [];
+
+        if ($request->get(TextOrderForm::SUBMIT_BUTTON_TEXT_ORDER) !== null) {
+            $textOrderForm->handleRequest($request);
+        }
+
         if ($textOrderForm->isSubmitted() && $textOrderForm->isValid()) {
             $data = $textOrderForm->getData();
 
@@ -466,18 +447,24 @@ class QuickOrderController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $uploadOrderForm
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
-    protected function handleUploadOrderForm(FormInterface $uploadOrderForm): array
+    protected function handleUploadOrderForm(Request $request, FormInterface $uploadOrderForm): array
     {
         $quickOrderItems = [];
+
+        if ($request->get(UploadOrderForm::SUBMIT_BUTTON_UPLOAD_ORDER) !== null) {
+            $uploadOrderForm->handleRequest($request);
+        }
+
         if ($uploadOrderForm->isSubmitted()) {
             $data = $uploadOrderForm->getData();
             $quickOrderItems = $this->getFactory()
                 ->createUploadOrderParser()
-                ->parse($data[UploadOrderForm::FIELD_FILE_UPLOAD_ORDER]);
+                ->parseFile($data[UploadOrderForm::FIELD_FILE_UPLOAD_ORDER]);
         }
 
         return $quickOrderItems;
@@ -587,22 +574,6 @@ class QuickOrderController extends AbstractController
         }
 
         return $prices;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     *
-     * @return array
-     */
-    protected function indexProductsBySku(array $productConcreteTransfers): array
-    {
-        $products = [];
-
-        foreach ($productConcreteTransfers as $product) {
-            $products[$product->getSku()] = $product;
-        }
-
-        return $products;
     }
 
     /**

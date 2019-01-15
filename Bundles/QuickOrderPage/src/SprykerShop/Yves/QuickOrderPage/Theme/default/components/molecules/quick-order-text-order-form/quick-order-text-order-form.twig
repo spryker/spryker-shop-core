@@ -15,11 +15,11 @@
         data: {
             form: data.textOrderForm,
             enableStart: false,
-            enableEnd: false,
-            submit: {
-                enable: true,
-                text: 'quick-order.paste-order.button.verify' | trans
-            }
+            enableEnd: false
         }
     } only %}
+
+    <button type="submit" name="textOrder" class="button button--expand button--success">
+        {{ 'quick-order.paste-order.button.verify' | trans }}
+    </button>
 {% endblock %}

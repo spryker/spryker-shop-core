@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\Validator;
+namespace SprykerShop\Yves\QuickOrderPage\Csv;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-interface CsvFileValidatorInterface
+interface FileValidatorInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile

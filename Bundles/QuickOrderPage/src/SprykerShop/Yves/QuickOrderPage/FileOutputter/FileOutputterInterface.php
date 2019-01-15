@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\FileOutputter;
 
+use Symfony\Component\HttpFoundation\Response;
+
 interface FileOutputterInterface
 {
     /**
@@ -14,5 +16,5 @@ interface FileOutputterInterface
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function outputFile(string $fileType);
+    public function outputFile(string $fileType): Response;
 }

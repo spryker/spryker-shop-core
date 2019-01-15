@@ -57,4 +57,14 @@ interface QuickOrderFileProcessorPluginInterface
      * @return bool
      */
     public function isValidAmountOfRows(UploadedFile $file, int $maxAllowedLines): bool;
+
+    /**
+     * Specification:
+     * - Parse file and return array of QuickOrderItemTransfers.
+     *
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     */
+    public function parseFile(UploadedFile $file): array;
 }

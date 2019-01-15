@@ -15,13 +15,13 @@
         data: {
             form: data.uploadOrderForm,
             enableStart: false,
-            enableEnd: false,
-            submit: {
-                enable: true,
-                text: 'quick-order.file-upload-order.button.upload' | trans
-            }
+            enableEnd: false
         }
     } only %}
+
+    <button type="submit" name="uploadOrder" class="button button--expand button--success">
+        {{ 'quick-order.file-upload-order.button.upload' | trans }}
+    </button>
 
     {% if data.downloadFileTemplateUrls %}
         <div class="col col--sm-12">

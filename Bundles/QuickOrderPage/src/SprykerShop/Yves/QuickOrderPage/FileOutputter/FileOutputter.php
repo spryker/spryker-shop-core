@@ -32,7 +32,7 @@ class FileOutputter implements FileOutputterInterface
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function outputFile(string $fileType)
+    public function outputFile(string $fileType): Response
     {
         foreach ($this->quickOrderFileTemplatePlugins as $fileTemplatePlugin) {
             if ($fileTemplatePlugin->isApplicable($fileType)) {
