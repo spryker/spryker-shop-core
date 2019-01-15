@@ -33,7 +33,7 @@ class ShopApplicationConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSslEnabled()
+    public function isSslEnabled(): bool
     {
         return $this->get(ApplicationConstants::YVES_SSL_ENABLED, true);
     }
