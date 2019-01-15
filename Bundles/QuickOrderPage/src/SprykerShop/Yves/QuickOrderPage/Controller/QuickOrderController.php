@@ -230,8 +230,6 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-     *
      * @return array
      */
     protected function executeDeleteRowAction(Request $request): array
