@@ -29,6 +29,14 @@
         }
     } only %}
 
+    {% include molecule('ajax-provider') with {
+        class: config.jsName ~ '__provider ' ~ config.jsName ~ '__remove-all-rows-provider',
+        attributes: {
+            method: 'POST',
+            url: url('quick-order/delete-all-rows')
+        }
+    } only %}
+
     {% include molecule('ajax-loader') with {
         modifiers: ['big'],
         attributes: {
@@ -81,7 +89,7 @@
                     {% endwidget %}
                 </div>
 
-                <div class="col col--sm-12 col--md-3">
+                <div class="col col--sm-12 col--md-2">
                     {% if can('SeeAddToCartPermissionPlugin') %}
                         <button type="submit" name="addToCart" class="button button--expand button--success js-add-to-cart-button">
                             {{ 'page.detail.add-to-cart' | trans }}
@@ -89,12 +97,25 @@
                     {% endif %}
                 </div>
 
-                <div class="col col--sm-12 col--md-3">
+                <div class="col col--sm-12 col--md-2">
                     {% if can('SeeAddToCartPermissionPlugin') %}
                         <button type="submit" name="createOrder" class="button button--expand button--success">
                             {{ 'quick-order.button.create-order' | trans }}
                         </button>
                     {% endif %}
+                </div>
+
+                <div class="col col--sm-12 col--md-2">
+                    <a href="#remove-all"
+                       class="button button--expand button--warning js-quick-order-form__remove-all-rows-trigger">
+                        {{ 'quick-order.button.delete-all-rows' | trans }}
+                        {% include atom('icon') with {
+                            modifiers: ['small'],
+                            data: {
+                                name: 'times'
+                            }
+                        } only %}
+                    </a>
                 </div>
             </div>
 

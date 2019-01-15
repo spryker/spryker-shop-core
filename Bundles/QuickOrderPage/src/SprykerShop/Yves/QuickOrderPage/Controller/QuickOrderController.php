@@ -269,6 +269,57 @@ class QuickOrderController extends AbstractController
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\JsonResponse
      */
+    public function deleteAllRowsAction(Request $request)
+    {
+        if (!$request->isMethod('post')) {
+            return $this->jsonResponse();
+        }
+
+        $viewData = $this->executeDeleteAllRowsAction($request);
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getQuickOrderPageWidgetPlugins(),
+            '@QuickOrderPage/views/quick-order-rows-async/quick-order-rows-async.twig'
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     *
+     * @return array
+     */
+    protected function executeDeleteAllRowsAction(Request $request): array
+    {
+        $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
+        $formDataItems = $formData['items'] = [];
+
+        $quickOrderTransfer = $this->getFactory()
+            ->createQuickOrderFormDataProvider()
+            ->mapFormDataToQuickOrderItems($formDataItems);
+
+        $quickOrderForm = $this->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getQuickOrderForm($quickOrderTransfer);
+
+        $products = $this->getProductsByQuickOrder($quickOrderTransfer);
+        $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
+
+        return [
+            'form' => $quickOrderForm->createView(),
+            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
+            'products' => $this->transformProductsViewData($products),
+            'prices' => $prices,
+        ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function productAdditionalDataAction(Request $request)
     {
         $quantity = $request->get('quantity');
