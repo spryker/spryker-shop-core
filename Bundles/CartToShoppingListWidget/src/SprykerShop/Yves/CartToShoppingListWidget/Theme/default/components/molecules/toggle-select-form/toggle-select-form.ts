@@ -16,15 +16,15 @@ export default class ToggleSelectForm extends Component {
     }
 
     /**
-     * Makes the trigger element a listener of the change event
+     * Makes the trigger element a listener of the change event.
      */
     mapEvents(): void {
         this.trigger.addEventListener('change', (event: Event) => this.onTriggerClick(event));
     }
 
     /**
-     * Disables a default behavior of the change event and invokes a toggle method
-     * @param event event name
+     * Disables the default behavior of the change event and invokes the toggle method.
+     * @param event Event name.
      */
     onTriggerClick(event: Event): void { 
         event.preventDefault();
@@ -32,29 +32,29 @@ export default class ToggleSelectForm extends Component {
     }
 
     /**
-     * Performs add or remove class name for target elements
-     * @param addClass value for checking add class name or remove it from the target
+     * Adds or removes class names from the target elements.
+     * @param addClass A value for checking if a class name is to be added or removed from the target.
      */
     toggle(addClass: boolean = this.addClass): void {
         this.targets.forEach((element: HTMLElement) => element.classList.toggle(this.classToToggle, addClass));
     }
 
     /**
-     * Gets if the option into select element has no empty value
+     * Gets if an option in the select element has no empty value.
      */
     get addClass(): boolean {
         return this.trigger.value !== '';
     }
 
     /**
-     * Gets a target class name
+     * Gets a target class name.
      */
     get target(): string {
         return this.trigger.getAttribute('target');
     }
 
     /**
-     * Gets a class name for toggle action
+     * Gets a class name for the toggle action.
      */
     get classToToggle(): string {
         return this.trigger.getAttribute('class-to-toggle');

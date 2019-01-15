@@ -1,7 +1,7 @@
 import { get as config } from '../app/config';
 
 /**
- * @event customEvent custom event
+ * @event customEvent A custom event.
  */
 export default abstract class Component extends HTMLElement {
     readonly name: string
@@ -21,14 +21,14 @@ export default abstract class Component extends HTMLElement {
     }
 
     /**
-     * Marks the component as mounted
+     * Marks the component as mounted.
      */
     markAsMounted(): void {
         this.isComponentMounted = true;
     }
 
     /**
-     * Invokes the readyCallback method
+     * Invokes the readyCallback method.
      */
     mountCallback(): void {
         this.readyCallback();
@@ -37,7 +37,7 @@ export default abstract class Component extends HTMLElement {
     protected abstract readyCallback(): void
 
     /**
-     * Gets if the component is mounted
+     * Gets if the component is mounted.
      */
     get isMounted(): boolean {
         return this.isComponentMounted;

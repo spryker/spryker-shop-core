@@ -25,7 +25,7 @@ export default class AjaxLoader extends Component {
     }
 
     /**
-     * Gets a querySelector name of the provider element
+     * Gets a querySelector name of the provider element.
      */
     get providerSelector(): string {
         return this.getAttribute('provider-selector');

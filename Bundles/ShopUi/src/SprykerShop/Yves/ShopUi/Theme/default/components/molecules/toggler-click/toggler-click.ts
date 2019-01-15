@@ -24,7 +24,7 @@ export default class TogglerClick extends Component {
     }
 
     /**
-     * Perfoms toggling of the class names
+     * Toggles the class names.
      */
     toggle(): void {
         this.targets.forEach((target: HTMLElement) => {
@@ -34,21 +34,21 @@ export default class TogglerClick extends Component {
     }
 
     /**
-     * Gets a querySelector of the trigger element
+     * Gets a querySelector of the trigger element.
      */
     get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
     }
 
     /**
-     * Gets a querySelector of the target element
+     * Gets a querySelector of the target element.
      */
     get targetSelector(): string {
         return this.getAttribute('target-selector');
     }
 
     /**
-     * Gets a class name for toggle action
+     * Gets a class name for the toggle action.
      */
     get classToToggle(): string {
         return this.getAttribute('class-to-toggle');

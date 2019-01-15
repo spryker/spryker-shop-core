@@ -1,6 +1,9 @@
 import Component from 'ShopUi/models/component';
 
 export default class MiniCartRadio extends Component {
+    /**
+     * The radio button element.
+     */
     radio: HTMLElement;
 
     protected readyCallback(): void {
@@ -14,7 +17,7 @@ export default class MiniCartRadio extends Component {
     }
 
     /**
-     * Gets lacation url from checked radio
+     * Gets the location url from a checked radio button.
      */
     get locationUrl(): string {
         return this.radio.dataset.href;

@@ -1,7 +1,13 @@
 import Component from '../../../models/component';
 
 export default class SideDrawer extends Component {
+    /**
+     * Collection of the trigger elements.
+     */
     triggers: HTMLElement[]
+    /**
+     * Collection of the container elements.
+     */
     containers: HTMLElement[]
 
     protected readyCallback(): void {
@@ -20,7 +26,7 @@ export default class SideDrawer extends Component {
     }
 
     /**
-     * Performs toggling of the class names
+     * Toggles the class names.
      */
     toggle(): void {
         const isShown = !this.classList.contains(`${this.name}--show`);
@@ -29,14 +35,14 @@ export default class SideDrawer extends Component {
     }
 
     /**
-     * Gets a class name of the trigger element
+     * Gets a class name of the trigger element.
      */
     get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
     }
 
     /**
-     * Gets a class name of the container element
+     * Gets the css query selector of the container element.
      */
     get containerSelector(): string {
         return this.getAttribute('container-selector');

@@ -3,11 +3,29 @@ import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provide
 import { mount } from 'ShopUi/app';
 
 export default class QuickOrderForm extends Component {
+    /**
+     * The current form.
+     */
     form: HTMLFormElement
+    /**
+     * The rows of the current forms.
+     */
     rows: HTMLElement
+    /**
+     * Element wich creats the for row.
+     */
     addRowTrigger: HTMLElement
+    /**
+     * Collection of the elements which remove the form row.
+     */
     removeRowTriggers: HTMLElement[]
+    /**
+     * Element creates the AjaxProvider component for the form row.
+     */
     addRowAjaxProvider: AjaxProvider
+    /**
+     * Element removes the AjaxProvider component from the form row.
+     */
     removeRowAjaxProvider: AjaxProvider
 
     protected readyCallback(): void {
@@ -47,8 +65,8 @@ export default class QuickOrderForm extends Component {
     }
 
     /**
-     * Performs an ajax request to the server and render responce on a page.
-     * @template viod Type of argument returned by the successful promise
+     * Sends an ajax request to the server and renders the response on the page.
+     * @template viod The argument type returned by a successful promise.
      */
     async addRow(): Promise<void> {
         const data = this.getFormData();
@@ -61,9 +79,9 @@ export default class QuickOrderForm extends Component {
     }
 
     /**
-     * Performs an ajax request to the server and render responce on a page.
-     * @template viod Type of argument returned by the successful promise
-     * @param rowIndex string index of row for removing
+     * Sends an ajax request to the server and renders the response on the page.
+     * @template viod The argument type returned by a successful promise.
+     * @param rowIndex A row string index used for removal.
      */
     async removeRow(rowIndex: string): Promise<void> {
         const data = this.getFormData({
@@ -78,10 +96,10 @@ export default class QuickOrderForm extends Component {
     }
 
     /**
-     * Gets an instanse of the FormData
-     * @template FormData type of data returned by the function
-     * @param appendData optional data object for extending the returned data
-     * @returns A data instance of the FormData type
+     * Gets an instance of the FormData.
+     * @template FormData A data type returned by the function.
+     * @param appendData An optional data object for extension of the returned data.
+     * @returns A data instance of the FormData type.
      */
     getFormData(appendData?: object): FormData {
         const data = new FormData(this.form);
@@ -92,5 +110,4 @@ export default class QuickOrderForm extends Component {
 
         return data;
     }
-
 }

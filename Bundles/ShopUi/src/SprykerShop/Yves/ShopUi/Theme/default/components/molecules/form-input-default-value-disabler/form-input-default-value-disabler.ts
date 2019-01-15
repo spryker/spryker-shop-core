@@ -1,7 +1,13 @@
 import Component from '../../../models/component';
 
 export default class FormInputDefaultValueDisabler extends Component {
+    /**
+     * Collection of the forms.
+     */
     forms: HTMLFormElement[]
+    /**
+     * The collection of the form input elemenets.
+     */
     inputs: HTMLInputElement[]
 
     protected readyCallback(): void {
@@ -22,8 +28,8 @@ export default class FormInputDefaultValueDisabler extends Component {
     }
 
     /**
-     * Performs toggling of the disable attribute and sbmit the form
-     * @param form HTMLFormElement for submit event
+     * Toggles the disabled attribute and submits the form.
+     * @param form HTMLFormElement is the element for submit event.
      */
     disableInputsWithDefaultValues(form: HTMLFormElement) {
         const inputs = <HTMLInputElement[]>Array.from(form.querySelectorAll(this.inputSelector));
@@ -43,21 +49,21 @@ export default class FormInputDefaultValueDisabler extends Component {
     }
 
     /**
-     * Gets a querySelector name of the form element
+     * Gets a querySelector name of the form element.
      */
     get formSelector(): string {
         return this.getAttribute('form-selector');
     }
 
     /**
-     * Gets a querySelector name of the input element
+     * Gets a querySelector name of the input element.
      */
     get inputSelector(): string {
         return this.getAttribute('input-selector');
     }
 
     /**
-     * Gets a name of the default value attribute
+     * Gets a name of the default value attribute.
      */
     get defaultValueAttribute(): string {
         return this.getAttribute('default-value-attribute');

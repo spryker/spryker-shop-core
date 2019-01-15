@@ -10,14 +10,41 @@ interface keyCodes {
 export default class SuggestSearch extends Component {
     readonly keyboardCodes: keyCodes
 
+    /**
+     * The search input element.
+     */
     searchInput: HTMLInputElement
+    /**
+     * The hint input element.
+     */
     hintInput: HTMLInputElement
+    /**
+     * The container of the suggestions items.
+     */
     suggestionsContainer: HTMLElement
+    /**
+     * Performs the Ajax operations.
+     */
     ajaxProvider: AjaxProvider
+    /**
+     * The current value of the search input element.
+     */
     currentSearchValue: string
+    /**
+     * A content of the hint input element.
+     */
     hint: string
+    /**
+     * The list of the search suggestions.
+     */
     navigation: HTMLElement[]
+    /**
+     * The index of the active suggestion item.
+     */
     activeItemIndex: number
+    /**
+     * The class name of the active suggestion item.
+     */
     navigationActiveClass: string
 
 
@@ -214,14 +241,14 @@ export default class SuggestSearch extends Component {
     }
 
     /**
-     * Shows the search suggestion
+     * Shows search suggestion(s).
      */
     showSugestions(): void {
         this.suggestionsContainer.classList.remove('is-hidden');
     }
 
     /**
-     * Performs hiding of the search suggestion
+     * Hides search suggestion(s).
      */
     hideSugestions(): void {
         this.suggestionsContainer.classList.add('is-hidden');
@@ -235,8 +262,8 @@ export default class SuggestSearch extends Component {
     }
 
     /**
-     * Performs setting of the search suggestion
-     * @param value Optional data sets instead the search suggestion
+     * Sets the search suggestion(s).
+     * @param value Optional data sets provided instead of the search suggestion.
      */
     updateHintInput(value?: string): void {
         let hintValue = value ? value : this.hint;
@@ -257,28 +284,28 @@ export default class SuggestSearch extends Component {
     }
 
     /**
-     * Gets a time delay for the keyup and blur events
+     * Gets a time delay for the keyup and blur events.
      */
     get debounceDelay(): number {
         return Number(this.getAttribute('debounce-delay'));
     }
 
     /**
-     * Gets a time delay for the keydown event
+     * Gets a time delay for the keydown event.
      */
     get throttleDelay(): number {
         return Number(this.getAttribute('throttle-delay'));
     }
 
     /**
-     * Gets a minimun number of letters in search field for start to send a request to a server
+     * Gets the number of letters which, upon entering in search field, is sufficient to send a request to the server.
      */
     get lettersTrashold(): number {
         return Number(this.getAttribute('letters-trashold'));
     }
 
     /**
-     * Gets a querySelector of the search input field
+     * Gets a querySelector of the search input field.
      */
     get searchInputSelector(): string {
         return <string> this.getAttribute('input-selector');

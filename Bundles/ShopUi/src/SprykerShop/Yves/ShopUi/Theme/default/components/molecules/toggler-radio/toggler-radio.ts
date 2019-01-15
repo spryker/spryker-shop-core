@@ -1,6 +1,9 @@
 import TogglerCheckbox from '../toggler-checkbox/toggler-checkbox';
 
 export default class TogglerRadio extends TogglerCheckbox {
+    /**
+     * Collection of the toggle triggers.
+     */
     togglers: TogglerRadio[]
 
     protected readyCallback(): void {
@@ -14,7 +17,7 @@ export default class TogglerRadio extends TogglerCheckbox {
     }
 
     /**
-     * Performs toggling of the all toggler elements
+     * Toggles all the toggler elements.
      */
     toggleAll(): void {
         this.togglers.forEach((toggler: TogglerRadio) => {
@@ -23,7 +26,7 @@ export default class TogglerRadio extends TogglerCheckbox {
     }
 
     /**
-     * Gets a group name
+     * Gets a group name.
      */
     get groupName(): string {
         return this.getAttribute('group-name');

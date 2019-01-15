@@ -28,7 +28,7 @@ export default class FormDataInjector extends Component {
     }
 
     /**
-     * Performs injection of a data to the form fileds
+     * Injects data into the form fields.
      */
     public injectData(): void {
         this.fieldsToInject.forEach((field: HTMLFormElement) => this.addField(field));
@@ -45,14 +45,14 @@ export default class FormDataInjector extends Component {
     }
 
     /**
-     * Gets a querySelector name of a destination form
+     * Gets a querySelector name of the destination form.
      */
     get destinationFormSelector(): string {
         return this.getAttribute('destination-form-selector');
     }
 
     /**
-     * Gets a querySelector name of a filed element
+     * Gets a querySelector name of the from fileds.
      */
     get fieldsSelector(): string {
         return this.getAttribute('fields-selector');

@@ -5,8 +5,8 @@ const EVENT_FETCHING = 'fetching';
 const EVENT_FETCHED = 'fetched';
 
 /**
- * @event fetching Event emitted when an ajax request is sent to the server
- * @event fetched Event emitted when an ajax request is closed
+ * @event fetching An event which is triggered when an ajax request is sent to the server.
+ * @event fetched An event which is triggered when an ajax request is closed.
  */
 export default class AjaxProvider extends Component {
     protected isFetchingRequest: boolean = false
@@ -27,10 +27,10 @@ export default class AjaxProvider extends Component {
     }
 
     /**
-     * Performs an ajax request to the server.
-     * @template T Type of argument returned by the successful promise
-     * @param data Optional data sent to the server in the request body
-     * @returns A generic typed promise connected to the ajax request
+     * Sends an ajax request to the server.
+     * @template T The argument type returned by a successful promise.
+     * @param data Optional data sent to the server in the request body.
+     * @returns A generic typed promise connected to the ajax request.
      */
     async fetch<T = string>(data?: any): Promise<T> {
         debug(this.method, this.url, 'fetching...');
@@ -73,7 +73,7 @@ export default class AjaxProvider extends Component {
     }
 
     /**
-     * Gets the url endpoint used to perform the ajax call to
+     * Gets the url endpoint used to perform the ajax call to.
      */
     get url(): string {
         const url = this.getAttribute('url');
@@ -92,28 +92,28 @@ export default class AjaxProvider extends Component {
     }
 
     /**
-     * Gets the request method
+     * Gets the request method.
      */
     get method(): string {
         return this.getAttribute('method').toUpperCase();
     }
 
     /**
-     * Gets the response type
+     * Gets the response type.
      */
     get responseType(): XMLHttpRequestResponseType {
         return <XMLHttpRequestResponseType>this.getAttribute('response-type');
     }
 
     /**
-     * Gets if the component will fetch immediately after load
+     * Gets if the component performs the fetch operation after loading.
      */
     get fetchOnLoad(): boolean {
         return this.hasAttribute('fetch-on-load');
     }
 
     /**
-     * Gets if the component is currently fetching
+     * Gets if the component is currently fetching.
      */
     get isFetching(): boolean {
         return this.isFetchingRequest;

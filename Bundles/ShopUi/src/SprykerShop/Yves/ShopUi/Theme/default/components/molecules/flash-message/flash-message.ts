@@ -2,6 +2,9 @@ import Component from '../../../models/component';
 
 export default class FlashMessage extends Component {
     readonly defaultDuration: number = 5000
+    /**
+     * The id of flash message timeout.
+     */
     durationTimeoutId: any
 
     protected readyCallback(): void {
@@ -19,8 +22,8 @@ export default class FlashMessage extends Component {
     }
 
     /**
-     * Shows the flash message during the set time
-     * @param duration number value is a time for showing the flash message
+     * Shows the flash message during the time set.
+     * @param duration A number value which defines the period of time for which the flash message is shown.
      */
     showFor(duration: number) {
         this.classList.add(`${this.name}--show`);
@@ -28,7 +31,7 @@ export default class FlashMessage extends Component {
     }
 
     /**
-     * Hides the flash message
+     * Hides the flash message.
      */
     hide() {
         clearTimeout(this.durationTimeoutId);

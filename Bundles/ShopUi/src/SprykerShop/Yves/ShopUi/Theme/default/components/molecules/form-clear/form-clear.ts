@@ -1,14 +1,32 @@
 import Component from '../../../models/component';
 
 /**
- * @event formFieldsClearAfter Event emitted after cleaning of the form fileds
+ * @event formFieldsClearAfter An event which is triggered after the form fields are cleared.
  */
 export default class FormClear extends Component {
+    /**
+     * The current form.
+     */
     form: HTMLElement;
+    /**
+     * Collection of the triggers elements.
+     */
     triggers: HTMLElement[];
+    /**
+     * Collection of the form elemenets.
+     */
     targets: HTMLElement[];
+    /**
+     * Collection of the targets elements which should be ignored while collection the filters.
+     */
     ignoreElements: HTMLElement[];
+    /**
+     * Collection of the filter elements.
+     */
     filterElements: HTMLElement[];
+    /**
+     * The custom event.
+     */
     formFieldsClearAfter: CustomEvent;
 
     protected readyCallback(): void {
@@ -40,8 +58,8 @@ export default class FormClear extends Component {
     }
 
     /**
-     * Performs cleaning an array of form elements and fires the custom event formFieldsClearAfter
-     * @param element HTMLFormElement is an element for clean action
+     * Clears an array of the form elements and triggers the custom event formFieldsClearAfter.
+     * @param element HTMLFormElement is the element for clear action.
      */
     clearFormValues(): void {
         this.filterElements.forEach((element: HTMLFormElement) => {
@@ -52,8 +70,8 @@ export default class FormClear extends Component {
     }
 
     /**
-     * Performs cleaning of the current form filed
-     * @param element HTMLFormElement is an element for clean action
+     * Clears current form field.
+     * @param element HTMLFormElement is the element for clear action.
      */
     clearFormField(element: HTMLFormElement): void {
         const inputType = element.type;
@@ -74,7 +92,7 @@ export default class FormClear extends Component {
     }
 
     /**
-     * Gets a tag name of the current element
+     * Gets a tag name of the current element.
      */
     getTagName(element: HTMLElement): string {
         return element.tagName.toUpperCase();
@@ -85,21 +103,21 @@ export default class FormClear extends Component {
     }
 
     /**
-     * Gets a querySelector name of the form
+     * Gets a querySelector name of the form.
      */
     get formSelector(): string {
         return this.getAttribute('form-selector');
     }
 
     /**
-     * Gets a querySelector name of the trigger element
+     * Gets a querySelector name of the trigger element.
      */
     get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
     }
 
     /**
-     * Gets a querySelector name of the ignore element
+     * Gets a querySelector name of the ignore element.
      */
     get ignoreSelector(): string {
         return this.getAttribute('ignore-selector');

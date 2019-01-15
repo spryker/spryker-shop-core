@@ -26,8 +26,8 @@ export default class CustomerReorder extends Component {
     }
 
     /**
-     * Sets or removes the disable attribute for a trigger element
-     * @param enable boolean value for checking is the trigger available for changing
+     * Sets or removes the disabled attribute from the trigger element.
+     * @param enable A boolean value for checking if the trigger is available for changing.
      */
     enableTrigger(enable: boolean): void {
         if (enable) {

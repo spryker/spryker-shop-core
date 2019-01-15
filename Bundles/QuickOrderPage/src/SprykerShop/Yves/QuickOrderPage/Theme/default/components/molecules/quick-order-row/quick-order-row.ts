@@ -7,11 +7,29 @@ const ERROR_MESSAGE_CLASS = 'quick-order-row__error--show';
 const ERROR_PARTIAL_MESSAGE_CLASS = 'quick-order-row-partial__error--show';
 
 export default class QuickOrderRow extends Component {
+    /**
+     * Imported component which provides the Ajax operations.
+     */
     ajaxProvider: AjaxProvider;
+    /**
+     * The form with an autocomplete ability.
+     */
     autocompleteInput: AutocompleteForm;
+    /**
+     * The input element for a quantity
+     */
     quantityInput: HTMLInputElement;
+    /**
+     * Elemnts which contains error messages.
+     */
     errorMessage: HTMLElement;
+    /**
+     * TThe timer of the form fields reload.
+     */
     timer: number;
+    /**
+     * A time is sufficient to reload form fields.
+     */
     timeout: number = 3000;
 
     protected readyCallback(): void {
@@ -57,8 +75,8 @@ export default class QuickOrderRow extends Component {
     }
 
     /**
-     * Performs settings for the ajaxProvider and send an ajax request to the server.
-     * @param sku string value to setting of ajaxProvider
+     * Configures the ajaxProvider and sends an ajax request to the server.
+     * @param sku A string value for the ajaxProvider configuration.
      */
     async reloadField(sku: string = '') {
         clearTimeout(this.timer);
@@ -83,7 +101,7 @@ export default class QuickOrderRow extends Component {
     }
 
     /**
-     * Gets a quantity value
+     * Gets a quantity value.
      */
     get quantityValue(): string {
         return this.quantityInput.value;

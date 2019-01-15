@@ -22,7 +22,7 @@ export default class TogglerHash extends Component {
     }
 
     /**
-     * Performs checking the hash and invoke the flexible toogle action
+     * Checks the hash and triggers the flexible toggle action.
      */
     checkHash(): void {
         if (this.triggerHash === this.hash) {
@@ -34,43 +34,43 @@ export default class TogglerHash extends Component {
     }
 
     /**
-     * Perfoms toggling of the class names
-     * @param addClass boolean value for more flexible toggling action
+     * Toggles the class names.
+     * @param addClass A boolean value for a more flexible toggling action.
      */
     toggle(addClass: boolean): void {
         this.targets.forEach((target: HTMLElement) => target.classList.toggle(this.classToToggle, addClass));
     }
 
     /**
-     * Gets the current page url
+     * Gets the current page url.
      */
     get hash(): string {
         return window.location.hash;
     }
 
     /**
-     * Gets the trigger hash
+     * Gets the trigger hash.
      */
     get triggerHash(): string {
         return this.getAttribute('trigger-hash');
     }
 
     /**
-     * Gets a querySelector of the target element
+     * Gets a querySelector of the target element.
      */
     get targetSelector(): string {
         return this.getAttribute('target-selector');
     }
 
     /**
-     * Gets a class name for toggle action
+     * Gets a class name for the toggle action.
      */
     get classToToggle(): string {
         return this.getAttribute('class-to-toggle');
     }
 
     /**
-     * Gets if the element should add the class when in blur
+     * Gets if the element should add the class when in blur.
      */
     get addClassWhenHashInUrl(): boolean {
         return this.hasAttribute('add-class-when-hash-in-url');
