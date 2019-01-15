@@ -74,7 +74,7 @@ EOF;
 
         $expectedCode = <<<EOF
 // line 1
-if (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("foo", array(0 => "foo", 1 => 123))) {
+if (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("foo", [0 => "foo", 1 => 123])) {
     \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget))));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
@@ -136,7 +136,7 @@ EOF;
         $expectedCode = <<<EOF
 // line 1
 if (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("foo")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), array("foo" => "bar", "baz" => array("a" => "b"))));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), ["foo" => "bar", "baz" => ["a" => "b"]]));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
 EOF;
@@ -177,7 +177,7 @@ EOF;
         $expectedCode = <<<EOF
 // line 1
 if (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("foo")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), array("foo" => "bar", "baz" => array("a" => "b"))));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), ["foo" => "bar", "baz" => ["a" => "b"]]));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
 EOF;
@@ -315,7 +315,7 @@ if (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("foo"))
     \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget))));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 } elseif (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("bar")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), array("param1" => "bar")));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), ["param1" => "bar"]));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 } elseif (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("baz", array(0 => "arg1"))) {
     \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget))));
