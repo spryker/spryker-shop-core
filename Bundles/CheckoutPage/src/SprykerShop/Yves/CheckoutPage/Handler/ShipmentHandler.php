@@ -130,14 +130,14 @@ class ShipmentHandler implements ShipmentHandlerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param int $shipmentSelectionId
+     * @param int $idShipmentMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function findShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, int $shipmentSelectionId): ?ShipmentMethodTransfer
+    protected function findShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, int $idShipmentMethod): ?ShipmentMethodTransfer
     {
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodsTransfer) {
-            if ($shipmentMethodsTransfer->getIdShipmentMethod() === $shipmentSelectionId) {
+            if ($shipmentMethodsTransfer->getIdShipmentMethod() === $idShipmentMethod) {
                 return $shipmentMethodsTransfer;
             }
         }
