@@ -53,11 +53,13 @@
 
         <hr>
 
-        {% include molecule('shopping-list-product-quick-add', 'ShoppingListPage') with {
-            data: {
-                activeShoppingListId: data.shoppingList.idShoppingList
-            }
-        } only %}
+        {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+            {% include molecule('shopping-list-product-quick-add', 'ShoppingListPage') with {
+                data: {
+                    activeShoppingListId: data.shoppingList.idShoppingList
+                }
+            } only %}
+        {% endif %}
 
         {% if data.shoppingListItems|length %}
             <form method="POST" action="{{ path('shopping-list/add-to-cart') }}">
