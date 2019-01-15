@@ -24,6 +24,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientBri
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceBridge;
 use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentFormDataProviderPlugin;
@@ -238,7 +239,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addShipmentService(Container $container): Container
     {
         $container[self::SERVICE_SHIPMENT] = function (Container $container) {
-            return $container->getLocator()->shipment()->service();
+            return new CheckoutPageToShipmentServiceBridge($container->getLocator()->shipment()->service());
         };
 
         return $container;

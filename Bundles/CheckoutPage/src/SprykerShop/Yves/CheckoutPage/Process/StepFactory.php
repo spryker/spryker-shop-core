@@ -24,6 +24,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleC
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\CustomerStep;
@@ -194,9 +195,10 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function getShipmentService(): ShipmentServiceInterface
+    public function getShipmentService(): CheckoutPageToShipmentServiceInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
     }

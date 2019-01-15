@@ -15,6 +15,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
@@ -25,19 +26,19 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $productBundleClient;
 
     /**
-     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
      */
     protected $shipmentService;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
-     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
      * @param string $stepRoute
      * @param string $escapeRoute
      */
     public function __construct(
         CheckoutPageToProductBundleClientInterface $productBundleClient,
-        ShipmentServiceInterface $shipmentService,
+        CheckoutPageToShipmentServiceInterface $shipmentService,
         $stepRoute,
         $escapeRoute
     ) {

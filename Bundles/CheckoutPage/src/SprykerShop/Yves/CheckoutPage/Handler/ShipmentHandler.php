@@ -18,6 +18,7 @@ use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ShipmentHandler implements ShipmentHandlerInterface
@@ -33,21 +34,19 @@ class ShipmentHandler implements ShipmentHandlerInterface
     protected $priceClient;
 
     /**
-     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
      */
     protected $shipmentService;
 
     /**
-     * ShipmentHandler constructor.
-     *
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface $priceClient
-     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
         CheckoutPageToPriceClientInterface $priceClient,
-        ShipmentServiceInterface $shipmentService
+        CheckoutPageToShipmentServiceInterface $shipmentService
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->priceClient = $priceClient;

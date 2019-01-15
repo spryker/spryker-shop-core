@@ -19,6 +19,7 @@ use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use \ArrayObject;
 
@@ -35,20 +36,21 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $shipmentPlugins;
 
     /**
-     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
      */
     protected $shipmentService;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $shipmentPlugins
-     * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @param $stepRoute
+     * @param $escapeRoute
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,
         StepHandlerPluginCollection $shipmentPlugins,
-        ShipmentServiceInterface $shipmentService,
+        CheckoutPageToShipmentServiceInterface $shipmentService,
         $stepRoute,
         $escapeRoute
     ) {
