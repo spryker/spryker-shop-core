@@ -28,7 +28,7 @@ class ShipmentCollectionForm extends AbstractType
     /**
      * @return string|null
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return static::BLOCK_PREFIX;
     }
@@ -37,7 +37,7 @@ class ShipmentCollectionForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addShipmentGroups($builder, $options);
     }

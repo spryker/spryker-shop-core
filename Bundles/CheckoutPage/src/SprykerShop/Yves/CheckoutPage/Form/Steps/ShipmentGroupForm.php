@@ -68,7 +68,6 @@ class ShipmentGroupForm extends AbstractType
         });
 
         return $this;
-
     }
 
     /**

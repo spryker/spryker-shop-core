@@ -66,7 +66,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use getShipmentCollectionForm() instead
+     * @deprecated Use getShipmentCollectionForm() instead.
      *
      * @return string
      */

@@ -91,7 +91,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @deprecated Use createAvailableMethodsByShipmentChoiceList() instead
+     * @deprecated Use createAvailableMethodsByShipmentChoiceList() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -120,7 +120,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      *
      * @return array
      */
-    protected function createAvailableMethodsByShipmentChoiceList(QuoteTransfer $quoteTransfer)
+    protected function createAvailableMethodsByShipmentChoiceList(QuoteTransfer $quoteTransfer): array
     {
         $shipmentMethods = [];
 
@@ -142,7 +142,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @deprecated Use getAvailableMethodsByShipment() instead
+     * @deprecated Use getAvailableMethodsByShipment() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

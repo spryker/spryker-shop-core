@@ -75,6 +75,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
             $shipment->setShippingAddress($address);
             $itemTransfer->setShipment($shipment);
         }
+
         /** @todo Move elsewhere */
         $quoteTransfer->setShipmentGroups($this->getShipmentGroupCollection($quoteTransfer));
 
@@ -90,7 +91,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
         $shipmentHandler = $this->shipmentPlugins->get(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_STEP_HANDLER);
-        $shipmentHandler->addToDataClass($request, $quoteTransfer);
+        $quoteTransfer = $shipmentHandler->addToDataClass($request, $quoteTransfer);
 
         return $this->calculationClient->recalculate($quoteTransfer);
     }
