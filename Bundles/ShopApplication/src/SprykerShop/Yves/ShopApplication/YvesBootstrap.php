@@ -40,9 +40,6 @@ abstract class YvesBootstrap
 
     public function __construct()
     {
-        // Currently the SilexApplication is an instance of our ContainerInterface
-        // to make both applications use the same container we use the old application
-        // as the current container
         $this->serviceContainer
             = $this->application
             = new SilexApplication();
@@ -58,13 +55,10 @@ abstract class YvesBootstrap
     {
         $this->registerServiceProviders();
 
-        // Override registered services with the new ones.
         $this->setupApplication();
 
-        // Register router after we have overridden the services with our new ones
         $this->registerRouters();
 
-        // Register old controllers after our new ones
         $this->registerControllerProviders();
 
         $this->application->boot();
@@ -78,8 +72,8 @@ abstract class YvesBootstrap
      */
     protected function setupApplication(): void
     {
-        foreach ($this->getApplicationPlugins() as $applicationExtension) {
-            $this->sprykerApplication->registerApplicationPlugin($applicationExtension);
+        foreach ($this->getApplicationPlugins() as $applicationPlugin) {
+            $this->sprykerApplication->registerApplicationPlugin($applicationPlugin);
         }
     }
 
