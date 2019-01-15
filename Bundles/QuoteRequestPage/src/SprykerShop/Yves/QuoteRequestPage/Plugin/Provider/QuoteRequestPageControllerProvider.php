@@ -12,8 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_QUOTE_REQUEST = 'quote-request';
-    public const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
+    public const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
 
     /**
      * @param \Silex\Application $app
@@ -22,31 +21,17 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addQuoteRequestRoute()
-            ->addQuoteRequestDetailsRoute();
+        $this->addQuoteRequestCreateRoute();
     }
 
     /**
      * @return $this
      */
-    protected function addQuoteRequestRoute(): self
+    protected function addQuoteRequestCreateRoute(): self
     {
-        $this->createController('/{quoteRequest}', static::ROUTE_QUOTE_REQUEST, 'QuoteRequestPage', 'QuoteRequestOverview')
+        $this->createController('/{quoteRequest}/create', static::ROUTE_QUOTE_REQUEST_CREATE, 'QuoteRequestPage', 'Create', 'create')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request');
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    protected function addQuoteRequestDetailsRoute(): self
-    {
-        $this->createGetController('/{quoteRequest}/details/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_DETAILS, 'QuoteRequestPage', 'QuoteRequest')
-            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
-            ->value('quoteRequest', 'quote-request')
-            ->assert('quoteRequestReference', '.+');
 
         return $this;
     }

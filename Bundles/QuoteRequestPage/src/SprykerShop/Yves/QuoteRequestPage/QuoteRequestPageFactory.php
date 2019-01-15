@@ -7,38 +7,48 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage;
 
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider;
+use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestForm;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig getConfig()
  */
 class QuoteRequestPageFactory extends AbstractFactory
 {
-//    /**
-//     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $data
-//     * @param array $options
-//     *
-//     * @return \Symfony\Component\Form\FormInterface
-//     */
-//    public function getQuoteRequestUpdateForm(QuoteRequestTransfer $data = null, array $options = []): FormInterface
-//    {
-//        return $this->getFormFactory()->create(QuoteRequestUpdateForm::class, $data, $options);
-//    }
-//
-//    /**
-//     * @return \SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestUpdateFormDataProvider
-//     */
-//    public function createQuoteRequestUpdateFormUDataProvider(): QuoteRequestUpdateFormDataProvider
-//    {
-//        return new QuoteRequestUpdateFormDataProvider(
-//            $this->getQuoteRequestClient(),
-//            $this->getCustomerClient()
-//        );
-//    }
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        $quoteRequestFormDataProvider = $this->createQuoteRequestFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            QuoteRequestForm::class,
+            $quoteRequestTransfer,
+            $quoteRequestFormDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider
+     */
+    public function createQuoteRequestFormDataProvider(): QuoteRequestFormDataProvider
+    {
+        return new QuoteRequestFormDataProvider(
+            $this->getQuoteClient()
+        );
+    }
 
     /**
      * @return \Symfony\Component\Form\FormFactory
@@ -49,11 +59,11 @@ class QuoteRequestPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface
+     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface
      */
-    public function getCustomerClient(): QuoteRequestPageToCustomerClientInterface
+    public function getCompanyUserClient(): QuoteRequestPageToCompanyUserClientInterface
     {
-        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_CUSTOMER);
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_COMPANY_USER);
     }
 
     /**
@@ -62,5 +72,21 @@ class QuoteRequestPageFactory extends AbstractFactory
     public function getQuoteRequestClient(): QuoteRequestPageToQuoteRequestClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_QUOTE_REQUEST);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface
+     */
+    public function getQuoteClient(): QuoteRequestPageToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldExpanderPluginInterface[]
+     */
+    public function getQuoteRequestFormMetadataFieldExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELD_EXPANDERS);
     }
 }

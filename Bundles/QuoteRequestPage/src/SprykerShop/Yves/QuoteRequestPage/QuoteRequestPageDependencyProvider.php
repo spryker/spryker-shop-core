@@ -9,13 +9,17 @@ namespace SprykerShop\Yves\QuoteRequestPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientBridge;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientBridge;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientBridge;
 
 class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    
+    public const PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELD_EXPANDERS = 'PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELD_EXPANDERS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -26,8 +30,9 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideDependencies($container);
 
-        $container = $this->addCustomerClient($container);
+        $container = $this->addCompanyUserClient($container);
         $container = $this->addQuoteRequestClient($container);
+        $container = $this->addQuoteClient($container);
 
         return $container;
     }
@@ -37,10 +42,10 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCustomerClient(Container $container): Container
+    protected function addCompanyUserClient(Container $container): Container
     {
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
-            return new QuoteRequestPageToCustomerClientBridge($container->getLocator()->customer()->client());
+        $container[self::CLIENT_COMPANY_USER] = function (Container $container) {
+            return new QuoteRequestPageToCompanyUserClientBridge($container->getLocator()->companyUser()->client());
         };
 
         return $container;
@@ -58,5 +63,41 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient(Container $container): Container
+    {
+        $container[self::CLIENT_QUOTE] = function (Container $container) {
+            return new QuoteRequestPageToQuoteClientBridge($container->getLocator()->quote()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteRequestFormMetadataFieldExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELD_EXPANDERS] = function () {
+            return $this->getQuoteRequestFormMetadataFieldExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldExpanderPluginInterface[]
+     */
+    protected function getQuoteRequestFormMetadataFieldExpanderPlugins(): array
+    {
+        return [];
     }
 }
