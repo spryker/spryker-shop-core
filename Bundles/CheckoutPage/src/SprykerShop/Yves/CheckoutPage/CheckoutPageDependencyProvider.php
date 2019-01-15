@@ -48,7 +48,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
 
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
-    public const SERVICE_SHIPMENT  = 'SHIPMENT_SERVICE';
+    public const SERVICE_SHIPMENT  = 'SERVICE_SHIPMENT';
 
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
