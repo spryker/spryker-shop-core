@@ -207,15 +207,10 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     private function setShippingAddresses(AbstractTransfer $quoteTransfer): void
     {
-        $quoteShippingAddress = $this->prepareShippingAddress(
-            $quoteTransfer->getShippingAddress()
-        );
-        $quoteTransfer->setShippingAddress($quoteShippingAddress);
-
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemShippingAddress = $itemTransfer->getShipment()->getShippingAddress();
             $itemTransfer->setShipment(
-                $this->getItemShipment($itemShippingAddress, $quoteShippingAddress)
+                $this->getItemShipment($itemShippingAddress)
             );
         }
     }
@@ -231,7 +226,12 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
 
         if ($quoteTransfer->getBillingSameAsShipping() === true) {
             $quoteTransfer->setBillingAddress(clone $quoteTransfer->getShippingAddress());
-        } elseif ($billingAddressTransfer !== null && $billingAddressTransfer->getIdCustomerAddress() !== null) {
+            $quoteTransfer->getBillingAddress()->setIsDefaultBilling(true);
+
+            return;
+        }
+
+        if ($billingAddressTransfer !== null && $billingAddressTransfer->getIdCustomerAddress() !== null) {
             $billingAddressTransfer = $this->hydrateCustomerAddress(
                 $billingAddressTransfer,
                 $this->getCustomer()
@@ -239,44 +239,35 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
 
             $quoteTransfer->setBillingAddress($billingAddressTransfer);
         }
-        $quoteTransfer->getBillingAddress()->setIsDefaultBilling(true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $itemShippingAddress
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $quoteShippingAddressTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function getItemShipment(
-        AddressTransfer $itemShippingAddress,
-        ?AddressTransfer $quoteShippingAddressTransfer
-    ): ShipmentTransfer {
-        $shippingAddress = $this->prepareShippingAddress($itemShippingAddress)
-            ?? $quoteShippingAddressTransfer;
-        $addressKey = $this->getAddressTransferKey($shippingAddress);
+    protected function getItemShipment(AddressTransfer $itemShippingAddress): ShipmentTransfer
+    {
+        $shippingAddress = $this->prepareShippingAddress($itemShippingAddress);
+        $addressHash = $this->getAddressHash($shippingAddress);
 
-        if (isset($this->existingShipments[$addressKey])) {
-            return $this->existingShipments[$addressKey];
+        if (isset($this->existingShipments[$addressHash])) {
+            return $this->existingShipments[$addressHash];
         }
 
         $shipmentTransfer = $this->createShipment($shippingAddress);
-        $this->existingShipments[$addressKey] = $shipmentTransfer;
+        $this->existingShipments[$addressHash] = $shipmentTransfer;
 
         return $shipmentTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddress
+     * @param \Generated\Shared\Transfer\AddressTransfer $shippingAddress
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function prepareShippingAddress(?AddressTransfer $shippingAddress): ?AddressTransfer
+    protected function prepareShippingAddress(AddressTransfer $shippingAddress): AddressTransfer
     {
-        if ($this->isAddressEmpty($shippingAddress)) {
-            return null;
-        }
-
         if ($shippingAddress->getIdCustomerAddress() !== null) {
             $shippingAddress = $this->hydrateCustomerAddress(
                 $shippingAddress,
@@ -294,21 +285,9 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return string
      */
-    protected function getAddressTransferKey(AddressTransfer $addressTransfer): string
+    public function getAddressHash(AddressTransfer $addressTransfer): string
     {
-        return sprintf(
-            '%s %s %s %s %s %s %s %s %s %s',
-            $addressTransfer->getFkCustomer(),
-            $addressTransfer->getFirstName(),
-            $addressTransfer->getLastName(),
-            $addressTransfer->getAddress1(),
-            $addressTransfer->getAddress2(),
-            $addressTransfer->getAddress3(),
-            $addressTransfer->getZipCode(),
-            $addressTransfer->getCity(),
-            $addressTransfer->getFkCountry(),
-            $addressTransfer->getPhone()
-        );
+        return md5($addressTransfer->serialize());
     }
 
     /**
@@ -327,10 +306,9 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected function hasItemsWithEmptyShippingAddresses(AbstractTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null
-                || $itemTransfer->getShipment()->getShippingAddress() === null
-                || $this->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())
-            ) {
+            $isAddressEmpty = $this->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress());
+
+            if ($itemTransfer->getShipment() === null || $isAddressEmpty) {
                 return true;
             }
         }
