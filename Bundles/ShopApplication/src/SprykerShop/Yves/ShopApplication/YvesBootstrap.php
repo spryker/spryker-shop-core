@@ -24,7 +24,7 @@ abstract class YvesBootstrap
     protected $application;
 
     /**
-     * @var \Spryker\Yves\Application\ApplicationConfig
+     * @var \SprykerShop\Yves\ShopApplication\ShopApplicationConfig
      */
     protected $config;
 
