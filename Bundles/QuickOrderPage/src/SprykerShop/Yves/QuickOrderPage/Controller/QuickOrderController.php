@@ -268,44 +268,14 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAllRowsAction(Request $request)
+    public function deleteAllRowsAction()
     {
-
-//        $this->executeDeleteAllRowsAction($request);
-
         $this->addSuccessMessage('The form items have been successfully removed. ');
+
         return $this->redirectResponseInternal(QuickOrderPageControllerProvider::ROUTE_QUICK_ORDER);
     }
-
-//    /**
-//     * @param \Symfony\Component\HttpFoundation\Request $request
-//     *
-//     * @return array
-//     */
-//    protected function executeDeleteAllRowsAction(Request $request): array
-//    {
-//        $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
-//
-//        $quickOrderTransfer = $this->getFactory()
-//            ->createQuickOrderFormDataProvider()
-//            ->mapFormDataToQuickOrderItems([]);
-//
-//        $quickOrderForm = $this->getFactory()
-//            ->createQuickOrderFormFactory()
-//            ->getQuickOrderForm($quickOrderTransfer);
-//
-//        $products = $this->getProductsByQuickOrder($quickOrderTransfer);
-//        $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
-//
-//        return [
-//            'form' => $quickOrderForm->createView(),
-//            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
-//            'products' => $this->transformProductsViewData($products),
-//            'prices' => $prices,
-//        ];
-//    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
