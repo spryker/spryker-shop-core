@@ -4,9 +4,10 @@
     price: _view.price,
     additionalColumns: _view.additionalColumns,
     product: _view.product,
+    errorMessages: _view.errorMessages,
+    warningMessages: _view.warningMessages,
     form: _view.form,
-    index: _view.index | default(0),
-    isQuantityAdjusted: _view.isQuantityAdjusted
+    index: _view.index | default(0)
 } %}
 
 {% block template %}
@@ -16,8 +17,9 @@
             customQuantityFieldName: 'quick_order_form[items][' ~ data.index ~ '][quantity]',
             price: data.price,
             additionalColumns: data.additionalColumns,
-            product: data.product,
-            isQuantityAdjusted: data.isQuantityAdjusted
+            errorMessages: data.errorMessages,
+            warningMessages: data.warningMessages,
+            product: data.product
         }
     } only %}
         {% block component %}

@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
-use SprykerShop\Yves\QuickOrderPage\AdditionalColumnsGetter\AdditionalColumnsGetter;
-use SprykerShop\Yves\QuickOrderPage\AdditionalColumnsGetter\AdditionalColumnsGetterInterface;
+use SprykerShop\Yves\QuickOrderPage\AdditionalColumnsProvider\AdditionalColumnsProvider;
+use SprykerShop\Yves\QuickOrderPage\AdditionalColumnsProvider\AdditionalColumnsProviderInterface;
 use SprykerShop\Yves\QuickOrderPage\Csv\FileParser;
 use SprykerShop\Yves\QuickOrderPage\Csv\FileParserInterface;
 use SprykerShop\Yves\QuickOrderPage\Csv\FileValidator;
@@ -23,8 +23,6 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrder
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
-use SprykerShop\Yves\QuickOrderPage\DownloadFileTemplateUrlsGetter\DownloadFileTemplateUrlsGetter;
-use SprykerShop\Yves\QuickOrderPage\DownloadFileTemplateUrlsGetter\DownloadFileTemplateUrlsGetterInterface;
 use SprykerShop\Yves\QuickOrderPage\FileOutputter\FileOutputter;
 use SprykerShop\Yves\QuickOrderPage\FileOutputter\FileOutputterInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint;
@@ -41,6 +39,8 @@ use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolver;
 use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolverInterface;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolver;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
+use SprykerShop\Yves\QuickOrderPage\TemplateExtensionsReader\TemplateExtensionsReader;
+use SprykerShop\Yves\QuickOrderPage\TemplateExtensionsReader\TemplateExtensionsReaderInterface;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParserInterface;
 use SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadedOrderParser;
@@ -360,18 +360,18 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\DownloadFileTemplateUrlsGetter\DownloadFileTemplateUrlsGetterInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\TemplateExtensionsReader\TemplateExtensionsReaderInterface
      */
-    public function createDownloadFileTemplateUrlsGetter(): DownloadFileTemplateUrlsGetterInterface
+    public function createTemplateExtensionsReader(): TemplateExtensionsReaderInterface
     {
-        return new DownloadFileTemplateUrlsGetter($this->getQuickOrderFileTemplatePlugins());
+        return new TemplateExtensionsReader($this->getQuickOrderFileTemplatePlugins());
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\AdditionalColumnsGetter\AdditionalColumnsGetterInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\AdditionalColumnsProvider\AdditionalColumnsProviderInterface
      */
-    public function createAdditionalColumnsGetter(): AdditionalColumnsGetterInterface
+    public function createAdditionalColumnsGetter(): AdditionalColumnsProviderInterface
     {
-        return new AdditionalColumnsGetter($this->getQuickOrderFormColumnPlugins());
+        return new AdditionalColumnsProvider($this->getQuickOrderFormColumnPlugins());
     }
 }

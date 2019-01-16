@@ -23,9 +23,9 @@
         {{ 'quick-order.file-upload-order.button.upload' | trans }}
     </button>
 
-    {% if data.downloadFileTemplateUrls %}
+    {% if data.templateExtensions %}
         <div class="col col--sm-12">
-            {% for fileTemplateExt in data.downloadFileTemplateUrls %}
+            {% for fileTemplateExt in data.templateExtensions %}
                 <p>
                     <a href="{{ path('quick-order/download-template', {'file-type': fileTemplateExt}) }}">
                     {{ 'quick-order.file-upload-order.file-template-download-message' | trans({'%template%': fileTemplateExt})}}

@@ -62,6 +62,8 @@ interface QuickOrderFileProcessorPluginInterface
      * Specification:
      * - Parse file and return array of QuickOrderItemTransfers.
      *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]

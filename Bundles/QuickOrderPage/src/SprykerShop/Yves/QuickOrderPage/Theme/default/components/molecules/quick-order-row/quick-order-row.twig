@@ -9,7 +9,6 @@
     index: 0,
     quantityField: required,
     skuField: required,
-    errorMessages: null,
     product: null,
 
     autocomplete: {
@@ -70,12 +69,5 @@
             {% endblock %}
         </div>
 
-        {% if data.errorMessages %}
-            <div class="col col--sm-12">
-                {% for itemErrorMessage in data.errorMessages %}
-                    <p>{{ itemErrorMessage }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
     </div>
 {% endblock %}

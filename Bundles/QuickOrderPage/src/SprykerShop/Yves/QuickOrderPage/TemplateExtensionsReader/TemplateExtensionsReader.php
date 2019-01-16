@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\DownloadFileTemplateUrlsGetter;
+namespace SprykerShop\Yves\QuickOrderPage\TemplateExtensionsReader;
 
-class DownloadFileTemplateUrlsGetter implements DownloadFileTemplateUrlsGetterInterface
+class TemplateExtensionsReader implements TemplateExtensionsReaderInterface
 {
     /**
      * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplatePluginInterface[]
@@ -25,13 +25,13 @@ class DownloadFileTemplateUrlsGetter implements DownloadFileTemplateUrlsGetterIn
     /**
      * @return string[]
      */
-    public function getDownloadFileTemplateUrls(): array
+    public function getTemplateExtensions(): array
     {
-        $downloadFileTemplateUrls = [];
+        $templateExtensions = [];
         foreach ($this->quickOrderFileTemplatePlugins as $fileTemplatePlugin) {
-            $downloadFileTemplateUrls[$fileTemplatePlugin->getFileExtension()] = $fileTemplatePlugin->getFileExtension();
+            $templateExtensions[$fileTemplatePlugin->getFileExtension()] = $fileTemplatePlugin->getFileExtension();
         }
 
-        return $downloadFileTemplateUrls;
+        return $templateExtensions;
     }
 }

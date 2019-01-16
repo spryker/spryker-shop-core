@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\AdditionalColumnsGetter;
+namespace SprykerShop\Yves\QuickOrderPage\AdditionalColumnsProvider;
 
-interface AdditionalColumnsGetterInterface
+interface AdditionalColumnsProviderInterface
 {
     /**
      * @return array

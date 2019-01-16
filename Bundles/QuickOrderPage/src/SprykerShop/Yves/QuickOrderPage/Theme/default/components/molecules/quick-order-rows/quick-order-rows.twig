@@ -54,6 +54,7 @@
                 quantityField: row.quantity,
                 skuField: row.sku,
                 errorMessages: row.vars.value.errorMessages,
+                warningMessages: row.vars.value.warningMessages,
                 additionalColumns: data.additionalColumns,
                 product: product,
                 price: product is null ? null : data.prices[product.sku] | default(),

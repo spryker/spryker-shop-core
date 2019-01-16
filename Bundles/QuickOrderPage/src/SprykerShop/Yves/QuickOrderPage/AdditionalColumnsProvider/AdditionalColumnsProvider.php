@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\AdditionalColumnsGetter;
+namespace SprykerShop\Yves\QuickOrderPage\AdditionalColumnsProvider;
 
-class AdditionalColumnsGetter implements AdditionalColumnsGetterInterface
+class AdditionalColumnsProvider implements AdditionalColumnsProviderInterface
 {
     /**
      * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[]

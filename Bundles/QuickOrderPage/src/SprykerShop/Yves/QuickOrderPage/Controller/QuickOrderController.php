@@ -112,15 +112,18 @@ class QuickOrderController extends AbstractController
         }
 
         $quickOrderTransfer = $this->getQuickOrderTransfer($quickOrderItems);
+
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
             ->getQuickOrderForm($quickOrderTransfer);
 
         $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
+
         $products = $this->getProductsFromQuickOrderItems($quickOrderTransfer);
-        $downloadFileTemplateUrls = $this->getFactory()
-            ->createDownloadFileTemplateUrlsGetter()
-            ->getDownloadFileTemplateUrls();
+
+        $templateExtensions = $this->getFactory()
+            ->createTemplateExtensionsReader()
+            ->getTemplateExtensions();
 
         $additionalColumns = $this->getFactory()
             ->createAdditionalColumnsGetter()
@@ -132,7 +135,7 @@ class QuickOrderController extends AbstractController
             'uploadOrderForm' => $uploadOrderForm->createView(),
             'additionalColumns' => $additionalColumns,
             'products' => $this->transformProductsViewData($products),
-            'downloadFileTemplateUrls' => $downloadFileTemplateUrls,
+            'templateExtensions' => $templateExtensions,
             'prices' => $prices,
         ];
     }
@@ -382,22 +385,14 @@ class QuickOrderController extends AbstractController
             ->setQuantity($quantity ?: 1)
             ->setSku($sku);
 
-        $product = $this->getProductByQuickOrderItem($quickOrderItemTransfer);
-        $quickOrderItemTransfer->setProductConcrete($product);
-
-        $quickOrderItemTransfer = $this->getFactory()
-            ->createQuickOrderItemPluginExecutor()
-            ->applyQuickOrderItemFilterPluginsOnQuickOrderItem($quickOrderItemTransfer);
-
-        $quickOrderItemTransfer = $this->getFactory()
-            ->createPriceResolver()
-            ->setSumPriceForQuickOrderItemTransfer($quickOrderItemTransfer);
-
+        $quickOrderTransfer = $this->getQuickOrderTransfer([$quickOrderItemTransfer]);
+        $quickOrderItemTransfer = $quickOrderTransfer->getItems()->offsetGet(0);
         $form = $this->getFactory()
             ->createQuickOrderFormFactory()
             ->getQuickOrderItemEmbeddedForm($quickOrderItemTransfer);
 
-        $product = $this->transformProductsViewData([$product])[$sku] ?? null;
+        $products = $this->getProductsFromQuickOrderItems($quickOrderTransfer);
+        $products = $this->transformProductsViewData($products);
 
         $additionalColumns = $this->getFactory()
             ->createAdditionalColumnsGetter()
@@ -406,10 +401,11 @@ class QuickOrderController extends AbstractController
         $viewData = [
             'price' => $quickOrderItemTransfer->getSumPrice(),
             'additionalColumns' => $additionalColumns,
-            'product' => $product,
+            'product' => reset($products),
             'form' => $form->createView(),
+            'errorMessages' => $quickOrderItemTransfer->getErrorMessages(),
+            'warningMessages' => $quickOrderItemTransfer->getWarningMessages(),
             'index' => $index,
-            'isQuantityAdjusted' => $this->getIsQuantityAdjusted($quantity, $quickOrderItemTransfer->getQuantity()),
         ];
 
         return $this->view(
@@ -586,16 +582,5 @@ class QuickOrderController extends AbstractController
         return $this->getFactory()
             ->createViewDataTransformer()
             ->transformProductData($productConcreteTransfers, $this->getFactory()->getQuickOrderFormColumnPlugins());
-    }
-
-    /**
-     * @param mixed $before
-     * @param mixed $after
-     *
-     * @return bool
-     */
-    protected function getIsQuantityAdjusted($before, $after): bool
-    {
-        return $before !== null && (int)$before !== (int)$after;
     }
 }
