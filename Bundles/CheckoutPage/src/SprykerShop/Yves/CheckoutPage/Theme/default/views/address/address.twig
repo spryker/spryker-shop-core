@@ -12,6 +12,17 @@
 } %}
 
 {% block content %}
+    {% set existingShippingAddressSelectSelector = '' %}
+    {% set existingBillingAddressSelectSelector = '' %}
+
+    {% if data.forms.shipping.id_customer_address is defined %}
+        {% set existingShippingAddressSelectSelector = '[name="' ~ data.forms.shipping.id_customer_address.vars.full_name ~ '"]' %}
+    {% endif %}
+
+    {% if data.forms.billing.id_customer_address is defined %}
+        {% set existingBillingAddressSelectSelector = '[name="' ~ data.forms.billing.id_customer_address.vars.full_name ~ '"]' %}
+    {% endif %}
+
     {% embed molecule('form') with {
         class: 'box',
         data: {
@@ -21,8 +32,8 @@
                 enable: true,
                 text: 'checkout.step.shipment' | trans
             },
-            existingShippingAddressSelectSelector: '[name="' ~ data.forms.shipping.id_customer_address.vars.full_name ~ '"]',
-            existingBillingAddressSelectSelector: '[name="' ~ data.forms.billing.id_customer_address.vars.full_name ~ '"]'
+            existingShippingAddressSelectSelector: existingShippingAddressSelectSelector,
+            existingBillingAddressSelectSelector: existingBillingAddressSelectSelector
         },
         embed: {
             forms: {
@@ -42,7 +53,6 @@
                 {% set hasShippingAddresses = true %}
                 {% set hideShippingAddressForm = false %}
             {% endif %}
-
             <div class="js-form-handler__shippingAddress js-form-clear__shippingAddress-form">
                 {% if hasShippingAddresses %}
                     <div class="form__field col col--sm-12">

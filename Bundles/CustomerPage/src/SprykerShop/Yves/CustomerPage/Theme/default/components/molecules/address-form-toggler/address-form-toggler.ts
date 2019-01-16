@@ -5,10 +5,12 @@ export default class AddressFormToggler extends Component {
     protected targetElementCache: Map<String, HTMLElement> = new Map<String, HTMLElement>();
 
     protected readyCallback(): void {
-        this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
+        if(this.triggerSelector !== ''){
+            this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
 
-        this.prepareTargetElementCache();
-        this.mapEvents();
+            this.prepareTargetElementCache();
+            this.mapEvents();
+        }
     }
 
     protected prepareTargetElementCache(): void {

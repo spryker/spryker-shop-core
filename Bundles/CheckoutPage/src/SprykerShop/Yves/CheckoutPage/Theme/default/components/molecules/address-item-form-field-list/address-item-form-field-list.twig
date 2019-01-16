@@ -27,12 +27,16 @@
                 <p><strong>{{ itemName }}</strong></p>
                 <p>{{ ('customer.order.item_quantity' | trans) ~ ' ' ~ itemQuantity }}</p>
             </div>
-            <div class="col col--sm-6 spacing spacing--inner">
-                {{ form_widget(item.shippingAddress.id_customer_address) }}
-            </div>
+            {% set hiddenClass = '' %}
+            {% if item.shippingAddress.id_customer_address is defined %}
+                <div class="col col--sm-6 spacing spacing--inner">
+                    {{ form_widget(item.shippingAddress.id_customer_address) }}
+                </div>
+                {% set hiddenClass = 'is-hidden' %}
+            {% endif %}
             <div class="col col--sm-12">
                 {% embed molecule('form') with {
-                    class: 'js-address__item-shipping is-hidden',
+                    class: 'js-address__item-shipping ' ~ hiddenClass,
                     data: {
                         form: item.shippingAddress,
                         enableStart: false,
@@ -48,7 +52,7 @@
                             iso2_code: 'col col--sm-12 col--lg-4'
                         },
                         submit: {
-                            enable: true
+                            enable: false
                         },
                         cancel: {
                             enable: false
@@ -69,14 +73,15 @@
                         }) }}
                     {% endblock %}
                 {% endembed %}
-
-                {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
-                    attributes: {
-                        'trigger-selector': '[name="' ~ item.shippingAddress.id_customer_address.vars.full_name ~ '"]' | default(''),
-                        'target-selector': '#' ~ formItemShippingAddressId,
-                        'class-to-toggle': 'is-hidden',
-                    }
-                } only %}
+                {% if item.shippingAddress.id_customer_address is defined %}
+                    {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
+                        attributes: {
+                            'trigger-selector': '[name="' ~ item.shippingAddress.id_customer_address.vars.full_name ~ '"]' | default(''),
+                            'target-selector': '#' ~ formItemShippingAddressId,
+                            'class-to-toggle': 'is-hidden',
+                        }
+                    } only %}
+                {% endif %}
             </div>
         {% endfor %}
     </div>

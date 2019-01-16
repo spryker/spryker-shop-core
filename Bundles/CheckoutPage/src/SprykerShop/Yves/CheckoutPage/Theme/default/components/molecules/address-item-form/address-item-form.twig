@@ -10,6 +10,9 @@
 } %}
 
 {% block body %}
+    <div class="text-right">
+        <a href="{{url('customer/address')}}">{{ 'page.checkout.address.manage_your_addresses' | trans }}</a>
+    </div>
     {% embed molecule('form') with {
         data: {
             form: data.form,
