@@ -28,6 +28,7 @@ class QuickOrderController extends AbstractController
 {
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
+    public const MESSAGE_REMOVE_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-removed';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -272,7 +273,7 @@ class QuickOrderController extends AbstractController
      */
     public function deleteAllRowsAction()
     {
-        $this->addSuccessMessage('The form items have been successfully removed. ');
+        $this->addSuccessMessage(static::MESSAGE_REMOVE_ALL_ROWS_SUCCESS);
 
         return $this->redirectResponseInternal(QuickOrderPageControllerProvider::ROUTE_QUICK_ORDER);
     }
