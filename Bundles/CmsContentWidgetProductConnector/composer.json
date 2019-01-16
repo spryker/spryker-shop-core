@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/cms-content-widget": "^1.2.0",
     "spryker/kernel": "^3.24.0",
-    "spryker/product-storage": "^1.6.0"
+    "spryker/product-storage": "^1.8.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
