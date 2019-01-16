@@ -29,14 +29,6 @@
         }
     } only %}
 
-    {% include molecule('ajax-provider') with {
-        class: config.jsName ~ '__provider ' ~ config.jsName ~ '__remove-all-rows-provider',
-        attributes: {
-            method: 'POST',
-            url: url('quick-order/delete-all-rows')
-        }
-    } only %}
-
     {% include molecule('ajax-loader') with {
         modifiers: ['big'],
         attributes: {
@@ -106,8 +98,8 @@
                 </div>
 
                 <div class="col col--sm-12 col--md-2">
-                    <a href="#remove-all"
-                       class="button button--expand button--warning {{embed.jsName}}__remove-all-rows-trigger">
+                    <a href="{{ url('quick-order/delete-all-rows') }}"
+                       class="button button--expand button--warning">
                         {{ 'quick-order.button.delete-all-rows' | trans }}
                         {% include atom('icon') with {
                             modifiers: ['small'],

@@ -6,19 +6,15 @@ export default class QuickOrderForm extends Component {
     form: HTMLFormElement
     rows: HTMLElement
     addRowTrigger: HTMLElement
-    removeAllRowsTrigger: HTMLElement
     removeRowTriggers: HTMLElement[]
     addRowAjaxProvider: AjaxProvider
-    removeAllRowsAjaxProvider: AjaxProvider
     removeRowAjaxProvider: AjaxProvider
 
     protected readyCallback(): void {
         this.form = <HTMLFormElement>this.querySelector(`.${this.jsName}__form`);
         this.rows = <HTMLElement>this.querySelector(`.${this.jsName}__rows`);
         this.addRowTrigger = <HTMLElement>this.querySelector(`.${this.jsName}__add-row-trigger`);
-        this.removeAllRowsTrigger = <HTMLElement>this.querySelector(`.${this.jsName}__remove-all-rows-trigger`);
         this.addRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__add-row-provider`);
-        this.removeAllRowsAjaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__remove-all-rows-provider`);
         this.removeRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__remove-row-provider`);
         this.registerRemoveRowTriggers();
         this.mapEvents();
@@ -30,7 +26,6 @@ export default class QuickOrderForm extends Component {
 
     protected mapEvents(): void {
         this.addRowTrigger.addEventListener('click', (event: Event) => this.onAddRowClick(event));
-        this.removeAllRowsTrigger.addEventListener('click', (event: Event) => this.onRemoveAllRowsClick(event));
         this.mapRemoveRowTriggersEvents();
     }
 
@@ -41,11 +36,6 @@ export default class QuickOrderForm extends Component {
     protected onAddRowClick(event: Event): void {
         event.preventDefault();
         this.addRow();
-    }
-
-    protected onRemoveAllRowsClick(event: Event): void {
-        event.preventDefault();
-        this.removeAllRows();
     }
 
     protected onRemoveRowClick(event: Event): void {
@@ -59,15 +49,6 @@ export default class QuickOrderForm extends Component {
     async addRow(): Promise<void> {
         const data = this.getFormData();
         const response = await this.addRowAjaxProvider.fetch(data);
-
-        this.rows.innerHTML = response;
-        await mount();
-        this.registerRemoveRowTriggers();
-        this.mapRemoveRowTriggersEvents();
-    }
-
-    async removeAllRows(): Promise<void> {
-        const response = await this.removeAllRowsAjaxProvider.fetch();
 
         this.rows.innerHTML = response;
         await mount();
