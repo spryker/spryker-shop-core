@@ -68,10 +68,10 @@ class ShipmentHandler implements ShipmentHandlerInterface
         $this->addMethodTransfer($quoteTransfer->getShipmentGroups());
         $this->addExpenseTransfer($quoteTransfer->getShipmentGroups(), $quoteTransfer->getPriceMode());
 
-        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer){
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
             foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
                 $itemTransfer->setShipment(
-                  $shipmentGroupTransfer->getShipment()
+                    $shipmentGroupTransfer->getShipment()
                 );
             }
         }

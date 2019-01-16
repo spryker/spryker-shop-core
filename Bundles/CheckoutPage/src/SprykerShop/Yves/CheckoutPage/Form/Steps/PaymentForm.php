@@ -43,7 +43,7 @@ class PaymentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array                                        $options
      *
      * @return void
      */
@@ -54,7 +54,7 @@ class PaymentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array                                        $options
      *
      * @return $this
      */
@@ -64,14 +64,14 @@ class PaymentForm extends AbstractType
         $paymentMethodChoices = $this->getPaymentMethodChoices($paymentMethodSubForms);
 
         $this->addPaymentMethodChoices($builder, $paymentMethodChoices)
-             ->addPaymentMethodSubForms($builder, $paymentMethodSubForms, $options);
+            ->addPaymentMethodSubForms($builder, $paymentMethodSubForms, $options);
 
         return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $paymentMethodChoices
+     * @param array                                        $paymentMethodChoices
      *
      * @return $this
      */
@@ -98,9 +98,9 @@ class PaymentForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface                $builder
      * @param \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface[] $paymentMethodSubForms
-     * @param array $options
+     * @param array                                                       $options
      *
      * @return $this
      */
@@ -183,7 +183,8 @@ class PaymentForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'validation_groups' => function (FormInterface $form) {
                 return [
                     Constraint::DEFAULT_GROUP,
@@ -193,7 +194,8 @@ class PaymentForm extends AbstractType
             'attr' => [
                 'novalidate' => 'novalidate',
             ],
-        ]);
+            ]
+        );
 
         $resolver->setRequired(SubFormInterface::OPTIONS_FIELD_NAME);
     }

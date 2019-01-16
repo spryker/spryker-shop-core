@@ -42,8 +42,8 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
-     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $shipmentPlugins
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection            $shipmentPlugins
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface  $shipmentService
      * @param $stepRoute
      * @param $escapeRoute
      */
@@ -68,7 +68,9 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        /** This is stub, remove when address step is ready */
+        /**
+         * This is stub, remove when address step is ready
+         */
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
             $shipment = new ShipmentTransfer();
             $address = new AddressTransfer();
@@ -78,7 +80,10 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
             $itemTransfer->setShipment($shipment);
         }
 
-        /** @todo Move elsewhere */
+        /**
+         * @todo Move elsewhere
+         */
+
         $quoteTransfer->setShipmentGroups($this->getShipmentGroupCollection($quoteTransfer));
 
         return true;
@@ -86,7 +91,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer  $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
