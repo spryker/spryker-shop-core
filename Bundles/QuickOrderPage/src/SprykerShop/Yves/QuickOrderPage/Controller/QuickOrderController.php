@@ -28,7 +28,7 @@ class QuickOrderController extends AbstractController
 {
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
-    public const MESSAGE_REMOVE_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-removed';
+    protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -267,13 +267,11 @@ class QuickOrderController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAllRowsAction()
+    public function clearAllRowsAction()
     {
-        $this->addSuccessMessage(static::MESSAGE_REMOVE_ALL_ROWS_SUCCESS);
+        $this->addSuccessMessage(static::MESSAGE_CLEAR_ALL_ROWS_SUCCESS);
 
         return $this->redirectResponseInternal(QuickOrderPageControllerProvider::ROUTE_QUICK_ORDER);
     }
