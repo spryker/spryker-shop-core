@@ -5,7 +5,7 @@
     quote: _widget.quote,
     limit: _widget.limit,
     isVisible: _widget.isVisible,
-    quoteApprovalStatus: _widget.quoteApprovalStatus,
+    quoteStatus: _widget.quoteStatus,
     canSendApprovalRequest: _widget.canSendApprovalRequest,
     quoteApprovalRequestFormOptions: {
         action: path('quote-approval/create')
@@ -23,9 +23,9 @@
             </div>
             <div class="col">
                 {% include molecule('approve-request-status', 'QuoteApprovalWidget') with {
-                    modifiers: [data.quoteApprovalStatus | lower],
+                    modifiers: [data.quoteStatus | lower],
                     data: {
-                        quoteApprovalStatus: data.quoteApprovalStatus
+                        quoteStatus: data.quoteStatus
                     }
                 } only %}
             </div>
@@ -36,7 +36,7 @@
                 data: {
                     approval: approval,
                     customer: customer,
-                    quoteApprovalStatus: data.quoteApprovalStatus
+                    quoteStatus: data.quoteStatus
                 }
             } only %}
         {% endif %}

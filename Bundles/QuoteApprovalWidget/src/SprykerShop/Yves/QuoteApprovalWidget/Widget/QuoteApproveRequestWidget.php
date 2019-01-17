@@ -34,7 +34,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
         $this->addParameter('canSendApprovalRequest', !$this->getQuoteApprovalClient()->isQuoteWaitingForApproval($quoteTransfer));
         $this->addParameter('quoteApprovalRequestForm', $this->createQuoteApprovalRequestForm($quoteTransfer)->createView());
         $this->addParameter('quote', $quoteTransfer);
-        $this->addParameter('quoteApprovalStatus', $this->getQuoteApprovalClient()->calculateQuoteStatus($quoteTransfer));
+        $this->addParameter('quoteStatus', $this->getQuoteApprovalClient()->calculateQuoteStatus($quoteTransfer));
     }
 
     /**
