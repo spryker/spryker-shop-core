@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'notification-availability/unsubscribe';
+    public const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe';
     public const ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE = 'availability-notification/subscribe';
 
     /**
