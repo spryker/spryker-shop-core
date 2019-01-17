@@ -45,6 +45,7 @@
                         {% endfor %}
                     </div>
                     <div class="col col--sm-6">
+                        {{ form_errors(shipmentGroupForm.shipment.shipmentSelection) }}
                         {% for name, choices in shipmentGroupForm.shipment.shipmentSelection.vars.choices %}
                             <div class="form__field col col--sm-12">
                                 <h5>{{ name }}</h5>
@@ -65,6 +66,8 @@
                                 </div>
                             {% endif %}
                         {% endfor %}
+                        <h3>{{ 'checkout.shipment.requested_delivery_date.title'|trans }}</h3>
+                        {{ form_row(shipmentGroupForm.shipment.requestedDeliveryDate) }}
                     </div>
                 </article>
                 {% if not loop.last %}

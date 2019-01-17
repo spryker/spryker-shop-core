@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -39,7 +41,9 @@ class ShipmentForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addShipmentMethods($builder, $options);
+        $this
+            ->addShipmentMethods($builder, $options)
+            ->addRequestedDeliveryDate($builder, $options);
     }
 
     /**
@@ -60,6 +64,24 @@ class ShipmentForm extends AbstractType
                 $this->createNotBlankConstraint(),
             ],
             'label' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addRequestedDeliveryDate(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(ShipmentTransfer::REQUESTED_DELIVERY_DATE, DateType::class, [
+            'label' => 'checkout.shipment.requested_delivery_date.label',
+            'attr' => [
+                'placeholder' => 'checkout.shipment.requested_delivery_date.placeholder'
+            ],
         ]);
 
         return $this;
