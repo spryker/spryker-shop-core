@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-
 interface QuoteApprovalWidgetToQuoteClientInterface
 {
     /**

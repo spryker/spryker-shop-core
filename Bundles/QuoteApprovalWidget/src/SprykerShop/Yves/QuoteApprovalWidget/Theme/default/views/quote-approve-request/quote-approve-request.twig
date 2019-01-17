@@ -1,19 +1,19 @@
 {% extends template('widget') %}
 
 {% define data = {
-    form: _widget.form,
+    quoteApprovalRequestForm: _widget.quoteApprovalRequestForm,
     quote: _widget.quote,
     limit: _widget.limit,
     isVisible: _widget.isVisible,
     quoteApprovalStatus: _widget.quoteApprovalStatus,
     canSendApprovalRequest: _widget.canSendApprovalRequest,
-    formOptions: {
-        action: path('quote-approval/request/send')
+    quoteApprovalRequestFormOptions: {
+        action: path('quote-approval/create')
     }
 } %}
 
 {% block body %}
-    {% if data.isVisible and data.form.idApprover.vars.choices | length %}
+    {% if data.isVisible and data.quoteApprovalRequestForm.idCompanyUser.vars.choices | length %}
         {% set approval = data.quote.approvals | length > 0 ? data.quote.approvals | last : null %}
         {% set customer = approval ? approval.approver.customer : null %}
 
@@ -44,8 +44,8 @@
         {% if data.canSendApprovalRequest %}
             {% include molecule('approve-request-form', 'QuoteApprovalWidget') with {
                 data: {
-                    form: data.form,
-                    formOptions: data.formOptions,
+                    quoteApprovalRequestForm: data.quoteApprovalRequestForm,
+                    quoteApprovalRequestFormOptions: data.quoteApprovalRequestFormOptions,
                     quote: data.quote,
                     limit: data.limit
                 }

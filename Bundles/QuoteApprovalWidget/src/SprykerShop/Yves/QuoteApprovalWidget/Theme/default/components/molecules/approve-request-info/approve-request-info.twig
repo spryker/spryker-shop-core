@@ -31,8 +31,8 @@
         </div>
         {% if data.quoteApprovalStatus == 'Waiting' %}
             <div class="col col--sm-12">
-                <a class="button button--expand button--hollow button--alert" href="{{ path('quote-approval/request/cancel', {'idQuoteApproval': data.approval.idQuoteApproval }) }}">
-                    {{ 'quote_approval.request.cancel'|trans }}
+                <a class="button button--expand button--hollow button--alert" href="{{ path('quote-approval/remove', {'idQuoteApproval': data.approval.idQuoteApproval }) }}">
+                    {{ 'quote_approval.remove'|trans }}
                 </a>
             </div>
         {% endif %}

@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +23,11 @@ class CheckoutController extends AbstractController
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
     /**
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     */
+    protected const ROUTE_CART = 'cart';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return mixed
@@ -31,7 +35,7 @@ class CheckoutController extends AbstractController
     public function indexAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
         $response = $this->createStepProcess()->process($request);
@@ -47,7 +51,7 @@ class CheckoutController extends AbstractController
     public function customerAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
         $response = $this->createStepProcess()->process(
@@ -76,7 +80,7 @@ class CheckoutController extends AbstractController
     public function addressAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
         $response = $this->createStepProcess()->process(
@@ -105,7 +109,7 @@ class CheckoutController extends AbstractController
     public function shipmentAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
         $response = $this->createStepProcess()->process(
@@ -134,7 +138,7 @@ class CheckoutController extends AbstractController
     public function paymentAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
         $response = $this->createStepProcess()->process(
@@ -163,7 +167,7 @@ class CheckoutController extends AbstractController
     public function summaryAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
         $viewData = $this->createStepProcess()->process(
@@ -192,7 +196,7 @@ class CheckoutController extends AbstractController
     public function placeOrderAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
         $grandTotal = $this->getFactory()
@@ -242,9 +246,9 @@ class CheckoutController extends AbstractController
      */
     protected function isQuoteAvailableForCheckout(): bool
     {
-        $quote = $this->getFactory()->getQuoteClient()->getQuote();
+        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
 
-        return $this->getFactory()->getCheckoutClient()->isQuoteApplicableForCheckout($quote);
+        return $this->getFactory()->getCheckoutClient()->isQuoteApplicableForCheckout($quoteTransfer);
     }
 
     /**

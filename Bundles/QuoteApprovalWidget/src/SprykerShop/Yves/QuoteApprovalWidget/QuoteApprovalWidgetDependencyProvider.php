@@ -30,6 +30,7 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
         $container = $this->addQuoteApprovalClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addCustomerClient($container);

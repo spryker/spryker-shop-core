@@ -12,8 +12,8 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class QuoteApprovalWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_QUOTE_APPROVAL_REUQEST_SEND = 'quote-approval/request/send';
-    public const ROUTE_QUOTE_APPROVAL_REUQEST_CANCEL = 'quote-approval/request/cancel';
+    public const ROUTE_QUOTE_APPROVAL_CREATE = 'quote-approval/create';
+    public const ROUTE_QUOTE_APPROVAL_REMOVE = 'quote-approval/remove';
 
     protected const PATTERN_ID = '\d+';
 
@@ -24,18 +24,27 @@ class QuoteApprovalWidgetControllerProvider extends AbstractYvesControllerProvid
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addSendApproveRequestRoute();
+        $this->addCreateQuoteApprovalRoute()
+            ->addRemoveQuoteApprovalRoute();
     }
 
     /**
      * @return $this
      */
-    protected function addSendApproveRequestRoute()
+    protected function addCreateQuoteApprovalRoute()
     {
-        $this->createController('/quote-approval/request/send', static::ROUTE_QUOTE_APPROVAL_REUQEST_SEND, 'QuoteApprovalWidget', 'QuoteApproveRequest', 'sendQuoteApproveRequest')
+        $this->createController('/quote-approval/create', static::ROUTE_QUOTE_APPROVAL_CREATE, 'QuoteApprovalWidget', 'QuoteApproval', 'createQuoteApproval')
             ->method('POST');
 
-        $this->createController('/quote-approval/request/{idQuoteApproval}/cancel', static::ROUTE_QUOTE_APPROVAL_REUQEST_CANCEL, 'QuoteApprovalWidget', 'QuoteApproveRequest', 'cancelQuoteApprovalRequest')
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addRemoveQuoteApprovalRoute()
+    {
+        $this->createController('/quote-approval/{idQuoteApproval}/remove', static::ROUTE_QUOTE_APPROVAL_REMOVE, 'QuoteApprovalWidget', 'QuoteApproval', 'removeQuoteApproval')
             ->assert('idQuoteApproval', static::PATTERN_ID)
             ->method('GET');
 

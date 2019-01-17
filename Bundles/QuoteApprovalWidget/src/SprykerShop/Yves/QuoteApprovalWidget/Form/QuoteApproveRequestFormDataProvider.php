@@ -8,12 +8,8 @@
 namespace SprykerShop\Yves\QuoteApprovalWidget\Form;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\PermissionCollectionTransfer;
-use Generated\Shared\Transfer\PermissionTransfer;
-use Generated\Shared\Transfer\QuoteApproveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
@@ -59,21 +55,29 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     public function getOptions(QuoteTransfer $quoteTransfer, string $localeName): array
     {
         return [
-            'data_class' => QuoteApproveRequestTransfer::class,
-            QuoteApproveRequestForm::OPTION_APPROVERS_LIST => $this->getPotentialApproversList($quoteTransfer, $localeName),
+            'data_class' => QuoteApprovalCreateRequestTransfer::class,
+            QuoteApproveRequestForm::OPTION_APPROVERS_LIST => $this->getApproversList($quoteTransfer, $localeName),
         ];
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApproveRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer): QuoteApproveRequestTransfer
+    public function getData(QuoteTransfer $quoteTransfer): QuoteApprovalCreateRequestTransfer
     {
-        return (new QuoteApproveRequestTransfer())
-            ->setQuote($quoteTransfer)
-            ->setCustomer($this->customerClient->getCustomer());
+        $quoteApprovalCreateRequestTransfer = new QuoteApprovalCreateRequestTransfer();
+
+        $customerTransfer = $this->customerClient->getCustomer();
+
+        if (!$customerTransfer) {
+            return $quoteApprovalCreateRequestTransfer;
+        }
+
+        return $quoteApprovalCreateRequestTransfer
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdQuote($quoteTransfer->getIdQuote());
     }
 
     /**
@@ -82,20 +86,20 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
      *
      * @return array
      */
-    protected function getPotentialApproversList(QuoteTransfer $quoteTransfer, string $localeName): array
+    protected function getApproversList(QuoteTransfer $quoteTransfer, string $localeName): array
     {
-        $potentialApproversCollection = $this->quoteApprovalClient
-            ->getPotentialQuoteApproversList($quoteTransfer);
+        $quoteApproverCollection = $this->quoteApprovalClient
+            ->getQuoteApproversList($quoteTransfer);
 
-        $potentialApproversList = [];
+        $quoteApproverList = [];
 
-        foreach ($potentialApproversCollection->getCompanyUsers() as $approver) {
+        foreach ($quoteApproverCollection->getCompanyUsers() as $approver) {
             $label = $this->getChoiceLabel($quoteTransfer, $approver, $localeName);
 
-            $potentialApproversList[$label] = $approver->getIdCompanyUser();
+            $quoteApproverList[$label] = $approver->getIdCompanyUser();
         }
 
-        return $potentialApproversList;
+        return $quoteApproverList;
     }
 
     /**
@@ -136,7 +140,10 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
         QuoteTransfer $quoteTransfer,
         string $localeName
     ) {
-        $approverLimit = $this->findApproverLimit($companyUserTransfer, $quoteTransfer);
+        $approverLimit = $this->quoteApprovalClient->calculateApproveQuotePermissionLimit(
+            $quoteTransfer,
+            $companyUserTransfer
+        );
 
         if ($approverLimit === null) {
             return $this->glossaryStorageClient->translate(
@@ -146,71 +153,5 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
         }
 
         return ($approverLimit / 100) . $quoteTransfer->getCurrency()->getSymbol();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return int|null
-     */
-    protected function findApproverLimit(
-        CompanyUserTransfer $companyUserTransfer,
-        QuoteTransfer $quoteTransfer
-    ): ?int {
-        $highestApproverPermissionLimit = null;
-
-        foreach ($companyUserTransfer->getCompanyRoleCollection()->getRoles() as $companyRoleTransfer) {
-            $quoteApprovePermissionTransfer = $this->findPermissionByKey($companyRoleTransfer->getPermissionCollection());
-
-            if ($quoteApprovePermissionTransfer === null) {
-                continue;
-            }
-
-            $approverPermissionLimit = $this->findApproverLimitInPermissionConfiguration(
-                $quoteApprovePermissionTransfer,
-                $quoteTransfer
-            );
-
-            if ($approverPermissionLimit > $highestApproverPermissionLimit) {
-                $highestApproverPermissionLimit = $approverPermissionLimit;
-            }
-        }
-
-        return $highestApproverPermissionLimit;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PermissionTransfer $quoteApprovePermission
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return int|null
-     */
-    protected function findApproverLimitInPermissionConfiguration(
-        PermissionTransfer $quoteApprovePermission,
-        QuoteTransfer $quoteTransfer
-    ): ?int {
-        $configuration = $quoteApprovePermission->getConfiguration();
-        $currencyCode = $quoteTransfer->getCurrency()->getCode();
-        $storeName = $quoteTransfer->getStore()->getName();
-
-        return $configuration[ApproveQuotePermissionPlugin::FIELD_STORE_MULTI_CURRENCY][$storeName][$currencyCode] ?? null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\PermissionTransfer|null
-     */
-    protected function findPermissionByKey(
-        PermissionCollectionTransfer $permissionCollectionTransfer
-    ): ?PermissionTransfer {
-        foreach ($permissionCollectionTransfer->getPermissions() as $permission) {
-            if ($permission->getKey() === ApproveQuotePermissionPlugin::KEY) {
-                return $permission;
-            }
-        }
-
-        return null;
     }
 }

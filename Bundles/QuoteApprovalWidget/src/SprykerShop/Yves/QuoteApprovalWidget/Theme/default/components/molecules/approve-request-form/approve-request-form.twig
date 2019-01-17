@@ -5,8 +5,8 @@
 } %}
 
 {% define data = {
-    form: required,
-    formOptions: required,
+    quoteApprovalRequestForm: required,
+    quoteApprovalRequestFormOptions: required,
     quote: required,
     limit: required,
 } %}
@@ -19,13 +19,13 @@
     <p>
         {{ 'quote_approval_widget.limit_text' | trans({'%amount%': data.limit / 100 ~ data.quote.currency.symbol}) }}
     </p>
-    {{ form_start(data.form, data.formOptions) }}
-        {{ form_widget(data.form.idApprover) }}
+    {{ form_start(data.quoteApprovalRequestForm, data.quoteApprovalRequestFormOptions) }}
+        {{ form_widget(data.quoteApprovalRequestForm.idCompanyUser) }}
 
         <button type="submit" class="button button--expand button--success spacing-top">
             {{ 'quote_approval.request.send' | trans }}
         </button>
 
-        {{ form_errors(data.form) }}
-    {{ form_end(data.form) }}
+        {{ form_errors(data.quoteApprovalRequestForm) }}
+    {{ form_end(data.quoteApprovalRequestForm) }}
 {% endblock %}
