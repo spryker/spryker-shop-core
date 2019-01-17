@@ -88,14 +88,6 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToPermissionClientInterface
-     */
-    public function getPermissionClient(): QuoteApprovalWidgetToPermissionClientInterface
-    {
-        return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::CLIENT_PERMISSION);
-    }
-
-    /**
      * @return \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface
      */
     public function getGlossaryStorageClient(): QuoteApprovalWidgetToGlossaryStorageClientInterface

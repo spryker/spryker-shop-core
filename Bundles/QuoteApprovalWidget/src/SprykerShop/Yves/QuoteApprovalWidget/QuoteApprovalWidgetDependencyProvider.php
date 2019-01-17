@@ -20,7 +20,6 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
     public const CLIENT_QUOTE_APPROVAL = 'CLIENT_QUOTE_APPROVAL';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
@@ -34,7 +33,6 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addQuoteApprovalClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addCustomerClient($container);
-        $container = $this->addPermissionClient($container);
         $container = $this->addGlossaryStorageClient($container);
 
         return $container;
@@ -77,20 +75,6 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new QuoteApprovalWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addPermissionClient($container): Container
-    {
-        $container[static::CLIENT_PERMISSION] = function (Container $container) {
-            return new QuoteApprovalWidgetToPermissionClientBridge($container->getLocator()->permission()->client());
         };
 
         return $container;
