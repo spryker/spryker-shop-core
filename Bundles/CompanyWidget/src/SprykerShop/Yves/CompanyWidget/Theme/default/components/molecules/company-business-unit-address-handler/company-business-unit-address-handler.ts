@@ -1,6 +1,8 @@
 import Component from 'ShopUi/models/component';
 import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
+const EVENT_USE_SELECTED_ADDRESS_TRIGGER = 'use-selected-address-trigger';
+
 export default class CompanyBusinessUnitAddressHandler extends Component {
     triggers: HTMLElement[];
     form: HTMLFormElement;
@@ -11,7 +13,6 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     addressesDataObject: any;
     addressesSelects: HTMLSelectElement[];
     currentAddress: String;
-    hiddenCustomerIdInput: HTMLInputElement;
     hiddenDefaultAddressInput: HTMLInputElement;
     customAddressTriggerInput: HTMLFormElement;
     resetSelectEvent: CustomEvent;
@@ -28,13 +29,13 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.ignoreElements = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.ignoreSelector));
         this.filterElements = this.targets.filter((element) => !this.ignoreElements.includes(element));
         this.formClear = <FormClear>this.form.querySelector('.js-form-clear');
-        this.hiddenCustomerIdInput = <HTMLInputElement>this.form.querySelector(this.customerAddressIdSelector);
         this.hiddenDefaultAddressInput = <HTMLInputElement>this.form.querySelector(this.defaultAddressSelector);
         this.customAddressTriggerInput = <HTMLFormElement>this.form.querySelector(this.customAddressTrigger);
 
         this.initAddressesData();
         this.mapEvents();
         this.fillDefaultAddress();
+        this.initResetSelectEvent();
     }
 
     protected mapEvents(): void {
@@ -48,9 +49,12 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
             triggerElement.addEventListener('click', () => {
                 this.addressesSelects.forEach((selectElement) => {
                     this.setCurrentAddress(selectElement);
-                    this.initResetSelectEvent();
                 });
                 this.onClick(triggerElement);
+
+                const customEvent = new CustomEvent(EVENT_USE_SELECTED_ADDRESS_TRIGGER);
+                triggerElement.dispatchEvent(customEvent);
+                console.log(triggerElement);
             });
         });
     }
@@ -175,10 +179,6 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
 
     get ignoreSelector(): string {
         return this.getAttribute('ignore-selector');
-    }
-
-    get customerAddressIdSelector(): string {
-        return this.getAttribute('customer-address-id-selector');
     }
 
     get defaultAddressSelector(): string {

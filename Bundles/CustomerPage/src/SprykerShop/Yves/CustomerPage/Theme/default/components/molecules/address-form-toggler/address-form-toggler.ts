@@ -8,22 +8,24 @@ export default class AddressFormToggler extends Component {
         this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
         this.form = <HTMLFormElement>document.querySelector(this.targetSelector);
 
+        this.onTogglerChange();
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.toggler.addEventListener('change', (event: Event) => this.onTogglerChange(event))
+        this.toggler.addEventListener('change', () => this.onTogglerChange());
     }
 
-    protected onTogglerChange(event: Event): void {
-        const togglerElement = <HTMLSelectElement>event.srcElement;
-        const selectedOption = <string>togglerElement.options[togglerElement.selectedIndex].value;
+    protected onTogglerChange(): void {
+        const selectedOption = <string>this.toggler.options[this.toggler.selectedIndex].value;
 
         this.toggle(!!selectedOption);
     }
 
     toggle(isShown: boolean): void {
-        this.form.classList.toggle(this.classToToggle, isShown);
+        const hasCompanyBusinessUnitAddress = (this.hasCompanyBusinessUnitAddress == 'true');
+
+        this.form.classList.toggle(this.classToToggle, hasCompanyBusinessUnitAddress ? false : isShown);
     }
 
     get triggerSelector(): string {
@@ -36,5 +38,9 @@ export default class AddressFormToggler extends Component {
 
     get classToToggle(): string {
         return this.getAttribute('class-to-toggle');
+    }
+
+    get hasCompanyBusinessUnitAddress(): string {
+        return this.getAttribute('has-company-business-unit-address');
     }
 }

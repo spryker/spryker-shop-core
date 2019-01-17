@@ -62,9 +62,9 @@
             {{ parent() }}
         {% endblock %}
         {% block optionsGroup %}
-            {% if not embed.defaultAddressKey %}
+            {#{% if not embed.defaultAddressKey %}#}
             <option value="">{{ 'page.checkout.address.address_select' | trans }}</option>
-            {% endif %}
+            {#{% endif %}#}
 
             {% if embed.customerAddresses is not empty %}
                 <optgroup label="{{ 'page.checkout.address.option_group.customer' | trans }}">
@@ -94,7 +94,6 @@
                 'trigger-selector': '.js-from-add-new-address__' ~ data.formType,
                 'data-selector': '.js-from-select-address__' ~ data.formType,
                 'ignore-selector': '.js-form-clear__ignore-element',
-                'customer-address-id-selector': '.js-form-customer-id__' ~ data.formType,
                 'default-address-selector': '.js-form-default-address__' ~ data.formType,
                 'custom-address-trigger': '.js-from-clear__'~ data.formType ~'-toggler',
                 'addresses': data.addresses
@@ -121,6 +120,6 @@
         } only %}
     </div>
 
-    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" data-key="id_customer_address" class="js-form-customer-id__{{ data.formType }}">
+    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" data-key="id_customer_address">
     <input type="hidden" class="js-form-clear__ignore-element js-form-default-address__{{ data.formType }}" value="{{ defaultAddressKey }}">
 {% endblock %}
