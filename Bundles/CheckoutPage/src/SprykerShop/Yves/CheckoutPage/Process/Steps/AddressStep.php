@@ -205,7 +205,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return void
      */
-    private function setShippingAddresses(AbstractTransfer $quoteTransfer): void
+    protected function setShippingAddresses(AbstractTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemShippingAddress = $itemTransfer->getShipment()->getShippingAddress();
@@ -234,7 +234,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         if ($billingAddressTransfer !== null && $billingAddressTransfer->getIdCustomerAddress() !== null) {
             $billingAddressTransfer = $this->hydrateCustomerAddress(
                 $billingAddressTransfer,
-                $this->getCustomer()
+                $this->customerClient->getCustomer()
             );
 
             $quoteTransfer->setBillingAddress($billingAddressTransfer);
@@ -271,7 +271,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         if ($shippingAddress->getIdCustomerAddress() !== null) {
             $shippingAddress = $this->hydrateCustomerAddress(
                 $shippingAddress,
-                $this->getCustomer()
+                $this->customerClient->getCustomer()
             );
         }
 
@@ -291,14 +291,6 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    protected function getCustomer(): ?CustomerTransfer
-    {
-        return $this->customerClient->getCustomer();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -306,9 +298,8 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected function hasItemsWithEmptyShippingAddresses(AbstractTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $isAddressEmpty = $this->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress());
-
-            if ($itemTransfer->getShipment() === null || $isAddressEmpty) {
+            if ($itemTransfer->getShipment() === null
+                || $this->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())) {
                 return true;
             }
         }

@@ -242,7 +242,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addItemShippingAddressSubForm(FormBuilderInterface $builder, array $options): self
+    protected function addItemShippingAddressSubForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_ITEMS, CollectionType::class, [
             'label' => false,
