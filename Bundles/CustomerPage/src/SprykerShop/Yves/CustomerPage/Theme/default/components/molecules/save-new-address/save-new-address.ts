@@ -1,28 +1,28 @@
 import Component from 'ShopUi/models/component';
 
-const EVENT_USE_SELECTED_ADDRESS_TRIGGER = 'use-selected-address-trigger';
+const EVENT_ADD_NEW_ADDRESS = 'add-new-address';
 
 export default class SaveNewAddress extends Component {
     customerShippingAddresses: HTMLFormElement;
     customerBillingAddresses: HTMLFormElement;
     saveNewAddressToggler: HTMLInputElement;
     sameAsShippingToggler: HTMLInputElement;
-    useShippingAddressTrigger: HTMLButtonElement;
-    useBillingAddressTrigger: HTMLButtonElement;
+    addNewShippingAddress: HTMLButtonElement;
+    addNewBillingAddress: HTMLButtonElement;
 
     newShippingAddressChecked: boolean = false;
     newBillingAddressChecked: boolean = false;
     readonly hideClass: string = 'is-hidden';
 
     protected readyCallback(): void {
-        if(this.shippingAddressTogglerSelector && this.billingAddressTogglerSelector) {
+        if (this.shippingAddressTogglerSelector && this.billingAddressTogglerSelector) {
             this.customerShippingAddresses = <HTMLFormElement>document.querySelector(this.shippingAddressTogglerSelector);
             this.customerBillingAddresses = <HTMLFormElement>document.querySelector(this.billingAddressTogglerSelector);
         }
 
-        if(this.shippingAddressTriggerSelector && this.billingAddressTriggerSelector) {
-            this.useShippingAddressTrigger = <HTMLButtonElement>document.querySelector(this.shippingAddressTriggerSelector);
-            this.useBillingAddressTrigger = <HTMLButtonElement>document.querySelector(this.billingAddressTriggerSelector);
+        if (this.addNewShippingAddressSelector && this.addNewBillingAddressSelector) {
+            this.addNewShippingAddress = <HTMLButtonElement>document.querySelector(this.addNewShippingAddressSelector);
+            this.addNewBillingAddress = <HTMLButtonElement>document.querySelector(this.addNewBillingAddressSelector);
         }
 
         this.saveNewAddressToggler = <HTMLInputElement>document.querySelector(this.saveAddressTogglerSelector);
@@ -42,10 +42,10 @@ export default class SaveNewAddress extends Component {
     }
 
     protected mapEvents(): void {
-        console.log(this.useShippingAddressTrigger);
-        this.useShippingAddressTrigger.addEventListener(EVENT_USE_SELECTED_ADDRESS_TRIGGER, () => {
-            console.log(11);
-        });
+        if (this.addNewShippingAddress && this.addNewBillingAddress) {
+            this.addNewShippingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => this.shippingTogglerOnChange());
+            this.addNewBillingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => this.billingTogglerOnChange());
+        }
 
         this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
         this.customerBillingAddresses.addEventListener('change', () => this.billingTogglerOnChange());
@@ -73,7 +73,6 @@ export default class SaveNewAddress extends Component {
     }
 
     protected isSaveNewAddressOptionSelected(toggler: HTMLFormElement): boolean {
-        console.log(toggler.value);
         return !toggler.value;
     }
 
@@ -108,12 +107,12 @@ export default class SaveNewAddress extends Component {
         return this.getAttribute('billing-address-toggler-selector');
     }
 
-    get shippingAddressTriggerSelector(): string {
-        return this.getAttribute('shipping-address-trigger-selector');
+    get addNewShippingAddressSelector(): string {
+        return this.getAttribute('add-new-shipping-address-selector');
     }
 
-    get billingAddressTriggerSelector(): string {
-        return this.getAttribute('billing-address-trigger-selector');
+    get addNewBillingAddressSelector(): string {
+        return this.getAttribute('add-new-billing-address-selector');
     }
 
     get billingSameAsShippingAddressTogglerSelector(): string {

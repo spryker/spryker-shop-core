@@ -1,7 +1,7 @@
 import Component from 'ShopUi/models/component';
 import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
-const EVENT_USE_SELECTED_ADDRESS_TRIGGER = 'use-selected-address-trigger';
+const EVENT_ADD_NEW_ADDRESS = 'add-new-address';
 
 export default class CompanyBusinessUnitAddressHandler extends Component {
     triggers: HTMLElement[];
@@ -16,6 +16,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     hiddenDefaultAddressInput: HTMLInputElement;
     customAddressTriggerInput: HTMLFormElement;
     resetSelectEvent: CustomEvent;
+    addNewAddressEvent: CustomEvent;
 
     readonly resetSelectEventName: string = 'reset-select';
 
@@ -36,6 +37,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.mapEvents();
         this.fillDefaultAddress();
         this.initResetSelectEvent();
+        this.initAddNewAddressSelector();
     }
 
     protected mapEvents(): void {
@@ -51,10 +53,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
                     this.setCurrentAddress(selectElement);
                 });
                 this.onClick(triggerElement);
-
-                const customEvent = new CustomEvent(EVENT_USE_SELECTED_ADDRESS_TRIGGER);
-                triggerElement.dispatchEvent(customEvent);
-                console.log(triggerElement);
+                triggerElement.dispatchEvent(this.addNewAddressEvent);
             });
         });
     }
@@ -62,6 +61,10 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     protected initResetSelectEvent(): void {
         this.resetSelectEvent = new CustomEvent(this.resetSelectEventName);
         this.resetSelectEvent.initEvent('change', true, true);
+    }
+
+    protected initAddNewAddressSelector(): void {
+        this.addNewAddressEvent = <CustomEvent>new CustomEvent(EVENT_ADD_NEW_ADDRESS);
     }
 
     protected onClick(triggerElement: HTMLElement): void {
@@ -142,11 +145,12 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     resetAddressesSelect(): void {
         const addressSelect = <HTMLSelectElement>this.form.querySelector(this.dataSelector);
         const addressSelectOptions = <HTMLOptionElement[]>Array.from(addressSelect.options);
+        const addressHiddenInput = <HTMLInputElement>this.form.querySelector(`[name="${this.addressHiddenInputSelector}"]`);
 
         addressSelectOptions.some((item, index) => {
             if(!item.value.length) {
                 addressSelect.selectedIndex = index;
-                addressSelect.dispatchEvent(this.resetSelectEvent);
+                addressHiddenInput.dispatchEvent(this.resetSelectEvent);
                 return true;
             }
         });
@@ -183,6 +187,10 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
 
     get defaultAddressSelector(): string {
         return this.getAttribute('default-address-selector');
+    }
+
+    get addressHiddenInputSelector(): string {
+        return this.getAttribute('address-hidden-input-selector');
     }
 
     get customAddressTrigger(): string {

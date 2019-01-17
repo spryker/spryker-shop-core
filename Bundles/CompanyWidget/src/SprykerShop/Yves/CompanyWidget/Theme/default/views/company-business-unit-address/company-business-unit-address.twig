@@ -42,7 +42,7 @@
             currentAddressId: data.currentAddressId
         }
     } only %}
-        {% block selectClass %}js-form-clear__ignore-element js-from-select-address__{{ embed.formType }}{% endblock %}
+        {% block selectClass %}js-form-clear__ignore-element js-form-select-address__{{ embed.formType }}{% endblock %}
         {% block option %}
             {% set isSelected = embed.defaultAddressKey == address.key %}
             {% set fullName = '%s %s %s, %s %s, %s %s' | format(
@@ -62,9 +62,7 @@
             {{ parent() }}
         {% endblock %}
         {% block optionsGroup %}
-            {#{% if not embed.defaultAddressKey %}#}
             <option value="">{{ 'page.checkout.address.address_select' | trans }}</option>
-            {#{% endif %}#}
 
             {% if embed.customerAddresses is not empty %}
                 <optgroup label="{{ 'page.checkout.address.option_group.customer' | trans }}">
@@ -85,17 +83,18 @@
     {% endembed %}
 
     <div>
-        <button type="button" class="button spacing-bottom js-from-add-new-address__{{ data.formType }}">
+        <button type="button" class="button spacing-bottom js-form-add-new-address__{{ data.formType }}">
             {{ 'page.checkout.address.use_selected_address' | trans }}
         </button>
         {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
             attributes: {
                 'form-selector': '.js-form-handler__' ~ data.formType,
-                'trigger-selector': '.js-from-add-new-address__' ~ data.formType,
-                'data-selector': '.js-from-select-address__' ~ data.formType,
+                'trigger-selector': '.js-form-add-new-address__' ~ data.formType,
+                'data-selector': '.js-form-select-address__' ~ data.formType,
                 'ignore-selector': '.js-form-clear__ignore-element',
                 'default-address-selector': '.js-form-default-address__' ~ data.formType,
-                'custom-address-trigger': '.js-from-clear__'~ data.formType ~'-toggler',
+                'custom-address-trigger': '.js-form-clear__'~ data.formType ~'-toggler',
+                'address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_customer_address]',
                 'addresses': data.addresses
             }
         } only %}
@@ -103,7 +102,7 @@
 
     <div>
         <label>
-            <input type="checkbox" name="customAddress[{{ data.formType }}]" {% if data.isCustomAddress %}checked{% endif %} class="js-from-clear__{{ data.formType }}-toggler js-form-clear__ignore-element" value="1" data-show-save-new-address>
+            <input type="checkbox" name="customAddress[{{ data.formType }}]" {% if data.isCustomAddress %}checked{% endif %} class="js-form-clear__{{ data.formType }}-toggler js-form-clear__ignore-element" value="1" data-show-save-new-address>
             {% if data.formType == 'shippingAddress' %}
                 {{ 'page.checkout.address.different_delivery_address' | trans }}
             {% endif %}
@@ -114,7 +113,7 @@
         {% include molecule('form-clear') with {
             attributes: {
                 'form-selector': '.js-form-clear__' ~ data.formType ~ '-form',
-                'trigger-selector': '.js-from-clear__' ~ data.formType ~ '-toggler',
+                'trigger-selector': '.js-form-clear__' ~ data.formType ~ '-toggler',
                 'ignore-selector': '.js-form-clear__ignore-element'
             }
         } only %}
