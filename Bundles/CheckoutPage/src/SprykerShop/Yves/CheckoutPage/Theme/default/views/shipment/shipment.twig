@@ -34,7 +34,6 @@
         {% block fields %}
             {% set shipmentGroupCollectionForm = data.form.shipmentGroups | default %}
             {% for shipmentGroupForm in shipmentGroupCollectionForm %}
-                {#<h6 class="danger">Shipment group: items, shipment</h6>#}
                 <article class="grid grid--stretch grid--justify box col--sm-12">
                     <div class="col col--sm-6">
                         {% for item in shipmentGroupForm.vars.data.items %}

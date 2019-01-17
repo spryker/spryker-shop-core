@@ -196,7 +196,6 @@ class StepFactory extends AbstractFactory
 
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getShipmentService(): CheckoutPageToShipmentServiceInterface
     {

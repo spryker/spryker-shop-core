@@ -78,7 +78,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return string
      */
-    public function getShipmentCollectionForm()
+    public function getShipmentCollectionForm(): string
     {
         return ShipmentCollectionForm::class;
     }

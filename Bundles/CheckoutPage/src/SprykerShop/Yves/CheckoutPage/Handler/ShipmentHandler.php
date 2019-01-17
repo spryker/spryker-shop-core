@@ -83,7 +83,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollectionTo
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollectionFrom
      *
-     * @return \ArrayObject
+     * @return void
      */
     protected function updateItemsLink(ArrayObject $shipmentGroupCollectionTo, ArrayObject $shipmentGroupCollectionFrom): void
     {
@@ -113,11 +113,11 @@ class ShipmentHandler implements ShipmentHandlerInterface
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
-     * @param string $priceMode
+     * @param string|null $priceMode
      *
      * @return void
      */
-    protected function addExpenseTransfer(ArrayObject $shipmentGroupCollection, $priceMode): void
+    protected function addExpenseTransfer(ArrayObject $shipmentGroupCollection, ?string $priceMode): void
     {
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             $shippingExpenseTransfer = $this->createShippingExpenseTransfer(
@@ -156,7 +156,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
     }
 
     /**
-     * @param \ArrayObject $itemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
@@ -166,7 +166,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
     }
 
     /**
-     * @param \ArrayObject $shipmentGroupCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
      *
      * @return \ArrayObject of ShipmentGroupTransfer
      */
@@ -184,11 +184,11 @@ class ShipmentHandler implements ShipmentHandlerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param string $priceMode
+     * @param string|null $priceMode
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, $priceMode): ExpenseTransfer
+    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, ?string $priceMode): ExpenseTransfer
     {
         $shipmentExpenseTransfer = $this->createExpenseTransfer();
         $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
@@ -201,12 +201,12 @@ class ShipmentHandler implements ShipmentHandlerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $shipmentExpenseTransfer
-     * @param int $price
-     * @param string $priceMode
+     * @param int|null $price
+     * @param string|null $priceMode
      *
      * @return void
      */
-    protected function setPrice(ExpenseTransfer $shipmentExpenseTransfer, $price, $priceMode)
+    protected function setPrice(ExpenseTransfer $shipmentExpenseTransfer, ?int $price, ?string $priceMode)
     {
         if ($priceMode === $this->priceClient->getNetPriceModeIdentifier()) {
             $shipmentExpenseTransfer->setUnitGrossPrice(0);

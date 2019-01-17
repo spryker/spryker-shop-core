@@ -80,10 +80,6 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
             $itemTransfer->setShipment($shipment);
         }
 
-        /**
-         * @todo Move elsewhere
-         */
-
         $quoteTransfer->setShipmentGroups($this->getShipmentGroupCollection($quoteTransfer));
 
         return true;

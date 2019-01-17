@@ -25,7 +25,7 @@ class ShipmentCollectionForm extends AbstractType
     public const OPTION_SHIPMENT_METHODS_BY_GROUP = 'shipmentMethodsByGroup';
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getBlockPrefix(): string
     {
@@ -35,6 +35,8 @@ class ShipmentCollectionForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

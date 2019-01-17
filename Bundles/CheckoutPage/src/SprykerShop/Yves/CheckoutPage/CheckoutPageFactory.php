@@ -200,6 +200,9 @@ class CheckoutPageFactory extends AbstractFactory
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
     }
 
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
     public function getShippingService(): CheckoutPageToShipmentServiceInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
