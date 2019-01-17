@@ -29,7 +29,7 @@
         }
     } only %}
         {% block fields %}
-            {% set existingShippingAddresses = embed.forms.shipping.id_customer_address is defined %}
+            {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
             {% set hasShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
             {% set hideShippingAddressForm = data.form.shippingAddress.id_customer_address is defined %}
             {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
@@ -47,7 +47,7 @@
                                 {% widget companyBusinessUnitAddressWidget %}{% endwidget %}
 
                                 {% if existingShippingAddresses %}
-                                    {% do embed.forms.shipping.id_customer_address.setRendered %}
+                                    {% do data.form.shippingAddress.id_customer_address.setRendered %}
                                 {% endif %}
                             {% else %}
                                 <li class="list__item spacing-y">
@@ -135,7 +135,7 @@
                         }) }}
                     {% endblock %}
                     {% block fields %}
-                        {% set existingBillingAddresses = embed.forms.billing.id_customer_address is defined %}
+                        {% set existingBillingAddresses = data.form.id_customer_address is defined %}
                         {% set hasBillingAddresses = data.form.id_customer_address is defined %}
                         {% set hideBillingAddressForm = data.form.id_customer_address is defined %}
                         {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress', data.form.vars.data]) %}
@@ -151,7 +151,7 @@
                                         {% widget companyBusinessUnitAddressWidget %}{% endwidget %}
 
                                         {% if existingBillingAddresses %}
-                                            {% do embed.forms.billing.id_customer_address.setRendered %}
+                                            {% do data.form.id_customer_address.setRendered %}
                                         {% endif %}
                                     {% else %}
                                         <li class="list__item spacing-y">
