@@ -8,11 +8,12 @@
 namespace SprykerShop\Yves\ShopApplication;
 
 use Spryker\Shared\Application\Application;
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Application as SilexApplication;
 use Spryker\Yves\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjector;
+use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 
 abstract class YvesBootstrap
 {
@@ -91,14 +92,14 @@ abstract class YvesBootstrap
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjector $dependencyInjector
+     * @param \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface $dependencyInjector
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function injectExternalDependencies(DependencyInjector $dependencyInjector, Container $container): Container
+    protected function injectExternalDependencies(DependencyInjectorInterface $dependencyInjector, Container $container): Container
     {
-        $container = $dependencyInjector->injectDependencies($container);
+        $container = $dependencyInjector->inject($container);
 
         return $container;
     }
