@@ -16,6 +16,12 @@
         <property name="warningMessages" type="Message[]" singular="warningMessage" />
     </transfer>
 
+    <transfer name="QuickOrderValidationResponse">
+        <property name="errorMessages" type="Message[]" singular="errorMessage" />
+        <property name="warningMessages" type="Message[]" singular="warningMessage" />
+        <property name="correctValues" type="array"  singular="correctValue" />
+    </transfer>
+
     <transfer name="ProductConcrete">
         <property name="fkProductAbstract" type="int" />
         <property name="sku" type="string" />

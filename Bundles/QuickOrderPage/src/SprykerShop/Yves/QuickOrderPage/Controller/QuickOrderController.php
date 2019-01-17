@@ -153,7 +153,7 @@ class QuickOrderController extends AbstractController
 
         $quickOrderTransfer = $this->getFactory()
             ->getQuickOrderClient()
-            ->addProductsToQuickOrder($quickOrderTransfer);
+            ->buildQuickOrderTransfer($quickOrderTransfer);
 
         $quickOrderTransfer = $this->getFactory()
             ->createQuickOrderItemPluginExecutor()

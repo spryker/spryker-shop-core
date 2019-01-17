@@ -39,9 +39,9 @@ class QuickOrderPageToQuickOrderClientBridge implements QuickOrderPageToQuickOrd
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function addProductsToQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    public function buildQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
-        return $this->quickOrderClient->addProductsToQuickOrder($quickOrderTransfer);
+        return $this->quickOrderClient->buildQuickOrderTransfer($quickOrderTransfer);
     }
 
     /**

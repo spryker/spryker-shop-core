@@ -23,7 +23,7 @@ interface QuickOrderPageToQuickOrderClientInterface
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function addProductsToQuickOrder(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
+    public function buildQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
