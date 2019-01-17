@@ -1,48 +1,21 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\Handler;
+namespace SprykerShop\Yves\CheckoutPage\Model\Shipment;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Use \SprykerShop\Yves\CheckoutPage\Model\Shipment\Creator instead.
- */
-class ShipmentHandler implements ShipmentHandlerInterface
+class Creator extends ShipmentHandler
 {
-    /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
-     */
-    protected $shipmentClient;
-
-    /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface
-     */
-    protected $priceClient;
-
-    /**
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface $priceClient
-     */
-    public function __construct(
-        CheckoutPageToShipmentClientInterface $shipmentClient,
-        CheckoutPageToPriceClientInterface $priceClient
-    ) {
-        $this->shipmentClient = $shipmentClient;
-        $this->priceClient = $priceClient;
-    }
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -51,27 +24,30 @@ class ShipmentHandler implements ShipmentHandlerInterface
      */
     public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $shipmentTransfer = $quoteTransfer->getShipment();
+        $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
 
-        $shipmentMethodTransfer = $this->getShipmentMethodById($quoteTransfer);
-        $shipmentTransfer->setMethod($shipmentMethodTransfer);
-
-        $shipmentExpenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode());
-        $this->replaceShipmentExpenseInQuote($quoteTransfer, $shipmentExpenseTransfer);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $idSelectedShipmentMethod = $quoteTransfer->getShipment()->getShipmentSelection();
+            $shipmentTransfer = $itemTransfer->getShipment();
+            $shipmentTransfer->setShipmentSelection($idSelectedShipmentMethod);
+            $shipmentMethodTransfer = $this->getAvailableShipmentMethodById($shipmentMethodsTransfer, $idSelectedShipmentMethod);
+            $shipmentTransfer->setMethod($shipmentMethodTransfer);
+            $shipmentTransfer->setExpense(
+                $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode())
+            );
+        }
 
         return $quoteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     * @param int $idShipmentMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function getShipmentMethodById(QuoteTransfer $quoteTransfer)
+    protected function getAvailableShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, int $idShipmentMethod): ?ShipmentMethodTransfer
     {
-        $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
-        $idShipmentMethod = $quoteTransfer->getShipment()->getShipmentSelection();
-
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodsTransfer) {
             if ($shipmentMethodsTransfer->getIdShipmentMethod() === $idShipmentMethod) {
                 return $shipmentMethodsTransfer;
@@ -127,25 +103,6 @@ class ShipmentHandler implements ShipmentHandlerInterface
         $shipmentExpenseTransfer->setUnitNetPrice(0);
         $shipmentExpenseTransfer->setSumNetPrice(0);
         $shipmentExpenseTransfer->setUnitGrossPrice($price);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     *
-     * @return void
-     */
-    protected function replaceShipmentExpenseInQuote(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer)
-    {
-        $otherExpenseCollection = new ArrayObject();
-        foreach ($quoteTransfer->getExpenses() as $expense) {
-            if ($expense->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                $otherExpenseCollection->append($expense);
-            }
-        }
-
-        $quoteTransfer->setExpenses($otherExpenseCollection);
-        $quoteTransfer->addExpense($expenseTransfer);
     }
 
     /**

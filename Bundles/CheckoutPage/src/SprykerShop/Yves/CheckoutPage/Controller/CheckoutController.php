@@ -151,10 +151,21 @@ class CheckoutController extends AbstractController
             return $viewData;
         }
 
+        /**
+         * @deprecated Remove this code after multiple shipment release.
+         *
+         * @todo: add multi shipment enabled resolving
+         */
+//        $this->getFactory()->getShipmentService()->checkQuoteItemHasOwnShipmentTransfer();
+        $isMultiShipmentEnabled = true;
+        $template = $isMultiShipmentEnabled
+            ? '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig'
+            : '@CheckoutPage/views/summary/summary.twig';
+
         return $this->view(
             $viewData,
             $this->getFactory()->getSummaryPageWidgetPlugins(),
-            '@CheckoutPage/views/summary/summary.twig'
+            $template
         );
     }
 
