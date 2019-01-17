@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ShopApplication;
 
 use Spryker\Shared\Application\Application;
-use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Application as SilexApplication;
 use Spryker\Yves\Kernel\BundleDependencyProviderResolverAwareTrait;
