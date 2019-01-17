@@ -248,14 +248,6 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
-     */
-    public function getShipmentService(): CheckoutPageToShipmentServiceInterface
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolverInterface
      */
     public function createShipmentCreatorStrategyResolver(): ShipmentCreatorStrategyResolverInterface
@@ -265,7 +257,7 @@ class CheckoutPageFactory extends AbstractFactory
         $strategyContainer = $this->addShipmentCreatorWithoutMultipleShipment($strategyContainer);
         $strategyContainer = $this->addShipmentCreatorWithMultipleShipment($strategyContainer);
 
-        return new ShipmentCreatorStrategyResolver($this->getShipmentService(), $strategyContainer);
+        return new ShipmentCreatorStrategyResolver($strategyContainer);
     }
 
     /**

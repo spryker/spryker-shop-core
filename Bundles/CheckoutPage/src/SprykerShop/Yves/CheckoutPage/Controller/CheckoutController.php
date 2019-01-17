@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -153,12 +154,8 @@ class CheckoutController extends AbstractController
 
         /**
          * @deprecated Remove this code after multiple shipment release.
-         *
-         * @todo: add multi shipment enabled resolving
          */
-//        $this->getFactory()->getShipmentService()->checkQuoteItemHasOwnShipmentTransfer();
-        $isMultiShipmentEnabled = true;
-        $template = $isMultiShipmentEnabled
+        $template = $this->isMultiShipmentEnabled()
             ? '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig'
             : '@CheckoutPage/views/summary/summary.twig';
 
@@ -224,5 +221,13 @@ class CheckoutController extends AbstractController
     protected function createStepProcess()
     {
         return $this->getFactory()->createCheckoutProcess();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isMultiShipmentEnabled(): bool
+    {
+        return defined(ItemTransfer::SHIPMENT);
     }
 }

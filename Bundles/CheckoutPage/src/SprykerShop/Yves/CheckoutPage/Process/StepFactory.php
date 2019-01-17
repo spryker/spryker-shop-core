@@ -327,14 +327,6 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
-     */
-    public function getShipmentService(): CheckoutPageToShipmentServiceInterface
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface
      */
     public function createAddressStepSaver(): SaverInterface
@@ -371,6 +363,8 @@ class StepFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     *
      * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolverInterface
      */
     public function createAddressStepStrategyResolver(): AddressStepStrategyResolverInterface
@@ -383,10 +377,12 @@ class StepFactory extends AbstractFactory
         $strategyContainer = $this->addAddressStepPostConditionCheckerWithoutMultipleShipment($strategyContainer);
         $strategyContainer = $this->addAddressStepPostConditionCheckerWithMultipleShipment($strategyContainer);
 
-        return new AddressStepStrategyResolver($this->getShipmentService(), $strategyContainer);
+        return new AddressStepStrategyResolver($strategyContainer);
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -401,6 +397,8 @@ class StepFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -415,6 +413,8 @@ class StepFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -429,6 +429,8 @@ class StepFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -461,6 +463,8 @@ class StepFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     *
      * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface
      */
     public function createShipmentStepStrategyResolver(): ShipmentStepStrategyResolverInterface
@@ -470,10 +474,12 @@ class StepFactory extends AbstractFactory
         $strategyContainer = $this->addShipmentStepPostConditionCheckerWithoutMultipleShipment($strategyContainer);
         $strategyContainer = $this->addShipmentStepPostConditionCheckerWithMultipleShipment($strategyContainer);
 
-        return new ShipmentStepStrategyResolver($this->getShipmentService(), $strategyContainer);
+        return new ShipmentStepStrategyResolver($strategyContainer);
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array
@@ -488,6 +494,8 @@ class StepFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Remove after multiple shipment will be released.
+     *
      * @param array $strategyContainer
      *
      * @return array

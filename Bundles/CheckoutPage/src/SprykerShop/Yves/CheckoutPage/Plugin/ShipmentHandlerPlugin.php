@@ -27,7 +27,7 @@ class ShipmentHandlerPlugin extends AbstractPlugin implements StepHandlerPluginI
     {
         return $this->getFactory()
             ->createShipmentCreatorStrategyResolver()
-            ->resolveByQuote($quoteTransfer)
+            ->resolve()
             ->addShipmentToQuote($request, $quoteTransfer);
     }
 }

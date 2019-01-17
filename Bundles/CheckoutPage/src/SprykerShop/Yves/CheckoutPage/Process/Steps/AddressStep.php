@@ -75,9 +75,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        $quoteTransfer = $this->stepResolver
-            ->resolveSaverByQuote($quoteTransfer)
-            ->save($request, $quoteTransfer);
+        $quoteTransfer = $this->stepResolver->resolveSaver()->save($request, $quoteTransfer);
 
         return $this->calculationClient->recalculate($quoteTransfer);
     }
@@ -89,9 +87,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        return $this->stepResolver
-            ->resolvePostConditionByQuote($quoteTransfer)
-            ->check($quoteTransfer);
+        return $this->stepResolver->resolvePostCondition()->check($quoteTransfer);
     }
 
     /**

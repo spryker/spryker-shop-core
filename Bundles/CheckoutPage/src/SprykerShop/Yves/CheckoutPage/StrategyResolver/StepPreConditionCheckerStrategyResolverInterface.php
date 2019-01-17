@@ -6,7 +6,6 @@
 
 namespace SprykerShop\Yves\CheckoutPage\StrategyResolver;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PreConditionCheckerInterface;
 
 /**
@@ -20,9 +19,7 @@ interface StepPreConditionCheckerStrategyResolverInterface
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PreConditionCheckerInterface
      */
-    public function resolvePreConditionByQuote(QuoteTransfer $quoteTransfer): PreConditionCheckerInterface;
+    public function resolvePreCondition(): PreConditionCheckerInterface;
 }

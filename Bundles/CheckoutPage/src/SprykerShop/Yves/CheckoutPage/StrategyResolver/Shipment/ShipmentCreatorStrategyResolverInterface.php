@@ -6,7 +6,6 @@
 
 namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 
 /**
@@ -20,9 +19,7 @@ interface ShipmentCreatorStrategyResolverInterface
     /**
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface
      */
-    public function resolveByQuote(QuoteTransfer $quoteTransfer): CreatorInterface;
+    public function resolve(): CreatorInterface;
 }
