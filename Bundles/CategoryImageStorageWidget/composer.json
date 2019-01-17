@@ -1,21 +1,16 @@
 {
-  "name": "spryker-shop/cms-content-widget-product-connector",
+  "name": "spryker-shop/category-image-storage-widget",
   "type": "library",
-  "description": "CmsContentWidgetProductConnector module",
+  "description": "CategoryImageStorageWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cms-content-widget": "^1.2.0",
-    "spryker/kernel": "^3.24.0",
-    "spryker/product-storage": "^1.8.0"
+    "spryker/category-image-storage": "^1.0.0",
+    "spryker/kernel": "^3.25.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/twig": "*"
-  },
-  "suggest": {
-    "spryker/twig": "If you want to use CmsProductContentWidgetPlugin."
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
