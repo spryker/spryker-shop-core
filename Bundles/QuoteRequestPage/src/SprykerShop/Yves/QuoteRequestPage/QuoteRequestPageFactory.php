@@ -35,8 +35,7 @@ class QuoteRequestPageFactory extends AbstractFactory
 
         return $this->getFormFactory()->create(
             QuoteRequestForm::class,
-            $quoteRequestTransfer,
-            $quoteRequestFormDataProvider->getOptions()
+            $quoteRequestFormDataProvider->getData($quoteRequestTransfer)
         );
     }
 
@@ -46,7 +45,8 @@ class QuoteRequestPageFactory extends AbstractFactory
     public function createQuoteRequestFormDataProvider(): QuoteRequestFormDataProvider
     {
         return new QuoteRequestFormDataProvider(
-            $this->getQuoteClient()
+            $this->getQuoteClient(),
+            $this->getConfig()
         );
     }
 

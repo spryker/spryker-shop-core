@@ -9,10 +9,8 @@ namespace SprykerShop\Yves\QuoteRequestPage\Form;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
@@ -56,13 +54,5 @@ class QuoteRequestForm extends AbstractType
         foreach ($this->getFactory()->getQuoteRequestFormMetadataFieldExpanderPlugins() as $shoppingItemFormTypeExpanderPlugin) {
             $builder = $shoppingItemFormTypeExpanderPlugin->expand($builder, $options);
         }
-
-        $builder->add(static::FIELD_METADATA, TextType::class, [
-            'label' => 'customer.account.shopping_list.overview.name',
-            'required' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
-        ]);
     }
 }

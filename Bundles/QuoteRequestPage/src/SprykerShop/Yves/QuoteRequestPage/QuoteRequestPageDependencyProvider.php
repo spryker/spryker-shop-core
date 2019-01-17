@@ -34,6 +34,8 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addQuoteRequestClient($container);
         $container = $this->addQuoteClient($container);
 
+        $container = $this->addQuoteRequestFormMetadataFieldExpanderPlugins($container);
+
         return $container;
     }
 

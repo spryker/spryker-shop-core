@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,13 +24,33 @@ class CreateController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $response = $this->executeCreateAction($request);
+        $response = $this->action($request);
 
         if (!is_array($response)) {
             return $response;
         }
 
         return $this->view($response, [], '@QuoteRequestPage/views/quote-request/create-quote-request.twig');
+    }
+
+    protected function action(Request $request)
+    {
+        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $cartItems = $quoteTransfer->getItems()->getArrayCopy();
+
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->findCompanyUser();
+
+        $quoteRequestForm = $this->getFactory()
+            ->getQuoteRequestForm((new QuoteRequestTransfer())->setCompanyUser($companyUserTransfer))
+            ->handleRequest($request);
+
+        return [
+            'quoteRequestForm' => $quoteRequestForm->createView(),
+            'cart' => $quoteTransfer,
+            'cartItems' => $cartItems,
+        ];
     }
 
     /**
@@ -39,10 +60,24 @@ class CreateController extends AbstractController
      */
     protected function executeCreateAction(Request $request)
     {
-        $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->findCompanyUser();
+
+        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $quoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
+            ->setQuote($quoteTransfer);
 
         $quoteRequestTransfer = (new QuoteRequestTransfer())
-            ->setCompanyUser($companyUserTransfer);
+            ->setCompanyUser($companyUserTransfer)
+            ->setLatestVersion($quoteRequestVersionTransfer)
+            ->setMetadata(['one' => 'one', 'two' => 'two']);
+
+        $quoteRequestResponseTransfer = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->create($quoteRequestTransfer);
+
+        dump($quoteRequestResponseTransfer);die;
 
         $quoteRequestForm = $this->getFactory()
             ->getQuoteRequestForm($quoteRequestTransfer)

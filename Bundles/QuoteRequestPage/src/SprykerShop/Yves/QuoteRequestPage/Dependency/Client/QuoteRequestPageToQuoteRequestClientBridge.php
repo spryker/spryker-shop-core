@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestPage\Dependency\Client;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -28,13 +29,13 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function createQuoteRequestFromQuote(QuoteTransfer $quoteTransfer): QuoteRequestTransfer
+    public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestClient->createQuoteRequestFromQuote($quoteTransfer);
+        return $this->quoteRequestClient->create($quoteRequestTransfer);
     }
 
     /**

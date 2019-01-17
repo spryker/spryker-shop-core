@@ -1,9 +1,7 @@
 {% extends template('widget') %}
 
 {% block body %}
-    <form method="POST" action="{{ path('quote-request/create-quote-request') }}">
-        <button type="submit" class="button button--expand">
-            {{ 'quote-request.request-for-quote' | trans }}
-        </button>
-    </form>
+    <a class="button button--expand" href="{{ url('quote-request/create') }}">
+        {{ 'quote_request_widget.request_for_quote' | trans }}
+    </a>
 {% endblock %}

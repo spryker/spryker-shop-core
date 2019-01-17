@@ -1,0 +1,98 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'quote_request_page.quote_request' | trans,
+                    url: url('quote-request')
+                },
+                {
+                    label: 'quote_request_page.quote_request.create' | trans,
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% define data = {
+    title: 'quote_request_page.quote_request' | trans,
+    cart: _view.cart,
+    quoteRequestForm: _view.quoteRequestForm,
+    cartItems: _view.cartItems
+} %}
+
+
+{% block content %}
+
+    {% if data.cart.items is empty %}
+        <div class="box text-center">
+            {% include atom('icon') with {
+                modifiers: ['biggest'],
+                class: 'text-alt',
+                data: {
+                    name: 'shopping-cart'
+                }
+            } only %}
+            <h6>{{ 'cart.empty' | trans }}</h6>
+        </div>
+    {% else %}
+
+        {{ form_start(data.quoteRequestForm) }}
+
+        <div class="grid">
+            <div class="col col--sm-12 col--xl-8">
+                <div class="box">
+                </div>
+            </div>
+
+            <div class="col col--sm-12 col--xl-4">
+                <div class="box">
+                    <p>DATE <b>{{ data.quoteRequestForm.vars.value.createdAt }}</b></p>
+                    <p>STATUS <b>{{ data.quoteRequestForm.vars.value.status }}</b></p>
+                    <p>VALID TILL</p>
+                    <p>HISTORY</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col col--sm-12 col--xl-8">
+                {% for cartItem in data.cartItems %}
+                    {% include molecule('quote-request-cart-item', 'CartPage') with {
+                        class: 'box',
+                        data: {
+                            cartItem: cartItem
+                        }
+                    } only %}
+                {% endfor %}
+            </div>
+
+            <div class="col col--sm-12 col--xl-4">
+                <div class="box">
+                    {% include molecule('quote-request-cart-summary', 'CartPage') with {
+                        data: {
+                            cart: data.cart
+                        }
+                    } only %}
+                </div>
+                <div class="box">
+                    <a class="button button--expand button--cancel" href="{{ url('cart') }}">
+                        {{ "label.button.cancel" | trans }}
+                    </a>
+                    <hr />
+                    <button type="submit" class="button button--expand button--success">
+                        {{ 'quote_request_page.quote_request.submit' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(data.quoteRequestForm) }}
+
+    {% endif %}
+{% endblock %}
