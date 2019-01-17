@@ -12,7 +12,6 @@ use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
 use Spryker\Yves\StepEngine\Process\StepCollection;
 use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
 use Spryker\Yves\StepEngine\Process\StepEngine;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\DataContainer\DataContainer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
@@ -40,6 +39,7 @@ use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
 class StepFactory extends AbstractFactory
 {
     protected const ERROR_CODE_GENERAL_FAILURE = 399;
+    protected const ROUTE_CART = 'cart';
 
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection
@@ -204,7 +204,7 @@ class StepFactory extends AbstractFactory
             CheckoutPageControllerProvider::CHECKOUT_PLACE_ORDER,
             HomePageControllerProvider::ROUTE_HOME,
             [
-                static::ERROR_CODE_GENERAL_FAILURE => CartControllerProvider::ROUTE_CART,
+                static::ERROR_CODE_GENERAL_FAILURE => self::ROUTE_CART,
                 'payment failed' => CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
                 'shipment failed' => CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
             ]
