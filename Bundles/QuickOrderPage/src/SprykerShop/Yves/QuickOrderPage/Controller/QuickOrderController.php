@@ -121,12 +121,12 @@ class QuickOrderController extends AbstractController
 
         $products = $this->getProductsFromQuickOrderItems($quickOrderTransfer);
 
-        $templateExtensions = $this->getFactory()
-            ->createTemplateExtensionsReader()
-            ->getTemplateExtensions();
+        $fileTemplateExtensions = $this->getFactory()
+            ->createFileTemplateExtensionsReader()
+            ->getFileTemplateExtensions();
 
         $additionalColumns = $this->getFactory()
-            ->createAdditionalColumnsGetter()
+            ->createAdditionalColumnsProvider()
             ->getAdditionalColumns();
 
         return [
@@ -135,7 +135,7 @@ class QuickOrderController extends AbstractController
             'uploadOrderForm' => $uploadOrderForm->createView(),
             'additionalColumns' => $additionalColumns,
             'products' => $this->transformProductsViewData($products),
-            'templateExtensions' => $templateExtensions,
+            'fileTemplateExtensions' => $fileTemplateExtensions,
             'prices' => $prices,
         ];
     }
@@ -288,13 +288,13 @@ class QuickOrderController extends AbstractController
 
         $quickOrderTransfer = $this->getFactory()
             ->getQuickOrderClient()
-            ->addProductsToQuickOrder($quickOrderTransfer);
+            ->buildQuickOrderTransfer($quickOrderTransfer);
 
         $products = $this->getProductsFromQuickOrderItems($quickOrderTransfer);
         $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
 
         $additionalColumns = $this->getFactory()
-            ->createAdditionalColumnsGetter()
+            ->createAdditionalColumnsProvider()
             ->getAdditionalColumns();
 
         return [
@@ -353,13 +353,13 @@ class QuickOrderController extends AbstractController
 
         $quickOrderTransfer = $this->getFactory()
             ->getQuickOrderClient()
-            ->addProductsToQuickOrder($quickOrderTransfer);
+            ->buildQuickOrderTransfer($quickOrderTransfer);
 
         $products = $this->getProductsFromQuickOrderItems($quickOrderTransfer);
         $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
 
         $additionalColumns = $this->getFactory()
-            ->createAdditionalColumnsGetter()
+            ->createAdditionalColumnsProvider()
             ->getAdditionalColumns();
 
         return [
@@ -395,7 +395,7 @@ class QuickOrderController extends AbstractController
         $products = $this->transformProductsViewData($products);
 
         $additionalColumns = $this->getFactory()
-            ->createAdditionalColumnsGetter()
+            ->createAdditionalColumnsProvider()
             ->getAdditionalColumns();
 
         $viewData = [

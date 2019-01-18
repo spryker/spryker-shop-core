@@ -25,6 +25,8 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequest
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
 use SprykerShop\Yves\QuickOrderPage\FileOutputter\FileOutputter;
 use SprykerShop\Yves\QuickOrderPage\FileOutputter\FileOutputterInterface;
+use SprykerShop\Yves\QuickOrderPage\FileTemplateExtensionsReader\FileTemplateExtensionsReader;
+use SprykerShop\Yves\QuickOrderPage\FileTemplateExtensionsReader\FileTemplateExtensionsReaderInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\QuantityFieldConstraint;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderFormatConstraint;
@@ -39,8 +41,6 @@ use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolver;
 use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolverInterface;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolver;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
-use SprykerShop\Yves\QuickOrderPage\TemplateExtensionsReader\TemplateExtensionsReader;
-use SprykerShop\Yves\QuickOrderPage\TemplateExtensionsReader\TemplateExtensionsReaderInterface;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParserInterface;
 use SprykerShop\Yves\QuickOrderPage\UploadOrder\UploadedOrderParser;
@@ -360,17 +360,17 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\TemplateExtensionsReader\TemplateExtensionsReaderInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\FileTemplateExtensionsReader\FileTemplateExtensionsReaderInterface
      */
-    public function createTemplateExtensionsReader(): TemplateExtensionsReaderInterface
+    public function createFileTemplateExtensionsReader(): FileTemplateExtensionsReaderInterface
     {
-        return new TemplateExtensionsReader($this->getQuickOrderFileTemplatePlugins());
+        return new FileTemplateExtensionsReader($this->getQuickOrderFileTemplatePlugins());
     }
 
     /**
      * @return \SprykerShop\Yves\QuickOrderPage\AdditionalColumnsProvider\AdditionalColumnsProviderInterface
      */
-    public function createAdditionalColumnsGetter(): AdditionalColumnsProviderInterface
+    public function createAdditionalColumnsProvider(): AdditionalColumnsProviderInterface
     {
         return new AdditionalColumnsProvider($this->getQuickOrderFormColumnPlugins());
     }

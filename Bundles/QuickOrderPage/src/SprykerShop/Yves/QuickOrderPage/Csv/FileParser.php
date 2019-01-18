@@ -65,12 +65,12 @@ class FileParser implements FileParserInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadOrder
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedOrder
      *
      * @return array
      */
-    protected function getUploadOrderRows(UploadedFile $uploadOrder): array
+    protected function getUploadOrderRows(UploadedFile $uploadedOrder): array
     {
-        return $this->utilCsvService->readUploadedFile($uploadOrder);
+        return $this->utilCsvService->readUploadedFile($uploadedOrder);
     }
 }

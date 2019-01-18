@@ -10,7 +10,7 @@
     products: [],
     prices: [],
     additionalColumns: [],
-    templateExtensions: [],
+    fileTemplateExtensions: [],
     textOrderForm: required,
     uploadOrderForm: required
 } %}
@@ -44,7 +44,7 @@
             form: data.form,
             products: data.products,
             prices: data.prices,
-            templateExtensions: data.templateExtensions,
+            fileTemplateExtensions: data.fileTemplateExtensions,
             options: {
                 attr: {
                     class: config.jsName ~ '__form',
@@ -88,7 +88,7 @@
                     {% include molecule('quick-order-file-upload', 'QuickOrderPage') with {
                         data: {
                             uploadOrderForm: data.uploadOrderForm,
-                            templateExtensions: data.templateExtensions
+                            fileTemplateExtensions: data.fileTemplateExtensions
                         }
                     } only %}
                 </div>

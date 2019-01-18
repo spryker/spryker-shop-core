@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\TemplateExtensionsReader;
+namespace SprykerShop\Yves\QuickOrderPage\FileTemplateExtensionsReader;
 
-interface TemplateExtensionsReaderInterface
+interface FileTemplateExtensionsReaderInterface
 {
     /**
      * @return string[]
      */
-    public function getTemplateExtensions(): array;
+    public function getFileTemplateExtensions(): array;
 }
