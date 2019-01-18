@@ -48,15 +48,27 @@
         <div class="grid">
             <div class="col col--sm-12 col--xl-8">
                 <div class="box">
+
+                    <div class="col col--sm-12 col--xl-6">
+                        <div class="box">
+                            {{ form_row(data.quoteRequestForm.metadata.purchase_order_number) }}
+                            {{ form_row(data.quoteRequestForm.metadata.delivery_date) }}
+                        </div>
+                    </div>
+                    <div class="col col--sm-12 col--xl-6">
+                        <div class="box">
+                            {{ form_row(data.quoteRequestForm.metadata.note) }}
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    <p>DATE <b>{{ data.quoteRequestForm.vars.value.createdAt }}</b></p>
-                    <p>STATUS <b>{{ data.quoteRequestForm.vars.value.status }}</b></p>
-                    <p>VALID TILL</p>
-                    <p>HISTORY</p>
+                    <p>Date: <b>{{ data.quoteRequestForm.vars.value.createdAt }}</b></p>
+                    <p>Status: <b>{{ data.quoteRequestForm.vars.value.status }}</b></p>
+                    <p>Valid till:</p>
+                    <p>History:</p>
                 </div>
             </div>
         </div>
@@ -84,7 +96,7 @@
                     <a class="button button--expand button--cancel" href="{{ url('cart') }}">
                         {{ "label.button.cancel" | trans }}
                     </a>
-                    <hr />
+                    <hr/>
                     <button type="submit" class="button button--expand button--success">
                         {{ 'quote_request_page.quote_request.submit' | trans }}
                     </button>

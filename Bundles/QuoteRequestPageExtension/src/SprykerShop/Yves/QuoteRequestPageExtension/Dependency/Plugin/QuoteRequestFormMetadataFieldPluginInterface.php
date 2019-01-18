@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface QuoteRequestFormMetadataFieldExpanderPluginInterface
+interface QuoteRequestFormMetadataFieldPluginInterface
 {
     /**
      * Specification:
@@ -22,5 +22,5 @@ interface QuoteRequestFormMetadataFieldExpanderPluginInterface
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface;
+    public function buildForm(FormBuilderInterface $builder, array $options): FormBuilderInterface;
 }

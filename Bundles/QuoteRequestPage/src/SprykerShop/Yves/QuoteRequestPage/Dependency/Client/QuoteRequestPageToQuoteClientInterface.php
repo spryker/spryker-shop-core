@@ -7,12 +7,15 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-
 interface QuoteRequestPageToQuoteClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote(): QuoteTransfer;
+    public function getQuote();
+
+    /**
+     * @return void
+     */
+    public function clearQuote();
 }

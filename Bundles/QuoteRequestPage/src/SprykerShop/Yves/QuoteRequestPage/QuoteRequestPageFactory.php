@@ -15,6 +15,8 @@ use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompan
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider;
+use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandler;
+use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandlerInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -25,17 +27,15 @@ use Symfony\Component\Form\FormInterface;
 class QuoteRequestPageFactory extends AbstractFactory
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getQuoteRequestForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    public function getQuoteRequestForm(): FormInterface
     {
         $quoteRequestFormDataProvider = $this->createQuoteRequestFormDataProvider();
 
         return $this->getFormFactory()->create(
             QuoteRequestForm::class,
-            $quoteRequestFormDataProvider->getData($quoteRequestTransfer)
+            $quoteRequestFormDataProvider->getData()
         );
     }
 
@@ -45,8 +45,20 @@ class QuoteRequestPageFactory extends AbstractFactory
     public function createQuoteRequestFormDataProvider(): QuoteRequestFormDataProvider
     {
         return new QuoteRequestFormDataProvider(
+            $this->getCompanyUserClient(),
             $this->getQuoteClient(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandlerInterface
+     */
+    public function createQuoteRequestHandler(): QuoteRequestHandlerInterface
+    {
+        return new QuoteRequestHandler(
+            $this->getQuoteRequestClient(),
+            $this->getQuoteClient()
         );
     }
 
@@ -83,10 +95,10 @@ class QuoteRequestPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldExpanderPluginInterface[]
+     * @return \SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldPluginInterface[]
      */
-    public function getQuoteRequestFormMetadataFieldExpanderPlugins(): array
+    public function getQuoteRequestFormMetadataFieldPlugins(): array
     {
-        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELD_EXPANDERS);
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELDS);
     }
 }

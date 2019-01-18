@@ -10,11 +10,17 @@ namespace SprykerShop\Yves\QuoteRequestPage\Form\DataProvider;
 use DateTime;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig;
 
 class QuoteRequestFormDataProvider
 {
+    /**
+     * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface
+     */
+    protected $companyUserClient;
+
     /**
      * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface
      */
@@ -26,27 +32,32 @@ class QuoteRequestFormDataProvider
     protected $config;
 
     /**
+     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface $companyUserClient
      * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig $config
      */
     public function __construct(
+        QuoteRequestPageToCompanyUserClientInterface $companyUserClient,
         QuoteRequestPageToQuoteClientInterface $quoteClient,
         QuoteRequestPageConfig $config
-    ) {
+    )
+    {
+        $this->companyUserClient = $companyUserClient;
         $this->quoteClient = $quoteClient;
         $this->config = $config;
     }
 
-    public function getData(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
+    public function getData(): QuoteRequestTransfer
     {
-        $quoteRequestTransfer->setCreatedAt((new DateTime())->format('Y-m-d H:i:s'));
-        $quoteRequestTransfer->setStatus($this->config->getInitialStatus());
-
         $quoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
             ->setQuote($this->quoteClient->getQuote())
             ->setVersion($this->config->getInitialVersion());
 
-        $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
+        $quoteRequestTransfer = (new QuoteRequestTransfer)
+            ->setCompanyUser($this->companyUserClient->findCompanyUser())
+            ->setCreatedAt((new DateTime())->format('Y-m-d H:i:s'))
+            ->setStatus($this->config->getInitialStatus())
+            ->setLatestVersion($quoteRequestVersionTransfer);
 
         return $quoteRequestTransfer;
     }

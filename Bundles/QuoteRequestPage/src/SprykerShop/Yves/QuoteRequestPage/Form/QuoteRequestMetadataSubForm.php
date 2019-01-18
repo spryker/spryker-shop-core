@@ -7,31 +7,15 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Form;
 
-use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig getConfig()
  */
-class QuoteRequestForm extends AbstractType
+class QuoteRequestMetadataSubForm extends AbstractType
 {
-    public const FIELD_METADATA = 'metadata';
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => QuoteRequestTransfer::class,
-        ]);
-    }
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -40,18 +24,19 @@ class QuoteRequestForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addMetadataForm($builder);
+        $this->addMetadataFields($builder, $options);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return $this
+     * @return void
      */
-    protected function addMetadataForm(FormBuilderInterface $builder)
+    protected function addMetadataFields(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(static::FIELD_METADATA, QuoteRequestMetadataSubForm::class);
-
-        return $this;
+        foreach ($this->getFactory()->getQuoteRequestFormMetadataFieldPlugins() as $quoteRequestFormMetadataFieldPlugin) {
+            $builder = $quoteRequestFormMetadataFieldPlugin->buildForm($builder, $options);
+        }
     }
 }

@@ -19,7 +19,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     
-    public const PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELD_EXPANDERS = 'PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELD_EXPANDERS';
+    public const PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELDS = 'PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELDS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -34,7 +34,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addQuoteRequestClient($container);
         $container = $this->addQuoteClient($container);
 
-        $container = $this->addQuoteRequestFormMetadataFieldExpanderPlugins($container);
+        $container = $this->addQuoteRequestFormMetadataFieldPlugins($container);
 
         return $container;
     }
@@ -86,19 +86,19 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addQuoteRequestFormMetadataFieldExpanderPlugins(Container $container): Container
+    protected function addQuoteRequestFormMetadataFieldPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELD_EXPANDERS] = function () {
-            return $this->getQuoteRequestFormMetadataFieldExpanderPlugins();
+        $container[static::PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELDS] = function () {
+            return $this->getQuoteRequestFormMetadataFieldPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldExpanderPluginInterface[]
+     * @return \SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldPluginInterface[]
      */
-    protected function getQuoteRequestFormMetadataFieldExpanderPlugins(): array
+    protected function getQuoteRequestFormMetadataFieldPlugins(): array
     {
         return [];
     }

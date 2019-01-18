@@ -12,6 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
 {
+    public const ROUTE_QUOTE_REQUEST = 'quote-request';
     public const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
 
     /**
@@ -21,7 +22,20 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addQuoteRequestCreateRoute();
+        $this->addQuoteRequestRoute()
+            ->addQuoteRequestCreateRoute();
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addQuoteRequestRoute(): self
+    {
+        $this->createController('/{quoteRequest}', static::ROUTE_QUOTE_REQUEST, 'QuoteRequestPage', 'View')
+            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request');
+
+        return $this;
     }
 
     /**
