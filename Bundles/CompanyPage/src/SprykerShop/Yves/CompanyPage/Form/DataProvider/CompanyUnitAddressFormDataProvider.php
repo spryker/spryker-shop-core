@@ -70,7 +70,6 @@ class CompanyUnitAddressFormDataProvider
             if ($idCompanyBusinessUnit !== null) {
                 $addressTransfer->setFkCompanyBusinessUnit($idCompanyBusinessUnit);
                 $addressTransfer = $this->setDefaultBillingAddress($addressTransfer);
-                $addressTransfer = $this->setDefaultShippingAddress($addressTransfer);
             }
 
             return $addressTransfer->modifiedToArray();
@@ -141,22 +140,6 @@ class CompanyUnitAddressFormDataProvider
 
         if ($businessUnit->getDefaultBillingAddress() === $addressTransfer->getIdCompanyUnitAddress()) {
             $addressTransfer->setIsDefaultBilling(true);
-        }
-
-        return $addressTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
-    protected function setDefaultShippingAddress(CompanyUnitAddressTransfer $addressTransfer): CompanyUnitAddressTransfer
-    {
-        $businessUnit = $this->getBusinessUnit($addressTransfer->getFkCompanyBusinessUnit());
-
-        if ($businessUnit->getDefaultShippingAddress() === $addressTransfer->getIdCompanyUnitAddress()) {
-            $addressTransfer->setIsDefaultShipping(true);
         }
 
         return $addressTransfer;

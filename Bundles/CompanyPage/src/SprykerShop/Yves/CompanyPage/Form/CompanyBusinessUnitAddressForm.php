@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
 {
     public const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
-    public const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
 
     /**
      * @return string
@@ -34,7 +33,6 @@ class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
         parent::buildForm($builder, $options);
 
         $this->addIsDefaultBillingField($builder, $options);
-        $this->addIsDefaultShippingField($builder, $options);
     }
 
     /**
@@ -50,21 +48,6 @@ class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
             'required' => false,
         ]);
 
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addIsDefaultShippingField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(static::FIELD_IS_DEFAULT_SHIPPING, CheckboxType::class, [
-            'label' => 'company.account.address.is_default_shipping',
-            'required' => false,
-        ]);
         return $this;
     }
 }

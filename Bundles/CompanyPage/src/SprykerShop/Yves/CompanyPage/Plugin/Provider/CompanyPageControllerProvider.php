@@ -66,6 +66,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->addCompanyRoutes()
             ->addCompanyAddressRoutes()
             ->addCompanyBusinessUnitRoutes()
+            ->addCompanyBusinessUnitAddressRouts()
             ->addCompanyRoleRoutes()
             ->addPermissionRoutes()
             ->addCompanyUserRoutes()
@@ -138,6 +139,15 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{company}/business-unit/delete-confirmation', static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION, 'CompanyPage', 'BusinessUnit', 'confirmDelete')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCompanyBusinessUnitAddressRouts(): self
+    {
         $this->createController('/{company}/business-unit/address/create', static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, 'CompanyPage', 'BusinessUnitAddress', 'create')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
