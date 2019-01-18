@@ -13,15 +13,4 @@ class ShoppingListPageConfig extends AbstractBundleConfig
 {
     public const DEFAULT_NAME = 'My shopping list';
     public const CART_REDIRECT_URL = 'cart';
-
-    /**
-     * Specification:
-     * - Returns the cart redirect url.
-     *
-     * @return string
-     */
-    public function getCartRedirectUrl(): string
-    {
-        return static::CART_REDIRECT_URL;
-    }
 }

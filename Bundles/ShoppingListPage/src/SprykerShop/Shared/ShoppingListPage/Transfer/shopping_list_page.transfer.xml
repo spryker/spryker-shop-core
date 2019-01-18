@@ -27,4 +27,8 @@
         <property name="idShoppingListItem" type="int" />
     </transfer>
 
+    <transfer name="CompanyUserCriteriaFilter">
+        <property name="isActive" type="bool"/>
+    </transfer>
+
 </transfers>
