@@ -5,19 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\Dependency\Client;
+namespace SprykerShop\Yves\CheckoutWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutPageToCheckoutClientInterface
+interface CheckoutWidgetToCheckoutClientInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    public function placeOrder(QuoteTransfer $quoteTransfer);
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

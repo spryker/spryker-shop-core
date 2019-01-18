@@ -1,0 +1,56 @@
+{% extends template('widget') %}
+
+{% define data = {
+    quoteApprovalRequestForm: _widget.quoteApprovalRequestForm,
+    quote: _widget.quote,
+    limit: _widget.limit,
+    isVisible: _widget.isVisible,
+    quoteStatus: _widget.quoteStatus,
+    canSendApprovalRequest: _widget.canSendApprovalRequest,
+    quoteApprovalRequestFormOptions: {
+        action: path('quote-approval/create')
+    }
+} %}
+
+{% block body %}
+    {% if data.isVisible and data.quoteApprovalRequestForm.idCompanyUser.vars.choices | length %}
+        {% set approval = data.quote.approvals | length > 0 ? data.quote.approvals | last : null %}
+        {% set customer = approval ? approval.approver.customer : null %}
+
+        <div class="grid grid--justify grid--middle">
+            <div class="col">
+                <h6>{{ 'quote_approval_widget.title' | trans }}</h6>
+            </div>
+            <div class="col">
+                {% include molecule('approve-request-status', 'QuoteApprovalWidget') with {
+                    modifiers: [data.quoteStatus | lower],
+                    data: {
+                        quoteStatus: data.quoteStatus
+                    }
+                } only %}
+            </div>
+        </div>
+
+        {% if approval %}
+            {% include molecule('approve-request-info', 'QuoteApprovalWidget') with {
+                data: {
+                    approval: approval,
+                    customer: customer,
+                    quoteStatus: data.quoteStatus
+                }
+            } only %}
+        {% endif %}
+
+        {% if data.canSendApprovalRequest %}
+            {% include molecule('approve-request-form', 'QuoteApprovalWidget') with {
+                data: {
+                    quoteApprovalRequestForm: data.quoteApprovalRequestForm,
+                    quoteApprovalRequestFormOptions: data.quoteApprovalRequestFormOptions,
+                    quote: data.quote,
+                    limit: data.limit
+                }
+            } only %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+

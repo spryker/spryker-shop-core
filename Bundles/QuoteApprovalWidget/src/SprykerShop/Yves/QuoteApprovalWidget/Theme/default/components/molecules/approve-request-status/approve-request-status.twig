@@ -1,0 +1,13 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'approve-request-status',
+} %}
+
+{% define data = {
+    quoteStatus: required
+} %}
+
+{% block body %}
+    {{ data.quoteStatus }}
+{% endblock %}

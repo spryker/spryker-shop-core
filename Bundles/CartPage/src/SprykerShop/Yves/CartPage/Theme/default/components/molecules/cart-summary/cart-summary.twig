@@ -7,7 +7,8 @@
 
 {% define data = {
     cart: required,
-    isQuoteValid: required
+    isQuoteValid: required,
+    isQuoteEditable: required,
 } %}
 
 {% set canProceedToCheckout = data.cart.items is not empty
@@ -80,8 +81,7 @@
 
     {% if canProceedToCheckout %}
         <hr />
-        <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}>
-            {{ 'cart.checkout' | trans }}
-        </a>
+        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
+        {% widget 'ProcceedToCheckoutButtonWidget' args [data.cart] %}{% endwidget %}
     {% endif %}
 {% endblock %}
