@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductQuickAddWidget\Controller;
 
 use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,7 @@ class ProductQuickAddWidgetController extends AbstractController
             ->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->addErrorMessage(static::MESSAGE_QUICK_ADD_TO_CART_INCORRECT_INPUT_DATA);
+            $this->addErrorFlashMessagesFromForm($form);
             $referer = $this->getRefferWithAnchor($request->headers);
 
             return $this->redirectResponseExternal($referer);
@@ -54,5 +55,17 @@ class ProductQuickAddWidgetController extends AbstractController
     protected function getRefferWithAnchor(HeaderBag $headers): string
     {
         return $headers->get(static::REFERER_PARAM) . static::PRODUCT_QUICK_ADD_FORM_ANCHOR;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return void
+     */
+    protected function addErrorFlashMessagesFromForm(FormInterface $form): void
+    {
+        foreach ($form->getErrors(true) as $error) {
+            $this->addErrorMessage($error->getMessage());
+        }
     }
 }
