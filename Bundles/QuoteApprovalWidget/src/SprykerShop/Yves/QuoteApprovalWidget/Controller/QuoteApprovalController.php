@@ -59,9 +59,11 @@ class QuoteApprovalController extends AbstractController
             $quoteApprovalRemoveRequestTransfer->setIdQuoteApproval($idQuoteApproval)
                 ->setCustomerReference($customerTransfer->getCustomerReference());
 
-            $this->getFactory()
+            $quoteApprovalResponseTransfer = $this->getFactory()
                 ->getQuoteApprovalClient()
                 ->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
+
+            $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
         }
 
         return $this->redirectResponseInternal(static::ROUTE_CART);
