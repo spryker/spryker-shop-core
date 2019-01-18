@@ -22,7 +22,8 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addAvailabilityNotificationSubscribeRoute()
+        $this
+            ->addAvailabilityNotificationSubscribeRoute()
             ->addAvailabilityNotificationUnsubscribeRoute();
     }
 
@@ -31,9 +32,9 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
      */
     protected function addAvailabilityNotificationSubscribeRoute(): self
     {
-        $this->createPostController('/{notificationAvailability}/subscribe', static::ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'subscribe')
-            ->assert('notificationAvailability', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
-            ->value('notificationAvailability', 'availability-notification');
+        $this->createPostController('/{availabilityNotification}/subscribe', static::ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'subscribe')
+            ->assert('availabilityNotification', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
+            ->value('availabilityNotification', 'availability-notification');
 
         return $this;
     }
@@ -43,9 +44,9 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
      */
     protected function addAvailabilityNotificationUnsubscribeRoute(): self
     {
-        $this->createPostController('/{notificationAvailability}/unsubscribe', self::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'unsubscribe')
-            ->assert('notificationAvailability', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
-            ->value('notificationAvailability', 'availability-notification');
+        $this->createPostController('/{availabilityNotification}/unsubscribe', self::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'unsubscribe')
+            ->assert('availabilityNotification', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
+            ->value('availabilityNotification', 'availability-notification');
 
         return $this;
     }

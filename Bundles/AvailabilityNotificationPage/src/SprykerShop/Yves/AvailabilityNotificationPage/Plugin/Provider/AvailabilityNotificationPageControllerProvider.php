@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class AvailabilityNotificationPageControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe';
+    public const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe-by-key';
 
     public const PARAM_SUBSCRIPTION_KEY = 'subscriptionKey';
 
@@ -31,7 +31,7 @@ class AvailabilityNotificationPageControllerProvider extends AbstractYvesControl
      */
     protected function addAvailabilityNotificationUnsubscribeRoute(): self
     {
-        $this->createGetController('/{notificationAvailability}/unsubscribe', static::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, 'AvailabilityNotificationPage', 'AvailabilityNotificationPage', 'unsubscribe')
+        $this->createGetController('/{notificationAvailability}/unsubscribe-by-key', static::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, 'AvailabilityNotificationPage', 'AvailabilityNotificationPage', 'unsubscribe')
             ->assert('notificationAvailability', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
             ->assert(static::PARAM_SUBSCRIPTION_KEY, '\[0-9A-Za-z]{32}')
             ->value('notificationAvailability', 'availability-notification');
