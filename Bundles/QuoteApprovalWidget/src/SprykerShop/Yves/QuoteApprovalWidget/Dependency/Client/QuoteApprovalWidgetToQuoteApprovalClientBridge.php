@@ -31,7 +31,7 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
@@ -41,7 +41,7 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
@@ -73,6 +73,7 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return int|null
      */
