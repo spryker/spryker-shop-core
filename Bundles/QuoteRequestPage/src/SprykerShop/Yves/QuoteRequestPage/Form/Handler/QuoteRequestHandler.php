@@ -43,10 +43,8 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
      */
     public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer->getLatestVersion()
-            ->setQuote($this->quoteClient->getQuote());
-
-        $quoteRequestResponseTransfer = $this->quoteRequestClient->create($quoteRequestTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestClient
+            ->create($quoteRequestTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccess()) {
 //             TODO: throws exception after ::cleanQuote(), how I should clear quote?
