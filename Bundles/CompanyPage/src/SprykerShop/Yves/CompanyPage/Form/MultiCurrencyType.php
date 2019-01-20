@@ -17,16 +17,7 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
  */
 class MultiCurrencyType extends AbstractType
 {
-    protected const FIELD_MULTI_CURRENCY = 'multi_currency';
     protected const MIN_MONEY_INT = 0;
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return 'MultiCurrencyType';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -64,7 +55,7 @@ class MultiCurrencyType extends AbstractType
     protected function addAmountPerCurrencyField(FormBuilderInterface $builder, string $currencyIsoCode): self
     {
         $options = [
-            'attr' => ['placeholder' => 'company_page.multi_currency_type.name.cent_amount'],
+            'attr' => ['placeholder' => 'company_page.multi_currency_type.name.cent_amount.' . $currencyIsoCode],
             'label' => strtoupper($currencyIsoCode),
             'constraints' => [
                 new GreaterThanOrEqual([

@@ -12,12 +12,14 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientBridge;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientBridge;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientBridge;
+use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteClientBridge;
 
 class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
     public const CLIENT_QUOTE_APPROVAL = 'CLIENT_QUOTE_APPROVAL';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -27,9 +29,10 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addClientCustomer($container);
-        $container = $this->addClientGlossaryStorage($container);
-        $container = $this->addClientQuoteApproval($container);
+        $container = $this->addQuoteApprovalClient($container);
+        $container = $this->addQuoteClient($container);
+        $container = $this->addCustomerClient($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -39,7 +42,35 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addClientCustomer(Container $container): Container
+    protected function addQuoteApprovalClient($container): Container
+    {
+        $container[static::CLIENT_QUOTE_APPROVAL] = function (Container $container) {
+            return new QuoteApprovalWidgetToQuoteApprovalClientBridge($container->getLocator()->quoteApproval()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient($container): Container
+    {
+        $container[static::CLIENT_QUOTE] = function (Container $container) {
+            return new QuoteApprovalWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerClient($container): Container
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new QuoteApprovalWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
@@ -53,24 +84,10 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addClientGlossaryStorage(Container $container): Container
+    protected function addGlossaryStorageClient($container): Container
     {
         $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
             return new QuoteApprovalWidgetToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addClientQuoteApproval(Container $container): Container
-    {
-        $container[static::CLIENT_QUOTE_APPROVAL] = function (Container $container) {
-            return new QuoteApprovalWidgetToQuoteApprovalClientBridge($container->getLocator()->quoteApproval()->client());
         };
 
         return $container;

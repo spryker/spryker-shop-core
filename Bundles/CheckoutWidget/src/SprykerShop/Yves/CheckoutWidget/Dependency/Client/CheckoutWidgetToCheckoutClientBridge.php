@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\Dependency\Client;
+namespace SprykerShop\Yves\CheckoutWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class CheckoutPageToCheckoutClientBridge implements CheckoutPageToCheckoutClientInterface
+class CheckoutWidgetToCheckoutClientBridge implements CheckoutWidgetToCheckoutClientInterface
 {
     /**
      * @var \Spryker\Client\Checkout\CheckoutClientInterface
@@ -22,16 +22,6 @@ class CheckoutPageToCheckoutClientBridge implements CheckoutPageToCheckoutClient
     public function __construct($checkoutClient)
     {
         $this->checkoutClient = $checkoutClient;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    public function placeOrder(QuoteTransfer $quoteTransfer)
-    {
-        return $this->checkoutClient->placeOrder($quoteTransfer);
     }
 
     /**

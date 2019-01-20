@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageFactory getFactory()
+ * @method \Spryker\Client\Checkout\CheckoutClientInterface getClient()
  */
 class CheckoutController extends AbstractController
 {
@@ -22,12 +23,21 @@ class CheckoutController extends AbstractController
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
     /**
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     */
+    protected const ROUTE_CART = 'cart';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return mixed
      */
     public function indexAction(Request $request)
     {
+        if (!$this->isQuoteAvailableForCheckout()) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $response = $this->createStepProcess()->process($request);
 
         return $response;
@@ -40,6 +50,10 @@ class CheckoutController extends AbstractController
      */
     public function customerAction(Request $request)
     {
+        if (!$this->isQuoteAvailableForCheckout()) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $response = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
@@ -65,6 +79,10 @@ class CheckoutController extends AbstractController
      */
     public function addressAction(Request $request)
     {
+        if (!$this->isQuoteAvailableForCheckout()) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $response = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
@@ -90,6 +108,10 @@ class CheckoutController extends AbstractController
      */
     public function shipmentAction(Request $request)
     {
+        if (!$this->isQuoteAvailableForCheckout()) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $response = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
@@ -115,6 +137,10 @@ class CheckoutController extends AbstractController
      */
     public function paymentAction(Request $request)
     {
+        if (!$this->isQuoteAvailableForCheckout()) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $response = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
@@ -140,6 +166,10 @@ class CheckoutController extends AbstractController
      */
     public function summaryAction(Request $request)
     {
+        if (!$this->isQuoteAvailableForCheckout()) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $viewData = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
@@ -165,6 +195,10 @@ class CheckoutController extends AbstractController
      */
     public function placeOrderAction(Request $request)
     {
+        if (!$this->isQuoteAvailableForCheckout()) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $grandTotal = $this->getFactory()
             ->getQuoteClient()
             ->getQuote()
@@ -205,6 +239,16 @@ class CheckoutController extends AbstractController
     public function errorAction()
     {
         return $this->view([], [], '@CheckoutPage/views/order-fail/order-fail.twig');
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isQuoteAvailableForCheckout(): bool
+    {
+        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+
+        return $this->getFactory()->getCheckoutClient()->isQuoteApplicableForCheckout($quoteTransfer);
     }
 
     /**
