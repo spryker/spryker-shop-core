@@ -40,20 +40,22 @@ class QuoteRequestFormDataProvider
         QuoteRequestPageToCompanyUserClientInterface $companyUserClient,
         QuoteRequestPageToQuoteClientInterface $quoteClient,
         QuoteRequestPageConfig $config
-    )
-    {
+    ) {
         $this->companyUserClient = $companyUserClient;
         $this->quoteClient = $quoteClient;
         $this->config = $config;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
     public function getData(): QuoteRequestTransfer
     {
         $quoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
             ->setQuote($this->quoteClient->getQuote())
             ->setVersion($this->config->getInitialVersion());
 
-        $quoteRequestTransfer = (new QuoteRequestTransfer)
+        $quoteRequestTransfer = (new QuoteRequestTransfer())
             ->setCompanyUser($this->companyUserClient->findCompanyUser())
             ->setCreatedAt((new DateTime())->format('Y-m-d H:i:s'))
             ->setStatus($this->config->getInitialStatus())

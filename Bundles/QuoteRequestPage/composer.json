@@ -5,11 +5,27 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/shop-ui": "^1.0.0"
+    "spryker-shop/quote-request-page-extension": "*",
+    "spryker-shop/shop-application": "*",
+    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/application": "*",
+    "spryker/company-user": "*",
+    "spryker/kernel": "*",
+    "spryker/quote": "*",
+    "spryker/quote-request": "*",
+    "spryker/symfony": "*"
   },
   "require-dev": {
+    "spryker-shop/cart-page": "*",
+    "spryker-shop/customer-page": "*",
     "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker-shop/cart-page": "If you want to use cart page molecules.",
+    "spryker-shop/customer-page": "If you want to use customer layout templates.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

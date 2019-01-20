@@ -7,20 +7,20 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
  */
-class ViewController extends AbstractController
+class QuoteRequestViewController extends QuoteRequestAbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): View
     {
         $viewData = $this->executeIndexAction($request);
 
@@ -38,6 +38,8 @@ class ViewController extends AbstractController
      */
     protected function executeIndexAction(Request $request): array
     {
-        dump(123);die;
+        // TODO: implement in next story
+
+        return [];
     }
 }

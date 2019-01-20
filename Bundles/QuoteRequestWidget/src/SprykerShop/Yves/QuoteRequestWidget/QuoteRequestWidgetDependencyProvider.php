@@ -8,70 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCustomerClientBridge;
-use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteClientBridge;
-use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteRequestClientBridge;
 
 class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    public function provideDependencies(Container $container): Container
-    {
-        $container = $this->addCustomerClient($container);
-        $container = $this->addQuoteClient($container);
-        $container = $this->addQuoteRequestClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addCustomerClient(Container $container): Container
-    {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return new QuoteRequestWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addQuoteClient(Container $container): Container
-    {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
-            return new QuoteRequestWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addQuoteRequestClient(Container $container): Container
-    {
-        $container[static::CLIENT_QUOTE_REQUEST] = function (Container $container) {
-            return new QuoteRequestWidgetToQuoteRequestClientBridge($container->getLocator()->quoteRequest()->client());
-        };
-
-        return $container;
-    }
 }

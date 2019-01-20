@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\QuoteRequestPage\Plugin\QuoteRequestPage;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldPluginInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 

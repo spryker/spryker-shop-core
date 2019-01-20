@@ -31,7 +31,7 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addQuoteRequestRoute(): self
     {
-        $this->createController('/{quoteRequest}', static::ROUTE_QUOTE_REQUEST, 'QuoteRequestPage', 'View')
+        $this->createController('/{quoteRequest}', static::ROUTE_QUOTE_REQUEST, 'QuoteRequestPage', 'QuoteRequestView')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request');
 
@@ -43,7 +43,7 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addQuoteRequestCreateRoute(): self
     {
-        $this->createController('/{quoteRequest}/create', static::ROUTE_QUOTE_REQUEST_CREATE, 'QuoteRequestPage', 'Create', 'create')
+        $this->createController('/{quoteRequest}/create', static::ROUTE_QUOTE_REQUEST_CREATE, 'QuoteRequestPage', 'QuoteRequestCreate', 'create')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request');
 

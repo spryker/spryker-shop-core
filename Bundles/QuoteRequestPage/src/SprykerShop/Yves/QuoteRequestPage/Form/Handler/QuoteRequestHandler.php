@@ -49,7 +49,8 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
         $quoteRequestResponseTransfer = $this->quoteRequestClient->create($quoteRequestTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccess()) {
-            $this->quoteClient->clearQuote();
+//             TODO: throws exception after ::cleanQuote(), how I should clear quote?
+//            $this->quoteClient->clearQuote();
         }
 
         return $quoteRequestResponseTransfer;

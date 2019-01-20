@@ -18,7 +18,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    
+
     public const PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELDS = 'PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELDS';
 
     /**
