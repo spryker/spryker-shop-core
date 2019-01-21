@@ -37,8 +37,7 @@ class FileParser implements FileParserInterface
         $quickOrderItemTransfers = [];
         $rows = $this->getUploadOrderRows($file);
 
-        if (!in_array(QuickOrderPageConfigShared::CSV_SKU_COLUMN_NAME, $rows[0])
-            || !in_array(QuickOrderPageConfigShared::CSV_QTY_COLUMN_NAME, $rows[0])) {
+        if (!isset($rows[0][0])) {
             return $quickOrderItemTransfers;
         }
 
