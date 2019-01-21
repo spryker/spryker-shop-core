@@ -34,13 +34,18 @@ class FileParser implements FileParserInterface
      */
     public function parse(UploadedFile $file): array
     {
+        $quickOrderItemTransfers = [];
         $rows = $this->getUploadOrderRows($file);
+
+        if (!in_array(QuickOrderPageConfigShared::CSV_SKU_COLUMN_NAME, $rows[0])
+            || !in_array(QuickOrderPageConfigShared::CSV_QTY_COLUMN_NAME, $rows[0])) {
+            return $quickOrderItemTransfers;
+        }
 
         $csvHeader = array_flip($rows[0]);
         $skuKey = array_search(QuickOrderPageConfigShared::CSV_SKU_COLUMN_NAME, array_keys($csvHeader));
         $qtyKey = array_search(QuickOrderPageConfigShared::CSV_QTY_COLUMN_NAME, array_keys($csvHeader));
 
-        $quickOrderItemTransfers = [];
         unset($rows[0]);
         foreach ($rows as $row) {
             $quickOrderItemTransfers[] = $this->createQuickOrderItemTransfer($row[$skuKey], (int)$row[$qtyKey]);

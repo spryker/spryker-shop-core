@@ -456,7 +456,7 @@ class QuickOrderController extends AbstractController
             $uploadOrderForm->handleRequest($request);
         }
 
-        if ($uploadOrderForm->isSubmitted()) {
+        if ($uploadOrderForm->isSubmitted() && $uploadOrderForm->isValid()) {
             $data = $uploadOrderForm->getData();
             $quickOrderItems = $this->getFactory()
                 ->createUploadOrderParser()
