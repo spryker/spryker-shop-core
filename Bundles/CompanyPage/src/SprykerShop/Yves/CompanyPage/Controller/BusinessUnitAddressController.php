@@ -122,6 +122,10 @@ class BusinessUnitAddressController extends AbstractCompanyController
         $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_COMPANY_BUSINESS_UNIT_ID);
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
+        if (!$idCompanyBusinessUnit) {
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+        }
+
         $dataProvider = $this
             ->getFactory()
             ->createCompanyPageFormFactory()
@@ -140,10 +144,6 @@ class BusinessUnitAddressController extends AbstractCompanyController
         }
 
         if ($addressForm->isValid()) {
-            if (!$idCompanyBusinessUnit) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
-            }
-
             $data = array_merge($data, $addressForm->getData());
 
             $companyUnitAddressTransfer = $this->getFactory()
