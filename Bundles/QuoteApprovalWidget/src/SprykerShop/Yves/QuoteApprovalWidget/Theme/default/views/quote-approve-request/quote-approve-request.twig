@@ -1,12 +1,12 @@
 {% extends template('widget') %}
 
 {% define data = {
-    quoteApprovalRequestForm: _widget.quoteApprovalRequestForm,
-    quote: _widget.quote,
-    limit: _widget.limit,
+    quoteApprovalRequestForm: _widget.quoteApprovalRequestForm|default,
+    quote: _widget.quote|default,
+    limit: _widget.limit|default,
     isVisible: _widget.isVisible,
-    quoteStatus: _widget.quoteStatus,
-    canSendApprovalRequest: _widget.canSendApprovalRequest,
+    quoteStatus: _widget.quoteStatus|default,
+    canSendApprovalRequest: _widget.canSendApprovalRequest|default,
     quoteApprovalRequestFormOptions: {
         action: path('quote-approval/create')
     }
