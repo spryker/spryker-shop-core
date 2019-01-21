@@ -14,7 +14,8 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_QUOTE_APPROVAL_APPROVE = 'quote-approval-approve';
     public const ROUTE_QUOTE_APPROVAL_DECLINE = 'quote-approval-decline';
-    public const ROUTE_QUOTE_APPROVAL_CANCEL = 'quote-approval-cancel';
+    public const ROUTE_QUOTE_APPROVAL_CREATE = 'quote-approval-create';
+    public const ROUTE_QUOTE_APPROVAL_REMOVE = 'quote-approval-remove';
 
     protected const PATTERN_ID = '\d+';
 
@@ -27,7 +28,8 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
     {
         $this->addQuoteApprovalApproveRoute()
             ->addQuoteApprovalDeclineRoute()
-            ->addQuoteApprovalCancelRoute();
+            ->addCreateQuoteApprovalRoute()
+            ->addRemoveQuoteApprovalRoute();
     }
 
     /**
@@ -55,10 +57,22 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addQuoteApprovalCancelRoute()
+    protected function addCreateQuoteApprovalRoute()
     {
-        $this->createPostController('/quote-approval/cancel/{idQuoteApproval}', static::ROUTE_QUOTE_APPROVAL_CANCEL, 'QuoteApprovalWidget', 'QuoteApproval', 'cancel')
-            ->assert('idQuoteApproval', static::PATTERN_ID);
+        $this->createController('/quote-approval/create', static::ROUTE_QUOTE_APPROVAL_CREATE, 'QuoteApprovalWidget', 'QuoteApproval', 'createQuoteApproval')
+            ->method('POST');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addRemoveQuoteApprovalRoute()
+    {
+        $this->createController('/quote-approval/{idQuoteApproval}/remove', static::ROUTE_QUOTE_APPROVAL_REMOVE, 'QuoteApprovalWidget', 'QuoteApproval', 'removeQuoteApproval')
+            ->assert('idQuoteApproval', static::PATTERN_ID)
+            ->method('POST');
 
         return $this;
     }
