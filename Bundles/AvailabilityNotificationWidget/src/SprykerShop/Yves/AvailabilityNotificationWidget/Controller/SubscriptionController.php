@@ -109,6 +109,12 @@ class SubscriptionController extends AbstractController
         $subscriptionForm->handleRequest($request);
 
         if ($subscriptionForm->isSubmitted() === false || $subscriptionForm->isValid() === false) {
+            $errors = $subscriptionForm->getErrors(true);
+
+            foreach ($errors as $error){
+                $this->addErrorMessage($error->getMessage());
+            }
+
             return;
         }
 
