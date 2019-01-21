@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -24,7 +25,7 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
     public function createQuoteApproval(QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer): QuoteApprovalResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
@@ -47,6 +48,7 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return int|null
      */
@@ -72,4 +74,18 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      * @return string|null
      */
     public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
 }

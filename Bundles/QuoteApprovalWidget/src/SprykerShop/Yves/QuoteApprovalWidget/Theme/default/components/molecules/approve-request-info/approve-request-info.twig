@@ -12,11 +12,11 @@
 {% block body %}
     <div class="grid">
         <div class="col col--sm-6 spacing-y spacing-y--big">
-            {% if data.approval.status == 'Waiting' %}
+            {% if data.approval.status == 'waiting' %}
                 {{ 'quote_approval.request.waiting_for_approval_from'|trans }}
-            {% elseif data.approval.status == 'Approved' %}
+            {% elseif data.approval.status == 'approved' %}
                 {{ 'quote_approval.request.approved_by'|trans }}
-            {% elseif data.approval.status == 'Declined' %}
+            {% elseif data.approval.status == 'declined' %}
                 {{ 'quote_approval.request.declined_by'|trans }}
             {% endif %}
             {{ data.customer.firstName }} {{ data.customer.lastName }}
@@ -29,7 +29,7 @@
             } only %}
             {{ data.approval.updatedAt | date }}
         </div>
-        {% if data.quoteStatus == 'Waiting' %}
+        {% if data.quoteStatus == 'waiting' %}
             <div class="col col--sm-12">
                 <a class="button button--expand button--hollow button--alert" href="{{ path('quote-approval/remove', {'idQuoteApproval': data.approval.idQuoteApproval }) }}">
                     {{ 'quote_approval.remove'|trans }}

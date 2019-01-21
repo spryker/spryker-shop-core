@@ -1,0 +1,63 @@
+{% extends template('widget') %}
+
+{% define data = {
+    quoteTransfer: _widget.quoteTransfer,
+    quoteApprovalCollection: _widget.quoteApprovalCollection,
+    waitingStatus: _widget.waitingStatus,
+} %}
+
+{% block body %}
+    {% if data.quoteApprovalCollection.quoteApprovals is not null %}
+        {% for quoteApproval in data.quoteApprovalCollection.quoteApprovals %}
+            <div>
+                {% include molecule('quote-info-row', 'QuoteApprovalWidget') with {
+                    data: {
+                        title: 'quote_approval_widget.cart.quote_owner_name' | trans,
+                        value: data.quoteTransfer.customer.firstName ~ ' ' ~ data.quoteTransfer.customer.lastName,
+                    }
+                } only %}
+
+                {% include molecule('quote-info-row', 'QuoteApprovalWidget') with {
+                    data: {
+                        title: 'quote_approval_widget.cart.request_date' | trans,
+                        value: quoteApproval.createdAt | date,
+                    }
+                } only %}
+
+                {% if quoteApproval.status == data.waitingStatus %}
+                    <div class="grid grid--right">
+                        {% if can('ApproveQuotePermissionPlugin', data.quoteTransfer) %}
+                            <div class="col">
+                                <form method="POST" action="{{ path('quote-approval-decline', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                                    <button type="submit" class="button button--alert">{{ 'quote_approval_widget.cart.decline' | trans }}</button>
+                                </form>
+                            </div>
+                            <div class="col spacing-left">
+                                <form method="POST" action="{{ path('quote-approval-approve', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                                    <button type="submit" class="button button--success">{{ 'quote_approval_widget.cart.approve' | trans }}</button>
+                                </form>
+                            </div>
+                        {% else %}
+                            <div class="col">
+                                <form method="POST" action="{{ path('quote-approval-cancel', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                                    <button type="submit" class="button button--alert">{{ 'quote_approval_widget.cart.cancel' | trans }}</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    {% set quoteStatus = 'quote_approval_widget.cart.status.' ~ quoteApproval.status %}
+
+                    {% include molecule('quote-info-row', 'QuoteApprovalWidget') with {
+                        data: {
+                            title: 'quote_approval_widget.cart.status' | trans,
+                            value: quoteStatus | trans,
+                            status: quoteApproval.status | lower
+                        }
+                    } only %}
+                {% endif %}
+                <hr />
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
